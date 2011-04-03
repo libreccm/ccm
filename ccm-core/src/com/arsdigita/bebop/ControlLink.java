@@ -137,8 +137,9 @@ public class ControlLink extends BaseLink {
      */
     protected void fireActionEvent(PageState state) {
         ActionEvent e = null;
-        if (m_actionListeners == null)
+        if (m_actionListeners == null) {
             return;
+        }
         for (int i=0; i < m_actionListeners.size(); i++ ) {
             if ( e == null ) {
                 e = new ActionEvent(this, state);
@@ -151,6 +152,7 @@ public class ControlLink extends BaseLink {
      * Responds to the incoming request. Fires the <code>ActionEvent</code>.
      * @param state the current page state
      */
+    @Override
     public void respond(PageState state) {
         fireActionEvent(state);
     }
@@ -162,12 +164,13 @@ public class ControlLink extends BaseLink {
      * @param state the current page state
      * @param parent the parent element
      */
+    @Override
     protected void generateURL(PageState state, Element parent) {
         setControlEvent(state);
         try {
             parent.addAttribute("href", state.stateAsURL());
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             parent.addAttribute("href", "");
         }
         exportAttributes(parent);

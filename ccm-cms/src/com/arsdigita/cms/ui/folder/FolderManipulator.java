@@ -229,6 +229,7 @@ public class FolderManipulator extends SimpleContainer
         return m_itemView.getBrowser();
     }
 
+    @Override
     public void process(FormSectionEvent e) {
         PageState s = e.getPageState();
         if ( e.getSource() == m_itemView ) {
@@ -249,6 +250,7 @@ public class FolderManipulator extends SimpleContainer
         }
     }
 
+    @Override
     public void validate(FormSectionEvent e) {
         ContentItem item;
         String name;
@@ -308,6 +310,7 @@ public class FolderManipulator extends SimpleContainer
         }
     }
 
+    @Override
     public void submitted(FormSectionEvent e)
         throws FormProcessException {
         PageState s = e.getPageState();
@@ -317,6 +320,7 @@ public class FolderManipulator extends SimpleContainer
         }
     }
 
+    @Override
     public void reset(PageState s) {
         m_itemView.setVisible(s, true);
         m_itemView.reset(s);
@@ -342,6 +346,7 @@ public class FolderManipulator extends SimpleContainer
             m_folderTree.setCellRenderer (new FolderTreeCellRenderer());
 
             Label l = new Label(new PrintListener() {
+                @Override
                     public void prepare(PrintEvent e) {
                         PageState s = e.getPageState();
                         Label t = (Label) e.getTarget();
@@ -389,6 +394,7 @@ public class FolderManipulator extends SimpleContainer
             }
         }
 
+        @Override
         public void reset(PageState s) {
             m_folderTree.clearSelection(s);
             // FIXME: add a reset method to Tree and call that instead of this
@@ -461,6 +467,7 @@ public class FolderManipulator extends SimpleContainer
             return m_browser;
         }
 
+        @Override
         public void reset(PageState s) {
             m_checkboxGroup.setValue(s, null);
             m_actionSel.setValue(s, null);
@@ -469,6 +476,7 @@ public class FolderManipulator extends SimpleContainer
 
         // The renderer for the first column in the itemView table
         private class CheckboxRenderer implements TableCellRenderer {
+            @Override
             public Component getComponent(Table table, PageState state, Object value,
                                           boolean isSelected, Object key,
                                           int row, int column) {
@@ -501,6 +509,7 @@ public class FolderManipulator extends SimpleContainer
          * are control links.  Invalid folders are: the parent folder of the
          * sources, any of the sources, and any subfolders of the sources.
          */
+        @Override
         public Component getComponent (Tree tree, PageState state, Object value,
                                        boolean isSelected, boolean isExpanded,
                                        boolean isLeaf, Object key) {

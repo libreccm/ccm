@@ -140,6 +140,7 @@ public class ImageBrowser extends Table {
     public static abstract class LinkActionListener
             extends TableActionAdapter {
 
+        @Override
         public void cellSelected(TableActionEvent e) {
             int c = e.getColumn().intValue();
             if (c == LINK) {
@@ -157,6 +158,7 @@ public class ImageBrowser extends Table {
     // Renders a static image for the current asset
     private class ThumbnailCellRenderer implements TableCellRenderer {
 
+        @Override
         public Component getComponent(Table table, PageState state, Object value,
                 boolean isSelected, Object key,
                 int row, int column) {
@@ -232,6 +234,7 @@ public class ImageBrowser extends Table {
             m_builder = b;
         }
 
+        @Override
         public TableModel makeModel(Table t, PageState s) {
             return new ImageModelAdapter(
                     m_builder.makeModel((ImageBrowser) t, s));
@@ -253,14 +256,17 @@ public class ImageBrowser extends Table {
             m_model = m;
         }
 
+        @Override
         public int getColumnCount() {
             return ImageBrowser.NUM_COLUMNS;
         }
 
+        @Override
         public boolean nextRow() {
             return m_model.nextRow();
         }
 
+        @Override
         public Object getElementAt(int columnIndex) {
             ImageAsset a = m_model.getImageAsset();
 
@@ -311,6 +317,7 @@ public class ImageBrowser extends Table {
             }
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
             return m_model.getImageAsset().getID();
         }

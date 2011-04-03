@@ -13,25 +13,4 @@
             </xrd:associations>
         </xrd:adapter>
     </xrd:context>
-
-    <!-- Next the metadata for search -->
-    <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
-        <!-- Content item is the simplest type -->
-        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Image" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
-            <xrd:attributes rule="exclude">
-                <xrd:property name="/object/textAsset/id"/>
-                <xrd:property name="/object/textAsset/defaultDomainClass"/>
-                <xrd:property name="/object/textAsset/objectType"/>
-                <xrd:property name="/object/textAsset/displayName"/>
-                <xrd:property name="/object/textAsset/ancestors"/>
-                <xrd:property name="/object/textAsset/version"/>
-                <xrd:property name="/object/textAsset/name"/>
-                <xrd:property name="/object/textAsset/language"/>
-                <xrd:property name="/object/textAsset/isDeleted"/>
-            </xrd:attributes>
-            <xrd:associations rule="include">
-                <xrd:property name="/object/textAsset"/>
-            </xrd:associations>
-        </xrd:adapter>
-    </xrd:context>
 </xrd:adapters>

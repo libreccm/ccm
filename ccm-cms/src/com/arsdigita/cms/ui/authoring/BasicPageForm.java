@@ -28,11 +28,9 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
-//import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
-//import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -213,6 +211,7 @@ public abstract class BasicPageForm extends BasicItemForm {
      */
     public class LaunchDateValidationListener implements ParameterListener {
 
+        @Override
     	public void validate(final ParameterEvent e) {
     		
     		final ParameterData data = e.getParameterData();

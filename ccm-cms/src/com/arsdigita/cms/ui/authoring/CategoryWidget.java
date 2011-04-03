@@ -31,6 +31,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
@@ -54,13 +55,16 @@ public class CategoryWidget extends Widget {
         m_mode = mode;
     }
 
+    @Override
     protected String getType() {
         return "category";
     }
+    @Override
     public boolean isCompound() {
         return false;
     }
     
+    @Override
     protected void generateWidget(PageState state, 
                                   Element parent) {
         Element widget = parent.newChildElement("cms:categoryWidget",
@@ -74,9 +78,7 @@ public class CategoryWidget extends Widget {
 
         BigDecimal[] values = (BigDecimal[])getValue(state);
         if (values != null) {
-            for (int i = 0 ; i < values.length ; i++) {
-                ids.add(values[i]);
-            }
+            ids.addAll(Arrays.asList(values));
         }
         
         Category root = (Category)DomainObjectFactory.newInstance(
@@ -132,8 +134,10 @@ public class CategoryWidget extends Widget {
         
         String fullname = path == null ? "/" : path + " > " + cat.getName();
         el.addAttribute("fullname", fullname);
-	StringBuffer nodeID = new StringBuffer(parent.getAttribute("node-id"));
-	if (nodeID.length() > 0) nodeID.append("-");
+	StringBuilder nodeID = new StringBuilder(parent.getAttribute("node-id"));
+	if (nodeID.length() > 0) {
+            nodeID.append("-");
+        }
 	nodeID.append(cat.getID());
 	el.addAttribute("node-id", nodeID.toString());        
         parent.addContent(el);

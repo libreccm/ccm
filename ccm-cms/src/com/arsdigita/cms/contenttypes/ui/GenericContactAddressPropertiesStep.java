@@ -17,6 +17,7 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.contenttypes.GenericAddress;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
@@ -33,6 +34,8 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
     public static final String CHANGE_ADDRESS_SHEET_NAME = "changeAddress";
     public static final String DELETE_ADDRESS_SHEET_NAME = "deleteAddress";
 
+    private ItemSelectionModel itemModel;
+
     /** Creates a new instance of GenericContactAddressPropertiesStep */
     public GenericContactAddressPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         this(itemModel, parent, "");
@@ -41,31 +44,20 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
     public GenericContactAddressPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
         super(itemModel, parent, prefix);
 
-//        GenericContact contact = (GenericContact)itemModel.getSelectedObject(state);
+        this.itemModel = itemModel;
 
-//XXX
-//        if(/*contact.getAddress() == null*/ true) {
         BasicPageForm attachAddressSheet = new GenericContactAttachAddressPropertyForm(itemModel, this);
-        add(ADD_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.attach_address").localize(), new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
-
-        /* Set the displayComponent for this step */
-//            setDisplayComponent(getEmptyBaseAddressPropertySheet(itemModel));
-
-//        } else {
-
-        // editAddress
+        BasicPageForm reattachAddressSheet = new GenericContactAttachAddressPropertyForm(itemModel, this);
         BasicPageForm editAddressSheet = new GenericContactEditAddressPropertyForm(itemModel, this);
-        add(EDIT_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.edit_address").localize(), new WorkflowLockedComponentAccess(editAddressSheet, itemModel), editAddressSheet.getSaveCancelSection().getCancelButton());
-
-//            BasicPageForm attachAddressSheet = new GenericContactAttachAddressPropertyForm(itemModel, this);
-//            add(CHANGE_ADDRESS_SHEET_NAME, (String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.reattach_address").localize(), new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
-
         BasicPageForm deleteAddressSheet = new GenericContactDeleteAddressForm(itemModel, this);
-        add(DELETE_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_address").localize(), new WorkflowLockedComponentAccess(deleteAddressSheet, itemModel), deleteAddressSheet.getSaveCancelSection().getCancelButton());
+
+        add(ADD_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.attach_address").localize(), new AttachAddressWorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
+        add(CHANGE_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.reattach_address").localize(), new EditAddressWorkflowLockedComponentAccess(reattachAddressSheet, itemModel), reattachAddressSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.edit_address").localize(), new EditAddressWorkflowLockedComponentAccess(editAddressSheet, itemModel), editAddressSheet.getSaveCancelSection().getCancelButton());
+        add(DELETE_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_address").localize(), new EditAddressWorkflowLockedComponentAccess(deleteAddressSheet, itemModel), deleteAddressSheet.getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
         setDisplayComponent(getAddressPropertySheet(itemModel));
-//        }
 
     }
 
@@ -87,12 +79,13 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
                     "address." + GenericAddress.ISO_COUNTRY_CODE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 
+                        @Override
                         public String format(DomainObject item,
                                 String attribute,
                                 PageState state) {
                             GenericAddress Address = ((GenericContact) item).getAddress();
                             if (Address != null && Address.getIsoCountryCode() != null) {
-                                return Address.getCountryNameFromIsoCode(Address.getIsoCountryCode());
+                                return GenericAddress.getCountryNameFromIsoCode(Address.getIsoCountryCode());
                             } else {
                                 return (String) ContenttypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
                             }
@@ -106,5 +99,33 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
 
     public static Component getEmptyBaseAddressPropertySheet(ItemSelectionModel itemModel) {
         return new Label(((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.emptyAddress").localize()));
+    }
+
+    private class EditAddressWorkflowLockedComponentAccess extends WorkflowLockedComponentAccess {
+
+        public EditAddressWorkflowLockedComponentAccess(Component c, ItemSelectionModel i) {
+            super(c, i);
+        }
+
+        @Override
+        public boolean isVisible(PageState state) {
+            GenericContact contact = (GenericContact) itemModel.getSelectedObject(state);
+
+            return contact.hasAddress();
+        }
+    }
+
+    private class AttachAddressWorkflowLockedComponentAccess extends WorkflowLockedComponentAccess {
+
+        public AttachAddressWorkflowLockedComponentAccess(Component c, ItemSelectionModel i) {
+            super(c, i);
+        }
+
+        @Override
+        public boolean isVisible(PageState state) {
+            GenericContact contact = (GenericContact) itemModel.getSelectedObject(state);
+
+            return !contact.hasAddress();
+        }
     }
 }

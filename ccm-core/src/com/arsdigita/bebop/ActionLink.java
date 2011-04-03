@@ -73,6 +73,7 @@ public class ActionLink extends ControlLink {
      *
      * @param s the current page state
      */
+    @Override
     public void setControlEvent(PageState s) {
         s.setControlEvent(this);
     }

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
@@ -120,6 +119,7 @@ public class SimpleEditStep extends SecurityPropertyEditor
         
             
         parent.getList().addActionListener(new ActionListener() {
+            @Override
                 public void actionPerformed(ActionEvent e) {
                     PageState state = e.getPageState();
                     showDisplayPane(state);
@@ -140,6 +140,7 @@ public class SimpleEditStep extends SecurityPropertyEditor
      * Registers globa state param for cancelling streamlined
      * creation
      */
+    @Override
     public void register(Page p) {
         super.register(p);
         p.addGlobalStateParam(m_streamlinedCreationParam);
@@ -200,6 +201,7 @@ public class SimpleEditStep extends SecurityPropertyEditor
      *
      * @param state the PageState
      */
+    @Override
     public void pageRequested(RequestEvent e) {
         PageState state = e.getPageState();
 

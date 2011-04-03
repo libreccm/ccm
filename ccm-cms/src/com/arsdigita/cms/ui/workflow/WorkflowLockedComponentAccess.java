@@ -38,9 +38,9 @@ import org.apache.log4j.Logger;
 public class WorkflowLockedComponentAccess extends ComponentAccess {
 
     private static final Logger s_log =
-        Logger.getLogger(WorkflowLockedComponentAccess.class);
-
+            Logger.getLogger(WorkflowLockedComponentAccess.class);
     ItemSelectionModel m_itemModel;
+
     /**
      * @param c The component
      */
@@ -54,7 +54,7 @@ public class WorkflowLockedComponentAccess extends ComponentAccess {
      * @param check An access check
      */
     public WorkflowLockedComponentAccess(Component c, String check, ItemSelectionModel i) {
-        super(c,check);
+        super(c, check);
         m_itemModel = i;
     }
 
@@ -68,22 +68,37 @@ public class WorkflowLockedComponentAccess extends ComponentAccess {
      *    the access checks
      * @return true if all the access checks pass, false otherwise
      * */
-   public boolean canAccess(PageState state, Security security) {
-         SecurityManager sm = Utilities.getSecurityManager(state);
-         ContentItem item = (ContentItem)m_itemModel.getSelectedObject(state);
+    @Override
+    public boolean canAccess(PageState state, Security security) {
+        SecurityManager sm = Utilities.getSecurityManager(state);
+        ContentItem item = (ContentItem) m_itemModel.getSelectedObject(state);
 
-         if (super.canAccess(state, security)) {
-             boolean smCheck = sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM,
-                                            item);
-             if ( s_log.isDebugEnabled() ) {
-                 s_log.debug("Superclass security check passed. SecurityManager check is " + 
-                             smCheck);
-             }
-             return smCheck;
-         }
 
-         s_log.warn("Returning false");
+        if (isVisible(state) == true) {
+            if (super.canAccess(state, security)) {
+                boolean smCheck = sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM,
+                        item);
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("Superclass security check passed. SecurityManager check is "
+                            + smCheck);
+                }
+                return smCheck;
+            }
+        }
 
-         return false;
-   }
+        return false;
+    }
+
+    /**
+     * Override this method to change visiblity of action link created by
+     * SecurityPropertyEditor add-method. If this method returns false, the
+     * link will be hidden, p.ex. to hide a delete link if the component is
+     * already empty.
+     *
+     * @param state The page state
+     * @return true for default behavior
+     */
+    public boolean isVisible(PageState state) {
+        return true;
+    }
 }

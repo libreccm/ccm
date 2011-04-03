@@ -168,6 +168,7 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
         this(new Label(title), builder);
     }
 
+    @Override
     public void reset(final PageState state) {
         s_log.debug("Resetting to default initial state");
 
@@ -317,6 +318,7 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
     }
 
     public class SelectionListener implements ChangeListener {
+        @Override
         public final void stateChanged(final ChangeEvent e) {
             s_log.debug("Selection state changed; I may change " +
                         "the body's visible pane");

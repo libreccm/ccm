@@ -78,7 +78,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.address").localize()));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.address").localize()));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener(new NotNullValidationListener());
         addressParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
@@ -88,27 +88,27 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
         add(address);
 
         if (!GenericContact.getConfig().getHideAddressPostalCode()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.postal_code").localize()));
+            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.postal_code").localize()));
             ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
             TextField postalCode = new TextField(postalCodeParam);
             /* XXX NumberListener ?*/
             add(postalCode);
         }
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.city").localize()));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.city").localize()));
         ParameterModel cityParam = new StringParameter(CITY);
         TextField city = new TextField(cityParam);
         add(city);
 
         if (!GenericContact.getConfig().getHideAddressState()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.state").localize()));
+            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.state").localize()));
             ParameterModel stateParam = new StringParameter(STATE);
             TextField state = new TextField(stateParam);
             add(state);
         }
 
         if (!GenericContact.getConfig().getHideAddressCountry()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.iso_country_code").localize()));
+            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.iso_country_code").localize()));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
 
@@ -125,6 +125,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
             country.addValidationListener(
                     new ParameterListener() {
 
+                @Override
                         public void validate(ParameterEvent e) throws FormProcessException {
                             ParameterData data = e.getParameterData();
                             String isoCode = (String) data.getValue();
@@ -139,6 +140,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
 
     }
 
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
@@ -155,6 +157,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
         }
     }
 
+    @Override
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
                 && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
@@ -162,18 +165,13 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
         }
     }
 
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
 
         if (getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
-//            if (contact.getAddress() == null) {
-//                contact.setAddress(new GenericAddress());
-//                contact.getAddress().setName("Address for " + contact.getName() + "(" + contact.getID() + ")");
-//                contact.getAddress().setTitle("Address for " + contact.getName() + "(" + contact.getID() + ")");
-//            }
-
             contact.getAddress().setAddress((String) data.get(ADDRESS));
             contact.getAddress().setPostalCode((String) data.get(POSTAL_CODE));
             contact.getAddress().setCity((String) data.get(CITY));

@@ -127,7 +127,9 @@ public class IncompleteDateParameter extends DateParameter {
                 c.set(Calendar.MONTH, Integer.parseInt(month));
             } else {
                 this.skippedMonth = true;
-                c.set(Calendar.MONTH, 1);
+                // BE AWARE: Java month counting is of by 1 because someone decided
+                // to start counting at 0, So january = 0 (not 1);
+                c.set(Calendar.MONTH, 0);
             }
             if (day != null && day.length() > 0) {
                 this.skippedDay = false;
