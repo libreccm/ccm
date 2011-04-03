@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app      xmlns="http://java.sun.com/xml/ns/j2ee"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+                     http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+            version="2.4">
+
+    <!-- module ccm-portalworkspace  -  servlet definitions BEGIN  -->
+    <servlet>
+<!--        <servlet-name>files</servlet-name>        -->
+        <servlet-name>portalworkspace-files</servlet-name>
+        <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+        <init-param>
+            <param-name>template-path</param-name>
+            <param-value>/templates/ccm-portalworkspace</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet>
+        <servlet-name>portlet-type-xsl</servlet-name>
+        <servlet-class>com.arsdigita.dispatcher.PortletTypeXSLServlet</servlet-class>
+    </servlet>
+    <!-- module ccm-portalworkspace  -  servlet definitions END  -->
+
+    <!-- module ccm-portalworkspace  -  servlet mappings BEGIN  -->
+    <servlet-mapping>
+        <servlet-name>portalworkspace-files</servlet-name>
+        <url-pattern>/ccm-portalworkspace/files/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portlet-type-xsl</servlet-name>
+        <url-pattern>/__ccm__/servlet/portlet-type/*</url-pattern>
+    </servlet-mapping>
+    <!-- module ccm-portalworkspace  -  servlet mappings END  -->
+
+</web-app>

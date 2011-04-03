@@ -1,0 +1,54 @@
+model com.arsdigita.portalworkspace.portlet;
+
+import com.arsdigita.portal.Portlet;
+
+object type MyWorkspacesPortlet extends Portlet {
+}
+
+query MyWorkspaces {
+    BigDecimal id;
+    String title;
+    String primaryURL;
+
+    do {
+        select distinct
+          a.application_id,
+          a.title,
+          a.primary_url,
+          upper(a.title) as sort_key
+        from
+          group_member_trans_index gmti,
+          pw_workspaces w,
+          group_subgroup_map m,
+          applications a
+        where
+          gmti.member_id = :userID
+          -- joins
+          and gmti.group_id = m.subgroup_id
+          and m.group_id = w.party_id
+          and w.workspace_id = a.application_id
+        union
+        select
+          a.application_id,
+          a.title,
+          a.primary_url,
+          upper(a.title) as sort_key
+        from
+          pw_workspaces w,
+          group_member_map m,
+          applications a
+        where
+          w.party_id = m.group_id
+          and m.member_id = :userID
+          -- leave out his or her personal workspace
+          and w.workspace_id <> :personalWorkspaceID
+          -- joins
+          and w.workspace_id = a.application_id
+        order by 
+          sort_key
+    } map {
+        id = a.application_id;
+        title = a.title;
+        primaryURL = a.primary_url;
+    }
+}

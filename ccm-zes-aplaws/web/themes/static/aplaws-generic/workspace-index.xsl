@@ -11,7 +11,7 @@
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search portal"
 	version="1.0">
 
-<xsl:import href="../../../../ROOT/__ccm__/apps/workspace/xsl/index.xsl"/>
+<xsl:import href="../../../../ROOT/__ccm__/apps/portalworkspace/xsl/index.xsl"/>
 <xsl:import href="portal/lib.xsl"/>
 <xsl:import href="portal/portlets.xsl"/>
 <xsl:import href="lib/header.xsl"/>
@@ -41,7 +41,8 @@
 	
 	<body>
         <xsl:call-template name="bebop:dcpJavascript"/>
-		<a class="navHide" href="#startcontent" title="Go directly to main content" accesskey="S">Skip over navigation</a>		
+		<a class="navHide" href="#startcontent" title="Go directly to main content"
+                           accesskey="S">Skip over navigation</a>
 		<span class="hide">|</span>
 		<xsl:call-template name="header"/>
 		<xsl:call-template name="wsBreadcrumb"/>
@@ -76,7 +77,8 @@
 
 <xsl:template name="wsBody">
     
-<table id="mainLayout" width="100%" border="0" cellspacing="0" cellpadding="5" summary="This table is used for a three-column page layout">
+<table id="mainLayout" width="100%" border="0" cellspacing="0" cellpadding="5"
+       summary="This table is used for a three-column page layout">
 <tr>
     <td width="20%" align="left" valign="top" >
 <!--VOID LHS Column -->
@@ -120,9 +122,13 @@
 
 <xsl:template match="portal:homepageWorkspace/bebop:link">
 <xsl:choose>
-<xsl:when test="./bebop:label='browse'"><a href="{@href}"  class="adminReturn" title="Return to the standard page view">back to user's view</a></xsl:when>
-<xsl:when test="./bebop:label='reset'"><a href="{@href}" class="adminWarning"  title="WARNING!!: This link will delete the whole area!">delete area</a></xsl:when>
-<xsl:when test="./bebop:label='customize'"><a href="{@href}" title="Customise this part of the page">customise area</a></xsl:when>
+<xsl:when test="./bebop:label='browse'"><a href="{@href}"  
+          class="adminReturn"
+          title="Return to the standard page view">back to user's view</a></xsl:when>
+<xsl:when test="./bebop:label='reset'"><a href="{@href}" class="adminWarning"
+          title="WARNING!!: This link will delete the whole area!">delete area</a></xsl:when>
+<xsl:when test="./bebop:label='customize'"><a href="{@href}"
+          title="Customise this part of the page">customise area</a></xsl:when>
 <xsl:otherwise><xsl:apply-templates /></xsl:otherwise>
 </xsl:choose>
 </xsl:template>
@@ -166,8 +172,19 @@
 
 
 </xsl:stylesheet>
-<!-- Stylus Studio meta-information - (c)1998-2003. Sonic Software Corporation. All rights reserved.
+<!-- Stylus Studio meta-information - (c)1998-2003. Sonic Software Corporation.
+     All rights reserved.
 <metaInformation>
-<scenarios ><scenario default="yes" name="Scenario2" userelativepaths="yes" externalpreview="no" url="..\XML\newHomepagePortal.xml" htmlbaseurl="http://194.202.210.43:9005/theme/ibm&#x2D;generic/" outputurl="" processortype="internal" profilemode="0" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext=""/></scenarios><MapperInfo srcSchemaPath="" srcSchemaRoot="" srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+<scenarios ><scenario default="yes" name="Scenario2" userelativepaths="yes" 
+    externalpreview="no" url="..\XML\newHomepagePortal.xml"
+    htmlbaseurl="http://194.202.210.43:9005/theme/ibm&#x2D;generic/"
+    outputurl="" processortype="internal" profilemode="0" urlprofilexml=""
+    commandline="" additionalpath="" additionalclasspath=""
+    postprocessortype="none" postprocesscommandline=""
+    postprocessadditionalpath=""
+    postprocessgeneratedext=""/></scenarios><MapperInfo srcSchemaPath=""
+    srcSchemaRoot="" srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no"
+    destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes"
+    destSchemaInterpretAsXML="no"/>
 </metaInformation>
 -->

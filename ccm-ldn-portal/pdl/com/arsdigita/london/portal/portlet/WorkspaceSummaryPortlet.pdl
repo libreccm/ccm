@@ -1,6 +1,0 @@
-model com.arsdigita.london.portal.portlet;
-
-import com.arsdigita.portal.Portlet;
-
-object type WorkspaceSummaryPortlet extends Portlet {
-}

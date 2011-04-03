@@ -21,8 +21,8 @@ package com.arsdigita.aplaws;
 import com.arsdigita.london.navigation.Template;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
-import com.arsdigita.london.portal.PageLayout;
-import com.arsdigita.london.portal.Workspace;
+import com.arsdigita.portalworkspace.PageLayout;
+import com.arsdigita.portalworkspace.Workspace;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.RootCategoryCollection;
