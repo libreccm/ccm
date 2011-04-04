@@ -70,7 +70,7 @@ import java.util.Map;
 /**
  * Encapsulates a {@link FolderManipulator} in order to create a flat
  * item listing. Also contains a new item form.
-2 *
+ *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
  * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
  * @version Id: FolderItemPane.java 287 2005-02-22 00:29:02Z sskracic $

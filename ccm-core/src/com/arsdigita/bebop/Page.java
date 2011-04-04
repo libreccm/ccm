@@ -81,14 +81,11 @@ import org.apache.log4j.Logger;
  * @version $Id: Page.java 1270 2006-07-18 13:34:55Z cgyg9330 $
  */
 public class Page extends BlockStylable implements Container {
-    
 
     /** Class specific logger instance. */
     private static final Logger s_log = Logger.getLogger(Page.class);
-
     /** The delimiter character for components naming */
     private static final String DELIMITER = ".";
-
     /**
      * The prefix that gets prepended to all state variables. Components must
      * not use variables starting with this prefix. This guarantees that the
@@ -96,9 +93,7 @@ public class Page extends BlockStylable implements Container {
      * interfere with each other.
      */
     private static final String COMPONENT_PREFIX = "bbp" + DELIMITER;
-
     private static final String INTERNAL = COMPONENT_PREFIX;
-
     /**
      * The name of the special parameter that indicates which component has
      * been selected.
@@ -116,13 +111,11 @@ public class Page extends BlockStylable implements Container {
         CONTROL_EVENT_KEYS.add(CONTROL_VALUE);
         s_log.debug("Static initalizer finished.");
     }
-
     /**
      * The name of the request parameter used for the visibility state of
      * components stored in m_invisible.
      */
     static final String INVISIBLE = INTERNAL + "i";
-
     /**
      * Map of stateful components (id --> Component)
      * SortedMap used because component based hash for page is based on concatenation of 
@@ -131,48 +124,36 @@ public class Page extends BlockStylable implements Container {
      */
     private SortedMap m_componentMap;
     private List m_components;
-
     /**
      * Map of component -> owned parameter collection
      */
     private Map m_componentParameterMap = new HashMap();
-
     private FormModel m_stateModel;
-
     /**
      * <code>Container</code> that renders this <code>Page</code>.
      */
     protected Container m_panel;
-
     private List m_actionListeners;
-
     private List m_requestListeners;
-
     /**
      * The title of the page to be added in the head of HTML output. The
      * title is wrapped in a Label to allow developers to add
      * PrintListeners to dynamically change the value of the title.
      */
     private Label m_title;
-
     /**
      * Stores the actual title for the current request. The title may be
      * generated with a PrintListener of the m_title Label.
      */
     private RequestLocal m_currentTitle;
-
     /**
      * A list of all the client-side stylesheets. The elements of the list
      * are of type Page.Stylesheet, defined at the end of this file.
      */
     private List m_clientStylesheets;
-
     private StringParameter m_selected;
-
     private StringParameter m_controlEvent;
-
     private StringParameter m_controlValue;
-
     /**
      * The default (initial) visibility of components. The encoding is
      * identical to that for PageState.m_invisible.
@@ -181,18 +162,15 @@ public class Page extends BlockStylable implements Container {
      * PageState.
      */
     protected BitSet m_invisible;
-
     /**
      * The PageErrorDisplay component that will display page state validation
      * errors on this page
      */
     private Component m_errorDisplay;
-
     /**
      * Indicates whether finish() has been called on this Page.
      */
     private boolean m_finished = false;
-
     /**
      * indicates whether pageState.stateAsURL() should export the
      * entire state for this page, or whether it should only export
@@ -270,6 +248,7 @@ public class Page extends BlockStylable implements Container {
         // Initialize the RequestLocal where the title for the current
         // request will be kept
         m_currentTitle = new RequestLocal() {
+
             protected Object initialValue(PageState state) {
                 return m_title.firePrintEvent(state);
             }
@@ -289,7 +268,7 @@ public class Page extends BlockStylable implements Container {
 
         // Set up the visibility tracking parameters
         m_invisible = new BitSet(32);
-        BitSetParameter p = new BitSetParameter(INVISIBLE, 
+        BitSetParameter p = new BitSetParameter(INVISIBLE,
                                                 BitSetParameter.ENCODE_DGAP);
         m_stateModel.addFormParam(p);
     }
@@ -542,7 +521,6 @@ public class Page extends BlockStylable implements Container {
 //      Assert.isUnlocked(this);
 //      addClientStylesheet(styleSheetURI, styleSheetType);
 //  }
-
     /**
      * Adds a client-side stylesheet that should be used in HTML
      * output. Arbitrarily many client-side stylesheets can be added with
@@ -651,11 +629,11 @@ public class Page extends BlockStylable implements Container {
             m_panel.generateXML(state, page);
         }
 
-        if (Kernel.getConfig().isDebugEnabled() &&
-            debugStructure(state.getRequest()) ) {
+        if (Kernel.getConfig().isDebugEnabled() && debugStructure(state.
+                getRequest())) {
 
             Element structure =
-                page.newChildElement("bebop:structure", BEBOP_XML_NS);
+                    page.newChildElement("bebop:structure", BEBOP_XML_NS);
 
             showStructure(state, structure);
         }
@@ -687,7 +665,7 @@ public class Page extends BlockStylable implements Container {
      */
     public PageState process(HttpServletRequest request,
                              HttpServletResponse response)
-        throws ServletException {
+            throws ServletException {
 
         PageState result = new PageState(this, request, response);
         try {
@@ -746,7 +724,6 @@ public class Page extends BlockStylable implements Container {
 //       PageState state = process(req, res);
 //     return state;
 //  }
-
     /**
      * Builds a DOM Document from the current request state by
      * doing a depth-first tree walk on the current set of components
@@ -760,7 +737,7 @@ public class Page extends BlockStylable implements Container {
      */
     public Document buildDocument(HttpServletRequest req,
                                   HttpServletResponse res)
-        throws ServletException {
+            throws ServletException {
         try {
             Document doc = new Document();
             PageState state = process(req, res);
@@ -797,6 +774,7 @@ public class Page extends BlockStylable implements Container {
             Assert.isUnlocked(this);
 
             Traversal componentRegistrar = new Traversal() {
+
                 protected void act(Component c) {
                     addComponent(c);
                     c.register(Page.this);
@@ -949,7 +927,8 @@ public class Page extends BlockStylable implements Container {
         }
 
         public void generateXML(Element parent) {
-            Element style = parent.newChildElement("bebop:stylesheet", BEBOP_XML_NS);
+            Element style = parent.newChildElement("bebop:stylesheet",
+                                                   BEBOP_XML_NS);
             style.addAttribute("href", m_URI);
             if (m_type != null) {
                 style.addAttribute("type", m_type);
@@ -977,8 +956,8 @@ public class Page extends BlockStylable implements Container {
             }
             if (m_componentMap.get(key) != null) {
                 throw new IllegalArgumentException(
-                          "Component key must not be duplicated.  The key " +
-                          key + " is shared by more than one component.");
+                        "Component key must not be duplicated.  The key " + key
+                        + " is shared by more than one component.");
             }
             m_componentMap.put(key, c);
             m_components.add(c);
@@ -1005,15 +984,18 @@ public class Page extends BlockStylable implements Container {
     public void addComponentStateParam(Component c, ParameterModel p) {
         Assert.isUnlocked(this);
 
-        if ( ! stateContains(c)) {
-            throw new IllegalArgumentException
-                ("Component must be registered in Page");
+        if (!stateContains(c)) {
+            throw new IllegalArgumentException(
+                    "Component must be registered in Page");
         }
-        if ( ! m_stateModel.containsFormParam(p) ) {
-            p.setName(parameterName(c, p.getName()));
+        if (!m_stateModel.containsFormParam(p)) {
+            String name = parameterName(c, p.getName());
+            s_log.debug(String.format("Setting name of parameter to add to '%s'",
+                                      name));
+            p.setName(name);
             m_stateModel.addFormParam(p);
 
-            Collection params = (Collection)m_componentParameterMap.get(c);
+            Collection params = (Collection) m_componentParameterMap.get(c);
             if (params == null) {
                 params = new ArrayList();
                 m_componentParameterMap.put(c, params);
@@ -1028,7 +1010,6 @@ public class Page extends BlockStylable implements Container {
     public Collection getComponentParameters(Component c) {
         return (Collection) m_componentParameterMap.get(c);
     }
-
 
     /**
      * Gets the state index of a component. This is the number assigned
@@ -1181,7 +1162,6 @@ public class Page extends BlockStylable implements Container {
         resetter.preorder(cmpnt);
     }
 
-
     /**
      * Return the prefix that is prepended to each component's state
      * parameters to keep them unique.
@@ -1193,13 +1173,13 @@ public class Page extends BlockStylable implements Container {
             // WRS: preferentially use key if it exists
             String key = c.getKey();
             if (key == null) {
-                if ( stateContains(c) ) {
+                if (stateContains(c)) {
                     key = String.valueOf(stateIndex(c));
                 } else {
-                    throw new IllegalArgumentException
-                        ("Cannot generate prefix for component: key is null "
-                         + "and component " + c.toString() + "/" + c.getKey()
-                         + " did not register with page.");
+                    throw new IllegalArgumentException(
+                            "Cannot generate prefix for component: key is null "
+                            + "and component " + c.toString() + "/" + c.getKey()
+                            + " did not register with page.");
                 }
             }
             return COMPONENT_PREFIX + key + DELIMITER;
@@ -1213,7 +1193,7 @@ public class Page extends BlockStylable implements Container {
      * @return the unmangled name.
      */
     private static final String unmangle(String name) {
-        if ( ! name.startsWith(COMPONENT_PREFIX) ) {
+        if (!name.startsWith(COMPONENT_PREFIX)) {
             return name;
         }
         // Find the second occurence of delimiter
@@ -1223,9 +1203,7 @@ public class Page extends BlockStylable implements Container {
         }
         return name;
     }
-
     // Procs for debugging output
-
     private static String NAME = "name";
 
     /**
@@ -1316,25 +1294,26 @@ public class Page extends BlockStylable implements Container {
      * by implementations of hashCode & equals 
      * @return
      */
-    public String getComponentString () {
-    	Iterator it = m_componentMap.keySet().iterator();
-    	/*int hash = 0;
-    	while (it.hasNext()) {
-    		String componentId = (String)it.next();
-    		s_log.debug("component id = " + componentId);
-    		hash = hash | componentId.hashCode();
-    		s_log.debug("hash so far = " + hash);
-    	}*/
-    	Date start = new Date();
-    		
-    	StringBuffer hashString = new StringBuffer();
-		while (it.hasNext()) {
-			String componentId = (String)it.next();
-    		hashString.append(componentId);
-		}
-		s_log.debug("Time to create hashCode for page: " + (new Date().getTime() - start.getTime()));
-    	return hashString.toString();	
-    
-    
+    public String getComponentString() {
+        Iterator it = m_componentMap.keySet().iterator();
+        /*int hash = 0;
+        while (it.hasNext()) {
+        String componentId = (String)it.next();
+        s_log.debug("component id = " + componentId);
+        hash = hash | componentId.hashCode();
+        s_log.debug("hash so far = " + hash);
+        }*/
+        Date start = new Date();
+
+        StringBuffer hashString = new StringBuffer();
+        while (it.hasNext()) {
+            String componentId = (String) it.next();
+            hashString.append(componentId);
+        }
+        s_log.debug("Time to create hashCode for page: " + (new Date().getTime() - start.
+                                                            getTime()));
+        return hashString.toString();
+
+
     }
 }

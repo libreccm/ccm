@@ -34,6 +34,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainService;
 import java.text.DateFormat;
 
 /**
@@ -65,7 +66,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.name"),
-                Publication.NAME);
+                  Publication.NAME);
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.title"),
                   Publication.TITLE);
@@ -74,7 +75,8 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                   Publication.YEAR_OF_PUBLICATION);
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.abstract"),
-                  Publication.ABSTRACT);
+                  Publication.ABSTRACT,
+                  new PreFormattedTextFormatter());
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.misc"),
                   Publication.MISC);
@@ -132,7 +134,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
         addStep(new PublicationAuthorsPropertyStep(itemModel, parent),
-                "publications.ui.publication.authors");       
+                "publications.ui.publication.authors");
         addStep(new PublicationSeriesPropertyStep(itemModel, parent),
                 "publications.ui.publication.series");
     }
@@ -143,4 +145,18 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                 labelKey).localize()),
                 step);
     }
+
+     private static class PreFormattedTextFormatter
+            extends DomainService
+            implements DomainObjectPropertySheet.AttributeFormatter {
+
+        public PreFormattedTextFormatter() {
+            super();
+        }
+
+        public String format(DomainObject obj, String attribute, PageState state) {
+            return String.format("<pre>%s</pre>", get(obj, attribute));
+        }
+    }
+   
 }

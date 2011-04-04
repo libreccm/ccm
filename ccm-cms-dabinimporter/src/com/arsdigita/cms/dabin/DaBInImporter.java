@@ -112,16 +112,16 @@ public class DaBInImporter extends Program {
     private Folder personsRootFolder;
     private Folder projectsRootFolder;
     private Folder publicationsRootFolder;
-    private Folder authors; 
-    private Folder contacts;   
+    private Folder authors;
+    private Folder contacts;
     private Folder departments;
-    private Folder members;    
+    private Folder members;
     private Folder organization;
-    private Folder persons;   
-    private Folder projects;   
-    private Folder publications;    
-    private Folder publishers;    
-    private Folder files;    
+    private Folder persons;
+    private Folder projects;
+    private Folder publications;
+    private Folder publishers;
+    private Folder files;
     private Map<String, ContentBundle> departmentsMap;
     private Map<String, ContentBundle> personsMap;
     private Map<String, ContentBundle> projectsMap;
@@ -135,7 +135,7 @@ public class DaBInImporter extends Program {
     private Address officeAddress;
     private Domain termsDomain;
     private Term publicationsTerm;
-    private Term workingPapersTerm;    
+    private Term workingPapersTerm;
     private Term currentProjectsTerm;
     private Term finishedProjectsTerm;
 
@@ -147,13 +147,13 @@ public class DaBInImporter extends Program {
         super("DaBInImporter",
               "0.1.0",
               "configFile",
-              startup);      
+              startup);
         departmentsMap = new HashMap<String, ContentBundle>();
         personsMap = new HashMap<String, ContentBundle>();
         projectsMap = new HashMap<String, ContentBundle>();
         publishersMap = new HashMap<PublisherData, ContentBundle>();
         publicationMap = new HashMap<String, ContentBundle>();
-        workingPaperMap = new HashMap<String, ContentBundle>();     
+        workingPaperMap = new HashMap<String, ContentBundle>();
     }
 
     @Override
@@ -259,19 +259,19 @@ public class DaBInImporter extends Program {
         projectsRootFolder = projectsSection.getRootFolder();
         publicationsRootFolder = publicationsSection.getRootFolder();
 
-        authors = createFolder(personsRootFolder, "autoren", "Autoren");  
+        authors = createFolder(personsRootFolder, "autoren", "Autoren");
 
         contacts = createFolder(personsRootFolder, "kontaktdaten",
-                                "Kontaktdaten");        
+                                "Kontaktdaten");
 
         departments = createFolder(root, "abteilungen", "Abteilungen");
 
-        members = createFolder(personsRootFolder, "mitglieder", "Mitglieder");        
+        members = createFolder(personsRootFolder, "mitglieder", "Mitglieder");
 
         organization = createFolder(root, "organisationen", "Organisation(en)");
 
         persons = createFolder(personsRootFolder, "personen", "Personen");
-        
+
         projects = createFolder(projectsRootFolder, "projekte", "Projekte");
 
         publishers = createFolder(publicationsRootFolder, "verlage", "Verlage");
@@ -293,13 +293,13 @@ public class DaBInImporter extends Program {
             System.out.println("Terms for publications...");
             String publicationsTermPath = (String) config.get(
                     "terms.publications");
-            publicationsTerm = checkTermPath(publicationsTermPath);           
+            publicationsTerm = checkTermPath(publicationsTermPath);
 
             System.out.println("Terms for working papers...");
             String workingPapersTermPath =
                    (String) config.get("terms.workingpapers");
             workingPapersTerm = checkTermPath(workingPapersTermPath);
-            
+
             System.out.println("Term for current projects...");
             String currentProjectsTermPath = (String) config.get(
                     "terms.projects.current");
@@ -1135,7 +1135,11 @@ public class DaBInImporter extends Program {
                 System.out.printf("%4d of %4d: %s...\n", counter, number, result.
                         getString("name"));
                 PublicationData data = new PublicationData();
-                data.setType(PublicationType.ARTICLE_IN_COLLECTED_VOLUME);
+                //All publications of the DaBIn type "Artikel/Aufsatz" are now
+                //imported as ArticleInJournal since ArticleInJournal and ArticleInCollectedVolume
+                //can't be seperated from the information in DaBIn
+                //data.setType(PublicationType.ARTICLE_IN_COLLECTED_VOLUME);
+                data.setType(PublicationType.ARTICLE_IN_JOURNAL);
                 data.setPublicationDaBInId(result.getString("Publikation_Id"));
                 data.setName(result.getString("Name"));
                 data.setVerlag(result.getString("Verlag"));
@@ -1493,8 +1497,13 @@ public class DaBInImporter extends Program {
                 personDe.setTitlePre(personData.getTitlePre());
                 personDe.setDescription(String.format("DaBInId={%s}",
                                                       personData.getDabinId()));
-                personDe.setContentSection(section);
-                personDe.setLifecycle(createLifecycle(personsLifecycle));
+                if (type == PersonType.AUTHOR) {
+                    personDe.setContentSection(publicationsSection);
+                    personDe.setLifecycle(createLifecycle(publicationsLifecycle));
+                } else {
+                    personDe.setContentSection(personsSection);
+                    personDe.setLifecycle(createLifecycle(personsLifecycle));
+                }
                 personDe.save();
                 personDe.setLanguage("de");
 
@@ -1503,8 +1512,13 @@ public class DaBInImporter extends Program {
                 personEn.setGivenName(personData.getGivenname());
                 personEn.setDescription(String.format("DaBInId={%s}",
                                                       personData.getDabinId()));
-                personEn.setContentSection(section);
-                personEn.setLifecycle(createLifecycle(personsLifecycle));
+                if (type == PersonType.AUTHOR) {
+                    personEn.setContentSection(publicationsSection);
+                    personEn.setLifecycle(createLifecycle(publicationsLifecycle));
+                } else {
+                    personEn.setContentSection(personsSection);
+                    personEn.setLifecycle(createLifecycle(personsLifecycle));
+                }
                 personEn.save();
                 personEn.setLanguage("en");
 
@@ -1518,9 +1532,9 @@ public class DaBInImporter extends Program {
 
                 personDe.setContentSection(section);
                 personEn.setContentSection(section);
-                
+
                 Folder folder = null;
-                switch(type) {
+                switch (type) {
                     case MEMBER:
                         folder = members;
                         break;
@@ -1638,7 +1652,7 @@ public class DaBInImporter extends Program {
                     contactBundle.addInstance(contactEn);
                     contactBundle.setContentSection(personsSection);
                     contacts.addItem(contactBundle);
-                
+
                     contactDe.setContentSection(personsSection);
                     contactEn.setContentSection(personsSection);
 
@@ -1682,7 +1696,7 @@ public class DaBInImporter extends Program {
 
                 System.out.printf("\tde: %s...", departmentData.getNameDe());
                 departmentDe = new SciDepartment();
-                departmentDe.setTitle(departmentData.getNameDe());               
+                departmentDe.setTitle(departmentData.getNameDe());
                 departmentDe.setName(DaBInImporter.normalizeString(departmentData.
                         getNameDe()));
                 departmentDe.setLanguage("de");
@@ -1694,7 +1708,7 @@ public class DaBInImporter extends Program {
                 System.out.printf("\ten: %s...",
                                   departmentData.getNameEn());
                 departmentEn = new SciDepartment();
-                departmentEn.setTitle(departmentData.getNameEn());              
+                departmentEn.setTitle(departmentData.getNameEn());
                 departmentEn.setName(DaBInImporter.normalizeString(departmentData.
                         getNameDe()));
                 departmentEn.setLanguage("en");
@@ -1793,7 +1807,7 @@ public class DaBInImporter extends Program {
                 if ((projectData.getNameDe() != null)
                     && (projectData.getNameDe().length() > 0)) {
                     projectDe = new SciProject();
-                    projectDe.setTitle(projectData.getNameDe());              
+                    projectDe.setTitle(projectData.getNameDe());
                     String projectName = DaBInImporter.normalizeString(projectData.
                             getNameDe());
                     if (projectName.length() > 200) {
@@ -1955,7 +1969,7 @@ public class DaBInImporter extends Program {
                     System.out.println("OK");
                     i++;
                 }
-            
+
                 projects.addItem(project);
 
                 //Assign to term/category
@@ -2514,7 +2528,7 @@ public class DaBInImporter extends Program {
                         pubLink.save();
                     }
                 }
-            
+
                 publications.addItem(publication);
                 if (publicationData.getVisiblity()
                     == PublicationVisibility.GLOBAL) {
@@ -2631,10 +2645,10 @@ public class DaBInImporter extends Program {
                     workingPaperEn.setContentSection(publicationsSection);
                 }
 
-                workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);               
+                workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
                 publications.addItem(workingPaper);
                 WorkingPaper primary = (WorkingPaper) workingPaper.
-                        getPrimaryInstance();                
+                        getPrimaryInstance();
                 Term term = workingPapersTerm;//s.get(yearStr);                
                 term = termsDomain.getTerm(term.getUniqueID());
                 System.out.printf("\tAdding project to term '%s:%s'...\n", term.
@@ -2729,7 +2743,7 @@ public class DaBInImporter extends Program {
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
-                          
+
                             files.addItem(bundle);
                         }
                     } catch (IOException ex) {
@@ -2856,9 +2870,19 @@ public class DaBInImporter extends Program {
                 System.out.printf("\tde: %s, %s...", publisherData.getName(), publisherData.
                         getPlace());
                 publisherDe = new Publisher();
-                publisherDe.setTitle(publisherData.getName());
-                publisherDe.setName(DaBInImporter.normalizeString(publisherData.
-                        getName()));
+                if ((publisherData.getPlace() == null) || publisherData.getPlace().
+                        isEmpty()) {
+                    publisherDe.setTitle(publisherData.getName());
+                    publisherDe.setName(DaBInImporter.normalizeString(publisherData.
+                            getName()));
+                } else {
+                    publisherDe.setTitle(String.format("%s, %s", publisherData.
+                            getName(), publisherData.getPlace()));
+                    publisherDe.setName(DaBInImporter.normalizeString(String.
+                            format(
+                            "%s, %s", publisherData.getName(), publisherData.
+                            getPlace())));
+                }
                 publisherDe.setPlace(publisherData.getPlace());
                 publisherDe.setLanguage("de");
                 publisherDe.setLifecycle(createLifecycle(publicationsLifecycle));
@@ -2869,9 +2893,19 @@ public class DaBInImporter extends Program {
                 System.out.printf("\tEn: %s, %s...", publisherData.getName(), publisherData.
                         getPlace());
                 publisherEn = new Publisher();
-                publisherEn.setTitle(publisherData.getName());
-                publisherEn.setName(DaBInImporter.normalizeString(publisherData.
-                        getName()));
+                if ((publisherData.getPlace() == null) || publisherData.getPlace().
+                        isEmpty()) {
+                    publisherEn.setTitle(publisherData.getName());
+                    publisherEn.setName(DaBInImporter.normalizeString(publisherData.
+                            getName()));
+                } else {
+                    publisherEn.setTitle(String.format("%s, %s", publisherData.
+                            getName(), publisherData.getPlace()));
+                    publisherEn.setName(DaBInImporter.normalizeString(String.
+                            format(
+                            "%s, %s", publisherData.getName(), publisherData.
+                            getPlace())));
+                }
                 publisherEn.setPlace(publisherData.getPlace());
                 publisherEn.setLanguage("en");
                 publisherEn.setLifecycle(createLifecycle(publicationsLifecycle));
@@ -2887,8 +2921,11 @@ public class DaBInImporter extends Program {
 
                 publisherDe.setContentSection(publicationsSection);
                 publisherEn.setContentSection(publicationsSection);
-                
+
                 publishers.addItem(publisher);
+                System.out.printf(
+                        "Putting publisher into publishers map. HashCode: %d",
+                        publisherData.hashCode());
                 publishersMap.put(publisherData, publisher);
                 System.out.println("OK");
             }
@@ -2975,7 +3012,12 @@ public class DaBInImporter extends Program {
 
         int colonIndex = normalizedData.indexOf(':');
         if (colonIndex < 0) {
-            publisher.setName(normalizedData);/*.replace(",", "").
+            while ((normalizedData.length() > 1)
+                   && !Character.isLetter(normalizedData.charAt(0))) {
+                normalizedData = normalizedData.substring(1);
+            }
+
+            publisher.setName(normalizedData.trim());/*.replace(",", "").
             replace("/", "").
             replaceAll("\\s\\s+", " ").
             replace(' ', '-').toLowerCase());*/
@@ -3015,11 +3057,19 @@ public class DaBInImporter extends Program {
             System.out.printf("\tprevDelimIndex = %d\n", prevDelimIndex);
             place = normalizedData.substring(prevDelimIndex, colonIndex);
 
-            publisher.setName(name.trim().
-                    replace(",", "").
-                    replace("/", "").
-                    replaceAll("\\s\\s+", " ").
-                    replace(' ', '-').toLowerCase());
+            while ((name.length() > 1)
+                   && !Character.isLetter(name.charAt(0))) {
+                name = name.substring(1);
+            }
+            publisher.setName(name.trim());//.
+            //replace(",", "").
+            //replace("/", "").
+            //replaceAll("\\s\\s+", " ").
+            //replace(' ', '-').toLowerCase());
+            while ((place.length() > 1)
+                   && !Character.isLetter(place.charAt(0))) {
+                place = place.substring(1);
+            }
             publisher.setPlace(place.trim());
         }
 
@@ -3111,7 +3161,7 @@ public class DaBInImporter extends Program {
         publicationData.setPagesFrom(pagesFrom);
         publicationData.setPagesTo(pagesTo);
     }
-  
+
     private Term checkTermPath(final String path) {
         StringTokenizer pathTokenizer = new StringTokenizer(path, "/");
 
@@ -3147,7 +3197,7 @@ public class DaBInImporter extends Program {
 
         return term;
     }
- 
+
     private void createTerm(final String uniqueId,
                             final String name,
                             final Domain domain,
@@ -3191,7 +3241,7 @@ public class DaBInImporter extends Program {
                 "Ä", "Ae").replace("Ü", "Ue").replace("Ö", "Oe").replace("ß",
                                                                          "ss").
                 replace(" ", "-").
-                replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase();
+                replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase().trim();
     }
 
     public static void main(String[] args) {

@@ -74,8 +74,8 @@ import com.arsdigita.toolbox.util.GlobalizationUtil;
  */
 public class DomainObjectPropertySheet extends PropertySheet {
 
-    public static final String versionId = "$Id: DomainObjectPropertySheet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
+    public static final String versionId =
+                               "$Id: DomainObjectPropertySheet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private List m_props;
     private DomainObjectSelectionModel m_objModel;
     private AttributeFormatter m_toStringFormatter;
@@ -102,8 +102,7 @@ public class DomainObjectPropertySheet extends PropertySheet {
      *
      */
     public DomainObjectPropertySheet(
-                                     DomainObjectSelectionModel objModel, boolean valueOutputEscape
-                                     ) {
+            DomainObjectSelectionModel objModel, boolean valueOutputEscape) {
         super(new DomainObjectModelBuilder(), valueOutputEscape);
 
         m_objModel = objModel;
@@ -142,7 +141,7 @@ public class DomainObjectPropertySheet extends PropertySheet {
     public void add(GlobalizedMessage label, String attribute) {
         // Determine if we are dealing with a simple string or a complex
         // path
-        if(attribute.indexOf('.') == -1) {
+        if (attribute.indexOf('.') == -1) {
             add(label, attribute, m_toStringFormatter);
         } else {
             add(label, attribute, m_recursiveFormatter);
@@ -172,7 +171,8 @@ public class DomainObjectPropertySheet extends PropertySheet {
      * @param attribute The name for the attribute
      * @param formatter An instance of AttributeFormatter
      */
-    public void add(GlobalizedMessage label, String attribute, AttributeFormatter f) {
+    public void add(GlobalizedMessage label, String attribute,
+                    AttributeFormatter f) {
         m_props.add(new Property(label, attribute, f));
     }
 
@@ -225,28 +225,36 @@ public class DomainObjectPropertySheet extends PropertySheet {
         /**
          *  @deprecated use getGlobalizedLabel instead
          */
-        public String getLabel() { return m_label.getKey(); }
+        public String getLabel() {
+            return m_label.getKey();
+        }
 
-        public GlobalizedMessage getGlobalizedLabel() { return m_label; }
+        public GlobalizedMessage getGlobalizedLabel() {
+            return m_label;
+        }
 
-        public String getAttribute() { return m_attr; }
+        public String getAttribute() {
+            return m_attr;
+        }
 
-        public AttributeFormatter getFormatter() { return m_formatter; }
+        public AttributeFormatter getFormatter() {
+            return m_formatter;
+        }
     }
 
     // Build up the object properties model from the iterator over all properties
-    private static class DomainObjectPropertiesModel implements PropertySheetModel {
+    private static class DomainObjectPropertiesModel implements
+            PropertySheetModel {
 
         private DomainObject m_obj;
         private PageState m_state;
         private Iterator m_props;
         private Property m_current;
         private static String ERROR =
-            "No current property. Make sure that nextRow() was called at least once.";
+                              "No current property. Make sure that nextRow() was called at least once.";
 
         public DomainObjectPropertiesModel(
-                                           DomainObject obj, Iterator props, PageState state
-                                           ) {
+                DomainObject obj, Iterator props, PageState state) {
             m_obj = obj;
             m_props = props;
             m_state = state;
@@ -254,11 +262,11 @@ public class DomainObjectPropertySheet extends PropertySheet {
         }
 
         public boolean nextRow() {
-            if(!m_props.hasNext()) {
+            if (!m_props.hasNext()) {
                 return false;
             }
 
-            m_current = (Property)m_props.next();
+            m_current = (Property) m_props.next();
             return true;
         }
 
@@ -270,39 +278,39 @@ public class DomainObjectPropertySheet extends PropertySheet {
         }
 
         public GlobalizedMessage getGlobalizedLabel() {
-            if(m_current == null) {
+            if (m_current == null) {
                 throw new IllegalStateException(ERROR);
             }
             return m_current.getGlobalizedLabel();
         }
 
         public String getValue() {
-            if(m_current == null) {
+            if (m_current == null) {
                 throw new IllegalStateException(ERROR);
             }
-            return m_current.getFormatter()
-                .format(m_obj, m_current.getAttribute(), m_state);
+            return m_current.getFormatter().format(m_obj,
+                                                   m_current.getAttribute(),
+                                                   m_state);
         }
     }
 
     // Builds an DomainObjectPropertiesModel
     private static class DomainObjectModelBuilder extends LockableImpl
-        implements PropertySheetModelBuilder {
+            implements PropertySheetModelBuilder {
 
         public PropertySheetModel makeModel(PropertySheet sheet, PageState state) {
-            DomainObjectPropertySheet s = (DomainObjectPropertySheet)sheet;
-            return new DomainObjectPropertiesModel (
-                                                    s.getObjectSelectionModel().getSelectedObject(state),
-                                                    s.properties(),
-                                                    state
-                                                    );
+            DomainObjectPropertySheet s = (DomainObjectPropertySheet) sheet;
+            return new DomainObjectPropertiesModel(
+                    s.getObjectSelectionModel().getSelectedObject(state),
+                    s.properties(),
+                    state);
         }
     }
 
     // Abstract formatter which maintains a "default" string
     private static abstract class DefaultAttributeFormatter
-        extends DomainService
-        implements AttributeFormatter {
+            extends DomainService
+            implements AttributeFormatter {
 
         private String m_default;
 
@@ -322,7 +330,7 @@ public class DomainObjectPropertySheet extends PropertySheet {
     // A simple attribute formatter that calls get on the object with the
     // specified attribute
     private static class SimpleAttributeFormatter
-        extends DefaultAttributeFormatter {
+            extends DefaultAttributeFormatter {
 
         public SimpleAttributeFormatter() {
             super();
@@ -333,11 +341,13 @@ public class DomainObjectPropertySheet extends PropertySheet {
         }
 
         public String format(DomainObject obj, String attribute, PageState state) {
-            if(obj == null) return getDefaultString();
+            if (obj == null) {
+                return getDefaultString();
+            }
 
             Object value = get(obj, attribute);
 
-            if(value == null) {
+            if (value == null) {
                 return getDefaultString();
             } else {
                 return value.toString();
@@ -349,9 +359,8 @@ public class DomainObjectPropertySheet extends PropertySheet {
     // by following the names in the attribute string. For example, if
     // the string says "foo.bar.baz", the formatter will attempt to call
     // obj.get("foo").get("bar").get("baz");
-
     private static class RecursiveAttributeFormatter
-        extends DefaultAttributeFormatter {
+            extends DefaultAttributeFormatter {
 
         public RecursiveAttributeFormatter() {
             super();
@@ -362,26 +371,31 @@ public class DomainObjectPropertySheet extends PropertySheet {
         }
 
         public String format(DomainObject obj, String attribute, PageState state) {
-            if(obj == null) return getDefaultString();
+            if (obj == null) {
+                return getDefaultString();
+            }
 
             StringTokenizer tokenizer = new StringTokenizer(attribute, ".");
             String token = null;
             Object value = getDataObject(obj);
 
-            while(tokenizer.hasMoreTokens()) {
+            while (tokenizer.hasMoreTokens()) {
                 token = tokenizer.nextToken();
                 // Null check
-                value = ((DataObject)value).get(token);
-                if(value == null)
+                value = ((DataObject) value).get(token);
+                if (value == null) {
                     return getDefaultString();
+                }
             }
 
             // Extract leaf value
-            if(token == null || value == null)
+            if (token == null || value == null) {
                 return getDefaultString();
+            }
 
             return value.toString();
         }
     }
 
+   
 }
