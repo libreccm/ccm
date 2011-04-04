@@ -53,14 +53,12 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.OptionGroup;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
-import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ArrayParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.tree.TreeCellRenderer;
-import com.arsdigita.cms.CMSGlobalized;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
@@ -382,8 +380,7 @@ public class FolderManipulator extends SimpleContainer
                                        "&nbsp;" + msg);
                         }
                     }
-                }
-            });
+                });
             l.setOutputEscaping(false);
             add(l);
             add(m_folderTree);
