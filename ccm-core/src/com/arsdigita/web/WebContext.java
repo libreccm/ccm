@@ -18,7 +18,7 @@
  */
 package com.arsdigita.web;
 
-import com.arsdigita.web.Application;
+// import com.arsdigita.web.Application;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.util.Assert;
@@ -39,17 +39,22 @@ import org.apache.log4j.Logger;
  */
 public final class WebContext extends Record {
 
+    /** Logger instance for debugging */
     private static final Logger s_log = Logger.getLogger(WebContext.class);
 
     private Application m_application = null;
     private URL m_requestURL = null;
 
+    /** List of properties making up a Web Context   */
     private static String[] s_fields = new String[] {
         "User",
         "Application",
         "RequestURL"
     };
 
+    /** 
+     * Constructor
+     */
     WebContext() {
         super(WebContext.class, s_log, s_fields);
     }

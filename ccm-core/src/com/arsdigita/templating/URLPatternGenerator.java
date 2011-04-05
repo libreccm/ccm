@@ -33,8 +33,8 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Generates a set of pattern values based on the URL path
- * info for the current request. Slashes in the request are
+ * Generates a set of pattern values based on the URL path info
+ * for the current request. Slashes in the request are
  * translated into hyphens; the file extension is stripped;
  * the any 'index' is removed, except for the top level.
  *
@@ -140,7 +140,7 @@ public class URLPatternGenerator implements PatternGenerator {
         return url.substring(base.length()-1);
     }
     
-    // XXX fix me, why vcan't we get this from Web.getConfig.getRequestURL
+    // XXX fix me, why can't we get this from Web.getConfig.getRequestURL
     private String getBasePath() {
         SiteNodeRequestContext ctx = (SiteNodeRequestContext)
             DispatcherHelper.getRequestContext(Web.getRequest());

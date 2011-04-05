@@ -22,15 +22,12 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The various <code>PresentationManager</code> classes resolve
- * requests into stylesheets using classes derived from this
- * interface.
+ * The various <code>PresentationManager</code> classes resolve requests
+ * into stylesheets using classes derived from this interface.
+ *
+ * @version $Id: StylesheetResolver.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface StylesheetResolver {
-    public static final String versionId =
-        "$Id: StylesheetResolver.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Resolves a template for the request.

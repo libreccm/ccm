@@ -49,26 +49,45 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
 
 
     /** 
-     * Creates theme manager as a legacy-compatible application type.
+     * Creates theme manager as a legacy-free application type.
      * 
+     * NOTE: The wording in the title parameter of ApplicationType determines
+     * the name of the subdirectory for the XSL stylesheets.
+     * It gets "urlized", i.e. trimming leading and trailing blanks and replacing
+     * blanks between words and illegal characters with an hyphen and converted
+     * to lower case.
+     * Example: "Theme Director" will become "theme-director".
+     *
+     * Creates an entry in table application_types and a corresponding entry in
+     * apm_package_types
      */
     private void setupThemeDirector() {
 
         // create application type
-        ApplicationType type = ApplicationType.createApplicationType(
-                                               "themedirector",
-                                               "CCM Themes Administration",
-                                               ThemeDirector.BASE_DATA_OBJECT_TYPE);
+        // legacy compatible style of creation
+  //    ApplicationType type = ApplicationType.createApplicationType(
+  //                                           "themedirector",
+  //                                           "CCM Themes Administration",
+  //                                           ThemeDirector.BASE_DATA_OBJECT_TYPE);
+        // EXPERIMENTAL legacy free style of creation
+        ApplicationType type =
+                new ApplicationType(  "Theme Director",
+                                      ThemeDirector.BASE_DATA_OBJECT_TYPE );
+
         type.setDescription("CCM themes administration");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");
 
-        // create application instance
+        // create application instance as a legacy compatible app
+        // Whether a legacy compatible or a legacy free application is
+        // created depends on the type of ApplicationType above. No need to
+        // modify anything here
         Application app =
-            Application.createApplication(type,
-                                          "themes",
-                                          "CCM Themes Administration",
-                                          admin);
+                Application.createApplication(type,
+                                              "themes",
+                                              "CCM Themes Administration",
+                                              admin);
+
         app.setDescription("CCM themes administration");
     }
 }

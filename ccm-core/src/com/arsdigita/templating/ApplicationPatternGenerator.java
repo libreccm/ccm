@@ -28,6 +28,8 @@ import com.arsdigita.web.Application;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 
 
 /**
@@ -35,15 +37,33 @@ import javax.servlet.http.HttpServletRequest;
  * key, eg content-center, content-section.
  */
 public class ApplicationPatternGenerator implements PatternGenerator {
+
+    /** Private logger instance for debugging purpose  */
+    private static final Logger s_log = Logger.getLogger(PatternGenerator.class);
+
+    /** 
+     * Implementation iof the Interface class.
+     * 
+     * @param key
+     * @param req
+     * @return
+     */
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
+
         final Application app = Web.getContext().getApplication();
         
         if (app != null) {
             return new String[] {
-                app.getPackageType().getKey()
+                app.getApplicationType().getName()
             };
         }
+        
+        // SiteNodeRequestContext is deprecated and replaced by web.WebContext
+        // used in the code above (Web.getContext(). 
+        // This code should never be executed.
+        s_log.error("Application not found in WebApplication context!");
+        
         
         SiteNodeRequestContext ctx = (SiteNodeRequestContext)
             DispatcherHelper.getRequestContext(req);

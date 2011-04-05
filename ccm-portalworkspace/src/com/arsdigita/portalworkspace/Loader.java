@@ -18,12 +18,13 @@
 
 package com.arsdigita.portalworkspace;
 
-import org.apache.log4j.Logger;
-
+// import com.arsdigita.domain.DomainObject;
+// import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.loader.PackageLoader;
+// import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portalworkspace.portlet.ApplicationDirectoryPortlet;
 import com.arsdigita.portalworkspace.portlet.ContentDirectoryPortlet;
 import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
@@ -40,7 +41,10 @@ import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Application;
+// import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
+
+import org.apache.log4j.Logger;
 
 /**
  * Executes nonrecurring at install time and loads (and configures ) a default
@@ -86,7 +90,7 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     * Run script invoked by the loader script.
+     * Run script invoked by com.arsdigita.packing loader script.
      *
      * @param ctx
      */
@@ -128,9 +132,9 @@ public class Loader extends PackageLoader {
         if (url != null) {
 
             // check weather the url parameter is properly formatted
-            s_log.debug("process url " + url);
-            Assert.isTrue(url.startsWith("/"), "url starts with /");
-            Assert.isTrue(url.endsWith("/"), "url ends with /");
+            s_log.error("process url " + url);
+            Assert.isTrue(url.startsWith("/"), "url starts not with /");
+            Assert.isTrue(url.endsWith("/"), "url ends not with /");
             Assert.isTrue(!url.equals("/"), "url is not /");
 
             int last = url.lastIndexOf("/", url.length() - 2);
@@ -145,20 +149,28 @@ public class Loader extends PackageLoader {
             } else {
                 name = url.substring(1, url.length() - 1);
             }
-            s_log.debug("node name is " + name);
+            s_log.error("node name is " + name);
 
             // set up the portal node
-            Workspace workspace = Workspace.createWorkspace(name, title,
-					parent, Boolean.TRUE.equals(isPublic));
+        //  Workspace workspace = Workspace.createWorkspace(name, title,
+		//	parent, Boolean.TRUE.equals(isPublic));
+            Workspace workspace = Workspace.createWorkspace(type, name, title,
+					null, parent, Boolean.TRUE.equals(isPublic));
 			
         }
     }
 
     /**
-     * Creates a workspace application type as a legacy-compatible application
-     * type.
+     * Creates a workspace application type as a legacy-free application type.
      *
      * No localization here because it is an invariant configuration.
+     *
+     * NOTE: The wording in the title parameter of ApplicationType determines
+     * the name of the subdirectory for the XSL stylesheets.
+     * It gets "urlized", i.e. trimming leading and trailing blanks and replacing
+     * blanks between words and illegal characters with an hyphen and converted
+     * to lower case.
+     * "Portal Workspace" will become "portal-workspace".
      *
      * Creates an entry in table application_types and a corresponding entry in
      * apm_package_types
@@ -166,15 +178,23 @@ public class Loader extends PackageLoader {
      * @return
      */
     private ApplicationType setupWorkspaceType() {
+
+        s_log.debug("Creating an application type for portal workspace. " +
+                    "Base Data Object Type: " + Workspace.BASE_DATA_OBJECT_TYPE);
         // The first string is a key parameter used to create a
         // legacy package type to back the new application type.
-        ApplicationType type = ApplicationType.createApplicationType(
-                                               "portalworkspace",
-                                               "Portal Workspace",
-                                               Workspace.BASE_DATA_OBJECT_TYPE);
+ //     ApplicationType type = ApplicationType.createApplicationType(
+ //                                            "portalworkspace",
+ //                                            "Portal Workspace",
+ //                                            Workspace.BASE_DATA_OBJECT_TYPE);
+
+
+        ApplicationType type = new ApplicationType( "Portal Workspace",
+                                                Workspace.BASE_DATA_OBJECT_TYPE );
         type.setDescription("Portal based collaborative workspaces");
         type.createGroup();
         return type;
+
     }
 
     /**
@@ -182,6 +202,9 @@ public class Loader extends PackageLoader {
      *
      * Creates an entry for class (=type) c.ad.portalworkspace.WorkspacePage in
      * table application_types, but not in apm_package_types.
+     *
+     * Uses the legacy free type of application Information (i.e. a title string
+     * and the object type = fully qualified domain class name) for creation
      * @return
      */
     private ResourceType setupWorkspacePageType() {

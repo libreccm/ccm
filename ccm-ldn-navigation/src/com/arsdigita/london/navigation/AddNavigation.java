@@ -1,31 +1,18 @@
 package com.arsdigita.london.navigation;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.log4j.Logger;
-
-import com.arsdigita.categorization.Category;
-import com.arsdigita.categorization.RootCategoryCollection;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.ui.role.RoleFactory;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.kernel.Role;
-import com.arsdigita.kernel.RoleCollection;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.util.Program;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.web.Application;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.log4j.Logger;
 
 public class AddNavigation extends Program {
 
@@ -37,6 +24,7 @@ public class AddNavigation extends Program {
 
     private void addNavigation(String navURL, String navTitle, String defaultDomain) {
         if (!Application.isInstalled(Navigation.BASE_DATA_OBJECT_TYPE, "/"+navURL+"/")) {
+            
             DomainObjectFactory.registerInstantiator(
                     Navigation.BASE_DATA_OBJECT_TYPE, new DomainObjectInstantiator() {
                         public DomainObject doNewInstance(DataObject dataObject) {

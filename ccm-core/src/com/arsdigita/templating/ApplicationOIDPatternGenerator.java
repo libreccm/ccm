@@ -33,7 +33,9 @@ public class ApplicationOIDPatternGenerator implements PatternGenerator {
 
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
-        Application application = Web.getContext().getApplication();
+
+        final Application application = Web.getContext().getApplication();
+        
         if (application != null) {
             String[] oid = new String[1];
             // FR: better URLEncode this

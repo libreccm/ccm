@@ -44,7 +44,7 @@ import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.URLRewriter;
 import com.arsdigita.xml.FactoriesSetup;
 import com.arsdigita.web.Host;
-import com.arsdigita.web.WebApp;
+// import com.arsdigita.web.WebApp;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.workflow.simple.TaskComment;
 import com.arsdigita.search.converter.Converter;
@@ -94,8 +94,6 @@ public class Initializer extends CompoundInitializer {
         add(new com.arsdigita.search.intermedia.Initializer());
         add(new com.arsdigita.notification.Initializer());
 
-        // add(new LegacyInitializer("com/arsdigita/core/enterprise.init"));
-        // add(new OptionalLegacyInitializer("enterprise.init"));
     }
 
     /**
@@ -126,6 +124,7 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
+/*      Status Experimental - not used anywhere in code base.
         e.getFactory().registerInstantiator
             (WebApp.BASE_DATA_OBJECT_TYPE,
              new DomainObjectInstantiator() {
@@ -133,7 +132,7 @@ public class Initializer extends CompoundInitializer {
                      return new WebApp(data);
                   }
              });
-
+*/
         e.getFactory().registerInstantiator
             (TaskComment.BASE_DATA_OBJECT_TYPE,
              new DomainObjectInstantiator() {
@@ -145,6 +144,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator
             (Admin.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
+                 @Override
                  public DomainObject doNewInstance(final DataObject data) {
                      return new Admin(data);
                  }
@@ -153,6 +153,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator
             (SiteMap.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
+                 @Override
                  public DomainObject doNewInstance(final DataObject data) {
                      return new SiteMap(data);
                  }
@@ -192,6 +193,7 @@ public class Initializer extends CompoundInitializer {
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new MimeType(dataObject);
                  }
+                 @Override
                  public DomainObjectInstantiator
                      resolveInstantiator(DataObject obj) {
                      return this;

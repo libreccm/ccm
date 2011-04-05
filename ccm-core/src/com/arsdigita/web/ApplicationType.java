@@ -33,6 +33,8 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.db.Sequences;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.StringUtils;
+
 import java.util.LinkedList;
 import java.util.Collection;
 import java.math.BigDecimal;
@@ -95,9 +97,9 @@ public class ApplicationType extends ResourceType {
      * @param createContainerGroup
      */
     protected ApplicationType(final String objectType,
-			      final String title,
-			      final String applicationObjectType,
-			      final boolean createContainerGroup) {
+                              final String title,
+                              final String applicationObjectType,
+                              final boolean createContainerGroup) {
         this(objectType);  // creates and returns an empty data object
 
         Assert.exists(title, "String title");
@@ -107,12 +109,13 @@ public class ApplicationType extends ResourceType {
         setApplicationObjectType(applicationObjectType);
 
         setDefaults();
-	if (createContainerGroup) {
-	    createGroup();
-	}
+        if (createContainerGroup) {
+            createGroup();
+        }
         m_legacyFree = true;
     }
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -169,11 +172,19 @@ public class ApplicationType extends ResourceType {
     }
 
     
+    /**
+     * Legacy compatible application type
+     * @param dataObjectType
+     * @param packageType
+     * @param title
+     * @param applicationObjectType
+     * @param createContainerGroup
+     */
     protected ApplicationType(final String dataObjectType,
-			      final PackageType packageType,
-			      final String title,
-			      final String applicationObjectType,
-			      boolean createContainerGroup) {
+                              final PackageType packageType,
+                              final String title,
+                              final String applicationObjectType,
+                              boolean createContainerGroup) {
         this(dataObjectType);
 
         Assert.exists(title, "title");
@@ -187,9 +198,9 @@ public class ApplicationType extends ResourceType {
         setApplicationObjectType(applicationObjectType);
 
         setDefaults();
-	if (createContainerGroup) {
-	    createGroup();
-	}
+        if (createContainerGroup) {
+            createGroup();
+        }
     }
 
     /**
@@ -561,6 +572,12 @@ public class ApplicationType extends ResourceType {
         remove("relevantPrivileges", privDO);
     }
 
+    /**
+     * Retrieve the attribute object type from database, which is the fully
+     * qualified classname of the applications domain class.
+     * 
+     * @return object typ (fully qualified classname) as string
+     */
     public String getApplicationObjectType() {
         String objectType = (String)get("objectType");
 
@@ -573,6 +590,38 @@ public class ApplicationType extends ResourceType {
         Assert.exists(objectType);
 
         set("objectType", objectType);
+    }
+
+    /**
+     * Provides an "urlized" name for an application, especially needed by
+     * PatternStyleSheetResolver to locate the xsl templates for an application
+     * in the local file system tree.
+     *
+     * We use the developer provided title value as name stripping off all white
+     * spaces. So developer has some influence on the term.
+     *
+     * The name may not be unique! Uniqueness is by no way technically
+     * guaranteed! This is developer's responsibility.
+     * 
+     * This method has been added to enable legacy-free types of applications to
+     * work in CCM. Class ApplicationType is meant to replace the deprecated
+     * class PackageType which provide this facility by its packageKey property.
+     * So wwe have to provide this functionality by ApplicationType as well
+     * which has no kind of "key" by design.
+     */
+    public String getName() {
+
+        // m_legacyFree seems sometimes not set correctly!
+//      if (m_legacyFree == true ) {
+        if (getPackageType() == null) { // indicates a legacy free ApplicationType
+            // XXX we need a better way to determine a name, probably using
+            // the class name without leading package name.
+            s_log.debug("Expect XSL templates at " + StringUtils.urlize(getTitle()));
+            return StringUtils.urlize(getTitle());
+        } else {
+            return this.getPackageType().getKey();
+        }
+
     }
 
     /**

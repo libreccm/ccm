@@ -81,7 +81,7 @@ public class Web {
      *
      * @return A <code>WebContext</code> object; it cannot be null
      */
-    public static final WebContext getContext() {
+    public static WebContext getContext() {
         if (s_context == null) {
             s_context = new WebContextLocal();
         }
@@ -94,7 +94,7 @@ public class Web {
      * @return A <code>WebConfig</code> configuration record; it
      * cannot be null
      */
-    public static final WebConfig getConfig() {
+    public static WebConfig getConfig() {
         if (s_config == null) {
             s_config = new WebConfig();
             s_config.require("ccm-core/web.properties");
@@ -108,7 +108,7 @@ public class Web {
      * @return The current <code>HttpServletRequest</code>; it can be
      * null
      */
-    public static final HttpServletRequest getRequest() {
+    public static HttpServletRequest getRequest() {
         return (HttpServletRequest) s_request.get();
     }
 

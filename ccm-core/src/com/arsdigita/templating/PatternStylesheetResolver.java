@@ -115,9 +115,12 @@ import org.apache.log4j.Logger;
  * @author Richard W.M. Jones
  */
 public class PatternStylesheetResolver implements StylesheetResolver {
+
+    /** Logger instance for debugging.  */
     private static final Logger s_log = Logger.getLogger
         (PatternStylesheetResolver.class);
 
+    /** List of registered pattern generators which are queried in turn. */
     private static final HashMap s_generators = new HashMap();
 
     /**

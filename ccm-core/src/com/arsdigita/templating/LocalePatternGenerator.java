@@ -22,8 +22,8 @@ import com.arsdigita.kernel.Kernel;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Generates a pattern for based on the request negotiated
- * locale in com.arsdigita.kernel.KernelContext
+ * Generates a pattern based on the request negotiated locale
+ * in com.arsdigita.kernel.KernelContext
  */
 public class LocalePatternGenerator implements PatternGenerator {
     public String[] generateValues(String key,

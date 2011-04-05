@@ -111,6 +111,7 @@ public class Resource extends ACSObject {
         return resource;
     }
 
+    @Override
     protected void beforeSave() {
         if (isNew() || isPropertyModified("parentResource")) {
             m_parentModified = true;
@@ -123,6 +124,7 @@ public class Resource extends ACSObject {
         }
     }
 
+    @Override
     protected void afterSave() {
         super.afterSave();
 

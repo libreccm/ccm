@@ -24,8 +24,12 @@ model com.arsdigita.web;
 // @author Justin Ross (justin@arsdigita.com)
 // @version $Id: WebApp.pdl 287 2005-02-22 00:29:02Z sskracic $
 
+// Class WebApp seems to be quit unfinisched work and is commented out.
+// So we need no table for it.
+// We leave igt hefre vofr further reference. 
+// pboy April 2011
 object type WebApp {
-    String[1..1] name = webapps.name VARCHAR(200);
+//  String[1..1] name = webapps.name VARCHAR(200);
 
-    object key (name);
+//  object key (name);
 }

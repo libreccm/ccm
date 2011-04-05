@@ -74,7 +74,9 @@ import org.apache.log4j.Logger;
  */
 public class Application extends Resource {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Application.class);
+    
     public static final String PRIMARY_URL = "primaryURL";
     private static final String SLASH = "/";
 
@@ -215,7 +217,7 @@ public class Application extends Resource {
             Assert.isTrue(!fragment.equals(""),
                          "The URL fragment must not be the empty string");
         }
-
+        s_log.debug("Application type legacy free: " + type.m_legacyFree );
         if (type.m_legacyFree) {
             return Application.make(type,fragment,title,parent,createContainerGroup);
         } else {
@@ -250,14 +252,29 @@ public class Application extends Resource {
                          "slashes; I got '" + fragment + "'");
         }
 
+        /* Problem with "slash or not slash"
+         * String fragment (=url) is expected without any slash, just the name.
+         * Given the original code below the fragment appears in database as
+         * "/[fragment]" but all of the other code expects "/[fragment]/" and
+         * all other applications created as legacy compatible have a trailing
+         * slash!
+         * So I experimentally changed the code to have a trailing slash.
+         * Because no other code uses legacy free applications I suppose the
+         * original code here is less tested.
+         * pboy April 2011  see method setPath() as well!
+         */
         if (parent == null) {
             if (fragment == null) {
-                app.setPath("");
+                // app.setPath(""); original code modified see above
+                app.setPath(SLASH);
             } else {
-                app.setPath(SLASH + fragment);
+                // app.setPath(SLASH + fragment); original code modified see above
+                app.setPath(SLASH + fragment + SLASH);
             }
         } else {
-            app.setPath(parent.getPath() + SLASH + fragment);
+            // app.setPath(parent.getPath() + SLASH + fragment); original code
+            //                                                   modified see above
+            app.setPath(parent.getPath() + SLASH + fragment + SLASH);
         }
 
         return app;
@@ -276,14 +293,14 @@ public class Application extends Resource {
     private static Application legacyMake(final ApplicationType type,
                                           final String fragment,
                                           final String title,
-					  final Application parent,
-					  final boolean createContainerGroup) {
+                                          final Application parent,
+                                          final boolean createContainerGroup) {
 	final Application application =	(Application) Resource.createResource(
                                                            type, title, parent);
-	if (createContainerGroup) {
-	    s_log.debug("Creating Group for application");
-	    application.createGroup();
-	}
+        if (createContainerGroup) {
+            s_log.debug("Creating Group for application");
+            application.createGroup();
+        }
         final DataObject dataObject =
             DomainServiceInterfaceExposer.getDataObject(application);
 
@@ -382,6 +399,8 @@ public class Application extends Resource {
 
     // Can return null.
     public static Application retrieveApplicationForPath(String path) {
+
+        s_log.debug("retrieveApplicationForPath: " + path);
         DataCollection dataCollection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
@@ -392,6 +411,7 @@ public class Application extends Resource {
             dataCollection.close();
             return Application.retrieveApplication(dataObject);
         } else {
+        s_log.debug("retrieveApplicationForPath: No application found on " + path);
             return null;
         }
     }
@@ -577,13 +597,24 @@ public class Application extends Resource {
     public final void setPath(String path) {
         if (Assert.isEnabled()) {
             Assert.exists(path, String.class);
-            Assert.isTrue
-                (path.equals("") || (path.startsWith(SLASH)
-                                     && !path.endsWith(SLASH)),
-                 "The path must either be the empty string (for the " +
-                 "default application) or it must start with '/' and *not* " +
-                 "end in '/'; I got '" + path + "'");
-        }
+/* Modified by pboy April 2011
+ * This Assert statement prevents a trailing slash. setPath is currently called 
+ * only by Applicatiom#make which creates a LEGACY FREE application.
+ * Legacy compatible applications are currently created WITH a trailing slash
+ * (see e.g. SiteNode#setURL oder SiteNode#getURLFromParent.) Therefore for the
+ * time beeing if we must support legacy free and legacy compatible applications
+ * in parallel we have to use a trailing slash for legacy free applications,
+ * otherwise they will not be found by methods like retrieveApplicationForPath()
+ * which is called by legacy compatible apps including a trailing slash. If 
+ * legacy free apps are store without trailing slash the search will never match.  
+ */
+//          Assert.isTrue
+//              (path.equals("") || (path.startsWith(SLASH)
+//                                   && !path.endsWith(SLASH)),
+//               "The path must either be the empty string (for the " +
+//               "default application) or it must start with '/' and *not* " +
+//               "end in '/'; I got '" + path + "'");
+      }
 
         set(PRIMARY_URL, path);
     }

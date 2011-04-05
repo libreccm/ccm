@@ -45,6 +45,7 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
+import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Web;
 
 import java.util.Iterator;
@@ -150,7 +151,8 @@ public class Workspace extends Application {
     }
 
     /**
-     * Does the real work to create a workspace in the storage (db)
+     * Does the real work to create a workspace as a legacy compatible
+     * applicationin the storage (db)
      *
      * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the
      * process of application creation uses it as createGroupContainer
@@ -174,6 +176,39 @@ public class Workspace extends Application {
 
         Workspace workspace = (Workspace) Application.createApplication(
                 BASE_DATA_OBJECT_TYPE, url, title, parent);
+        workspace.setupGroups(title, isPublic);
+        workspace.setDefaultLayout(layout);
+        return workspace;
+    }
+
+    /**
+     * Does the real work to create a workspace as a legacy free application
+     * in the storage (db)
+     *
+     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the
+     * process of application creation uses it as createGroupContainer
+     *
+     * @param url
+     * @param title
+     * @param layout
+     * @param parent
+     * @param isPublic whether to create a workspace group
+     * @return
+     */
+    public static Workspace createWorkspace(ApplicationType type,
+                                            String url, String title,
+                                            PageLayout layout,
+                                            Application parent,
+                                            boolean isPublic) {
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Creating group workspace, isPublic:" + isPublic
+                        + " on " + url + " with parent "
+                        + (parent == null ? "none" : parent.getOID().toString()));
+        }
+        if (layout==null) layout = PageLayout.getDefaultLayout();
+
+        Workspace workspace = (Workspace) Application.createApplication(
+                         type, url, title, parent, isPublic );
         workspace.setupGroups(title, isPublic);
         workspace.setDefaultLayout(layout);
         return workspace;
