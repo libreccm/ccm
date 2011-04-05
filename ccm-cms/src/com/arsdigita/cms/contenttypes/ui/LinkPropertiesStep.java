@@ -37,13 +37,12 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedContainer;
  * role on ContentItem.
  */
 public abstract class LinkPropertiesStep extends ResettableContainer {
-    
+
     private AuthoringKitWizard m_parent;
-    
     private ItemSelectionModel m_itemModel;
     private BigDecimalParameter m_linkParam = new BigDecimalParameter("link");
     private LinkSelectionModel m_linkModel = new LinkSelectionModel(m_linkParam);
-    
+
     /**
      * Constructor. Creates a <code>LinkPropertiesStep</code> given an
      * <code>ItemSelectionModel</code>  and an
@@ -53,17 +52,17 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
      * @param parent The <code>AuthoringKitWizard</code> to track the
      * current link
      */
-    public LinkPropertiesStep( ItemSelectionModel itemModel,
-                               AuthoringKitWizard parent ) {
+    public LinkPropertiesStep(ItemSelectionModel itemModel,
+            AuthoringKitWizard parent) {
 
         m_itemModel = itemModel;
         m_parent = parent;
-	      setLinkSelectionModel();
+        setLinkSelectionModel();
         add(getDisplayComponent());
-        
+
         Form form = new Form("linkEditForm");
         form.add(getEditSheet());
-        
+
         WorkflowLockedContainer edit = new WorkflowLockedContainer(itemModel);
         edit.add(form);
         add(edit);
@@ -74,7 +73,7 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
      * should override this method if a custom LinkSelectionModel is desired. 
      */
     protected void setLinkSelectionModel() {
-	    setLinkSelectionModel(new LinkSelectionModel(m_linkParam));
+        setLinkSelectionModel(new LinkSelectionModel(m_linkParam));
     }
 
     /**
@@ -84,7 +83,7 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
      * the authoring step
      */
     protected void setLinkSelectionModel(LinkSelectionModel linkModel) {
-	    m_linkModel = linkModel;
+        m_linkModel = linkModel;
     }
 
     /**
@@ -94,7 +93,7 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
      * the authoring step
      */
     protected LinkSelectionModel getLinkSelectionModel() {
-	    return m_linkModel;
+        return m_linkModel;
     }
 
     /**
@@ -104,7 +103,7 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
      * the authoring step
      */
     protected ItemSelectionModel getItemSelectionModel() {
-	    return m_itemModel;
+        return m_itemModel;
     }
 
     /**
@@ -114,7 +113,7 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
      * the authoring step
      */
     protected BigDecimalParameter getLinkParam() {
-	    return m_linkParam;
+        return m_linkParam;
     }
 
     /**
@@ -135,7 +134,7 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
      * @return The edit form
      */
     protected FormSection getEditSheet() {
-	    return new LinkPropertyForm(m_itemModel, m_linkModel);
+        return new LinkPropertyForm(m_itemModel, m_linkModel);
     }
 
     /**
@@ -149,4 +148,3 @@ public abstract class LinkPropertiesStep extends ResettableContainer {
         p.addComponentStateParam(this, m_linkParam);
     }
 }
-

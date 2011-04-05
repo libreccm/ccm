@@ -29,8 +29,8 @@ import com.arsdigita.cms.contenttypes.ui.LinkTable;
  */
 public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
 
-    protected static String s_linkListName = "genericLink";
-    protected static ContentType s_contentType = null;
+    protected String linkListName;
+    protected ContentType contentType;
 
     /**
      * Constructor. Creates a <code>RelatedLinkPropertiesStep</code> given an
@@ -41,19 +41,20 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
      * @param parent The <code>AuthoringKitWizard</code> to track the
      * current link
      */
-    public RelatedLinkPropertiesStep( ItemSelectionModel itemModel,
-                                      AuthoringKitWizard parent ) {
+    public RelatedLinkPropertiesStep(ItemSelectionModel itemModel,
+            AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
     /**
      * Sets a RelatedLinkSelectionModel as the 
-     * LinkSelectionModel for this authoring step. 
+     * LinkSelectionModel for this authoring step.
+     * Also, set the linkListName and contentType if neccessary
      */
     @Override
     protected void setLinkSelectionModel() {
-        setLinkSelectionModel(
-            new RelatedLinkSelectionModel(getLinkParam()));
+        linkListName = "NONE";
+        setLinkSelectionModel(new RelatedLinkSelectionModel(getLinkParam()));
     }
 
     /**
@@ -67,12 +68,12 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
         SimpleContainer container = new SimpleContainer();
         LinkTable table;
         if (ContentSection.getConfig().isHideAdditionalResourceFields()) {
-        	table = new LinkTable(getItemSelectionModel(), getLinkSelectionModel());
-        	table.setModelBuilder(new RelatedLinkTableModelBuilder(getItemSelectionModel(), s_linkListName));
+            table = new LinkTable(getItemSelectionModel(), getLinkSelectionModel());
+            table.setModelBuilder(new RelatedLinkTableModelBuilder(getItemSelectionModel(), linkListName));
         } else {
-        	table = new RelatedLinkTable(getItemSelectionModel(), getLinkSelectionModel(), s_linkListName);
+            table = new RelatedLinkTable(getItemSelectionModel(), getLinkSelectionModel(), linkListName);
         }
-      
+
         container.add(table);
         return container;
     }
@@ -84,10 +85,9 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
      */
     @Override
     protected FormSection getEditSheet() {
-        return new RelatedLinkPropertyForm(getItemSelectionModel(), 
-                                           getLinkSelectionModel(),
-                                           s_linkListName,
-                                           s_contentType);
+        return new RelatedLinkPropertyForm(getItemSelectionModel(),
+                getLinkSelectionModel(),
+                linkListName,
+                contentType);
     }
 }
-
