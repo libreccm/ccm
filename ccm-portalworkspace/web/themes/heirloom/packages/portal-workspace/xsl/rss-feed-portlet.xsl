@@ -46,7 +46,8 @@
   
   <xsl:template match="rss:channel">
     <xsl:param name="maxItems" select="10"/>
-    <a><xsl:attribute name="href"><xsl:value-of select="rss:link"/></xsl:attribute><xsl:value-of select="rss:title"/></a>
+    <a><xsl:attribute name="href"><xsl:value-of select="rss:link"/>
+       </xsl:attribute><xsl:value-of select="rss:title"/></a>
     <!-- backwards compatability with old rss format -->
     <xsl:for-each select="rss:item[$maxItems > position()]">
       <dl>
@@ -57,7 +58,8 @@
     
   <xsl:template match="rss:item">
     <dt>
-        <a><xsl:attribute name="href"><xsl:value-of select="rss:link"/></xsl:attribute><xsl:value-of select="rss:title"/></a>
+        <a><xsl:attribute name="href"><xsl:value-of select="rss:link"/>
+        </xsl:attribute><xsl:value-of select="rss:title"/></a>
     </dt>
     <dd>
       <xsl:value-of select="rss:description"/>
@@ -67,7 +69,8 @@
   
   <xsl:template match="channel">
     <xsl:param name="maxItems" select="10"/>
-    <a><xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute><xsl:value-of select="title"/></a>
+    <a><xsl:attribute name="href"><xsl:value-of select="link"/>
+       </xsl:attribute><xsl:value-of select="title"/></a>
     <!-- backwards compatability with old rss format -->
     <xsl:for-each select="item[$maxItems > position()]">
       <dl>
@@ -78,7 +81,8 @@
     
   <xsl:template match="item">
     <dt>
-        <a><xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute><xsl:value-of select="title"/></a>
+        <a><xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute>
+           <xsl:value-of select="title"/></a>
     </dt>
     <dd>
       <xsl:value-of select="description"/>

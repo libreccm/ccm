@@ -33,7 +33,8 @@
       </tr>
       <tr>
         <td colspan="2">
-          <input type="checkbox" checked="checked" name="persistentCookieP" value="1" id="persistentCookieP:1"/>
+          <input type="checkbox" checked="checked" name="persistentCookieP"
+                value="1" id="persistentCookieP:1"/>
           <label for="persistentCookieP:1">Remember this login?</label>
         </td>
       </tr>

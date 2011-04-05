@@ -132,7 +132,7 @@ public class Loader extends PackageLoader {
         if (url != null) {
 
             // check weather the url parameter is properly formatted
-            s_log.error("process url " + url);
+            s_log.debug("process url " + url);
             Assert.isTrue(url.startsWith("/"), "url starts not with /");
             Assert.isTrue(url.endsWith("/"), "url ends not with /");
             Assert.isTrue(!url.equals("/"), "url is not /");
@@ -149,7 +149,7 @@ public class Loader extends PackageLoader {
             } else {
                 name = url.substring(1, url.length() - 1);
             }
-            s_log.error("node name is " + name);
+            s_log.debug("node name is " + name);
 
             // set up the portal node
         //  Workspace workspace = Workspace.createWorkspace(name, title,

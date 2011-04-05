@@ -3,12 +3,10 @@
   xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
   version="1.0">
 
-  <xsl:import href="../../../../packages/portalworkspace/xsl/portal.xsl"/>
+  <xsl:import href="../../../packages/portal-workspace/xsl/portal.xsl"/>
 
   <xsl:template match="portal:workspaceDetails">
-    <xsl:if test="@canEdit = 'true'">
-      <a href="edit.jsp">Edit</a>
-    </xsl:if>
+    <a href="index.jsp">View</a>
     <xsl:if test="@canAdmin = 'true'">
       <a href="admin/index.jsp">Admin</a>
     </xsl:if>

@@ -9,7 +9,7 @@
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-subsite" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-portal" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-portalworkspace" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
     <!--  not required anymore (2007-06-09)
     <ccm:requires name="ccm-ldn-dublin" version="6.6.0" relation="ge"/>

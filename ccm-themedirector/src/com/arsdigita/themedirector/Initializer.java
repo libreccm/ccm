@@ -39,7 +39,9 @@ import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.templating.PatternStylesheetResolver;
+
 import org.apache.log4j.Logger;
+
 
 /**
  * The Theme Directory initializer.
@@ -91,6 +93,7 @@ public class Initializer extends CompoundInitializer {
         evt.getFactory().registerInstantiator(
             ThemeDirector.BASE_DATA_OBJECT_TYPE,
             new ACSObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new ThemeDirector(dataObject);
                 }
