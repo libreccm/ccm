@@ -30,12 +30,16 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
  */
 public class SciDepartmentPublicationsStep extends RelatedLinkPropertiesStep {
 
-    protected static String s_linkListName = "SciDepartmentPublications";
-    protected static ContentType s_contentType = ContentType.findByAssociatedObjectType(
-            "com.arsdigita.cms.contenttypes.Publication");
-
     public SciDepartmentPublicationsStep(ItemSelectionModel itemModel,
                                          AuthoringKitWizard parent) {     
         super(itemModel, parent);
+    }
+
+    @Override
+    protected void setLinkSelectionModel() {
+        super.setLinkSelectionModel();
+        linkListName = "SciDepartmentPublications";
+        contentType = ContentType.findByAssociatedObjectType(
+            "com.arsdigita.cms.contenttypes.Publication");
     }
 }

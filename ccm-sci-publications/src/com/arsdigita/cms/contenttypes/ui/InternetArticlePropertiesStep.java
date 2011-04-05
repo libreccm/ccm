@@ -66,8 +66,8 @@ public class InternetArticlePropertiesStep extends PublicationPropertiesStep {
                 InternetArticle.ISSN);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.publication_date"),
-                InternetArticle.PUBLICATION_DATE);
+                "publications.ui.internetarticle.lastAccessed"),
+                InternetArticle.LAST_ACCESSED);
 
         return sheet;
     }

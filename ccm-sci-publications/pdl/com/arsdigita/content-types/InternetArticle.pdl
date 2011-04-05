@@ -30,7 +30,9 @@ object type InternetArticle extends Publication {
        Integer[0..1] numberOfPages = ct_internet_article.number_of_pages INTEGER;
        String[0..1] edition = ct_internet_article.edition VARCHAR(256);
        String[0..1] issn = ct_internet_article.issn VARCHAR(9);
+       Date[0..1] lastAccessed = ct_internet_article.last_accessed DATE;
        Date[0..1] publicationDate = ct_internet_article.publicationDate DATE;
+       
 
        reference key (ct_internet_article.internet_article_id);
 }

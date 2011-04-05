@@ -250,7 +250,7 @@ public class FolderBrowser extends Table {
     }
 
     protected long getFolderSize() {
-        return m_folderSize;
+        return m_folderSize;       
     }
 
     private class FolderTableModelBuilder
@@ -286,14 +286,6 @@ public class FolderBrowser extends Table {
                 Folder.ItemCollection itemColl = (Folder.ItemCollection) m_itemColl.
                         get(s);
                 s_log.debug(String.format("itemColl.size = %d", itemColl.size()));
-                /*if (itemColl.size() < 20) {
-                    s_log.debug("Setting filter invisible.");
-                    m_filterForm.setVisible(s, false);
-                } else {
-                    s_log.debug("Setting filter visible.");
-                    m_filterForm.setVisible(s, true);
-                }*/
-                
 
                 m_folderSize = itemColl.size();
                 if (s.getValue(m_filter) != null) {
@@ -320,7 +312,7 @@ public class FolderBrowser extends Table {
                 if (itemColl == null) {
                     return 0;
                 }
-
+          
                 if (state.getValue(m_filter) != null) {
                     itemColl.addFilter(String.format(
                             "lower(name) like lower('%s%%') or lower(displayName) like lower('%s%%')",

@@ -259,7 +259,7 @@ public class DaBInImporter extends Program {
         projectsRootFolder = projectsSection.getRootFolder();
         publicationsRootFolder = publicationsSection.getRootFolder();
 
-        authors = createFolder(personsRootFolder, "autoren", "Autoren");
+        authors = createFolder(personsRootFolder, "externe", "Externe");
 
         contacts = createFolder(personsRootFolder, "kontaktdaten",
                                 "Kontaktdaten");
@@ -270,7 +270,9 @@ public class DaBInImporter extends Program {
 
         organization = createFolder(root, "organisationen", "Organisation(en)");
 
-        persons = createFolder(personsRootFolder, "personen", "Personen");
+        //Personen sollen beim ZeS in den gleichen Ordner wie Autoren.
+        //persons = createFolder(personsRootFolder, "persons", "persons");
+        persons = authors;
 
         projects = createFolder(projectsRootFolder, "projekte", "Projekte");
 
@@ -2733,14 +2735,14 @@ public class DaBInImporter extends Program {
                             //bundle.save();
 
                             RelatedLink download = new RelatedLink();
-                            download.setTitle("Download");
+                            download.setTitle(config.getProperty("workingpaper.download.de"));
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperDe);
 
                             download = new RelatedLink();
                             download.setTitle("Download");
-                            download.setTargetType(Link.INTERNAL_LINK);
+                            download.setTargetType(config.getProperty("workingpaper.download.en"));
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
 

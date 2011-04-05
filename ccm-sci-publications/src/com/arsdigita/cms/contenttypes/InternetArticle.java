@@ -40,6 +40,7 @@ public class InternetArticle extends Publication {
     public static final String NUMBER_OF_PAGES = "numberOfPages";
     public static final String EDITION = "edition";
     public static final String ISSN = "issn";
+    public static final String LAST_ACCESSED = "lastAccessed";
     public static final String PUBLICATION_DATE = "publicationDate";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.InternetArticle";
@@ -137,6 +138,14 @@ public class InternetArticle extends Publication {
 
     public void setISSN(String issn) {
         set(ISSN, issn);
+    }
+
+    public Date getLastAccessed() {
+        return (Date) get(LAST_ACCESSED);
+    }
+
+    public void setLastAccessed(Date lastAccessed) {
+        set(LAST_ACCESSED, lastAccessed);
     }
 
     public Date getPublicationDate() {

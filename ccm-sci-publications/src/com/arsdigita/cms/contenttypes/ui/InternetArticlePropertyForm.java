@@ -106,10 +106,10 @@ public class InternetArticlePropertyForm
 
         Calendar today = new GregorianCalendar();
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.publicationdate").
+                "publications.ui.internetarticle.lastAccessed").
                 localize()));
         ParameterModel pubDateParam =
-                       new DateParameter(InternetArticle.PUBLICATION_DATE);
+                       new DateParameter(InternetArticle.LAST_ACCESSED);
         com.arsdigita.bebop.form.Date pubDate =
                                       new com.arsdigita.bebop.form.Date(
                 pubDateParam);
@@ -129,8 +129,8 @@ public class InternetArticlePropertyForm
         data.put(InternetArticle.NUMBER_OF_PAGES, article.getNumberOfPages());
         data.put(InternetArticle.EDITION, article.getEdition());
         data.put(InternetArticle.ISSN, article.getISSN());
-        data.put(InternetArticle.PUBLICATION_DATE,
-                 article.getPublicationDate());
+        data.put(InternetArticle.LAST_ACCESSED,
+                 article.getLastAccessed());
     }
 
     @Override
@@ -148,8 +148,8 @@ public class InternetArticlePropertyForm
                     (Integer) data.get(InternetArticle.NUMBER_OF_PAGES));
             article.setEdition((String) data.get(InternetArticle.EDITION));
             article.setISSN((String) data.get(InternetArticle.ISSN));
-            article.setPublicationDate(
-                    (Date) data.get(InternetArticle.PUBLICATION_DATE));
+            article.setLastAccessed(
+                    (Date) data.get(InternetArticle.LAST_ACCESSED));
 
             article.save();
         }
