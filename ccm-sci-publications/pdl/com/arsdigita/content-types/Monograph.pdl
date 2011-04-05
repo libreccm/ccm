@@ -27,4 +27,6 @@ object type Monograph extends PublicationWithPublisher {
 
        reference key (ct_monograph.monograph_id);
 
+       Boolean[0..1] reviewed = ct_monograph.reviewed BIT;
+
 }

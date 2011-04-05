@@ -30,6 +30,7 @@ object type ArticleInJournal extends Publication {
        Integer[0..1] pagesFrom = ct_article_in_journal.pages_from INTEGER;
        Integer[0..1] pagesTo = ct_article_in_journal.pages_to INTEGER;
        Date[0..1] publicationDate = ct_article_in_journal.publication_date DATE;
+       Boolean[0..1] reviewed = ct_article_in_journal.reviewed BIT;
 
        reference key (ct_article_in_journal.article_in_journal_id);
 

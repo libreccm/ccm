@@ -26,6 +26,8 @@ import com.arsdigita.cms.ContentPage;
 object type CollectedVolume extends PublicationWithPublisher {
        
        reference key (ct_collected_volume.collected_volume_id);
+
+       Boolean[0..1] reviewed = ct_collected_volume.reviewed BIT;		
 }
 
 
@@ -41,6 +43,8 @@ association {
 						        to ct_article_in_collected_volume.article_id;
 
             Integer[0..1] articleOrder = ct_collected_volume_article_map.article_order INTEGER;    
+
+
 
 }
 
