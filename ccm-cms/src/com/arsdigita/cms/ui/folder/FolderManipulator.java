@@ -59,6 +59,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.tree.TreeCellRenderer;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
@@ -138,7 +139,7 @@ public class FolderManipulator extends SimpleContainer
     public void register(Page p) {
         super.register(p);
         p.setVisibleDefault(m_targetSelector, false);
-        //p.setVisibleDefault(m_filterForm, true);
+        p.setVisibleDefault(m_filterForm, true);
         p.addComponentStateParam(this, m_sources);
         p.addComponentStateParam(this, m_action);
         p.addComponentStateParam(this, m_filter);
@@ -458,10 +459,10 @@ public class FolderManipulator extends SimpleContainer
             panel.add(m_paginator);
             panel.add(m_browser);
 
-            /*s_log.debug("Adding filter form...");
-            m_filterForm = new FilterForm((PaginationModelBuilder) m_browser.
+            s_log.debug("Adding filter form...");
+            m_filterForm = new FilterForm((FilterFormModelBuilder) m_browser.
                     getModelBuilder());
-            getPanel().add(m_filterForm);*/
+            FolderManipulator.this.add(m_filterForm);
 
             m_checkboxGroup = new CheckboxGroup(m_sources);
             panel.add(m_checkboxGroup);
@@ -522,9 +523,9 @@ public class FolderManipulator extends SimpleContainer
 
         private SimpleContainer panel;
         private boolean visible;
-        private PaginationModelBuilder modelBuilder;
+        private FilterFormModelBuilder modelBuilder;
 
-        public FilterForm(PaginationModelBuilder modelBuilder) {
+        public FilterForm(FilterFormModelBuilder modelBuilder) {
             super("folderFilterForm");
 
             s_log.debug("Creating filter form...");
@@ -579,15 +580,20 @@ public class FolderManipulator extends SimpleContainer
         public void submitted(FormSectionEvent fse) throws FormProcessException {
         }
 
-        public void setVisible(boolean visible) {
-            this.visible = visible;
-        }
-
         @Override
         public boolean isVisible(PageState state) {
-            //return super.isVisible(state);
-            return visible;
+            if (super.isVisible(state)
+                && (modelBuilder.getFolderSize(state) >= CMSConfig.getInstance().getFolderAtoZShowLimit())) {
+                return true;
+            } else {
+                return false;
+            }
         }
+    }
+
+    protected interface FilterFormModelBuilder {
+
+        public long getFolderSize(PageState state);
     }
 
     /**

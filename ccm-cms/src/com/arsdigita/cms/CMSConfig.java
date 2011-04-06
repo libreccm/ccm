@@ -450,6 +450,11 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_folderBrowseListSize = new IntegerParameter("com.arsdigita.cms.folder_browse_list_size",
             Parameter.REQUIRED, 20);
 
+    /////////////////////////////////////////////
+    // Folder A to Z show limit: Display a A to Z filter bar when a folder has more than x items
+    /////////////////////////////////////////////
+    private final Parameter m_folderAtoZShowLimit = new IntegerParameter("com.arsdigita.cms.folder_atoz_show_limit",
+            Parameter.REQUIRED, 100);
 
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -526,6 +531,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_itemSearchDefaultTab);
 
         register(m_folderBrowseListSize);
+        register(m_folderAtoZShowLimit);
 
         // publishToFile package related parameter
         // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
@@ -902,5 +908,9 @@ public final class CMSConfig extends AbstractConfig {
 
     public Integer getFolderBrowseListSize() {
         return (Integer) get(m_folderBrowseListSize);
+    }
+
+    public Integer getFolderAtoZShowLimit() {
+        return (Integer) get(m_folderAtoZShowLimit);
     }
 }

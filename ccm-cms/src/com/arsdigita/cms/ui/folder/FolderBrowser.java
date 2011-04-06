@@ -250,11 +250,13 @@ public class FolderBrowser extends Table {
     }
 
     protected long getFolderSize() {
-        return m_folderSize;       
+        return m_folderSize;
     }
 
     private class FolderTableModelBuilder
-            extends AbstractTableModelBuilder implements PaginationModelBuilder {
+            extends AbstractTableModelBuilder
+            implements PaginationModelBuilder,
+                       FolderManipulator.FilterFormModelBuilder {
 
         private FolderSelectionModel m_folder;
         private RequestLocal m_size;
@@ -299,6 +301,20 @@ public class FolderBrowser extends Table {
             }
         }
 
+        @Override
+        public long getFolderSize(PageState state) {
+            Folder f = (Folder) m_folder.getSelectedObject(state);
+
+            Folder.ItemCollection itemColl = f.getPrimaryInstances();
+
+            if (itemColl == null) {
+                return 0;
+            } else {
+                return itemColl.size();
+            }
+        }
+
+        @Override
         public int getTotalSize(Paginator paginator, PageState state) {
 
             Integer size = (Integer) m_size.get(state);
@@ -312,7 +328,7 @@ public class FolderBrowser extends Table {
                 if (itemColl == null) {
                     return 0;
                 }
-          
+
                 if (state.getValue(m_filter) != null) {
                     itemColl.addFilter(String.format(
                             "lower(name) like lower('%s%%') or lower(displayName) like lower('%s%%')",
