@@ -8,8 +8,8 @@
               ccmVersion="6.1" 
                     name="aplaws-gen" 
               prettyName="APLAWS plus" 
-                 version="1-1-0" 
-                 release="rc-1" 
+                 version="1-1-2" 
+                 release="alpha-1" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -26,7 +26,7 @@
         <ccm:application name="ccm-cms"/>
 
         <ccm:application name="ccm-cms-assets-fileattachment"/>
-<!--    <ccm:application name="ccm-cms-assets-imagestep"/>           -->
+        <ccm:application name="ccm-cms-assets-imagestep"/>
         <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
@@ -67,9 +67,11 @@
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
 <!--    <ccm:application name="ccm-forum-categorised"/>              -->
+<!--    <ccm:application name="ccm-portalserver"/>                   -->
+        <ccm:application name="ccm-portalworkspace"/>                
 <!--    <ccm:application name="ccm-simplesurvey"/>                   -->
-<!--    <ccm:application name="ccm-themedirector"/>                  -->
-        <ccm:application name="ccm-user-preferences"/>
+        <ccm:application name="ccm-themedirector"/>                     
+<!--    <ccm:application name="ccm-user-preferences"/>               -->
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
 
@@ -81,8 +83,7 @@
 <!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
 <!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
 <!--    <ccm:application name="ccm-ldn-importer"/>                   -->
-<!--    <ccm:application name="ccm-ldn-navigation"/>                 -->
-        <ccm:application name="ccm-ldn-portal"/>
+        <ccm:application name="ccm-ldn-navigation"/>                 
 <!--    <ccm:application name="ccm-ldn-rss"/>                        -->
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
