@@ -51,18 +51,24 @@ public class ApplicationPatternGenerator implements PatternGenerator {
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
 
+        s_log.debug("Processing Application with key: " + key );
+
         final Application app = Web.getContext().getApplication();
-        
         if (app != null) {
-            return new String[] {
-                app.getApplicationType().getName()
-            };
+            String[] returnValue = { app.getApplicationType().getName() };
+            s_log.warn("Found application >>"+returnValue+"<< in Application.");
+            return returnValue;
         }
         
         // SiteNodeRequestContext is deprecated and replaced by web.WebContext
         // used in the code above (Web.getContext(). 
         // This code should never be executed.
-        s_log.error("Application not found in WebApplication context!");
+        // Findings: SideNode is requirred for modules which dont use
+        // legacy-compatible applications but package-type apps. content-center
+        // and cms-service are 2 examples. Code can be eliminated when all apps
+        // will use web.Application for loading and instantiation.
+        s_log.warn("ApplicationType for >>" +key +
+                    "<< not found. Trying SiteNodes instead.");
         
         
         SiteNodeRequestContext ctx = (SiteNodeRequestContext)
@@ -71,10 +77,15 @@ public class ApplicationPatternGenerator implements PatternGenerator {
         SiteNode node = ctx.getSiteNode();
         
         if (node != null) {
-            return new String[] {
-                node.getPackageInstance().getType().getKey()
-            };
+            String[] returnValue = {
+                                    node.getPackageInstance().getType().getKey()
+                                   };
+            s_log.debug("Found node >>" + returnValue + "<< in SiteNodes.");
+            return returnValue;
         }
+
+        s_log.warn("ApplicationType for " +key +
+                    " could not be found in SiteNodes either. Returning empty String[]");
         
         return new String[] {};
     }
