@@ -3,23 +3,23 @@
     xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
-    <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
 
-        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.SciMember" 
-                    extends="com.arsdigita.cms.ContentPage">
+      <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Person"
+                     extends="com.arsdigita.cms.ContentPage">
 
 	  <xrd:attributes rule="exclude">
 	    <xrd:property name="/object/birthdate"/>
 	    <xrd:property name="/object/gender"/>
 	  </xrd:attributes>
-	  
+
 	  <xrd:associations rule="include">
 	    <xrd:property name="/object/contacts"/>
 	    <xrd:property name="/object/contacts/contactentries"/>
 	    <xrd:property name="/object/contacts/address"/>
-	    <xrd:property name="/object/organizationalunit"/>
+	    <xrd:property name="/object/organizationalunit"/>	    		
 	  </xrd:associations>
+	</xrd:adapter>
 
-        </xrd:adapter>
-    </xrd:context>
+      </xrd:context>
 </xrd:adapters>

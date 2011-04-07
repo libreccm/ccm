@@ -33,6 +33,7 @@ import java.math.BigDecimal;
 public class Journal extends Publication {
 
     public static final String ISSN = "issn";
+    public static final String LAST_YEAR = "lastYear";
     public static final String ARTICLES = "articles";
     public static final String ARTICLE_ORDER = "articleOrder";
     public static final String BASE_DATA_OBJECT_TYPE =
@@ -64,6 +65,14 @@ public class Journal extends Publication {
 
     public void setISSN(String issn) {
         set(ISSN, issn);
+    }
+
+    public Integer getLastYear() {
+        return (Integer) get(LAST_YEAR);
+    }
+
+    public void setLastYear(Integer lastYear)  {
+        set(LAST_YEAR, lastYear);
     }
 
     public ArticleInJournalCollection getArticles() {

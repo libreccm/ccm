@@ -21,10 +21,15 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
@@ -60,11 +65,13 @@ public class SeriesPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        /*add(new Label((String) PublicationGlobalizationUtil.globalize(
-        "publications.ui.series.title").localize()));
-        ParameterModel titleParam = new StringParameter(Series.NAME);
-        TextField title = new TextField(titleParam);
-        add(title);*/
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.abstract").localize()));
+        ParameterModel abstractParam = new StringParameter(Series.ABSTRACT);
+        TextArea abstractArea = new TextArea(abstractParam);
+        abstractArea.setCols(60);
+        abstractArea.setRows(18);
+        add(abstractArea);
     }
 
     @Override
@@ -72,7 +79,7 @@ public class SeriesPropertyForm
         FormData data = fse.getFormData();
         Series series = (Series) super.initBasicWidgets(fse);
 
-        //data.put(Series.NAME, series.getTitle());
+        data.put(Series.ABSTRACT, series.getAbstract());
     }
 
     @Override
@@ -82,9 +89,9 @@ public class SeriesPropertyForm
 
         if ((series != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            /*series.setTitle((String) data.get(Series.NAME));
+            series.setAbstract((String) data.get(Series.ABSTRACT));
 
-            series.save();*/
+            series.save();
         }
     }
 

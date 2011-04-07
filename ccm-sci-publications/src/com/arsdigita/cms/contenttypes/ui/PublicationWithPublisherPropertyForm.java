@@ -26,8 +26,11 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.ParameterEvent;
+import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
@@ -70,13 +73,41 @@ public class PublicationWithPublisherPropertyForm
     @Override
     protected void addWidgets() {
         super.addWidgets();
-       
+
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.isbn").localize()));
         ParameterModel isbnParam = new StringParameter(
                 PublicationWithPublisher.ISBN);
         TextField isbn = new TextField(isbnParam);
         isbn.setMaxLength(17);
+        isbn.addValidationListener(new ParameterListener() {
+
+            public void validate(ParameterEvent event)
+                    throws FormProcessException {
+                ParameterData data = event.getParameterData();
+                String value = (String) data.getValue();
+
+                if (value.isEmpty()) {
+                    return;
+                }
+
+                value = value.replace("-", "");
+             
+                if (value.length() != 13) {
+                    data.invalidate();
+                    data.addError(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.invalid_isbn"));
+                }
+
+                try {
+                    Long num = Long.parseLong(value);
+                } catch (NumberFormatException ex) {
+                    data.invalidate();
+                    data.addError(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.invalid_isbn"));
+                }
+            }
+        });
         add(isbn);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
@@ -121,7 +152,7 @@ public class PublicationWithPublisherPropertyForm
         PublicationWithPublisher publication =
                                  (PublicationWithPublisher) super.
                 initBasicWidgets(fse);
-        
+
         data.put(PublicationWithPublisher.ISBN, publication.getISBN());
         data.put(PublicationWithPublisher.VOLUME, publication.getVolume());
         data.put(PublicationWithPublisher.NUMBER_OF_VOLUMES,
@@ -142,8 +173,10 @@ public class PublicationWithPublisherPropertyForm
                 processBasicWidgets(fse);
 
         if ((publication != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {         
-            publication.setISBN((String) data.get(PublicationWithPublisher.ISBN));
+                isSelected(fse.getPageState())) {
+            String isbn = (String) data.get(PublicationWithPublisher.ISBN);
+            isbn = isbn.replace("-", "");
+            publication.setISBN(isbn);
 
             publication.setVolume((Integer) data.get(
                     PublicationWithPublisher.VOLUME));

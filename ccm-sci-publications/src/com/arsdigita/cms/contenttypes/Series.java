@@ -39,6 +39,7 @@ public class Series extends ContentPage {
     public static final String EDITOR_ORDER = "editor_order";
     public static final String PUBLICATIONS = "publications";
     public static final String VOLUME_OF_SERIES = "volumeOfSeries";
+    public static final String ABSTRACT  ="abstract";
 
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Series";
 
@@ -60,6 +61,14 @@ public class Series extends ContentPage {
 
     public Series(String type) {
         super(type);
+    }
+
+    public String getAbstract() {
+        return (String) get(ABSTRACT);
+    }
+
+    public void setAbstract(String abstractStr) {
+        set(ABSTRACT, abstractStr);
     }
 
     public EditshipCollection getEditors() {

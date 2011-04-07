@@ -42,7 +42,7 @@ public class GreyLiteratureInitializer extends ContentTypeInitializer {
 
     @Override
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Publication.xml";
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/GreyLiterature.xml";
     }
 
 }

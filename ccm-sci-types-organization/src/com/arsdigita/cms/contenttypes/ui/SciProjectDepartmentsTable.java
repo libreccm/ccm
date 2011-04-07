@@ -125,8 +125,7 @@ public class SciProjectDepartmentsTable
         }
     }
 
-    private class SciProjectDepartmentsTableModel
-            implements TableModel {
+    private class SciProjectDepartmentsTableModel implements TableModel {
 
         private Table m_table;
         private SciProjectDepartmentsCollection m_departments;
@@ -227,7 +226,6 @@ public class SciProjectDepartmentsTable
 
                 return link;
             } else {
-
                 Label label = new Label(value.toString());
                 return label;
             }

@@ -53,7 +53,7 @@ public class SciDepartmentMemberStep
 
         BasicItemForm addMemberSheet =
                       new SciDepartmentMemberAddForm(itemModel,
-                      this);
+                                                     this);
         add(ADD_MEMBER_SHEET_NAME,
             (String) SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.department.add_member").localize(),
@@ -71,15 +71,15 @@ public class SciDepartmentMemberStep
     }
 
     public void setSelectedPerson(final GenericPerson selectedPerson) {
- this.selectedPerson = selectedPerson;
+        this.selectedPerson = selectedPerson;
     }
 
     public String getSelectedPersonRole() {
-       return selectedPersonRole;
+        return selectedPersonRole;
     }
 
     public void setSelectedPersonRole(final String selectedPersonRole) {
-       this.selectedPersonRole = selectedPersonRole;
+        this.selectedPersonRole = selectedPersonRole;
     }
 
     public String getSelectedPersonStatus() {

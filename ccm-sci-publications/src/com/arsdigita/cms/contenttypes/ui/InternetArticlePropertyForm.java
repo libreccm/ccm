@@ -26,16 +26,16 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.ParameterEvent;
+import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.InternetArticle;
-import com.arsdigita.cms.ui.ItemSearchWidget;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -50,7 +50,7 @@ public class InternetArticlePropertyForm
                    FormProcessListener,
                    FormSubmissionListener {
 
-    private InternetArticlePropertiesStep m_step; 
+    private InternetArticlePropertiesStep m_step;
     public static final String ID = "InternetArticleEdit";
 
     public InternetArticlePropertyForm(ItemSelectionModel itemModel) {
@@ -74,7 +74,7 @@ public class InternetArticlePropertyForm
                        new StringParameter(InternetArticle.PLACE);
         TextField place = new TextField(placeParam);
         add(place);
-     
+
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number").localize()));
         ParameterModel numberParam =
@@ -102,6 +102,34 @@ public class InternetArticlePropertyForm
                        new StringParameter(InternetArticle.ISSN);
         TextField issn = new TextField(issnParam);
         issn.setMaxLength(9);
+        issn.addValidationListener(new ParameterListener() {
+
+            public void validate(ParameterEvent event) throws
+                    FormProcessException {
+                ParameterData data = event.getParameterData();
+                String value = (String) data.getValue();
+
+                if(value.isEmpty()) {
+                    return;
+                }
+
+                value = value.replace("-", "");
+
+                if (value.length() != 8) {
+                    data.invalidate();
+                    data.addError(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.invalid_issn"));
+                }
+
+                try {
+                    Long num = Long.parseLong(value);
+                } catch (NumberFormatException ex) {
+                    data.invalidate();
+                    data.addError(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.invalid_issn"));
+                }
+            }
+        });
         add(issn);
 
         Calendar today = new GregorianCalendar();
@@ -124,7 +152,7 @@ public class InternetArticlePropertyForm
         FormData data = fse.getFormData();
         InternetArticle article = (InternetArticle) initBasicWidgets(fse);
 
-        data.put(InternetArticle.PLACE, article.getPlace());        
+        data.put(InternetArticle.PLACE, article.getPlace());
         data.put(InternetArticle.NUMBER, article.getNumber());
         data.put(InternetArticle.NUMBER_OF_PAGES, article.getNumberOfPages());
         data.put(InternetArticle.EDITION, article.getEdition());
@@ -142,12 +170,14 @@ public class InternetArticlePropertyForm
 
         if ((article != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            article.setPlace((String) data.get(InternetArticle.PLACE));               
+            article.setPlace((String) data.get(InternetArticle.PLACE));
             article.setNumber((String) data.get(InternetArticle.NUMBER));
             article.setNumberOfPages(
                     (Integer) data.get(InternetArticle.NUMBER_OF_PAGES));
             article.setEdition((String) data.get(InternetArticle.EDITION));
-            article.setISSN((String) data.get(InternetArticle.ISSN));
+            String issn = (String) data.get(InternetArticle.ISSN);
+            issn = issn.replace("-", "");
+            article.setISSN(issn);
             article.setLastAccessed(
                     (Date) data.get(InternetArticle.LAST_ACCESSED));
 

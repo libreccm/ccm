@@ -33,6 +33,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
 import com.arsdigita.web.Application;

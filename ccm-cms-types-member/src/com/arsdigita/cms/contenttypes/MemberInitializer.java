@@ -42,4 +42,9 @@ public class MemberInitializer extends ContentTypeInitializer {
     public String[] getStylesheets() {
         return new String[]{"/static/content-types/com/arsdigita/cms/contenttypes/Member.xsl"};
     }
+
+    @Override
+    public String getTraversalXML() {
+	return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Member.xml";	
+    }
 }

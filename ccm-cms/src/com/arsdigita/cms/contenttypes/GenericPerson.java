@@ -36,7 +36,8 @@ import java.util.Date;
  * @author Sören Bernstein
  * @author Jens Pelzetter
  */
-public class GenericPerson extends ContentPage implements RelationAttributeInterface {
+public class GenericPerson extends ContentPage implements
+        RelationAttributeInterface {
 
     public static final String PERSON = "person";
     public static final String SURNAME = "surname";
@@ -48,12 +49,11 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     public static final String CONTACTS = "contacts";
     public static final String CONTACTS_KEY = "link_key";
     public static final String CONTACTS_ORDER = "link_order";
-
-    private static final String RELATION_ATTRIBUTES = "contacts.link_key:GenericContactType";
-
+    private static final String RELATION_ATTRIBUTES =
+                                "contacts.link_key:GenericContactType";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.GenericPerson";
+                               "com.arsdigita.cms.contenttypes.GenericPerson";
 
     /**
      * Default constructor. This creates a new (empty) GenericPerson.
@@ -163,7 +163,12 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
             surname = "";
         }
 
-        return String.format("%s %s %s %s", titlePre, givenName, surname, titlePost).trim();
+        if (titlePost.trim().isEmpty()) {
+            return String.format("%s %s %s", titlePre, givenName, surname).trim();
+        } else {
+            return String.format("%s %s %s, %s", titlePre, givenName, surname,
+                                 titlePost).trim();
+        }
     }
 
     private void updateNameAndTitle() {
@@ -171,7 +176,8 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
         String fullname = getFullName();
         if (fullname != null && !fullname.isEmpty()) {
             setTitle(fullname);
-            setName(GenericPerson.urlSave(String.format("%s %s", getSurname(), getGivenName())));
+            setName(GenericPerson.urlSave(String.format("%s %s", getSurname(),
+                                                        getGivenName())));
         }
     }
 
@@ -207,7 +213,8 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
         if (in != null && !in.isEmpty()) {
 
             // Replacement map
-            String[][] replacements = {{"ä", "ae"}, {"Ä", "Ae"}, {"ö", "oe"}, {"Ö", "Oe"}, {"ü", "ue"}, {"Ü", "Ue"}, {"ß", "ss"}, {".", ""}};
+            String[][] replacements = {{"ä", "ae"}, {"Ä", "Ae"}, {"ö", "oe"}, {
+                    "Ö", "Oe"}, {"ü", "ue"}, {"Ü", "Ue"}, {"ß", "ss"}, {".", ""}};
 
             // Replace all spaces with dash
             String out = in.replace(" ", "-");
@@ -233,9 +240,9 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     @Override
     public boolean hasRelationAttributeProperty(String propertyName) {
         StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
-        while(strTok.hasMoreTokens()) {
+        while (strTok.hasMoreTokens()) {
             String token = strTok.nextToken();
-            if(token.startsWith(propertyName + ".")) {
+            if (token.startsWith(propertyName + ".")) {
                 return true;
             }
         }
@@ -250,10 +257,11 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     @Override
     public String getRelationAttributeKeyName(String propertyName) {
         StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
-        while(strTok.hasMoreTokens()) {
+        while (strTok.hasMoreTokens()) {
             String token = strTok.nextToken();
-            if(token.startsWith(propertyName + ".")) {
-                return token.substring(token.indexOf(".") + 1, token.indexOf(":"));
+            if (token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(".") + 1,
+                                       token.indexOf(":"));
             }
         }
         return null;
@@ -262,9 +270,9 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     @Override
     public String getRelationAttributeName(String propertyName) {
         StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
-        while(strTok.hasMoreTokens()) {
+        while (strTok.hasMoreTokens()) {
             String token = strTok.nextToken();
-            if(token.startsWith(propertyName + ".")) {
+            if (token.startsWith(propertyName + ".")) {
                 return token.substring(token.indexOf(":") + 1);
             }
         }
@@ -275,5 +283,4 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     public String getRelationAttributeKey(String propertyName) {
         return null;
     }
-
 }

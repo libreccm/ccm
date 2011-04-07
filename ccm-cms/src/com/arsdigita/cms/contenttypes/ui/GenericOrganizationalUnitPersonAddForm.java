@@ -139,8 +139,8 @@ public class GenericOrganizationalUnitPersonAddForm
         status = selector.getSelectedPersonStatus();
 
         if (person == null) {
-            //m_itemSearch.setVisible(state, true);
-            //selectedPersonNameLabel.setVisible(state, false);
+            m_itemSearch.setVisible(state, true);
+            selectedPersonNameLabel.setVisible(state, false);
         } else {
             data.put(ITEM_SEARCH, person);
             data.put(GenericOrganizationalUnitPersonCollection.PERSON_ROLE,
@@ -148,9 +148,9 @@ public class GenericOrganizationalUnitPersonAddForm
             data.put(GenericOrganizationalUnitPersonCollection.STATUS,
                      status);
 
-            //m_itemSearch.setVisible(state, false);
-            //selectedPersonNameLabel.setVisible(state, true);
-            //selectedPersonNameLabel.setLabel(person.getFullName(), state);
+            m_itemSearch.setVisible(state, false);
+            selectedPersonNameLabel.setVisible(state, true);
+            selectedPersonNameLabel.setLabel(person.getFullName(), state);
         }
 
         setVisible(state, true);

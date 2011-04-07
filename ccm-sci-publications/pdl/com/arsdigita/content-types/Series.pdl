@@ -27,6 +27,8 @@ object type Series extends ContentPage {
 
        reference key (ct_series.series_id);
 
+       String[0..1] abstract = ct_series.abstract VARCHAR(4096);
+
 }
 
 //Assoication for the editship of a series

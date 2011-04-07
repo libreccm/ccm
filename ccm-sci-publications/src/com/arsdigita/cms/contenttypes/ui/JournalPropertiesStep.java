@@ -46,9 +46,13 @@ public class JournalPropertiesStep extends PublicationPropertiesStep {
         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
                 getPublicationPropertySheet(itemModel);
 
-          sheet.add(PublicationGlobalizationUtil.globalize(
+        sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.issn"),
-                Journal.ISSN);
+                  Journal.ISSN);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.journal.lastYearOfPublication"),
+                  Journal.LAST_YEAR);
 
         return sheet;
     }

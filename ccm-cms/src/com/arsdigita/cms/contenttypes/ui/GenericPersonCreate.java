@@ -38,7 +38,8 @@ public class GenericPersonCreate extends PageCreate {
     private static final String TITLEPRE = GenericPerson.TITLEPRE;
     private static final String TITLEPOST = GenericPerson.TITLEPOST;
 
-    public GenericPersonCreate(final ItemSelectionModel itemModel, final CreationSelector parent) {
+    public GenericPersonCreate(final ItemSelectionModel itemModel,
+                               final CreationSelector parent) {
         super(itemModel, parent);
     }
 
@@ -47,7 +48,8 @@ public class GenericPersonCreate extends PageCreate {
         ContentType type = getItemSelectionModel().getContentType();
         m_workflowSection = new ApplyWorkflowFormSection(type);
         add(m_workflowSection, ColumnPanel.INSERT);
-        add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.content_type")));
+        add(new Label(GlobalizationUtil.globalize(
+                "cms.ui.authoring.content_type")));
         add(new Label(type.getLabel()));
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
@@ -56,11 +58,14 @@ public class GenericPersonCreate extends PageCreate {
         GenericPersonPropertyForm.mandatoryFieldWidgets(this);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date")));
+            add(new Label(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
-            com.arsdigita.bebop.form.Date launchDate = new com.arsdigita.bebop.form.Date(launchDateParam);
+            com.arsdigita.bebop.form.Date launchDate = new com.arsdigita.bebop.form.Date(
+                    launchDateParam);
             if (ContentSection.getConfig().getRequireLaunchDate()) {
-                launchDate.addValidationListener(new LaunchDateValidationListener());
+                launchDate.addValidationListener(
+                        new LaunchDateValidationListener());
                 // if launch date is required, help user by suggesting today's date
                 launchDateParam.setDefaultValue(new Date());
             }
@@ -133,7 +138,11 @@ public class GenericPersonCreate extends PageCreate {
             surname = "";
         }
 
-        return String.format("%s %s %s %s", titlePre, givenName, surname, titlePost).trim();
+        if (titlePost.trim().isEmpty()) {
+            return String.format("%s %s %s", titlePre, givenName, surname).trim();
+        } else {
+            return String.format("%s %s %s, %s", titlePre, givenName, surname,
+                                 titlePost).trim();
+        }
     }
-
 }

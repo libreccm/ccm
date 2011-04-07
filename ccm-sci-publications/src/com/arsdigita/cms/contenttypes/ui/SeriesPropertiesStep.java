@@ -69,6 +69,10 @@ public class SeriesPropertiesStep extends SimpleEditStep {
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.title"),
                   Series.TITLE);
+           sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.abstract"),
+                  Series.ABSTRACT,
+                  new PublicationPropertiesStep.PreFormattedTextFormatter());
 
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {

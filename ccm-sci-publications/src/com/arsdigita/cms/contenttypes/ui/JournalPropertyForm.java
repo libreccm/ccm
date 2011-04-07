@@ -26,7 +26,11 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.ParameterEvent;
+import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -67,7 +71,40 @@ public class JournalPropertyForm
                 "publications.ui.journal.issn").localize()));
         ParameterModel issnParam = new StringParameter(Journal.ISSN);
         TextField issn = new TextField(issnParam);
+        issn.addValidationListener(new ParameterListener() {
+
+            public void validate(ParameterEvent event) throws
+                    FormProcessException {
+                ParameterData data = event.getParameterData();
+                String value = (String) data.getValue();
+
+                if (value.isEmpty()) {
+                    return;
+                }
+
+                value = value.replace("-", "");
+
+                if (value.length() != 8) {
+                    data.invalidate();
+                    data.addError(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.invalid_issn"));
+                }
+
+                try {
+                    Long num = Long.parseLong(value);
+                } catch (NumberFormatException ex) {
+                    data.invalidate();
+                    data.addError(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.invalid_issn"));
+                }
+            }
+        });
         add(issn);
+
+        add(new Label((String) PublicationGlobalizationUtil.globalize("publications.ui.journal.lastYearOfPublication").localize()));
+        ParameterModel lastYearParam = new IntegerParameter(Journal.LAST_YEAR);
+        TextField lastYear = new TextField(lastYearParam);
+        add(lastYear);
     }
 
     @Override
@@ -78,6 +115,7 @@ public class JournalPropertyForm
         Journal journal = (Journal) super.initBasicWidgets(fse);
 
         data.put(Journal.ISSN, journal.getISSN());
+        data.put(Journal.LAST_YEAR, journal.getLastYear());
     }
 
     @Override
@@ -89,9 +127,15 @@ public class JournalPropertyForm
 
         if ((journal != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            journal.setISSN((String) data.get(Journal.ISSN));
 
-            journal.save();;
+            String issn = (String) data.get(Journal.ISSN);
+            issn = issn.replace("-", "");
+            journal.setISSN(issn);
+
+            Integer lastYear = (Integer) data.get(Journal.LAST_YEAR);
+            journal.setLastYear(lastYear);
+
+            journal.save();
         }
     }
 }

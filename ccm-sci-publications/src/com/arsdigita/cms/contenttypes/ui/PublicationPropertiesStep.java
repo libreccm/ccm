@@ -146,7 +146,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                 step);
     }
 
-     private static class PreFormattedTextFormatter
+     protected static class PreFormattedTextFormatter
             extends DomainService
             implements DomainObjectPropertySheet.AttributeFormatter {
 

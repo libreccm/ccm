@@ -20,8 +20,10 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
@@ -37,6 +39,9 @@ public class SciMember extends GenericPerson {
     private static final Logger logger = Logger.getLogger(SciMember.class);
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciMember";
+    private static final String ORGANIZATIONS = "organizationalunit";
+    private static final String DEPARTMENTS = "organizationalunit";
+    private static final String PROJECTS = "organizationalunit";
     private static final SciOrganizationConfig s_config =
                                                new SciOrganizationConfig();
 
@@ -66,7 +71,24 @@ public class SciMember extends GenericPerson {
         super(type);
     }
 
+    public SciMemberSciOrganizationsCollection getOrganizations() {
+        return new SciMemberSciOrganizationsCollection((DataCollection) get(
+                ORGANIZATIONS));
+    }
+
+    public void addOrganization(SciOrganization organization) {
+        Assert.exists(organization, SciOrganization.class);
+
+        add(ORGANIZATIONS, organization);
+    }
+
+    public void removeOrganization(SciOrganization organization) {
+        Assert.exists(organization, SciOrganization.class);
+
+        remove(ORGANIZATIONS, organization);
+    }
+
     public static SciOrganizationConfig getConfig() {
         return s_config;
-    }    
+    }
 }

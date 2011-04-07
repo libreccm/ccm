@@ -25,6 +25,7 @@ import com.arsdigita.cms.ContentPage;
 //PDL definition for a journal
 object type Journal extends Publication {
 
+  Integer[0..1] lastYear = ct_journal.lastyear INTEGER;
   String[0..1] issn = ct_journal.issn VARCHAR(9);       
 
   reference key (ct_journal.journal_id);
