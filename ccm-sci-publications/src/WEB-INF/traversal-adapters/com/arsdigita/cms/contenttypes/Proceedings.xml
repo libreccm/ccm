@@ -11,6 +11,7 @@
       
       <xrd:associations rule="include">
 	<xrd:property name="/object/papers"/>
+	<xrd:property name="/object/papers/authors"/>
         <xrd:property name="/object/organizer"/>
       </xrd:associations>
 
