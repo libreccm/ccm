@@ -76,16 +76,66 @@ public class SciMember extends GenericPerson {
                 ORGANIZATIONS));
     }
 
-    public void addOrganization(SciOrganization organization) {
+    public void addOrganization(SciOrganization organization,
+            String role,
+            String status) {
         Assert.exists(organization, SciOrganization.class);
 
-        add(ORGANIZATIONS, organization);
+        DataObject link = add(ORGANIZATIONS, organization);
+
+        link.set(SciMemberSciOrganizationsCollection.MEMBER_ROLE, role);
+        link.set(SciMemberSciOrganizationsCollection.STATUS, status);
+        link.save();
     }
 
     public void removeOrganization(SciOrganization organization) {
         Assert.exists(organization, SciOrganization.class);
 
         remove(ORGANIZATIONS, organization);
+    }
+
+    public SciMemberSciDepartmentsCollection getDepartments() {
+        return new SciMemberSciDepartmentsCollection((DataCollection) get(DEPARTMENTS));
+    }
+
+    public void addDepartment(SciDepartment department,
+            String role,
+            String status) {
+        Assert.exists(department, SciDepartment.class);
+
+        DataObject link = add(DEPARTMENTS, department);
+
+        link.set(SciMemberSciDepartmentsCollection.MEMBER_ROLE, role);
+        link.set(SciMemberSciDepartmentsCollection.STATUS, status);
+        link.save();
+    }
+
+    public void removeDepartment(SciDepartment department) {
+        Assert.exists(department, SciDepartment.class);
+
+        remove(DEPARTMENTS, department);
+    }
+
+    public SciMemberSciProjectsCollection getProjects() {
+        return new SciMemberSciProjectsCollection((DataCollection) get(PROJECTS));
+    }
+
+    public void addProject(SciProject project,
+        String role,
+                String status) {
+        Assert.exists(project, SciProject.class);
+
+        DataObject link = add(PROJECTS, project);
+
+            link.set(SciMemberSciDepartmentsCollection.MEMBER_ROLE, role);
+        link.set(SciMemberSciDepartmentsCollection.STATUS, status);
+        link.save();
+    }
+
+    public void removeProject(SciProject project) {
+        Assert.exists(project, SciProject.class);
+
+        remove(PROJECTS, project);
     }
 
     public static SciOrganizationConfig getConfig() {

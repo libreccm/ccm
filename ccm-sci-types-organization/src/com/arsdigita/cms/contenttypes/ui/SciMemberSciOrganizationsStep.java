@@ -30,7 +30,8 @@ public class SciMemberSciOrganizationsStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
 
         BasicItemForm addOrganizationForm = new SciMemberSciOrganizationAddForm(
-                itemModel);
+                itemModel,
+                this);
         add(MEMBER_ADD_ORGANIZATION_SHEET_NAME,
             (String) SciOrganizationGlobalizationUtil.globalize(
                 "scimember.ui.organization.add").localize(),
@@ -40,12 +41,24 @@ public class SciMemberSciOrganizationsStep extends SimpleEditStep {
         setDisplayComponent(new SciMemberSciOrganizationsTable(itemModel, this));
     }
 
+    protected  SciOrganization getSelectedOrganization() {
+        return selectedOrganization;
+    }
+
     protected void setSelectedOrganization(SciOrganization organization) {
         this.selectedOrganization = organization;
     }
 
+     protected String getSelectedOrganizationRole() {
+        return selectedOrganizationRole;
+    }
+
     protected void setSelectedOrganizationRole(String role) {
         this.selectedOrganizationRole = role;
+    }
+
+    protected String getSelectedOrganizationStatus() {
+        return selectedOrganizationStatus;
     }
 
     protected void setSelectedOrganizationStatus(String status) {

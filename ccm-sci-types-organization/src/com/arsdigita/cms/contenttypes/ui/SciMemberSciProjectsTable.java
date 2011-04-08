@@ -18,8 +18,8 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contenttypes.SciMember;
-import com.arsdigita.cms.contenttypes.SciMemberSciOrganizationsCollection;
-import com.arsdigita.cms.contenttypes.SciOrganization;
+import com.arsdigita.cms.contenttypes.SciMemberSciProjectsCollection;
+import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
@@ -32,56 +32,56 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class SciMemberSciOrganizationsTable
+public class SciMemberSciProjectsTable
         extends Table
         implements TableActionListener {
 
     private static final Logger logger = Logger.getLogger(
-            SciMemberSciOrganizationsTable.class);
+            SciMemberSciProjectsTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_EDIT_LINK = "table_col_edit_link";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
     private final String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel itemModel;
-    private SciMemberSciOrganizationsStep step;
+    private SciMemberSciProjectsStep step;
 
-    public SciMemberSciOrganizationsTable(ItemSelectionModel itemModel,
-                                          SciMemberSciOrganizationsStep step) {
+    public SciMemberSciProjectsTable(ItemSelectionModel itemModel,
+                                          SciMemberSciProjectsStep step) {
         super();
         this.itemModel = itemModel;
         this.step = step;
 
         setEmptyView(new Label(SciOrganizationGlobalizationUtil.globalize(
-                "scimember.ui.organizations.none")));
+                "scimember.ui.projects.none")));
 
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
                 SciOrganizationGlobalizationUtil.globalize(
-                "scimember.ui.organization").localize(),
+                "scimember.ui.project").localize(),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
                 SciOrganizationGlobalizationUtil.globalize(
-                "scimember.ui.organization.role").localize()));
+                "scimember.ui.project.role").localize()));
         columnModel.add(new TableColumn(
                 2,
                 SciOrganizationGlobalizationUtil.globalize(
-                "scimember.ui.organization.status").localize()));
+                "scimember.ui.project.status").localize()));
         columnModel.add(new TableColumn(
                 3,
                 SciOrganizationGlobalizationUtil.globalize(
-                "scimember.ui.organization.edit").localize(),
+                "scimember.ui.project.edit").localize(),
                 TABLE_COL_EDIT_LINK));
         columnModel.add(new TableColumn(
                 4,
                 SciOrganizationGlobalizationUtil.globalize(
-                "scimember.ui.organization.remove").localize(),
+                "scimember.ui.project.remove").localize(),
                 TABLE_COL_DEL));
 
         setModelBuilder(
-                new SciMemberSciOrganizationsTableModelBuilder(itemModel));
+                new SciMemberSciProjectsTableModelBuilder(itemModel));
         columnModel.get(0).setCellRenderer(new EditCellRenderer());
         columnModel.get(3).setCellRenderer(new EditLinkCellRenderer());
         columnModel.get(4).setCellRenderer(new DeleteCellRenderer());
@@ -89,36 +89,36 @@ public class SciMemberSciOrganizationsTable
         addTableActionListener(this);
     }
 
-    private class SciMemberSciOrganizationsTableModelBuilder
+    private class SciMemberSciProjectsTableModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
 
-        public SciMemberSciOrganizationsTableModelBuilder(
+        public SciMemberSciProjectsTableModelBuilder(
                 ItemSelectionModel itemModel) {
-            SciMemberSciOrganizationsTable.this.itemModel = itemModel;
+            SciMemberSciProjectsTable.this.itemModel = itemModel;
         }
 
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             SciMember member = (SciMember) itemModel.getSelectedObject(state);
-            return new SciMemberSciOrganizationsTableModel(table,
+            return new SciMemberSciProjectsTableModel(table,
                                                            state,
                                                            member);
         }
     }
 
-    private class SciMemberSciOrganizationsTableModel implements TableModel {
+    private class SciMemberSciProjectsTableModel implements TableModel {
 
         private Table table;
-        private SciMemberSciOrganizationsCollection organizations;
-        private SciOrganization organization;
+        private SciMemberSciProjectsCollection projects;
+        private SciProject project;
 
-        public SciMemberSciOrganizationsTableModel(Table table,
+        public SciMemberSciProjectsTableModel(Table table,
                                                    PageState state,
                                                    SciMember member) {
             this.table = table;
-            this.organizations = member.getOrganizations();
+            this.projects = member.getProjects();
         }
 
         @Override
@@ -130,8 +130,8 @@ public class SciMemberSciOrganizationsTable
         public boolean nextRow() {
             boolean ret;
 
-            if ((organizations != null) && organizations.next()) {
-                organization = organizations.getOrganization();
+            if ((projects != null) && projects.next()) {
+                project = projects.getProject();
                 ret = true;
             } else {
                 ret = false;
@@ -144,11 +144,11 @@ public class SciMemberSciOrganizationsTable
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return organization.getTitle();
+                    return project.getTitle();
                 case 1:
                     RelationAttributeCollection role = new RelationAttributeCollection(
-                            "SciOrganizationRole",
-                            organizations.getRoleName());
+                            "SciProjectRole",
+                            projects.getRoleName());
                     if (role.next()) {
                         String roleName = role.getName();
                         role.close();
@@ -160,7 +160,7 @@ public class SciMemberSciOrganizationsTable
                 case 2:
                     RelationAttributeCollection status = new RelationAttributeCollection(
                             "GenericOrganizationalUnitMemberStatus",
-                            organizations.getStatus());
+                            projects.getStatus());
                     if (status.next()) {
                         String statusName = status.getName();
                         status.close();
@@ -171,10 +171,10 @@ public class SciMemberSciOrganizationsTable
                     }
                 case 3:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "scimember.ui.organizations.edit_assoc").localize();
+                            "scimember.ui.projects.edit_assoc").localize();
                 case 4:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "scimember.ui.organizations.remove").localize();
+                            "scimember.ui.projects.remove").localize();
                 default:
                     return null;
             }
@@ -182,7 +182,7 @@ public class SciMemberSciOrganizationsTable
 
         @Override
         public Object getKeyAt(int columnIndex) {
-            return organization.getID();
+            return project.getID();
         }
     }
 
@@ -207,9 +207,9 @@ public class SciMemberSciOrganizationsTable
                                                         member);
 
             if (canEdit) {
-                SciOrganization organization;
+                SciProject project;
                 try {
-                    organization = new SciOrganization((BigDecimal) key);
+                    project = new SciProject((BigDecimal) key);
                 } catch (DataObjectNotFoundException ex) {
                     logger.warn(String.format("No object with key '%s' found.",
                                               key),
@@ -221,8 +221,8 @@ public class SciMemberSciOrganizationsTable
                 ItemResolver resolver = section.getItemResolver();
                 Link link = new Link(value.toString(),
                                      resolver.generateItemURL(state,
-                                                              organization,
-                                                              section, organization.
+                                                              project,
+                                                              section, project.
                         getVersion()));
                 return link;
             } else {
@@ -285,7 +285,7 @@ public class SciMemberSciOrganizationsTable
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) SciOrganizationGlobalizationUtil.
                         globalize(
-                        "scimember.ui.organization."
+                        "scimember.ui.project."
                         + "confirm_remove").
                         localize());
                 return link;
@@ -300,33 +300,33 @@ public class SciMemberSciOrganizationsTable
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        SciOrganization organization = new SciOrganization(new BigDecimal(event.
+        SciProject project = new SciProject(new BigDecimal(event.
                 getRowKey().toString()));
 
         SciMember member = (SciMember) itemModel.getSelectedObject(state);
 
-        SciMemberSciOrganizationsCollection organizations = member.
-                getOrganizations();
+        SciMemberSciProjectsCollection projects = member.
+                getProjects();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
         } else if (TABLE_COL_EDIT_LINK.equals(
                 column.getHeaderKey().toString())) {
-            while (organizations.next()) {
-                if (organizations.getOrganization().equals(organization)) {
+            while (projects.next()) {
+                if (projects.getProject().equals(project)) {
                     break;
                 }
             }
-            step.setSelectedOrganization(organizations.getOrganization());
-            step.setSelectedOrganizationRole(organizations.getRoleName());
-            step.setSelectedOrganizationStatus(organizations.getStatus());
+            step.setSelectedProject(projects.getProject());
+            step.setSelectedProjectRole(projects.getRoleName());
+            step.setSelectedProjectStatus(projects.getStatus());
 
-            organizations.close();
+            projects.close();
 
             step.showEditComponent(state);
         } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
-            member.removeOrganization(organization);
+            member.removeProject(project);
         }
     }
 

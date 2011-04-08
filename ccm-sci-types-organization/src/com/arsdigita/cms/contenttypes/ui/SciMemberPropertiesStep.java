@@ -74,6 +74,15 @@ public class SciMemberPropertiesStep extends SimpleEditStep {
                                   new SciMemberSciOrganizationsStep(itemModel,
                                                                     parent));
 
+        segmentedPanel.addSegment(new Label((String) SciOrganizationGlobalizationUtil.
+                globalize("scimember.ui.departments").localize()),
+                                  new SciMemberSciDepartmentsStep(itemModel,
+                                                                  parent));
+
+        segmentedPanel.addSegment(new Label((String) SciOrganizationGlobalizationUtil.
+                globalize("scimember.ui.projects").localize()),
+                                  new SciMemberSciProjectsStep(itemModel,
+                                                               parent));
 
         setDisplayComponent(segmentedPanel);
     }

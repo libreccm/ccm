@@ -30,20 +30,20 @@ import com.arsdigita.persistence.DataObject;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class SciMemberSciOrganizationsCollection extends DomainCollection {
+public class SciMemberSciProjectsCollection extends DomainCollection {
 
     public static final String LINK_MEMBER_ROLE = "link.role_name";
     public static final String LINK_STATUS = "link.status";
     public static final String MEMBER_ROLE = "role_name";
     public static final String STATUS = "status";
 
-    public SciMemberSciOrganizationsCollection(DataCollection dataCollection) {
+    public SciMemberSciProjectsCollection(DataCollection dataCollection) {
         super(dataCollection);
 
         m_dataCollection.addFilter(String.format("type = %s",
                                                  ContentType.
-                findByAssociatedObjectType(SciOrganization.class.getName()).
-                getID().toString()));
+                findByAssociatedObjectType(SciProject.class.getName()).getID().
+                toString()));
 
         m_dataCollection.addOrder("title");
     }
@@ -68,10 +68,8 @@ public class SciMemberSciOrganizationsCollection extends DomainCollection {
         link.set(STATUS, status);
     }
 
-    public SciOrganization getOrganization() {
-        return (SciOrganization) DomainObjectFactory.newInstance(m_dataCollection.
+    public SciProject getProject() {
+        return (SciProject) DomainObjectFactory.newInstance(m_dataCollection.
                 getDataObject());
     }
-
-
 }

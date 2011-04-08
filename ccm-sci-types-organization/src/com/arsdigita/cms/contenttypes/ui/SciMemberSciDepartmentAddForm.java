@@ -17,9 +17,9 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.RelationAttributeCollection;
+import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciMember;
-import com.arsdigita.cms.contenttypes.SciMemberSciOrganizationsCollection;
-import com.arsdigita.cms.contenttypes.SciOrganization;
+import com.arsdigita.cms.contenttypes.SciMemberSciDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -28,41 +28,41 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
-public class SciMemberSciOrganizationAddForm
+public class SciMemberSciDepartmentAddForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener,
                    FormSubmissionListener {
 
     private ItemSearchWidget itemSearch;
-    private final String ITEM_SEARCH = "sciMemberOrganization";
-    private SciMemberSciOrganizationsStep step;
-    private Label selectedOrganizationNameLabel;
+    private final String ITEM_SEARCH = "sciMemberDepartment";
+    private SciMemberSciDepartmentsStep step;
+    private Label selectedDepartmentNameLabel;
 
-    public SciMemberSciOrganizationAddForm(ItemSelectionModel itemModel,
-                                           SciMemberSciOrganizationsStep step) {
-        super("sciMemberOrganizationAddForm", itemModel);
+    public SciMemberSciDepartmentAddForm(ItemSelectionModel itemModel,
+                                         SciMemberSciDepartmentsStep step) {
+        super("sciMemberDepartmentAddForm", itemModel);
         this.step = step;
-
     }
 
     @Override
-    protected void addWidgets() {
+    public void addWidgets() {
         add(new Label(SciOrganizationGlobalizationUtil.globalize(
-                "scimember.ui.organization.select_organization")));
+                "scimember.ui.department.select_department")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(SciOrganization.class.getName()));
+                findByAssociatedObjectType(SciDepartment.class.getName()));
         add(itemSearch);
 
-        selectedOrganizationNameLabel = new Label("");
-        add(selectedOrganizationNameLabel);
+        selectedDepartmentNameLabel = new Label("");
+        add(selectedDepartmentNameLabel);
 
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.person.role")));
         ParameterModel roleParam =
                        new StringParameter(
-                SciMemberSciOrganizationsCollection.MEMBER_ROLE);
+                SciMemberSciDepartmentsCollection.MEMBER_ROLE);
         SingleSelect roleSelect = new SingleSelect(roleParam);
         roleSelect.addValidationListener(new NotNullValidationListener());
         roleSelect.addOption(
@@ -70,7 +70,7 @@ public class SciMemberSciOrganizationAddForm
                            new Label((String) ContenttypesGlobalizationUtil.
                 globalize("cms.ui.select_one").localize())));
         RelationAttributeCollection roles = new RelationAttributeCollection(
-                "SciOrganizationRole");
+                "SciDepartmentRole");
         roles.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
                 getLanguage());
         while (roles.next()) {
@@ -84,7 +84,7 @@ public class SciMemberSciOrganizationAddForm
                 "cms.contenttypes.ui.genericorgaunit.person.status")));
         ParameterModel statusModel =
                        new StringParameter(
-                SciMemberSciOrganizationsCollection.STATUS);
+                SciMemberSciDepartmentsCollection.STATUS);
         SingleSelect statusSelect = new SingleSelect(statusModel);
         statusSelect.addValidationListener(new NotNullValidationListener());
         statusSelect.addOption(new Option("",
@@ -107,25 +107,25 @@ public class SciMemberSciOrganizationAddForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
 
-        SciOrganization orga;
+        SciDepartment department;
         String role;
         String status;
 
-        orga = step.getSelectedOrganization();
-        role = step.getSelectedOrganizationRole();
-        status = step.getSelectedOrganizationStatus();
+        department = step.getSelectedDepartment();
+        role = step.getSelectedDepartmentRole();
+        status = step.getSelectedDepartmentStatus();
 
-        if (orga == null) {
+        if (department == null) {
             itemSearch.setVisible(state, true);
-            selectedOrganizationNameLabel.setVisible(state, false);
+            selectedDepartmentNameLabel.setVisible(state, false);
         } else {
-            data.put(ITEM_SEARCH, orga);
-            data.put(SciMemberSciOrganizationsCollection.MEMBER_ROLE, role);
-            data.put(SciMemberSciOrganizationsCollection.STATUS, status);
+            data.put(ITEM_SEARCH, department);
+            data.put(SciMemberSciDepartmentsCollection.MEMBER_ROLE, role);
+            data.put(SciMemberSciDepartmentsCollection.STATUS, status);
 
             itemSearch.setVisible(state, false);
-            selectedOrganizationNameLabel.setVisible(state, true);
-            selectedOrganizationNameLabel.setLabel(orga.getTitle(), state);
+            selectedDepartmentNameLabel.setVisible(state, true);
+            selectedDepartmentNameLabel.setLabel(department.getTitle(), state);
         }
 
         setVisible(state, true);
@@ -139,37 +139,36 @@ public class SciMemberSciOrganizationAddForm
                 state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
+            SciDepartment department;
+            department = step.getSelectedDepartment();
 
-            SciOrganization orga;
-            orga = step.getSelectedOrganization();
-
-            if (orga == null) {
-                member.addOrganization((SciOrganization) data.get(ITEM_SEARCH),
-                                       (String) data.get(
-                        SciMemberSciOrganizationsCollection.MEMBER_ROLE),
-                                       (String) data.get(
-                        SciMemberSciOrganizationsCollection.STATUS));
+            if (department == null) {
+                member.addDepartment((SciDepartment) data.get(ITEM_SEARCH),
+                                     (String) data.get(
+                        SciMemberSciDepartmentsCollection.MEMBER_ROLE),
+                                     (String) data.get(
+                        SciMemberSciDepartmentsCollection.STATUS));
             } else {
-                SciMemberSciOrganizationsCollection orgas;
+                SciMemberSciDepartmentsCollection departments;
 
-                orgas = member.getOrganizations();
+                departments = member.getDepartments();
 
-                while (orgas.next()) {
-                    if (orgas.getOrganization().equals(orga)) {
+                while (departments.next()) {
+                    if (departments.getDepartment().equals(department)) {
                         break;
                     }
                 }
 
-                orgas.setRoleName((String) data.get(
-                        SciMemberSciOrganizationsCollection.MEMBER_ROLE));
-                orgas.setStatus((String) data.get(
-                        SciMemberSciOrganizationsCollection.STATUS));
+                departments.setRoleName((String) data.get(
+                        SciMemberSciDepartmentsCollection.MEMBER_ROLE));
+                departments.setStatus((String) data.get(
+                        SciMemberSciDepartmentsCollection.STATUS));
 
-                step.setSelectedOrganization(null);
-                step.setSelectedOrganizationRole(null);
-                step.setSelectedOrganizationStatus(null);
+                step.setSelectedDepartment(null);
+                step.setSelectedDepartmentRole(null);
+                step.setSelectedDepartmentStatus(null);
 
-                orgas.close();
+                departments.close();
             }
 
             init(fse);
@@ -178,11 +177,10 @@ public class SciMemberSciOrganizationAddForm
 
     @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
-        if (getSaveCancelSection().getCancelButton().isSelected(
-                fse.getPageState())) {
-            step.setSelectedOrganization(null);
-            step.setSelectedOrganizationRole(null);
-            step.setSelectedOrganizationStatus(null);
+        if (getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+            step.setSelectedDepartment(null);
+            step.setSelectedDepartmentRole(null);
+            step.setSelectedDepartmentStatus(null);
 
             init(fse);
         }
