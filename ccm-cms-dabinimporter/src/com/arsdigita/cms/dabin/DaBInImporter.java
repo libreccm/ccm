@@ -2741,8 +2741,8 @@ public class DaBInImporter extends Program {
                             download.setLinkOwner(workingPaperDe);
 
                             download = new RelatedLink();
-                            download.setTitle("Download");
-                            download.setTargetType(config.getProperty("workingpaper.download.en"));
+                            download.setTitle(config.getProperty("workingpaper.download.en"));
+                            download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
 
