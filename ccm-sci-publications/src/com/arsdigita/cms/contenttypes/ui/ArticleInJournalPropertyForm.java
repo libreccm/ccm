@@ -26,6 +26,8 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.CheckboxGroup;
+import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
@@ -47,8 +49,10 @@ public class ArticleInJournalPropertyForm
                    FormProcessListener,
                    FormSubmissionListener {
 
+    private static final String REVIEWED = "reviewed";
     private ArticleInJournalPropertiesStep m_step;
     public static final String ID = "ArticleInJournalEdit";
+    private CheckboxGroup reviewed;
 
     public ArticleInJournalPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -63,7 +67,7 @@ public class ArticleInJournalPropertyForm
 
     @Override
     protected void addWidgets() {
-        super.addWidgets();     
+        super.addWidgets();
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleinjournal.volume").localize()));
@@ -103,6 +107,12 @@ public class ArticleInJournalPropertyForm
                 pubDateParam);
         pubDate.setYearRange(1900, today.get(Calendar.YEAR) + 2);
         add(pubDate);
+
+         add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.reviewed")));
+        reviewed = new CheckboxGroup("reviewedGroup");
+        reviewed.addOption(new Option(REVIEWED, ""));
+        add(reviewed);
     }
 
     @Override
@@ -111,13 +121,19 @@ public class ArticleInJournalPropertyForm
 
         FormData data = fse.getFormData();
         ArticleInJournal article = (ArticleInJournal) initBasicWidgets(fse);
-      
+
         data.put(ArticleInJournal.VOLUME, article.getVolume());
         data.put(ArticleInJournal.ISSUE, article.getIssue());
         data.put(ArticleInJournal.PAGES_FROM, article.getPagesFrom());
-        data.put(ArticleInJournal.PAGES_TO, article.getPagesTo());           
+        data.put(ArticleInJournal.PAGES_TO, article.getPagesTo());
         data.put(ArticleInJournal.PUBLICATION_DATE,
                  article.getPublicationDate());
+
+        if ((article.getReviewed() != null) && (article.getReviewed())) {
+            reviewed.setValue(fse.getPageState(), new String[]{REVIEWED});
+        } else {
+            reviewed.setValue(fse.getPageState(), null);
+        }
     }
 
     @Override
@@ -128,15 +144,21 @@ public class ArticleInJournalPropertyForm
         ArticleInJournal article = (ArticleInJournal) initBasicWidgets(fse);
 
         if ((article != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {        
+                isSelected(fse.getPageState())) {
             article.setVolume((Integer) data.get(ArticleInJournal.VOLUME));
             article.setIssue((String) data.get(ArticleInJournal.ISSUE));
             article.setPagesFrom(
                     (Integer) data.get(ArticleInJournal.PAGES_FROM));
             article.setPagesTo(
-                    (Integer) data.get(ArticleInJournal.PAGES_TO));            
+                    (Integer) data.get(ArticleInJournal.PAGES_TO));
             article.setPublicationDate(
                     (Date) data.get(ArticleInJournal.PUBLICATION_DATE));
+
+            if (reviewed.getValue(fse.getPageState()) == null) {
+                article.setReviewed(false);
+            } else {
+                article.setReviewed(true);
+            }
 
             article.save();
         }

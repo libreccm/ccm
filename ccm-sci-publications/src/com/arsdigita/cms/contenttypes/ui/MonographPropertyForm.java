@@ -28,8 +28,6 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.parameters.ArrayParameter;
-import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Monograph;
 
@@ -63,11 +61,11 @@ public class MonographPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        /*add(new Label(PublicationGlobalizationUtil.globalize(
-        "publications.ui.monograph.reviewed")));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.monograph.reviewed")));
         reviewed = new CheckboxGroup("reviewedGroup");
         reviewed.addOption(new Option(REVIEWED, ""));
-        add(reviewed);     */
+        add(reviewed);
     }
 
     @Override
@@ -77,14 +75,14 @@ public class MonographPropertyForm
         FormData data = fse.getFormData();
         Monograph monograph = (Monograph) super.initBasicWidgets(fse);
 
-        if (reviewed != null) {
-            if ((monograph.getReviewed() != null)
-                && (monograph.getReviewed())) {
-                reviewed.setValue(fse.getPageState(), new String[]{REVIEWED});
-            } else {
-                reviewed.setValue(fse.getPageState(), null);
-            }
+
+        if ((monograph.getReviewed() != null)
+            && (monograph.getReviewed())) {
+            reviewed.setValue(fse.getPageState(), new String[]{REVIEWED});
+        } else {
+            reviewed.setValue(fse.getPageState(), null);
         }
+
     }
 
     @Override
@@ -96,12 +94,11 @@ public class MonographPropertyForm
 
         if ((monograph != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            if (reviewed != null) {
-                if (reviewed.getValue(fse.getPageState()) == null) {
-                    monograph.setReviewed(false);
-                } else {
-                    monograph.setReviewed(true);
-                }
+
+            if (reviewed.getValue(fse.getPageState()) == null) {
+                monograph.setReviewed(false);
+            } else {
+                monograph.setReviewed(true);
             }
 
             monograph.save();

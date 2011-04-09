@@ -36,6 +36,7 @@ public class CollectedVolume extends PublicationWithPublisher {
 
     public static final String ARTICLES = "articles";
     public static final String ARTICLE_ORDER = "articleOrder";
+    public static final String REVIEWED = "reviewed";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.CollectedVolume";
 
@@ -57,6 +58,14 @@ public class CollectedVolume extends PublicationWithPublisher {
 
     public CollectedVolume(String type) {
         super(type);
+    }
+
+    public Boolean getReviewed() {
+        return (Boolean) get(REVIEWED);
+    }
+
+    public  void setReviewed(Boolean reviewed) {
+        set(REVIEWED, reviewed);
     }
 
     public ArticleInCollectedVolumeCollection getArticles() {

@@ -21,13 +21,16 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainService;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
-
 
 /**
  *
@@ -42,8 +45,12 @@ public class WorkingPaperPropertiesStep extends UnPublishedPropertiesStep {
 
     public static Component getWorkingPaperPropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet)
-                getUnPublishedPropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) getUnPublishedPropertySheet(
+                itemModel);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.workingpaper.reviewed"),
+                  WorkingPaper.REVIEWED, new ReviewedFormatter());
 
         return sheet;
     }
@@ -51,7 +58,7 @@ public class WorkingPaperPropertiesStep extends UnPublishedPropertiesStep {
     @Override
     protected void addBasicProperties(ItemSelectionModel itemModel,
                                       AuthoringKitWizard parent) {
-         SimpleEditStep basicProperties = new SimpleEditStep(itemModel,
+        SimpleEditStep basicProperties = new SimpleEditStep(itemModel,
                                                             parent,
                                                             EDIT_SHEET_NAME);
 
@@ -73,5 +80,26 @@ public class WorkingPaperPropertiesStep extends UnPublishedPropertiesStep {
                 new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.basic_properties").
                 localize()), basicProperties);
+    }
+
+    private static class ReviewedFormatter
+            extends DomainService
+            implements DomainObjectPropertySheet.AttributeFormatter {
+
+        public ReviewedFormatter() {
+            super();
+        }
+
+        public String format(DomainObject obj, String attribute, PageState state) {
+            if ((get(obj, attribute) != null)
+                && (get(obj, attribute) instanceof Boolean)
+                && ((Boolean) get(obj, attribute) == true)) {
+                return (String) PublicationGlobalizationUtil.globalize(
+                        "publications.ui.workingpaper.reviewed.yes").localize();
+            } else {
+                return (String) PublicationGlobalizationUtil.globalize(
+                        "publications.ui.workingpaper.reviewed.no").localize();
+            }
+        }
     }
 }

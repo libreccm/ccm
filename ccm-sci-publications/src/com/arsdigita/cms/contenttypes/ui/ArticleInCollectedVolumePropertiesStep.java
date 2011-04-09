@@ -21,12 +21,15 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainService;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
@@ -57,6 +60,10 @@ public class ArticleInCollectedVolumePropertiesStep
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.article_in_collected_volume.chapter"),
                   ArticleInCollectedVolume.CHAPTER);
+
+         sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.reviewed"),
+                  ArticleInCollectedVolume.REVIEWED, new ReviewedFormatter());
 
         return sheet;
     }
@@ -99,5 +106,26 @@ public class ArticleInCollectedVolumePropertiesStep
                 "publications.ui.articleInCollectedVolume.collectedVolume").
                 localize());
 
+    }
+
+     private static class ReviewedFormatter
+            extends DomainService
+            implements DomainObjectPropertySheet.AttributeFormatter {
+
+        public ReviewedFormatter() {
+            super();
+        }
+
+        public String format(DomainObject obj, String attribute, PageState state) {
+            if ((get(obj, attribute) != null)
+                && (get(obj, attribute) instanceof Boolean)
+                && ((Boolean) get(obj, attribute) == true)) {
+                return (String) PublicationGlobalizationUtil.globalize(
+                        "publications.ui.articleInCollectedVolume.reviewed.yes").localize();
+            } else {
+                return (String) PublicationGlobalizationUtil.globalize(
+                        "publications.ui.articleInCollectedVolume.reviewed.no").localize();
+            }
+        }
     }
 }

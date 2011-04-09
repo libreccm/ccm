@@ -29,6 +29,7 @@ import java.math.BigDecimal;
  */
 public class WorkingPaper extends UnPublished {
 
+    public static final String REVIEWED = "reviewed";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.WorkingPaper";
 
@@ -50,5 +51,13 @@ public class WorkingPaper extends UnPublished {
 
     public WorkingPaper(String type) {
         super(type);
+    }
+
+    public Boolean getReviewed() {
+        return (Boolean) get(REVIEWED);
+    }
+
+    public void setReviewed(Boolean reviewed) {
+        set(REVIEWED, reviewed);
     }
 }

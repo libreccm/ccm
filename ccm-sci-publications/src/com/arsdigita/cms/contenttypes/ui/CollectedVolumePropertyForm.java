@@ -21,10 +21,13 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.CheckboxGroup;
+import com.arsdigita.bebop.form.Option;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import org.apache.log4j.Logger;
@@ -42,8 +45,10 @@ public class CollectedVolumePropertyForm
     private static final Logger s_log =
                                 Logger.getLogger(
             CollectedVolumePropertyForm.class);
+    private static final String REVIEWED = "reviewed";
     private CollectedVolumePropertiesStep m_step;
     public static final String ID = "CollectedVolumeEdit";
+    private CheckboxGroup reviewed;
 
     public CollectedVolumePropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -59,6 +64,11 @@ public class CollectedVolumePropertyForm
     @Override
     protected void addWidgets() {
         super.addWidgets();
+
+        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.collectedVolume.reviewed")));
+        reviewed = new CheckboxGroup("reviewedGroup");
+        reviewed.addOption(new Option(REVIEWED, ""));
+        add(reviewed);
     }
 
     @Override
@@ -68,6 +78,13 @@ public class CollectedVolumePropertyForm
         FormData data = fse.getFormData();
         CollectedVolume collectedVolume =
                         (CollectedVolume) super.initBasicWidgets(fse);
+
+        if ((collectedVolume.getReviewed() != null)
+                &&(collectedVolume.getReviewed())) {
+            reviewed.setValue(fse.getPageState(), new String[]{REVIEWED});
+        } else {
+            reviewed.setValue(fse.getPageState(), null);
+        }
     }
 
     @Override
@@ -77,5 +94,16 @@ public class CollectedVolumePropertyForm
         FormData data = fse.getFormData();
         CollectedVolume collectedVolume =
                         (CollectedVolume) super.processBasicWidgets(fse);
+
+        if ((collectedVolume != null) && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+
+            if (reviewed.getValue(fse.getPageState()) == null) {
+                collectedVolume.setReviewed(false);
+            } else {
+                collectedVolume.setReviewed(true);
+            }
+
+            collectedVolume.save();
+        }
     }
 }

@@ -26,6 +26,8 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.CheckboxGroup;
+import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
@@ -43,8 +45,10 @@ public class ArticleInCollectedVolumePropertyForm
                    FormInitListener,
                    FormSubmissionListener {
 
+    private static final String REVIEWED = "reviewed";
     private ArticleInCollectedVolumePropertiesStep m_step;
     public static final String ID = "ArticleInCollectedVolumeEdit";
+    private CheckboxGroup reviewed;
 
     public ArticleInCollectedVolumePropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -85,6 +89,12 @@ public class ArticleInCollectedVolumePropertyForm
                 ArticleInCollectedVolume.CHAPTER);
         TextField chapter = new TextField(chapterParam);
         add(chapter);
+
+         add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.reviewed")));
+        reviewed = new CheckboxGroup("reviewedGroup");
+        reviewed.addOption(new Option(REVIEWED, ""));
+        add(reviewed);
     }
 
     @Override
@@ -99,6 +109,12 @@ public class ArticleInCollectedVolumePropertyForm
         data.put(ArticleInCollectedVolume.PAGES_FROM, article.getPagesFrom());
         data.put(ArticleInCollectedVolume.PAGES_TO, article.getPagesTo());
         data.put(ArticleInCollectedVolume.CHAPTER, article.getChapter());
+
+        if ((article.getReviewed() != null) && (article.getReviewed())) {
+            reviewed.setValue(fse.getPageState(), new String[]{REVIEWED});
+        } else {
+            reviewed.setValue(fse.getPageState(), null);
+        }
     }
 
     @Override
@@ -118,6 +134,12 @@ public class ArticleInCollectedVolumePropertyForm
                     ArticleInCollectedVolume.PAGES_TO));
             article.setChapter((String) data.get(
                     ArticleInCollectedVolume.CHAPTER));
+
+            if (reviewed.getValue(fse.getPageState()) == null) {
+                article.setReviewed(false);
+            } else {
+                article.setReviewed(true);
+            }
 
             article.save();
         }

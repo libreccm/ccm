@@ -61,5 +61,5 @@ public class ArticleInCollectedVolumeCollectedVolumeStep
                                                      new ArticleInCollectedVolumeCollectedVolumeSheet(
                 itemModel);
         setDisplayComponent(sheet);
-    }
+    }    
 }

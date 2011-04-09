@@ -40,6 +40,7 @@ public class ArticleInJournal extends Publication {
     public static final String PAGES_TO = "pagesTo";
     public static final String JOURNAL = "journal";
     public static final String PUBLICATION_DATE = "publicationDate";
+    public static final String REVIEWED = "reviewed";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.ArticleInJournal";
 
@@ -101,6 +102,14 @@ public class ArticleInJournal extends Publication {
 
     public void setPublicationDate(Date publicationDate) {
         set(PUBLICATION_DATE, publicationDate);
+    }
+
+    public Boolean getReviewed() {
+        return (Boolean) get(REVIEWED);
+    }
+
+    public void setReviewed(Boolean reviewed) {
+        set(REVIEWED, reviewed);
     }
 
     public Journal getJournal() {

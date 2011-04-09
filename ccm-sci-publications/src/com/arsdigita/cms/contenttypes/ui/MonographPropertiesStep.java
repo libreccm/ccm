@@ -49,9 +49,9 @@ public class MonographPropertiesStep
         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationWithPublisherPropertiesStep.
                 getPublicationWithPublisherPropertySheet(itemModel);
 
-        /*sheet.add(PublicationGlobalizationUtil.globalize(
+        sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.monograph.reviewed"),
-                  Monograph.REVIEWED, new ReviewedFormatter());*/
+                  Monograph.REVIEWED, new ReviewedFormatter());
 
         return sheet;
     }

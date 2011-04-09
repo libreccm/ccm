@@ -20,11 +20,15 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.CheckboxGroup;
+import com.arsdigita.bebop.form.Option;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.WorkingPaper;
 
 /**
  *
@@ -36,8 +40,10 @@ public class WorkingPaperPropertyForm
                    FormProcessListener,
                    FormSubmissionListener {
 
+    private static final String REVIEWED = "reviewed";
     private WorkingPaperPropertiesStep m_step;
     public static final String ID = "WorkingPaperEdit";
+    private CheckboxGroup reviewed;
 
     public WorkingPaperPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -53,15 +59,43 @@ public class WorkingPaperPropertyForm
     @Override
     protected void addWidgets() {
         super.addWidgets();
+
+        add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.workingpaper.reviewed")));
+        reviewed = new CheckboxGroup("reviewedGroup");
+        reviewed.addOption(new Option(REVIEWED, ""));
+        add(reviewed);
     }
 
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         super.init(fse);
+
+        WorkingPaper paper = (WorkingPaper) super.initBasicWidgets(fse);
+
+        if ((paper.getReviewed() != null) && (paper.getReviewed())) {
+            reviewed.setValue(fse.getPageState(), new String[]{REVIEWED});
+        } else {
+            reviewed.setValue(fse.getPageState(), null);
+        }
     }
 
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
         super.process(fse);
+
+        WorkingPaper paper = (WorkingPaper) super.processBasicWidgets(fse);
+
+        if ((paper != null) && getSaveCancelSection().getSaveButton().isSelected(
+                fse.getPageState())) {
+
+            if (reviewed.getValue(fse.getPageState()) == null) {
+                paper.setReviewed(false);
+            } else {
+                paper.setReviewed(true);
+            }
+
+            paper.save();
+        }
     }
 }
