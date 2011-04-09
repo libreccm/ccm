@@ -88,6 +88,7 @@ public class SciProjectPropertyForm
         shortDesc.setCols(75);
         shortDesc.setRows(5);
         add(shortDesc);
+        
     }
 
     @Override

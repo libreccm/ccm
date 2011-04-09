@@ -94,7 +94,7 @@ public class SciProjectPropertiesStep
         sheet.add(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.shortdesc"),
                   SciProject.PROJECT_SHORT_DESCRIPTION);
-
+      
         return sheet;
     }
 
