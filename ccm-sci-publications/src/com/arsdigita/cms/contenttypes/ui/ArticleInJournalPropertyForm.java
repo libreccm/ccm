@@ -31,6 +31,8 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -74,6 +76,8 @@ public class ArticleInJournalPropertyForm
         ParameterModel volumeParam =
                        new IntegerParameter(ArticleInJournal.VOLUME);
         TextField volume = new TextField(volumeParam);
+        volume.addValidationListener(new NotNullValidationListener());
+        volume.addValidationListener(new NotEmptyValidationListener());
         add(volume);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(

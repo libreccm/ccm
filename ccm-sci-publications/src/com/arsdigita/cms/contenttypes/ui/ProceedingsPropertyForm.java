@@ -29,13 +29,12 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Date;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
+import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Proceedings;
-import com.arsdigita.cms.ui.ItemSearchWidget;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -49,7 +48,7 @@ public class ProceedingsPropertyForm
                    FormInitListener,
                    FormSubmissionListener {
 
-    private ProceedingsPropertiesStep m_step;       
+    private ProceedingsPropertiesStep m_step;
     public static final String ID = "proceedingsEdit";
 
     public ProceedingsPropertyForm(ItemSelectionModel itemModel) {
@@ -66,12 +65,14 @@ public class ProceedingsPropertyForm
     @Override
     protected void addWidgets() {
         super.addWidgets();
-       
+
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.name_of_conference")));
         ParameterModel nameOfConfParam = new StringParameter(
                 Proceedings.NAME_OF_CONFERENCE);
         TextField nameOfConf = new TextField(nameOfConfParam);
+        nameOfConf.addValidationListener(new NotNullValidationListener());
+        nameOfConf.addValidationListener(new NotEmptyValidationListener());
         add(nameOfConf);
 
         add(new Label(PublicationGlobalizationUtil.globalize(
@@ -79,6 +80,8 @@ public class ProceedingsPropertyForm
         ParameterModel placeOfConfParam = new StringParameter(
                 Proceedings.PLACE_OF_CONFERENCE);
         TextField placeOfConf = new TextField(placeOfConfParam);
+        placeOfConf.addValidationListener(new NotNullValidationListener());
+        placeOfConf.addValidationListener(new NotEmptyValidationListener());
         add(placeOfConf);
 
         Calendar today = new GregorianCalendar();
@@ -88,6 +91,8 @@ public class ProceedingsPropertyForm
                 Proceedings.DATE_FROM_OF_CONFERENCE);
         Date dateFrom = new Date(dateFromParam);
         dateFrom.setYearRange(1900, today.get(Calendar.YEAR) + 3);
+        dateFrom.addValidationListener(new NotNullValidationListener());
+        dateFrom.addValidationListener(new NotEmptyValidationListener());
         add(dateFrom);
 
         add(new Label(PublicationGlobalizationUtil.globalize(
@@ -96,6 +101,8 @@ public class ProceedingsPropertyForm
                 Proceedings.DATE_TO_OF_CONFERENCE);
         Date dateTo = new Date(dateToParam);
         dateTo.setYearRange(1900, today.get(Calendar.YEAR) + 3);
+        dateTo.addValidationListener(new NotNullValidationListener());
+        dateTo.addValidationListener(new NotEmptyValidationListener());
         add(dateTo);
     }
 
@@ -106,7 +113,7 @@ public class ProceedingsPropertyForm
 
         FormData data = fse.getFormData();
         Proceedings proceedings = (Proceedings) super.initBasicWidgets(fse);
-     
+
         data.put(Proceedings.NAME_OF_CONFERENCE,
                  proceedings.getNameOfConference());
         data.put(Proceedings.PLACE_OF_CONFERENCE,
@@ -126,7 +133,7 @@ public class ProceedingsPropertyForm
 
 
         if ((proceedings != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {        
+                isSelected(fse.getPageState())) {
             proceedings.setNameOfConference((String) data.get(
                     Proceedings.NAME_OF_CONFERENCE));
             proceedings.setPlaceOfConference((String) data.get(
