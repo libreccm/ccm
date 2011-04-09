@@ -21,16 +21,20 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import java.text.DateFormat;
 
 /**
  * Step for editing the basic properties of a {@link SciProject}.
@@ -53,10 +57,40 @@ public class SciProjectPropertiesStep
 
         sheet.add(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.begin"),
-                  SciProject.BEGIN);
+                  SciProject.BEGIN,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
+
+            public String format(DomainObject obj,
+                                 String attribute,
+                                 PageState state) {
+                SciProject project = (SciProject) obj;
+                if (project.getBegin() == null) {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                } else {
+                    return DateFormat.getDateInstance(DateFormat.LONG).format(
+                            project.getBegin());
+                }
+            }
+        });
         sheet.add(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.end"),
-                  SciProject.END);
+                  SciProject.END,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
+
+            public String format(DomainObject obj,
+                                 String attribute,
+                                 PageState state) {
+                SciProject project = (SciProject) obj;
+                if (project.getEnd() == null) {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                } else {
+                    return DateFormat.getDateInstance(DateFormat.LONG).format(
+                            project.getEnd());
+                }
+            }
+        });
         sheet.add(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.shortdesc"),
                   SciProject.PROJECT_SHORT_DESCRIPTION);

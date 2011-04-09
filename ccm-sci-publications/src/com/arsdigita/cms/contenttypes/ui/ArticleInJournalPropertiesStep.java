@@ -24,6 +24,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -31,6 +32,7 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainService;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import java.text.DateFormat;
 
 /**
  *
@@ -66,9 +68,26 @@ public class ArticleInJournalPropertiesStep extends PublicationPropertiesStep {
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleinjournal.publication_date"),
-                  ArticleInJournal.PUBLICATION_DATE);
+                  ArticleInJournal.PUBLICATION_DATE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
 
-          sheet.add(PublicationGlobalizationUtil.globalize(
+            public String format(DomainObject obj,
+                                 String attribute,
+                                 PageState state) {
+
+                ArticleInJournal article = (ArticleInJournal) obj;
+
+                if (article.getPublicationDate() != null) {
+                    return DateFormat.getDateInstance(DateFormat.LONG).format(
+                            article.getPublicationDate());
+                } else {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                }
+            }
+        });
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleinjournal.reviewed"),
                   ArticleInJournal.REVIEWED, new ReviewedFormatter());
 
@@ -114,7 +133,7 @@ public class ArticleInJournalPropertiesStep extends PublicationPropertiesStep {
 
     }
 
-     private static class ReviewedFormatter
+    private static class ReviewedFormatter
             extends DomainService
             implements DomainObjectPropertySheet.AttributeFormatter {
 
@@ -127,7 +146,8 @@ public class ArticleInJournalPropertiesStep extends PublicationPropertiesStep {
                 && (get(obj, attribute) instanceof Boolean)
                 && ((Boolean) get(obj, attribute) == true)) {
                 return (String) PublicationGlobalizationUtil.globalize(
-                        "publications.ui.articleinjournal.reviewed.yes").localize();
+                        "publications.ui.articleinjournal.reviewed.yes").
+                        localize();
             } else {
                 return (String) PublicationGlobalizationUtil.globalize(
                         "publications.ui.articleinjournal.reviewed.no").localize();

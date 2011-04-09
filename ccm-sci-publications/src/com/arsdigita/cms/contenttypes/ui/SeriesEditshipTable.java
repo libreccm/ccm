@@ -36,10 +36,14 @@ import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.EditshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Series;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import org.apache.log4j.Logger;
 
 /**
@@ -62,7 +66,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                                SimpleEditStep editStep) {
         super();
         m_itemModel = itemModel;
-        this.editStep = (SeriesEditshipStep)editStep;
+        this.editStep = (SeriesEditshipStep) editStep;
 
         setEmptyView(
                 new Label(PublicationGlobalizationUtil.globalize(
@@ -174,9 +178,23 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                 case 0:
                     return m_editor.getFullName();
                 case 1:
-                    return m_editshipCollection.getFrom();
+                    if (m_editshipCollection.getFrom() == null) {
+                        return ContenttypesGlobalizationUtil.globalize(
+                                "cms.ui.unknown").localize();
+                    } else {
+                        return DateFormat.getDateInstance(DateFormat.LONG).
+                                format(
+                                m_editshipCollection.getFrom());
+                    }
                 case 2:
-                    return m_editshipCollection.getTo();
+                    if (m_editshipCollection.getTo() == null) {
+                        return ContenttypesGlobalizationUtil.globalize(
+                                "cms.ui.unknown").localize();
+                    } else {
+                        return DateFormat.getDateInstance(DateFormat.LONG).
+                                format(
+                                m_editshipCollection.getTo());
+                    }
                 case 3:
                     return PublicationGlobalizationUtil.globalize(
                             "publications.ui.series.editship.edit").localize();
@@ -240,8 +258,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                                       int col) {
             SecurityManager securityManager =
                             Utilities.getSecurityManager(state);
-            Series series = (Series) m_itemModel.
-                    getSelectedObject(state);
+            Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
@@ -365,9 +382,10 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
-        } else if(TABLE_COL_EDIT_EDITSHIP.equals(column.getHeaderKey().toString())) {
-            while(editors.next()) {
-                if(editors.getEditor().equals(editor)) {
+        } else if (TABLE_COL_EDIT_EDITSHIP.equals(column.getHeaderKey().
+                toString())) {
+            while (editors.next()) {
+                if (editors.getEditor().equals(editor)) {
                     break;
                 }
             }
@@ -378,7 +396,8 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
 
             editors.close();
 
-            editStep.showComponent(state, SeriesEditshipStep.ADD_EDITOR_SHEET_NAME);
+            editStep.showComponent(state,
+                                   SeriesEditshipStep.ADD_EDITOR_SHEET_NAME);
         } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             series.removeEditor(editor);
         }

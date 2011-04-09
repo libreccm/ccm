@@ -45,7 +45,7 @@ public class ExpertiseOrdererSheet
                 "publications.ui.expertise.orderer").localize(),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                0,
+                1,
                 PublicationGlobalizationUtil.globalize(
                 "publications.ui.expertise.orderer.remove").localize(),
                 TABLE_COL_DEL));

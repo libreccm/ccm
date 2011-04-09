@@ -21,13 +21,17 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import java.text.DateFormat;
 
 /**
  *
@@ -57,11 +61,41 @@ public class ProceedingsPropertiesStep
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.date_from_of_conference"),
-                  Proceedings.DATE_FROM_OF_CONFERENCE);
+                  Proceedings.DATE_FROM_OF_CONFERENCE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
+
+            public String format(DomainObject item,
+                                 String attribute,
+                                 PageState state) {
+                Proceedings proceedings = (Proceedings) item;
+                if (proceedings.getDateFromOfConference() != null) {
+                    return DateFormat.getDateInstance(DateFormat.LONG).format(proceedings.
+                            getDateFromOfConference());
+                } else {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                }
+            }
+        });
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.date_to_of_conference"),
-                  Proceedings.DATE_TO_OF_CONFERENCE);
+                  Proceedings.DATE_TO_OF_CONFERENCE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
+
+            public String format(DomainObject item,
+                                 String attribute,
+                                 PageState state) {
+                Proceedings proceedings = (Proceedings) item;
+                if (proceedings.getDateToOfConference() != null) {
+                    return DateFormat.getDateInstance(DateFormat.LONG).format(proceedings.
+                            getDateToOfConference());
+                } else {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                }
+            }
+        });
 
         return sheet;
     }

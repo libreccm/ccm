@@ -85,27 +85,26 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(
                 itemModel);
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.surname").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.surname"),
                   GenericPerson.SURNAME);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.givenname").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.givenname"),
                   GenericPerson.GIVENNAME);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.titlepre").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.titlepre"),
                   GenericPerson.TITLEPRE);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.titlepost").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.titlepost"),
                   GenericPerson.TITLEPOST);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.birthdate").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.birthdate"),
                   GenericPerson.BIRTHDATE,
                   new DomainObjectPropertySheet.AttributeFormatter() {
 
             public String format(DomainObject item,
                                  String attribute,
-                                 PageState state) {
-                //ContentPage page = (ContentPage) item;
+                                 PageState state) {              
                 GenericPerson person = (GenericPerson) item;
                 if (person.getBirthdate() != null) {
                     return DateFormat.getDateInstance(DateFormat.LONG).format(person.
@@ -117,8 +116,8 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
             }
         });
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.gender").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.gender"),
                   GenericPerson.GENDER,
                   new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -138,8 +137,8 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         });
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                    "cms.ui.authoring.page_launch_date").localize(),
+            sheet.add(ContenttypesGlobalizationUtil.globalize(
+                    "cms.ui.authoring.page_launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -158,8 +157,8 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
             });
         }
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.description").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.description"),
                   GenericPerson.DESCRIPTION);
         return sheet;
     }
