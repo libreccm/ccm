@@ -27,11 +27,8 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.RadioGroup;
-import com.arsdigita.bebop.parameters.BooleanParameter;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
@@ -55,12 +52,13 @@ public class PublicationAuthorAddForm
     private static final Logger s_log = Logger.getLogger(
             PublicationAuthorAddForm.class);
     private PublicationPropertiesStep m_step;
-    private ItemSearchWidget m_itemSearch;
-    //private SaveCancelSection m_saveCancelSection;
+    private ItemSearchWidget m_itemSearch;  
     private final String ITEM_SEARCH = "authors";
     private ItemSelectionModel m_itemModel;
     private SimpleEditStep editStep;
     private Label selectedAuthorLabel;
+    private static final String ISEDITOR = "isEditor";
+    private CheckboxGroup isEditor;
 
     public PublicationAuthorAddForm(ItemSelectionModel itemModel,
                                     SimpleEditStep editStep) {
@@ -84,25 +82,10 @@ public class PublicationAuthorAddForm
         add(selectedAuthorLabel);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.is_editor").localize()));
-        ParameterModel isEditorModel = new BooleanParameter(
-                AuthorshipCollection.EDITOR);
-        RadioGroup isEditorGroup = new RadioGroup(isEditorModel);
-        isEditorGroup.addValidationListener(new NotNullValidationListener());
-        isEditorGroup.setMetaDataAttribute(
-                "label",
-                (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.is_editor_label").
-                localize());
-        isEditorGroup.addOption(
-                new Option(Boolean.FALSE.toString(),
-                           (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.is_editor_false").localize()));
-        isEditorGroup.addOption(
-                new Option(Boolean.TRUE.toString(),
-                           (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.is_editor_true").localize()));
-        add(isEditorGroup);
+                "publications.ui.authors.author.is_editor").localize()));     
+        isEditor = new CheckboxGroup("isEditorGroup");
+        isEditor.addOption(new Option(ISEDITOR, ""));
+        add(isEditor);
     }
 
     @Override
@@ -126,7 +109,12 @@ public class PublicationAuthorAddForm
             s_log.warn(String.format("Author is here: %s", author.getFullName()));
 
             data.put(ITEM_SEARCH, author);
-            data.put(AuthorshipCollection.EDITOR, editor);
+            //data.put(AuthorshipCollection.EDITOR, editor);
+            if ((editor != null) && editor) {
+                isEditor.setValue(state, new String[]{ISEDITOR});
+            } else {
+                isEditor.setValue(state, null);
+            }
 
             m_itemSearch.setVisible(state, false);
             selectedAuthorLabel.setLabel(author.getFullName(), state);
@@ -149,10 +137,18 @@ public class PublicationAuthorAddForm
             author = ((PublicationAuthorsPropertyStep) editStep).
                     getSelectedAuthor();
 
+            Boolean editor;
+
+            if (isEditor.getValue(state) == null) {
+                editor = Boolean.FALSE;
+            } else {
+                editor = Boolean.TRUE;
+            }
+
             if (author == null) {
                 publication.addAuthor(
                         (GenericPerson) data.get(ITEM_SEARCH),
-                        (Boolean) data.get(AuthorshipCollection.EDITOR));
+                        editor);                       
             } else {
                 AuthorshipCollection authors;
 
@@ -164,9 +160,8 @@ public class PublicationAuthorAddForm
                     }
                 }
 
-                authors.setEditor(
-                        (Boolean) data.get(AuthorshipCollection.EDITOR));
-
+                authors.setEditor(editor);
+               
                 ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthor(
                         null);
                 ((PublicationAuthorsPropertyStep) editStep).
