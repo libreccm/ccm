@@ -99,7 +99,7 @@ public class DaBInImporter extends Program {
     private static final Logger logger = Logger.getLogger(DaBInImporter.class);
     private Properties config;
     private String timestamp = null;
-    private ContentSection section;
+    private ContentSection section;  
     private ContentSection personsSection;
     private ContentSection projectsSection;
     private ContentSection publicationsSection;
@@ -110,6 +110,7 @@ public class DaBInImporter extends Program {
     private Connection connection = null;
     private Folder root;
     private Folder personsRootFolder;
+    private Folder membersRootFolder;
     private Folder projectsRootFolder;
     private Folder publicationsRootFolder;
     private Folder authors;
@@ -202,6 +203,7 @@ public class DaBInImporter extends Program {
         section = getContentSection(config.getProperty("ccm.contentsection"));
         personsSection = getContentSection(config.getProperty(
                 "ccm.personsContentSection"));
+        
         projectsSection = getContentSection(config.getProperty(
                 "ccm.projectsContentSection"));
         publicationsSection = getContentSection(config.getProperty(
@@ -256,6 +258,7 @@ public class DaBInImporter extends Program {
                 "\nCreating CCM folders (if they do not exist already)...");
         root = section.getRootFolder();
         personsRootFolder = personsSection.getRootFolder();
+        membersRootFolder = section.getRootFolder();
         projectsRootFolder = projectsSection.getRootFolder();
         publicationsRootFolder = publicationsSection.getRootFolder();
 
@@ -266,7 +269,7 @@ public class DaBInImporter extends Program {
 
         departments = createFolder(root, "abteilungen", "Abteilungen");
 
-        members = createFolder(personsRootFolder, "mitglieder", "Mitglieder");
+        members = createFolder(membersRootFolder, "mitglieder", "Mitglieder");
 
         organization = createFolder(root, "organisationen", "Organisation(en)");
 
