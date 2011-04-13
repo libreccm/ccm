@@ -2622,7 +2622,7 @@ public class DaBInImporter extends Program {
                     workingPaperEn.setOrganization(orgaEn);
                     workingPaperEn.setPlace("Bremen");
                     extractYearOfPublication(workingPaperData, workingPaperEn);
-                    workingPaperEn.setLanguage("En");
+                    workingPaperEn.setLanguage("en");
                     workingPaperEn.setLifecycle(createLifecycle(
                             publicationsLifecycle));
                     workingPaperEn.setContentSection(publicationsSection);
