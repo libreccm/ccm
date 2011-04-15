@@ -27,6 +27,20 @@ import java.util.List;
 import java.util.Iterator;
 
 /**
+ * <p>This class is a convenience class for easily initializing an
+ * Application Portlet type (ie full screen portlet) wrapping
+ * {@link PortletType} class.</p>
+ * <p>
+ * The usage pattern for this class is:
+ * <ul>
+ * <li> Create a PortletSetup class.</li>
+ * <li> Use setters to initialize values.</li>
+ * <li> Call the run method ( setup.run() ).</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Necessary values that are uninitialized when run() is called throw an
+ * exception. </p>
  *
  * @author <a href="mailto:jparsons@arsdigita.com">Jim Parsons</a>
  */
@@ -36,19 +50,38 @@ public class AppPortletSetup extends PortletSetup {
     protected boolean m_isSingleton = false;
 
 
+    /**
+     * Main Constructor, param category is an appender class and used to be able
+     * to appand messages into the log file.
+     * @param category
+     */
     public AppPortletSetup(Category category) {
         super(category);
 
     }
 
+    /**
+     * Determine whether it is a PortalApplication.
+     * Parameter is deprecated and not used for new, legacy free application
+     * types! Should be ommitted in this case.
+     * @param isPortalApplication
+     */
     public void setPortalApplication(boolean isPortalApplication) {
         m_isPortalApplication = isPortalApplication;
     }
 
+    /**
+     * Determine whether it is a singelton application, ie only one instantiation
+     * is apllowed.
+     * Parameter is deprecated and not used for new, legacy free application
+     * types! Should be ommitted in this case.
+     * @param isPortalApplication
+     */
     public void setSingleton(boolean isSingleton) {
         m_isSingleton = isSingleton;
     }
 
+    @Override
     public PortletType run() {
         notice("Validating setup...");
 

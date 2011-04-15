@@ -58,7 +58,7 @@ public class PortletType extends ResourceType {
      * PortletType uses the data object type of ApplicationType.
      */
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.portal.PortletType";
+                               "com.arsdigita.portal.PortletType";
 
     public static final String WIDE_PROFILE = "wide";
     public static final String NARROW_PROFILE = "narrow";
@@ -94,6 +94,7 @@ public class PortletType extends ResourceType {
 
         PackageType packageType = null;
 
+        // is com.arsdigita.portal.Portal initialized
         try {
             packageType = PackageType.findByKey("portal");
         } catch (DataObjectNotFoundException nfe) {
@@ -113,6 +114,7 @@ public class PortletType extends ResourceType {
         setEmbeddedView(true);
     }
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -358,6 +360,7 @@ public class PortletType extends ResourceType {
             return m_path;
         }
 
+        @Override
         public boolean equals(Object o) {
             if (!(o instanceof XSLEntry)) {
                 return false;
