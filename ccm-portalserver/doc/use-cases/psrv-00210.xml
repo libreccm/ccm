@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00210" />
+	<title>Delete a Portlet from a Portal Tab</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2001/11/02" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+This use case describes the series of events necessary to delete a portlet in an already existing Portal Tab
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A PA is interested in deleting a Portlet from a Tab within a Portal" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>Beginning at the Portal, a PA clicks the "Configure Portal"
+  link</li>
+  <li>On the Configure Portal page, the PA is presented with a list of all Tabs that currently reside within the Portal. Next to the name of each Tab, is a link saying "configure" and a link saying "delete".</li> 
+  <li>The PA chooses the Tab he or she would like to delete a Portlet from, and chooses the "Configure" link for that Tab</li>
+  <li>The Tab configuration page presents the PA with an Option to "Add/Remove Portlets". The PA selects this link</li>
+  <li>On the Add/Remove Portlets page, all available Portlets appear as a checkable list, partitioned conveniently by Package Type. Portlets already included within this Tab are pre-checked, while unused available Portlets appear as unchecked</li>
+  <li>The PA unchecks those Portlets he or she wishes to remove, and then clicks the "Save Configuration"button</li>
+  <li>The PA is returned to the Tab configuration Page</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The desired Portlets are removed from the Portal
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span><br>
+</p>
+
+		]]>
+	</open_issues>
+<iteration>
+Focused
+</iteration>
+</use_case>

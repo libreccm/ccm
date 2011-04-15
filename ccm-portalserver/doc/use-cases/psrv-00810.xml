@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00810" />
+	<title>Browsing Bookmarks within a Portal </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2001/11/21" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+This Use case is the Base Case for Bookmark functionality. General Bookmark
+attributes and procedures are detailed here.
+<p>
+<br>
+The Collaborative Portal bookmarking model has one important distinction from browser bookmarking: In CW, Bookmarks can be shared. In a Collaborative 
+Portal, the bookmark portlet is available for reading and use in most cases, by all participants. The ability to create a bookmark and have it appear within the bookmark portlet for a particular portal, is controlled by write privelage on the bookmark portlet.</p>
+<br>
+<p>
+A system user may have participant status in many different portals, including their own personal portal. When using a collaborative portal or an application associated with a collaborative portal, the bookmark portlet 
+instanced by that portal only shows bookmarks associated with that portal.
+When a user is at his or her own personal portal, the Bookmark portlet can be configured to show just personal bookmarks, or import bookmarks as read/use only from collaborative portals that include the user as a member.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="A Portal participant is referred to a bookmark available  within a portal" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+This Use Case pre-supposes that the Bookmark portlet is present in the portal, and that it has at least one bookmark saved there.
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>The portal participant chooses a bookmark entry from the bookmark portlet.</li>
+  <li>The participant is taken to that content item.</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The portal participant arrives at the desired content destination.
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span><br>
+</p>
+
+
+
+
+		]]>
+	</open_issues>
+<iteration>
+Focused
+</iteration>
+</use_case>

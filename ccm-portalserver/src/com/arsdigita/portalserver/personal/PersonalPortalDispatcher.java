@@ -1,0 +1,99 @@
+/*
+ * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.portalserver.personal;
+
+
+import com.arsdigita.portalserver.util.GlobalizationUtil; 
+
+import com.arsdigita.bebop.DimensionalNavbar;
+import com.arsdigita.bebop.Link;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.page.PageDispatcher;
+import com.arsdigita.dispatcher.Dispatcher;
+import com.arsdigita.dispatcher.RequestContext;
+
+import com.arsdigita.portalserver.ui.admin.PortalAdminPage;
+import com.arsdigita.portalserver.ui.PortalDispatcher;
+import com.arsdigita.portalserver.ui.PortalParticipants;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+
+/**
+ * <p><strong>Experimental</strong></p>
+ *
+ * @author <a href="mailto:justin@arsdigita.com">Justin Ross</a>
+ * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/personal/PersonalPortalDispatcher.java#5 $
+ */
+public class PersonalPortalDispatcher extends PortalDispatcher {
+    public static final String versionId =
+        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/personal/PersonalPortalDispatcher.java#5 $" +
+        "$Author: dennis $" +
+        "$DateTime: 2004/08/17 23:19:25 $";
+
+    private Dispatcher m_portalAdminDispatcher;
+
+    public PersonalPortalDispatcher() {
+        super();
+
+        Map m = new HashMap();
+
+        m.put("", new PersonalPortalHomePage());
+        m.put(PORTAL_PARTICIPANT_PAGE, PortalParticipants.createPage());
+
+        setMap(m);
+    }
+
+    @Override
+    public void dispatch(HttpServletRequest request,
+                         HttpServletResponse response,
+                         RequestContext context)
+        throws IOException, ServletException {
+        String remainingURLPart = context.getRemainingURLPart();
+
+        if (remainingURLPart.startsWith(PORTAL_ADMIN_PAGE)) {
+            if (m_portalAdminDispatcher == null) {
+                PortalAdminPage page = new PortalAdminPage() {
+                        protected void buildContextBar() {
+                            DimensionalNavbar navbar = new DimensionalNavbar();
+
+                            navbar.setClassAttr("portalNavbar");
+
+                            navbar.add
+                                (new Link(new PersonalPortalLinkPrinter()));
+                            navbar.add(new Label(GlobalizationUtil.globalize("cw.workspace.personal.configure_workspace")));
+
+                            getHeader().add(navbar);
+                        }
+                    };
+
+                m_portalAdminDispatcher = new PageDispatcher(page);
+            }
+
+            m_portalAdminDispatcher.dispatch(request, response, context);
+        } else {
+            super.dispatch(request, response, context);
+        }
+    }
+}

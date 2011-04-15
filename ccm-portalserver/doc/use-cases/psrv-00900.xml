@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00900" />
+	<title>Select a Theme for a Portal </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/26" />
+	<status value="ready_for_review" />
+        <release_target release="2.0"/>
+	<goal_level value="user_goal" />
+        <trigger value="The administrator is unhappy with the current look and feel."/>
+	<actors><actor name="Portal Administrator" /></actors>
+        <description>
+           <![CDATA[
+        The theme for a portal determines its look & feel. This use case is employed when an administrator is unhappy with the look and feel of a portal.
+            ]]>
+        </description>
+	<basic_path>
+		<![CDATA[
+        <ol>
+          <li>The PA selects the 'Configure Portal' link.</li>
+          <li>The PA then selects the 'Themes' tab on the portal configuration page.</li>
+          <li>A list of available themes is displayed with check boxes next to them. The portals current theme has the checkbox next to it pre-selected. In addition, a thumbnail of the look and feel for the currently selected theme is displayed</li>
+          <li>The PA selects the desired theme, and the thumbnail changes to reflect this selection. This step may iterate...</li>
+          <li>After finalizing on a theme, the PA clicks the 'Save Theme' button</li>
+          <li>The PA is returned to the Configure Portal layout tab.</li>
+        </ol>
+                ]]>
+	</basic_path>
+        <alternate_path>
+		<![CDATA[
+        <ul>
+          <li>AP 1: The PA chooses not to change the theme, and clicks the cancel button, then is returned to the configure portal layout tab.</li>
+          <li>AP 2: The PA is not satisfied with any of the themes offered and clicks the 'Create Theme' button. This path is detailed in <a href="./psrv-00910.xml.html">PSRV-00910:Create A Theme for a Portal</a></li>
+                ]]>
+        </alternate_path>
+        <preconditions>
+		<![CDATA[
+         This use case depends on at least two themes being installed on the portalserver. The current plan is to have five pre-installed themes on every portalserver deployment. 
+                ]]>
+        </preconditions>
+
+        
+	<success_end_conditions>
+		The desired theme is now used to render the portal.
+	</success_end_conditions>
+        <iteration>Filled</iteration>
+</use_case>

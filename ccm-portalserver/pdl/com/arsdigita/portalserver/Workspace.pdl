@@ -1,0 +1,284 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// @author Justin Ross (justin@arsdigita.com)
+// $Id: Workspace.pdl pboy $
+model com.arsdigita.workspace;
+
+import com.arsdigita.portal.Portal;
+import com.arsdigita.kernel.User;
+import com.arsdigita.web.Application;
+import com.arsdigita.kernel.Group;
+import com.arsdigita.kernel.Party;
+
+
+object type Workspace extends Application {
+    Boolean isReady = ps_workspaces.ready_p CHAR(1);
+    Boolean isArchived = ps_workspaces.archive_p CHAR(1);
+    Boolean isDraft = ps_workspaces.draft_p CHAR(1);
+    Boolean isPersonalizable = ps_workspaces.personalizable_p CHAR(1);
+    Boolean isSubPortal = ps_workspaces.subportal_p CHAR(1);
+    Date[0..1] creationDate = ps_workspaces.creation_date DATE;
+    Date[0..1] archiveDate = ps_workspaces.archive_date DATE;
+    String mission = ps_workspaces.mission VARCHAR(4000);
+    Theme[0..1] theme = join ps_workspaces.theme_id to ps_themes.theme_id;
+    Workspace[0..n] relatedWorkspace =
+        join ps_workspaces.workspace_id
+            to ps_workspace_workspace_map.referencing_workspace_id,
+        join ps_workspace_workspace_map.referenced_workspace_id
+            to ps_workspaces.workspace_id;
+
+    reference key (ps_workspaces.workspace_id);
+}
+
+association {
+    Workspace[0..n] workspaces =
+        join parties.party_id to ps_workspace_participant_map.participant_id,
+        join ps_workspace_participant_map.workspace_id to ps_workspaces.workspace_id;
+    Party[0..n] participants =
+        join ps_workspaces.workspace_id to ps_workspace_participant_map.workspace_id,
+        join ps_workspace_participant_map.participant_id to parties.party_id;
+}
+
+query childWorkspacesForApplicationID {
+    Workspace workspace;
+
+    do {
+        select
+          acs_objects.object_id,
+          acs_objects.object_type,
+          acs_objects.display_name,
+          acs_objects.default_domain_class,
+          applications.parent_application_id,
+          applications.package_id,
+          applications.title,
+          applications.description,
+          applications.primary_url,
+          ps_workspaces.ready_p,
+          ps_workspaces.archive_p,
+          ps_workspaces.mission
+        from
+          acs_objects,
+          applications,
+          ps_workspaces
+        where
+          applications.parent_application_id = :applicationID
+          -- joins
+          and acs_objects.object_id = applications.application_id
+          and applications.application_id = ps_workspaces.workspace_id
+    } map {
+        workspace.id = acs_objects.object_id;
+        workspace.objectType = acs_objects.object_type;
+        workspace.displayName = acs_objects.display_name;
+        workspace.defaultDomainClass = acs_objects.default_domain_class;
+        workspace.parentResource.id = applications.parent_application_id;
+        workspace.packageInstance.id = applications.package_id;
+        workspace.title = applications.title;
+        workspace.description = applications.description;
+        workspace.primaryURL = applications.primary_url;
+        workspace.isReady = ps_workspaces.ready_p;
+        workspace.isArchived = ps_workspaces.archive_p;
+        workspace.mission = ps_workspaces.mission;
+    }
+}
+
+query rootWorkspaces {
+    Workspace workspace;
+
+    do {
+        select
+          acs_objects.object_id,
+          acs_objects.object_type,
+          acs_objects.display_name,
+          acs_objects.default_domain_class,
+          applications.parent_application_id,
+          applications.package_id,
+          applications.title,
+          applications.description,
+          applications.primary_url,
+          ps_workspaces.ready_p,
+          ps_workspaces.archive_p,
+          ps_workspaces.mission
+        from
+          acs_objects,
+          applications,
+          ps_workspaces
+        where
+          (applications.parent_application_id is null or
+           parent_application_id = :parentID) 
+          -- joins
+          and acs_objects.object_id = applications.application_id
+          and applications.application_id = ps_workspaces.workspace_id
+    } map {
+        workspace.id = acs_objects.object_id;
+        workspace.objectType = acs_objects.object_type;
+        workspace.displayName = acs_objects.display_name;
+        workspace.defaultDomainClass = acs_objects.default_domain_class;
+        workspace.parentResource.id = applications.parent_application_id;
+        workspace.packageInstance.id = applications.package_id;
+        workspace.title = applications.title;
+        workspace.description = applications.description;
+        workspace.primaryURL = applications.primary_url;
+        workspace.isReady = ps_workspaces.ready_p;
+        workspace.isArchived = ps_workspaces.archive_p;
+        workspace.mission = ps_workspaces.mission;
+    }
+}
+
+query workspaceForSiteNodeID {
+    Workspace workspace;
+
+    do {
+        select
+          acs_objects.object_id,
+          acs_objects.object_type,
+          acs_objects.display_name,
+          acs_objects.default_domain_class,
+          applications.parent_application_id,
+          applications.package_id,
+          applications.title,
+          applications.description,
+          applications.primary_url,
+          ps_workspaces.ready_p,
+          ps_workspaces.mission
+        from
+          site_nodes,
+          apm_packages,
+          applications,
+          acs_objects,
+          ps_workspaces
+        where
+          site_nodes.node_id = :siteNodeID
+          -- joins
+          and site_nodes.object_id = apm_packages.package_id
+          and apm_packages.package_id = applications.package_id
+          and applications.application_id = acs_objects.object_id
+          and applications.application_id = ps_workspaces.workspace_id
+    } map {
+        workspace.id = acs_objects.object_id;
+        workspace.objectType = acs_objects.object_type;
+        workspace.displayName = acs_objects.display_name;
+        workspace.defaultDomainClass = acs_objects.default_domain_class;
+        workspace.parentResource.id = applications.parent_application_id;
+        workspace.packageInstance.id = applications.package_id;
+        workspace.title = applications.title;
+        workspace.description = applications.description;
+        workspace.primaryURL = applications.primary_url;
+        workspace.isReady = ps_workspaces.ready_p;
+        workspace.mission = ps_workspaces.mission;
+    }
+}
+
+query RolesForUser {
+    BigDecimal groupID;
+    do {
+        select group_id
+        from group_member_trans_map
+        where member_id = :participantID
+    } map {
+        groupID = group_id;
+    }
+}
+
+query RolesForGroup {
+    BigDecimal groupID;
+    do {
+        select group_id
+        from group_subgroup_trans_map
+        where subgroup_id = :participantID and group_id != subgroup_id
+    } map {
+        groupID = group_id;
+    }
+}
+
+query DirectRolesForUser {
+    BigDecimal groupID;
+    do {
+        select group_id
+        from group_member_map
+        where member_id = :participantID
+    } map {
+        groupID = group_id;
+    }
+}
+
+query DirectRolesForGroup {
+    BigDecimal groupID;
+    do {
+        select group_id
+        from group_subgroup_map
+        where subgroup_id = :participantID
+    } map {
+        groupID = group_id;
+    }
+}
+
+
+query WorkspaceParticipantsWithInitial {
+    BigDecimal participantID;
+    do {
+        select wpm.participant_id as participant_id
+          from ps_workspace_participant_map wpm, person_names pn, users u
+         where wpm.workspace_id = :workspaceID and
+               wpm.participant_id = u.user_id and
+               u.name_id = pn.name_id and
+               upper(substr(pn.family_name, 1, 1)) = :nameInitial
+        UNION ALL
+        select wpm.participant_id as participant_id
+          from ps_workspace_participant_map wpm, groups g
+         where wpm.workspace_id = :workspaceID and
+               wpm.participant_id = g.group_id and
+               upper(substr(g.name, 1, 1)) = :nameInitial
+    } map {
+        participantID = participant_id;
+    }
+}
+
+
+query WorkspaceParticipantInitials {
+    String initial;
+    do {
+        select name_initial
+          from ( select distinct upper(substr(pn.family_name, 1, 1)) 
+                        as name_initial
+                   from ps_workspace_participant_map wpm, person_names pn, users u
+                  where wpm.workspace_id = :workspaceID and
+                        wpm.participant_id = u.user_id and
+                        u.name_id = pn.name_id
+                 UNION
+                 select distinct upper(substr(g.name, 1, 1)) as name_initial
+                   from ps_workspace_participant_map wpm, groups g
+                  where wpm.workspace_id = :workspaceID and
+                        wpm.participant_id = g.group_id )
+          order by name_initial
+    } map {
+        initial = name_initial;
+    }
+}
+
+
+query WorkspaceParticipantIDs {
+    BigDecimal id;
+    do {
+        select wpm.participant_id
+          from ps_workspace_participant_map wpm
+         where wpm.workspace_id = :workspaceID
+    } map {
+        id = wpm.participant_id;
+    }
+}
+

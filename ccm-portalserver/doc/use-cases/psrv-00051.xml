@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00051" />
+	<title>Search for a portal participant</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2003/02/28" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span> A Portal Participant
+wants to find participants in a portal meeting certain
+criteria.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="A Portal Participant  wants to find participants within a portal meeting certain  criteria" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>The Participant navigates to the "People" tab in the
+    Configure Portal area, and clicks on the "search" link.</li>
+  <li>The Participant specifies search criteria, which may include
+    participant name and role assignments.</li>
+  <li>The Participant is presented with a set of matching
+    participants.  This listing format shall be the same as that
+    described in as the browse listing described in <a
+    href="psrv-00050.xml.html">PSRV-00050</a> ("Browse Portal
+    Participants").</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The Participant finds participants matching the specified criteria.
+</p>
+
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+The complexity of available search parameters is an open issue.
+
+		]]>
+	</open_issues>
+<iteration>
+Focused
+</iteration>
+</use_case>

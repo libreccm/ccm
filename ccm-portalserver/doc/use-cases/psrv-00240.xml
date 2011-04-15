@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00240" />
+	<title>Configure a Portlet </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2001/11/02" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+A Portal Administrator wishes to customize a portlet that currently resides
+within a Tab in the Portal.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A PA wishes to alter the presentation or a Portlet within a Portal" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>Starting at the Portal, a PA clicks the Configure Portal link</li>
+</ol>
+
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span><br>
+</p>
+
+
+
+		]]>
+	</open_issues>
+<iteration>
+Filled
+</iteration>
+</use_case>

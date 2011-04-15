@@ -1,0 +1,198 @@
+<HTML>
+   <HEAD>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>Use Case 00830:Editing Bookmark Properties </title>
+      <link rel="stylesheet" type="text/css" href="./developer.css">
+      <link rel="stylesheet" type="text/css" href="./cw-use-cases.css">
+   </HEAD>
+   <BODY>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+         <tr>
+            <td><a href="..">CCM Portalserver Project</a> &gt;
+               <a href="./use_case_list.html">Use Cases Index Page</a> &gt;
+               
+            </td>
+            <td align="right"><a href="http://www.redhat.com/ccm">CCM Central</a> |
+               <a href="http://www.redhat.com/">Red Hat</a></td>
+         </tr>
+      </table>
+      <h1>Use Case 00830:Editing Bookmark Properties </h1>
+      <p></p>
+      <h3>Release Target: </h3>
+      <p></p>
+      <hr>
+      <p></p>
+      <table border="2" cellpadding="1" width="100%" align="top">
+         <tr>
+            <td><span class="optional">Description:  </span></td>
+            <td>
+               		
+               <p> <span class="option"></span>
+               This Use Case describes the action of modifying the properties of an existing bookmark.
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="required">Goal Level:  </span></td>
+            <td>user_goal</td>
+         </tr>
+         <tr>
+            <td><span class="required">Actors:  </span></td>
+            <td>
+               <ul>
+                  <li>Portal Participant</li>
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td><span class="required">Trigger:  </span></td>
+            <td>WP decides to modify bookmark</td>
+         </tr>
+         <tr>
+            <td><span class="optional">Preconditions:  </span></td>
+            <td>
+               		
+               <p> <span class="optional"></span>
+               This Use Case requires these three pre-conditions:
+               <ol>
+               <li>The bookmark portlet is present in the portal.</li>
+                <li>At least one bookmark has been saved in the portlet.</li>
+                 <li>The participant has write privilege on the bookmark application instance for this portal.</li>
+                 </ol>
+               
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="required">Basic Path:  </span></td>
+            <td>
+               		
+               <p> <span class="required"></span><br>
+               <ol>  <li>Through the bookmark portlet, the participant launches the bookmark application.</li>
+               <li>The bookmark application lists all bookmarks for that portal (and within the personal portal, all bookmarks available
+               in collaborative portals that the user participates in, if desired...)</li>
+               <li>The user then selects a bookmark</li>
+               <li>After a bookmark has been selected, A form is displayed with all pertinent information about the bookmark, such as:</li>
+                   <ul><li>Creation date</li>
+               	  <li>The name of the person who created it.</li>
+               	  <li>The name of the bookmark (A <em>modifiable</em> field)</li>
+               	  <li>The target URL (A <em>modifiable</em> field)</li>
+               	  <li>The name of the portal it is associated with</li>
+               	  <li>A link that says <a href=".">Delete This Bookmark</a></li></ul>
+                 <li>The user can change the name or the target of the bookmark, by modifying
+               the values in the modifiable field, then press the save button</li>
+               
+               </ol>
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="optional">Postconditions:  </span></td>
+            <td>
+               		
+               <p> <span class="optional"></span>
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="required">Succesful End Conditions:  </span></td>
+            <td>
+               		
+               <p> <span class="required"></span>
+               The desired property is modified.
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="optional">Alternate Paths:  </span></td>
+            <td>
+               		
+               <p> <span class="optional"></span>
+               If properties are opened up for a bookmark that the participant does NOT have write privileges, then the properties are displayed
+               as unmodifiable fields (i.e., labels instead of text fields).
+               
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="optional">Exception Paths:  </span></td>
+            <td>
+               		
+               <p> <span class="optional"></span>
+               
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="optional">Failure End Conditions:  </span></td>
+            <td>
+               		
+               <p> <span class="optional"></span>
+               
+               </p>
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="optional">Sample Narrative:  </span></td>
+            <td>
+               		
+               <p> <span class="optional"></span>
+               </p>
+               
+               <p> <span class="optional">Open Issues:</span><br>
+               </p>
+               
+               
+               
+               
+               		
+               	
+            </td>
+         </tr>
+         <tr>
+            <td><span class="optional">Open Issues:  </span></td>
+            <td></td>
+         </tr>
+         <tr>
+            <td><span class="required">Iteration:  </span></td>
+            <td>
+               Focused
+               
+            </td>
+         </tr>
+         <tr>
+            <td><span class="required">Status:  </span></td>
+            <td>in_progress</td>
+         </tr>
+      </table>
+      <p></p>
+      by Jim Parsons
+      <p></p>
+      Last Modified: 2001/11/21
+   </BODY>
+</HTML>

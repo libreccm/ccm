@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00500" />
+	<title>Archive a Portal</title>
+	<author name="Jim Parsons" email="author@arsdigita.com" />
+	<last_modified date="2001/10/31" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+A Portal set up for a particular project team is archived when the project is completed.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="An administrator of a Portal wishes to unlink it from he sitemap and store it in its archived state" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+
+<ol>
+  <li>The administrator visits the Portal homepage.</li>
+  <li>The administrator clicks on the "Configure Portal" link.</li>
+  <li>The administrator chooses the "Archive Portal" link.</li>
+  <li>The administrator is prompted to enter any comments he or she wishes to associate with the archived Portal.</li>
+  <li>A confirmation message and button is displayed asking if the administrator is sure that he or she wishes to unlink the Portal from the active sitemap to be stored.</li>
+  <li>A "Successfully Archived" page is displayed.</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+In archived state, a Portal is available to the non-administrative users as a Read-Only Portal. Administrators can still access the configuration page for the archived Portal, and modify the user access list for the Portal.
+ <br>
+ <br>
+ In addition, an administrator can "un-archive" a Portal if desired, but this is a separate use case!
+
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The Portal is successfully archived below the "/archived-portals" node, and is accessible by Portal group members in Read Only mode.
+
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span><br>
+</p>
+
+
+
+		]]>
+	</open_issues>
+<iteration>
+Filled.
+</iteration>
+</use_case>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00033" />
+	<title>Add another Portal as a Related Portal</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2001/10/30" />
+	<status value="ready_for_review" />
+        <release_target release="2.0"/>
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+A Portal Administrator (PA) wishes to add a reference to his or her Portal to a Related Portal.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A Portal Administrator wishes to add a reference to another portal as a Related APortal" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+It is a necessary pre-condition for this Use Case, that at least one other Portal has granted "Related Portal" access.
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>The PA clicks on the Configure Portal link</li>
+  <li>The PA then the Related Portals Tab </li>
+  <li>The PA is presented with a list of Portals on the system that have granted access as a related portal to the PA's portal group. Note: Those Portals that are already listed as related Portals are listed, but grayed out. </li>
+  <li>The PA selects a Portal from the list</li>
+  <li>The PA then clicks the Add Related Portal button on this configuration page</li>
+  <li>The PA is returned to the Portal Tab Configuration page. 
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The new related Portal appears within the Related Portals portlet.
+</p>
+
+
+		]]>
+	</success_end_conditions>
+<iteration>
+Focused
+</iteration>
+</use_case>

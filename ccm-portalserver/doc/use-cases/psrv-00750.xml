@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00750" />
+	<title>Search Help Using a Text String</title>
+	<author name="Jay Talbot" email="jtalbot@arsdigita.com" />
+	<last_modified date="2001/12/27" />
+	<status value="ready_for_review" />
+	<extends>
+		<id category="CATS" number="00170" />
+	</extends>
+	<description>
+		<![CDATA[
+<p> <span class="optional"> </span> </p>
+
+<p>This is a subfunction use case for the View Help summary use case (<a href="psrv-00710.xml.html">PSRV-00710</a>).</p>
+
+<p>The Portal Participant can perform a full-text search of the complete set of Help pages to find those pages that include a specified text string.</p>
+
+<p><b>Note: </b>This capability does not have the priority to be completed for version 1. It will be included in version 2.</p>
+
+		]]>
+	</description>
+	<goal_level value="subfunction" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="The WP wants to find any Help pages that include a specified text string" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"> </span> The WP participant is viewing a Help page.</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="optional"> </span> </p>
+
+<p>
+	<ol>
+		<li>The WP selects the action to do a full-text search of Help.</li>
+		<li>The system displays the Full Text Search page.</li>
+		<li>The WP enters a text string and initiates the search.</li>
+		<li>The system displays a results page with the list of Help pages that include the text string.</li>
+		<li>The WP chooses a Help topic to view.</li>
+		<li>The system displays the selected Help topic.</li>
+	</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="optional"> </span>The system simultaneously displays the Armenta page from which Help was initiated and a Help page that includes the specified text sting.</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span></p>
+
+	<ol>
+		<li value="4"> If no Help pages contain the text string, the system displays a message indicating that no Help pages contain the text string. </li>
+	</ol>
+
+		]]>
+	</alternative_paths>
+</use_case>

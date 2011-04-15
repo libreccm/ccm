@@ -1,0 +1,39 @@
+#!/bin/sh
+touch ./html/index.html;
+rm ./html/index.html;
+touch ./html/index.html;
+echo "<html>" >> ./html/index.html;
+echo "<head>" >> ./html/index.html;
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\"/>" >> ./html/index.html;
+echo "<title>CCM PORTAL Server - Use Cases</title>" >> ./html/index.html;
+echo "</head>" >> ./html/index.html;
+echo "<body>" >> ./html/index.html;
+echo "<table border=\"0\" width=\"100%\" cellspacing=\"0\">" >> ./html/index.html;
+echo "<tr bgcolor=\"#CC0000\">" >> ./html/index.html;
+echo "<td align=\"left\">" >> ./html/index.html;
+echo "<img src=\"./homepg_rh_logo.gif\" border=\"0\">" >> ./html/index.html;
+echo "</td>" >> ./html/index.html;
+echo "<td align=\"right\">" >> ./html/index.html;
+echo "<h1>" >> ./html/index.html;
+echo "<font color=\"white\">" >> ./html/index.html;
+echo "CCM Portal Server&nbsp;" >> ./html/index.html;
+echo "</font>" >> ./html/index.html;
+echo "</h1>" >> ./html/index.html;
+echo "</td>" >> ./html/index.html;
+echo "</tr>" >> ./html/index.html;
+echo "</table>" >> ./html/index.html;
+echo "<p>" >> ./html/index.html;
+echo "<p>" >> ./html/index.html;
+echo "<H2>Index of Portalserver Use Cases</H2>" >> ./html/index.html;
+#
+for x
+do
+echo "<a href=\"$x.html\">" >> ./html/index.html;
+java -cp ./saxon.jar com.icl.saxon.StyleSheet $x ./index.xsl >> ./html/index.html;
+echo "</a>" >> ./html/index.html;
+echo "<br>" >> ./html/index.html;
+done
+#
+echo "</body>" >> ./html/index.html;
+echo "</html>" >> ./html/index.html;
+

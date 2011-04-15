@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT use_case (id, title, author, last_modified, status, extends?, description?, goal_level, actors, trigger, 
+	preconditions?, basic_path, postconditions?, success_end_conditions, alternative_paths?, exception_paths?,
+	failure_end_conditions?, sample_narrative?, open_issues?)>
+<!ELEMENT id EMPTY>
+<!ATTLIST id category CDATA #REQUIRED number CDATA #REQUIRED>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT author EMPTY>
+<!ATTLIST author name CDATA #REQUIRED email CDATA #REQUIRED>
+<!ELEMENT last_modified EMPTY>
+<!ATTLIST last_modified date CDATA #REQUIRED>
+<!ELEMENT release_target EMPTY>
+<!ATTLIST release_target release CDATA #REQUIRED>
+<!ELEMENT status EMPTY>
+<!ATTLIST status value (not_started | in_progress | ready_for_review | reviewed | approved | deferred) #REQUIRED>
+<!ELEMENT extends (id)>
+<!ELEMENT description (#PCDATA)> 
+<!ELEMENT goal_level EMPTY>
+<!ATTLIST goal_level value (user_goal | summary_goal | subfunction) #REQUIRED>
+<!ELEMENT actors (actor+)>
+<!ELEMENT actor EMPTY>
+<!ATTLIST actor name CDATA #REQUIRED>
+<!ELEMENT trigger EMPTY>
+<!ATTLIST trigger value CDATA #REQUIRED>
+<!ELEMENT preconditions (#PCDATA)> 
+<!ELEMENT basic_path (#PCDATA)> 
+<!ELEMENT postconditions (#PCDATA)> 
+<!ELEMENT success_end_conditions (#PCDATA)> 
+<!ELEMENT alternative_paths (#PCDATA)> 
+<!ELEMENT exception_paths (#PCDATA)> 
+<!ELEMENT failure_end_conditions (#PCDATA)> 
+<!ELEMENT sample_narrative (#PCDATA)> 
+<!ELEMENT open_issues (#PCDATA)> 
+<!ELEMENT iteration (#PCDATA)> 
+
+

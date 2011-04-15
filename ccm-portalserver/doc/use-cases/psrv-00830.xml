@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00830" />
+	<title>Editing Bookmark Properties </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2001/11/21" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+This Use Case describes the action of modifying the properties of an existing bookmark.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="WP decides to modify bookmark" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+This Use Case requires these three pre-conditions:
+<ol>
+  <li>The bookmark portlet is present in the portal.</li>
+  <li>At least one bookmark has been saved in the portlet.</li>
+  <li>The participant has write privilege on the bookmark application instance for this portal.</li>
+  </ol>
+
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>  <li>Through the bookmark portlet, the participant launches the bookmark application.</li>
+  <li>The bookmark application lists all bookmarks for that portal (and within the personal portal, all bookmarks available in collaborative portals that the user participates in, if desired...)</li>
+  <li>The user then selects a bookmark</li>
+  <li>After a bookmark has been selected, A form is displayed with all pertinent information about the bookmark, such as:</li>
+    <ul><li>Creation date</li>
+	  <li>The name of the person who created it.</li>
+	  <li>The name of the bookmark (A <em>modifiable</em> field)</li>
+	  <li>The target URL (A <em>modifiable</em> field)</li>
+	  <li>The name of the portal it is associated with</li>
+	  <li>A link that says <a href=".">Delete This Bookmark</a></li></ul>
+  <li>The user can change the name or the target of the bookmark, by modifying
+the values in the modifiable field, then press the save button</li>
+
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The desired property is modified.
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+If properties are opened up for a bookmark that the participant does NOT have write privileges, then the properties are displayed as unmodifiable fields (i.e., labels instead of text fields).
+
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+<p> <span class="optional">Open Issues:</span><br>
+</p>
+
+
+
+
+		]]>
+	</sample_narrative>
+<iteration>
+Focused
+</iteration>
+</use_case>

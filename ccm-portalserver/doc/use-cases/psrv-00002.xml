@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00002" />
+	<title>Create a New Portal from a Pre-defined Template</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/28" />
+	<status value="not_started" />
+        <release_target release="2.1"/>
+	<description>
+		<![CDATA[
+<p><span class="optional"></span> A Portal
+Administrator may create a new portal from an existing template.  She controls the portal's location in the portal hierarchy, its name, its URL
+stub, and its mission statement.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="The Portal Administrator  wants to create a new portal  with pre-set applications, portlets, and layout as a starting point." />
+	<preconditions>
+		<![CDATA[
+        The user has general permission to create portals.
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p><span class="required"></span>
+
+<ol>
+
+  <li>The Portal Administrator navigates to the portal creation
+    interface via the portal administration home page.</li>
+
+  <li>She specifies a name for the new portal.</li>
+ 
+  <li>She specifies a URL stub for the new portal.</li>
+
+  <li>She optionally writes up a "mission statement" for the new portal.</li>
+
+  <li>She clicks the "Create from existing template" button.</li>
+
+  <li>She is presented with a list of templates and selects the one she wishes to use for the new portal. If desired, she can click the preview link of any template to visit a read-only version of that portal configuration.</li>
+
+  <li>If there is a participant list associated with her template selection, she can check a checkbox which specifies whether or not all participants associated with the template should be included in the new portal.</li>
+
+  <li>Finally, she finishes by clicking the "Create Portal" button.
+
+</ol>
+</p>
+See <a href="./psrv-00003.xml.html">PSRV-00002:Create a Portal Template</a> for how to go about creating a template.
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p><span class="required"></span> A new
+portal is created, with the creating user named as a participant in
+the portal with administrative privileges, and with all application
+and portlet configuration copied over from the selected portal template.
+Participants may be copied as well.</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span></p>
+
+		]]>
+	</open_issues>
+<iteration>Facade</iteration>
+</use_case>

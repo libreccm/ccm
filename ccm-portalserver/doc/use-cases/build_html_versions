@@ -1,0 +1,14 @@
+#!/bin/sh
+rm ./html/*.html;
+#
+for x
+do
+java -cp ./saxon.jar com.icl.saxon.StyleSheet $x ./htmlize.xsl > ./html/$x.html;
+done
+#
+echo "Building index page...";
+./build_index_page *.xml;
+echo "Index page finished.";
+#
+echo "Finished conversion.";
+

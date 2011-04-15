@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00730" />
+	<title>Navigate Help Using a Table of Contents</title>
+	<author name="Jay Talbot" email="jtalbot@arsdigita.com" />
+	<last_modified date="2001/12/27" />
+	<status value="ready_for_review" />
+        <release_target release="2.1"/>
+	<extends>
+		<id category="CATS" number="00170" />
+	</extends>
+	<description>
+		<![CDATA[
+<p> <span class="optional"> </span> </p>
+
+<p>This is a subfunction use case for the View Help summary use case (<a href="wspc-00710.html">PSRV-00710</a>).</p>
+
+<p>From any Help page, the Portal Participant can view Help information organized in a traditional table of contents format. In addition, the WP can quickly move to the appropriate Help files from the table of contents.</p>
+
+		]]>
+	</description>
+	<goal_level value="subfunction" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="The WP wants to find Help information through a table of contents format" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"> </span> The WP participant is viewing a Help page.</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="optional"> </span> </p>
+
+<p>
+	<ol>
+		<li>The WP selects the action to view the Help table of contents page.</li>
+		<li>The system displays the Help table of contents page.</li>
+		<li>The WP chooses a Help topic to view.</li>
+		<li>The system displays the selected Help topic.</li>
+	</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="optional"> </span>The system simultaneously displays the original Armenta page and the Help page that was requested from the Help table of contents page. </p>
+
+		]]>
+	</success_end_conditions>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"> </span>None </p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"> </span>None</p>
+
+
+		]]>
+	</failure_end_conditions>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span>None
+</p>
+
+
+		]]>
+	</open_issues>
+</use_case>

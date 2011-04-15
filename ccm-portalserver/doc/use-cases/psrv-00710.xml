@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00710" />
+	<title>View Help for the Current System Page</title>
+	<author name="Jay Talbot" email="jtalbot@arsdigita.com" />
+	<last_modified date="2001/12/27" />
+	<status value="ready_for_review" />
+        <release_target release="2.1"/>
+	<extends>
+		<id category="CATS" number="00170" />
+	</extends>
+	<description>
+		<![CDATA[
+<p> <span class="optional"> </span>
+
+This is a subfunction use case for the View Help summary use case (<a href="psrv-00710.xml.html">PSRV-00010</a>).</p>
+
+<p>The Portal Participant can open a Help page for any page in the Armenta system.</p>
+
+<p>From this page, the WP has access to the complete Help system.</p>
+
+		]]>
+	</description>
+	<goal_level value="subfunction" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="The WP wants to find information about the page currently displayed by Armenta" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"> </span> The WP participant is viewing an Armenta page. </p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="optional"> </span> </p>
+
+<p>
+<ol>
+<li>The WP selects the action to view Help for the current page.</li>
+<li>The system displays a Help page with procedures for using the current Armenta page.</li>
+</ol>
+</p>
+
+
+		]]>
+	</basic_path>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="optional"> </span>The System simultaneously displays the necessary Help page and the page it documents.</span> </p>
+
+		]]>
+	</success_end_conditions>
+</use_case>

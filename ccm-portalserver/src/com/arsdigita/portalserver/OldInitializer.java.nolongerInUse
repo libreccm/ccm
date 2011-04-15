@@ -1,0 +1,420 @@
+/*
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.portalserver;
+
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.web.*;
+import com.arsdigita.kernel.*;
+// import com.arsdigita.sitenode.*;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.initializer.Configuration;
+import com.arsdigita.initializer.InitializationException;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.portal.PortletType;
+import com.arsdigita.portal.AgentPortlet;
+import com.arsdigita.portal.apportlet.AppPortletSetup;
+import com.arsdigita.portal.PortletSetup;
+import com.arsdigita.util.Assert;
+import org.apache.log4j.Logger;
+
+/**
+ * <p><strong>Experimental</strong></p>
+ *
+ * @author <a href="mailto:justin@arsdigita.com">Justin Ross</a>
+ * @version $Id: OldInitializer.java#4 pboy  $
+ */
+public class OldInitializer extends BaseInitializer {
+
+    /** Logger instance for Debugging purpose. */
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
+
+    private Configuration m_conf = new Configuration();
+
+    public OldInitializer() throws InitializationException {
+        super();
+        
+        m_conf.initParameter("urlPathPrefix", "XXX", String.class);
+    }
+
+    public Configuration getConfiguration() {
+        return m_conf;
+    }
+
+    public final void doStartup() {
+        s_log.info("Initializing Portal...");
+
+        TransactionContext txn =
+            SessionManager.getSession().getTransactionContext();
+
+        txn.beginTxn();
+
+        PackageType portalPackageType = setupPortalPackageType();
+
+        // ApplicationType portalAppType = setupPortalApplication();
+        ApplicationType portalAppType =
+                                     setupPortalApplication(portalPackageType);
+
+        setupPortalNavigatorPortlet();
+
+        setupApplicationDirectoryPortlet();
+
+        setupPortalSummaryPortlet();
+
+        setupAgentPortlet();
+
+        setupAdminPortal();
+
+        ResourceType rtype = setupResource();
+
+        ResourceType restype = setupSubPortal();
+
+
+        txn.commitTxn();
+
+        URLFinder forumFinder = new URLFinder() {
+                public String find(OID oid) throws NoValidURLException {
+                    Application app = Application.retrieveApplication(oid);
+                    return app.getPrimaryURL();
+                }
+                public String find(OID oid, String context) throws NoValidURLException {
+                    return find(oid);
+                }
+                
+            };
+
+        URLService.registerFinder(Application.BASE_DATA_OBJECT_TYPE, forumFinder);
+
+        CWURLFinder finder = new CWURLFinder("admin");
+        URLService.registerFinder(PortalSite.BASE_DATA_OBJECT_TYPE, finder);
+        s_log.info("Done initializing PortalSite.");
+
+
+    }
+
+    private PackageType setupPortalPackageType() {
+        try {
+            return PackageType.findByKey("portalsite");
+        } catch (DataObjectNotFoundException nfe) {
+            s_log.info("PackageType 'portalsite' is not installed.  " +
+                       "Installing now...");
+
+            Stylesheet stylesheet = Stylesheet.createStylesheet
+                ("/packages/portalserver/xsl/portalserver.xsl");
+
+            PackageType packageType = PackageType.create
+                ("portalsite", "PortalSite", "PortalSites",
+                 "http://arsdigita.com/portalsite");
+            packageType.addStylesheet(stylesheet);
+            packageType.setDispatcherClass
+                ("com.arsdigita.portalserver.ui.PortalDispatcher");
+            packageType.save();
+         
+            buildDefaultThemes();
+
+            return packageType;
+        }
+    }
+
+    private ApplicationType setupPortalApplication(PackageType packageType) {
+ // private ApplicationType setupPortalApplication() {
+        // Creates a new ApplicationType
+        // Creates a new ApplicationType
+        ApplicationSetup setup = new ApplicationSetup(s_log);
+
+        setup.setApplicationObjectType(PortalSite.BASE_DATA_OBJECT_TYPE);
+        setup.setPackageType(packageType);
+        // setup.setKey("portalsite");
+        setup.setTitle("Portal");
+        setup.setDescription
+            ("A Portal Site is a center for content aggregation.  It usually" + 
+             "has its own set of applications, such as a discussion forum" +
+             "and content items, as well as a list of participants.");
+  //    setup.setDispatcherClass
+  //            ("com.arsdigita.portalserver.ui.PortalDispatcher");
+        setup.setPortalApplication(false);
+        setup.setInstantiator(new ACSObjectInstantiator() {
+                protected DomainObject doNewInstance(DataObject dataObject) {
+                    return new PortalSite(dataObject);
+                }
+            });
+
+        DomainObjectFactory.registerInstantiator(
+               Role.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                         return new Role(dataObject);
+                    }
+               }
+        );
+
+        return setup.run();
+    }
+
+    private void setupPortalNavigatorPortlet() {
+        AppPortletSetup setup = 
+               new AppPortletSetup(s_log);
+
+        setup.setPortletObjectType
+            (PortalNavigatorPortlet.BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Portal Navigator");
+        setup.setDescription
+            ("Provides links to portal associated with the current " +
+             "portal.");
+        setup.setProfile(PortletType.NARROW_PROFILE);
+        setup.setPortalApplication(true);
+        setup.setInstantiator(new ACSObjectInstantiator() {
+                public DomainObject doNewInstance(DataObject dataObject) {
+                    return new PortalNavigatorPortlet(dataObject);
+                }
+            });
+
+        setup.run();
+    }
+
+    private void setupApplicationDirectoryPortlet() {
+        AppPortletSetup setup = 
+               new AppPortletSetup(s_log);
+
+        setup.setPortletObjectType
+            (ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Application Directory");
+        setup.setDescription("Provides links to the workspace's applications.");
+        setup.setProfile(PortletType.NARROW_PROFILE);
+        setup.setPortalApplication(true);
+        setup.setInstantiator(new ACSObjectInstantiator() {
+                public DomainObject doNewInstance(DataObject dataObject) {
+                    return new ApplicationDirectoryPortlet(dataObject);
+                }
+            });
+
+        setup.run();
+    }
+
+    private void setupPortalSummaryPortlet() {
+        AppPortletSetup setup = new AppPortletSetup(s_log);
+
+        setup.setPortletObjectType
+            (PortalSummaryPortlet.BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Portal Summary");
+        setup.setProfile(PortletType.NARROW_PROFILE);
+        setup.setPortalApplication(true);
+        setup.setInstantiator(new ACSObjectInstantiator() {
+                public DomainObject doNewInstance(DataObject dataObject) {
+                    return new PortalSummaryPortlet(dataObject);
+                }
+            });
+
+        setup.run();
+    }
+
+    private void setupAgentPortlet() {
+        PortletSetup setup = new PortletSetup(s_log);
+
+        setup.setPortletObjectType
+            (AgentPortlet.BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Agent");
+        setup.setDescription
+            ("Acts as agent or proxy for another portlet.");
+        setup.setProfile(PortletType.WIDE_PROFILE);
+        setup.setInstantiator(new ACSObjectInstantiator() {
+                public DomainObject doNewInstance(DataObject dataObject) {
+                    return new AgentPortlet(dataObject);
+                }
+            });
+
+        setup.run();
+    }
+
+    private void setupAdminPortal() {
+        try {
+            SiteNode sn = SiteNode.getSiteNode("/administration", false);
+            if (!"administration".equals(sn.getName())) {
+                PortalSite ps = PortalSite.createPortalSite(
+                        "administration", "Administration", null);
+                ps.setMission("Administration Portal");
+                ps.save();
+            }
+        } catch (DataObjectNotFoundException e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    private ResourceType setupResource() {
+
+        ResourceSetup setup = new ResourceSetup(s_log);
+
+        setup.setTitle("PortalTab");
+
+        setup.setResourceObjectType(PortalTab.BASE_DATA_OBJECT_TYPE);
+
+        setup.setDescription("A Portal Tab!");
+
+        setup.setInstantiator(new ACSObjectInstantiator() {
+              public DomainObject doNewInstance(DataObject dataObject) {
+                 return new PortalTab(dataObject);
+              }
+           });
+        return setup.run();
+
+    }
+
+    private ResourceType setupSubPortal() {
+
+        ResourceSetup setup = new ResourceSetup(s_log);
+
+        setup.setTitle("SubPortalTab");
+
+        setup.setResourceObjectType(SubPortalTab.BASE_DATA_OBJECT_TYPE);
+
+        setup.setDescription("A SubPortal Tab!");
+
+        setup.setInstantiator(new ACSObjectInstantiator() {
+              public DomainObject doNewInstance(DataObject dataObject) {
+                 return new SubPortalTab(dataObject);
+              }
+           });
+        return setup.run();
+
+    }
+
+    private void buildDefaultThemes() {
+
+    Theme theme0 = new Theme("Red Hat");
+    theme0.setDescription("A cool corporate theme");
+    theme0.setContextBarColor("#E1E1E1");
+    theme0.setContextBarTextColor("#3F3F3F");
+    theme0.setActiveTabColor("#a21e1e");
+    theme0.setInactiveTabColor("#dddddd");
+    theme0.setInactiveTabTextColor("#555555");
+    theme0.setActiveTabTextColor("#ffffff");
+    theme0.setTopRuleColor("#a21e1e");
+    theme0.setBottomRuleColor("#a21e1e");
+    theme0.setPortletHeaderColor("#a21e1e");
+    theme0.setPortletIconColor("#a21e1e");
+    theme0.setPortletHeaderTextColor("#ffffff");
+    theme0.setPageBGColor("#ffffff");
+    theme0.setBodyTextColor("#000000");
+    theme0.setNarrowBGColor("#dddddd");
+    theme0.save();
+/*
+    Theme theme1 = new Theme("Celtic Fever");
+    theme1.setDescription("A theme for Celtic NBA fans");
+    theme1.setContextBarColor("#008800");
+    theme1.setActiveTabColor("#008800");
+    theme1.setInactiveTabColor("#002200");
+    theme1.setInactiveTabTextColor("#ffffff");
+    theme1.setActiveTabTextColor("#ffffff");
+    theme1.setTopRuleColor("#008800");
+    theme1.setBottomRuleColor("#008800");
+    theme1.setPortletHeaderColor("#006600");
+    theme1.setPortletIconColor("#006600");
+    theme1.setPortletHeaderTextColor("#000000");
+    theme1.setPageBGColor("#ffffff");
+    theme1.setPageBGImage("/assets/cw/workspace/bg_bos.gif");
+    theme1.setBodyTextColor("#000000");
+    theme1.setNarrowBGColor("#ddeedd");
+    theme1.save();
+*/
+    Theme theme2 = new Theme("Bright Day");
+    theme2.setDescription("A sunny, cloudless sky");
+    theme2.setContextBarColor("#003366");
+    theme2.setContextBarTextColor("#FFFFFF");
+    theme2.setActiveTabColor("#93bee2");
+    theme2.setInactiveTabColor("#d8e8f5");
+    theme2.setInactiveTabTextColor("#000000");
+    theme2.setActiveTabTextColor("#000000");
+    theme2.setTopRuleColor("#93bee2");
+    theme2.setBottomRuleColor("#93bee2");
+    theme2.setPortletHeaderColor("#cccccc");
+    theme2.setPortletIconColor("#cccccc");
+    theme2.setPortletHeaderTextColor("#000000");
+    theme2.setPageBGColor("#ffffff");
+    theme2.setPageBGImage("");
+    theme2.setNarrowBGColor("#dddddd");
+    theme2.setBodyTextColor("#000000");
+
+    theme2.save();
+
+    Theme theme3 = new Theme("Harvest");
+    theme3.setDescription("High Heat");
+    theme3.setContextBarColor("#ff9966");
+    theme3.setContextBarTextColor("#ffffff");
+    theme3.setActiveTabColor("#ff9966");
+    theme3.setInactiveTabColor("#ffcc99");
+    theme3.setInactiveTabTextColor("#000000");
+    theme3.setActiveTabTextColor("#000000");
+    theme3.setTopRuleColor("#ff9966");
+    theme3.setBottomRuleColor("#ff9966");
+    theme3.setPortletHeaderColor("#ff9966");
+    theme3.setPortletIconColor("#ff9966");
+    theme3.setPortletHeaderTextColor("#000000");
+    theme3.setPageBGColor("#ffffff");
+    theme3.setPageBGImage("");
+    theme3.setNarrowBGColor("#ffffcc");
+    theme3.setBodyTextColor("#000000");
+
+    theme3.save();
+
+    Theme theme4 = new Theme("Desert");
+    theme4.setDescription("High Heat");
+    theme4.setContextBarColor("#cccc99");
+    theme4.setContextBarTextColor("#FFFFFF");
+    theme4.setActiveTabColor("#cccc99");
+    theme4.setInactiveTabColor("#ededca");
+    theme4.setInactiveTabTextColor("#000000");
+    theme4.setActiveTabTextColor("#000000");
+    theme4.setTopRuleColor("#cccc99");
+    theme4.setBottomRuleColor("#cccc99");
+    theme4.setPortletHeaderColor("#cccc99");
+    theme4.setPortletIconColor("#cccc99");
+    theme4.setPortletHeaderTextColor("#000000");
+    theme4.setPageBGColor("#ffffff");
+    theme4.setPageBGImage("");
+    theme4.setNarrowBGColor("#ffffcc");
+    theme4.setBodyTextColor("#000000");
+
+    theme4.save();
+
+    Theme theme5 = new Theme("Stars and Bars");
+    theme5.setDescription("Patriotic");
+    theme5.setContextBarColor("#cc0000");
+    theme5.setContextBarTextColor("#FFFFFF");
+    theme5.setActiveTabColor("#cc0000");
+    theme5.setInactiveTabColor("#ffffff");
+    theme5.setInactiveTabTextColor("#000000");
+    theme5.setActiveTabTextColor("#ffffff");
+    theme5.setTopRuleColor("#cc0000");
+    theme5.setBottomRuleColor("#cc0000");
+    theme5.setPortletHeaderColor("#cc0000");
+    theme5.setPortletIconColor("#cc0000");
+    theme5.setPortletHeaderTextColor("#ffffff");
+    theme5.setPageBGColor("#ffffff");
+    theme5.setPageBGImage("/assets/cw/backgrounds/stars.gif");
+    theme5.setNarrowBGColor("#eeeeee");
+    theme5.setBodyTextColor("#000000");
+
+    theme5.save();
+
+    }
+
+    public final void doShutdown() {}
+}

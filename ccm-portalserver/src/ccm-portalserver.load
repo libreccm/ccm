@@ -1,0 +1,15 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ps_workspaces"/>
+    <initializer class="com.arsdigita.portalserver.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-portalserver"/>
+    <data class="com.arsdigita.portalserver.Loader"/>
+  </scripts>
+</load>

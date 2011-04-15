@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00014" />
+	<title>Modify Portal URL Stub</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2001/10/31" />
+	<status value="not_started" />
+        <release_target release="2.1"/>
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+A method is needed for a Portal Administrator to change the final portion of a portal URL that refers to the Portal location on the Site Map.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A PA for a Portal desires to change the section of a portal URL that refers specifically to this Portal's location on the Site Map" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>Within the Portal, the PA clicks on the link for Portal Configuration</li>
+  <li>The PA locates a Text Field on the page named URL Stub. The current stub name is pre-loaded within this field</li>
+  <li>The PA changes the value within this field to the name he or she prefers</li>
+  <li>The PA clicks on the "Save Configuration" button</li>
+  <li>The PA is returned to the Portal Configuration page</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The URL Stub name is successfully changed
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+Two possible exceptions to this Use Case are:
+<ul>
+  <li>The URL Stub text field is left blank. In this case, the config page is redisplayed with the error explained in red text next to the text field, such as "Required Field"</li>
+  <li>The URL Stub name entered has whitespace or unacceptable characters in it.If so, the config page is redisplayed with a message in red text explaining the nature of the error, such as "unacceptable character '!'</li>
+</ul>
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span><br>
+</p>
+
+
+</p>
+
+		]]>
+	</open_issues>
+<iteration>
+Facade
+</iteration>
+</use_case>

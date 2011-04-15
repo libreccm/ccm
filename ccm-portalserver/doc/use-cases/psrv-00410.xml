@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00410" />
+	<title>Navigate to a related portal</title>
+	<author name="Justin Ross" email="justin@arsdigita.com" />
+	<last_modified date="2001/10/30" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p><span class="optional"></span> A Portal Participant
+sees and can navigate to portals related to the one currently under
+scrutiny.  A related portal may be merely associated or it may
+additionally be a "child" portal to the current portal.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="The user wishes to move from  the current portal to another relevant portal" />
+	<preconditions>
+		<![CDATA[
+<p><span class="optional"></span> The current portal
+must have at least one portal in relation to it, and that portal
+must be accessible by the user.</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p><span class="required"></span>
+
+<ol>
+  <li>The user visits the portal home page.</li>
+
+  <li>The system displays a list of related portals that the user
+  has access to.  If a related portal is a child of the current
+  portal, it is marked as such.</li>
+
+  <li>The user selects one of the portals and navigates to it.</li>
+
+  <li>The chosen portal appears in place of the old one, and the
+  system provides a way to navigate back.</li>
+</ol>
+
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p><span class="required"></span> The user
+reaches a related portal.</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</open_issues>
+</use_case>

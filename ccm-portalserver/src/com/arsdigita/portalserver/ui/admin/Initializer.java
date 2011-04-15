@@ -1,0 +1,158 @@
+/*
+ * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.portalserver.ui.admin;
+
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.initializer.Configuration;
+import com.arsdigita.initializer.InitializationException;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationType;
+import com.arsdigita.web.ApplicationSetup;
+import com.arsdigita.kernel.ACSObjectInstantiator;
+// import com.arsdigita.kernel.BaseInitializer;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.portalserver.*;
+
+import org.apache.log4j.Logger;
+
+//public class Initializer extends BaseInitializer {
+public class Initializer {
+    public static final String versionId = "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/admin/Initializer.java#9 $ by $Author: dennis $, $DateTime: 2004/08/17 23:19:25 $";
+
+    private static Logger s_log = Logger.getLogger(Initializer.class);
+
+    private Configuration m_conf = new Configuration();
+
+    public Initializer() throws InitializationException {
+        /* Empty */
+    }
+
+    public Configuration getConfiguration() {
+        return m_conf;
+    }
+
+    public final void doStartup() {
+        TransactionContext txn = SessionManager.getSession()
+            .getTransactionContext();
+
+        txn.beginTxn();
+
+        ApplicationType type = setupPortalCreator();
+        setupPortalCreate(type);
+
+        ApplicationType atype = setupPortalSitemapper();
+        setupPortalSitemap(atype);
+
+        txn.commitTxn();
+    }
+
+    private ApplicationType setupPortalCreator() {
+        ApplicationSetup setup = new ApplicationSetup(s_log);
+        setup.setApplicationObjectType(PortalCreator.BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Portal Creator");
+        setup.setDescription("Creates portals.");
+        setup.setWorkspaceApplication(false);
+        setup.setKey("portal-create");
+//      setup.setStylesheet("/packages/portalserver/xsl/portalserver.xsl");
+        setup.setDispatcherClass(
+                  "com.arsdigita.portalserver.ui.admin.PortalCreateDispatcher");
+        setup.setInstantiator(new ACSObjectInstantiator() {
+                protected DomainObject doNewInstance(DataObject dataObject) {
+                    return new PortalCreator(dataObject);
+                }
+            });
+
+        return setup.run();
+    }
+
+    private void setupPortalCreate(ApplicationType type) {
+        if (!Application.isInstalled(PortalCreator.BASE_DATA_OBJECT_TYPE,
+                                     "/portal-admin/portal-create/")) {
+            Application admin =
+                Application.retrieveApplicationForPath("/portal-admin/");
+
+            if (admin == null) {
+                s_log.warn("There is no application at /portal-admin/ so I " +
+                           "can't install the portal create application.");
+                return;
+            }
+
+            s_log.info("There is no Portal Creator application instance " +
+                       "on /user-profile/.  Installing now.");
+
+            Application app = Application.createApplication
+                (type, "portal-create", "Create Top-Level Portals", admin);
+            app.setDescription("Create top-level portals.");
+
+            app.save();
+
+            s_log.info("Done installing Portal Creator on " +
+                       "/portal-admin/portal-create/.");
+        }
+    }
+
+    private ApplicationType setupPortalSitemapper() {
+        ApplicationSetup setup = new ApplicationSetup(s_log);
+        setup.setApplicationObjectType(PortalSiteMap.BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Portal Site Map");
+        setup.setDescription("Displays and manages Portals");
+        setup.setWorkspaceApplication(false);
+        setup.setKey("portal-sitemap");
+//      setup.setStylesheet("/packages/portalserver/xsl/portal-sitemap.xsl");
+        setup.setDispatcherClass(
+                 "com.arsdigita.portalserver.ui.admin.PortalSiteMapDispatcher");
+        setup.setInstantiator(new ACSObjectInstantiator() {
+                protected DomainObject doNewInstance(DataObject dataObject) {
+                    return new PortalSiteMap(dataObject);
+                }
+            });
+
+        return setup.run();
+    }
+
+    private void setupPortalSitemap(ApplicationType type) {
+        if (!Application.isInstalled(PortalSiteMap.BASE_DATA_OBJECT_TYPE,
+                                     "/portal-admin/portal-sitemap/")) {
+            Application admin =
+                Application.retrieveApplicationForPath("/portal-admin/");
+
+            if (admin == null) {
+                s_log.warn("There is no application at /portal-admin/ so I " +
+                           "can't install the portal sitemap application.");
+                return;
+            }
+
+            s_log.warn("There is no Portal Site Map application instance " +
+                       "on /portal-admin/.  Installing now.");
+
+            Application app = Application.createApplication
+                (type, "portal-sitemap", "Portal Site Map", admin);
+            app.setDescription("Portal Site Map");
+
+            app.save();
+
+            s_log.warn("Done installing Portal Site Map on " +
+                       "/portal-admin/portal-sitemap/.");
+        }
+    }
+
+    public final void doShutdown() {}
+}

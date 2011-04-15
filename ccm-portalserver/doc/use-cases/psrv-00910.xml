@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00910" />
+	<title>Create a Theme for a Portal </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/26" />
+	<status value="in_progress" />
+	<goal_level value="user_goal" />
+        <release_target release="2.0"/>
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A desired Look and Feel is not available in the list of currently installed themes." />
+	<basic_path>
+          <![CDATA[
+	     <ol>
+                <li>The PA clicks the 'Create Theme' button on the Themes tab in the Configure Portal area</li>
+                <li>The PA is taken to the theme creation page</li>
+                <li>The currently selected theme is pre-loaded into the UI, so that PA's can easily make incremental changes.</li>
+                <li>The PA creates the theme. Individual aspects of this process are detailed in use cases psrv-00950 through psrv-00970</li>
+                <li>When satisfied, the PA clicks the 'Save Theme' button.</li>
+                <li>The UI prompts the PA for a name for the theme. After entering one, the PA clicks 'Save' and the PA is returned to the Configure Portal Themes tab, where the new theme appears in the list.</li>
+            </ol>
+          ]]>
+	</basic_path>
+	<success_end_conditions>
+		Description of success from the user's point of view.
+	</success_end_conditions>
+</use_case>

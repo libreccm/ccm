@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00011" />
+	<title>Modify Portal Mission </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/28" />
+	<status value="ready_for_review" />
+        <release_target release="2.0"/> 
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="A Portal Administrator wishes to change the mission statement for a portal" />
+	<basic_path>
+          <![CDATA[
+<ol>
+  <li>Starting at the Portal, A PA navigates to the Portal Configuration page by clicking the "Configure Portal" link</li>
+  <li>On the Portal Configuration page, the PA selects the 'basic' tab.</li>
+  <li>The PA then edits the mission statement for the Portal, and clicks save.</li>
+</ol>
+</p>
+          ]]>
+	</basic_path>
+	<success_end_conditions>
+	</success_end_conditions>
+<iteration>
+Filled
+</iteration>
+</use_case>

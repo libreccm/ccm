@@ -1,0 +1,15 @@
+// Red Hat Enterprise Portal Server initialization file
+//
+// When running Portal Server, the parameters for
+// com.arsdigita.kernel.Initializer must be modified.
+//
+// ::login-stylesheet:: -> login_ps_en.xsl
+// ::subsite-dispatcher-class:: -> com.arsdigita.portalserver.pslogin.PSSubsiteDispatcher
+
+init com.arsdigita.portalserver.OldInitializer { }
+
+init com.arsdigita.portalserver.admin.Initializer { }
+
+init com.arsdigita.portalserver.ui.admin.Initializer { }
+
+init com.arsdigita.portalserver.personal.Initializer { }

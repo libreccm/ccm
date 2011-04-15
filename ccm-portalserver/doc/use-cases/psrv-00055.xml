@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00055" />
+	<title>Add a portal participant</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2001/11/01" />
+	<status value="in_progress" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span> A Portal Administrator
+wants to add a participant to a portal.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A Portal Administrator  wishes to add a new participant to a portal" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+
+  <li>The Portal Administrator navigates to the "Participants"
+    screen for the portal to which participants are to be
+    added.</li>
+  <li>The Administrator then clicks on the "Add New Participant" link.</li>
+  <li>The Administrator then types in a name or email address to search for
+    the users and groups that might be added.</li>
+  <li>A list of matches is returned.  The Administrator clicks on the
+    name of the party to be made a participant.</li>
+  <li>The Administrator selects the role(s) the participant is to play
+    in the portal.</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The selected parties are made participants in the portal, with the
+specified roles.
+</p>
+
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span><br>
+<ul>
+  <li>Should people who are already participants show up in the search
+    results?  Leaving them out could prove annoying in situations
+    where the Administrator does not know that the party they're
+    looking for is already a participant.  Including existing
+    participants, with some sort of flag indicating that they're
+    already participants (and linking to the "View/Administer a single
+    participant" page (<a href="psrv-00052.xml.html">PSRV-00052</a>) may
+    make more sense.</li>
+</ul>
+</p>
+
+
+
+
+
+		]]>
+	</open_issues>
+<iteration>
+Focused
+</iteration>
+</use_case>

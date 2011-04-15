@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00150" />
+	<title>Reorder Portal Tabs</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/28" />
+	<status value="ready_for_review" />
+	<goal_level value="user_goal" />
+        <release_target release="2.0"/>
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="PA desires to change position of a Portal Tab relative to the others." />
+	<basic_path>
+             <![CDATA[
+        <ol>
+         <li>The Portal Administrator selects the 'Configure Portal' link.</li>
+         <li>The PA then selects the portal tab from the list that he wishes to reposition.</li>
+         <li>When selected, repositioning arrows/links appear next to the tab.</li>
+         <li>The PA shifts the Tab right or left, as desired.</li>
+        </ol>   
+               ]]>
+	</basic_path>
+	<success_end_conditions>
+	</success_end_conditions>
+<iteration>
+Finished
+</iteration>
+</use_case>

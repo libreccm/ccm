@@ -1,0 +1,27 @@
+/* Use case styles */
+
+.required {
+  font-style: normal;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.optional {
+  font-style: normal;
+  font-weight: bold;
+
+}
+
+.fix-me {
+  font-style: italic;
+}
+
+DIV.sidelight {
+  background-color: #F0F0F0;
+  border: none;
+  padding: 5pt;
+}
+
+TD.priority {
+  text-align: center;
+}

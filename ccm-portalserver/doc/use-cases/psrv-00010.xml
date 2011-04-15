@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00010" />
+	<title>Modify basic portal configuration</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2003/02/28" />
+	<status value="ready_for_review" />
+        <release_target release="2.0"/>
+	<description>
+		<![CDATA[
+<p><span class="optional"></span> A Portal
+Administrator may modify the basic configuration of its portal,
+including its name, mission statement, layout, and look & feel.</p>
+
+		]]>
+	</description>
+	<goal_level value="summary_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="The Portal Administrator  wants to modify an existing portal" />
+	<preconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p><span class="required"></span>
+
+<ol>
+
+  <li>The Portal Administrator navigates to the configuration
+    page for the portal by selecting the link 'Configure Portal'.</li>
+
+  <li>She chooses the 'Basic' tab to modify:
+      <ul>
+        <li>Mission statement (<a href="./psrv-00011.xml.html">PSRV-00011:Modify Portal Mission</a>)</li>
+        <li>Portal Name (<<a href="./psrv-00012.xml.html">PSRV-00012:Modify Portal Name</a>)</li>
+      </ul></li>
+
+  <li>She chooses the 'Layout' tab to:
+      <ul>
+        <li>Change the layout of portlets (<a href="psrv-00220.xml.html>PSRV-00220:Change the Layout for a Portal Tab</a>)</li> 
+         <li>A a Portal Tab (<a href="psrv-00100.xml.html">PSRV-00100:Add a Tab to a Portal</a>)</li>
+         <li>Rename a Portal Tab (<a href="./psrv-00140.xml.html">PSRV-00140:Change Name of Existing Portal Tab</li>
+         <li>Delete a Portal Tab (<a href="./psrv-00120.xml.html">PSRV-00120:Delete a Portal Tab</a>)</li>
+         <li>Re-order tabs in a Portal (<a href="./psrv-00150.xml.html">PSRV-00150:Reorder Portal Tabs</a>)</li>
+         <li>Add and Delete Portlets from a Portal (<a href="psrv-00200.xml.html">PSRV-00200:Add a Portlet to a Portal Tab</a> <a href="psrv-00210.xml.html">PSRV-00210:Delete a Portlet from a Portal Tab</a>)</li>
+      </ul></li>
+
+</ol>
+
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p><span class="required"></span> The basic
+attributes of the portal are updated.</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span></p>
+
+<hr>
+
+
+		]]>
+	</open_issues>
+<iteration>
+Filled
+</iteration>
+</use_case>

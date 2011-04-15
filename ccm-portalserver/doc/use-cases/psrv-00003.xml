@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00003" />
+	<title>Create a Portal Template</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2001/11/06" />
+	<status value="in_progress" />
+        <release_target release="2.1"/>
+	<description>
+		<![CDATA[
+<p><span class="optional"></span> A Portal
+Administrator may create and configure portal templates.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="The Portal Administrator wishes to create a new template" />
+	<preconditions>
+		<![CDATA[
+<p><span class="optional"></span> User has general
+permission to create portal templates.</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p><span class="required"></span>
+
+To be determined...
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p><span class="optional"></span> A new portal template is created.
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+<p> <span class="optional">Open Issues:</span></p>
+
+		]]>
+	</sample_narrative>
+<iteration>
+Facade
+</iteration>
+</use_case>

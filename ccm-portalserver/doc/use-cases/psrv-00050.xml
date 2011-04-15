@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00050" />
+	<title>Browse portal participants</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2001/11/01" />
+        <release_target release="2.0"/>
+	<status value="ready_for_review" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span> A Portal Participant
+wishes to browse through a listing of all participants in the
+portal.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="A Portal Participant  wishes to browse through a listing of all participants in the  portal" />
+	<preconditions>
+		<![CDATA[
+A participants portlet must be installed in the Portal.
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>The Portal Participant navigates to the "Participants"
+    listing screen for the portal.</li>
+  <li>The participant is presented with a listing of all participants
+    in the portal and certain frequently-needed information.  If
+    the number of participants exceeds some threshold, the list will
+    be broken up into multiple pages, with links for quick access to
+    partcipants whose names begin with particular letters of the
+    alphabet.</li>
+  <li>Each entry in the provided list will include a link to drill
+    down to the "One Participant" view.  See <a
+    href="psrv-00052.xml.html">PSRV-00052</a> ("View a single participant's
+    activities and roles within a portal") for a description of
+    this view.</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span> The user is
+able to view listings of participants within the portal, and drill
+down to detailed views of individual participants.</p>
+
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+    
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span><br>
+</p>
+
+
+		]]>
+	</open_issues>
+<iteration>
+Focused
+</iteration>
+</use_case>

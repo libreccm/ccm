@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00740" />
+	<title>Search Help Using a Keyword</title>
+	<author name="Jay Talbot" email="jtalbot@arsdigita.com" />
+	<last_modified date="2001/12/27" />
+        <release_target release="2.1"/>
+	<status value="ready_for_review" />
+	<extends>
+		<id category="CATS" number="00170" />
+	</extends>
+	<description>
+		<![CDATA[
+<p> <span class="optional"> </span> </p>
+
+<p>This is a subfunction use case for the View Help summary use case (<a href="psrv-00710.xml.html">PSRV-00710</a>).</p>
+
+<p>The Portal Participant can search the complete set of Help pages for those pages that have been associated with a specific keyword.</p>
+
+<p><b>Note: </b>This capability does not have the priority to be completed for version 1. It will be included in version 2.</p>
+
+		]]>
+	</description>
+	<goal_level value="subfunction" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="The WP wants to find information that has been associated with one or more keywords" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"> </span>The WP participant is viewing a Help page.</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="optional"> </span> </p>
+
+<p>
+	<ol>
+		<li>The WP selects the action to search Help by keywords.</li>
+		<li>The system displays the Keyword Search page.</li>
+		<li>The WP enters a keyword or phrase and initiates the search.</li>
+		<li>The system displays a results page with the list of Help pages associated with the keyword.</li>
+		<li>The WP chooses a Help topic to view.</li>
+		<li>The system displays the selected Help topic.</li>
+	</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="optional"> </span>The system simultaneously displays the Armenta page from which Help was initiated and a Help page that is associated with the keywords used for the search.</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span></p>
+
+	<ol>
+		<li value="4"> If there are no Help pages associated with the keywords, the system displays a message indicating that there are no Help pages associated with the specified keywords. </li>
+	</ol>
+
+		]]>
+	</alternative_paths>
+</use_case>

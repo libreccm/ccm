@@ -1,0 +1,45 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: //portalserver/dev/pdl/com/arsdigita/portalserver/query-SubPortalPortlets.pg.pdl#2 $
+// $DateTime: 2004/08/17 23:19:25 $
+model com.arsdigita.workspace;
+
+import com.arsdigita.portal.Portlet;
+
+query getSubPortalPortlets {
+    Portlet portlet;
+    do {
+        select p.portlet_id, p.portal_id
+          from portlets p
+          where p.portal_id = :subPortalTabID 
+          UNION ALL
+        select p.portlet_id, p.portal_id
+          from portlets p,
+               portals i,
+               applications a,
+               sub_workspace_tabs s
+          where s.tab_id = :subPortalTabID
+            and i.portal_id = s.super_tab_id
+            and a.application_id = p.portlet_id
+            and a.cell_number = :cell
+       } map {
+         portlet.id = p.portlet_id;
+         portlet.portal.id = p.portal_id;
+       }
+}
+

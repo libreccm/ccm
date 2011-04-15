@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Archiving Statement of Work</title>
+</head>
+<body>
+<h1>Portal Archiving - Statement Of Work</h1>
+<p>
+by Jim Parsons - jparsons@redhat.com
+<p>
+This document details the intended approach to adding the ability to archive
+portals for the Red Hat Enterprise Portal Server. 
+<p>
+<ul>
+<li>Currently, before this statement of work is implemented, ALL portals exist in the Unarchived state.</li>
+<li>After implementation, portals will exist in one of two exclusive states: Archived or Unarchived.</li>
+<li>Unarchived portals will be indistinguishable from current portal implementation.</li>
+<li>Archived Portals will exhibit the following traits:
+    <ul>
+      <li>Any unarchived Portal will be eligible for archive status</li>
+      <li>Archived Portals will be accessible to the system admin and anyone he or she deems admissable only. This implies that all access permissions for a portal to be archived will be revoked upon archive status, except for Sys Admin status.</li>
+      <li>Archived portals will not appear in lists of portals viewed by admin
+          applications such as portal link lists. This will be implemented by
+          modifying the currently used getAllPortals methods used by these
+          applications to return a filtered collection of portals that all
+          share unarchived status.</li>
+    </ul>
+<li>The sysadmin holds exclusive permission to archive and unarchive Portals</li>
+<li>Any portal that is archived, can be unarchived by the sys admin. Permissions for users other than the sysadmin and their authorized users, will have to be rebuilt.</li>  
+<li>All data associated with a Portal that is archived will be retained by the system.</li>
+</ul>
+<p>
+<h2>Implementation Tasks</h2>
+<ul>
+<li>Add isArchived boolean field to Workspace.pdl</li>
+<li>Change Portal constructor to set isArchived to false by default</li>
+<li>Write upgrade script</li>
+<li>Add filter to domain layer methods that return portal collections, so that only unarchived portals are returned</li>
+<li>Add domain method to return a collection of ALL archived portals</li>
+<li>Add domain method to return ALL portals - archived AND unarchived</li>
+<li>Add domain code getter and setter for archive bit</li>
+<li>Add link to  PS Admin for accessing archive application page</li>
+<li>Build UI for archiving and unarchiving Portals</li>
+  <ul>
+    <li>Build Archive and Unarchive forms</li>
+    <li>Archive form should offer a checkbox for recursively archiving all child portals</li>
+    <li>UI should offer creation date for all online portals, and archive date for those portals that are archived</li>
+  </ul>
+</ul>
+</body>
+</html>
+

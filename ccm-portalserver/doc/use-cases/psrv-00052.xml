@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00052" />
+	<title>View/Administer a single participant</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2001/11/01" />
+	<status value="in_progress" />
+        <release_target release="2.0"/> 
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>A Portal Participant
+wishes to view various information about a specific portal
+participant.  A Portal Administrator may also want to perform
+various other administrative tasks on a participant.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="A Portal Participant  wishes to view various information about a specific portal  participant, or a Portal Administrator wishes to perform  administrative actions related to a specific participant" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+
+  <li>The Portal Participant locates the participant they are
+    interested in via <a href="psrv-00051.xml.html">PSRV-00051:Search for a portal participant</a>.</li>
+  <li>The Participant clicks on a "view" link next to the name of the
+    participant of interest.</li>
+  <li>The resulting view page presents the Participant with a history
+    of the selected participant as well as their other activities, 
+    and also various other information specific to the selected participant, 
+    such as their role assignments in the portal.  In addition, this view
+    will present data on the user that is not associated with any
+    portal, such as position in the organization structure and
+    contact information.</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span> The user is
+able to view listings of participants within the portal, and drill
+down to detailed views of individual participants.</p>
+
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+  <ul>
+    <li>When viewed by an Administrator, this page will also serve as
+      a participant administration page: UI will be provided for
+      adjusting their role assignments (See <a
+      href="psrv-00065.xml.html">PSRV-00065</a>), for
+      removing the participant from the portal (See <a
+      href="psrv-00056.xml.html">PSRV-00056</a>), and for any other
+      administrative tasks that are identified.</p>
+    </li>
+  </ul>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+<open_issues>
+None
+</open_issues>
+
+<iteration>
+Focused
+</iteration>
+</use_case>

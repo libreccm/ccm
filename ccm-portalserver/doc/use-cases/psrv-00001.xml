@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00001" />
+	<title>Create a new portal</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2001/11/06" />
+	<status value="ready_for_review" />
+        <release_target release="2.0"/>
+	<description>
+		<![CDATA[
+<p><span class="optional"></span>The Portal Administrator makes new Portals available by performing the following steps:</p>
+
+<ul>
+	<li>Creating a new portal.</li>
+	<li>Creating the group of Portal Participants for that portal.</li>
+	<li>Creating portal tabs, if desired, for the portal.</li>
+	<li>Adding the appropriate portlets to the portal and portal tabs.</li>
+        <li>Configuring layout and look & feel for the portal.</li>
+</ul>
+
+<p>The Portal Administrator has two possible procedures for creating portals:</p>
+
+<ul>
+	<li>Creating a new portal from scratch.</li>
+	<li>Creating a new portal by using a portal template. (See Alternate Paths)</li>
+</ul>
+
+<p>While creating a portal, the Portal Administrator assigns the following properties:</p>
+
+<ul>
+	<li>Portal Name - the name by which the portal is identified in the Web site.</li>
+	<li>Portal Mission - a brief description of the purpose that the portal is intended to fulfill.</li>
+	<li>Portal URL Label - the label of the Web site stub at which the portal appears.</li>
+</ul>
+
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="The Portal Administrator  wants to create a new portal" />
+	<preconditions>
+		<![CDATA[
+<p><span class="optional"></span> User has general
+permission to create portals.
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p><span class="required"></span>
+
+<ol>
+
+  <li>The Portal Administrator navigates to the creation interface
+    via the portal administration home page.</li>
+
+  <li>She specifies a name for the portal.</li>
+ 
+  <li>She specifies a URL stub for the portal.</li>
+
+  <li>She optionally writes up a "mission statement" for the portal.</li>
+
+</ol>
+
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p><span class="optional"></span> A new portal is
+created, with the user who created it identified as its
+administrator.</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p><span class="required"></span> A new
+portal is created, with the creating user named as a participant in
+the portal with administrative privileges, and the Administrator is
+redirected to the new portal's configuration page.</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+PA may choose to create a portal from an existing system template, rather than create a portal from scratch. See <a href="./psrv-00002.xml.html">PSRV_00002:Create a New Portal from a Pre-defined Template</a>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+<ul>
+  <li><strong>EXC-1:</strong> The Administrator does not have
+    permission to create new portals.</li>
+  <li><strong>EXC-2:</strong> The specified URL stub contains
+    characters that are illegal for URLs.</li>
+  <li><strong>EXC-3:</strong> The specified URL stub is already in
+    use by another portal.</li>
+</ul>
+</p>
+
+		]]>
+	</exception_paths>
+
+	<failure_end_conditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</sample_narrative>
+<iteration>
+Finished
+</iteration>
+</use_case>

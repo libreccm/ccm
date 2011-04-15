@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00610" />
+	<title>Navigate to a Personal Portal</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/28" />
+	<status value="ready_for_review" />
+        <release_target release="2.0"/>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="A user wishes to navigate to a personal portal." />
+	<basic_path>
+		Basic path for the use case
+	</basic_path>
+	<success_end_conditions>
+		Description of success from the user's point of view.
+	</success_end_conditions>
+</use_case>

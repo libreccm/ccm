@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00959" />
+	<title>Set Portlet Header Color for Theme </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/26" />
+	<status value="in_progress" />
+	<goal_level value="subfunction" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="User wishes to set a color for Context Bar" />
+	<basic_path>
+        <![CDATA[
+          <ol>
+            <li>User begins on Create Theme page (see <a href="psrv-00910.xml.html">PSRV-00910:Create a Theme for a Portal</a>)</li>
+            <li>User locates section of Create Theme form for Context bar and either selects one of the preset colors, or enters a custom value.</li>
+          </ol>
+        ]]>
+	</basic_path>
+	<success_end_conditions>
+	</success_end_conditions>
+<iteration>Focused</iteration>
+</use_case>

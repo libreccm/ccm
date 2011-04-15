@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00100" />
+	<title>Add a Tab to a Portal </title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/28" />
+        <release_target release="2.0"/>
+	<status value="ready_for_review" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+The Portal administrator should be able to create and save tabs within a portal. 
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A portal administrator has decided that an additional tab on a particular portal is desirable for organizational purposes" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+Of course, this Use Case relies on the existence of a Portal in the first place. Every new portal is built with a default tab. 
+This tab is named "Main". The name of this tab, or any other tab can be 
+changed within the tab configuration page (See <a href="psrv-00110.xml.html">PSRV-00110:Configure a Portal Tab</a> Use Case).
+</p>
+
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>The PA visits the Portal Home page.</li>
+  <li>The PA selects the Configure Portal link</li>
+  <li>The PA then selects the link for 'Create a New Portal Tab'</li>
+  <li>The PA then enters a name for the new Portal Tab(this is a required field)</li>
+  <li>The PA then clicks the Create Tab button</li>
+  <li>The PA is then taken to the Configuration page for the new Tab</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The new tab is created, and available for customization.
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+		]]>
+	</alternative_paths>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+
+		]]>
+	</open_issues>
+<iteration>
+Finished
+</iteration>
+</use_case>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00057" />
+	<title>Invite a participant to a portal</title>
+	<author name="Author's Name" email="author@arsdigita.com" />
+	<last_modified date="2001/12/06" />
+	<status value="not_started" />
+        <release_target release="2.1"/>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Participant" /></actors>
+	<trigger value="The event that gets the use case started" />
+	<basic_path>
+		Basic path for the use case
+	</basic_path>
+	<success_end_conditions>
+		Description of success from the user's point of view.
+	</success_end_conditions>
+</use_case>

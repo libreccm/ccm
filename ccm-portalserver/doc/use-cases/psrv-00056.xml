@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00056" />
+	<title>Remove a portal participant</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2001/11/01" />
+	<status value="in_progress" />
+        <release_target release="2.1"/>
+	<description>
+		<![CDATA[
+<p> <span class="option"></span> A Portal Administrator
+wants to remove a participant from a portal.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="A Portal Administrator  wishes to remove an existing participant from a portal" />
+	<preconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>The Portal Administrator navigates to the "View One
+    Participant" page, using <a
+    href="psrv-00052.xml.html">PSRV-00052</a>.</li>
+  <li>The Administrator clicks on a "Remove this participant" link.</li>
+  <li>The Administrator is returned to the portal's "Participants"
+    page.</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The selected party is removed as a participant of the portal.
+</p>
+
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p> <span class="optional"></span>
+<ul>
+  <li>If removing a participant will leave some responsibility/role
+    unassigned, the administrator should be presented with a
+    confirmation screen that lists these responsibilities and asks the
+    administrator to confirm the removal decision.  This screen may
+    also provide shortcuts for re-assigning those responsibilities to
+    new roles or individuals.</li>
+</ul>
+</p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p> <span class="optional"></span>
+
+</p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p> <span class="optional"></span>
+</p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+What happens if a participant is removed who has roles? Particpants with roles should not be deleted, but deactivated. If an attempt is made to delete them, perhaps the system should deny this action until all roles have been disassociated with that participant.
+
+
+		]]>
+	</open_issues>
+<iteration>
+Filled.
+</iteration>
+</use_case>

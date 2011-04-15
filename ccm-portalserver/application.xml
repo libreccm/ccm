@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ccm:application name="ccm-portalserver"
+  prettyName="Red Hat Enterprise Portal Server"
+  version="1.0.0"
+  xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  webapp="ROOT"
+  release="1">
+
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.1.0" relation="ge"/>
+  </ccm:dependencies>
+
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+
+  <ccm:description>
+     A framework for personalized and group-oriented aggregation and delivery of
+     information. Portal Server relies on servlets to provide access to new and
+     existing applications in an organizations infrastructure and present the
+     information in a convenient centralized perspective.
+  </ccm:description>
+
+</ccm:application>

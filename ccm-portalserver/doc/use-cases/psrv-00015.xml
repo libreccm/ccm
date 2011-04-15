@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00015" />
+	<title>Move Portal</title>
+	<author name="Eric Lorenzo" email="elorenzo@arsdigita.com" />
+	<last_modified date="2001/10/31" />
+	<status value="not_started" />
+        <release_target release="2.1"/>
+	<description>
+		<![CDATA[
+<p><span class="optional"></span> A Global Portal
+Administrator may move around portals within the portal
+hierarchy.</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="The Portal Administrator  wants to move around parts of the portal hierarchy" />
+	<preconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p><span class="required"></span>
+
+<ol>
+
+  <li>The Portal Administrator navigates to "Move Portal"
+    interface under global portal management.</li>
+
+  <li>She selects the portal to be moved.  (The toplevel portal    may not be selected.)</li>
+
+  <li>She selects the new parent for the portal being moved.</li>
+
+  <li>She reviews the planned change.</li>
+
+  <li>She confirms the change.</li>
+
+</ol>
+
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p><span class="required"></span> The first
+portal specified is moved in the hierarchy so that it's parent is
+the second portal specified.  The children of the moved portal
+move with it.</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+<p> <span class="optional"></span></p>
+
+<hr>
+
+
+		]]>
+	</open_issues>
+<iteration>
+Facade
+</iteration>
+</use_case>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE use_case SYSTEM "use-case.dtd">
+<use_case>
+	<id category="PSRV" number="00012" />
+	<title>Modify Portal Name</title>
+	<author name="Jim Parsons" email="jparsons@redhat.com" />
+	<last_modified date="2003/02/28" />
+	<status value="ready_for_review" />
+	<description>
+		<![CDATA[
+<p> <span class="option"></span>
+A method for changing the name of an existing Portal.
+</p>
+
+		]]>
+	</description>
+	<goal_level value="user_goal" />
+	<actors><actor name="Portal Administrator" /></actors>
+	<trigger value="The PA desires to change the name of an existing Portal" />
+	<preconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</preconditions>
+	<basic_path>
+		<![CDATA[
+<p> <span class="required"></span><br>
+<ol>
+  <li>Starting at the Portal, A PA navigates to the Portal Configuration page by clicking the "Configure Portal" link</li>
+  <li>On the Portal Configuration page, the PA selects the 'basic' tab.</li>
+  <li>The PA then enters the new name for the Portal, and clicks save.</li>
+</ol>
+</p>
+
+		]]>
+	</basic_path>
+	<postconditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</postconditions>
+	<success_end_conditions>
+		<![CDATA[
+<p> <span class="required"></span>
+The name of the Portal is changed to the desired name.
+</p>
+
+		]]>
+	</success_end_conditions>
+	<alternative_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</alternative_paths>
+	<exception_paths>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</exception_paths>
+	<failure_end_conditions>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</failure_end_conditions>
+	<sample_narrative>
+		<![CDATA[
+<p><span class="optional"></span></p>
+
+		]]>
+	</sample_narrative>
+	<open_issues>
+		<![CDATA[
+ince changing the URL of a portal is not available yet, will having the Portal name and the URL being wildly different confuse the user?
+
+
+		]]>
+	</open_issues>
+<iteration>
+Focused
+</iteration>
+</use_case>

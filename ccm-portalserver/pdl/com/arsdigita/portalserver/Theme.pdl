@@ -1,0 +1,53 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// @author Jim Parsons (jparsons@arsdigita.com)
+// $Id: //portalserver/dev/pdl/com/arsdigita/portalserver/Theme.pdl#4 $
+// $DateTime: 2004/08/17 23:19:25 $
+model com.arsdigita.workspace;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.web.Application;
+
+
+object type ThemeApplication extends Application {
+    reference key (ps_themeapplications.theme_app_id);
+}
+
+object type Theme extends ACSObject {
+	String[0..1] theme_name = ps_themes.theme_name VARCHAR(4000);
+	String[0..1] theme_desc = ps_themes.theme_desc VARCHAR(4000);
+	String[0..1] ctx_bar_color = ps_themes.ctx_bar_color VARCHAR(100);
+	String[0..1] ctx_bar_text_color = ps_themes.ctx_bar_text_color VARCHAR(100);
+	String[0..1] active_tab_color = ps_themes.active_tab_color VARCHAR(100);
+	String[0..1] active_tab_text_color = ps_themes.active_tab_text_color VARCHAR(100);
+	String[0..1] inactive_tab_color = ps_themes.inactive_tab_color VARCHAR(100);
+	String[0..1] inactive_tab_text_color = ps_themes.inactive_tab_text_color VARCHAR(100);
+	String[0..1] top_rule = ps_themes.top_rule VARCHAR(100);
+	String[0..1] bottom_rule = ps_themes.bottom_rule VARCHAR(100);
+	String[0..1] portlet_head = ps_themes.portlet_head VARCHAR(100);
+	String[0..1] portlet_icon = ps_themes.portlet_icon VARCHAR(100);
+	String[0..1] portlet_border_color = ps_themes.portlet_border_color VARCHAR(100);
+	String[0..1] portlet_border_style = ps_themes.portlet_border_style VARCHAR(100);
+	String[0..1] portlet_header_text_color = ps_themes.portlet_header_text_color VARCHAR(100);
+	String[0..1] page_bg_color = ps_themes.page_bg_color VARCHAR(100);
+	String[0..1] page_bg_image = ps_themes.page_bg_image VARCHAR(100);
+	String[0..1] narrow_bg_color = ps_themes.narrow_bg_color VARCHAR(100);
+	String[0..1] body_text_color = ps_themes.body_text_color VARCHAR(100);
+
+	reference key (ps_themes.theme_id);
+}
