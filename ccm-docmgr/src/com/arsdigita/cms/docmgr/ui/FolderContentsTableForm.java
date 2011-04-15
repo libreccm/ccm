@@ -94,14 +94,16 @@ class FolderContentsTableForm extends Form
                     
                 Folder parentFolder = new Folder(fid);
                     
-                DataQuery m_collection = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.docmgr.ui.ItemsInFolder");
+                DataQuery m_collection = SessionManager.getSession()
+                        .retrieveQuery("com.arsdigita.cms.docmgr.ui.ItemsInFolder");
                 m_collection.setParameter(Folder.PARENT, fid);
                 m_collection.setParameter(Folder.VERSION, parentFolder.getVersion());
                     
                 long size = m_collection.size();
                 m_collection.close();
                 int rowsPerPage = DocMgr.getConfig().getRowsPerPage();
-                int maxPages = (int) ((size / rowsPerPage) + (size % rowsPerPage > 0 ? 1 : 0));
+                int maxPages = (int) ((size / rowsPerPage) +
+                                      (size % rowsPerPage > 0 ? 1 : 0));
                 return new Integer(maxPages);
             }
         };

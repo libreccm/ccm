@@ -1,0 +1,37 @@
+
+// the query returns the first(:maxRows) rows of Document & DocLink ordered by last_modified_cached date
+// docID, objectType - OID attributes
+// input parameters: :ancestors, :maxRows
+
+model com.arsdigita.cms.docmgr.ui;
+
+query RecentUpdatedDocs {
+
+  BigDecimal docID;
+  String objectType;
+
+  do {
+    select id, object_type from (
+      select * from (
+        select * from (
+          select d.doc_id as id, d.last_modified_cached, ao.object_type 
+          from cms_documents d inner join acs_objects ao on (d.doc_id = ao.object_id) inner join cms_items i on (d.doc_id = i.item_id) 
+          where d.last_modified_cached is not null 
+            and i.ancestors like :ancestors 
+          order by d.last_modified_cached desc
+        ) where rownum <= :maxRows
+        union
+        select * from (
+          select d.link_id as id, d.last_modified_cached, ao.object_type 
+          from cms_doc_links d inner join acs_objects ao on (d.link_id = ao.object_id) inner join cms_items i on (d.link_id = i.item_id)  
+          where d.last_modified_cached is not null 
+            and i.ancestors like :ancestors 
+          order by d.last_modified_cached desc
+        ) where rownum <= :maxRows
+      ) order by last_modified_cached desc
+    ) where rownum <= :maxRows
+  } map {
+    docID = id;
+    objectType = object_type;
+  }
+}
