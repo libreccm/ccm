@@ -464,8 +464,7 @@ public abstract class SciOrganizationBasePanel
                                            final Element parent,
                                            final PageState state) {
         RelatedLink link;
-        ContentItem publication;
-        String objectType;
+        ContentItem publication;        
         List<ContentItem> publications;
 
         publications = new ArrayList<ContentItem>();
@@ -500,7 +499,19 @@ public abstract class SciOrganizationBasePanel
             }
         });
 
-        for (ContentItem pub : publications) {
+        long pageNumber = getPageNumber(state);
+        long pageCount = getPageCount(publications.size());
+        long begin = getPaginatorBegin(pageNumber);
+        long count = getPaginatorCount(begin, publications.size());
+        long end = getPaginatorEnd(begin, count);
+        pageNumber = normalizePageNumber(pageCount, pageNumber);
+
+        createPaginatorElement(parent, pageNumber, pageCount, begin, end, count,
+                               end);
+        List<ContentItem> publicationsToShow = publications.subList((int) begin,
+                                                                    (int) end);
+
+        for (ContentItem pub : publicationsToShow) {
             generatePublicationXML(pub, parent, state);           
         }
     }
