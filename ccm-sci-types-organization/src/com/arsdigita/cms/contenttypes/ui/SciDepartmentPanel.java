@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -29,6 +30,7 @@ import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -51,6 +53,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     public static final String SHOW_PROJECTS = "projects";
     public static final String SHOW_PROJECTS_ONGOING = "projectsOngoing";
     public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";
+    public static final String SHOW_PUBLICATIONS = "publications";
 
     @Override
     protected String getDefaultForShowParam() {
@@ -447,6 +450,12 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                 availableData.newChildElement("projectsFinished");
             }
         }
+        DataCollection publicationLinks =
+                       RelatedLink.getRelatedLinks(department,
+                                                   "SciDepartmentPublications");
+        if ((publicationLinks != null) && (publicationLinks.size() > 0)) {
+            availableData.newChildElement("publications");
+        }
 
         String show = getShowParam(state);
 
@@ -481,6 +490,12 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                                 getFiltersForFinishedProjects());
         } else if (SHOW_SUBDEPARTMENTS.equals(show)) {
             generateSubDepartmentsXML(department, content, state);
+        } else if (SHOW_PUBLICATIONS.equals(show)) {
+            generatePublicationsXML(
+                    RelatedLink.getRelatedLinks(item,
+                                                "SciDepartmentPublications"),
+                    content,
+                    state);
         }
     }
 }

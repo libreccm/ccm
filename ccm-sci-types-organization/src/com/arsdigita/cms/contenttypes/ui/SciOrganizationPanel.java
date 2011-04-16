@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -32,10 +33,9 @@ import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciOrganizationDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciOrganizationProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,6 +60,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
     public static final String SHOW_PROJECTS = "projects";
     public static final String SHOW_PROJECTS_ONGOING = "projectsOngoing";
     public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";
+    public static final String SHOW_PUBLICATIONS = "publications";
 
     @Override
     protected String getDefaultForShowParam() {
@@ -546,6 +547,12 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                 availableData.newChildElement("projectsFinished");
             }
         }
+        DataCollection publicationLinks =
+                       RelatedLink.getRelatedLinks(orga,
+                                                   "SciOrganizationPublications");
+        if ((publicationLinks != null) && (publicationLinks.size() > 0)) {
+            availableData.newChildElement("publications");
+        }
 
         String show = getShowParam(state);
 
@@ -578,6 +585,12 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         } else if (SHOW_PROJECTS_FINISHED.equals(show)) {
             generateProjectsXML(
                     orga, content, state, getFiltersForFinishedProjects());
+        } else if (SHOW_PUBLICATIONS.equals(show)) {
+            generatePublicationsXML(
+                    RelatedLink.getRelatedLinks(item,
+                                                "SciOrganizationPublications"),
+                    content,
+                    state);
         }
     }
 }

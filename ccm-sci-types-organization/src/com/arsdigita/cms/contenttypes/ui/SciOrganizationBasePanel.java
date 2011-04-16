@@ -20,6 +20,9 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentItemXMLRenderer;
+import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -28,7 +31,13 @@ import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.xml.Element;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -439,4 +448,74 @@ public abstract class SciOrganizationBasePanel
             }
         }
     }
+
+    /**
+     * Create the XML for the list of publications, using the special
+     * RelatedLinks passed by the caller. To avoid a dependency to the
+     * sci-publications module, we are using only methods from
+     * {@link DataObject}, {@link DomainObject}, {@link DataCollection} and
+     * {@link DomainCollection}.
+     *
+     * @param links Links to the publications
+     * @param parent  The parent XML element for the XML created by this method
+     * @param state The current page state.
+     */
+    protected void generatePublicationsXML(final DataCollection links,
+                                           final Element parent,
+                                           final PageState state) {
+        RelatedLink link;
+        ContentItem publication;
+        String objectType;
+        List<ContentItem> publications;
+
+        publications = new ArrayList<ContentItem>();
+
+        while (links.next()) {
+            link = new RelatedLink(links.getDataObject());
+            publication = link.getTargetItem();
+
+            publications.add(publication);
+        }
+
+        Collections.sort(publications, new Comparator<ContentItem>() {
+
+            public int compare(ContentItem o1, ContentItem o2) {
+                Integer year1;
+                Integer year2;
+
+                year1 = (Integer) o1.get("yearOfPublication");
+                year2 = (Integer) o2.get("yearOfPublication");
+
+                if (year1.compareTo(year2) == 0) {
+                    String title1;
+                    String title2;
+
+                    title1 = (String) o1.get("title");
+                    title2 = (String) o2.get("title");
+
+                    return title1.compareTo(title2);
+                } else {
+                    return (year1.compareTo(year2)) * -1;
+                }
+            }
+        });
+
+        for (ContentItem pub : publications) {
+            generatePublicationXML(pub, parent, state);           
+        }
+    }
+    
+    protected void generatePublicationXML(final ContentItem publication,
+                                          final Element parent,
+                                          final PageState state) {
+        Element publicationElem;
+        ContentItemXMLRenderer renderer;
+
+        publicationElem = parent.newChildElement("publications");
+
+        renderer = new ContentItemXMLRenderer(publicationElem);
+        renderer.setWrapAttributes(true);
+
+        renderer.walk(publication, SimpleXMLGenerator.class.getName());       
+    }    
 }

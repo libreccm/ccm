@@ -21,15 +21,13 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
-import com.arsdigita.cms.contenttypes.GenericPerson;
-import com.arsdigita.cms.contenttypes.SciMember;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.contenttypes.SciProjectSubProjectsCollection;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -234,6 +232,12 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
                 availableData.newChildElement("formerMembers");
             }
         }
+        DataCollection publicationLinks =
+                       RelatedLink.getRelatedLinks(project,
+                                                   "SciProjectPublications");
+        if ((publicationLinks != null) && (publicationLinks.size() > 0)) {
+            availableData.newChildElement("publications");
+        }
 
         String show = getShowParam(state);
 
@@ -256,6 +260,12 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
                                    getFiltersForFinishedProjects());
         } else if (SHOW_MEMBERS.equals(show)) {
             generateMembersXML(project, content, state, true, true, true);
+        } else if (SHOW_PUBLICATIONS.equals(show)) {
+            generatePublicationsXML(
+                    RelatedLink.getRelatedLinks(item,
+                                                "SciProjectPublications"),
+                    content,
+                    state);
         }
     }
 }

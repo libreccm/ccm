@@ -2881,8 +2881,10 @@ public class DaBInImporter extends Program {
                     publisherDe.setName(DaBInImporter.normalizeString(publisherData.
                             getName()));
                 } else {
-                    publisherDe.setTitle(String.format("%s, %s", publisherData.
-                            getName(), publisherData.getPlace()));
+                    /*publisherDe.setTitle(String.format("%s, %s", publisherData.
+                            getName(), publisherData.getPlace()));*/
+                    publisherDe.setTitle(String.format("%s", publisherData.
+                            getName()));
                     publisherDe.setName(DaBInImporter.normalizeString(String.
                             format(
                             "%s, %s", publisherData.getName(), publisherData.
