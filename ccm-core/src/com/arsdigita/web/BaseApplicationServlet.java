@@ -95,6 +95,7 @@ public abstract class BaseApplicationServlet extends BaseServlet {
      *
      * @see com.arsdigita.web.BaseServlet#doService(HttpServletRequest,HttpServletResponse)
      */
+    @Override
     protected final void doService(final HttpServletRequest sreq,
                                    final HttpServletResponse sresp)
             throws ServletException, IOException {
@@ -152,6 +153,11 @@ public abstract class BaseApplicationServlet extends BaseServlet {
                                       Application app)
             throws ServletException, IOException;
 
+    /**
+     * 
+     * @param sreq
+     * @return
+     */
     private Application getApplication(HttpServletRequest sreq) {
         s_log.debug("Resolving the application that will handle this request");
 

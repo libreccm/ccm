@@ -36,25 +36,23 @@ import org.apache.log4j.Logger;
  * <p><strong>Experimental</strong></p>
  *
  * @author <a href="mailto:justin@arsdigita.com">Justin Ross</a>
- * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/PortalDispatcher.java#5 $
+ * @version $Id: PortalDispatcher.java  pboy $
  */
 public class PortalDispatcher extends BebopMapDispatcher {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/PortalDispatcher.java#5 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
 
     private static final Logger s_log = Logger.getLogger
         (PortalDispatcher.class);
 
     // XXX Move these to constant pool.
-
     protected static final String PORTAL_HOME_PAGE = "index.xhtml";
     protected static final String PORTAL_ADMIN_PAGE = "admin";
     protected static final String PORTAL_PARTICIPANT_PAGE = "participants";
 
     private Dispatcher m_portalsiteAdminDispatcher;
 
+    /**
+     * Constructor
+     */
     public PortalDispatcher() {
         super();
 
@@ -67,6 +65,15 @@ public class PortalDispatcher extends BebopMapDispatcher {
         setMap(m);
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @param context
+     * @throws IOException
+     * @throws ServletException
+     */
+    @Override
     public void dispatch(HttpServletRequest request,
                          HttpServletResponse response,
                          RequestContext context)

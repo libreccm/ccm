@@ -62,13 +62,14 @@
 <!--  - - - - -  -   -->
 <!--    <ccm:application name="ccm-auth-http"/>                      -->
 <!--    <ccm:application name="ccm-bookmarks"/>                      -->
-<!--    temporarily excluded, produces errors in the build process
-        <ccm:application name="ccm-docmngr"/>                        -->
+<!--    temporarily excluded, produces errors in the build process   -->
+        <ccm:application name="ccm-docmgr"/>                        
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
 <!--    <ccm:application name="ccm-forum-categorised"/>              -->
 <!--    <ccm:application name="ccm-portalserver"/>                   -->
-        <ccm:application name="ccm-portalworkspace"/>                
+        <ccm:application name="ccm-portalserver"/>                
+        <ccm:application name="ccm-portalworkspace"/>               
 <!--    <ccm:application name="ccm-simplesurvey"/>                   -->
         <ccm:application name="ccm-themedirector"/>                     
 <!--    <ccm:application name="ccm-user-preferences"/>               -->

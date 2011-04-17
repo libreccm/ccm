@@ -46,8 +46,8 @@ public class BebopMapDispatcher extends MapDispatcher {
         Logger.getLogger(BebopMapDispatcher.class);
 
     /**
-     * Creates BebopMapDispatcher with empty URL mapped to "/" and the
-     * default presentation manager.  Also maps a Bebop confirmation
+     * Constructor creates BebopMapDispatcher with empty URL mapped to "/" and
+     * the default presentation manager.  Also maps a Bebop confirmation
      * page to the location at ConfirmPage.CONFIRM_URL.
      */
     public BebopMapDispatcher() {
@@ -63,6 +63,7 @@ public class BebopMapDispatcher extends MapDispatcher {
      * Sets the page map for this dispatcher.
      * @param m the page map (which maps URLs to Pages)
      */
+    @Override
     public synchronized final void setMap(Map m) {
         // hijack the page map and replace Page targets
         // with Dispatcher targets.
@@ -143,10 +144,16 @@ public class BebopMapDispatcher extends MapDispatcher {
      * @param md the MapDispatcher to configure
      * @return a SAX DefaultHandler object for handling SAX events.
      */
+    @Override
     protected DefaultHandler newParseConfigHandler(MapDispatcher md) {
         return new BebopConfigHandler(md);
     }
 
+
+    
+    /**
+     * 
+     */
     private static class BebopConfigHandler
         extends MapDispatcher.ParseConfigHandler {
 
@@ -154,6 +161,7 @@ public class BebopMapDispatcher extends MapDispatcher {
             super(md);
         }
 
+        @Override
         public void endElement(String uri, String localName, String qn) {
             if (qn.equals("page-class")) {
                 try {

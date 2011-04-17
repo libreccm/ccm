@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
  */
 package com.arsdigita.bebop.page;
 
@@ -36,17 +35,18 @@ import java.util.HashMap;
 import java.util.Set;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletContext;
+//import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
 /**
- * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: BebopApplicationServlet.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $
  * 
- * chris gilbert - allow BebopApplicationServlet pages to disable client/middleware
+ * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author chris gilbert - allow BebopApplicationServlet pages to disable
+ *                         client/middleware
+ * @version $Id: BebopApplicationServlet.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $
  */
 public class BebopApplicationServlet extends BaseApplicationServlet {
 
@@ -82,8 +82,8 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
     }
 
     /**
+     * disable client/middleware caching of specified page (Chris Gilbert).
      *
-     * disable client/middleware caching of specified page. 
      * @param pathInfo - the same path used to add the page when put was called
      */
     protected final void disableClientCaching(String pathInfo) {

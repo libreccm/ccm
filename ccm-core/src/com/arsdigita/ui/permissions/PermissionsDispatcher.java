@@ -29,7 +29,8 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.ui.login.UserAuthenticationListener;
 
 /**
- * Dispatcher for the permissions UI package.
+ * Dispatcher for the
+ * UI package.
  * Manages permissions admin pages.
  * The dispatcher is mounted at /permissions/
  * Below that, an index page is mounted at "" or "index",

@@ -47,7 +47,7 @@ public class ThemeFile extends DomainObject {
                                 Logger.getLogger(ThemeFile.class);
 
     public static final String BASE_DATA_OBJECT_TYPE = 
-        "com.arsdigita.themedirector.ThemeFile";
+                               "com.arsdigita.themedirector.ThemeFile";
 
     public static final String ID = "id";
     public static final String FILE_PATH = "filePath";

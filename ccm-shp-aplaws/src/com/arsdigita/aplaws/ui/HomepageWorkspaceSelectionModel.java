@@ -27,9 +27,9 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 
-import com.arsdigita.london.portal.Workspace;
-import com.arsdigita.london.portal.WorkspacePage;
-import com.arsdigita.london.portal.WorkspacePageCollection;
+import com.arsdigita.portalworkspace.Workspace;
+import com.arsdigita.portalworkspace.WorkspacePage;
+import com.arsdigita.portalworkspace.WorkspacePageCollection;
 
 import com.arsdigita.london.subsite.Subsite;
 
