@@ -1,0 +1,94 @@
+/*
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.faq;
+
+import com.arsdigita.faq.ui.FaqPage;
+import com.arsdigita.faq.ui.FaqAdminView;
+import com.arsdigita.faq.ui.FaqUserView;
+
+import com.arsdigita.bebop.page.BebopMapDispatcher;
+import com.arsdigita.bebop.Page;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.log4j.Logger;
+
+/**
+ * Faq dispatcher for both Bebop-backed and other URLs.
+ *
+ * @author Kevin Scaldeferri (kevin@arsdigita.com)
+ * @version $Revision: #4 $ $Date: 2004/08/17 $
+ * @version $Id: FaqDispatcher.java pboy $
+ */
+
+public class FaqDispatcher extends BebopMapDispatcher {
+
+    private static final Logger s_log =
+        Logger.getLogger(FaqDispatcher.class);
+
+    /**
+     * 
+     */
+    public FaqDispatcher() {
+        super();
+
+        Map m = new HashMap();
+
+        Page index = buildIndexPage();
+        Page admin = buildAdminIndexPage();
+
+        m.put("", index);
+        m.put("index.jsp", index);
+        m.put("one.jsp", index);
+
+        m.put("admin/", admin);
+        m.put("admin/index.jsp", admin);
+
+        setMap(m);
+    }
+
+    private FaqPage buildIndexPage() {
+        FaqPage p = new FaqPage();
+
+        p.add(new FaqUserView());
+
+        /*CommentsService commentsService =
+         *  new CommentsService(req, FaqHelper.getFaqID(req));
+         *  p.add(commentsService.buildCommentsComponent(
+         *  "comments/one-object"));
+         */
+
+        p.lock();
+        return p;
+    }
+
+
+    private FaqPage buildAdminIndexPage() {
+
+        FaqPage p = new FaqPage("admin");
+
+        FaqAdminView faqAdminTabs = new FaqAdminView();
+        faqAdminTabs.setKey("FaqAdminTabs");
+        p.add(faqAdminTabs);
+
+        p.lock();
+        return p;
+    }
+
+}

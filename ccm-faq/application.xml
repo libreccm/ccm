@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ccm:application name="ccm-faq"
+  prettyName="Red Hat Enterprise FAQ"
+  version="6.6.0"
+  xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  webapp="ROOT"
+  release="1">
+
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.1.0"  relation="ge"/>
+  </ccm:dependencies>
+
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+
+  <ccm:description>
+     An application for managing persisted faq. Useful for team 
+     bookmarking, or accessing personal faq remotely.
+  </ccm:description>
+
+</ccm:application>

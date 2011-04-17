@@ -1,0 +1,60 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: //apps/faq/dev/pdl/com/arsdigita/faq/Faq.pdl#3 $
+// $DateTime: 2004/08/17 23:26:27 $
+model com.arsdigita.faq;
+
+import com.arsdigita.kernel.ACSObject;
+
+import com.arsdigita.web.Application;
+
+object type Faq extends Application {
+
+    component QAPair[0..n] questions = 
+        join faqs.faq_id to faq_questions.faq_id;
+
+    reference key (faqs.faq_id);	
+
+}
+
+
+object type QAPair extends ACSObject {
+
+    String     question = faq_questions.question VARCHAR(1000);
+    String     answer   = faq_questions.answer  VARCHAR(1000);
+    String     answerFormat = faq_questions.answer_format VARCHAR(100);
+    Integer    sortKey = faq_questions.sort_key INTEGER;
+
+    Faq[1..1]  faq = join faq_questions.faq_id to faqs.faq_id;
+	
+    reference key (faq_questions.question_id);	
+
+}
+
+
+query nextSortKey {
+    Integer nextSortKey;
+    do {
+        select CASE WHEN max(sort_key) is null THEN 0
+                    ELSE max(sort_key) END + 1 as next_sort_key
+        from   faq_questions
+        where  faq_id = :faqID
+    } map {
+        nextSortKey = faq_questions.next_sort_key;
+    }
+}
