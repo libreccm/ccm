@@ -29,9 +29,11 @@ import java.math.BigDecimal;
  * {@link GenericOrganizationalUnit} class as base.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class Publisher extends GenericOrganizationalUnit {
 
+    public static final String PUBLISHER_NAME = "publisherName";
     public static final String PLACE = "place";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Publisher";
@@ -56,6 +58,14 @@ public class Publisher extends GenericOrganizationalUnit {
         super(type);
     }
 
+    public String getPublisherName() {
+        return (String) get(PUBLISHER_NAME);
+    }
+
+    public void setPublisherName(String publisherName) {
+        set(PUBLISHER_NAME, publisherName);
+    }
+
     /**
      *
      * @return The place of the publisher.
@@ -71,4 +81,30 @@ public class Publisher extends GenericOrganizationalUnit {
     public void setPlace(String place) {
         set(PLACE, place);
     }
+
+     // Create a ulr save version of the full name
+    public static String urlSave(String in) {
+
+        if (in != null && !in.isEmpty()) {
+
+            // Replacement map
+            String[][] replacements = {{"ä", "ae"}, {"Ä", "Ae"}, {"ö", "oe"}, {
+                    "Ö", "Oe"}, {"ü", "ue"}, {"Ü", "Ue"}, {"ß", "ss"}, {".", ""}};
+
+            // Replace all spaces with dash
+            String out = in.replace(" ", "-");
+
+            // Replace all special chars defined in replacement map
+            for (int i = 0; i < replacements.length; i++) {
+                out = out.replace(replacements[i][0], replacements[i][1]);
+            }
+
+            // Replace all special chars that are not yet replaced with a dash
+            return out.replaceAll("[^A-Za-z0-9-]", "_").toLowerCase();
+        }
+
+        return in;
+
+    }
+
 }

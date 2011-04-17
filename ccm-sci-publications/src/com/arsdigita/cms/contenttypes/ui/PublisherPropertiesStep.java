@@ -32,6 +32,7 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class PublisherPropertiesStep
         extends GenericOrganizationalUnitPropertiesStep {
@@ -45,6 +46,10 @@ public class PublisherPropertiesStep
             ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) getGenericOrganizationalUnitPropertySheet(
                 itemModel);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.publisher.name"),
+                  Publisher.PUBLISHER_NAME);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publisher.place"),

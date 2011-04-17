@@ -99,7 +99,7 @@ public class DaBInImporter extends Program {
     private static final Logger logger = Logger.getLogger(DaBInImporter.class);
     private Properties config;
     private String timestamp = null;
-    private ContentSection section;  
+    private ContentSection section;
     private ContentSection personsSection;
     private ContentSection projectsSection;
     private ContentSection publicationsSection;
@@ -203,7 +203,7 @@ public class DaBInImporter extends Program {
         section = getContentSection(config.getProperty("ccm.contentsection"));
         personsSection = getContentSection(config.getProperty(
                 "ccm.personsContentSection"));
-        
+
         projectsSection = getContentSection(config.getProperty(
                 "ccm.projectsContentSection"));
         publicationsSection = getContentSection(config.getProperty(
@@ -2738,13 +2738,15 @@ public class DaBInImporter extends Program {
                             //bundle.save();
 
                             RelatedLink download = new RelatedLink();
-                            download.setTitle(config.getProperty("workingpaper.download.de"));
+                            download.setTitle(config.getProperty(
+                                    "workingpaper.download.de"));
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperDe);
 
                             download = new RelatedLink();
-                            download.setTitle(config.getProperty("workingpaper.download.en"));
+                            download.setTitle(config.getProperty(
+                                    "workingpaper.download.en"));
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
@@ -2882,14 +2884,16 @@ public class DaBInImporter extends Program {
                             getName()));
                 } else {
                     /*publisherDe.setTitle(String.format("%s, %s", publisherData.
-                            getName(), publisherData.getPlace()));*/
-                    publisherDe.setTitle(String.format("%s", publisherData.
-                            getName()));
+                    getName(), publisherData.getPlace()));*/
+                    publisherDe.setTitle(String.format("%s %s",
+                                                       publisherData.getName(),
+                                                       publisherData.getPlace()));
                     publisherDe.setName(DaBInImporter.normalizeString(String.
                             format(
-                            "%s, %s", publisherData.getName(), publisherData.
+                            "%s %s", publisherData.getName(), publisherData.
                             getPlace())));
                 }
+                publisherDe.setPublisherName(publisherData.getName());
                 publisherDe.setPlace(publisherData.getPlace());
                 publisherDe.setLanguage("de");
                 publisherDe.setLifecycle(createLifecycle(publicationsLifecycle));
@@ -2906,13 +2910,14 @@ public class DaBInImporter extends Program {
                     publisherEn.setName(DaBInImporter.normalizeString(publisherData.
                             getName()));
                 } else {
-                    publisherEn.setTitle(String.format("%s, %s", publisherData.
+                    publisherEn.setTitle(String.format("%s %s", publisherData.
                             getName(), publisherData.getPlace()));
                     publisherEn.setName(DaBInImporter.normalizeString(String.
                             format(
-                            "%s, %s", publisherData.getName(), publisherData.
+                            "%s %s", publisherData.getName(), publisherData.
                             getPlace())));
                 }
+                publisherEn.setPublisherName(publisherData.getName());
                 publisherEn.setPlace(publisherData.getPlace());
                 publisherEn.setLanguage("en");
                 publisherEn.setLifecycle(createLifecycle(publicationsLifecycle));
