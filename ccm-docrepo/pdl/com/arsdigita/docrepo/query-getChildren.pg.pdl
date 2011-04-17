@@ -1,0 +1,69 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: docrepo/query-getChildren.pg.pdl  pboy $
+// $DateTime: 2004/08/17 23:26:27 $
+model com.arsdigita.docrepo;
+
+// retrieve listing of resources that have a given parent
+
+query getChildren {
+    BigDecimal parentID;
+    String name;
+    String description;
+    Boolean isFolder;
+    String mimeType;
+    String mimeTypeDescription;
+    BigDecimal modifyingUser;
+    String modifyingIP;
+    Date lastModified;
+    BigDecimal id;
+    String objectType;
+    do {
+        select CASE WHEN d.parent_id is null then -1 
+                    else d.parent_id end as parent_id,      
+               d.name,
+               d.description,
+               d.is_folder,
+               d.mime_type,
+               m.label, 
+               d.last_user,
+               d.modifying_ip,
+               d.last_modified,
+               a.object_id,
+               a.object_type
+        from   dr_resources d
+               left join cms_mime_types m on (d.mime_type = m.mime_type),
+               acs_objects a 
+        where d.resource_id = a.object_id
+        and parent_id = :folderID
+        order by d.is_folder, d.name
+    } map {
+        parentID    =  parent_id;
+        name        = d.name;
+        description = d.description;
+        isFolder    = d.is_folder;
+        mimeType    = d.mime_type;
+        mimeTypeDescription = m.label;
+        modifyingUser = d.last_user;
+        modifyingIP  = d.modifying_ip;
+        lastModified = d.last_modified;
+        id          = a.object_id;
+        objectType  = a.object_type; 
+    }
+}     
+

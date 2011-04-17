@@ -1,0 +1,113 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: docrepo/ResourceImpl.pdl  pboy $
+model com.arsdigita.docrepo;
+
+import com.arsdigita.versioning.*;
+import com.arsdigita.kernel.*;
+
+object type ResourceImpl extends VersionedACSObject { 
+    String[1..1]     name        = dr_resources.name VARCHAR(200);
+    String[0..1]     description = dr_resources.description VARCHAR(4000);
+    Boolean[1..1]    isFolder    = dr_resources.is_folder CHAR(1);
+    String[1..1]     path        = dr_resources.path VARCHAR(3000);
+    String           mimeType    = dr_resources.mime_type VARCHAR(200);
+    BigDecimal       size        = dr_resources.length INTEGER;
+    Date[1..1]       creationDate = dr_resources.creation_date TIMESTAMP;
+    String[0..1]     creationIP  = dr_resources.creation_ip VARCHAR(50);
+    Date[1..1]       lastModifiedDate = dr_resources.last_modified TIMESTAMP;
+    String[0..1]     lastModifiedIP  = dr_resources.modifying_ip VARCHAR(50);
+
+    reference key (dr_resources.resource_id);
+}
+
+association {
+  ResourceImpl[1..1] contentResource = 
+      join dr_blobjects.resource_id to dr_resources.resource_id;
+  component DocBlobject[0..1] content = 
+      join dr_resources.resource_id to dr_blobjects.resource_id;
+}
+
+association {
+  ResourceImpl[0..n] createdResources =
+      join users.user_id to dr_resources.creation_user;
+  User[0..1] creationUser = join dr_resources.creation_user to users.user_id;
+}
+
+association {
+  ResourceImpl[0..n] modifiedResources =
+      join users.user_id to dr_resources.last_user;
+  User[0..1] lastModifiedUser = join dr_resources.last_user to users.user_id;
+}
+
+association {
+   ResourceImpl[0..1] parent = join dr_resources.parent_id
+                                 to dr_resources.resource_id;
+   component ResourceImpl[0..n] immediateChildren = 
+                 join dr_resources.resource_id to dr_resources.parent_id;
+}
+
+// Returns the direct children of a given resource
+
+query getDirectChildren {
+    BigDecimal id;
+    Boolean isFolder;
+    do {
+        select  resource_id,
+                is_folder
+        from    dr_resources
+        where   parent_id = :parentID
+    } map {
+        id       = resource_id;
+        isFolder = is_folder;
+    }        
+}
+
+// Returns a set of resources by path
+
+query getResourceByPath {
+    BigDecimal id;
+    Boolean isFolder;
+    String name;
+    String path;
+    do {
+        select resource_id,
+               name,
+               is_folder,
+               path            
+        from   dr_resources
+        where  path = :targetPath
+    } map {
+        id   = resource_id;
+        isFolder = is_folder;
+        name = name;
+        path = path;
+    }
+}
+
+
+// Update the denormalized path for every child of a given resource 
+data operation updateChildren {
+    do {
+        update dr_resources
+        set    path = :rootPath || substr(path, :oldRootPathLength)
+        where  path like :oldPath || '%'
+        and not resource_id = :parentResource
+    }
+}
+

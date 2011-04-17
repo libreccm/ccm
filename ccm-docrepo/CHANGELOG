@@ -1,0 +1,10 @@
+April 14, 2011
+
+Package ccm-docmgr from Byline repository copied and integrated in ccm/aplaws
+as an test environment.
+This "old" docmgr worked nearly out of the box (in contrast to "new" docmgr.
+
+Plan: Integrate "old" docmgr as a simple doc repository for files. To distinguish
+it from the advanced version provided by Magpie (which is based on the old code
+but heavily extended) it should be renamed to ccm-docrepo or
+ccm-filerepository / ccm-documentrepository

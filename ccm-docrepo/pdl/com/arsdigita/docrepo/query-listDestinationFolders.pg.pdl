@@ -1,0 +1,49 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: docrepo/query-listDestinationFolders.pg.pdl  pboy $
+model com.arsdigita.docrepo;
+
+// Retrieve a list of all folders in a certain repository for Copy
+// or Move operations.
+// This query excludes subfolders of source folders. It excludes
+// all(!) children folder(s) of the selected resources (specified
+// by the bind variable srcResources).
+query listDestinationFolders {
+    String name;
+    String path;
+    BigDecimal parentID;
+    BigDecimal resourceID;
+    do {
+         select name,
+                resource_id,
+                path,
+                CASE WHEN parent_id is null then (-1)::integer
+                     else parent_id END as parent_id
+         from   dr_resources
+         where  is_folder='1'
+         and    resource_id in (select object_id from vc_objects
+                                where is_deleted = '0')
+         and    path like :rootPath || '%'
+      } map {
+         name = dr_resources.name;
+         path = dr_resources.path;
+         resourceID = dr_resources.resource_id;
+         parentID = dr_resources.parent_id;
+      }
+}
+

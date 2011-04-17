@@ -1,0 +1,14 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.docrepo.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-docrepo"/>
+    <data class="com.arsdigita.docrepo.Loader"/>
+  </scripts>
+</load>

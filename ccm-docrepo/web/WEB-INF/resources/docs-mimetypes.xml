@@ -1,0 +1,244 @@
+<!-- These are the MIME types used by the Document Repository
+     application.  This file is optionally scanned by the Initializer
+     to synchronize with the MIME types stored in the database.
+     
+     To add additional types just follow the existing examples.  The
+     "class" attribute is optional.  Its default value is MimeType,
+     but it can also be set to TextMimeType or ImageMimeType.  Its
+     value does not currently have any effect on Document Manager. -->
+
+<mimetypes name="Document Repository Mime types">
+
+
+  <!-- TEXT AND TEXT-RELATED TYPES -->
+
+  <mimetype name="application/msword" extension="doc,dot"  
+            label="MS Word Document" class="TextMimeType" />
+ 
+  <mimetype name="text/html" extension="htm,html,htmls,htx" 
+            label="HTML Document" class="TextMimeType" />
+
+  <mimetype name="text/plain"  
+            extension="c,cc,c++,com,conf,cxx,def,f,for,f90,g, h,idc,lst,m,pl,java,jav,list,log,txt,text" 
+            label="plain text" class="TextMimeType" />
+
+  <mimetype name="message/rfc822" extension="mht,mhtml"
+            label="MIME Message" />
+
+  <mimetype name="text/xml" extension="xml,xsl,xsd" 
+            label="XML Format" class="TextMimeType" />
+
+  <mimetype name="text/sgml" extension="sgm,sgml" 
+            label="SGML Text" class="TextMimeType" />
+
+  <mimetype name="text/x-jsp" extension="jsp" 
+            label="JSP Code" class="TextMimeType" />
+
+  <mimetype name="application/octet-stream" extension="bin" 
+            label="Generic unknown binary" />
+
+  <!-- DOCUMENT STYLESHEET TYPES -->
+
+  <mimetype name="text/css" extension="css"
+            label="Cascading Style Sheet" class="TextMimeType" />
+
+
+  <!-- IMAGE TYPES --> 
+
+  <mimetype name="image/jpeg" extension="jpg,jpeg,jfif,jpe"
+            label="JPEG image" class="ImageMimeType" />
+
+  <mimetype name="image/gif" extension="gif"
+            label="GIF image" class="ImageMimeType" />
+ 
+  <mimetype name="image/pic" extension="pic,pict"
+            label="PICT Image" class="ImageMimeType" />
+
+  <mimetype name="image/ief" extension="ief" 
+            label="IEF Image" class="ImageMimeType" />
+
+  <mimetype name="image/tiff" extension="tif,tiff" 
+            label="TIFF Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-cmu-rast" extension="ras" 
+            label="Raster Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-portable-anymap" extension="pnm" 
+            label="AnyMap Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-portable-bitmap" extension="pbm" 
+            label="Bitmap Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-portable-graymap" extension="pgm" 
+            label="Graymap Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-portable-pixmap" extension="ppm" 
+            label="Pixmap Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-rgb" extension="rgb" 
+            label="RGB Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-xbitmap" extension="xbm" 
+            label="XBM Image" class="ImageMimeType" />
+
+  <mimetype name="image/x-xwindowdump" extension="xwd" 
+            label="X-Windows Dump" class="ImageMimeType" />
+
+
+
+  <!-- AUDIO/VOICE/MUSIC RELATED TYPES -->
+
+  <mimetype name="audio/basic" extension="snd,au" 
+            label="Basic Sound File" />
+
+  <mimetype name="audio/x-aiff" extension="sound,aifc,aif,aiff" 
+            label="AIF Sound File" />
+
+  <mimetype name="audio/x-wav" extension="wav" 
+            label="Wav Audio File" />
+
+  <mimetype name="audio/mpeg" extension="m2a"
+           label="Audio File (MPEG)" />
+  
+  <mimetype name="audio/midi" extension="mid,midi" 
+           label="MIDI Sequence" />
+
+
+
+  <!-- APPLICATION TYPES -->
+
+       <!-- TEXT-RELATED APPLICATION TYPES -->
+
+       <mimetype name="application/postscript" extension="ps,ai,eps" 
+                 label="PostScript" class="TextMimeType" />
+       
+       <mimetype name="application/rtf" extension="rtf" 
+                 label="Rich Text Format" class="TextMimeType" />
+
+       <mimetype name="application/x-troff" extension="tr,t,troff" 
+                 label="Troff File" />
+       
+       <mimetype name="application/x-troff-man" extension="man" 
+                 label="Troff Document with MAN macros" />
+
+       <mimetype name="application/x-troff-me" extension="me" 
+                 label="Troff Document with ME macros" />
+
+       <mimetype name="application/x-troff-ms" extension="ms" 
+                 label="Troff Document with MS macros" />
+
+       <mimetype name="application/x-tex" extension="tex" 
+                 label="Tex/LateX Document" />
+
+       <mimetype name="application/x-texinfo" extension="texinfo,texi" 
+                 label="TexInfo File" />
+
+       <mimetype name="application/x-latex" extension="latex" 
+                 label="Latex File"  />
+
+       <mimetype name="application/vnd.framemaker" 
+                 extension="fm,frm,frame" label="FrameMaker Document" />
+
+       <mimetype name="application/x-wais-source" extension="src,wsrc" 
+                 label="WAIS Source File" />
+     
+
+       <!-- ARCHIVED/COMPRESSED FORMAT -->
+       
+       <mimetype name="application/x-gzip" extension="gz,gzip" 
+                 label="Compressed File" />
+       
+       <mimetype name="application/x-gtar" extension="gtar" 
+                 label="Gnu tar format" />
+       
+       <mimetype name="application/x-tar" extension="tar" 
+                 label="4.3BSD tar format" />
+
+       <mimetype name="application/zip" extension="zip"  
+                 label="DOS/PC - Pkzipped Archive" />
+               
+       <mimetype name="application/binhex" extension="hqx" 
+                 label="Macintosh Binhexed Archive" />
+
+       
+       <!-- DOWNLOADABLE PROGRAM/SCRIPTS -->
+
+       <mimetype name="application/x-javascript" extension="js,jse,mocha" 
+                 label="Javascript Code" />
+
+       <mimetype name="application/x-sh" extension="sh" 
+                 label="UNIX Bourne shell program" />
+
+       <mimetype name="application/x-csh" extension="csh" 
+                 label="UNIX C-shell program" />
+
+       <mimetype name="application/x-perl" extension="pl" 
+                 label="Perl program" />      
+       
+       <mimetype name="application/x-tcl" extension="tcl" 
+                 label="Tcl program" />
+
+
+       <!-- ANIMATION MULTIMEDIA -->
+      
+       <mimetype name="video/mpeg" extension="mpg,mpe" 
+                 label="MPG Video" />
+
+       <mimetype name="video/quicktime" extension="mov,qt" 
+                 label="Quciktime Movie" />
+
+       <mimetype name="application/x-msvideo" extension="avi" 
+                 label="AVI Movie" />
+
+       <mimetype name="video/x-sgi-movie" extension="mv,movie" 
+                 label="SGI Movie" />
+
+       <mimetype name="application/x-inventor" extension="iv" 
+                 label="Open Inventor 3-D scenes " />
+     
+       <mimetype name="application/x-dvi" extension="dvi"
+                 label="DVI File" />
+
+
+       <!-- SPECIAL EMBEDDED OBJECT -->
+
+       <mimetype name="application/x-olescript" extension="axs"
+                 label="OLE scripts" />
+
+       <mimetype name="application/x-oleobject" extension="ods"
+                 label="OLE Object" />
+ 
+       <mimetype name="application/x-webbasic" extension="wba"
+                 label="Visual Basic Object" />
+
+
+       <!-- GENERAL APPLICATIONS, MICROSOFT -->
+
+       <mimetype name="application/ms-excel" extension="xsl" 
+                 label="MS Excel Spreadsheet" />
+
+       <mimetype name="application/hlp" extension="hlp" 
+                 label="Help File" />
+
+       <mimetype name="application/x-mathcad" extension="mcd" 
+                 label="MathCAD File" />
+
+       <mimetype name="application/vnd.ms-project" extension="mpp" 
+                 label="MS Project File" />
+
+       <mimetype name="application/powerpoint" extension="ppt,pot" 
+                 label="MS PowerPoint Presentation" />
+
+       <mimetype name="application/vnd.ms-powerpoint" 
+                 extension="pps,ppz" label="MS Powerpoint Slide Show" />
+
+       <mimetype name="application/x-pagemaker" extension="pm4,pm5" 
+                 label="PageMaker File" />
+
+       <mimetype name="application/vnd.ms-works" extension="wks,wps" 
+                 label="Works Data" />
+
+       <mimetype name="application/pdf" extension="pdf" 
+                 label="Adobe Acrobat File" class="TextMimeType" />
+
+</mimetypes>

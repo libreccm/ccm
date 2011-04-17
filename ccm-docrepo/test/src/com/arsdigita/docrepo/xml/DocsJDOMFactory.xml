@@ -1,0 +1,14 @@
+<!DOCTYPE factory_defs [
+    <!ELEMENT factory_defs (type_map+)>
+    <!ELEMENT type_map EMPTY>
+    <!ATTLIST type_map element CDATA #REQUIRED class CDATA #REQUIRED>
+]>
+<factory_defs>
+    <type_map element="docs:new_folder" class="com.arsdigita.docmgr.xml.NewFolder" />
+    <type_map element="docs:folder" class="com.arsdigita.docmgr.xml.FolderElement" />
+    <type_map element="docs:delete_folder" class="com.arsdigita.docmgr.xml.DeleteFolder" />
+    <type_map element="docs:move_folder" class="com.arsdigita.docmgr.xml.MoveFolder" />
+    <type_map element="docs:new_file" class="com.arsdigita.docmgr.xml.NewFile" />
+    <type_map element="docs:upload_revision" class="com.arsdigita.docmgr.xml.UploadRevision" />
+    <type_map element="docs:file" class="com.arsdigita.docmgr.xml.FileElement" />
+</factory_defs>
