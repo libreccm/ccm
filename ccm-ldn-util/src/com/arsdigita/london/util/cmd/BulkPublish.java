@@ -17,6 +17,7 @@
  */
 package com.arsdigita.london.util.cmd;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.london.util.Program;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.persistence.CompoundFilter;
@@ -31,6 +32,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.installer.xml.ContentBundleHelper;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 
 import org.apache.commons.cli.CommandLine;
@@ -40,6 +42,7 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Date;
 
@@ -71,10 +74,14 @@ public class BulkPublish extends Program {
                 withDescription("The ids of items that shouldn't be published").
                 create("e"));
 
-
         options.addOption(
                 OptionBuilder.hasArg(false).withLongOpt("ignore-errors").
                 withDescription("Ignore any errors").create('i'));
+
+        options.addOption(
+                OptionBuilder.hasArg().withLongOpt("language").withDescription(
+                "Restrict publishing to items with the specified langauge").
+                create("l"));
 
     }
 
@@ -86,6 +93,7 @@ public class BulkPublish extends Program {
         final String[] types;
         final String[] exceptions;
         final int folderId;
+        final String language;
         final boolean ignoreErrors = cmdLine.hasOption("i");
 
         if (cmdLine.hasOption("t")) {
@@ -118,6 +126,14 @@ public class BulkPublish extends Program {
             }
         } else {
             exceptions = null;
+        }
+
+        if (cmdLine.hasOption("l")) {
+            language = cmdLine.getOptionValue("l");
+            System.out.printf("Publishing only items with language: %s\n",
+                              language);
+        } else {
+            language = null;
         }
 
         final List toPublish = new ArrayList();
@@ -203,8 +219,26 @@ public class BulkPublish extends Program {
                         return;
                     }
 
-                    ContentItem pending = item.publish(def, new Date());
-                    pending.getLifecycle().start();
+                    /*
+                     * Fix by jensp 2011-04-18: Bulk publish was aware of 
+                     * content bundles and different languages...
+                     */
+                    ContentBundle bundle = item.getContentBundle();
+                    Collection<String> langs = bundle.getLanguages();
+                    for (String lang : langs) {
+                        if ((language == null)
+                            || language.isEmpty()
+                            || lang.equals(language)) {
+                            ContentItem toPublish = bundle.getInstance(lang);
+                            ContentItem pending = toPublish.publish(def,
+                                                                    new Date());
+                            pending.getLifecycle().start();
+                        }
+                    }
+
+                    //ContentItem pending = item.publish(def, new Date());
+
+                    //pending.getLifecycle().start();
                 }
             };
             try {
