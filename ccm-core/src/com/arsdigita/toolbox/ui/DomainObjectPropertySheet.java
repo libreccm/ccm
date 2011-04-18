@@ -37,6 +37,7 @@ import com.arsdigita.kernel.ui.DomainObjectSelectionModel;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.toolbox.util.GlobalizationUtil;
 
+
 /**
  * Displays a list of label-value pairs, which represent the attributes
  * of a domain object.
@@ -315,7 +316,7 @@ public class DomainObjectPropertySheet extends PropertySheet {
         private String m_default;
 
         public DefaultAttributeFormatter() {
-            this("<i>unknown</i>");
+            this((String)GlobalizationUtil.globalize("cms.ui.unknown").localize());
         }
 
         public DefaultAttributeFormatter(String def) {

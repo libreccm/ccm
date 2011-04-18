@@ -23,6 +23,7 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.cms.CMSGlobalized;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -33,6 +34,7 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainService;
 import java.text.DateFormat;
@@ -146,7 +148,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                 step);
     }
 
-     protected static class PreFormattedTextFormatter
+    protected static class PreFormattedTextFormatter
             extends DomainService
             implements DomainObjectPropertySheet.AttributeFormatter {
 
@@ -155,8 +157,13 @@ public class PublicationPropertiesStep extends SimpleEditStep {
         }
 
         public String format(DomainObject obj, String attribute, PageState state) {
-            return String.format("<pre>%s</pre>", get(obj, attribute));
+            String str = (String) get(obj, attribute);
+            if ((str == null) || str.trim().isEmpty()) {
+                return (String) GlobalizationUtil.globalize("cms.ui.unknown").
+                        localize();
+            } else {
+                return String.format("<pre>%s</pre>", str);
+            }
         }
     }
-   
 }

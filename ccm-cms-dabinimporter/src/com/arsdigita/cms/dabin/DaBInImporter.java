@@ -132,8 +132,12 @@ public class DaBInImporter extends Program {
     private SciOrganization orgaDe;
     private SciOrganization orgaEn;
     private ContentBundle orga;
-    private Address postalAddress;
-    private Address officeAddress;
+    private ContentBundle postalAddress;
+    private Address postalAddressDe;
+    private Address postalAddressEn;
+    private ContentBundle officeAddress;
+    private Address officeAddressDe;
+    private Address officeAddressEn;
     private Domain termsDomain;
     private Term publicationsTerm;
     private Term workingPapersTerm;
@@ -333,113 +337,228 @@ public class DaBInImporter extends Program {
                 orgaDe.setTitle(config.getProperty("orga.title.de"));
                 orgaDe.setContentSection(section);
                 orgaDe.setLanguage("de");
-                orgaDe.save();
+                orgaDe.setLifecycle(createLifecycle(lifecycle));
                 orgaDe.setContentSection(section);
+                orgaDe.save();
 
                 orgaEn = new SciOrganization();
                 orgaEn.setName(config.getProperty("orga.name.en"));
                 orgaEn.setTitle(config.getProperty("orga.title.en"));
                 orgaEn.setContentSection(section);
                 orgaEn.setLanguage("en");
-                orgaEn.save();
+                orgaEn.setLifecycle(createLifecycle(lifecycle));
                 orgaEn.setContentSection(section);
+                orgaEn.save();
 
                 ContentBundle orga = new ContentBundle(orgaDe);
                 orga.addInstance(orgaEn);
+                orga.setLifecycle(createLifecycle(lifecycle));
+                orga.setContentSection(section);
                 organization.addItem(orga);
 
+                orgaDe.setContentSection(section);
+                orgaEn.setContentSection(section);
+
                 if (config.getProperty("orga.address.postal.name") != null) {
-                    postalAddress = new Address();
-                    postalAddress.setName(config.getProperty(
+                    postalAddressDe = new Address();
+                    postalAddressDe.setName(config.getProperty(
                             "orga.address.postal.name"));
-                    postalAddress.setTitle(config.getProperty(
+                    postalAddressDe.setTitle(config.getProperty(
                             "orga.address.postal.title"));
-                    postalAddress.setAddress(config.getProperty(
+                    postalAddressDe.setAddress(config.getProperty(
                             "orga.address.postal.data").
                             trim().
                             replace("\t", "").
                             replaceAll("  +", " ").
                             replace("\n ", "\n"));
-                    postalAddress.setPostalCode(config.getProperty(
+                    postalAddressDe.setPostalCode(config.getProperty(
                             "orga.address.postal.code"));
-                    postalAddress.setCity(config.getProperty(
+                    postalAddressDe.setCity(config.getProperty(
                             "orga.address.postal.city"));
-                    postalAddress.setState(config.getProperty(
+                    postalAddressDe.setState(config.getProperty(
                             "orga.address.postal.state"));
-                    postalAddress.setIsoCountryCode(config.getProperty(
+                    postalAddressDe.setIsoCountryCode(config.getProperty(
                             "orga.address.postal.country"));
-                    postalAddress.setContentSection(section);
-                    postalAddress.setLanguage("de");
-                    postalAddress.save();
+                    postalAddressDe.setLanguage("de");
+                    postalAddressDe.setLifecycle(createLifecycle(lifecycle));
+                    postalAddressDe.setContentSection(section);
+                    postalAddressDe.save();
 
-                    ContentBundle bundle = new ContentBundle(postalAddress);
-                    organization.addItem(bundle);
-
-                    Contact contact = new Contact();
-                    contact.setName(config.getProperty(
+                    postalAddressEn = new Address();
+                    postalAddressEn.setName(config.getProperty(
                             "orga.address.postal.name"));
-                    contact.setTitle(config.getProperty(
+                    postalAddressEn.setTitle(config.getProperty(
                             "orga.address.postal.title"));
-                    contact.setAddress(postalAddress);
-                    contact.setLanguage("de");
-                    contact.save();
-                    bundle = new ContentBundle(contact);
-                    organization.addItem(bundle);
+                    postalAddressEn.setAddress(config.getProperty(
+                            "orga.address.postal.data").
+                            trim().
+                            replace("\t", "").
+                            replaceAll("  +", " ").
+                            replace("\n ", "\n"));
+                    postalAddressEn.setPostalCode(config.getProperty(
+                            "orga.address.postal.code"));
+                    postalAddressEn.setCity(config.getProperty(
+                            "orga.address.postal.city"));
+                    postalAddressEn.setState(config.getProperty(
+                            "orga.address.postal.state"));
+                    postalAddressEn.setIsoCountryCode(config.getProperty(
+                            "orga.address.postal.country"));
+                    postalAddressEn.setLanguage("en");
+                    postalAddressEn.setLifecycle(createLifecycle(lifecycle));
+                    postalAddressEn.setContentSection(section);
+                    postalAddressEn.save();
 
-                    orgaDe.addContact(contact, "postalAddress");
+                    postalAddress = new ContentBundle(postalAddressDe);
+                    postalAddress.addInstance(postalAddressEn);
+                    postalAddress.setLifecycle(createLifecycle(lifecycle));
+                    postalAddress.setContentSection(section);
+                    organization.addItem(postalAddress);
+
+                    postalAddressDe.setContentSection(section);
+                    postalAddressEn.setContentSection(section);
+
+                    Contact contactDe = new Contact();
+                    contactDe.setName(config.getProperty(
+                            "orga.address.postal.name"));
+                    contactDe.setTitle(config.getProperty(
+                            "orga.address.postal.title"));
+                    contactDe.setAddress((Address) postalAddress.
+                            getPrimaryInstance());
+                    contactDe.setLanguage("de");
+                    contactDe.setLifecycle(createLifecycle(lifecycle));
+                    contactDe.setContentSection(section);
+                    contactDe.save();
+
+                    Contact contactEn = new Contact();
+                    contactEn.setName(config.getProperty(
+                            "orga.address.postal.name"));
+                    contactEn.setTitle(config.getProperty(
+                            "orga.address.postal.title"));
+                    contactEn.setAddress((Address) postalAddress.
+                            getPrimaryInstance());
+                    contactEn.setLanguage("en");
+                    contactEn.setLifecycle(createLifecycle(lifecycle));
+                    contactEn.setContentSection(section);
+                    contactEn.save();
+
+                    ContentBundle contact = new ContentBundle(contactDe);
+                    contact.addInstance(contactEn);
+                    contact.setLifecycle(createLifecycle(lifecycle));
+                    contact.setContentSection(section);
+                    organization.addItem(contact);
+
+                    contactDe.setContentSection(section);
+                    contactEn.setContentSection(section);
+
+                    orgaDe.addContact((Contact) contact.getPrimaryInstance(),
+                                      "postalAddress");
                     orgaDe.save();
-                    orgaEn.addContact(contact, "postalAddress");
+                    orgaEn.addContact((Contact) contact.getPrimaryInstance(),
+                                      "postalAddress");
                     orgaEn.save();
                 }
 
                 if (config.getProperty("orga.address.office.name") != null) {
-                    officeAddress = new Address();
-                    officeAddress.setName(config.getProperty(
+                    officeAddressDe = new Address();
+                    officeAddressDe.setName(config.getProperty(
                             "orga.address.office.name"));
-                    officeAddress.setTitle(config.getProperty(
+                    officeAddressDe.setTitle(config.getProperty(
                             "orga.address.office.title"));
-                    officeAddress.setAddress(config.getProperty(
+                    officeAddressDe.setAddress(config.getProperty(
                             "orga.address.office.data").
                             trim().
                             replace("\t", "").
                             replaceAll("  +", " ").
                             replace("\n ", "\n"));
                     //.replace("\n ", "\n"));
-                    officeAddress.setPostalCode(config.getProperty(
+                    officeAddressDe.setPostalCode(config.getProperty(
                             "orga.address.office.code"));
-                    officeAddress.setCity(config.getProperty(
+                    officeAddressDe.setCity(config.getProperty(
                             "orga.address.office.city"));
-                    officeAddress.setState(config.getProperty(
+                    officeAddressDe.setState(config.getProperty(
                             "orga.address.office.state"));
-                    officeAddress.setIsoCountryCode(config.getProperty(
+                    officeAddressDe.setIsoCountryCode(config.getProperty(
                             "orga.address.office.country"));
-                    officeAddress.setContentSection(section);
-                    officeAddress.setLanguage("de");
-                    officeAddress.save();
+                    officeAddressDe.setLanguage("de");
+                    officeAddressDe.setLifecycle(createLifecycle(lifecycle));
+                    officeAddressDe.setContentSection(section);
+                    officeAddressDe.save();
 
-                    ContentBundle bundle = new ContentBundle(officeAddress);
-                    organization.addItem(bundle);
-
-                    Contact contact = new Contact();
-                    contact.setName(config.getProperty(
+                    officeAddressEn = new Address();
+                    officeAddressEn.setName(config.getProperty(
                             "orga.address.office.name"));
-                    contact.setTitle(config.getProperty(
+                    officeAddressEn.setTitle(config.getProperty(
                             "orga.address.office.title"));
-                    contact.setAddress(officeAddress);
-                    contact.setLanguage("de");
+                    officeAddressEn.setAddress(config.getProperty(
+                            "orga.address.office.data").
+                            trim().
+                            replace("\t", "").
+                            replaceAll("  +", " ").
+                            replace("\n ", "\n"));
+                    //.replace("\n ", "\n"));
+                    officeAddressEn.setPostalCode(config.getProperty(
+                            "orga.address.office.code"));
+                    officeAddressEn.setCity(config.getProperty(
+                            "orga.address.office.city"));
+                    officeAddressEn.setState(config.getProperty(
+                            "orga.address.office.state"));
+                    officeAddressEn.setIsoCountryCode(config.getProperty(
+                            "orga.address.office.country"));
+                    officeAddressEn.setLanguage("en");
+                    officeAddressEn.setLifecycle(createLifecycle(lifecycle));
+                    officeAddressEn.setContentSection(section);
+                    officeAddressEn.save();
+
+                    officeAddress = new ContentBundle(officeAddressDe);
+                    officeAddress.setLifecycle(createLifecycle(lifecycle));
+                    officeAddress.setContentSection(section);
+                    officeAddress.addInstance(officeAddressEn);
+                    organization.addItem(officeAddress);
+
+                    officeAddressDe.setContentSection(section);
+                    officeAddressEn.setContentSection(section);
+
+                    Contact contactDe = new Contact();
+                    contactDe.setName(config.getProperty(
+                            "orga.address.office.name"));
+                    contactDe.setTitle(config.getProperty(
+                            "orga.address.office.title"));
+                    contactDe.setAddress((Address) officeAddress.
+                            getPrimaryInstance());
+                    contactDe.setLanguage("de");
+                    contactDe.setLifecycle(createLifecycle(lifecycle));
+                    contactDe.setContentSection(section);
+                    contactDe.save();
+
+                    Contact contactEn = new Contact();
+                    contactEn.setName(config.getProperty(
+                            "orga.address.office.name"));
+                    contactEn.setTitle(config.getProperty(
+                            "orga.address.office.title"));
+                    contactEn.setAddress((Address) officeAddress.
+                            getPrimaryInstance());
+                    contactEn.setLanguage("en");
+                    contactEn.setLifecycle(createLifecycle(lifecycle));
+                    contactEn.setContentSection(section);
+                    contactEn.save();
+
+                    ContentBundle contact = new ContentBundle(contactDe);
+                    contact.addInstance(contactEn);
+                    contact.setLifecycle(createLifecycle(lifecycle));
                     contact.setContentSection(section);
-                    contact.save();
-                    bundle = new ContentBundle(contact);
-                    organization.addItem(bundle);
+                    organization.addItem(contact);
 
-                    orgaDe.addContact(contact, "officeAddress");
+                    contactDe.setContentSection(section);
+                    contactEn.setContentSection(section);
+
+                    orgaDe.addContact((Contact) contact.getPrimaryInstance(),
+                                      "officeAddress");
                     orgaDe.save();
-                    orgaEn.addContact(contact, "officeAddress");
+                    orgaEn.addContact((Contact) contact.getPrimaryInstance(),
+                                      "officeAddress");
                     orgaEn.save();
+                    // orga.setContentSection(section);
 
-                    orgaDe.setContentSection(section);
-                    orgaEn.setContentSection(section);
-                    orga.setContentSection(section);
                 }
             }
         };
