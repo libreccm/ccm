@@ -1,0 +1,325 @@
+<!-- $Id: doc-conventions.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+
+<sect1 id="s1-intro-conventions">
+  <title>Document Conventions</title>
+  <para>
+    <indexterm>
+      <primary>conventions</primary>
+      <secondary>document</secondary>
+    </indexterm>
+    When you read this manual, certain words are represented
+    in different fonts, typefaces, sizes, and weights.  This highlighting is
+    systematic; different words are represented in the same style to
+    indicate their inclusion in a specific category.  The types of words
+    that are represented this way include the following:
+  </para>
+    <variablelist>
+      <varlistentry>
+	<term>
+	  <command>command</command>
+	</term>
+	<listitem>
+	  <para>Linux commands (and other operating system commands, when used)
+	    are represented this way.  This style should indicate to you that
+	    you can type the word or phrase on the command line and press
+	    <keycap>Enter</keycap> to invoke a command.  Sometimes a command
+	    contains words that would be displayed in a different style on their
+	    own (such as file names).  In these cases, they are considered to be
+	    part of the command, so the entire phrase is displayed as a command.
+	    For example:
+	  </para>
+	  
+	  <para>
+	    Use the <command>cat testfile</command> command to view the
+	    contents of a file, named <filename>testfile</filename>, in the
+	    current working directory.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>
+	  <filename>file name</filename>
+	</term>
+	<listitem>
+	  <para>File names, directory names, paths, and RPM package names are
+	    represented this way.  This style should indicate that a
+	    particular file or directory exists by that name on your system. Examples:
+	  </para>
+	  
+	  <para>
+	    The <filename>.bashrc</filename> file in your home directory
+	    contains bash shell definitions and aliases for your own use.
+	  </para> 
+
+	  <para>
+	    The <filename>/etc/fstab</filename> file contains information
+	    about different system devices and file systems.
+	  </para>
+	  
+	  <para>
+	    Install the <filename>webalizer</filename> RPM if you want to use
+	    a Web server log file analysis program.
+	  </para>
+	  
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>
+	  <application>application</application>
+	</term>
+	<listitem>
+	  <para>This style indicates that the program is an end-user application
+	    (as opposed to system software).  For example:
+	  </para>
+	  
+	  <para>
+	    Use <application>Mozilla</application> to browse
+	    the Web.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>
+	  <keycap>key</keycap>
+	</term>
+	<listitem>
+	  <para>A key on the keyboard is shown in this style.  For example:
+	  </para>
+	  
+	  <para>
+	    To use <keycap>Tab</keycap> completion, type in a character and then
+	    press the <keycap>Tab</keycap> key.  Your terminal displays the list
+	    of files in the directory that start with that letter.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <keycombo>
+	    <keycap>key</keycap> 
+	    <keycap>combination</keycap></keycombo>
+	</term>
+	  <listitem>
+	  <para>A combination of keystrokes is represented in this way.  For
+	    example:
+	  </para>
+	  
+	  <para>
+	    The <keycombo> <keycap>Ctrl</keycap> <keycap>Alt</keycap>
+	      <keycap>Backspace</keycap></keycombo> key combination exits your
+	      graphical session and return you to the graphical login screen or
+	      the console.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+	<varlistentry>
+	<term>
+	  <guilabel>text found on a GUI interface</guilabel>
+	  </term>
+	<listitem>
+	  <para>A title, word, or phrase found on a GUI interface screen or
+	    window is shown in this style.  Text shown in this style is being
+	    used to identify a particular GUI screen or an element on a GUI
+	    screen (such as text associated with a checkbox or field).  Example:
+	  </para>
+	  
+	  <para>
+	    Select the <guilabel>Require Password</guilabel> checkbox if you
+	    would like your screensaver to require a password before stopping.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>
+	  <guimenu>top level of a menu on a GUI screen or window</guimenu>
+	</term>
+	
+	<listitem>
+	  <para>A word in this style indicates that the word is
+	    the top level of a pulldown menu.  If you click on the word on
+	    the GUI screen, the rest of the menu should appear. For example:
+	  </para>
+	  
+	  <para>
+	    Under <guimenu>File</guimenu> on a GNOME terminal, the
+	    <guimenuitem>New Tab</guimenuitem> option allows you to open
+	    multiple shell prompts in the same window.
+	  </para>
+	  
+	  <para>
+	    If you need to type in a sequence of commands from a GUI menu,
+	    they are shown like the following example:
+	  </para>
+	  
+	  <para>
+	    Go to <guimenu>Main Menu Button</guimenu> (on the Panel) => 
+	    <guimenu>Programming</guimenu> => <guimenuitem>Emacs</guimenuitem>
+	  to start the <application>Emacs</application> text editor.
+	  </para>
+	  
+	</listitem>
+	
+      </varlistentry>
+      
+      <varlistentry>
+	<term>
+	  <guibutton>button on a GUI screen or window</guibutton>
+	</term>
+	
+	<listitem>
+	  <para>This style indicates that the text can be found on a clickable
+	    button on a GUI screen.  For example:
+	  </para>
+	  
+	  <para>
+	      Click on the <guibutton>Back</guibutton> button to return to the
+	      webpage you last viewed.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	  <term>
+	  <computeroutput>computer output</computeroutput>
+	</term>
+	<listitem>
+	  <para>Text in this style indicates text displayed to a shell prompt
+	       such as error messages and responses to commands. For example:
+	  </para>
+	  
+	  <para>
+	    The <command>ls</command> command displays the contents of a
+	    directory. For example:
+	  </para>
+	  
+<screen>
+<computeroutput>
+Desktop                about.html       logs          paulwesterberg.png
+Mail                   backupfiles      mail          reports
+</computeroutput>
+</screen>
+
+	  <para>
+	    The output returned in response to the command (in this case, the
+	    contents of the directory) is shown in this style.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>
+	  <prompt>prompt</prompt>
+	</term>
+	<listitem>
+	  <para>A prompt, which is a computer's way of signifying that it is ready
+	    for you to input something, is shown in this style.
+	    Examples:
+	  </para>
+	  
+	  <para>
+	    <prompt>$</prompt>
+	  </para>
+	  
+	  <para>
+	    <prompt>#</prompt>
+	  </para>
+	  
+	  <para>
+	    <prompt>[stephen@maturin stephen]$</prompt>
+	  </para>
+	  
+	  <para>
+	    <prompt>leopard login:</prompt>
+	  </para>
+	  
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>
+	  <userinput>user input</userinput>
+	</term>
+	<listitem>
+	  <para>Text that the user has to type, either on the command line, or
+	    into a text box on a GUI screen, is displayed in this style.  In
+	    the following example, <userinput>text</userinput> is displayed in
+	    this style:
+	  </para>
+	  
+	  <para>
+	    To boot your system into the text based installation program, you
+	    must type in the <userinput>text</userinput> command at the
+	    <prompt>boot:</prompt> prompt.
+	  </para>
+          </listitem>
+      </varlistentry>
+
+    <varlistentry>
+      <term><replaceable>replaceable</replaceable></term>
+      <listitem>
+	<para>Text used for examples which is meant to be replaced with data
+	provided by the user is displayed in this style. In the following
+	example, <replaceable>&lt;version-number&gt;</replaceable> is displayed
+	in this style:</para>
+
+	<para>The directory for the kernel source is
+	  <filename>/usr/src/<replaceable>&lt;version-number&gt;</replaceable>/</filename>,
+	  where <replaceable>&lt;version-number&gt;</replaceable> is the version
+	  of the kernel installed on this system.</para>
+	
+      </listitem>
+    </varlistentry>
+      
+    </variablelist>
+
+  <para>
+    Additionally, we use several different strategies to draw your attention to
+    certain pieces of information.  In order of how critical the information is
+    to your system, these items are marked as note, tip, important, caution,
+    or a warning.  For example:
+  </para>
+  
+  <note>
+    <title>Note</title>
+    <para>
+      Remember that Linux is case sensitive.  In other words, a rose is not
+      a ROSE is not a rOsE.
+    </para>
+  </note>
+
+  <tip>
+    <title>Tip</title>
+    <para>
+      The directory <filename>/usr/share/doc/</filename> contains additional
+      documentation for packages installed on your system.
+    </para>
+  </tip>
+  
+  <important>
+    <title>Important</title>
+    <para>
+      If you modify the DHCP configuration file, the changes will not take
+      effect until you restart the DHCP daemon.
+    </para>
+  </important>
+
+  <caution>
+    <title>Caution</title>
+    <para>
+      Do not perform routine tasks as root &mdash; use a regular user account
+      unless you need to use the root account for system administration tasks.
+    </para>
+  </caution>
+
+  <warning>
+    <title>Warning</title> <para>Be careful to remove only the necessary
+      &PROD; partitions. Removing other partitions could result in data loss or
+      a corrupted system environment.</para>
+  </warning>
+
+</sect1>

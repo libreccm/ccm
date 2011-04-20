@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui;
 
-
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Container;
@@ -38,18 +37,15 @@ import com.arsdigita.bebop.form.OptionGroup;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.bebop.tree.TreeNode;
 import com.arsdigita.bebop.util.SequentialMap;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
-import com.arsdigita.categorization.CategoryTreeModelLite;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.ui.DataQueryTreeNode;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -61,7 +57,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TooManyListenersException;
@@ -82,15 +77,12 @@ import java.util.TreeMap;
  * @version $Id: CategoryForm.java 903 2005-09-22 05:39:04Z apevec $
  */
 public abstract class CategoryForm extends Form
-    implements FormProcessListener, FormValidationListener {
-
+        implements FormProcessListener, FormValidationListener {
 
     private RequestLocal m_assigned;
     private Submit m_assign, m_remove;
     Label m_freeLabel, m_assignedLabel;
-
     private static final String SEPARATOR = ">";
-
     public static final String FREE = "free";
     public static final String ASSIGNED = "assigned";
     public static final String ASSIGN = "assign";
@@ -98,7 +90,6 @@ public abstract class CategoryForm extends Form
     public static final int SELECT_WIDTH = 30;
     public static final int SELECT_HEIGHT = 10;
     public static final String FILLER_OPTION = StringUtils.repeat("_", SELECT_WIDTH);
-
     private static final Logger s_log = Logger.getLogger(CategoryForm.class);
 
     /**
@@ -109,7 +100,7 @@ public abstract class CategoryForm extends Form
     public CategoryForm(String name) {
         super(name, new ColumnPanel(3));
 
-        ColumnPanel panel = (ColumnPanel)getPanel();
+        ColumnPanel panel = (ColumnPanel) getPanel();
         panel.setBorder(false);
         panel.setPadColor("#FFFFFF");
         panel.setColumnWidth(1, "0%");
@@ -120,27 +111,27 @@ public abstract class CategoryForm extends Form
 
         // Create the request local
         m_assigned = new RequestLocal() {
-                public Object initialValue(PageState state) {
-                    CategoryMap m = new CategoryMap();
-                    initAssignedCategories(state, m);
-                    return m;
-                }
-            };
+
+            public Object initialValue(PageState state) {
+                CategoryMap m = new CategoryMap();
+                initAssignedCategories(state, m);
+                return m;
+            }
+        };
 
         // Top row
-        m_freeLabel = new Label(GlobalizationUtil.globalize("cms.ui.item.categories.available"),  false);
+        m_freeLabel = new Label(GlobalizationUtil.globalize("cms.ui.item.categories.available"), false);
         m_freeLabel.setFontWeight(Label.BOLD);
         add(m_freeLabel, ColumnPanel.LEFT);
 
         add(new Label("&nbsp;", false));
 
-        m_assignedLabel = new Label(GlobalizationUtil.globalize("cms.ui.item.categories.assigned"),  false);
+        m_assignedLabel = new Label(GlobalizationUtil.globalize("cms.ui.item.categories.assigned"), false);
         m_assignedLabel.setFontWeight(Label.BOLD);
         add(m_assignedLabel, ColumnPanel.LEFT);
 
         // Middle Row
-        SingleSelect freeWidget =
-            new SingleSelect(new BigDecimalParameter(FREE));
+        SingleSelect freeWidget = new SingleSelect(new BigDecimalParameter(FREE));
         try {
             freeWidget.addPrintListener(new FreePrintListener());
         } catch (TooManyListenersException e) {
@@ -181,11 +172,13 @@ public abstract class CategoryForm extends Form
         m_assign.setSize(10);
         c.add(m_assign);
     }
+
     protected void addRemoveButton(Container c) {
         m_remove = new Submit(REMOVE, "<<");
         m_remove.setSize(10);
         c.add(m_remove);
     }
+
     /**
      * Set the caption of the unassigned categories label
      *
@@ -209,79 +202,78 @@ public abstract class CategoryForm extends Form
      * @return a {@link CategoryMap} of all assigned categories
      */
     public CategoryMap getAssignedCategories(PageState s) {
-        return (CategoryMap)m_assigned.get(s);
+        return (CategoryMap) m_assigned.get(s);
     }
 
     // A print listener which populates the listbox with all
- 	// unassigned categories, apart from result of getExcludedCategory()
- 	// (if not null), and the root category.
- 	// Ordering is alphabetical based on qualified path, so entries are
- 	// ordered like a tree with all nodes expanded.
- 	// Ideally ordering should be like an expanded tree but based on 
- 	// the sortkey order of the categories. However, I don't know
- 	// if it would be possible to write a comparison function that
- 	// could do this efficiently, and I'm not even going to try
- 	// chris.gilbert@westsussex.gov.uk
+    // unassigned categories, apart from result of getExcludedCategory()
+    // (if not null), and the root category.
+    // Ordering is alphabetical based on qualified path, so entries are
+    // ordered like a tree with all nodes expanded.
+    // Ideally ordering should be like an expanded tree but based on
+    // the sortkey order of the categories. However, I don't know
+    // if it would be possible to write a comparison function that
+    // could do this efficiently, and I'm not even going to try
+    // chris.gilbert@westsussex.gov.uk
     //
     private class FreePrintListener implements PrintListener {
 
         public void prepare(PrintEvent e) {
- 
- 			OptionGroup target = (OptionGroup) e.getTarget();
+
+            OptionGroup target = (OptionGroup) e.getTarget();
             PageState state = e.getPageState();
             Category root = getRootCategory(state);
- 			if (root == null) {
+            if (root == null) {
                 return;
- 			}
+            }
 
- 			// exclude children of the excluded category (as per javadoc on 
- 			// getExcludedCategory() method. This prevents attempts
- 			// to create circular category graph (which causes
- 			// exception in Category during addMapping if not checked here
-			Category excludedCat = getExcludedCategory(state);
- 			CategoryMap excluded = new CategoryMap();
- 			if (excludedCat != null) 
-				{CategoryCollection excludedSubTree =getExcludedCategory(state).getDescendants();
- 				while (excludedSubTree.next()) {
- 					excluded.add(excludedSubTree.getCategory());
-                            }
-                        }
- 			CategoryMap assigned = getAssignedCategories(state);
- 			SortedMap sortedCats = new TreeMap();
- 			CategoryCollection children = root.getDescendants();
- 			while (children.next()) {
- 				Category cat = children.getCategory();
- 				sortedCats.put(cat.getQualifiedName(SEPARATOR, true),cat.getID().toString());
- 
-                    }
- 
- 			Iterator it = sortedCats.entrySet().iterator();
- 			Map.Entry entry;
- 			String path;
- 			String id;
- 			boolean notExcluded;
- 			boolean notAlreadyAssigned;
- 			boolean notRoot;
- 
- 			while (it.hasNext()) {
- 				entry = (Map.Entry)it.next();
- 				path = (String) entry.getKey();
- 				id = (String) entry.getValue();
- 
- 				notExcluded = (excluded == null || !excluded.containsKey(id));
- 				notAlreadyAssigned = !assigned.containsKey(id);
- 				notRoot = !id.equals(root.getID().toString());
- 
- 				if (notExcluded && notAlreadyAssigned && notRoot) {
- 					target.addOption(new Option(id, path));
+            // exclude children of the excluded category (as per javadoc on
+            // getExcludedCategory() method. This prevents attempts
+            // to create circular category graph (which causes
+            // exception in Category during addMapping if not checked here
+            Category excludedCat = getExcludedCategory(state);
+            CategoryMap excluded = new CategoryMap();
+            if (excludedCat != null) {
+                CategoryCollection excludedSubTree = getExcludedCategory(state).getDescendants();
+                while (excludedSubTree.next()) {
+                    excluded.add(excludedSubTree.getCategory());
+                }
+            }
+            CategoryMap assigned = getAssignedCategories(state);
+            SortedMap sortedCats = new TreeMap();
+            CategoryCollection children = root.getDescendants();
+            while (children.next()) {
+                Category cat = children.getCategory();
+                sortedCats.put(cat.getQualifiedName(SEPARATOR, true), cat.getID().toString());
+
+            }
+
+            Iterator it = sortedCats.entrySet().iterator();
+            Map.Entry entry;
+            String path;
+            String id;
+            boolean notExcluded;
+            boolean notAlreadyAssigned;
+            boolean notRoot;
+
+            while (it.hasNext()) {
+                entry = (Map.Entry) it.next();
+                path = (String) entry.getKey();
+                id = (String) entry.getValue();
+
+                notExcluded = (excluded == null || !excluded.containsKey(id));
+                notAlreadyAssigned = !assigned.containsKey(id);
+                notRoot = !id.equals(root.getID().toString());
+
+                if (notExcluded && notAlreadyAssigned && notRoot) {
+                    target.addOption(new Option(id, path));
                 }
 
             }
 
- 			addFillerOption(target);
+            addFillerOption(target);
         }
     }
-
 
     /**
      * Populate a {@link CategoryMap} with all categories which are assigned to
@@ -292,9 +284,7 @@ public abstract class CategoryForm extends Form
      *   <code>call map.addCategory(someCategory);</code>
      * @param state The page state
      */
-    protected abstract void initAssignedCategories(
-                                                   PageState state, CategoryMap map
-                                                   );
+    protected abstract void initAssignedCategories(PageState state, CategoryMap map);
 
     /**
      * Assign a category, moving it from the list on the left
@@ -355,16 +345,17 @@ public abstract class CategoryForm extends Form
     }
 
     // Populates the "assigned categories" widget
+    @Deprecated
     private class AssignedPrintListener implements PrintListener {
 
         public void prepare(PrintEvent e) {
-            OptionGroup o = (OptionGroup)e.getTarget();
+            OptionGroup o = (OptionGroup) e.getTarget();
             PageState state = e.getPageState();
             CategoryMap m = getAssignedCategories(state);
 
-            if(!m.isEmpty()) {
-                for (Iterator i = m.values().iterator(); i.hasNext(); ) {
-                    Category c = (Category)i.next();
+            if (!m.isEmpty()) {
+                for (Iterator i = m.values().iterator(); i.hasNext();) {
+                    Category c = (Category) i.next();
                     o.addOption(new Option(c.getID().toString(), getCategoryPath(c)));
                 }
             } else {
@@ -381,16 +372,16 @@ public abstract class CategoryForm extends Form
         FormData data = e.getFormData();
         BigDecimal id;
 
-        if(m_assign.isSelected(state)) {
+        if (m_assign.isSelected(state)) {
             id = (BigDecimal) data.get(FREE);
 
             // Assign a new category
             try {
                 Category cat = new Category(
-                    new OID(Category.BASE_DATA_OBJECT_TYPE, id));
+                        new OID(Category.BASE_DATA_OBJECT_TYPE, id));
                 if (!cat.canMap()) {
                     data.addError(
-                        (String) GlobalizationUtil.globalize(
+                            (String) GlobalizationUtil.globalize(
                             "cms.ui.need_category_map_privilege").localize());
                     return;
                 }
@@ -402,16 +393,16 @@ public abstract class CategoryForm extends Form
                 throw new FormProcessException(ex);
             }
 
-        } else if(m_remove.isSelected(state)) {
+        } else if (m_remove.isSelected(state)) {
             id = (BigDecimal) data.get(ASSIGNED);
 
             // Unassign a category
             try {
                 Category cat = new Category(
-                    new OID(Category.BASE_DATA_OBJECT_TYPE, id));
+                        new OID(Category.BASE_DATA_OBJECT_TYPE, id));
                 if (!cat.canMap()) {
                     data.addError(
-                        (String) GlobalizationUtil.globalize(
+                            (String) GlobalizationUtil.globalize(
                             "cms.ui.need_category_map_privilege").localize());
                     return;
                 }
@@ -431,8 +422,8 @@ public abstract class CategoryForm extends Form
         PageState state = e.getPageState();
         FormData data = e.getFormData();
 
-        if(m_assign.isSelected(state)) {
-            if(data.get(FREE) == null) {
+        if (m_assign.isSelected(state)) {
+            if (data.get(FREE) == null) {
                 data.addError("Please select a category to assign");
             } else {
                 // we need to make sure that no other item in this
@@ -442,12 +433,11 @@ public abstract class CategoryForm extends Form
                 // Assign a new category
                 try {
                     Category cat =
-                        new Category(new OID(Category.BASE_DATA_OBJECT_TYPE, id));
+                            new Category(new OID(Category.BASE_DATA_OBJECT_TYPE, id));
                     String url = getItemURL(state);
 
                     if (url != null) {
-                        DataQuery query = SessionManager.getSession().retrieveQuery
-                            ("com.arsdigita.categorization.getAllItemURLsForCategory");
+                        DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.categorization.getAllItemURLsForCategory");
                         query.setParameter("categoryID", id);
                         query.addEqualsFilter("lower(url)", url.toLowerCase());
 
@@ -456,33 +446,32 @@ public abstract class CategoryForm extends Form
                             ACSObject item = getObject(state);
                             Collection list = null;
                             if (item instanceof ContentItem) {
-                                list = BasicItemForm.getAllVersionIDs
-                                    ((ContentItem)item);
+                                list = BasicItemForm.getAllVersionIDs((ContentItem) item);
                             } else {
                                 list = new ArrayList();
                                 list.add(item.getID());
                             }
                             BigDecimal itemID = null;
                             while (query.next()) {
-                                itemID = (BigDecimal)query.get("itemID");
+                                itemID = (BigDecimal) query.get("itemID");
                                 if (!list.contains(itemID)) {
-                                    data.addError("There is already an item " +
-                                                  "with the url " + url +
-                                                  " in the category " +
-                                                  cat.getName());
+                                    data.addError("There is already an item "
+                                            + "with the url " + url
+                                            + " in the category "
+                                            + cat.getName());
                                     break;
                                 }
                             }
                         }
                     }
                 } catch (DataObjectNotFoundException ex) {
-                    s_log.error("Error processing category.  Unable to find " +
-                                "category with id " + id);
+                    s_log.error("Error processing category.  Unable to find "
+                            + "category with id " + id);
                     throw new FormProcessException(ex);
                 }
             }
-        } else if(m_remove.isSelected(state)) {
-            if(data.get(ASSIGNED) == null) {
+        } else if (m_remove.isSelected(state)) {
+            if (data.get(ASSIGNED) == null) {
                 data.addError("Please select a category to remove");
             }
         }
@@ -504,8 +493,8 @@ public abstract class CategoryForm extends Form
 
         boolean isFirst = true;
 
-        while(ancestors.next()) {
-            if ( !isFirst ) {
+        while (ancestors.next()) {
+            if (!isFirst) {
                 s.append(SEPARATOR);
             }
             s.append(ancestors.getCategory().getName());
@@ -529,7 +518,4 @@ public abstract class CategoryForm extends Form
             super.put(c.getID().toString(), c);
         }
     }
-
-
-
 }

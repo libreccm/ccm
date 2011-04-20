@@ -1,0 +1,87 @@
+<!-- $Id: book.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+  
+<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+
+<!-- *************** Control for HTML/print *************** -->
+<!-- Set to either "IGNORE" (for HTML) or "INCLUDE" (for print) -->
+
+<!ENTITY % SET-FOR-PRINT "IGNORE">
+
+<!-- *************** Settings for Book ID string *************** -->
+<!ENTITY BOOKDATE "2001-08-30T14:29-0400" -- Date the document was produced -->
+<!ENTITY SHORT-TITLE "SHORT TITLE" -- The title of this manual -->
+<!ENTITY PRODVER "&RHLVER;" -- The version of this product -->
+
+<!-- *************** Bring in RH-standard entities *************** -->
+<!ENTITY % RH-ENTITIES SYSTEM "./rh-sgml/rh-entities.sgml">
+%RH-ENTITIES;
+
+<!-- *************** Chapter entities... *************** -->
+<!ENTITY INTRO SYSTEM "intro.sgml">
+<!ENTITY CHAPTER SYSTEM "chapter.sgml">
+<!ENTITY GENERATED-INDEX SYSTEM "generated-index.sgml">
+<!ENTITY COLOPHON SYSTEM "./rh-sgml/colophon.sgml">
+]>
+
+
+<book id="index" lang="en">
+  <bookinfo>
+    <title>&RHL; &RHLVER;</title>
+    <subtitle>The Manual Entity Here</subtitle>
+    <isbn>
+      N/A
+    </isbn>
+    <mediaobject>
+      <imageobject>
+	<imagedata fileref="./figs/rhl-common/rhlogo-chapter-title.eps"
+	  format="eps" align="left">
+      </imageobject>
+      <imageobject>
+	<imagedata fileref="./figs/rhl-common/rhlogo-chapter-title.png"
+	  format="png" align="left">
+      </imageobject>
+    </mediaobject>
+    <publisher>
+      <publishername>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="./figs/rhl-common/rhlogo-title.eps"
+                       format="eps">
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="./figs/rhl-common/rhlogo-title.png"
+                       format="png">
+	  </imageobject>
+	</inlinemediaobject>
+      </publishername>
+    </publisher>
+    <copyright>
+      <year>2002</year>
+      <holder>&FORMAL-RHI;</holder>
+    </copyright>
+      &BOILERPLATE;
+  </bookinfo>
+
+  <toc>
+    <title>Table of Contents</title>
+  </toc>
+  
+  <!-- The chapters start here... -->
+  
+  &INTRO;
+
+  <part>
+    <title>Part Title</title>
+
+    <partintro>
+      <para>The part introduction goes here.</para>
+    </partintro>
+
+    &CHAPTER;
+
+  </part>
+
+  &GENERATED-INDEX;
+  &COLOPHON;
+
+</book>

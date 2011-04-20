@@ -58,25 +58,20 @@ import com.arsdigita.persistence.OID;
  *
  * 
  */
-
 // this class has been abstracted out from the original cms specific category form
 // in ccm-cms 
 public abstract class ACSObjectCategoryForm extends Form {
-    
+
     private Widget m_category;
     private SaveCancelSection m_buttons;
 
-
-    
     protected abstract ACSObject getObject(PageState state);
 
-    
-    
     public ACSObjectCategoryForm(BigDecimalParameter root,
-                            StringParameter mode,
-                            Widget categoryWidget) {
+            StringParameter mode,
+            Widget categoryWidget) {
         super("category", new BoxPanel(BoxPanel.VERTICAL));
-       
+
 
         m_category = categoryWidget;
         m_category.addValidationListener(new NotNullValidationListener());
@@ -84,57 +79,62 @@ public abstract class ACSObjectCategoryForm extends Form {
 
         add(m_category);
         add(m_buttons);
-        
+
         addInitListener(new FormInitListener() {
-                public void init(FormSectionEvent ev) 
+
+            @Override
+            public void init(FormSectionEvent ev)
                     throws FormProcessException {
-                    
-                    PageState state = ev.getPageState();
-					ACSObject object = getObject(state); 
-                     
-                    List ids = new ArrayList();
-                    CategoryCollection cats = new CategorizedObject(object).getParents();
-                    while (cats.next()) {
-                        ids.add(cats.getCategory().getID());
-                    }
-                    
-                    m_category.setValue(state,
-                                        ids.toArray(new BigDecimal[ids.size()]));
+
+                PageState state = ev.getPageState();
+                ACSObject object = getObject(state);
+
+                List ids = new ArrayList();
+                CategoryCollection cats = new CategorizedObject(object).getParents();
+                while (cats.next()) {
+                    ids.add(cats.getCategory().getID());
                 }
-            });
+
+                m_category.setValue(state,
+                        ids.toArray(new BigDecimal[ids.size()]));
+            }
+        });
 
         addProcessListener(new FormProcessListener() {
-                public void process(FormSectionEvent ev)
+
+            @Override
+            public void process(FormSectionEvent ev)
                     throws FormProcessException {
 
-                    PageState state = ev.getPageState();
+                PageState state = ev.getPageState();
 
-                    ACSObject object = getObject(state);
-                     
-                    BigDecimal[] ids = (BigDecimal[])m_category.getValue(state);
-                    for (int i = 0 ; i < ids.length ; i++) {
-                        Category cat = (Category)
-                            DomainObjectFactory.newInstance(
-                                new OID(Category.BASE_DATA_OBJECT_TYPE,
-                                        ids[i]));
-                        
-                        cat.addChild(object);
-                    }
+                ACSObject object = getObject(state);
 
-                    fireCompletionEvent(state);
+                BigDecimal[] ids = (BigDecimal[]) m_category.getValue(state);
+                for (int i = 0; i < ids.length; i++) {
+                    Category cat = (Category) DomainObjectFactory.newInstance(
+                            new OID(Category.BASE_DATA_OBJECT_TYPE,
+                            ids[i]));
+
+                    cat.addChild(object);
                 }
-            });
+
+                fireCompletionEvent(state);
+            }
+        });
         addSubmissionListener(new FormSubmissionListener() {
-                public void submitted(FormSectionEvent ev) 
+
+            @Override
+            public void submitted(FormSectionEvent ev)
                     throws FormProcessException {
 
-                    PageState state = ev.getPageState();
+                PageState state = ev.getPageState();
 
-                    if (m_buttons.getCancelButton().isSelected(state)) {
-                        fireCompletionEvent(state);
-                        throw new FormProcessException("cancelled");
-                    }
+                if (m_buttons.getCancelButton().isSelected(state)) {
+                    fireCompletionEvent(state);
+                    throw new FormProcessException("cancelled");
                 }
-            });
+            }
+        });
     }
 }

@@ -1,0 +1,4 @@
+BUNDLE_NAME=aplaws-plus-zes-devel
+BUNDLE_PRETTY_NAME="APLAWS+ ZeS Devel Bundle"
+VERSION=1.0.9devel
+RELEASE=1

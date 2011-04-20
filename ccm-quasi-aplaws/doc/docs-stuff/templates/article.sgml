@@ -1,0 +1,94 @@
+<!-- $Id: article.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+
+<!DOCTYPE ARTICLE PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+
+<!-- *************** Control for HTML/print *************** -->
+<!-- Set to either "IGNORE" (for HTML) or "INCLUDE" (for print) -->
+
+<!ENTITY % SET-FOR-PRINT "IGNORE">
+
+<!-- *************** Settings for Book ID string *************** -->
+<!ENTITY BOOKDATE "2001-05-01T17:43-0500" -- Date the document was produced -->
+<!ENTITY SHORT-TITLE "short" -- The short title of this manual -->
+<!ENTITY PRODVER "&RHLVER;" -- The version of this product -->
+
+<!-- *************** Bring in RH-standard entities *************** -->
+<!ENTITY % RH-ENTITIES SYSTEM "./rh-sgml/rh-entities.sgml">
+%RH-ENTITIES;
+
+<!-- **************Settings for print ****************** -->
+<!ENTITY HTML "HTML" -- Document in HTML -->
+<!ENTITY PRINT "Print" -- Document in print -->
+
+<![ %SET-FOR-PRINT [<!ENTITY % PRINTONLY "INCLUDE">]]>
+<![ %SET-FOR-PRINT [<!ENTITY % HTMLONLY "IGNORE">]]>
+<![ %SET-FOR-PRINT [<!ENTITY MEDIA "&PRINT;">]]>
+
+<!-- Settings for HTML (or more accurately, not for print)... -->
+
+<!ENTITY % PRINTONLY "IGNORE">
+<!ENTITY % HTMLONLY "INCLUDE">
+<!ENTITY MEDIA "&HTML;">
+
+]>
+
+<article id="index">
+  <articleinfo>
+    <title>Title</title>
+    <subtitle>Some Subtitle</subtitle>
+    <authorgroup>
+      <author>
+	<firstname>First</firstname>
+	<surname>Last</surname>
+	<affiliation>
+	  <address><email>flast@redhat.com</email></address>
+	</affiliation>
+      </author>
+    </authorgroup>
+    <copyright>
+      <year>2001</year>
+      <holder>&FORMAL-RHI;</holder>
+    </copyright>
+    &BOILERPLATE;    
+    <abstract>
+      <title>Abstract</title>
+      <para>
+	Brief overview of article.
+      </para>
+    </abstract>
+  </articleinfo>
+  
+  <sect1 id="idname">
+    <title>Title for sect1</title>
+    <para>
+      Some text ...
+    </para>
+
+    <figure id="id-for-fig">
+      <title>Title for Figure</title>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="./figs/chapter/someimage.eps"
+		     format="eps">
+	</imageobject>
+	<imageobject>
+	  <imagedata fileref="./figs/chapter/someimage.png"
+		     format="png">
+	</imageobject>
+	<textobject>
+	  <para>
+	    Some text description of this image
+	  </para>
+	</textobject>
+      </mediaobject>
+    </figure>
+    
+    <sect2 id="idname2">
+      <title>Title for sect2</title>
+      <para>
+	More text ...
+      </para>
+    </sect2>
+  </sect1>
+
+</article>

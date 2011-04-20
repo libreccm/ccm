@@ -1,0 +1,123 @@
+<!-- $Id: boilerplate-sh.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+
+<legalnotice id="legalnotice">
+
+  <para>
+    &BOOKID;
+  </para>
+
+  <para>
+    Copyright <trademark class="copyright"></trademark> 2001, 2002 by
+    &FORMAL-RHI; This material may be distributed only subject to the terms and
+    conditions set forth in the Open Publication License, V1.0 or later (the
+    latest version is presently available at <ulink
+    url="http://www.opencontent.org/openpub/">http://www.opencontent.org/openpub/</ulink>).
+  </para>
+
+  <para>
+    Distribution of substantively modified versions of this document is
+    prohibited without the explicit permission of the copyright holder.
+  </para>
+
+  <para>
+    Distribution of the work or derivative of the work in any standard (paper)
+    book form for commercial purposes is prohibited unless prior permission is
+    obtained from the copyright holder.
+  </para>
+
+  <para>
+    The admonition graphics (note, tip, important, caution, and warning) were
+    created by Marianne Pecci <email>goddess@ipass.net</email>. They may be
+    redistributed with explicit permission from Marianne Pecci and Red Hat, Inc.
+  </para>
+
+  <para>
+    &RH;, &RHN;, the &RH; "Shadow Man" logo, RPM, Maximum RPM, the RPM logo, Linux
+    Library, PowerTools, Linux Undercover, RHmember, RHmember More, Rough Cuts,
+    Rawhide, C2Net and all &RH;-based trademarks and logos are trademarks or registered
+    trademarks of &FORMAL-RHI; in the United States and other countries.
+  </para>
+
+  <para>
+    Linux is a registered trademark of Linus Torvalds.
+  </para>
+
+  <para>
+    Motif and UNIX are registered trademarks of The Open Group.
+  </para>
+
+  <para>
+    Compaq and the names of Compaq products referenced herein are either
+    trademarks and/or service marks or registered trademarks and/or service
+    marks of Compaq.
+  </para>
+
+  <para>
+    Itanium is a registered trademark of Intel Corporation.
+  </para>
+
+  <para>
+    Netscape is a registered trademark of Netscape Communications Corporation in
+    the United States and other countries.
+  </para>
+
+  <para>
+    Windows is a registered trademark of Microsoft Corporation.
+  </para>
+
+  <para>
+    SSH and Secure Shell are trademarks of SSH Communications Security, Inc.
+  </para>
+
+  <para>
+    FireWire is a trademark of Apple Computer Corporation.
+  </para>
+
+  <para>
+    All other trademarks and copyrights referred to are the property of their
+    respective owners.
+  </para>
+
+
+  <para>
+    This manual, as well as the software described in it, is furnished under
+    license and may only be used or copied in accordance with the terms of such
+    license. The information in this manual is furnished for information use
+    only, is subject to change without notice, and should not be constructed as
+    a commitment by Red Hat, Inc. Red Hat assumes no responsibly or liability
+    for any errors or inaccuracies that may appear in this book. 
+  </para>
+  <para>
+    Except as permitted by such license, no part of this publication may be
+    reproduced, stored in a retreival system, or transmitted, in any form or by
+    any means, electronic, mechanical, recording, or otherwise, without prior
+    written permission of Red Hat, Inc.
+  </para>
+  <para>
+    Portions of this manual were developed by the Apache Group, and are taken
+    with permission from the Apache 1.3 User s Guide at
+    http://www.apache.org/docs. Portions of this manual were developed by the
+    PHP Documentation Group, and are taken with permission from the PHP 1.3
+    Manual at http://www.php.net/manual.
+  </para>
+  <para>
+    This product includes software developed by the OpenSSL Project for use in
+    the OpenSSL Toolkit (http://www.openssl.org). Some of the cryptographic
+    software in this product was written by Eric Young
+    (eay@cryptsoft.com). Remainder copyright C2Net Software, Inc., 1995, 1996,
+    1997, 1998, 1999, and 2000. All rights reserved.
+  </para>
+  <para>
+    Stronghold Web Server 3.0 Server Setup Guide version 3.0.2 
+  </para>
+  <para>
+    Copyright 2001
+  </para>
+  <para>
+    All terms mentioned in this book that are known to be trademarks or service
+    marks have been approriately capitalized. Red Hat cannot attest to the
+    accuracy of this information. Use of a term in this book should not be
+    regarded as affecting the validity of any trademark or service mark.
+  </para>
+
+</legalnotice>
