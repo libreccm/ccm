@@ -34,7 +34,7 @@
             ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) itemList).setDefinition(new CMSDataCollectionDefinition());
             ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) itemList).setRenderer(new CMSDataCollectionRenderer());
             ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) itemList).getDefinition().setObjectType("com.arsdigita.cms.ContentPage");
-            ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getDefinition().addOrder("parent.categories.link.sortKey");
+            ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) itemList).getDefinition().addOrder("parent.categories.link.sortKey");
             ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) itemList).getRenderer().setPageSize(20);
             ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) itemList).getRenderer().setSpecializeObjects(true);
         </jsp:scriptlet>

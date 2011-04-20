@@ -54,6 +54,7 @@
 
       objList.getRenderer().setPageSize(20);
       objList.getRenderer().setSpecializeObjects(true);
+      objList.getRenderer().setSpecializeObjectsContext("sciProjectList");
 
       </jsp:scriptlet>
 
