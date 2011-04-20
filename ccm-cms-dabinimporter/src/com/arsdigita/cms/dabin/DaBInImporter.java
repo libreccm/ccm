@@ -20,6 +20,7 @@
 package com.arsdigita.cms.dabin;
 
 import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.FileAsset;
 import com.arsdigita.cms.Folder;
@@ -1602,18 +1603,22 @@ public class DaBInImporter extends Program {
                 GenericPerson personDe = null;
                 GenericPerson personEn = null;
 
+                Folder folder = null;
                 switch (type) {
                     case MEMBER:
                         personDe = new SciMember();
                         personEn = new SciMember();
+                        folder = members;
                         break;
                     case AUTHOR:
                         personDe = new SciAuthor();
                         personEn = new SciAuthor();
+                        folder = authors;
                         break;
                     case OTHER:
                         personDe = new Person();
                         personEn = new Person();
+                        folder = persons;
                         break;
                 }
                 personDe.setSurname(personData.getSurname());
@@ -1646,6 +1651,10 @@ public class DaBInImporter extends Program {
                 personEn.save();
                 personEn.setLanguage("en");
 
+
+                resolveDuplicateNameAndTitle(personDe, folder);
+                resolveDuplicateNameAndTitle(personEn, folder);
+
                 ContentBundle person;
                 person = new ContentBundle(personDe);
                 person.addInstance(personEn);
@@ -1656,19 +1665,6 @@ public class DaBInImporter extends Program {
 
                 personDe.setContentSection(section);
                 personEn.setContentSection(section);
-
-                Folder folder = null;
-                switch (type) {
-                    case MEMBER:
-                        folder = members;
-                        break;
-                    case AUTHOR:
-                        folder = authors;
-                        break;
-                    case OTHER:
-                        folder = persons;
-                        break;
-                }
 
                 folder.addItem(person);
 
@@ -1765,40 +1761,41 @@ public class DaBInImporter extends Program {
                         homepage = value;
                         homepage = value;
                     }
+                }
 
-                    contactDe.setContentSection(personsSection);
-                    contactDe.setLifecycle(createLifecycle(personsLifecycle));
-                    contactDe.save();
-                    contactEn.setContentSection(personsSection);
-                    contactEn.setLifecycle(createLifecycle(personsLifecycle));
-                    contactEn.save();
-                    ContentBundle contactBundle = new ContentBundle(contactDe);
-                    contactBundle.addInstance(contactEn);
-                    contactBundle.setContentSection(personsSection);
-                    contacts.addItem(contactBundle);
+                contactDe.setContentSection(personsSection);
+                contactDe.setLifecycle(createLifecycle(personsLifecycle));
+                contactDe.save();
+                contactEn.setContentSection(personsSection);
+                contactEn.setLifecycle(createLifecycle(personsLifecycle));
+                contactEn.save();
+                ContentBundle contactBundle = new ContentBundle(contactDe);
+                contactBundle.addInstance(contactEn);
+                contactBundle.setContentSection(personsSection);
+                contacts.addItem(contactBundle);
 
-                    contactDe.setContentSection(personsSection);
-                    contactEn.setContentSection(personsSection);
+                contactDe.setContentSection(personsSection);
+                contactEn.setContentSection(personsSection);
 
-                    if (homepage != null) {
-                        RelatedLink homepageLinkDe;
-                        homepageLinkDe = new RelatedLink();
-                        homepageLinkDe.setTitle("Persönliche Homepage");
-                        homepageLinkDe.setTargetType(Link.EXTERNAL_LINK);
-                        homepageLinkDe.setTargetURI(homepage);
-                        homepageLinkDe.setLinkListName("");
-                        homepageLinkDe.setLinkOwner(personDe);
-                        homepageLinkDe.save();
+                if (homepage != null) {
+                    RelatedLink homepageLinkDe;
+                    homepageLinkDe = new RelatedLink();
+                    homepageLinkDe.setTitle("Persönliche Homepage");
+                    homepageLinkDe.setTargetType(Link.EXTERNAL_LINK);
+                    homepageLinkDe.setTargetURI(homepage);
+                    homepageLinkDe.setLinkListName("");
+                    homepageLinkDe.setLinkOwner(personDe);
+                    homepageLinkDe.save();
 
-                        RelatedLink homepageLinkEn;
-                        homepageLinkEn = new RelatedLink();
-                        homepageLinkEn.setTitle("Personal homepage");
-                        homepageLinkEn.setTargetType(Link.EXTERNAL_LINK);
-                        homepageLinkEn.setTargetURI(homepage);
-                        homepageLinkEn.setLinkListName("");
-                        homepageLinkEn.setLinkOwner(personDe);
-                        homepageLinkEn.save();
-                    }
+                    RelatedLink homepageLinkEn;
+                    homepageLinkEn = new RelatedLink();
+                    homepageLinkEn.setTitle("Personal homepage");
+                    homepageLinkEn.setTargetType(Link.EXTERNAL_LINK);
+                    homepageLinkEn.setTargetURI(homepage);
+                    homepageLinkEn.setLinkListName("");
+                    homepageLinkEn.setLinkOwner(personDe);
+                    homepageLinkEn.save();
+
                 }
 
                 personsMap.put(personData.getDabinId(), person);
@@ -2023,10 +2020,12 @@ public class DaBInImporter extends Program {
                 project.setDefaultLanguage("de");
 
                 if (projectDe != null) {
+                    resolveDuplicateNameAndTitle(projectDe, projects);
                     projectDe.setContentSection(projectsSection);
                 }
 
                 if (projectEn != null) {
+                    resolveDuplicateNameAndTitle(projectEn, projects);
                     projectEn.setContentSection(projectsSection);
                 }
 
@@ -2541,6 +2540,9 @@ public class DaBInImporter extends Program {
                         createLifecycle(publicationsLifecycle));
                 publicationEn.setContentSection(publicationsSection);
 
+                resolveDuplicateNameAndTitle(publicationDe, publications);
+                resolveDuplicateNameAndTitle(publicationEn, publications);
+
                 System.out.println("\tAssigning authors...\n");
                 int i = 1;
                 for (Authorship authorship : publicationData.getAuthors()) {
@@ -3036,6 +3038,10 @@ public class DaBInImporter extends Program {
                             "%s %s", publisherData.getName(), publisherData.
                             getPlace())));
                 }
+
+                resolveDuplicateNameAndTitle(publisherDe, publishers);
+                resolveDuplicateNameAndTitle(publisherEn, publishers);
+
                 publisherEn.setPublisherName(publisherData.getName());
                 publisherEn.setPlace(publisherData.getPlace());
                 publisherEn.setLanguage("en");
@@ -3373,6 +3379,23 @@ public class DaBInImporter extends Program {
                                                                          "ss").
                 replace(" ", "-").
                 replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase().trim();
+    }
+
+    private void resolveDuplicateNameAndTitle(final ContentPage page,
+                                              final Folder folder) {
+
+        String resolvedName = page.getName();
+        String resolvedTitle = page.getTitle();
+        int i = 0;
+
+        while (folder.getItem(resolvedName, false) != null) {
+            i++;
+            resolvedName = String.format("%s-%d", page.getName(), i);
+            resolvedTitle = String.format("%s (%d)", page.getTitle(), i);
+        }
+
+        page.setName(resolvedName);
+        page.setTitle(resolvedTitle);
     }
 
     public static void main(String[] args) {
