@@ -105,8 +105,13 @@ public class TermWidget extends Widget {
             ids.addAll(Arrays.asList(values));
         }
 
-        String selectedCats = ids.toString();
-        widget.addAttribute("selectedCats", selectedCats.substring(1, selectedCats.length() - 1));
+        Element selEl = widget.newChildElement("cms:selectedCategories", CMS.CMS_XML_NS);
+        selEl.addAttribute("name", this.getName());
+        Iterator selCats = ids.iterator();
+        while (selCats.hasNext()) {
+            Element selCat = selEl.newChildElement("cms:category", CMS.CMS_XML_NS);
+            selCat.addAttribute("id", selCats.next().toString());
+        }
 
         // only root terms at first, the rest is loaded on-demand via AJAX
         DomainCollection terms = domain.getRootTerms();

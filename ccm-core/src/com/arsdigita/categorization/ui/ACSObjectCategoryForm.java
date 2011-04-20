@@ -41,6 +41,7 @@ import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.OID;
+import java.util.HashSet;
 
 /**
  * abstract form for assigning categories to acs_objects. The assigned
@@ -110,13 +111,23 @@ public abstract class ACSObjectCategoryForm extends Form {
 
                 ACSObject object = getObject(state);
 
+                HashSet curSelectesdCat = new HashSet();
+                CategoryCollection cats = new CategorizedObject(object).getParents();
+                while (cats.next()) {
+                    curSelectesdCat.add(cats.getCategory().getID());
+                }
+
                 BigDecimal[] ids = (BigDecimal[]) m_category.getValue(state);
                 for (int i = 0; i < ids.length; i++) {
                     Category cat = (Category) DomainObjectFactory.newInstance(
                             new OID(Category.BASE_DATA_OBJECT_TYPE,
                             ids[i]));
 
-                    cat.addChild(object);
+                    if(!curSelectesdCat.contains(ids[i])) {
+                        cat.addChild(object);
+                    } else {
+                        cat.removeChild(object);
+                    }
                 }
 
                 fireCompletionEvent(state);
