@@ -151,7 +151,16 @@ class PublishedLink extends DomainObject {
         }
 
         if ((sourceObject != null) && sourceObject.getObjectType().getProperty(propertyName).isCollection()) {
-            link.saveLinkAttributes((DataCollection) sourceObject.get(propertyName + "@link"));
+
+            DataCollection coll = (DataCollection) sourceObject.get(propertyName + "@link");
+            while (coll.next()) {
+
+                DataObject linkObj = coll.getDataObject();
+                if (linkTarget.getID() == link.getLinkTarget().getID()) {
+                    link.saveLinkAttributes(linkObj);
+                    coll.close();
+                }
+            }
         }
 
         return link;
@@ -317,41 +326,33 @@ class PublishedLink extends DomainObject {
         }
     }
 
-    private void saveLinkAttributes(DataCollection coll) {
+    private void saveLinkAttributes(DataObject linkObj) {
 
-        if (coll.next()) {
+        Iterator properties = linkObj.getObjectType().getDeclaredProperties();
+        HashMap<String, Object> linkAttributes = new HashMap();
 
-            DataObject linkObj = coll.getDataObject();
+        while (properties.hasNext()) {
 
-            Iterator properties = linkObj.getObjectType().getDeclaredProperties();
-            HashMap<String, Object> linkAttributes = new HashMap();
+            Property prop = (Property) properties.next();
+            String key = prop.getName();
 
-            while (properties.hasNext()) {
+            // Teste Property: Es darf kein Key und muß ein simples Attribute sein
+            if (prop.isAttribute() && !prop.isKeyProperty()) {
 
-                Property prop = (Property) properties.next();
-                String key = prop.getName();
+                Object value = linkObj.get(key);
+                linkAttributes.put(key, value);
+            }
+        }
 
-                // Teste Property: Es darf kein Key und muß ein simples Attribute sein
-                if (prop.isAttribute() && !prop.isKeyProperty()) {
-
-                    Object value = linkObj.get(key);
-                    linkAttributes.put(key, value);
-                }
+        if (linkAttributes.size() > 0) {
+            ByteArrayOutputStream data = new ByteArrayOutputStream();
+            try {
+                ObjectOutputStream out = new ObjectOutputStream(data);
+                out.writeObject(linkAttributes);
+            } catch (IOException ex) {
             }
 
-            if (linkAttributes.size() > 0) {
-                ByteArrayOutputStream data = new ByteArrayOutputStream();
-                try {
-                    ObjectOutputStream out = new ObjectOutputStream(data);
-                    out.writeObject(linkAttributes);
-                } catch (IOException ex) {
-                }
-
-                set(LINK_ATTRIBUTES, data.toByteArray());
-
-            }
-
-            coll.close();
+            set(LINK_ATTRIBUTES, data.toByteArray());
         }
     }
 
