@@ -23,6 +23,8 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
@@ -50,7 +52,9 @@ import org.apache.log4j.Logger;
  */
 public class GenericOrganizationalUnitPersonAddForm
         extends BasicItemForm
-        implements FormSubmissionListener {
+        implements FormProcessListener,
+                   FormInitListener,
+                   FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(
             GenericOrganizationalUnitPersonAddForm.class);
@@ -63,7 +67,7 @@ public class GenericOrganizationalUnitPersonAddForm
     public GenericOrganizationalUnitPersonAddForm(ItemSelectionModel itemModel,
                                                   GenericOrganizationalUnitPersonSelector selector) {
         super("PersonAddForm", itemModel);
-        this.selector = selector;
+        this.selector = selector;       
         addSubmissionListener(this);
     }
 
@@ -73,8 +77,8 @@ public class GenericOrganizationalUnitPersonAddForm
                 "cms.contenttypes.ui.genericorgaunit.select_person").localize()));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(getPersonType()));
-        m_itemSearch.getItemField().addValidationListener(
-                new NotNullValidationListener());
+        /*m_itemSearch.getItemField().addValidationListener(
+                new NotNullValidationListener());*/
         add(this.m_itemSearch);
 
         selectedPersonNameLabel = new Label("");
@@ -126,7 +130,7 @@ public class GenericOrganizationalUnitPersonAddForm
     }
 
     @Override
-    public void init(FormSectionEvent fse) {
+    public void init(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
 
@@ -196,7 +200,7 @@ public class GenericOrganizationalUnitPersonAddForm
 
                 selector.setSelectedPerson(null);
                 selector.setSelectedPersonRole(null);
-                selector.setSelectedPersonRole(null);
+                selector.setSelectedPersonStatus(null);
 
                 persons.close();
             }
@@ -206,11 +210,11 @@ public class GenericOrganizationalUnitPersonAddForm
     }
 
     public void submitted(FormSectionEvent fse) throws FormProcessException {
-        if (getSaveCancelSection().getCancelButton().isSelected(
+        if (this.getSaveCancelSection().getCancelButton().isSelected(
                 fse.getPageState())) {
             selector.setSelectedPerson(null);
             selector.setSelectedPersonRole(null);
-            selector.setSelectedPersonRole(null);
+            selector.setSelectedPersonStatus(null);
 
             init(fse);
         }

@@ -101,6 +101,6 @@ public class GenericOrganizationalUnitPersonPropertiesStep
 
     @Override
     public void showEditComponent(final PageState state) {
-        showComponent(state, ADD_PERSON_SHEET_NAME);
+        this.showComponent(state, ADD_PERSON_SHEET_NAME);
     }
 }
