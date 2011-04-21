@@ -156,7 +156,8 @@ class PublishedLink extends DomainObject {
             while (coll.next()) {
 
                 DataObject linkObj = coll.getDataObject();
-                if (linkTarget.getID() == link.getLinkTarget().getID()) {
+
+                if (linkTarget.getOID().equals(((DataObject) linkObj.getOID().get(propertyName)).getOID())) {
                     link.saveLinkAttributes(linkObj);
                     coll.close();
                 }
