@@ -3,8 +3,9 @@
     xmlns:define="/WEB-INF/bebop-define.tld"
     xmlns:show="/WEB-INF/bebop-show.tld"
     version="1.2">
-    <%-- This page is used by class in method getChannel(PageState pageState)
-           com.arsdigita.portalworkspace.ui.WorkspaceDirectoryComponent              --%>
+    <!-- This page is used by class in method getChannel(PageState pageState)
+         com.arsdigita.portalworkspace.ui.WorkspaceDirectoryComponent
+         Probably part of the ccm-ldn-rss WorkspaceDirectoryPortlet portlet. -->
 
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
 

@@ -1,0 +1,5 @@
+TODO:
+  Analyze the portlet WorkspaceDirectoryPortlet and make it work. It uses
+  the workspaces.jsp, currently located in subdir portlets, in some way
+  currently unknown. May be, workspaces.jsp has no relation to 
+  WorkspaceDirectoryPortlet.
