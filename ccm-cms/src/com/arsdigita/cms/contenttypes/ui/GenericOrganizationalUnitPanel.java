@@ -41,6 +41,9 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
     public static final String SHOW_CONTACTS = "contacts";
     public static final String SHOW_MEMBERS = "members";
 
+    private boolean displayContacts;
+    private boolean displayMembers;
+
     @Override
     protected String getDefaultForShowParam() {
         return SHOW_CONTACTS;
@@ -49,6 +52,22 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
     @Override
     protected Class<? extends ContentItem> getAllowedClass() {
         return GenericOrganizationalUnit.class;
+    }
+
+    public boolean isDisplayContacts() {
+        return displayContacts;
+    }
+
+    public void setDisplayContacts(boolean displayContacts) {
+        this.displayContacts = displayContacts;
+    }
+
+    public boolean isDisplayMembers() {
+        return displayMembers;
+    }
+
+    public void setDisplayMembers(boolean displayMembers) {
+        this.displayMembers = displayMembers;
     }
 
     protected void generateContactsXML(GenericOrganizationalUnit orga,
@@ -232,11 +251,13 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
         GenericOrganizationalUnit orga = (GenericOrganizationalUnit) item;
 
         if ((orga.getContacts() != null)
-            && (orga.getContacts().size() > 0)) {
+            && (orga.getContacts().size() > 0)
+            && displayMembers) {
             availableData.newChildElement("contacts");
         }
         if ((orga.getPersons() != null)
-            && (orga.getPersons().size() > 0)) {
+            && (orga.getPersons().size() > 0)
+            && displayMembers) {
             availableData.newChildElement("members");
         }
 

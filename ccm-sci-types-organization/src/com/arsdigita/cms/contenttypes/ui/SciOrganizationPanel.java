@@ -61,6 +61,10 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
     public static final String SHOW_PROJECTS_ONGOING = "projectsOngoing";
     public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";
     public static final String SHOW_PUBLICATIONS = "publications";
+    private boolean displayDescription = true;
+    private boolean displayDepartments = true;
+    private boolean displayProjects = true;
+    private boolean displayPublications = true;
 
     @Override
     protected String getDefaultForShowParam() {
@@ -70,6 +74,30 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
     @Override
     protected Class<? extends ContentItem> getAllowedClass() {
         return SciOrganization.class;
+    }
+
+    public boolean isDisplayDepartments() {
+        return displayDepartments;
+    }
+
+    public void setDisplayDepartments(boolean displayDepartments) {
+        this.displayDepartments = displayDepartments;
+    }
+
+    public boolean isDisplayDescription() {
+        return displayDescription;
+    }
+
+    public void setDisplayDescription(boolean displayDescription) {
+        this.displayDescription = displayDescription;
+    }
+
+    public boolean isDisplayProjects() {
+        return displayProjects;
+    }
+
+    public void setDisplayProjects(boolean displayProjects) {
+        this.displayProjects = displayProjects;
     }
 
     /**
@@ -509,48 +537,60 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         config = SciOrganization.getConfig();
 
         if ((orga.getOrganizationDescription() != null)
-            && !(orga.getOrganizationDescription().isEmpty())) {
+            && !(orga.getOrganizationDescription().isEmpty())
+            && displayDescription) {
             availableData.newChildElement("description");
         }
         if ((orga.getContacts() != null)
-            && (orga.getContacts().size() > 0)) {
+            && (orga.getContacts().size() > 0)
+            && isDisplayContacts()) {
             availableData.newChildElement("contacts");
         }
         if ((orga.getDepartments() != null)
-            && (orga.getDepartments().size() > 0)) {
+            && (orga.getDepartments().size() > 0)
+            && displayDepartments) {
             availableData.newChildElement("departments");
         }
         if (config.getOrganizationMembersAllInOne()) {
-            if (hasMembers(orga, new LinkedList<String>())) {
+            if (hasMembers(orga, new LinkedList<String>())
+                && isDisplayMembers()) {
                 availableData.newChildElement("members");
             }
         } else {
-            if (hasMembers(orga, getFiltersForActiveMembers())) {
+            if (hasMembers(orga, getFiltersForActiveMembers())
+                && isDisplayMembers()) {
                 availableData.newChildElement("membersActive");
             }
-            if (hasMembers(orga, getFiltersForAssociatedMembers())) {
+            if (hasMembers(orga, getFiltersForAssociatedMembers())
+                && isDisplayMembers()) {
                 availableData.newChildElement("membersAssociated");
             }
-            if (hasMembers(orga, getFiltersForFormerMembers())) {
+            if (hasMembers(orga, getFiltersForFormerMembers())
+                && isDisplayMembers()) {
                 availableData.newChildElement("membersFormer");
             }
         }
         if (config.getOrganizationProjectsAllInOne()) {
-            if (hasProjects(orga, new LinkedList<String>())) {
+            if (hasProjects(orga, new LinkedList<String>())
+                && displayProjects) {
                 availableData.newChildElement("projects");
             }
         } else {
-            if (hasProjects(orga, getFiltersForOngoingProjects())) {
+            if (hasProjects(orga, getFiltersForOngoingProjects())
+                && displayProjects) {
                 availableData.newChildElement("projectsOngoing");
             }
-            if (hasProjects(orga, getFiltersForFinishedProjects())) {
+            if (hasProjects(orga, getFiltersForFinishedProjects())
+                && displayProjects) {
                 availableData.newChildElement("projectsFinished");
             }
         }
         DataCollection publicationLinks =
                        RelatedLink.getRelatedLinks(orga,
                                                    "SciOrganizationPublications");
-        if ((publicationLinks != null) && (publicationLinks.size() > 0)) {
+        if ((publicationLinks != null)
+            && (publicationLinks.size() > 0)
+            && displayPublications) {
             availableData.newChildElement("publications");
         }
 

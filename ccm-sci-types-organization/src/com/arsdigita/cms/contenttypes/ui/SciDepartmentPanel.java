@@ -54,6 +54,10 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     public static final String SHOW_PROJECTS_ONGOING = "projectsOngoing";
     public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";
     public static final String SHOW_PUBLICATIONS = "publications";
+    private boolean displayDescription;
+    private boolean displaySubDepartments;
+    private boolean displayProjects;
+    private boolean displayPublications;
 
     @Override
     protected String getDefaultForShowParam() {
@@ -63,6 +67,38 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     @Override
     protected Class<? extends ContentItem> getAllowedClass() {
         return SciDepartment.class;
+    }
+
+    public boolean isDisplayDescription() {
+        return displayDescription;
+    }
+
+    public void setDisplayDescription(boolean displayDescription) {
+        this.displayDescription = displayDescription;
+    }
+
+    public boolean isDisplayProjects() {
+        return displayProjects;
+    }
+
+    public void setDisplayProjects(boolean displayProjects) {
+        this.displayProjects = displayProjects;
+    }
+
+    public boolean isDisplayPublications() {
+        return displayPublications;
+    }
+
+    public void setDisplayPublications(boolean displayPublications) {
+        this.displayPublications = displayPublications;
+    }
+
+    public boolean isDisplaySubDepartments() {
+        return displaySubDepartments;
+    }
+
+    public void setDisplaySubDepartments(boolean displaySubDepartments) {
+        this.displaySubDepartments = displaySubDepartments;
     }
 
     protected boolean hasMembers(final SciDepartment department,
@@ -412,48 +448,60 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         SciOrganizationConfig config = SciDepartment.getConfig();
 
         if ((department.getDepartmentDescription() != null)
-            && !department.getDepartmentDescription().isEmpty()) {
+            && !department.getDepartmentDescription().isEmpty()
+            && displayDescription) {
             availableData.newChildElement("description");
         }
         if ((department.getContacts() != null)
-            && (department.getContacts().size() > 0)) {
+            && (department.getContacts().size() > 0)
+            && isDisplayContacts()) {
             availableData.newChildElement("contacts");
         }
         if ((department.getSubDepartments() != null)
-            && (department.getSubDepartments().size() > 0)) {
+            && (department.getSubDepartments().size() > 0)
+            && displaySubDepartments) {
             availableData.newChildElement("subDepartments");
         }
         if (config.getOrganizationMembersAllInOne()) {
-            if (hasMembers(department, new LinkedList<String>())) {
+            if (hasMembers(department, new LinkedList<String>())
+                && isDisplayMembers()) {
                 availableData.newChildElement("members");
             }
         } else {
-            if (hasMembers(department, getFiltersForActiveMembers())) {
+            if (hasMembers(department, getFiltersForActiveMembers())
+                && isDisplayMembers()) {
                 availableData.newChildElement("membersActive");
             }
-            if (hasMembers(department, getFiltersForAssociatedMembers())) {
+            if (hasMembers(department, getFiltersForAssociatedMembers())
+                && isDisplayMembers()) {
                 availableData.newChildElement("membersAssociated");
             }
-            if (hasMembers(department, getFiltersForFormerMembers())) {
+            if (hasMembers(department, getFiltersForFormerMembers())
+                && isDisplayMembers()) {
                 availableData.newChildElement("membersFormer");
             }
         }
         if (config.getOrganizationProjectsAllInOne()) {
-            if (hasProjects(department, new LinkedList<String>())) {
+            if (hasProjects(department, new LinkedList<String>())
+                && displayProjects) {
                 availableData.newChildElement("projects");
             }
         } else {
-            if (hasProjects(department, getFiltersForOngoingProjects())) {
+            if (hasProjects(department, getFiltersForOngoingProjects())
+                && displayProjects) {
                 availableData.newChildElement("projectsOngoing");
             }
-            if (hasProjects(department, getFiltersForFinishedProjects())) {
+            if (hasProjects(department, getFiltersForFinishedProjects())
+                && displayProjects) {
                 availableData.newChildElement("projectsFinished");
             }
         }
         DataCollection publicationLinks =
                        RelatedLink.getRelatedLinks(department,
                                                    "SciDepartmentPublications");
-        if ((publicationLinks != null) && (publicationLinks.size() > 0)) {
+        if ((publicationLinks != null)
+            && (publicationLinks.size() > 0)
+            && displayPublications) {
             availableData.newChildElement("publications");
         }
 
