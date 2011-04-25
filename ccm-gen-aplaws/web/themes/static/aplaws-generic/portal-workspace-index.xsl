@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/london/navigation"
-  xmlns:search="http://rhea.redhat.com/search/1.0"
-  xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+              xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+             xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
+                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:nav="http://ccm.redhat.com/london/navigation"
+             xmlns:search="http://rhea.redhat.com/search/1.0"
+             xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search portal"
-	version="1.0">
+                  version="1.0">
 
-<xsl:import href="../../../../ROOT/__ccm__/apps/workspace/xsl/index.xsl"/>
+<!--  <xsl:import href="../../../../ROOT/__ccm__/apps/workspace/xsl/index.xsl"/>  -->
+<xsl:import href="../../heirloom/apps/portal-workspace/xsl/index.xsl"/>
+
 <xsl:import href="portal/lib.xsl"/>
 <xsl:import href="portal/portlets.xsl"/>
 <xsl:import href="lib/header.xsl"/>
 <xsl:import href="lib/lib.xsl"/>
-<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
+<!-- <xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>  -->
+<xsl:import href="../../heirloom/packages/bebop/xsl/dcp.xsl"/>
 
 <xsl:param name="context-prefix"></xsl:param>
 <xsl:param name="dispatcher-prefix" />
@@ -41,7 +44,9 @@
 	
 	<body>
         <xsl:call-template name="bebop:dcpJavascript"/>
-		<a class="navHide" href="#startcontent" title="Go directly to main content" accesskey="S">Skip over navigation</a>		
+		<a class="navHide" href="#startcontent" 
+                   title="Go directly to main content"
+                   accesskey="S">Skip over navigation</a>
 		<span class="hide">|</span>
 		<xsl:call-template name="header"/>
 		<xsl:call-template name="wsBreadcrumb"/>
@@ -51,7 +56,7 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates select="portal:workspace"/>
-						<xsl:call-template name="footer"/>
+			<xsl:call-template name="footer"/>
           </xsl:otherwise>
        </xsl:choose>
 	</body>
@@ -76,7 +81,8 @@
 
 <xsl:template name="wsBody">
     
-<table id="mainLayout" width="100%" border="0" cellspacing="0" cellpadding="5" summary="This table is used for a three-column page layout">
+<table id="mainLayout" width="100%" border="0" cellspacing="0" cellpadding="5"
+       summary="This table is used for a three-column page layout">
 <tr>
     <td width="20%" align="left" valign="top" >
 <!--VOID LHS Column -->
@@ -166,8 +172,19 @@
 
 
 </xsl:stylesheet>
-<!-- Stylus Studio meta-information - (c)1998-2003. Sonic Software Corporation. All rights reserved.
+<!-- Stylus Studio meta-information - (c)1998-2003. Sonic Software Corporation.
+     All rights reserved.
 <metaInformation>
-<scenarios ><scenario default="yes" name="Scenario2" userelativepaths="yes" externalpreview="no" url="..\XML\newHomepagePortal.xml" htmlbaseurl="http://194.202.210.43:9005/theme/ibm&#x2D;generic/" outputurl="" processortype="internal" profilemode="0" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext=""/></scenarios><MapperInfo srcSchemaPath="" srcSchemaRoot="" srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+<scenarios ><scenario default="yes" name="Scenario2" userelativepaths="yes" 
+             externalpreview="no" url="..\XML\newHomepagePortal.xml"
+             htmlbaseurl="http://194.202.210.43:9005/theme/ibm&#x2D;generic/"
+             outputurl="" processortype="internal" profilemode="0"
+             urlprofilexml="" commandline="" additionalpath=""
+             additionalclasspath="" postprocessortype="none"
+             postprocesscommandline="" postprocessadditionalpath=""
+             postprocessgeneratedext=""/></scenarios><MapperInfo srcSchemaPath=""
+             srcSchemaRoot="" srcSchemaPathIsRelative="yes"
+             srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot=""
+             destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
 </metaInformation>
 -->
