@@ -27,6 +27,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
@@ -65,7 +66,10 @@ public final class Connections {
                 break;
             }
 
-            final Connection conn = DriverManager.getConnection(url);
+            Properties props = new Properties();
+            props.setProperty("stringtype", "unspecified");
+
+            final Connection conn = DriverManager.getConnection(url, props);
 
             Assert.exists(conn, Connection.class);
 
