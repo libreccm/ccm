@@ -59,21 +59,24 @@ import org.apache.log4j.Logger;
  * a fresh installation of the whole system.
  * 
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  * @version $Id: Loader.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Loader extends PackageLoader {
 
-	private static final Logger s_log = Logger.getLogger(Loader.class);
+    private static final Logger s_log = Logger.getLogger(Loader.class);
 
-	private StringParameter m_url = new StringParameter(
-			"com.arsdigita.portalworkspace.default_url", Parameter.REQUIRED,
-			"/portal/");
+    private StringParameter m_url = new StringParameter(
+                                "com.arsdigita.portalworkspace.default_url",
+                                Parameter.REQUIRED,
+                                "/portal/");
 
-	private StringParameter m_title = new StringParameter(
-			"com.arsdigita.portalworkspace.default_title", Parameter.REQUIRED,
-			"Portal Homepage");
+    private StringParameter m_title = new StringParameter(
+                                "com.arsdigita.portalworkspace.default_title",
+                                Parameter.REQUIRED,
+			        "Portal Homepage");
 
-	/** Actually a kind of misnomer. In the creation process it is used to
+    /** Actually a kind of misnomer. In the creation process it is used to
      *  indicate whether a Containergroup should be created.
      */
     private BooleanParameter m_isPublic = new BooleanParameter(
@@ -81,7 +84,7 @@ public class Loader extends PackageLoader {
 			Parameter.REQUIRED, Boolean.TRUE);
 
     /**
-     * Standard constructor. 
+     * Standard constructor loads/registers the configuration parameter.
      */
     public Loader() {
 		register(m_isPublic);
@@ -151,9 +154,9 @@ public class Loader extends PackageLoader {
             }
             s_log.debug("node name is " + name);
 
-            // set up the portal node
-        //  Workspace workspace = Workspace.createWorkspace(name, title,
-		//	parent, Boolean.TRUE.equals(isPublic));
+            // set up the portal default node (instance)
+            //  Workspace workspace = Workspace.createWorkspace(name, title,
+            //      parent, Boolean.TRUE.equals(isPublic));
             Workspace workspace = Workspace.createWorkspace(type, name, title,
 					null, parent, Boolean.TRUE.equals(isPublic));
 			
@@ -216,7 +219,7 @@ public class Loader extends PackageLoader {
     }
 
 
-	/**
+    /**
      *
      */
     private void loadApplicationDirectoryPortlet() {

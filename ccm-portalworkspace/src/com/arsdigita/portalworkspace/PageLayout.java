@@ -31,83 +31,90 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
 
+/**
+ * 
+ * 
+ */
 public class PageLayout extends DomainObject {
 
-	public static final String ID = "id";
-
-	public static final String TITLE = "title";
-
-	public static final String DESCRIPTION = "description";
-
-	public static final String FORMAT = "format";
-
-	public static final String FORMAT_ONE_COLUMN = "100%";
-
-	public static final String FORMAT_TWO_COLUMNS = "50%,50%";
-
-	public static final String FORMAT_THREE_COLUMNS = "30%,40%,30%";
-
-	public static final String FORMAT_FOUR_COLUMNS = "25%,25%,25%,25%";
-
-	public static final String BASE_DATA_OBJECT_TYPE = 
+    public static final String ID = "id";
+    public static final String TITLE = "title";
+    public static final String DESCRIPTION = "description";
+    public static final String FORMAT = "format";
+    public static final String FORMAT_ONE_COLUMN = "100%";
+    public static final String FORMAT_TWO_COLUMNS = "50%,50%";
+    public static final String FORMAT_THREE_COLUMNS = "30%,40%,30%";
+    public static final String FORMAT_FOUR_COLUMNS = "25%,25%,25%,25%";
+    public static final String BASE_DATA_OBJECT_TYPE = 
                                "com.arsdigita.portalworkspace.PageLayout";
 
-	public PageLayout() {
-		this(BASE_DATA_OBJECT_TYPE);
-	}
+    public PageLayout() {
+        this(BASE_DATA_OBJECT_TYPE);
+    }
 
-	public PageLayout(String type) {
-		super(type);
-	}
+    public PageLayout(String type) {
+        super(type);
+    }
 
-	public PageLayout(DataObject dobj) {
-		super(dobj);
-	}
+    public PageLayout(DataObject dobj) {
+        super(dobj);
+    }
 
-	public PageLayout(OID oid) {
-		super(oid);
-	}
+    public PageLayout(OID oid) {
+        super(oid);
+    }
 
-	public void initialize() {
-		super.initialize();
+    /**
+     * 
+     */
+    public void initialize() {
 
-		if (isNew()) {
-			try {
-				set(ID, Sequences.getNextValue());
-			} catch (SQLException ex) {
-				throw new UncheckedWrapperException("cannot set id", ex);
-			}
-		}
-	}
+        super.initialize();
 
-	public static PageLayout getDefaultLayout() {
-		return findLayoutByFormat(Workspace.getConfig().getDefaultLayout());
-	}
+        if (isNew()) {
+            try {
+                set(ID, Sequences.getNextValue());
+            } catch (SQLException ex) {
+                throw new UncheckedWrapperException("cannot set id", ex);
+            }
+        }
+    }
 
-	public static PageLayout findLayoutByFormat(String format) {
-		DomainCollection layouts = retrieveAll();
-		layouts.addEqualsFilter(FORMAT, format);
+    public static PageLayout getDefaultLayout() {
+        return findLayoutByFormat(Workspace.getConfig().getDefaultLayout());
+    }
 
-		if (layouts.next()) {
-			PageLayout layout = (PageLayout) layouts.getDomainObject();
-			layouts.close();
-			return layout;
-		}
-		throw new RuntimeException("Cannot find page layout for " + format);
-	}
+    public static PageLayout findLayoutByFormat(String format) {
+        DomainCollection layouts = retrieveAll();
+        layouts.addEqualsFilter(FORMAT, format);
 
-	public static PageLayout create(String title, String description,
-			String format) {
-		PageLayout page = new PageLayout();
-		page.setup(title, description, format);
-		return page;
-	}
+        if (layouts.next()) {
+            PageLayout layout = (PageLayout) layouts.getDomainObject();
+            layouts.close();
+            return layout;
+        }
+        throw new RuntimeException("Cannot find page layout for " + format);
+    }
 
-	protected void setup(String title, String description, String format) {
-		setTitle(title);
-		setDescription(description);
-		setFormat(format);
-	}
+    /**
+     * 
+     * @param title
+     * @param description
+     * @param format
+     * @return 
+     */
+    public static PageLayout create(String title, String description,
+                                    String format) {
+        PageLayout page = new PageLayout();
+        page.setup(title, description, format);
+        return page;
+    }
+
+    protected void setup(String title, String description, String format) {
+        setTitle(title);
+        setDescription(description);
+        setFormat(format);
+    }
 
 	public static DomainCollection retrieveAll() {
 		DataCollection layouts = SessionManager.getSession().retrieve(
