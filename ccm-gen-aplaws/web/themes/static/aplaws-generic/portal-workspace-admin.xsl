@@ -4,7 +4,7 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
        version="1.0">
 
-<!--  <xsl:import href="../../../../ROOT/__ccm__/apps/workspace/xsl/admin.xsl"/>  -->
+<!--  <xsl:import href="../../../__ccm__/apps/workspace/xsl/admin.xsl"/>  -->
   <xsl:import href="../../heirloom/apps/portal-workspace/xsl/admin.xsl"/>
   <xsl:import href="lib/page.xsl"/>
 
@@ -12,7 +12,8 @@
   <xsl:param name="context-prefix" />
 
   <xsl:template name="aplaws:headerStyleSheets">
-    <link rel="stylesheet" href="{$context-prefix}/css/acs-master.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{$context-prefix}/css/acs-master.css"
+          type="text/css" media="screen"/>
   </xsl:template>
 
 </xsl:stylesheet>

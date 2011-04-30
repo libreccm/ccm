@@ -11,14 +11,14 @@
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search portal"
                   version="1.0">
 
-<!--  <xsl:import href="../../../../ROOT/__ccm__/apps/workspace/xsl/index.xsl"/>  -->
+<!--  <xsl:import href="../../../__ccm__/apps/workspace/xsl/index.xsl"/>  -->
 <xsl:import href="../../heirloom/apps/portal-workspace/xsl/index.xsl"/>
 
 <xsl:import href="portal/lib.xsl"/>
 <xsl:import href="portal/portlets.xsl"/>
 <xsl:import href="lib/header.xsl"/>
 <xsl:import href="lib/lib.xsl"/>
-<!-- <xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>  -->
+<!-- <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>  -->
 <xsl:import href="../../heirloom/packages/bebop/xsl/dcp.xsl"/>
 
 <xsl:param name="context-prefix"></xsl:param>
