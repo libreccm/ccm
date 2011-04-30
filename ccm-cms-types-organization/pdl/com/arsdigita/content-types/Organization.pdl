@@ -25,7 +25,7 @@ object type Organization extends ContentPage {
     String [0..1] link  = ct_organization.link VARCHAR(1000);
     String [0..1] contact = ct_organization.contact VARCHAR(2000);
 
-    BigDecimal[0..1] imageID = ct_organization.image_id;
+//    BigDecimal[0..1] imageID = ct_organization.image_id;
     composite ImageAsset[0..1] image = join ct_organization.image_id to cms_images.image_id;
 
     reference key (ct_organization.organization_item_id);
