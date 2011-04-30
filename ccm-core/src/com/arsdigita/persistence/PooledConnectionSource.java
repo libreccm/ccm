@@ -41,27 +41,23 @@ import org.apache.log4j.Logger;
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: PooledConnectionSource.java 885 2005-09-20 15:54:06Z sskracic $
  **/
-
 public class PooledConnectionSource implements ConnectionSource {
 
     private static final Logger s_log =
-        Logger.getLogger(PooledConnectionSource.class);
-
+            Logger.getLogger(PooledConnectionSource.class);
     private static CacheTable s_connectionTags =
-        new CacheTable("jdbcConnectionTags",
-                       RuntimeConfig.getConfig().getJDBCPoolSize() + 10,
-                       CacheTable.MAX_CACHE_AGE,
-                       false);
-
+            new CacheTable("jdbcConnectionTags",
+            RuntimeConfig.getConfig().getJDBCPoolSize() + 10,
+            CacheTable.MAX_CACHE_AGE,
+            false);
     private String m_url;
     private int m_size;
     private long m_interval;
     private Set m_connections = new HashSet();
     private List m_available = new ArrayList();
     private List m_untested = new ArrayList();
-
     private static boolean s_taggingEnabled =
-        RuntimeConfig.getConfig().isThreadTaggingEnabled();
+            RuntimeConfig.getConfig().isThreadTaggingEnabled();
 
     public PooledConnectionSource(String url, int size, long interval) {
         m_url = url;
@@ -94,7 +90,7 @@ public class PooledConnectionSource implements ConnectionSource {
         } else {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Reacquisition failed: " + pref
-                            + ", tag: " + s_connectionTags.get(pref.toString()));
+                        + ", tag: " + s_connectionTags.get(pref.toString()));
             }
             return acquire();
         }
@@ -113,8 +109,9 @@ public class PooledConnectionSource implements ConnectionSource {
                 renameThread(result);
                 return result;
             } else {
-                try { wait(); }
-                catch (InterruptedException e) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
                     throw new UncheckedWrapperException(e);
                 }
             }
@@ -150,12 +147,12 @@ public class PooledConnectionSource implements ConnectionSource {
             String sql = "";
             String tag = "";
             switch (database) {
-            case DbHelper.DB_POSTGRES:
-                sql = "select pg_backend_pid() as tag";
-                break;
-            case DbHelper.DB_ORACLE:
-                sql = "select userenv('SESSIONID') as tag from dual";
-                break;
+                case DbHelper.DB_POSTGRES:
+                    sql = "select pg_backend_pid() as tag";
+                    break;
+                case DbHelper.DB_ORACLE:
+                    sql = "select userenv('SESSIONID') as tag from dual";
+                    break;
             }
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
@@ -171,11 +168,9 @@ public class PooledConnectionSource implements ConnectionSource {
         }
     }
 
-
     public synchronized void release(Connection conn) {
         if (!m_connections.contains(conn)) {
-            throw new IllegalArgumentException
-                ("connection did come from ths source: " + conn);
+            throw new IllegalArgumentException("connection did come from ths source: " + conn);
         }
 
         boolean remove;
@@ -211,10 +206,13 @@ public class PooledConnectionSource implements ConnectionSource {
     }
 
     private class Poller extends Thread {
+
         public void run() {
             while (true) {
-                try { Thread.sleep(m_interval); }
-                catch (InterruptedException e) {
+                s_log.error("PollerThread run(): " + m_interval);
+                try {
+                    Thread.sleep(m_interval);
+                } catch (InterruptedException e) {
                     throw new UncheckedWrapperException(e);
                 }
                 testAvailable();
@@ -222,15 +220,19 @@ public class PooledConnectionSource implements ConnectionSource {
         }
     }
 
+    // This Thread is running only if ther Poller Thread sends a notify() to
+    // the synchronized m_untested variable.
     private class Tester extends Thread {
+
         public void run() {
             List untested = new ArrayList();
             while (true) {
                 untested.clear();
                 synchronized (m_untested) {
                     if (m_untested.isEmpty()) {
-                        try { m_untested.wait(); }
-                        catch (InterruptedException e) {
+                        try {
+                            m_untested.wait();
+                        } catch (InterruptedException e) {
                             throw new UncheckedWrapperException(e);
                         }
                     }
@@ -238,18 +240,17 @@ public class PooledConnectionSource implements ConnectionSource {
                     m_untested.clear();
                 }
 
-                for (Iterator it = untested.iterator(); it.hasNext(); ) {
+                for (Iterator it = untested.iterator(); it.hasNext();) {
                     Connection conn = (Connection) it.next();
                     SQLException e = test(conn);
                     if (e != null) {
                         s_log.warn("connection " + conn
-                                   + ", tag: " + s_connectionTags.get(conn.toString())
-                                   + " failed test", e);
+                                + ", tag: " + s_connectionTags.get(conn.toString())
+                                + " failed test", e);
                         try {
                             conn.close();
                         } catch (SQLException ex) {
-                            s_log.warn
-                                ("error while closing bad connection", ex);
+                            s_log.warn("error while closing bad connection", ex);
                         }
                     }
                     release(conn);
@@ -257,8 +258,7 @@ public class PooledConnectionSource implements ConnectionSource {
             }
         }
     }
-
-    private static final String[] TYPES = new String[] { "TABLE" };
+    private static final String[] TYPES = new String[]{"TABLE"};
 
     private static SQLException test(Connection conn) {
         try {
@@ -272,5 +272,4 @@ public class PooledConnectionSource implements ConnectionSource {
             return e;
         }
     }
-
 }
