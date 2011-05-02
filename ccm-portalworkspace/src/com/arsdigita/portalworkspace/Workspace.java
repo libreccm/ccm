@@ -59,9 +59,12 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Workspace domain class.
- * A workspace represents an area containing 0...n portals each arranged
- * as a pane of page. Each portal (or pane) manages a number of portlets.
+ * Class <b>Workspace</b> is the main domain class (extending Application) for
+ * the portalworkspace module.
+ *
+ * A (portal)workspace represents an area containing 0...n portals each arranged
+ * as a pane of page. Each portal (or pane) manages a number of portlets. So a
+ * workspace is a container for a set of portal panes.
  * 
  */
 public class Workspace extends Application {
@@ -69,11 +72,13 @@ public class Workspace extends Application {
     /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(Workspace.class);
 
+    /** Config object containing various parameter    */
     private static final WorkspaceConfig s_config = WorkspaceConfig.getConfig();
 
     public static WorkspaceConfig getConfig() {
         return s_config;
     }
+    /** PDL stuff                                    */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.portalworkspace.Workspace";
     public static final String PARTY = "party";
@@ -88,7 +93,7 @@ public class Workspace extends Application {
     private static Workspace defaultHomepageWorkspace = null;
 
     /**
-     * Constructor
+     * Constructor retrieves the domain object using its DataObject representation
      * @param obj
      */
     public Workspace(DataObject obj) {
@@ -246,12 +251,12 @@ public class Workspace extends Application {
 
     /**
      * Retrieve the workspace that is created during loading of the
-     * ccm-ldn-portal application and is set as the defaultworkspace for the
-     * site.
+     * ccm-portalworkspace application and is set as the defaultworkspace
+     * for the site.
      *
      * Returns null if there are no workspaces (though presumably if that is the
-     * case, ccm-ldn-portal hasn't been loaded and so I don't know how you are
-     * invoking this method!)
+     * case, ccm-portalworkspace hasn't been loaded and so I don't know how you
+     * are invoking this method!)
      *
      * @return default workspace instance (created during load)
      */
@@ -280,6 +285,9 @@ public class Workspace extends Application {
 
     }
 
+    /** 
+     * 
+     */
     @Override
     public void beforeSave() {
         // If no permissions are configured, then setup empty groups
@@ -346,6 +354,11 @@ public class Workspace extends Application {
         }
     }
 
+    /** 
+     * 
+     * @param title
+     * @param isPublic
+     */
     private void setupGroups(String title, boolean isPublic) {
         Group members = new Group();
         members.setName(title);
@@ -380,10 +393,19 @@ public class Workspace extends Application {
         setParty(members);
     }
 
+    /**
+     * 
+     * @return
+     */
     public static WorkspaceCollection retrieveAll() {
         return retrieveAll(null);
     }
 
+    /**
+     * 
+     * @param parent
+     * @return
+     */
     public static WorkspaceCollection retrieveAll(Application parent) {
         DataCollection wks = SessionManager.getSession().retrieve(
                 BASE_DATA_OBJECT_TYPE);
@@ -394,11 +416,14 @@ public class Workspace extends Application {
         return new WorkspaceCollection(wks);
     }
 
+    /**
+     * 
+     */
     public Workspace retrieveSubworkspaceForParty(Party owner)
             throws DataObjectNotFoundException {
 
-        DataCollection wks = SessionManager.getSession().retrieve(
-                BASE_DATA_OBJECT_TYPE);
+        DataCollection wks = SessionManager.getSession()
+                                           .retrieve(BASE_DATA_OBJECT_TYPE);
 
         wks.addEqualsFilter("parentResource.id", getID());
         wks.addEqualsFilter(PARTY_ID, owner.getID());
@@ -741,6 +766,11 @@ public class Workspace extends Application {
         return (User) get("owner");
     }
 
+    /**
+     * 
+     * @param owner
+     * @return
+     */
     public static Workspace createPersonalWorkspace(final User owner) {
 
         s_log.debug("creating the personal portal for "
@@ -786,6 +816,11 @@ public class Workspace extends Application {
         return workspace;
     }
 
+    /**
+     * 
+     * @param owner
+     * @return
+     */
     public static Workspace retrievePersonalWorkspace(User owner) {
         DataCollection personalWorkspaces = SessionManager.getSession().retrieve(
                 BASE_DATA_OBJECT_TYPE);

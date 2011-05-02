@@ -1,16 +1,19 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package com.arsdigita.portalworkspace.ui;
@@ -38,66 +41,66 @@ import com.arsdigita.xml.XML;
  */
 public abstract class PortalList extends SimpleContainer {
 
-	private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionModel m_workspace;
+    private PortalSelectionModel m_portal;
 
-	private PortalSelectionModel m_portal;
+    private Map m_actions = new HashMap();
 
-	private Map m_actions = new HashMap();
 
-	/**
+    /**
      * Constructor.
      * 
      * @param portal
      */
     public PortalList(PortalSelectionModel portal) {
-		this(null, portal);
-	}
+        this(null, portal);
+    }
 
-	/**
+    /**
      * Constructor
      * @param workspace
      * @param portal
      */
     public PortalList(WorkspaceSelectionModel workspace,
                       PortalSelectionModel portal) {
-		super("portal:portalList", PortalConstants.PORTAL_XML_NS);
+        super("portal:portalList", PortalConstants.PORTAL_XML_NS);
 
-		m_workspace = workspace;
-		m_portal = portal;
-	}
+        m_workspace = workspace;
+        m_portal = portal;
+    }
 
-	public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
-		m_workspace = workspace;
-	}
+    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+        m_workspace = workspace;
+    }
 
-	protected void addPortalAction(String name, ActionListener listener) {
-		m_actions.put(name, listener);
-	}
+    protected void addPortalAction(String name, ActionListener listener) {
+        m_actions.put(name, listener);
+    }
 
-	public void respond(PageState state) {
-		String name = state.getControlEventName();
+    public void respond(PageState state) {
+        String name = state.getControlEventName();
 
-		ActionListener listener = (ActionListener) m_actions.get(name);
-		if (listener != null) {
-			listener.actionPerformed(new ActionEvent(this, state));
-		}
-	}
+        ActionListener listener = (ActionListener) m_actions.get(name);
+        if (listener != null) {
+            listener.actionPerformed(new ActionEvent(this, state));
+        }
+    }
 
-	public void setSelectedPortal(PageState state, WorkspacePage portal) {
-		m_portal.setSelectedObject(state, portal);
-	}
+    public void setSelectedPortal(PageState state, WorkspacePage portal) {
+        m_portal.setSelectedObject(state, portal);
+    }
 
-	public WorkspacePage getSelectedPortal(PageState state) {
-		return (WorkspacePage) m_portal.getSelectedPortal(state);
-	}
+    public WorkspacePage getSelectedPortal(PageState state) {
+        return (WorkspacePage) m_portal.getSelectedPortal(state);
+    }
 
-	public void clearSelectedPortal(PageState state) {
-		m_portal.clearSelection(state);
-	}
+    public void clearSelectedPortal(PageState state) {
+        m_portal.clearSelection(state);
+    }
 
-	public Workspace getSelectedWorkspace(PageState state) {
-		return m_workspace.getSelectedWorkspace(state);
-	}
+    public Workspace getSelectedWorkspace(PageState state) {
+        return m_workspace.getSelectedWorkspace(state);
+    }
 
     /**
      *
@@ -105,64 +108,71 @@ public abstract class PortalList extends SimpleContainer {
      * @param parent
      */
     @Override
-	public void generateXML(PageState state, Element parent) {
-		if (!isVisible(state)) {
-			return;
-		}
+    public void generateXML(PageState state, Element parent) {
+        
+        if (!isVisible(state)) {
+            return;
+        }
 
-		Element content = generateParent(parent);
+        Element content = generateParent(parent);
+        generateChildrenXML(state, content);
+        generatePortalListXML(state, content);
 
-		generateChildrenXML(state, content);
+    }
 
-		generatePortalListXML(state, content);
-	}
-
-	/**
+    /**
      * 
      * @param state
      * @param parent
      */
     protected void generatePortalListXML(PageState state, Element parent) {
-		WorkspacePage current = m_portal.getSelectedPortal(state);
 
-		Workspace workspace = getSelectedWorkspace(state);
-		WorkspacePageCollection pages = workspace.getPages();
-		pages.addOrder(WorkspacePage.SORT_KEY);
-		while (pages.next()) {
-			Element pageEl = new Element("portal:portalDetails",
-					PortalConstants.PORTAL_XML_NS);
+        WorkspacePage current = m_portal.getSelectedPortal(state);
 
-			WorkspacePage page = pages.getPage();
+        Workspace workspace = getSelectedWorkspace(state);
+        WorkspacePageCollection pages = workspace.getPages();
+        pages.addOrder(WorkspacePage.SORT_KEY);
+        while (pages.next()) {
+            Element pageEl = new Element("portal:portalDetails",
+                                         PortalConstants.PORTAL_XML_NS);
+            WorkspacePage page = pages.getPage();
+            generatePageXML(state, pageEl, page);
 
-			generatePageXML(state, pageEl, page);
+            pageEl.addAttribute("isSelected",
+                                XML.format(page.equals(current) ? Boolean.TRUE
+                                                                : Boolean.FALSE));
 
-			pageEl.addAttribute("isSelected",
-					XML.format(page.equals(current) ? Boolean.TRUE
-							: Boolean.FALSE));
+            parent.addContent(pageEl);
+        }
 
-			parent.addContent(pageEl);
-		}
-	}
+    }
 
-	protected void generatePageXML(PageState state, Element parent,
-			WorkspacePage page) {
-		DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(parent);
-		xr.setWrapRoot(false);
-		xr.setWrapAttributes(true);
-		xr.setWrapObjects(false);
+    /**
+     * 
+     * @param state
+     * @param parent
+     * @param page
+     */
+    protected void generatePageXML(PageState state, Element parent,
+                                   WorkspacePage page) {
+        DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(parent);
+        xr.setWrapRoot(false);
+        xr.setWrapAttributes(true);
+        xr.setWrapObjects(false);
 
-		xr.walk(page, PortalList.class.getName());
+        xr.walk(page, PortalList.class.getName());
 
-		Iterator actions = m_actions.keySet().iterator();
-		while (actions.hasNext()) {
-			String name = (String) actions.next();
-			state.setControlEvent(this, name, page.getID().toString());
-			try {
-				parent.addAttribute(name + "Action", state.stateAsURL());
-			} catch (IOException ex) {
-				throw new UncheckedWrapperException("cannot get state url", ex);
-			}
-			state.clearControlEvent();
-		}
-	}
+        Iterator actions = m_actions.keySet().iterator();
+        while (actions.hasNext()) {
+            String name = (String) actions.next();
+            state.setControlEvent(this, name, page.getID().toString());
+            try {
+                parent.addAttribute(name + "Action", state.stateAsURL());
+            } catch (IOException ex) {
+                throw new UncheckedWrapperException("cannot get state url", ex);
+            }
+            state.clearControlEvent();
+        }
+    }
+
 }

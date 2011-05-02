@@ -1,16 +1,19 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package com.arsdigita.portalworkspace.ui;
@@ -26,7 +29,6 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.event.ChangeEvent;
@@ -36,7 +38,6 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.jsp.DefinePage;
 import com.arsdigita.bebop.parameters.IntegerParameter;
-import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.portal.PortletRenderer;
 import com.arsdigita.bebop.portal.PortalModel;
@@ -44,19 +45,15 @@ import com.arsdigita.bebop.portal.PortalModelBuilder;
 
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.portal.Portlet;
-import com.arsdigita.portal.PortletCollection;
 import com.arsdigita.portal.PortletTypeCollection;
 
 import com.arsdigita.kernel.Resource;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.ui.ResourceConfigComponent;
 
 import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
@@ -68,7 +65,6 @@ import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 
 import java.math.BigDecimal;
 
-import com.arsdigita.formbuilder.util.FormBuilderUtil;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -79,7 +75,7 @@ import org.apache.log4j.Logger;
 // XXX this class is disgusting
 /**
  * PersistentPortals are able to have more than one column, and the constructor
- * for PersitentPortal takes in an integer argument for number of columns.
+ * for PersistentPortal takes in an integer argument for number of columns.
  * 
  * HomepagePortals defined on the jsp page each construct instances of this
  * class, one for the portal in view mode, one in edit mode. 
@@ -87,131 +83,145 @@ import org.apache.log4j.Logger;
  */
 public class PersistentPortal extends SimpleContainer {
 
-	public static final String ACTION_CUSTOMIZE = "customize";
-	public static final String ACTION_MOVE_UP = "moveUp";
-	public static final String ACTION_MOVE_DOWN = "moveDown";
-	public static final String ACTION_MOVE_LEFT = "moveLeft";
-	public static final String ACTION_MOVE_RIGHT = "moveRight";
-
-
-	public static final String ACTION_DELETE = "delete";
-
     private static final Logger s_log = Logger.getLogger(PersistentPortal.class);
 
-	private WorkspaceSelectionModel m_workspace;
-	private PortalSelectionModel m_portal;
-	private PortletTypeSelectionModel m_portletType;
-	private PortletSelectionModel m_portlet;
+    public static final String ACTION_CUSTOMIZE = "customize";
+    public static final String ACTION_MOVE_UP = "moveUp";
+    public static final String ACTION_MOVE_DOWN = "moveDown";
+    public static final String ACTION_MOVE_LEFT = "moveLeft";
+    public static final String ACTION_MOVE_RIGHT = "moveRight";
 
-	private String m_mode;
-	private int m_columns;
 
-	private PortletTypeForm m_adders[];
-	private HashMap m_create;
-	private HashMap m_modify;
-	private HashMap m_createApp;
+    public static final String ACTION_DELETE = "delete";
 
-	private RequestLocal m_parentResource;
-	private RequestLocal m_currentResource;
-	private RequestLocal m_currentApp;
-	private PortalModelBuilder m_portalModelBuilder;
-	private DomainObjectParameter m_parentApp;
+    private WorkspaceSelectionModel m_workspace;
+    private PortalSelectionModel m_portal;
+    private PortletTypeSelectionModel m_portletType;
+    private PortletSelectionModel m_portlet;
 
-	private SingleSelectionModel m_column;
+    private String m_mode;
+    private int m_columns;
 
-	// Ought to be enough until browser window size is a few thousand
-	// pixels wide...
-	public static final int MAX_COLUMNS = 10;
+    private PortletTypeForm m_adders[];
+    private HashMap m_create;
+    private HashMap m_modify;
+    private HashMap m_createApp;
 
+    private RequestLocal m_parentResource;
+    private RequestLocal m_currentResource;
+    private RequestLocal m_currentApp;
+    private PortalModelBuilder m_portalModelBuilder;
+    private DomainObjectParameter m_parentApp;
+
+    private SingleSelectionModel m_column;
+
+    // Ought to be enough until browser window size is a few thousand
+    // pixels wide...
+    public static final int MAX_COLUMNS = 10;
+
+
+    /**
+     * Constructor
+     * @param portal
+     * @param mode
+     */
     public PersistentPortal(PortalSelectionModel portal,
                             String mode) {
-		this(portal, "portal", mode);
-	}
+        this(portal, "portal", mode);
+    }
 
+    /**
+     * 
+     * @param portal
+     * @param name
+     * @param mode
+     */
     public PersistentPortal(PortalSelectionModel portal,
                             String name,
-			String mode) {
-		setTag("portal:portal");
-		setNamespace(PortalConstants.PORTAL_XML_NS);
+                            String mode) {
+        
+        setTag("portal:portal");
+        setNamespace(PortalConstants.PORTAL_XML_NS);
 
-		s_log.debug("IN constructor" + name + " " + mode);
-		m_adders = new PortletTypeForm[MAX_COLUMNS];
-		m_mode = mode;
-		m_portal = portal;
+        s_log.debug("IN constructor" + name + " " + mode);
+        m_adders = new PortletTypeForm[MAX_COLUMNS];
+        m_mode = mode;
+        m_portal = portal;
 
         m_column = new ParameterSingleSelectionModel(new IntegerParameter("column"));
-        
 
-		if (m_mode.equals(PortalConstants.MODE_EDITOR)) {
-			for (int i = 0; i < m_adders.length; i++) {
-				m_adders[i] = new PortletTypeForm("add" + name + i);
-				m_adders[i].setRedirecting(true);
-				add(m_adders[i]);
-				m_adders[i].addProcessListener(new PortletAddListener(m_portal,
-						i + 1));
-			}
+
+        if (m_mode.equals(PortalConstants.MODE_EDITOR)) {
+            for (int i = 0; i < m_adders.length; i++) {
+                m_adders[i] = new PortletTypeForm("add" + name + i);
+                m_adders[i].setRedirecting(true);
+                add(m_adders[i]);
+                m_adders[i].addProcessListener(new PortletAddListener(m_portal,
+                                                                      i + 1));
+            }
 
             m_portlet = new PortletSelectionModel(
-                new BigDecimalParameter("edit")
-            );
-			m_portletType = new PortletTypeSelectionModel(
-                new BigDecimalParameter("create")
-            );
+                                new BigDecimalParameter("edit") );
+            m_portletType = new PortletTypeSelectionModel(
+                                new BigDecimalParameter("create") );
 
-			m_portal.addChangeListener(new ChangeListener() {
-				public void stateChanged(ChangeEvent event) {
-					PageState state = event.getPageState();
-					if (m_portal.isSelected(state)) {
-                            WorkspacePage portal = 
-                                m_portal.getSelectedPortal(state);
-						s_log.debug("Setting portal" + portal);
-						m_parentResource.set(state, portal);
-					} else {
-						s_log.debug("Clearing portal");
-						m_parentResource.set(state, null);
-					}
-				}
-			});
-			m_portlet.addChangeListener(new ChangeListener() {
-				public void stateChanged(ChangeEvent event) {
-					PageState state = event.getPageState();
-					if (m_portal.isSelected(state)) {
-                            com.arsdigita.portal.Portlet portlet = 
+            m_portal.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent event) {
+                    PageState state = event.getPageState();
+                    if (m_portal.isSelected(state)) {
+                        WorkspacePage portal = m_portal.getSelectedPortal(state);
+                        s_log.debug("Setting portal" + portal);
+                        m_parentResource.set(state, portal);
+                    } else {
+                        s_log.debug("Clearing portal");
+                        m_parentResource.set(state, null);
+                    }
+                }
+            });
+            
+            m_portlet.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent event) {
+                    PageState state = event.getPageState();
+                    if (m_portal.isSelected(state)) {
+                        com.arsdigita.portal.Portlet portlet = 
                                 m_portlet.getSelectedPortlet(state);
-						s_log.debug("Setting portlet" + portlet);
-						m_currentResource.set(state, portlet);
-					} else {
-						s_log.debug("Clearing portlet");
-						m_currentResource.set(state, null);
-					}
-				}
-			});
+                        s_log.debug("Setting portlet" + portlet);
+                        m_currentResource.set(state, portlet);
+                    } else {
+                        s_log.debug("Clearing portlet");
+                        m_currentResource.set(state, null);
+                    }
+                }
+            });
 
-			m_parentApp = new DomainObjectParameter("parentApp");
-			m_parentResource = new RequestLocal() {
-				public Object initialValue(PageState state) {
-					return state.getValue(m_parentApp);
-				}
-			};
-			m_currentResource = new RequestLocal() {
-				public Object initialValue(PageState state) {
-					return m_portlet.getSelectedPortlet(state);
-				}
-			};
-			m_currentApp = new RequestLocal() {
-				public Object initialValue(PageState state) {
-					return Kernel.getContext().getResource();
-				}
-			};
+            m_parentApp = new DomainObjectParameter("parentApp");
 
-			PortletTypeCollection types = PortletType.retrieveAllPortletTypes();
-			m_create = new HashMap();
-			m_modify = new HashMap();
-			m_createApp = new HashMap();
-			s_log.debug("Do add types");
-			while (types.next()) {
-				PortletType type = types.getPortletType();
-				s_log.debug("Add type " + type.getResourceObjectType());
+            m_parentResource = new RequestLocal() {
+                public Object initialValue(PageState state) {
+                    return state.getValue(m_parentApp);
+                }
+            };
+
+            m_currentResource = new RequestLocal() {
+                public Object initialValue(PageState state) {
+                    return m_portlet.getSelectedPortlet(state);
+                }
+            };
+
+            m_currentApp = new RequestLocal() {
+                public Object initialValue(PageState state) {
+                    return Kernel.getContext().getResource();
+                }
+            };
+
+            PortletTypeCollection types = PortletType.retrieveAllPortletTypes();
+            m_create = new HashMap();
+            m_modify = new HashMap();
+            m_createApp = new HashMap();
+            s_log.debug("Do add types");
+            while (types.next()) {
+                PortletType type = types.getPortletType();
+                s_log.debug("Add type " + type.getResourceObjectType());
 
                 final ResourceConfigComponent create = 
                     type.getCreateComponent(m_parentResource);
@@ -219,104 +229,106 @@ public class PersistentPortal extends SimpleContainer {
                     type.getModifyComponent(m_currentResource);
 
 
-				ApplicationType appType = type.getProviderApplicationType();
-				SimpleContainer createApp = null;
-				if (appType != null) {
+                ApplicationType appType = type.getProviderApplicationType();
+                SimpleContainer createApp = null;
+                if (appType != null) {
                     final ResourceConfigComponent appCreate = 
                         appType.getCreateComponent(m_currentApp);
-					ApplicationSelector sel = new ApplicationSelector(appType,
-                                                                      m_parentApp,
-                                                                      appType.getConfig() == null ? null : appType.getConfig().getViewPrivilege());
-					appCreate.addCompletionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							PageState state = e.getPageState();
-							s_log.debug("Do create of portlet");
-							Resource resource = appCreate.createResource(state);
-							if (resource == null) {
-								s_log.debug("No resource, reset");
-								m_portletType.clearSelection(e.getPageState());
-							} else {
-								s_log.debug("Seting res to " + resource);
-								state.setValue(m_parentApp, resource);
-							}
-						}
-					});
-					sel.addCompletionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							PageState state = e.getPageState();
-							if (state.getValue(m_parentApp) == null) {
-								s_log.debug("Sel no resource, reset");
-								m_portletType.clearSelection(e.getPageState());
-							} else {
-                                    s_log.debug("Got res " + 
-                                                state.getValue(m_parentApp));
-							}
-						}
-					});
+                    ApplicationSelector sel = new ApplicationSelector(
+                                                      appType,
+                                                      m_parentApp,
+                                                      appType.getConfig() == null ? null : appType.getConfig().getViewPrivilege());
+                    appCreate.addCompletionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            PageState state = e.getPageState();
+                            s_log.debug("Do create of portlet");
+                            Resource resource = appCreate.createResource(state);
+                            if (resource == null) {
+                                s_log.debug("No resource, reset");
+                                m_portletType.clearSelection(e.getPageState());
+                            } else {
+                                s_log.debug("Seting res to " + resource);
+                                state.setValue(m_parentApp, resource);
+                            }
+                        }
+                    });
 
-					createApp = new SimpleContainer();
-					createApp.add(appCreate);
-					createApp.add(sel);
-				}
+                    sel.addCompletionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            PageState state = e.getPageState();
+                            if (state.getValue(m_parentApp) == null) {
+                                s_log.debug("Sel no resource, reset");
+                                m_portletType.clearSelection(e.getPageState());
+                            } else {
+                                s_log.debug("Got res " + 
+                                            state.getValue(m_parentApp));
+                            }
+                        }
+                    });
 
-				s_log.debug("Create component is " + create);
-				s_log.debug("Modify component is " + modify);
+                    createApp = new SimpleContainer();
+                    createApp.add(appCreate);
+                    createApp.add(sel);
+                }
 
-				create.addCompletionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						PageState state = e.getPageState();
-						s_log.debug("Do create of portlet");
-						Resource resource = create.createResource(state);
+                s_log.debug("Create component is " + create);
+                s_log.debug("Modify component is " + modify);
 
-						if (resource != null) {
-                                Integer column = (Integer)
-                                    m_column.getSelectedKey(state);
-							Assert.exists(column, Integer.class);
+                create.addCompletionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        PageState state = e.getPageState();
+                        s_log.debug("Do create of portlet");
+                        Resource resource = create.createResource(state);
 
-                                WorkspacePage portal = 
-                                    m_portal.getSelectedPortal(state);
-                                portal.addPortlet((Portlet)resource, 
+                        if (resource != null) {
+                            Integer column = (Integer)
+                                             m_column.getSelectedKey(state);
+                            Assert.exists(column, Integer.class);
+
+                            WorkspacePage portal = m_portal
+                                                   .getSelectedPortal(state);
+                            portal.addPortlet((Portlet)resource, 
                                                   column.intValue());
-							portal.save();
-						}
-							            
-                            
-                            // added cg - remove cached page if max existing
-						// stateful portlet count is exceeded so page is
-						// rebuilt with correct number of renderers
-						if (resource instanceof StatefulPortlet) {
-							s_log.debug("Stateful portlet added");
-							// check if the maximum number of stateful
-							// portlets has increased
-                                PortletType portletType =
+                            portal.save();
+                        }
+
+                        // added cg - remove cached page if max existing
+                        // stateful portlet count is exceeded so page is
+                        // rebuilt with correct number of renderers
+                        if (resource instanceof StatefulPortlet) {
+                            s_log.debug("Stateful portlet added");
+                            // check if the maximum number of stateful
+                            // portlets has increased
+                            PortletType portletType =
                                     ((Portlet) resource).getPortletType();
-                                DataQuery findMaxInstances =
+                            DataQuery findMaxInstances =
                                     SessionManager.getSession().retrieveQuery(
                                         "com.arsdigita.london.portal.MaxPortletInstances");
-                                findMaxInstances.setParameter(
-                                    "portletType",
-									portletType.getID());
-							int maxCount = 0;
-							while (findMaxInstances.next()) {
+                            findMaxInstances.setParameter("portletType",
+                                                          portletType.getID());
+                            int maxCount = 0;
+                            while (findMaxInstances.next()) {
                                     maxCount =
                                         ((Integer) findMaxInstances
                                             .get("maxCount"))
                                             .intValue();
-							}
-							String key = portletType.getResourceObjectType();
+                            }
 
-                                int previousMax = StatefulPersistentPortal.getCurrentPortletRendererInstances(key);
+                            String key = portletType.getResourceObjectType();
 
-                                s_log.debug(
-                                    portletType
-                                        + ": previous count = "
-                                        + previousMax
-                                        + " | new max = "
+                            int previousMax = StatefulPersistentPortal
+                                              .getCurrentPortletRendererInstances(key);
+
+                            s_log.debug(  portletType + ": previous count = "
+                                        + previousMax + " | new max = "
                                         + maxCount);
-							if (maxCount > previousMax) {
-									DefinePage.invalidatePage(DispatcherHelper.getCurrentResourcePath(state.getRequest())); }
-						}
-						m_portletType.clearSelection(e.getPageState());
+                            if (maxCount > previousMax) {
+                                DefinePage.invalidatePage(
+                                    DispatcherHelper
+                                    .getCurrentResourcePath(state.getRequest())); }
+                        }
+
+                        m_portletType.clearSelection(e.getPageState());
 						state.setValue(m_parentApp, null);
 						m_parentResource.set(state, null);
 					}

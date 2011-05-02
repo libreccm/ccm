@@ -1,16 +1,19 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package com.arsdigita.portalworkspace.ui;
@@ -46,44 +49,70 @@ import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 
+
+/**
+ * Another entry point into a standard portal workspace page where the
+ * page is constructed in "edit" mode to allow configuration and modification
+ * by an authorized participant.
+ *
+ * It is used via a jsp page which is invoked at the applications url.
+ *
+ * Example code stub:
+ * <pre>
+ * <define:component name="edit"
+ *              classname="com.arsdigita.portalworkspace.ui.WorkspaceEditor" />
+ * <jsp:scriptlet>
+ *    ((AbstractWorkspaceComponent)edit).setWorkspaceModel(
+ *                                           new DefaultWorkspaceSelectionModel());
+ * </jsp:scriptlet>
+ * </pre>
+ *
+ * Currently there is a jsp for the default url at
+ * (web)/templates/ccm-portalworkspace/edit.jsp which is mapped via web.xml
+ * to /ccm/portal/edit.jsp in the default, pre-configured configuration.
+ */
 public class WorkspaceEditor extends AbstractWorkspaceComponent {
 
-	private static final Logger s_log = Logger.getLogger(WorkspaceEditor.class);
+    private static final Logger s_log = Logger.getLogger(WorkspaceEditor.class);
 
-	private ActionLink m_add;
+    private ActionLink m_add;
 
-	private SelectThemeForm m_selectForm;
+    private SelectThemeForm m_selectForm;
 
-	private RadioGroup m_grp;
+    private RadioGroup m_grp;
 
-	private CreateThemeForm m_createForm;
+    private CreateThemeForm m_createForm;
 
-	private ActionLink m_createThemeLink;
+    private ActionLink m_createThemeLink;
 
-	private WorkspaceThemeCollection m_workspaceThemes;
+    private WorkspaceThemeCollection m_workspaceThemes;
 
-	private BasicPropertiesForm m_basisPropertiesForm;
+    private BasicPropertiesForm m_basisPropertiesForm;
 
-	private ActionLink m_editBasicPropertiesLink;
+    private ActionLink m_editBasicPropertiesLink;
 
-	public WorkspaceEditor() {
-		this(null);
-	}
 
-	public void register(Page page) {
-		super.register(page);
-		page.setVisibleDefault(m_selectForm, !m_workspaceThemes.isEmpty());
-		page.setVisibleDefault(m_createForm, false);
-		page.setVisibleDefault(m_basisPropertiesForm, false);
-	}
+    /**
+     * Default Constructor constructs a new, empty WorkspaceEditor object.
+     */
+    public WorkspaceEditor() {
+        this(null);
+    }
 
-	public WorkspaceEditor(WorkspaceSelectionModel workspace) {
-		super(workspace);
-		s_log.debug("WorkspaceEditor constructed");
+    /**
+     * Constructs a WorkspaceViewer for a specific workspace object
+     * and sets the xml tags accordingly.
+     * 
+     * @param workspace
+     */
+    public WorkspaceEditor(WorkspaceSelectionModel workspace) {
 
-		m_add = new ActionLink("add pane");
-		m_add.setClassAttr("actionLink");
-		m_add.addActionListener(new ActionListener() {
+        super(workspace);
+        s_log.debug("WorkspaceEditor constructed");
+
+        m_add = new ActionLink("add pane");
+        m_add.setClassAttr("actionLink");
+        m_add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PageState state = e.getPageState();
 
@@ -99,48 +128,67 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
 			}
 		});
 
-		add(m_add);
+        add(m_add);
 
-		m_createThemeLink = new ActionLink((String) GlobalizationUtil
+        m_createThemeLink = new ActionLink((String) GlobalizationUtil
 				.globalize("portal.ui.admin.create_theme").localize());
-		m_createThemeLink.setClassAttr("actionLink");
-		m_createThemeLink.addActionListener(new CreateThemeLinkListener());
-		m_grp = new RadioGroup("themes");
-		m_grp.setClassAttr("vertical");
-		populateOptionGroup();
-		m_selectForm = new SelectThemeForm();
-		m_createForm = new CreateThemeForm();
+        m_createThemeLink.setClassAttr("actionLink");
+        m_createThemeLink.addActionListener(new CreateThemeLinkListener());
+        m_grp = new RadioGroup("themes");
+        m_grp.setClassAttr("vertical");
+        populateOptionGroup();
+        m_selectForm = new SelectThemeForm();
+        m_createForm = new CreateThemeForm();
 
-		add(m_selectForm);
-		add(m_createForm);
-		add(m_createThemeLink); // nb. this line is commented in the undp src
+        add(m_selectForm);
+        add(m_createForm);
+        add(m_createThemeLink); // nb. this line is commented in the undp src
 
-		// now add the basic properties controls
-		m_editBasicPropertiesLink = new ActionLink((String) GlobalizationUtil
+        // now add the basic properties controls
+        m_editBasicPropertiesLink = new ActionLink((String) GlobalizationUtil
 				.globalize("portal.ui.admin.edit_basic_properties").localize());
-		m_editBasicPropertiesLink
+        m_editBasicPropertiesLink
 				.addActionListener(new BasicPropertiesLinkListener());
-		m_editBasicPropertiesLink.setClassAttr("actionLink");
-		add(m_editBasicPropertiesLink);
-		m_basisPropertiesForm = new BasicPropertiesForm();
-		add(m_basisPropertiesForm);
-	}
+        m_editBasicPropertiesLink.setClassAttr("actionLink");
+        add(m_editBasicPropertiesLink);
+        m_basisPropertiesForm = new BasicPropertiesForm();
+        add(m_basisPropertiesForm);
+    }
 
-	protected PortalList createPortalList(PortalSelectionModel portal) {
-		return new PortalListEditor(portal);
-	}
+    /**
+     * 
+     * @param portal
+     * @return
+     */
+    protected PortalList createPortalList(PortalSelectionModel portal) {
+        return new PortalListEditor(portal);
+    }
 
-	protected PersistentPortal createPortalDisplay(PortalSelectionModel portal) {
-		return new PersistentPortal(portal, PortalConstants.MODE_EDITOR);
-	}
 
-	// TODO
-	// there is a big problem with this model
-	// the options are locked and therefore you can't see
-	// the theme created until after a server restart
-	// however this is as the code came from skylift so
-	// I'm leaving it like this.
-	private void populateOptionGroup() {
+    public void register(Page page) {
+		super.register(page);
+		page.setVisibleDefault(m_selectForm, !m_workspaceThemes.isEmpty());
+		page.setVisibleDefault(m_createForm, false);
+		page.setVisibleDefault(m_basisPropertiesForm, false);
+    }
+
+    
+    /**
+     *
+     * @param portal
+     * @return
+     */
+    protected PersistentPortal createPortalDisplay(PortalSelectionModel portal) {
+        return new PersistentPortal(portal, PortalConstants.MODE_EDITOR);
+    }
+
+    // TODO
+    // there is a big problem with this model
+    // the options are locked and therefore you can't see
+    // the theme created until after a server restart
+    // however this is as the code came from skylift so
+    // I'm leaving it like this.
+    private void populateOptionGroup() {
 		m_grp.clearOptions();
 		m_workspaceThemes = WorkspaceTheme.retrieveAllWorkspaceThemes();
 		while (m_workspaceThemes.next()) {
@@ -149,22 +197,26 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
 			String name = m_workspaceThemes.getWorkspaceTheme().getName();
 			addOption(id, name);
 		}
-	}
+    }
 
-	private void addOption(String id, String name) {
+    private void addOption(String id, String name) {
 		Option opt = new Option(id, name);
 		m_grp.addOption(opt);
-	}
+    }
 
-	public class SelectThemeForm extends Form implements FormProcessListener,
-			FormInitListener {
-		private Label instruction;
+    /**
+     * 
+     */
+    public class SelectThemeForm extends Form implements FormProcessListener,
+                                                         FormInitListener {
+        private Label instruction;
+        private Submit button;
+        RequestLocal prtlRL;
 
-		private Submit button;
-
-		RequestLocal prtlRL;
-
-		public SelectThemeForm() {
+        /**
+         *
+         */
+        public SelectThemeForm() {
 			super("selectthemeform");
 			s_log.debug("SelectThemeForm constructed");
 			instruction = new Label(GlobalizationUtil
@@ -180,9 +232,13 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
 			add(m_grp);
 			addProcessListener(this);
 			addInitListener(this);
-		}
+        }
 
-		public void process(FormSectionEvent e) {
+        /**
+         *
+         * @param e
+         */
+        public void process(FormSectionEvent e) {
 			s_log.debug("process called for SelectThemeForm");
 			String selectedkey;
 			PageState s = e.getPageState();
@@ -197,9 +253,9 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
 				workspace.setTheme(theme);
 				workspace.save();
 			}
-		}
+        }
 
-		public void init(FormSectionEvent e) throws FormProcessException {
+        public void init(FormSectionEvent e) throws FormProcessException {
 			s_log.debug("init called for SelectThemeForm");
 			PageState ps = e.getPageState();
 			if (m_workspaceThemes.isEmpty())
@@ -214,45 +270,37 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
 			WorkspaceTheme theme = workspace.getTheme();
 			if (theme != null)
 				fd.put("themes", theme.getID().toString());
-		}
+        }
 
-	}
+    }
 
-	public class CreateThemeForm extends Form implements FormProcessListener,
-			FormInitListener {
-		private Label instruction;
 
-		private Submit savebutton;
+    /** 
+     * 
+     */
+    public class CreateThemeForm extends Form implements FormProcessListener,
+                                                         FormInitListener {
+        private Label instruction;
+        private Submit savebutton;
+        private TextField themename;
+        private ColorPicker background;
+        private ColorPicker text;
+        private ColorPicker activetab;
+        private ColorPicker inactivetab;
+        private ColorPicker activetabtext;
+        private ColorPicker inactivetabtext;
+        private ColorPicker toprule;
+        private ColorPicker bottomrule;
+        private ColorPicker portletheader;
+        private ColorPicker portletborder;
+        private ColorPicker portletheadertext;
+        private ColorPicker portletbodynarrow;
+        RequestLocal prtlRL;
 
-		private TextField themename;
-
-		private ColorPicker background;
-
-		private ColorPicker text;
-
-		private ColorPicker activetab;
-
-		private ColorPicker inactivetab;
-
-		private ColorPicker activetabtext;
-
-		private ColorPicker inactivetabtext;
-
-		private ColorPicker toprule;
-
-		private ColorPicker bottomrule;
-
-		private ColorPicker portletheader;
-
-		private ColorPicker portletborder;
-
-		private ColorPicker portletheadertext;
-
-		private ColorPicker portletbodynarrow;
-
-		RequestLocal prtlRL;
-
-		public CreateThemeForm() {
+        /**
+         *
+         */
+        public CreateThemeForm() {
 			super("createthemeform");
 			s_log.debug("CreateThemeForm constructed");
 			setClassAttr("themecreator");
@@ -299,7 +347,7 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
 
 			addProcessListener(this);
 			addInitListener(this);
-		}
+        }
 
 		public void process(FormSectionEvent e) {
 			s_log.debug("processing the create theme form");

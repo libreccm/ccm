@@ -25,22 +25,28 @@ import com.arsdigita.web.LoginSignal;
 
 public class UserWorkspaceSelectionModel extends WorkspaceSelectionModel {
 
-	protected Workspace getDefaultWorkspace(PageState state) {
-		Workspace workspace = (Workspace) Kernel.getContext().getResource();
-		Party party = Kernel.getContext().getParty();
+    /**
+     *
+     * @param state
+     * @return
+     */
+    protected Workspace getDefaultWorkspace(PageState state) {
+        
+        Workspace workspace = (Workspace) Kernel.getContext().getResource();
+        Party party = Kernel.getContext().getParty();
 
-		if (party == null) {
-			throw new LoginSignal(state.getRequest());
-		}
+        if (party == null) {
+            throw new LoginSignal(state.getRequest());
+        }
 
-		try {
-			workspace = workspace.retrieveSubworkspaceForParty(party);
+        try {
+            workspace = workspace.retrieveSubworkspaceForParty(party);
+        } catch (DataObjectNotFoundException ex) {
+            throw new UncheckedWrapperException("cannot find workspace for party "
+                                                + party.getID(), ex);
+        }
+        return workspace;
 
-		} catch (DataObjectNotFoundException ex) {
-			throw new UncheckedWrapperException(
-					"cannot find workspace for party " + party.getID(), ex);
-		}
+    }
 
-		return workspace;
-	}
 }

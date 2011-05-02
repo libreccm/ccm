@@ -1,16 +1,19 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package com.arsdigita.portalworkspace.ui;
@@ -44,76 +47,102 @@ import com.arsdigita.util.Assert;
 public class PortalEditForm extends Form implements FormProcessListener,
 		FormInitListener {
 
-	private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionModel m_workspace;
+    private PortalSelectionModel m_portal;
+    private TextField m_title;
+    private Submit m_save;
 
-	private PortalSelectionModel m_portal;
 
-	private TextField m_title;
+    /**
+     *
+     * @param portal
+     */
+    public PortalEditForm(PortalSelectionModel portal) {
+        this(null, portal);
+    }
 
-	private Submit m_save;
 
-	public PortalEditForm(PortalSelectionModel portal) {
-		this(null, portal);
-	}
+    /** 
+     * 
+     * @param workspace
+     * @param portal
+     */
+    public PortalEditForm(WorkspaceSelectionModel workspace,
+                          PortalSelectionModel portal) {
 
-	public PortalEditForm(WorkspaceSelectionModel workspace,
-			PortalSelectionModel portal) {
-		super("editPortal", new SimpleContainer("portal:editPortal",
-				PortalConstants.PORTAL_XML_NS));
+        super("editPortal", new SimpleContainer("portal:editPortal",
+                                                PortalConstants.PORTAL_XML_NS));
 
-		m_workspace = workspace;
-		m_portal = portal;
+        m_workspace = workspace;
+        m_portal = portal;
 
-		m_title = new TextField(new StringParameter("title"));
-		m_title.addValidationListener(new NotNullValidationListener());
-		m_title
-				.addValidationListener(new StringInRangeValidationListener(1,
-						40));
+        m_title = new TextField(new StringParameter("title"));
+        m_title.addValidationListener(new NotNullValidationListener());
+        m_title.addValidationListener(new StringInRangeValidationListener(1,40));
 
-		m_save = new Submit("Save");
+        m_save = new Submit("Save");
 
-		add(m_title);
-		add(m_save);
+        add(m_title);
+        add(m_save);
 
-		addProcessListener(this);
-		addInitListener(this);
-	}
+        addProcessListener(this);
+        addInitListener(this);
+    }
 
-	public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
-		m_workspace = workspace;
-	}
+    /**
+     *
+     * @param workspace
+     */
+    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+        m_workspace = workspace;
+    }
 
-	public Workspace getSelectedWorkspace(PageState state) {
-		return m_workspace.getSelectedWorkspace(state);
-	}
+    /**
+     * 
+     * @param state
+     * @return
+     */
+    public Workspace getSelectedWorkspace(PageState state) {
+        return m_workspace.getSelectedWorkspace(state);
+    }
 
-	public void init(FormSectionEvent e) {
-		PageState state = e.getPageState();
+    /**
+     * 
+     * @param e
+     */
+    public void init(FormSectionEvent e) {
 
-		WorkspacePage portal = (WorkspacePage) m_portal
-				.getSelectedPortal(state);
+        PageState state = e.getPageState();
+        WorkspacePage portal = (WorkspacePage) m_portal
+                .getSelectedPortal(state);
 
-		Assert.exists(portal, WorkspacePage.class);
 
-		m_title.setValue(state, portal.getTitle());
-	}
+        Assert.exists(portal, WorkspacePage.class);
+        m_title.setValue(state, portal.getTitle());
 
-	public void process(FormSectionEvent e) {
-		PageState state = e.getPageState();
+    }
 
-		Workspace workspace = getSelectedWorkspace(state);
-		Party party = Kernel.getContext().getParty();
-		if (!PortalHelper.canCustomize(party, workspace)) {
-			throw new AccessDeniedException(
-					"no permissions to customize workspace");
+    /**
+     * 
+     * @param e
+     */
+    public void process(FormSectionEvent e) {
+        PageState state = e.getPageState();
+
+        Workspace workspace = getSelectedWorkspace(state);
+        Party party = Kernel.getContext().getParty();
+        if (!PortalHelper.canCustomize(party, workspace)) {
+                              throw new AccessDeniedException(
+                                  "no permissions to customize workspace");
 		}
 
-		WorkspacePage portal = (WorkspacePage) m_portal
-				.getSelectedPortal(state);
+        WorkspacePage portal = (WorkspacePage) m_portal.getSelectedPortal(state);
 
-		Assert.exists(portal, WorkspacePage.class);
+        Assert.exists(portal, WorkspacePage.class);
 
-		String title = (String) m_title.getValue(state);
-		portal.setTitle(title);
-	}
+        String title = (String) m_title.getValue(state);
+        portal.setTitle(title);
+
+    }
+
 }

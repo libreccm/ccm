@@ -31,64 +31,83 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.web.ApplicationType;
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationCollection;
-import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.web.ApplicationType;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationCollection;
+
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
+
 import java.util.TooManyListenersException;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * 
+ */
 public class ApplicationSelector extends Form {
 
     private static final Logger s_log = Logger.getLogger(ApplicationSelector.class);
 
-	private ApplicationType m_type;
-	private SingleSelect m_apps;
-	private DomainObjectParameter m_app;
-	private SaveCancelSection m_buttons;
+    private ApplicationType m_type;
+    private SingleSelect m_apps;
+    private DomainObjectParameter m_app;
+    private SaveCancelSection m_buttons;
 
     private PrivilegeDescriptor m_privilege;
-	
-	public ApplicationSelector(ApplicationType type,
-							DomainObjectParameter app) {
-								this(type, app, null);	
-							}
 
+    /**
+     * Convenient Constructor
+     * @param type
+     * @param app
+     */
+    public ApplicationSelector(ApplicationType type,DomainObjectParameter app) {
+        this(type, app, null);
+    }
+
+    /**
+     * Constructor
+     * @param type
+     * @param app
+     * @param privilege
+     */
     public ApplicationSelector(ApplicationType type,
                                DomainObjectParameter app,
                                PrivilegeDescriptor privilege) {
-		super("applicationSelector");
+        super("applicationSelector");
 
-		m_type = type;
-		m_app = app;
+        m_type = type;
+        m_app = app;
         m_privilege = privilege;
-        
+
         s_log.debug("displayed applications will be filtered by privilege " +
                     m_privilege);
 
-		m_apps = new SingleSelect(new DomainObjectParameter("apps"));
-		m_apps.addValidationListener(new NotNullValidationListener());
-		try {
-			m_apps.addPrintListener(new AppPrintListener());
-		} catch (TooManyListenersException ex) {
-			throw new UncheckedWrapperException("this cannot happen", ex);
-		}
-		add(m_apps);
+        m_apps = new SingleSelect(new DomainObjectParameter("apps"));
+        m_apps.addValidationListener(new NotNullValidationListener());
+        try {
+            m_apps.addPrintListener(new AppPrintListener());
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("this cannot happen", ex);
+        }
+        add(m_apps);
 
-		m_buttons = new SaveCancelSection(new SimpleContainer());
-		add(m_buttons);
+        m_buttons = new SaveCancelSection(new SimpleContainer());
+        add(m_buttons);
 
-		addProcessListener(new AppProcessListener());
-		addSubmissionListener(new AppSubmissionListener());
-	}
+        addProcessListener(new AppProcessListener());
+        addSubmissionListener(new AppSubmissionListener());
+    }
 
-	private class AppSubmissionListener implements FormSubmissionListener {
+    /**
+     *
+     */
+    private class AppSubmissionListener implements FormSubmissionListener {
         public void submitted(FormSectionEvent e) 
             throws FormProcessException {
 			if (m_buttons.getCancelButton().isSelected(e.getPageState())) {
@@ -98,40 +117,53 @@ public class ApplicationSelector extends Form {
 			}
 			s_log.debug("Falling through for process");
 		}
-	}
-	private class AppProcessListener implements FormProcessListener {
-        public void process(FormSectionEvent e) 
-            throws FormProcessException {
-			s_log.debug("Firing event for process");
+    }
 
-			PageState state = e.getPageState();
+    /**
+     *
+     */
+    private class AppProcessListener implements FormProcessListener {
 
-			state.setValue(m_app, m_apps.getValue(state));
+        public void process(FormSectionEvent e) throws FormProcessException {
+            s_log.debug("Firing event for process");
+
+            PageState state = e.getPageState();
+
+            state.setValue(m_app, m_apps.getValue(state));
 			fireCompletionEvent(e.getPageState());
-		}
-	}
-	private class AppPrintListener implements PrintListener {
-		public void prepare(PrintEvent e) {
-			ApplicationCollection apps = Application.retrieveAllApplications();
+        }
+    }
+
+    /**
+     *
+     */
+    private class AppPrintListener implements PrintListener {
+
+        /**
+         *
+         * @param e
+         */
+        public void prepare(PrintEvent e) {
+            ApplicationCollection apps = Application.retrieveAllApplications();
             apps.addEqualsFilter("resourceType.id",
                                  m_type.getID());
             if (m_privilege != null) {
             	Party user = Kernel.getContext().getParty();
-            	if (user == null) {
-            		user = Kernel.getPublicUser();
-            	}
-            	PermissionService.filterObjects(apps,m_privilege, user.getOID());
+                if (user == null) {
+                    user = Kernel.getPublicUser();
+                }
+                PermissionService.filterObjects(apps,m_privilege, user.getOID());
             }
-			apps.addOrder("primaryURL");
+            apps.addOrder("primaryURL");
 
-			SingleSelect t = (SingleSelect) e.getTarget();
-            t.addOption(new Option(null,
-                                   "--select one--"));
-			while (apps.next()) {
-				Application app = apps.getApplication();
+            SingleSelect t = (SingleSelect) e.getTarget();
+            t.addOption(new Option(null, "--select one--"));
+            while (apps.next()) {
+                Application app = apps.getApplication();
                 t.addOption(new Option(app.getOID().toString(),
                                        app.getTitle() + " (" + app.getPath() + ")"));
-			}
-		}
-	}
+            }
+        }
+    }
+
 }

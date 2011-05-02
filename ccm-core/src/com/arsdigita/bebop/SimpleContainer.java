@@ -26,18 +26,20 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 
 /**
- * A basic implementation of the {@link Container} interface.
- * <p>By default,
- * renders all of its children directly, without wrapping them in any
- * kind of tag.
- * However, the {@link #SimpleContainer(String, String)} constructor
- * and/or the {@link #setTag(String)} method can be used to cause the container
- * to wrap the XML for its children in an arbitrary tag. This functionality
- * is useful for XSL templating.
- * For example, a template rule might be
- * written to arrange the children of this component in paragraphs:
+ * A basic implementation of the {@link Container} interface which, by default,
+ * renders all of its children directly, without wrapping them in any kind of
+ * tag.
  *
- * <blockquote><pre><code>// Java Code:
+ * However, the {@link #SimpleContainer(String, String)} constructor and/or the
+ * {@link #setTag(String)} method can be used to cause the container to wrap
+ * the XML for its children in an arbitrary tag. This functionality is useful
+ * for XSL templating.
+ *
+ * For example, a template rule might be written to arrange the children of this
+ * component in paragraphs:
+ *
+ * <blockquote><pre><code>
+ * // Java Code:
  * m_container = new SimpleContainer("cms:foo", CMS_XML_NS);
  *
  * // XSL code:

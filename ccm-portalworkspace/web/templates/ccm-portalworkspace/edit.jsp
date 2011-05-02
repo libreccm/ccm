@@ -12,10 +12,13 @@
       DispatcherHelper.cacheDisable(response);
     </jsp:scriptlet>
 
-    <define:page name="editWorkspace" application="portal" title="Workspace Customize" cache="true">
-      <define:component name="edit" classname="com.arsdigita.portalworkspace.ui.WorkspaceEditor" />
+    <define:page name="editWorkspace" application="portal"
+                 title="Workspace Customize" cache="true">
+      <define:component name="edit"
+                   classname="com.arsdigita.portalworkspace.ui.WorkspaceEditor" />
       <jsp:scriptlet>
-      ((AbstractWorkspaceComponent)edit).setWorkspaceModel(new DefaultWorkspaceSelectionModel());
+      ((AbstractWorkspaceComponent)edit).setWorkspaceModel(
+                                             new DefaultWorkspaceSelectionModel());
       </jsp:scriptlet>
     </define:page>
 

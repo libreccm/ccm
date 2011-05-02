@@ -23,13 +23,13 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.bebop.PageState;
 
 /**
- * A {@link SingleSelectionModel} which loads an item from the
- * database. The isSelected() method will return true if it
- * was possible to load the item.
+ * A {@link SingleSelectionModel} which loads an item from the database.
+ *
+ * The isSelected() method will return true if it was possible to load the item.
+ *
+ * @version $Id: DomainObjectSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface DomainObjectSelectionModel extends SingleSelectionModel {
-
-    public static final String versionId = "$Id: DomainObjectSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Return the item which was selected and loaded from the database,
@@ -38,7 +38,6 @@ public interface DomainObjectSelectionModel extends SingleSelectionModel {
      * @param state The page state
      * @return The item domain object, or null if no item is
      *         selected.
-     *
      */
     DomainObject getSelectedObject(PageState state);
 

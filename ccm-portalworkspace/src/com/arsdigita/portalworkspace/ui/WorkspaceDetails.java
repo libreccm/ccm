@@ -30,6 +30,10 @@ import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
+/**
+ * 
+ * 
+ */
 public class WorkspaceDetails extends SimpleComponent {
 
 	private WorkspaceSelectionModel m_workspace;

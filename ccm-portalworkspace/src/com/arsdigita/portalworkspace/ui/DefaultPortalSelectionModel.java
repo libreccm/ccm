@@ -1,21 +1,22 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package com.arsdigita.portalworkspace.ui;
-
-import java.math.BigDecimal;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
@@ -25,66 +26,106 @@ import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portalworkspace.WorkspacePageCollection;
 
+import java.math.BigDecimal;
+
+
+/**
+ *
+ * 
+ */
 public class DefaultPortalSelectionModel extends ACSObjectSelectionModel
-		implements PortalSelectionModel {
+		                         implements PortalSelectionModel {
 
-	private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionModel m_workspace;
 
-	public DefaultPortalSelectionModel(BigDecimalParameter param) {
-		this(null, param);
-	}
+    /**
+     *
+     * @param param
+     */
+    public DefaultPortalSelectionModel(BigDecimalParameter param) {
+        this(null, param);
+    }
 
-	public DefaultPortalSelectionModel(WorkspaceSelectionModel workspace,
-			                           BigDecimalParameter param) {
-		super(WorkspacePage.class.getName(),
-				WorkspacePage.BASE_DATA_OBJECT_TYPE, param);
+    public DefaultPortalSelectionModel(WorkspaceSelectionModel workspace,
+                                       BigDecimalParameter param) {
+        super(WorkspacePage.class.getName(),
+              WorkspacePage.BASE_DATA_OBJECT_TYPE, param);
 
-		m_workspace = workspace;
-	}
+        m_workspace = workspace;
+    }
 
-	public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
-		m_workspace = workspace;
-	}
+    /**
+     *
+     * @param workspace
+     */
+    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+        m_workspace = workspace;
+    }
 
-	public Workspace getSelectedWorkspace(PageState state) {
-		return m_workspace.getSelectedWorkspace(state);
-	}
+    /**
+     *
+     * @param state
+     * @return
+     */
+    public Workspace getSelectedWorkspace(PageState state) {
+        return m_workspace.getSelectedWorkspace(state);
+    }
 
+    /**
+     *
+     * @param state
+     * @return
+     */
     @Override
-	public Object getSelectedKey(PageState state) {
-		BigDecimal key = (BigDecimal) super.getSelectedKey(state);
-		if (key == null) {
-			loadDefaultPortal(state);
-		}
+    public Object getSelectedKey(PageState state) {
+        BigDecimal key = (BigDecimal) super.getSelectedKey(state);
+        if (key == null) {
+            loadDefaultPortal(state);
+        }
+        return super.getSelectedKey(state);
+    }
 
-		return super.getSelectedKey(state);
-	}
-
+    /**
+     * 
+     * @param state
+     * @return
+     */
     @Override
-	public DomainObject getSelectedObject(PageState state) {
-		BigDecimal key = (BigDecimal) super.getSelectedKey(state);
-		if (key == null) {
-			loadDefaultPortal(state);
-		}
+    public DomainObject getSelectedObject(PageState state) {
+        BigDecimal key = (BigDecimal) super.getSelectedKey(state);
+        if (key == null) {
+            loadDefaultPortal(state);
+        }
+        return super.getSelectedObject(state);
+    }
 
-		return super.getSelectedObject(state);
-	}
+    /**
+     *
+     * @param state
+     * @return
+     */
+    public WorkspacePage getSelectedPortal(PageState state) {
+        return (WorkspacePage) getSelectedObject(state);
+    }
 
-	public WorkspacePage getSelectedPortal(PageState state) {
-		return (WorkspacePage) getSelectedObject(state);
-	}
+    /**
+     * 
+     * @param state
+     */
+    private void loadDefaultPortal(PageState state) {
 
-	private void loadDefaultPortal(PageState state) {
-		Workspace workspace = getSelectedWorkspace(state);
-		WorkspacePageCollection portals = workspace.getPages();
-		portals.addOrder(WorkspacePage.SORT_KEY);
-		if (portals.next()) {
-			WorkspacePage portal = portals.getPage();
-			setSelectedObject(state, portal);
-			portals.close();
-		} else {
-			WorkspacePage portal = workspace.addPage("Main", "Main page");
-			setSelectedObject(state, portal);
-		}
-	}
+        Workspace workspace = getSelectedWorkspace(state);
+        WorkspacePageCollection portals = workspace.getPages();
+        portals.addOrder(WorkspacePage.SORT_KEY);
+        if (portals.next()) {
+            WorkspacePage portal = portals.getPage();
+            setSelectedObject(state, portal);
+            portals.close();
+        } else {
+            WorkspacePage portal = workspace.addPage("Main", "Main page");
+            setSelectedObject(state, portal);
+        }
+
+    }
+
 }

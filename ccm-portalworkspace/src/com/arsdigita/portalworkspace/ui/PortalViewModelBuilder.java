@@ -30,48 +30,75 @@ import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portal.PortletCollection;
 import com.arsdigita.util.LockableImpl;
 
-public class PortalViewModelBuilder extends LockableImpl implements
-		PortalModelBuilder {
+/**
+ * 
+ * 
+ */
+public class PortalViewModelBuilder extends LockableImpl 
+                                    implements PortalModelBuilder {
 
-	private static final Logger s_log = Logger
-			.getLogger(PortalViewModelBuilder.class);
+    /** Logger object to support debugging                                    */
+    private static final Logger s_log =
+                         Logger.getLogger(PortalViewModelBuilder.class);
 
-	private PortalSelectionModel m_portal;
+    private PortalSelectionModel m_portal;
 
-	public PortalViewModelBuilder(PortalSelectionModel portal) {
-		m_portal = portal;
-	}
 
-	public PortalModel buildModel(PageState state) {
-		WorkspacePage portal = m_portal.getSelectedPortal(state);
+    /**
+     *
+     * @param portal
+     */
+    public PortalViewModelBuilder(PortalSelectionModel portal) {
+        m_portal = portal;
+    }
 
-		ArrayList list = new ArrayList();
-		PortletCollection portlets = portal.getPortlets();
-		while (portlets.next()) {
-			com.arsdigita.portal.Portlet portlet = portlets.getPortlet();
-			list.add(portlet.getPortletRenderer());
-		}
+    /**
+     * 
+     * @param state
+     * @return
+     */
+    public PortalModel buildModel(PageState state) {
 
-		return new PortalViewModel(list.iterator(), portal.getTitle());
-	}
+        WorkspacePage portal = m_portal.getSelectedPortal(state);
 
-	private class PortalViewModel implements PortalModel {
+        ArrayList list = new ArrayList();
+        PortletCollection portlets = portal.getPortlets();
+        while (portlets.next()) {
+            com.arsdigita.portal.Portlet portlet = portlets.getPortlet();
+            list.add(portlet.getPortletRenderer());
+        }
 
-		private Iterator m_portlets;
+        return new PortalViewModel(list.iterator(), portal.getTitle());
 
-		private String m_title;
+    }
 
-		public PortalViewModel(Iterator portlets, String title) {
-			m_portlets = portlets;
-			m_title = title;
-		}
+    /**
+     *
+     */
+    private class PortalViewModel implements PortalModel {
 
-		public Iterator getPortletRenderers() {
-			return m_portlets;
-		}
+        private Iterator m_portlets;
+        private String m_title;
+        public PortalViewModel(Iterator portlets, String title) {
+            m_portlets = portlets;
+            m_title = title;
 
-		public String getTitle() {
-			return m_title;
-		}
-	}
+        }
+
+        /**
+         * 
+         * @return
+         */
+        public Iterator getPortletRenderers() {
+            return m_portlets;
+        };
+
+        /**
+         *
+         * @return
+         */
+        public String getTitle() {
+            return m_title;
+        }
+    }
 }

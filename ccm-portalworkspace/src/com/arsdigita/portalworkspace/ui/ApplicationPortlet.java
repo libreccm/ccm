@@ -27,35 +27,55 @@ import com.arsdigita.xml.Element;
 
 public class ApplicationPortlet extends AbstractPortletRenderer {
 
-	private RequestLocal m_parent;
+    private RequestLocal m_parent;
+    private Component m_portletComponent;
+    private Component m_appComponent;
 
-	private Component m_portletComponent;
 
-	private Component m_appComponent;
+    /**
+     * Constructor
+     * @param title
+     * @param column
+     * @param row
+     * @param parent
+     * @param portletComponent
+     * @param appComponent
+     */
+    public ApplicationPortlet(String title, int column, int row,
+                              RequestLocal parent, Component portletComponent,
+                              Component appComponent) {
 
-	public ApplicationPortlet(String title, int column, int row,
-			RequestLocal parent, Component portletComponent,
-			Component appComponent) {
-		Assert.exists(parent, RequestLocal.class);
-		Assert.exists(portletComponent, Component.class);
-		Assert.exists(appComponent, Component.class);
+        Assert.exists(parent, RequestLocal.class);
+        Assert.exists(portletComponent, Component.class);
+        Assert.exists(appComponent, Component.class);
 
-		m_parent = parent;
-		m_portletComponent = portletComponent;
-		m_appComponent = appComponent;
+        m_parent = parent;
+        m_portletComponent = portletComponent;
+        m_appComponent = appComponent;
 
-		setTitle(title);
-		setCellNumber(column);
-		setSortKey(row);
-	}
+        setTitle(title);
+        setCellNumber(column);
+        setSortKey(row);
 
-	protected void generateBodyXML(PageState state, Element parent) {
-		Element content = parent.newChildElement("portlet:simple",
-				PortalConstants.PORTLET_XML_NS);
-		if (m_parent.get(state) == null) {
-			m_appComponent.generateXML(state, content);
-		} else {
-			m_portletComponent.generateXML(state, content);
-		}
-	}
+    }
+
+
+    /**
+     *
+     * @param state
+     * @param parent
+     */
+    protected void generateBodyXML(PageState state, Element parent) {
+
+        Element content = parent.newChildElement("portlet:simple",
+                                                 PortalConstants.PORTLET_XML_NS);
+
+        if (m_parent.get(state) == null) {
+            m_appComponent.generateXML(state, content);
+        } else {
+            m_portletComponent.generateXML(state, content);
+        }
+
+    }
+
 }

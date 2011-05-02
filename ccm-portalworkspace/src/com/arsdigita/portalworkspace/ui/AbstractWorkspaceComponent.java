@@ -1,16 +1,19 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package com.arsdigita.portalworkspace.ui;
@@ -21,61 +24,92 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.portalworkspace.Workspace;
 
+/**
+ * 
+ * 
+ */
 public abstract class AbstractWorkspaceComponent extends SimpleContainer {
 
-	private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionModel m_workspace;
 
-	private DefaultPortalSelectionModel m_portal;
+    private DefaultPortalSelectionModel m_portal;
 
-	private WorkspaceDetails m_details;
+    private WorkspaceDetails m_details;
 
-	private PortalList m_portalList;
+    private PortalList m_portalList;
 
-	private PersistentPortal m_portalDisplay;
+    private PersistentPortal m_portalDisplay;
 
-	public AbstractWorkspaceComponent() {
-		this(null);
-	}
+    /**
+     * Default constructor creates a new, empty
+     * <code>AbstractWorkspaceComponent</code> using parents (SimpleContainer)
+     * default constructor.
+     */
+    public AbstractWorkspaceComponent() {
+        this(null);
+    }
 
-	public AbstractWorkspaceComponent(WorkspaceSelectionModel workspace) {
-		super("portal:workspace", PortalConstants.PORTAL_XML_NS);
+    /**
+     * 
+     * @param workspace
+     */
+    public AbstractWorkspaceComponent(WorkspaceSelectionModel workspace) {
 
-		m_workspace = workspace;
+        /* Creates a WorkspaceComponent (SimpleContainer) that will wrap its
+         * children in the specified tag.                                     */
+        super("portal:workspace", PortalConstants.PORTAL_XML_NS);
 
-		m_details = new WorkspaceDetails(m_workspace);
+        m_workspace = workspace;
+        m_details = new WorkspaceDetails(m_workspace);
+        m_portal = new DefaultPortalSelectionModel(new BigDecimalParameter(
+                                                           "portal"));
+        m_portalList = createPortalList(m_portal);
+        m_portalDisplay = createPortalDisplay(m_portal);
 
-		m_portal = new DefaultPortalSelectionModel(new BigDecimalParameter(
-				"portal"));
+        add(m_details);
+        add(m_portalList);
+        add(m_portalDisplay);
+    }
 
-		m_portalList = createPortalList(m_portal);
+    /**
+     *
+     */
+    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+        m_workspace = workspace;
+        m_details.setWorkspaceModel(workspace);
+        m_portalList.setWorkspaceModel(workspace);
+        m_portal.setWorkspaceModel(workspace);
+    }
 
-		m_portalDisplay = createPortalDisplay(m_portal);
+    public Workspace getSelectedWorkspace(PageState state) {
+        return m_workspace.getSelectedWorkspace(state);
+    }
 
-		add(m_details);
-		add(m_portalList);
-		add(m_portalDisplay);
-	}
+    /**
+     * To be overwritten by children class with class specific logic. 
+     * 
+     * @param portal
+     * @return
+     */
+    protected abstract PortalList createPortalList(PortalSelectionModel portal);
 
-	public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
-		m_workspace = workspace;
-		m_details.setWorkspaceModel(workspace);
-		m_portalList.setWorkspaceModel(workspace);
-		m_portal.setWorkspaceModel(workspace);
-	}
+    /**
+     * To be overwritten by children class with class specific logic. 
+     * 
+     * @param portal
+     * @return
+     */
+    protected abstract PersistentPortal createPortalDisplay(
+                                            PortalSelectionModel portal);
 
-	public Workspace getSelectedWorkspace(PageState state) {
-		return m_workspace.getSelectedWorkspace(state);
-	}
+    /**
+     * 
+     */ 
+    public void register(Page page) {
 
-	protected abstract PortalList createPortalList(PortalSelectionModel portal);
+        super.register(page);
+        page.addComponentStateParam(this, m_portal.getStateParameter());
 
-	protected abstract PersistentPortal createPortalDisplay(
-			PortalSelectionModel portal);
-
-	public void register(Page page) {
-		super.register(page);
-
-		page.addComponentStateParam(this, m_portal.getStateParameter());
-	}
+    }
 
 }
