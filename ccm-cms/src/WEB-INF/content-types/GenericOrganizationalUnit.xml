@@ -22,6 +22,15 @@
                     component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitPropertiesStep"
                     ordering="1"
                     />
+                    
+            <ctd:authoring-step 
+            labelKey="cms.contenttypes.ui.orgaunit.persons"
+            labelBundle="com.arsdigita.cms.contenttypes.util.ContenttypesResourceBundle"
+            descriptionKey="cms.contenttypes.ui.orgaunit.persons.description"
+            descriptionBundle="com.arsdigita.cms.contenttypes.util.ContenttypesResourceBundle"
+            component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitPersonPropertiesStep"
+            ordering="2"
+            />
                      
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
         </ctd:authoring-kit>

@@ -2864,6 +2864,7 @@ public class DaBInImporter extends Program {
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperDe);
+                            download.setLinkListName("NONE");
 
                             download = new RelatedLink();
                             download.setTitle(config.getProperty(
@@ -2871,6 +2872,7 @@ public class DaBInImporter extends Program {
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
+                            download.setLinkListName("NONE");
 
                             files.addItem(bundle);
                         }

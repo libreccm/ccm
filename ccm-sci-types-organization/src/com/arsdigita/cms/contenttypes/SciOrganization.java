@@ -22,9 +22,13 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import org.apache.log4j.Logger;
 
 /**
@@ -81,6 +85,21 @@ public class SciOrganization extends GenericOrganizationalUnit {
         logger.debug("Static initalizer finished.");
     }
 
+    public enum MemberStatus {
+
+        ALL,
+        ACTIVE,
+        ASSOCIATED,
+        FORMER
+    }
+
+    public enum ProjectStatus {
+
+        ALL,
+        ONGOING,
+        FINISHED
+    }
+
     public SciOrganization() {
         this(BASE_DATA_OBJECT_TYPE);
     }
@@ -117,6 +136,344 @@ public class SciOrganization extends GenericOrganizationalUnit {
         return (String) get(ORGANIZATION_DESCRIPTION);
     }
 
+    @Override
+    public boolean hasContacts() {
+        boolean result = false;
+
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfContactsOfSciOrganization");
+        query.setParameter("organization", getID());
+
+        if (query.size() > 0) {
+            result = true;
+        } else {
+            result = false;
+        }
+
+        query.close();
+
+        return result;
+    }
+
+    public boolean hasDepartments() {
+        boolean result = false;
+
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
+        query.setParameter("organization", getID());
+
+        if (query.size() > 0) {
+            result = true;
+        } else {
+            result = false;
+        }
+
+        query.close();
+
+        return result;
+    }
+
+    /**
+     * 
+     * @param merge Should I also look into the departments and return true
+     * if the organization or at least one of the departments has members?
+     * @return 
+     */
+    public boolean hasMembers(final boolean merge, final MemberStatus status) {
+        String queryName;
+
+        switch (status) {
+            case ALL:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfSciOrganization";
+                break;
+            case ACTIVE:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfActiveMembersOfSciOrganization";
+                break;
+            case ASSOCIATED:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfAssociatedMembersOfSciOrganization";
+                break;
+            case FORMER:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfFormerMembersOfSciOrganization";
+                break;
+            default:
+                queryName = "";
+                break;
+        }
+
+        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        query.setParameter("organization", getID());
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery departmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
+                departmentsQuery.setParameter("organization", getID());
+
+                if (query.size() > 0) {
+                    BigDecimal departmentId;
+                    boolean result = false;
+                    while (departmentsQuery.next()) {
+                        departmentId = (BigDecimal) departmentsQuery.get(
+                                "departmentId");
+                        result = hasMembers(departmentId, merge, status);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    departmentsQuery.close();
+                    return result;
+                } else {
+                    departmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    private boolean hasMembers(final BigDecimal departmentId,
+                               final boolean merge,
+                               final MemberStatus status) {
+        String queryName;
+
+        switch (status) {
+            case ALL:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfSciDepartment";
+                break;
+            case ACTIVE:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfActiveMembersOfSciDepartment";
+                break;
+            case ASSOCIATED:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfAssociatedMembersOfDepartment";
+                break;
+            case FORMER:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfFormerMembersOfSciDepartment";
+                break;
+            default:
+                queryName = "";
+                break;
+        }
+
+        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        query.setParameter("department", departmentId);
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery subDepartmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
+                subDepartmentsQuery.setParameter("department", departmentId);
+
+                if (query.size() > 0) {
+                    BigDecimal subDepartmentId;
+                    boolean result = false;
+                    while (subDepartmentsQuery.next()) {
+                        subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
+                                "departmentId");
+                        result = hasMembers(subDepartmentId, merge, status);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    subDepartmentsQuery.close();
+                    return result;
+                } else {
+                    subDepartmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    public boolean hasProjects(final boolean merge,
+                               final ProjectStatus status) {
+        String queryName;
+
+        switch (status) {
+            case ALL:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfSciOrganization";
+                break;
+            case ONGOING:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfOngoingProjectsOfSciOrganization";
+                break;
+            case FINISHED:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfFinishedProjectsOfSciOrganization";
+                break;
+            default:
+                queryName = "";
+                break;
+        }
+
+        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        query.setParameter("organization", getID());
+        if (status != ProjectStatus.ALL) {
+            Calendar today = new GregorianCalendar();
+            query.setParameter("today",
+                               String.format("%d-%02d-%02d",
+                                             today.get(Calendar.YEAR),
+                                             today.get(Calendar.MONTH) + 1,
+                                             today.get(Calendar.DAY_OF_MONTH)));
+        }
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery departmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
+                departmentsQuery.setParameter("organization", getID());
+
+                if (query.size() > 0) {
+                    BigDecimal departmentId;
+                    boolean result = false;
+                    while (departmentsQuery.next()) {
+                        departmentId = (BigDecimal) departmentsQuery.get(
+                                "departmentId");
+                        result = hasProjects(departmentId, merge, status);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    departmentsQuery.close();
+                    return result;
+                } else {
+                    departmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    private boolean hasProjects(final BigDecimal departmentId,
+                               final boolean merge,
+                               final ProjectStatus status) {
+        String queryName;
+
+        switch (status) {
+            case ALL:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfSciDepartment";
+                break;
+            case ONGOING:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfOngoingProjectsOfSciDepartment";
+                break;
+            case FINISHED:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfFinishedProjectsOfSciDepartment";
+                break;
+            default:
+                queryName = "";
+                break;
+        }
+
+        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        query.setParameter("department", getID());
+        if (status != ProjectStatus.ALL) {
+            Calendar today = new GregorianCalendar();
+            query.setParameter("today",
+                               String.format("%d-%02d-%02d",
+                                             today.get(Calendar.YEAR),
+                                             today.get(Calendar.MONTH) + 1,
+                                             today.get(Calendar.DAY_OF_MONTH)));
+
+        }
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery subDepartmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
+                subDepartmentsQuery.setParameter("department", departmentId);
+
+                if (query.size() > 0) {
+                    BigDecimal subDepartmentId;
+                    boolean result = false;
+                    while (subDepartmentsQuery.next()) {
+                        subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
+                                "departmentId");
+                        result = hasProjects(subDepartmentId, merge, status);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    subDepartmentsQuery.close();
+                    return result;
+                } else {
+                    subDepartmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    public boolean hasPublications() {
+        boolean result = false;
+
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationLinksOfSciOrganization");
+        query.setParameter("organization", getID());
+
+        if (query.size() > 0) {
+            result = true;
+        } else {
+            result = false;
+        }
+
+        query.close();
+
+        return result;
+    }
+
     public void setOrganizationDescription(String description) {
         set(ORGANIZATION_DESCRIPTION, description);
     }
@@ -142,10 +499,6 @@ public class SciOrganization extends GenericOrganizationalUnit {
         remove(DEPARTMENTS, department);
     }
 
-    public boolean hasDepartments() {
-        return !this.getDepartments().isEmpty();
-    }
-
     public SciOrganizationProjectsCollection getProjects() {
         return new SciOrganizationProjectsCollection(
                 (DataCollection) get(PROJECTS));
@@ -155,7 +508,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
         Assert.exists(project, SciProject.class);
 
         DataObject link = add(PROJECTS, project);
-        link.set(PROJECT_ORDER, Integer.valueOf((int) getProjects().size()));        
+        link.set(PROJECT_ORDER, Integer.valueOf((int) getProjects().size()));
         link.set(SciProject.ORGANIZATIONS_ORDER, Integer.valueOf((int) project.
                 getOrganizations().size()));
         link.save();
@@ -166,8 +519,5 @@ public class SciOrganization extends GenericOrganizationalUnit {
 
         remove(PROJECTS, project);
     }
-
-    public boolean hasProjects() {
-        return !this.getProjects().isEmpty();
-    }
+   
 }

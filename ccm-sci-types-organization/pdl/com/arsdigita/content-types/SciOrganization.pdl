@@ -41,4 +41,129 @@ association {
 	    Integer[0..1] organizationOrder = ct_sciorga_organizations_projects_map.organization_order INTEGER;
 }
 
+query getIdsOfContactsOfSciOrganization {
+    BigDecimal contactId;
+
+    do {
+        select cms_organizationalunits_contact_map.contact_id 
+        from cms_organizationalunits_contact_map        
+        where cms_organizationalunits_contact_map.organizationalunit_id = :organization        
+    } map {
+        contactId = cms_organizationalunits_contact_map.contact_id;
+    }
+}
+
+query getIdsOfDepartmentsOfSciOrganization {
+    BigDecimal departmentId;
+
+    do {
+        select ct_sciorga_organizations_departments_map.department_id
+        from ct_sciorga_organizations_departments_map        
+        where ct_sciorga_organizations_departments_map.organization_id = :organization
+    } map {
+        departmentId = ct_sciorga_organizations_departments_map;
+    }
+}
+
+query getIdsOfMembersOfSciOrganization {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map      
+        where cms_organizationalunits_person_map.organizationalunit_id = :organization
+    } map {
+        memberId = cms_organizationalunits_person_map.person_id;
+    }
+}
+
+query getIdsOfActiveMembersOfSciOrganization {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map        
+        where cms_organizationalunits_person_map.organizationalunit_id = :organization 
+        and cms_organizationalunits_person_map.status = 'active'
+    } map {
+        memberId = cms_organizationalunits_person_map.person_id;
+    }
+}
+
+query getIdsOfAssociatedMembersOfSciOrganization {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map       
+        where cms_organizationalunits_person_map.organizationalunit_id = :organization 
+        and cms_organizationalunits_person_map.status = 'associated'
+    } map {
+        memberId = cms_organizationalunits_person_map.personId;
+    }
+}
+
+query getIdsOfFormerMembersOfSciOrganization {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map   
+        where cms_organizationalunits_person_map.organizationalunit_id = :organization 
+        and (cms_organizationalunits_person_map.status = 'former' or cms_organizationalunits_person_map.status = 'associatedFormer')
+    } map {
+        memberId = cms_organizationalunits_person_map.personId;
+    }
+}
+
+query getIdsOfProjectsOfSciOrganization {
+    BigDecimal projectId;
+
+    do {
+        select ct_sciorga_organizations_projects_map.project_id
+        from ct_sciorga_organizations_projects_map    
+        where ct_sciorga_organizations_projects_map.organization_id = :organization
+    } map {
+        projectId = ct_sciorga_organizations_projects_map.project_id;
+    }
+}
+
+query getIdsOfOngoingProjectsOfSciOrganization {
+    BigDecimal projectId;
+
+    do {
+        select ct_sciorga_projects.project_id
+        from ct_sciorga_organizations_projects_map
+        join ct_sciorga_projects on ct_sciorga_organizations_projects_map.project_id = ct_sciorga_projects.project_id
+        where ct_sciorga_organizations_projects_map.organization_id = :organization and ct_sciorga_projects.projectend >= ':today'
+    } map {
+        projectId = ct_sciorga_projects.project_id;
+    }
+}
+
+query getIdsOfFinishedProjectsOfSciOrganization {
+    BigDecimal projectId;
+
+    do {
+        select ct_sciorga_projects.project_id
+        from ct_sciorga_organizations_projects_map
+        join ct_sciorga_projects on ct_sciorga_organizations_projects_map.project_id = ct_sciorga_projects.project_id
+        where ct_sciorga_organizations_projects_map.organization_id = :organization and ct_sciorga_projects.projectend < ':today'
+    } map {
+        projectId = ct_sciorga_projects.project_id;
+    }
+}
+
+query getIdsOfPublicationLinksOfSciOrganization {
+    BigDecimal linkId;
+
+    do {
+        select cms_related_links.related_link_id 
+        from cms_related_links
+        where cms_related_links.owner_id = :organization 
+        and cms_related_links.link_list_name = 'SciOrganizationPublications'
+    } map {
+        linkId = cms_related_links.related_link_id;
+    }
+}
 

@@ -139,12 +139,12 @@ public class SciProjectPropertiesStep
                     "sciorganization.ui.project.contacts"));
         }
 
-        if (!config.getProjectAddPersonHide()) {
+       /* if (!config.getProjectAddPersonHide()) {
             addStep(new SciProjectMemberStep(itemModel,
                                              parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.project.members"));
-        }
+        }*/
 
         if (!config.getProjectSetSuperProjectHide()) {
             addStep(new SciProjectSuperProjectStep(itemModel,
@@ -153,12 +153,12 @@ public class SciProjectPropertiesStep
                     "sciorganization.ui.project.superproject"));
         }
 
-        if (!config.getProjectAddSubProjectHide()) {
+      /*  if (!config.getProjectAddSubProjectHide()) {
             addStep(new SciProjectSubprojectsStep(itemModel,
                                                   parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.project.subprojects"));
-        }
+        }*/
 
         if (!config.getProjectAddOrganizationHide()) {
             addStep(new SciProjectOrganizationsStep(itemModel, parent),
@@ -166,7 +166,7 @@ public class SciProjectPropertiesStep
                     "sciorganization.ui.project.organizations"));
         }
 
-        if (!config.getProjectAddDepartmentHide()) {
+        /*if (!config.getProjectAddDepartmentHide()) {
             addStep(new SciProjectDepartmentsStep(itemModel, parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.project.departments"));
@@ -182,10 +182,10 @@ public class SciProjectPropertiesStep
              * Must add this step manually since the basic class is not
              * SimpleEditStep...
              */
-            getSegmentedPanel().addSegment(new Label(SciOrganizationGlobalizationUtil.
+           /* getSegmentedPanel().addSegment(new Label(SciOrganizationGlobalizationUtil.
                     globalize("sciorganization.ui.project.publications")),
                                            new SciProjectPublicationsStep(
                     itemModel, parent));
-        }
+        }*/
     }
 }

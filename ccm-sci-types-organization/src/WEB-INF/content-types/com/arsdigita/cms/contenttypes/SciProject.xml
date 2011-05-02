@@ -12,7 +12,7 @@
 
         <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       
-	  <ctd:authoring-step
+            <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_properties.title"
 	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	      descriptionKey="sciorganization.ui.project_properties.title"
@@ -20,12 +20,41 @@
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectPropertiesStep"
 	      ordering="1"/>
 	  
-	  <ctd:authoring-step
+            <ctd:authoring-step
+	      labelKey="sciorganization.ui.project.members"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      descriptionKey="sciorganization.ui.project.members.description"
+	      component="com.arsdigita.cms.contenttypes.ui.SciProjectMemberStep"
+	      ordering="2"/>
+              
+            <ctd:authoring-step
+	      labelKey="sciorganization.ui.project.subprojects"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      descriptionKey="sciorganization.ui.project.subprojects"
+	      component="com.arsdigita.cms.contenttypes.ui.SciProjectSubprojectsStep"
+	      ordering="3"/>	  	
+              
+            <ctd:authoring-step
+	      labelKey="sciorganization.ui.project.departments"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      descriptionKey="sciorganization.ui.project.departments"
+	      component="com.arsdigita.cms.contenttypes.ui.SciProjectDepartmentsStep"
+	      ordering="4"/>	  	
+              
+          
+            <ctd:authoring-step
+	      labelKey="sciorganization.ui.project.publications"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      descriptionKey="sciorganization.ui.project.publications"
+	      component="com.arsdigita.cms.contenttypes.ui.SciProjectDepartmentsStep"
+	      ordering="5"/>	  
+          
+            <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_description.title"
 	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	      descriptionKey="sciorganization.ui.project_description.title"
-	      component="com.arsdigita.cms.contenttypes.ui.SciProjectDescriptionStep"
-	      ordering="2"/>	  	
+	      component="com.arsdigita.cms.contenttypes.ui.SciProjectPublicationsStep"
+	      ordering="6"/>	  	
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 

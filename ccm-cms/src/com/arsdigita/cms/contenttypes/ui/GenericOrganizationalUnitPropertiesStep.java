@@ -126,9 +126,14 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
         addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                    parent),
                 "cms.contenttypes.ui.orgaunit.contact");
+        /* jensp, 2011-05-01:
+         * Member step is now a full step, to improve performence of the 
+         * content center gui.
         addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
                                                                   parent),
                 "cms.contenttypes.ui.orgaunit.persons");
+         
+         */
     }
 
     /**

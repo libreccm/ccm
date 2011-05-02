@@ -4,34 +4,55 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-  <ctd:content-type
+    <ctd:content-type
       label="SciOrganization"
       description="Base type for scientific orgnizations"
       objectType="com.arsdigita.cms.contenttypes.SciOrganization"
       classname="com.arsdigita.cms.contenttypes.SciOrganization">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       
-      <ctd:authoring-step
-	  labelKey="sciorganization.ui.organization.properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
-	  descriptionKey="publications.ui.publication_properties.title.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
-	  component="com.arsdigita.cms.contenttypes.ui.SciOrganizationPropertiesStep"
-	  ordering="1"/>
+            <ctd:authoring-step
+                labelKey="sciorganization.ui.organization.properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+                descriptionKey="publications.ui.publication_properties.title.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+                component="com.arsdigita.cms.contenttypes.ui.SciOrganizationPropertiesStep"
+                ordering="1"/>
 
-      <ctd:authoring-step
-	  labelKey="sciorganization.ui.organization.description.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
-	  descriptionKey="sciorganization.ui.organization_description.title.description"
-	  component="com.arsdigita.cms.contenttypes.ui.SciOrganizationDescriptionStep"
-	  ordering="2"/>	  	
+            <ctd:authoring-step
+                labelKey="sciorganization.ui.organization_members"
+        	labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+                descriptionKey="sciorganization.ui.organization_members.title.description"
+                component="com.arsdigita.cms.contenttypes.ui.SciOrganizationMemberStep"
+                ordering="2"/>	  	
 
-      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+            <ctd:authoring-step
+                labelKey="sciorganization.ui.organization.departments"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+                descriptionKey="sciorganization.ui.organization.departments.description"
+                component="com.arsdigita.cms.contenttypes.ui.SciOrganizationDepartmentsStep"
+                ordering="3"/>	
 
-    </ctd:authoring-kit>
+            <ctd:authoring-step
+                labelKey="sciorganization.ui.organization.projects"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+                descriptionKey="sciorganization.ui.organization.projects.description"
+                component="com.arsdigita.cms.contenttypes.ui.SciOrganizationProjectsStep"
+                ordering="4"/>
 
-  </ctd:content-type>
+            <ctd:authoring-step
+                labelKey="sciorganization.ui.organization.description.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+                descriptionKey="sciorganization.ui.organization_description.title.description"
+                component="com.arsdigita.cms.contenttypes.ui.SciOrganizationDescriptionStep"
+                ordering="5"/>	  	
+
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
+        </ctd:authoring-kit>
+
+    </ctd:content-type>
  
 
 </ctd:content-types>

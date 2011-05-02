@@ -86,6 +86,7 @@ public class SciOrganizationPropertiesStep
                     "sciorganization.ui.organization.contacts"));
         }
 
+        /* This steps are now separate steps in the left box.
         if (!config.getOrganizationAddPersonHide()) {
             addStep(new SciOrganizationMemberStep(itemModel,
                                                   parent),
@@ -103,7 +104,7 @@ public class SciOrganizationPropertiesStep
             addStep(new SciOrganizationProjectsStep(itemModel, parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.organization.projects"));
-        }
+        }*/
     }
 
     public static Component getSciOrganizationPropertySheet(

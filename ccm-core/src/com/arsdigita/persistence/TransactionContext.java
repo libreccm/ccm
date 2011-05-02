@@ -66,6 +66,7 @@ public class TransactionContext {
      **/
 
     public void beginTxn() {
+        s_cat.debug("Beginning transaction..."); 
         // Do nothing. This is implicit now.
         if (m_inTxn) {
             throw new IllegalStateException("double begin");
@@ -82,6 +83,7 @@ public class TransactionContext {
      **/
 
     public void commitTxn() {
+        s_cat.debug("Commiting transaction...");
         boolean success = false;
         try {
             fireBeforeCommitEvent();
@@ -91,9 +93,14 @@ public class TransactionContext {
             success = true;
             m_inTxn = false;
             fireCommitEvent();
+            s_cat.debug("Done.");       
         } finally {
+            s_cat.debug("Cleaning up...");           
             clearAttributes();
             if (!success) { m_ossn.invalidateDataObjects(false, true); }
+             if (m_inTxn) {
+                s_cat.warn("Warning: Cleanup after commit was reached, but m_inTxn is true.");
+            }
         }
     }
 
@@ -126,6 +133,7 @@ public class TransactionContext {
      **/
 
     public void abortTxn() {
+        s_cat.warn("Aborting transaction...");
         boolean success = false;
         try {
             try {
@@ -141,6 +149,7 @@ public class TransactionContext {
             fireAbortEvent();
             clearAttributes();
         }
+        s_cat.warn("Transaction aborted.");
     }
 
     /**

@@ -29,7 +29,7 @@
                       todir="${app.server.shared.dir}/endorsed" preservelastmodified="true"/>
 		<copy file="tools-ng/devel/lib/ojdbc14.jar"
                       todir="${app.server.shared.dir}" preservelastmodified="true"/>
-		<copy file="tools-ng/devel/lib/postgresql-jdbc-8.2.506.jar"
+		<copy file="tools-ng/devel/lib/postgresql-jdbc.jar"
                       todir="${app.server.shared.dir}" preservelastmodified="true"/>
 	</target>
     

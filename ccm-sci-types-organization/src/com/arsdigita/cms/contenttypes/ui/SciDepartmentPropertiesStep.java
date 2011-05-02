@@ -102,30 +102,36 @@ public class SciDepartmentPropertiesStep
                     "sciorganization.ui.department.contacts"));
         }
 
+        /*
         if (!config.getDepartmentAddPersonHide()) {
             addStep(new SciDepartmentMemberStep(itemModel,
                                                 parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.department.members"));
         }
+         */
 
+        /*
         if (!config.getDepartmentAddSubDepartmentHide()) {
             addStep(new SciDepartmentSubDepartmentsStep(itemModel, parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.department.subdepartments"));
-        }
-
+        }         
+         */
+        
         if (!config.getDepartmentSetSuperDepartmentHide()) {
             addStep(new SciDepartmentSuperDepartmentStep(itemModel, parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.department.superdepartment"));
         }
 
+        /*
         if (!config.getDepartmentAddProjectHide()) {
             addStep(new SciDepartmentProjectsStep(itemModel, parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.department.projects"));
-        }
+        }         
+         */
 
         if (!config.getDepartmentSetOrganizationHide()) {
             addStep(new SciDepartmentOrganizationStep(itemModel, parent),
@@ -133,6 +139,7 @@ public class SciDepartmentPropertiesStep
                     "sciorganization.ui.department.organization"));
         }
 
+        /*
         ContentTypeCollection contentTypes = ContentType.getAllContentTypes();
         contentTypes.addFilter("associatedObjectType = :type").set(
                 "type",
@@ -143,10 +150,10 @@ public class SciDepartmentPropertiesStep
              * Must add this step manually since the basic class is not
              * SimpleEditStep...
              */
-            getSegmentedPanel().addSegment(new Label(SciOrganizationGlobalizationUtil.
+           /* getSegmentedPanel().addSegment(new Label(SciOrganizationGlobalizationUtil.
                     globalize("sciorganization.ui.department.publications")),
                                            new SciDepartmentPublicationsStep(
                     itemModel, parent));
-        }
+        }*/
     }
 }

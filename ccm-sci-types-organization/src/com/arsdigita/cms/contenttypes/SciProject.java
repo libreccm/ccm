@@ -22,7 +22,9 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -90,6 +92,21 @@ public class SciProject extends GenericOrganizationalUnit {
         logger.debug("Static initalizer starting...");
         s_config.load();
         logger.debug("Static initalizer finished.");
+    }
+
+    public enum MemberStatus {
+
+        ALL,
+        ACTIVE,
+        ASSOCIATED,
+        FORMER
+    }
+
+    public enum ProjectStatus {
+
+        ALL,
+        ONGOING,
+        FINISHED
     }
 
     public SciProject() {
@@ -187,10 +204,6 @@ public class SciProject extends GenericOrganizationalUnit {
         remove(SUBPROJECTS, project);
     }
 
-    public boolean hasSubProjects() {
-        return !this.getSubProjects().isEmpty();
-    }
-
     public SciProjectOrganizationsCollection getOrganizations() {
         return new SciProjectOrganizationsCollection((DataCollection) get(
                 ORGANIZATIONS));
@@ -204,7 +217,7 @@ public class SciProject extends GenericOrganizationalUnit {
         link.set(ORGANIZATIONS_ORDER,
                  Integer.valueOf((int) getOrganizations().size()));
         link.set(SciOrganization.PROJECT_ORDER,
-                Integer.valueOf((int) orga.getProjects().size()));
+                 Integer.valueOf((int) orga.getProjects().size()));
         link.save();
     }
 
@@ -283,5 +296,201 @@ public class SciProject extends GenericOrganizationalUnit {
                      Integer.valueOf((int) superProject.getSubProjects().size()));
             link.save();
         }
+    }
+
+    @Override
+    public boolean hasContacts() {
+        boolean result = false;
+
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfContactsOfSciProject");
+        query.setParameter("project", getID());
+
+        if (query.size() > 0) {
+            result = true;
+        } else {
+            result = false;
+        }
+
+        query.close();
+
+        return result;
+    }
+
+    public boolean hasSubProjects() {
+        boolean result = false;
+
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfSubProjectsOfSciProject");
+        query.setParameter("project", getID());
+
+        if (query.size() > 0) {
+            result = true;
+        } else {
+            result = false;
+        }
+
+        query.close();
+
+        return result;
+    }
+
+    /**
+     * 
+     * @param merge Should I also look into the projects and return true
+     * if the organization or at least one of the projects has members?
+     * @return 
+     */
+    public boolean hasMembers(final boolean merge, final MemberStatus status) {
+        String queryName;
+
+        switch (status) {
+            case ALL:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfSciProject";
+                break;
+            case ACTIVE:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfActiveMembersOfSciProject";
+                break;
+            case ASSOCIATED:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfAssociatedMembersOfSciProject";
+                break;
+            case FORMER:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfFormerMembersOfSciProject";
+                break;
+            default:
+                queryName = "";
+                break;
+        }
+
+        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        query.setParameter("project", getID());
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery projectsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubProjectsOfSciProject");
+                projectsQuery.setParameter("project", getID());
+
+                if (query.size() > 0) {
+                    BigDecimal projectId;
+                    boolean result = false;
+                    while (projectsQuery.next()) {
+                        projectId = (BigDecimal) projectsQuery.get(
+                                "projectId");
+                        result = hasMembers(projectId, merge, status);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    projectsQuery.close();
+                    return result;
+                } else {
+                    projectsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    private boolean hasMembers(final BigDecimal projectId,
+                               final boolean merge,
+                               final MemberStatus status) {
+        String queryName;
+
+        switch (status) {
+            case ALL:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfSciProject";
+                break;
+            case ACTIVE:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfActiveMembersOfSciProject";
+                break;
+            case ASSOCIATED:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfAssociatedMembersOfProject";
+                break;
+            case FORMER:
+                queryName =
+                "com.arsdigita.cms.contenttypes.getIdsOfFormerMembersOfSciProject";
+                break;
+            default:
+                queryName = "";
+                break;
+        }
+
+        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        query.setParameter("project", projectId);
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery subProjectsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubProjectsOfSciProject");
+                subProjectsQuery.setParameter("project", projectId);
+
+                if (query.size() > 0) {
+                    BigDecimal subprojectId;
+                    boolean result = false;
+                    while (subProjectsQuery.next()) {
+                        subprojectId = (BigDecimal) subProjectsQuery.get(
+                                "projectId");
+                        result = hasMembers(subprojectId, merge, status);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    subProjectsQuery.close();
+                    return result;
+                } else {
+                    subProjectsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    public boolean hasPublications() {
+        boolean result = false;
+
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationLinksOfSciProject");
+        query.setParameter("project", getID());
+
+        if (query.size() > 0) {
+            result = true;
+        } else {
+            result = false;
+        }
+
+        query.close();
+
+        return result;
     }
 }

@@ -41,8 +41,8 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
     public static final String SHOW_CONTACTS = "contacts";
     public static final String SHOW_MEMBERS = "members";
 
-    private boolean displayContacts;
-    private boolean displayMembers;
+    private boolean displayContacts = true;
+    private boolean displayMembers = true;
 
     @Override
     protected String getDefaultForShowParam() {

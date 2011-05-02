@@ -82,54 +82,34 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         this.displaySubProjects = displaySubProjects;
     }
 
-    protected boolean hasMembers(final SciProject project,
-                                 final List<String> filters) {
-        if (project.getPersons() != null) {
-            GenericOrganizationalUnitPersonCollection persons;
-            persons = project.getPersons();
-            for (String filter : filters) {
-                persons.addFilter(filter);
-            }
-            if (persons.size() > 0) {
-                return true;
-            }
-        }
-
-        boolean hasMembers;
-        hasMembers = false;
-        if (SciProject.getConfig().getOrganizationMembersMerge()) {
-            SciProjectSubProjectsCollection subProjects;
-            subProjects = project.getSubProjects();
-
-            while (subProjects.next()) {
-                SciProject subProject = subProjects.getSubProject();
-
-                hasMembers = hasMembers(subProject, filters);
-                if (hasMembers) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+    protected boolean hasMembers(final SciProject project) {
+        return project.hasMembers(SciProject.getConfig().
+                getOrganizationMembersMerge(),
+                                  SciProject.MemberStatus.ALL);
     }
 
-    protected boolean hasSubProjects(final SciProject project,
-                                     final List<String> filters) {
-        if (project.getSubProjects() != null) {
-
-            SciProjectSubProjectsCollection subProjects;
-            subProjects = project.getSubProjects();
-            for (String filter : filters) {
-                subProjects.addFilter(filter);
-            }
-            if (subProjects.size() > 0) {
-                return true;
-            }
-        }
-        return false;
+    protected boolean hasActiveMembers(final SciProject project) {
+        return project.hasMembers(SciProject.getConfig().
+                getOrganizationMembersMerge(),
+                                  SciProject.MemberStatus.ACTIVE);
     }
 
+    protected boolean hasAssociatedMembers(final SciProject project) {
+        return project.hasMembers(SciProject.getConfig().
+                getOrganizationMembersMerge(),
+                                  SciProject.MemberStatus.ASSOCIATED);
+    }
+
+    protected boolean hasFormerMembers(final SciProject project) {
+        return project.hasMembers(SciProject.getConfig().
+                getOrganizationMembersMerge(),
+                                  SciProject.MemberStatus.FORMER);
+    }
+
+    protected boolean hasSubProjects(final SciProject project) {
+        return project.hasSubProjects();        
+    }
+        
     protected void generateSubProjectsXML(final SciProject project,
                                           final Element parent,
                                           final PageState state,
@@ -151,8 +131,8 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         long end = getPaginatorEnd(begin, count);
         pageNumber = normalizePageNumber(pageCount, pageNumber);
 
-        createPaginatorElement(parent, pageNumber, pageCount, begin, end, count, subProjects.
-                size());
+        createPaginatorElement(parent, pageNumber, pageCount, begin, end, count,
+                               subProjects.size());
         subProjects.setRange((int) begin, (int) end);
 
 
@@ -237,43 +217,37 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
             && displayDescription) {
             availableData.newChildElement("description");
         }
-        if ((project.getContacts() != null)
-            && (project.getContacts().size() > 0)
+        if (project.hasContacts()
             && isDisplayContacts()) {
             availableData.newChildElement("contacts");
         }
-        if ((project.getSubProjects() != null)
-            && (project.getSubProjects().size() > 0)
+        if (hasSubProjects(project)
             && displaySubProjects) {
             availableData.newChildElement("subProjects");
         }
         if (config.getProjectMembersAllInOne()) {
-            if (hasMembers(project, new LinkedList<String>())
+            if (hasMembers(project)
                 && isDisplayMembers()) {
                 availableData.newChildElement("members");
             }
         } else {
-            if (hasMembers(project, getFiltersForActiveMembers())
+            if (hasActiveMembers(project)
                 && isDisplayMembers()) {
                 availableData.newChildElement("activeMembers");
             }
-            if (hasMembers(project, getFiltersForAssociatedMembers())
+            if (hasAssociatedMembers(project)
                 && isDisplayMembers()) {
                 availableData.newChildElement("associatedMembers");
             }
-            if (hasMembers(project, getFiltersForFormerMembers())
+            if (hasFormerMembers(project)
                 && isDisplayMembers()) {
                 availableData.newChildElement("formerMembers");
             }
         }
-        DataCollection publicationLinks =
-                       RelatedLink.getRelatedLinks(project,
-                                                   "SciProjectPublications");
-        if ((publicationLinks != null)
-            && (publicationLinks.size() > 0)
-            && displayPublications) {
+        if (project.hasPublications()
+                && displayPublications) {
             availableData.newChildElement("publications");
-        }
+        }         
 
         String show = getShowParam(state);
 
