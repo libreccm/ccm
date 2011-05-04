@@ -26,7 +26,7 @@ import com.arsdigita.portalworkspace.Workspace;
 
 /** 
  * 
- * Used by the jsp, specified in web.xml and used to construct a perspnal
+ * Used by the jsp, specified in web.xml and used to construct a personal
  * homepage for an loggedIn user
  */
 public class DefaultWorkspaceSelectionModel extends WorkspaceSelectionModel {

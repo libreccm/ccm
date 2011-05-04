@@ -509,11 +509,19 @@ public class CoreLoader extends PackageLoader {
         permissionsNode.mountPackage(permissionsInstance);
     }
 
+    /**
+     * Load core's basic portal infrastructure. 
+     */
     private void loadPortal() {
+/*  Portal now legacy free. To be deleted when transistion is completed.
         s_log.info("Adding package type: portal");
         PackageType packageType = PackageType.create
             ("portal", "Portal", "Portals", "http://arsdigita.com/portal");
-
+*/
+        s_log.info("Adding resource type: portal");
+        // ResourceType manages the entries in table application_types and
+        // therefore actually creates a sort of new style legacy free
+        // application type
         ResourceType type = ResourceType.createResourceType
             ("Portal", Portal.BASE_DATA_OBJECT_TYPE);
         type.setDescription("A Portal!");

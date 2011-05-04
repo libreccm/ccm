@@ -45,6 +45,10 @@ import org.apache.log4j.Logger;
 /**
  * XXX JAVADOC XXX
  *
+ * ResourceType / Resource.pdl maintains the tables application_types and
+ * applications. Creating a ResourceType results in a kind of legacy free
+ * application type (without linkage to permissions and legacy compatible layer).
+ *
  * @see com.arsdigita.kernel.Resource
  * @see com.arsdigita.kernel.ResourceTypeCollection
  * @author Jim Parsons &lt;<a href="mailto:jparsons@redhat.com">jparsons@redhat.com</a>&gt;
@@ -55,13 +59,19 @@ public class ResourceType extends DomainObject {
     /** The logging object for this class. */
     private static final Logger s_log = Logger.getLogger(ResourceType.class);
 
-    // ===== Constants ======================================================= //
+    // ===== Constants ====================================================== //
 
     /** The fully qualified model name of the underlying data object, which in
-     *  this case is the same as the Java type. */
+     *  this case is the same as the Java type.                               */
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.kernel.ResourceType";
 
+    /**
+     * Accessor method for this class Base Data Object Type, i.e. the
+     * underlying data object.
+     *  
+     * @return String data object type name
+     */
     @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -102,10 +112,15 @@ public class ResourceType extends DomainObject {
 
     // ===== Class Methods =================================================== //
 
-    public static ResourceType createResourceType
-        (String title, String resourceObjectType) {
-        return new ResourceType
-            (BASE_DATA_OBJECT_TYPE, title, resourceObjectType);
+    /**
+     * 
+     * @param title
+     * @param resourceObjectType
+     * @return
+     */
+    public static ResourceType createResourceType(String title,
+                                                  String resourceObjectType) {
+        return new ResourceType(BASE_DATA_OBJECT_TYPE, title, resourceObjectType);
     }
 
     // No null params.

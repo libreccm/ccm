@@ -27,8 +27,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.PackageType;
+//import com.arsdigita.domain.DataObjectNotFoundException;
+//import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -41,7 +41,11 @@ import com.arsdigita.web.Web;
 
 
 /**
- * 
+ * Represents a portlet application type.
+ *
+ * It is actually a child of ResourceType where ResourceTypes is parent of
+ * ApplicationType and actually handles entries in table aplication_types (and
+ * is used by class ApplicationType to handle application entries).
  *
  * @author Justin Ross
  * @version $Id: PortletType.java 287 2005-02-22 00:29:02Z sskracic $
@@ -49,8 +53,8 @@ import com.arsdigita.web.Web;
 public class PortletType extends ResourceType {
 
     /** The logging object for this class. */
-    private static final Logger s_cat =
-        Logger.getLogger(PortletType.class.getName());
+    private static final Logger s_cat = Logger
+                                        .getLogger(PortletType.class.getName());
 
     /**
      * The fully qualified model name of the underlying data object, which in
@@ -75,7 +79,8 @@ public class PortletType extends ResourceType {
     }
 
     /**
-     * Create  a new Portlet from packageType.
+     * Create  a new Portlet Type to persist in data storage.
+     * 
      * Do not instantiate directly, use createPortletType(...) instead!
      * @param dataObjectType
      * @param title
@@ -91,9 +96,8 @@ public class PortletType extends ResourceType {
         Assert.exists(title, "title");
         Assert.exists(profile, "profile");
         Assert.exists(portletObjectType, "portletObjectType");
-
+/*  Portal now legacy free. To be deleted when transistion is completed.
         PackageType packageType = null;
-
         // is com.arsdigita.portal.Portal initialized
         try {
             packageType = PackageType.findByKey("portal");
@@ -104,7 +108,19 @@ public class PortletType extends ResourceType {
             s_cat.error(message);
             throw new IllegalStateException(message);
         }
-
+*/
+        // is com.arsdigita.portal.Portal initialized?
+        if ( !ResourceType.isInstalled(Portal.BASE_DATA_OBJECT_TYPE) ) {
+            String message =
+                "The PackageType 'portal' is not installed.  It must be " +
+                "installed in order to create a new PortletType.";
+            s_cat.error(message);
+            throw new IllegalStateException(message);
+            } else {
+            s_cat.debug(" Portal ResourceType " + Portal.BASE_DATA_OBJECT_TYPE
+                                                + " is installed.");
+            }
+        
         setTitle(title);
         setResourceObjectType(portletObjectType);
 
@@ -234,7 +250,7 @@ public class PortletType extends ResourceType {
         return hasFullPageView.booleanValue();
     }
 
-    protected void setFullPageView(boolean hasFullPageView) {
+    protected final void setFullPageView(boolean hasFullPageView) {
         set("hasFullPageView", new Boolean(hasFullPageView));
     }
 
@@ -246,7 +262,7 @@ public class PortletType extends ResourceType {
         return hasEmbeddedView.booleanValue();
     }
 
-    protected void setEmbeddedView(boolean hasEmbeddedView) {
+    protected final void setEmbeddedView(boolean hasEmbeddedView) {
         set("hasEmbeddedView", new Boolean(hasEmbeddedView));
     }
 
@@ -258,7 +274,7 @@ public class PortletType extends ResourceType {
     }
 
     // Param profile can be null.
-    protected void setProfile(String profile) {
+    protected final void setProfile(String profile) {
         set("profile", profile);
     }
 
