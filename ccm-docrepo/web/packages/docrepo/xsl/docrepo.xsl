@@ -17,7 +17,7 @@
 <xsl:output method="html" indent="yes"/>
 
 <xsl:param name="contextPath"/>
-
+<!-- not used in docrepo xsl. may be a copy&paste error  -->
 <xsl:variable name="assets-dir">/packages/portalserver/www/assets</xsl:variable>
 <xsl:variable name="css-dir">/packages/portalserver/www/css</xsl:variable>
 

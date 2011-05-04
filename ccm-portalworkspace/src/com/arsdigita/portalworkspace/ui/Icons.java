@@ -18,6 +18,13 @@ package com.arsdigita.portalworkspace.ui;
 import com.arsdigita.bebop.Image;
 import org.apache.log4j.Logger;
 
+// ////////////////////////////////////////////////////////////////////
+
+// This class is AWFULL! Images are part of the theme, not of the code.
+// Should be removed as soon as possible (pboy)
+
+// ////////////////////////////////////////////////////////////////////
+
 /**
  * This class contains Images for the various CW icons.  These image
  * instances are all locked, so they may not be directly added to a
@@ -44,61 +51,61 @@ public class Icons {
 
     static {
         logger.debug("Static initalizer starting...");
-        USER_16 = new Image("/packages/workspace/www/assets/User16.gif");
+        USER_16 = new Image("/themes/heirloom/packages/portal-workspace/images/User16.gif");
         USER_16.setBorder("0");
         USER_16.lock();
 
-        GROUP_16 = new Image("/packages/workspace/www/assets/Group16.gif");
+        GROUP_16 = new Image("/themes/heirloom/packages/portal-workspace/images/Group16.gif");
         GROUP_16.setBorder("0");
         GROUP_16.lock();
 
-        LEFT_16 = new Image("/packages/workspace/www/assets/left.gif");
+        LEFT_16 = new Image("/themes/heirloom/packages/portal-workspace/images/left.gif");
         LEFT_16.setBorder("0");
         LEFT_16.lock();
 
-        RIGHT_16 = new Image("/packages/workspace/www/assets/right.gif");
+        RIGHT_16 = new Image("/themes/heirloom/packages/portal-workspace/images/right.gif");
         RIGHT_16.setBorder("0");
         RIGHT_16.lock();
 
-        UP_16 = new Image("/packages/workspace/www/assets/up.gif");
+        UP_16 = new Image("/themes/heirloom/packages/portal-workspace/images/up.gif");
         UP_16.setBorder("0");
         UP_16.lock();
 
-        DOWN_16 = new Image("/packages/workspace/www/assets/down.gif");
+        DOWN_16 = new Image("/themes/heirloom/packages/portal-workspace/images/down.gif");
         DOWN_16.setBorder("0");
         DOWN_16.lock();
 
         RADIO_EMPTY_16 =
-            new Image("/packages/workspace/www/assets/RadioEmpty16.gif");
+            new Image("/themes/heirloom/packages/portal-workspace/imagesRadioEmpty16.gif");
         RADIO_EMPTY_16.setBorder("0");
         RADIO_EMPTY_16.lock();
 
         RADIO_FULL_16 =
-            new Image("/packages/workspace/www/assets/RadioFull16.gif");
+            new Image("/themes/heirloom/packages/portal-workspace/images/RadioFull16.gif");
         RADIO_FULL_16.setBorder("0");
         RADIO_FULL_16.lock();
 
         RADIO_EMPTY_GRAYED_16 =
-            new Image("/packages/workspace/www/assets/RadioEmptyGrayed16.gif");
+            new Image("/themes/heirloom/packages/portal-workspace/images/RadioEmptyGrayed16.gif");
         RADIO_EMPTY_GRAYED_16.setBorder("0");
         RADIO_EMPTY_GRAYED_16.lock();
 
         RADIO_FULL_GRAYED_16 =
-            new Image("/packages/workspace/www/assets/RadioFullGrayed16.gif");
+            new Image("/themes/heirloom/packages/portal-workspace/images/RadioFullGrayed16.gif");
         RADIO_FULL_GRAYED_16.setBorder("0");
         RADIO_FULL_GRAYED_16.lock();
 
         CHECK_EMPTY_16 =
-            new Image("/packages/workspace/www/assets/CheckEmpty16.gif");
+            new Image("/themes/heirloom/packages/portal-workspace/images/CheckEmpty16.gif");
         CHECK_EMPTY_16.setBorder("0");
         CHECK_EMPTY_16.lock();
 
         CHECK_FULL_16 =
-            new Image("/packages/workspace/www/assets/CheckFull16.gif");
+            new Image("/themes/heirloom/packages/portal-workspace/images/CheckFull16.gif");
         CHECK_FULL_16.setBorder("0");
         CHECK_FULL_16.lock();
 
-        TRASH_16 = new Image("/packages/workspace/www/assets/delete.gif");
+        TRASH_16 = new Image("/themes/heirloom/packages/portal-workspace/images/delete16.gif");
         TRASH_16.setBorder("0");
         TRASH_16.lock();
         logger.debug("Static initalizer finished.");

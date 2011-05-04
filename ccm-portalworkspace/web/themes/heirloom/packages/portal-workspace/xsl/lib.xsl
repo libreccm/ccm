@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
-  xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
+              xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+             xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
+            xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
   version="1.0">
 
 
@@ -46,7 +46,7 @@
                   </xsl:variable>
                   
                   <a href="{@url}" title="{$title}">
-                    <img src="{@name}.gif" border="0" alt="{$title}"/>
+                    <img src="../images/{@name}.gif" border="0" alt="{$title}"/>
                   </a>
                 </th>
               </xsl:for-each>
@@ -151,16 +151,16 @@
       <xsl:when test="@isSelected = 'false'">
         <td class="tab-label">
           <a href="{@moveLeftAction}">
-            <img src="moveLeft.gif" border="0" style="margin-left: 5px"/>
+            <img src="../images/moveLeft.gif" border="0" style="margin-left: 5px"/>
           </a>
           <a href="{@moveRightAction}">
-            <img src="moveRight.gif" border="0" style="margin-left: 5px"/>
+            <img src="../images/moveRight.gif" border="0" style="margin-left: 5px"/>
           </a>
           <a href="{@selectAction}">
             <xsl:value-of select="title"/>
           </a>
           <a href="{@deleteAction}" onclick="return confirm('Are you sure you want to delete this pane')">
-            <img src="delete.gif" border="0" style="margin-left: 5px"/>
+            <img src="../images/delete.gif" border="0" style="margin-left: 5px"/>
           </a>
         </td>
         <td class="tab-end"/>
@@ -172,12 +172,12 @@
             <tr>
               <td>
                 <a href="{@moveLeftAction}">
-                  <img src="moveLeft.gif" border="0" style="margin-left: 5px"/>
+                  <img src="../images/moveLeft.gif" border="0" style="margin-left: 5px"/>
                 </a>
               </td>
               <td>
                 <a href="{@moveRightAction}">
-                  <img src="moveRight.gif" border="0" style="margin-left: 5px"/>
+                  <img src="../images/moveRight.gif" border="0" style="margin-left: 5px"/>
                 </a>
               </td>
               <td>
@@ -185,7 +185,7 @@
               </td>
               <td>
                 <a href="{@deleteAction}" onclick="return confirm('Are you sure you want to delete this pane')">
-                  <img src="delete.gif" border="0" style="margin-left: 5px"/>
+                  <img src="../images/delete.gif" border="0" style="margin-left: 5px"/>
                 </a>
               </td>
             </tr>
@@ -197,14 +197,14 @@
       <xsl:otherwise>
         <td class="current-tab-label">
           <a href="{@moveLeftAction}">
-            <img src="moveLeft.gif" border="0" style="margin-left: 5px"/>
+            <img src="../images/moveLeft.gif" border="0" style="margin-left: 5px"/>
           </a>
           <a href="{@moveRightAction}">
-            <img src="moveRight.gif" border="0" style="margin-left: 5px"/>
+            <img src="../images/moveRight.gif" border="0" style="margin-left: 5px"/>
           </a>
           <xsl:value-of select="title"/>
           <a href="{@deleteAction}" onclick="return confirm('Are you sure you want to delete this pane')">
-            <img src="delete.gif" border="0" style="margin-left: 5px"/>
+            <img src="../images/delete.gif" border="0" style="margin-left: 5px"/>
           </a>
         </td>
         <td class="current-tab-end"/>

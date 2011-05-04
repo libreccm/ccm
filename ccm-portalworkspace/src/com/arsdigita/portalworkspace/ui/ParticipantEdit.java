@@ -17,7 +17,7 @@ package com.arsdigita.portalworkspace.ui;
 
 import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.event.*;
-import com.arsdigita.bebop.form.*;
+// import com.arsdigita.bebop.form.*;
 import com.arsdigita.kernel.*;
 import com.arsdigita.kernel.permissions.*;
 import com.arsdigita.bebop.list.ListModel;
