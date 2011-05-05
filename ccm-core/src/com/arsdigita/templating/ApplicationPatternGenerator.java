@@ -56,7 +56,7 @@ public class ApplicationPatternGenerator implements PatternGenerator {
         final Application app = Web.getContext().getApplication();
         if (app != null) {
             String[] returnValue = { app.getApplicationType().getName() };
-            s_log.warn("Found application >>"+returnValue+"<< in Application.");
+            s_log.debug("Found application >>"+returnValue+"<< in Application.");
             return returnValue;
         }
         
@@ -84,7 +84,7 @@ public class ApplicationPatternGenerator implements PatternGenerator {
             return returnValue;
         }
 
-        s_log.warn("ApplicationType for " +key +
+        s_log.debug("ApplicationType for " +key +
                     " could not be found in SiteNodes either. Returning empty String[]");
         
         return new String[] {};

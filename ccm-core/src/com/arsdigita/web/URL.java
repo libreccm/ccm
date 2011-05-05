@@ -867,12 +867,12 @@ public class URL {
         return url;
     }
 
-    public static final URL excursion(final HttpServletRequest sreq,
+    public final URL excursion(final HttpServletRequest sreq,
                                       final String path) {
         return URL.excursion(sreq, path, new ParameterMap());
     }
 
-    static final URL login(final HttpServletRequest sreq) {
+    static URL login(final HttpServletRequest sreq) {
         return URL.excursion(sreq, Util.getSecurityHelper().getLoginURL(sreq),
                              (ParameterMap) s_empty.get());
     }
