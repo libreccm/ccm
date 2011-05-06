@@ -22,14 +22,14 @@ import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 
 /**
- * <p>A signal that requests to commit or abort the current transaction
- * and to send a redirect to a new URL.  BaseServlet traps this signal
- * when it is thrown and finishes the transaction before it sends the
- * redirect to the response.  This way the client cannot see state
- * inconsistent with work performed in the previous request.</p>
+ * <p>A signal that requests to commit or abort the current transaction and to
+ * send a redirect to a new URL. BaseServlet traps this signal when it is thrown
+ * and finishes the transaction before it sends the redirect to the response.
+ * This way the client cannot see state inconsistent with work performed in the
+ * previous request.</p>
  *
- * <p><code>RedirectSignal</code>s are usually sent after doing work
- * on behalf of the user:</p>
+ * <p><code>RedirectSignal</code>s are usually sent after doing work on behalf
+ * of the user:</p>
  *
  * <blockquote><pre>
  * private final void saveUserSettings(final HttpServletRequest sreq) {
@@ -52,10 +52,18 @@ import org.apache.log4j.Logger;
  */
 public class RedirectSignal extends TransactionSignal {
 
+    /** Logger instance for debugging support.                               */
     private static final Logger s_log = Logger.getLogger(RedirectSignal.class);
 
+    /** Destination URL where redirect to                                    */
     private final String m_url;
 
+    /**
+     * Constructor 
+     * 
+     * @param url
+     * @param isCommitRequested
+     */
     public RedirectSignal(final String url, final boolean isCommitRequested) {
         super(isCommitRequested);
 
@@ -75,6 +83,12 @@ public class RedirectSignal extends TransactionSignal {
         m_url = url;
     }
 
+    /**
+     * Convenience Constructor for URL objects.
+     * 
+     * @param url
+     * @param isCommitRequested
+     */
     public RedirectSignal(final URL url, final boolean isCommitRequested) {
         this(url.toString(), isCommitRequested);
     }

@@ -62,6 +62,7 @@ public class UserBanner extends SimpleComponent {
      * @param state
      * @param parent
      */
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         init();

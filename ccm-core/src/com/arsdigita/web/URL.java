@@ -853,7 +853,7 @@ public class URL {
         return URL.there(sreq, app, pathInfo);
     }
 
-    public static final URL excursion(final HttpServletRequest sreq,
+    public static URL excursion(final HttpServletRequest sreq,
                                       final String path,
                                       final ParameterMap params) {
         if (s_log.isDebugEnabled()) {
@@ -867,7 +867,7 @@ public class URL {
         return url;
     }
 
-    public final URL excursion(final HttpServletRequest sreq,
+    public static URL excursion(final HttpServletRequest sreq,
                                       final String path) {
         return URL.excursion(sreq, path, new ParameterMap());
     }
