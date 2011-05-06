@@ -38,6 +38,7 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
 import javax.servlet.ServletException;
+import org.apache.log4j.Logger;
 
 /**
  *  Displays statically or
@@ -92,45 +93,33 @@ import javax.servlet.ServletException;
  */
 public class Table extends BlockStylable implements BebopConstants {
 
+    private static final Logger logger = Logger.getLogger(Table.class);
     // Names for HTML Attributes
     private static final String WIDTH = "width";
     private static final String CELL_SPACING = "cellspacing";
     private static final String CELL_PADDING = "cellpadding";
     private static final String BORDER = "border";
-
-    private static final String SELECTED_ROW="row";
-
+    private static final String SELECTED_ROW = "row";
     /**
      * The control event when the user selects one table cell.
      * This control event will only be used when
      */
     protected static final String CELL_EVENT = "cell";
-
     protected static final char SEP = ' ';
-
     private TableModelBuilder m_modelBuilder;
-
     private TableColumnModel m_columnModel;
-
     private TableHeader m_header;
-
     private RequestLocal m_tableModel;
-
     private SingleSelectionModel m_rowSelectionModel;
-
     /**
      * A listener to forward headSelected events originating from the
      * TableHeader. This will be null until somebody actually registers a
      * TableActionListener from the outside.
      */
     private TableActionListener m_headerForward;
-
     private EventListenerList m_listeners;
-
     private TableCellRenderer m_defaultCellRenderer;
-
     private Component m_emptyView;
-
     private boolean m_striped = false;
 
     /**
@@ -184,14 +173,13 @@ public class Table extends BlockStylable implements BebopConstants {
         m_columnModel = c;
         setHeader(new TableHeader(m_columnModel));
         m_rowSelectionModel =
-            new ParameterSingleSelectionModel(new StringParameter(SELECTED_ROW));
+        new ParameterSingleSelectionModel(new StringParameter(SELECTED_ROW));
         m_listeners = new EventListenerList();
         m_defaultCellRenderer = new DefaultTableCellRenderer();
         initTableModel();
     }
 
     // Events and listeners
-
     /**
      * Adds a {@link TableActionListener} to the table. The listener is
      * fired whenever a table cell is clicked.
@@ -200,15 +188,14 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     public void addTableActionListener(TableActionListener l) {
         Assert.isUnlocked(this);
-        if ( m_headerForward == null ) {
+        if (m_headerForward == null) {
             m_headerForward = createTableActionListener();
-            if ( m_header != null ) {
+            if (m_header != null) {
                 m_header.addTableActionListener(m_headerForward);
             }
         }
         m_listeners.add(TableActionListener.class, l);
     }
-
 
     /**
      * Removes a {@link TableActionListener} from the table.
@@ -230,12 +217,11 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     protected void fireCellSelected(PageState state,
                                     Object rowKey, Integer column) {
-        Iterator
-            i=m_listeners.getListenerIterator(TableActionListener.class);
+        Iterator i = m_listeners.getListenerIterator(TableActionListener.class);
         TableActionEvent e = null;
 
         while (i.hasNext()) {
-            if ( e == null ) {
+            if (e == null) {
                 e = new TableActionEvent(this, state, rowKey, column);
             }
             ((TableActionListener) i.next()).cellSelected(e);
@@ -252,18 +238,16 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     protected void fireHeadSelected(PageState state,
                                     Object rowKey, Integer column) {
-        Iterator
-            i=m_listeners.getListenerIterator(TableActionListener.class);
+        Iterator i = m_listeners.getListenerIterator(TableActionListener.class);
         TableActionEvent e = null;
 
         while (i.hasNext()) {
-            if ( e == null ) {
+            if (e == null) {
                 e = new TableActionEvent(this, state, rowKey, column);
             }
             ((TableActionListener) i.next()).headSelected(e);
         }
     }
-
 
     /**
      * Instantiates a new {@link TableActionListener} for this table.
@@ -274,12 +258,12 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     protected TableActionListener createTableActionListener() {
         return new TableActionAdapter() {
-                public void headSelected(TableActionEvent e) {
-                    fireHeadSelected(e.getPageState(), e.getRowKey(), e.getColumn());
-                }
-            };
-    }
 
+            public void headSelected(TableActionEvent e) {
+                fireHeadSelected(e.getPageState(), e.getRowKey(), e.getColumn());
+            }
+        };
+    }
 
     /**
      * @return the {@link TableColumnModel} for this table.
@@ -310,7 +294,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *
      * @param v the new {@link TableModelBuilder}
      */
-    public void setModelBuilder(TableModelBuilder  v) {
+    public void setModelBuilder(TableModelBuilder v) {
         Assert.isUnlocked(this);
         m_modelBuilder = v;
     }
@@ -329,18 +313,18 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param v the new header for this table. If null, the header will be
      *   hidden.
      */
-    public void setHeader(TableHeader  v) {
+    public void setHeader(TableHeader v) {
         Assert.isUnlocked(this);
-        if ( m_headerForward != null ) {
-            if ( m_header != null ) {
+        if (m_headerForward != null) {
+            if (m_header != null) {
                 m_header.removeTableActionListener(m_headerForward);
             }
-            if ( v != null ) {
+            if (v != null) {
                 v.addTableActionListener(m_headerForward);
             }
         }
         m_header = v;
-        if ( m_header != null ) {
+        if (m_header != null) {
             m_header.setTable(this);
         }
     }
@@ -361,7 +345,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param i the numerical index of the column
      * @param v the column that is to be mapped at i
      */
-    public void setColumn(int i, TableColumn  v) {
+    public void setColumn(int i, TableColumn v) {
         getColumnModel().set(i, v);
     }
 
@@ -379,7 +363,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *
      * @param v a {@link SingleSelectionModel}
      */
-    public void setRowSelectionModel(SingleSelectionModel  v) {
+    public void setRowSelectionModel(SingleSelectionModel v) {
         Assert.isUnlocked(this);
         m_rowSelectionModel = v;
     }
@@ -389,8 +373,8 @@ public class Table extends BlockStylable implements BebopConstants {
      *   for selecting the current column.
      */
     public SingleSelectionModel getColumnSelectionModel() {
-        return ( getColumnModel() == null ) ? null :
-            getColumnModel().getSelectionModel();
+        return (getColumnModel() == null) ? null : getColumnModel().
+                getSelectionModel();
     }
 
     /**
@@ -399,7 +383,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *
      * @param v a {@link SingleSelectionModel}
      */
-    public void setColumnSelectionModel(SingleSelectionModel  v) {
+    public void setColumnSelectionModel(SingleSelectionModel v) {
         Assert.isUnlocked(this);
         // TODO: make sure table gets notified of changes
         getColumnModel().setSelectionModel(v);
@@ -431,7 +415,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *
      * @param v the default {@link TableCellRenderer}
      */
-    public final void setDefaultCellRenderer(TableCellRenderer  v) {
+    public final void setDefaultCellRenderer(TableCellRenderer v) {
         m_defaultCellRenderer = v;
     }
 
@@ -443,7 +427,6 @@ public class Table extends BlockStylable implements BebopConstants {
         return m_emptyView;
     }
 
-
     /**
      * Sets the empty view. The empty view is the component that
      * is shown if the table is empty. Usually, the component
@@ -451,12 +434,11 @@ public class Table extends BlockStylable implements BebopConstants {
      *
      * @param v a Bebop component
      */
-    public final void setEmptyView(Component  v) {
+    public final void setEmptyView(Component v) {
         m_emptyView = v;
     }
 
     // Set HTML table attributes
-
     /**
      *  
      * @return the HTML width of the table.
@@ -469,7 +451,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *  
      * @param v the HTML width of the table
      */
-    public void setWidth(String  v) {
+    public void setWidth(String v) {
         setAttribute(WIDTH, v);
     }
 
@@ -485,10 +467,9 @@ public class Table extends BlockStylable implements BebopConstants {
      *  
      * @param v the HTML border of the table
      */
-    public void setBorder(String  v) {
+    public void setBorder(String v) {
         setAttribute(BORDER, v);
     }
-
 
     public String getCellSpacing() {
         return getAttribute(CELL_SPACING);
@@ -498,7 +479,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *  
      * @param v the HTML width of the table
      */
-    public void setCellSpacing(String  v) {
+    public void setCellSpacing(String v) {
         setAttribute(CELL_SPACING, v);
     }
 
@@ -514,7 +495,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *  
      * @param v the HTML cell padding of the table
      */
-    public void setCellPadding(String  v) {
+    public void setCellPadding(String v) {
         setAttribute(CELL_PADDING, v);
     }
 
@@ -529,13 +510,13 @@ public class Table extends BlockStylable implements BebopConstants {
         String rowKey = null;
         Integer column = null;
 
-        if ( CELL_EVENT.equals(event) ) {
+        if (CELL_EVENT.equals(event)) {
             String value = s.getControlEventValue();
             SingleSelectionModel rowSel = getRowSelectionModel();
             SingleSelectionModel colSel = getColumnSelectionModel();
             int split = value.indexOf(SEP);
             rowKey = value.substring(0, split);
-            column = new Integer(value.substring(split+1));
+            column = new Integer(value.substring(split + 1));
             colSel.setSelectedKey(s, column);
             rowSel.setSelectedKey(s, rowKey);
             fireCellSelected(s, rowKey, column);
@@ -552,12 +533,14 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param p the page that contains this table
      */
     public void register(Page p) {
-    	ParameterModel m = getRowSelectionModel() == null ? null : getRowSelectionModel().getStateParameter();
-        if ( m != null ) {
+        ParameterModel m = getRowSelectionModel() == null ? null
+                           : getRowSelectionModel().getStateParameter();
+        if (m != null) {
             p.addComponentStateParam(this, m);
         }
-        m = getColumnSelectionModel() == null ? null : getColumnSelectionModel().getStateParameter();
-        if ( m != null ) {
+        m = getColumnSelectionModel() == null ? null : getColumnSelectionModel().
+                getStateParameter();
+        if (m != null) {
             p.addComponentStateParam(this, m);
         }
         return;
@@ -571,25 +554,26 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     public Iterator children() {
         return new Iterator() {
-                int pos = (getHeader()==null) ? -1 : -2;
 
-                public boolean hasNext() {
-                    return pos < getColumnModel().size() -1;
-                }
+            int pos = (getHeader() == null) ? -1 : -2;
 
-                public Object next() {
-                    pos += 1;
-                    if ( pos == -1 ) {
-                        return getHeader();
-                    } else {
-                        return getColumn(pos);
-                    }
-                }
+            public boolean hasNext() {
+                return pos < getColumnModel().size() - 1;
+            }
 
-                public void remove() {
-                    throw new UnsupportedOperationException("Read-only iterator.");
+            public Object next() {
+                pos += 1;
+                if (pos == -1) {
+                    return getHeader();
+                } else {
+                    return getColumn(pos);
                 }
-            };
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException("Read-only iterator.");
+            }
+        };
     }
 
     /**
@@ -601,12 +585,12 @@ public class Table extends BlockStylable implements BebopConstants {
      * <code>false</code> otherwise.
      */
     public boolean isSelectedRow(PageState s, Object rowKey) {
-        if ( rowKey == null || getRowSelectionModel() == null) {
+        if (rowKey == null || getRowSelectionModel() == null) {
             return false;
         }
         return getRowSelectionModel().isSelected(s)
-            && rowKey.toString().equals(
-                                        getRowSelectionModel().getSelectedKey(s).toString());
+               && rowKey.toString().equals(
+                getRowSelectionModel().getSelectedKey(s).toString());
     }
 
     /**
@@ -619,12 +603,12 @@ public class Table extends BlockStylable implements BebopConstants {
      * <code>false</code> otherwise.
      */
     public boolean isSelectedColumn(PageState s, Object column) {
-        if ( column == null || getColumnSelectionModel() == null) {
+        if (column == null || getColumnSelectionModel() == null) {
             return false;
         }
         return getColumnSelectionModel().isSelected(s)
-            && column.toString().equals(
-                                        getColumnSelectionModel().getSelectedKey(s).toString());
+               && column.toString().equals(
+                getColumnSelectionModel().getSelectedKey(s).toString());
     }
 
     /**
@@ -643,7 +627,6 @@ public class Table extends BlockStylable implements BebopConstants {
     public boolean isSelectedCell(PageState s, Object rowKey, Object column) {
         return isSelectedRow(s, rowKey) && isSelectedColumn(s, column);
     }
-
 
     public void setStriped(boolean striped) {
         m_striped = striped;
@@ -695,13 +678,13 @@ public class Table extends BlockStylable implements BebopConstants {
 
 
         final boolean tableIsRegisteredWithPage =
-            s.getPage().stateContains(getControler());
+                      s.getPage().stateContains(getControler());
 
         if (model.nextRow()) {
             Element table = p.newChildElement(BEBOP_TABLE, BEBOP_XML_NS);
             exportAttributes(table);
             generateExtraXMLAttributes(s, table);
-            if ( getHeader() != null ) {
+            if (getHeader() != null) {
                 getHeader().generateXML(s, table);
             }
             Element tbody = table.newChildElement(BEBOP_TABLEBODY, BEBOP_XML_NS);
@@ -711,37 +694,63 @@ public class Table extends BlockStylable implements BebopConstants {
 
             final int modelSize = getColumnModel().size();
             int row = 0;
-            do {
-                Element trow = tbody.newChildElement(BEBOP_TABLEROW, BEBOP_XML_NS);
 
-                for (int i=0; i< modelSize; i++) {
+            logger.debug("Creating table rows...");
+            long start = System.currentTimeMillis();
+            do {
+                long rowStart = System.currentTimeMillis();
+                Element trow = tbody.newChildElement(BEBOP_TABLEROW,
+                                                     BEBOP_XML_NS);
+
+                for (int i = 0; i < modelSize; i++) {
 
                     TableColumn tc = getColumn(i);
-                    if ( tc.isVisible(s) ) {
+                    if (tc.isVisible(s)) {
                         TableCellRenderer r = tc.getCellRenderer();
-                        if ( r == null ) {
+                        if (r == null) {
                             r = m_defaultCellRenderer;
                         }
                         final int modelIndex = tc.getModelIndex();
                         Object key = model.getKeyAt(modelIndex);
                         Object value = model.getElementAt(modelIndex);
-                        boolean selected = isSelectedCell(s, key, new Integer(i));
+                        boolean selected =
+                                isSelectedCell(s, key, new Integer(i));
                         if (tableIsRegisteredWithPage) {
-                            StringBuffer coords = new StringBuffer(40);
-                            coords.append(model.getKeyAt(modelIndex))
-                                .append(SEP).append(i);
+                            /*StringBuffer coords = new StringBuffer(40);
+                            coords.append(model.getKeyAt(modelIndex)).append(SEP).
+                                    append(i);
                             s.setControlEvent(getControler(), CELL_EVENT,
-                                              coords.toString());
+                                              coords.toString());*/
+
+                            s.setControlEvent(getControler(),
+                                              CELL_EVENT,
+                                              String.format("%s%s%d",
+                                                            model.getKeyAt(
+                                    modelIndex),
+                                                            SEP,
+                                                            i));
                         }
-                        Element cell = trow.newChildElement(BEBOP_CELL, BEBOP_XML_NS);
+
+                        Element cell = trow.newChildElement(BEBOP_CELL,
+                                                            BEBOP_XML_NS);
+
                         tc.exportCellAttributes(cell);
-                        r.getComponent(this, s, value, selected, key, row, i)
-                            .generateXML(s, cell);
+                        long begin = System.currentTimeMillis();
+                        r.getComponent(this, s, value, selected, key, row, i).
+                                generateXML(s, cell);
+                        logger.debug(String.format("until here i needed %d ms",
+                                                   System.currentTimeMillis()
+                                                   - begin));
                     }
                 }
                 row += 1;
+                logger.debug(
+                        String.format("Created row in %d ms",
+                                      System.currentTimeMillis() - rowStart));
             } while (model.nextRow());
-        } else if ( m_emptyView != null ) {
+            logger.debug(String.format("Build table rows in %d ms",
+                                       System.currentTimeMillis() - start));
+        } else if (m_emptyView != null) {
             m_emptyView.generateXML(s, p);
         }
         if (tableIsRegisteredWithPage) {
@@ -771,10 +780,11 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     private void initTableModel() {
         m_tableModel = new RequestLocal() {
-                protected Object initialValue(PageState s) {
-                    return m_modelBuilder.makeModel(Table.this, s);
-                }
-            };
+
+            protected Object initialValue(PageState s) {
+                return m_modelBuilder.makeModel(Table.this, s);
+            }
+        };
     }
 
     /**
@@ -799,7 +809,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * builder use row numbers, converted to strings, as the key for
      * each column of a row.  */
     public static class MatrixTableModelBuilder
-        extends AbstractTableModelBuilder {
+            extends AbstractTableModelBuilder {
 
         private Object[][] m_data;
 
@@ -809,48 +819,46 @@ public class Table extends BlockStylable implements BebopConstants {
 
         public TableModel makeModel(Table t, PageState s) {
             return new TableModel() {
-                    private int row = -1;
 
-                    public int getColumnCount() {
-                        return m_data[0].length;
-                    }
+                private int row = -1;
 
-                    public boolean nextRow() {
-                        return ( ++row < m_data.length );
-                    }
+                public int getColumnCount() {
+                    return m_data[0].length;
+                }
 
-                    public Object getElementAt(int j) {
-                        return m_data[row][j];
-                    }
+                public boolean nextRow() {
+                    return (++row < m_data.length);
+                }
 
-                    public Object getKeyAt(int j) {
-                        return String.valueOf(row);
-                    }
-                };
+                public Object getElementAt(int j) {
+                    return m_data[row][j];
+                }
+
+                public Object getKeyAt(int j) {
+                    return String.valueOf(row);
+                }
+            };
         }
     }
-
-
     /**
      * A {@link TableModel} that has no rows.
      */
     public static final TableModel EMPTY_MODEL = new TableModel() {
 
-            public int getColumnCount() {
-                return 0;
-            }
+        public int getColumnCount() {
+            return 0;
+        }
 
-            public boolean nextRow() {
-                return false;
-            }
+        public boolean nextRow() {
+            return false;
+        }
 
-            public Object getKeyAt(int column) {
-                throw new IllegalStateException("TableModel is empty");
-            }
+        public Object getKeyAt(int column) {
+            throw new IllegalStateException("TableModel is empty");
+        }
 
-            public Object getElementAt(int column) {
-                throw new IllegalStateException("TableModel is empty");
-            }
-        };
-
+        public Object getElementAt(int column) {
+            throw new IllegalStateException("TableModel is empty");
+        }
+    };
 }

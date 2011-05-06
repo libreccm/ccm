@@ -854,8 +854,8 @@ public class URL {
     }
 
     public static URL excursion(final HttpServletRequest sreq,
-                                      final String path,
-                                      final ParameterMap params) {
+                                final String path,
+                                final ParameterMap params) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Creating excursion URL to " + path);
         }
@@ -868,7 +868,7 @@ public class URL {
     }
 
     public static URL excursion(final HttpServletRequest sreq,
-                                      final String path) {
+                                final String path) {
         return URL.excursion(sreq, path, new ParameterMap());
     }
 
@@ -889,15 +889,15 @@ public class URL {
      * @return a <code>String</code> URL
      */
     @Override
-    public final String toString() {
-        if (m_params == null) {
+    public final String toString() {        
+        if (m_params == null) {            
             return m_url.substring(m_serverPortEnd);
         } else {
             String str = m_url.substring(m_serverPortEnd);
-            if (str.contains("?")) {
+            if (str.contains("?")) {                
                 return String.format("%s%s", m_url.substring(m_serverPortEnd),
                                      m_params.toString().replace('?', '&'));
-            } else {
+            } else {                
                 return m_url.substring(m_serverPortEnd) + m_params;
             }
         }

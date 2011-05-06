@@ -35,6 +35,7 @@ import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.mimetypes.MimeTypeCollection;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 
@@ -190,6 +191,10 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
             rl.setResourceType(mType);
         }
         rl.setLinkListName((String) data.get(RelatedLink.LINK_LIST_NAME));
+        
+        DataCollection links = RelatedLink.getRelatedLinks(getContentItem(fse.getPageState()), m_linkListName);
+        rl.setOrder((int) links.size() + 1);
+        
         super.setLinkProperties(link, fse);
     }
 }

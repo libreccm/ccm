@@ -36,12 +36,11 @@ import org.apache.log4j.Logger;
  * @version $Revision: #4 $ $Date: 2004/08/17 $
  * @author Nobuko Asakai (nasakai@redhat.com)
  */
+public abstract class LinkTableModelBuilder
+        extends LockableImpl implements TableModelBuilder {
 
-public abstract class LinkTableModelBuilder 
-    extends LockableImpl implements TableModelBuilder {
-    private static final Logger s_log = 
-        Logger.getLogger(LinkTableModelBuilder.class);
-
+    private static final Logger s_log =
+                                Logger.getLogger(LinkTableModelBuilder.class);
 
     /**
      * Creates the LinKTableModel based on the current table and pagestate
@@ -55,7 +54,7 @@ public abstract class LinkTableModelBuilder
 
         DataCollection links = getLinks(s);
 
-        if ( links.isEmpty() ) {
+        if (links.isEmpty()) {
             return Table.EMPTY_MODEL;
         } else {
             return new LinkTableModel(links);
@@ -75,18 +74,25 @@ public abstract class LinkTableModelBuilder
      * TableModel implementation for Links
      */
     public static class LinkTableModel implements TableModel {
-    
+
         Link m_link;
         DataCollection m_links;
+
         public LinkTableModel(DataCollection links) {
             m_links = links;
             m_link = null;
         }
 
         public boolean nextRow() {
+            s_log.debug(String.format("m_links.size() = %d", m_links.size()));
+            
             if (m_links.next()) {
+                s_log.debug("Getting domain object for link...");
+                long now = System.currentTimeMillis();
                 DataObject object = m_links.getDataObject();
-                m_link = (Link)DomainObjectFactory.newInstance(object);
+                m_link = (Link) DomainObjectFactory.newInstance(object);
+                s_log.debug(String.format("Got domain object in %d ms", System.
+                        currentTimeMillis() - now));
                 return true;
             } else {
                 return false;
@@ -94,7 +100,7 @@ public abstract class LinkTableModelBuilder
         }
 
         public int getColumnCount() {
-            return (int)m_links.size();
+            return (int) m_links.size();
 
         }
 
@@ -105,8 +111,9 @@ public abstract class LinkTableModelBuilder
         public Object getKeyAt(int columnIndex) {
             return m_link.getID();
         }
+
         public long size() {
-	    return m_links.size();
-	}
+            return m_links.size();
+        }
     }
 }

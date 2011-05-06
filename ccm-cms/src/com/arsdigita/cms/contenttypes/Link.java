@@ -74,7 +74,7 @@ public class Link extends ACSObject {
     public static final String ORDER = "linkOrder";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.Link";
+                               "com.arsdigita.cms.contenttypes.Link";
 
     /**
      * Default constructor. This creates a new Link.
@@ -165,8 +165,9 @@ public class Link extends ACSObject {
      * Link.INTERNAL_LINK
      */
     public void setTargetType(String type) {
-        Assert.isTrue(type != null && (type.equals(EXTERNAL_LINK) || type.equals(
-                INTERNAL_LINK)));
+        Assert.isTrue(type != null && (type.equals(EXTERNAL_LINK)
+                                       || type.equals(
+                                       INTERNAL_LINK)));
         set(TARGET_TYPE, type);
     }
 
@@ -196,7 +197,7 @@ public class Link extends ACSObject {
     public ContentItem getTargetItem() {
         DataObject object = (DataObject) get(TARGET_ITEM);
         ACSObject acsObject =
-                (ACSObject) DomainObjectFactory.newInstance(object);
+                  (ACSObject) DomainObjectFactory.newInstance(object);
 
         // Quasimodo: BEGIN
         // This is part of the patch to make RelatedLink (and Link) multilanguage compatible
@@ -207,7 +208,8 @@ public class Link extends ACSObject {
         // If acsObject is instance of ContentBundle
         if (acsObject instanceof ContentBundle) {
             // get the negotiated language version of this ContentBundle 
-            ci = ((ContentBundle) acsObject).negotiate(DispatcherHelper.getRequest().getLocales());
+            ci = ((ContentBundle) acsObject).negotiate(DispatcherHelper.
+                    getRequest().getLocales());
         } else {
             // else there are no language versions so just use the acsObject
             ci = (ContentItem) acsObject;
@@ -299,6 +301,7 @@ public class Link extends ACSObject {
      * @return the Link URI
      */
     public String getInternalOrExternalURI(PageState state) {
+      
         if (EXTERNAL_LINK.equals(getTargetType())) {
             return getTargetURI();
         } else {
@@ -306,7 +309,7 @@ public class Link extends ACSObject {
 
             if (item == null) {
                 s_log.error(getOID()
-                        + " is internal link, but has null target item");
+                            + " is internal link, but has null target item");
                 return "";
             }
 
@@ -314,7 +317,7 @@ public class Link extends ACSObject {
             ItemResolver resolver = section.getItemResolver();
             String url = resolver.generateItemURL(
                     state, item, section, item.getVersion());
-
+          
             if ((getTargetURI() != null) && getTargetURI().startsWith("&")) {
                 ParameterMap parameters;
                 StringTokenizer tokenizer;
@@ -333,12 +336,12 @@ public class Link extends ACSObject {
                         String.format(
                         "Internal link with parameters found. Generated URL is: %s",
                         URL.there(state.getRequest(), url,
-                        parameters).
+                                  parameters).
                         toString()));
                 return URL.there(state.getRequest(), url, parameters).
                         toString();
-            } else {
-                return URL.there(state.getRequest(), url).toString();
+            } else {                
+                return URL.there(state.getRequest(), url).toString();                
             }
         }
     }
@@ -356,8 +359,8 @@ public class Link extends ACSObject {
         Session session = SessionManager.getSession();
         DataCollection links = session.retrieve(BASE_DATA_OBJECT_TYPE);
         Filter filter =
-                links.addInSubqueryFilter("id",
-                "com.arsdigita.cms.contenttypes.getReferringLinks");
+               links.addInSubqueryFilter("id",
+                                         "com.arsdigita.cms.contenttypes.getReferringLinks");
         filter.set("itemID", item.getID());
 
         return links;
@@ -400,7 +403,8 @@ public class Link extends ACSObject {
         swapKeys(true, queryName, operationName, "");
     }
 
-    public void swapWithNext(String queryName, String operationName, String linkListName) {
+    public void swapWithNext(String queryName, String operationName,
+                             String linkListName) {
         swapKeys(true, queryName, operationName, linkListName);
     }
 
@@ -417,7 +421,8 @@ public class Link extends ACSObject {
         swapKeys(false, queryName, operationName, "");
     }
 
-    public void swapWithPrevious(String queryName, String operationName, String linkListName) {
+    public void swapWithPrevious(String queryName, String operationName,
+                                 String linkListName) {
         swapKeys(false, queryName, operationName, linkListName);
     }
 
@@ -457,12 +462,12 @@ public class Link extends ACSObject {
      *  @param queryName This is used to find the key with which to swap
      */
     protected void swapKeys(boolean swapNext, String queryName,
-            String operationName) {
+                            String operationName) {
         this.swapKeys(swapNext, queryName, operationName, "");
     }
 
     protected void swapKeys(boolean swapNext, String queryName,
-            String operationName, String linkListName) {
+                            String operationName, String linkListName) {
 
         String methodName = null;
         if (swapNext) {
@@ -472,7 +477,7 @@ public class Link extends ACSObject {
         }
 
         Assert.isTrue(!isNew(), methodName + " cannot be called on an "
-                + "object that is new");
+                                + "object that is new");
 
         Integer currentKey = (Integer) get(ORDER);
         // if the current item is not already ordered, alphabetize
@@ -483,8 +488,8 @@ public class Link extends ACSObject {
             return;
         }
         Assert.isTrue(currentKey != null, methodName + " cannot be "
-                + "called on an object that is not currently in the "
-                + "list");
+                                          + "called on an object that is not currently in the "
+                                          + "list");
 
         int key = currentKey.intValue();
 
@@ -493,24 +498,26 @@ public class Link extends ACSObject {
 
         int otherKey = key;
 
+        
+        
         if (swapNext) {
             otherKey = key + 1;
             query.addOrder("linkOrder ASC");
             query.addFilter(query.getFilterFactory().greaterThan("linkOrder",
-                    currentKey,
-                    true));
+                                                                 currentKey,
+                                                                 true));
         } else {
             otherKey = key - 1;
             query.addOrder("linkOrder DESC");
             query.addFilter(query.getFilterFactory().lessThan("linkOrder",
-                    currentKey, true));
+                                                              currentKey, true));
         }
 
         if (query.next()) {
             otherKey = ((Integer) query.get("linkOrder")).intValue();
             query.close();
-        }
-
+        }              
+             
         DataOperation operation = getSwapOperation(operationName);
         operation.setParameter("linkOrder", new Integer(key));
         operation.setParameter("nextLinkOrder", new Integer(otherKey));

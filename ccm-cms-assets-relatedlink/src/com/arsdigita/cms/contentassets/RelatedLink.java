@@ -39,26 +39,24 @@ import org.apache.log4j.Logger;
  * @version $Revision: #4 $ $Date: 2004/03/30 $
  * @author Scott Seago (sseago@redhat.com)
  */
-public class RelatedLink extends Link  {
+public class RelatedLink extends Link {
 
     private static final Logger s_log = Logger.getLogger(RelatedLink.class);
-
     /** PDL properties */
     public static final String LINK_LIST_NAME = "linkListName";
     public static final String RESOURCE_SIZE = "resourceSize";
     public static final String RESOURCE_TYPE = "resourceType";
     public static final String LINK_OWNER = "linkOwner";
-    public static final String RELATED_LINKS  = "links";
-
+    public static final String RELATED_LINKS = "links";
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contentassets.RelatedLink";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contentassets.RelatedLink";
 
     /**
      * Default constructor. This creates a new RelatedLink.
      */
     public RelatedLink() {
-        this( BASE_DATA_OBJECT_TYPE );
+        this(BASE_DATA_OBJECT_TYPE);
     }
 
     /**
@@ -69,9 +67,9 @@ public class RelatedLink extends Link  {
      * @param id The <code>id</code> for the retrieved
      * <code>DataObject</code>
      */
-    public RelatedLink( BigDecimal id )
-        throws DataObjectNotFoundException {
-        this( new OID( BASE_DATA_OBJECT_TYPE, id ) );
+    public RelatedLink(BigDecimal id)
+            throws DataObjectNotFoundException {
+        this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     /**
@@ -82,9 +80,9 @@ public class RelatedLink extends Link  {
      * @param oid The <code>OID</code> for the retrieved
      * <code>DataObject</code>
      */
-    public RelatedLink( OID oid )
-        throws DataObjectNotFoundException {
-        super( oid );
+    public RelatedLink(OID oid)
+            throws DataObjectNotFoundException {
+        super(oid);
     }
 
     /**
@@ -94,8 +92,8 @@ public class RelatedLink extends Link  {
      * @param obj The <code>DataObject</code> with which to create or
      * load a content item
      */
-    public RelatedLink( DataObject obj ) {
-        super( obj );
+    public RelatedLink(DataObject obj) {
+        super(obj);
     }
 
     /**
@@ -105,18 +103,18 @@ public class RelatedLink extends Link  {
      * @param type The <code>String</code> data object type of the
      * item to create
      */
-    public RelatedLink( String type ) {
-        super( type );
+    public RelatedLink(String type) {
+        super(type);
     }
 
     /** get the name of the named link list. */
-    public String getLinkListName(){
-      return (String) get(LINK_LIST_NAME);
+    public String getLinkListName() {
+        return (String) get(LINK_LIST_NAME);
     }
 
     /** Set the name of the named link list. */
-    public void setLinkListName(String name){
-      set(LINK_LIST_NAME , name);
+    public void setLinkListName(String name) {
+        set(LINK_LIST_NAME, name);
     }
 
     /**
@@ -124,12 +122,12 @@ public class RelatedLink extends Link  {
      * 
      * @return <code>MimeType</code> of target resource.
      */
-    public MimeType getResourceType(){
-      DataObject obj = (DataObject) get ( RESOURCE_TYPE );
-      if(obj != null){
-        return new MimeType(obj);
-      }
-      return null;
+    public MimeType getResourceType() {
+        DataObject obj = (DataObject) get(RESOURCE_TYPE);
+        if (obj != null) {
+            return new MimeType(obj);
+        }
+        return null;
     }
 
     /**
@@ -137,18 +135,18 @@ public class RelatedLink extends Link  {
      * 
      * @param type , <code>MimeType</code> of target resource.
      */
-    public void setResourceType(MimeType type){
-      setAssociation(RESOURCE_TYPE , type);
+    public void setResourceType(MimeType type) {
+        setAssociation(RESOURCE_TYPE, type);
     }
 
     /** get the size of the target resource. */
-    public String getResourceSize(){
-      return (String) get(RESOURCE_SIZE);
+    public String getResourceSize() {
+        return (String) get(RESOURCE_SIZE);
     }
 
     /** Set the size of the target resource. */
-    public void setResourceSize(String size){
-      set(RESOURCE_SIZE , size);
+    public void setResourceSize(String size) {
+        set(RESOURCE_SIZE, size);
     }
 
     /** 
@@ -172,7 +170,7 @@ public class RelatedLink extends Link  {
         if (dobj == null) {
             return null;
         } else {
-            return (ContentItem)DomainObjectFactory.newInstance(dobj);
+            return (ContentItem) DomainObjectFactory.newInstance(dobj);
         }
 
     }
@@ -185,12 +183,20 @@ public class RelatedLink extends Link  {
      * @return 
      */
     public static DataCollection getRelatedLinks(ContentItem item, String name) {
-        s_log.debug("Getting related links for a content item");
+        s_log.debug(String.format("Getting related links for content item %s",
+                                  item.getID()));
+        long now = System.currentTimeMillis();
+        s_log.debug(String.format("Started at %d", now));
         Session session = SessionManager.getSession();
         DataCollection links = session.retrieve(BASE_DATA_OBJECT_TYPE);
         links.addEqualsFilter(LINK_OWNER + ".id", item.getID());
         links.addEqualsFilter(LINK_LIST_NAME, name);
         links.addOrder(ORDER);
+        s_log.debug(String.format(
+                "Got all related links for content item %s in %d ms. (time finished: %d)",
+                item.getID().toString(),
+                System.currentTimeMillis() - now,
+                System.currentTimeMillis()));
         return links;
     }
 
@@ -205,12 +211,13 @@ public class RelatedLink extends Link  {
     public static DataCollection getReferringRelatedLinks(ContentItem item) {
         Session session = SessionManager.getSession();
         DataCollection links = session.retrieve(BASE_DATA_OBJECT_TYPE);
-        Filter filter = links.addInSubqueryFilter("id", "com.arsdigita.cms.contentassets.getReferringRelatedLinks");
+        Filter filter =
+               links.addInSubqueryFilter("id",
+                                         "com.arsdigita.cms.contentassets.getReferringRelatedLinks");
         filter.set("itemID", item.getID());
-        
+
         return links;
     }
-
 
     /**
      * Swaps this <code>RelatedLink</code> with the next one,
@@ -218,9 +225,10 @@ public class RelatedLink extends Link  {
      */
     @Override
     public void swapWithNext() {
-        swapWithNext("com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
-                     "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
-                     this.getLinkListName());
+        swapWithNext(
+                "com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
+                "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
+                this.getLinkListName());
     }
 
     /**
@@ -229,9 +237,10 @@ public class RelatedLink extends Link  {
      */
     @Override
     public void swapWithPrevious() {
-        swapWithPrevious("com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
-                         "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
-                         this.getLinkListName());
+        swapWithPrevious(
+                "com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
+                "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
+                this.getLinkListName());
     }
 
     /**
@@ -268,8 +277,6 @@ public class RelatedLink extends Link  {
         return operation;
     }
 
-
-
     /**
      * This method is only used for setting initial sort keys for
      * links which exist without them. This is called by swapKeys
@@ -291,7 +298,7 @@ public class RelatedLink extends Link  {
             link.setOrder(sortKey);
             link.save();
         }
-        
+
     }
 
     /**
@@ -306,27 +313,27 @@ public class RelatedLink extends Link  {
             return 0;
         }
         int returnOrder = 0;
-        DataQuery query = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem");
+        DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem");
         query.setParameter("ownerID", getLinkOwner().getID());
         query.setParameter("linkListName", getLinkListName());
         query.addOrder("linkOrder DESC");
         if (query.next()) {
-            Integer linkOrder = ((Integer)query.get("linkOrder"));
+            Integer linkOrder = ((Integer) query.get("linkOrder"));
             query.close();
             if (linkOrder != null) {
                 returnOrder = linkOrder.intValue();
             }
         }
         return returnOrder;
-        
+
     }
 
     @Override
     public void beforeSave() {
         super.beforeSave();
         if (getOrder() == null) {
-            setOrder(maxOrder()+1);
+            setOrder(maxOrder() + 1);
         }
     }
 }
