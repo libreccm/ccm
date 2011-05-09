@@ -143,7 +143,7 @@ public class BaseQueryEngine implements QueryEngine {
         }
         com.arsdigita.persistence.Filter f = sql.getFilterFactory().simple(
               Document.ID + " in ( com.arsdigita.search.partyPermissionFilterStub "
-              + " and  RAW[" + privilege.getColumnName() + " = 1 ])");
+              + " and  RAW[" + privilege.getColumnName() + " = '1' ])");
         f.set("partyID", PermissionManager.constructAccessList(partyOID));
         sql.appendClause(f);
     }
