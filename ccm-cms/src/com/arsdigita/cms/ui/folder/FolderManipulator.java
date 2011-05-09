@@ -53,6 +53,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.OptionGroup;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ArrayParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -132,7 +133,8 @@ public class FolderManipulator extends SimpleContainer
         add(m_targetSelector);
         m_targetSelector.addProcessListener(this);
         m_targetSelector.addValidationListener(this);
-        m_targetSelector.addSubmissionListener(this);
+        m_targetSelector.addSubmissionListener(this);        
+                
     }
 
     @Override
@@ -142,7 +144,7 @@ public class FolderManipulator extends SimpleContainer
         p.setVisibleDefault(m_filterForm, true);
         p.addComponentStateParam(this, m_sources);
         p.addComponentStateParam(this, m_action);
-        p.addComponentStateParam(this, m_filter);
+        p.addComponentStateParam(this, m_filter);        
     }
 
     public final BigDecimal[] getSources(PageState s) {
@@ -194,7 +196,8 @@ public class FolderManipulator extends SimpleContainer
 
 
         for (int i = 0; i < items.length; i++) {
-            ContentItem item = (ContentItem) DomainObjectFactory.newInstance(new OID(
+            ContentItem item =
+                        (ContentItem) DomainObjectFactory.newInstance(new OID(
                     ContentItem.BASE_DATA_OBJECT_TYPE, items[i]));
 
             Assert.exists(item, ContentItem.class);
@@ -310,7 +313,8 @@ public class FolderManipulator extends SimpleContainer
                         d.addError(name + (String) globalize(
                                 "cms.ui.folder.item_is_live").localize());
                     }
-                    if ((!sm.canAccess(user, SecurityManager.DELETE_ITEM, item)) && isMove(
+                    if ((!sm.canAccess(user, SecurityManager.DELETE_ITEM, item))
+                        && isMove(
                             s)) {
                         d.addError((String) globalize(
                                 "cms.ui.folder.no_permission_for_item").localize()
@@ -343,7 +347,7 @@ public class FolderManipulator extends SimpleContainer
         m_targetSelector.setVisible(s, false);
         m_targetSelector.reset(s);
         s.setValue(m_action, null);
-        s.setValue(m_sources, null);
+        s.setValue(m_sources, null);        
     }
 
     // The form containing the tree to select the target folder from
@@ -370,7 +374,8 @@ public class FolderManipulator extends SimpleContainer
                     int n = getSources(s).length;
                     Folder f = (Folder) m_srcFolderSel.getSelectedObject(s);
                     String msg = n + "&nbsp;" + (String) globalize(
-                            "cms.ui.folder.items").localize() + "&nbsp;" + (String) globalize(
+                            "cms.ui.folder.items").localize() + "&nbsp;"
+                                 + (String) globalize(
                             "cms.ui.folder.from").localize() + "&nbsp;/" + f.
                             getPathNoJsp() + "&nbsp;" + (String) globalize(
                             "cms.ui.folder.to").localize();
@@ -533,7 +538,7 @@ public class FolderManipulator extends SimpleContainer
             this.modelBuilder = modelBuilder;
 
             addProcessListener(this);
-            addInitListener(this);
+            addInitListener(this);          
             addSubmissionListener(this);
 
             panel = new BoxPanel(BoxPanel.HORIZONTAL);
@@ -563,9 +568,11 @@ public class FolderManipulator extends SimpleContainer
                 panel.add(link);
             }
 
-            /*panel.add(new Label("filter"));
+            panel.add(new Label((String) globalize("cms.ui.folder.filter").localize()));
             panel.add(new TextField(m_filter));
-            panel.add(new Submit("filterFolderSubmit", "filter"));*/
+            panel.add(
+                    new Submit("filterFolderSubmit",
+                               (String) globalize("cms.ui.folder.filter_do").localize()));
 
             add(panel);
 
@@ -583,7 +590,8 @@ public class FolderManipulator extends SimpleContainer
         @Override
         public boolean isVisible(PageState state) {
             if (super.isVisible(state)
-                && (modelBuilder.getFolderSize(state) >= CMSConfig.getInstance().getFolderAtoZShowLimit())) {
+                && (modelBuilder.getFolderSize(state) >= CMSConfig.getInstance().
+                    getFolderAtoZShowLimit())) {
                 return true;
             } else {
                 return false;
@@ -667,7 +675,7 @@ public class FolderManipulator extends SimpleContainer
                 /*
                 DataQuery dq = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.FoldersAndAllSubFolders");
                 dq.setParameter("item_list", invalidFolders);
-
+                
                 while (dq.next()) {
                 invalidFolders.add (dq.get("folder_id").toString());
                 }
