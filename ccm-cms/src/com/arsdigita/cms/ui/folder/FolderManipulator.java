@@ -144,7 +144,7 @@ public class FolderManipulator extends SimpleContainer
         p.setVisibleDefault(m_filterForm, true);
         p.addComponentStateParam(this, m_sources);
         p.addComponentStateParam(this, m_action);
-        p.addComponentStateParam(this, m_filter);        
+        p.addComponentStateParam(this, m_filter);               
     }
 
     public final BigDecimal[] getSources(PageState s) {
@@ -347,7 +347,8 @@ public class FolderManipulator extends SimpleContainer
         m_targetSelector.setVisible(s, false);
         m_targetSelector.reset(s);
         s.setValue(m_action, null);
-        s.setValue(m_sources, null);        
+        s.setValue(m_sources, null);      
+        s.setValue(m_filter, null);
     }
 
     // The form containing the tree to select the target folder from
@@ -529,6 +530,7 @@ public class FolderManipulator extends SimpleContainer
         private SimpleContainer panel;
         private boolean visible;
         private FilterFormModelBuilder modelBuilder;
+        private TextField filterField;
 
         public FilterForm(FilterFormModelBuilder modelBuilder) {
             super("folderFilterForm");
@@ -569,7 +571,8 @@ public class FolderManipulator extends SimpleContainer
             }
 
             panel.add(new Label((String) globalize("cms.ui.folder.filter").localize()));
-            panel.add(new TextField(m_filter));
+            filterField = new TextField(m_filter);
+            panel.add(filterField);
             panel.add(
                     new Submit("filterFolderSubmit",
                                (String) globalize("cms.ui.folder.filter_do").localize()));
@@ -578,10 +581,16 @@ public class FolderManipulator extends SimpleContainer
 
         }
 
+        public TextField getFilterField() {
+            return filterField;
+        }
+        
         public void process(FormSectionEvent fse) throws FormProcessException {
         }
 
         public void init(FormSectionEvent fse) throws FormProcessException {
+            fse.getPageState().setValue(FolderManipulator.this.m_filter, null);
+            filterField.setValue(fse.getPageState(), null);
         }
 
         public void submitted(FormSectionEvent fse) throws FormProcessException {
