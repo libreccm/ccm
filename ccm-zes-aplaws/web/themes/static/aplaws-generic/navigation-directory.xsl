@@ -4,8 +4,8 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
   version="1.0">
 
-  <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../ROOT/packages/ui/xsl/ui.xsl"/>
+  <xsl:import href="../../heirloom/packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../heirloom/packages/ui/xsl/ui.xsl"/>
   <xsl:import href="lib/page.xsl"/>
 
   <xsl:param name="theme-prefix" />

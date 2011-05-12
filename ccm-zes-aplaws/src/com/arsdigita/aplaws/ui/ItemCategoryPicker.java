@@ -43,13 +43,14 @@ import com.arsdigita.london.terms.ui.TermWidget;
 
 
 public class ItemCategoryPicker extends ACSObjectCategoryPicker {
-    private static final Logger s_log = Logger.getLogger(ItemCategoryPicker.class);
 
+    private static final Logger s_log = Logger.getLogger(ItemCategoryPicker.class);
+    // private static final class s_picker =  this ;
    
     public ItemCategoryPicker(BigDecimalParameter root,
                               StringParameter mode) {
-                      super(root, mode);
-           s_log.debug("instantiating ItemCategoryPicker");
+        super(root, mode);
+        s_log.debug("instantiating ItemCategoryPicker");
         
     }
 
@@ -59,7 +60,8 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
                          com.arsdigita.bebop.parameters.BigDecimalParameter, 
                          com.arsdigita.bebop.parameters.StringParameter)
      */
-    protected ACSObjectCategoryForm getForm(BigDecimalParameter root, StringParameter mode) {
+    protected ACSObjectCategoryForm getForm(BigDecimalParameter root,
+                                            StringParameter mode) {
         s_log.debug("getForm");
         return new ItemCategoryForm(root, mode, new TermWidget(mode, this));
     }

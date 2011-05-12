@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/london/navigation"
-  xmlns:search="http://rhea.redhat.com/search/1.0"
-  xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+              xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+             xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
+                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:nav="http://ccm.redhat.com/london/navigation"
+             xmlns:search="http://rhea.redhat.com/search/1.0"
+             xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search portal"
-	version="1.0">
+                  version="1.0">
 
-<xsl:import href="../../../../ROOT/__ccm__/apps/portalworkspace/xsl/index.xsl"/>
+<!--  <xsl:import href="../../../__ccm__/apps/workspace/xsl/index.xsl"/>  -->
+<xsl:import href="../../heirloom/apps/portal-workspace/xsl/index.xsl"/>
+
 <xsl:import href="portal/lib.xsl"/>
 <xsl:import href="portal/portlets.xsl"/>
 <xsl:import href="lib/header.xsl"/>
 <xsl:import href="lib/lib.xsl"/>
-<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
+<!-- <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>  -->
+<xsl:import href="../../heirloom/packages/bebop/xsl/dcp.xsl"/>
 
 <xsl:param name="context-prefix"></xsl:param>
 <xsl:param name="dispatcher-prefix" />
@@ -41,8 +44,9 @@
 	
 	<body>
         <xsl:call-template name="bebop:dcpJavascript"/>
-		<a class="navHide" href="#startcontent" title="Go directly to main content"
-                           accesskey="S">Skip over navigation</a>
+		<a class="navHide" href="#startcontent" 
+                   title="Go directly to main content"
+                   accesskey="S">Skip over navigation</a>
 		<span class="hide">|</span>
 		<xsl:call-template name="header"/>
 		<xsl:call-template name="wsBreadcrumb"/>
@@ -52,7 +56,7 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates select="portal:workspace"/>
-						<xsl:call-template name="footer"/>
+			<xsl:call-template name="footer"/>
           </xsl:otherwise>
        </xsl:choose>
 	</body>

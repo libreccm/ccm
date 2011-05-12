@@ -8,6 +8,13 @@
               title="childCategories"
               cache="true">
 
+    <!-- Class had been moved from ccm-ldn-aplaws to ccm-ldn-terms in
+         order to avoid dependencies between modules, ccm-forum-categorised
+         and a specific kind of the integration module ccm-???-aplaws.
+    <define:component name="catSubtree"
+      classname="com.arsdigita.aplaws.ui.CategorySubtree"/>
+    -->
+
     <define:component name="catSubtree"
       classname="com.arsdigita.london.terms.ui.CategorySubtree"/>
   </define:page>

@@ -18,9 +18,7 @@
 
 package com.arsdigita.aplaws;
 
-import com.arsdigita.london.navigation.Navigation;
 import com.arsdigita.london.navigation.Template;
-import com.arsdigita.london.navigation.TemplateMapping;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
 import com.arsdigita.portalworkspace.PageLayout;
@@ -37,19 +35,19 @@ import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.runtime.ScriptContext;
-import com.arsdigita.util.Assert;
-import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.parameter.BooleanParameter;
+// import com.arsdigita.util.Assert;
+// import com.arsdigita.util.UncheckedWrapperException;
+// import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.URLParameter;
+// import com.arsdigita.util.parameter.URLParameter;
 import com.arsdigita.web.Application;
 
 import org.apache.log4j.Logger;
 
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.util.Date;
+// import java.net.URL;
+// import java.net.MalformedURLException;
+// import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -138,7 +136,8 @@ public class Loader extends PackageLoader {
         String[] files = categoryFiles;
 
         final Parser parser = new Parser();
-        for (int i = 0; i < files.length; i++) {
+        // for each filename in the array of files containing categories
+        for (int i = 0 ; i < files.length ; i++) {
             final String file = files[i];
             if (s_log.isInfoEnabled()) {
                 s_log.info("Process " + file);
@@ -181,10 +180,18 @@ public class Loader extends PackageLoader {
         registerNavigationTemplates();
 
         // Switch /portal/ to use 1 column layout for funky aplaws stuff.
-        Workspace portal = (Workspace)Application
+        // pboy: This will have no effect at all. A portal page created at
+        // url /portal/ (and beneath) will always use the homepage jsp's which
+        // are hardcoded to create a three column design and ignore any
+        // column configuration. All portal pages at other urls are not
+        // affect by this setting which touches only the one application (portal)
+        // at url /portal/. Portal pages at other urls use the corresponding
+        // configuration parameter for its initial value and number of columns
+        // may be modified at any time using configuration ui.
+/*      Workspace portal = (Workspace)Application
               .retrieveApplicationForPath("/portal/");
         portal.setDefaultLayout(PageLayout
-              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));
+              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));             */
     }   // end run method
 
 //  public void registerServicesTemplate(String appURL) {
@@ -288,6 +295,7 @@ public class Loader extends PackageLoader {
     // --     "com.arsdigita.aplaws.custom_nav_key",
     // --     Parameter.REQUIRED,
     // --     "APLAWS-NAVIGATION");
+
     /*   Zugriff auf Website wird nicht benötigt, aber der Parameter bei Einrichtung
      *   der Kategorien. Funktion URL prüft auf korrekte Syntax, nicht auf Existenz
      */
@@ -354,8 +362,7 @@ public class Loader extends PackageLoader {
         Application app = Application.retrieveApplicationForPath(appURL);
         domain.setAsRootForObject(app, context);
         if (app instanceof ContentSection) {
-            RoleCollection coll = ((ContentSection) app).getStaffGroup().
-                    getOrderedRoles();
+            RoleCollection coll = ((ContentSection) app).getStaffGroup().getOrderedRoles();
             Set adminRoles = new HashSet();
             Set categorizeRoles = new HashSet();
             while (coll.next()) {
@@ -366,26 +373,22 @@ public class Loader extends PackageLoader {
                     String priv = (String) privs.get(RoleFactory.PRIVILEGE);
                     if (priv.equals(SecurityManager.CMS_CATEGORY_ADMIN)) {
                         adminRoles.add(role);
-                    } else if (priv.equals(
-                            SecurityManager.CMS_CATEGORIZE_ITEMS)) {
+                    } else if (priv.equals(SecurityManager.CMS_CATEGORIZE_ITEMS)) {
                         categorizeRoles.add(role);
                     }
                 }
 
             }
-            RootCategoryCollection catCollection = Category.getRootCategories(
-                    ((ContentSection) app));
+            RootCategoryCollection catCollection = Category.getRootCategories(((ContentSection) app));
             while (catCollection.next()) {
                 Iterator adminIter = adminRoles.iterator();
                 while (adminIter.hasNext()) {
-                    ((Role) adminIter.next()).grantPermission(catCollection.
-                            getCategory(),
+                    ((Role) adminIter.next()).grantPermission(catCollection.getCategory(),
                                                               PrivilegeDescriptor.ADMIN);
                 }
                 Iterator categorizeIter = categorizeRoles.iterator();
                 while (categorizeIter.hasNext()) {
-                    ((Role) categorizeIter.next()).grantPermission(catCollection.
-                            getCategory(),
+                    ((Role) categorizeIter.next()).grantPermission(catCollection.getCategory(),
                                                                    Category.MAP_DESCRIPTOR);
                 }
             }
