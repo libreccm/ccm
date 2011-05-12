@@ -38,10 +38,14 @@
   </version>
 
   <version from="6.6.0" to="6.6.1">
-<!--
--->
     <script sql="ccm-cms/upgrade/::database::-6.6.0-6.6.1.sql"/>
     <script class="com.arsdigita.cms.upgrade.CreateGenericContentTypes"/>
+  </version>
+  <version from="6.6.1" to="6.6.2">
+    <script class="com.arsdigita.cms.upgrade.AddNewStyleApplicationEntries"/>
+<!--
+    <script sql="ccm-cms/upgrade/::database::-6.6.0-6.6.1.sql"/>
+-->
   </version>
 
 </upgrade>

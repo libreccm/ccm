@@ -181,14 +181,15 @@ public class Application extends Resource {
 						final String title,
 						final Application parent,
 						final boolean createContainerGroup) {
-	final ApplicationType type =
-			ApplicationType.retrieveApplicationTypeForApplication(typeName);
+        final ApplicationType type = ApplicationType
+                                     .retrieveApplicationTypeForApplication(
+                                                                      typeName);
         if (type == null) {
             throw new IllegalArgumentException(
                       "No ApplicationType found for type name " + typeName);
         }
-	return Application.createApplication(type,fragment,
-                                         title,parent,createContainerGroup);
+        return Application.createApplication(type,fragment,
+                                             title,parent,createContainerGroup);
     }
 
     /**
@@ -206,10 +207,11 @@ public class Application extends Resource {
      */
     public static Application createApplication(
                                         final ApplicationType type,
-				                		final String fragment,
-						                final String title,
-						                final Application parent,
-					                	final boolean createContainerGroup) {
+                                        final String fragment,
+                                        final String title,
+                                        final Application parent,
+                                        final boolean createContainerGroup) {
+
         if (Assert.isEnabled()) {
             Assert.exists(type, ApplicationType.class);
             Assert.exists(fragment, String.class);
@@ -219,10 +221,12 @@ public class Application extends Resource {
         }
         s_log.debug("Application type legacy free: " + type.m_legacyFree );
         if (type.m_legacyFree) {
-            return Application.make(type,fragment,title,parent,createContainerGroup);
+            return Application.make(type,fragment,title,parent,
+                                    createContainerGroup);
         } else {
             s_log.debug("Creating legacy compatible app");
-            return Application.legacyMake(type,fragment,title,parent,createContainerGroup);
+            return Application.legacyMake(type,fragment,title,parent,
+                                          createContainerGroup);
         }
     }
 
@@ -295,6 +299,7 @@ public class Application extends Resource {
                                           final String title,
                                           final Application parent,
                                           final boolean createContainerGroup) {
+
 	final Application application =	(Application) Resource.createResource(
                                                            type, title, parent);
         if (createContainerGroup) {
@@ -636,8 +641,8 @@ public class Application extends Resource {
         return apps;
     }
 
-    public static boolean isInstalled
-        (String applicationObjectType, String path) {
+    public static boolean isInstalled (String applicationObjectType,
+                                       String path) {
         DataCollection dataCollection =
             SessionManager.getSession().retrieve(applicationObjectType);
 

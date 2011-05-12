@@ -60,7 +60,7 @@ public class ApplicationType extends ResourceType {
      * this case is the same as the Java type (full qualified class name).
      */
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.web.ApplicationType";
+                               "com.arsdigita.web.ApplicationType";
 
     private PackageType m_packageType;
     boolean m_legacyFree = false;
@@ -69,12 +69,15 @@ public class ApplicationType extends ResourceType {
      * Constructor creates a new ApplicationType instance to encapsulate a given
      * data object (@see com.arsdigita.persistence.Session#retrieve(String) ).
      * The super implementation uses overwritable methods initialize() and
-     * postInitialization() to further process the dataObject (see below).
+     * postInitialization() to further process the dataObject.
      * 
      * @param dataObject
      */
     public ApplicationType(DataObject dataObject) {
         super(dataObject);
+        if (this.getPackageType() == null) { // indicates a legacy free app
+            m_legacyFree = true;
+        }   // otherwise leave it on its default value of false
     }
 
     protected ApplicationType(String dataObjectType) {
@@ -85,6 +88,12 @@ public class ApplicationType extends ResourceType {
                               final String title,
                               final String applicationObjectType) {
         this(objectType, title, applicationObjectType, false);
+    //  under some circumstances m_legacyFree is set correctly to true
+        if (m_legacyFree == false) {  //check if default value is correct!
+            if (this.getPackageType() == null) { // indicates a legacy free app
+                m_legacyFree = true;
+            }   // otherwise leave it on its default value of false
+        }
 
     }
 
@@ -228,7 +237,7 @@ public class ApplicationType extends ResourceType {
 
     /**
      * Helper method to create a packageType for a new legacy compatible 
-     * application type without a already existing (i.e. installed in db) legacy
+     * application type without an already existing (i.e. installed in db) legacy
      * application.
      * 
      * @param key of the package to be created
@@ -315,7 +324,8 @@ public class ApplicationType extends ResourceType {
 
     // Can return null.
     public static ApplicationType retrieveApplicationTypeForApplication
-        (String applicationObjectType) {
+                                      (String applicationObjectType) {
+
         Assert.exists(applicationObjectType, "applicationObjectType");
 
         DataCollection collection =
@@ -609,19 +619,28 @@ public class ApplicationType extends ResourceType {
      * So wwe have to provide this functionality by ApplicationType as well
      * which has no kind of "key" by design.
      */
+    // XXX we need a better way to determine a name, probably using
+    // the class name without leading package name.
     public String getName() {
 
-        // m_legacyFree seems sometimes not set correctly!
-//      if (m_legacyFree == true ) {
-        if (getPackageType() == null) { // indicates a legacy free ApplicationType
-            // XXX we need a better way to determine a name, probably using
-            // the class name without leading package name.
+        if (m_legacyFree == true ) {
             s_log.debug("Expect XSL templates at " + StringUtils.urlize(getTitle()));
             return StringUtils.urlize(getTitle());
         } else {
-            return this.getPackageType().getKey();
-        }
+            // m_legacyFree seems sometimes not set correctly! It's odd but the
+            // goal is to get rid of legacy code so it should do it for the
+            // time beeing. We check getPackageType to see if m_legacyFree is
+            // really set correctly.
+            if (getPackageType() == null) { // indicates legacy free App
+                s_log.debug("Expect XSL templates at "
+                            + StringUtils.urlize(getTitle()));
+                m_legacyFree = true;   // correct m_legacyFree for future use
+                return StringUtils.urlize(getTitle());
+            } else {
+                return this.getPackageType().getKey();
+            }
 
+        }
     }
 
     /**

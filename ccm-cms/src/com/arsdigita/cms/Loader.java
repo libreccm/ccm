@@ -127,12 +127,13 @@ public class Loader extends PackageLoader {
             "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
     // To be updated soon...
     // "com.arsdigita.dispatcher.DefaultPackageDispatcher";
-    /**
-     * Stylesheet which has to be assigned as part of a legacy application
-     * creation.
-     */
-    private final static String WORKSPACE_STYLESHEET =
-            "/packages/content-section/xsl/content-center.xsl";
+
+//  /**
+//   * Stylesheet which has to be assigned as part of a legacy application
+//   * creation.
+//   */
+//  private final static String WORKSPACE_STYLESHEET =
+//          "/packages/content-section/xsl/content-center.xsl";
     /**
      * Name of the CMS service package instance, i.e. its URL.
      */
@@ -170,11 +171,11 @@ public class Loader extends PackageLoader {
 
                 // 2 - step 1b) Setup the Workspace package.
                 loadWorkspacePackage();  // using old stype
-                // loadWorkspacePackageNewStyle();
+                // loadWorkspacePackageNewStyle();  // using new style
 
                 // 3 - step 1c) Setup the CMS global services package.
                 loadServicePackage();   // using olde style
-                // loadServicePackageNewStyle();
+                // loadServicePackageNewStyle();  // using new style
 
                 // 4 - step 1d) Load the content-center page mappings
                 // Wrong! Is Initializer task, must be done each startup, in
@@ -283,19 +284,6 @@ public class Loader extends PackageLoader {
                     "Content Centers",
                     "http://cms-workspace.arsdigita.com/");
             type.setDispatcherClass(WORKSPACE_DISPATCHER_CLASS);
-
-            // Register a stylesheet to the Content Center package.
-   //  Registering a Stylesheet referrs to the old LegacyStylesheetResolver
-   //  which uses a database entry to determine an appropriate stylesheet.
-   //  New way is a pattern based search algorithm. Preserved here for easy
-   //  reference during transition (removal of corresponding classes)
-   //  see com.arsdigita.templating
-   //  content center works without registering a style sheet here.
-   //       Stylesheet ss =
-   //               Stylesheet.createStylesheet(WORKSPACE_STYLESHEET);
-   //       ss.save();
-   //       type.addStylesheet(ss);
-
             type.save();
 
             // from PackageInstance instance = workspaceInstaller.createPackageInstance();
@@ -329,8 +317,8 @@ public class Loader extends PackageLoader {
      * Loads and instantiates the Workspace package (content-center) in the
      * database.
      */
-    private void loadWorkspacePackageNewStyle() {
-        s_log.debug("Creating CMS Workspace...");
+    public static ApplicationType loadWorkspaceApplicationType() {
+        s_log.warn("Creating CMS Workspace...");
 
 //      Creating of Workspace package using new style c.ad.web.Application 
 //      in legacy compatible mode. Needs refactoring of the Workspace package.
@@ -358,15 +346,27 @@ public class Loader extends PackageLoader {
 
         ApplicationType workspaceType = appsetup.run();
         workspaceType.save();
+        s_log.warn("CMS Workspace type created.");
 
+        return workspaceType;
+    }
+
+    /**
+     * 
+     * @param workspaceType
+     */
+    public static void setupDefaultWorkspaceApplicationInstance(
+                                                ApplicationType workspaceType) {
         // create legacy compatible  application instance,
         // old-style package key used as url fragment where to install the instance
+        s_log.warn("Creating CMS Workspace instance ...");
         Workspace app = (Workspace) Application.createApplication(
                 workspaceType, // type
                 Workspace.PACKAGE_KEY, // url fragment
                 Workspace.INSTANCE_NAME,// title
                 null);                  // parent
         app.save();
+        s_log.warn("CMS Workspace instance created.");
 
         s_log.debug("Done loading CMS Workspace.");
     }
@@ -411,7 +411,7 @@ public class Loader extends PackageLoader {
      * store for global resources and assets.
      *
      */
-    private void loadServicePackageNewStyle() {
+    public static ApplicationType loadServiceApplicationType() {
         s_log.debug("Loading CMS Servce Package...");
 
 
@@ -429,8 +429,6 @@ public class Loader extends PackageLoader {
         // old style / legacy compatible properties
         appsetup.setKey(Service.PACKAGE_KEY);
         appsetup.setDispatcherClass(Service.DISPATCHER_CLASS);
-        // Service has no UI, therefore no stylesheet available
-        // appsetup.setStylesheet( Workspace.STYLESHEET );
         appsetup.setSingleton(true);
         appsetup.setPortalApplication(false);
         appsetup.setInstantiator(new ACSObjectInstantiator() {
@@ -443,6 +441,16 @@ public class Loader extends PackageLoader {
         ApplicationType serviceType = appsetup.run();
         serviceType.save();
 
+        return serviceType;
+    }
+
+
+    /**
+     *
+     * @param serviceType
+     */
+    public static void setupDefaultServiceApplicationInstance(
+                                                ApplicationType serviceType) {
         // create legacy compatible  application instance,
         // old-style package key used as url fragment where to install the instance
         Service app = (Service) Application.createApplication(

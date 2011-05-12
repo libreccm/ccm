@@ -44,16 +44,15 @@ import org.apache.log4j.Category;
  * setup.run();
  * </blockquote></pre>
  *
- * <strong>Important note.</strong> When <code>Application</code>s are
- * used in the context of old-style apps that use
- * <code>SiteNode</code>s and <code>PackageType</code>s, it is
- * important to use the <code>setKey("some-string-key")</code> so that
- * your new applications can interoperate fluidly with the legacy
- * applications.  Use of the <code>setKey</code> method ensures that
- * your application will, behind the scenes, use site nodes and
- * package instances, in addition to the <code>Application</code>
- * object, to represent each new mountable application.  As a result,
- * legacy code for managing and dispatching applications will work
+ * <strong>Important note.</strong> When <code>Application</code>s are used
+ * in the context of old-style apps that use <code>SiteNode</code>s and
+ * <code>PackageType</code>s, it is important to use the
+ * <code>setKey("some-string-key")</code> so that your new applications can
+ * interoperate fluidly with the legacy applications.
+ * Use of the <code>setKey</code> method ensures that your application will,
+ * behind the scenes, use site nodes and package instances, in addition to the
+ * <code>Application</code> object, to represent each new mountable application.
+ * As a result, legacy code for managing and dispatching applications will work
  * with both your old and your new applications.
  *
  * @see com.arsdigita.web.ApplicationType
@@ -62,6 +61,7 @@ import org.apache.log4j.Category;
  */
 public class ApplicationSetup {
 
+    /** Appender to enable writing to the löog file.                          */
     protected Category m_category;
     protected String m_title = null;
     protected String m_description = null;
@@ -76,6 +76,11 @@ public class ApplicationSetup {
     protected boolean m_isSingleton = false;
     protected String m_dispatcherClass = null;
 
+    /**
+     * Constructor.
+     * 
+     * @param category as appender to the log file.
+     */
     public ApplicationSetup(Category category) {
         m_category = category;
     }
@@ -143,10 +148,9 @@ public class ApplicationSetup {
     }
 
     /**
-     * Marks this applications of this type as ones that do or do not
-     * belong to a "portal", a special application type that collects
-     * child applications together for presentation and navigation
-     * purposes.
+     * Marks this applications of this type as ones that do or do not belong to
+     * a "portal", a special application type that collects child applications
+     * together for presentation and navigation purposes.
      *
      * By default, this value is true.
      */

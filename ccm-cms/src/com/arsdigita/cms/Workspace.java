@@ -21,14 +21,15 @@ package com.arsdigita.cms;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.DataAssociation;
-import com.arsdigita.persistence.PersistenceException;
+// import com.arsdigita.persistence.DataAssociation;
+// import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.web.Application;
 
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
+//  WORK IN PROGRESS !!
 
 /**
  * Application domain class for the CMS module user entry page (content-center)
@@ -40,8 +41,11 @@ public class Workspace extends Application {
 
     private static final Logger s_log = Logger.getLogger(ContentSection.class);
 
+    // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.Workspace";
+
+    // general constants
     public static final String PACKAGE_KEY = "content-center";
     public static final String INSTANCE_NAME = "Content Center";
     public static final String DISPATCHER_CLASS =
@@ -50,20 +54,57 @@ public class Workspace extends Application {
                                "/packages/content-section/xsl/content-center.xsl";
 
     /**
-     * Constructor
-     * @param oid
+     * Constructor retrieving a workspace from the database usings its OID.
+     *
+     * @param oid the OID of the workspace (content-center)
      * @throws DataObjectNotFoundException
      */
     public Workspace(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
+    /**
+     * Constructor retrieving the contained <code>DataObject</code> from the
+     * persistent storage mechanism with an <code>OID</code> specified by id.
+     *
+     * @param id The <code>id</code> for the retrieved
+     * <code>DataObject</code>.
+     */
     public Workspace(BigDecimal key)  throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
 
+    /**
+     * Constructs a repository from the underlying data object.
+     */
     public Workspace(DataObject dataObject) {
         super(dataObject);
+    }
+
+    /**
+     * Getter to retrieve the base database object type name
+     *
+     * @return base data aoject type as String
+     */
+    @Override
+    protected String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
+    }
+
+    /**
+     * This is called when the application is created.
+     */
+    public static Workspace create(String urlName,
+                                   String title,
+                                   Application parent) {
+
+        Workspace app =
+            (Workspace) Application.createApplication
+            (BASE_DATA_OBJECT_TYPE, urlName, title, parent);
+
+        app.save();
+
+        return app;
     }
 
 }

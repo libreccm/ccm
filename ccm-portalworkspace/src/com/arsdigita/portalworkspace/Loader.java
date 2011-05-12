@@ -175,22 +175,12 @@ public class Loader extends PackageLoader {
      * to lower case.
      * "Portal Workspace" will become "portal-workspace".
      *
-     * Creates an entry in table application_types and a corresponding entry in
-     * apm_package_types
-     *
      * @return
      */
     private ApplicationType setupWorkspaceType() {
 
         s_log.debug("Creating an application type for portal workspace. " +
                     "Base Data Object Type: " + Workspace.BASE_DATA_OBJECT_TYPE);
-        // The first string is a key parameter used to create a
-        // legacy package type to back the new application type.
- //     ApplicationType type = ApplicationType.createApplicationType(
- //                                            "portalworkspace",
- //                                            "Portal Workspace",
- //                                            Workspace.BASE_DATA_OBJECT_TYPE);
-
 
         ApplicationType type = new ApplicationType( "Portal Workspace",
                                                 Workspace.BASE_DATA_OBJECT_TYPE );

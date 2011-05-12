@@ -43,8 +43,11 @@ public class Service extends Application {
 
     private static final Logger s_log = Logger.getLogger(ContentSection.class);
 
+    // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.Service";
+
+    // general constants
     public static final String PACKAGE_KEY = "cms-service";
     public static final String INSTANCE_NAME = "CMS Service";
     public static final String DISPATCHER_CLASS =
@@ -54,20 +57,57 @@ public class Service extends Application {
     //                         "/packages/content-section/xsl/content-center.xsl";
 
     /**
-     * Constructor
-     * @param oid
+     * Constructor retrieving service from the database usings its OID.
+     *
+     * @param oid the OID of the service (cms-service)
      * @throws DataObjectNotFoundException
      */
     public Service(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
+    /**
+     * Constructor retrieving the contained <code>DataObject</code> from the
+     * persistent storage mechanism with an <code>OID</code> specified by id.
+     *
+     * @param id The <code>id</code> for the retrieved
+     * <code>DataObject</code>.
+     */
     public Service(BigDecimal key)  throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
 
+    /**
+     * Constructs a service domain object from the underlying data object.
+     */
     public Service(DataObject dataObject) {
         super(dataObject);
     }
+
+    /**
+     * Getter to retrieve the base database object type name
+     *
+     * @return base data aoject type as String
+     */
+    @Override
+    protected String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
+    }
+
+    /**
+     * This is called when the application is created.
+     */
+    public static Service create(String urlName,
+                                   String title,
+                                   Application parent) {
+
+        Service app = (Service) Application.createApplication
+                                (BASE_DATA_OBJECT_TYPE, urlName, title, parent);
+
+        app.save();
+
+        return app;
+    }
+
 
 }
