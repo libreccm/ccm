@@ -370,4 +370,5 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
         }
         m_property = (Property) m_properties.pop();
     }
+    
 }

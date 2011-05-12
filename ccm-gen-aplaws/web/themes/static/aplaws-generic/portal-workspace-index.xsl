@@ -126,9 +126,13 @@
 
 <xsl:template match="portal:homepageWorkspace/bebop:link">
 <xsl:choose>
-<xsl:when test="./bebop:label='browse'"><a href="{@href}"  class="adminReturn" title="Return to the standard page view">back to user's view</a></xsl:when>
-<xsl:when test="./bebop:label='reset'"><a href="{@href}" class="adminWarning"  title="WARNING!!: This link will delete the whole area!">delete area</a></xsl:when>
-<xsl:when test="./bebop:label='customize'"><a href="{@href}" title="Customise this part of the page">customise area</a></xsl:when>
+<xsl:when test="./bebop:label='browse'"><a href="{@href}"  
+          class="adminReturn"
+          title="Return to the standard page view">back to user's view</a></xsl:when>
+<xsl:when test="./bebop:label='reset'"><a href="{@href}" class="adminWarning"
+          title="WARNING!!: This link will delete the whole area!">delete area</a></xsl:when>
+<xsl:when test="./bebop:label='customize'"><a href="{@href}"
+          title="Customise this part of the page">customise area</a></xsl:when>
 <xsl:otherwise><xsl:apply-templates /></xsl:otherwise>
 </xsl:choose>
 </xsl:template>
@@ -176,15 +180,15 @@
      All rights reserved.
 <metaInformation>
 <scenarios ><scenario default="yes" name="Scenario2" userelativepaths="yes" 
-             externalpreview="no" url="..\XML\newHomepagePortal.xml"
-             htmlbaseurl="http://194.202.210.43:9005/theme/ibm&#x2D;generic/"
-             outputurl="" processortype="internal" profilemode="0"
-             urlprofilexml="" commandline="" additionalpath=""
-             additionalclasspath="" postprocessortype="none"
-             postprocesscommandline="" postprocessadditionalpath=""
-             postprocessgeneratedext=""/></scenarios><MapperInfo srcSchemaPath=""
-             srcSchemaRoot="" srcSchemaPathIsRelative="yes"
-             srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot=""
-             destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+    externalpreview="no" url="..\XML\newHomepagePortal.xml"
+    htmlbaseurl="http://194.202.210.43:9005/theme/ibm&#x2D;generic/"
+    outputurl="" processortype="internal" profilemode="0" urlprofilexml=""
+    commandline="" additionalpath="" additionalclasspath=""
+    postprocessortype="none" postprocesscommandline=""
+    postprocessadditionalpath=""
+    postprocessgeneratedext=""/></scenarios><MapperInfo srcSchemaPath=""
+    srcSchemaRoot="" srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no"
+    destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes"
+    destSchemaInterpretAsXML="no"/>
 </metaInformation>
 -->

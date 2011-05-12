@@ -132,7 +132,7 @@ public class Loader extends PackageLoader {
 
 
     public void run(final ScriptContext ctx) {
-        
+
         String[] files = categoryFiles;
 
         final Parser parser = new Parser();
@@ -180,10 +180,18 @@ public class Loader extends PackageLoader {
         registerNavigationTemplates();
 
         // Switch /portal/ to use 1 column layout for funky aplaws stuff.
-        Workspace portal = (Workspace)Application
+        // pboy: This will have no effect at all. A portal page created at
+        // url /portal/ (and beneath) will always use the homepage jsp's which
+        // are hardcoded to create a three column design and ignore any
+        // column configuration. All portal pages at other urls are not
+        // affect by this setting which touches only the one application (portal)
+        // at url /portal/. Portal pages at other urls use the corresponding
+        // configuration parameter for its initial value and number of columns
+        // may be modified at any time using configuration ui.
+/*      Workspace portal = (Workspace)Application
               .retrieveApplicationForPath("/portal/");
         portal.setDefaultLayout(PageLayout
-              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));
+              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));             */
     }   // end run method
 
 //  public void registerServicesTemplate(String appURL) {
@@ -242,6 +250,19 @@ public class Loader extends PackageLoader {
             "Generic Welcome Page for navigation",
             "/packages/navigation/templates/gen-welcome.jsp");
     
+
+        template =
+        Template.create(
+                "MultiPartArticle as Index Item",
+                "Display a MultiPartArticle as index item",
+                "/packages/navigation/templates/mparticle-index.jsp");
+
+
+        template =
+        Template.create(
+                "Specializing list",
+                "Displays a list of items as the ordinary template, but specializes the objects in the list.",
+                "/packages/navigation/templates/SpecializingList.jsp");
     }
 
     /**
@@ -252,18 +273,16 @@ public class Loader extends PackageLoader {
      * delivered.  
      */
     // -- public void registerDefaultNavigationDomain() {
-
-       // -- private StringParameter m_customNavKey;
+    // -- private StringParameter m_customNavKey;
     // -- private URLParameter    m_customNavDomainURL;
     // -- private StringParameter m_customNavPath;
     // -- private StringParameter m_customNavUseContext;
     // -- private StringParameter m_customNavTitle;
     // -- private StringParameter m_customNavDesc;
-      
-        // -- m_customNavKey = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_key",
-        // --     Parameter.REQUIRED,
-        // --     "APLAWS-NAVIGATION");
+    // -- m_customNavKey = new StringParameter(
+    // --     "com.arsdigita.aplaws.custom_nav_key",
+    // --     Parameter.REQUIRED,
+    // --     "APLAWS-NAVIGATION");
         
 /*   Zugriff auf Website wird nicht benötigt, aber der Parameter bei Einrichtung
  *   der Kategorien. Funktion URL prüft auf korrekte Syntax, nicht auf Existenz  
@@ -278,57 +297,17 @@ public class Loader extends PackageLoader {
         // --     throw new UncheckedWrapperException("Cannot parse url", ex);
         // -- }
 
-        
-        // -- m_customNavPath = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_path",
-        // --     Parameter.REQUIRED,
-        // --     "local");
-        
-        // -- m_customNavUseContext = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_use_context",
-        // --     Parameter.REQUIRED,
-        // --     "local");
-        
-        // -- m_customNavTitle = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_title",
-        // --     Parameter.REQUIRED,
-        // --     "APLAWS Custom Navigation");
-        
-        // -- m_customNavDesc = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_desc",
-        // --     Parameter.REQUIRED,
-        // --     "Installation specific navigation tree");
-       
-        
-        // -- register(m_customNavDesc);
-        // -- register(m_customNavDomainURL);
-        // -- register(m_customNavKey);
-        // -- register(m_customNavPath);
-        // -- register(m_customNavTitle);
-        // -- register(m_customNavUseContext);
-
-        // -- String customNavPath = (String)get(m_customNavPath);
-        // -- String customNavTitle = (String)get(m_customNavTitle);
-
-        // Package com.arsdigita.web
-        // Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE,
-        //                               customNavPath,
-        //                               customNavTitle,
-        //                               null);
-
-        
-        
-                // -- String customNavDesc = (String)get(m_customNavDesc);
-        // -- String customNavKey = (String)get(m_customNavKey);
-        // -- String customNavUseContext = (String)get(m_customNavUseContext);
-        // -- URL customNavDomainURL = (URL)get(m_customNavDomainURL);
-
-        // -- Domain.create(customNavKey, customNavDomainURL,
-        // --               customNavTitle, customNavDesc, "1.0.0", new Date());
-
-        // registerDomain(customNavKey, '/'+customNavPath+'/', null);
-        // -- registerDomain(customNavKey, "/content/", customNavUseContext);
-
+    /*   Zugriff auf Website wird nicht benötigt, aber der Parameter bei Einrichtung
+     *   der Kategorien. Funktion URL prüft auf korrekte Syntax, nicht auf Existenz
+     */
+    // -- try {
+    // --     m_customNavDomainURL = new URLParameter(
+    // --         "com.arsdigita.aplaws.custom_nav_domain_url",
+    // --         Parameter.REQUIRED,
+    // --         new URL("http://www.aplaws.org.uk/" +
+    // --                 "standards/custom/1.00/termslist.xml"));
+    // -- } catch (MalformedURLException ex) {
+    // --     throw new UncheckedWrapperException("Cannot parse url", ex);
     // -- }
 
     /**
@@ -339,9 +318,8 @@ public class Loader extends PackageLoader {
                                String appURL,
                                String context) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Mapping domain " + domainKey + 
-                        " to app " + appURL + 
-                        " in context " + context);
+            s_log.debug("Mapping domain " + domainKey + " to app " + appURL
+                        + " in context " + context);
         }
 
         Domain domain = Domain.retrieve(domainKey);  // package com.arsdigita.london.terms
@@ -353,8 +331,8 @@ public class Loader extends PackageLoader {
             Set categorizeRoles = new HashSet();
             while (coll.next()) {
                 Role role = coll.getRole();
-                final DataQuery privs = RoleFactory.getRolePrivileges
-                    (app.getID(), role.getGroup().getID());
+                final DataQuery privs = RoleFactory.getRolePrivileges(
+                        app.getID(), role.getGroup().getID());
                 while (privs.next()) {
                     String priv = (String) privs.get(RoleFactory.PRIVILEGE);
                     if (priv.equals(SecurityManager.CMS_CATEGORY_ADMIN)) {
@@ -363,7 +341,7 @@ public class Loader extends PackageLoader {
                         categorizeRoles.add(role);
                     }
                 }
-                
+
             }
             RootCategoryCollection catCollection = Category.getRootCategories(((ContentSection) app));
             while (catCollection.next()) {

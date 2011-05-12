@@ -4,8 +4,8 @@
 
 <web-app>
 
-  <display-name>CCM ZeS</display-name>
-  <description>Content and Collaboration Management</description>
+  <display-name>OpenCCM</display-name> 
+  <description>Community and Content Management</description>
 
   <!-- path and filename of the log4j user accessible config file
        WEB-INF/conf/log4j.properties is the built-in default value -->
@@ -17,20 +17,18 @@
 
   <!-- Require secure connection by redirect to host-port part
        of parameter waf.web.secure_server               
-       NOT USED with ZeS                                        
   <filter>
     <filter-name>secured</filter-name>
     <filter-class>com.arsdigita.web.SecureFilter</filter-class>
   </filter>
   -->
   <!-- Initialize Profiler timers
-       NOT USED with ZeS standard / production                                  
+       NOT USED with standard / production                                  
   <filter>
     <filter-name>profiler</filter-name>
     <filter-class>com.arsdigita.profiler.ProfilerFilter</filter-class>
   </filter>
   -->
-
 
   <filter>
     <filter-name>shortcuts</filter-name>
@@ -41,7 +39,6 @@
     <filter-name>subsite</filter-name>
     <filter-class>com.arsdigita.london.subsite.SubsiteFilter</filter-class>
   </filter>
-
 
 <!--    NOT USED HERE
   <filter-mapping>
@@ -54,7 +51,6 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 -->
-
 
   <filter-mapping>
     <filter-name>subsite</filter-name>
@@ -161,7 +157,6 @@
     <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
   </servlet>
 
-
  <servlet>
    <servlet-name>TextOnlyServlet</servlet-name>
    <display-name>Text Only Servlet</display-name>
@@ -190,8 +185,8 @@
      MODULES SERVLET DECLARATIONS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-ldn-atoz  -  servlet definitions BEGIN      
-       NOT USED with ZeS
+  <!-- module ccm-ldn-atoz  -  servlet definitions BEGIN
+       NOT USED with ZeS   
   <servlet>
     <servlet-name>atoz-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
@@ -210,11 +205,11 @@
   <!-- module ccm-forum  -  servlet declarations END    -->  
 
   <servlet>
-    <servlet-name>portalworkspace-files</servlet-name>
+    <servlet-name>portal-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-portalworkspace</param-value>
+      <param-value>/templates/ccm-ldn-portal</param-value>
     </init-param>
   </servlet>
 
@@ -308,45 +303,45 @@
   </servlet>
   <!-- module ccm-ldn-terms  -  servlet declarations END   -->
 
-  <!-- module ccm-ldn-themes  -  servlet declarations BEGIN   -->
+  <!-- module ccm-themedirector  -  servlet declarations BEGIN   -->
   <servlet>
     <servlet-name>theme-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-theme</param-value>
+      <param-value>/templates/ccm-themedirector</param-value>
     </init-param>
   </servlet>
 
   <servlet>
      <servlet-name>ThemeDownload</servlet-name>
-     <servlet-class>com.arsdigita.london.theme.dispatcher.ThemeDownloadServlet</servlet-class>
+     <servlet-class>com.arsdigita.themedirector.dispatcher.ThemeDownloadServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>ThemePreviewServlet</servlet-name>
      <display-name>Servlet to allow admins to preview look/feel</display-name>
     <servlet-class>
-     com.arsdigita.london.theme.dispatcher.InternalThemePrefixerServlet
+     com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet
     </servlet-class>
     <init-param>
       <param-name>prefix</param-name>
       <param-value>/theme</param-value>
     </init-param>
   </servlet>
-  <!-- module ccm-ldn-themes  -  servlet declarations END   -->
+  <!-- module ccm-themedirector  -  servlet declarations END   -->
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      MODULES SERVLET MAPPINGS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN  - - >
+  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN  
        NOT USED HERE
   <servlet-mapping>
     <servlet-name>atoz-files</servlet-name>
     <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
   </servlet-mapping>
-  < ! - - module ccm-ldn-atoz  -  servlet mappings END  -->
+       module ccm-ldn-atoz  -  servlet mappings END  -->
 
   <!-- module ccm-forum  -  servlet mappings BEGIN  -->
   <servlet-mapping>
@@ -361,8 +356,8 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>portalworkspace-files</servlet-name>
-    <url-pattern>/ccm-portalworkspace/files/*</url-pattern>
+    <servlet-name>portal-files</servlet-name>
+    <url-pattern>/ccm-ldn-portal/files/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -408,7 +403,7 @@
   </servlet-mapping>
   <!-- module ccm-ldn-terms  -  servlet mappings END  -->
 
-  <!-- module ccm-ldn-theme  -  servlet mappings BEGIN   -->
+  <!-- module ccm-themedirector  -  servlet mappings BEGIN   -->
   <servlet-mapping>
     <servlet-name>theme-files</servlet-name>
     <url-pattern>/theme-files/*</url-pattern>
@@ -423,7 +418,7 @@
     <servlet-name>ThemePreviewServlet</servlet-name>
     <url-pattern>/theme/*</url-pattern>
   </servlet-mapping>
-  <!-- module ccm-ldn-themes  -  servlet mappings END   -->
+  <!-- module ccm-themedirector  -  servlet mappings END   -->
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -505,7 +500,6 @@
      <servlet-name>PrintFriendlyServlet</servlet-name>
      <url-pattern>/print/*</url-pattern>
  </servlet-mapping>
-
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      ERROR PAGES

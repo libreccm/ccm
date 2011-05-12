@@ -71,8 +71,8 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
      * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getObject()
      */
     protected ACSObject getObject(PageState state) {
-	ContentItem item = CMS.getContext().getContentItem();
-	return item.getParent();
+        ContentItem item = CMS.getContext().getContentItem();
+        return item.getParent();
 
     }
     
