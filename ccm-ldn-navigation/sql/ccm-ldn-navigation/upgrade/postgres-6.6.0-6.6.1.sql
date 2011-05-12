@@ -24,8 +24,8 @@
 
 begin;
 
-\i ../postgres/upgrade/6.6.0-6.6.1/upd_nav_tree_portlet.sql
-\i ../postgres/upgrade/6.6.0-6.6.1/upd_acs_objects.sql
-\i ../postgres/upgrade/6.6.0-6.6.1/upd_application_tables.sql
+\i postgres/6.6.0-6.6.1/upd_nav_tree_portlet.sql
+\i postgres/6.6.0-6.6.1/upd_acs_objects.sql
+\i postgres/6.6.0-6.6.1/upd_application_tables.sql
 
 commit;

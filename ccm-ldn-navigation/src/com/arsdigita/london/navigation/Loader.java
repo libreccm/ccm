@@ -18,21 +18,14 @@
 
 package com.arsdigita.london.navigation;
 
-// same package
-// import com.arsdigita.london.navigation.Navigation;
-
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
-import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 
 import com.arsdigita.london.navigation.portlet.ObjectListPortlet;
@@ -73,6 +66,7 @@ public class Loader extends PackageLoader {
     }
 
     /**
+     * Run script invoked by com.arsdigita.packing loader script.
      * 
      * @param ctx
      */
@@ -81,11 +75,12 @@ public class Loader extends PackageLoader {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
+                loadNavigationApplicationType();
                 setupNavigation();
-                Loader.loadObjectListPortlet();
-                Loader.loadItemListPortlet();
-                NavigationTreePortlet.loadPortletType();
 
+                loadItemListPortlet();
+                loadObjectListPortlet();
+                NavigationTreePortlet.loadPortletType();
 
                 try {
                     setupTemplates();
@@ -96,7 +91,66 @@ public class Loader extends PackageLoader {
         }.run();
     }
 
+    // ////////////////////////////////////////////////////////////////////////
+    //
+    //          S e t u p    o f   a p p l i c a t i o n   t y p e s
+    //
+    // ////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Creates a Navigation ApplicationType as a legacy-free type of application,
+     * ie loads the class definition into persistent storage (application_types).
+     */
+    private void loadNavigationApplicationType() {
+
+        // NOTE: The title "Navigation" is used to retrieve the application's
+        // name to determine the location of xsl files (by url-izing it). So
+        // DON'T modify it without synchronizing web directory tree accordingly!
+        ApplicationType type =
+                new ApplicationType( "Navigation",
+                                     Navigation.BASE_DATA_OBJECT_TYPE );
+        type.setDescription("A category based navigation system.");
+
+    }
+
+
+    /**
+     * Creates ItemListPortlet portlet type, ie loads the class definition
+     * into persistent storage (table application_types).
+     */
+    public static void loadItemListPortlet() {
+        PortletType type = PortletType
+            .createPortletType("Navigation Content Item List",
+                               PortletType.WIDE_PROFILE,
+                               ItemListPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Displays a list of content items");
+    }
+
+    /**
+     * Creates ObjectListPortlet portlet type, ie loads the class definition
+     * into persistent storage (table application_types).
+     */
+    public static void loadObjectListPortlet() {
+        PortletType type = PortletType
+            .createPortletType("Navigation Object List",
+                               PortletType.WIDE_PROFILE,
+                               ObjectListPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Displays a list of objects");
+    }
+
+
+    // ////////////////////////////////////////////////////////////////////////
+    //
+    //        S e t u p    o f   N A V I G A T I O N   i n s t a n c e s
+    //
+    // ////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Creating a default navigation instance at address /navigation/
+     *
+     */
     public void setupNavigation() {
+/*
         ApplicationSetup setup = new ApplicationSetup(s_log);
         
         setup.setApplicationObjectType(
@@ -112,12 +166,13 @@ public class Loader extends PackageLoader {
             });
         ApplicationType type = setup.run();
         type.save();
-        
+*/
         Navigation app = (Navigation)
-            Application.createApplication(type,
+            Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE,
                                           "navigation",
                                           "Navigation Control Center",
                                           null);
+        app.setDescription("The default ccm-navigation instance.");
         app.save();
     }
 
@@ -164,21 +219,5 @@ public class Loader extends PackageLoader {
 
             template = templates.readLine();
         }
-    }
-    
-    public static void loadItemListPortlet() {
-        PortletType type = PortletType
-            .createPortletType("Navigation Object List",
-                               PortletType.WIDE_PROFILE,
-                               ObjectListPortlet.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("Displays a list of objects");
-    }
-    
-    public static void loadObjectListPortlet() {
-        PortletType type = PortletType
-            .createPortletType("Navigation Content Item List",
-                               PortletType.WIDE_PROFILE,
-                               ItemListPortlet.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("Displays a list of content items");
     }
 }

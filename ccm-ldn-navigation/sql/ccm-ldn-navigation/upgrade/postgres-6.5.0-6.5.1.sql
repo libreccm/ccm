@@ -1,3 +1,3 @@
 begin;
-\i ../postgres/upgrade/add-quicklink-cascade.sql
+\i postgres/6.5.0-6.5.1/add-quicklink-cascade.sql
 commit;

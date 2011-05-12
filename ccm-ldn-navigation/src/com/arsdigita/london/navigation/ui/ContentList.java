@@ -44,7 +44,8 @@ import org.apache.log4j.Logger;
 /**
  * This generate a list of all live content items which:
  * <ul>
- * <li> when viewing an item: are in first category assigned to the the item currently viewed, including the item currently viewed
+ * <li> when viewing an item: are in first category assigned to the the item
+ *      currently viewed, including the item currently viewed
  * <li> or, when viewing a category: are in the category currently viewed
  * </ul>
  * The list is split in sub-lists, one for each content type.

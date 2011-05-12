@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2010 Peter Boy. All Rights Reserved.
+-- Copyright (C) 2011 Peter Boy. All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,14 +15,17 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: oracle-se--6.6.0-6.6.1.sql  $
+-- $Id: postgres-6.6.1-6.6.2.sql  $
 
--- NavigationTreePortlet has been moved from ccm-ldn-portal (where it existed as
+-- Navigation is now initialized as a legacy free type of application
 -- NavigationDirectoryPortlet) to ccm-ldn-navigation because it depends on
 -- navigation and was misplaced there (generating horizontal dependencies).
 
 
+begin;
 
-@@ oracle-se/6.6.0-6.6.1/upd_nav_tree_portlet.sql
-@@ oracle-se/6.6.0-6.6.1/upd_acs_objects.sql
-@@ oracle-se/6.6.0-6.6.1/upd_application_tables.sql
+\i default/6.6.1-6.6.2/remove_legacy_entries.sql
+-- \i ../postgres/upgrade/6.6.0-6.6.1/upd_acs_objects.sql
+-- \i ../postgres/upgrade/6.6.0-6.6.1/upd_application_tables.sql
+
+commit;
