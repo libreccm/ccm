@@ -19,7 +19,6 @@
 package com.arsdigita.cms.upgrade;
 
 import com.arsdigita.cms.Loader;
-import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.PackageInstance;
@@ -31,6 +30,8 @@ import com.arsdigita.packaging.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.util.StringUtils;
+import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 
 import org.apache.commons.cli.CommandLine;
@@ -56,10 +57,12 @@ public class AddNewStyleApplicationEntries extends Program {
     private static Logger s_log = Logger.getLogger(CreateGenericContentTypes.class);
 
     /**
-    /* Constructor
+    /* Constructor constructs a program object which initializes the CCM
+     * runtime system and enables concatenation, so a following SQL script
+     * may be executed.
      */
     public AddNewStyleApplicationEntries() {
-        super("AddNewStyleApplicationEntries", "1.0.0", "");
+        super("AddNewStyleApplicationEntries", "1.0.0", "",true,true);
     }
 
 
@@ -86,10 +89,9 @@ public class AddNewStyleApplicationEntries extends Program {
                 final TransactionContext tc = session.getTransactionContext();
                 tc.beginTxn();
 
-                //  experimental
+                //  Update CMS Workspace
                 ApplicationType appType = null;
                 appType = Loader.loadWorkspaceApplicationType();
-
                 // get corresponding package type
                 PackageType packageType = appType.getPackageType();
                 // get all installed instances
@@ -97,16 +99,45 @@ public class AddNewStyleApplicationEntries extends Program {
                                                         .getInstances();
                 PackageInstance aPackage = null ;
                 Resource res = null;
+                Application app = null;
                 while ( allPackages.next() ) {
                     aPackage = allPackages.getPackageInstance();
                     res = Resource.createResource((ResourceType)appType,
                                                   aPackage.getDisplayName(),
                                                   null);
+                    res.setDescription("The default CMS workspace instance.");
+                    res.save();
+                    app = Application.retrieveApplication(res.getOID());
+                    app.setPath("/"+StringUtils.urlize(app.getTitle())+"/");
+                    // unfortunately there seems to be no way to set the
+                    // assoziation to PackageInstance. So we must do that by
+                    // SQL magic
                 }
 
 
+                //  Update CMS Service
                 appType = null;
                 appType = Loader.loadServiceApplicationType();
+                // get corresponding package type
+                packageType = appType.getPackageType();
+                // get all installed instances
+                allPackages = packageType.getInstances();
+                aPackage = null ;
+                res = null;
+                app = null;
+                while ( allPackages.next() ) {
+                    aPackage = allPackages.getPackageInstance();
+                    res = Resource.createResource((ResourceType)appType,
+                                                  aPackage.getDisplayName(),
+                                                  null);
+                    res.setDescription("The default CMS service instance.");
+                    res.save();
+                    app = Application.retrieveApplication(res.getOID());
+                    app.setPath("/"+StringUtils.urlize(app.getTitle())+"/");
+                    // unfortunately there seems to be no way to set the
+                    // assoziation to PackageInstance. So we must do that by
+                    // SQL magic
+                }
 
 
                 tc.commitTxn();

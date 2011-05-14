@@ -170,12 +170,16 @@ public class Loader extends PackageLoader {
                 // loadCMSPackageType();
 
                 // 2 - step 1b) Setup the Workspace package.
-                loadWorkspacePackage();  // using old stype
-                // loadWorkspacePackageNewStyle();  // using new style
+                // loadWorkspacePackage();  // using old stype
+                // new style:
+                ApplicationType appType = loadWorkspaceApplicationType();
+                setupDefaultWorkspaceApplicationInstance(appType);
 
                 // 3 - step 1c) Setup the CMS global services package.
-                loadServicePackage();   // using olde style
-                // loadServicePackageNewStyle();  // using new style
+                // loadServicePackage();   // using olde style
+                // new style:
+                appType = loadServiceApplicationType();
+                setupDefaultServiceApplicationInstance(appType);
 
                 // 4 - step 1d) Load the content-center page mappings
                 // Wrong! Is Initializer task, must be done each startup, in
@@ -268,11 +272,12 @@ public class Loader extends PackageLoader {
 //
 //      s_log.debug("Done creating the CMS package type.");
 //  }
-    /**
-     * Loads and instantiates the Workspace package (content-center) in the
-     * database using old style application.
-     * Will be replaced by new style application in the migration process,
-     */
+//  /**
+//   * Loads and instantiates the Workspace package (content-center) in the
+//   * database using old style application.
+//   * Will be replaced by new style application in the migration process,
+//   */
+/*
     private void loadWorkspacePackage() {
         s_log.debug("Creating CMS Workspace...");
 
@@ -312,10 +317,12 @@ public class Loader extends PackageLoader {
         }
 
     }
-
+*/
     /**
      * Loads and instantiates the Workspace package (content-center) in the
      * database.
+     * It is made public to be able to invoke it from the update script
+     * (e.g. 6.6.1-6.6.2).
      */
     public static ApplicationType loadWorkspaceApplicationType() {
         s_log.warn("Creating CMS Workspace...");
@@ -365,19 +372,20 @@ public class Loader extends PackageLoader {
                 Workspace.PACKAGE_KEY, // url fragment
                 Workspace.INSTANCE_NAME,// title
                 null);                  // parent
+        app.setDescription("The default CMS workspace instance.");
         app.save();
         s_log.warn("CMS Workspace instance created.");
 
         s_log.debug("Done loading CMS Workspace.");
     }
 
-    /**
-     * CMS Service application is used by the Content Management System as a 
-     * store for global resources and assets.
-     * Using old style application, will be replaced by new style in the
-     * migration process.
-     */
-    private void loadServicePackage() {
+//  /**
+//   * CMS Service application is used by the Content Management System as a
+//   * store for global resources and assets.
+//   * Using old style application, will be replaced by new style in the
+//   * migration process.
+//   */
+/*  private void loadServicePackage() {
         s_log.debug("Loading CMS Servce Package...");
 
         try {
@@ -405,11 +413,12 @@ public class Loader extends PackageLoader {
             throw new ConfigError("Failed to initialize CMS global services package.");
         }
     }
-
+*/
     /**
      * CMS Service application is used by the Content Management System as a
      * store for global resources and assets.
-     *
+     * It is made public to be able to invoke it from the update script
+     * (e.g. 6.6.1-6.6.2).
      */
     public static ApplicationType loadServiceApplicationType() {
         s_log.debug("Loading CMS Servce Package...");
@@ -458,6 +467,7 @@ public class Loader extends PackageLoader {
                 Service.PACKAGE_KEY, // url fragment
                 Service.INSTANCE_NAME,// title
                 null);                // parent
+        app.setDescription("The default CMS service instance.");
         app.save();
 
         s_log.debug("Done creating CMS Service Package.");
