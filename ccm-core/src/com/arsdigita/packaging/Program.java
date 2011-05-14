@@ -84,8 +84,14 @@ public abstract class Program {
     private String m_version;
     private String m_usage;
     private boolean m_verbose = false;
+    /** Whether to produce out marked by debug while running the CLI program.*/
     private boolean m_debug = false;
+    /** Whether to initialize the CCM system before running the CLI program. */
     private boolean m_startup = true;
+    /** True skips system.exit after processing finished so another program may
+        be invoked by a calling cammand script. Especially usefule for upgrade
+        script when a sql script has to be executed afer a jave class.       */
+    private boolean m_concatenate = false;
 
     private Options m_options;
     
@@ -103,11 +109,11 @@ public abstract class Program {
     public Program(String name,
                    String version,
                    String usage) {
-        this(name, version, usage, true);
+        this(name, version, usage, true, false);
     }
 
     /**
-     * Creates a new program. The conventions for the 
+     * Creates a new program. The conventions for the
      * usage parameter follow the GNU style guidelines.
      * For example, if there are multiple source files
      * and one destination, it would be "SOURCE... DEST"
@@ -120,10 +126,30 @@ public abstract class Program {
                    String version,
                    String usage,
                    boolean startup) {
+        this(name, version, usage, startup, false);
+    }
+
+    /**
+     * Creates a new program. The conventions for the 
+     * usage parameter follow the GNU style guidelines.
+     * For example, if there are multiple source files
+     * and one destination, it would be "SOURCE... DEST"
+     * @param name the program name
+     * @param version the version string
+     * @param usage for any non-option command line arguments
+     * @param startup true to perform standard WAF startup
+     * @param concatenate false invokes System.exit when processing finished
+     */
+    public Program(String name,
+                   String version,
+                   String usage,
+                   boolean startup,
+                   boolean concatenate) {
         m_name = name;
         m_version = version;
         m_usage = usage;
         m_startup = startup;
+        m_concatenate = concatenate;
         m_options = new Options();
         
         m_options.addOption
@@ -243,7 +269,9 @@ public abstract class Program {
 
             doRun(cmdLine);
 
-            System.exit(0);
+            if(!m_concatenate) {
+                System.exit(0);
+            }
         } catch (Throwable t) {
             System.err.println("Error: " + t.getClass() + 
                                ":" + t.getMessage());

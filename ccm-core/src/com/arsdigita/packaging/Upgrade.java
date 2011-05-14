@@ -156,12 +156,15 @@ class Upgrade extends Command {
                                "that your 'to' and 'from' versions match " +
                                "the intended upgrade exactly");
             return false;
+        } else {
+            System.out.println("Number of scripts: " + m_scripts.size() );
         }
 
         Iterator iter = m_scripts.iterator();
-
         while (iter.hasNext()) {
+
             final String[] parts = (String[]) iter.next();
+
             final String classname = parts[0];
             final String sql = parts[1];
 
@@ -173,8 +176,8 @@ class Upgrade extends Command {
                 final Method method;
 
                 try {
-                    method = clacc.getMethod
-                        ("main", new Class[] {String[].class});
+                    method = clacc.getMethod("main",
+                                             new Class[] {String[].class});
                 } catch (NoSuchMethodException nsme) {
                     throw new UncheckedWrapperException(nsme);
                 } catch (SecurityException se) {
@@ -191,6 +194,7 @@ class Upgrade extends Command {
                         }
                     }
                 }
+
                 try {
                     method.invoke(null, new Object[] {ll.toArray(new String[] {})});
                 } catch (IllegalAccessException iae) {
@@ -198,6 +202,7 @@ class Upgrade extends Command {
                 } catch (InvocationTargetException ite) {
                     throw new UncheckedWrapperException(ite);
                 }
+
             } else if (sql != null) {
                 final SchemaLoader loader = new SchemaLoader(sql);
 
@@ -217,6 +222,7 @@ class Upgrade extends Command {
             } else {
                 throw new IllegalStateException();
             }
+
         }
 
         return true;
@@ -225,6 +231,7 @@ class Upgrade extends Command {
     private class Parser extends DefaultHandler {
         private String m_version;
 
+        @Override
         public final void startElement(final String uri,
                                        final String lname,
                                        final String qname,
@@ -261,6 +268,7 @@ class Upgrade extends Command {
             }
         }
 
+        @Override
         public final void endElement(final String uri,
                                      final String lname,
                                      final String qname) {
