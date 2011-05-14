@@ -42,6 +42,7 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+                
                 setupThemeDirector();
             }
         }.run();
@@ -49,7 +50,7 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
 
 
     /** 
-     * Creates theme manager as a legacy-free application type.
+     * Creates theme director as a legacy-free application type.
      * 
      * NOTE: The wording in the title parameter of ApplicationType determines
      * the name of the subdirectory for the XSL stylesheets.
@@ -63,13 +64,6 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
      */
     private void setupThemeDirector() {
 
-        // create application type
-        // legacy compatible style of creation
-  //    ApplicationType type = ApplicationType.createApplicationType(
-  //                                           "themedirector",
-  //                                           "CCM Themes Administration",
-  //                                           ThemeDirector.BASE_DATA_OBJECT_TYPE);
-        // EXPERIMENTAL legacy free style of creation
         ApplicationType type =
                 new ApplicationType(  "Theme Director",
                                       ThemeDirector.BASE_DATA_OBJECT_TYPE );
@@ -78,7 +72,7 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
 
         Application admin = Application.retrieveApplicationForPath("/admin/");
 
-        // create application instance as a legacy compatible app
+        // create application instance as a legacy free app.
         // Whether a legacy compatible or a legacy free application is
         // created depends on the type of ApplicationType above. No need to
         // modify anything here

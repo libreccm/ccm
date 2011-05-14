@@ -48,7 +48,7 @@ public class LegacyCategoryBrowserApplication extends Application {
     private DocFolder m_root = null;
 
     /**
-     * Retreives a repository from the database usings its OID.
+     * Retrieves a repository from the database usings its OID.
      *
      * @param oid the OID of the repository
      */

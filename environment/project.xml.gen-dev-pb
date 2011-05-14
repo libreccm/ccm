@@ -66,7 +66,7 @@
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
 <!--    <ccm:application name="ccm-forum-categorised"/>              -->
-        <ccm:application name="ccm-portalserver"/>                
+        <ccm:application name="ccm-portalserver"/>                      
         <ccm:application name="ccm-portalworkspace"/>               
 <!--    <ccm:application name="ccm-simplesurvey"/>                   -->
         <ccm:application name="ccm-themedirector"/>                     

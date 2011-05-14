@@ -53,7 +53,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Loader.
+ * <p>Loader executes nonrecurring at install time and loads (installs and
+ * initializes) the APLAWS integration module persistently into database.</p>
  *
  * Creates category domains in the terms application according to 
  * configuration files and adds jsp templates to navigation.

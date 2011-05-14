@@ -89,7 +89,7 @@ public class CreateGroupsAndPortletType extends Program {
             }.run();
 	}
 
-	public static final void main(final String[] args) {
+	public static void main(final String[] args) {
 		new CreateGroupsAndPortletType().run(args);
 	}
 
