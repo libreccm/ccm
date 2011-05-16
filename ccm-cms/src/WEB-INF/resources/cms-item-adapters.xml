@@ -43,7 +43,7 @@
                 <xrd:property name="/object/targetItem/version"/>
                 <xrd:property name="/object/targetItem/name"/>
                 <xrd:property name="/object/targetItem/language"/>
-                <xrd:property name="/object/targetItem/content"/>
+                <xrd:property name="/object/targetItem/content"/>                
             </xrd:attributes>
             <xrd:associations rule="include">
                 <xrd:property name="/object/targetItem"/>

@@ -29,6 +29,10 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 public class RelatedLinkInitializer extends ContentAssetInitializer {
 
+    protected RelatedLinkInitializer(final String manifestFile) {
+        super(manifestFile);
+    }
+    
     /**
      * 
      */

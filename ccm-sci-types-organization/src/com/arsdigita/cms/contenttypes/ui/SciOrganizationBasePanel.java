@@ -104,8 +104,9 @@ public abstract class SciOrganizationBasePanel
                 return false;
             }
             final MemberListItem other = (MemberListItem) obj;
-            if (this.member != other.member && (this.member == null || !this.member.
-                                                equals(other.member))) {
+            if (this.member != other.member && (this.member == null
+                                                || !this.member.equals(
+                                                other.member))) {
                 return false;
             }
             if ((this.role == null) ? (other.role != null)
@@ -155,7 +156,7 @@ public abstract class SciOrganizationBasePanel
 
         public int compare(SciProject project1, SciProject project2) {
             /*int result = 0;
-
+            
             if (project1.getBegin() == null) {
             return -1;
             } else if (project2.getBegin() == null) {
@@ -163,7 +164,7 @@ public abstract class SciOrganizationBasePanel
             } else {
             result = project1.getBegin().compareTo(project2.getBegin());
             }
-
+            
             if (result == 0) {
             if (project1.getEnd() == null) {
             return -1;
@@ -176,7 +177,7 @@ public abstract class SciOrganizationBasePanel
             result = project1.getEnd().compareTo(project2.getEnd());
             }
             }
-
+            
             return result;*/
 
             return project1.getTitle().compareTo(project2.getTitle());
@@ -348,11 +349,11 @@ public abstract class SciOrganizationBasePanel
         pageNumber = normalizePageNumber(pageCount, pageNumber);
 
         createPaginatorElement(
-                parent, pageNumber, pageCount, begin, end, count, membersWithoutDoubles.
-                size());
-        List<MemberListItem> membersWithoutDoublesToShow = membersWithoutDoubles.
-                subList((int) begin,
-                        (int) end);
+                parent, pageNumber, pageCount, begin, end, count,
+                membersWithoutDoubles.size());
+        List<MemberListItem> membersWithoutDoublesToShow =
+                             membersWithoutDoubles.subList((int) begin,
+                                                           (int) end);
 
         Element membersWithoutDoublesElem = parent.newChildElement(
                 "members");
@@ -464,7 +465,7 @@ public abstract class SciOrganizationBasePanel
                                            final Element parent,
                                            final PageState state) {
         RelatedLink link;
-        ContentItem publication;        
+        ContentItem publication;
         List<ContentItem> publications;
 
         publications = new ArrayList<ContentItem>();
@@ -482,10 +483,20 @@ public abstract class SciOrganizationBasePanel
                 Integer year1;
                 Integer year2;
 
+                if ((o1 == null) && o2 == null) {
+                    return 0;
+                } else if ((o1 == null) && (o2 != null)) {
+                    return -1;
+                } else if ((o1 != null) && o2 == null) {
+                    return 1;
+                }
+
                 year1 = (Integer) o1.get("yearOfPublication");
                 year2 = (Integer) o2.get("yearOfPublication");
 
-                if (year1.compareTo(year2) == 0) {
+
+                if (year1.compareTo(year2)
+                    == 0) {
                     String title1;
                     String title2;
 
@@ -512,21 +523,25 @@ public abstract class SciOrganizationBasePanel
                                                                     (int) end);
 
         for (ContentItem pub : publicationsToShow) {
-            generatePublicationXML(pub, parent, state);           
+            generatePublicationXML(pub, parent, state);
         }
     }
-    
+
     protected void generatePublicationXML(final ContentItem publication,
                                           final Element parent,
                                           final PageState state) {
         Element publicationElem;
         ContentItemXMLRenderer renderer;
 
+        if (publication == null) {
+            return;
+        }
+        
         publicationElem = parent.newChildElement("publications");
 
         renderer = new ContentItemXMLRenderer(publicationElem);
         renderer.setWrapAttributes(true);
 
-        renderer.walk(publication, SimpleXMLGenerator.class.getName());       
-    }    
+        renderer.walk(publication, SimpleXMLGenerator.class.getName());
+    }
 }

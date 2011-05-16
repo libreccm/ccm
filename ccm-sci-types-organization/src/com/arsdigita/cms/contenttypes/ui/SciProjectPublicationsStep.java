@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.FormSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.ui.RelatedLinkPropertiesStep;
@@ -41,5 +42,14 @@ public class SciProjectPublicationsStep extends RelatedLinkPropertiesStep {
         linkListName = "SciProjectPublications";
         contentType = ContentType.findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.Publication");
+    }
+    
+    @Override
+    protected FormSection getEditSheet() {
+        return new SciProjectPublicationLinkPropertyForm(
+                getItemSelectionModel(),
+                                                            getLinkSelectionModel(),
+                                                            linkListName,
+                                                            contentType);
     }
 }

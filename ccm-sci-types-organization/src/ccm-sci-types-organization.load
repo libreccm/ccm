@@ -3,6 +3,7 @@
     <table name="inits"/>
     <table name="acs_objects"/>
     <table name="cms_items"/>
+    <table name="cms_related_links"/>
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
@@ -14,6 +15,9 @@
     <initializer class="com.arsdigita.cms.contenttypes.SciDepartmentInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.SciProjectInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.SciMemberInitializer"/>
+    <initializer class="com.arsdigita.cms.contentassets.SciOrganizationPublicationLinkInitializer"/>
+    <initializer class="com.arsdigita.cms.contentassets.SciDepartmentPublicationLinkInitializer"/>
+    <initializer class="com.arsdigita.cms.contentassets.SciProjectPublicationLinkInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-sci-types-organization"/>
@@ -21,5 +25,8 @@
     <data class="com.arsdigita.cms.contenttypes.SciDepartmentLoader"/>
     <data class="com.arsdigita.cms.contenttypes.SciProjectLoader"/>
     <data class="com.arsdigita.cms.contenttypes.SciMemberLoader"/>
+    <data class="com.arsdigita.cms.contentassets.SciOrganizationPublicationLinkLoader"/>
+    <data class="com.arsdigita.cms.contentassets.SciDepartmentPublicationLinkLoader"/>
+    <data class="com.arsdigita.cms.contentassets.SciProjectPublicationLinkLoader"/>
   </scripts>
 </load>

@@ -25,7 +25,6 @@ import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObject;
 
-
 /**
  * An adapter for Links allowing pluggable
  * assets to extend the traversal.
@@ -35,16 +34,16 @@ import com.arsdigita.domain.DomainObject;
  *
  * @author Sören Bernstein (Quasimodo)
  */
-public class LinkTraversalAdapter 
-    extends ContentItemTraversalAdapter {
-    
-    private static final Logger s_log = 
-        Logger.getLogger(LinkTraversalAdapter.class);
-    
+public class LinkTraversalAdapter
+        extends ContentItemTraversalAdapter {
+
+    private static final Logger s_log =
+                                Logger.getLogger(LinkTraversalAdapter.class);
+
     public LinkTraversalAdapter() {
         super();
     }
-        
+
     public LinkTraversalAdapter(SimpleDomainObjectTraversalAdapter adapter) {
         super(adapter);
     }
@@ -54,20 +53,21 @@ public class LinkTraversalAdapter
      * to the asset's adapter, otherwise delegates to
      * the content item's primary adapter
      */
+    @Override
     public boolean processProperty(DomainObject obj,
                                    String path,
                                    Property prop,
                                    String context) {
 
         DomainObject nObj = obj;
-
+       
         if (obj instanceof ContentBundle) {
 
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Found a link to a content bundle. Resolve this link to negotiated language.");
-            }
+            s_log.debug(
+                    "Found a link to a content bundle. Resolve this link to negotiated language.");
 
-            nObj = ((ContentBundle) obj).negotiate(DispatcherHelper.getRequest().getLocales());
+            nObj = ((ContentBundle) obj).negotiate(DispatcherHelper.getRequest().
+                    getLocales());
         }
 
         return super.processProperty(nObj, path, prop, context);

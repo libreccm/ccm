@@ -1,0 +1,7 @@
+model com.arsdigita.cms.contentassets;
+
+object type SciDepartmentPublicationLink extends RelatedLink {
+
+    reference key (ct_sciorga_department_publication_link.publication_link_id);
+
+}
