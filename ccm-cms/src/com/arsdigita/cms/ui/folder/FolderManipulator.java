@@ -504,6 +504,7 @@ public class FolderManipulator extends SimpleContainer
             m_actionSel.setValue(s, null);
             m_paginator.reset(s);
             s.setValue(m_filter, null);
+            m_filterForm.getFilterField().setValue(s, null);
         }
 
         // The renderer for the first column in the itemView table
@@ -589,8 +590,8 @@ public class FolderManipulator extends SimpleContainer
         }
 
         public void init(FormSectionEvent fse) throws FormProcessException {
-            fse.getPageState().setValue(FolderManipulator.this.m_filter, null);
-            filterField.setValue(fse.getPageState(), null);
+            //fse.getPageState().setValue(FolderManipulator.this.m_filter, null);
+            //filterField.setValue(fse.getPageState(), null);
         }
 
         public void submitted(FormSectionEvent fse) throws FormProcessException {
