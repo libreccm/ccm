@@ -221,7 +221,6 @@ public class ImagePropertiesStep extends SimpleEditStep {
             if (image != null && uploadSheet.getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 
                 image.setImage(imageAsset);
-                image.save();
             }
         }
 

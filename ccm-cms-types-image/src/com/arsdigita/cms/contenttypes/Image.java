@@ -30,9 +30,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * This content type represents an article.
+ * 
  *
- * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @author Sören Bernstein
  */
 public class Image extends ContentPage {
 
@@ -95,6 +95,15 @@ public class Image extends ContentPage {
 
     public Image(String type) {
         super(type);
+    }
+
+    /**
+     * @return the base PDL object type for this item. Child classes should
+     *  override this method to return the correct value
+     */
+    @Override
+    public String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
     }
 
     public ImageAsset getImage() {

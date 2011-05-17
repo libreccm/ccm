@@ -244,7 +244,7 @@ public class ImagePropertyForm
             image.setOrigin((String) data.get(Image.ORIGIN));
             image.setOriginalSize((String) data.get(Image.ORIGSIZE));
 
-            image.save();
+            m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
 }
