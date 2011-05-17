@@ -791,7 +791,7 @@ public class ContentSection extends Application {
         CompoundFilter or = ff.or();
 
         // The content type must be either of the requested type
-        or.addFilter(ff.equals(ContentType.ID, ct.ID));
+        or.addFilter(ff.equals(ContentType.ID, ct.getID()));
 
         // Or must be a descendant of the requested type
         try {
@@ -801,6 +801,7 @@ public class ContentSection extends Application {
             }
         } catch (Exception ex) {
             // WTF? The selected content type does not exist in the table???
+            s_log.error("WTF? The selected content type does not exist in the table???");
         }
 
         ctc.addFilter(or);
