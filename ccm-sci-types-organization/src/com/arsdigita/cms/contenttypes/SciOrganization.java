@@ -219,8 +219,8 @@ public class SciOrganization extends GenericOrganizationalUnit {
                           SessionManager.getSession().retrieveQuery(
                         "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
                 departmentsQuery.setParameter("organization", getID());
-
-                if (query.size() > 0) {
+                                
+                if (departmentsQuery.size() > 0) {
                     BigDecimal departmentId;
                     boolean result = false;
                     while (departmentsQuery.next()) {
