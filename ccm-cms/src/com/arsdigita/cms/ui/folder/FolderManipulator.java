@@ -113,6 +113,7 @@ public class FolderManipulator extends SimpleContainer
     private ItemView m_itemView;
     private TargetSelector m_targetSelector;
     private FilterForm m_filterForm;
+    private StringParameter m_aToZfilter = new StringParameter("aToZfilter");
     private StringParameter m_filter = new StringParameter("filter");
 
     public FolderManipulator(FolderSelectionModel folderSel) {
@@ -144,6 +145,7 @@ public class FolderManipulator extends SimpleContainer
         p.setVisibleDefault(m_filterForm, true);
         p.addComponentStateParam(this, m_sources);
         p.addComponentStateParam(this, m_action);
+        p.addComponentStateParam(this, m_aToZfilter);
         p.addComponentStateParam(this, m_filter);               
     }
 
@@ -347,7 +349,8 @@ public class FolderManipulator extends SimpleContainer
         m_targetSelector.setVisible(s, false);
         m_targetSelector.reset(s);
         s.setValue(m_action, null);
-        s.setValue(m_sources, null);      
+        s.setValue(m_sources, null);   
+        s.setValue(m_aToZfilter, null);
         s.setValue(m_filter, null);
     }
 
@@ -456,6 +459,7 @@ public class FolderManipulator extends SimpleContainer
             group.setSubject(panel);
 
             m_browser = new FolderBrowser(m_srcFolderSel);
+            m_browser.setAtoZfilterParameter(m_aToZfilter);
             m_browser.setFilterParameter(m_filter);
             m_browser.setFilterForm(m_filterForm);
             m_paginator = new Paginator((PaginationModelBuilder) m_browser.
@@ -503,6 +507,7 @@ public class FolderManipulator extends SimpleContainer
             m_checkboxGroup.setValue(s, null);
             m_actionSel.setValue(s, null);
             m_paginator.reset(s);
+            s.setValue(m_aToZfilter, null);
             s.setValue(m_filter, null);
             m_filterForm.getFilterField().setValue(s, null);
         }
@@ -551,6 +556,7 @@ public class FolderManipulator extends SimpleContainer
             allLink.addActionListener(new ActionListener() {
 
                 public void actionPerformed(ActionEvent event) {
+                    event.getPageState().setValue(m_aToZfilter, "");
                     event.getPageState().setValue(m_filter, "");
                 }
             });
@@ -563,7 +569,7 @@ public class FolderManipulator extends SimpleContainer
                 link.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent event) {
-                        event.getPageState().setValue(m_filter,
+                        event.getPageState().setValue(m_aToZfilter,
                                                       Character.toString(
                                 lowerCaseChar));
                     }

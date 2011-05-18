@@ -109,6 +109,7 @@ public class FolderBrowser extends Table {
     private final static String SORT_KEY_CREATION_DATE = "creationDate";
     private StringParameter m_sortType = new StringParameter("sortType");
     private StringParameter m_sortDirection = new StringParameter("sortDirn");
+    private StringParameter m_aToZfilter = null;
     private StringParameter m_filter = null;
     private FolderManipulator.FilterForm m_filterForm;
     private long m_folderSize;
@@ -138,21 +139,21 @@ public class FolderBrowser extends Table {
         m_currentFolder = currentFolder;
 
         /*
-
+        
         This code should be uncommented if the desired behaviour is for a change
         of folder to cause reversion to default ordering of contained items
         (by name ascending). Our feeling is that the user selected ordering
         should be retained for the duration of the folder browsing session. If
         anyone wants this alternative behaviour it should be brought in under
         the control of a config parameter.
-
+        
         m_currentFolder.addChangeListener(new ChangeListener() {
-
+        
         public void stateChanged(ChangeEvent e) {
         PageState state = e.getPageState();
         state.setValue(m_sortType, m_sortType.getDefaultValue());
         state.setValue(m_sortDirection, m_sortDirection.getDefaultValue());
-
+        
         }});
          */
         setClassAttr("dataTable");
@@ -245,6 +246,10 @@ public class FolderBrowser extends Table {
         m_filterForm = filterForm;
     }
 
+    protected void setAtoZfilterParameter(StringParameter aToZfilter) {
+        m_aToZfilter = aToZfilter;
+    }
+
     protected void setFilterParameter(StringParameter filter) {
         m_filter = filter;
     }
@@ -285,14 +290,20 @@ public class FolderBrowser extends Table {
             } else {
                 t.getRowSelectionModel().clearSelection(s);
                 s_log.debug(String.format("filter = '%s'", s.getValue(m_filter)));
-                Folder.ItemCollection itemColl = (Folder.ItemCollection) m_itemColl.
-                        get(s);
+                Folder.ItemCollection itemColl =
+                                      (Folder.ItemCollection) m_itemColl.get(s);
                 s_log.debug(String.format("itemColl.size = %d", itemColl.size()));
 
                 m_folderSize = itemColl.size();
-                if (s.getValue(m_filter) != null) {
+                if (s.getValue(m_aToZfilter) != null) {
                     itemColl.addFilter(String.format(
                             "lower(name) like lower('%s%%') or lower(displayName) like lower('%s%%')",
+                            s.getValue(m_aToZfilter),
+                            s.getValue(m_aToZfilter)));
+                }
+                if (s.getValue(m_filter) != null) {
+                    itemColl.addFilter(String.format(
+                            "lower(name) like lower('%%%s%%') or lower(displayName) like lower('%%%s%%')",
                             s.getValue(m_filter),
                             s.getValue(m_filter)));
                 }
@@ -329,9 +340,15 @@ public class FolderBrowser extends Table {
                     return 0;
                 }
 
-                if (state.getValue(m_filter) != null) {
+                if (state.getValue(m_aToZfilter) != null) {
                     itemColl.addFilter(String.format(
                             "lower(name) like lower('%s%%') or lower(displayName) like lower('%s%%')",
+                            state.getValue(m_aToZfilter),
+                            state.getValue(m_aToZfilter)));
+                }
+                if (state.getValue(m_filter) != null) {
+                    itemColl.addFilter(String.format(
+                            "lower(name) like lower('%%%s%%') or lower(displayName) like lower('%%%s%%')",
                             state.getValue(m_filter),
                             state.getValue(m_filter)));
                 }
@@ -481,7 +498,8 @@ public class FolderBrowser extends Table {
                 } else {
                     ItemResolver resolver = section.getItemResolver();
                     return new Link(name, resolver.generateItemURL(state, id,
-                                                                   name, section, coll.
+                                                                   name, section,
+                                                                   coll.
                             getVersion()));
                 }
             }
