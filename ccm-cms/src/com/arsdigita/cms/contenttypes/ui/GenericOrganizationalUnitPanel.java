@@ -85,7 +85,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
         createPaginatorElement(parent, pageNumber, pageCount, begin, end,
                                count, contacts.size());
-        contacts.setRange((int) begin, (int) end);
+        contacts.setRange((int) begin + 1, (int) end + 1);
 
         Element contactsElem = parent.newChildElement("contacts");
         while (contacts.next()) {
@@ -116,7 +116,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
         createPaginatorElement(parent, pageNumber, pageCount, begin, end,
                                count, persons.size());
-        persons.setRange((int) begin, (int) end);
+        persons.setRange((int) begin + 1, (int) end + 1);
 
         while (persons.next()) {
             GenericPerson person;

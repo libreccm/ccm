@@ -154,7 +154,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         createPaginatorElement(
                 parent, pageNumber, pageCount, begin, end, count, departments.
                 size());
-        departments.setRange((int) begin, (int) end);
+        departments.setRange((int) begin + 1, (int) end + 1);
 
         while (departments.next()) {
             SciDepartment department;

@@ -133,7 +133,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
 
         createPaginatorElement(parent, pageNumber, pageCount, begin, end, count,
                                subProjects.size());
-        subProjects.setRange((int) begin, (int) end);
+        subProjects.setRange((int) begin + 1, (int) end + 1);
 
 
         while (subProjects.next()) {

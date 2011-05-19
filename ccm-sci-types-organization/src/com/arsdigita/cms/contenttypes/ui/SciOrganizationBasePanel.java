@@ -34,6 +34,7 @@ import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.xml.Element;
@@ -97,7 +98,7 @@ public abstract class SciOrganizationBasePanel
 
         @Override
         public boolean equals(Object obj) {
-            if (obj == null) {
+            /*if (obj == null) {
                 return false;
             }
             if (getClass() != obj.getClass()) {
@@ -117,18 +118,26 @@ public abstract class SciOrganizationBasePanel
                 : !this.status.equals(other.status)) {
                 return false;
             }
-            return true;
+            return true;*/
+            if (obj instanceof MemberListItem) {
+                MemberListItem other = (MemberListItem) obj;
+                
+                return member.equals(other.getMember());
+            } else {
+                return false;
+            }
         }
 
         @Override
         public int hashCode() {
-            int hash = 7;
+            /*int hash = 7;
             hash =
             79 * hash + (this.member != null ? this.member.hashCode() : 0);
             hash = 79 * hash + (this.role != null ? this.role.hashCode() : 0);
             hash =
             79 * hash + (this.status != null ? this.status.hashCode() : 0);
-            return hash;
+            return hash;*/
+            return member.hashCode();
         }
     }
 
