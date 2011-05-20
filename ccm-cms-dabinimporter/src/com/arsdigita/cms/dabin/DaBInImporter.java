@@ -2615,6 +2615,7 @@ public class DaBInImporter extends Program {
                 } else {
                     publication = new ContentBundle(publicationDe);
                     publication.setDefaultLanguage("de");
+                    publication.addInstance(publicationEn);                    
                 }
                 publication.setLifecycle(createLifecycle(publicationsLifecycle));
                 publication.setContentSection(publicationsSection);

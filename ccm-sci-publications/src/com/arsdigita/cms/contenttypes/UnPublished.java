@@ -26,7 +26,6 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
-import org.apache.log4j.Logger;
 
 /**
  *
