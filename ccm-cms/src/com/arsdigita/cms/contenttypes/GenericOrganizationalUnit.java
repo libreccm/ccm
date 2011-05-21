@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataCollection;
@@ -119,7 +120,16 @@ public class GenericOrganizationalUnit extends ContentPage {
     public void addPerson(GenericPerson person, String role, String status) {
         Assert.exists(person, GenericPerson.class);
 
-        DataObject link = add(PERSONS, person);
+        GenericPerson personToLink = person;
+        
+        ContentBundle bundle = person.getContentBundle();
+        if ((bundle != null) && (bundle.hasInstance(this.getLanguage()))) {
+           personToLink = (GenericPerson) bundle.getInstance(this.getLanguage());
+        }
+        
+        Assert.exists(personToLink, GenericPerson.class);
+        
+        DataObject link = add(PERSONS, personToLink);
 
         link.set(ROLE, role);
         link.set(STATUS, status);
