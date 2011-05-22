@@ -191,7 +191,7 @@ public class Loader extends PackageLoader {
 /*      Workspace portal = (Workspace)Application
               .retrieveApplicationForPath("/portal/");
         portal.setDefaultLayout(PageLayout
-              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));             */
+              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));            */
     }   // end run method
 
 //  public void registerServicesTemplate(String appURL) {
@@ -221,10 +221,10 @@ public class Loader extends PackageLoader {
      */
     public void registerNavigationTemplates() {
 
-        Template template ;
+        Template template;
 
-    /*  In navigation werden bereits Grund-Templates erstellt.
-    */
+        /*  In navigation werden bereits Grund-Templates erstellt.
+         */
         template = Template.create(
             "Generic AtoZ paginator",
             "Generic AtoZ paginator index page",
@@ -263,6 +263,19 @@ public class Loader extends PackageLoader {
                 "Specializing list",
                 "Displays a list of items as the ordinary template, but specializes the objects in the list.",
                 "/packages/navigation/templates/SpecializingList.jsp");
+
+        template =
+        Template.create(
+                "SciProject list",
+                "Displays a list of SciProject items, including some attributes.",
+                "/packages/navigation/templates/SciProjectList.jsp");
+
+        template =
+        Template.create(
+                "SciPublication list",
+                "Displays a list of publication items, including some attributes.",
+                "/packages/navigation/templates/SciPublicationList.jsp");
+
     }
 
     /**
@@ -283,7 +296,7 @@ public class Loader extends PackageLoader {
     // --     "com.arsdigita.aplaws.custom_nav_key",
     // --     Parameter.REQUIRED,
     // --     "APLAWS-NAVIGATION");
-        
+
 /*   Zugriff auf Website wird nicht benötigt, aber der Parameter bei Einrichtung
  *   der Kategorien. Funktion URL prüft auf korrekte Syntax, nicht auf Existenz  
  */        

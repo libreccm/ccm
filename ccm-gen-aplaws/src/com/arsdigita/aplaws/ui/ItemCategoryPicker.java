@@ -45,7 +45,7 @@ import com.arsdigita.london.terms.ui.TermWidget;
 public class ItemCategoryPicker extends ACSObjectCategoryPicker {
 
     private static final Logger s_log = Logger.getLogger(ItemCategoryPicker.class);
-    // private static final class s_picker =  this ;
+
    
     public ItemCategoryPicker(BigDecimalParameter root,
                               StringParameter mode) {
