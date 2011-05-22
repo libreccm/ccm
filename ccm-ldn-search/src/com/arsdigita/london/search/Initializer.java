@@ -31,8 +31,6 @@ import com.arsdigita.search.IndexerType;
 import com.arsdigita.search.FilterType;
 import com.arsdigita.search.QueryEngineRegistry;
 import com.arsdigita.search.filters.ObjectTypeFilterType;
-import com.arsdigita.london.search.RemoteQueryEngine;
-import com.arsdigita.london.search.HostFilterType;
 
 /**
  * The Search initializer.
@@ -60,6 +58,7 @@ public class Initializer extends CompoundInitializer {
      * This starts up the search threads according to the values in the
      * properties file
      */
+    @Override
     public void init(DomainInitEvent e) {
         super.init(e);
 

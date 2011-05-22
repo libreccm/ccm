@@ -21,7 +21,6 @@ package com.arsdigita.cms;
 import com.arsdigita.cms.util.PageClassConfigHandler;
 // import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.runtime.ConfigError;
-import com.arsdigita.initializer.InitializationException;
 // import com.arsdigita.kernel.PackageInstance;
 // import com.arsdigita.kernel.PackageType;
 // import com.arsdigita.kernel.Stylesheet;

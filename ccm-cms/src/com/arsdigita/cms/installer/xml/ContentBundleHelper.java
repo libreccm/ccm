@@ -37,7 +37,9 @@ import org.apache.log4j.Logger;
  * @author Aizaz Ahmed
  */
 public class ContentBundleHelper extends ContentItemHelper {
+
     private static final Logger s_log = Logger.getLogger(ContentBundleHelper.class);
+
     /*
      *  All Items are saved as content bundles. we need to keep the content
      *  bundles around because sometimes we only want to save at the very end
@@ -55,6 +57,7 @@ public class ContentBundleHelper extends ContentItemHelper {
      * <P> Note: If the create (or one of it's variants) has already been
      * called, setting the parent implicitly saves the object </P>
      */
+    @Override
     public void setParent(Folder parent) {
         super.setParent ( parent );
         if (m_bundle != null ) {
@@ -66,6 +69,7 @@ public class ContentBundleHelper extends ContentItemHelper {
     /*
      * FIXME: need to know how to handle bundles in this scenario 
      */
+    @Override
     public void setContentItem(ContentItem item) {
         super.setContentItem ( item );
         m_bundle = null;
@@ -75,6 +79,7 @@ public class ContentBundleHelper extends ContentItemHelper {
     /**
      * <P>Saves the Item and it's associated ContentBundle</P>
      */
+    @Override
     public void save() {
         s_log.debug ( "About to save bundle" );
         //getParent().addItem(m_bundle);
@@ -92,6 +97,7 @@ public class ContentBundleHelper extends ContentItemHelper {
      * new ContentItem is added to it. If this bundle already contains
      * an instance of this language, it will fail on Assert. </P>
      */
+    @Override
     protected ContentItem createContentItem( boolean save ) {
     
         // if it exists, m_item gets set here.
@@ -118,7 +124,7 @@ public class ContentBundleHelper extends ContentItemHelper {
         if ( save ) {
             save ();
         }
-s_log.warn ( "Created bundled Item: " + getName() + "  " + m_item );
+        s_log.warn ( "Created bundled Item: " + getName() + "  " + m_item );
         return m_item;
     }
 
@@ -127,6 +133,7 @@ s_log.warn ( "Created bundled Item: " + getName() + "  " + m_item );
      * <P>Sets the title of the ContentItem returned by the super method
      * to be the same as the item name </P>
      */
+    @Override
     protected ContentItem createNewContentItem () {
         ContentItem toReturn = super.createNewContentItem();
         ((ContentPage)toReturn).setTitle ( toReturn.getName() );
@@ -140,6 +147,7 @@ s_log.warn ( "Created bundled Item: " + getName() + "  " + m_item );
      * it will only clone this language instance and create a new ( or
      * retrieve the appropriate) content bundle to add it to.
      */
+    @Override
     public ContentItem cloneItem(String name, Folder parent, boolean save) {
         ContentBundle originalBundle = ((ContentPage)m_item).getContentBundle();
         s_log.debug ("Original bundle before cloning: "

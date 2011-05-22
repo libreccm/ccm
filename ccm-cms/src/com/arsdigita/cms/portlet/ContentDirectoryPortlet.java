@@ -51,10 +51,12 @@ public class ContentDirectoryPortlet extends Portlet {
         super(dataObject);
     }
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    @Override
     protected AbstractPortletRenderer doGetPortletRenderer() {
         return new ContentDirectoryPortletRenderer(this);
     }

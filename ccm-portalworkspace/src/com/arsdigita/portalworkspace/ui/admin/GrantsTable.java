@@ -33,8 +33,6 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
-//import com.arsdigita.kernel.permissions.ParameterizedPrivilege;
-import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 import com.arsdigita.portalworkspace.ui.Icons;
 import com.arsdigita.persistence.OID;
 
@@ -45,8 +43,9 @@ import org.apache.log4j.Category;
 /**
  * GrantsTable.
  *
+ * Reimplementation using Ardigita portal server code.
  * @author dennis (2003/08/15)
- * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/GrantsTable.java#2 $
+ * @version $Id: com/arsdigita/portalserver/permissions/GrantsTable.java $
  */ 
 abstract class GrantsTable extends Table {
 
@@ -74,6 +73,7 @@ abstract class GrantsTable extends Table {
             final String eventName = privilege.getName();
 
             m_link = new ControlLink(Icons.RADIO_EMPTY_16) {
+                    @Override
                     public void setControlEvent(PageState ps) {
                         ps.setControlEvent((Component) s_targetRL.get(ps),
                                            eventName,
@@ -140,10 +140,11 @@ abstract class GrantsTable extends Table {
 
     // Per-request label for renderer getComponent calls
     private final static RequestLocal s_dynamicLabel = new RequestLocal() {
-            public Object initialValue(PageState ps) {
-                return new Label();
-            }
-        };
+        @Override
+        public Object initialValue(PageState ps) {
+            return new Label();
+        }
+    };
 
     public GrantsTable(final RequestLocal grantsRL,
                        final RequestLocal typesRL,
@@ -279,6 +280,7 @@ abstract class GrantsTable extends Table {
         setHeader(new TableHeader(columnModel));
     }
 
+    @Override
     public void respond(PageState ps) {
         String controlEventName = ps.getControlEventName();
         String controlEventValue = ps.getControlEventValue();
@@ -380,8 +382,10 @@ abstract class GrantsTable extends Table {
         }
     }
 
-    private PermissionDescriptor getPermissionDescriptorHelper
-        (Grant grant, int privLevel, OID objectOID, OID partyOID) {
+    private PermissionDescriptor getPermissionDescriptorHelper(Grant grant,
+                                                               int privLevel,
+                                                               OID objectOID,
+                                                               OID partyOID) {
         PrivilegeDescriptor priv;
 
 //         if (grant.objectType != null) {

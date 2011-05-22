@@ -28,7 +28,7 @@ import com.arsdigita.cms.docmgr.ui.LegacyCategoryDocsNavigatorPortlet;
 import com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.initializer.Configuration;
+// import com.arsdigita.initializer.Configuration;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
@@ -53,7 +53,7 @@ import com.arsdigita.web.ApplicationType;
 
 public class Initializer extends CompoundInitializer {
 
-    private Configuration m_conf = new Configuration();
+    // private Configuration m_conf = new Configuration();
 
     private static final String SEPARATOR = java.io.File.separator;
 
@@ -74,9 +74,9 @@ public class Initializer extends CompoundInitializer {
     /**
      * Returns the configuration object used by this initializer.
      */
-    public Configuration getConfiguration() {
-        return m_conf;
-    }
+//  public Configuration getConfiguration() {
+//      return m_conf;
+//  }
 
     public void init(DomainInitEvent e) {
         s_log.debug("Document (CCM) Manager is initializing using .init(DomainInitEvent e)");

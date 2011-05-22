@@ -33,12 +33,13 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.initializer.InitializationException;
+//import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
@@ -96,14 +97,16 @@ public final class ContentSectionSetup {
      * Method needs a transaction to proceed successfully.
      * {@link com.arsdigita.cms.contentsection.Initializer#checkForNewContentSection() }
      */
-    public static void setupContentSectionAppInstance(String name,
-            List staffGroup,
-            Boolean isPubliclyViewable,
-            String itemResolverClassName,
-            String templateResolverClassName,
-            List sectionContentTypes,
-            Boolean useSectionCategories,
-            List categoryFileList) {
+    public static void setupContentSectionAppInstance(
+                                               String name,
+                                               List staffGroup,
+                                               Boolean isPubliclyViewable,
+                                               String itemResolverClassName,
+                                               String templateResolverClassName,
+                                               List sectionContentTypes,
+                                               Boolean useSectionCategories,
+                                               List categoryFileList) {
+
         s_log.info("Creating content section on /" + name);
 
         ContentSection section = ContentSection.create(name);
@@ -229,7 +232,7 @@ public final class ContentSectionSetup {
 
         Party viewer = retrieveParty(email);
         if (viewer == null) {
-            throw new InitializationException((String) GlobalizationUtil.globalize(
+            throw new ConfigError((String) GlobalizationUtil.globalize(
                     "cms.installer.cannot_find_group_for_email").localize() + email);
         }
 
@@ -300,7 +303,7 @@ public final class ContentSectionSetup {
      * @throws InitializationException
      */
     public void registerPublicationCycles()
-            throws InitializationException {
+            throws ConfigError {
 
         // The feature lifecycle.
         LifecycleDefinition lcd = new LifecycleDefinition();
@@ -329,7 +332,7 @@ public final class ContentSectionSetup {
      * @throws InitializationException
      */
     public void registerWorkflowTemplates()
-            throws InitializationException {
+            throws ConfigError {
 
         // The 3-step production workflow.
         WorkflowTemplate wf = new WorkflowTemplate();

@@ -82,6 +82,7 @@ class Grant {
     public String objectTypeDisplayName = null;
     public int level;
 
+    @Override
     public int hashCode() {
         if (objectType == null) {
             return granteeID.hashCode() + objectID.hashCode();
@@ -92,6 +93,7 @@ class Grant {
             objectType.hashCode();
     }
 
+    @Override
     public boolean equals(Object other) {
         if (other == null) {
             return false;
@@ -122,6 +124,7 @@ class Grant {
         return objectType.equals(otherGrant.objectType);
     }
 
+    @Override
     public String toString() {
         return marshal(granteeID, objectID, basePrivilege, objectType);
     }

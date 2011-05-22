@@ -64,7 +64,8 @@ public class Scheduler {
         
         s_timer = new Timer(true); // start timer as daemon thread
         if (s_log.isInfoEnabled()) {
-            s_log.info("Starting timer with delay= " + s_timerDelay + ", frequency= " + s_timerFrequency
+            s_log.info("Starting timer with delay= " + s_timerDelay 
+                       + ", frequency= " + s_timerFrequency
                        + ", maxDepth= " + s_maxDepth);
         }
         s_timer.schedule(new Scheduler.SpiderTask(),

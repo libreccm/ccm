@@ -26,12 +26,10 @@ import org.apache.log4j.Logger;
 
 /**
  * A record containing search spider configuration properties.
+ *
+ * @version $Id: SpiderConfig.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class SpiderConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: SpiderConfig.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2003/11/27 11:55:32 $";
 
     private static final Logger s_log = Logger.getLogger(SpiderConfig.class);
 

@@ -24,7 +24,6 @@ import com.arsdigita.cms.contenttypes.ui.mparticle.ArticleSectionPanel;
 // import com.arsdigita.cms.search.ContentPageMetadataProvider;
 import com.arsdigita.kernel.URLService;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.search.MetadataProviderRegistry;
 
 /**

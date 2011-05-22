@@ -70,15 +70,15 @@ public interface Initializer {
      */
     void init(DomainInitEvent e);
 
-    /**
-     * A hook for free-form initialization as existed in the older
-     * initialization scheme.
-     *
-     * @deprecated with no replacement; code that uses this hook
-     * should be refactored to use {@link #init(DataInitEvent)} and
-     * {@link #init(DomainInitEvent)}
-     */
-    void init(LegacyInitEvent e);
+//  /**
+//   * A hook for free-form initialization as existed in the older
+//   * initialization scheme.
+//   *
+//   * @deprecated with no replacement; code that uses this hook
+//   * should be refactored to use {@link #init(DataInitEvent)} and
+//   * {@link #init(DomainInitEvent)}
+//   */
+//  void init(LegacyInitEvent e);
 
     /**
      *

@@ -18,8 +18,10 @@
  */
 package com.arsdigita.kernel.security;
 
-import com.arsdigita.initializer.InitializationException;
+// import com.arsdigita.initializer.InitializationException;
+import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -86,7 +88,8 @@ public class LoginConfig extends Configuration {
      *
      * @throws InitializationException if there is a parsing error.
      **/
-    public LoginConfig(List config) throws InitializationException {
+//  public LoginConfig(List config) throws InitializationException {
+    public LoginConfig(List config)  {
         Map contextConfigs = new HashMap();
         for (int i = 0; i < config.size(); i++) {
             String tuple = (String) config.get(i);
@@ -106,8 +109,9 @@ public class LoginConfig extends Configuration {
         }
     }
 
-    private void addAppConfig(String name, List entries)
-        throws InitializationException {
+//  private void addAppConfig(String name, List entries)
+//      throws InitializationException {
+    private void addAppConfig(String name, List entries) {
         AppConfigurationEntry[] array =
             new AppConfigurationEntry[entries.size()];
         for (int i = 0; i < array.length; i++) {
@@ -117,8 +121,9 @@ public class LoginConfig extends Configuration {
         m_appConfigs.put(name, array);
     }
 
-    private AppConfigurationEntry loadAppConfigEntry(List list)
-        throws InitializationException {
+//  private AppConfigurationEntry loadAppConfigEntry(List list)
+//      throws InitializationException {
+    private AppConfigurationEntry loadAppConfigEntry(List list) {
         Iterator iter = list.iterator();
         String name = getString(iter, "module class name");
         AppConfigurationEntry.LoginModuleControlFlag flag
@@ -130,8 +135,10 @@ public class LoginConfig extends Configuration {
         return new AppConfigurationEntry(name, flag, options);
     }
 
-    private AppConfigurationEntry.LoginModuleControlFlag
-        getFlag(String flag) throws InitializationException {
+//  private AppConfigurationEntry.LoginModuleControlFlag
+//      getFlag(String flag) throws InitializationException {
+    private AppConfigurationEntry.LoginModuleControlFlag getFlag(String flag)
+                                  throws ConfigError  {
         if (flag.equalsIgnoreCase("requisite")) {
             return AppConfigurationEntry.LoginModuleControlFlag.REQUISITE;
         }
@@ -144,18 +151,18 @@ public class LoginConfig extends Configuration {
         if (flag.equalsIgnoreCase("optional")) {
             return AppConfigurationEntry.LoginModuleControlFlag.OPTIONAL;
         }
-        throw new InitializationException
+        throw new ConfigError
             ("Control flag must be one of \"required\", "
              +"\"requisite\", \"sufficient\", or \"optional\", "
              +"but got: \""+flag+"\"");
     }
 
     private void addOption(Iterator iter, Map map)
-        throws InitializationException {
+        throws ConfigError {
         String option = getString(iter, "option");
         int index = option.indexOf('=');
         if (index == -1) {
-            throw new InitializationException
+            throw new ConfigError
                 ("Option must be \"key=value\", but got: \""
                  +option+"\"");
         }
@@ -165,10 +172,10 @@ public class LoginConfig extends Configuration {
     }
 
     private String getString(Iterator iter, String name)
-        throws InitializationException {
+        throws ConfigError {
         Object temp = getObject(iter, name);
         if (!(temp instanceof String)) {
-            throw new InitializationException
+            throw new ConfigError
                 ("Expected String "+name
                  +", but got: \""+temp+"\"");
         }
@@ -176,9 +183,9 @@ public class LoginConfig extends Configuration {
     }
 
     private Object getObject(Iterator iter, String name)
-        throws InitializationException {
+        throws ConfigError {
         if (!iter.hasNext()) {
-            throw new InitializationException
+            throw new ConfigError
                 ("Missing "+name);
         }
         return iter.next();
@@ -190,6 +197,7 @@ public class LoginConfig extends Configuration {
     }
 
     // overrides Configuration
+    @Override
     public void refresh() {
         // do nothing
     }

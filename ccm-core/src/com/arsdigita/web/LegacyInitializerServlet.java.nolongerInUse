@@ -18,6 +18,15 @@
  */
 package com.arsdigita.web;
 
+
+// //////////////////////////////////////////////////////////////////////////
+//
+// Old initializer system based on enterprise.init scripts is no longer
+// available.
+//
+// //////////////////////////////////////////////////////////////////////////
+
+
 import com.arsdigita.developersupport.Debug;
 import com.arsdigita.initializer.Script;
 import com.arsdigita.util.ResourceManager;
@@ -36,6 +45,7 @@ public final class LegacyInitializerServlet extends BaseServlet {
      * Starts up the web environment for the ACS by loading the specified
      * initializer script.
      */
+    @Override
     protected final void doInit() throws ServletException {
         Debug.setLevel("com.arsdigita.initializer.Script", "info");
 
@@ -54,6 +64,7 @@ public final class LegacyInitializerServlet extends BaseServlet {
         m_initializer.startup();
     }
 
+    @Override
     protected final void doDestroy() {
         m_initializer.shutdown();
         m_initializer = null;

@@ -18,7 +18,7 @@
  */
 package com.arsdigita.cms.util;
 
-import com.arsdigita.initializer.InitializationException;
+import com.arsdigita.runtime.ConfigError;
 import org.apache.oro.text.perl.Perl5Util;
 
 /**
@@ -30,12 +30,12 @@ import org.apache.oro.text.perl.Perl5Util;
 
 public class Util {
     public static void validateURLParameter(String name, String value)
-        throws InitializationException {
+        throws ConfigError {
 
         final String pattern = "/[^A-Za-z_0-9\\-]+/";
         Perl5Util util = new Perl5Util();
         if ( util.match(pattern, value) ) {
-            throw new InitializationException
+            throw new ConfigError
                 ("The \"" + name + "\" parameter must contain only " +
                  " alpha-numeric characters, underscores, and/or hyphens.");
         }

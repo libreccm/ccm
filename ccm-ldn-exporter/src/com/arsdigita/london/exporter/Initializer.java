@@ -23,7 +23,7 @@ import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.LegacyInitEvent;
+import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.xml.XML;
@@ -45,7 +45,8 @@ public class Initializer extends CompoundInitializer {
 
     // TODO - one the core initializers are ported this should be moved
     // to be a DomainEvent instead of a LegacyInitEvent
-    public void init(LegacyInitEvent evt) {
+    @Override
+    public void init(DomainInitEvent evt) {
         super.init(evt);
 
         XML.parse(Exporter.getConfig().getTraversalAdapters(),

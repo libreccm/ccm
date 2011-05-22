@@ -44,7 +44,8 @@ public class DocumentManager implements HttpDocManager {
      * "Borrowed" from com.arsdigita.dispatcher.DispatcherHelper.
      * TO DO: Move this into an appropriate utility class!
      */
-    public static final SimpleDateFormat rfc1123_formatter = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
+    public static final SimpleDateFormat rfc1123_formatter =
+                        new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(DocumentManager.class);

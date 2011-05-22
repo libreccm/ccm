@@ -132,6 +132,7 @@ public class UncheckedWrapperException extends RuntimeException {
     /**
      * Get a string representing this exception and the root cause.
      */
+    @Override
     public String toString() {
         return toString(this.getClass());
     }
@@ -163,6 +164,7 @@ public class UncheckedWrapperException extends RuntimeException {
     /**
      * This exception's message and the root cause's.
      */
+    @Override
     public String getMessage() {
         if (m_rootCause != null) {
             return super.getMessage() + " (root cause: " + m_rootCause.
@@ -175,6 +177,7 @@ public class UncheckedWrapperException extends RuntimeException {
     /**
      * Stack trace for the root cause.
      */
+    @Override
     public void printStackTrace() {
         super.printStackTrace();
         if (m_rootCause != null) {
@@ -186,6 +189,7 @@ public class UncheckedWrapperException extends RuntimeException {
     /**
      * Stack trace for the root cause.
      */
+    @Override
     public void printStackTrace(java.io.PrintStream s) {
         super.printStackTrace(s);
         if (m_rootCause != null) {
@@ -197,6 +201,7 @@ public class UncheckedWrapperException extends RuntimeException {
     /**
      * Stack trace for the root cause.
      */
+    @Override
     public void printStackTrace(java.io.PrintWriter s) {
         super.printStackTrace(s);
         if (m_rootCause != null) {

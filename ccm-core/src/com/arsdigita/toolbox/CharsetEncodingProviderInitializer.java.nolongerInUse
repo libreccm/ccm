@@ -24,6 +24,16 @@ import com.arsdigita.initializer.Initializer;
 import com.arsdigita.util.URLRewriter;
 import org.apache.log4j.Logger;
 
+
+// ////////////////////////////////////////////////////////////////////////////
+//
+// Migration Status:
+// Moved into main ~/core/initializer
+// Nolonger used
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+
 /**
  * <p>
  * Add the character set encoding provider.

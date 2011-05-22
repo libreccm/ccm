@@ -22,7 +22,6 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-/*  import com.arsdigita.runtime.LegacyInitEvent; Legacy Init removed */
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.persistence.pdl.ManifestSource;

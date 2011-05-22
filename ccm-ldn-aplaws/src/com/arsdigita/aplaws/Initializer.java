@@ -24,7 +24,6 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.templating.PatternStylesheetResolver;
@@ -43,12 +42,14 @@ public class Initializer extends CompoundInitializer {
     /**
      * An empty implementation of {@link Initializer#init(DataInitEvent)}.
      */
+    @Override
     public void init(DataInitEvent evt) {}
 
     /**
      * 
      * @param evt
      */
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
 
@@ -60,18 +61,11 @@ public class Initializer extends CompoundInitializer {
         );
     }
 
-    /**
-     * Implementation of the {@link Initializer#init(LegacyInitEvent)}
-     * method.
-     *
-     * @param evt The legacy init event.
-     **/
-    public void init(LegacyInitEvent evt) {
-      }
 
     /**
      * An empty implementation of {@link Initializer#close()}.
      */
+    @Override
     public void close(ContextCloseEvent evt) {}
 
 }

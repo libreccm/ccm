@@ -1,6 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.runtime.LegacyInitEvent;
+// import com.arsdigita.runtime.LegacyInitEvent;
 import org.apache.log4j.Logger;
 
 /**
@@ -25,8 +25,8 @@ public class ResearchNetworkInitializer extends ContentTypeInitializer {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/ResearchNetwork.xml";
     }
 
-    @Override
-    public void init(LegacyInitEvent evt) {
-        super.init(evt);
-    }
+//    @Override
+//    public void init(LegacyInitEvent evt) {
+//        super.init(evt);
+//    }
 }

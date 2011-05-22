@@ -24,7 +24,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.initializer.InitializationException;
+import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
@@ -341,7 +341,7 @@ public class XMLContentItemHandler extends DefaultHandler {
         Perl5Util util = new Perl5Util();
         String pattern = "/[^A-Za-z_0-9\\-]+ /";
         if (util.match(pattern, name)) {
-            throw new InitializationException(
+            throw new ConfigError(
                 "The \"" + name + 
                 "\" name parameter must contain only alpha-numeric " +
                 "characters, underscores, and/or hyphens.");

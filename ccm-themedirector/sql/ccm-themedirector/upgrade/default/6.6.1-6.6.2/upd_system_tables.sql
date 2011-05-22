@@ -21,7 +21,7 @@
 
 
 update application_types
-   set       title='Theme Director',
+   set   title='Theme Director',
          package_type_id=null
  where   object_type='com.arsdigita.themedirector.ThemeDirector' ;
 
@@ -37,8 +37,23 @@ delete from site_nodes
 delete from apm_packages
  where   pretty_name like '%Theme%' ;
 
--- table apm_package_types doesn't require an update
+-- table apm_package_types
 delete from apm_package_types
  where   pretty_name like '%Theme%' ;
 
+delete from object_context
+    where object_id = (select acs_objects.object_id from acs_objects
+                          where acs_objects.object_type
+                              like '%com.arsdigita.kernel%'
+                          AND acs_objects.display_name like '/admin/themes/') ;
+
+delete from object_context
+    where object_id = (select acs_objects.object_id from acs_objects
+                          where acs_objects.object_type
+                              like '%com.arsdigita.kernel%'
+                          AND acs_objects.display_name like 'CCM Themes Admin') ;
+
+delete  from acs_objects
+    where object_type like '%com.arsdigita.kernel%'
+    AND display_name like '%hemes%' ;
 

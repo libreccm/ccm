@@ -37,8 +37,27 @@ delete from site_nodes
 delete from apm_packages
  where   pretty_name like '%Portal%' ;
 
--- table apm_package_types doesn't require an update
+-- table apm_package_types 
 delete from apm_package_types
  where   pretty_name like '%Workspace%' ;
 
+delete from object_context
+    where object_id = (select acs_objects.object_id from acs_objects
+                          where acs_objects.object_type
+                              like '%com.arsdigita.kernel%'
+                          AND acs_objects.display_name like '/portal/') ;
+
+delete from object_context
+    where object_id = (select acs_objects.object_id from acs_objects
+                          where acs_objects.object_type
+                              like '%com.arsdigita.kernel%'
+                          AND acs_objects.display_name like 'Portal Workspace') ;
+
+delete  from acs_objects
+    where object_type like '%com.arsdigita.kernel%'
+    AND display_name like '/portal/' ;
+
+delete  from acs_objects
+    where object_type like '%com.arsdigita.kernel%'
+    AND display_name like 'Portal Workspace' ;
 

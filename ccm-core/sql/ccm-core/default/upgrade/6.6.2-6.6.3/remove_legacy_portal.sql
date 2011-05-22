@@ -16,7 +16,9 @@
 -- $Id: remove_legacy_portal.sql pboy $
 
 -- delete core portals legacy entry in apm_package_types
--- there es no entry in acs_objects!
+-- there is no entry in application_types bot package_type_id and there are
+-- no entries for instances in apm_packages / sitenodes / APPLICATIONS nor
+-- there is any entry in acs_objects!
 
 delete  from apm_package_types
         where package_key like 'portal' ;

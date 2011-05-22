@@ -237,7 +237,7 @@ public  class Runtime extends CompoundInitializer {
 
         init.init(new DomainInitEvent(new DomainObjectFactory()));
 
-        init.init(new LegacyInitEvent(session));
+//      init.init(new LegacyInitEvent(session));
 
         if(evt != null) {
            init.init(evt);

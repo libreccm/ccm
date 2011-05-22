@@ -25,12 +25,13 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ui.authoring.PageCreateDynamic;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.formbuilder.PersistentForm;
-import com.arsdigita.initializer.InitializationException;
+//import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.metadata.DynamicObjectType;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.metadata.Model;
 import com.arsdigita.persistence.metadata.ObjectType;
+import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
 import org.apache.oro.text.perl.Perl5Util;
 
@@ -77,13 +78,13 @@ public class UDCTHelper extends ContentTypeHelperImpl implements ContentTypeHelp
         return m_parentType;
     }
 
-    public ContentType getParentContentType() throws InitializationException {
+    public ContentType getParentContentType() throws UncheckedWrapperException {
         ContentType parent;
         try {
             parent =  ContentType.findByAssociatedObjectType(m_parent); 
             return parent;
         } catch (DataObjectNotFoundException e) {
-            throw new InitializationException("Parent Type not found" , e);
+            throw new UncheckedWrapperException("Parent Type not found" , e);
         }
     }
 

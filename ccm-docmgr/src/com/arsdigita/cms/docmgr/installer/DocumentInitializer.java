@@ -8,7 +8,7 @@ import com.arsdigita.cms.docmgr.Document;
 /*
  * Instantiates the Document content type
  *
- * @version $Id: PrescriptiveInitializer.java,v 1.3 2003/06/30 21:47:31 cwolfe Exp $
+ * @version $Id: DocumentInitializer.java $
  */
 public class DocumentInitializer extends ContentTypeInitializer {
 

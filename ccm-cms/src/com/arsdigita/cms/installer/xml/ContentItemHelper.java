@@ -36,7 +36,7 @@ import java.lang.reflect.Method;
  * @author Nobuko Asakai (nasakai@redhat.com)
  * @see com.arsdigita.cms.installer.xml.XMLContentItemHandler
  * @see com.arsdigita.cms.installer.xml.ContentItemLoader
- * */
+ */
 public class ContentItemHelper {
     private static final Logger s_log = Logger.getLogger(ContentItemHelper.class);
     /* Default language for this item instance */
@@ -52,6 +52,10 @@ public class ContentItemHelper {
     private String m_contentType;
     private Class m_contentTypeClass;
 
+    /**
+     * 
+     * @param section
+     */
     public ContentItemHelper(ContentSection section) {
         m_section = section;
         m_parent = section.getRootFolder();

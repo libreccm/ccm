@@ -8,7 +8,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
-import com.arsdigita.initializer.InitializationException;
+// import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.PackageType;
 // import com.arsdigita.kernel.Stylesheet;
@@ -32,7 +32,8 @@ public class Initializer extends CompoundInitializer {
 
 	private static final Logger s_log = Logger.getLogger(Initializer.class);
 
-	public Initializer() throws InitializationException {
+//ublic Initializer() throws InitializationException {
+	public Initializer()  {
 		final String url = RuntimeConfig.getConfig().getJDBCURL();
 		final int database = DbHelper.getDatabaseFromURL(url);
 
@@ -40,6 +41,7 @@ public class Initializer extends CompoundInitializer {
 				new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 	}
 
+    @Override
 	public void init(DomainInitEvent e) {
 		s_log.info("WebLog Initializer starting.");
 
@@ -53,6 +55,7 @@ public class Initializer extends CompoundInitializer {
 
 		// register application
 		DomainObjectInstantiator instantiator = new ACSObjectInstantiator() {
+            @Override
 			protected DomainObject doNewInstance(DataObject dataObject) {
 				return new WebLogApplication(dataObject);
 			}
@@ -63,6 +66,7 @@ public class Initializer extends CompoundInitializer {
 
 		// Register the portlets
 		instantiator = new ACSObjectInstantiator() {
+            @Override
 			protected DomainObject doNewInstance(DataObject dataObject) {
 				return new WebLogPortlet(dataObject);
 			}

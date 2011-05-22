@@ -27,11 +27,11 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @version $Id: com/arsdigita/portalserver/permissions/Grant.java $
+ */
 class Grant {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/Grant.java#5 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
 
     private static Logger s_log = Logger.getLogger(Grant.class.getName());
 
@@ -82,6 +82,7 @@ class Grant {
     public String objectTypeDisplayName = null;
     public int level;
 
+    @Override
     public int hashCode() {
         if (objectType == null) {
             return granteeID.hashCode() + objectID.hashCode();
@@ -92,6 +93,7 @@ class Grant {
             objectType.hashCode();
     }
 
+    @Override
     public boolean equals(Object other) {
         if (other == null) {
             return false;
@@ -122,6 +124,7 @@ class Grant {
         return objectType.equals(otherGrant.objectType);
     }
 
+    @Override
     public String toString() {
         return marshal(granteeID, objectID, basePrivilege, objectType);
     }

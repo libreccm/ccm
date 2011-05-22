@@ -33,6 +33,14 @@ import com.arsdigita.portalserver.*;
 
 import org.apache.log4j.Logger;
 
+
+// ///////////////////////////////////////////////////////////////////////
+//
+// Everything moved into central initializer
+//
+// ///////////////////////////////////////////////////////////////////////
+
+
 //public class Initializer extends BaseInitializer {
 public class Initializer {
     public static final String versionId = "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/admin/Initializer.java#9 $ by $Author: dennis $, $DateTime: 2004/08/17 23:19:25 $";

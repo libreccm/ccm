@@ -5,7 +5,8 @@
 
   <target name="compile-hook">
     <mkdir dir="${build.src.dir}/com/arsdigita/installer"/>
-    <mkdir dir="${build.src.dir}/com/arsdigita/initializer"/>
+    <!-- Old style initializer completely removed.                 -->
+    <!-- <mkdir dir="${build.src.dir}/com/arsdigita/initializer"/> -->
     <mkdir dir="${build.src.dir}/com/redhat/persistence/pdl"/>
     <mkdir dir="${build.src.dir}/com/redhat/persistence/common"/>
     <mkdir dir="${build.src.dir}/com/redhat/persistence/oql"/>
@@ -14,11 +15,13 @@
       outputdirectory="${build.src.dir}/com/arsdigita/installer"
       javacchome="${javacc.home.dir}"
     />
+<!--  Old style initializer completely removed. 
     <javacc
       target="${src.dir}/com/arsdigita/initializer/ScriptParser.jj"
       outputdirectory="${build.src.dir}/com/arsdigita/initializer"
       javacchome="${javacc.home.dir}"
     />
+-->
     <javacc
       target="${src.dir}/com/redhat/persistence/pdl/PDLParser.jj"
       outputdirectory="${build.src.dir}/com/redhat/persistence/pdl"

@@ -39,7 +39,6 @@ import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.xml.XML;
@@ -50,7 +49,6 @@ import com.arsdigita.xml.XML;
  * @version $Id: Initializer.java 1741 2008-09-01 15:38:21Z clasohm $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId = "$Id: Initializer.java 1741 2008-09-01 15:38:21Z clasohm $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -60,10 +58,17 @@ public class Initializer extends CompoundInitializer {
                 new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
-    // TODO - one the core initializers are ported this should be moved
-    // to be a DomainEvent instead of a LegacyInitEvent
-    public void init(LegacyInitEvent evt) {
-        super.init(evt);
+    @Override
+	public void init(DomainInitEvent evt) {
+		super.init(evt);
+
+        DomainObjectFactory f = evt.getFactory();
+    	f.registerInstantiator(AtoZCategoryAlias.BASE_DATA_OBJECT_TYPE,
+                               new DomainObjectInstantiator() {
+            protected DomainObject doNewInstance(DataObject dataObject) {
+                return new AtoZCategoryAlias(dataObject);
+            }
+        });
 
         XML.parse(AtoZ.getConfig().getTraversalAdapters(),
                 new TraversalHandler());
@@ -98,14 +103,4 @@ public class Initializer extends CompoundInitializer {
 
     }
 
-	public void init(DomainInitEvent evt) {
-		super.init(evt);
-
-        DomainObjectFactory f = evt.getFactory();
-    	f.registerInstantiator(AtoZCategoryAlias.BASE_DATA_OBJECT_TYPE, new DomainObjectInstantiator() {
-			protected DomainObject doNewInstance(DataObject dataObject) {
-				return new AtoZCategoryAlias(dataObject);
-			}
-    	});
-	}
 }

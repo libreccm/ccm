@@ -20,7 +20,7 @@ package com.arsdigita.metadata;
 
 import com.arsdigita.db.ConnectionManager;
 import com.arsdigita.db.Sequences;
-import com.arsdigita.initializer.Startup;
+// import com.arsdigita.initializer.Startup;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.PersistenceException;
@@ -63,12 +63,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
- * DynamicObjectType is a class that can be used to dynamically
- * create and modify {@link
- * com.arsdigita.persistence.metadata.ObjectType}.  It can be used to
- * create the subtype, add and remove Attributes and RoleReferences as
- * well as perform many other tasks related to the new object type.
- * When the application is done creating the object type, it should
+ * DynamicObjectType is a class that can be used to dynamically create and
+ * modify {@link com.arsdigita.persistence.metadata.ObjectType}.
+ * It can be used to create the subtype, add and remove Attributes and
+ * RoleReferences as well as perform many other tasks related to the new
+ * object type. When the application is done creating the object type, it should
  * call {@link #save()} to persist the information about the newly created
  * object type.
  *
@@ -977,9 +976,11 @@ public class DynamicObjectType extends DynamicElement {
         String startupScript = args[3];
         String webAppRoot = args[4];
 
-        Startup startup = new Startup(webAppRoot, startupScript);
-        startup.setLastInitializer("com.arsdigita.persistence.Initializer");
-        startup.init();
+//      Old Initializer system is not workable anymore.
+//      Eventually TODO: refactor to use the new Initializer system.
+//      Startup startup = new Startup(webAppRoot, startupScript);
+//      startup.setLastInitializer("com.arsdigita.persistence.Initializer");
+//      startup.init();
 
         TransactionContext txn = SessionManager.getSession()
             .getTransactionContext();
@@ -1068,6 +1069,7 @@ public class DynamicObjectType extends DynamicElement {
         }
 
         txn.commitTxn();
-        startup.destroy();
+//      Old Initializer is not usable anymore, see above
+//      startup.destroy();
     }
 }

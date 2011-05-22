@@ -25,7 +25,7 @@ import com.arsdigita.domain.DomainObject;
 
 import com.arsdigita.kernel.ACSObjectInstantiator;
 
-import com.arsdigita.persistence.pdl.ManifestSource;
+// import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.DataObject;
@@ -33,7 +33,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.LegacyInitEvent;
+// import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 
 import com.arsdigita.templating.PatternStylesheetResolver;
@@ -56,23 +56,19 @@ public class Initializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
     
+    @Override
     public void init(DomainInitEvent e) {
         super.init(e);
 
         e.getFactory().registerInstantiator(
             Subsite.BASE_DATA_OBJECT_TYPE,
             new ACSObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new Subsite(dataObject);
                 }
             });
-    }
 
-    // TODO - once the core initializers are ported this should be moved
-    // to be a DomainEvent instead of a LegacyInitEvent
-    public void init(LegacyInitEvent evt) {
-        super.init(evt);
-        
         XML.parse(Subsite.getConfig().getTraversalAdapters(),
                   new TraversalHandler());
 
@@ -81,4 +77,18 @@ public class Initializer extends CompoundInitializer {
         );
 
     }
+
+    // TODO - once the core initializers are ported this should be moved
+    // to be a DomainEvent instead of a LegacyInitEvent
+//  public void init(LegacyInitEvent evt) {
+//      super.init(evt);
+        
+//      XML.parse(Subsite.getConfig().getTraversalAdapters(),
+//                new TraversalHandler());
+
+//      PatternStylesheetResolver.registerPatternGenerator(
+//          "subsite", new SubsitePatternGenerator()
+//      );
+
+//  }
 }

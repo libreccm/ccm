@@ -42,7 +42,6 @@ import com.arsdigita.portalserver.ui.admin.PortalSiteMap;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
 // import com.arsdigita.web.*;
 import com.arsdigita.web.Application;

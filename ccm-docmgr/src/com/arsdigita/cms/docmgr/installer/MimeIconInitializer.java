@@ -21,8 +21,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.initializer.Configuration;
-import com.arsdigita.initializer.InitializationException;
+//Bimport com.arsdigita.initializer.Configuration;
+// import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.mimetypes.MimeType;
 
 
@@ -33,9 +33,9 @@ import com.arsdigita.mimetypes.MimeType;
  *
  */
 
-public class MimeIconInitializer implements com.arsdigita.initializer.Initializer {
+public class MimeIconInitializer { // implements com.arsdigita.initializer.Initializer {
 
-    private Configuration m_conf = new Configuration();
+    // private Configuration m_conf = new Configuration();
 
     private static final String SEPARATOR = java.io.File.separator;
 
@@ -51,23 +51,23 @@ public class MimeIconInitializer implements com.arsdigita.initializer.Initialize
     private static String m_defaultIcon = null;
 
     public MimeIconInitializer() { 
-        m_conf.initParameter(ICON_URL_ROOT,
-                             "location of mime-type icons",
-                             String.class); 
-        m_conf.initParameter(DEFAULT_ICON,
-                             "icon to use if no match found",
-                             String.class); 
-        m_conf.initParameter(MIME_ICON_MAP,
-                             "mime-type to icon map",
-                             List.class);
+    //  m_conf.initParameter(ICON_URL_ROOT,
+    //                       "location of mime-type icons",
+    //                       String.class);
+    //  m_conf.initParameter(DEFAULT_ICON,
+    //                       "icon to use if no match found",
+    //                       String.class);
+    //  m_conf.initParameter(MIME_ICON_MAP,
+    //                       "mime-type to icon map",
+    //                       List.class);
     }
 
     /**
      * Returns the configuration object used by this initializer.
      */
-    public Configuration getConfiguration() {
-        return m_conf;
-    }
+//  public Configuration getConfiguration() {
+//      return m_conf;
+//  }
 
     /**
      * Called on startup.
@@ -75,15 +75,15 @@ public class MimeIconInitializer implements com.arsdigita.initializer.Initialize
     public void startup() {
         s_log.warn("Mime Icon Initializer beginning");
 
-        m_iconUrlRoot = (String) m_conf.getParameter
-            (ICON_URL_ROOT);
-        m_defaultIcon = (String) m_conf.getParameter
-            (DEFAULT_ICON);
+    //  m_iconUrlRoot = (String) m_conf.getParameter
+    //      (ICON_URL_ROOT);
+    //  m_defaultIcon = (String) m_conf.getParameter
+    //      (DEFAULT_ICON);
 
-        List mimeTypes = (List) m_conf.getParameter
-            (MIME_ICON_MAP);
+    //  List mimeTypes = (List) m_conf.getParameter
+    //      (MIME_ICON_MAP);
 
-        Iterator i = mimeTypes.iterator();
+/*        Iterator i = mimeTypes.iterator();
         while(i.hasNext()) {
             List values = (List) i.next();
             if(values.size() != 2) {
@@ -105,20 +105,20 @@ public class MimeIconInitializer implements com.arsdigita.initializer.Initialize
             }
             m_iconMap.put(mimeTypeName, m_iconUrlRoot + iconName);            
         }
-
+*/
         s_log.info("Mime Icon Initializer completed.");
     }
 
-    public static String getMimeIconURL(String mimeTypeName) {
+/*    public static String getMimeIconURL(String mimeTypeName) {
         if (m_iconMap.get(mimeTypeName) != null) {
             return (String) m_iconMap.get(mimeTypeName);
         }
         return m_iconUrlRoot + m_defaultIcon;
     }
-
+*/
     /**
      * Shutdown the document manager.
      */
-    public void shutdown() { }
+//  public void shutdown() { }
 
 }

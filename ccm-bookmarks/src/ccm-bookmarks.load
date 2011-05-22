@@ -5,7 +5,7 @@
     <initializer class="com.arsdigita.core.Initializer"/>
   </requires>
   <provides>
-    <initializer class="com.arsdigita.bookmarks.installer.Initializer"/>
+    <initializer class="com.arsdigita.bookmarks.Initializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-bookmarks"/>

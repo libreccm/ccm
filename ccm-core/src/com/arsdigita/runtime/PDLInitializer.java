@@ -96,9 +96,9 @@ public class PDLInitializer implements Initializer {
      * An empty implementation of {@link Initializer#init(LegacyInitEvent)}.
      **/
 
-    public void init(LegacyInitEvent evt) {
+//  public void init(LegacyInitEvent evt) {
         // do nothing
-    }
+//  }
 
     /**
      * An empty implementation of {@link Initializer#init(ContextInitEvent)}.

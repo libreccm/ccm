@@ -1,19 +1,22 @@
 /*
- * Copyright (C) 2001, 2002 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the CCM Public
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.redhat.com/licenses/ccmpl.html
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.bookmarks.installer;
+package com.arsdigita.bookmarks;
 
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.DataObject;
@@ -27,7 +30,7 @@ import com.arsdigita.bookmarks.*;
 import com.arsdigita.bookmarks.ui.*;
 // unused  import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.initializer.Configuration;
+// import com.arsdigita.initializer.Configuration;
 // unused import com.arsdigita.initializer.InitializationException;
 // unused import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.pdl.ManifestSource;
@@ -53,7 +56,8 @@ public class Initializer extends CompoundInitializer {
     private static final Logger s_log = Logger.getLogger
         (Initializer.class);
 
-    private Configuration m_conf = new Configuration();
+    //  required by Old Initializer.
+    //  private Configuration m_conf = new Configuration();
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -66,6 +70,7 @@ public class Initializer extends CompoundInitializer {
     }
 
 
+    @Override
     public void init(DomainInitEvent e) {
 	    s_log.info("Bookmarks app is initializing using .init(DomainInitEvent e)");
         // 	setupDomainFactory();

@@ -60,14 +60,14 @@ public abstract class GenericInitializer implements Initializer {
     }
 
 
-    /**
-     * An empty implementation of {@link Initializer#init(LegacyInitEvent)}
-     * method.
-     *
-     * @param evt The legacy init event.
-     **/
-    public void init(LegacyInitEvent evt) {
-    }
+//  /**
+//   * An empty implementation of {@link Initializer#init(LegacyInitEvent)}
+//   * method.
+//   *
+//   * @param evt The legacy init event.
+//   **/
+//  public void init(LegacyInitEvent evt) {
+//  }
 
     /**
      * An empty implementation of {@link Initializer#init(ContextInitEvent)}
