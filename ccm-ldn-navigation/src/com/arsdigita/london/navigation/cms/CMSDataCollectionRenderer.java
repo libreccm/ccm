@@ -19,7 +19,6 @@ package com.arsdigita.london.navigation.cms;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
-import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.navigation.DataCollectionRenderer;

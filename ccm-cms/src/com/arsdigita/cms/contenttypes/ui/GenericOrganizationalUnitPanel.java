@@ -230,9 +230,11 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             Element addressElem = contactElem.newChildElement(
                     "address");
             Element postalCode = addressElem.newChildElement(
-                    "postalCode");
+                    "postalCode");            
             postalCode.setText(address.getPostalCode());
-            Element data = addressElem.newChildElement("data");
+            Element city = addressElem.newChildElement("city");
+            city.setText(address.getCity());
+            Element data = addressElem.newChildElement("address");
             data.setText(address.getAddress());
             Element country = addressElem.newChildElement("country");
             country.setText(address.getIsoCountryCode());

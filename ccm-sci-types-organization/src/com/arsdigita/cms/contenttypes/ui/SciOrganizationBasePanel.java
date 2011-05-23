@@ -34,7 +34,6 @@ import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.xml.Element;
