@@ -1,21 +1,25 @@
-/* * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+/*
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
 
 package com.arsdigita.london.shortcuts.ui;
 
 import com.arsdigita.bebop.Table;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.bebop.table.TableModel;
@@ -38,6 +42,10 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.bebop.ExternalLink;
 
+/**
+ * 
+ * 
+ */
 public class ShortcutsTable extends Table {
     private static final Category log = 
         Category.getInstance(ShortcutsTable.class.getName());
