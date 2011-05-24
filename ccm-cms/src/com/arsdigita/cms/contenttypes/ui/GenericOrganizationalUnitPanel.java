@@ -30,6 +30,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.xml.Element;
 
 /**
@@ -40,7 +41,6 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
     public static final String SHOW_CONTACTS = "contacts";
     public static final String SHOW_MEMBERS = "members";
-
     private boolean displayContacts = true;
     private boolean displayMembers = true;
 
@@ -163,7 +163,11 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
                                       final PageState state,
                                       final String order,
                                       final boolean withPerson) {
-        Element contactElem = parent.newChildElement("contact");
+        ContactXmlLGenerator generator = new ContactXmlLGenerator(contact);
+        
+        generator.generateXML(state, parent, order);
+        
+        /*Element contactElem = parent.newChildElement("contact");
         contactElem.addAttribute("order", order);
 
         Element title = contactElem.newChildElement("title");
@@ -230,7 +234,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             Element addressElem = contactElem.newChildElement(
                     "address");
             Element postalCode = addressElem.newChildElement(
-                    "postalCode");            
+                    "postalCode");
             postalCode.setText(address.getPostalCode());
             Element city = addressElem.newChildElement("city");
             city.setText(address.getCity());
@@ -240,7 +244,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             country.setText(address.getIsoCountryCode());
             Element theState = addressElem.newChildElement("state");
             theState.setText(address.getState());
-        }
+        }*/
     }
 
     @Override
@@ -268,6 +272,21 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             generateContactsXML(orga, content, state);
         } else if (SHOW_MEMBERS.equals(show)) {
             generateMembersXML(orga, content, state);
+        }
+    }
+
+    private class ContactXmlLGenerator extends SimpleXMLGenerator {
+
+        private GenericContact contact;
+
+        public ContactXmlLGenerator(final GenericContact contact) {
+            super();
+            this.contact = contact;
+        }
+
+        @Override
+        protected ContentItem getContentItem(PageState state) {
+            return contact;
         }
     }
 }
