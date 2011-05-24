@@ -159,7 +159,7 @@ public class FolderTreeModelBuilder extends LockableImpl
                     + "\n                             and dgc.pd_context_id = dp.pd_object_id"
                     + "\n                             and dp.pd_grantee_id = dgm.pd_group_id"
                     + "\n                             and dgm.pd_member_id in (-200," + userID + ",-202)"
-                    + "\n                             and dp." + TREE_DESCRIPTOR.getColumnName() + " = 1"
+                    + "\n                             and dp." + TREE_DESCRIPTOR.getColumnName() + " = '1'"
                     + "\n                             ) )"
                     + "\n    where i.parent_id = " + node.getID()
                     + "\n      and f.folder_id = i.item_id"
@@ -174,7 +174,7 @@ public class FolderTreeModelBuilder extends LockableImpl
                     + "\n                and dgm.pd_member_id in (-200," + userID + ",-202)"
                     + "\n                and dp.pd_grantee_id = dgm.pd_group_id"
                     + "\n                and dogc.pd_object_id = f.folder_id"
-                    + "\n                and dp." + TREE_DESCRIPTOR.getColumnName() + " = 1 )"
+                    + "\n                and dp." + TREE_DESCRIPTOR.getColumnName() + " = '1' )"
                     + "\n    group by f.label, f.folder_id"
                     + "\n    order by lower(f.label)";
 
