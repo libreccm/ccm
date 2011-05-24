@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2011 Peter boy (pboy@barkhof.uni-bremen.de
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,56 +16,45 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.faq;
 
-import com.arsdigita.faq.ui.FaqPage;
-import com.arsdigita.faq.ui.FaqAdminView;
-import com.arsdigita.faq.ui.FaqUserView;
-
-import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.page.BebopApplicationServlet;
+import com.arsdigita.faq.ui.FaqAdminView;
+import com.arsdigita.faq.ui.FaqPage;
+import com.arsdigita.faq.ui.FaqUserView;
+import javax.servlet.ServletException;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
- * Faq dispatcher for both Bebop-backed and other URLs.
  *
- * @author Kevin Scaldeferri (kevin@arsdigita.com)
- * @version $Revision: #4 $ $Date: 2004/08/17 $
- * @version $Id: FaqDispatcher.java pboy $
+ * @author pb
  */
+public class FaqServlet  extends BebopApplicationServlet {
 
-public class FaqDispatcher extends BebopMapDispatcher {
+    /** Private logger instance to faciliate debugging procedures         */
+    private static final Logger s_log = Logger.getLogger(FaqServlet.class);
 
-    private static final Logger s_log =
-        Logger.getLogger(FaqDispatcher.class);
 
-    /**
-     * Constructor, sets up internal data structures and builds the user
-     * interface (public [index] page and admin page)
-     */
-    public FaqDispatcher() {
-        super();
-
-        Map m = new HashMap();
+    public void init() throws ServletException {
+        super.init();
 
         Page index = buildIndexPage();
         Page admin = buildAdminIndexPage();
 
-        m.put("", index);
-        m.put("index.jsp", index);
-        m.put("one.jsp", index);
+        put("/", index);
+        put("/index.jsp", index);
+        put("/one.jsp", index);
 
-        m.put("admin/", admin);
-        m.put("admin/index.jsp", admin);
+        put("admin/", admin);
+        put("admin/index.jsp", admin);
 
-        setMap(m);
     }
 
     /**
-     * 
+     *
      * @return
      */
     private FaqPage buildIndexPage() {
@@ -85,7 +74,7 @@ public class FaqDispatcher extends BebopMapDispatcher {
 
 
     /**
-     * 
+     *
      * @return
      */
     private FaqPage buildAdminIndexPage() {

@@ -63,6 +63,8 @@
 <!--    <ccm:application name="ccm-auth-http"/>                      -->
 <!--    <ccm:application name="ccm-bookmarks"/>                      -->
         <ccm:application name="ccm-docmgr"/>                        
+<!--    <ccm:application name="ccm-docrepo"/>                        -->
+        <ccm:application name="ccm-faq"/>
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
 <!--    <ccm:application name="ccm-forum-categorised"/>              -->

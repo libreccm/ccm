@@ -42,8 +42,8 @@ public class BebopMapDispatcher extends MapDispatcher {
 
     private PresentationManager m_presManager;
 
-    private static final Logger s_log =
-        Logger.getLogger(BebopMapDispatcher.class);
+    /** Private logger instance to help debugging.                            */
+    private static final Logger s_log = Logger.getLogger(BebopMapDispatcher.class);
 
     /**
      * Constructor creates BebopMapDispatcher with empty URL mapped to "/" and

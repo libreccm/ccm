@@ -98,7 +98,8 @@ public abstract class BaseApplicationServlet extends BaseServlet {
     @Override
     protected final void doService(final HttpServletRequest sreq,
                                    final HttpServletResponse sresp)
-            throws ServletException, IOException {
+                  throws ServletException, IOException {
+
         final Application app = getApplication(sreq);
 
         if (app == null) {

@@ -88,6 +88,7 @@ public class Loader extends PackageLoader {
 
     /**
      * TODO: What is it for? Execution is currently commented out.
+     * Referenced class com.arsdigita.forum.Inbox does not exist.
      * @return
      */
     private static ApplicationType setupInboxAppType() {

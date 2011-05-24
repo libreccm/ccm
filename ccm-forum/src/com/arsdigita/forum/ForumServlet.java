@@ -53,19 +53,20 @@ public class ForumServlet extends BebopApplicationServlet
     @Override
     public void init() throws ServletException {
         super.init();
-		s_log.debug("creating forum page");
+        s_log.debug("creating forum page");
+
         final Page forum = ForumPageFactory.getPage(ForumPageFactory.FORUM_PAGE);
-		s_log.debug("creating thread page");
+        s_log.debug("creating thread page");
         final Page thread = ForumPageFactory.getPage(ForumPageFactory.THREAD_PAGE);
 
         put("/", forum);
         put("/index.jsp", forum);
         put("/thread.jsp", thread);
         if (Forum.getConfig().disableClientPageCaching()) {
-        	s_log.debug("caching disabled");
-        	disableClientCaching("/");
-        	disableClientCaching("/index.jsp");
-        	disableClientCaching("/thread.jsp");
+            s_log.debug("caching disabled");
+            disableClientCaching("/");
+            disableClientCaching("/index.jsp");
+            disableClientCaching("/thread.jsp");
         }
         
         // allow other pages to be added
@@ -73,19 +74,17 @@ public class ForumServlet extends BebopApplicationServlet
         // for AJAX category asignment
         Iterator it = ForumPageFactory.getPages();
         while (it.hasNext()) {
-        	Object key = (Object)it.next();
-        	if (!key.equals(ForumPageFactory.FORUM_PAGE) &&
+            Object key = (Object)it.next();
+            if (!key.equals(ForumPageFactory.FORUM_PAGE) &&
                 !key.equals(ForumPageFactory.THREAD_PAGE)) {
-        		put("/" + key, ForumPageFactory.getPage((String)key));
-				if (Forum.getConfig().disableClientPageCaching()) {
-					disableClientCaching("/" + key);
-        	
+                put("/" + key, ForumPageFactory.getPage((String)key));
+                if (Forum.getConfig().disableClientPageCaching()) {
+                    disableClientCaching("/" + key);
                 }
             }
         }
         
     }
-    
-	
-									   
+
+
 }

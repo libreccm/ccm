@@ -18,16 +18,10 @@
  */
 package com.arsdigita.faq;
 
-// import com.arsdigita.mimetypes.*;
-//import com.arsdigita.domain.DomainObject;
 import com.arsdigita.faq.ui.FaqQuestionsPortlet;
-//import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
-//import com.arsdigita.persistence.DataObject;
-//import com.arsdigita.portal.PortletType;
-//import com.arsdigita.portal.apportlet.AppPortletSetup;
 import com.arsdigita.portal.apportlet.AppPortletType;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.web.ApplicationType;
@@ -85,16 +79,22 @@ public class Loader extends PackageLoader {
      */
     private void loadFAQApplicationType() {
 
-        ApplicationType type = ApplicationType.createApplicationType(
-                                              "faq",
-                                              "Frequently Asked Questions",
-                                              Faq.BASE_DATA_OBJECT_TYPE);
-        type.setDescription
-            ("FAQ's empower users to share knowledge.");
+        /* Setup a new style legacy compatible application type.   */
+        //  ApplicationType type = ApplicationType.createApplicationType(
+    //                                        "faq",
+    //                                        "Frequently Asked Questions",
+    //                                        Faq.BASE_DATA_OBJECT_TYPE);
         // Current code requires an apps specific dispatcher class. Has to be
         // modified to be able to create a legacy free app type.
-        type.setDispatcherClass
-                ("com.arsdigita.faq.FaqDispatcher");
+   //   type.setDispatcherClass
+   //           ("com.arsdigita.faq.FaqDispatcher");
+
+        /* Setup as new stype legacy free aplcation */
+        ApplicationType type = new ApplicationType("FAQ",
+                                                   Faq.BASE_DATA_OBJECT_TYPE);
+        // type independent:
+        type.setDescription
+            ("Frequently Asked Questions empower users to share knowledge.");
 
     }
 
