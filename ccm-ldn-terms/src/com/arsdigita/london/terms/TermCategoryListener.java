@@ -34,17 +34,23 @@ import com.arsdigita.persistence.SessionManager;
  */
 public class TermCategoryListener implements CategoryListener {
 
-    private static final Logger s_log = Logger.getLogger(TermCategoryListener.class);
+    private static final Logger s_log = Logger.getLogger(
+            TermCategoryListener.class);
 
-    public void onDelete(Category cat) {}
+    public void onDelete(Category cat) {
+    }
 
-    public void onAddChild(Category cat, Category child) {}
+    public void onAddChild(Category cat, Category child) {
+    }
 
-    public void onRemoveChild(Category cat, Category child) {}
+    public void onRemoveChild(Category cat, Category child) {
+    }
 
-    public void onMap(Category cat, ACSObject obj) {}
+    public void onMap(Category cat, ACSObject obj) {
+    }
 
-    public void onUnmap(Category cat, ACSObject obj) {}
+    public void onUnmap(Category cat, ACSObject obj) {
+    }
 
     /**
      * Create new term by hooking into setDefaultParent() category
@@ -57,8 +63,8 @@ public class TermCategoryListener implements CategoryListener {
      */
     public void onSetDefaultParent(Category cat, Category parent) {
         // Check whether a term already exists for this category.
-        DataCollection allTerms = SessionManager.getSession()
-            .retrieve(Term.BASE_DATA_OBJECT_TYPE);
+        DataCollection allTerms = SessionManager.getSession().retrieve(
+                Term.BASE_DATA_OBJECT_TYPE);
         allTerms.addEqualsFilter(Term.MODEL, cat.getID());
         if (allTerms.next()) {
             s_log.debug("A term already exists for cat: " + cat);
@@ -78,8 +84,8 @@ public class TermCategoryListener implements CategoryListener {
             return;
         }
 
-        DataCollection domains = SessionManager.getSession()
-            .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
+        DataCollection domains = SessionManager.getSession().retrieve(
+                Domain.BASE_DATA_OBJECT_TYPE);
         domains.addEqualsFilter(Domain.MODEL, root.getID());
         Domain termDomain = null;
         if (domains.next()) {
@@ -98,12 +104,9 @@ public class TermCategoryListener implements CategoryListener {
         }
 
         Term.create(cat,
-                    String.valueOf(maxID.intValue()+1),
+                    String.valueOf(maxID.intValue() + 1),
                     false,
                     "",
-                    termDomain
-        );
+                    termDomain);
     }
-
 }
-

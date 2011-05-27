@@ -92,7 +92,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             GenericContact contact;
             contact = contacts.getContact();
 
-            generateContactXML(contact,
+            generateGenericContactXML(contact,
                                contactsElem,
                                state,
                                Integer.toString(contacts.getContactOrder()),
@@ -157,17 +157,13 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             }
         }
     }
-
+    
     protected void generateContactXML(final GenericContact contact,
                                       final Element parent,
                                       final PageState state,
                                       final String order,
-                                      final boolean withPerson) {
-        ContactXmlLGenerator generator = new ContactXmlLGenerator(contact);
-        
-        generator.generateXML(state, parent, order);
-        
-        /*Element contactElem = parent.newChildElement("contact");
+                                      final boolean withPerson) {              
+        Element contactElem = parent.newChildElement("contact");
         contactElem.addAttribute("order", order);
 
         Element title = contactElem.newChildElement("title");
@@ -244,7 +240,17 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             country.setText(address.getIsoCountryCode());
             Element theState = addressElem.newChildElement("state");
             theState.setText(address.getState());
-        }*/
+        }
+    }
+
+    protected void generateGenericContactXML(final GenericContact contact,
+                                      final Element parent,
+                                      final PageState state,
+                                      final String order,
+                                      final boolean withPerson) {
+        ContactXmlLGenerator generator = new ContactXmlLGenerator(contact);
+        
+        generator.generateXML(state, parent, order);             
     }
 
     @Override
