@@ -265,7 +265,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             for (String filter : filters) {
                 orgaMembers.addFilter(filter);
             }
-
+                        
             SciOrganizationDepartmentsCollection departments;
             departments = orga.getDepartments();
 

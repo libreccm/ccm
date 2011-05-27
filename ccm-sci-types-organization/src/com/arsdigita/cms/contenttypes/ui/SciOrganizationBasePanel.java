@@ -209,12 +209,22 @@ public abstract class SciOrganizationBasePanel
 
         return filters;
     }
+    
+    protected List<String> getFiltersForFormerAssociatedMembers() {
+        List<String> filters;
+        filters = new LinkedList<String>();
+
+        filters.add("link.status = 'associatedFormer'");        
+
+        return filters;
+    }
 
     protected List<String> getFiltersForFormerMembers() {
         List<String> filters;
         filters = new LinkedList<String>();
 
-        filters.add("link.status = 'former'");
+        //filters.add("link.status = 'former'");        
+        filters.add("lower(link.status) like lower('%former%')");        
 
         return filters;
     }
