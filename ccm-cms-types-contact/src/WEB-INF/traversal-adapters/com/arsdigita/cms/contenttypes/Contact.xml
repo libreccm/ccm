@@ -43,6 +43,7 @@
         <xrd:property name="/object/person"/>
         <xrd:property name="/object/address"/>
         <xrd:property name="/object/contactentries"/>
+        <xrd:property name="/object/organizationalunit"/>
       </xrd:associations>
     </xrd:adapter>
   </xrd:context>
