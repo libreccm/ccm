@@ -33,7 +33,6 @@ import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciOrganizationDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciOrganizationProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
 import java.util.Collections;
 import java.util.HashSet;

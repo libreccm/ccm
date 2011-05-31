@@ -32,8 +32,10 @@ import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.xml.Element;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
@@ -101,23 +103,27 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     }
 
     protected boolean hasMembers(final SciDepartment department) {
-        return department.hasMembers(SciDepartment.getConfig().getOrganizationMembersMerge(),
-                                     SciDepartment.MemberStatus.ALL);                
+        return department.hasMembers(SciDepartment.getConfig().
+                getOrganizationMembersMerge(),
+                                     SciDepartment.MemberStatus.ALL);
     }
-    
-    protected  boolean hasActiveMembers(final SciDepartment department) {
-        return department.hasMembers(SciDepartment.getConfig().getOrganizationMembersMerge(),
-                                     SciDepartment.MemberStatus.ACTIVE);                
+
+    protected boolean hasActiveMembers(final SciDepartment department) {
+        return department.hasMembers(SciDepartment.getConfig().
+                getOrganizationMembersMerge(),
+                                     SciDepartment.MemberStatus.ACTIVE);
     }
-    
-    protected  boolean hasAssociatedMembers(final SciDepartment department) {
-        return department.hasMembers(SciDepartment.getConfig().getOrganizationMembersMerge(),
-                                     SciDepartment.MemberStatus.ASSOCIATED);                
+
+    protected boolean hasAssociatedMembers(final SciDepartment department) {
+        return department.hasMembers(SciDepartment.getConfig().
+                getOrganizationMembersMerge(),
+                                     SciDepartment.MemberStatus.ASSOCIATED);
     }
-    
-    protected  boolean hasFormerMembers(final SciDepartment department) {
-        return department.hasMembers(SciDepartment.getConfig().getOrganizationMembersMerge(),
-                                     SciDepartment.MemberStatus.FORMER);                
+
+    protected boolean hasFormerMembers(final SciDepartment department) {
+        return department.hasMembers(SciDepartment.getConfig().
+                getOrganizationMembersMerge(),
+                                     SciDepartment.MemberStatus.FORMER);
     }
 
     protected boolean hasProjects(final SciDepartment department) {
@@ -133,7 +139,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     }
 
     protected boolean hasFinishedProjects(final SciDepartment department) {
-         return department.hasProjects(SciDepartment.getConfig().
+        return department.hasProjects(SciDepartment.getConfig().
                 getOrganizationProjectsMerge(),
                                       SciDepartment.ProjectStatus.FINISHED);
     }
@@ -347,22 +353,29 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
 
             mergeProjects(subDepartments, projects, filters);
 
-            Collections.sort(projects, new SciProjectComparator());
+            Set<SciProject> projectsSet;
+            List<SciProject> projectsWithoutDoubles;
+            projectsSet = new HashSet<SciProject>(projects);
+            projectsWithoutDoubles = new LinkedList<SciProject>(projectsSet);
+
+            Collections.sort(projectsWithoutDoubles, new SciProjectComparator());
 
             long pageNumber = getPageNumber(state);
-            long pageCount = getPageCount(projects.size());
+            long pageCount = getPageCount(projectsWithoutDoubles.size());
             long begin = getPaginatorBegin(pageNumber);
-            long count = getPaginatorCount(begin, projects.size());
+            long count = getPaginatorCount(begin, projectsWithoutDoubles.size());
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
-            createPaginatorElement(
-                    parent, pageNumber, pageCount, begin, end, count, projects.
-                    size());
-            List<SciProject> projectsToShow = projects.subList((int) begin,
+            createPaginatorElement(parent,
+                                   pageNumber,
+                                   pageCount,
+                                   begin,
+                                   end,
+                                   count,
+                                   projectsWithoutDoubles.size());
+            List<SciProject> projectsToShow = projectsWithoutDoubles.subList((int) begin,
                                                                (int) end);
-
-
 
             Element projectsElem = parent.newChildElement("projects");
             for (SciProject project : projectsToShow) {
@@ -456,20 +469,20 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                 && displayProjects) {
                 availableData.newChildElement("projects");
             }
-        } else {            
+        } else {
             if (hasOngoingProjects(department)
                 && displayProjects) {
                 availableData.newChildElement("projectsOngoing");
-            }            
+            }
             if (hasFinishedProjects(department)
                 && displayProjects) {
                 availableData.newChildElement("projectsFinished");
             }
         }
         if (department.hasPublications()
-                && displayPublications) {
+            && displayPublications) {
             availableData.newChildElement("publications");
-        }        
+        }
 
         String show = getShowParam(state);
 

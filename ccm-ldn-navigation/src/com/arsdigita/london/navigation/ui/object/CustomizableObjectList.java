@@ -142,14 +142,16 @@ public class CustomizableObjectList extends ComplexObjectList {
                                           final String label,
                                           final boolean allOption,
                                           final boolean allOptionIsDefault,
-                                          final boolean propertyIsNumeric) {
+                                          final boolean propertyIsNumeric,
+                                          final boolean includeNull) {
         CompareFilter filter;
 
         filter = new CompareFilter(property,
                                    label,
                                    allOption,
                                    allOptionIsDefault,
-                                   propertyIsNumeric);
+                                   propertyIsNumeric,
+                                   includeNull);
         filters.put(label, filter);
 
         return filter;

@@ -21,6 +21,7 @@ public class CompareFilter implements Filter {
     private final boolean allOption;
     private final boolean allOptionIsDefault;
     private final boolean propertyIsNumeric;
+    private final boolean includeNull;
     private Map<String, Option> options = new LinkedHashMap<String, Option>();
     private String value;
 
@@ -28,12 +29,14 @@ public class CompareFilter implements Filter {
                             final String label,
                             final boolean allOption,
                             final boolean allOptionIsDefault,
-                            final boolean propertyIsNumeric) {
+                            final boolean propertyIsNumeric,
+                            final boolean includeNull) {
         this.property = property;
         this.label = label;
         this.allOption = allOption;
         this.allOptionIsDefault = allOptionIsDefault;
         this.propertyIsNumeric = propertyIsNumeric;
+        this.includeNull = includeNull;
     }
 
     @Override
@@ -108,6 +111,10 @@ public class CompareFilter implements Filter {
             filter.append('\'');
             filter.append(selectedOption.getValue());
             filter.append('\'');
+        }
+        
+        if (includeNull) {
+            filter.append(String.format(" or %s is null", property));
         }
 
         return filter.toString();
