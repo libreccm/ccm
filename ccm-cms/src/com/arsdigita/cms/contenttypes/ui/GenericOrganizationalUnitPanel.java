@@ -32,6 +32,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.xml.Element;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -39,6 +40,8 @@ import com.arsdigita.xml.Element;
  */
 public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
+    private final static Logger logger = Logger.getLogger(GenericOrganizationalUnit.class);
+    
     public static final String SHOW_CONTACTS = "contacts";
     public static final String SHOW_MEMBERS = "members";
     private boolean displayContacts = true;
@@ -72,6 +75,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
     protected void generateContactsXML(GenericOrganizationalUnit orga,
                                        Element parent, PageState state) {
+        long start = System.currentTimeMillis();        
         GenericOrganizationalUnitContactCollection contacts;
         contacts = orga.getContacts();
 
@@ -98,6 +102,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
                                Integer.toString(contacts.getContactOrder()),
                                true);
         }
+        System.out.printf("Generated Contacts XML in %d ms.\n", System.currentTimeMillis() - start);
     }
 
     protected void generateMembersXML(GenericOrganizationalUnit orga,

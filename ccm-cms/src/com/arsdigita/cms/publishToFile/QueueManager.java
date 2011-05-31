@@ -38,7 +38,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.io.File;
 
-
 /**
  * Class for queuing tasks for publishing and unpublishing to
  * the file system and for processing the queue.  When processing
@@ -66,34 +65,27 @@ public class QueueManager implements Runnable {
 
     // Creates a s_logging category with name = to the full name of class
     private static Logger s_log = Logger.getLogger(QueueManager.class);
-
     // Should probably use these constants.  Are hardcoded for now because
     // matches DataQuery suffex.
     // final static String BLOCK_SELECT_METHOD_QUEUED_ORDER    = "QueuedOrder";
     // final static String BLOCK_SELECT_METHOD_GROUP_BY_PARENT = "GroupByParent";
-
     // Parameters involved in processing the queue and their default values.
     // Set to values other than default by calling methods from an initializer.
     private int m_startupDelay;
     private int m_pollDelay;
-
     static Integer s_retryDelay = new Integer(120);
     static Integer s_blockSize = new Integer(20);
     static String s_blockSelectMethod = "QueuedOrder";
     static Integer s_maximumFailCount = new Integer(-1);
-
     // Following true if should keep watching queue
-    static private boolean s_keepWatchingQueue =  true;
-
+    static private boolean s_keepWatchingQueue = true;
     static private Thread s_queueThread = null;
-
     // Class implementing methods run when publishing or unpublishing to file.
     private static PublishToFileListener s_publishListener = null;
 
     ////////////////////////////////////////////////////////////////////
     // Constructor related code.
     //
-
     /**
      * 
      * @param startupDelay
@@ -107,7 +99,6 @@ public class QueueManager implements Runnable {
     ////////////////////////////////////////////////////////////////////
     // Initialization related code.
     //
-
     /**
      * Set how many seconds the queue manager should wait before trying to
      * process an entry which has previously failed.
@@ -146,7 +137,6 @@ public class QueueManager implements Runnable {
         s_maximumFailCount = maxFailCount;
     }
 
-
     /***
      * Set the listener that processes the publish and unpublish requests.
      */
@@ -157,7 +147,6 @@ public class QueueManager implements Runnable {
     ////////////////////////////////////////////////////////////////////
     // Methods for queuing tasks
     //
-
     public static void requeueMissingFiles() {
         DomainCollection files = PublishedFile.retrieveAll();
 
@@ -167,7 +156,7 @@ public class QueueManager implements Runnable {
         HashSet done = new HashSet();
 
         while (files.next()) {
-            PublishedFile fileRecord = (PublishedFile)files.getDomainObject();
+            PublishedFile fileRecord = (PublishedFile) files.getDomainObject();
 
             if (done.contains(fileRecord.getFileName())) {
                 continue;
@@ -182,26 +171,26 @@ public class QueueManager implements Runnable {
 
             } else if (file.exists()) {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug( "File " + file.getAbsolutePath() +
-                                 " already exists");
+                    s_log.debug("File " + file.getAbsolutePath()
+                                + " already exists");
                 }
 
             } else {
                 if (s_log.isInfoEnabled()) {
-                    s_log.info("Published file " + file.getAbsolutePath() +
-                               " for item " + fileRecord.getItemId() +
-                               " isn't on the filesystem. Scheduling for " +
-                               "republishing.");
+                    s_log.info("Published file " + file.getAbsolutePath()
+                               + " for item " + fileRecord.getItemId()
+                               + " isn't on the filesystem. Scheduling for "
+                               + "republishing.");
                 }
 
                 ContentItem item = fileRecord.getItem();
 
                 if (item == null) {
-                    s_log.warn
-                        ("No corresponding content item found for " +
-                         "published file " + fileRecord.getFileName() + " " +
-                         "(draft id " + fileRecord.getDraftId() + ", " +
-                         "item id " + fileRecord.getItemId() + ")");
+                    s_log.warn("No corresponding content item found for "
+                               + "published file " + fileRecord.getFileName()
+                               + " " + "(draft id " + fileRecord.getDraftId()
+                               + ", " + "item id " + fileRecord.getItemId()
+                               + ")");
                 } else {
                     ACSObject parent = item.getParent();
                     BigDecimal parentID = null;
@@ -215,7 +204,6 @@ public class QueueManager implements Runnable {
         }
     }
 
-
     /***
      * Schedule an item for publishing. This should be called just after a new
      * live version of an item becomes available.
@@ -225,8 +213,8 @@ public class QueueManager implements Runnable {
      * @pre ! item instanceof ContainerItem
      ***/
     public static void queuePublish(ContentItem item) {
-        Assert.isTrue( !(item instanceof ContentBundle),
-                "Cannot queue content bundle " + item );
+        Assert.isTrue(!(item instanceof ContentBundle),
+                      "Cannot queue content bundle " + item);
         Assert.isTrue(item.isLiveVersion(), "Item is not live");
         if (s_log.isInfoEnabled()) {
             s_log.info("Queue publish task for " + item.getID());
@@ -234,17 +222,17 @@ public class QueueManager implements Runnable {
 
         String task = QueueEntry.TASK_PUBLISH;
         QueueEntryCollection q = new QueueEntryCollection(
-            item.getID());
+                item.getID());
         while (q.next()) {
-            if ( q.isPublishTask() ) {
+            if (q.isPublishTask()) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Deleting existing publish task " + q.getID());
                 }
                 q.delete();
-            } else if ( q.isUnpublishTask() || q.isRepublishTask() ) {
+            } else if (q.isUnpublishTask() || q.isRepublishTask()) {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Deleting existing (un|re)publish task " +
-                                q.getID());
+                    s_log.debug("Deleting existing (un|re)publish task " + q.
+                            getID());
                 }
                 task = QueueEntry.TASK_REPUBLISH;
                 q.delete();
@@ -252,7 +240,6 @@ public class QueueManager implements Runnable {
         }
         queue(item, task);
     }
-
 
     /***
      * Schedule an item for unpublishing. This should be called just before
@@ -268,11 +255,11 @@ public class QueueManager implements Runnable {
         }
 
         QueueEntryCollection q = new QueueEntryCollection(
-            item.getID());
+                item.getID());
         while (q.next()) {
-            if ( q.isPublishTask()
-                    || q.isRepublishTask()
-                    || q.isUnpublishTask() ) {
+            if (q.isPublishTask()
+                || q.isRepublishTask()
+                || q.isUnpublishTask()) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Deleting existing (un|re|new)publish task "
                                 + q.getID());
@@ -282,7 +269,6 @@ public class QueueManager implements Runnable {
         }
         queue(item, QueueEntry.TASK_UNPUBLISH);
     }
-
 
     /***
      * Schedule an item for republishing. This should be called whenever an
@@ -300,16 +286,16 @@ public class QueueManager implements Runnable {
         }
 
         QueueEntryCollection q = new QueueEntryCollection(
-            item.getID());
+                item.getID());
         while (q.next()) {
-            if ( q.isUnpublishTask()
-                    || q.isPublishTask() ) {
+            if (q.isUnpublishTask()
+                || q.isPublishTask()) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Deleting existing (un|new)publish task "
                                 + q.getID());
                 }
                 q.delete();
-            } else if ( q.isRepublishTask() ) {
+            } else if (q.isRepublishTask()) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Aborting because there is already a republish "
                                 + q.getID());
@@ -339,11 +325,11 @@ public class QueueManager implements Runnable {
         }
 
         Assert.isTrue(liveItem != null && liveItem.isLiveVersion(),
-                     "Item is not live");
+                      "Item is not live");
         Assert.isTrue(source != null && source.isLiveVersion(),
-                     "Source is not live");
+                      "Source is not live");
         Assert.isTrue(destination != null && destination.isLiveVersion(),
-                     "Destination is not live");
+                      "Destination is not live");
 
         // for move put itemId as destination folder ID, for parent_id source
         // folder ID we do not need any other information for move
@@ -354,8 +340,8 @@ public class QueueManager implements Runnable {
     }
 
     private static void queue(ContentItem item, String task) {
-        Assert.isTrue( !(item instanceof ContentBundle),
-                "Cannot queue content bundle " + item );
+        Assert.isTrue(!(item instanceof ContentBundle),
+                      "Cannot queue content bundle " + item);
         Assert.isTrue(item.isLiveVersion(), "Item is not live");
 
         ACSObject parent = item.getParent();
@@ -374,12 +360,12 @@ public class QueueManager implements Runnable {
                               String task,
                               String destination) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Queue " + task + " for " + item.getOID() + " on all hosts");
+            s_log.debug("Queue " + task + " for " + item.getOID()
+                        + " on all hosts");
         }
 
         DestinationStub dest = PublishToFile.getDestination(
-            item.getSpecificObjectType()
-        );
+                item.getSpecificObjectType());
         // No destination configured for this object type, lets
         // get outta here, since they obviously don't want to
         // p2fs it....
@@ -388,7 +374,7 @@ public class QueueManager implements Runnable {
         }
 
         DomainCollection hosts = Host.retrieveAll();
-        while ( hosts.next() ) {
+        while (hosts.next()) {
             Host host = (Host) hosts.getDomainObject();
 
             if (s_log.isDebugEnabled()) {
@@ -410,8 +396,7 @@ public class QueueManager implements Runnable {
                               String destination,
                               Host host) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Queue item " + item + " for " +
-                        task + " on " + host);
+            s_log.debug("Queue item " + item + " for " + task + " on " + host);
         }
 
         QueueEntry q = QueueEntry.create(item,
@@ -425,8 +410,6 @@ public class QueueManager implements Runnable {
     ////////////////////////////////////////////////////////////////////
     // Routines from here down involved with processing the queue.
     //
-
-
     /**
      * Start watching and processing the queue. This method spawns a
      * background thread that processes the queue. Queue processing starts
@@ -439,11 +422,12 @@ public class QueueManager implements Runnable {
      * has any entries.
      */
     public static void startWatchingQueue(int startupDelay, int pollDelay) {
-        if ( startupDelay > 0 ) {
+        if (startupDelay > 0) {
             if (s_log.isInfoEnabled()) {
                 s_log.info("Going to start queue processing.");
             }
-            s_queueThread = new Thread( new QueueManager(startupDelay, pollDelay) );
+            s_queueThread =
+            new Thread(new QueueManager(startupDelay, pollDelay));
             s_queueThread.setDaemon(true);
             s_queueThread.setName("cms-p2fs-queue");
             s_queueThread.start();
@@ -464,8 +448,6 @@ public class QueueManager implements Runnable {
         s_keepWatchingQueue = false;
     }
 
-
-
     /***
      * Watch queue for entries to process.  The main routine that starts
      * queue processing.
@@ -477,13 +459,12 @@ public class QueueManager implements Runnable {
 
         HashSet failedItems = new HashSet();
 
-        while ( sleep(m_pollDelay) && s_keepWatchingQueue ) {
+        while (sleep(m_pollDelay) && s_keepWatchingQueue) {
 //          synchronized( Scheduler.class ) {
             //while there are more entries in queue process them.HashSet
             //is used to store the failed items and for checking that
             //they do not get processed again.
-            while ( processQueueItems(failedItems) )
-                ;
+            while (processQueueItems(failedItems));
 
             // clear failed items
             failedItems.clear();
@@ -499,8 +480,8 @@ public class QueueManager implements Runnable {
         try {
             Thread.sleep(n * 1000);
             return true;
-        } catch ( InterruptedException e ) {
-            s_log.error( "Waiting was interrupted.");
+        } catch (InterruptedException e) {
+            s_log.error("Waiting was interrupted.");
             return false;
         }
     }
@@ -525,11 +506,11 @@ public class QueueManager implements Runnable {
             s_log.warn("Ignoring uncaught exception", e);
         } finally {
             try {
-                if ( query != null ) {
+                if (query != null) {
                     query.close();
                 }
 
-                if ( txn.inTxn() ) {
+                if (txn.inTxn()) {
                     txn.abortTxn();
                     s_log.info("Aborting transaction");
                 }
@@ -548,7 +529,8 @@ public class QueueManager implements Runnable {
      * This method exists so that we can test p2fs without the
      * transaction management code.
      */
-    private static boolean processQueueItemsInternal(DataQuery query, HashSet failedItems) {
+    private static boolean processQueueItemsInternal(DataQuery query,
+                                                     HashSet failedItems) {
         Host host = Web.getConfig().getCurrentHost();
         boolean hasMore = false;
 
@@ -558,7 +540,7 @@ public class QueueManager implements Runnable {
         query.setParameter("maximumFailCount", s_maximumFailCount);
 
         int entryCount = 0;
-        while ( query.next() && entryCount < s_blockSize.intValue() ) {
+        while (query.next() && entryCount < s_blockSize.intValue()) {
             DataObject dobj = (DataObject) query.get("queueEntry");
             QueueEntry qe = new QueueEntry(dobj);
             if (s_log.isDebugEnabled()) {
@@ -566,7 +548,7 @@ public class QueueManager implements Runnable {
             }
 
             BigDecimal itemId = qe.getItemId();
-            if ( !failedItems.contains(itemId) ) {
+            if (!failedItems.contains(itemId)) {
                 try {
                     if (entryCount == 0) {
                         // Tell the publish listener that we are about
@@ -580,17 +562,20 @@ public class QueueManager implements Runnable {
                     s_publishListener.doTask(qe);
 
                     qe.delete();   // successfully processed item, delete from queue
-                } catch ( PublishToFileException e ) {
-                    flagError(itemId, "PublishToFileException.", e, qe, failedItems);
-                } catch ( Exception e ) {
-                    flagError(itemId, "Task " + qe + " failed:", e, qe, failedItems);
+                } catch (PublishToFileException e) {
+                    flagError(itemId, "PublishToFileException.", e, qe,
+                              failedItems);
+                } catch (Exception e) {
+                    flagError(itemId, "Task " + qe + " failed:", e, qe,
+                              failedItems);
                 }
                 entryCount++;
             }
         }
 
-        if ( entryCount > 0 )
+        if (entryCount > 0) {
             s_publishListener.transactionEnd();
+        }
 
         hasMore = !query.isAfterLast();
 
@@ -598,19 +583,19 @@ public class QueueManager implements Runnable {
 
     }
 
-
     /**
      * Get items to process
      * @return Query for fetching block to process.
      */
     static DataQuery getBlockQuery() {
-        DataQuery query = SessionManager.getSession()
-            .retrieveQuery("com.arsdigita.cms.publishToFile.getBlock");
+        DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.publishToFile.getBlock");
 
-        if ("GroupByParent".equals(s_blockSelectMethod))
+        if ("GroupByParent".equals(s_blockSelectMethod)) {
             query.addOrder("queueEntry.parentId, queueEntry.sortOrder");
-        else
+        } else {
             query.addOrder("queueEntry.sortOrder");
+        }
 
         return query;
     }
@@ -620,16 +605,13 @@ public class QueueManager implements Runnable {
         // Flag that queue entry failed
         failedItems.add(itemId);
         Long failCount = qe.getFailCount();
-        s_log.error( exName + "  itemId=" + itemId +
-                     " task=" + qe +
-                     " destination=" + qe.getDestination() + " failCount=" + failCount +
-                     " error=" + e.getMessage(), e);
+        s_log.error(exName + "  itemId=" + itemId + " task=" + qe
+                    + " destination=" + qe.getDestination() + " failCount="
+                    + failCount + " error=" + e.getMessage(), e);
         DataOperation operation = SessionManager.getSession().
-            retrieveDataOperation(
-                "com.arsdigita.cms.publishToFile.flagPublishFailed"
-            );
+                retrieveDataOperation(
+                "com.arsdigita.cms.publishToFile.flagPublishFailed");
         operation.setParameter("id", qe.getID());
         operation.execute();
     }
-
 }

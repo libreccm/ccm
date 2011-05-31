@@ -47,8 +47,8 @@
                                                    now.get(java.util.GregorianCalendar.DATE));
 
       objList.addCompareFilter("projectend", "projectstatus", true, true, false)
-        .addOption("ongoing", CompareFilter.Operators.GTEQ, today)
-        .addOption("finished", CompareFilter.Operators.LT, today);
+        .addOption("ongoing", CompareFilter.Operators.GTEQ, today, true)
+        .addOption("finished", CompareFilter.Operators.LT, today, false);
       objList.addSortField("title", "title asc");      
       objList.getDefinition().addOrder(objList.getOrder(request.getParameter("sort")));
 

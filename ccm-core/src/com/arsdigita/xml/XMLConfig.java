@@ -37,38 +37,34 @@ import org.apache.log4j.Logger;
 public final class XMLConfig extends AbstractConfig {
 
     public final static String versionId =
-        "$Id: XMLConfig.java 1393 2006-11-28 09:12:32Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
-
-    private static final Logger s_log = Logger.getLogger
-        (XMLConfig.class);
-
+                               "$Id: XMLConfig.java 1393 2006-11-28 09:12:32Z sskracic $"
+                               + "$Author: sskracic $"
+                               + "$DateTime: 2004/08/16 18:10:38 $";
+    private static final Logger s_log = Logger.getLogger(XMLConfig.class);
     private static XMLConfig s_config;
-
     // supported XSL transformer implementations
     private static final String RESIN =
-        "com.caucho.xsl.Xsl";
+                                "com.caucho.xsl.Xsl";
     private static final String JD_XSLT =
-        "jd.xml.xslt.trax.TransformerFactoryImpl";
+                                "jd.xml.xslt.trax.TransformerFactoryImpl";
     private static final String XSLTC =
-        "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
+                                "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
     private static final String SAXON =
-        "com.icl.saxon.TransformerFactoryImpl";
+                                "com.icl.saxon.TransformerFactoryImpl";
+    private static final String SAXON_HE =
+                                "net.sf.saxon.TransformerFactoryImpl";
     private static final String XALAN =
-        "org.apache.xalan.processor.TransformerFactoryImpl";
-
+                                "org.apache.xalan.processor.TransformerFactoryImpl";
     // supported documentBuilder implementations
     private static final String DOM_XERCES =
-        "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
+                                "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
     private static final String DOM_RESIN =
-        "com.caucho.xml.parsers.XmlDocumentBuilderFactory";
-
+                                "com.caucho.xml.parsers.XmlDocumentBuilderFactory";
     // supported SAX parser implementations
     private static final String SAX_XERCES =
-        "org.apache.xerces.jaxp.SAXParserFactoryImpl";
+                                "org.apache.xerces.jaxp.SAXParserFactoryImpl";
     private static final String SAX_RESIN =
-        "com.caucho.xml.parsers.XmlSAXParserFactory";
+                                "com.caucho.xml.parsers.XmlSAXParserFactory";
 
     /**
      * Returns the singleton configuration record for the XML functionality
@@ -84,22 +80,18 @@ public final class XMLConfig extends AbstractConfig {
 
         return s_config;
     }
-
-    private final Parameter m_xfmr     = new StringParameter
-                ("waf.xml.xsl_transformer", Parameter.REQUIRED, "saxon");
-
-    private final Parameter m_builder  = new StringParameter
-                ("waf.xml.dom_builder",     Parameter.REQUIRED, "xerces");
-
-    private final Parameter m_parser   = new StringParameter
-                ("waf.xml.sax_parser",      Parameter.REQUIRED, "xerces");
-
-    private Parameter m_activateFullTimeFormatter = new BooleanParameter
-                ("waf.xml.activate_full_date_formatter",
-                 Parameter.OPTIONAL, new Boolean(false));
-
-
-
+    private final Parameter m_xfmr = new StringParameter(
+            "waf.xml.xsl_transformer", Parameter.REQUIRED, "saxon");
+    private final Parameter m_builder = new StringParameter(
+            "waf.xml.dom_builder", Parameter.REQUIRED, "xerces");
+    private final Parameter m_parser = new StringParameter("waf.xml.sax_parser",
+                                                           Parameter.REQUIRED,
+                                                           "xerces");
+    private Parameter m_activateFullTimeFormatter = new BooleanParameter(
+            "waf.xml.activate_full_date_formatter",
+                                                                         Parameter.OPTIONAL,
+                                                                         new Boolean(
+            false));
 
     /**
      * Constructs an empty XMLConfig object following the singelton pattern.
@@ -108,10 +100,9 @@ public final class XMLConfig extends AbstractConfig {
      * it does not work with the associated classes AbstractConfig and
      * ConfigRegistry because they can currently not deal with a private constructor
      */
-
     // private XMLConfig() {
     public XMLConfig() {
-        
+
         register(m_xfmr);
         register(m_builder);
         register(m_parser);
@@ -120,10 +111,7 @@ public final class XMLConfig extends AbstractConfig {
         loadInfo();
     }
 
-    
     /* ************     public getter / setter section          ************ */
-
-
     /**
      * Returns the XSL Transformer factory class name to use.
      * 
@@ -136,12 +124,20 @@ public final class XMLConfig extends AbstractConfig {
         String m_key = (String) get(m_xfmr);
 
         // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
-        if(m_key.toLowerCase().equals("xsltc"))   return XSLTC;
-        if(m_key.toLowerCase().equals("xalan"))   return XALAN ;
-        if(m_key.toLowerCase().equals("resin"))   return RESIN;
-        if(m_key.toLowerCase().equals("jd.xslt")) return JD_XSLT;
-        // return defaultValue
-        return SAXON;
+        if (m_key.toLowerCase().equals("xsltc")) {
+            return XSLTC;
+        } else if (m_key.toLowerCase().equals("xalan")) {
+            return XALAN;
+        } else if (m_key.toLowerCase().equals("resin")) {
+            return RESIN;
+        } else if (m_key.toLowerCase().equals("jd.xslt")) {
+            return JD_XSLT;
+        } else if (m_key.toLowerCase().equals("saxonhe")) {
+            return SAXON_HE;
+        } else {
+            // return defaultValue
+            return SAXON;
+        }
     }
 
     /**
@@ -156,8 +152,11 @@ public final class XMLConfig extends AbstractConfig {
         String m_key = (String) get(m_builder);
 
         // Defined values: xerces (default)|resin
-        if(m_key.toLowerCase().equals("resin"))   return DOM_RESIN;
-          else                                    return DOM_XERCES;
+        if (m_key.toLowerCase().equals("resin")) {
+            return DOM_RESIN;
+        } else {
+            return DOM_XERCES;
+        }
     }
 
     /**
@@ -172,8 +171,11 @@ public final class XMLConfig extends AbstractConfig {
         String m_key = (String) get(m_parser);
 
         // Defined values: xerces (default)|resin
-        if(m_key.toLowerCase().equals("resin"))   return SAX_RESIN;
-          else                                    return SAX_XERCES;
+        if (m_key.toLowerCase().equals("resin")) {
+            return SAX_RESIN;
+        } else {
+            return SAX_XERCES;
+        }
     }
 
     /**
@@ -187,7 +189,6 @@ public final class XMLConfig extends AbstractConfig {
      * Sets the activateFullTimeFormatter flag.
      */
     public void setActivateFullTimeFormatter(boolean activateFullTimeFormatter) {
-        set (m_activateFullTimeFormatter,new Boolean(activateFullTimeFormatter));
+        set(m_activateFullTimeFormatter, new Boolean(activateFullTimeFormatter));
     }
-
 }

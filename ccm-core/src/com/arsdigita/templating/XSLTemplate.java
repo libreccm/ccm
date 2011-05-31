@@ -57,13 +57,12 @@ import org.w3c.dom.Document;
  * @version $Id: XSLTemplate.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class XSLTemplate {
+
     public static final String versionId =
-        "$Id: XSLTemplate.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
-
+                               "$Id: XSLTemplate.java 287 2005-02-22 00:29:02Z sskracic $"
+                               + "$Author: sskracic $"
+                               + "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(XSLTemplate.class);
-
     private final URL m_source;
     private final Templates m_templates;
     private final List m_dependents;
@@ -93,12 +92,12 @@ public final class XSLTemplate {
             s_log.debug("Getting new templates object");
 
             final TransformerFactory factory =
-                TransformerFactory.newInstance();
+                                     TransformerFactory.newInstance();
             factory.setURIResolver(resolver);
             factory.setErrorListener(listener);
 
-            m_templates = factory.newTemplates
-                (resolver.resolve(m_source.toString(), null));
+            m_templates = factory.newTemplates(resolver.resolve(m_source.
+                    toString(), null));
 
             s_log.debug("Done getting new templates");
         } catch (TransformerConfigurationException ex) {
@@ -175,8 +174,8 @@ public final class XSLTemplate {
                                 final Result result,
                                 final ErrorListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Transforming " + source + " and sending it to " +
-                        result + " using error listener " + listener);
+            s_log.debug("Transforming " + source + " and sending it to "
+                        + result + " using error listener " + listener);
         }
 
         if (Assert.isEnabled()) {
@@ -189,12 +188,10 @@ public final class XSLTemplate {
             final Transformer transformer = newTransformer();
             transformer.setErrorListener(listener);
 
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Transforming the XML source document");
-            }
-
+            s_log.debug("Transforming the XML source document");
+           
             transformer.transform(source, result);
-
+                        
             s_log.debug("Finished transforming");
         } catch (TransformerConfigurationException tce) {
             throw new WrappedTransformerException(tce);
@@ -268,14 +265,14 @@ public final class XSLTemplate {
      */
     public final boolean isModified() {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Checking if the XSL files for " + this + " " +
-                        "have been modified and need to be re-read");
+            s_log.debug("Checking if the XSL files for " + this + " "
+                        + "have been modified and need to be re-read");
         }
 
         final Iterator iter = m_dependents.iterator();
 
         while (iter.hasNext()) {
-            final URL url = Templating.transformURL((URL)iter.next());
+            final URL url = Templating.transformURL((URL) iter.next());
             Assert.exists(url, URL.class);
 
             if (url.getProtocol().equals("file")) {
@@ -283,16 +280,16 @@ public final class XSLTemplate {
 
                 if (file.lastModified() > m_created.getTime()) {
                     if (s_log.isInfoEnabled()) {
-                        s_log.info("File " + file + " was modified " +
-                                   file.lastModified());
+                        s_log.info("File " + file + " was modified " + file.
+                                lastModified());
                     }
 
                     return true;
                 }
             } else {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("The URL is not to a file; assuming " +
-                                url + " is not modified");
+                    s_log.debug("The URL is not to a file; assuming " + url
+                                + " is not modified");
                 }
             }
         }
@@ -316,11 +313,11 @@ public final class XSLTemplate {
      * @param base the base directory in which the files will extract
      */
     public void toZIP(OutputStream os,
-                      String base) 
-        throws IOException {
-        
+                      String base)
+            throws IOException {
+
         final ZipOutputStream zos = new ZipOutputStream(os);
-        
+
         URL src = getSource();
         String srcProto = src.getProtocol();
 
@@ -330,7 +327,7 @@ public final class XSLTemplate {
 
         final Iterator sheets = getDependents().iterator();
         while (sheets.hasNext()) {
-            URL xsl = (URL)sheets.next();
+            URL xsl = (URL) sheets.next();
             if (xsl.getProtocol().equals(srcProto)) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Outputting file " + xsl);
@@ -339,19 +336,20 @@ public final class XSLTemplate {
                 if (path.startsWith("/")) {
                     path = path.substring(1);
                 }
-                
+
                 zos.putNextEntry(new ZipEntry(base + "/" + path));
-                
+
                 IO.copy(xsl.openStream(), zos);
             } else {
-                s_log.warn("Not outputting file " + xsl + 
-                           " because its not under protocol " + srcProto);
+                s_log.warn("Not outputting file " + xsl
+                           + " because its not under protocol " + srcProto);
             }
         }
         zos.finish();
     }
 
     private static class Log4JErrorListener implements ErrorListener {
+
         public void warning(TransformerException e) throws TransformerException {
             log(Level.WARN, e);
         }
@@ -360,13 +358,14 @@ public final class XSLTemplate {
             log(Level.ERROR, e);
         }
 
-        public void fatalError(TransformerException e) throws TransformerException {
+        public void fatalError(TransformerException e) throws
+                TransformerException {
             log(Level.FATAL, e);
         }
 
         private static void log(Level level, TransformerException ex) {
-            s_log.log(level, "Transformer " + level + ": " +
-                      ex.getLocationAsString() + ": " + ex.getMessage(),
+            s_log.log(level, "Transformer " + level + ": " + ex.
+                    getLocationAsString() + ": " + ex.getMessage(),
                       ex);
         }
     }

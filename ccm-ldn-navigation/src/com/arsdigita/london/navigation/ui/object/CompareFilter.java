@@ -20,8 +20,7 @@ public class CompareFilter implements Filter {
     private final String label;
     private final boolean allOption;
     private final boolean allOptionIsDefault;
-    private final boolean propertyIsNumeric;
-    private final boolean includeNull;
+    private final boolean propertyIsNumeric;    
     private Map<String, Option> options = new LinkedHashMap<String, Option>();
     private String value;
 
@@ -29,14 +28,13 @@ public class CompareFilter implements Filter {
                             final String label,
                             final boolean allOption,
                             final boolean allOptionIsDefault,
-                            final boolean propertyIsNumeric,
-                            final boolean includeNull) {
+                            final boolean propertyIsNumeric
+                            ) {
         this.property = property;
         this.label = label;
         this.allOption = allOption;
         this.allOptionIsDefault = allOptionIsDefault;
-        this.propertyIsNumeric = propertyIsNumeric;
-        this.includeNull = includeNull;
+        this.propertyIsNumeric = propertyIsNumeric;        
     }
 
     @Override
@@ -45,14 +43,15 @@ public class CompareFilter implements Filter {
     }
 
     public CompareFilter addOption(final String label, final String value) {
-        return addOption(label, Operators.EQ, value);
+        return addOption(label, Operators.EQ, value, false);
     }
 
     public CompareFilter addOption(final String label,
                                    final Operators operator,
-                                   final String value) {
+                                   final String value,
+                                   final boolean includeNull) {
         Option option;
-        option = new Option(label, operator, value);
+        option = new Option(label, operator, value, includeNull);
         options.put(label, option);
         return this;
     }
@@ -113,10 +112,10 @@ public class CompareFilter implements Filter {
             filter.append('\'');
         }
         
-        if (includeNull) {
+        if (selectedOption.getIncludeNull()) {
             filter.append(String.format(" or %s is null", property));
         }
-
+            
         return filter.toString();
     }
 
@@ -173,13 +172,16 @@ public class CompareFilter implements Filter {
         private final String label;
         private final Operators operator;
         private final String value;
+        private final boolean includeNull;
 
         public Option(final String label,
                       final Operators operator,
-                      final String value) {
+                      final String value,
+                      final boolean includeNull) {
             this.label = label;
             this.operator = operator;
             this.value = value;
+            this.includeNull = includeNull;
         }
 
         public String getLabel() {
@@ -192,6 +194,10 @@ public class CompareFilter implements Filter {
 
         public String getValue() {
             return value;
+        }
+        
+        public boolean getIncludeNull() {
+            return includeNull;
         }
     }
 }

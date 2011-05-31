@@ -55,10 +55,11 @@ public class GreetingItem extends AbstractComponent {
 
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
+        long start = System.currentTimeMillis();
         ContentItem item = (ContentItem) getObject();
         if (null == item || !item.isLive()) {
             return null;
-        }
+        }       
 
         if (!ContentItem.VERSION.equals(item.getVersion())) {
             item = item.getLiveVersion();
@@ -106,7 +107,7 @@ public class GreetingItem extends AbstractComponent {
         if (baseItem == null) {
             // get the primary instance instead (fallback)
             baseItem = bundle.getPrimaryInstance();
-        }
+        }       
         Element itemEl = content.newChildElement("cms:item",
                                                  CMS.CMS_XML_NS);
 
@@ -122,8 +123,8 @@ public class GreetingItem extends AbstractComponent {
         renderer.walk(baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT);*/
 
         generateGreetingItemXml(itemEl, baseItem);
-
-        return content;
+       
+        return content;        
     }
 
     /**
