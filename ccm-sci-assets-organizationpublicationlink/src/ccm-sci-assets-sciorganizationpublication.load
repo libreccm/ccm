@@ -1,0 +1,15 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>
+        <table name="cms_items"/>
+        <initalizer class="com.arsdigita.cms.Initializer"/>
+    </requires>
+    <provides> 
+        <initializer class="com.arsdigita.cms.contentassets.SciOrganizationPublicationInitializer"/>
+    </provides>
+    <scripts>
+        <schema directory="ccm-sci-assets-sciorganizationpublication"/>
+        <data class="com.arsdigita.cms.contentassets.SciOrganizationPublicationLoader"/>
+    </scripts>
+</load>

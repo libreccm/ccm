@@ -1,0 +1,16 @@
+model com.arsdigita.cms.contentassets;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+association {
+    GenericOrganizationalUnit[0..n] organizations = join ct_publications.publication_id
+                                                     to cms_organization_publication_map.publication_id,
+                                                   join cms_organization_publication_map.organization_id
+                                                     to cms_organizationalunit.organizationalunit_id;
+
+    Publication[0..n] publications = join cms_organizationalunit.organizationalunit_id
+                                                  to cms_organization_publication_link.organization_id,
+                                                join cms_organization_publication_link.publication_id
+                                                  to ct_publication.publication_id;                                                   
+}

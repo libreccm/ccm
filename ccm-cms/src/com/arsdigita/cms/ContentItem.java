@@ -375,20 +375,27 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @return the base PDL object type for this item. Child classes should
      *  override this method to return the correct value
      */
+    @Override
     public String getBaseDataObjectType() {
         return this.BASE_DATA_OBJECT_TYPE;
     }
 
     /**
      * Publicized getter method for use by metadata forms.
+     * @param key
+     * @return  
      */
+    @Override
     public Object get(final String key) {
         return super.get(key);
     }
 
     /**
      * Public setter method for use by metadata forms.
+     * @param key
+     * @param value  
      */
+    @Override
     public void set(final String key, final Object value) {
         super.set(key, value);
     }
@@ -396,7 +403,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * For new content items, sets the associated content type if it
      * has not been already set.
-     */
+     */   
+    @Override
     protected void beforeSave() {
         m_wasNew = isNew();
 
