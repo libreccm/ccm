@@ -83,6 +83,11 @@ public class BulkPublish extends Program {
                 "Restrict publishing to items with the specified langauge").
                 create("l"));
 
+        options.addOption(
+                OptionBuilder.hasArg(false).withLongOpt("republish").
+                withDescription(
+                "Republish items which are already live.").create("r"));
+
     }
 
     /**
@@ -95,6 +100,7 @@ public class BulkPublish extends Program {
         final int folderId;
         final String language;
         final boolean ignoreErrors = cmdLine.hasOption("i");
+        final boolean republish = cmdLine.hasOption("r");
 
         if (cmdLine.hasOption("t")) {
             types = cmdLine.getOptionValues("t");
@@ -195,7 +201,22 @@ public class BulkPublish extends Program {
                     }
 
                     if (item.isLive()) {
-                        s_log.info("Skipping because its already live");
+                        if (republish) {
+                            s_log.info("Item is already live, republishing...");
+
+                            ContentBundle bundle = item.getContentBundle();
+                            Collection<String> langs = bundle.getLanguages();
+                            
+                            for (String lang : langs) {
+                                ContentItem toPublish = bundle.getInstance(lang);
+                                toPublish.republish();
+                            }
+
+                        } else {
+                            s_log.info("Skipping because its already live");
+                        }
+
+
                         return;
                     }
 
@@ -220,7 +241,7 @@ public class BulkPublish extends Program {
                     }
 
                     /*
-                     * Fix by jensp 2011-04-18: Bulk publish was aware of 
+                     * Fix by jensp 2011-04-18: Bulk publish was not aware of 
                      * content bundles and different languages...
                      */
                     ContentBundle bundle = item.getContentBundle();
