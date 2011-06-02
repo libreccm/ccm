@@ -33,7 +33,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitWithPublications;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import java.math.BigDecimal;
 
 /**
  *

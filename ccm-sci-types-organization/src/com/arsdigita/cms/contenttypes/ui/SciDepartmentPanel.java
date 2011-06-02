@@ -28,6 +28,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
+import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.xml.Element;
@@ -54,7 +55,6 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     public static final String SHOW_PROJECTS = "projects";
     public static final String SHOW_PROJECTS_ONGOING = "projectsOngoing";
     public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";
-    public static final String SHOW_PUBLICATIONS = "publications";
     private boolean displayDescription = true;
     private boolean displaySubDepartments = true;
     private boolean displayProjects = true;
@@ -85,15 +85,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     public void setDisplayProjects(boolean displayProjects) {
         this.displayProjects = displayProjects;
     }
-
-    public boolean isDisplayPublications() {
-        return displayPublications;
-    }
-
-    public void setDisplayPublications(boolean displayPublications) {
-        this.displayPublications = displayPublications;
-    }
-
+   
     public boolean isDisplaySubDepartments() {
         return displaySubDepartments;
     }
@@ -374,8 +366,9 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                                    end,
                                    count,
                                    projectsWithoutDoubles.size());
-            List<SciProject> projectsToShow = projectsWithoutDoubles.subList((int) begin,
-                                                               (int) end);
+            List<SciProject> projectsToShow =
+                             projectsWithoutDoubles.subList((int) begin,
+                                                            (int) end);
 
             Element projectsElem = parent.newChildElement("projects");
             for (SciProject project : projectsToShow) {
@@ -420,6 +413,99 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         }
     }
 
+    protected void generateAvailableDataXml(final SciDepartment department,
+                                            final Element element,
+                                            final PageState state) {
+        final SciOrganizationConfig config = SciOrganization.getConfig();
+
+        if ((department.getDepartmentDescription() != null)
+            && !department.getDepartmentDescription().isEmpty()
+            && displayDescription) {
+            element.newChildElement("description");
+        }
+        if (department.hasContacts()
+            && isDisplayContacts()) {
+            element.newChildElement("contacts");
+        }
+        if (department.hasSubDepartments()
+            && displaySubDepartments) {
+            element.newChildElement("subDepartments");
+        }
+        if (config.getOrganizationMembersAllInOne()) {
+            if (hasMembers(department)
+                && isDisplayMembers()) {
+                element.newChildElement("members");
+            }
+        } else {
+            if (hasActiveMembers(department)
+                && isDisplayMembers()) {
+                element.newChildElement("membersActive");
+            }
+            if (hasAssociatedMembers(department)
+                && isDisplayMembers()) {
+                element.newChildElement("membersAssociated");
+            }
+            if (hasFormerMembers(department)
+                && isDisplayMembers()) {
+                element.newChildElement("membersFormer");
+            }
+        }
+        if (config.getOrganizationProjectsAllInOne()) {
+            if (hasProjects(department)
+                && displayProjects) {
+                element.newChildElement("projects");
+            }
+        } else {
+            if (hasOngoingProjects(department)
+                && displayProjects) {
+                element.newChildElement("projectsOngoing");
+            }
+            if (hasFinishedProjects(department)
+                && displayProjects) {
+                element.newChildElement("projectsFinished");
+            }
+        }
+    }
+
+    protected void generateDataXml(SciDepartment department,
+                                   Element element,
+                                   PageState state) {
+        String show = getShowParam(state);
+
+        if (SHOW_DESCRIPTION.equals(show)) {
+            String desc;
+            desc = department.getDepartmentDescription();
+
+            Element description = element.newChildElement("description");
+            description.setText(desc);
+        } else if (SHOW_CONTACTS.equals(show)) {
+            generateContactsXML(department, element, state);
+        } else if (SHOW_MEMBERS.equals(show)) {
+            generateMembersXML(department, element, state,
+                               new LinkedList<String>());
+        } else if (SHOW_MEMBERS_ACTIVE.equals(show)) {
+            generateMembersXML(department, element, state,
+                               getFiltersForActiveMembers());
+        } else if (SHOW_MEMBERS_ASSOCIATED.equals(show)) {
+            generateMembersXML(department, element, state,
+                               getFiltersForAssociatedMembers());
+        } else if (SHOW_MEMBERS_FORMER.equals(show)) {
+            generateMembersXML(department, element, state,
+                               getFiltersForFormerMembers());
+        } else if (SHOW_PROJECTS.equals(show)) {
+            generateProjectsXML(department, element, state,
+                                new LinkedList<String>());
+        } else if (SHOW_PROJECTS_ONGOING.equals(show)) {
+            generateProjectsXML(department, element, state,
+                                getFiltersForOngoingProjects());
+        } else if (SHOW_PROJECTS_FINISHED.equals(show)) {
+            generateProjectsXML(department, element, state,
+                                getFiltersForFinishedProjects());
+        } else if (SHOW_SUBDEPARTMENTS.equals(show)) {
+            generateSubDepartmentsXML(department, element, state);
+        }
+    }
+
     @Override
     public void generateXML(ContentItem item,
                             Element element,
@@ -430,99 +516,8 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
 
         SciDepartment department = (SciDepartment) item;
 
-        SciOrganizationConfig config = SciDepartment.getConfig();
+        generateAvailableDataXml(department, availableData, state);
 
-        if ((department.getDepartmentDescription() != null)
-            && !department.getDepartmentDescription().isEmpty()
-            && displayDescription) {
-            availableData.newChildElement("description");
-        }
-        if (department.hasContacts()
-            && isDisplayContacts()) {
-            availableData.newChildElement("contacts");
-        }
-        if (department.hasSubDepartments()
-            && displaySubDepartments) {
-            availableData.newChildElement("subDepartments");
-        }
-        if (config.getOrganizationMembersAllInOne()) {
-            if (hasMembers(department)
-                && isDisplayMembers()) {
-                availableData.newChildElement("members");
-            }
-        } else {
-            if (hasActiveMembers(department)
-                && isDisplayMembers()) {
-                availableData.newChildElement("membersActive");
-            }
-            if (hasAssociatedMembers(department)
-                && isDisplayMembers()) {
-                availableData.newChildElement("membersAssociated");
-            }
-            if (hasFormerMembers(department)
-                && isDisplayMembers()) {
-                availableData.newChildElement("membersFormer");
-            }
-        }
-        if (config.getOrganizationProjectsAllInOne()) {
-            if (hasProjects(department)
-                && displayProjects) {
-                availableData.newChildElement("projects");
-            }
-        } else {
-            if (hasOngoingProjects(department)
-                && displayProjects) {
-                availableData.newChildElement("projectsOngoing");
-            }
-            if (hasFinishedProjects(department)
-                && displayProjects) {
-                availableData.newChildElement("projectsFinished");
-            }
-        }
-        if (department.hasPublications()
-            && displayPublications) {
-            availableData.newChildElement("publications");
-        }
-
-        String show = getShowParam(state);
-
-        if (SHOW_DESCRIPTION.equals(show)) {
-            String desc;
-            desc = department.getDepartmentDescription();
-
-            Element description = content.newChildElement("description");
-            description.setText(desc);
-        } else if (SHOW_CONTACTS.equals(show)) {
-            generateContactsXML(department, content, state);
-        } else if (SHOW_MEMBERS.equals(show)) {
-            generateMembersXML(department, content, state,
-                               new LinkedList<String>());
-        } else if (SHOW_MEMBERS_ACTIVE.equals(show)) {
-            generateMembersXML(department, content, state,
-                               getFiltersForActiveMembers());
-        } else if (SHOW_MEMBERS_ASSOCIATED.equals(show)) {
-            generateMembersXML(department, content, state,
-                               getFiltersForAssociatedMembers());
-        } else if (SHOW_MEMBERS_FORMER.equals(show)) {
-            generateMembersXML(department, content, state,
-                               getFiltersForFormerMembers());
-        } else if (SHOW_PROJECTS.equals(show)) {
-            generateProjectsXML(department, content, state,
-                                new LinkedList<String>());
-        } else if (SHOW_PROJECTS_ONGOING.equals(show)) {
-            generateProjectsXML(department, content, state,
-                                getFiltersForOngoingProjects());
-        } else if (SHOW_PROJECTS_FINISHED.equals(show)) {
-            generateProjectsXML(department, content, state,
-                                getFiltersForFinishedProjects());
-        } else if (SHOW_SUBDEPARTMENTS.equals(show)) {
-            generateSubDepartmentsXML(department, content, state);
-        } else if (SHOW_PUBLICATIONS.equals(show)) {
-            generatePublicationsXML(
-                    RelatedLink.getRelatedLinks(item,
-                                                "SciDepartmentPublications"),
-                    content,
-                    state);
-        }
+        generateDataXml(department, content, state);
     }
 }

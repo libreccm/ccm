@@ -2,14 +2,16 @@
     <requires>
         <table name="inits"/>
         <table name="acs_objects"/>
-        <table name="cms_items"/>
+        <table name="cms_items"/>        
+        <table name="ct_publications"/>
         <initalizer class="com.arsdigita.cms.Initializer"/>
+        <initalizer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
     </requires>
     <provides> 
         <initializer class="com.arsdigita.cms.contentassets.SciOrganizationPublicationInitializer"/>
     </provides>
     <scripts>
-        <schema directory="ccm-sci-assets-sciorganizationpublication"/>
+        <schema directory="ccm-sci-assets-organizationpublicationlink"/>
         <data class="com.arsdigita.cms.contentassets.SciOrganizationPublicationLoader"/>
     </scripts>
 </load>

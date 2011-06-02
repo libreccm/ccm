@@ -211,7 +211,7 @@ class Load extends Command {
             if (loaders.containsKey(key)) { continue; }
             Loader l = Loader.get(key);
             if (l == null) {
-                System.err.println("unable to locate package: " + key);
+                System.err.println("unable to locate package: " + key);                                                
                 err = true;
             } else {
                 loaders.put(key, l);

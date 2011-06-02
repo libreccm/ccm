@@ -41,19 +41,19 @@
 	      component="com.arsdigita.cms.contenttypes.ui.SciDepartmentProjectsStep"
 	      ordering="4"/>
                           
-            <ctd:authoring-step
+            <!--<ctd:authoring-step
 	      labelKey="sciorganization.ui.department.publications"
 	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	      descriptionKey="sciorganization.ui.department.publications.description.title"
 	      component="com.arsdigita.cms.contenttypes.ui.SciDepartmentPublicationsStep"
-	      ordering="5"/>	
+	      ordering="5"/>	-->
                           
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.department.description.title"
 	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	      descriptionKey="sciorganization.ui.department.description.title"
 	      component="com.arsdigita.cms.contenttypes.ui.SciDepartmentDescriptionStep"
-	      ordering="6"/>	
+	      ordering="5"/>	
                                                                
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 

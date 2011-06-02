@@ -479,7 +479,7 @@ public abstract class SciOrganizationBasePanel
      * @param parent  The parent XML element for the XML created by this method
      * @param state The current page state.
      */
-    protected void generatePublicationsXML(final DataCollection links,
+   /* protected void generatePublicationsXML(final DataCollection links,
                                            final Element parent,
                                            final PageState state) {
         RelatedLink link;
@@ -561,5 +561,5 @@ public abstract class SciOrganizationBasePanel
         renderer.setWrapAttributes(true);
 
         renderer.walk(publication, SimpleXMLGenerator.class.getName());
-    }
+    }*/
 }

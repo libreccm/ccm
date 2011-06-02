@@ -475,7 +475,7 @@ public class SciProject extends GenericOrganizationalUnit {
         }
     }
 
-    public boolean hasPublications() {
+    /*public boolean hasPublications() {
         boolean result = false;
 
         DataQuery query =
@@ -492,5 +492,5 @@ public class SciProject extends GenericOrganizationalUnit {
         query.close();
 
         return result;
-    }
+    }*/
 }

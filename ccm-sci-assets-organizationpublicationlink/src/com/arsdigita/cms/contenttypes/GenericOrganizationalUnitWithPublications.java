@@ -41,21 +41,21 @@ public class GenericOrganizationalUnitWithPublications extends GenericOrganizati
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public GenericOrganizationalUnitWithPublications(BigDecimal id)
+    public GenericOrganizationalUnitWithPublications(final BigDecimal id)
             throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public GenericOrganizationalUnitWithPublications(OID oid)
+    public GenericOrganizationalUnitWithPublications(final OID oid)
             throws DataObjectNotFoundException {
         super(oid);
     }
 
-    public GenericOrganizationalUnitWithPublications(DataObject dobj) {
+    public GenericOrganizationalUnitWithPublications(final DataObject dobj) {
         super(dobj);
     }
 
-    private GenericOrganizationalUnitWithPublications(String type) {
+    private GenericOrganizationalUnitWithPublications(final String type) {
         super(type);
     }
 

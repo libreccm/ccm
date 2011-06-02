@@ -57,23 +57,26 @@ import org.apache.log4j.Logger;
  * @version $Revision: #13 $ $Date: 2004/08/16 $
  * @version $Id: Loader.java 736 2005-09-01 10:46:05Z sskracic $
  **/
-
 class Loader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
-
     private static final String INIT = "com.arsdigita.runtime.Initializer";
 
     public static Loader get(String pkg) {
         ClassLoader ldr = Loader.class.getClassLoader();
         InputStream is = ldr.getResourceAsStream(pkg + ".load");
-        if (is == null) { return null; }
+        if (is == null) {
+            s_log.error(String.format("Failed to find '%s.load'.", pkg));
+            return null;
+        }
         LoaderInfo info = new LoaderInfo(is);
-        try { is.close(); }
-        catch (IOException e) { throw new UncheckedWrapperException(e); }
+        try {
+            is.close();
+        } catch (IOException e) {
+            throw new UncheckedWrapperException(e);
+        }
         return new Loader(pkg, info, Checklist.get(pkg));
     }
-
     private String m_key;
     private LoaderInfo m_info;
     private Checklist m_checks;
@@ -85,7 +88,7 @@ class Loader {
         m_checks = checks;
         m_scripts = new ArrayList();
         for (Iterator it = m_info.getDataScripts().iterator();
-             it.hasNext(); ) {
+             it.hasNext();) {
             String script = (String) it.next();
             m_scripts.add(Classes.newInstance(script));
         }
@@ -107,8 +110,7 @@ class Loader {
         if (m_checks == null) {
             return true;
         } else {
-            return m_checks.run
-                (Checklist.SCHEMA, new ScriptContext(null, null));
+            return m_checks.run(Checklist.SCHEMA, new ScriptContext(null, null));
         }
     }
 
@@ -116,7 +118,7 @@ class Loader {
         int db = DbHelper.getDatabase(conn);
         String dir = DbHelper.getDatabaseDirectory(db);
         List scripts = m_info.getSchemaScripts();
-        for (Iterator it = scripts.iterator(); it.hasNext(); ) {
+        for (Iterator it = scripts.iterator(); it.hasNext();) {
             String script = (String) it.next();
             s_log.info("Loading schema for " + script);
             PackageLoader.load(conn, script + "/" + dir + "-create.sql");
@@ -131,13 +133,12 @@ class Loader {
         }
     }
 
-    
     // deprecated:
     // public void loadData(Session ssn, ParameterLoader loader) {
     public void loadData(Session ssn, ParameterReader prd) {
         final List inits = m_info.getProvidedInitializers();
         CompoundInitializer ini = new CompoundInitializer();
-        for (Iterator it = inits.iterator(); it.hasNext(); ) {
+        for (Iterator it = inits.iterator(); it.hasNext();) {
             String init = (String) it.next();
             s_log.info("Running initializer " + init);
             ini.add((Initializer) Classes.newInstance(init));
@@ -150,11 +151,13 @@ class Loader {
         //  final ScriptContext ctx = new ScriptContext(ssn, loader);
         final ScriptContext ctx = new ScriptContext(ssn, prd);
         new KernelExcursion() {
+
             protected void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
-                for (Iterator it = m_scripts.iterator(); it.hasNext(); ) {
+                for (Iterator it = m_scripts.iterator(); it.hasNext();) {
                     Script script = (Script) it.next();
-                    s_log.info("Running data loader " + script.getClass().getName());
+                    s_log.info("Running data loader " + script.getClass().
+                            getName());
                     script.run(ctx);
                 }
             }
@@ -171,11 +174,12 @@ class Loader {
 
         final List inits = m_info.getProvidedInitializers();
         final List required = m_info.getRequiredInitializers();
-        for (Iterator it = inits.iterator(); it.hasNext(); ) {
+        for (Iterator it = inits.iterator(); it.hasNext();) {
             String init = (String) it.next();
             DataObject dataobject = ssn.create(new OID(INIT, init));
-            DataAssociation da = (DataAssociation)dataobject.get("requirements");
-            for (Iterator reqit = required.iterator(); reqit.hasNext(); ) {
+            DataAssociation da =
+                            (DataAssociation) dataobject.get("requirements");
+            for (Iterator reqit = required.iterator(); reqit.hasNext();) {
                 String reqinit = (String) reqit.next();
                 da.add(ssn.retrieve(new OID(INIT, reqinit)));
             }
@@ -206,5 +210,4 @@ class Loader {
     public String toString() {
         return "<loader for " + m_key + ">";
     }
-
 }

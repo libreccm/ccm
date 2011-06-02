@@ -71,6 +71,8 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
      */
     @Override
     public void init(DomainInitEvent evt) {
+        System.err.println("ContentAssetInitializer init running...");
+        
         super.init(evt);
 
         final String traversal = getTraversalXML();

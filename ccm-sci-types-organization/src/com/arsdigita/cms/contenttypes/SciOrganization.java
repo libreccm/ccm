@@ -407,7 +407,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
         }
 
         DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
-        query.setParameter("department", getID());
+        query.setParameter("department", departmentId);
         if (status != ProjectStatus.ALL) {
             Calendar today = new GregorianCalendar();
             query.setParameter("today",
@@ -455,7 +455,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
         }
     }
 
-    public boolean hasPublications() {
+    /*public boolean hasPublications() {
         boolean result = false;
 
         DataQuery query =
@@ -472,7 +472,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
         query.close();
 
         return result;
-    }
+    }*/
 
     public void setOrganizationDescription(String description) {
         set(ORGANIZATION_DESCRIPTION, description);

@@ -47,53 +47,69 @@ public class SciOrganizationPublicationInitializer extends CompoundInitializer {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
+        System.err.println("Creating  SciOrganizationPublicationInitializer...");
+        
         add(new PDLInitializer(
                 new ManifestSource(
-                "ccm-sci-assets-sciorganiationpublication.pdl.mf",
+                "ccm-sci-assets-organizationpublicationlink.pdl.mf",
                 new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
+        
+        System.err.println("Constructor of SciOrganizationPublicationInitializer finished...");
     }
 
     @Override
     public void init(DomainInitEvent event) {
+        System.out.println("Beginning init of SciOrganizationPublicationInitializer...");
+        
+        System.out.println("Calling super.init()");
         super.init(event);
-
+       
+        System.out.println("Creating traversal handler...");
         final String traversal = getTraversalXML();
         XML.parseResource(traversal,
                           new ContentAssetTraversalHandler(getProperty()));
 
+        System.out.println("Registering authoring step for publications of an organization...");
         AuthoringKitWizard.registerAssetStep(
-                SciOrganization.BASE_DATA_OBJECT_TYPE,
+                SciOrganization.BASE_DATA_OBJECT_TYPE,              
                 SciOrganizationPublicationStep.class,
-                new GlobalizedMessage("sciorganization.ui.publications",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
-                new GlobalizedMessage("sciorganization.ui.publications",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
-                1);
+                new GlobalizedMessage("sciorganizationpublication.ui.publicationsOfOrganization",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
+                new GlobalizedMessage("sciorganizationpublication.ui.publicationsOfOrganization",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
+                99);
+        
+        System.out.println("Registering authoring step for publications of a department..");
         AuthoringKitWizard.registerAssetStep(
-                SciDepartment.BASE_DATA_OBJECT_TYPE,
+                SciDepartment.BASE_DATA_OBJECT_TYPE,                
                 SciOrganizationPublicationStep.class,
-                new GlobalizedMessage("sciorganization.ui.publications",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
-                new GlobalizedMessage("sciorganization.ui.publications",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
-                1);
+                new GlobalizedMessage("sciorganizationpublication.ui.publicationsOfDepartment",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
+                new GlobalizedMessage("sciorganizationpublication.ui.publicationsOfDepartment",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
+                99);
+        
+        System.out.println("Registering authoring step for publications of a project...");
         AuthoringKitWizard.registerAssetStep(
                 SciProject.BASE_DATA_OBJECT_TYPE,
                 SciOrganizationPublicationStep.class,
-                new GlobalizedMessage("sciorganization.ui.publications",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
-                new GlobalizedMessage("sciorganization.ui.publications",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
+                new GlobalizedMessage("sciorganizationpublication.ui.publicationsOfProject",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
+                new GlobalizedMessage("sciorganizationpublication.ui.publicationsOfProject",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
                 1);
 
+        System.out.println("Registering authoring step of organization of a publication...");
         AuthoringKitWizard.registerAssetStep(
                 Publication.BASE_DATA_OBJECT_TYPE,
                 PublicationSciOrganizationStep.class,
-                new GlobalizedMessage("sciorganization.ui.organizations",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
-                new GlobalizedMessage("sciorganization.ui.organizations",
-                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublication"),
+                new GlobalizedMessage("sciorganizationpublication.ui.organizationsOfPublication",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
+                new GlobalizedMessage("ssciorganizationpublication.ui.organizationsOfPublication",
+                                      "com.arsdigita.cms.contentassets.ui.SciOrganizationPublicationResources"),
                 1);
+        
+        System.err.println("Finished init of SciOrganizationPublicationInitializer.");
     }
 
     /**

@@ -44,10 +44,9 @@ public class PublicationSciOrganizationStep extends SimpleEditStep {
                                           AuthoringKitWizard parent,
                                           String prefix) {
         super(itemModel, parent, prefix);
-
+       
         BasicItemForm addOrganizationSheet =
-                      new PublicationSciOrganizationAddForm(itemModel,
-                                                            getOrganizationClassName());
+                      new PublicationSciOrganizationAddForm(itemModel);
         add(ADD_ORGANIZATION_SHEET_NAME,
             (String) SciOrganizationPublicationGlobalizationUtil.globalize(
                 "sciorganizationpublication.ui.addOrganization").localize(),
@@ -58,9 +57,5 @@ public class PublicationSciOrganizationStep extends SimpleEditStep {
                                         new PublicationSciOrganizationTable(
                 itemModel);
         setDisplayComponent(organizationTable);
-    }
-
-    private String getOrganizationClassName() {
-        return GenericOrganizationalUnit.class.getName();
-    }
+    }  
 }

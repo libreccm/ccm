@@ -501,7 +501,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
                         "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
                 departmentsQuery.setParameter("department", getID());
 
-                if (query.size() > 0) {
+                if (departmentsQuery.size() > 0) {
                     BigDecimal departmentId;
                     boolean result = false;
                     while (departmentsQuery.next()) {
@@ -551,7 +551,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
         }
 
         DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
-        query.setParameter("department", getID());
+        query.setParameter("department", departmentId);
         if (status != ProjectStatus.ALL) {
             Calendar today = new GregorianCalendar();
             query.setParameter("today",

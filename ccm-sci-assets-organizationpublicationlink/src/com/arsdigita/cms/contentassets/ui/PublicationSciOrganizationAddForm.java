@@ -43,33 +43,31 @@ public class PublicationSciOrganizationAddForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener {
-    
+
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "organizations";
-    private String orgaClassName;
-    
-    public PublicationSciOrganizationAddForm(ItemSelectionModel itemModel,
-                                             String orgaClassName) {
+
+    public PublicationSciOrganizationAddForm(ItemSelectionModel itemModel) {
         super("OrganizationsAddForm", itemModel);
-        this.orgaClassName = orgaClassName;
     }
-    
+
     @Override
     public void addWidgets() {
         add(new Label((String) SciOrganizationPublicationGlobalizationUtil.
                 globalize("sciorganization.ui.selectOrganization").localize()));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(orgaClassName));
+                findByAssociatedObjectType(GenericOrganizationalUnit.class.
+                getName()));
         add(itemSearch);
     }
-    
+
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         PageState state = fse.getPageState();
-        
+
         setVisible(state, true);
     }
-    
+
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
@@ -79,12 +77,12 @@ public class PublicationSciOrganizationAddForm
         PublicationWithOrganization publication =
                                     new PublicationWithOrganization(
                 pub.getOID());
-        
+
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             publication.addOrganization((GenericOrganizationalUnit) data.get(
-                    ITEM_SEARCH));            
+                    ITEM_SEARCH));
         }
-        
+
         init(fse);
     }
 }
