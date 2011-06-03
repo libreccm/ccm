@@ -518,7 +518,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         Element content = generateBaseXML(item, element, state);
 
         SciOrganization orga = (SciOrganization) item;
-        Element availableData = element.newChildElement("availableData");
+        Element availableData = content.newChildElement("availableData");
 
         generateAvailableDataXml(orga, availableData, state);
 

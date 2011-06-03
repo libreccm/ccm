@@ -208,8 +208,14 @@ public class Link extends ACSObject {
         // If acsObject is instance of ContentBundle
         if (acsObject instanceof ContentBundle) {
             // get the negotiated language version of this ContentBundle 
-            ci = ((ContentBundle) acsObject).negotiate(DispatcherHelper.
-                    getRequest().getLocales());
+            //jensp: If there is no request object - for example if getTargetItem
+            //is called from a command line program - use the primary instance.
+            if (DispatcherHelper.getRequest() == null) {
+                ci = ((ContentBundle) acsObject).getPrimaryInstance();
+            } else {
+                ci = ((ContentBundle) acsObject).negotiate(DispatcherHelper.
+                        getRequest().getLocales());
+            }
         } else {
             // else there are no language versions so just use the acsObject
             ci = (ContentItem) acsObject;
@@ -301,7 +307,7 @@ public class Link extends ACSObject {
      * @return the Link URI
      */
     public String getInternalOrExternalURI(PageState state) {
-      
+
         if (EXTERNAL_LINK.equals(getTargetType())) {
             return getTargetURI();
         } else {
@@ -317,7 +323,7 @@ public class Link extends ACSObject {
             ItemResolver resolver = section.getItemResolver();
             String url = resolver.generateItemURL(
                     state, item, section, item.getVersion());
-          
+
             if ((getTargetURI() != null) && getTargetURI().startsWith("&")) {
                 ParameterMap parameters;
                 StringTokenizer tokenizer;
@@ -340,8 +346,8 @@ public class Link extends ACSObject {
                         toString()));
                 return URL.there(state.getRequest(), url, parameters).
                         toString();
-            } else {                
-                return URL.there(state.getRequest(), url).toString();                
+            } else {
+                return URL.there(state.getRequest(), url).toString();
             }
         }
     }
@@ -498,8 +504,8 @@ public class Link extends ACSObject {
 
         int otherKey = key;
 
-        
-        
+
+
         if (swapNext) {
             otherKey = key + 1;
             query.addOrder("linkOrder ASC");
@@ -516,8 +522,8 @@ public class Link extends ACSObject {
         if (query.next()) {
             otherKey = ((Integer) query.get("linkOrder")).intValue();
             query.close();
-        }              
-             
+        }
+
         DataOperation operation = getSwapOperation(operationName);
         operation.setParameter("linkOrder", new Integer(key));
         operation.setParameter("nextLinkOrder", new Integer(otherKey));

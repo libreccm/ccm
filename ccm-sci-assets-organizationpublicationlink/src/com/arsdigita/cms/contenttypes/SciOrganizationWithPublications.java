@@ -55,8 +55,9 @@ public class SciOrganizationWithPublications extends SciOrganization {
     }
 
     public SciOrganizationWithPublications(final SciOrganization organization) {
+        super(organization.getID());
         orgaWithPublications = new GenericOrganizationalUnitWithPublications(
-                organization.getID());
+                organization.getID());        
     }
     
     public static SciOrganizationWithPublicationsConfig getConfig() {
@@ -78,14 +79,15 @@ public class SciOrganizationWithPublications extends SciOrganization {
                 DataQuery departmentsQuery =
                           SessionManager.getSession().retrieveQuery(
                         "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
-                departmentsQuery.setParameter("organization", getID());
+                departmentsQuery.setParameter("organization", 
+                        getID());
 
-                if (query.size() > 0) {
+                if (departmentsQuery.size() > 0) {
                     BigDecimal departmentId;
                     boolean result = false;
                     while (departmentsQuery.next()) {
                         departmentId = (BigDecimal) departmentsQuery.get(
-                                "departmentsId");
+                                "departmentId");
                         result = hasPublications(departmentId, merge);
 
                         if (result) {
@@ -110,8 +112,8 @@ public class SciOrganizationWithPublications extends SciOrganization {
                                     final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciDepartment");
-        query.setParameter("departmentId", departmentId);
+                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciOrganization");
+        query.setParameter("organization", departmentId);
 
         if (query.size() > 0) {
             query.close();
@@ -124,7 +126,7 @@ public class SciOrganizationWithPublications extends SciOrganization {
                         "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
                 subDepartmentsQuery.setParameter("department", departmentId);
                 
-                if (query.size() > 0) {
+                if (subDepartmentsQuery.size() > 0) {
                     BigDecimal subDepartmentId;
                     boolean result = false;
                     while(subDepartmentsQuery.next()) {

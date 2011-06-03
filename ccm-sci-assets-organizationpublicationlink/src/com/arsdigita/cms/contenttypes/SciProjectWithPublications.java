@@ -50,6 +50,7 @@ public class SciProjectWithPublications extends SciProject {
     }
 
     public SciProjectWithPublications(final SciProject project) {
+        super(project.getID());
         projectWithPublications =
         new GenericOrganizationalUnitWithPublications(project.getID());
     }
@@ -57,8 +58,8 @@ public class SciProjectWithPublications extends SciProject {
     public boolean hasPublications(final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciProject");
-        query.setParameter("projectId", getID());
+                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciOrganization");
+        query.setParameter("organization", getID());
 
         if (query.size() > 0) {
             query.close();

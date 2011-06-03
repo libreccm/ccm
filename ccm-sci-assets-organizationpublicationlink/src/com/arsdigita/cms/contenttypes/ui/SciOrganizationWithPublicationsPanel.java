@@ -22,7 +22,13 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.contentassets.SciOrganizationPublicationCollection;
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
+import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.AuthorshipCollection;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
+import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentWithPublications;
@@ -55,7 +61,7 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
     public void setDisplayPublications(final boolean displayPublications) {
         this.displayPublications = displayPublications;
     }
-    
+
     @Override
     protected void generateAvailableDataXml(final SciOrganization organization,
                                             final Element element,
@@ -69,10 +75,14 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
                                         new SciOrganizationWithPublications(
                 organization);
 
+        long start = System.currentTimeMillis();
         if ((orga.hasPublications(config.getOrganizationPublicationsMerge()))
-                && displayPublications) {
+            && displayPublications) {
             element.newChildElement("publications");
         }
+        System.out.printf(
+                "\n\nNeeded %d ms to determine if organization has publications\n\n",
+                System.currentTimeMillis() - start);
     }
 
     protected void mergePublications(
@@ -109,6 +119,7 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
 
         if (SciOrganizationWithPublications.getConfig().
                 getOrganizationPublicationsMerge()) {
+            long start = System.currentTimeMillis();
             List<Publication> publications;
             publications = new LinkedList<Publication>();
             SciOrganizationPublicationCollection orgaPublications;
@@ -143,15 +154,94 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
             List<Publication> publicationsToShow = publicationWithoutDoubles.
                     subList((int) begin, (int) end);
 
-            final Element publicationsElem = parent.newChildElement(
-                    "publications");
-            final ContentItemXMLRenderer renderer =
-                                         new ContentItemXMLRenderer(
-                    publicationsElem);
-            renderer.setWrapAttributes(true);
+            System.out.printf(
+                    "\n\nCreating list of publications to show in %d ms.\n\n",
+                    System.currentTimeMillis() - start);
+
+            start = System.currentTimeMillis();
+
+            //final Element publicationsElem = parent.newChildElement(
+            //      "publications");
+
             for (Publication publication : publicationsToShow) {
+                //Element publicationElem = parent.newChildElement(
+                  //      "publications");
+                /*ContentItemXMLRenderer renderer =
+                new ContentItemXMLRenderer(publicationElem);                
+                renderer.setWrapAttributes(true);
+                long walkStart = System.currentTimeMillis();
                 renderer.walk(publication, SimpleXMLGenerator.class.getName());
+                System.out.printf("\n\nRenderer walked %d ms\n\n", System.currentTimeMillis() - walkStart);*/
+
+                /*Element objectTypeElem = publicationElem.newChildElement("objectType");
+                objectTypeElem.setText(publication.getObjectType().getQualifiedName());
+                Element yearElem = publicationElem.newChildElement(
+                "yearOfPublication");
+                yearElem.setText(publication.getYearOfPublication().toString());
+                Element miscElem = publicationElem.newChildElement("misc");
+                miscElem.setText(publication.getMisc());
+                AuthorshipCollection authors = publication.getAuthors();
+                while (authors.next()) {
+                Element authorsElem = publicationElem.newChildElement(
+                "authors");
+                Element linkElem = authorsElem.newChildElement("link");
+                Element editorElem = linkElem.newChildElement("editor");
+                if (authors.isEditor()) {
+                editorElem.setText("true");
+                } else {
+                editorElem.setText("false");
+                }
+                Element authorOrderElem = linkElem.newChildElement(
+                "authorOrder");
+                authorOrderElem.setText(authors.getAuthorshipOrder().
+                toString());
+                
+                GenericPerson author = authors.getAuthor();
+                Element surnameElem = authorsElem.newChildElement("surname");
+                surnameElem.setText(author.getSurname());
+                Element givennameElem = authorsElem.newChildElement(
+                "givenname");
+                givennameElem.setText(author.getGivenName());
+                }
+                
+                Element abstractElem = publicationElem.newChildElement(
+                "abstract");
+                abstractElem.setText(publication.getAbstract());
+                
+                if (publication instanceof PublicationWithPublisher) {
+                PublicationWithPublisher pwp =
+                (PublicationWithPublisher) publication;
+                Publisher publisher = pwp.getPublisher();
+                
+                Element publisherElem = publicationElem.newChildElement(
+                "publisher");
+                Element publisherNameElem = publisherElem.newChildElement(
+                "publisherName");
+                publisherNameElem.setText(publisher.getPublisherName());
+                Element publisherPlaceElem = publisherElem.newChildElement(
+                "place");
+                publisherPlaceElem.setText(publisher.getPlace());
+                }
+                
+                Element titleElem = publicationElem.newChildElement("title");
+                titleElem.setText(publication.getTitle());
+                
+                if (publication instanceof ArticleInJournal) {
+                
+                }
+                
+                if (publication instanceof ArticleInCollectedVolume) {
+                
+                }*/
+
+                PublicationXmlHelper xmlHelper =
+                                     new PublicationXmlHelper(parent,
+                                                              publication);
+                xmlHelper.generateXml();
             }
+
+            System.out.printf("\n\nGenerated publications XML in %d ms\n\n",
+                              System.currentTimeMillis() - start);
         } else {
             SciOrganizationPublicationCollection orgaPublications;
             orgaPublications = orga.getPublications();

@@ -16,3 +16,15 @@ association {
                                                 join cms_organization_publication_map.publication_id
                                                   to ct_publications.publication_id;                                                   
 }
+
+query getIdsOfPublicationsOfSciOrganization {
+    BigDecimal publicationId;
+
+    do {
+        select cms_organization_publication_map.publication_id
+        from cms_organization_publication_map 
+        where cms_organization_publication_map.organization_id = :organization
+    } map {
+        publicationId = cms_organization_publication_map.publication_id;
+    }
+}

@@ -50,6 +50,7 @@ public class SciDepartmentWithPublications extends SciDepartment {
     }
     
     public SciDepartmentWithPublications(final SciDepartment department) {
+        super(department.getID());
         departmentWithPublications =
         new GenericOrganizationalUnitWithPublications(department.getID());
     }
@@ -57,8 +58,8 @@ public class SciDepartmentWithPublications extends SciDepartment {
     public boolean hasPublications(final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciDepartment");
-        query.setParameter("departmentId", getID());
+                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciOrganization");
+        query.setParameter("organization", getID());
         
         if (query.size() > 0) {
             query.close();
