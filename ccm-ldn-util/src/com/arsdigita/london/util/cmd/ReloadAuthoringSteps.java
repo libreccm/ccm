@@ -1,15 +1,10 @@
 package com.arsdigita.london.util.cmd;
 
-import com.arsdigita.cms.installer.xml.XMLContentItemHandler;
 import com.arsdigita.cms.installer.xml.XMLContentTypeHandler;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.packaging.Program;
-import com.arsdigita.persistence.Session;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.xml.XML;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
 
 /**
  *
@@ -21,8 +16,6 @@ public class ReloadAuthoringSteps extends Program {
         super("ReloadAuthoringSteps",
               "1.0.0",
               "");
-
-
 
     }
 
@@ -57,7 +50,10 @@ public class ReloadAuthoringSteps extends Program {
                 XML.parseResource(defToReload, handler);
             }
         }.run();
-        System.out.printf("Reloaded AuthoringSteps from '%s'.", defToReload);
-
+        System.out.printf("Reloaded AuthoringSteps from '%s'.", defToReload);       
+    }
+    
+    public static void main(String[] args) {
+        new ReloadAuthoringSteps().run(args);
     }
 }

@@ -401,6 +401,29 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
+     * Public add for use by metadata forms.
+     * 
+     * @param propertyName
+     * @param dobj
+     * @return 
+     */    
+    @Override
+    public DataObject add(String propertyName, DomainObject dobj) {
+        return super.add(propertyName, dobj);
+    }
+    
+    /**
+     * Public remove for use by metadata forms
+     * 
+     * @param propertyName
+     * @param dobj 
+     */
+    @Override
+    public void remove(String propertyName, DomainObject dobj) {
+        super.remove(propertyName, dobj);
+    }
+    
+    /**
      * For new content items, sets the associated content type if it
      * has not been already set.
      */   

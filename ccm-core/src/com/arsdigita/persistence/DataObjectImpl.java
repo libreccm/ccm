@@ -43,7 +43,6 @@ import org.apache.log4j.Logger;
 class DataObjectImpl implements DataObject {
 
     final static Logger s_log = Logger.getLogger(DataObjectImpl.class);
-
     private Session m_ssn;
     private OID m_oid;
     private List m_observers = new ArrayList();
@@ -53,10 +52,9 @@ class DataObjectImpl implements DataObject {
     private boolean m_valid = true;
     // originating transaction has terminated
     private boolean m_transactionDone = false;
-
     // package-scoped, written and read by Session
     PropertyMap p_pMap;
-     // package-scoped, read/written by Session
+    // package-scoped, read/written by Session
     com.redhat.persistence.metadata.ObjectType p_objectType;
 
     private final class ObserverEntry {
@@ -85,7 +83,7 @@ class DataObjectImpl implements DataObject {
             // unschedule event from others
             if (isWaiting(event)) {
                 for (Iterator it = m_waiting.entrySet().iterator();
-                     it.hasNext(); ) {
+                     it.hasNext();) {
                     Map.Entry me = (Map.Entry) it.next();
                     DataEvent value = (DataEvent) me.getValue();
                     if (value.equals(event)) {
@@ -100,7 +98,9 @@ class DataObjectImpl implements DataObject {
         }
 
         public void scheduleEvent(DataEvent now, DataEvent waiting) {
-            if (!isFiring(waiting)) { m_waiting.put(now, waiting); }
+            if (!isFiring(waiting)) {
+                m_waiting.put(now, waiting);
+            }
         }
 
         public DataEvent clearFiring(DataEvent event) {
@@ -124,7 +124,6 @@ class DataObjectImpl implements DataObject {
         public String toString() {
             return "Observer: " + m_observer;
         }
-
     }
 
     DataObjectImpl(ObjectType type) {
@@ -143,9 +142,9 @@ class DataObjectImpl implements DataObject {
         // disconnected data objects should use the session of the current
         // thread
         if (isDisconnected()) {
-            throw new IllegalStateException
-                ("There was an error in disconnected object implementation. "
-                 + "Disconnected data object can not access session.");
+            throw new IllegalStateException(
+                    "There was an error in disconnected object implementation. "
+                    + "Disconnected data object can not access session.");
         }
 
         // this checks that nondisconnected objects are not being used
@@ -156,10 +155,10 @@ class DataObjectImpl implements DataObject {
             && m_ssn != null
             && SessionManager.getSession() != null
             && m_ssn != SessionManager.getSession().getProtoSession()) {
-            throw new PersistenceException
-                ("This data object: (" + this + ") is being accessed from "
-                 + "another thread before its originating transaction has "
-                 + "terminated.");
+            throw new PersistenceException("This data object: (" + this
+                                           + ") is being accessed from "
+                                           + "another thread before its originating transaction has "
+                                           + "terminated.");
         }
 
         return m_ssn;
@@ -188,13 +187,26 @@ class DataObjectImpl implements DataObject {
         validate();
         Property prop = getObjectType().getProperty(property);
         if (prop == null) {
-            throw new PersistenceException
-                ("no such property: " + property + " for " + this);
+            StringBuilder builder = new StringBuilder();
+            Iterator properties = getObjectType().getProperties();
+            while (properties.hasNext()) {
+                if (builder.length() > 0) {
+                    builder.append(", ");
+                }
+
+                builder.append(((Property) properties.next()).getName());
+            }
+
+            throw new PersistenceException(String.format(
+                    "no such property: %s for %s. Available properties: %s",
+                                                         property.toString(),
+                                                         this.toString(),
+                                                         builder.toString()));
         }
         if (prop.isCollection()) {
             if (isDisconnected()) {
-                return new DataAssociationImpl
-                    (SessionManager.getSession(), this, prop);
+                return new DataAssociationImpl(SessionManager.getSession(), this,
+                                               prop);
             } else {
                 return new DataAssociationImpl(getSession(), this, prop);
             }
@@ -222,8 +234,8 @@ class DataObjectImpl implements DataObject {
                     DataObjectImpl dobj = (DataObjectImpl) obj;
                     dobj.disconnect();
                     if (!dobj.isValid()) {
-                        throw new IllegalStateException
-                            ("got invalid data object from session: " + obj);
+                        throw new IllegalStateException("got invalid data object from session: "
+                                                        + obj);
                     }
                 }
                 m_disconnect.put(prop, obj);
@@ -244,10 +256,14 @@ class DataObjectImpl implements DataObject {
     }
 
     private void doDisconnect() {
-        if (m_disconnect != null) { return; }
+        if (m_disconnect != null) {
+            return;
+        }
         m_disconnect = new HashMap();
         // access the session directly as part of disconnection
-        if (m_ssn.isDeleted(this)) { return; }
+        if (m_ssn.isDeleted(this)) {
+            return;
+        }
         if (!m_manualDisconnect) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("autodisconnect: " + getOID(), new Throwable());
@@ -255,10 +271,11 @@ class DataObjectImpl implements DataObject {
         }
 
         com.redhat.persistence.Session ssn =
-            SessionManager.getSession().getProtoSession();
+                                       SessionManager.getSession().
+                getProtoSession();
 
         for (Iterator it = getObjectType().getProperties();
-             it.hasNext(); ) {
+             it.hasNext();) {
             Property p = (Property) it.next();
             if (!p.isCollection()
                 && !p.isKeyProperty()
@@ -274,12 +291,14 @@ class DataObjectImpl implements DataObject {
     public void set(String property, Object value) {
         validateWrite();
         // all entry points for empty strings need to be converted to null
-        if ("".equals(value)) { value = null; }
+        if ("".equals(value)) {
+            value = null;
+        }
         try {
             Property prop = getObjectType().getProperty(property);
             if (prop == null) {
-                throw new PersistenceException
-                    ("no such property: " + property + " for " + this);
+                throw new PersistenceException("no such property: " + property
+                                               + " for " + this);
             }
             if (prop.isKeyProperty()) {
                 m_oid.set(property, value);
@@ -296,21 +315,27 @@ class DataObjectImpl implements DataObject {
 
     public boolean isNew() {
         validate();
-        if (isDisconnected()) { return false; }
+        if (isDisconnected()) {
+            return false;
+        }
         // handle calls to isNew before key is set
-        return !m_oid.isInitialized() ||
-            (getSsn().isNew(this) && !getSsn().isPersisted(this));
+        return !m_oid.isInitialized() || (getSsn().isNew(this) && !getSsn().
+                                          isPersisted(this));
     }
 
     public boolean isDeleted() {
         validate();
-        if (isDisconnected()) { return false; }
+        if (isDisconnected()) {
+            return false;
+        }
         return getSsn().isDeleted(this);
     }
 
     public boolean isCommitted() {
         validate();
-        if (isDisconnected()) { return false; }
+        if (isDisconnected()) {
+            return false;
+        }
         return m_oid.isInitialized() && !getSsn().isNew(this);
     }
 
@@ -319,7 +344,9 @@ class DataObjectImpl implements DataObject {
     }
 
     void invalidate(boolean connectedOnly, boolean error) {
-        if (!isValid()) { return; }
+        if (!isValid()) {
+            return;
+        }
 
         // access the session directly as part of disconnection
         if (error || (!connectedOnly && m_ssn.isModified(this))) {
@@ -336,8 +363,8 @@ class DataObjectImpl implements DataObject {
 
     public void disconnect() {
         if (!m_oid.isInitialized()) {
-            throw new PersistenceException
-                ("can't disconnect uninitialized: " + this);
+            throw new PersistenceException("can't disconnect uninitialized: "
+                                           + this);
         }
 
         m_manualDisconnect = true;
@@ -346,13 +373,17 @@ class DataObjectImpl implements DataObject {
 
     public boolean isModified() {
         validate();
-        if (isDisconnected()) { return false; }
+        if (isDisconnected()) {
+            return false;
+        }
         return !getSsn().isFlushed(this);
     }
 
     public boolean isPropertyModified(String name) {
         validate();
-        if (isDisconnected()) { return false; }
+        if (isDisconnected()) {
+            return false;
+        }
         return !getSsn().isFlushed(this, convert(name));
     }
 
@@ -369,8 +400,8 @@ class DataObjectImpl implements DataObject {
     private void validate() {
         if (!isValid()) {
             if (s_log.isDebugEnabled()) {
-                s_log.debug
-                    ("invalid data object invalidated at: ", m_invalidStack);
+                s_log.debug("invalid data object invalidated at: ",
+                            m_invalidStack);
             }
             throw new PersistenceException("invalid data object: " + this);
         }
@@ -379,8 +410,8 @@ class DataObjectImpl implements DataObject {
     private void validateWrite() {
         validate();
         if (isDisconnected()) {
-            throw new PersistenceException
-                ("can not write to disconnected data object: " + this);
+            throw new PersistenceException("can not write to disconnected data object: "
+                                           + this);
         }
     }
 
@@ -398,7 +429,7 @@ class DataObjectImpl implements DataObject {
     public void specialize(String subtypeName) {
         validate();
         ObjectType subtype =
-            getSession().getMetadataRoot().getObjectType(subtypeName);
+                   getSession().getMetadataRoot().getObjectType(subtypeName);
 
         if (subtype == null) {
             throw new PersistenceException("No such type: " + subtypeName);
@@ -442,9 +473,10 @@ class DataObjectImpl implements DataObject {
     private void assertFlushed() {
         // m_ssn.assertFlushed(this) doesn't work because of '~' properties
         for (Iterator it = getObjectType().getProperties();
-             it.hasNext(); ) {
+             it.hasNext();) {
             Property p = (Property) it.next();
-            s_log.debug(String.format("Asserting that property '%s' is flushed...", p.getName()));
+            s_log.debug(String.format(
+                    "Asserting that property '%s' is flushed...", p.getName()));
             if (!getSsn().isFlushed(this, C.prop(m_ssn.getRoot(), p))) {
                 // use m_ssn to generate the exception
                 getSsn().assertFlushed(this);
@@ -460,21 +492,21 @@ class DataObjectImpl implements DataObject {
         ObserverEntry entry = new ObserverEntry(observer);
         if (!m_observers.contains(entry)) {
             if (m_firing != null) {
-                throw new IllegalStateException
-                    ("Can't add a new observer from within another " +
-                     "observer.\n" +
-                     "Trying to add: " + observer + "\n" +
-                     "Currently firing: " + m_firing + "\n" +
-                     "Current observers: " + m_observers);
+                throw new IllegalStateException("Can't add a new observer from within another "
+                                                + "observer.\n"
+                                                + "Trying to add: " + observer
+                                                + "\n" + "Currently firing: "
+                                                + m_firing + "\n"
+                                                + "Current observers: "
+                                                + m_observers);
             }
             m_observers.add(entry);
         }
     }
-
     private ObserverEntry m_firing = null;
 
     void scheduleObserver(DataEvent event) {
-        for (Iterator it = m_observers.iterator(); it.hasNext(); ) {
+        for (Iterator it = m_observers.iterator(); it.hasNext();) {
             ObserverEntry entry = (ObserverEntry) it.next();
             DataObserver observer = entry.getObserver();
             if (event instanceof AfterEvent) {
@@ -488,7 +520,9 @@ class DataObjectImpl implements DataObject {
             ObserverEntry entry = (ObserverEntry) m_observers.get(i);
             final DataObserver observer = entry.getObserver();
             if (entry.isFiring(event)) {
-                if (s_log.isDebugEnabled()) { s_log.debug("isFiring: " + event); }
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("isFiring: " + event);
+                }
                 continue;
             }
 
@@ -510,7 +544,9 @@ class DataObjectImpl implements DataObject {
                 // after events never delay firing
                 if (event instanceof BeforeEvent) {
                     DataEvent waiting = entry.clearFiring(event);
-                    if (waiting != null) { fireObserver(waiting); }
+                    if (waiting != null) {
+                        fireObserver(waiting);
+                    }
                 }
 
                 entry.setFiring(event);
@@ -518,7 +554,9 @@ class DataObjectImpl implements DataObject {
                 event.invoke(observer);
 
                 DataEvent waiting = entry.clearFiring(event);
-                if (waiting != null) { fireObserver(waiting); }
+                if (waiting != null) {
+                    fireObserver(waiting);
+                }
             } finally {
                 entry.clearFiring(event);
             }
@@ -549,5 +587,4 @@ class DataObjectImpl implements DataObject {
     public String toString() {
         return m_oid.toString();
     }
-
 }

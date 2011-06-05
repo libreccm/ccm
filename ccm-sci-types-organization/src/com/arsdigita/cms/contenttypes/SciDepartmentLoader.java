@@ -55,7 +55,7 @@ public class SciDepartmentLoader extends AbstractContentTypeLoader {
         return TYPES;
     }
 
-      @Override
+    @Override
     protected void prepareSection(final ContentSection section,
                                   final ContentType type,
                                   final LifecycleDefinition lifecycle,

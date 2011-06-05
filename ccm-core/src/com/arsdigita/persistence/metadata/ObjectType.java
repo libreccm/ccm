@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-
 /**
  * The ObjectType class is a specialized form of CompoundType that supports
  * inheritence. It also adds the notion of identity by allowing properties to
@@ -36,34 +35,28 @@ import java.util.Iterator;
  */
 public class ObjectType extends CompoundType {
 
-    static ObjectType
-	wrap(com.redhat.persistence.metadata.ObjectType type) {
-	if (type == null) {
-	    return null;
-	} else {
-	    return new ObjectType(type);
-	}
+    static ObjectType wrap(com.redhat.persistence.metadata.ObjectType type) {
+        if (type == null) {
+            return null;
+        } else {
+            return new ObjectType(type);
+        }
     }
 
     static Collection wrap(Collection types) {
-	ArrayList result = new ArrayList(types.size());
-	for (Iterator it = types.iterator(); it.hasNext(); ) {
-	    result.add
-		(wrap((com.redhat.persistence.metadata.ObjectType)
-		      it.next()));
-	}
-	return result;
+        ArrayList result = new ArrayList(types.size());
+        for (Iterator it = types.iterator(); it.hasNext();) {
+            result.add(wrap(
+                    (com.redhat.persistence.metadata.ObjectType) it.next()));
+        }
+        return result;
     }
-
-
     private com.redhat.persistence.metadata.ObjectType m_type;
 
-    private
-	ObjectType(com.redhat.persistence.metadata.ObjectType type) {
-	super(type);
+    private ObjectType(com.redhat.persistence.metadata.ObjectType type) {
+        super(type);
         m_type = type;
     }
-
 
     /**
      * Returns the supertype of this ObjectType or null if this is a base
@@ -71,11 +64,9 @@ public class ObjectType extends CompoundType {
      *
      * @return The supertype of this ObjectType or null if this is a base.
      **/
-
     public ObjectType getSupertype() {
         return ObjectType.wrap(m_type.getSupertype());
     }
-
 
     /**
      * Returns the base type of this ObjectType (which may simply be the
@@ -83,11 +74,9 @@ public class ObjectType extends CompoundType {
      *
      * @return The base type of this ObjectType.
      **/
-
     public ObjectType getBasetype() {
-	return ObjectType.wrap(m_type.getBasetype());
+        return ObjectType.wrap(m_type.getBasetype());
     }
-
 
     /**
      *  Returns true if the given Property is one of the key Properties on this
@@ -97,7 +86,7 @@ public class ObjectType extends CompoundType {
      *  @return true if is a key property.
      */
     public boolean isKeyProperty(Property p) {
-	return m_type.isKeyProperty(p.getName());
+        return m_type.isKeyProperty(p.getName());
     }
 
     /**
@@ -108,7 +97,7 @@ public class ObjectType extends CompoundType {
      *  @return true if is a key property.
      */
     public boolean isKeyProperty(String name) {
-	return m_type.isKeyProperty(name);
+        return m_type.isKeyProperty(name);
     }
 
     /**
@@ -119,9 +108,8 @@ public class ObjectType extends CompoundType {
      *
      * @see Property
      **/
-
     public Iterator getKeyProperties() {
-	return Property.wrap(m_type.getKeyProperties()).iterator();
+        return Property.wrap(m_type.getKeyProperties()).iterator();
     }
 
     /**
@@ -133,7 +121,6 @@ public class ObjectType extends CompoundType {
      *
      * @see Property
      **/
-
     public Iterator getProperties() {
         return Property.wrap(m_type.getProperties()).iterator();
     }
@@ -147,11 +134,9 @@ public class ObjectType extends CompoundType {
      *
      * @see Property
      **/
-
     public Iterator getDeclaredProperties() {
         return Property.wrap(m_type.getDeclaredProperties()).iterator();
     }
-
 
     /**
      * Returns true if this ObjectType contains a Property with the given
@@ -162,11 +147,9 @@ public class ObjectType extends CompoundType {
      * @return True if this ObjectType contains a Property with the given
      *         name, false otherwise.
      **/
-
     public boolean hasProperty(String name) {
-	return m_type.hasProperty(name);
+        return m_type.hasProperty(name);
     }
-
 
     /**
      * Returns true if this ObjectType directly defines a Property with the
@@ -178,11 +161,9 @@ public class ObjectType extends CompoundType {
      * @return True if this ObjectType contains a directly defined Property
      *         with the given name, false otherwise.
      **/
-
     public boolean hasDeclaredProperty(String name) {
         return m_type.hasDeclaredProperty(name);
     }
-
 
     /**
      * Returns the Property contained by this ObjectType with the given name
@@ -193,11 +174,9 @@ public class ObjectType extends CompoundType {
      *
      * @return An instance of Property or null.
      **/
-
     public Property getProperty(String name) {
-	return Property.wrap(m_type.getProperty(name));
+        return Property.wrap(m_type.getProperty(name));
     }
-
 
     /**
      * Returns the Property directly defined by this ObjectType with the given
@@ -208,18 +187,15 @@ public class ObjectType extends CompoundType {
      *
      * @return An instance of Property or null.
      **/
-
     public Property getDeclaredProperty(String name) {
         return Property.wrap(m_type.getDeclaredProperty(name));
     }
 
-
     /**
      * @see #isSubtypeOf(ObjectType)
      **/
-
     public boolean isSubtypeOf(String qualifiedName) {
-	return m_type.isSubtypeOf(qualifiedName);
+        return m_type.isSubtypeOf(qualifiedName);
     }
 
     /**
@@ -233,11 +209,9 @@ public class ObjectType extends CompoundType {
      *
      * @return True if this ObjectType is a subtype of <i>type</i>.
      **/
-
     public boolean isSubtypeOf(ObjectType type) {
-	return m_type.isSubtypeOf(type.m_type);
+        return m_type.isSubtypeOf(type.m_type);
     }
-
 
     /**
      * Checks if the <code>ObjectType</code> specified by <code>extendedType</code>
@@ -255,35 +229,32 @@ public class ObjectType extends CompoundType {
     public static void verifySubtype(ObjectType baseType,
                                      ObjectType extendedType) {
         if (!extendedType.isSubtypeOf(baseType)) {
-            throw new PersistenceException
-		("The object type '" + extendedType.getQualifiedName() +
-		 "' is not a subtype of the object type '" +
-		 baseType.getQualifiedName() + "'");
+            throw new PersistenceException("The object type '" + extendedType.
+                    getQualifiedName()
+                                           + "' is not a subtype of the object type '"
+                                           + baseType.getQualifiedName() + "'");
         }
     }
 
     public static void verifySubtype(String baseType,
                                      String extendedType) {
-        verifySubtype
-	    (MetadataRoot.getMetadataRoot().getObjectType(baseType),
-	     MetadataRoot.getMetadataRoot().getObjectType(extendedType));
+        verifySubtype(MetadataRoot.getMetadataRoot().getObjectType(baseType),
+                      MetadataRoot.getMetadataRoot().getObjectType(extendedType));
     }
 
     public static void verifySubtype(String baseType,
                                      ObjectType extendedType) {
         ObjectType baseObjectType =
-	    MetadataRoot.getMetadataRoot().getObjectType(baseType);
+                   MetadataRoot.getMetadataRoot().getObjectType(baseType);
         Assert.isTrue(baseObjectType != null,
-			  "Could not find the ObjectType for the " +
-                          "base type.  The base type was: " + baseType + ".");
+                      "Could not find the ObjectType for the "
+                      + "base type.  The base type was: " + baseType + ".");
         verifySubtype(baseObjectType, extendedType);
     }
 
     public static void verifySubtype(ObjectType baseType,
                                      String extendedType) {
-        verifySubtype
-	    (baseType,
-	     MetadataRoot.getMetadataRoot().getObjectType(extendedType));
+        verifySubtype(baseType,
+                      MetadataRoot.getMetadataRoot().getObjectType(extendedType));
     }
-
 }
