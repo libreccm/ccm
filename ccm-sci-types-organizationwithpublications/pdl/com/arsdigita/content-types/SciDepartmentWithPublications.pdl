@@ -1,0 +1,34 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type SciDepartmentWithPublications extends SciDepartment {
+    reference key ( ct_sciorga_departments_with_publications.department_id );
+}
+
+association {
+    SciDepartment[0..n] departments = join ct_publications.publication_id
+                                        to ct_department_publication_map.publication_id,
+                                       join ct_department_publication_map.department_id
+                                         to ct_sciorga_departments_with_publications.department_id;
+
+    Publication[0..n] publications = join ct_sciorga_departments_with_publications.department_id
+                                       to ct_department_publication_map.department_id,
+                                     join ct_department_publication_map.publication_id
+                                       to ct_publications.publication_id;     
+
+    Integer[0..1] publicationOrder = ct_department_publication_map.publication_order INTEGER;
+}
+
+query getIdsOfPublicationsOfSciDepartment {
+    BigDecimal publicationId;
+
+    do {
+        select ct_department_publication_map.publication_id
+        from ct_department_publication_map
+        where ct_department_publication_map.department_id = :department
+    } map {
+        publicationId = ct_department_publication_map.publication_id;
+    }
+}

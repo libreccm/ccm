@@ -1,0 +1,36 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type SciProjectWithPublications extends SciProject {
+
+    reference key ( ct_sciorga_projects_with_publications.project_id );
+}
+
+association {
+    SciProject[0..n] projects = join ct_publications.publication_id
+                                  to ct_project_publication_map.publication_id,
+                                join ct_project_publication_map.project_id
+                                  to ct_sciorga_projects_with_publications.project_id;
+
+    Publication[0..n] publications = join ct_sciorga_projects_with_publications.project_id
+                                       to ct_project_publication_map.project_id,
+                                     join ct_project_publication_map.publication_id
+                                       to ct_publications.publication_id;
+
+    Integer[0..1] publicationOrder = ct_project_publication_map.publication_order INTEGER;
+
+}
+
+query getIdsOfPublicationsOfSciProject {
+    BigDecimal publicationId;
+
+    do {
+        select ct_project_publication_map.publication_id
+        from ct_project_publication_map
+        where ct_project_publication_map.project_id = :project
+    } map {
+        publicationId = ct_project_publication_map.publication_id;
+    }
+}

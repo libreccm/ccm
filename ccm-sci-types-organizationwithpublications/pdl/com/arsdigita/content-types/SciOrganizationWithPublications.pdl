@@ -1,0 +1,34 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type SciOrganizationWithPublications extends SciOrganization {
+    reference key ( ct_sciorga_organizations_with_publications.organization_id );
+}
+
+association {
+    SciOrganization[0..n] organizations = join ct_publications.publication_id
+                                            to ct_organization_publication_map.publication_id,
+                                          join ct_organization_publication_map.organization_id
+                                            to ct_sciorga_organizations_with_publications.organization_id;
+
+    Publication[0..n] publications = join ct_sciorga_organizations_with_publications.organization_id
+                                       to ct_organization_publication_map.organization_id,
+                                     join ct_organization_publication_map.publication_id
+                                       to ct_publications.publication_id;     
+
+    Integer[0..1] publicationOrder = ct_organization_publication_map.publication_order INTEGER;                                       
+}
+
+query getIdsOfPublicationsOfSciOrganization {
+    BigDecimal publicationId;
+
+    do {
+        select ct_organization_publication_map.publication_id
+        from ct_organization_publication_map
+        where ct_organization_publication_map.organization_id = :organization
+    } map {
+        publicationId = ct_organization_publication_map.publication_id;
+    }
+}
