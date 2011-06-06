@@ -41,7 +41,7 @@ public class ReloadAuthoringSteps extends Program {
 
         final String defToReload = args[0];
 
-        System.out.printf("Reloading AuthoringSteps from '%s'...", defToReload);
+        System.out.printf("Reloading AuthoringSteps from '%s'...\n", defToReload);
         new Transaction() {
 
             @Override
@@ -50,7 +50,7 @@ public class ReloadAuthoringSteps extends Program {
                 XML.parseResource(defToReload, handler);
             }
         }.run();
-        System.out.printf("Reloaded AuthoringSteps from '%s'.", defToReload);       
+        System.out.printf("Reloaded AuthoringSteps from '%s'.\n", defToReload);       
     }
     
     public static void main(String[] args) {

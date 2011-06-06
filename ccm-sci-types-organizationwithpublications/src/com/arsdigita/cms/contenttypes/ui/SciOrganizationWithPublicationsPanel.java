@@ -20,6 +20,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.SciDepartment;
@@ -50,6 +51,16 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
 
     public static final String SHOW_PUBLICATIONS = "publications";
     private boolean displayPublications = true;
+
+    @Override
+    protected Class<? extends ContentItem> getAllowedClass() {
+        return SciOrganizationWithPublications.class;
+    }
+
+    @Override
+    protected String getPanelName() {
+        return SciOrganization.class.getSimpleName();
+    }
 
     public boolean isDisplayPublications() {
         return displayPublications;
@@ -90,9 +101,14 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
             SciDepartmentPublicationsCollection departmentPublications;
 
             dep = departments.getDepartment();
+            if (!dep.isPublished()
+                || !(dep instanceof SciDepartmentWithPublications)) {
+                continue;
+            }
             department = (SciDepartmentWithPublications) dep;
             departmentPublications = department.getPublications();
-
+            departmentPublications.addFilter("version = 'live'");
+            
             if (publications instanceof ArrayList) {
                 ((ArrayList<Publication>) publications).ensureCapacity(
                         publications.size()
@@ -100,13 +116,9 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
             }
 
             Publication publication;
-            while (departmentPublications.next()) {
-                publication = (Publication) departmentPublications.getPublication().getLiveVersion();
-                if (publication == null) {
-                    continue;
-                } else {
-                publications.add(publication);
-                }
+            while (departmentPublications.next()) {                
+                publication = departmentPublications.getPublication();               
+                    publications.add(publication);                
             }
 
             SciDepartmentSubDepartmentsCollection subDepartments;
@@ -130,18 +142,21 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
             List<Publication> publications;
             SciOrganizationPublicationsCollection orgaPublications;
             orgaPublications = orga.getPublications();
+            orgaPublications.addFilter("version = 'live'");
             publications = new ArrayList<Publication>((int) orgaPublications.
                     size());
+            
 
             Publication publication;
             while (orgaPublications.next()) {
-                publication = (Publication) orgaPublications.getPublication().getLiveVersion();
-                if (publication == null) {
-                    continue;
-                } else {
+                //publication = (Publication) orgaPublications.getPublication().getLiveVersion();
+                publication = orgaPublications.getPublication();
                 publications.add(publication);
-                }
             }
+
+            System.out.printf("Got publications of organization in %d ms\n",
+                              System.currentTimeMillis() - start);
+
 
             SciOrganizationDepartmentsCollection departments = organization.
                     getDepartments();
@@ -187,8 +202,8 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
                     System.currentTimeMillis() - start);
 
             start = System.currentTimeMillis();
-          
-            for (Publication pub : publicationsToShow) {               
+
+            for (Publication pub : publicationsToShow) {
                 PublicationXmlHelper xmlHelper =
                                      new PublicationXmlHelper(parent,
                                                               pub);

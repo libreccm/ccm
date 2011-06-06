@@ -137,7 +137,7 @@ public abstract class CompoundContentItemPanel
      *
      * @param item The item to show by this panel.
      */
-    public void setContentItem(final ContentItem item) {
+    public void setContentItem(final ContentItem item) {                
         if (item instanceof ContentBundle) {
             ContentBundle bundle;
             ContentItem resolved = null;
@@ -305,11 +305,15 @@ public abstract class CompoundContentItemPanel
      */
     protected abstract Class<? extends ContentItem> getAllowedClass();
 
+    protected String getPanelName() {
+        return getAllowedClass().getSimpleName();
+    }
+    
     protected Element generateBaseXML(ContentItem item,
                                       Element parent,
                                       PageState state) {
         Element content = parent.newChildElement(
-                String.format("cms:%sData", getAllowedClass().getSimpleName()),
+                String.format("cms:%sData", getPanelName()),
                 CMS.CMS_XML_NS);
 
         exportAttributes(content);
@@ -331,6 +335,9 @@ public abstract class CompoundContentItemPanel
     public void generateXML(final PageState state, final Element parent) {
         ContentItem item = getContentItem(state);
 
+        boolean isVisible = isVisible(state);
+        Class<? extends ContentItem> klass = getAllowedClass();
+        
         if (!isVisible(state)
             || (item == null)
             || !(item.getClass().equals(getAllowedClass()))) {
