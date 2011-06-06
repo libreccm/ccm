@@ -1,7 +1,0 @@
-model com.arsdigita.cms.contentassets;
-
-object type SciProjectPublicationLink extends RelatedLink {
-
-    reference key (ct_sciorga_project_publication_link.publication_link_id);
-
-}
