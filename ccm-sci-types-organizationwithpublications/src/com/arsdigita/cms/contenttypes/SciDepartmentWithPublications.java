@@ -61,7 +61,7 @@ public class SciDepartmentWithPublications extends SciDepartment {
     public boolean hasPublications(final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciDepartment");
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciDepartment");
         query.setParameter("department", getID());
 
         if (query.size() > 0) {
@@ -105,8 +105,8 @@ public class SciDepartmentWithPublications extends SciDepartment {
                                     final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciDepartment");
-        query.setParameter("departmentId", departmentId);
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciDepartment");
+        query.setParameter("department", departmentId);
 
         if (query.size() > 0) {
             query.close();
@@ -119,7 +119,94 @@ public class SciDepartmentWithPublications extends SciDepartment {
                         "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
                 subDepartmentsQuery.setParameter("department", departmentId);
 
-                if (query.size() > 0) {
+                if (subDepartmentsQuery.size() > 0) {
+                    BigDecimal subDepartmentId;
+                    boolean result = false;
+                    while (subDepartmentsQuery.next()) {
+                        subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
+                                "departmentId");
+                        result = hasPublications(subDepartmentId, merge);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    subDepartmentsQuery.close();
+                    return result;
+                } else {
+                    subDepartmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    public boolean hasWorkingPapers(final boolean merge) {
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfWorkingPapersOfSciDepartment");
+        query.setParameter("department", getID());
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery departmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
+                departmentsQuery.setParameter("department", getID());
+
+                if (departmentsQuery.size() > 0) {
+                    BigDecimal departmentId;
+                    boolean result = false;
+                    while (departmentsQuery.next()) {
+                        departmentId = (BigDecimal) departmentsQuery.get(
+                                "departmentId");
+                        result = hasWorkingPapers(departmentId, merge);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    departmentsQuery.close();
+                    return result;
+                } else {
+                    departmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+    
+    private boolean hasWorkingPapers(final BigDecimal departmentId,
+                                     final boolean merge) {
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfWorkingPapersOfSciDepartment");
+        query.setParameter("department", departmentId);
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery subDepartmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
+                subDepartmentsQuery.setParameter("department", departmentId);
+
+                if (subDepartmentsQuery.size() > 0) {
                     BigDecimal subDepartmentId;
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {
@@ -149,18 +236,19 @@ public class SciDepartmentWithPublications extends SciDepartment {
         return new SciDepartmentPublicationsCollection((DataCollection) get(
                 PUBLICATIONS));
     }
-    
+
     public void addPublication(final Publication publication) {
         Assert.exists(publication, Publication.class);
-        
+
         DataObject link = add(PUBLICATIONS, publication);
-        link.set("publicationOrder", Integer.valueOf((int) getPublications().size()));
+        link.set("publicationOrder", Integer.valueOf((int) getPublications().
+                size()));
         link.save();
     }
-    
+
     public void removePublication(final Publication publication) {
         Assert.exists(publication, Publication.class);
-        
+
         remove(PUBLICATIONS, publication);
     }
 }

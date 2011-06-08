@@ -73,6 +73,10 @@ public class SciOrganizationWithPublications extends SciOrganization {
                   SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciOrganization");
         query.setParameter("organization", getID());
+        if (getConfig().getOrganizationPublicationsSeparateWorkingPapers()) {
+            query.addFilter(
+                    "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+        }
 
         if (query.size() > 0) {
             query.close();
@@ -118,6 +122,103 @@ public class SciOrganizationWithPublications extends SciOrganization {
                   SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciOrganization");
         query.setParameter("organization", departmentId);
+        if (getConfig().getOrganizationPublicationsSeparateWorkingPapers()) {
+            query.addFilter(
+                    "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+        }
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery subDepartmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
+                subDepartmentsQuery.setParameter("department", departmentId);
+
+                if (subDepartmentsQuery.size() > 0) {
+                    BigDecimal subDepartmentId;
+                    boolean result = false;
+                    while (subDepartmentsQuery.next()) {
+                        subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
+                                "departmentId");
+                        result = hasPublications(subDepartmentId, merge);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    subDepartmentsQuery.close();
+                    return result;
+                } else {
+                    subDepartmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    public boolean hasWorkingPapers(final boolean merge) {
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfWorkingPapersOfSciOrganization");
+        query.setParameter("organization", getID());
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+
+                DataQuery departmentsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
+                departmentsQuery.setParameter("organization",
+                                              getID());
+
+                if (departmentsQuery.size() > 0) {
+                    BigDecimal departmentId;
+                    boolean result = false;
+                    while (departmentsQuery.next()) {
+                        departmentId = (BigDecimal) departmentsQuery.get(
+                                "departmentId");
+                        result = hasWorkingPapers(departmentId, merge);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    departmentsQuery.close();
+                    return result;
+                } else {
+                    departmentsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    private boolean hasWorkingPapers(final BigDecimal departmentId,
+                                     final boolean merge) {
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contentassets.getIdsOfWorkingPapersOfSciOrganization");
+        query.setParameter("organization", departmentId);
+        if (getConfig().getOrganizationPublicationsSeparateWorkingPapers()) {
+            query.addFilter(
+                    "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+        }
 
         if (query.size() > 0) {
             query.close();

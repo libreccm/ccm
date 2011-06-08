@@ -32,3 +32,17 @@ query getIdsOfPublicationsOfSciDepartment {
         publicationId = ct_department_publication_map.publication_id;
     }
 }
+
+query getIdsOfWorkingPapersOfSciDepartment {
+    BigDecimal workingPaperId;
+    String objectType;
+
+    do {
+        select ct_department_publication_map.publication_id, acs_objects.object_type
+        from ct_department_publication_map join acs_objects on ct_department_publication_map.publication_id = acs_objects.object_id
+        where ct_department_publication_map.department_id = :department and acs_objects.object_type = 'com.arsdigita.cms.contenttypes.WorkingPaper'
+    } map {
+        workingPaperId = ct_department_publication_map.publication_id;
+        objectType = acs_objects.object_type;
+    }
+}

@@ -20,7 +20,8 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.ContentItemXMLRenderer;
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.SciOrganizationWithPublications;
 import com.arsdigita.cms.contenttypes.SciOrganizationWithPublicationsConfig;
@@ -29,8 +30,8 @@ import com.arsdigita.cms.contenttypes.SciProjectPublicationsCollection;
 import com.arsdigita.cms.contenttypes.SciProjectSubProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciProjectWithPublications;
 import com.arsdigita.cms.contenttypes.SciPublicationTitleComparator;
-import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.xml.Element;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -44,7 +45,22 @@ import java.util.Set;
 public class SciProjectWithPublicationsPanel extends SciProjectPanel {
 
     public static final String SHOW_PUBLICATIONS = "publications";
+    public static final String SHOW_WORKING_PAPERS = "workingPapers";
     private boolean displayPublications = true;
+    private boolean displayWorkingPapers = true;
+
+    public SciProjectWithPublicationsPanel() {
+    }
+
+    @Override
+    public Class<? extends ContentItem> getAllowedClass() {
+        return SciProjectWithPublications.class;
+    }
+
+    @Override
+    protected String getPanelName() {
+        return SciProject.class.getSimpleName();
+    }
 
     public boolean isDisplayPublications() {
         return displayPublications;
@@ -54,10 +70,20 @@ public class SciProjectWithPublicationsPanel extends SciProjectPanel {
         this.displayPublications = displayPublications;
     }
 
+    public boolean isDisplayWorkingPapers() {
+        return displayWorkingPapers;
+    }
+
+    public void setDisplayWorkingPapers(final boolean displayWorkingPapers) {
+        this.displayWorkingPapers = displayWorkingPapers;
+    }
+
     @Override
-    public void generateAvailableDataXml(final SciProject project,
+    public void generateAvailableDataXml(final GenericOrganizationalUnit orga,
                                          final Element element,
                                          final PageState state) {
+        SciProject project = (SciProject) orga;
+
         super.generateAvailableDataXml(project, element, state);
 
         SciOrganizationWithPublicationsConfig config =
@@ -71,11 +97,17 @@ public class SciProjectWithPublicationsPanel extends SciProjectPanel {
             && displayPublications) {
             element.newChildElement("publications");
         }
+        if ((proj.hasWorkingPapers(config.getOrganizationPublicationsMerge()))
+            && displayWorkingPapers
+            && config.getProjectPublicationsSeparateWorkingPapers()) {
+            element.newChildElement("workingPapers");
+        }
     }
 
     protected void mergePublications(
             final SciProjectSubProjectsCollection subProjects,
-            final List<Publication> publications) {
+            final List<Publication> publications,
+            final boolean workingPapersOnly) {
         while (subProjects.next()) {
             SciProject proj;
             SciProjectWithPublications project;
@@ -84,51 +116,69 @@ public class SciProjectWithPublicationsPanel extends SciProjectPanel {
             proj = subProjects.getSubProject();
             project = (SciProjectWithPublications) proj;
             projectPublications = project.getPublications();
+            if (workingPapersOnly) {
+                projectPublications.addFilter(
+                        "objectType = 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+            } else if (SciOrganizationWithPublications.getConfig().
+                    getProjectPublicationsSeparateWorkingPapers()) {
+                projectPublications.addFilter(
+                        "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+            }
+
+            if (publications instanceof ArrayList) {
+                ((ArrayList<Publication>) publications).ensureCapacity(
+                        publications.size() + (int) projectPublications.size());
+            }
 
             Publication publication;
             while (projectPublications.next()) {
-                publication = (Publication) projectPublications.getPublication().
-                        getLiveVersion();
-                if (publication == null) {
-                    continue;
-                } else {
-                    publications.add(publication);
-                }
+                publication = projectPublications.getPublication();
+                publications.add(publication);
             }
 
             SciProjectSubProjectsCollection subSubProjects =
                                             proj.getSubProjects();
 
             if ((subSubProjects != null) && subSubProjects.size() > 0) {
-                mergePublications(subSubProjects, publications);
+                mergePublications(subSubProjects, publications,
+                                  workingPapersOnly);
             }
         }
     }
 
     protected void generatePublicationsXml(final SciProject project,
                                            final Element parent,
-                                           final PageState state) {
+                                           final PageState state,
+                                           final boolean workingPapersOnly) {
         final SciProjectWithPublications proj =
                                          (SciProjectWithPublications) project;
 
         if (SciOrganizationWithPublications.getConfig().
                 getOrganizationPublicationsMerge()) {
-            List<Publication> publications = new LinkedList<Publication>();
+            List<Publication> publications;
             SciProjectPublicationsCollection projectPublications = proj.
                     getPublications();
+            if (workingPapersOnly) {
+                projectPublications.addFilter(
+                        "objectType = 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+            } else if (SciOrganizationWithPublications.getConfig().
+                    getProjectPublicationsSeparateWorkingPapers()) {
+                projectPublications.addFilter(
+                        "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+            }
+
+            publications =
+            new ArrayList<Publication>((int) projectPublications.size());
 
             Publication publication;
             while (projectPublications.next()) {
-                publication = (Publication) projectPublications.getPublication().
-                        getLiveVersion();
-                if (publication == null) {
-                    continue;
-                } else {
-                    publications.add(publication);
-                }
+                publication = projectPublications.getPublication();
+                publications.add(publication);
             }
 
-            mergePublications(project.getSubProjects(), publications);
+            mergePublications(project.getSubProjects(),
+                              publications,
+                              workingPapersOnly);
 
             Set<Publication> publicationsSet;
             List<Publication> publicationsWithoutDoubles;
@@ -151,17 +201,22 @@ public class SciProjectWithPublicationsPanel extends SciProjectPanel {
             List<Publication> publicationsToShow = publicationsWithoutDoubles.
                     subList((int) begin, (int) end);
 
-            final Element publicationsElem = parent.newChildElement(
-                    "publications");
-            final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(
-                    publicationsElem);
-            renderer.setWrapAttributes(true);
             for (Publication pub : publicationsToShow) {
-                renderer.walk(pub, SimpleXMLGenerator.class.getName());
+                PublicationXmlHelper xmlHelper = new PublicationXmlHelper(parent,
+                                                                          pub);
+                xmlHelper.generateXml();
             }
         } else {
             SciProjectPublicationsCollection projectPublications = proj.
                     getPublications();
+            if (workingPapersOnly) {
+                projectPublications.addFilter(
+                        "objectType = 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+            } else if (SciOrganizationWithPublications.getConfig().
+                    getProjectPublicationsSeparateWorkingPapers()) {
+                projectPublications.addFilter(
+                        "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+            }
 
             List<Publication> publications = new LinkedList<Publication>();
 
@@ -183,27 +238,27 @@ public class SciProjectWithPublicationsPanel extends SciProjectPanel {
             List<Publication> publicationsToShow = publications.subList(
                     (int) begin, (int) end);
 
-            final Element publicationsElem = parent.newChildElement(
-                    "publications");
-            final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(
-                    publicationsElem);
-            renderer.setWrapAttributes(true);
             for (Publication publication : publicationsToShow) {
-                renderer.walk(publication, SimpleXMLGenerator.class.getName());
+                PublicationXmlHelper xmlHelper =
+                                     new PublicationXmlHelper(parent,
+                                                              publication);
+                xmlHelper.generateXml();
             }
         }
     }
 
     @Override
-    public void generateDataXml(final SciProject project,
+    public void generateDataXml(final GenericOrganizationalUnit orga,
                                 final Element element,
                                 final PageState state) {
         String show = getShowParam(state);
 
         if (SHOW_PUBLICATIONS.equals(show)) {
-            generatePublicationsXml(project, element, state);
+            generatePublicationsXml((SciProject) orga, element, state, false);
+        } else if (SHOW_WORKING_PAPERS.equals(show)) {
+            generatePublicationsXml((SciProject) orga, element, state, true);
         } else {
-            super.generateDataXml(project, element, state);
+            super.generateDataXml(orga, element, state);
         }
     }
 }

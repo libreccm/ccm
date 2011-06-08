@@ -22,7 +22,7 @@
     <define:page name="publications"
                  application="content"                 
                  title="Publications4Homepages"
-                 cache="true">
+                 cache="false">
 
         <define:component name="publicationList"
                           classname="com.arsdigita.london.navigation.ui.object.ComplexObjectList"/>
@@ -34,6 +34,7 @@
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().setDescendCategories(true);        
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().setExcludeIndexObjects(false);
 	((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().setFilterCategory(false);
+	((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().addOrder("yearOfPublication desc");
         if((request.getParameterMap().get("DaBInId") != null) &amp;&amp; (((String[])request.getParameterMap().get("DaBInId")).length &gt; 0)) {
           String[] params = (String[]) request.getParameterMap().get("DaBInId");
           String dabinid = params[0];          

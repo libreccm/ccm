@@ -58,7 +58,7 @@ query getIdsOfSubDepartmentsOfSciDepartment {
         from ct_sciorga_departments_subdepartments_map        
         where ct_sciorga_departments_subdepartments_map.department_id = :department
     } map {
-        departmentId = ct_sciorga_departments_subdepartments_map;
+        departmentId = ct_sciorga_departments_subdepartments_map.department_id;
     }
 }
 

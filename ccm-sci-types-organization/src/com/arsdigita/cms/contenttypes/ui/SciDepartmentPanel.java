@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -30,12 +31,17 @@ import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.ui.panels.Filter;
+import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.xml.Element;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
@@ -54,16 +60,23 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     public static final String SHOW_PROJECTS = "projects";
     public static final String SHOW_PROJECTS_ONGOING = "projectsOngoing";
     public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";
+    private static final String TITLE = "title";
+    private String show;
     private boolean displayDescription = true;
     private boolean displaySubDepartments = true;
-    private boolean displayProjects = true;
-    private boolean displayPublications = true;
-
-    @Override
-    protected String getDefaultForShowParam() {
-        return SHOW_DESCRIPTION;
+    private boolean displayProjects = true;    
+    private Map<String, Filter> projectFilters =
+                                new LinkedHashMap<String, Filter>();
+    
+    public SciDepartmentPanel() {
+        projectFilters.put(TITLE, new TextFilter(TITLE, TITLE));
     }
 
+    @Override
+    protected String getDefaultShowParam() {
+        return SHOW_DESCRIPTION;
+    }
+       
     @Override
     protected Class<? extends ContentItem> getAllowedClass() {
         return SciDepartment.class;
@@ -84,7 +97,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     public void setDisplayProjects(boolean displayProjects) {
         this.displayProjects = displayProjects;
     }
-   
+
     public boolean isDisplaySubDepartments() {
         return displaySubDepartments;
     }
@@ -318,16 +331,45 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         }
     }
 
+    protected void generateProjectFiltersXml(
+            final List<SciProject> projects,
+            final Element element) {
+        final Element filterElement = element.newChildElement("filters");
+
+        for (Map.Entry<String, Filter> filterEntry : projectFilters.entrySet()) {
+            filterEntry.getValue().generateXml(filterElement);
+        }
+    }
+    
+    protected void applyProjectFilters(
+            final List<String> filters,
+            final HttpServletRequest request) {
+        //Get parameters from HTTP request
+        for (Map.Entry<String, Filter> filterEntry : projectFilters.entrySet()) {
+            String value = request.getParameter(
+                    filterEntry.getValue().getLabel());
+
+            if ((value != null) && !(value.trim().isEmpty())) {
+                filterEntry.getValue().setValue(value);
+            }
+        }
+    }
+    
     protected void generateProjectsXML(final SciDepartment department,
                                        final Element parent,
                                        final PageState state,
                                        final List<String> filters) {
+        Element controls = parent.newChildElement("filterControls");
+        controls.addAttribute("customName", "sciDepartmentProjects");
+            controls.addAttribute("show", show);
+        
         if (SciDepartment.getConfig().getOrganizationProjectsMerge()) {
             List<SciProject> projects;
             projects = new LinkedList<SciProject>();
             SciDepartmentProjectsCollection departmentProjects;
             departmentProjects = department.getProjects();
 
+            applyProjectFilters(filters, state.getRequest());
             if ((filters != null)
                 && !(filters.isEmpty())) {
                 for (String filter : filters) {
@@ -358,6 +400,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            generateProjectFiltersXml(projectsWithoutDoubles, controls);
             createPaginatorElement(parent,
                                    pageNumber,
                                    pageCount,
@@ -399,6 +442,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            generateProjectFiltersXml(projects, controls);
             createPaginatorElement(
                     parent, pageNumber, pageCount, begin, end, count, projects.
                     size());
@@ -412,10 +456,13 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         }
     }
 
-    protected void generateAvailableDataXml(final SciDepartment department,
+    @Override
+    protected void generateAvailableDataXml(final GenericOrganizationalUnit orga,
                                             final Element element,
                                             final PageState state) {
         final SciOrganizationConfig config = SciOrganization.getConfig();
+
+        SciDepartment department = (SciDepartment) orga;
 
         if ((department.getDepartmentDescription() != null)
             && !department.getDepartmentDescription().isEmpty()
@@ -466,10 +513,13 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         }
     }
 
-    protected void generateDataXml(SciDepartment department,
+    @Override
+    protected void generateDataXml(GenericOrganizationalUnit orga,
                                    Element element,
                                    PageState state) {
-        String show = getShowParam(state);
+        show = getShowParam(state);
+
+        SciDepartment department = (SciDepartment) orga;
 
         if (SHOW_DESCRIPTION.equals(show)) {
             String desc;
@@ -505,18 +555,18 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         }
     }
 
-    @Override
+    /*@Override
     public void generateXML(ContentItem item,
-                            Element element,
-                            PageState state) {
-        Element content = generateBaseXML(item, element, state);
-
-        Element availableData = content.newChildElement("availableData");
-
-        SciDepartment department = (SciDepartment) item;
-
-        generateAvailableDataXml(department, availableData, state);
-
-        generateDataXml(department, content, state);
-    }
+    Element element,
+    PageState state) {
+    Element content = generateBaseXML(item, element, state);
+    
+    Element availableData = content.newChildElement("availableData");
+    
+    SciDepartment department = (SciDepartment) item;
+    
+    generateAvailableDataXml(department, availableData, state);
+    
+    generateDataXml(department, content, state);
+    }*/
 }

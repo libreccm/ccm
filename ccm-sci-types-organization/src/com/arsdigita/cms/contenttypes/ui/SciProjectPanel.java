@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
@@ -46,7 +47,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
     private boolean displayPublications = true;
 
     @Override
-    protected String getDefaultForShowParam() {
+    protected String getDefaultShowParam() {
         return SHOW_DESCRIPTION;
     }
 
@@ -189,11 +190,14 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         generateMembersListXML(members, parent, state);
     }
 
-    protected void generateAvailableDataXml(final SciProject project,
+    @Override
+    protected void generateAvailableDataXml(final GenericOrganizationalUnit orga,
                                             final Element element,
                                             final PageState state) {
         
         SciOrganizationConfig config = SciProject.getConfig();
+        
+        SciProject project = (SciProject) orga;
 
         if ((project.getProjectDescription() != null)
             && !project.getProjectDescription().isEmpty()
@@ -229,11 +233,14 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         }           
     }
     
-    protected void generateDataXml(final SciProject project,
+    @Override
+    protected void generateDataXml(final GenericOrganizationalUnit orga,
                                    final Element element,
                                    final PageState state) {
         
         String show = getShowParam(state);
+        
+        SciProject project = (SciProject) orga;
 
         if (SHOW_DESCRIPTION.equals(show)) {
             Element description = element.newChildElement("description");
@@ -257,7 +264,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         } 
     }
     
-    @Override
+    /*@Override
     public void generateXML(ContentItem item,
                             Element element,
                             PageState state) {
@@ -271,5 +278,5 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         
         generateDataXml(project, element, state);
         
-    }
+    }*/
 }

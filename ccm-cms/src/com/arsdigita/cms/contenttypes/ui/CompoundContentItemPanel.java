@@ -37,6 +37,7 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
@@ -61,6 +62,8 @@ public abstract class CompoundContentItemPanel
      * Parameter which indicates which page to show
      */
     protected StringParameter m_show;
+    private String showDefault;
+    private boolean showOnlyDefault = false;
     private static final String PAGE_NUMBER = "pageNumber";
     /**
      * Parameter for a paginator
@@ -125,7 +128,7 @@ public abstract class CompoundContentItemPanel
             if (!context.hasContentItem()) {
                 return null;
             }
-            return context.getContentItem();
+            return context.getContentItem().getLiveVersion();
         } else {
             return m_item;
         }
@@ -151,7 +154,7 @@ public abstract class CompoundContentItemPanel
                 resolved = bundle.getPrimaryInstance();
             }
 
-            m_item = resolved;
+            m_item = resolved.getLiveVersion();
         } else {
             m_item = item;
         }
@@ -245,8 +248,28 @@ public abstract class CompoundContentItemPanel
      *
      * @return Default value for the show parameter.
      */
-    protected abstract String getDefaultForShowParam();
+    protected final String getDefaultForShowParam() {
+        if ((showDefault == null) || showDefault.isEmpty()) {
+            return getDefaultShowParam();
+        } else {
+            return showDefault;
+        }                
+    }
+    
+    public void setDefaultForShowParam(final String showDefault) {
+        this.showDefault = showDefault;
+    }
+    
+    protected abstract String getDefaultShowParam();
 
+    public boolean isShowOnlyDefault() {
+        return showOnlyDefault;
+    }
+    
+    public void setShowOnlyDefault(final boolean showOnlyDefault) {
+        this.showOnlyDefault = showOnlyDefault;
+    } 
+    
     protected String getShowParam(final PageState state) {
         String show;
         try {
@@ -266,6 +289,15 @@ public abstract class CompoundContentItemPanel
         }
 
         return show;
+    }
+    
+    protected String getHttpParam(final String param, final PageState state) {
+      final HttpServletRequest request = state.getRequest();
+      String value;
+      
+      value = request.getParameter(param);
+      
+      return value;
     }
 
     protected long getPageNumber(final PageState state) {

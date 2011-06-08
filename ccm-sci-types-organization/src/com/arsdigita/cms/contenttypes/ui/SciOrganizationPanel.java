@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -32,12 +33,17 @@ import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciOrganizationDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciOrganizationProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.ui.panels.Filter;
+import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.xml.Element;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
@@ -57,17 +63,24 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
     public static final String SHOW_DEPARTMENTS = "departments";
     public static final String SHOW_PROJECTS = "projects";
     public static final String SHOW_PROJECTS_ONGOING = "projectsOngoing";
-    public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";   
+    public static final String SHOW_PROJECTS_FINISHED = "projectsFinished";
+    private static final String TTILE = "title";
+    private String show;
     private boolean displayDescription = true;
     private boolean displayDepartments = true;
     private boolean displayProjects = true;
-    //private boolean displayPublications = true;
+    private final Map<String, Filter> projectFilters =
+                                      new LinkedHashMap<String, Filter>();
 
-    @Override
-    protected String getDefaultForShowParam() {
-        return SHOW_DESCRIPTION;
+    public SciOrganizationPanel() {
+        projectFilters.put(TTILE, new TextFilter(TTILE, TTILE));
     }
 
+    @Override
+    protected String getDefaultShowParam() {
+        return SHOW_DESCRIPTION;
+    }
+       
     @Override
     protected Class<? extends ContentItem> getAllowedClass() {
         return SciOrganization.class;
@@ -298,7 +311,8 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
     protected void mergeProjects(
             final SciOrganizationDepartmentsCollection departments,
             final List<SciProject> projects,
-            final List<String> filters) {
+            final List<String> filters,
+            final PageState state) {
 
         while (departments.next()) {
             SciDepartmentProjectsCollection departmentProjects;
@@ -329,12 +343,17 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                                        final Element parent,
                                        final PageState state,
                                        final List<String> filters) {
+        Element controls = parent.newChildElement("filterControls");
+        controls.addAttribute("customName", "sciOrganizationProjects");
+        controls.addAttribute("show", show);
+        
         if (SciOrganization.getConfig().getOrganizationProjectsMerge()) {
             List<SciProject> projects;
             projects = new LinkedList<SciProject>();
             SciOrganizationProjectsCollection orgaProjects;
             orgaProjects = orga.getProjects();
 
+            applyProjectFilters(filters, state.getRequest());
             if ((filters != null)
                 && !(filters.isEmpty())) {
                 for (String filter : filters) {
@@ -349,7 +368,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                 projects.add(orgaProjects.getProject());
             }
 
-            mergeProjects(departments, projects, filters);
+            mergeProjects(departments, projects, filters, state);
 
             Set<SciProject> projectsSet;
             List<SciProject> projectsWithoutDoubles;
@@ -365,6 +384,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            generateProjectFiltersXml(projectsWithoutDoubles, controls);
             createPaginatorElement(
                     parent, pageNumber, pageCount, begin, end, count,
                     projectsWithoutDoubles.size());
@@ -381,6 +401,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             SciOrganizationProjectsCollection orgaProjects;
             orgaProjects = orga.getProjects();
 
+            applyProjectFilters(filters, state.getRequest());
             if ((filters != null)
                 && !(filters.isEmpty())) {
                 for (String filter : filters) {
@@ -403,6 +424,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            generateProjectFiltersXml(projects, controls);
             createPaginatorElement(
                     parent, pageNumber, pageCount, begin, end, count, projects.
                     size());
@@ -416,11 +438,56 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         }
     }
 
-    protected void generateAvailableDataXml(final SciOrganization organization,
+    protected void generateProjectFiltersXml(
+            final List<SciProject> projects,
+            final Element element) {
+        final Element filterElement = element.newChildElement("filters");
+
+        for (Map.Entry<String, Filter> filterEntry : projectFilters.entrySet()) {
+            filterEntry.getValue().generateXml(filterElement);
+        }
+    }
+
+    protected void applyProjectFilters(
+            final List<String> filters,
+            final HttpServletRequest request) {
+        //Get parameters from HTTP request
+        for (Map.Entry<String, Filter> filterEntry : projectFilters.entrySet()) {
+            String value = request.getParameter(
+                    filterEntry.getValue().getLabel());
+
+            if ((value != null) && !(value.trim().isEmpty())) {
+                filterEntry.getValue().setValue(value);
+            }
+        }
+
+        //Apply filters to DomainCollection
+        final StringBuilder filterBuilder = new StringBuilder();
+        for (Map.Entry<String, Filter> filterEntry : projectFilters.entrySet()) {
+            if ((filterEntry.getValue().getFilter() == null)
+                || (filterEntry.getValue().getFilter().isEmpty())) {
+                continue;
+            }
+
+            if (filterBuilder.length() > 0) {
+                filterBuilder.append(" AND ");
+            }
+            filterBuilder.append(filterEntry.getValue().getFilter());
+            s_log.debug(String.format("filters: %s", filterBuilder));
+            if (filterBuilder.length() > 0) {
+                filters.add(filterBuilder.toString());
+            }
+        }
+    }
+
+    @Override
+    protected void generateAvailableDataXml(final GenericOrganizationalUnit orga,
                                             final Element element,
                                             final PageState state) {
         SciOrganizationConfig config;
         config = SciOrganization.getConfig();
+
+        SciOrganization organization = (SciOrganization) orga;
 
         if ((organization.getOrganizationDescription() != null)
             && !(organization.getOrganizationDescription().isEmpty())
@@ -471,10 +538,13 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         }
     }
 
-    protected void generateDataXml(SciOrganization organization,
-                                   Element element,
-                                   PageState state) {
-        String show = getShowParam(state);
+    @Override
+    protected void generateDataXml(final GenericOrganizationalUnit orga,
+                                   final Element element,
+                                   final PageState state) {
+        show = getShowParam(state);
+
+        SciOrganization organization = (SciOrganization) orga;
 
         if (SHOW_DESCRIPTION.equals(show)) {
             String desc;
@@ -511,17 +581,17 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         }
     }
 
-    @Override
+    /*@Override
     public void generateXML(ContentItem item,
-                            Element element,
-                            PageState state) {
-        Element content = generateBaseXML(item, element, state);
-
-        SciOrganization orga = (SciOrganization) item;
-        Element availableData = content.newChildElement("availableData");
-
-        generateAvailableDataXml(orga, availableData, state);
-
-        generateDataXml(orga, content, state);
-    }
+    Element element,
+    PageState state) {
+    Element content = generateBaseXML(item, element, state);
+    
+    SciOrganization orga = (SciOrganization) item;
+    Element availableData = content.newChildElement("availableData");
+    
+    generateAvailableDataXml(orga, availableData, state);
+    
+    generateDataXml(orga, content, state);
+    }*/
 }

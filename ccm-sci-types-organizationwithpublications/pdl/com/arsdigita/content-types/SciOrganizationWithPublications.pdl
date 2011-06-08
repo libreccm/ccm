@@ -23,12 +23,40 @@ association {
 
 query getIdsOfPublicationsOfSciOrganization {
     BigDecimal publicationId;
+    String objectType;
 
     do {
-        select ct_organization_publication_map.publication_id
-        from ct_organization_publication_map
+        select ct_organization_publication_map.publication_id, acs_objects.object_type
+        from ct_organization_publication_map join acs_objects on ct_organization_publication_map.publication_id = acs_objects.object_id
         where ct_organization_publication_map.organization_id = :organization
     } map {
         publicationId = ct_organization_publication_map.publication_id;
+        objectType = acs_objects.object_type;
     }
 }
+
+query getIdsOfWorkingPapersOfSciOrganization {
+    BigDecimal workingPaperId;
+    String objectType;
+
+    do {
+        select ct_organization_publication_map.publication_id, acs_objects.object_type
+        from ct_organization_publication_map join acs_objects on ct_organization_publication_map.publication_id = acs_objects.object_id
+        where ct_organization_publication_map.organization_id = :organization and acs_objects.object_type = 'com.arsdigita.cms.contenttypes.WorkingPaper'
+    } map {
+        workingPaperId = ct_organization_publication_map.publication_id;
+        objectType = acs_objects.object_type;
+    }
+}
+
+query getAllYearsOfPublication {
+    Integer yearOfPublication;
+
+    do {
+        select distinct ct_publications.year 
+        from ct_publications
+    } map {
+        yearOfPublication = ct_publications.year;
+    }
+}
+

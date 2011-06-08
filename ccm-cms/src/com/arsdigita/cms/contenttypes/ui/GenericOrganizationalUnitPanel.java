@@ -40,15 +40,15 @@ import org.apache.log4j.Logger;
  */
 public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
-    private final static Logger logger = Logger.getLogger(GenericOrganizationalUnit.class);
-    
+    private final static Logger logger =
+                                Logger.getLogger(GenericOrganizationalUnit.class);
     public static final String SHOW_CONTACTS = "contacts";
     public static final String SHOW_MEMBERS = "members";
     private boolean displayContacts = true;
     private boolean displayMembers = true;
 
     @Override
-    protected String getDefaultForShowParam() {
+    protected String getDefaultShowParam() {
         return SHOW_CONTACTS;
     }
 
@@ -75,7 +75,7 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
     protected void generateContactsXML(GenericOrganizationalUnit orga,
                                        Element parent, PageState state) {
-        long start = System.currentTimeMillis();        
+        long start = System.currentTimeMillis();
         GenericOrganizationalUnitContactCollection contacts;
         contacts = orga.getContacts();
 
@@ -97,12 +97,14 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             contact = contacts.getContact();
 
             generateGenericContactXML(contact,
-                               contactsElem,
-                               state,
-                               Integer.toString(contacts.getContactOrder()),
-                               true);
+                                      contactsElem,
+                                      state,
+                                      Integer.toString(
+                    contacts.getContactOrder()),
+                                      true);
         }
-        System.out.printf("Generated Contacts XML in %d ms.\n", System.currentTimeMillis() - start);
+        System.out.printf("Generated Contacts XML in %d ms.\n", System.
+                currentTimeMillis() - start);
     }
 
     protected void generateMembersXML(GenericOrganizationalUnit orga,
@@ -162,12 +164,12 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             }
         }
     }
-    
+
     protected void generateContactXML(final GenericContact contact,
                                       final Element parent,
                                       final PageState state,
                                       final String order,
-                                      final boolean withPerson) {              
+                                      final boolean withPerson) {
         Element contactElem = parent.newChildElement("contact");
         contactElem.addAttribute("order", order);
 
@@ -249,41 +251,73 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
     }
 
     protected void generateGenericContactXML(final GenericContact contact,
-                                      final Element parent,
-                                      final PageState state,
-                                      final String order,
-                                      final boolean withPerson) {
+                                             final Element parent,
+                                             final PageState state,
+                                             final String order,
+                                             final boolean withPerson) {
         ContactXmlLGenerator generator = new ContactXmlLGenerator(contact);
-        
-        generator.generateXML(state, parent, order);             
+
+        generator.generateXML(state, parent, order);
     }
 
-    @Override
-    public void generateXML(ContentItem item, Element element,
-                            PageState state) {
-        Element content = generateBaseXML(item, element, state);
-
-        Element availableData = content.newChildElement("availableData");
-
-        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) item;
-
+    protected void generateAvailableDataXml(final GenericOrganizationalUnit orga,
+                                            final Element element,
+                                            final PageState state) {
         if ((orga.getContacts() != null)
             && (orga.getContacts().size() > 0)
             && displayMembers) {
-            availableData.newChildElement("contacts");
+            element.newChildElement("contacts");
         }
         if ((orga.getPersons() != null)
             && (orga.getPersons().size() > 0)
             && displayMembers) {
-            availableData.newChildElement("members");
+            element.newChildElement("members");
         }
+    }
 
+    protected void generateDataXml(final GenericOrganizationalUnit orga,
+                                   final Element element,
+                                   final PageState state) {
         String show = getShowParam(state);
         if (SHOW_CONTACTS.equals(show)) {
-            generateContactsXML(orga, content, state);
+            generateContactsXML(orga, element, state);
         } else if (SHOW_MEMBERS.equals(show)) {
-            generateMembersXML(orga, content, state);
+            generateMembersXML(orga, element, state);
         }
+    }
+
+    @Override
+    public void generateXML(ContentItem item,
+                            Element element,
+                            PageState state) {
+        Element content = generateBaseXML(item, element, state);
+
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) item;
+        Element availableData = content.newChildElement("availableData");
+
+        if (!isShowOnlyDefault()) {
+            generateAvailableDataXml(orga, availableData, state);
+        }
+
+        generateDataXml(orga, content, state);
+
+        /*if ((orga.getContacts() != null)
+        && (orga.getContacts().size() > 0)
+        && displayMembers) {
+        availableData.newChildElement("contacts");
+        }
+        if ((orga.getPersons() != null)
+        && (orga.getPersons().size() > 0)
+        && displayMembers) {
+        availableData.newChildElement("members");
+        }
+        
+        String show = getShowParam(state);
+        if (SHOW_CONTACTS.equals(show)) {
+        generateContactsXML(orga, content, state);
+        } else if (SHOW_MEMBERS.equals(show)) {
+        generateMembersXML(orga, content, state);
+        }*/
     }
 
     private class ContactXmlLGenerator extends SimpleXMLGenerator {

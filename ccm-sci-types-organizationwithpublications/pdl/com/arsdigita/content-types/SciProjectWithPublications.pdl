@@ -34,3 +34,17 @@ query getIdsOfPublicationsOfSciProject {
         publicationId = ct_project_publication_map.publication_id;
     }
 }
+
+query getIdsOfWorkingPapersOfSciProject {
+    BigDecimal workingPaperId;
+    String objectType;
+
+    do {
+        select ct_project_publication_map.publication_id, acs_objects.object_type
+        from ct_project_publication_map join acs_objects on ct_project_publication_map.publication_id = acs_objects.object_id
+        where ct_project_publication_map.project_id = :project and acs_objects.object_type = 'com.arsdigita.cms.contenttypes.WorkingPaper'
+    } map {
+        workingPaperId = ct_project_publication_map.publication_id;
+        objectType = acs_objects.object_type;
+    }
+}

@@ -179,6 +179,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
      * 
      * @param merge Should I also look into the departments and return true
      * if the organization or at least one of the departments has members?
+     * @param status 
      * @return 
      */
     public boolean hasMembers(final boolean merge, final MemberStatus status) {
@@ -357,7 +358,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
                         "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
                 departmentsQuery.setParameter("organization", getID());
 
-                if (query.size() > 0) {
+                if (departmentsQuery.size() > 0) {
                     BigDecimal departmentId;
                     boolean result = false;
                     while (departmentsQuery.next()) {
@@ -429,7 +430,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
                         "com.arsdigita.cms.contenttypes.getIdsOfSubDepartmentsOfSciDepartment");
                 subDepartmentsQuery.setParameter("department", departmentId);
 
-                if (query.size() > 0) {
+                if (subDepartmentsQuery.size() > 0) {
                     BigDecimal subDepartmentId;
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {

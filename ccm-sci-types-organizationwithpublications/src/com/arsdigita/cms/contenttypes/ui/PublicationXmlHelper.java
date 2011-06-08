@@ -139,10 +139,14 @@ public class PublicationXmlHelper {
     }
 
     private void generatePublicationXml(final Element publicationElem) {
+        publicationElem.addAttribute("oid", publication.getOID().toString());
+        publicationElem.addAttribute("version", publication.getVersion());
         generateXmlElement(publicationElem, "title", publication.getTitle());
-        Element yearElem = publicationElem.newChildElement(
-                "yearOfPublication");
-        yearElem.setText(publication.getYearOfPublication().toString());
+        if (publication.getYearOfPublication() != null) {
+            Element yearElem = publicationElem.newChildElement(
+                    "yearOfPublication");
+            yearElem.setText(publication.getYearOfPublication().toString());
+        }
         generateXmlElement(publicationElem,
                            "yearOfPublication",
                            publication.getYearOfPublication());

@@ -297,7 +297,8 @@ public class CustomizableObjectList extends ComplexObjectList {
             sortByKey = new ArrayList<String>(sortFields.keySet()).get(0);
         }
 
-        Element controls = content.newChildElement("controls");
+        Element controls = content.newChildElement("filterControls");
+        controls.addAttribute("customName", m_customName);
 
         Element filterElems = controls.newChildElement("filters");
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {

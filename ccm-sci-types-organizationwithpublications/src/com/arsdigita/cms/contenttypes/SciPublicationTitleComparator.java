@@ -37,7 +37,7 @@ public class SciPublicationTitleComparator implements Comparator<Publication> {
 
 
 
-        return title1.compareTo(title2);
+        return title1.compareToIgnoreCase(title2);
         //return publication1.getTitle().compareTo(publication2.getTitle());
     }
 }

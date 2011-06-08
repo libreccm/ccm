@@ -60,8 +60,8 @@ public class SciProjectWithPublications extends SciProject {
     public boolean hasPublications(final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciProject");
-        query.setParameter("organization", getID());
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciProject");
+        query.setParameter("project", getID());
 
         if (query.size() > 0) {
             query.close();
@@ -104,7 +104,94 @@ public class SciProjectWithPublications extends SciProject {
                                     final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciProject");
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciProject");
+        query.setParameter("project", projectId);
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery subProjectsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubProjectsOfSciProject");
+                subProjectsQuery.setParameter("project", projectId);
+
+                if (subProjectsQuery.size() > 0) {
+                    BigDecimal subProjectId;
+                    boolean result = false;
+                    while (subProjectsQuery.next()) {
+                        subProjectId = (BigDecimal) subProjectsQuery.get(
+                                "projectId");
+                        result = hasPublications(subProjectId, merge);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    subProjectsQuery.close();
+                    return result;
+                } else {
+                    subProjectsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    public boolean hasWorkingPapers(final boolean merge) {
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfWorkingPapersOfSciProject");
+        query.setParameter("project", getID());
+
+        if (query.size() > 0) {
+            query.close();
+            return true;
+        } else {
+            if (merge) {
+                query.close();
+                DataQuery subProjectsQuery =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfSubProjectsOfSciProject");
+                subProjectsQuery.setParameter("project", getID());
+
+                if (subProjectsQuery.size() > 0) {
+                    BigDecimal subProjectId;
+                    boolean result = false;
+                    while (subProjectsQuery.next()) {
+                        subProjectId = (BigDecimal) subProjectsQuery.get(
+                                "projectId");
+                        result = hasPublications(subProjectId, merge);
+
+                        if (result) {
+                            break;
+                        }
+                    }
+
+                    subProjectsQuery.close();
+                    return result;
+                } else {
+                    subProjectsQuery.close();
+                    return false;
+                }
+            } else {
+                query.close();
+                return false;
+            }
+        }
+    }
+
+    private boolean hasWorkingPapers(final BigDecimal projectId,
+                                     final boolean merge) {
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfWorkingPapersOfSciProject");
         query.setParameter("projectId", projectId);
 
         if (query.size() > 0) {
