@@ -408,6 +408,10 @@ public class ContentType extends ACSObject {
      */
     public void addDescendants(BigDecimal newDescendant) {
 
+        if (getID().equals(newDescendant)) {
+            return;
+        }
+        
         // Get the list of descendants from db
         String descendants = (String) get(DESCENDANTS);
 

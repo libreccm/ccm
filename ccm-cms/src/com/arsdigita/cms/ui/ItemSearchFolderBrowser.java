@@ -222,14 +222,14 @@ public class ItemSearchFolderBrowser extends Table {
                     }
                 } catch (Exception ex) {
                     // WTF? The selected content type does not exist in the table???
-                }
+                }                                
 
                 itemColl.addFilter(or);
+                                
             }
-
+            
             itemColl.addOrder("isFolder desc");
-            itemColl.addOrder("lower(item."
-                    + ContentItem.NAME + ") ");
+            itemColl.addOrder("lower(item." + ContentItem.NAME + ") ");
             return itemColl;
         }
 
@@ -361,6 +361,7 @@ public class ItemSearchFolderBrowser extends Table {
         }
 
         public boolean nextRow() {
+            System.out.println("test");
             return m_itemColl != null ? m_itemColl.next() : false;
         }
 

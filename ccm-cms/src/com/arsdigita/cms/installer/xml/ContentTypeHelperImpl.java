@@ -31,12 +31,15 @@ import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.search.MetadataProviderRegistry;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 public class ContentTypeHelperImpl implements ContentTypeHelper {
 
-    private static final Logger s_log = Logger.getLogger(ContentTypeHelperImpl.class);
+    private static final Logger s_log = Logger.getLogger(
+            ContentTypeHelperImpl.class);
     private ContentType m_type;
     private ContentType m_parent;
     // Basic Content type properties
@@ -194,16 +197,16 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         try {
             s_log.debug("making new content type");
             m_type =
-                    ContentType.findByAssociatedObjectType(m_objectType);
+            ContentType.findByAssociatedObjectType(m_objectType);
             m_type.setLabel(m_label);
             m_type.setDescription(m_description);
             m_type.save();
         } catch (DataObjectNotFoundException e) {
             s_log.debug("Looking for content type");
             s_log.debug("Creating ContentType Label: " + m_label
-                    + " Description: " + m_description
-                    + " className: " + m_className
-                    + " AssociatedObjectType: " + m_objectType);
+                        + " Description: " + m_description
+                        + " className: " + m_className
+                        + " AssociatedObjectType: " + m_objectType);
 
             // this is what would need to be changed to make the
             // label and description multi-lingual.  To do that,
@@ -223,11 +226,12 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         }
 
         // Turn on search indexing for this type
-        ObjectType type = SessionManager.getMetadataRoot().getObjectType(m_objectType);
+        ObjectType type = SessionManager.getMetadataRoot().getObjectType(
+                m_objectType);
         if (type.isSubtypeOf(ContentPage.BASE_DATA_OBJECT_TYPE)
-                && !isInternal()) {
+            && !isInternal()) {
             s_log.debug("Registering search adapter for "
-                    + m_objectType);
+                        + m_objectType);
             MetadataProviderRegistry.registerAdapter(
                     m_objectType,
                     new ContentPageMetadataProvider());
@@ -253,7 +257,7 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
             while (ac.next()) {
                 AuthoringStep step = ac.getAuthoringStep();
                 s_log.debug("Deleting authoringStep "
-                        + step.getLabel());
+                            + step.getLabel());
                 m_kit.removeStep(step);
                 step.delete();
             }
@@ -274,25 +278,25 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
      *  @deprecated
      */
     public void addAuthoringStep(String label,
-            String description,
-            String component,
-            BigDecimal ordering) {
+                                 String description,
+                                 String component,
+                                 BigDecimal ordering) {
         addAuthoringStep(label, null, description, null, component, ordering);
     }
 
     public void addAuthoringStep(String labelKey,
-            String labelBundle,
-            String descriptionKey,
-            String descriptionBundle,
-            String component,
-            BigDecimal ordering) {
+                                 String labelBundle,
+                                 String descriptionKey,
+                                 String descriptionBundle,
+                                 String component,
+                                 BigDecimal ordering) {
         s_log.debug("Creating AuthoringStep "
-                + " LabelKey: " + labelKey
-                + " LabelBundle: " + labelBundle
-                + " DescriptionKey: " + descriptionKey
-                + " DescriptionBundle: " + descriptionBundle
-                + " Component " + component
-                + " Ordering: " + ordering);
+                    + " LabelKey: " + labelKey
+                    + " LabelBundle: " + labelBundle
+                    + " DescriptionKey: " + descriptionKey
+                    + " DescriptionBundle: " + descriptionBundle
+                    + " Component " + component
+                    + " Ordering: " + ordering);
 
         Assert.exists(m_kit);
         Assert.exists(labelKey);
@@ -301,8 +305,8 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         Assert.exists(ordering);
 
         m_kit.createStep(labelKey, labelBundle,
-                descriptionKey, descriptionBundle,
-                component, ordering);
+                         descriptionKey, descriptionBundle,
+                         component, ordering);
         m_kit.save();
         m_type.save();
     }
@@ -318,8 +322,13 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
      */
     private void createPedigree(ContentType type) {
 
+        //System.out.printf(String.format(
+               // "\n\nCreating pedigrees for content type '%s'...\n",
+                 //                       type.getClassName()));
+
         // The parent content type
-        ContentType parent = null;
+        ContentType parent = null;    
+        List<ContentType> parents = new ArrayList<ContentType> ();
 
         // Get all content types
         ContentTypeCollection cts = ContentType.getAllContentTypes();
@@ -329,31 +338,51 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         while (cts.next()) {
             ContentType ct = cts.getContentType();
 
+            //System.out.printf(
+                   // "Checking if content type '%s' is a sub type of content type '%s'\n",
+                    //type.getClassName(),
+                    //ct.getClassName());
             try {
-                Class.forName(type.getClassName()).asSubclass(Class.forName(ct.getClassName()));
+                Class.forName(type.getClassName()).asSubclass(Class.forName(ct.
+                        getClassName()));
+                //System.out.printf(
+                   //     "content type '%s' is a sub type of content type '%s'\n",
+                     //   type.getClassName(),
+                       // ct.getClassName());
             } catch (Exception ex) {
                 // This cast is not valid so type is not a sublacss of ct
+                //System.out.printf(
+                        //"content type '%s' is *NOT* a sub type of content type '%s'\n",
+                        //type.getClassName(),
+                        //ct.getClassName());
                 continue;
             }
 
             // Save the current ct as possible parent if we haven't found any parent yet
             // or if the current ancestor list is longer than that one from the possible
             // parent earlier found
-            if (!type.getClassName().equals(ct.getClassName())
-                    && (parent == null
+            if (!(type.getClassName().equals(ct.getClassName()))
+                && (parent == null
                     || (parent.getAncestors() != null
-                    && ct.getAncestors() != null
-                    && parent.getAncestors().length() < ct.getAncestors().length()))) {
-                parent = ct;
+                        && ct.getAncestors() != null
+                        && parent.getAncestors().length() < ct.getAncestors().
+                        length())
+                    || !(parent.getClassName().equals(ct.getClassName())))) {
+                //System.out.printf("Setting parent to '%s'...\n",
+                                  //ct.getClassName());
+                parent = ct;                
+                parents.add(ct);
             }
         }
 
         // If there is a valid parent content type create the pedigree
         if (parent != null && !parent.getClassName().equals(type.getClassName())) {
+            //System.out.printf("Setting ancestors...\n");
             if (parent.getAncestors() != null) {
                 String parentAncestors = parent.getAncestors();
 
-                StringTokenizer strTok = new StringTokenizer(parentAncestors, "/");
+                StringTokenizer strTok = new StringTokenizer(parentAncestors,
+                                                             "/");
 
                 // Add parent ancestors to this content types ancestor list
                 // Also while we iterate through the list, we also need to add
@@ -369,16 +398,29 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
                         // The db is broken. There is no content type for this ID
                     }
 
+                    //System.out.printf("Adding ancestor '%s'\n", ctID.toString());
                     // Add parent ancestor
                     type.addAncestor(ctID);
                 }
             }
 
             // Add parent to ancestor list
+            //System.out.printf(
+                   // "Adding parent '%s' to ancestor list of content type '%s'...\n",
+                     //         parent.getClassName(), type.getClassName());
             type.addAncestor(parent.getID());
 
             // Add this to parent descendants
-            parent.addDescendants(type.getID());
+           // //System.out.printf("Adding '%s' to descendants of parent '%s'...\n",
+             //                 type.getClassName(), parent.getClassName());
+    //            parent.addDescendants(type.getID());           
+             for(ContentType p: parents) {
+                 parent.addDescendants(type.getID());
+                 //System.out.printf("Adding '%s' to descendants of parent '%s'...\n",
+                       //       type.getClassName(), p.getClassName());
+             }
         }
+        //System.out.printf("Finished create pedigree for content type '%s'.\n\n",
+                         // type.getClassName());
     }
 }

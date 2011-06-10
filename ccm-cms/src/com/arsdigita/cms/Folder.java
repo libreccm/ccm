@@ -630,7 +630,7 @@ public class Folder extends ContentItem {
         public ItemCollection(DataQuery query) {
             super(new DataQueryDataCollectionAdapter(doAlias(query), ITEM));
 
-            init(query, true);
+            init(query, false);
         }
 
         private void init(DataQuery query, boolean bSort) {
