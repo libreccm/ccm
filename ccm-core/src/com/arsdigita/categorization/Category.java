@@ -386,7 +386,10 @@ public class Category extends ACSObject {
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
-            return m_categoryLocalizationCollection.getName();
+            String name = m_categoryLocalizationCollection.getName();
+            m_categoryLocalizationCollection.rewind();
+            return name;
+            //return m_categoryLocalizationCollection.getName();
 
         } else {
 
@@ -563,7 +566,10 @@ public class Category extends ACSObject {
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
-            return m_categoryLocalizationCollection.getDescription();
+            String description = m_categoryLocalizationCollection.getDescription();
+            m_categoryLocalizationCollection.rewind();
+            return description;
+            //return m_categoryLocalizationCollection.getDescription();
 
         } else {
 
@@ -633,7 +639,10 @@ public class Category extends ACSObject {
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
-            return m_categoryLocalizationCollection.getURL();
+            String url =  m_categoryLocalizationCollection.getURL();
+            //return m_categoryLocalizationCollection.getURL();
+            m_categoryLocalizationCollection.rewind();
+            return url;
 
         } else {
 
@@ -704,7 +713,10 @@ public class Category extends ACSObject {
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
-            return m_categoryLocalizationCollection.isEnabled();
+            boolean isEnabled = m_categoryLocalizationCollection.isEnabled();
+            m_categoryLocalizationCollection.rewind();
+            return isEnabled;
+            //return m_categoryLocalizationCollection.isEnabled();
 
         } else {
 

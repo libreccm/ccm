@@ -194,7 +194,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
 
             GenericOrganizationalUnitPersonCollection heads;
             heads = department.getPersons();
-            heads.addFilter("link.role_name = 'head'");
+            heads.addFilter("link.role_name = 'head' and link.status = 'active'");
             heads.addOrder("surname asc, givenname asc");
 
             if (heads.size() > 0) {

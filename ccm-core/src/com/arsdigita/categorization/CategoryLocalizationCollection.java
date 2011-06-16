@@ -33,6 +33,8 @@ import com.arsdigita.persistence.DataCollection;
  **/
 public class CategoryLocalizationCollection extends ACSObjectCollection {
 
+    private String lastFoundLocale;
+    
     public CategoryLocalizationCollection(Category category) {
         super(category.getLocalizations().getDataCollection());
     }
@@ -111,10 +113,11 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     /**
      * Search for the requested localization in the Collection
      *
+     * @param locale 
      * @return result of the search. If true, the CollectionCursor is set to the position of the requested locale.
      */
     public boolean localizationExists(String locale) {
-
+               
         // Really string comparison using !=  ??
         // && !locale.isEmpty() ?
         if (!m_dataCollection.isEmpty() && locale != "") {

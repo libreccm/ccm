@@ -40,7 +40,7 @@ public class SciMemberSciDepartmentsCollection extends DomainCollection {
     public SciMemberSciDepartmentsCollection(DataCollection dataCollection) {
         super(dataCollection);
 
-        m_dataCollection.addFilter(String.format("type = %s",
+        m_dataCollection.addFilter(String.format("type = '%s'",
                                                  ContentType.
                 findByAssociatedObjectType(SciDepartment.class.getName()).getID().
                 toString()));
