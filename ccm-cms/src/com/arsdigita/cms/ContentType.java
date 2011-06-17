@@ -482,14 +482,14 @@ public class ContentType extends ACSObject {
      */
     public static ContentType findByAssociatedObjectType(String objType)
             throws DataObjectNotFoundException {
-
+        
         ContentTypeCollection types = getAllContentTypes();
         types.addFilter("associatedObjectType = :type").set("type", objType);
 
         if (types.next()) {
             ContentType type = types.getContentType();
             types.close();
-
+           
             return type;
 
         } else {

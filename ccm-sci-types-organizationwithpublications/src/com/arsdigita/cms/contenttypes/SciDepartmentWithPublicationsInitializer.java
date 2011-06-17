@@ -34,7 +34,7 @@ public class SciDepartmentWithPublicationsInitializer
 
     public SciDepartmentWithPublicationsInitializer() {
         super("empty.pdl.mf",
-              SciOrganizationWithPublications.BASE_DATA_OBJECT_TYPE);
+              SciDepartmentWithPublications.BASE_DATA_OBJECT_TYPE);
     }
 
     @Override
@@ -44,7 +44,9 @@ public class SciDepartmentWithPublicationsInitializer
         ContentType departmentType =
                     ContentType.findByAssociatedObjectType(SciDepartment.class.
                 getName());
-        departmentType.setMode("internal");
+        if (!departmentType.isInternal()) {
+            departmentType.setMode("internal");
+        }
 
         AuthoringKitWizard.registerAssetStep(Publication.BASE_DATA_OBJECT_TYPE,
                                              PublicationSciDepartmentStep.class,

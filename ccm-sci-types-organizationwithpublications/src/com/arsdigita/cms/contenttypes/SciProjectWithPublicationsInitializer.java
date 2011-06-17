@@ -34,7 +34,7 @@ public class SciProjectWithPublicationsInitializer
 
     public SciProjectWithPublicationsInitializer() {
         super("empty.pdl.mf",
-              SciOrganizationWithPublications.BASE_DATA_OBJECT_TYPE);
+              SciProjectWithPublications.BASE_DATA_OBJECT_TYPE);
     }
 
     @Override
@@ -44,9 +44,11 @@ public class SciProjectWithPublicationsInitializer
         ContentType projectType =
                     ContentType.findByAssociatedObjectType(SciProject.class.
                 getName());
-        projectType.setMode("internal");
-        
-         AuthoringKitWizard.registerAssetStep(Publication.BASE_DATA_OBJECT_TYPE,
+        if (!projectType.isInternal()) {
+            projectType.setMode("internal");
+        }
+
+        AuthoringKitWizard.registerAssetStep(Publication.BASE_DATA_OBJECT_TYPE,
                                              PublicationSciProjectStep.class,
                                              new GlobalizedMessage(
                 "sciorganizationpublication.ui.publication.projects.title",

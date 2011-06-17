@@ -44,7 +44,10 @@ public class SciOrganizationWithPublicationsInitializer
         ContentType orgaType =
                     ContentType.findByAssociatedObjectType(SciOrganization.class.
                 getName());
-        orgaType.setMode("internal");
+        if (!orgaType.isInternal()) {
+            orgaType.setMode("internal");
+        }
+        System.out.println("Set mode to interal");
 
         AuthoringKitWizard.registerAssetStep(Publication.BASE_DATA_OBJECT_TYPE,
                                              PublicationSciOrganizationStep.class,

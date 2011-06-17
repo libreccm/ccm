@@ -67,11 +67,10 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
      * @param objectType Base Data Object Type of the content type
      */
     protected ContentTypeInitializer(final String manifestFile,
-                                     final String objectType) {
-        final String url = RuntimeConfig.getConfig().getJDBCURL();
+                                     final String objectType) {       
+        final String url = RuntimeConfig.getConfig().getJDBCURL();        
         final int database = DbHelper.getDatabaseFromURL(url);
-
-
+        
         add(new PDLInitializer
             (new ManifestSource
              (manifestFile,
@@ -90,18 +89,18 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
     @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
-
+        
         // Register an optional traversal adapter for the content type
         final String traversal = getTraversalXML();
         if (!StringUtils.emptyString(traversal)) {
             XML.parseResource
                 (traversal,
                  new TraversalHandler());
-        }
+        }        
 
         // Load and register stylesheets for the content type
         try {
-
+           
             ContentType type = ContentType.findByAssociatedObjectType(m_objectType);
 
             MetadataProviderRegistry.registerAdapter(
@@ -112,9 +111,8 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
             for (int i = 0; i < stylesheets.length; i++) {
                 String stylesheet = stylesheets[i];
                 ContentType.registerXSLFile(type, stylesheet);
-
             }
-        } catch (com.arsdigita.domain.DataObjectNotFoundException e) {
+        } catch (com.arsdigita.domain.DataObjectNotFoundException e) {            
             s_log.debug("Unable to register the stylesheet for " +
                         m_objectType +
                         " because the content type was not found. " +
