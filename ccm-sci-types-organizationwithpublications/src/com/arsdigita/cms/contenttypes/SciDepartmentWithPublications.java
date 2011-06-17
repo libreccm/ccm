@@ -80,7 +80,7 @@ public class SciDepartmentWithPublications extends SciDepartment {
                     boolean result = false;
                     while (departmentsQuery.next()) {
                         departmentId = (BigDecimal) departmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasPublications(departmentId, merge);
 
                         if (result) {
@@ -124,7 +124,7 @@ public class SciDepartmentWithPublications extends SciDepartment {
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {
                         subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasPublications(subDepartmentId, merge);
 
                         if (result) {
@@ -167,7 +167,7 @@ public class SciDepartmentWithPublications extends SciDepartment {
                     boolean result = false;
                     while (departmentsQuery.next()) {
                         departmentId = (BigDecimal) departmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasWorkingPapers(departmentId, merge);
 
                         if (result) {
@@ -211,7 +211,7 @@ public class SciDepartmentWithPublications extends SciDepartment {
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {
                         subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasPublications(subDepartmentId, merge);
 
                         if (result) {

@@ -87,8 +87,7 @@ public class SciOrganizationWithPublications extends SciOrganization {
                 DataQuery departmentsQuery =
                           SessionManager.getSession().retrieveQuery(
                         "com.arsdigita.cms.contenttypes.getIdsOfDepartmentsOfSciOrganization");
-                departmentsQuery.setParameter("organization",
-                                              getID());
+                departmentsQuery.setParameter("organization", getID());
 
                 if (departmentsQuery.size() > 0) {
                     BigDecimal departmentId;
@@ -120,13 +119,15 @@ public class SciOrganizationWithPublications extends SciOrganization {
                                     final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciOrganization");
-        query.setParameter("organization", departmentId);
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciDepartment");
+        query.setParameter("department", departmentId);
         if (getConfig().getOrganizationPublicationsSeparateWorkingPapers()) {
             query.addFilter(
                     "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
         }
 
+        System.out.printf("Proceedings department id %s\n ", departmentId.toString());
+        
         if (query.size() > 0) {
             query.close();
             return true;
@@ -143,7 +144,8 @@ public class SciOrganizationWithPublications extends SciOrganization {
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {
                         subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
+                        System.out.printf("Proceesing sub department %s...\n", subDepartmentId.toString());
                         result = hasPublications(subDepartmentId, merge);
 
                         if (result) {
@@ -236,7 +238,7 @@ public class SciOrganizationWithPublications extends SciOrganization {
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {
                         subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasPublications(subDepartmentId, merge);
 
                         if (result) {

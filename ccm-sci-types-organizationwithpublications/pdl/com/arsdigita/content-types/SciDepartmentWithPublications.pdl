@@ -23,13 +23,15 @@ association {
 
 query getIdsOfPublicationsOfSciDepartment {
     BigDecimal publicationId;
+    String objectType;
 
     do {
-        select ct_department_publication_map.publication_id
-        from ct_department_publication_map
+        select ct_department_publication_map.publication_id, acs_objects.object_type
+        from ct_department_publication_map join acs_objects on ct_department_publication_map.publication_id = acs_objects.object_id
         where ct_department_publication_map.department_id = :department
     } map {
         publicationId = ct_department_publication_map.publication_id;
+        objectType = acs_objects.object_type;
     }
 }
 

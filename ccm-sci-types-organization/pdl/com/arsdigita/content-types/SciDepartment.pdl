@@ -51,14 +51,14 @@ query getIdsOfContactsOfSciDepartment {
 }
 
 query getIdsOfSubDepartmentsOfSciDepartment {
-    BigDecimal departmentId;
+    BigDecimal subDepartmentId;
 
     do {
-        select ct_sciorga_departments_subdepartments_map.department_id
+        select ct_sciorga_departments_subdepartments_map.subdepartment_id
         from ct_sciorga_departments_subdepartments_map        
         where ct_sciorga_departments_subdepartments_map.department_id = :department
     } map {
-        departmentId = ct_sciorga_departments_subdepartments_map.department_id;
+        subDepartmentId = ct_sciorga_departments_subdepartments_map.subdepartment_id;
     }
 }
 

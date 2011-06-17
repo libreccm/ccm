@@ -369,7 +369,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
                     boolean result = false;
                     while (departmentsQuery.next()) {
                         departmentId = (BigDecimal) departmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasMembers(departmentId, merge, status);
 
                         if (result) {
@@ -436,7 +436,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {
                         subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasMembers(subDepartmentId, merge, status);
 
                         if (result) {
@@ -506,7 +506,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
                     boolean result = false;
                     while (departmentsQuery.next()) {
                         departmentId = (BigDecimal) departmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasProjects(departmentId, merge, status);
 
                         if (result) {
@@ -578,7 +578,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
                     boolean result = false;
                     while (subDepartmentsQuery.next()) {
                         subDepartmentId = (BigDecimal) subDepartmentsQuery.get(
-                                "departmentId");
+                                "subDepartmentId");
                         result = hasProjects(subDepartmentId, merge, status);
 
                         if (result) {
