@@ -146,10 +146,7 @@ public class PublicationXmlHelper {
             Element yearElem = publicationElem.newChildElement(
                     "yearOfPublication");
             yearElem.setText(publication.getYearOfPublication().toString());
-        }
-        generateXmlElement(publicationElem,
-                           "yearOfPublication",
-                           publication.getYearOfPublication());
+        }      
         generateXmlElement(publicationElem, "misc", publication.getMisc());
         generateXmlElement(parent, "abstract", publication.getAbstract());
         generateAuthorsXml(publicationElem);

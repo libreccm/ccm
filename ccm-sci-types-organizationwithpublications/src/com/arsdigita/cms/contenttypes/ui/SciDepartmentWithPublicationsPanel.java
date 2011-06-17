@@ -42,6 +42,7 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -67,7 +68,7 @@ public class SciDepartmentWithPublicationsPanel extends SciDepartmentPanel {
     private static final String AUTHORS = "authors";
     private static final String YEAR_OF_PUBLICATION = "yearOfPublication";
     private static final String YEAR_ASC = "yearAsc";
-    private static final String YEAR_DESC = "yearAsc";
+    private static final String YEAR_DESC = "yearDesc";
     private String show;
     private boolean displayPublications = true;
     private boolean displayWorkingPapers = true;
@@ -90,15 +91,17 @@ public class SciDepartmentWithPublicationsPanel extends SciDepartmentPanel {
                 "com.arsdigita.cms.contenttypes.getAllYearsOfPublication");
         yearFilter.setDataQuery(query, "yearOfPublication");
         filters.put(YEAR_OF_PUBLICATION, yearFilter);
+        
+         sortFields.put(YEAR_DESC,
+                       new SortField<Publication>(YEAR_DESC,
+                                                  new SciPublicationYearDescComparator()));
         sortFields.put(TITLE,
                        new SortField<Publication>(TITLE,
                                                   new SciPublicationTitleComparator()));
         sortFields.put(YEAR_ASC,
                        new SortField<Publication>(YEAR_ASC,
                                                   new SciPublicationYearAscComparator()));
-        sortFields.put(YEAR_DESC,
-                       new SortField<Publication>(YEAR_DESC,
-                                                  new SciPublicationYearDescComparator()));
+       
         /*sortFields.put(AUTHORS,
         new SortField<Publication>(AUTHORS,
         new SciPublicationAuthorComparator()));*/
@@ -210,11 +213,10 @@ public class SciDepartmentWithPublicationsPanel extends SciDepartmentPanel {
     protected void generateFiltersXml(
             final List<Publication> publications,
             final Element element) {
-        final Element sortFieldsElement = element.newChildElement("sortFields");
-        sortFieldsElement.addAttribute("sortBy", sortByKey);
-        for (Map.Entry<String, SortField<Publication>> sortField :
-             sortFields.entrySet()) {
-            sortField.getValue().generateXml(sortFieldsElement);
+        final Element filterElement = element.newChildElement("filters");
+
+        for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
+            filterEntry.getValue().generateXml(filterElement);
         }
     }
 
@@ -236,8 +238,9 @@ public class SciDepartmentWithPublicationsPanel extends SciDepartmentPanel {
         }
 
         if (sortFields.containsKey(sortByKey)) {
-            Collections.sort(publications, sortFields.get(sortByKey).
-                    getComparator());
+            Comparator<Publication> comparator = sortFields.get(sortByKey).
+                    getComparator();
+            Collections.sort(publications, comparator);
         } else {
             Collections.sort(publications, new SciPublicationTitleComparator());
         }
@@ -320,7 +323,7 @@ public class SciDepartmentWithPublicationsPanel extends SciDepartmentPanel {
             publicationsWithoutDoubles = new LinkedList<Publication>(
                     publicationsSet);
 
-            applySortFields(publications, state.getRequest());
+            applySortFields(publicationsWithoutDoubles, state.getRequest());
 
             //Collections.sort(publicationsWithoutDoubles,
             //               new SciPublicationTitleComparator());
