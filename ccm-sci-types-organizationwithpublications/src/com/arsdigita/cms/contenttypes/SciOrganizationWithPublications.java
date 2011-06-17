@@ -120,7 +120,7 @@ public class SciOrganizationWithPublications extends SciOrganization {
                                     final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfPublicationsOfSciOrganization");
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsOfSciOrganization");
         query.setParameter("organization", departmentId);
         if (getConfig().getOrganizationPublicationsSeparateWorkingPapers()) {
             query.addFilter(
@@ -213,7 +213,7 @@ public class SciOrganizationWithPublications extends SciOrganization {
                                      final boolean merge) {
         DataQuery query =
                   SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contentassets.getIdsOfWorkingPapersOfSciOrganization");
+                "com.arsdigita.cms.contenttypes.getIdsOfWorkingPapersOfSciOrganization");
         query.setParameter("organization", departmentId);
         if (getConfig().getOrganizationPublicationsSeparateWorkingPapers()) {
             query.addFilter(
