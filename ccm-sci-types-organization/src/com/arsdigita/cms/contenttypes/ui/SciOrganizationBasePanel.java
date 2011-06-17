@@ -411,7 +411,7 @@ public abstract class SciOrganizationBasePanel
         members.addOrder("surname asc, givenname asc");
 
         if (members.size() > 0) {
-            Element membersElem = projectElem.newChildElement("mebers");
+            Element membersElem = projectElem.newChildElement("members");
 
             while (members.next()) {
                 generateMemberXML(members.getPerson(),
