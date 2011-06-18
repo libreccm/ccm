@@ -82,8 +82,7 @@ public class FileStorageItemPropertyForm
         add( new Label( FileStorageItem.DESCRIPTION_LABEL ) );
         ParameterModel descriptionParam
             = new StringParameter( FileStorageItem.DESCRIPTION );
-        descriptionParam
-            .addParameterListener( new NotNullValidationListener() );
+//        descriptionParam.addParameterListener( new NotNullValidationListener() );
         CMSDHTMLEditor description = new CMSDHTMLEditor( descriptionParam );
         description.setCols( 40 );
         description.setRows( 8 );
