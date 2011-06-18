@@ -74,7 +74,21 @@ public final class Connections {
             Assert.exists(conn, Connection.class);
 
             conn.setAutoCommit(false);
-
+           
+            if(s_log.isDebugEnabled()) {
+                if (conn.getTransactionIsolation() == Connection.TRANSACTION_NONE) {
+                    s_log.debug("transactionIsoliation = NONE");                    
+                } else if(conn.getTransactionIsolation() == Connection.TRANSACTION_READ_COMMITTED) {
+                     s_log.debug("transactionIsoliation = READ_COMMITED");                    
+                } else if(conn.getTransactionIsolation() == Connection.TRANSACTION_READ_UNCOMMITTED) {
+                     s_log.debug("transactionIsoliation = READ_UNCOMMITTED");
+                } else if(conn.getTransactionIsolation() == Connection.TRANSACTION_REPEATABLE_READ) {
+                    s_log.debug("transactionIsoliation = REPEATABLE_READ");
+                } else if(conn.getTransactionIsolation() == Connection.TRANSACTION_SERIALIZABLE) {
+                    s_log.debug("transactionIsoliation = SERIALIZABLE");
+                }
+            }
+            
             // This is a workaround for a bug in certain versions of
             // oracle that cause oracle to erroneously report parse
             // errors or 0600 errors when a UNION ALL is used in a

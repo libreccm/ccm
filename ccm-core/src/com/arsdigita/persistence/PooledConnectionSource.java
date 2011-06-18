@@ -44,12 +44,13 @@ import org.apache.log4j.Logger;
 public class PooledConnectionSource implements ConnectionSource {
 
     private static final Logger s_log =
-            Logger.getLogger(PooledConnectionSource.class);
+                                Logger.getLogger(PooledConnectionSource.class);
     private static CacheTable s_connectionTags =
-            new CacheTable("jdbcConnectionTags",
-            RuntimeConfig.getConfig().getJDBCPoolSize() + 10,
-            CacheTable.MAX_CACHE_AGE,
-            false);
+                              new CacheTable("jdbcConnectionTags",
+                                             RuntimeConfig.getConfig().
+            getJDBCPoolSize() + 10,
+                                             CacheTable.MAX_CACHE_AGE,
+                                             false);
     private String m_url;
     private int m_size;
     private long m_interval;
@@ -57,7 +58,7 @@ public class PooledConnectionSource implements ConnectionSource {
     private List m_available = new ArrayList();
     private List m_untested = new ArrayList();
     private static boolean s_taggingEnabled =
-            RuntimeConfig.getConfig().isThreadTaggingEnabled();
+                           RuntimeConfig.getConfig().isThreadTaggingEnabled();
 
     public PooledConnectionSource(String url, int size, long interval) {
         m_url = url;
@@ -90,7 +91,7 @@ public class PooledConnectionSource implements ConnectionSource {
         } else {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Reacquisition failed: " + pref
-                        + ", tag: " + s_connectionTags.get(pref.toString()));
+                            + ", tag: " + s_connectionTags.get(pref.toString()));
             }
             return acquire();
         }
@@ -101,12 +102,35 @@ public class PooledConnectionSource implements ConnectionSource {
             if (!m_available.isEmpty()) {
                 Connection conn = (Connection) m_available.remove(0);
                 renameThread(conn);
+                /**
+                 * jensp 2011-06-18: Change to prevent connections from being
+                 * in "idle in transaction" state. Such connections seam to 
+                 * cause problems (memory etc.) with PostgreSQL.
+                 */
+                try {
+                    conn.setAutoCommit(false);
+                } catch (SQLException ex) {
+                    s_log.warn("Failed to set autocommit to false");
+                }
+                /**
+                 * jensp end
+                 */
                 return conn;
             } else if (m_connections.size() < m_size) {
                 Connection result = (Connection) Connections.acquire(m_url);
                 s_connectionTags.put(result.toString(), tag(result));
                 m_connections.add(result);
                 renameThread(result);
+                try {
+                    /**
+                     * jensp 2011-06-18: Change to prevent connections from being
+                     * in "idle in transaction" state. Such connections seam to 
+                     * cause problems (memory etc.) with PostgreSQL.
+                     */
+                    result.setAutoCommit(false);
+                } catch (SQLException ex) {
+                    s_log.warn("Failed to set autocommit to false");
+                }
                 return result;
             } else {
                 try {
@@ -127,7 +151,8 @@ public class PooledConnectionSource implements ConnectionSource {
                 s_log.warn("Could not obtain conn tag for: " + conn);
                 return;
             }
-            String newName = tname.replaceAll("(-db[0-9]*)*$", "") + "-db" + ctag;
+            String newName = tname.replaceAll("(-db[0-9]*)*$", "") + "-db"
+                             + ctag;
             if (!tname.equals(newName)) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("setting the thread name to: " + newName);
@@ -170,7 +195,8 @@ public class PooledConnectionSource implements ConnectionSource {
 
     public synchronized void release(Connection conn) {
         if (!m_connections.contains(conn)) {
-            throw new IllegalArgumentException("connection did come from ths source: " + conn);
+            throw new IllegalArgumentException("connection did come from this source: "
+                                               + conn);
         }
 
         boolean remove;
@@ -184,6 +210,19 @@ public class PooledConnectionSource implements ConnectionSource {
         if (remove) {
             remove(conn);
         } else {
+            /**
+             * jensp 2011-06-18: Change to prevent connections from being
+             * in "idle in transaction" state. Such connections seam to 
+             * cause problems (memory etc.) with PostgreSQL.
+             */
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException ex) {
+                s_log.warn("Failed to set auto commit to true.");
+            }
+            /**
+             * jensp end
+             */
             m_available.add(conn);
         }
 
@@ -193,7 +232,8 @@ public class PooledConnectionSource implements ConnectionSource {
     private synchronized void remove(Connection conn) {
         m_connections.remove(conn);
         m_available.remove(conn);
-        s_log.info("removed: " + conn + ", tag: " + s_connectionTags.get(conn.toString()));
+        s_log.info("removed: " + conn + ", tag: " + s_connectionTags.get(conn.
+                toString()));
         s_connectionTags.remove(conn.toString());
     }
 
@@ -209,7 +249,7 @@ public class PooledConnectionSource implements ConnectionSource {
 
         public void run() {
             while (true) {
-                s_log.error("PollerThread run(): " + m_interval);
+                //s_log.error("PollerThread run(): " + m_interval);
                 try {
                     Thread.sleep(m_interval);
                 } catch (InterruptedException e) {
@@ -245,8 +285,9 @@ public class PooledConnectionSource implements ConnectionSource {
                     SQLException e = test(conn);
                     if (e != null) {
                         s_log.warn("connection " + conn
-                                + ", tag: " + s_connectionTags.get(conn.toString())
-                                + " failed test", e);
+                                   + ", tag: " + s_connectionTags.get(conn.
+                                toString())
+                                   + " failed test", e);
                         try {
                             conn.close();
                         } catch (SQLException ex) {

@@ -544,7 +544,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                                    final PageState state) {
         show = getShowParam(state);
 
-        SciOrganization organization = (SciOrganization) orga;
+        SciOrganization organization = (SciOrganization) orga;        
 
         if (SHOW_DESCRIPTION.equals(show)) {
             String desc;

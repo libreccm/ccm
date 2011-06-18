@@ -20,9 +20,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentItemXMLRenderer;
-import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -31,13 +28,7 @@ import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
-import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject;
 import com.arsdigita.xml.Element;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
