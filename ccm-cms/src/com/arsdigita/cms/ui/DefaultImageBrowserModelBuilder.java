@@ -39,16 +39,14 @@ import com.arsdigita.util.LockableImpl;
  * @version $Id: DefaultImageBrowserModelBuilder.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class DefaultImageBrowserModelBuilder extends LockableImpl
-    implements ImageBrowserModelBuilder, PaginationModelBuilder {
+        implements ImageBrowserModelBuilder, PaginationModelBuilder {
 
     private SingleSelectionModel m_keywordModel;
     private static ImageBrowserModel EMPTY_MODEL =
-        new EmptyImageBrowserModel();
-
+                                     new EmptyImageBrowserModel();
     private ImageBrowser m_imageBrowser;
     private RequestLocal m_size;
     private RequestLocal m_imageColl;
-
     private String m_context;
 
     /**
@@ -60,13 +58,12 @@ public class DefaultImageBrowserModelBuilder extends LockableImpl
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      */
     public DefaultImageBrowserModelBuilder(
-                                           SingleSelectionModel keywordModel, String context
-                                           ) {
+            SingleSelectionModel keywordModel, String context) {
         super();
         m_keywordModel = keywordModel;
         m_context = context;
-	m_size = new RequestLocal();
-	m_imageColl = new RequestLocal();
+        m_size = new RequestLocal();
+        m_imageColl = new RequestLocal();
     }
 
     /**
@@ -85,9 +82,10 @@ public class DefaultImageBrowserModelBuilder extends LockableImpl
     public ImageBrowserModel makeModel(ImageBrowser browser, PageState s) {
         //String key = (String)m_keywordModel.getSelectedKey(s);
 
-	// pass through key even if null -- null key will return all rows in m_context.
+        // pass through key even if null -- null key will return all rows in m_context.
         //ImageAssetCollection c = ReusableImageAsset.getReusableImagesByKeyword(key, m_context);
-        return new DefaultImageBrowserModel((ImageAssetCollection) m_imageColl.get(s));
+        return new DefaultImageBrowserModel((ImageAssetCollection) m_imageColl.
+                get(s));
     }
 
     /**
@@ -107,32 +105,34 @@ public class DefaultImageBrowserModelBuilder extends LockableImpl
     }
 
     public int getTotalSize(Paginator paginator, PageState state) {
-	
-	Integer size = (Integer) m_size.get(state);
-	
-	if (size == null) {
-	    
-	    String key = (String)m_keywordModel.getSelectedKey(state);
-	    ImageAssetCollection c = ReusableImageAsset.getReusableImagesByKeyword(key, m_context);
-	    if (c == null) {
-		return 0;
-	    }
 
-	    size = new Integer( (int) ReusableImageAsset.getReusableImagesByKeyword(key, m_context).size());
-	    
-	    c.setRange(new Integer(paginator.getFirst(state)),
-		       new Integer(paginator.getLast(state) + 1));
-	    
-	    m_size.set(state, size);
-	    m_imageColl.set(state, c);
-	}
-	
-	return size.intValue();
+        Integer size = (Integer) m_size.get(state);
+
+        if (size == null) {
+
+            String key = (String) m_keywordModel.getSelectedKey(state);
+            ImageAssetCollection c = ReusableImageAsset.
+                    getReusableImagesByKeyword(key, m_context);
+            if (c == null) {
+                return 0;
+            }
+
+            size = new Integer( (int) ReusableImageAsset.getReusableImagesByKeyword(key, m_context).size());        
+
+            c.setRange(new Integer(paginator.getFirst(state)),
+                       new Integer(paginator.getLast(state) + 1));
+
+            m_size.set(state, size);
+            m_imageColl.set(state, c);
+        }
+
+        return size.intValue();
     }
-    
+
     public void setImageBrowser(ImageBrowser ib) {
-	m_imageBrowser = ib;
+        m_imageBrowser = ib;
     }
+
     /**
      * Indicates whether the paginator should be visible,
      * based on the visibility of the image browser itself.
@@ -141,7 +141,6 @@ public class DefaultImageBrowserModelBuilder extends LockableImpl
      *         associated image browser is unknown.
      */
     public boolean isVisible(PageState state) {
-	return (m_imageBrowser != null)?m_imageBrowser.isVisible(state):true;
+        return (m_imageBrowser != null) ? m_imageBrowser.isVisible(state) : true;
     }
-    
 }

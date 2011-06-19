@@ -53,10 +53,9 @@ import org.apache.log4j.Logger;
 public class ReusableImageAsset extends ImageAsset {
 
     private static final Logger s_log =
-        Logger.getLogger( ReusableImageAsset.class );
-
+                                Logger.getLogger(ReusableImageAsset.class);
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.ReusableImageAsset";
+                               "com.arsdigita.cms.ReusableImageAsset";
 
     /**
      * Default constructor. This creates a new image asset.
@@ -148,36 +147,37 @@ public class ReusableImageAsset extends ImageAsset {
      * @param defaultMimeType The default mime type for the file
      */
     public void loadFromFile(String fileName, File file, String defaultMimeType)
-        throws IOException {
+            throws IOException {
 
         // Guess mime type
         MimeType mime = MimeType.guessMimeTypeFromFile(fileName);
-        if( s_log.isDebugEnabled() ) {
-            s_log.debug( "Mime type is " + ( null == mime ? "null" : mime.getMimeType() ) );
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Mime type is " + (null == mime ? "null" : mime.
+                                           getMimeType()));
         }
 
-        RenderedImage image = JAI.create( "FileLoad", file.getPath() );
+        RenderedImage image = JAI.create("FileLoad", file.getPath());
 
         int width = image.getWidth();
         int height = image.getHeight();
 
-        if( s_log.isDebugEnabled() ) {
-            s_log.debug( "Width: " + width );
-            s_log.debug( "Height: " + height );
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Width: " + width);
+            s_log.debug("Height: " + height);
         }
 
-        if( s_log.isDebugEnabled() ) {
+        if (s_log.isDebugEnabled()) {
             String[] props = image.getPropertyNames();
-            for( int i = 0; i < props.length; i++ ) {
+            for (int i = 0; i < props.length; i++) {
                 String prop = props[i];
-                s_log.debug( prop + ": " + image.getProperty( prop ) );
+                s_log.debug(prop + ": " + image.getProperty(prop));
             }
         }
 
-        setWidth( new BigDecimal( width ) );
-        setHeight( new BigDecimal( height ) );
+        setWidth(new BigDecimal(width));
+        setHeight(new BigDecimal(height));
 
-        if(mime == null || !( mime instanceof ImageMimeType ) ) {
+        if (mime == null || !(mime instanceof ImageMimeType)) {
             mime = MimeType.loadMimeType(defaultMimeType);
         }
 
@@ -185,12 +185,12 @@ public class ReusableImageAsset extends ImageAsset {
 
         // Extract the filename
         int i = fileName.lastIndexOf("/");
-        if(i > 0) {
-            fileName = fileName.substring(i+1);
+        if (i > 0) {
+            fileName = fileName.substring(i + 1);
         }
         i = fileName.lastIndexOf("\\");  // DOS-style
-        if(i > 0) {
-            fileName = fileName.substring(i+1);
+        if (i > 0) {
+            fileName = fileName.substring(i + 1);
         }
 
         setName(fileName);
@@ -205,7 +205,7 @@ public class ReusableImageAsset extends ImageAsset {
      * @param file      The file on the server to write to.
      */
     public void writeToFile(File file)
-        throws IOException {
+            throws IOException {
         FileOutputStream fs = new FileOutputStream(file);
         try {
             fs.write(getContent());
@@ -217,17 +217,22 @@ public class ReusableImageAsset extends ImageAsset {
         }
     }
 
-
     /**
      * Retrieve all images in the database. Expensive operation.
      *
      * @return a collection of ReusableImageAssets
      */
     public static ImageAssetCollection getAllReusableImages() {
-        DataCollection da = SessionManager.getSession().retrieve
-            (BASE_DATA_OBJECT_TYPE);
-        da.addEqualsFilter(VersionedACSObject.IS_DELETED, new Integer(0));
-        da.addEqualsFilter(ACSObject.OBJECT_TYPE, BASE_DATA_OBJECT_TYPE);
+        DataCollection da = SessionManager.getSession().retrieve(
+                BASE_DATA_OBJECT_TYPE);
+        //da.addEqualsFilter(VersionedACSObject.IS_DELETED, new Integer(0));
+        //da.addEqualsFilter(ACSObject.OBJECT_TYPE, BASE_DATA_OBJECT_TYPE);
+        da.addFilter(String.format("%s = '%s'",
+                                   VersionedACSObject.IS_DELETED,
+                                   "0"));
+        da.addFilter(String.format("%s = '%s'",
+                                   ACSObject.OBJECT_TYPE,
+                                   BASE_DATA_OBJECT_TYPE));
         return new ImageAssetCollection(da);
     }
 
@@ -240,15 +245,14 @@ public class ReusableImageAsset extends ImageAsset {
      * @return a collection of images whose name matches the keyword
      */
     public static ImageAssetCollection getReusableImagesByKeyword(
-        String keyword, String context
-    ) {
+            String keyword, String context) {
         ImageAssetCollection c = getAllReusableImages();
         c.addOrder(Asset.NAME);
         Filter f;
-        if(!(keyword == null || keyword.length() < 1)) {
-	    f = c.addFilter("lower(name) like lower(\'%\' || :keyword || \'%\')");
-	    f.set("keyword", keyword);
-	}
+        if (!(keyword == null || keyword.length() < 1)) {
+            f = c.addFilter("lower(name) like lower(\'%\' || :keyword || \'%\')");
+            f.set("keyword", keyword);            
+        }
         f = c.addFilter("version = :version");
         f.set("version", context);
         return c;
@@ -263,6 +267,4 @@ public class ReusableImageAsset extends ImageAsset {
     public static ImageAssetCollection getReusableImagesByKeyword(String keyword) {
         return getReusableImagesByKeyword(keyword, ContentItem.DRAFT);
     }
-
-
 }
