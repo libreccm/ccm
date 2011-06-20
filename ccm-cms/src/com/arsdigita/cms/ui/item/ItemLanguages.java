@@ -156,7 +156,7 @@ public class ItemLanguages extends LayoutPanel {
 
                 ContentType type = item.getContentType();
 
-                item = (ContentPage) item.copy();
+                item = (ContentPage) item.copy(lang);
                 item.setLanguage(lang);
                 item.setName(name);
 

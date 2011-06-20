@@ -78,10 +78,33 @@ public class SciOrganizationDepartmentAddForm
                 getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().
-                isSelected(state))) {
-            orga.addDepartment((SciDepartment) data.get(ITEM_SEARCH));
+              isSelected(state))) {
+            SciDepartment department = (SciDepartment) data.get(ITEM_SEARCH);
+
+            department = (SciDepartment) department.getContentBundle().
+                    getInstance(orga.getLanguage());
+
+            orga.addDepartment(department);
+            //orga.addDepartment((SciDepartment) data.get(ITEM_SEARCH));
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        SciOrganization orga = (SciOrganization) getItemSelectionModel().
+                getSelectedObject(state);
+                
+        SciDepartment department = (SciDepartment) data.get(ITEM_SEARCH);
+
+        if (!(department.getContentBundle().hasInstance(orga.getLanguage()))) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.organization.department.add.no_suitable_language_variant"));
+        }
     }
 }

@@ -203,10 +203,12 @@ import java.util.Set;
 public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     private static final Logger s_log = Logger.getLogger(ContentItem.class);
-    private static final Logger s_logDenorm = Logger.getLogger(ContentItem.class.getName() + ".Denorm");
+    private static final Logger s_logDenorm =
+                                Logger.getLogger(ContentItem.class.getName()
+                                                 + ".Denorm");
     private static final String MODEL = "com.arsdigita.cms";
     private static final String QUERY_PENDING_ITEMS =
-            MODEL + ".getPendingSortedByLifecycle";
+                                MODEL + ".getPendingSortedByLifecycle";
     public static final String BASE_DATA_OBJECT_TYPE = MODEL + ".ContentItem";
     /**
      * A state marking the draft or master item corresponding to a
@@ -234,7 +236,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public static final String VERSIONS = "slaveVersions";
     public static final String CONTENT_SECTION = "section";
     private static final String PUBLISH_LISTENER_CLASS =
-            PublishLifecycleListener.class.getName();
+                                PublishLifecycleListener.class.getName();
     private VersionCache m_pending;
     private VersionCache m_live;
     private boolean m_wasNew;
@@ -302,19 +304,20 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
     }
     private static DomainObjectObserver s_parentObs =
-            new AbstractDomainObjectObserver() {
+                                        new AbstractDomainObjectObserver() {
 
-                public void set(DomainObject dobj, String name,
+        public void set(DomainObject dobj, String name,
                         Object old, Object newVal) {
-                    if (PARENT.equals(name)) {
-                        ContentItem ci = (ContentItem) dobj;
+            if (PARENT.equals(name)) {
+                ContentItem ci = (ContentItem) dobj;
 
-                        if (newVal != null) {
-                            PermissionService.setContext(ci.getOID(), ((DataObject) newVal).getOID());
-                        }
-                    }
+                if (newVal != null) {
+                    PermissionService.setContext(ci.getOID(),
+                                                 ((DataObject) newVal).getOID());
                 }
-            };
+            }
+        }
+    };
 
     /**
      * Called from the base class (<code>DomainObject</code>)
@@ -341,7 +344,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
         if (isNew()) {
             s_log.debug(this + " is being newly created; "
-                    + "marking it as a draft version");
+                        + "marking it as a draft version");
 
             m_wasNew = true;
 
@@ -351,7 +354,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
             try {
                 final ContentType type =
-                        ContentType.findByAssociatedObjectType(getSpecificObjectType());
+                                  ContentType.findByAssociatedObjectType(
+                        getSpecificObjectType());
 
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Set content type for " + this + " to " + type);
@@ -406,12 +410,12 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @param propertyName
      * @param dobj
      * @return 
-     */    
+     */
     @Override
     public DataObject add(String propertyName, DomainObject dobj) {
         return super.add(propertyName, dobj);
     }
-    
+
     /**
      * Public remove for use by metadata forms
      * 
@@ -422,11 +426,11 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public void remove(String propertyName, DomainObject dobj) {
         super.remove(propertyName, dobj);
     }
-    
+
     /**
      * For new content items, sets the associated content type if it
      * has not been already set.
-     */   
+     */
     @Override
     protected void beforeSave() {
         m_wasNew = isNew();
@@ -442,10 +446,10 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /*  
-
+    
     removed cg - object observer sets context based
     on parent whenever parent is updated
-
+    
     protected void afterSave() {
     super.afterSave();
     s_log.info("******After Save of object " + getOID());
@@ -478,11 +482,11 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                 setContentSection(((ContentItem) parent).getContentSection());
             } else {
                 s_log.debug("The item's parent is not a folder; I am "
-                        + "not setting the default content section");
+                            + "not setting the default content section");
             }
         } else {
             s_log.debug("The item's version is null or it is not draft; "
-                    + "doing nothing");
+                        + "doing nothing");
         }
     }
 
@@ -522,7 +526,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * Get the parent object.
      */
     public ACSObject getParent() {
-        return (ACSObject) DomainObjectFactory.newInstance((DataObject) get(PARENT));
+        return (ACSObject) DomainObjectFactory.newInstance((DataObject) get(
+                PARENT));
     }
 
     /**
@@ -542,7 +547,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      */
     public final ItemCollection getChildren() {
         final DataAssociationCursor cursor =
-                ((DataAssociation) super.get(CHILDREN)).cursor();
+                                    ((DataAssociation) super.get(CHILDREN)).
+                cursor();
 
         return new ItemCollection(cursor);
     }
@@ -598,7 +604,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @return The content section to which this item belongs
      */
     public ContentSection getContentSection() {
-        return (ContentSection) DomainObjectFactory.newInstance((DataObject) get(CONTENT_SECTION));
+        return (ContentSection) DomainObjectFactory.newInstance((DataObject) get(
+                CONTENT_SECTION));
     }
 
     /**
@@ -694,7 +701,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @return the items on the path to the root folder.
      */
     public ItemCollection getPathInfo(boolean includeSelf) {
-        DataCollection collection = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+        DataCollection collection = SessionManager.getSession().retrieve(
+                BASE_DATA_OBJECT_TYPE);
 
         String ids = (String) get(ANCESTORS);
         if (ids == null) {
@@ -858,7 +866,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         DataQuery versions = getSession().retrieveQuery(QUERY_PENDING_ITEMS);
         versions.setParameter("itemID", getDraftVersion().getID());
 
-        return new ItemCollection(new DataQueryDataCollectionAdapter(versions, "item"));
+        return new ItemCollection(new DataQueryDataCollectionAdapter(versions,
+                                                                     "item"));
     }
 
     /**
@@ -934,13 +943,15 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         s_log.debug("m_live miss");
 
         final DataAssociationCursor versions =
-                ((DataAssociation) get(VERSIONS)).cursor();
+                                    ((DataAssociation) get(VERSIONS)).cursor();
 
         versions.addEqualsFilter(VERSION, LIVE);
 
         try {
             if (versions.next()) {
-                ContentItem item = (ContentItem) DomainObjectFactory.newInstance(versions.getDataObject());
+                ContentItem item =
+                            (ContentItem) DomainObjectFactory.newInstance(versions.
+                        getDataObject());
                 return m_live.set(item);
             }
             return m_live.set(null);
@@ -1068,18 +1079,18 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public void setLive(final ContentItem version) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Setting item " + this + " live with version "
-                    + version);
+                        + version);
         }
 
         if (Assert.isEnabled()) {
             Assert.isTrue(version == null || LIVE.equals(version.getVersion()),
-                    "Item version " + version + " must be null or "
-                    + "the live version");
+                          "Item version " + version + " must be null or "
+                          + "the live version");
         }
 
         if (isLive()) {
             s_log.debug("The item is already live; getting the current "
-                    + "live version");
+                        + "live version");
 
             final ContentItem oldVersion = getLiveVersion();
 
@@ -1096,7 +1107,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                 // XXX We don't need to use a custom query here
                 // anymore.
                 final DataQuery items =
-                        SessionManager.getSession().retrieveQuery("com.arsdigita.cms.getLiveItemsWithSameParent");
+                                SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.getLiveItemsWithSameParent");
                 items.addNotEqualsFilter("id", oldVersion.getID());
                 items.setParameter("itemId", oldVersion.getID());
 
@@ -1109,7 +1121,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
                     if (s_log.isDebugEnabled()) {
                         s_log.debug(oldVersion + " is the last child of "
-                                + parent);
+                                    + parent);
                     }
                 }
 
@@ -1131,14 +1143,14 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
             if (parent instanceof ContentBundle || parent instanceof Folder) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Parent of " + oldVersion + " is " + parent
-                            + "; unpublishing the parent");
+                                + "; unpublishing the parent");
                 }
 
                 ((ContentItem) parent).setLive(null);
             }
 
             s_log.debug("Setting the live version association to null and "
-                    + "saving");
+                        + "saving");
 
             setLiveVersion(null);
 
@@ -1147,7 +1159,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
         if (version != null) {
             s_log.debug("The new version is not null; setting the live "
-                    + "version association");
+                        + "version association");
 
             setLiveVersion(version);
 
@@ -1174,15 +1186,15 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @return the new pending version
      */
     public ContentItem publish(final LifecycleDefinition cycleDef,
-            final Date startDate) {
+                               final Date startDate) {
 
         applyTag("Published");
         Versions.suspendVersioning();
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Publishing item " + this + " with lifecycle "
-                    + "definition " + cycleDef + " and start date "
-                    + startDate);
+                        + "definition " + cycleDef + " and start date "
+                        + startDate);
         }
         /* amended Chris Gilbert
          *
@@ -1196,7 +1208,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         if (listener == null) {
             listener = getPublishListenerClassName();
         }
-        final Lifecycle cycle = cycleDef.createFullLifecycle(startDate, listener);
+        final Lifecycle cycle =
+                        cycleDef.createFullLifecycle(startDate, listener);
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Instantiated lifecycle " + cycle);
@@ -1212,15 +1225,16 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         if (Assert.isEnabled()) {
             Assert.exists(pending, ContentItem.class);
             Assert.isTrue(PENDING.equals(pending.getVersion())
-                    || LIVE.equals(pending.getVersion()),
-                    "The new pending item must be pending or live; "
-                    + "instead it is " + pending.getVersion());
+                          || LIVE.equals(pending.getVersion()),
+                          "The new pending item must be pending or live; "
+                          + "instead it is " + pending.getVersion());
         }
         return pending;
     }
 
     public String getPublishListenerClassName() {
-        String className = ContentSection.getConfig().getPublishLifecycleListenerClass();
+        String className = ContentSection.getConfig().
+                getPublishLifecycleListenerClass();
         if (className != null && !"".equals(className)) {
             return className;
         } else {
@@ -1243,8 +1257,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         if (isLive()) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("The item is currently live; removing the "
-                        + "lifecycle of the public version, "
-                        + getPublicVersion());
+                            + "lifecycle of the public version, "
+                            + getPublicVersion());
             }
 
             removeLifecycle(getPublicVersion());
@@ -1319,7 +1333,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         if (lifecycle == null) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("The item has no lifecycle; checking if the "
-                        + "public version has a lifecycle");
+                            + "public version has a lifecycle");
             }
 
             final ContentItem pub = getPublicVersion();
@@ -1333,7 +1347,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("The public version has a lifecycle; "
-                            + "returning " + cyclelife);
+                                + "returning " + cyclelife);
                 }
 
                 return cyclelife;
@@ -1382,7 +1396,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Removing lifecycle instance from item "
-                    + itemToRemove);
+                        + itemToRemove);
         }
 
         LifecycleService.removeLifecycle(itemToRemove);
@@ -1434,11 +1448,12 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
 
 
-        Category root = Category.getRootForObject(getContentSection(), useContext);
+        Category root = Category.getRootForObject(getContentSection(),
+                                                  useContext);
         if (null == root) {
             s_log.warn("No root category for "
-                    + getContentSection().getOID().toString()
-                    + " with context " + useContext);
+                       + getContentSection().getOID().toString()
+                       + " with context " + useContext);
             return Collections.EMPTY_LIST.iterator();
         }
 
@@ -1533,6 +1548,10 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public ContentItem copy() {
         return copy(null, false);
     }
+    
+    public ContentItem copy(String lang) {
+        return copy(null, false, lang);
+    }
 
     /**
      * Recursively copy this item, creating a clone.
@@ -1548,7 +1567,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @return the new copy of the item
      * @see #copyServicesFrom(ContentItem)
      */
-    final public ContentItem copy(final ContentItem newParent, final boolean copyServices) {
+    final public ContentItem copy(final ContentItem newParent,
+                                  final boolean copyServices) {
         ContentItem newItem = makeCopy();
         if (newParent != null) {
             newItem.setParent(newParent);
@@ -1558,6 +1578,21 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
         return newItem;
     }
+    
+    final public ContentItem copy(final ContentItem newParent,
+                                  final boolean copyServices,
+                                  final String lang) {
+        ContentItem newItem = makeCopy(lang);
+        if (newParent != null) {
+            newItem.setParent(newParent);
+        }
+        if (copyServices) {
+            newItem.copyServicesFrom(this);
+        }
+        return newItem;
+    }
+    
+    
 
     /**
      * Performs the actual mechanics of copying a content item.
@@ -1572,6 +1607,29 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
 
         final ContentItem newItem = new ObjectCopier().copyItem(this);
+        // Doesn't seem like I should have to do this, but what the hell
+        newItem.setContentSection(getContentSection());
+        newItem.save();
+
+        return newItem;
+    }
+
+    /**
+     * Variant of {@link ACSObject#makeCopy} which allows to pass the (further) 
+     * language of the copy.
+     * 
+     * @param language
+     * @return 
+     */
+    protected ContentItem makeCopy(String language) {
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Copy taking place", new Throwable("trace"));
+        }
+
+        LanguageAwareObjectCopier copier = new LanguageAwareObjectCopier(
+                language);
+
+        final ContentItem newItem = copier.copyItem(this);
         // Doesn't seem like I should have to do this, but what the hell
         newItem.setContentSection(getContentSection());
         newItem.save();
@@ -1653,7 +1711,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         setLive(pending);
         ContentBundle draftBundle = getBundle();
         ContentBundle liveBundle = pending.getBundle();
-        if (draftBundle != null && liveBundle != null && !liveBundle.isLiveVersion()) {
+        if (draftBundle != null && liveBundle != null && !liveBundle.
+                isLiveVersion()) {
             draftBundle.promotePendingVersion(liveBundle);
         }
 
@@ -1669,7 +1728,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      */
     protected void setVersionRecursively(final String version) {
         s_log.debug("Recursively updating the version attribute of the "
-                + "item");
+                    + "item");
 
         new VersionUpdater(version).updateItemVersion(this);
     }
@@ -1702,9 +1761,10 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @deprecated use {@link #copyProperty(CustomCopy, Property, ItemCopier)} instead
      */
     protected final boolean copyProperty(final ContentItem source,
-            final String attribute,
-            final ItemCopier copier) {
-        throw new UnsupportedOperationException("use copyProperty(CustomCopy, Property, ItemCopier) for copying");
+                                         final String attribute,
+                                         final ItemCopier copier) {
+        throw new UnsupportedOperationException(
+                "use copyProperty(CustomCopy, Property, ItemCopier) for copying");
     }
 
     /**
@@ -1793,8 +1853,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      *   to copy the property.
      */
     public boolean copyProperty(final CustomCopy source,
-            final Property property,
-            final ItemCopier copier) {
+                                final Property property,
+                                final ItemCopier copier) {
         String attribute = property.getName();
         if (CHILDREN.equals(attribute)) {
             return true;
@@ -1822,26 +1882,29 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         // If live Bundle already exists, recategorize.
         if (PARENT.equals(attribute)) {
             ACSObject parent = ((ContentItem) source).getParent();
-            if (parent != null && copier.getCopyType() == ItemCopier.VERSION_COPY) {
+            if (parent != null && copier.getCopyType()
+                                  == ItemCopier.VERSION_COPY) {
                 if (parent instanceof ContentBundle) {
 
                     ContentBundle bundle = (ContentBundle) parent;
-                    ContentBundle liveBundle = (ContentBundle) bundle.getPublicVersion();
+                    ContentBundle liveBundle = (ContentBundle) bundle.
+                            getPublicVersion();
                     if (liveBundle == null) {
-                        liveBundle = (ContentBundle) bundle.createPendingVersion(null);
+                        liveBundle =
+                        (ContentBundle) bundle.createPendingVersion(null);
                     } else {
                         Set liveCatSet = new HashSet();
                         Set draftCatSet = new HashSet();
 
                         CategoryCollection liveCategories =
-                                liveBundle.getCategoryCollection();
+                                           liveBundle.getCategoryCollection();
                         while (liveCategories.next()) {
                             liveCatSet.add(liveCategories.getCategory());
                         }
                         liveCategories.close();
 
                         CategoryCollection draftCategories =
-                                bundle.getCategoryCollection();
+                                           bundle.getCategoryCollection();
                         while (draftCategories.next()) {
                             draftCatSet.add(draftCategories.getCategory());
                         }
@@ -1854,7 +1917,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
                         Iterator removeIter = catsToRemove.iterator();
                         while (removeIter.hasNext()) {
-                            liveBundle.removeCategory((Category) removeIter.next());
+                            liveBundle.removeCategory(
+                                    (Category) removeIter.next());
                         }
                         Iterator addIter = catsToAdd.iterator();
                         while (addIter.hasNext()) {
@@ -1932,7 +1996,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         // slp.getLocale()
 
         try {
-            locale = Locale.fromJavaLocale(new java.util.Locale(getLanguage(), ""));
+            locale = Locale.fromJavaLocale(new java.util.Locale(getLanguage(),
+                                                                ""));
         } catch (GlobalizationException e) {
             s_log.warn("GlobalizationException thrown in getLocale()", e);
             throw new UncheckedWrapperException(e.getMessage());
@@ -2024,20 +2089,26 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         super.beforeDelete();
 
         // remove Link associations to this
-        DataCollection dc = SessionManager.getSession().retrieve(Link.BASE_DATA_OBJECT_TYPE);
+        DataCollection dc = SessionManager.getSession().retrieve(
+                Link.BASE_DATA_OBJECT_TYPE);
         dc.addEqualsFilter(Link.TARGET_ITEM + "." + ACSObject.ID,
-                getID());
+                           getID());
         while (dc.next()) {
-            Link link = (Link) DomainObjectFactory.newInstance(dc.getDataObject());
+            Link link = (Link) DomainObjectFactory.newInstance(
+                    dc.getDataObject());
             link.setTargetItem(null);
         }
 
         // remove ContentGroup associations to this
-        dc = SessionManager.getSession().retrieve(ContentGroupAssociation.BASE_DATA_OBJECT_TYPE);
-        dc.addEqualsFilter(ContentGroupAssociation.CONTENT_ITEM + "." + ACSObject.ID,
-                getID());
+        dc = SessionManager.getSession().retrieve(
+                ContentGroupAssociation.BASE_DATA_OBJECT_TYPE);
+        dc.addEqualsFilter(ContentGroupAssociation.CONTENT_ITEM + "."
+                           + ACSObject.ID,
+                           getID());
         while (dc.next()) {
-            ContentGroupAssociation groupAssoc = (ContentGroupAssociation) DomainObjectFactory.newInstance(dc.getDataObject());
+            ContentGroupAssociation groupAssoc =
+                                    (ContentGroupAssociation) DomainObjectFactory.
+                    newInstance(dc.getDataObject());
             groupAssoc.setContentItem(null);
         }
     }
@@ -2110,5 +2181,4 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public List getExtraXMLGenerators() {
         return extraXMLGenerators;
     }
-
 }

@@ -47,10 +47,9 @@ import java.util.Iterator;
 class DomainCopier extends DomainService {
 
     private static Logger s_log = Logger.getLogger(DomainCopier.class);
-
     // A map of OID => DomainObject
     private final HashMap m_copied;
-    private final TraversedSet m_traversed;
+    protected final TraversedSet m_traversed;
     final Tracer m_trace;
 
     /**
@@ -69,7 +68,7 @@ class DomainCopier extends DomainService {
      *
      * @param source the <code>DomainObject</code> from which to copy
      */
-    public  DomainObject copy(final DomainObject source) {
+    public DomainObject copy(final DomainObject source) {
         m_trace.enter("copy", source);
 
         final OID sourceOID = source.getOID();
@@ -90,15 +89,15 @@ class DomainCopier extends DomainService {
 
             if (source instanceof ACSObject) {
                 final String type =
-                    ((ACSObject) source).getSpecificObjectType();
-                
-                target = (DomainObject)Classes.newInstance(
-                    clacc, 
-                    new Class[] { String.class },
-                    new Object[] { type });
+                             ((ACSObject) source).getSpecificObjectType();
+
+                target = (DomainObject) Classes.newInstance(
+                        clacc,
+                        new Class[]{String.class},
+                        new Object[]{type});
             } else {
-                Assert.fail("Cannot copy " + source + "; it is not an " +
-                            "ACSObject");
+                Assert.fail("Cannot copy " + source + "; it is not an "
+                            + "ACSObject");
                 // XXX Contrary to this assertion, it is reasonable to
                 // copy domain objects, and this code should support
                 // it.
@@ -129,59 +128,59 @@ class DomainCopier extends DomainService {
     }
 
     protected void copyData(final DomainObject source, DomainObject target) {
-            final ObjectType type = source.getObjectType();
+        final ObjectType type = source.getObjectType();
 
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Using object type " + type.getName());
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Using object type " + type.getName());
+        }
+
+        // XXX This is what I would like to do:
+        //
+        //final Iterator iter = type.getProperties();
+        //
+        //while (iter.hasNext()) {
+        //    copyProperty(source, target, (Property) iter.next());
+        //}
+
+        // But the beforeSave-on-flush behavior makes it so I have
+        // to do this instead:
+
+        Iterator iter = type.getProperties();
+        final ArrayList attributes = new ArrayList();
+        final ArrayList roles = new ArrayList();
+        final ArrayList collections = new ArrayList();
+
+        while (iter.hasNext()) {
+            final Property prop = (Property) iter.next();
+
+            if (prop.isAttribute()) {
+                attributes.add(prop);
+            } else if (prop.isCollection()) {
+                collections.add(prop);
+            } else {
+                roles.add(prop);
             }
+        }
 
-            // XXX This is what I would like to do:
-            //
-            //final Iterator iter = type.getProperties();
-            //
-            //while (iter.hasNext()) {
-            //    copyProperty(source, target, (Property) iter.next());
-            //}
+        iter = attributes.iterator();
 
-            // But the beforeSave-on-flush behavior makes it so I have
-            // to do this instead:
+        while (iter.hasNext()) {
+            copyProperty(source, target, (Property) iter.next());
+        }
 
-            Iterator iter = type.getProperties();
-            final ArrayList attributes = new ArrayList();
-            final ArrayList roles = new ArrayList();
-            final ArrayList collections = new ArrayList();
+        iter = roles.iterator();
 
-            while (iter.hasNext()) {
-                final Property prop = (Property) iter.next();
+        while (iter.hasNext()) {
+            copyProperty(source, target, (Property) iter.next());
+        }
 
-                if (prop.isAttribute()) {
-                    attributes.add(prop);
-                } else if (prop.isCollection()) {
-                    collections.add(prop);
-                } else {
-                    roles.add(prop);
-                }
-            }
+        iter = collections.iterator();
 
-            iter = attributes.iterator();
+        while (iter.hasNext()) {
+            copyProperty(source, target, (Property) iter.next());
+        }
 
-            while (iter.hasNext()) {
-                copyProperty(source, target, (Property) iter.next());
-            }
 
-            iter = roles.iterator();
-
-            while (iter.hasNext()) {
-                copyProperty(source, target, (Property) iter.next());
-            }
-
-            iter = collections.iterator();
-
-            while (iter.hasNext()) {
-                copyProperty(source, target, (Property) iter.next());
-            }
-
-        
     }
 
     /**
@@ -211,8 +210,8 @@ class DomainCopier extends DomainService {
         }
 
         if (prop.isKeyProperty()) {
-            s_log.debug("The property is one of the key properties; " +
-                        "skipping it");
+            s_log.debug("The property is one of the key properties; "
+                        + "skipping it");
         } else {
             s_log.debug("Copying is enabled; proceeding");
 
@@ -281,8 +280,8 @@ class DomainCopier extends DomainService {
         final String name = prop.getName();
 
         if (m_traversed.contains(source, prop)) {
-            s_log.debug("The role belongs to a link that has " +
-                        "already been traversed; skipping it");
+            s_log.debug("The role belongs to a link that has "
+                        + "already been traversed; skipping it");
         } else {
             // This marks the forward link traversed.  Further down,
             // in this method and in copyCollection, we mark the
@@ -363,12 +362,13 @@ class DomainCopier extends DomainService {
             m_traversed.add(selem, reverse);
 
             final DomainObject telem = copy(source, target, selem, prop);
+
             DataObject tgtLink = null;
 
             // removing this assert since copy will return null in the
             // case of deferred association creation in VersionCopier
             //Assert.exists(telem, DomainObject.class);
-            
+
             if (telem != null) {
                 tgtLink = add(target, name, telem);
             }
@@ -410,8 +410,7 @@ class DomainCopier extends DomainService {
 
         if (prop.isComponent()) {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("The property is a component; " +
-                            "copying by value");
+                s_log.debug("The property is a component; " + "copying by value");
             }
 
             final DomainObject copy = copy(object);
@@ -420,8 +419,8 @@ class DomainCopier extends DomainService {
 
             return copy;
         } else {
-            s_log.debug("The property is not a component; " +
-                        "copying by reference");
+            s_log.debug("The property is not a component; "
+                        + "copying by reference");
 
             m_trace.exit("copy", object);
 
@@ -442,10 +441,8 @@ class DomainCopier extends DomainService {
         return (DomainObject) m_copied.get(oid);
     }
 
-
     // Utility methods and classes
-
-    private DomainObject domain(final DataObject data) {
+    protected DomainObject domain(final DataObject data) {
         Assert.exists(data, DataObject.class);
 
         final DomainObject domain = DomainObjectFactory.newInstance(data);
@@ -455,7 +452,8 @@ class DomainCopier extends DomainService {
         return domain;
     }
 
-    private static class TraversedSet extends HashSet {
+    protected static class TraversedSet extends HashSet {
+
         void add(final DomainObject object, final Property prop) {
             Assert.exists(object, DomainObject.class);
 
@@ -472,14 +470,15 @@ class DomainCopier extends DomainService {
             return contains(object.getOID() + "." + prop.getName());
         }
     }
-    private final class WrapperDomainObject extends DomainObject{
+
+    protected final class WrapperDomainObject extends DomainObject {
+
         public WrapperDomainObject(DataObject dobj) {
             super(dobj);
         }
-        
+
         public WrapperDomainObject(OID oid) {
             super(oid);
         }
-        
     }
 }
