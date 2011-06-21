@@ -116,6 +116,10 @@ public class Summary extends CMSContainer {
             itemElement.addAttribute("name",item.getName());
 
             String objectType = item.getObjectType().getName();
+
+            // Quasimodo: ObjectType for summary
+            itemElement.addAttribute("objectType", objectType);
+
             String descriptionAttribute = "";
             if ( objectType.equals("NewsItem") || objectType.equals("Article") ) {
                 descriptionAttribute = "lead";
