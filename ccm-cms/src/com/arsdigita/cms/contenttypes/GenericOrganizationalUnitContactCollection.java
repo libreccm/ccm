@@ -64,7 +64,7 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
     public void setContactOrder(Integer order) {
         DataObject link = (DataObject) this.get("link");
 
-        link.set(LINK_CONTACT_ORDER, order);
+        link.set(CONTACT_ORDER, order);
     }
 
     /**
