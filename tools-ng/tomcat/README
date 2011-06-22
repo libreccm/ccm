@@ -1,0 +1,17 @@
+Here we provide source rpms to create a rpm based Tomcat distribution which 
+just installs the original Apache Tomcat distribution in a rpm system and
+FSH compatible manner (i.e. install into /usr/share/tomcatX, /etc/tomcatX, ...)
+
+Tomcat as distributed by jPackage.org, Red Hat, SuSE and others replace some  
+libraries of the Apache Tomcat distribution by (hopefully) equivalent general
+Java packages and place them for system-wide usage (and indepentend updates)
+into /usr/share/java directory tree. Furthermore they inject extra capabilities,
+which may not been desired and may conflict with a CCM installation. Also, 
+system wide installed jars introduce dependencies from other programs and 
+you may end up in the well known "dependency hell". 
+
+This causes trouble in some circumstances.
+
+The source rpm creates a sellf contained distribution which is just dependent
+on a Java installation. 
+
