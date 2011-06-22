@@ -67,7 +67,7 @@ public class GenericOrganizationalUnitPersonAddForm
     public GenericOrganizationalUnitPersonAddForm(ItemSelectionModel itemModel,
                                                   GenericOrganizationalUnitPersonSelector selector) {
         super("PersonAddForm", itemModel);
-        this.selector = selector;       
+        this.selector = selector;
         addSubmissionListener(this);
     }
 
@@ -78,7 +78,7 @@ public class GenericOrganizationalUnitPersonAddForm
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(getPersonType()));
         /*m_itemSearch.getItemField().addValidationListener(
-                new NotNullValidationListener());*/
+        new NotNullValidationListener());*/
         add(this.m_itemSearch);
 
         selectedPersonNameLabel = new Label("");
@@ -116,7 +116,8 @@ public class GenericOrganizationalUnitPersonAddForm
         statusSelect.addOption(new Option("",
                                           new Label((String) ContenttypesGlobalizationUtil.
                 globalize("cms.ui.select_one").localize())));
-        RelationAttributeCollection statusColl = new RelationAttributeCollection(
+        RelationAttributeCollection statusColl =
+                                    new RelationAttributeCollection(
                 getStatusAttributeName());
         statusColl.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
                 getLanguage());
@@ -164,7 +165,8 @@ public class GenericOrganizationalUnitPersonAddForm
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) getItemSelectionModel().
+        GenericOrganizationalUnit orga =
+                                  (GenericOrganizationalUnit) getItemSelectionModel().
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
@@ -173,11 +175,14 @@ public class GenericOrganizationalUnitPersonAddForm
             person = selector.getSelectedPerson();
 
             if (person == null) {
-                logger.debug(String.format("Adding person %s",
-                                           ((GenericPerson) data.get(ITEM_SEARCH)).
-                        getFullName()));
+                GenericPerson personToAdd =
+                              (GenericPerson) data.get(ITEM_SEARCH);
+                personToAdd.getContentBundle().getInstance(orga.getLanguage());
 
-                orga.addPerson((GenericPerson) data.get(ITEM_SEARCH),
+                logger.debug(String.format("Adding person %s",
+                                           personToAdd.getFullName()));
+
+                orga.addPerson(personToAdd,
                                (String) data.get(
                         GenericOrganizationalUnitPersonCollection.PERSON_ROLE),
                                (String) data.get(
@@ -217,6 +222,51 @@ public class GenericOrganizationalUnitPersonAddForm
             selector.setSelectedPersonStatus(null);
 
             init(fse);
+        }
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if ((selector.getSelectedPerson() == null)
+            && (data.get(ITEM_SEARCH) == null)) {
+            data.addError(
+                    ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.genericorgaunit.person.no_person_selected"));
+            return;
+        }
+
+        if (selector.getSelectedPerson() == null) {
+            GenericOrganizationalUnit orga =
+                                      (GenericOrganizationalUnit) getItemSelectionModel().
+                    getSelectedObject(state);
+
+            GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
+
+            if (!(person.getContentBundle().hasInstance(orga.getLanguage()))) {
+                data.addError(
+                        ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.genericorgaunit.person.no_suitable_language_variant"));
+                
+                return;
+            }
+
+            person = (GenericPerson) person.getContentBundle().getInstance(orga.
+                    getLanguage());
+            GenericOrganizationalUnitPersonCollection persons =
+                                                      orga.getPersons();
+
+            persons.addFilter(String.format("id = %s",
+                                            person.getID().toString()));
+            if (persons.size() > 0) {
+                data.addError(
+                        ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.genericorgaunit.person.already_added"));
+            }
+            
+            persons.close();
         }
     }
 

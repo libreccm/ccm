@@ -55,9 +55,37 @@ public class UnPublishedOrganizationForm
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            unPublished.setOrganization((GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.
+                    get(ITEM_SEARCH);
+            orga = (GenericOrganizationalUnit) orga.getContentBundle().
+                    getInstance(unPublished.getLanguage());
 
-            init(fse);
+            unPublished.setOrganization(orga);
+
+        }
+
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.unpublished.organization.no_orga_selected"));
+            return;
+        }
+
+        UnPublished unPublished = (UnPublished) getItemSelectionModel().
+                getSelectedObject(state);
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
+                ITEM_SEARCH);
+        if (!(orga.getContentBundle().hasInstance(unPublished.getLanguage()))) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.unpublished.organization.no_suitable_language_variant"));
+            return;
         }
     }
 }

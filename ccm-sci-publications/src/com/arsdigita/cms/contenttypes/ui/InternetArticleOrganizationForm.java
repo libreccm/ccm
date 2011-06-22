@@ -51,13 +51,42 @@ public class InternetArticleOrganizationForm
     public void process(final FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        InternetArticle article = (InternetArticle) getItemSelectionModel().getSelectedObject(state);
+        InternetArticle article = (InternetArticle) getItemSelectionModel().
+                getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            article.setOrganization((GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.
+                    get(ITEM_SEARCH);
+            orga = (GenericOrganizationalUnit) orga.getContentBundle().
+                    getInstance(article.getLanguage());
 
-            init(fse);
+            article.setOrganization(orga);
         }
 
+        init(fse);
+    }
+
+    @Override
+    public void validate(final FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.internetarticle.select_organization.no_orga_selected"));
+            return;
+        }
+
+        InternetArticle article = (InternetArticle) getItemSelectionModel().
+                getSelectedObject(state);
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
+                ITEM_SEARCH);
+        if (!(orga.getContentBundle().hasInstance(article.getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.internetarticle.select_organization.no_suitable_language_variant"));
+            return;
+        }
     }
 }

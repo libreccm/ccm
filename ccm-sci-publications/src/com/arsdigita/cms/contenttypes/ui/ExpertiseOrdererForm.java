@@ -41,7 +41,7 @@ public class ExpertiseOrdererForm
     }
 
     @Override
-    public void init(final FormSectionEvent fse) throws FormProcessException{
+    public void init(final FormSectionEvent fse) throws FormProcessException {
         PageState state = fse.getPageState();
 
         setVisible(state, true);
@@ -51,12 +51,40 @@ public class ExpertiseOrdererForm
     public void process(final FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
+        Expertise expertise = (Expertise) getItemSelectionModel().
+                getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            expertise.setOrderer((GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+            GenericOrganizationalUnit orderer =
+                                      (GenericOrganizationalUnit) data.get(
+                    ITEM_SEARCH);
+            orderer = (GenericOrganizationalUnit) orderer.getContentBundle().
+                    getInstance(expertise.getLanguage());
 
-            init(fse);
+            expertise.setOrderer(orderer);
+        }
+
+        init(fse);
+    }
+    
+    @Override public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+        
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.expertise.orderer.no_orderer_selected"));
+            
+            return;
+        } 
+        
+        Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
+        GenericOrganizationalUnit orderer = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);        
+        if (!(orderer.getContentBundle().hasInstance(expertise.getLanguage()))) {
+              data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.expertise.orderer.no_suitable_langauge_variant"));
+            
+            return;
         }
     }
 }

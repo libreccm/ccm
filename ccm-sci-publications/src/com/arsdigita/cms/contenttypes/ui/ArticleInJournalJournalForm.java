@@ -55,7 +55,7 @@ public class ArticleInJournalJournalForm
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleInJournal.selectJournal")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
-                ContentType.findByAssociatedObjectType(
+                                          ContentType.findByAssociatedObjectType(
                 Journal.class.getName()));
         add(itemSearch);
     }
@@ -71,14 +71,39 @@ public class ArticleInJournalJournalForm
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        ArticleInJournal article = (ArticleInJournal) getItemSelectionModel().getSelectedObject(state);
+        ArticleInJournal article = (ArticleInJournal) getItemSelectionModel().
+                getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            article.setJournal((Journal) data.get(ITEM_SEARCH));
+            Journal journal = (Journal) data.get(ITEM_SEARCH);
+            journal = (Journal) journal.getContentBundle().getInstance(article.
+                    getLanguage());
 
-            init(fse);
+            article.setJournal(journal);
         }
 
+        init(fse);
     }
 
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state= fse.getPageState();
+        final FormData data = fse.getFormData();
+        
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInJournal.selectJournal.no_journal_selected"));
+            return;
+        }
+        
+        ArticleInJournal article = (ArticleInJournal) getItemSelectionModel().getSelectedObject(
+                state);
+        Journal journal = (Journal) data.get(ITEM_SEARCH);
+        
+        if (!(journal.getContentBundle().hasInstance(article.getLanguage()))) {
+               data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInJournal.selectJournal.no_suitable_language_variant"));
+            return;
+        }                
+    }
 }

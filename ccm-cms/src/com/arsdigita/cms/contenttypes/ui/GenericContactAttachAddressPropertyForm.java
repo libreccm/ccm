@@ -1,12 +1,3 @@
-/*
- * ContactEditAddressPropertyForm.java
- *
- * Created on 8. Juli 2009, 10:27
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
@@ -36,15 +27,16 @@ import org.apache.log4j.Logger;
  *
  * @author quasi
  */
-public class GenericContactAttachAddressPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
-    
-    private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
+public class GenericContactAttachAddressPropertyForm extends BasicPageForm
+        implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
+    private static final Logger logger =
+                                Logger.getLogger(
+            GenericContactPropertyForm.class);
     private GenericContactAddressPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "contactAddress";
-
     /**
      * ID of the form
      */
@@ -55,7 +47,7 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm imple
      *
      * @param itemModel
      */
-    public GenericContactAttachAddressPropertyForm(ItemSelectionModel itemModel)    {
+    public GenericContactAttachAddressPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
@@ -65,7 +57,8 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm imple
      * @param itemModel
      * @param step
      */
-    public GenericContactAttachAddressPropertyForm(ItemSelectionModel itemModel, GenericContactAddressPropertiesStep step) {
+    public GenericContactAttachAddressPropertyForm(ItemSelectionModel itemModel,
+                                                   GenericContactAddressPropertiesStep step) {
         super(ID, itemModel);
         addSubmissionListener(this);
 
@@ -73,22 +66,26 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm imple
 
         addInitListener(this);
         addSubmissionListener(this);
-        
+
     }
 
     @Override
     public void addWidgets() {
-        add(new Label((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_address").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericAddress"));
-        add(this.m_itemSearch);       
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.contact.select_address").localize()));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
+                findByAssociatedObjectType(
+                "com.arsdigita.cms.contenttypes.GenericAddress"));
+        add(this.m_itemSearch);
     }
-    
+
     @Override
     public void init(FormSectionEvent fse) {
-	FormData data = fse.getFormData();
+        FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(state);
-       
+        GenericContact contact = (GenericContact) getItemSelectionModel().
+                getSelectedObject(state);
+
         setVisible(state, true);
 
         if (contact != null) {
@@ -98,16 +95,22 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm imple
 
     @Override
     public void process(FormSectionEvent fse) {
-	FormData data = fse.getFormData();
+        FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(state);
+        GenericContact contact = (GenericContact) getItemSelectionModel().
+                getSelectedObject(state);
 
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            contact.setAddress((GenericAddress)data.get(ITEM_SEARCH));
+            GenericAddress address = (GenericAddress) data.get(ITEM_SEARCH);
+
+            address = (GenericAddress) address.getContentBundle().getInstance(
+                    contact.getLanguage());
+
+            contact.setAddress(address);
         }
+        
         init(fse);
     }
-
 
     /**
      * Creates the section with the save and the cancel button.
@@ -119,13 +122,21 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm imple
 
                 @Override
                 public void prepare(PrintEvent e) {
-                    GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(e.getPageState());
+                    GenericContact contact =
+                                   (GenericContact) getItemSelectionModel().
+                            getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
 
                     if (contact.getAddress() != null) {
-                        target.setButtonLabel((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_address.change").localize());
+                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                                globalize(
+                                "cms.contenttypes.ui.contact.select_address.change").
+                                localize());
                     } else {
-                        target.setButtonLabel((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_address.add").localize());
+                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                                globalize(
+                                "cms.contenttypes.ui.contact.select_address.add").
+                                localize());
                     }
                 }
             });
@@ -136,16 +147,35 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm imple
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
-        if (e.getFormData().get(ITEM_SEARCH) == null) {
-            throw new FormProcessException((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_address.wrong_type").localize());
+        final PageState state = e.getPageState();
+        final FormData data = e.getFormData();
+        
+        if (data.get(ITEM_SEARCH) == null) {
+            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+                    globalize(
+                    "cms.contenttypes.ui.contact.select_address.wrong_type").
+                    localize());
         }
+                
+        GenericContact contact = (GenericContact) getItemSelectionModel().
+                getSelectedObject(state);
+        
+          GenericAddress address = (GenericAddress) data.get(ITEM_SEARCH);
+          
+          if (!(address.getContentBundle().hasInstance(contact.getLanguage()))) {
+              data.addError( ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.contact.select_address.no_suitable_language_variant"));
+          }
     }
 
     @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(e.getPageState())) {
             init(e);
-            throw new FormProcessException((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_address.cancelled").localize());
+            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+                    globalize(
+                    "cms.contenttypes.ui.contact.select_address.cancelled").
+                    localize());
         }
     }
 }

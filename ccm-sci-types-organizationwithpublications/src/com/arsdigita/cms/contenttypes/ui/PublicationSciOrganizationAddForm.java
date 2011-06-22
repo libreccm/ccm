@@ -29,9 +29,11 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationSciOrganizationCollection;
 import com.arsdigita.cms.contenttypes.SciOrganizationWithPublications;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 
 /**
@@ -78,13 +80,55 @@ public class PublicationSciOrganizationAddForm
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             SciOrganizationWithPublications organization =
                                             (SciOrganizationWithPublications) data.
-                    get(
-                    ITEM_SEARCH);
+                    get(ITEM_SEARCH);
+            organization = (SciOrganizationWithPublications) organization.
+                    getContentBundle().getInstance(publication.getLanguage());
             DataObject link = publication.add("organizations", organization);
-            link.set("publicationOrder", Integer.valueOf((int)organization.getPublications().size()));
+            link.set("publicationOrder", Integer.valueOf((int) organization.
+                    getPublications().size()));
             link.save();
         }
 
         init(fse);
     }
+
+    @Override
+    public void validate(final FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(SciOrganizationWithPublicationsGlobalizationUtil.
+                    globalize(
+                    "sciorganization.ui.selectOrganization.no_orga_selected"));
+            return;
+        }
+
+        Publication publication = (Publication) getItemSelectionModel().
+                getSelectedObject(state);
+        SciOrganizationWithPublications organization =
+                                        (SciOrganizationWithPublications) data.
+                get(ITEM_SEARCH);
+        if (!(organization.getContentBundle().hasInstance(publication.
+              getLanguage()))) {
+            data.addError(
+                    SciOrganizationWithPublicationsGlobalizationUtil.globalize(
+                    "sciorganization.ui.selectOrganization.no_suitable_language_variant"));
+            return;
+        }
+
+        organization = (SciOrganizationWithPublications) organization.
+                getContentBundle().getInstance(publication.getLanguage());
+        PublicationSciOrganizationCollection organizations =
+                                             new PublicationSciOrganizationCollection((DataCollection) publication.
+                get("organizations"));
+        organizations.addFilter(String.format("id = %s", organization.getID().toString()));
+        if (organizations.size() > 0 ) {
+               data.addError(
+                    SciOrganizationWithPublicationsGlobalizationUtil.globalize(
+                    "sciorganization.ui.selectOrganization.already_added"));
+        }
+        
+        organizations.close();
+    } 
 }

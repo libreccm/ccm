@@ -69,16 +69,53 @@ public class SciProjectSuperProjectSetForm
 
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
-       FormData data = fse.getFormData();
-       PageState state = fse.getPageState();
-       SciProject project = (SciProject) getItemSelectionModel().
-               getSelectedObject(state);
+        FormData data = fse.getFormData();
+        PageState state = fse.getPageState();
+        SciProject project = (SciProject) getItemSelectionModel().
+                getSelectedObject(state);
 
-       if (this.getSaveCancelSection().getSaveButton().
-               isSelected(state)) {
-           project.setSuperProject((SciProject) data.get(ITEM_SEARCH));
+        if (this.getSaveCancelSection().getSaveButton().
+                isSelected(state)) {
+            SciProject superProject = (SciProject) data.get(ITEM_SEARCH);
+            superProject = (SciProject) superProject.getContentBundle().
+                    getInstance(project.getLanguage());
 
-           init(fse);
-       }
+            project.setSuperProject(superProject);
+        }
+
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.select_superproject.no_project_selected"));
+            return;
+        }
+
+        SciProject project = (SciProject) getItemSelectionModel().
+                getSelectedObject(state);
+        SciProject superProject = (SciProject) data.get(ITEM_SEARCH);
+        if (!(superProject.getContentBundle().hasInstance(project.getLanguage()))) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.select_superproject.no_suitable_language_variant"));
+            return;
+        }
+
+        superProject = (SciProject) superProject.getContentBundle().getInstance(project.
+                getLanguage());
+        if (superProject.getID().equals(project.getID())) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.select_superproject.same_project"));
+            return;
+        }
+
     }
 }

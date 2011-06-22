@@ -42,7 +42,7 @@ public class SciMemberSciProjectAddForm
     private Label selectedProjectNameLabel;
 
     public SciMemberSciProjectAddForm(ItemSelectionModel itemModel,
-                                         SciMemberSciProjectsStep step) {
+                                      SciMemberSciProjectsStep step) {
         super("sciMemberProjectAddForm", itemModel);
         this.step = step;
     }
@@ -90,7 +90,8 @@ public class SciMemberSciProjectAddForm
         statusSelect.addOption(new Option("",
                                           new Label((String) ContenttypesGlobalizationUtil.
                 globalize("cms.ui.select_one").localize())));
-        RelationAttributeCollection statusColl = new RelationAttributeCollection(
+        RelationAttributeCollection statusColl =
+                                    new RelationAttributeCollection(
                 "GenericOrganizationalUnitMemberStatus");
         statusColl.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
                 getLanguage());
@@ -143,10 +144,14 @@ public class SciMemberSciProjectAddForm
             project = step.getSelectedProject();
 
             if (project == null) {
-                member.addProject((SciProject) data.get(ITEM_SEARCH),
-                                     (String) data.get(
+                SciProject projectToAdd = (SciProject) data.get(ITEM_SEARCH);
+                projectToAdd = (SciProject) projectToAdd.getContentBundle().
+                        getInstance(member.getLanguage());
+
+                member.addProject(projectToAdd,
+                                  (String) data.get(
                         SciMemberSciProjectsCollection.MEMBER_ROLE),
-                                     (String) data.get(
+                                  (String) data.get(
                         SciMemberSciProjectsCollection.STATUS));
             } else {
                 SciMemberSciProjectsCollection projects;
@@ -177,12 +182,44 @@ public class SciMemberSciProjectAddForm
 
     @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
-        if (getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+        if (getSaveCancelSection().getCancelButton().isSelected(
+                fse.getPageState())) {
             step.setSelectedProject(null);
             step.setSelectedProjectRole(null);
             step.setSelectedProjectStatus(null);
 
             init(fse);
         }
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.project.select_project.no_project_selected"));
+            return;
+        }
+
+        SciMember member = (SciMember) getItemSelectionModel().getSelectedObject(
+                state);
+        SciProject project = (SciProject) data.get(ITEM_SEARCH);
+        if (!(project.getContentBundle().hasInstance(member.getLanguage()))) {
+            data.addError(SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.project.select_project.no_suitable_language_variant"));
+            return;
+        }
+        
+        project = (SciProject) project.getContentBundle().getInstance(member.getLanguage());
+        SciMemberSciProjectsCollection projects = member.getProjects();
+        projects.addFilter(String.format("id = %s", project.getID().toString()));
+        if (projects.size() > 0) {
+            data.addError(SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.project.select_project.already_added"));
+        }
+        
+        projects.close();
     }
 }

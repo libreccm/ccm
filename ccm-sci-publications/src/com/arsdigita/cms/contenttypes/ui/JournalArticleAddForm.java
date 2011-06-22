@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.ArticleInJournalCollection;
 import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -57,7 +58,7 @@ public class JournalArticleAddForm
 
     @Override
     public void addWidgets() {
-         add(new Label((String) PublicationGlobalizationUtil.globalize(
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.articles.select_article").
                 localize()));
         m_itemSearch = new ItemSearchWidget(
@@ -83,9 +84,48 @@ public class JournalArticleAddForm
                 state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            journal.addArticle((ArticleInJournal) data.get(ITEM_SEARCH));
+            ArticleInJournal article = (ArticleInJournal) data.get(ITEM_SEARCH);
+            article = (ArticleInJournal) article.getContentBundle().getInstance(journal.
+                    getLanguage());
+
+            journal.addArticle(article);
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.journal.articles.select_article.no_article_selected"));
+            return;
+        }
+
+        Journal journal = (Journal) getItemSelectionModel().getSelectedObject(
+                state);
+        ArticleInJournal article = (ArticleInJournal) data.get(ITEM_SEARCH);
+        if (!(article.getContentBundle().hasInstance(journal.getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.journal.articles.select_article.no_suitable_language_variant"));
+            return;
+        }
+
+        article = (ArticleInJournal) article.getContentBundle().getInstance(journal.
+                getLanguage());
+        ArticleInJournalCollection articles = journal.getArticles();
+        articles.addFilter(String.format("id = %s", article.getID().toString()));
+        if (articles.size() > 0) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.journal.articles.select_article.already_added"));
+        }
+
+        articles.close();
     }
 }

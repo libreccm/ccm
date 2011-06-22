@@ -52,7 +52,7 @@ public class PublicationAuthorAddForm
     private static final Logger s_log = Logger.getLogger(
             PublicationAuthorAddForm.class);
     private PublicationPropertiesStep m_step;
-    private ItemSearchWidget m_itemSearch;  
+    private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "authors";
     private ItemSelectionModel m_itemModel;
     private SimpleEditStep editStep;
@@ -82,7 +82,7 @@ public class PublicationAuthorAddForm
         add(selectedAuthorLabel);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.is_editor").localize()));     
+                "publications.ui.authors.author.is_editor").localize()));
         isEditor = new CheckboxGroup("isEditorGroup");
         isEditor.addOption(new Option(ISEDITOR, ""));
         add(isEditor);
@@ -146,9 +146,12 @@ public class PublicationAuthorAddForm
             }
 
             if (author == null) {
-                publication.addAuthor(
-                        (GenericPerson) data.get(ITEM_SEARCH),
-                        editor);                       
+                GenericPerson authorToAdd =
+                              (GenericPerson) data.get(ITEM_SEARCH);
+                authorToAdd = (GenericPerson) authorToAdd.getContentBundle().
+                        getInstance(publication.getLanguage());
+
+                publication.addAuthor(authorToAdd, editor);
             } else {
                 AuthorshipCollection authors;
 
@@ -161,7 +164,7 @@ public class PublicationAuthorAddForm
                 }
 
                 authors.setEditor(editor);
-               
+
                 ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthor(
                         null);
                 ((PublicationAuthorsPropertyStep) editStep).
@@ -174,6 +177,7 @@ public class PublicationAuthorAddForm
         init(fse);
     }
 
+    @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(
                 fse.getPageState())) {
@@ -184,5 +188,38 @@ public class PublicationAuthorAddForm
 
             init(fse);
         }
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if ((((PublicationAuthorsPropertyStep) editStep).getSelectedAuthor()
+             == null)
+            && (data.get(ITEM_SEARCH) == null)) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.authors.selectAuthor.no_author_selected"));
+            return;
+        }
+        
+         Publication publication = (Publication) getItemSelectionModel().
+                getSelectedObject(state);         
+         GenericPerson author = (GenericPerson) data.get(ITEM_SEARCH);
+         if (!(author.getContentBundle().hasInstance(publication.getLanguage()))) {
+             data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.authors.selectAuthor.no_suitable_language_variant"));
+            return;
+         }
+         
+         author = (GenericPerson) author.getContentBundle().getInstance(publication.getLanguage());
+         AuthorshipCollection authors = publication.getAuthors();
+         authors.addFilter(String.format("id = %s", author.getID().toString()));
+         if (authors.size() > 0) {
+             data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.authors.selectAuthor.already_added"));
+         }
+         
+         authors.close();
     }
 }

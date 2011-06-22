@@ -29,9 +29,11 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationSciProjectCollection;
 import com.arsdigita.cms.contenttypes.SciProjectWithPublications;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 
 /**
@@ -79,6 +81,8 @@ public class PublicationSciProjectAddForm
             SciProjectWithPublications project =
                                        (SciProjectWithPublications) data.get(
                     ITEM_SEARCH);
+            project = (SciProjectWithPublications) project.getContentBundle().
+                    getInstance(publication.getLanguage());
             DataObject link = publication.add("projects", project);
             link.set("publicationOrder", Integer.valueOf((int) project.
                     getPublications().size()));
@@ -86,5 +90,42 @@ public class PublicationSciProjectAddForm
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(SciOrganizationWithPublicationsGlobalizationUtil.
+                    globalize(
+                    "sciorganization.ui.selectProject.no_project_selected"));
+            return;
+        }
+
+        Publication publication = (Publication) getItemSelectionModel().
+                getSelectedObject(state);
+        SciProjectWithPublications project =
+                                   (SciProjectWithPublications) data.get(
+                ITEM_SEARCH);
+        if (!(project.getContentBundle().hasInstance(publication.getLanguage()))) {
+            data.addError(SciOrganizationWithPublicationsGlobalizationUtil.
+                    globalize(
+                    "sciorganization.ui.selectProject.no_suitable_language_variant"));
+            return;
+        }
+        
+        project = (SciProjectWithPublications) project.getContentBundle().getInstance(publication.getLanguage());
+        PublicationSciProjectCollection projects = new PublicationSciProjectCollection((DataCollection) publication.
+                get("projects"));
+        projects.addFilter(String.format("id = %s", project.getID().toString()));
+        if (projects.size() > 0) {
+            data.addError(SciOrganizationWithPublicationsGlobalizationUtil.
+                    globalize(
+                    "sciorganization.ui.selectProject.already_added"));
+        }
+        
+        projects.close();
     }
 }

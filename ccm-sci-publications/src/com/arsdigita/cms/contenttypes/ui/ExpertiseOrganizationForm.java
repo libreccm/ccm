@@ -41,7 +41,7 @@ public class ExpertiseOrganizationForm
     }
 
     @Override
-    public void init(final FormSectionEvent fse) throws FormProcessException{
+    public void init(final FormSectionEvent fse) throws FormProcessException {
         PageState state = fse.getPageState();
 
         setVisible(state, true);
@@ -51,12 +51,40 @@ public class ExpertiseOrganizationForm
     public void process(final FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
+        Expertise expertise = (Expertise) getItemSelectionModel().
+                getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            expertise.setOrganization((GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.
+                    get(ITEM_SEARCH);
+            orga = (GenericOrganizationalUnit) orga.getContentBundle().
+                    getInstance(expertise.getLanguage());
 
-            init(fse);
+            expertise.setOrganization(orga);
+
         }
+
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.expertise.organization.no_orga_selected"));
+            return;
+        }
+        
+        Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
+        if (!(orga.getContentBundle().hasInstance(expertise.getLanguage()))) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.expertise.organization.no_suitable_language_variant"));
+            return;
+        }
+
     }
 }

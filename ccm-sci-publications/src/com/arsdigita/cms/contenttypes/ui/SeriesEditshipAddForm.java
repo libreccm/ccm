@@ -139,7 +139,11 @@ public class SeriesEditshipAddForm
             editor = editStep.getSelectedEditor();
 
             if (editor == null) {
-                series.addEditor((GenericPerson) data.get(ITEM_SEARCH),
+                GenericPerson editorToAdd =
+                              (GenericPerson) data.get(ITEM_SEARCH);
+                editorToAdd.getContentBundle().getInstance(series.getLanguage());
+
+                series.addEditor(editorToAdd,
                                  (Date) data.get(EditshipCollection.FROM),
                                  (Date) data.get(EditshipCollection.TO));
             } else {
@@ -166,16 +170,46 @@ public class SeriesEditshipAddForm
         init(fse);
     }
 
+    @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
 
         if (getSaveCancelSection().getCancelButton().isSelected(
                 fse.getPageState())) {
             editStep.setSelectedEditor(null);
             editStep.setSelectedEditorDateFrom(null);
-            editStep.setSelectedEditorDateTo(null);
-
-            init(fse);
+            editStep.setSelectedEditorDateTo(null);           
         }
-
+        
+        init(fse);
+    }
+    
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+        
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.no_editor_selected"));
+            return;
+        }
+        
+        Series series = (Series) getItemSelectionModel().getSelectedObject(state);
+        GenericPerson editor = (GenericPerson) data.get(ITEM_SEARCH);
+        if (!(editor.getContentBundle().hasInstance(series.getLanguage()))) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.no_suitable_language_variant"));
+            return;
+        }
+        
+        editor = (GenericPerson) editor.getContentBundle().getInstance(series.getLanguage());
+        EditshipCollection editors = series.getEditors();
+        editors.addFilter(String.format("id = %s", editor.getID().toString()));
+        if (editors.size() > 0) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.already_added"));
+        }
+        
+        editors.close();
     }
 }

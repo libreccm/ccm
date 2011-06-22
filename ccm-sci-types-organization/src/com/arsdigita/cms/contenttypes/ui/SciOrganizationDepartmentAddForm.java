@@ -30,6 +30,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciOrganization;
+import com.arsdigita.cms.contenttypes.SciOrganizationDepartmentsCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
@@ -96,15 +97,36 @@ public class SciOrganizationDepartmentAddForm
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
 
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.organization.department.add.no_department_selected"));
+            
+            return;
+        }
+        
         SciOrganization orga = (SciOrganization) getItemSelectionModel().
                 getSelectedObject(state);
-                
-        SciDepartment department = (SciDepartment) data.get(ITEM_SEARCH);
 
+        SciDepartment department = (SciDepartment) data.get(ITEM_SEARCH);
         if (!(department.getContentBundle().hasInstance(orga.getLanguage()))) {
             data.addError(
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.organization.department.add.no_suitable_language_variant"));
+
+            return;
         }
+
+        department = (SciDepartment) department.getContentBundle().getInstance(orga.
+                getLanguage());
+        SciOrganizationDepartmentsCollection departments = orga.getDepartments();
+        departments.addFilter(String.format("id = %s",
+                                            department.getID().toString()));
+        if (departments.size() > 0) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.organization.department.add.already_added"));
+        }
+        
+        departments.close();
     }
 }

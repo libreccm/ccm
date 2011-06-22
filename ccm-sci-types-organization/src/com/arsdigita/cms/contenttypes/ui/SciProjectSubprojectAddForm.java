@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.SciProjectSubProjectsCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
@@ -76,9 +77,54 @@ public class SciProjectSubprojectAddForm
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            project.addSubProject((SciProject) data.get(ITEM_SEARCH));
+            SciProject subProject = (SciProject) data.get(ITEM_SEARCH);
+            subProject = (SciProject) subProject.getContentBundle().
+                    getInstance(project.getLanguage());
 
-             init(fse);
-        }       
+            project.addSubProject(subProject);
+        }
+
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.select_subproject.no_project_selected"));
+            return;
+        }
+
+        SciProject project = (SciProject) getItemSelectionModel().
+                getSelectedObject(state);
+        SciProject subProject = (SciProject) data.get(ITEM_SEARCH);
+        if (!(subProject.getContentBundle().hasInstance(project.getLanguage()))) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.select_subproject.no_suitable_language_variant"));
+            return;
+        }
+
+        subProject = (SciProject) subProject.getContentBundle().getInstance(project.
+                getLanguage());
+        if (subProject.getID().equals(project.getID())) {
+            data.addError(SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.select_subproject.same_project"));
+            return;
+        }
+
+        SciProjectSubProjectsCollection subProjects = project.getSubProjects();
+        subProjects.addFilter(String.format("id = %s", subProject.getID().
+                toString()));
+        if(subProjects.size() > 0) {
+             data.addError(SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.select_subproject.already_added"));
+        }
+        
+        subProjects.close();
     }
 }

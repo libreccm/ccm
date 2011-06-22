@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.SciOrganizationPublicationsCollection;
 import com.arsdigita.cms.contenttypes.SciOrganizationWithPublications;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -74,9 +75,51 @@ public class SciOrganizationPublicationsAddForm
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            organization.addPublication((Publication) data.get(ITEM_SEARCH));
+            Publication publication = (Publication) data.get(ITEM_SEARCH);
+            publication = (Publication) publication.getContentBundle().
+                    getInstance(organization.getLanguage());
+            organization.addPublication(publication);
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(final FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationWithPublicationsGlobalizationUtil.globalize(
+                    "sciorganization.ui.selectPublication.no_publication_selected"));
+            return;
+        }
+
+        SciOrganizationWithPublications organization =
+                                        (SciOrganizationWithPublications) getItemSelectionModel().
+                getSelectedObject(state);
+        Publication publication = (Publication) data.get(ITEM_SEARCH);
+        if (!(publication.getContentBundle().hasInstance(
+              organization.getLanguage()))) {
+            data.addError(
+                    SciOrganizationWithPublicationsGlobalizationUtil.globalize(
+                    "sciorganization.ui.selectPublication.no_suitable_language_variant"));
+            return;
+        }
+
+        publication = (Publication) publication.getContentBundle().getInstance(
+                organization.getLanguage());
+        SciOrganizationPublicationsCollection publications = organization.
+                getPublications();
+        publications.addFilter(String.format("id = %s", publication.getID().
+                toString()));
+        if (publications.size() > 0) {
+            data.addError(SciOrganizationWithPublicationsGlobalizationUtil.
+                    globalize(
+                    "sciorganization.ui.selectPublication.already_added"));
+        }
+
+        publications.close();
     }
 }

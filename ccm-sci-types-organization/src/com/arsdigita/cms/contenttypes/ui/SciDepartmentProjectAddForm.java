@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -79,11 +80,48 @@ public class SciDepartmentProjectAddForm
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            department.addProject((SciProject) data.get(ITEM_SEARCH));
+            SciProject project = (SciProject) data.get(ITEM_SEARCH);
+            project = (SciProject) project.getContentBundle().getInstance(department.
+                    getLanguage());
+
+            department.addProject(project);
         }
 
         init(fse);
+    }
 
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
 
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.select_project.no_project_selected"));
+            return;
+        }
+
+        SciDepartment department = (SciDepartment) getItemSelectionModel().
+                getSelectedObject(state);
+        SciProject project = (SciProject) data.get(ITEM_SEARCH);
+        if (!(project.getContentBundle().hasInstance(department.getLanguage()))) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.select_project.no_suitable_language_variant"));
+            return;
+        }
+
+        project = (SciProject) project.getContentBundle().getInstance(department.
+                getLanguage());
+        SciDepartmentProjectsCollection projects = department.getProjects();
+        projects.addFilter(String.format("id = %s", project.getID().toString()));
+        if (projects.size() > 0) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.select_project.already_added"));
+        }
+        
+        projects.close();
     }
 }

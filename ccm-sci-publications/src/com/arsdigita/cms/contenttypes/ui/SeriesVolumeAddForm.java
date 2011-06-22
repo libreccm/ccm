@@ -92,12 +92,49 @@ public class SeriesVolumeAddForm extends BasicItemForm {
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            series.addVolume(
-                    (Publication) data.get(ITEM_SEARCH),
-                    (Integer) data.get(
+            Publication volume = (Publication) data.get(ITEM_SEARCH);
+            volume = (Publication) volume.getContentBundle().getInstance(series.
+                    getLanguage());
+
+            series.addVolume(volume,
+                             (Integer) data.get(
                     VolumeInSeriesCollection.VOLUME_OF_SERIES));
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.volume_of_series.no_volume_selected"));
+            return;
+        }
+
+        Series series = (Series) getItemSelectionModel().
+                getSelectedObject(state);
+        Publication volume = (Publication) data.get(ITEM_SEARCH);
+        if (!(volume.getContentBundle().hasInstance(series.getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.volume_of_series.no_suitable_language_variant"));
+            return;
+        }
+
+        volume = (Publication) volume.getContentBundle().getInstance(series.
+                getLanguage());
+        VolumeInSeriesCollection volumes = series.getVolumes();
+        volumes.addFilter(String.format("id = %s", volume.getID().toString()));
+        if (volumes.size() > 0) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.volume_of_series.already_added"));
+        }
+
+        volumes.close();
     }
 }

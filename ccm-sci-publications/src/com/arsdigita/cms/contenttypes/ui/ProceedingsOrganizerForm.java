@@ -55,10 +55,38 @@ public class ProceedingsOrganizerForm
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            proceedings.setOrganizerOfConference((GenericOrganizationalUnit) data.
-                    get(ITEM_SEARCH));
+            GenericOrganizationalUnit organizer =
+                                      (GenericOrganizationalUnit) data.get(
+                    ITEM_SEARCH);
+            organizer = (GenericOrganizationalUnit) organizer.getContentBundle().
+                    getInstance(proceedings.getLanguage());
 
-            init(fse);
+            proceedings.setOrganizerOfConference(organizer);
+
+        }
+
+        init(fse);
+    }
+
+    @Override
+    public void validate(final FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.organizer.no_orga_selected"));
+            return;
+        }
+
+        Proceedings proceedings = (Proceedings) getItemSelectionModel().
+                getSelectedObject(state);
+        GenericOrganizationalUnit organizer = (GenericOrganizationalUnit) data.
+                get(ITEM_SEARCH);
+        if (!(organizer.getContentBundle().hasInstance(proceedings.getLanguage()))) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.organizer.no_suitable_language_variant"));
+            return;
         }
     }
 }

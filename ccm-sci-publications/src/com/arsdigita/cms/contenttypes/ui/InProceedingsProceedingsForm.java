@@ -77,10 +77,37 @@ public class InProceedingsProceedingsForm
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            inProceedings.setProceedings((Proceedings) data.get(ITEM_SEARCH));
+            Proceedings proceedings = (Proceedings) data.get(ITEM_SEARCH);
+            proceedings = (Proceedings) proceedings.getContentBundle().
+                    getInstance(inProceedings.getLanguage());
 
-            init(fse);
+            inProceedings.setProceedings(proceedings);
         }
 
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.inProceedings.selectProceedings.no_proceedings_selected"));
+            return;
+        }
+
+        InProceedings inProceedings = (InProceedings) getItemSelectionModel().
+                getSelectedObject(state);
+        Proceedings proceedings = (Proceedings) data.get(ITEM_SEARCH);
+        if (!(proceedings.getContentBundle().hasInstance(inProceedings.
+              getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.inProceedings.selectProceedings.no_suitable_language_variant"));
+            return;
+        }
     }
 }

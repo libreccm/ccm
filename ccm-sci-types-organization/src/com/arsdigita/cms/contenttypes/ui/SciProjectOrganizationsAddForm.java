@@ -30,6 +30,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.SciProjectOrganizationsCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
@@ -78,9 +79,44 @@ public class SciProjectOrganizationsAddForm
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            project.addOrganization((SciOrganization) data.get(ITEM_SEARCH));
+            SciOrganization orga = (SciOrganization) data.get(ITEM_SEARCH);
+            orga = (SciOrganization) orga.getContentBundle().getInstance(project.
+                    getLanguage());
 
-               init(fse);
-        }    
+            project.addOrganization(orga);
+        }
+
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+        
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.select_organization.no_organization_selected"));
+            return;
+        }
+        
+        SciProject project = (SciProject) getItemSelectionModel().
+                getSelectedObject(state);
+        SciOrganization orga = (SciOrganization) data.get(ITEM_SEARCH);
+        if (!(orga.getContentBundle().hasInstance(project.getLanguage()))) {
+              data.addError(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.select_organization.no_suitable_language_variant"));
+            return;
+        }
+        
+        orga = (SciOrganization) orga.getContentBundle().getInstance(project.getLanguage());
+        SciProjectOrganizationsCollection organizations = project.getOrganizations();
+        organizations.addFilter(String.format("id = %s", orga.getID().toString()));
+        if (organizations.size() > 0) {
+              data.addError(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.select_organization.already_added"));
+        }
+        
+        organizations.close();
     }
 }

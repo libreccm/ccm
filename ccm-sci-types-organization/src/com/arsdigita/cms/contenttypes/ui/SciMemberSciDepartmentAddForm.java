@@ -90,7 +90,8 @@ public class SciMemberSciDepartmentAddForm
         statusSelect.addOption(new Option("",
                                           new Label((String) ContenttypesGlobalizationUtil.
                 globalize("cms.ui.select_one").localize())));
-        RelationAttributeCollection statusColl = new RelationAttributeCollection(
+        RelationAttributeCollection statusColl =
+                                    new RelationAttributeCollection(
                 "GenericOrganizationalUnitMemberStatus");
         statusColl.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
                 getLanguage());
@@ -143,7 +144,13 @@ public class SciMemberSciDepartmentAddForm
             department = step.getSelectedDepartment();
 
             if (department == null) {
-                member.addDepartment((SciDepartment) data.get(ITEM_SEARCH),
+                SciDepartment departmentToAdd = (SciDepartment) data.get(
+                        ITEM_SEARCH);
+                departmentToAdd = (SciDepartment) departmentToAdd.
+                        getContentBundle().getInstance(
+                        member.getLanguage());
+
+                member.addDepartment(departmentToAdd,
                                      (String) data.get(
                         SciMemberSciDepartmentsCollection.MEMBER_ROLE),
                                      (String) data.get(
@@ -177,12 +184,48 @@ public class SciMemberSciDepartmentAddForm
 
     @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
-        if (getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+        if (getSaveCancelSection().getCancelButton().isSelected(
+                fse.getPageState())) {
             step.setSelectedDepartment(null);
             step.setSelectedDepartmentRole(null);
             step.setSelectedDepartmentStatus(null);
 
             init(fse);
         }
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.department.select_department.no_department_selected"));
+            return;
+        }
+
+        SciMember member = (SciMember) getItemSelectionModel().getSelectedObject(
+                state);
+        SciDepartment department = (SciDepartment) data.get(ITEM_SEARCH);
+        if (!(department.getContentBundle().hasInstance(member.getLanguage()))) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.department.select_department.no_suitable_language_variant"));
+            return;
+        }
+
+        department = (SciDepartment) department.getContentBundle().getInstance(member.
+                getLanguage());
+        SciMemberSciDepartmentsCollection departments = member.getDepartments();
+        departments.addFilter(String.format("id = %s", department.getID().toString()));
+        if (departments.size() > 0) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.department.select_department.already_added"));
+        }
+        
+        departments.close();
     }
 }

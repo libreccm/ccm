@@ -77,10 +77,48 @@ public class SciDepartmentSuperDepartmentForm
                 getSelectedObject(state);
 
         if ((this.getSaveCancelSection().getSaveButton().isSelected(state))) {
-            department.setSuperDepartment(
-                    (SciDepartment) data.get(ITEM_SEARCH));
+            SciDepartment superDepartment =
+                          (SciDepartment) data.get(ITEM_SEARCH);
+            superDepartment = (SciDepartment) superDepartment.getContentBundle().
+                    getInstance(department.getLanguage());
 
-            init(fse);
+            department.setSuperDepartment(superDepartment);
         }
+
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.select_superdepartment.no_department_selected"));
+            return;
+        }
+
+        SciDepartment department = (SciDepartment) getItemSelectionModel().
+                getSelectedObject(state);
+        SciDepartment superDepartment =
+                      (SciDepartment) data.get(ITEM_SEARCH);
+        if (!(superDepartment.getContentBundle().hasInstance(department.
+              getLanguage()))) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.select_superdepartment.no_suitable_language_variant"));
+            return;
+        }
+
+        superDepartment = (SciDepartment) superDepartment.getContentBundle().
+                getInstance(department.getLanguage());
+        if (superDepartment.getID().equals(department.getID())) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.select_superdepartment.same_department"));
+            return;
+        }                
     }
 }

@@ -29,9 +29,12 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationSciDepartmentCollection;
+import com.arsdigita.cms.contenttypes.SciDepartmentPublicationsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentWithPublications;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 
 /**
@@ -78,8 +81,9 @@ public class PublicationSciDepartmentAddForm
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             SciDepartmentWithPublications department =
                                           (SciDepartmentWithPublications) data.
-                    get(
-                    ITEM_SEARCH);
+                    get(ITEM_SEARCH);
+            department = (SciDepartmentWithPublications) department.
+                    getContentBundle().getInstance(publication.getLanguage());
             DataObject link = publication.add("departments", department);
             link.set("publicationOrder", Integer.valueOf((int) department.
                     getPublications().size()));
@@ -88,5 +92,42 @@ public class PublicationSciDepartmentAddForm
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationWithPublicationsGlobalizationUtil.globalize(
+                    "sciorganization.ui.selectDepartment.no_department_selected"));
+            return;
+        }
+
+        Publication publication = (Publication) getItemSelectionModel().
+                getSelectedObject(state);
+        SciDepartmentWithPublications department =
+                                      (SciDepartmentWithPublications) data.get(
+                ITEM_SEARCH);
+        if (!(department.getContentBundle().hasInstance(publication.getLanguage()))) {
+            data.addError(
+                    SciOrganizationWithPublicationsGlobalizationUtil.globalize(
+                    "sciorganization.ui.selectDepartment.no_suitable_language_variant"));
+            return;
+        }
+        
+        department = (SciDepartmentWithPublications) department.getContentBundle().getInstance(publication.getLanguage());
+        PublicationSciDepartmentCollection departments = new PublicationSciDepartmentCollection((DataCollection) publication.
+                get("departments"));        
+        departments.addFilter(String.format("id = %s", department.getID().toString()));
+        if (departments.size() > 0) {
+            data.addError(
+                    SciOrganizationWithPublicationsGlobalizationUtil.globalize(
+                    "sciorganization.ui.selectDepartment.already_added"));
+        }
+        
+        departments.close();
     }
 }

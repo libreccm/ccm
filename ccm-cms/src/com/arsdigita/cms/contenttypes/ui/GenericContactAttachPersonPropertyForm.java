@@ -1,11 +1,3 @@
-/*
- * ContactEditPersonPropertyForm.java
- *
- * Created on 8. Juli 2009, 10:27
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
@@ -44,14 +36,18 @@ import org.apache.log4j.Logger;
  *
  * @author quasi
  */
-public class GenericContactAttachPersonPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
-
-    private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
+public class GenericContactAttachPersonPropertyForm extends BasicPageForm
+        implements FormProcessListener, FormInitListener, FormSubmissionListener {
+    
+    private static final Logger logger =
+                                Logger.getLogger(
+            GenericContactPropertyForm.class);
     private GenericContactPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "contactPerson";
-    private final String CONTACTS_KEY = GenericPersonContactCollection.CONTACTS_KEY;
+    private final String CONTACTS_KEY =
+                         GenericPersonContactCollection.CONTACTS_KEY;
     /**
      * ID of the form
      */
@@ -72,62 +68,78 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
      * @param itemModel
      * @param step
      */
-    public GenericContactAttachPersonPropertyForm(ItemSelectionModel itemModel, GenericContactPersonPropertiesStep step) {
+    public GenericContactAttachPersonPropertyForm(ItemSelectionModel itemModel,
+                                                  GenericContactPersonPropertiesStep step) {
         super(ID, itemModel);
         addSubmissionListener(this);
-
+        
         addSaveCancelSection();
-
+        
         addInitListener(this);
         addSubmissionListener(this);
-
+        
     }
-
+    
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericPerson"));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.contact.select_person").localize()));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
+                findByAssociatedObjectType(
+                "com.arsdigita.cms.contenttypes.GenericPerson"));
         add(this.m_itemSearch);
 
         // GenericContact type field
-        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact.type")));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactType.addOption(new Option("",
+                                         new Label((String) ContenttypesGlobalizationUtil.
+                globalize("cms.ui.select_one").localize())));
 
         // Add the Options to the SingleSelect widget
-        GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
-        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
-
+        GenericContactTypeCollection contacttypes =
+                                     new GenericContactTypeCollection();
+        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+                getLanguage());
+        
         while (contacttypes.next()) {
             RelationAttribute ct = contacttypes.getRelationAttribute();
             contactType.addOption(new Option(ct.getKey(), ct.getName()));
         }
-
+        
         add(contactType);
     }
-
+    
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
-
+        GenericContact contact = (GenericContact) getItemSelectionModel().
+                getSelectedObject(state);
+        
         setVisible(state, true);
-
+        
         if (contact != null) {
             data.put(ITEM_SEARCH, contact.getPerson());
             data.put(CONTACTS_KEY, contact.getContactType());
         }
     }
-
+    
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
-
+        GenericContact contact = (GenericContact) getItemSelectionModel().
+                getSelectedObject(state);
+        
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            contact.setPerson((GenericPerson) data.get(ITEM_SEARCH), (String) data.get(CONTACTS_KEY));
+            GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
+            
+            person = (GenericPerson) person.getContentBundle().getInstance(contact.
+                    getLanguage());
+            
+            contact.setPerson(person, (String) data.get(CONTACTS_KEY));
         }
         init(fse);
     }
@@ -139,15 +151,23 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
     public void addSaveCancelSection() {
         try {
             getSaveCancelSection().getSaveButton().addPrintListener(new PrintListener() {
-
+                
                 public void prepare(PrintEvent e) {
-                    GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(e.getPageState());
+                    GenericContact contact =
+                                   (GenericContact) getItemSelectionModel().
+                            getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
-
+                    
                     if (contact.getPerson() != null) {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.change").localize());
+                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                                globalize(
+                                "cms.contenttypes.ui.contact.select_person.change").
+                                localize());
                     } else {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.add").localize());
+                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                                globalize(
+                                "cms.contenttypes.ui.contact.select_person.add").
+                                localize());
                     }
                 }
             });
@@ -155,18 +175,36 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
             throw new UncheckedWrapperException("this cannot happen", ex);
         }
     }
-
+    
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
-        if (e.getFormData().get(ITEM_SEARCH) == null) {
-            throw new FormProcessException((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.wrong_type").localize());
+        final PageState state = e.getPageState();
+        final FormData data = e.getFormData();
+        
+        if (data.get(ITEM_SEARCH) == null) {
+            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+                    globalize(
+                    "cms.contenttypes.ui.contact.select_person.wrong_type").
+                    localize());                        
         }
+        
+        GenericContact contact = (GenericContact) getItemSelectionModel().
+                getSelectedObject(state);
+        GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
+        
+        if (!(person.getContentBundle().hasInstance(contact.getLanguage()))) {
+            data.addError("cms.contenttypes.ui.contact.select_person.no_suitable_language_variant");
+        }
+        
     }
-
+    
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(e.getPageState())) {
             init(e);
-            throw new FormProcessException((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.cancelled").localize());
+            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+                    globalize(
+                    "cms.contenttypes.ui.contact.select_person.cancelled").
+                    localize());
         }
     }
 }

@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
@@ -52,7 +53,9 @@ import org.apache.log4j.Logger;
  */
 public class GenericPersonContactAddForm extends BasicItemForm {
 
-    private static final Logger s_log = Logger.getLogger(GenericPersonContactAddForm.class);
+    private static final Logger s_log =
+                                Logger.getLogger(
+            GenericPersonContactAddForm.class);
     private GenericPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
@@ -71,20 +74,30 @@ public class GenericPersonContactAddForm extends BasicItemForm {
     protected void addWidgets() {
 
         // Attach a GenericContact object
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.select_contact").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericContact"));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.select_contact").localize()));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
+                findByAssociatedObjectType(
+                "com.arsdigita.cms.contenttypes.GenericContact"));
         add(this.m_itemSearch);
 
         // GenericContact type field
-        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact.type")));
-        ParameterModel contactTypeParam = new StringParameter(GenericPersonContactCollection.CONTACTS_KEY);
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.contact.type")));
+        ParameterModel contactTypeParam =
+                       new StringParameter(
+                GenericPersonContactCollection.CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactType.addOption(new Option("",
+                                         new Label((String) ContenttypesGlobalizationUtil.
+                globalize("cms.ui.select_one").localize())));
 
         // Add the Options to the SingleSelect widget
-        GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
-        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        GenericContactTypeCollection contacttypes =
+                                     new GenericContactTypeCollection();
+        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+                getLanguage());
 
         while (contacttypes.next()) {
             RelationAttribute ct = contacttypes.getRelationAttribute();
@@ -94,6 +107,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         add(contactType);
     }
 
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
@@ -102,16 +116,63 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         setVisible(state, true);
     }
 
+    @Override
     public void process(FormSectionEvent fse) {
-        FormData data = fse.getFormData();
-        PageState state = fse.getPageState();
-        GenericPerson person = (GenericPerson) getItemSelectionModel().getSelectedObject(state);
+        final FormData data = fse.getFormData();
+        final PageState state = fse.getPageState();
+        GenericPerson person = (GenericPerson) getItemSelectionModel().
+                getSelectedObject(state);
 
-        //
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            person.addContact((GenericContact) data.get(ITEM_SEARCH), (String) data.get(GenericPersonContactCollection.CONTACTS_KEY));
+            GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
+
+            contact = (GenericContact) contact.getContentBundle().getInstance(
+                    person.getLanguage());
+
+            person.addContact(contact,
+                              (String) data.get(
+                    GenericPersonContactCollection.CONTACTS_KEY));
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.person.select_contact.no_contact_selected"));
+
+            return;
+        }
+
+        GenericPerson person = (GenericPerson) getItemSelectionModel().
+                getSelectedObject(state);
+
+        GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
+
+        if (!(contact.getContentBundle().hasInstance(person.getLanguage()))) {
+            data.addError(
+                    ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.person.select_contact.no_suitable_language_variant"));
+
+            return;
+        }
+        
+        contact = (GenericContact) contact.getContentBundle().getInstance(person.getLanguage());
+        GenericPersonContactCollection contacts = person.getContacts();
+        
+        contacts.addFilter(String.format("id = %s", contact.getID().toString()));
+        if (contacts.size() > 0) {
+             data.addError(
+                    ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.person.select_contact.already_added"));
+        }    
+        
+        contacts.close();        
     }
 }

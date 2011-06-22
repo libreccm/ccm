@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeCollection;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -86,10 +87,47 @@ public class CollectedVolumeArticleAddForm
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            collectedVolume.addArticle((ArticleInCollectedVolume) data.get(
-                    ITEM_SEARCH));
+            ArticleInCollectedVolume article = (ArticleInCollectedVolume) data.
+                    get(ITEM_SEARCH);
+            article = (ArticleInCollectedVolume) article.getContentBundle().
+                    getInstance(collectedVolume.getLanguage());
+
+            collectedVolume.addArticle(article);
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+        
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.collected_volume.articles.select_article.no_article_selected"));
+            return;
+        }
+        
+        CollectedVolume collectedVolume = (CollectedVolume) getItemSelectionModel().getSelectedObject(state);
+        ArticleInCollectedVolume article = (ArticleInCollectedVolume) data.get(ITEM_SEARCH);
+        
+        if (!(article.getContentBundle().hasInstance(collectedVolume.getLanguage()))) {
+             data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.collected_volume.articles.select_article.no_suitable_language_variant"));
+            return;
+        }
+                
+        article = (ArticleInCollectedVolume) article.getContentBundle().getInstance(collectedVolume.getLanguage());
+        ArticleInCollectedVolumeCollection articles = collectedVolume.getArticles();
+        
+        articles.addFilter(String.format("id = %s", article.getID().toString()));
+        if (articles.size() > 0) {
+                   data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.collected_volume.articles.select_article.already_added"));
+            return;
+        }
+        
+        articles.close();
     }
 }

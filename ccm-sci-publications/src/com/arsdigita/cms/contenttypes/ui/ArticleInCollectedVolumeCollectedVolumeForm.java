@@ -79,10 +79,39 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            article.setCollectedVolume((CollectedVolume) data.get(ITEM_SEARCH));
+            CollectedVolume collectedVolume = (CollectedVolume) data.get(
+                    ITEM_SEARCH);
+            collectedVolume =
+            (CollectedVolume) collectedVolume.getContentBundle().getInstance(
+                    article.getLanguage());
 
-            init(fse);
+            article.setCollectedVolume(collectedVolume);
         }
 
+        init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.articleInCollectedVolume.selectCollectedVolume.no_collected_volume_selected"));
+            return;
+        }
+        
+        ArticleInCollectedVolume article = (ArticleInCollectedVolume) getItemSelectionModel().getSelectedObject(state);
+        
+        CollectedVolume collectedVolume = (CollectedVolume) data.get(ITEM_SEARCH);
+        
+        if (!(collectedVolume.getContentBundle().hasInstance(article.getLanguage()))) {
+             data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.articleInCollectedVolume.selectCollectedVolume.no_suitable_language_variant"));
+            return;
+        }                        
     }
 }

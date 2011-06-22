@@ -54,14 +54,42 @@ public class PublicationWithPublisherSetPublisherForm
     public void process(final FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        PublicationWithPublisher publication = (PublicationWithPublisher) getItemSelectionModel().
+        PublicationWithPublisher publication =
+                                 (PublicationWithPublisher) getItemSelectionModel().
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            publication.setPublisher((Publisher) data.get(ITEM_SEARCH));
+            Publisher publisher = (Publisher) data.get(ITEM_SEARCH);
+            publisher = (Publisher) publisher.getContentBundle().getInstance(publication.
+                    getLanguage());
 
-            init(fse);
+            publication.setPublisher(publisher);
         }
 
+        init(fse);
+    }
+
+    @Override
+    public void validate(final FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.with_publisher.publisher.no_publisher_selected"));
+            return;
+        }
+
+        PublicationWithPublisher publication =
+                                 (PublicationWithPublisher) getItemSelectionModel().
+                getSelectedObject(state);
+        Publisher publisher = (Publisher) data.get(ITEM_SEARCH);
+        if (!(publisher.getContentBundle().hasInstance(publication.getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.with_publisher.publisher.no_suitable_language_variant"));
+            return;
+        }
     }
 }

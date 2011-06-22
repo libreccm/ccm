@@ -90,7 +90,8 @@ public class SciMemberSciOrganizationAddForm
         statusSelect.addOption(new Option("",
                                           new Label((String) ContenttypesGlobalizationUtil.
                 globalize("cms.ui.select_one").localize())));
-        RelationAttributeCollection statusColl = new RelationAttributeCollection(
+        RelationAttributeCollection statusColl =
+                                    new RelationAttributeCollection(
                 "GenericOrganizationalUnitMemberStatus");
         statusColl.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
                 getLanguage());
@@ -144,7 +145,12 @@ public class SciMemberSciOrganizationAddForm
             orga = step.getSelectedOrganization();
 
             if (orga == null) {
-                member.addOrganization((SciOrganization) data.get(ITEM_SEARCH),
+                SciOrganization orgaToAdd = (SciOrganization) data.get(
+                        ITEM_SEARCH);
+                orgaToAdd = (SciOrganization) orgaToAdd.getContentBundle().
+                        getInstance(member.getLanguage());
+
+                member.addOrganization(orga,
                                        (String) data.get(
                         SciMemberSciOrganizationsCollection.MEMBER_ROLE),
                                        (String) data.get(
@@ -186,5 +192,43 @@ public class SciMemberSciOrganizationAddForm
 
             init(fse);
         }
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.organization.select_organization.no_orga_selected"));
+            return;
+        }
+
+        SciMember member = (SciMember) getItemSelectionModel().getSelectedObject(
+                state);
+        SciOrganization orga = (SciOrganization) data.get(
+                ITEM_SEARCH);
+        if (!(orga.getContentBundle().hasInstance(member.getLanguage()))) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.organization.select_organization.no_suitable_language_variant"));
+            return;
+        }
+
+        orga = (SciOrganization) orga.getContentBundle().getInstance(member.
+                getLanguage());
+        SciMemberSciOrganizationsCollection organizations = member.
+                getOrganizations();
+        organizations.addFilter(String.format("id = %s",
+                                              orga.getID().toString()));
+        if (organizations.size() > 0) {
+            data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "scimember.ui.organization.select_organization.already_added"));
+        }
+        
+        organizations.close();
     }
 }

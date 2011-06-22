@@ -93,6 +93,14 @@ public class SciDepartmentOrganizationForm
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
 
+        if (data.get(ITEM_SEARCH) == null) {
+             data.addError(
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.organization.add.no_organization_selected"));
+             
+             return;
+        }
+        
         SciDepartment department = (SciDepartment) getItemSelectionModel().
                 getSelectedObject(state);
 

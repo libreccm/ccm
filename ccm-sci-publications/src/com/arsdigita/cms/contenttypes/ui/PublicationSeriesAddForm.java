@@ -32,6 +32,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.Series;
+import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
@@ -83,10 +84,46 @@ public class PublicationSeriesAddForm
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            publication.addSeries(
-                    (Series) data.get(ITEM_SEARCH));
+            Series series = (Series) data.get(ITEM_SEARCH);
+            series = (Series) series.getContentBundle().getInstance(publication.
+                    getLanguage());
+
+            publication.addSeries(series);
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.select_series.no_series_selected"));
+            return;
+        }
+
+        Publication publication = (Publication) getItemSelectionModel().
+                getSelectedObject(state);
+        Series series = (Series) data.get(ITEM_SEARCH);
+        if (!(series.getContentBundle().hasInstance(publication.getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.select_series.no_suitable_language_variant"));
+            return;
+        }
+
+        series = (Series) series.getContentBundle().getInstance(publication.
+                getLanguage());
+        SeriesCollection seriesColl = publication.getSeries();
+        seriesColl.addFilter(String.format("id = %s", series.getID().toString()));
+        if (seriesColl.size() > 0) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.select_series.already_added"));
+        }
+
+        seriesColl.close();
     }
 }

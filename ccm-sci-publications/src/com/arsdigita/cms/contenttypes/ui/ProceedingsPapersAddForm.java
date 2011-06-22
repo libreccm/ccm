@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.InProceedings;
+import com.arsdigita.cms.contenttypes.InProceedingsCollection;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -78,10 +79,47 @@ public class ProceedingsPapersAddForm
                 getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().
-                isSelected(state))) {
-            proceedings.addPaper((InProceedings) data.get(ITEM_SEARCH));
+              isSelected(state))) {
+            InProceedings paper = (InProceedings) data.get(ITEM_SEARCH);
+            paper = (InProceedings) paper.getContentBundle().getInstance(proceedings.
+                    getLanguage());
+
+            proceedings.addPaper(paper);
         }
 
         init(fse);
+    }
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        if (data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.select_paper.no_paper_selected"));
+            return;
+        }
+
+        Proceedings proceedings = (Proceedings) getItemSelectionModel().
+                getSelectedObject(state);
+        InProceedings paper = (InProceedings) data.get(ITEM_SEARCH);
+        if (!(paper.getContentBundle().hasInstance(proceedings.getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.select_paper.no_suitable_language_variant"));
+            return;
+        }
+        
+        paper = (InProceedings) paper.getContentBundle().getInstance(proceedings.getLanguage());
+        InProceedingsCollection papers = proceedings.getPapers();
+        papers.addFilter(String.format("id = %s", paper.getID().toString()));
+        if (papers.size() > 0) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.select_paper.already_added"));
+            return;
+        }
     }
 }
