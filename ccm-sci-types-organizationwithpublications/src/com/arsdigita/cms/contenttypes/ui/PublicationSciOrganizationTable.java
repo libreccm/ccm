@@ -193,14 +193,27 @@ public class PublicationSciOrganizationTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            organization.getLanguage()),
                               resolver.generateItemURL(state,
                                                        organization,
                                                        section,
                                                        organization.getVersion()));
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                SciOrganizationWithPublications organization;
+                try {
+                    organization =
+                    new SciOrganizationWithPublications((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(
+                        String.format("%s (%s)",
+                                      value.toString(),
+                                      organization.getLanguage()));
                 return label;
             }
         }

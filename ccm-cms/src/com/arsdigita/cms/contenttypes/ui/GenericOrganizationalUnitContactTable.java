@@ -60,6 +60,8 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
+
+
 public class GenericOrganizationalUnitContactTable extends Table implements
         TableActionListener {
 
@@ -271,14 +273,25 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            contact.getLanguage()),
                               resolver.generateItemURL(state,
                                                        contact,
                                                        section,
                                                        contact.getVersion()));
                 return link;
             } else {
-                return new Label(value.toString());
+                GenericContact contact;
+                try {
+                    contact = new GenericContact((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+                Label label = new Label(String.format("%s (%s)", value.toString(),
+                                                                 contact.getLanguage()));
+                
+                return label;
             }
         }
     }
@@ -385,7 +398,8 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                 int row,
                 int col) {
 
-            GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
+            GenericOrganizationalUnit orgaunit =
+                                      (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(state);
             GenericOrganizationalUnitContactCollection contacts =
                                                        orgaunit.getContacts();

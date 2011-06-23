@@ -3,6 +3,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -12,11 +13,16 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 
 /**
  *
@@ -72,7 +78,8 @@ public class PublicationWithPublisherSetPublisherSheet
         @Override
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            PublicationWithPublisher publication = (PublicationWithPublisher) itemModel.
+            PublicationWithPublisher publication =
+                                     (PublicationWithPublisher) itemModel.
                     getSelectedObject(state);
             return new PublicationWithPublisherSetPublisherSheetModel(table,
                                                                       state,
@@ -146,8 +153,51 @@ public class PublicationWithPublisherSetPublisherSheet
                                       Object key,
                                       int row,
                                       int column) {
-            Label label = new Label(value.toString());
-            return label;
+            com.arsdigita.cms.SecurityManager securityManager =
+                                              Utilities.getSecurityManager(state);
+            PublicationWithPublisher publication =
+                                     (PublicationWithPublisher) itemModel.
+                    getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(state.getRequest(),
+                                                        com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                                                        publication);
+            if (canEdit) {
+                Publisher publisher;
+                try {
+                    publisher = new Publisher(
+                            (BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            publisher.getLanguage()),
+                              resolver.generateItemURL(state,
+                                                       publisher,
+                                                       section,
+                                                       publisher.getVersion()));
+
+                return link;
+            } else {
+                Publisher publisher;
+                try {
+                    publisher = new Publisher(
+                            (BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(
+                        String.format("%s (%s)",
+                                      value.toString(),
+                                      publisher.getLanguage()));
+                return label;
+            }
         }
     }
 
@@ -165,7 +215,8 @@ public class PublicationWithPublisherSetPublisherSheet
                                       int col) {
             com.arsdigita.cms.SecurityManager securityManager =
                                               Utilities.getSecurityManager(state);
-            PublicationWithPublisher publication = (PublicationWithPublisher) itemModel.
+            PublicationWithPublisher publication =
+                                     (PublicationWithPublisher) itemModel.
                     getSelectedObject(
                     state);
 
@@ -191,13 +242,14 @@ public class PublicationWithPublisherSetPublisherSheet
     public void cellSelected(final TableActionEvent event) {
         PageState state = event.getPageState();
 
-        PublicationWithPublisher publication = (PublicationWithPublisher) itemModel.getSelectedObject(state);
+        PublicationWithPublisher publication =
+                                 (PublicationWithPublisher) itemModel.
+                getSelectedObject(state);
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             publication.setPublisher(null);
         }
 

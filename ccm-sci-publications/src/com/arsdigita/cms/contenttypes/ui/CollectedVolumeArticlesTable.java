@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,12 +32,16 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeCollection;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -198,10 +203,42 @@ public class CollectedVolumeArticlesTable
                     collectedVolume);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ArticleInCollectedVolume article;
+                try {
+                    article = new ArticleInCollectedVolume((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            article.getLanguage()),
+                              resolver.generateItemURL(state,
+                                                       article,
+                                                       section,
+                                                       article.getVersion()));
+
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                 ArticleInCollectedVolume article;
+                try {
+                    article = new ArticleInCollectedVolume((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      article.getLanguage()));
                 return label;
             }
         }
@@ -310,19 +347,19 @@ public class CollectedVolumeArticlesTable
                 new BigDecimal(event.getRowKey().toString()));
 
         CollectedVolume collectedVolume =
-                (CollectedVolume) m_itemModel.getSelectedObject(state);
+                        (CollectedVolume) m_itemModel.getSelectedObject(state);
 
         ArticleInCollectedVolumeCollection articles =
-                collectedVolume.getArticles();
+                                           collectedVolume.getArticles();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             collectedVolume.removeArticle(article);
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
             articles.swapWithPrevious(article);
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
             articles.swapWithNext(article);
         }
     }

@@ -260,14 +260,27 @@ public class GenericPersonContactTable extends Table implements
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)", 
+                                            value.toString(),
+                                            contact.getLanguage()),
                               resolver.generateItemURL(state,
                                                        contact,
                                                        section,
                                                        contact.getVersion()));
                 return link;
             } else {
-                return new Label(value.toString());
+                 GenericContact contact;
+                try {
+                    contact = new GenericContact((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+                
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      contact.getLanguage()));
+                
+                return label;
             }
         }
     }

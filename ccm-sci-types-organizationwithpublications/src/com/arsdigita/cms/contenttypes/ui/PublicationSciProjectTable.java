@@ -106,7 +106,7 @@ public class PublicationSciProjectTable
                                                        publication);
         }
     }
-    
+
     private class PublicationSciProjectTableModel implements TableModel {
 
         private Table table;
@@ -114,14 +114,14 @@ public class PublicationSciProjectTable
         private SciProjectWithPublications project;
 
         public PublicationSciProjectTableModel(final Table table,
-                                                    final PageState state,
-                                                    final Publication publication) {
+                                               final PageState state,
+                                               final Publication publication) {
 
             this.table = table;
 
             projects =
-            new PublicationSciProjectCollection((DataCollection) publication.
-                    get("projects"));
+            new PublicationSciProjectCollection((DataCollection) publication.get(
+                    "projects"));
         }
 
         public int getColumnCount() {
@@ -159,8 +159,8 @@ public class PublicationSciProjectTable
             return project.getID();
         }
     }
-    
-      private class EditCellRenderer
+
+    private class EditCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -193,20 +193,32 @@ public class PublicationSciProjectTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            project.getLanguage()),
                               resolver.generateItemURL(state,
                                                        project,
                                                        section,
                                                        project.getVersion()));
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                SciProjectWithPublications project;
+                try {
+                    project =
+                    new SciProjectWithPublications((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      project.getLanguage()));
                 return label;
             }
         }
     }
-      
-        private class DeleteCellRenderer
+
+    private class DeleteCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -240,24 +252,25 @@ public class PublicationSciProjectTable
             }
         }
     }
-        
-        public void cellSelected(final TableActionEvent event) {
-        PageState state =event.getPageState();
-        
+
+    public void cellSelected(final TableActionEvent event) {
+        PageState state = event.getPageState();
+
         SciProjectWithPublications project = new SciProjectWithPublications(
                 new BigDecimal(event.getRowKey().toString()));
-        
-        Publication publication = (Publication) itemModel.getSelectedObject(state);
-                     
+
+        Publication publication = (Publication) itemModel.getSelectedObject(
+                state);
+
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
-        
+
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
             //Nothing to do
-        } else if(TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
+        } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             Assert.exists(project, SciProjectWithPublications.class);
-            
+
             publication.remove("projects", project);
-        } 
+        }
     }
 
     public void headSelected(final TableActionEvent event) {

@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,16 +32,18 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.EditshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -235,10 +238,40 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                     series);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                GenericPerson editor;
+                try {
+                    editor = new GenericPerson((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            editor.getLanguage()),
+                              resolver.generateItemURL(state,
+                                                       editor,
+                                                       section,
+                                                       editor.getVersion()));
+
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                GenericPerson editor;
+                try {
+                    editor = new GenericPerson((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      editor.getLanguage()));
                 return label;
             }
         }
@@ -315,7 +348,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     private class UpCellRenderer
     extends LockableImpl
     implements TableCellRenderer {
-
+    
     @Override
     public Component getComponent(
     Table table,
@@ -325,7 +358,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     Object key,
     int row,
     int col) {
-
+    
     if (0 == row) {
     s_log.debug("Row is first row in table, don't show up link");
     Label label = new Label("");
@@ -341,7 +374,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     private class DownCellRenderer
     extends LockableImpl
     implements TableCellRenderer {
-
+    
     @Override
     public Component getComponent(
     Table table,
@@ -351,11 +384,11 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     Object key,
     int row,
     int col) {
-
+    
     Series = (Series) m_itemModel.
     getSelectedObject(state);
     EditshipCollection editors = series.getEditors();
-
+    
     if ((editors.size() - 1)
     == row) {
     s_log.debug("Row is last row in table, don't show down link");

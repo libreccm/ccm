@@ -235,7 +235,6 @@ public class SciOrganizationDepartmentsTable
                         getVersion()));
 
                 return link;
-
             } else {
                 SciDepartment department;
                 try {

@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,13 +32,17 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -227,10 +232,42 @@ public class PublicationAuthorsTable
                     publication);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                GenericPerson author;
+                try {
+                    author = new GenericPerson((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            author.getLanguage()),
+                              resolver.generateItemURL(state,
+                                                       author,
+                                                       section,
+                                                       author.getVersion()));
+
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                GenericPerson author;
+                try {
+                    author = new GenericPerson((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      author.getLanguage()));
                 return label;
             }
         }
@@ -380,19 +417,19 @@ public class PublicationAuthorsTable
         } else if (column.getHeaderKey().toString().equals(
                 TABLE_COL_EDIT_ASSOC)) {
 
-            while(authors.next()) {
+            while (authors.next()) {
                 if (authors.getAuthor().equals(author)) {
                     break;
                 }
             }
 
-           ((PublicationAuthorsPropertyStep)editStep).setSelectedAuthor(author);
-           ((PublicationAuthorsPropertyStep)editStep).setSelectedAuthorEditor(
+            ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthor(author);
+            ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthorEditor(
                     authors.isEditor());
 
             editStep.showComponent(state,
                                    PublicationAuthorsPropertyStep.ADD_AUTHOR_SHEET_NAME);
-            
+
             authors.close();
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             publication.removeAuthor(author);

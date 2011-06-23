@@ -47,7 +47,7 @@ public class SciMemberSciDepartmentsTable
     private SciMemberSciDepartmentsStep step;
 
     public SciMemberSciDepartmentsTable(ItemSelectionModel itemModel,
-                                          SciMemberSciDepartmentsStep step) {
+                                        SciMemberSciDepartmentsStep step) {
         super();
         this.itemModel = itemModel;
         this.step = step;
@@ -103,8 +103,8 @@ public class SciMemberSciDepartmentsTable
             table.getRowSelectionModel().clearSelection(state);
             SciMember member = (SciMember) itemModel.getSelectedObject(state);
             return new SciMemberSciDepartmentsTableModel(table,
-                                                           state,
-                                                           member);
+                                                         state,
+                                                         member);
         }
     }
 
@@ -115,8 +115,8 @@ public class SciMemberSciDepartmentsTable
         private SciDepartment department;
 
         public SciMemberSciDepartmentsTableModel(Table table,
-                                                   PageState state,
-                                                   SciMember member) {
+                                                 PageState state,
+                                                 SciMember member) {
             this.table = table;
             this.departments = member.getDepartments();
         }
@@ -146,7 +146,8 @@ public class SciMemberSciDepartmentsTable
                 case 0:
                     return department.getTitle();
                 case 1:
-                    RelationAttributeCollection role = new RelationAttributeCollection(
+                    RelationAttributeCollection role =
+                                                new RelationAttributeCollection(
                             "SciDepartmentRole",
                             departments.getRoleName());
                     if (role.next()) {
@@ -158,7 +159,8 @@ public class SciMemberSciDepartmentsTable
                                 "cms.ui.unknownRole").localize();
                     }
                 case 2:
-                    RelationAttributeCollection status = new RelationAttributeCollection(
+                    RelationAttributeCollection status =
+                                                new RelationAttributeCollection(
                             "GenericOrganizationalUnitMemberStatus",
                             departments.getStatus());
                     if (status.next()) {
@@ -219,14 +221,28 @@ public class SciMemberSciDepartmentsTable
 
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link = new Link(value.toString(),
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   department.getLanguage()),
                                      resolver.generateItemURL(state,
                                                               department,
-                                                              section, department.
+                                                              section,
+                                                              department.
                         getVersion()));
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                SciDepartment department;
+                try {
+                    department = new SciDepartment((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    logger.warn(String.format("No object with key '%s' found.",
+                                              key),
+                                ex);
+                    return new Label(value.toString());
+                }
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      department.getLanguage()));
                 return label;
             }
         }
@@ -305,8 +321,7 @@ public class SciMemberSciDepartmentsTable
 
         SciMember member = (SciMember) itemModel.getSelectedObject(state);
 
-        SciMemberSciDepartmentsCollection departments = member.
-                getDepartments();
+        SciMemberSciDepartmentsCollection departments = member.getDepartments();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 

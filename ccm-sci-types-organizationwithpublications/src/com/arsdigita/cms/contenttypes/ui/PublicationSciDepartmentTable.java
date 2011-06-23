@@ -192,20 +192,31 @@ public class PublicationSciDepartmentTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            department.getLanguage()),
                               resolver.generateItemURL(state,
                                                        department,
                                                        section,
                                                        department.getVersion()));
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                SciDepartmentWithPublications department;
+                try {
+                    department =
+                    new SciDepartmentWithPublications((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      department.getLanguage()));
                 return label;
             }
         }
     }
-    
-     private class DeleteCellRenderer
+
+    private class DeleteCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -239,24 +250,26 @@ public class PublicationSciDepartmentTable
             }
         }
     }
-     
-       public void cellSelected(final TableActionEvent event) {
-        PageState state =event.getPageState();
-        
-        SciDepartmentWithPublications department = new SciDepartmentWithPublications(
+
+    public void cellSelected(final TableActionEvent event) {
+        PageState state = event.getPageState();
+
+        SciDepartmentWithPublications department =
+                                      new SciDepartmentWithPublications(
                 new BigDecimal(event.getRowKey().toString()));
-        
-        Publication publication = (Publication) itemModel.getSelectedObject(state);
-                        
+
+        Publication publication = (Publication) itemModel.getSelectedObject(
+                state);
+
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
-        
+
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
             //Nothing to do
-        } else if(TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
+        } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             Assert.exists(department, SciDepartmentWithPublications.class);
-            
+
             publication.remove("departments", department);
-        } 
+        }
     }
 
     public void headSelected(final TableActionEvent event) {

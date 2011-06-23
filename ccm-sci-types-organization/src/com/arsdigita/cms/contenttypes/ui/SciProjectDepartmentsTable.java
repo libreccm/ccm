@@ -218,7 +218,9 @@ public class SciProjectDepartmentsTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            department.getLanguage()),
                               resolver.generateItemURL(state,
                                                        department,
                                                        section,
@@ -226,7 +228,18 @@ public class SciProjectDepartmentsTable
 
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                SciDepartment department;
+                try {
+                    department = new SciDepartment((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      department.getLanguage()));
                 return label;
             }
         }

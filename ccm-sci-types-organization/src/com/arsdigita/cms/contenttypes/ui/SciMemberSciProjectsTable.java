@@ -47,7 +47,7 @@ public class SciMemberSciProjectsTable
     private SciMemberSciProjectsStep step;
 
     public SciMemberSciProjectsTable(ItemSelectionModel itemModel,
-                                          SciMemberSciProjectsStep step) {
+                                     SciMemberSciProjectsStep step) {
         super();
         this.itemModel = itemModel;
         this.step = step;
@@ -103,8 +103,8 @@ public class SciMemberSciProjectsTable
             table.getRowSelectionModel().clearSelection(state);
             SciMember member = (SciMember) itemModel.getSelectedObject(state);
             return new SciMemberSciProjectsTableModel(table,
-                                                           state,
-                                                           member);
+                                                      state,
+                                                      member);
         }
     }
 
@@ -115,8 +115,8 @@ public class SciMemberSciProjectsTable
         private SciProject project;
 
         public SciMemberSciProjectsTableModel(Table table,
-                                                   PageState state,
-                                                   SciMember member) {
+                                              PageState state,
+                                              SciMember member) {
             this.table = table;
             this.projects = member.getProjects();
         }
@@ -146,7 +146,8 @@ public class SciMemberSciProjectsTable
                 case 0:
                     return project.getTitle();
                 case 1:
-                    RelationAttributeCollection role = new RelationAttributeCollection(
+                    RelationAttributeCollection role =
+                                                new RelationAttributeCollection(
                             "SciProjectRole",
                             projects.getRoleName());
                     if (role.next()) {
@@ -158,7 +159,8 @@ public class SciMemberSciProjectsTable
                                 "cms.ui.unknownRole").localize();
                     }
                 case 2:
-                    RelationAttributeCollection status = new RelationAttributeCollection(
+                    RelationAttributeCollection status =
+                                                new RelationAttributeCollection(
                             "GenericOrganizationalUnitMemberStatus",
                             projects.getStatus());
                     if (status.next()) {
@@ -219,14 +221,28 @@ public class SciMemberSciProjectsTable
 
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link = new Link(value.toString(),
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   project.getLanguage()),
                                      resolver.generateItemURL(state,
                                                               project,
                                                               section, project.
                         getVersion()));
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                SciProject project;
+                try {
+                    project = new SciProject((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    logger.warn(String.format("No object with key '%s' found.",
+                                              key),
+                                ex);
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      project.getLanguage()));
                 return label;
             }
         }
@@ -300,13 +316,12 @@ public class SciMemberSciProjectsTable
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        SciProject project = new SciProject(new BigDecimal(event.
-                getRowKey().toString()));
+        SciProject project = new SciProject(new BigDecimal(event.getRowKey().
+                toString()));
 
         SciMember member = (SciMember) itemModel.getSelectedObject(state);
 
-        SciMemberSciProjectsCollection projects = member.
-                getProjects();
+        SciMemberSciProjectsCollection projects = member.getProjects();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 

@@ -83,15 +83,15 @@ public class SciProjectSubProjectsTable
                 "sciorganization.ui.project.subproject.remove").localize(),
                 TABLE_COL_DEL));
         /*colModel.add(new TableColumn(
-                2,
-                SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.subproject.up").localize(),
-                TABLE_COL_UP));
+        2,
+        SciOrganizationGlobalizationUtil.globalize(
+        "sciorganization.ui.project.subproject.up").localize(),
+        TABLE_COL_UP));
         colModel.add(new TableColumn(
-                3,
-                SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.subproject.down").localize(),
-                TABLE_COL_DOWN));*/
+        3,
+        SciOrganizationGlobalizationUtil.globalize(
+        "sciorganization.ui.project.subproject.down").localize(),
+        TABLE_COL_DOWN));*/
 
         setModelBuilder(
                 new SciProjectSubProjectsTableModelBuilder(itemModel));
@@ -221,7 +221,9 @@ public class SciProjectSubProjectsTable
 
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link = new Link(value.toString(),
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   subProject.getLanguage()),
                                      resolver.generateItemURL(state,
                                                               subProject,
                                                               section,
@@ -231,7 +233,19 @@ public class SciProjectSubProjectsTable
                 return link;
 
             } else {
-                Label label = new Label(value.toString());
+                SciProject subProject;
+                try {
+                    subProject = new SciProject((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      subProject.getLanguage()));
                 return label;
             }
         }

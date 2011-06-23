@@ -247,7 +247,9 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            person.getLanguage()),
                               resolver.generateItemURL(state,
                                                        person,
                                                        section,
@@ -255,7 +257,21 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
 
                 return link;
             } else {
-                return new Label(value.toString());
+                    GenericPerson person;
+                try {
+                    person = new GenericPerson((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                
+                Label label = new Label(String.format("%s (%s)", 
+                                                      value.toString(),
+                                                      person.getLanguage()));
+                
+                return label;
             }
         }
     }

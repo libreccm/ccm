@@ -223,7 +223,9 @@ public class SciDepartmentSubDepartmentsTable
 
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link = new Link(value.toString(),
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   subDepartment.getLanguage()),
                                      resolver.generateItemURL(state,
                                                               subDepartment,
                                                               section,
@@ -234,7 +236,20 @@ public class SciDepartmentSubDepartmentsTable
 
 
             } else {
-                Label label = new Label(value.toString());
+                  SciDepartment subDepartment;
+                try {
+                    subDepartment = new SciDepartment(
+                            (BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      subDepartment.getLanguage()));
                 return label;
             }
         }

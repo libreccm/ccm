@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,12 +32,17 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 
 /**
  * Sheet which displays the proceedings associated with a InProceedings.
@@ -170,8 +176,48 @@ public class InProceedingsProceedingsSheet
                                       Object key,
                                       int row,
                                       int column) {
-            Label label = new Label(value.toString());
-            return label;
+            com.arsdigita.cms.SecurityManager securityManager =
+                                              Utilities.getSecurityManager(state);
+            InProceedings inProceedings = (InProceedings) itemModel.
+                    getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(state.getRequest(),
+                                                        com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                                                        inProceedings);
+            if (canEdit) {
+                Proceedings proceedings;
+                try {
+                    proceedings = new Proceedings((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            proceedings.getLanguage()),
+                              resolver.generateItemURL(state,
+                                                       proceedings,
+                                                       section,
+                                                       proceedings.getVersion()));
+
+                return link;
+            } else {
+                Proceedings proceedings;
+                try {
+                    proceedings = new Proceedings((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                Label label =
+                      new Label(String.format("%s (%s)",
+                                              value.toString(),
+                                              proceedings.getLanguage()));
+                return label;
+            }
         }
     }
 

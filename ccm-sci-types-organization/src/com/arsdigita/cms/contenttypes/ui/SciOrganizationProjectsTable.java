@@ -87,15 +87,15 @@ public class SciOrganizationProjectsTable
                 "sciorganization.ui.organization.project.remove").localize(),
                 TABLE_COL_DEL));
         /*colModel.add(new TableColumn(
-                2,
-                SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.organization.project.up").localize(),
-                TABLE_COL_UP));
+        2,
+        SciOrganizationGlobalizationUtil.globalize(
+        "sciorganization.ui.organization.project.up").localize(),
+        TABLE_COL_UP));
         colModel.add(new TableColumn(
-                3,
-                SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.organization.project.down").localize(),
-                TABLE_COL_DOWN));*/
+        3,
+        SciOrganizationGlobalizationUtil.globalize(
+        "sciorganization.ui.organization.project.down").localize(),
+        TABLE_COL_DOWN));*/
 
         setModelBuilder(
                 new SciOrganizationProjectsTableModelBuilder(itemModel));
@@ -226,7 +226,9 @@ public class SciOrganizationProjectsTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            project.getLanguage()),
                               resolver.generateItemURL(state,
                                                        project,
                                                        section,
@@ -235,7 +237,19 @@ public class SciOrganizationProjectsTable
                 return link;
 
             } else {
-                Label label = new Label(value.toString());
+                SciProject project;
+                try {
+                    project = new SciProject((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                
+                Label label = new Label(String.format("%s (%s)", 
+                                                      value.toString(),
+                                                      project.getLanguage()));
                 return label;
             }
         }

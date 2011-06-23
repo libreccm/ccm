@@ -146,7 +146,8 @@ public class SciMemberSciOrganizationsTable
                 case 0:
                     return organization.getTitle();
                 case 1:
-                    RelationAttributeCollection role = new RelationAttributeCollection(
+                    RelationAttributeCollection role =
+                                                new RelationAttributeCollection(
                             "SciOrganizationRole",
                             organizations.getRoleName());
                     if (role.next()) {
@@ -158,7 +159,8 @@ public class SciMemberSciOrganizationsTable
                                 "cms.ui.unknownRole").localize();
                     }
                 case 2:
-                    RelationAttributeCollection status = new RelationAttributeCollection(
+                    RelationAttributeCollection status =
+                                                new RelationAttributeCollection(
                             "GenericOrganizationalUnitMemberStatus",
                             organizations.getStatus());
                     if (status.next()) {
@@ -219,14 +221,29 @@ public class SciMemberSciOrganizationsTable
 
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link = new Link(value.toString(),
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   organization.getLanguage()),
                                      resolver.generateItemURL(state,
                                                               organization,
-                                                              section, organization.
+                                                              section,
+                                                              organization.
                         getVersion()));
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                SciOrganization organization;
+                try {
+                    organization = new SciOrganization((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    logger.warn(String.format("No object with key '%s' found.",
+                                              key),
+                                ex);
+                    return new Label(value.toString());
+                }
+                
+                Label label = new Label(String.format("%s (%s)",
+                                                      value.toString(),
+                                                      organization.getLanguage()));
                 return label;
             }
         }

@@ -193,7 +193,9 @@ public class SciDepartmentPublicationsTable
 
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link = new Link(value.toString(),
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   publication.getLanguage()),
                                      resolver.generateItemURL(state,
                                                               publication,
                                                               section,
@@ -202,7 +204,17 @@ public class SciDepartmentPublicationsTable
 
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                Publication publication;
+                try {
+                    publication = new Publication((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                Label label =
+                      new Label(String.format("%s (%s)",
+                                              value.toString(),
+                                              publication.getLanguage()));
                 return label;
             }
         }

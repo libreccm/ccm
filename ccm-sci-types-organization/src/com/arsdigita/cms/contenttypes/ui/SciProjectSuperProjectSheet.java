@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,12 +32,17 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
@@ -120,8 +126,8 @@ public class SciProjectSuperProjectSheet
                 m_done = false;
             } else {
                 m_done = true;
-                logger.debug(String.format("Super project to show: %s", m_superProject.
-                        getTitle()));
+                logger.debug(String.format("Super project to show: %s",
+                                           m_superProject.getTitle()));
             }
 
         }
@@ -132,7 +138,7 @@ public class SciProjectSuperProjectSheet
 
         public boolean nextRow() {
             boolean ret;
-          
+
             if (m_done) {
                 logger.debug("Returning true for nextRow()");
                 ret = true;
@@ -176,8 +182,50 @@ public class SciProjectSuperProjectSheet
                                       Object key,
                                       int row,
                                       int column) {
-            Label label = new Label(value.toString());
-            return label;
+            SecurityManager securityManager =
+                            Utilities.getSecurityManager(state);
+            SciProject project = (SciProject) m_itemModel.getSelectedObject(
+                    state);
+
+            boolean canEdit = securityManager.canAccess(
+                    state.getRequest(),
+                    SecurityManager.EDIT_ITEM,
+                    project);
+
+            if (canEdit) {
+                SciProject subProject;
+                try {
+                    subProject = new SciProject((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   subProject.getLanguage()),
+                                     resolver.generateItemURL(state,
+                                                              subProject,
+                                                              section,
+                                                              subProject.
+                        getVersion()));
+
+                return link;
+            } else {
+                SciProject subDepartment;
+                try {
+                    subDepartment = new SciProject((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(
+                        String.format("%s (%s)",
+                                      value.toString(),
+                                      subDepartment.getLanguage()));
+                return label;
+            }
         }
     }
 

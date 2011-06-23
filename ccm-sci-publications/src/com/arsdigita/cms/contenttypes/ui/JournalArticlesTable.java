@@ -210,14 +210,28 @@ public class JournalArticlesTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(value.toString(),
+                     new Link(String.format("%s (%s)",
+                                            value.toString(),
+                                            article.getLanguage()),
                               resolver.generateItemURL(state,
                                                        article,
                                                        section,
                                                        article.getVersion()));
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                ArticleInJournal article;
+                try {
+                    article = new ArticleInJournal((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(String.format("%s (%s)", 
+                                                      value.toString(),
+                                                      article.getLanguage()));
                 return label;
             }
         }
@@ -296,8 +310,7 @@ public class JournalArticlesTable
                 int row,
                 int col) {
 
-            Journal journal = (Journal) m_itemModel.
-                    getSelectedObject(state);
+            Journal journal = (Journal) m_itemModel.getSelectedObject(state);
             ArticleInJournalCollection articles = journal.getArticles();
 
             if ((articles.size() - 1) == row) {
@@ -335,9 +348,9 @@ public class JournalArticlesTable
         } else if (col.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             s_log.debug("Removing article assoc...");
             journal.removeArticle(article);
-        } else if(col.getHeaderKey().toString().equals(TABLE_COL_UP)) {
+        } else if (col.getHeaderKey().toString().equals(TABLE_COL_UP)) {
             articles.swapWithPrevious(article);
-        } else if(col.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
+        } else if (col.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
             articles.swapWithNext(article);
         }
     }

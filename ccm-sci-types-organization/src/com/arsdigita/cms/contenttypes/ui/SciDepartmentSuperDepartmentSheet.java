@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,11 +32,16 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 
 /**
  * Sheet for showing the superior department of a {@link SciDepartment}.
@@ -170,8 +176,51 @@ public class SciDepartmentSuperDepartmentSheet
                                       Object key,
                                       int row,
                                       int column) {
-            Label label = new Label(value.toString());
-            return label;
+            SecurityManager securityManager =
+                            Utilities.getSecurityManager(state);
+            SciDepartment department = (SciDepartment) m_itemModel.
+                    getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(
+                    state.getRequest(),
+                    SecurityManager.EDIT_ITEM,
+                    department);
+
+            if (canEdit) {
+                SciDepartment subDepartment;
+                try {
+                    subDepartment = new SciDepartment((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   subDepartment.getLanguage()),
+                                     resolver.generateItemURL(state,
+                                                              subDepartment,
+                                                              section,
+                                                              subDepartment.
+                        getVersion()));
+
+                return link;
+            } else {
+                SciDepartment subDepartment;
+                try {
+                    subDepartment = new SciDepartment((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                Label label = new Label(
+                        String.format("%s (%s)",
+                                      value.toString(),
+                                      subDepartment.getLanguage()));
+                return label;
+            }
+
         }
     }
 
@@ -215,7 +264,8 @@ public class SciDepartmentSuperDepartmentSheet
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        SciDepartment department = (SciDepartment) m_itemModel.getSelectedObject(
+        SciDepartment department =
+                      (SciDepartment) m_itemModel.getSelectedObject(
                 state);
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
