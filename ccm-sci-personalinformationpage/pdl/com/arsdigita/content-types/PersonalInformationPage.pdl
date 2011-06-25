@@ -1,0 +1,24 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type PersonalInformationPage extends ContentPage {
+
+       
+       reference key (ct_personal_information_pages.personal_information_page_id);
+}
+
+association {
+	    
+	    PersonalInformationPage[0..n] personalInformationPage = join ct_sciorga_members.member_id
+	    				  			      to ct_personal_information_page_owner_map.owner_id,
+								    join ct_personal_information_page_owner_map.personal_information_page_id
+								      to ct_personal_information_pages.personal_information_page_id;
+
+           SciMember[0..n] owner = join ct_personal_information_pages.personal_information_page_id
+	   		             to ct_personal_information_page_owner_map.personal_information_page_id,
+				   join ct_personal_information_page_owner_map.owner_id
+				     to ct_sciorga_members.member_id
+}
+

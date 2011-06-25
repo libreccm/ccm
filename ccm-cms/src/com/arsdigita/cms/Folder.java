@@ -625,6 +625,12 @@ public class Folder extends ContentItem {
         /**
          * Convenience Constructor that always sorts the collection
          * by isFolder and ID
+         * 
+         * jensp 2011-06: I changed this because this silly sorting affects
+         * the ItemSearchWidget and makes it pretty useless... I've not noticed
+         * any negative effects, so it seams no problem. Sorting is now set by
+         * the caller/user of the {@code ItemCollection}.
+         * 
          * @param query the Data Query to use to retrieve the collection
          */
         public ItemCollection(DataQuery query) {
