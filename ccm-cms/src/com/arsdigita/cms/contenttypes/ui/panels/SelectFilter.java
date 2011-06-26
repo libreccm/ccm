@@ -116,6 +116,11 @@ public class SelectFilter implements Filter {
         for (String optionStr : options) {
             optionElem = filter.newChildElement("option");
             optionElem.addAttribute("label", optionStr);
+            if (propertyIsNumeric) {
+                 optionElem.addAttribute("valueType", "number");
+            } else {
+                optionElem.addAttribute("valueType", "text");
+            }
         }
     }
 

@@ -121,12 +121,13 @@ public class PooledConnectionSource implements ConnectionSource {
                 s_connectionTags.put(result.toString(), tag(result));
                 m_connections.add(result);
                 renameThread(result);
+                /**
+                 * jensp 2011-06-18: Change to prevent connections from being
+                 * in "idle in transaction" state. Such connections seam to 
+                 * cause problems (memory etc.) with PostgreSQL.
+                 */
                 try {
-                    /**
-                     * jensp 2011-06-18: Change to prevent connections from being
-                     * in "idle in transaction" state. Such connections seam to 
-                     * cause problems (memory etc.) with PostgreSQL.
-                     */
+
                     result.setAutoCommit(false);
                 } catch (SQLException ex) {
                     s_log.warn("Failed to set autocommit to false");

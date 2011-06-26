@@ -200,7 +200,11 @@ public abstract class CompoundContentItemPanel
     }
 
     protected long getPaginatorEnd(final long begin, final long count) {
-        return begin + count;
+        long paginatorEnd = begin + count;
+        if (paginatorEnd < 0) {
+            paginatorEnd = 0;
+        }
+        return paginatorEnd;
     }
    
     protected void createPaginatorElement(final Element parent,
@@ -373,7 +377,7 @@ public abstract class CompoundContentItemPanel
         if (!isVisible(state)
             || (item == null)
             || !(item.getClass().equals(getAllowedClass()))) {
-            s_log.debug("Skipping generate XML isVisible: " + isVisible(
+            s_log.warn("Skipping generate XML isVisible: " + isVisible(
                     state) + " item "
                         + (item == null ? null : item.getOID()));
             return;

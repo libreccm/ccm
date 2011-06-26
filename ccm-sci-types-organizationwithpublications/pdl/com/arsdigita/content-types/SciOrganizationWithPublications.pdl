@@ -60,3 +60,64 @@ query getAllYearsOfPublication {
     }
 }
 
+query getAllYearsOfPublicationForAuthor {
+    Integer yearOfPublication;
+
+    do {
+        select distinct ct_publications.year 
+        from ct_publications join  ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
+        where person_id = :author
+    } map {
+        yearOfPublication = ct_publications.year;
+    }
+}
+
+query getAllPublicationTypes {
+
+    String objectType;
+    
+    do {
+        select distinct acs_objects.object_type 
+        from ct_publications join acs_objects on ct_publications.publication_id = acs_objects.object_id        
+    } map {
+        objectType = acs_objects.object_type;
+    }
+}
+
+query getAllPublicationTypesForAuthor {
+
+    String objectType;
+
+    do {
+        select distinct acs_objects.object_type 
+        from ct_publications join acs_objects on ct_publications.publication_id = acs_objects.object_id join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
+        where person_id = :author
+    } map {
+        objectType = acs_objects.object_type;
+    }
+
+}
+
+query getIdsOfPublicationsOfSciMember {
+    BigDecimal publicationId;
+    
+    do {
+        select ct_publications_authorship.publication_id 
+        from ct_publications_authorship 
+        where ct_publications_authorship.person_id = :author
+    } map {
+        publicationId = ct_publications_authorship.publication_id;
+    }
+}
+
+query getIdsOfProjectsOfSciMember {
+    BigDecimal projectId;
+
+    do {
+        select ct_sciorga_projects.project_id
+        from ct_sciorga_projects join cms_organizationalunits_person_map on ct_sciorga_projects.project_id = cms_organizationalunits_person_map.organizationalunit_id
+        where cms_organizationalunits_person_map.person_id = :member
+    } map {
+        projectId = ct_sciorga_projects.project_id;
+    }
+}

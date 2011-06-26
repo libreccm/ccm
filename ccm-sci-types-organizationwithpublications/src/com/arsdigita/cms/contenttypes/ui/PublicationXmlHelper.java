@@ -142,6 +142,8 @@ public class PublicationXmlHelper {
         publicationElem.addAttribute("oid", publication.getOID().toString());
         publicationElem.addAttribute("version", publication.getVersion());
         generateXmlElement(publicationElem, "title", publication.getTitle());
+        System.out.printf("\n\npublication.oid = '%s'", publication.getOID());
+        System.out.printf("publication.title = '%s'\n\n", publication.getTitle());
         if (publication.getYearOfPublication() != null) {
             Element yearElem = publicationElem.newChildElement(
                     "yearOfPublication");
@@ -159,7 +161,7 @@ public class PublicationXmlHelper {
             return;
         }
 
-        while (authors.next()) {
+        while (authors.next()) {                       
             Element authorsElem = publicationElem.newChildElement(
                     "authors");
             Element linkElem = authorsElem.newChildElement("link");
@@ -189,7 +191,7 @@ public class PublicationXmlHelper {
                                  (PublicationWithPublisher) publication;
         generatePublisherXml(publicationElem, pwp);
 
-        generateXmlElement(publicationElem, "misc", pwp.getISBN());
+        generateXmlElement(publicationElem, "isbn", pwp.getISBN());
         generateXmlElement(publicationElem, "volume", pwp.getVolume());
         generateXmlElement(publicationElem,
                            "numberOfVolumes",

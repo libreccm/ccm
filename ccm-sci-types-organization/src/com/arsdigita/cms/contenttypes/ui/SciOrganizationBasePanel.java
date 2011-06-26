@@ -384,7 +384,9 @@ public abstract class SciOrganizationBasePanel
 
         Element title = projectElem.newChildElement("title");
         title.setText(project.getTitle());
-
+        
+        Element beginElem = projectElem.newChildElement("projectbegin");
+             
         if ((project.getAddendum() != null)
             && !(project.getAddendum().isEmpty())) {
             Element addendum = projectElem.newChildElement("addendum");

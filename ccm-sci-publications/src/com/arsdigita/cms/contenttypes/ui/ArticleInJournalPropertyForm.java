@@ -76,8 +76,8 @@ public class ArticleInJournalPropertyForm
         ParameterModel volumeParam =
                        new IntegerParameter(ArticleInJournal.VOLUME);
         TextField volume = new TextField(volumeParam);
-        volume.addValidationListener(new NotNullValidationListener());
-        volume.addValidationListener(new NotEmptyValidationListener());
+        //volume.addValidationListener(new NotNullValidationListener());
+        //volume.addValidationListener(new NotEmptyValidationListener());
         add(volume);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(

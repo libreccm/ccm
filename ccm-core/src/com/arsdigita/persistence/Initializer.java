@@ -51,7 +51,7 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
         // Finally the files out of the database
         TransactionContext txn = null;
-        try {
+        try {            
             Session session = SessionManager.getSession();
             txn = session.getTransactionContext();
             txn.beginTxn();
@@ -116,6 +116,11 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
             //}
 
             txn.commitTxn();
+        } catch(Exception ex) {
+            //jensp 2011-06-24: There was no catch Block for this try. This is
+            //an extremly BAD practicse!!! At least there should be a log output
+            //of the execption of debugging.
+            s_log.error("An exception occured in the init(DomainInitEvent) method: ", ex);
         } finally {
             if (txn != null && txn.inTxn()) {
                 txn.abortTxn();

@@ -35,11 +35,10 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Id: TransactionContext.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 public class TransactionContext {
-    private static final Logger s_cat =
-        Logger.getLogger(TransactionContext.class);
 
+    private static final Logger s_cat =
+                                Logger.getLogger(TransactionContext.class);
     private Session m_ossn;
     // used in test infrastructure
     com.redhat.persistence.Session m_ssn;
@@ -64,9 +63,8 @@ public class TransactionContext {
      * This should be a transparent behavior change introduced as a
      * performance optimization, SDM #159142.
      **/
-
     public void beginTxn() {
-        s_cat.debug("Beginning transaction..."); 
+        s_cat.debug("Beginning transaction...");
         // Do nothing. This is implicit now.
         if (m_inTxn) {
             throw new IllegalStateException("double begin");
@@ -81,8 +79,7 @@ public class TransactionContext {
      *
      *  @post !inTxn()
      **/
-
-    public void commitTxn() {
+    public void commitTxn() {    
         s_cat.debug("Commiting transaction...");
         boolean success = false;
         try {
@@ -93,13 +90,18 @@ public class TransactionContext {
             success = true;
             m_inTxn = false;
             fireCommitEvent();
-            s_cat.debug("Done.");       
+            s_cat.debug("Done.");
+        } catch (Exception ex) {
+            s_cat.error("Exception occured: ", ex);
         } finally {
-            s_cat.debug("Cleaning up...");           
+            s_cat.debug("Cleaning up...");
             clearAttributes();
-            if (!success) { m_ossn.invalidateDataObjects(false, true); }
-             if (m_inTxn) {
-                s_cat.warn("Warning: Cleanup after commit was reached, but m_inTxn is true.");
+            if (!success) {
+                m_ossn.invalidateDataObjects(false, true);
+            }
+            if (m_inTxn) {
+                s_cat.warn(
+                        "Warning: Cleanup after commit was reached, but m_inTxn is true.");
             }
         }
     }
@@ -120,7 +122,9 @@ public class TransactionContext {
             fireCommitEvent();
         } finally {
             clearAttributes();
-            if (!success) { m_ossn.invalidateDataObjects(false, true); }
+            if (!success) {
+                m_ossn.invalidateDataObjects(false, true);
+            }
         }
     }
 
@@ -131,7 +135,6 @@ public class TransactionContext {
      *
      *  @post !inTxn()
      **/
-
     public void abortTxn() {
         s_cat.warn("Aborting transaction...");
         boolean success = false;
@@ -145,7 +148,9 @@ public class TransactionContext {
             }
             success = true;
         } finally {
-            if (!success) { m_ossn.invalidateDataObjects(false, true); }
+            if (!success) {
+                m_ossn.invalidateDataObjects(false, true);
+            }
             fireAbortEvent();
             clearAttributes();
         }
@@ -175,17 +180,16 @@ public class TransactionContext {
      * before the transaction
      */
     private void fireBeforeCommitEvent() {
-        Assert.isTrue
-	    (inTxn(), "The beforeCommit event was fired outside of " +
-	     "the transaction");
+        Assert.isTrue(inTxn(), "The beforeCommit event was fired outside of "
+                               + "the transaction");
 
         Object listeners[] = m_listeners.toArray();
 
-        for (int i = 0 ; i < listeners.length ; i++) {
-	    if (s_cat.isDebugEnabled()) {
-		s_cat.debug("Firing transaction beforeCommit event");
-	    }
-            TransactionListener listener = (TransactionListener)listeners[i];
+        for (int i = 0; i < listeners.length; i++) {
+            if (s_cat.isDebugEnabled()) {
+                s_cat.debug("Firing transaction beforeCommit event");
+            }
+            TransactionListener listener = (TransactionListener) listeners[i];
             listener.beforeCommit(this);
         }
     }
@@ -196,22 +200,22 @@ public class TransactionContext {
      * after the transaction
      */
     private void fireCommitEvent() {
-        Assert.isTrue
-	    (!inTxn(), "transaction commit event fired during transaction");
+        Assert.isTrue(!inTxn(),
+                      "transaction commit event fired during transaction");
 
         Object listeners[] = m_listeners.toArray();
         m_listeners.clear();
 
-        for (int i = 0 ; i < listeners.length ; i++) {
-	    if (s_cat.isDebugEnabled()) {
-		s_cat.debug("Firing transaction commit event");
-	    }
-            TransactionListener listener = (TransactionListener)listeners[i];
+        for (int i = 0; i < listeners.length; i++) {
+            if (s_cat.isDebugEnabled()) {
+                s_cat.debug("Firing transaction commit event");
+            }
+            TransactionListener listener = (TransactionListener) listeners[i];
             listener.afterCommit(this);
         }
 
-        Assert.isTrue
-	    (!inTxn(), "transaction commit listener didn't close transaction");
+        Assert.isTrue(!inTxn(),
+                      "transaction commit listener didn't close transaction");
     }
 
     /*
@@ -220,16 +224,15 @@ public class TransactionContext {
      * before the transaction
      */
     private void fireBeforeAbortEvent() {
-        Assert.isTrue
-	    (inTxn(), "The beforeAbort event was fired outside of " +
-	     "the transaction");
+        Assert.isTrue(inTxn(), "The beforeAbort event was fired outside of "
+                               + "the transaction");
 
         Object listeners[] = m_listeners.toArray();
-        for (int i = 0 ; i < listeners.length ; i++) {
-	    if (s_cat.isDebugEnabled()) {
-		s_cat.debug("Firing transaction beforeAbort event");
-	    }
-            TransactionListener listener = (TransactionListener)listeners[i];
+        for (int i = 0; i < listeners.length; i++) {
+            if (s_cat.isDebugEnabled()) {
+                s_cat.debug("Firing transaction beforeAbort event");
+            }
+            TransactionListener listener = (TransactionListener) listeners[i];
             listener.beforeAbort(this);
         }
     }
@@ -240,22 +243,22 @@ public class TransactionContext {
      * after the transaction
      */
     private void fireAbortEvent() {
-        Assert.isTrue
-	    (!inTxn(), "transaction abort event fired during transaction");
+        Assert.isTrue(!inTxn(),
+                      "transaction abort event fired during transaction");
 
         Object listeners[] = m_listeners.toArray();
         m_listeners.clear();
 
-        for (int i = 0 ; i < listeners.length ; i++) {
-	    if (s_cat.isDebugEnabled()) {
-		s_cat.debug("Firing transaction abort event");
-	    }
-            TransactionListener listener = (TransactionListener)listeners[i];
+        for (int i = 0; i < listeners.length; i++) {
+            if (s_cat.isDebugEnabled()) {
+                s_cat.debug("Firing transaction abort event");
+            }
+            TransactionListener listener = (TransactionListener) listeners[i];
             listener.afterAbort(this);
         }
 
-        Assert.isTrue
-	    (!inTxn(), "transaction abort listener didn't close transaction");
+        Assert.isTrue(!inTxn(),
+                      "transaction abort listener didn't close transaction");
     }
 
     /**
@@ -263,7 +266,6 @@ public class TransactionContext {
      *
      * @return True if a transaction is in progress, false otherwise.
      **/
-
     public boolean inTxn() {
         return m_inTxn;
     }
@@ -275,11 +277,10 @@ public class TransactionContext {
      *
      * @return The isolation level of the current transaction.
      **/
-
     public int getTransactionIsolation() {
         try {
             Connection conn = m_ossn.getConnection();
-	    return conn.getTransactionIsolation();
+            return conn.getTransactionIsolation();
         } catch (SQLException e) {
             throw PersistenceException.newInstance(e);
         }
@@ -296,7 +297,7 @@ public class TransactionContext {
     public void setTransactionIsolation(int level) {
         try {
             Connection conn = m_ossn.getConnection();
-	    conn.setTransactionIsolation(level);
+            conn.setTransactionIsolation(level);
         } catch (SQLException e) {
             throw PersistenceException.newInstance(e);
         }
@@ -347,5 +348,4 @@ public class TransactionContext {
     void clearAttributes() {
         m_attrs.clear();
     }
-
 }

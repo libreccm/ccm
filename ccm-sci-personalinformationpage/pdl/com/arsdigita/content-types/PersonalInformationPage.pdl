@@ -5,7 +5,8 @@ import com.arsdigita.cms.*;
 
 object type PersonalInformationPage extends ContentPage {
 
-       
+        String homepageUrl = homepage_url VARCHAR(256);
+
        reference key (ct_personal_information_pages.personal_information_page_id);
 }
 

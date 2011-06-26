@@ -131,7 +131,7 @@ public class SciOrganizationWithPublicationsPanel extends SciOrganizationPanel {
     }
 
     public void setDisplayWorkingPapers(final boolean displayWorkingPapers) {
-        this.displayWorkingPapers = displayWorkingPapers;
+        this.displayWorkingPapers = displayWorkingPapers;        
     }
 
     @Override
