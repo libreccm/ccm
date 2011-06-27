@@ -54,9 +54,10 @@ public class ItemSearchPopup extends ItemSearch {
      *
      * @param context the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     * @param limitToContentSection limit the search to the current content section
      */
-    public ItemSearchPopup(String context) {
-        super(context);
+    public ItemSearchPopup(String context, boolean limitToContentSection) {
+        super(context, limitToContentSection);
     }
 
     // Hide results by default
@@ -68,14 +69,14 @@ public class ItemSearchPopup extends ItemSearch {
     }
 
     @Override
-    protected ItemSearchSection createSearchSection(String context) {
-        return new ItemSearchSectionPopup(context);
+    protected ItemSearchSection createSearchSection(String context, boolean limitToContentSection) {
+        return new ItemSearchSectionPopup(context, limitToContentSection);
     }
 
     private static class ItemSearchSectionPopup extends ItemSearchSection {
 
-        public ItemSearchSectionPopup(String context) {
-            super(context);
+        public ItemSearchSectionPopup(String context, boolean limitToContentSection) {
+            super(context, limitToContentSection);
         }
 
         @Override

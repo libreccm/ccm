@@ -67,6 +67,7 @@ public class ItemSearchWidget extends FormSection
     private String m_clearName;
     private ParameterModel m_model;
     public static final String BEBOP_ITEM_SEARCH = "bebop:itemSearch";
+    public static final boolean LIMIT_TO_CONTENT_SECTION = false;
 
     private class ItemFragment extends TextField {
 
@@ -125,8 +126,8 @@ public class ItemSearchWidget extends FormSection
 
         private ItemSearchWidget parent;
 
-        public ItemSearchFragment(String name, String context, ItemSearchWidget parent) {
-            super(name, context);
+        public ItemSearchFragment(String name, String context, ItemSearchWidget parent, boolean limitToContentSection) {
+            super(name, context, limitToContentSection);
             this.parent = parent;
         }
 
@@ -234,7 +235,7 @@ public class ItemSearchWidget extends FormSection
         searchSection.add(m_clear);
         searchSection.add(m_jsLabel);
         add(searchSection);
-        m_searchComponent = new ItemSearchFragment(m_name, ContentItem.DRAFT, this);
+        m_searchComponent = new ItemSearchFragment(m_name, ContentItem.DRAFT, this, LIMIT_TO_CONTENT_SECTION);
         add(m_searchComponent);
         addSubmissionListener(this);
         addInitListener(this);

@@ -335,6 +335,12 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.OPTIONAL,
             new Integer(1));
     /**
+     * Limit the item search to current content section
+     */
+    private final Parameter m_limitToContentSection = new BooleanParameter("com.arsdigita.cms.search.limitToContentSection",
+            Parameter.OPTIONAL,
+            Boolean.TRUE);
+    /**
      * Asset steps to skip, specify asset steps that are not relevant for
      * specific content types.
      * Each entry in the list is a : separated pair. The first string
@@ -506,6 +512,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_categoryAuthoringExtension);
         register(m_hideResetLifecycleLink);
         register(m_keywordWeight);
+        register(m_limitToContentSection);
         register(m_titleWeight);
         register(m_scoreTitleAndKeywords);
         register(m_skipAssetSteps);
@@ -761,6 +768,10 @@ public final class CMSConfig extends AbstractConfig {
      **/
     public Integer getKeywordSearchWeight() {
         return (Integer) get(m_keywordWeight);
+    }
+
+    public final boolean limitToContentSection() {
+        return ((Boolean) get(m_limitToContentSection)).booleanValue();
     }
 
     /**

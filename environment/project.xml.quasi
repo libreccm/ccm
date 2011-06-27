@@ -42,6 +42,7 @@
         <ccm:application name="ccm-cms-types-glossaryitem"/>         
 <!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
 <!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
+        <ccm:application name="ccm-cms-types-image"/>
 <!--    <ccm:application name="ccm-cms-types-job"/>                  -->
 <!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
         <ccm:application name="ccm-cms-types-member"/>               

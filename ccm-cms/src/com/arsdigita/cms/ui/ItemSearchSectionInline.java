@@ -55,9 +55,10 @@ public class ItemSearchSectionInline extends ItemSearchSection {
      *
      * @param context the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     * @param limitToContentSection limit the search to the current content section
      */
-    public ItemSearchSectionInline(String name, String context) {
-        super(name, context);
+    public ItemSearchSectionInline(String name, String context, boolean limitToContentSection) {
+        super(name, context, limitToContentSection);
         m_name = name;
         m_item = new OIDParameter(name + "_itemOID");
     }

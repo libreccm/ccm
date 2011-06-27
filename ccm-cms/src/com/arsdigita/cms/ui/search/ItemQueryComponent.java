@@ -50,7 +50,7 @@ public class ItemQueryComponent extends BaseQueryComponent {
 
     private String m_context;
 
-    public ItemQueryComponent(String context) {
+    public ItemQueryComponent(String context, final boolean limitToContentSection) {
         m_context = context;
 
         if (Search.getConfig().isIntermediaEnabled()) {
@@ -69,7 +69,7 @@ public class ItemQueryComponent extends BaseQueryComponent {
                 @Override
                 protected Category[] getRoots(PageState state) {
                     Category[] roots;
-                    if (CMS.getContext().hasContentSection()) {
+                    if (limitToContentSection == true && CMS.getContext().hasContentSection()) {
                         ContentSection section = CMS.getContext().getContentSection();
                         roots = new Category[]{section.getRootCategory()};
                     } else {
@@ -90,7 +90,7 @@ public class ItemQueryComponent extends BaseQueryComponent {
 
                 @Override
                 protected ContentSection getContentSection() {
-                    if (CMS.getContext().hasContentSection()) {
+                    if (limitToContentSection == true && CMS.getContext().hasContentSection()) {
                         return CMS.getContext().getContentSection();
                     } else {
                         return super.getContentSection();

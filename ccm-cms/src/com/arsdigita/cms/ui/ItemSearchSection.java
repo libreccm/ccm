@@ -61,9 +61,10 @@ public class ItemSearchSection extends FormSection
      *
      * @param context the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     * @param limitToContentSection limit the search to the current content section
      */
-    public ItemSearchSection(String context) {
-        this(null, context);
+    public ItemSearchSection(String context, boolean limitToContentSection) {
+        this(null, context, limitToContentSection);
     }
     /**
      * Construct a new <code>ItemSearchSection</code> component
@@ -71,12 +72,13 @@ public class ItemSearchSection extends FormSection
      * @param context the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      * @param name The name of the search parameter for the particular FormSection
+     * @param limitToContentSection limit the search to the current content section
      */
-    public ItemSearchSection(String name, String context) {
+    public ItemSearchSection(String name, String context, boolean limitToContentSection) {
         super(new SimpleContainer());
         String thisName = (name == null ? "itemSearch" : name);
         
-        m_query = createQueryGenerator(context);
+        m_query = createQueryGenerator(context, limitToContentSection);
         m_results = createResultsPane(m_query);
         
         addQueryGenerator(this);
@@ -98,8 +100,8 @@ public class ItemSearchSection extends FormSection
         m_results.setVisible(state, false);
     }
 
-    protected ItemQueryComponent createQueryGenerator(String context) {
-        return new ItemQueryComponent(context);
+    protected ItemQueryComponent createQueryGenerator(String context, boolean limitToContentSection) {
+        return new ItemQueryComponent(context, limitToContentSection);
     }
 
     protected Component createResultsPane(QueryGenerator generator) {

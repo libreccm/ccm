@@ -242,7 +242,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         if (m_searchPane == null) {
             m_searchPane = new LayoutPanel();
             m_searchPane.setLeft(new SimpleComponent());
-            m_searchPane.setBody(new ItemSearch(ContentItem.DRAFT));
+            m_searchPane.setBody(new ItemSearch(ContentItem.DRAFT, CMS.getConfig().limitToContentSection()));
         }
         return m_searchPane;
     }
