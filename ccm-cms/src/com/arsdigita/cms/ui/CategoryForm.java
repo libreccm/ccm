@@ -112,6 +112,7 @@ public abstract class CategoryForm extends Form
         // Create the request local
         m_assigned = new RequestLocal() {
 
+            @Override
             public Object initialValue(PageState state) {
                 CategoryMap m = new CategoryMap();
                 initAssignedCategories(state, m);
@@ -146,7 +147,7 @@ public abstract class CategoryForm extends Form
         add(box, ColumnPanel.CENTER | ColumnPanel.MIDDLE);
 
         SingleSelect assignedWidget =
-            new SingleSelect(new BigDecimalParameter(ASSIGNED));
+                new SingleSelect(new BigDecimalParameter(ASSIGNED));
         try {
             assignedWidget.addPrintListener(new AssignedPrintListener());
         } catch (TooManyListenersException e) {
@@ -218,6 +219,7 @@ public abstract class CategoryForm extends Form
     //
     private class FreePrintListener implements PrintListener {
 
+        @Override
         public void prepare(PrintEvent e) {
 
             OptionGroup target = (OptionGroup) e.getTarget();
@@ -348,6 +350,7 @@ public abstract class CategoryForm extends Form
     @Deprecated
     private class AssignedPrintListener implements PrintListener {
 
+        @Override
         public void prepare(PrintEvent e) {
             OptionGroup o = (OptionGroup) e.getTarget();
             PageState state = e.getPageState();
@@ -367,6 +370,7 @@ public abstract class CategoryForm extends Form
     }
 
     // Process the form: assign/unassign categories
+    @Override
     public void process(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
         FormData data = e.getFormData();
@@ -418,6 +422,7 @@ public abstract class CategoryForm extends Form
 
     // Validate the form: make sure that a category is selected
     // for the remove/assign buttons
+    @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
         FormData data = e.getFormData();
