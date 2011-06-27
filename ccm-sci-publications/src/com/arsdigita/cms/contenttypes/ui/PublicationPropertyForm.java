@@ -80,8 +80,8 @@ public class PublicationPropertyForm
                 Publication.YEAR_OF_PUBLICATION);
         TextField yearOfPublication = new TextField(yearOfPublicationParam);
         yearOfPublication.setMaxLength(4);
-        yearOfPublication.addValidationListener(new NotNullValidationListener());
-        yearOfPublication.addValidationListener(new NotEmptyValidationListener());
+        //yearOfPublication.addValidationListener(new NotNullValidationListener());
+        //yearOfPublication.addValidationListener(new NotEmptyValidationListener());
         add(yearOfPublication);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
