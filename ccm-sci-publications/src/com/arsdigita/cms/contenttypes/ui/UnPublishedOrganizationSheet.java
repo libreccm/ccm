@@ -161,8 +161,7 @@ public class UnPublishedOrganizationSheet
             if (canEdit) {
                 GenericOrganizationalUnit organization;
                 try {
-                    organization = new Publisher(
-                            (BigDecimal) key);
+                    organization = new GenericOrganizationalUnit((BigDecimal)key);
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }

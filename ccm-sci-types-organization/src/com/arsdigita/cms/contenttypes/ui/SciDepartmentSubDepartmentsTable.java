@@ -368,7 +368,7 @@ public class SciDepartmentSubDepartmentsTable
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-            department.removeSubDepartment(department);
+            department.removeSubDepartment(subdepartment);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
             subdepartments.swapWithPrevious(subdepartment);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
