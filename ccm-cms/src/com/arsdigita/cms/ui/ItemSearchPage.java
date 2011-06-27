@@ -102,7 +102,7 @@ public class ItemSearchPage extends CMSPage {
      */
     protected ItemSearchPopup getSearchPane() {
         if (m_search == null) {
-            m_search = new ItemSearchPopup(ContentItem.DRAFT);
+            m_search = new ItemSearchPopup(ContentItem.DRAFT, false);
         }
 
         return m_search;
