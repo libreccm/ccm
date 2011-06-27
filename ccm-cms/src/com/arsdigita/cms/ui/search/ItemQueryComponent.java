@@ -45,6 +45,9 @@ import java.util.List;
  * This class provides a basic query form for CMS admin pages
  * that automatically adds components for the maximal set of
  * filters supported by the current search query engine.
+ *
+ * @author unknown
+ * @author Sören Bernstein (sbernstein@quasiweb.de)
  */
 public class ItemQueryComponent extends BaseQueryComponent {
 
@@ -99,7 +102,9 @@ public class ItemQueryComponent extends BaseQueryComponent {
             });
 
             add(new VersionFilterComponent(context));
-            add(new ContentSectionFilterComponent());
+            if (limitToContentSection == true) {
+                add(new ContentSectionFilterComponent());
+            }
             add(new DateRangeFilterWidget(new LastModifiedDateFilterType(),
                     LastModifiedDateFilterType.KEY));
             add(new DateRangeFilterWidget(new CreationDateFilterType(),

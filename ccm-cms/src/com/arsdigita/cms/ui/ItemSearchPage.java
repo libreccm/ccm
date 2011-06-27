@@ -23,6 +23,7 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.CMSExcursion;
 import com.arsdigita.cms.ContentItem;
@@ -47,7 +48,7 @@ import javax.servlet.http.HttpServletResponse;
  * <p>The Item Search page.</p>
  *
  * @author Scott Seago (scott@arsdigita.com)
- * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
+ * @author Sören Bernstein (sbernstein@quasiweb.de)
  */
 public class ItemSearchPage extends CMSPage {
 
@@ -55,9 +56,10 @@ public class ItemSearchPage extends CMSPage {
     private TabbedPane m_tabbedPane;
     private ItemSearchBrowsePane m_browse;
     private ItemSearchPopup m_search;
-//    private ItemSearchCreateItemPane m_create;
+    private ItemSearchCreateItemPane m_create;
     private BigDecimalParameter m_sectionId;
     private static final CMSConfig s_conf = CMSConfig.getInstance();
+    private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
 
     /**
@@ -102,7 +104,9 @@ public class ItemSearchPage extends CMSPage {
      */
     protected ItemSearchPopup getSearchPane() {
         if (m_search == null) {
-            m_search = new ItemSearchPopup(ContentItem.DRAFT, false);
+            // Always search in every content section
+//            m_search = new ItemSearchPopup(ContentItem.DRAFT, CMS.getConfig().limitToContentSection());
+            m_search = new ItemSearchPopup(ContentItem.DRAFT, LIMIT_TO_CONTENT_SECTION);
         }
 
         return m_search;

@@ -23,6 +23,7 @@ import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.Tree;
@@ -39,6 +40,7 @@ import com.arsdigita.bebop.event.TreeExpansionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -70,6 +72,8 @@ import org.apache.log4j.Logger;
 public class ItemSearchBrowsePane extends CMSContainer
         implements Resettable, TreeExpansionListener, ChangeListener,
         FormProcessListener, FormSubmissionListener {
+
+    private static final String CONTENT_TYPE_ID = "ct";
 
     private static final Logger s_log =
             Logger.getLogger(ItemSearchBrowsePane.class);
@@ -132,7 +136,9 @@ public class ItemSearchBrowsePane extends CMSContainer
         container.add(m_browser.getPaginator());
 
 //        m_newItem = new SectionNewItemForm("newItem");
+//        m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
 //        m_newItem.addProcessListener(this);
+//
 //        container.add(m_newItem);
 
         add(container);
@@ -248,7 +254,7 @@ public class ItemSearchBrowsePane extends CMSContainer
 //                sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder);
 //
 //        if (!newItem) {
-            browseMode(state);
+//            browseMode(state);
 //        }
 //        m_newItem.setVisible(state, newItem);
     }
@@ -337,7 +343,7 @@ public class ItemSearchBrowsePane extends CMSContainer
 
     private void browseMode(PageState s) {
 //        m_browseSeg.setVisible(s, true);
-//        m_typeSel.clearSelection(s);
+        m_typeSel.clearSelection(s);
     }
 
     private void newItemMode(PageState s) {

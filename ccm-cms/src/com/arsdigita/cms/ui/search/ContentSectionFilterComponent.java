@@ -32,6 +32,7 @@ public class ContentSectionFilterComponent extends StaticFilterComponent {
 
     private String m_version;
 
+    @Override
     public FilterSpecification getFilter(PageState state) {
         if (CMS.getContext().hasContentSection()) {
             String section = CMS.getContext().getContentSection().getName();
