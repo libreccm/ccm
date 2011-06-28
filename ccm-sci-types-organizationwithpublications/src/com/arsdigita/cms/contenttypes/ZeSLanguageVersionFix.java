@@ -51,6 +51,7 @@ public class ZeSLanguageVersionFix {
             ContentItem item = folder.getItem("zes", false);
 
             SciOrganizationWithPublications zesDe;
+            SciOrganizationWithPublications zesEn;
             if (item instanceof ContentBundle) {
                 zesDe =
                 (SciOrganizationWithPublications) ((ContentBundle) item).
@@ -58,6 +59,16 @@ public class ZeSLanguageVersionFix {
             } else {
                 zesDe = (SciOrganizationWithPublications) ((ContentPage) item).
                         getContentBundle().getPrimaryInstance();
+            }
+            zesEn = (SciOrganizationWithPublications) zesDe.getContentBundle().getInstance("en");
+            SciOrganizationPublicationsCollection zesPublications = zesDe.getPublications();
+            while(zesPublications.next()) {
+                Publication publicationDe = (Publication) zesPublications.getPublication().getContentBundle().getPrimaryInstance();
+                if (publicationDe.getContentBundle().getInstance("en") == null) {
+                    //craete en variant of publication...
+                } 
+                Publication publicationEn = (Publication) publicationDe.getContentBundle().getInstance("en");
+                zesEn.addPublication(publicationEn);                
             }
 
             System.out.printf("Got the ZeS: %s (%s)\n", zesDe.getName(), zesDe.
