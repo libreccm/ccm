@@ -165,6 +165,7 @@ class DataObjectImpl implements DataObject {
     }
 
     private com.redhat.persistence.metadata.Property convert(String property) {
+        System.out.printf("\n!!!Converting property '%s'...\n", property);
         return C.prop(m_ssn.getRoot(), getObjectType().getProperty(property));
     }
 

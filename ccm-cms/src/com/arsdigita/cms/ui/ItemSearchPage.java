@@ -56,7 +56,7 @@ public class ItemSearchPage extends CMSPage {
     private TabbedPane m_tabbedPane;
     private ItemSearchBrowsePane m_browse;
     private ItemSearchPopup m_search;
-    private ItemSearchCreateItemPane m_create;
+    //private ItemSearchCreateItemPane m_create;
     private BigDecimalParameter m_sectionId;
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
