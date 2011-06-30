@@ -4,8 +4,8 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
 
-  <xrd:context name="com.arsdigita.london.exporter.ContentExporter">
-    <xrd:adapter objectType="com.arsdigita.cms.ContentPage">
+<xrd:context name="com.arsdigita.london.exporter.ContentExporter">
+  <xrd:adapter objectType="com.arsdigita.cms.ContentPage">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/defaultDomainClass"/>
@@ -66,6 +66,7 @@
         <xrd:property name="/object/dublinCore"/>
       </xrd:associations>
     </xrd:adapter>
+  
     <xrd:adapter objectType="com.arsdigita.cms.contenttypes.FileStorageItem">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
@@ -129,7 +130,7 @@
     </xrd:adapter>
 
     <!-- Adds a text asset -->
-    <xrd:adapter objectType="com.arsdigita.cms.TextPage">
+<!--    <xrd:adapter objectType="com.arsdigita.cms.TextPage">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/defaultDomainClass"/>
@@ -199,7 +200,7 @@
         <xrd:property name="/object/dublinCore"/>
         <xrd:property name="/object/textAsset"/>
       </xrd:associations>
-    </xrd:adapter>
+    </xrd:adapter>-->
 
     <!-- Adds several image assets -->
     <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle">
@@ -359,7 +360,7 @@
         <xrd:property name="/object/sections/version"/>
         <xrd:property name="/object/sections/name"/>
         <xrd:property name="/object/sections/language"/>
-        <xrd:property name="/object/sections/isDeleted"/>
+        <xrd:property name="/object/sections/isDeleted"/> -->
         <!-- Begin Remove me ! -->
         <xrd:property name="/object/sections/pageBreak"/>
         <!-- End -->
