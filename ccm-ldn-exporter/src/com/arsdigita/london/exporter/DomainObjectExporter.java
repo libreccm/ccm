@@ -32,7 +32,11 @@ public class DomainObjectExporter extends DomainObjectXMLRenderer {
     public void handleAttribute(DomainObject obj,
                                 String path,
                                 Property property) {
-        if ("Blob".equals(property.getType().getQualifiedName())) {
+        /*System.out.printf("Handling path '%s', property '%s' (type: '%s)'\n", 
+                          path,
+                          property.getName(),
+                          property.getType().getQualifiedName());        */
+        if ("global.Blob".equals(property.getType().getQualifiedName())) {
             String filename = getAssetFileName(obj, path, property);
             File file = new File(m_assetDir, filename);
             

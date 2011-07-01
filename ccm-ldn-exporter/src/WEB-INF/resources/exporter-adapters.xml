@@ -63,6 +63,8 @@
         <xrd:property name="/object/links"/>
         <xrd:property name="/object/links/targetItem"/>
         <xrd:property name="/object/fileAttachments"/>
+        <xrd:property name="/object/fileAttachments/length"/>
+        <xrd:property name="/object/fileAttachments/content"/>
         <xrd:property name="/object/dublinCore"/>
       </xrd:associations>
     </xrd:adapter>
@@ -125,6 +127,8 @@
         <xrd:property name="/object/links"/>
         <xrd:property name="/object/links/targetItem"/>
         <xrd:property name="/object/file"/>
+        <xrd:property name="/object/file/length"/>
+        <xrd:property name="/object/file/content"/>
         <xrd:property name="/object/dublinCore"/>
       </xrd:associations>
     </xrd:adapter>
