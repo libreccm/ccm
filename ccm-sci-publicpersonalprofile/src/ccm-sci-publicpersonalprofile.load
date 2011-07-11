@@ -1,11 +1,11 @@
 <load>
-	<requries>
+	<requires>
 		<table name="inits"/>
 		<table name="acs_objects"/>
 		<table name="cms_items"/>
-		<table name="ct_sciorga_organizations"/>
-		<table name="ct_sciorga_organizations_with_publications"/>
-        	<table name="ct_sciorga_departments"/>
+<!--		<table name="ct_sciorga_organizations"/> -->
+<!--		<table name="ct_sciorga_organizations_with_publications"/> -->
+<!--        	<table name="ct_sciorga_departments"/> -->
 		<table name="ct_sciorga_projects"/>
         	<table name="ct_publications"/>
         	<initalizer class="com.arsdigita.cms.Initializer"/>
@@ -16,10 +16,10 @@
         	<initalizer class="com.arsdigita.cms.contenttypes.SciProjectInitializer"/>
 	</requires>
 	<provides>
-		<initalizer class="com.arsdigita.cms.contenttypes.SciPublicPersonalProfileInizalizer/>
+		<initalizer class="com.arsdigita.cms.contenttypes.SciPublicPersonalProfileInizalizer"/>
 	</provides>	
 	<scripts>
 		<schema directory="ccm-sci-publicpersonalprofile"/>
-		<data class="com.arsdigita.cms.contnenttypes.SciPublicPersonalProfileLoader"/>
+		<data class="com.arsdigita.cms.contenttypes.SciPublicPersonalProfileLoader"/>
 	</scripts>
 </load>

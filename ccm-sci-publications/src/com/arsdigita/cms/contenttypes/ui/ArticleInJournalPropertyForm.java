@@ -145,7 +145,7 @@ public class ArticleInJournalPropertyForm
         super.process(fse);
 
         FormData data = fse.getFormData();
-        ArticleInJournal article = (ArticleInJournal) initBasicWidgets(fse);
+        ArticleInJournal article = (ArticleInJournal) processBasicWidgets(fse);
 
         if ((article != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
