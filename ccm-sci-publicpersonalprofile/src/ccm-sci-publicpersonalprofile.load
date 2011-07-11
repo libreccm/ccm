@@ -10,16 +10,16 @@
         	<table name="ct_publications"/>
         	<initalizer class="com.arsdigita.cms.Initializer"/>
        		<initalizer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
-        	<initalizer class="com.arsdigita.cms.contenttypes.SciOrganizationInitializer"/>
-        	<initalizer class="com.arsdigita.cms.contenttypes.SciOrganizationWithPublicationsInitializer"/>
-        	<initalizer class="com.arsdigita.cms.contenttypes.SciDepartmentInitializer"/>
+<!--        	<initalizer class="com.arsdigita.cms.contenttypes.SciOrganizationInitializer"/> -->
+<!--        	<initalizer class="com.arsdigita.cms.contenttypes.SciOrganizationWithPublicationsInitializer"/> -->
+<!--        	<initalizer class="com.arsdigita.cms.contenttypes.SciDepartmentInitializer"/> -->
         	<initalizer class="com.arsdigita.cms.contenttypes.SciProjectInitializer"/>
 	</requires>
 	<provides>
-		<initalizer class="com.arsdigita.cms.contnenttypes.SciPersonalInformationPageInizalizer/>
+		<initalizer class="com.arsdigita.cms.contenttypes.SciPublicPersonalProfileInizalizer/>
 	</provides>	
 	<scripts>
-		<schema directory="ccm-sci-personalinformationpage"/>
-		<data class="com.arsdigita.cms.contnenttypes.SciPersonalInformationPageLoader"/>
+		<schema directory="ccm-sci-publicpersonalprofile"/>
+		<data class="com.arsdigita.cms.contnenttypes.SciPublicPersonalProfileLoader"/>
 	</scripts>
 </load>
