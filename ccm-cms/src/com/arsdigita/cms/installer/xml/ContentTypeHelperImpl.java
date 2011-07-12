@@ -228,6 +228,9 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         // Turn on search indexing for this type
         ObjectType type = SessionManager.getMetadataRoot().getObjectType(
                 m_objectType);
+        if (type == null) {
+            throw new IllegalArgumentException(String.format("No object type for '%s'", m_objectType));
+        }
         if (type.isSubtypeOf(ContentPage.BASE_DATA_OBJECT_TYPE)
             && !isInternal()) {
             s_log.debug("Registering search adapter for "
