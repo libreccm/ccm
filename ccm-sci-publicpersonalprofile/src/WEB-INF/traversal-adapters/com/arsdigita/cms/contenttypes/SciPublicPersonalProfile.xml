@@ -1,13 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-    Document   : SciPublicPersonalProfile.xml
-    Created on : 11. Juli 2011, 13:26
-    Author     : jensp
-    Description:
-        Purpose of the document follows.
--->
-
 <?xml version="1.0" encoding="utf-8"?>
 <xrd:adapters
     xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
