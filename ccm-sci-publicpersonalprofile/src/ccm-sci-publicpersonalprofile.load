@@ -17,7 +17,7 @@
 	</requires>
 	<provides>
                 <table name="ct_sci_public_personal_profiles"/>
-		<initalizer class="com.arsdigita.cms.contenttypes.SciPublicPersonalProfileInizalizer"/>
+		<initializer class="com.arsdigita.cms.contenttypes.SciPublicPersonalProfileInitializer"/>
 	</provides>	
 	<scripts>
 		<schema directory="ccm-sci-publicpersonalprofile"/>
