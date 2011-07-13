@@ -17,9 +17,7 @@ import com.arsdigita.util.Assert;
 public class SciPublicPersonalProfile extends ContentPage {
 
     public static final String OWNER = "owner";
-    public static final String PROFILE_URL = "profileUrl";
-    public static final String SHOW_PUBLICATION_LIST = "showPublicationList";
-    public static final String SHOW_PROJECT_LIST = "showProjectList";
+    public static final String PROFILE_URL = "profileUrl";   
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciPublicPersonalProfile";
 
@@ -81,21 +79,5 @@ public class SciPublicPersonalProfile extends ContentPage {
 
     public void setProfileUrl(String profileUrl) {
         set(PROFILE_URL, profileUrl);
-    }
-
-    public Boolean getShowPublicationList() {
-        return (Boolean) get(SHOW_PUBLICATION_LIST);
-    }
-
-    public void setShowPublicationList(Boolean showPublicationList) {
-        set(SHOW_PUBLICATION_LIST, showPublicationList);
-    }
-
-    public Boolean getShowProjectList() {
-        return (Boolean) get(SHOW_PROJECT_LIST);
-    }
-
-    public void setShowProjectList(Boolean showProjectList) {
-        set(SHOW_PROJECT_LIST, showProjectList);
     }
 }

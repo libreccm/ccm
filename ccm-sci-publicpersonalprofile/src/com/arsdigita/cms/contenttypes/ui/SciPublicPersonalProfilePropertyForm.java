@@ -66,23 +66,7 @@ public class SciPublicPersonalProfilePropertyForm
         ParameterModel profileUrlParam =
                        new StringParameter(SciPublicPersonalProfile.PROFILE_URL);
         TextField profileUrl = new TextField(profileUrlParam);
-        add(profileUrl);
-
-        add(new Label((String) SciPublicPersonalProfileGlobalizationUtil.
-                globalize(
-                "scipublicpersonalprofile.ui.profile.show_publication_list").
-                localize()));
-        showPublicationList = new CheckboxGroup(SHOW_PUBLICATION_LIST + "Group");
-        showPublicationList.addOption(new Option(SHOW_PUBLICATION_LIST, ""));
-        add(showPublicationList);
-
-        add(new Label((String) SciPublicPersonalProfileGlobalizationUtil.
-                globalize(
-                "scipublicpersonalprofile.ui.profile.show_project_list").
-                localize()));
-        showProjectList = new CheckboxGroup(SHOW_PROJECT_LIST + "Group");
-        showProjectList.addOption(new Option(SHOW_PROJECT_LIST, ""));
-        add(showProjectList);
+        add(profileUrl);    
     }
 
     @Override
@@ -93,16 +77,7 @@ public class SciPublicPersonalProfilePropertyForm
                                        (SciPublicPersonalProfile) super.
                 initBasicWidgets(fse);
 
-        data.put(SciPublicPersonalProfile.PROFILE_URL, profile.getProfileUrl());
-        if ((profile.getShowPublicationList() != null)
-            && profile.getShowPublicationList()) {
-            showPublicationList.setValue(state, new String[]{
-                        SHOW_PUBLICATION_LIST});
-        }
-        if ((profile.getShowProjectList() != null)
-            && profile.getShowProjectList()) {
-            showProjectList.setValue(state, new String[]{SHOW_PROJECT_LIST});
-        }
+        data.put(SciPublicPersonalProfile.PROFILE_URL, profile.getProfileUrl());        
     }
 
     @Override
@@ -117,18 +92,6 @@ public class SciPublicPersonalProfilePropertyForm
             && getSaveCancelSection().getSaveButton().isSelected(state)) {
             profile.setProfileUrl((String) data.get(
                     SciPublicPersonalProfile.PROFILE_URL));
-
-            if (showPublicationList.getValue(state) == null) {
-                profile.setShowPublicationList(Boolean.FALSE);
-            } else {
-                profile.setShowPublicationList(Boolean.TRUE);
-            }
-
-            if (showProjectList.getValue(state) == null) {
-                profile.setShowProjectList(Boolean.FALSE);
-            } else {
-                profile.setShowProjectList(Boolean.TRUE);
-            }
             
             profile.save();
         }

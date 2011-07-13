@@ -2,14 +2,9 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciPublicPersonalProfile;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
@@ -68,12 +63,7 @@ public class SciPublicPersonalProfilePropertiesStep extends SimpleEditStep {
                 itemModel);
         
         sheet.add(SciPublicPersonalProfileGlobalizationUtil.globalize("scipublicpersonalprofile.ui.profile_url"),
-                  SciPublicPersonalProfile.PROFILE_URL);
-        
-        sheet.add(SciPublicPersonalProfileGlobalizationUtil.globalize("scipublicpersonalprofile.ui.show_publication_list"),
-                  SciPublicPersonalProfile.SHOW_PUBLICATION_LIST);
-        sheet.add(SciPublicPersonalProfileGlobalizationUtil.globalize("scipublicpersonalprofile.ui.show_project_list"),
-                  SciPublicPersonalProfile.SHOW_PROJECT_LIST);
+                  SciPublicPersonalProfile.PROFILE_URL);                
         
         return sheet;
     }
