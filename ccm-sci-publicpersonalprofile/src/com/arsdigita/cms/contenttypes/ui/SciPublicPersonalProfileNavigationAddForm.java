@@ -70,9 +70,7 @@ public class SciPublicPersonalProfileNavigationAddForm
         add(new Label((String) SciPublicPersonalProfileGlobalizationUtil.
                 globalize("scipublicpersonalprofile.ui.nav.select_target").
                 localize()));
-        itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(
-                "com.arsdigita.cms.contenttypes.ContentItem"));
+        itemSearch = new ItemSearchWidget(ITEM_SEARCH);
         add(this.itemSearch);
     }
 

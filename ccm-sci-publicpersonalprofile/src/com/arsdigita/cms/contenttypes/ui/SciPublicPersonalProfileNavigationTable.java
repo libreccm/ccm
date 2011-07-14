@@ -103,7 +103,7 @@ public class SciPublicPersonalProfileNavigationTable
 
         @Override
         public boolean nextRow() {
-            if (index < mockNav.length) {
+            if (index < (mockNav.length - 1)) {
                 index++;
                 return true;
             } else {

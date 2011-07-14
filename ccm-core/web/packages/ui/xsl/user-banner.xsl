@@ -15,7 +15,7 @@
       <table class="globalAdminHeader">
        <tr>
         <!-- Shadow man logo by default -->
-        <a href="http://www.redhat.com"><td class="globalLogo"></td></a>
+        <!--<a href="http://www.redhat.com"><td class="globalLogo"></td></a>-->
          <td><xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text></td>
           <td style="margin: 0; border: 0; padding: 0;">
            <table align="center" style="margin: 0; border: 0; padding: 0;">
@@ -87,7 +87,7 @@
       <table class="globalAdminHeader">
        <tr>
         <!-- Shadow man logo by default -->
-        <a href="http://www.redhat.com"><td class="globalLogo"></td></a>
+        <!--<a href="http://www.redhat.com"><td class="globalLogo"></td></a>-->        
         <td><xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text></td>
         <td style="margin: 0; border: 0; padding: 0;">
          <table align="center" style="margin: 0; border: 0; padding: 0;">

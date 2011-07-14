@@ -327,7 +327,7 @@ public class PageTransformer implements PresentationManager {
 
                     while (entries.hasNext()) {
                         final Map.Entry entry = (Map.Entry) entries.next();
-
+                   
                         xf.setParameter((String) entry.getKey(),
                                         entry.getValue());
                     }
