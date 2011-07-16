@@ -54,14 +54,10 @@ import org.w3c.dom.Document;
  * and transformers.
  *
  * @author Dan Berrange
- * @version $Id: XSLTemplate.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: XSLTemplate.java 1942 2009-05-29 07:53:23Z terry $
  */
 public final class XSLTemplate {
 
-    public static final String versionId =
-                               "$Id: XSLTemplate.java 287 2005-02-22 00:29:02Z sskracic $"
-                               + "$Author: sskracic $"
-                               + "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(XSLTemplate.class);
     private final URL m_source;
     private final Templates m_templates;

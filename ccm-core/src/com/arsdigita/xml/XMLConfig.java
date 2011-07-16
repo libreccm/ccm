@@ -33,13 +33,10 @@ import org.apache.log4j.Logger;
  * - Sax Parser
  * - XSL Transformer
  *
+ * @version $Id: XMLConfig.java 1393 2006-11-28 09:12:32Z sskracic $
  */
 public final class XMLConfig extends AbstractConfig {
 
-    public final static String versionId =
-                               "$Id: XMLConfig.java 1393 2006-11-28 09:12:32Z sskracic $"
-                               + "$Author: sskracic $"
-                               + "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(XMLConfig.class);
     private static XMLConfig s_config;
     // supported XSL transformer implementations

@@ -31,7 +31,8 @@ public class AddNavigation extends Program {
                             return new Navigation(dataObject);
                         }
                     });
-            Application app = Application.createApplication(
+                    /* Create Instance beyond root (4. parameter null)       */
+                    Application app = Application.createApplication(
                     Navigation.BASE_DATA_OBJECT_TYPE, navURL, navTitle, null);
             app.save();
             Domain domain = Domain.retrieve(defaultDomain);

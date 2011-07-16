@@ -890,6 +890,7 @@ public class DynamicObjectType extends DynamicElement {
     /**
      *  This prints out a String representation of this object type
      */
+    @Override
     public String toString() {
         String appendString = Utilities.LINE_BREAK + "The following will be " +
             "added to the table:" + makeTableDDL();

@@ -53,7 +53,7 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:tri@arsdigita.com">Tri Tran</a>
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
  *
- * @version $Id: FolderTreeModelBuilder.java 1940 2009-05-29 07:15:05Z terry $
+ * @version $Id: FolderTreeModelBuilder.java 2183 2011-06-20 00:57:18Z pboy $
  */
 public class FolderTreeModelBuilder extends LockableImpl
         implements TreeModelBuilder {

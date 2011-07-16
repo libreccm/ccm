@@ -21,8 +21,8 @@ package com.arsdigita.aplaws;
 import com.arsdigita.london.navigation.Template;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
-import com.arsdigita.portalworkspace.PageLayout;
-import com.arsdigita.portalworkspace.Workspace;
+// import com.arsdigita.portalworkspace.PageLayout;
+// import com.arsdigita.portalworkspace.Workspace;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.RootCategoryCollection;
@@ -188,10 +188,10 @@ public class Loader extends PackageLoader {
         // at url /portal/. Portal pages at other urls use the corresponding
         // configuration parameter for its initial value and number of columns
         // may be modified at any time using configuration ui.
-/*      Workspace portal = (Workspace)Application
-              .retrieveApplicationForPath("/portal/");
-        portal.setDefaultLayout(PageLayout
-              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));            */
+    //  Workspace portal = (Workspace)Application
+    //        .retrieveApplicationForPath("/portal/");
+    //  portal.setDefaultLayout(PageLayout
+    //        .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));              
     }   // end run method
 
 //  public void registerServicesTemplate(String appURL) {
