@@ -1,0 +1,229 @@
+<!-- $Id: rhea-colophon.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+
+  <colophon id="colophon">
+
+    <para>The &PROD; manuals are written in DocBook SGML v4.1 format. The HTML
+      and PDF formats are produced using custom DSSSL stylesheets and custom
+      jade wrapper scripts. The DocBook SGML files are primarily written in
+      <application>Emacs</application> with the help of PSGML mode; additional
+      authoring and editing has been done with <application>vi</application>
+      using macros and key mappings.
+    </para>
+
+    <para>Garrett LeSage created the admonition graphics (note, tip, important,
+      caution, and warning). They may be freely redistributed with the &RH;
+      documentation.
+    </para>
+    
+    <para>The &PROD; Product Documentation Team is:
+    </para>
+
+    <para>
+      <author>
+        <firstname>Karsten</firstname>
+        <surname>Wade</surname>
+        <affiliation>
+          <jobtitle>Senior Technical Writer</jobtitle>
+        </affiliation>
+      </author> &mdash; Primary Writer/Maintainer of &RHEA; documentation for
+      &RHWAFX; and &RHECMSX;, for example the <citetitle>&RHWAFIG;</citetitle>,
+      the <citetitle>&RHWAFDG;</citetitle>, and the
+      <citetitle>&RHECMSDPG;</citetitle>.
+    </para>
+
+    <para>
+      <author>
+        <firstname>Char</firstname>
+        <surname>James-Tanny</surname>
+        <affiliation>
+          <jobtitle>Technical Writer</jobtitle>
+        </affiliation>
+      </author> &mdash; Writer of the <citetitle>&RHECMSAG;</citetitle> and the
+      <citetitle>&RHECMSUG;</citetitle>.
+    </para>
+
+    <para>The &PROD; Product Development Team made significant contributions to
+      the constructing, authoring, and editing of the entire line of &PROD;
+      documentation.
+    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Archit</firstname>
+            <surname>Shah</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Bryan</firstname>
+            <surname>Che</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Dan</firstname>
+            <surname>Berrange</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Dennis</firstname>
+            <surname>Gregorovic</surname>
+            <affiliation>
+              <jobtitle>Senior Release Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Jon</firstname>
+            <surname>Orris</surname>
+            <affiliation>
+              <jobtitle>Senior QA Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Jim</firstname>
+            <surname>Parsons</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Justin</firstname>
+            <surname>Ross</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Rafael</firstname>
+            <surname>Schloming</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Richard</firstname>
+            <surname>Li</surname>
+            <affiliation>
+              <jobtitle>Director of Software Engineering</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Richard</firstname>
+            <surname>Su</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Scott</firstname>
+            <surname>Seago</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>      
+      <listitem>
+        <para>
+          <author>
+            <firstname>Vadim</firstname>
+            <surname>Nasardinov</surname>
+            <affiliation>
+              <jobtitle>Senior Software Engineer</jobtitle>
+            </affiliation>
+          </author>
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <para>None of the &PROD; documentation would be possible without the
+      extremely able assistance of the &RHI; Documentation Technical Lead,
+      <author>
+        <firstname>John</firstname>
+        <surname>Ha</surname>
+        <affiliation>
+          <jobtitle>Product Documentation Technical Lead</jobtitle>
+        </affiliation>
+      </author>.
+    </para>  
+      
+    <para>The &PROD; documentation has descended from guides originally written
+      for ArsDigita.  The words, images, and ideas live on from these
+      contributors:
+    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Bob</firstname>
+            <surname>Donald</surname>
+          </author>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <author>
+            <firstname>Pete</firstname>
+            <surname>Su</surname>
+          </author>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <!-- translators can add their names here -->
+    <!-- if you do, uncomment the following paragraph -->
+
+    <!--
+    <para>To make the &PROD; documentation accessible to a worldwide audience,
+      we rely upon our excellent team of translators:
+    </para>
+    -->
+    
+  </colophon>
+  

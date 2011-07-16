@@ -1,0 +1,379 @@
+<chapter id="ch-application-development">
+  <title>Application Development</title>
+  <para>
+    Once you have your development server up and running you are ready
+    to start custom development. The
+<command>ccm-devel-create.pl</command> creates a skeleton application
+directory for your project where you should place your custom code.
+You should have a directory for each custom application you develop in
+your dev directory and an entry in
+<filename>project.xml</filename>. This chapter will detail the layout
+of the application directory and configuration files, however the
+details of actually writing XSL, Java, PDL, and JSP are beyond the
+scope of this document, please refer to the guides on <ulink url="http://ccm.redhat.com">CCM Website</ulink> or other resources.
+  </para>
+
+  <sect1 id="s1-quick-application-development">
+    <title>Quick Guide for the Impatient</title>
+    <para>
+      <orderedlist>
+        <listitem><para>Log in as your development user and run the command <command>ccm-profile <replaceable>projectname</replaceable>
+      </command>.</para>
+        </listitem>
+        <listitem>
+          <para>
+            <command>cddev</command> to change into the development directory.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Make the desired code changes
+          </para>
+        </listitem>
+        <listitem>
+          <para><command>ant deploy</command> to deploy and test the changes.
+        </para>
+      </listitem>
+      <listitem>
+        <para>If you are using CVS check in the changes.</para>
+      </listitem>
+      </orderedlist>
+    </para>
+  </sect1>
+    <sect1 id="s1-application-directory">
+        <title>An Application Directory</title>
+
+        <para>The dev directory will contain one or more application
+        directories. Each of these directories will be built as a single
+        unit, but may depend on functionality provided by other
+        applications.</para>
+
+        <para>An application directory contains several
+        subdirectories:</para>
+
+        <sect2 id="s2-application-directory-structure">
+          <title>Application Directory Structure</title>
+        <screen>
+          <computeroutput>
+          <userinput>application name</userinput>
+                   |
+                   |
+                   + -- application.xml
+                   |
+                   |
+                   + -- etc/
+                   |     |
+                   |     |
+                   |     + -- enterprise.init.in
+                   |
+                   |
+                   + -- web/
+                   |     |
+                   |     |
+                   |     + -- packages
+                   |
+                   |
+                   + -- src/
+                   |     |
+                   |     |
+                   |     + -- com/arsdigita/
+                   |
+                   |
+                   + -- pdl/
+                         |
+                         |
+                         + -- com/arsdigita/
+</computeroutput>
+        </screen>
+      </sect2>
+
+            <sect2 id="s2-app-etc">
+                <title>etc/</title>
+                    <para>This holds any custom fragments your package will
+                    need to add to the system initializer file,
+                    <filename>enterprise.init</filename>, in a file called
+                    <filename>enterprise.init.in</filename>. When you are
+                    building your project, one of the steps you will take
+                    will be running a task that concatenates all the
+                    appropriate <filename>enterprise.init.in</filename>
+                    fragments together into one master configuration
+                    file.</para>
+                    
+                    <para><filename>etc/</filename> might also contain
+                    custom libraries or other special files your package
+                    relies on.</para>
+            </sect2>
+
+            <sect2 id="s2-app-pdl">
+                <title>pdl/</title>
+                    <para>This directory contains the PDL files for custom data
+                    objects your application creates and uses. If you
+                    explore the <filename>pdl/</filename> directory, you'll
+                    see it is organized like Java packages, with directories
+                    following a package hierarchy. Like Java, PDL code is
+                    organized in packages (called
+                    <emphasis>models</emphasis>), and PDL objects can extend
+                    other PDL objects.</para>
+            </sect2>
+
+            <sect2 id="s2-app-sql">
+                <title>sql/</title>
+                    <para>This directory contains the custom SQL files
+that create, drop,
+                    and upgrade the database schema for your application,
+                    and a single custom create script
+                    (<filename>oracle-se-create.sql</filename>, for example)
+                    for each database you want your application to run on.
+                    SQL files are organized by package and by the database
+                    they are appropriate for. Note that auto generated sql,
+                    which is what most of your sql will be, only appears in
+                    the build and deployment directories, not in this
+                    <filename>sql/</filename> directory.</para>
+            </sect2>
+
+            <sect2 id="s2-app-src">
+                <title>src/</title>
+                    <para>holds the Java source code for your package. It is
+                    organized according to the standard Java package directory
+                    hierarchy.</para>
+            </sect2>
+
+            <sect2 id="s2-app-test">
+                <title>test/</title>
+                    <para>This holds <application>Junit</application> and other
+                    test classes for your application.
+                    <filename>test/</filename> will have at least a
+                    <filename>src/</filename> directory underneath it, and it
+                    may have other directories holding non-Java files necessary
+                    for running your application tests.</para>
+            </sect2>
+
+            <sect2 id="s2-app-web">
+                <title>web/</title>
+                    <para>This holds files from your application that should be
+                    deployed directly to the servlet container's
+                    <emphasis>webapp root</emphasis> (like the document root
+                    for a web server, the webapp root is the directory where the
+                    servlet container looks for Java classes, and for JSPs and
+                    any static files it needs to serve). Under
+                    <filename>web/</filename> you will find a
+                    <filename>packages/</filename> directory; in a complete
+                    application, you might also see a
+                    <filename>STATIC/</filename> or <filename>assets/</filename>
+                    directory for static files like graphics or CSS.</para>
+
+                    <para>The <filename>packages/</filename> directory under
+                    <filename>web/</filename> deserves a few special words.
+                    <filename>packages/</filename> is the location for the XSL
+                    for your application, and also for any JSPs you may want to
+                    include. Note that a ccm package is
+                    <emphasis>not</emphasis> the same thing as a Java package; a
+                    &CCM; application can contain many &CCM; packages, which can
+                    contain many Java packages. The distinction is that a &CCM;
+                    package is represented by a row in a &CCM; system table, can
+                    be mounted at site nodes and can have its own dispatcher. A
+                    Java package is simply a unit of code organization, and is
+                    not tracked by &CCM; in any way.</para>
+
+                    <para>XSL stylesheets for a package go under the
+                    <filename>packages/<replaceable>package-name</replaceable>/xsl/</filename>
+                    directory. Custom JSPs go under the
+                    <filename>packages/<replaceable>package-name</replaceable>/www/</filename>
+                    directory.</para>
+            </sect2>
+
+
+          </sect1>
+
+        <sect1 id="s1-application-dot-xml">
+            <title>The <filename>application.xml</filename> file</title>
+
+            <para><filename>application.xml</filename> provides metadata about
+            an application, primarily for use when building a package.</para>
+
+            <sect2 id="s2-sample-application-dot-xml">
+              <title>Sample <filename>application.xml</filename> file</title>
+            <screen><computeroutput>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+                                                                                
+&lt;ccm:application name="aplaws-custom"
+           prettyName="The APLAWS customization and styling package"
+              version="1.0.0"
+              release="1"&gt;
+                                                                                
+  &lt;ccm:dependancies&gt;
+&lt;!--    &lt;ccm:requires name="core" version="5.0.0"/&gt; --&gt;
+  &lt;/ccm:dependancies&gt;
+                                                                                
+  &lt;ccm:contacts&gt;
+&lt;!--
+    &lt;ccm:contact uri="http://www.redhat.com/software/ccm" type="website"/&gt;
+    &lt;ccm:contact uri="mailto:cms@redhat.com" type="support"/&gt;
+  --&gt;
+  &lt;/ccm:contacts&gt;
+                                                                                
+  &lt;ccm:description&gt;
+The aplaws-custom package customizes the APLAWS system.
+  &lt;/ccm:description&gt;
+                                                                                
+&lt;/ccm:application&gt;
+          </computeroutput>
+</screen>
+</sect2>
+<sect2 id="s2-application-dot-xml">
+  <title><filename>application.xml</filename> elements</title>
+
+            <para>As with <filename>project.xml</filename>, the most commonly
+            changed parameters are attributes of the top level element,
+            <command>&lt;ccm:application&gt;</command>:</para>
+          </sect2>
+
+                          <sect2 id="s2-ax-name">
+                    <title>name</title>
+                        <para>The machine friendly name of the
+                        application. This is not normally changed once it has
+                        been set.</para>
+                </sect2>
+
+                <sect2 id="s2-ax-pretty-name">
+                    <title>prettyName</title>
+                        <para>The human friendly name of the application.</para>
+                </sect2>
+
+                <sect2 id="s2-ax-version">
+                    <title>version</title>
+                        <para>The version number of the application. This always
+                        consists of 3 numbers, separated by '.', which have
+                        decreasing significance from left to right.</para>
+                        
+                        <para>By convention, the first number is the 'very
+                        major' version number. This is normally only changed to
+                        signify a very significant enhancement or change in
+                        functionality. The second number is less major, but
+                        still represents a significant new version. The third
+                        number is the minor version number. You will normally
+                        change this number for bug fixes or minor
+                        enhancements.</para>
+
+                        <note>
+                            <title>Note</title>
+                            <para>If you specified this application in the
+                            <command>extendsVersion</command> attribute of
+                            <filename>project.xml</filename> then the value you
+                            specify here will be top level version number for
+                            your project.</para>
+                        </note>
+                </sect2>
+
+                <sect2 id="s2-ax-release">
+                    <title>release</title>
+                        <para>The release number specifies a particular build of
+                        a version number.</para>
+
+                        <para>By convention, you should increase the release
+                        number only if you are correcting something which should
+                        have been in the original release, or something so minor
+                        it could not possibly impact on any other part of the
+                        system, such as a typo. When increasing the version
+                        number, you should reset the release number to 1.</para>
+
+                        <note>
+                            <title>Note</title>
+                            <para>If you specified this application in the
+                            <command>extendsVersion</command> attribute of
+                            <filename>project.xml</filename> then the value you
+                            specify here will be top level release number for
+                            your project.</para>
+                        </note>
+                </sect2>
+                <sect2 id="s2-ax-future">
+                  <title><command>&lt;ccm:dependancies&gt;</command>,
+            <command>&lt;ccm:contacts&gt;</command>, and
+            <command>&lt;ccm:description&gt;</command></title>
+
+            <para>The <command>&lt;ccm:dependancies&gt;</command>,
+            <command>&lt;ccm:contacts&gt;</command> and
+            <command>&lt;ccm:description&gt;</command> elements are placeholders
+            for future functionality, and are not currently used.</para>
+        </sect2>
+      </sect1>
+        <sect1 id="s1-app-cvs">
+          <title>Using CVS</title>
+          <para>
+         The Concurrent Versions System (CVS) is a powerful file
+system-based tool for managing changes made to a code base. It is
+particularly useful for tracking changes across time and for
+facilitating collaboration of multiple developers on the same
+code. This section will provide a brief introduction to CVS and the very basic commands. However it is strongly recommended that you study the CVS manual to take full advantage of this tool. 
+        </para>
+        <para> CVS works by storing all changes in a central
+repository, called the CVS repository. Developers can make copies of
+the code from the CVS repository - called a check out - and make
+changes to the code. Joe Developer is happy with the changes the the
+developer can submit the new changes to the repository (called a check
+in). If a Bob Developer comes along and checks out the same code base,
+it will now have the changes that Joe made, along with the history of
+how Joe changed the code. Because both developers are always referring
+to the central CVS repository code changes can be easily shared.
+ </para>
+
+ <para>
+CVS can provide you with the following capabilities for your code base:
+
+          <itemizedlist>
+            <listitem><para>Remember what all the previous checked-in
+            versions of a file contained, using its repository.</para></listitem>
+            <listitem><para>Show you the difference between what's in your
+            tree and what's in the repository.</para></listitem>
+            <listitem><para>Help you merge changes made simultaneously by
+multiple authors who might have been unaware of each other's
+            work.</para></listitem>
+            <listitem><para>Group a snapshot of currently checked-in
+            versions of files as a partcular release</para></listitem>
+            <listitem><para>Revert back to a previous version of the code.</para></listitem>
+            <listitem><para>Act as a backup and restore facility.</para>
+          </listitem>
+ </itemizedlist>
+
+</para>
+
+
+
+        <sect2 id="s2-cvs-commit">
+          <title><command>Making changes: cvs commit</command>
+        </title>
+        <para>
+          
+          Once you have made changes to a file you need to notify the repository of your changes. You can do this with the command <command>cvs commit</command>.
+        </para>
+        </sect2>
+        <sect2 id="s2-cvs-update">
+          <title><command>Retrieving changes: cvs update</command>
+        </title>
+        <para>
+          You can retrieve changes that other developers have made
+          with the command <command>cvs update</command>. You should always run <command>cvs update</command> before you start working to make sure that the files you are working on are up to date. 
+        </para>
+        </sect2>
+        <sect2 id="s2-cvs-help">
+          <title>CVS Help</title>
+          <para>
+            CVS is a very popular software and there is endless online
+documentation on how to use it. There is also help available in the manual page for CVS and command line help.
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <ulink url="http://www.cvshome.org/docs/">CVS online documentation.</ulink>
+                </para>
+              </listitem>
+              <listitem><para>man cvs</para></listitem>
+              <listitem><para><command>cvs --help-options</command>: List of options you can use with CVS.</para></listitem>
+              <listitem><para><command>cvs --help-commands</command>: List of commands you can use with CVS.</para>
+            </listitem>
+            </itemizedlist>
+
+            
+          </para>
+        </sect2>
+    </sect1>
+  </chapter>

@@ -1,0 +1,47 @@
+# Based on original from Eric Bischoff <eric@caldera.de>
+
+# Modified by Tammy Fox <tfox@redhat.com> for Red Hat Documentation
+
+# Make sure we have an absolute path to the backend and stylesheet, as
+# jw doesn't like relative paths...
+
+STUFFPATH=`dirname $0`
+if [ -n "${STUFFPATH##/*}" ]
+then
+    STUFFPATH=$PWD/$STUFFPATH
+fi
+
+# Generate the index, fixing up the problem of bogus empty closing tags (</>)...
+
+FINAL_INDEX=generated-index.sgml
+INDEXFILE=INDEX$$
+
+# Convert to HTML, generating the HTML.index file that we'll use to
+# create an SGML index...
+
+echo Running $SGML_JADE...
+$SGML_JADE -t sgml -V html-index  -i html -d $STUFFPATH/stylesheets/redhat.dsl#html ../${SGML_FILE_NAME}.sgml
+
+# Generate the index, fixing up the problem of bogus empty closing tags (</>)...
+
+echo Indexing...
+if [ $LANG = "it_IT" ]; then
+	SYMBOL="-s Simboli"
+elif [ $LANG = "es_ES" ]; then
+	SYMBOL="-s Símbolos"
+else
+	SYMBOL=""
+fi
+
+perl /usr/bin/collateindex.pl -g $SYMBOL -i generated-index -o ../$FINAL_INDEX HTML.index
+
+
+# Not sure if these are still needed; when we first tried collateindex;
+# it threw "</>" in the generated index in certain cases...
+
+cat ../$FINAL_INDEX | sed 's,^[        ]*</>[  ]*$,,' > ../$INDEXFILE
+mv -f ../$INDEXFILE ../$FINAL_INDEX
+
+echo Rerunning $SGML_JADE...
+
+$SGML_JADE -t sgml -i html -d $STUFFPATH/stylesheets/redhat.dsl#html ../${SGML_FILE_NAME}.sgml
