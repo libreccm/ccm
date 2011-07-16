@@ -84,7 +84,7 @@ public class Loader extends PackageLoader {
      * Constructor 
      */
     public Loader() {
-        
+
         // Es werden stumpf mehrere Kategorisierungsdomains fuer TERMS 
         // definiert und dann über xml Dateien gefüllt:
         // navigationDomain f. Navigation
@@ -193,7 +193,7 @@ public class Loader extends PackageLoader {
               .retrieveApplicationForPath("/portal/");
         portal.setDefaultLayout(PageLayout
               .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));             */
-    }   // end run method
+    }  // end run method
 
 //  public void registerServicesTemplate(String appURL) {
 //      Application app = Application.retrieveApplicationForPath(appURL);

@@ -29,8 +29,9 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.Kernel;
 
-import com.arsdigita.kernel.Kernel;import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;
 
 
 /** 
