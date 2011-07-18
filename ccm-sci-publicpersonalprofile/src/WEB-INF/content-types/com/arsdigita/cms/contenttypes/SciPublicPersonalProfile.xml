@@ -9,7 +9,8 @@
       objectType="com.arsdigita.cms.contenttypes.SciPublicPersonalProfile"
       classname="com.arsdigita.cms.contenttypes.SciPublicPersonalProfile">
 
-        <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+      <!--  <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">-->
+      <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.SciPublicPersonalProfileCreate">
       
             <ctd:authoring-step
 	  labelKey="scipublicpersonalprofile.ui.profile_properties.title"
