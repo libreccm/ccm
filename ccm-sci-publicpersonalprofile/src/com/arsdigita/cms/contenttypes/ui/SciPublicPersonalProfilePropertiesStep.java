@@ -5,15 +5,14 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SegmentedPanel;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciPublicPersonalProfile;
-import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.cms.contenttypes.SciMember;
 
 /**
  *
@@ -83,7 +82,7 @@ public class SciPublicPersonalProfilePropertiesStep extends SimpleEditStep {
         public String format(DomainObject obj, String attribute, PageState state) {
             SciPublicPersonalProfile profile = (SciPublicPersonalProfile) obj;
 
-            SciMember owner = profile.getOwner();
+            GenericPerson owner = profile.getOwner();
 
             if (owner == null) {
                 return "";

@@ -144,7 +144,7 @@ final class ContentTypeItemPane extends BaseItemPane {
 
         connect(m_elementAddForm, elementSelect,
                 AddElement.CONTENT_ITEM_ELEMENT, itemForm);
-        connect(itemForm);
+        connect(itemForm);              
     }
 
     // XXX A temporary, low-impact fix.
@@ -175,7 +175,7 @@ final class ContentTypeItemPane extends BaseItemPane {
             group.setSubject(new ContentTypePropertyList(m_type));
 
             group.addAction(new TypeSecurityContainer(editLink));
-            group.addAction(new TypeSecurityContainer(deleteLink));
+            group.addAction(new TypeSecurityContainer(deleteLink));                        
         }
     }
 

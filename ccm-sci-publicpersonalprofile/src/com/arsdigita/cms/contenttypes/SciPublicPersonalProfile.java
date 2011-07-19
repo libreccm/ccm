@@ -43,7 +43,7 @@ public class SciPublicPersonalProfile extends ContentPage {
         super(type);
     }
 
-    public SciMember getOwner() {
+    public GenericPerson getOwner() {
         final DataCollection collection = (DataCollection) get(OWNER);
 
         if (0 == collection.size()) {
@@ -55,12 +55,12 @@ public class SciPublicPersonalProfile extends ContentPage {
             dobj = collection.getDataObject();
             collection.close();
 
-            return (SciMember) DomainObjectFactory.newInstance(dobj);
+            return (GenericPerson) DomainObjectFactory.newInstance(dobj);
         }
     }
 
-    public void setOwner(SciMember owner) {
-        SciMember oldOwner;
+    public void setOwner(GenericPerson owner) {
+        GenericPerson oldOwner;
 
         oldOwner = getOwner();
         if (oldOwner != null) {
@@ -68,7 +68,7 @@ public class SciPublicPersonalProfile extends ContentPage {
         }
 
         if (null != owner) {
-            Assert.exists(owner, SciMember.class);
+            Assert.exists(owner, GenericPerson.class);
             add(OWNER, owner);
         }
     }
