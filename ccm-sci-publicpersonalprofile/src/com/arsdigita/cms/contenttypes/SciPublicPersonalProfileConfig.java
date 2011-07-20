@@ -21,7 +21,7 @@ public class SciPublicPersonalProfileConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.SciPublicPersonalProfile.show_unfinished_parts",
                              Parameter.REQUIRED,
                              Boolean.FALSE);
-        personType = new StringParameter("com.arsdigita.cms.contenttypes.PublicPersonalProfile.person_class",
+        personType = new StringParameter("com.arsdigita.cms.contenttypes.PublicPersonalProfile.person_type",
                 Parameter.REQUIRED,
                 "com.arsdigita.cms.contenttypes.GenericPerson");
                 

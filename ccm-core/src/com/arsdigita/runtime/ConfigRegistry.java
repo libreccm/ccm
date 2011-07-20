@@ -309,8 +309,10 @@ public class ConfigRegistry {
 
     private Properties getProperties(ClassLoader ldr, String resource) {
         Properties props = new Properties();
+        s_log.error(String.format(">>>Trying to get properties from '%s'...", resource));
         InputStream is = ldr.getResourceAsStream(resource);
         if (is != null) {
+            s_log.error(">>>Create input stream successfully, resource exists...");
             try {
                 props.load(is);
             } catch (IOException e) {
@@ -322,7 +324,9 @@ public class ConfigRegistry {
                     throw new UncheckedWrapperException(e);
                 }
             }
-        }
+        } else {
+            s_log.error(">>>Resource does not exist.");
+        } 
         return props;
     }
 

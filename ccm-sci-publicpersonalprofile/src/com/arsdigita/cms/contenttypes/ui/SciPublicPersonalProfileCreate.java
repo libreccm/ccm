@@ -20,7 +20,6 @@ import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
-import com.arsdigita.cms.contenttypes.SciMember;
 import com.arsdigita.cms.contenttypes.SciPublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.SciPublicPersonalProfileConfig;
 import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
@@ -46,6 +45,10 @@ public class SciPublicPersonalProfileCreate extends PageCreate {
     private static final SciPublicPersonalProfileConfig config =
                                                         new SciPublicPersonalProfileConfig();
 
+    static {
+        config.load();
+    }
+
     public SciPublicPersonalProfileCreate(final ItemSelectionModel itemModel,
                                           final CreationSelector parent) {
         super(itemModel, parent);
@@ -70,25 +73,23 @@ public class SciPublicPersonalProfileCreate extends PageCreate {
                        new StringParameter(SciPublicPersonalProfile.OWNER);
         SingleSelect ownerSelect = new SingleSelect(ownerModel);
         ownerSelect.addValidationListener(new NotNullValidationListener());
-
-        //DataCollection persons = SessionManager.getSession().retrieve(
-        //      SciMember.BASE_DATA_OBJECT_TYPE);
+  
         String personType = config.getPersonType();
-        if ((personType == null) || (personType.isEmpty()) ) {
+        if ((personType == null) || (personType.isEmpty())) {
             personType = "com.arsdigita.cms.contenttypes.GenericPerson";
         }
-        
-        ContentTypeCollection types = ContentType.getAllContentTypes();        
-        types.addFilter(String.format("className = '%s'", personType));        
+
+        ContentTypeCollection types = ContentType.getAllContentTypes();
+        types.addFilter(String.format("className = '%s'", personType));
         if (types.size() == 0) {
             personType = "com.arsdigita.cms.contenttypes.GenericPerson";
-        }        
+        }
         DataCollection persons = SessionManager.getSession().retrieve(
                 personType);
         persons.addFilter("profile is null");
         while (persons.next()) {
             GenericPerson person =
-                      (GenericPerson) DomainObjectFactory.newInstance(persons.
+                          (GenericPerson) DomainObjectFactory.newInstance(persons.
                     getDataObject());
             ownerSelect.addOption(new Option(person.getID().toString(), person.
                     getFullName()));
@@ -119,12 +120,12 @@ public class SciPublicPersonalProfileCreate extends PageCreate {
         String id = (String) fse.getFormData().get(
                 SciPublicPersonalProfile.OWNER);
 
-        SciMember owner = new SciMember(new BigDecimal(id));
+        GenericPerson owner = new GenericPerson(new BigDecimal(id));
 
         validateNameUniqueness(folder,
                                fse,
                                String.format("%s-profile",
-                                             SciMember.urlSave(
+                                             GenericPerson.urlSave(
                 owner.getFullName())));
     }
 
@@ -142,7 +143,7 @@ public class SciPublicPersonalProfileCreate extends PageCreate {
 
         GenericPerson owner = new GenericPerson(new BigDecimal(id));
         String name = String.format("%s-profile",
-                                    SciMember.urlSave(owner.getFullName()));
+                                    GenericPerson.urlSave(owner.getFullName()));
         String title = String.format("%s (Profil)", owner.getFullName());
 
         final ContentPage item = createContentPage(state);
