@@ -91,6 +91,7 @@ public class TemplateCreate extends BasicItemForm {
     /**
      * Add the "use context" widget
      */
+    @Override
     public void addWidgets() {
         super.addWidgets();
 

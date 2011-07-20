@@ -19,7 +19,6 @@
 package com.arsdigita.cms.ui.type;
 
 import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
@@ -61,12 +60,13 @@ final class ContentTypeItemPane extends BaseItemPane {
     private final TypeElements m_elements;
     private final AddElement m_elementAddForm;
     private final SectionTemplatesListing m_templates;
+    private final TypePermissionsTable m_permissions;
 //    private final RelationAttributeSection m_relationAttributes;
 
     ContentTypeItemPane(final ACSObjectSelectionModel model,
-            final ContentTypeRequestLocal type,
-            final ActionLink editLink,
-            final ActionLink deleteLink) {
+                        final ContentTypeRequestLocal type,
+                        final ActionLink editLink,
+                        final ActionLink deleteLink) {
         m_model = model;
         m_type = type;
 
@@ -77,15 +77,29 @@ final class ContentTypeItemPane extends BaseItemPane {
         m_elements = new TypeElements(m_model);
         m_elementAddForm = new AddElement();
 
-        m_templates = new SectionTemplatesListing(new ContentSectionRequestLocal(), m_type);
+        m_templates =
+        new SectionTemplatesListing(new ContentSectionRequestLocal(), m_type);
 
-        final ActionLink templateAddLink = new ActionLink(new Label(gz("cms.ui.type.template.add")));
+        m_permissions = new TypePermissionsTable(
+                new ContentSectionRequestLocal(), m_type);
+
+        final ActionLink templateAddLink = new ActionLink(new Label(gz(
+                "cms.ui.type.template.add")));
         final TemplateCreate templateFormSection = new TemplateCreate(m_model);
-
-        final Form templateForm = new CancellableForm("AddTemplate", templateFormSection.getSaveCancelSection().getCancelButton());
+        final Form templateForm = new CancellableForm("AddTemplate",
+                                                      templateFormSection.
+                getSaveCancelSection().getCancelButton());
         templateForm.add(templateFormSection);
-
         add(templateForm);
+
+        final ActionLink permissionAddLink = new ActionLink(new Label(gz(
+                "cms.ui.type.permission.add")));
+        final TypePermissions permissionsSection = new TypePermissions(m_model);
+        final Form permissionsForm = new CancellableForm("AddPermission",
+                                                         permissionsSection.
+                getSaveCancelSection().getCancelButton());
+        permissionsForm.add(permissionsSection);
+        add(permissionsForm);
 
         final AddTextElement textForm = new AddTextElement(m_model);
         add(textForm);
@@ -105,7 +119,8 @@ final class ContentTypeItemPane extends BaseItemPane {
         final AddFileElement fileForm = new AddFileElement(m_model);
         add(fileForm);
 
-        final AddContentItemElement itemForm = new AddContentItemElement(m_model);
+        final AddContentItemElement itemForm =
+                                    new AddContentItemElement(m_model);
         add(itemForm);
 
         m_detailPane.add(new SummarySection(editLink, deleteLink));
@@ -114,9 +129,13 @@ final class ContentTypeItemPane extends BaseItemPane {
         m_detailPane.add(new TypeSecurityContainer(new ElementSection()));
         m_detailPane.add(new TemplateSection(templateAddLink));
 
-        connect(templateAddLink, templateForm);
+        m_detailPane.add(new PermissionsSection(permissionAddLink));
 
-        final SingleSelect elementSelect = m_elementAddForm.getElementTypeSelect();
+        connect(templateAddLink, templateForm);
+        connect(permissionAddLink, permissionsForm);
+
+        final SingleSelect elementSelect =
+                           m_elementAddForm.getElementTypeSelect();
 
         connect(m_elementAddForm, elementSelect,
                 AddElement.TEXT_ELEMENT, textForm);
@@ -144,7 +163,7 @@ final class ContentTypeItemPane extends BaseItemPane {
 
         connect(m_elementAddForm, elementSelect,
                 AddElement.CONTENT_ITEM_ELEMENT, itemForm);
-        connect(itemForm);              
+        connect(itemForm);
     }
 
     // XXX A temporary, low-impact fix.
@@ -166,7 +185,7 @@ final class ContentTypeItemPane extends BaseItemPane {
     private class SummarySection extends Section {
 
         SummarySection(final ActionLink editLink,
-                final ActionLink deleteLink) {
+                       final ActionLink deleteLink) {
             setHeading(new Label(gz("cms.ui.type.details")));
 
             final ActionGroup group = new ActionGroup();
@@ -175,7 +194,7 @@ final class ContentTypeItemPane extends BaseItemPane {
             group.setSubject(new ContentTypePropertyList(m_type));
 
             group.addAction(new TypeSecurityContainer(editLink));
-            group.addAction(new TypeSecurityContainer(deleteLink));                        
+            group.addAction(new TypeSecurityContainer(deleteLink));
         }
     }
 
@@ -194,7 +213,7 @@ final class ContentTypeItemPane extends BaseItemPane {
         @Override
         public final boolean isVisible(final PageState state) {
             return m_model.isSelected(state) && isDynamicType(state)
-                    && !ContentSection.getConfig().getHideUDCTUI();
+                   && !ContentSection.getConfig().getHideUDCTUI();
         }
     }
 
@@ -208,6 +227,24 @@ final class ContentTypeItemPane extends BaseItemPane {
 
             group.setSubject(m_templates);
             group.addAction(new TypeSecurityContainer(templateAddLink));
+        }
+
+        @Override
+        public final boolean isVisible(final PageState state) {
+            return m_model.isSelected(state) && !isDynamicType(state);
+        }
+    }
+
+    private class PermissionsSection extends Section {
+
+        public PermissionsSection(final ActionLink permissionsAddLink) {
+            setHeading(new Label(gz("cms.ui.type.permissions")));
+
+            final ActionGroup group = new ActionGroup();
+            setBody(group);
+
+            group.setSubject(m_permissions);
+            group.addAction(new TypeSecurityContainer(permissionsAddLink));
         }
 
         @Override
@@ -233,10 +270,12 @@ final class ContentTypeItemPane extends BaseItemPane {
             ContentItem ci = null;
 
             try {
-                Class<? extends ContentItem> clazz = Class.forName(ct.getClassName()).asSubclass(ContentItem.class);
+                Class<? extends ContentItem> clazz = Class.forName(ct.
+                        getClassName()).asSubclass(ContentItem.class);
                 ci = clazz.newInstance();
                 if (ci instanceof RelationAttributeInterface) {
-                    RelationAttributeInterface rai = (RelationAttributeInterface) ci;
+                    RelationAttributeInterface rai =
+                                               (RelationAttributeInterface) ci;
                     retVal = rai.hasRelationAttributes();
                 }
                 ci.delete();
@@ -258,8 +297,8 @@ final class ContentTypeItemPane extends BaseItemPane {
                 final PageState state = e.getPageState();
 
                 if (state.isVisibleOnPage(ContentTypeItemPane.this)
-                        && m_model.isSelected(state)
-                        && !userCanEdit(state)) {
+                    && m_model.isSelected(state)
+                    && !userCanEdit(state)) {
                     m_templates.getRemoveColumn().setVisible(state, false);
                     m_templates.getDefaultColumn().setVisible(state, false);
                     m_elements.getTable().getColumn(3).setVisible(state, false);
@@ -287,7 +326,7 @@ final class ContentTypeItemPane extends BaseItemPane {
     protected static boolean userCanEdit(final PageState state) {
         SecurityManager sm = Utilities.getSecurityManager(state);
         return sm.canAccess(state.getRequest(),
-                SecurityManager.CONTENT_TYPE_ADMIN);
+                            SecurityManager.CONTENT_TYPE_ADMIN);
     }
 
     /**
@@ -301,8 +340,9 @@ final class ContentTypeItemPane extends BaseItemPane {
         final ContentType type = m_type.getContentType(state);
 
         final String objectTypeString =
-                "com.arsdigita.persistence.DynamicObjectType";
-        final DataCollection collection = SessionManager.getSession().retrieve(objectTypeString);
+                     "com.arsdigita.persistence.DynamicObjectType";
+        final DataCollection collection = SessionManager.getSession().retrieve(
+                objectTypeString);
         collection.addEqualsFilter("dynamicType", type.getAssociatedObjectType());
 
         final boolean b = collection.next();
