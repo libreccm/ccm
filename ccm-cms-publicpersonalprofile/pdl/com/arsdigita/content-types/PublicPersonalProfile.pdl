@@ -1,0 +1,27 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type PublicPersonalProfile extends ContentPage {
+
+       String[0..1] profileUrl = ct_public_personal_profiles.profile_url VARCHAR(256);
+       Boolean[0..1] showPublicationList = ct_public_personal_profiles.show_publication_list BIT;
+       Boolean[0..1] showProjectList = ct_public_personal_profiles.show_project_list BIT;
+
+       reference key (ct_public_personal_profiles.profile_id);
+}
+
+association {
+	    
+	    PublicPersonalProfile[0..n] profile = join cms_persons.person_id
+	    				            to ct_public_personal_profile_owner_map.owner_id,
+					          join ct_public_personal_profile_owner_map.profile_id
+					            to ct_public_personal_profiles.profile_id;
+
+           GenericPerson[0..n] owner = join ct_public_personal_profiles.profile_id
+	   		                 to ct_public_personal_profile_owner_map.profile_id,
+				       join ct_public_personal_profile_owner_map.owner_id
+				         to cms_persons.person_id;
+}
+

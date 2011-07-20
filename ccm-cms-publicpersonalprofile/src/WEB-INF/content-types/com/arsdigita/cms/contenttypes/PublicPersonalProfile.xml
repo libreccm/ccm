@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+                    
+    <ctd:content-type
+      label="PublicPersonalProfile"
+      description="Item which is used to create a public personal profile."
+      objectType="com.arsdigita.cms.contenttypes.PublicPersonalProfile"
+      classname="com.arsdigita.cms.contenttypes.PublicPersonalProfile">
+
+      <!--  <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">-->
+      <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileCreate">
+      
+            <ctd:authoring-step
+	  labelKey="publicpersonalprofile.ui.profile_properties.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+	  descriptionKey="publicpersonalprofile.ui.profile_properties.title.description"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+	  component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfilePropertiesStep"
+	  ordering="1"/>
+          
+            <ctd:authoring-step
+        	  labelKey="publicpersonalprofile.ui.profile_nav.title"
+                  labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                  descriptionKey="publicpersonalprofile.ui.profile_nav.description"
+                  descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                  component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileNavigationStep"
+                  ordering="2"/>
+
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
+        </ctd:authoring-kit>
+
+    </ctd:content-type>                
+                    
+</ctd:content-types>

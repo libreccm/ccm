@@ -1,0 +1,16 @@
+<load>
+	<requires>
+		<table name="inits"/>
+		<table name="acs_objects"/>
+		<table name="cms_items"/>
+        	<initalizer class="com.arsdigita.cms.Initializer"/>
+	</requires>
+	<provides>
+                <table name="ct_public_personal_profiles"/>
+		<initializer class="com.arsdigita.cms.contenttypes.PublicPersonalProfileInitializer"/>
+	</provides>	
+	<scripts>
+		<schema directory="ccm-cms-publicpersonalprofile"/>
+		<data class="com.arsdigita.cms.contenttypes.PublicPersonalProfileLoader"/>
+	</scripts>
+</load>
