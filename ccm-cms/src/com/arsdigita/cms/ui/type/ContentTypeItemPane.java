@@ -92,14 +92,14 @@ final class ContentTypeItemPane extends BaseItemPane {
         templateForm.add(templateFormSection);
         add(templateForm);
 
-        final ActionLink permissionAddLink = new ActionLink(new Label(gz(
+        /*final ActionLink permissionAddLink = new ActionLink(new Label(gz(
                 "cms.ui.type.permission.add")));
         final TypePermissions permissionsSection = new TypePermissions(m_model);
         final Form permissionsForm = new CancellableForm("AddPermission",
                                                          permissionsSection.
                 getSaveCancelSection().getCancelButton());
         permissionsForm.add(permissionsSection);
-        add(permissionsForm);
+        add(permissionsForm);*/
 
         final AddTextElement textForm = new AddTextElement(m_model);
         add(textForm);
@@ -129,10 +129,11 @@ final class ContentTypeItemPane extends BaseItemPane {
         m_detailPane.add(new TypeSecurityContainer(new ElementSection()));
         m_detailPane.add(new TemplateSection(templateAddLink));
 
-        m_detailPane.add(new PermissionsSection(permissionAddLink));
+        //m_detailPane.add(new PermissionsSection(permissionAddLink));
+        m_detailPane.add(new PermissionsSection());
 
         connect(templateAddLink, templateForm);
-        connect(permissionAddLink, permissionsForm);
+       // connect(permissionAddLink, permissionsForm);
 
         final SingleSelect elementSelect =
                            m_elementAddForm.getElementTypeSelect();
@@ -237,14 +238,14 @@ final class ContentTypeItemPane extends BaseItemPane {
 
     private class PermissionsSection extends Section {
 
-        public PermissionsSection(final ActionLink permissionsAddLink) {
+        public PermissionsSection() {
             setHeading(new Label(gz("cms.ui.type.permissions")));
 
             final ActionGroup group = new ActionGroup();
             setBody(group);
 
             group.setSubject(m_permissions);
-            group.addAction(new TypeSecurityContainer(permissionsAddLink));
+            //group.addAction(new TypeSecurityContainer(permissionsAddLink));
         }
 
         @Override

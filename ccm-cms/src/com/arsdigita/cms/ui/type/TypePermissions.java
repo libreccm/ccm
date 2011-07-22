@@ -36,8 +36,7 @@ public class TypePermissions extends BasicItemForm {
     @Override
     public void addWidgets() {
         //super.addWidgets();
-
-
+        
         add(new Label(GlobalizationUtil.globalize(
                 "cms.ui.type.permissions.select_role")));
         ParameterModel roleModel = new StringParameter(ROLE);

@@ -9,11 +9,17 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ui.ContentSectionRequestLocal;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.kernel.permissions.ObjectPermissionCollection;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.util.LockableImpl;
 
 /**
@@ -23,8 +29,9 @@ import com.arsdigita.util.LockableImpl;
  */
 public class TypePermissionsTable extends Table {
 
-    private final String TABLE_COL_EDIT = "table_col_edit";
-    private final String TABLE_COL_DEL = "table_col_del";
+    private final String TABLE_COL_ROLE = "table_col_role";
+    private final String TABLE_COL_CAN_USE = "table_col_can_use";
+    private final String TABLE_COL_ACTION = "table_col_action";
     private final ContentTypeRequestLocal type;
 
     public TypePermissionsTable(final ContentSectionRequestLocal section,
@@ -37,19 +44,30 @@ public class TypePermissionsTable extends Table {
                 "cms.ui.type.permissions.none")));
 
         TableColumnModel columnModel = getColumnModel();
-        columnModel.add(new TableColumn(0, GlobalizationUtil.globalize(
-                "cms.ui.type.permission"), TABLE_COL_EDIT));
+
+        columnModel.add(new TableColumn(
+                0,
+                GlobalizationUtil.globalize("cms.ui.type.permissions.role").
+                localize(),
+                TABLE_COL_ROLE));
 
         columnModel.add(new TableColumn(
                 1,
+                GlobalizationUtil.globalize("cms.ui.type.permissions_can_use").
+                localize(),
+                TABLE_COL_CAN_USE));
+
+        columnModel.add(new TableColumn(
+                2,
                 GlobalizationUtil.globalize(
-                "cms.ui.type.remove").localize(),
-                TABLE_COL_DEL));
+                "cms.ui.type.permission.action").localize(),
+                TABLE_COL_ACTION));
 
         setModelBuilder(new TypePermissionsTableModelBuilder());
 
-        columnModel.get(0).setCellRenderer(new EditCellRenderer());
-        columnModel.get(1).setCellRenderer(new DeleteCellRenderer());
+        columnModel.get(0).setCellRenderer(new RoleCellRenderer());
+        columnModel.get(1).setCellRenderer(new CanUseCellRenderer());
+        columnModel.get(2).setCellRenderer(new ActionCellRenderer());
     }
 
     private class TypePermissionsTableModelBuilder
@@ -68,40 +86,83 @@ public class TypePermissionsTable extends Table {
     private class TypePermissionsTableModel implements TableModel {
 
         private Table table;
+        private RoleCollection roles;
+        private ContentType contentType;
         private ObjectPermissionCollection permissions;
 
         public TypePermissionsTableModel(Table table, PageState state) {
             this.table = table;
-            ContentType type =
-                        ((TypePermissionsTable) table).getType().getContentType(
+            contentType =
+            ((TypePermissionsTable) table).getType().getContentType(
                     state);
 
-            permissions = PermissionService.getDirectGrantedPermissions(type.
-                    getOID());
+            roles = CMS.getContext().getContentSection().getStaffGroup().
+                    getRoles();
+
+            permissions =
+            PermissionService.getDirectGrantedPermissions(contentType.getOID());
         }
 
         public int getColumnCount() {
-            if (permissions == null) {
+            if (roles == null) {
                 return 0;
             } else {
-                return (int) permissions.size();
+                return (int) roles.size();
             }
         }
 
         public boolean nextRow() {
-            if (permissions == null) {
+            if (roles == null) {
                 return false;
             } else {
-                return permissions.next();
+                return roles.next();
             }
         }
 
         public Object getElementAt(int columnIndex) {
-            switch(columnIndex) {
+            switch (columnIndex) {
                 case 0:
-                    return permissions.toString();
+                    return roles.getRole().getName();
                 case 1:
-                    return GlobalizationUtil.globalize("cms.ui.type.permission.remove");
+                    if (permissions.size() == 0) {
+                        return "cms.ui.type.permissions.can_use.yes";
+                    } else {
+                        Party party = Kernel.getContext().getParty();
+                        if (party == null) {
+                            party = Kernel.getPublicUser();
+                        }
+                        PermissionDescriptor create =
+                                             new PermissionDescriptor(PrivilegeDescriptor.
+                                get(
+                                com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM),
+                                                                      contentType,
+                                                                      party);
+                        if (PermissionService.checkPermission(create)) {
+                            return "cms.ui.type.permissions.can_use.yes";
+                        } else {
+                            return "cms.ui.type.permissions.can_use.no";
+                        }
+                    }                    
+                case 2:
+                     if (permissions.size() == 0) {
+                        return "cms.ui.type.permissions.actions.restrict_to_this_role";
+                    } else {
+                        Party party = Kernel.getContext().getParty();
+                        if (party == null) {
+                            party = Kernel.getPublicUser();
+                        }
+                        PermissionDescriptor create =
+                                             new PermissionDescriptor(PrivilegeDescriptor.
+                                get(
+                                com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM),
+                                                                      contentType,
+                                                                      party);
+                        if (PermissionService.checkPermission(create)) {
+                            return "cms.ui.type.permissions.actions.revoke";
+                        } else {
+                            return "cms.ui.type.permissions.can_use.grant";
+                        }
+                    }                             
                 default:
                     return null;
             }
@@ -112,7 +173,7 @@ public class TypePermissionsTable extends Table {
         }
     }
 
-    private class EditCellRenderer
+    private class RoleCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -123,11 +184,11 @@ public class TypePermissionsTable extends Table {
                                       Object key,
                                       int row,
                                       int column) {
-            return new Label("");
+            return new Label(value.toString());
         }
     }
 
-    private class DeleteCellRenderer
+    private class CanUseCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -138,7 +199,22 @@ public class TypePermissionsTable extends Table {
                                       Object key,
                                       int row,
                                       int column) {
-            return new Label("");
+            return new Label(value.toString());
+        }
+    }
+
+    private class ActionCellRenderer
+            extends LockableImpl
+            implements TableCellRenderer {
+
+        public Component getComponent(Table table,
+                                      PageState state,
+                                      Object value,
+                                      boolean isSelected,
+                                      Object key,
+                                      int row,
+                                      int column) {
+            return new Label(value.toString());
         }
     }
 
