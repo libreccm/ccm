@@ -1,9 +1,13 @@
 package com.arsdigita.cms.ui.type;
 
+import com.arsdigita.bebop.Column;
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
+import com.arsdigita.bebop.event.TableActionEvent;
+import com.arsdigita.bebop.event.TableActionListener;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
@@ -11,23 +15,28 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.ContentSectionRequestLocal;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.cms.util.SecurityConstants;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.kernel.permissions.ObjectPermissionCollection;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  *
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class TypePermissionsTable extends Table {
+public class TypePermissionsTable extends Table implements TableActionListener {
 
     private final String TABLE_COL_ROLE = "table_col_role";
     private final String TABLE_COL_CAN_USE = "table_col_can_use";
@@ -68,6 +77,41 @@ public class TypePermissionsTable extends Table {
         columnModel.get(0).setCellRenderer(new RoleCellRenderer());
         columnModel.get(1).setCellRenderer(new CanUseCellRenderer());
         columnModel.get(2).setCellRenderer(new ActionCellRenderer());
+
+        addTableActionListener(this);
+    }
+
+    public void cellSelected(final TableActionEvent event) {
+        PageState state = event.getPageState();
+
+        TableColumn column = getColumnModel().get(event.getColumn().intValue());
+
+        if (TABLE_COL_ACTION.equals(column.getHeaderKey().toString())) {
+            Role role = new Role(new BigDecimal(event.getRowKey().toString()));
+            ContentType contentType = getType().getContentType(state);
+            ObjectPermissionCollection permissions =
+                                       PermissionService.
+                    getDirectGrantedPermissions(contentType.getOID());
+       
+            if ((permissions.size() == 0)) {
+                role.grantPermission(contentType,
+                                     PrivilegeDescriptor.get(
+                        com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM));
+            } else if (!role.checkPermission(contentType, PrivilegeDescriptor.
+                    get(com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM))) {
+                role.grantPermission(contentType,
+                                     PrivilegeDescriptor.get(
+                        com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM));
+            } else {
+                role.revokePermission(contentType,
+                                      PrivilegeDescriptor.get(
+                        com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM));
+            }
+        }
+    }
+
+    public void headSelected(final TableActionEvent event) {
+        //Nothing to do
     }
 
     private class TypePermissionsTableModelBuilder
@@ -126,50 +170,36 @@ public class TypePermissionsTable extends Table {
                 case 1:
                     if (permissions.size() == 0) {
                         return "cms.ui.type.permissions.can_use.yes";
-                    } else {
-                        Party party = Kernel.getContext().getParty();
-                        if (party == null) {
-                            party = Kernel.getPublicUser();
-                        }
-                        PermissionDescriptor create =
-                                             new PermissionDescriptor(PrivilegeDescriptor.
+                    } else {                    
+                        if (roles.getRole().checkPermission(contentType,
+                                                            PrivilegeDescriptor.
                                 get(
-                                com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM),
-                                                                      contentType,
-                                                                      party);
-                        if (PermissionService.checkPermission(create)) {
+                                com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM))) {
                             return "cms.ui.type.permissions.can_use.yes";
                         } else {
                             return "cms.ui.type.permissions.can_use.no";
                         }
-                    }                    
+                    }
                 case 2:
-                     if (permissions.size() == 0) {
+                    if (permissions.size() == 0) {
                         return "cms.ui.type.permissions.actions.restrict_to_this_role";
                     } else {
-                        Party party = Kernel.getContext().getParty();
-                        if (party == null) {
-                            party = Kernel.getPublicUser();
-                        }
-                        PermissionDescriptor create =
-                                             new PermissionDescriptor(PrivilegeDescriptor.
+                        if (roles.getRole().checkPermission(contentType,
+                                                            PrivilegeDescriptor.
                                 get(
-                                com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM),
-                                                                      contentType,
-                                                                      party);
-                        if (PermissionService.checkPermission(create)) {
+                                com.arsdigita.cms.SecurityManager.CMS_NEW_ITEM))) {
                             return "cms.ui.type.permissions.actions.revoke";
                         } else {
                             return "cms.ui.type.permissions.can_use.grant";
                         }
-                    }                             
+                    }
                 default:
                     return null;
             }
         }
 
         public Object getKeyAt(int columnIndex) {
-            return columnIndex;
+            return roles.getRole().getID();
         }
     }
 
@@ -199,7 +229,7 @@ public class TypePermissionsTable extends Table {
                                       Object key,
                                       int row,
                                       int column) {
-            return new Label(value.toString());
+            return new Label(GlobalizationUtil.globalize(value.toString()));
         }
     }
 
@@ -214,7 +244,23 @@ public class TypePermissionsTable extends Table {
                                       Object key,
                                       int row,
                                       int column) {
-            return new Label(value.toString());
+            com.arsdigita.cms.SecurityManager securityManager = Utilities.
+                    getSecurityManager(state);
+            Party party = Kernel.getContext().getParty();
+            if (party == null) {
+                party = Kernel.getPublicUser();
+            }
+            if (securityManager.canAccess(party,
+                                          SecurityConstants.CONTENT_TYPE_ADMIN)) {
+                ControlLink link = new ControlLink((String)GlobalizationUtil.globalize(
+                        value.toString()).localize());
+
+                return link;
+            } else {
+                return new Label(value.toString());
+            }
+
+
         }
     }
 
