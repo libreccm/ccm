@@ -202,7 +202,12 @@ public class Date extends Widget implements BebopConstants {
 
             m_year.clearOptions();
             if (this.getParameterModel() instanceof IncompleteDateParameter) {
-                if (((IncompleteDateParameter) this.getParameterModel()).isSkipYearAllowed()) {
+                // Create an empty year entry to unset a date, if either
+                //      a) skipYearAllowed is true
+                //      b) skipDayAllowed is true and skipMonthAllowed is true, to unset a date
+                if (((IncompleteDateParameter) this.getParameterModel()).isSkipYearAllowed() || 
+                        (((IncompleteDateParameter) this.getParameterModel()).isSkipDayAllowed() && 
+                         ((IncompleteDateParameter) this.getParameterModel()).isSkipMonthAllowed())) {
                     m_year.addOption(new Option("", ""));
                 }
             }
