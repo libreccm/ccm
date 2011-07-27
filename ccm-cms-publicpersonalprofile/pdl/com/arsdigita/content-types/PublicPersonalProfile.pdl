@@ -23,5 +23,19 @@ association {
 	   		                 to ct_public_personal_profile_owner_map.profile_id,
 				       join ct_public_personal_profile_owner_map.owner_id
 				         to cms_persons.person_id;
+
+           Integer[0..1] ownerOrder = ct_public_personal_profile_owner_map.owner_order INTEGER;                                         
 }
 
+object type PublicPersonalProfileNavItem {
+
+    BigDecimal[1..1] id = ct_public_personal_profile_nav_items.object_id INTEGER;
+    String[0..1] key = ct_public_personal_profile_nav_items.key VARCHAR(128);
+    String[0..1] lang = ct_public_personal_profile_nav_items.lang VARCHAR(2);
+    String[0..1] label = ct_public_personal_profile_nav_items.label VARCHAR(128);
+    Integer[0..1] navItemOrder = ct_public_personal_profile_nav_items.nav_item_order INTEGER;
+    String[0..1] generatorClass =  ct_public_personal_profile_nav_items.generator_class VARCHAR(1024);
+
+    unique(key, lang, label);
+    object key (id);
+}
