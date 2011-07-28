@@ -18,6 +18,7 @@ public class PublicPersonalProfile extends ContentPage {
 
     public static final String OWNER = "owner";
     public static final String PROFILE_URL = "profileUrl";   
+    public static final String LINK_LIST_NAME = "publicPersonalProfileNavItems";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.PublicPersonalProfile";
 

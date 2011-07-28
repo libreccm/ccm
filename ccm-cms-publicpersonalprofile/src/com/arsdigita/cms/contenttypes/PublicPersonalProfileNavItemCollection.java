@@ -44,7 +44,7 @@ public class PublicPersonalProfileNavItemCollection extends DomainCollection {
     }
     
     public final void addLanguageFilter(final String language) {
-        languageFilter = this.addEqualsFilter(PublicPersonalProfileNavItem.KEY, 
+        languageFilter = this.addEqualsFilter(PublicPersonalProfileNavItem.LANG, 
                                            language);
     }
     

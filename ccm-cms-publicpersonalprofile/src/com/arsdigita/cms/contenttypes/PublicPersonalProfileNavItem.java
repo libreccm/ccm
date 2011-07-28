@@ -20,7 +20,7 @@ public class PublicPersonalProfileNavItem extends DomainObject {
     public static final String ORDER = "navItemOrder";
     public static final String GENERATOR_CLASS = "generatorClass";
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.PublicPersonalProfileNavItem";
+                               "com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem";
 
     public PublicPersonalProfileNavItem() {
         this(BASE_DATA_OBJECT_TYPE);

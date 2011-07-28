@@ -3,7 +3,9 @@
 		<table name="inits"/>
 		<table name="acs_objects"/>
 		<table name="cms_items"/>
+                <table name="cms_related_links"/>
         	<initalizer class="com.arsdigita.cms.Initializer"/>
+                <initalizer class="com.arsdigita.cms.contentassets.RelatedLinkInitializer"/>
 	</requires>
 	<provides>
                 <table name="ct_public_personal_profiles"/>
