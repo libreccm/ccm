@@ -10,6 +10,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
+import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -25,6 +26,7 @@ import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
 import org.apache.log4j.Logger;
 
@@ -73,6 +75,9 @@ public class PublicPersonalProfileNavigationAddForm
                        new StringParameter(PublicPersonalProfileNavItem.KEY);
         SingleSelect navItemSelect = new SingleSelect(navItemModel);
         navItemSelect.addValidationListener(new NotNullValidationListener());
+        navItemSelect.addValidationListener(new NotEmptyValidationListener());
+
+        navItemSelect.addOption(new Option("", ""));
 
         PublicPersonalProfileNavItemCollection navItems =
                                                new PublicPersonalProfileNavItemCollection();
@@ -99,6 +104,7 @@ public class PublicPersonalProfileNavigationAddForm
                     "publicpersonalprofile.ui.nav.select_target").
                     localize()));
             itemSearch = new ItemSearchWidget(ITEM_SEARCH);
+            itemSearch.addValidationListener(this);
             add(this.itemSearch);
         }
     }
@@ -153,6 +159,20 @@ public class PublicPersonalProfileNavigationAddForm
         link.setTargetWindow("");
 
         link.save();
+    }
+
+    @Override
+    public void validate(final FormSectionEvent fse) throws FormProcessException {
+        PageState state = fse.getPageState();
+        FormData data = fse.getFormData();
+
+        if (!showGenerated() && data.get(ITEM_SEARCH) == null) {
+            data.addError(
+                    new GlobalizedMessage(
+                    "parameter_is_required",
+                    "com.arsdigita.bebop.parameters.ParameterResources"));
+        }
+
     }
 
     protected boolean showGenerated() {
