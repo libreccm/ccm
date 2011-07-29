@@ -13,8 +13,8 @@
 
 
     <!-- base directory of the development environment
-	 default is current directory (sysprop user.dir) -->
-    <property name="ccm.project.dir" value="${user.dir}" />
+	 default is parent directory of build.xml (sysprop basedir) -->
+    <property name="ccm.project.dir" value="${basedir}" />
     <echo message="Project base directory is ${ccm.project.dir} "/>
 
 
