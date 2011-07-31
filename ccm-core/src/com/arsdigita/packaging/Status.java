@@ -29,19 +29,20 @@ import com.arsdigita.runtime.Startup;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #5 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: Status.java 736 2005-09-01 10:46:05Z sskracic 
+ */
 class Status extends Command {
 
-    public final static String versionId = 
-            "$Id: Status.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
-
+    /**
+     * Constructor
+     */
     public Status() {
         super("status", "Report on the status of a CCM instance");
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to perform the status check.
+     */
     public boolean run(String[] args) {
         String[] packages;
         if (args.length == 0) {

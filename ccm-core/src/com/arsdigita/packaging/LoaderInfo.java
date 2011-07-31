@@ -32,14 +32,9 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: LoaderInfo.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 class LoaderInfo {
-
-    public final static String versionId = 
-            "$Id: LoaderInfo.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private List m_requiredTables = new ArrayList();
     private List m_providedTables = new ArrayList();
@@ -49,6 +44,10 @@ class LoaderInfo {
     private List m_dataScripts = new ArrayList();
     private List m_requiredPackages = new ArrayList();
 
+    /**
+     * Constructor.
+     * @param is 
+     */
     public LoaderInfo(InputStream is) {
         XML.parse(is, new LoaderInfoHandler());
     }

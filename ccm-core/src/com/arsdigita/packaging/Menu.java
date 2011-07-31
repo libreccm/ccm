@@ -33,14 +33,9 @@ import java.util.Map;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: Menu.java 736 2005-09-01 10:46:05Z sskracic 
+ */
 class Menu {
-
-    public final static String versionId = 
-            "$Id: Menu.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     static final class Layout {
         private Layout() {}

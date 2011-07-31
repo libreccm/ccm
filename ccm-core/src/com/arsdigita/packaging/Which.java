@@ -37,10 +37,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Which.java 736 2005-09-01 10:46:05Z sskracic $
  */
 class Which extends Command {
-    public static final String versionId =
-        "$Id: Which.java 736 2005-09-01 10:46:05Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Which.class);
 
@@ -74,6 +70,9 @@ class Which extends Command {
         return list;
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to perform the which task.
+     */
     public boolean run(final String[] args) {
         CommandLine line;
         try {

@@ -30,27 +30,28 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
 /**
- * Clear
- *
- * Implements the command line interface to clear one or more values
- * in a CCM configuration database (registry)
+ * Clear implements the command line interface to clear one or more values
+ * in a CCM configuration database (registry).
 
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Clear.java 736 2005-09-01 10:46:05Z sskracic $
+ * @version $Id: Clear.java 736 2005-09-01 10:46:05Z sskracic $
  */
 class Clear extends Command {
-    public final static String versionId =
-        "$Id: Clear.java 736 2005-09-01 10:46:05Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options s_options = getOptions();
 
+    /**
+     * Constructor
+     */
     public Clear() {
         super("clear",
               "Clear one or more values in a CCM configuration database");
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to perform the clear process.
+     */
     public boolean run(final String[] args) {
         final CommandLine line;
 

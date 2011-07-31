@@ -31,8 +31,7 @@ import org.apache.commons.cli.Options;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: Command.java 1324 2006-09-21 22:13:16Z apevec $
- **/
-
+ */
 abstract class Command {
 
     private String m_name;

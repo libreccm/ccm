@@ -36,14 +36,9 @@ import java.util.Map;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #4 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: ParameterMap.java 736 2005-09-01 10:46:05Z sskracic 
+ */
 class ParameterMap {
-
-    public final static String versionId = 
-            "$Id: ParameterMap.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private List m_contexts = new ArrayList();
     private List m_parameters = new ArrayList();

@@ -44,14 +44,9 @@ import java.util.Properties;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: ParameterEditor.java 736 2005-09-01 10:46:05Z sskracic $
+ */
 class ParameterEditor {
-
-    public final static String versionId = 
-            "$Id: ParameterEditor.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private ParameterMap m_map;
     private BufferedReader m_in;
@@ -63,6 +58,13 @@ class ParameterEditor {
     private List m_topics;
     private Map m_help;
 
+    /**
+     * 
+     * 
+     * @param map
+     * @param in
+     * @param out 
+     */
     ParameterEditor(ParameterMap map, InputStream in, PrintStream out) {
         m_map = map;
         m_in = new BufferedReader(new InputStreamReader(in));
@@ -209,6 +211,9 @@ class ParameterEditor {
         loadHelp();
     }
 
+    /**
+     * 
+     */
     private void loadHelp() {
         Properties props = new Properties();
         InputStream is =
@@ -352,8 +357,11 @@ class ParameterEditor {
         return m_valid;
     }
 
-    // XXX: for testing
-    public static final void main(String[] args) {
+    /**
+     * Method main added for testing only!
+     * @param args 
+     */
+    public static void main(String[] args) {
         ParameterMap map = new ParameterMap();
         map.addContext(    com.arsdigita.runtime.RuntimeConfig.getConfig());
         map.addContext(new com.arsdigita.web.WebConfig());

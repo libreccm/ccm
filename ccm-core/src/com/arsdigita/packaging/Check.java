@@ -24,7 +24,7 @@ import com.arsdigita.runtime.AbstractScript;
  * The Check class provides a developer callback for performing
  * validation checks during various points in the package loading and
  * server startup process. This functionality is accessed by creating
- * a <i>package-key</i>.checklist file in the src dir of the package
+ * a <i>package-key</i> checklist file in the src dir of the package
  * that wishes to add checks. This must be a valid xml file that
  * conforms to the following format:
  *
@@ -65,14 +65,9 @@ import com.arsdigita.runtime.AbstractScript;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #5 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: Check.java 736 2005-09-01 10:46:05Z sskracic $
+ */
 public abstract class Check extends AbstractScript {
-
-    public final static String versionId = 
-            "$Id: Check.java 736 2005-09-01 10:46:05Z sskracic $" +
-            "by $Author: sskracic $, " + 
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     public static final class Status {
 
@@ -101,8 +96,7 @@ public abstract class Check extends AbstractScript {
      * the Check class.
      *
      * @param status The status, one of PASS, FAIL, or WARN.
-     **/
-
+     */
     protected void status(Status status) {
         if (m_status == null) {
             m_status = status;
@@ -116,8 +110,7 @@ public abstract class Check extends AbstractScript {
      * #run(ScriptContext)} method.
      *
      * @return The status, one of PASS, FAIL, or WARN.
-     **/
-
+     */
     public Status getStatus() {
         return m_status;
     }

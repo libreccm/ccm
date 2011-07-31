@@ -34,8 +34,6 @@ import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.runtime.Startup;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.UncheckedWrapperException;
-// ParameterLoader is deprecated
-// import com.arsdigita.util.parameter.ParameterLoader;
 import com.arsdigita.util.parameter.ParameterReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +54,7 @@ import org.apache.log4j.Logger;
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #13 $ $Date: 2004/08/16 $
  * @version $Id: Loader.java 2115 2011-01-13 17:11:50Z pboy $
- **/
+ */
 class Loader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);

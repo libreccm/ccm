@@ -32,23 +32,17 @@ import org.apache.log4j.Logger;
 
 
 /**
- * CheckDB
- * helper class for the load command worker class Load, checks for
- * existence of a database and verifies accessibility
- *
- * Subject to change!
+ * CheckDB is a helper class for the load command worker class Load, checks for
+ * existence of a database and verifies accessibility.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: DBCheck.java 736 2005-09-01 10:46:05Z sskracic $
  */
 
 public class CheckDB extends BaseCheck {
 
     private static final Logger logger = Logger.getLogger(CheckDB.class);
-    public final static String versionId = 
-            "$Id: DBCheck.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     // Integration of service class packaging.MessageMap.
     // Specifies a package specific message file overriding BaseCheck

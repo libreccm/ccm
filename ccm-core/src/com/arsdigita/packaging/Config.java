@@ -45,14 +45,10 @@ import java.util.Properties;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: Config.java 736 2005-09-01 10:46:05Z sskracic $
  **/
 
 public final class Config extends ParameterMap {
-
-    public final static String versionId = 
-            "$Id: Config.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private ConfigRegistry m_reg;
 

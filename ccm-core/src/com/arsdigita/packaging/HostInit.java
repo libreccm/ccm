@@ -67,14 +67,9 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #16 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: HostInit.java 736 2005-09-01 10:46:05Z sskracic $
+ */
 public class HostInit {
-
-    public final static String versionId = 
-            "$Id: HostInit.java 736 2005-09-01 10:46:05Z sskracic $" +
-            "by $Author: sskracic $, " + 
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(HostInit.class);

@@ -26,23 +26,14 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.pdl.PDLCompiler;
-// pboy (Jan.09): deprecated classes and methods removed, 
-//                comments should be deleted after extensiv testing
-// deprecated, no replacement specified by author, 
-// created InteractiveParameterReader analogous to CompoundParameterReader
-//import com.arsdigita.runtime.InteractiveParameterLoader;
 import com.arsdigita.runtime.InteractiveParameterReader;
 import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.runtime.RegistryConfig;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.Startup;
 import com.arsdigita.util.UncheckedWrapperException;
-// deprecated, use c.ad.util.JavaPropertyReader instead
-// import com.arsdigita.util.config.JavaPropertyLoader;
 import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.jdbc.Connections;
-// deprecated:
-// import com.arsdigita.util.parameter.CompoundParameterLoader;
 import com.arsdigita.util.parameter.CompoundParameterReader;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ParameterContext;
@@ -76,9 +67,27 @@ import org.apache.log4j.Logger;
 /**
  * PackageTool worker class, implements the "load" command.
  *  
- * Loads the database schema and initial content.
+ * It is called by class MasterTols and loads the database schema and initial 
+ * content.
  * 
- * Called by PackageTool
+ * MasterTool provides the following parameters (usually provided by an
+ * invokation script 'ccm')
+ * 
+ * ccm load   PACKAGE-KEYS    [options]
+ * PACKAGE-KEYS one or more space separated names of modules (package-key, e.g.
+ *              ccm-cms-types-event) which should be loaded into database and
+ *              configuration registry
+ * Options:     [-usage]  	Display a usage message for load command 
+ *              [-help|--help] 	Display a help message for load command
+ *              [--recursive]	Recursively load required packages
+ *              [--data] 
+ *              [--config] 
+ *              [--interactive] 
+ *              [--schema] 
+ *              [--parameters KEY=VALUE ...] 
+ *              [--init] 
+ *              [--parameter-file FILE]
+ * 
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: Load.java 736 2005-09-01 10:46:05Z sskracic $
@@ -168,8 +177,8 @@ class Load extends Command {
      * @return
      */
     public boolean run(String[] args) {
+        
         CommandLine line;
-
         try {
             line = new PosixParser().parse(OPTIONS, args);
         } catch (ParseException e) {
@@ -195,23 +204,22 @@ class Load extends Command {
                               || line.hasOption("data")
                               || line.hasOption("init"));
 
-        // RegistryConfig contains a list of package-keys of packages to be
-        // installed.
-        // Constructs a new and empty config object.
-        RegistryConfig rc = new RegistryConfig();
-        rc.load();
-        List loaded = Arrays.asList(rc.getPackages());
+        // RegistryConfig contains a list of package-keys of loaded packages 
+        RegistryConfig rc = new RegistryConfig(); // Create a new (empty) config object.
+        rc.load();                                // Load config values from file
+        List loaded = Arrays.asList(rc.getPackages()); // retrieve list of installed packages
 
         Map loaders = new HashMap();
         List keys = new ArrayList();
-        keys.addAll(packages);
+        keys.addAll(packages); // from command line parameters packages to be installed
+        
         boolean err = false;
         while (!keys.isEmpty()) {
             String key = (String) keys.remove(0);
             if (loaders.containsKey(key)) { continue; }
             Loader l = Loader.get(key);
             if (l == null) {
-                System.err.println("unable to locate package: " + key);                                                
+                System.err.println("unable to locate package: " + key);
                 err = true;
             } else {
                 loaders.put(key, l);

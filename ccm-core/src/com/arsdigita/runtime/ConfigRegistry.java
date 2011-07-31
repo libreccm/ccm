@@ -111,25 +111,26 @@ public class ConfigRegistry {
     }
 
     /**
-     * Invokes {@link #ConfigRegistry(URL, ClassLoader)} defaulting the
-     * loader to the context class loader.
-     *
-     * @param url The base url for registry locations.
+     * Convenience class which invokes {@link #ConfigRegistry(URL, ClassLoader)}
+     *  defaulting the loader to the current context class loader.
      *
      * @see Thread#getContextClassLoader()
-     **/
+     *
+     * @param url The base url for registry locations.
+     */
     public ConfigRegistry(URL url) {
         this(url, Thread.currentThread().getContextClassLoader());
     }
 
     /**
-     * Invokes {@link #ConfigRegistry(URL, ClassLoader)} defaulting the URL to
+     * Convenience class which invokes {@link #ConfigRegistry(URL, ClassLoader)}
+     * defaulting the URL to 
      * <code>new File(System.getProperty("ccm.conf")).toURL()</code>. The value
      * of the ccm.conf system property may or may not include a trailing slash.
      *
      * @param loader The ClassLoader to use when searching for
      * registry configuration files.
-     **/
+     */
     public ConfigRegistry(ClassLoader loader) {
         this(CCMResourceManager.getConfigURL(), loader);
     }
@@ -138,7 +139,7 @@ public class ConfigRegistry {
      * Invokes {@link #ConfigRegistry(URL)} defaulting the URL to <code>new
      * File(System.getProperty("ccm.conf")).toURL()</code>. The value of the
      * ccm.conf system property may or may not include a trailing slash.
-     **/
+     */
     public ConfigRegistry() {
         this(CCMResourceManager.getConfigURL());
     }

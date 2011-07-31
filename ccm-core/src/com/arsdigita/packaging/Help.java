@@ -23,19 +23,20 @@ package com.arsdigita.packaging;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #4 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: Help.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 class Help extends Command {
 
-    public final static String versionId = 
-            "$Id: Help.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
-
+    /**
+     * Constructor
+     */
     public Help() {
         super("--help", "Print generic help");
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to write help message.
+     */
     public boolean run(String[] args) {
         // XXX: Should do something better eventually.
         return new Usage().run(args);

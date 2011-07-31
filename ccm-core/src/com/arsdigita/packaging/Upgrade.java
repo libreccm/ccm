@@ -85,6 +85,9 @@ class Upgrade extends Command {
         logger.debug("Static initalizer finished.");
     }
 
+    /**
+     * Constructor
+     */
     public Upgrade() {
         super("upgrade",
               "Upgrade a CCM package");
@@ -92,6 +95,9 @@ class Upgrade extends Command {
         m_scripts = new ArrayList();
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to perform the upgrade step.
+     */
     public boolean run(final String[] args) {
         final CommandLine line;
 
@@ -228,6 +234,9 @@ class Upgrade extends Command {
         return true;
     }
 
+    /**
+     * 
+     */
     private class Parser extends DefaultHandler {
         private String m_version;
 

@@ -51,7 +51,8 @@ public class MasterTool {
         out.println("  --help     Display help");
         out.println("  --usage    Print this message");
 		out.println();
-		out.println("To show debugging output set the CCM_TOOLS_DEBUG environmental variable");
+		out.println("To show debugging output set the CCM_TOOLS_DEBUG "+
+                            "environmental variable");
         out.println();
         out.println("Commands:");
         out.print(cmds.getCommands());

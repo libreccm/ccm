@@ -89,8 +89,7 @@ public class RegistryConfig extends AbstractConfig {
 
     /**
      * Constructs a new and empty config object.
-     **/
-
+     */
     public RegistryConfig() {
         register(m_packages);
         register(m_parents);
@@ -100,8 +99,7 @@ public class RegistryConfig extends AbstractConfig {
      * Returns the value of the waf.config.packages parameter.
      *
      * @return the value of the waf.config.packages parameter
-     **/
-
+     */
     public String[] getPackages() {
         return (String[]) get(m_packages);
     }
@@ -110,8 +108,7 @@ public class RegistryConfig extends AbstractConfig {
      * Returns the value of the waf.config.parents parameter.
      *
      * @return the value of the waf.config.parents parameter
-     **/
-
+     */
     public URL[] getParents() {
         return (URL[]) get(m_parents);
     }

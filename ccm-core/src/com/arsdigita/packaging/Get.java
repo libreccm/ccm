@@ -40,23 +40,18 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
 
 /**
- * Get
- * 
- * Implements the command line interface to list one or more values
+ * Get class implements the command line interface to list one or more values
  * from a CCM configuration database (registry)
  * 
  * Called by ccm get command
  * 
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: Get.java 1324 2006-09-21 22:13:16Z apevec $
  **/
 class Get extends Command {
 
     public static final Logger logger = Logger.getLogger(Get.class);
-    public final static String versionId =
-                               "$Id: Get.java 1324 2006-09-21 22:13:16Z apevec $"
-                               + " by $Author: apevec $, "
-                               + "$DateTime: 2004/08/16 18:10:38 $";
     private static final Options OPTIONS = getOptions();
 
     static {
@@ -72,11 +67,17 @@ class Get extends Command {
         logger.debug("Static initalizer finished.");
     }
 
+    /**
+     * Constructor
+     */
     public Get() {
         super("get", "Print one or more values from a CCM "
                      + "configuration database");
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to perform get.
+     */
     public boolean run(String[] args) {
         CommandLine line;
         try {
@@ -162,6 +163,12 @@ class Get extends Command {
         return true;
     }
 
+    /**
+     * 
+     * @param properties
+     * @param out
+     * @throws IOException 
+     */
     private void write(Properties properties, PrintStream out)
             throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -65,7 +65,7 @@ public class StringUtils {
      * @return <code>true</code> if <code>s</code> is null or empty;
      * otherwise <code>false</code>
      */
-    public final static boolean emptyString(String s) {
+    public static boolean emptyString(String s) {
         boolean expr = (s == null || s.trim().length() == 0);
         return expr;
     }
@@ -76,7 +76,7 @@ public class StringUtils {
      * @return <code>true</code> if <code>o</code> is null or empty;
      * otherwise <code>false</code>
      */
-    public final static boolean emptyString(Object o) {
+    public static boolean emptyString(Object o) {
         boolean expr =
             (o == null || (o instanceof String && ((String)o).length() ==0));
         return expr;
@@ -86,7 +86,7 @@ public class StringUtils {
      * If the String is null, returns an empty string.  Otherwise,
      * returns the string unaltered
      */
-    public final static String nullToEmptyString(String s) {
+    public static String nullToEmptyString(String s) {
         return (s == null) ? "" : s;
     }
 
@@ -96,7 +96,7 @@ public class StringUtils {
      * @param s The plain-text string to quote
      * @return The string with special characters escpaed.
      */
-    public final static String quoteHtml(String s) {
+    public static String quoteHtml(String s) {
         if (s != null) {
             StringBuffer result = new StringBuffer(s.length() + 10);
             for (int i = 0; i < s.length(); i++) {
@@ -132,7 +132,7 @@ public class StringUtils {
      * @return A HTML string with blank lines coverted to <pre>&lt;p></pre>
      * and ampersands/angle brackets escaped.
      */
-    public final static String textToHtml(String s) {
+    public static String textToHtml(String s) {
         s = quoteHtml(s);
         s = s_re.substitute("s/\r\n\r\n/<p>/g", s);
         s = s_re.substitute("s/\n\n/<p>/g", s);
@@ -148,7 +148,7 @@ public class StringUtils {
      * more extensive conversion of HTML fragments to plain text
      * equivalents, see {@link HtmlToText}.
      */
-    public final static String htmlToText(String s) {
+    public static String htmlToText(String s) {
         if (s != null) {
             // first take out new-lines
             s = s_re.substitute("s/\n//g", s);
@@ -201,7 +201,7 @@ public class StringUtils {
      * &reg;
      * </ul>
      */
-    public final static String smartTextToHtml(String s) {
+    public static String smartTextToHtml(String s) {
         ArrayList blocks = new ArrayList();
         s_re.split(blocks, "/\\r?\\n(\\r?\\n)+/", s);
 
@@ -353,7 +353,13 @@ public class StringUtils {
         return s;
     }
 
-
+    /**
+     * 
+     * @param subst
+     * @param pattern
+     * @param s
+     * @return 
+     */
     private static String smartTextReplace(Substitution subst,
                                            String pattern,
                                            String s) {
@@ -375,6 +381,9 @@ public class StringUtils {
         return result.toString();
     }
 
+    /**
+     * 
+     */
     private static class TitledLinkSubstitution implements Substitution {
         private Map m_hash;
 
@@ -401,6 +410,9 @@ public class StringUtils {
         }
     }
 
+    /**
+     * 
+     */
     private static class UntitledLinkSubstitution implements Substitution {
         private Map m_hash;
 
@@ -427,6 +439,9 @@ public class StringUtils {
         }
     }
 
+    /**
+     * 
+     */
     private static class UnobscureSubstitution implements Substitution {
         private Map m_hash;
 
@@ -449,7 +464,9 @@ public class StringUtils {
         }
     }
 
-
+    /**
+     * 
+     */
     private static class EntitySubstitution implements Substitution {
         public void appendSubstitution(StringBuffer appendBuffer,
                                        MatchResult match,
@@ -474,7 +491,7 @@ public class StringUtils {
      * @param s string contains items separated by a separator character.
      * @param sep separator character.
      * @return Array of items.
-     **/
+     */
     public static String [] split(String s, char sep) {
         ArrayList al = new ArrayList();
         int start_pos, end_pos;
@@ -496,91 +513,88 @@ public class StringUtils {
         return returned_array;
     }
 
-  /**
-   * <p> Given a string, split it into substrings matching a regular
-   * expression that you supply. Parts of the original string which
-   * don't match the regular expression also appear as substrings. The
-   * upshot of this is that the final substrings can be concatenated
-   * to get the original string.  </p>
-   *
-   * <p> As an example, let's say the original string is: </p>
-   *
-   * <pre>
-   * s = "/packages/foo/xsl/::vhost::/foo_::locale::.xsl";
-   * </pre>
-   *
-   * <p> We call the function like this: </p>
-   *
-   * <pre>
-   * output = splitUp (s, "/::\\w+::/");
-   * </pre>
-   *
-   * <p> The result (<code>output</code>) will be the following list: </p>
-   *
-   * <pre>
-   * ("/packages/foo/xsl/", "::vhost::", "/foo_", "::locale::", ".xsl")
-   * </pre>
-   *
-   * <p> Notice the important property that concatenating all these
-   * strings together will restore the original string. </p>
-   *
-   * <p> Here is another useful example. To split up HTML into elements
-   * and content, do: </p>
-   *
-   * <pre>
-   * output = splitUp (html, "/<.*?>/");
-   * </pre>
-   *
-   * <p> You will end up with something like this: </p>
-   *
-   * <pre>
-   * ("The following text will be ", "<b>", "bold", "</b>", ".")
-   * </pre>
-   *
-   * @param s The original string to split.
-   * @param re The regular expression in the format required by
-   * {@link org.apache.oro.text.perl.Perl5Util#match(String, String)}.
-   * @return List of substrings.
-   *
-   * @author Richard W.M. Jones
-   *
-   * <p> This is equivalent to the Perl "global match in array context",
-   * specifically: <code>@a = /(RE)|(.+)/g;</code> </p>
-   *
-   */
-  public static List splitUp (String s, String re)
-  {
-    Perl5Util p5 = new Perl5Util ();
-    ArrayList list = new ArrayList ();
+    /**
+     * <p> Given a string, split it into substrings matching a regular
+     * expression that you supply. Parts of the original string which
+     * don't match the regular expression also appear as substrings. The
+     * upshot of this is that the final substrings can be concatenated
+     * to get the original string.  </p>
+     *
+     * <p> As an example, let's say the original string is: </p>
+     *
+     * <pre>
+     * s = "/packages/foo/xsl/::vhost::/foo_::locale::.xsl";
+     * </pre>
+     *
+     * <p> We call the function like this: </p>
+     *
+     * <pre>
+     * output = splitUp (s, "/::\\w+::/");
+     * </pre>
+     *
+     * <p> The result (<code>output</code>) will be the following list: </p>
+     *
+     * <pre>
+     * ("/packages/foo/xsl/", "::vhost::", "/foo_", "::locale::", ".xsl")
+     * </pre>
+     *
+     * <p> Notice the important property that concatenating all these
+     * strings together will restore the original string. </p>
+     *
+     * <p> Here is another useful example. To split up HTML into elements
+     * and content, do: </p>
+     *
+     * <pre>
+     * output = splitUp (html, "/<.*?>/");
+     * </pre>
+     *
+     * <p> You will end up with something like this: </p>
+     *
+     * <pre>
+     * ("The following text will be ", "<b>", "bold", "</b>", ".")
+     * </pre>
+     *
+     * @param s The original string to split.
+     * @param re The regular expression in the format required by
+     * {@link org.apache.oro.text.perl.Perl5Util#match(String, String)}.
+     * @return List of substrings.
+     *
+     * @author Richard W.M. Jones
+     *
+     * <p> This is equivalent to the Perl "global match in array context",
+     * specifically: <code>@a = /(RE)|(.+)/g;</code> </p>
+     *
+     */
+    public static List splitUp (String s, String re)
+    {
+        Perl5Util p5 = new Perl5Util ();
+        ArrayList list = new ArrayList ();
 
-    while (s != null && s.length() > 0)
-      {
-        // Find the next match.
-        if (p5.match (re, s))
-          {
-            MatchResult result = p5.getMatch ();
+        while (s != null && s.length() > 0) {
+            // Find the next match.
+            if (p5.match (re, s)) {
+                MatchResult result = p5.getMatch ();
 
-            // String up to the start of the match.
-            if (result.beginOffset (0) > 0)
-              list.add (s.substring (0, result.beginOffset (0)));
+                // String up to the start of the match.
+                if (result.beginOffset (0) > 0)
+                    list.add (s.substring (0, result.beginOffset (0)));
 
-            // Matching part.
-            list.add (result.toString ());
+                // Matching part.
+                list.add (result.toString ());
 
-            // Update s to be the remainder of the string.
-            s = s.substring (result.endOffset (0));
-          }
-        else
-          {
-            // Finished.
-            list.add (s);
+                // Update s to be the remainder of the string.
+                s = s.substring (result.endOffset (0));
+            }
+            else {
+                // Finished.
+                list.add (s);
 
-            s = null;
-          }
-      }
+                s = null;
+            }
+        }
 
-    return list;
-  }
+        return list;
+    }
 
     /**
      * Converts an array of Strings into a single String separated by
@@ -594,7 +608,7 @@ public class StringUtils {
      * @pre strings != null
      *
      * @return Joined String
-     **/
+     */
     public static String join(String[] strings, char joinChar) {
         StringBuffer result = new StringBuffer();
         final int lastIdx = strings.length - 1;
@@ -607,6 +621,7 @@ public class StringUtils {
 
         return result.toString();
     }
+    
     /**
      * Converts an array of Strings into a single String separated by
      * a given string.
@@ -619,7 +634,7 @@ public class StringUtils {
      * @pre strings != null
      *
      * @return Joined String
-     **/
+     */
     public static String join(String[] strings, String joinStr) {
         StringBuffer result = new StringBuffer();
         final int lastIdx = strings.length - 1;
@@ -632,6 +647,7 @@ public class StringUtils {
 
         return result.toString();
     }
+    
     /**
      * Extract a parameter value from a packed list of parameter values.
      * Example: 
@@ -652,7 +668,7 @@ public class StringUtils {
      * @return the value corresponding to the key, or null if the key is not
      *         present.  If the key appears in the list more than once,
      *         the first value is returned.
-     **/
+     */
     public static String getParameter(String key, String plist, char sep) {
         int key_end;
         int key_start = 0;
@@ -900,7 +916,7 @@ public class StringUtils {
      * @param pattern the pattern String
      * @param repeatCount the number of time to repeat it
      */
-    public final static String repeat(String pattern, int repeatCount) {
+    public static String repeat(String pattern, int repeatCount) {
         StringBuffer sb = new StringBuffer(repeatCount * pattern.length());
         for (int i = 0; i < repeatCount; i++) {
             sb.append(pattern);
@@ -915,7 +931,7 @@ public class StringUtils {
      * @param pattern the pattern character
      * @param repeatCount the number of time to repeat it
      */
-    public final static String repeat(char pattern, int repeatCount) {
+    public static String repeat(char pattern, int repeatCount) {
         return repeat(String.valueOf(pattern), repeatCount);
     }
 
@@ -928,7 +944,7 @@ public class StringUtils {
      *
      * @since  5.1.2
      */
-    public final static String wrap(String input) {
+    public static String wrap(String input) {
         return wrap(input,80);
     }
 
@@ -955,7 +971,7 @@ public class StringUtils {
      *
      * @since  5.1.2
      */
-    public final static String wrap(String input, int maxLength) {
+    public static String wrap(String input, int maxLength) {
 
         final char SPACE = ' ';
         final char ENDL  = '\n';
@@ -1130,7 +1146,7 @@ public class StringUtils {
      *
      * @pre find != null
      * @pre replace != null
-     **/
+     */
     public static String replace(final String str,
                                  final String find,
                                  final String replace) {
@@ -1187,6 +1203,9 @@ public class StringUtils {
 
 
 
+    /**
+     * 
+     */
     private static class HashSubstitution implements Substitution {
         private Map m_hash;
 

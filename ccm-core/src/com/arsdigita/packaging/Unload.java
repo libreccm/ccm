@@ -36,15 +36,11 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: Unload.java 736 2005-09-01 10:46:05Z sskracic $
+ */
 class Unload extends Command {
 
     private static final Logger logger = Logger.getLogger(Unload.class);
-    public final static String versionId = 
-            "$Id: Unload.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options OPTIONS = new Options();
 
@@ -69,10 +65,16 @@ class Unload extends Command {
         logger.debug("Static initalizer finished.");
     }
 
+    /**
+     * Constructor
+     */
     public Unload() {
         super("unload", "Unload configuration");
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to perform the unload process.
+     */
     public boolean run(String[] args) {
         CommandLine line;
         try {

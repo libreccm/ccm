@@ -35,15 +35,15 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: Checklist.java 736 2005-09-01 10:46:05Z sskracic $
+ */
 class Checklist {
 
-    public final static String versionId = 
-            "$Id: Checklist.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
-
+    /**
+     * 
+     * @param pkg
+     * @return 
+     */
     public static Checklist get(String pkg) {
         ClassLoader ldr = Checklist.class.getClassLoader();
         InputStream is = ldr.getResourceAsStream(pkg + ".checklist");
@@ -60,10 +60,21 @@ class Checklist {
 
     private List m_groups = new ArrayList();
 
+    /**
+     * Constructor
+     * 
+     * @param is 
+     */
     public Checklist(InputStream is) {
         XML.parse(is, new ChecklistHandler());
     }
 
+    /**
+     * 
+     * @param type
+     * @param ctx
+     * @return 
+     */
     public boolean run(int type, ScriptContext ctx) {
         boolean result = true;
         for (Iterator it = m_groups.iterator(); it.hasNext(); ) {
@@ -75,6 +86,9 @@ class Checklist {
         return result;
     }
 
+    /**
+     * 
+     */
     private class Group {
 
         private int m_type;
@@ -122,6 +136,9 @@ class Checklist {
     private static final String CHECK = "check";
     private static final String CLASS = "class";
 
+    /**
+     * 
+     */
     private class ChecklistHandler extends DefaultHandler {
 
         private Group m_group = null;
