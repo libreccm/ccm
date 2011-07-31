@@ -74,6 +74,12 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-cms-publicpersonalprofile (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-publicpersonalprofile/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-cms-types-address (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-address/src</location>
@@ -89,18 +95,6 @@
                     <label>ccm-cms-types-article (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-article/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-cms-types-baseAddress (Source)</label>
-                    <type>java</type>
-                    <location>ccm-cms-types-baseAddress/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-cms-types-baseContact (Source)</label>
-                    <type>java</type>
-                    <location>ccm-cms-types-baseContact/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -176,6 +170,12 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-cms-types-image (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-image/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-cms-types-inlinesite (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-inlinesite/src</location>
@@ -230,9 +230,9 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-cms-types-organizationalunit (Source)</label>
+                    <label>ccm-cms-types-person (Source)</label>
                     <type>java</type>
-                    <location>ccm-cms-types-organizationalunit/src</location>
+                    <location>ccm-cms-types-person/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -476,6 +476,18 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-ldn-types-contact (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-types-contact/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-types-esdservice (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-types-esdservice/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-ldn-util (Source)</label>
                     <type>java</type>
                     <location>ccm-ldn-util/src</location>
@@ -518,13 +530,25 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-sci-publications/src</label>
+                    <label>ccm-sci-bundles (Source)</label>
+                    <type>java</type>
+                    <location>ccm-sci-bundles/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-sci-publications (Source)</label>
                     <type>java</type>
                     <location>ccm-sci-publications/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-sci-types-organization/src</label>
+                    <label>ccm-sci-types-organizationwithpublications (Source)</label>
+                    <type>java</type>
+                    <location>ccm-sci-types-organizationwithpublications/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-sci-types-organization (Source)</label>
                     <type>java</type>
                     <location>ccm-sci-types-organization/src</location>
                     <encoding>UTF-8</encoding>
@@ -605,6 +629,10 @@
                         <location>ccm-cms-assets-relatedlink/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-cms-publicpersonalprofile (Source)</label>
+                        <location>ccm-cms-publicpersonalprofile/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-cms-types-address (Source)</label>
                         <location>ccm-cms-types-address/src</location>
                     </source-folder>
@@ -615,14 +643,6 @@
                     <source-folder style="packages">
                         <label>ccm-cms-types-article (Source)</label>
                         <location>ccm-cms-types-article/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>ccm-cms-types-baseAddress (Source)</label>
-                        <location>ccm-cms-types-baseAddress/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>ccm-cms-types-baseContact (Source)</label>
-                        <location>ccm-cms-types-baseContact/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-types-bookmark (Source)</label>
@@ -673,6 +693,10 @@
                         <location>ccm-cms-types-htmlform/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-cms-types-image (Source)</label>
+                        <location>ccm-cms-types-image/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-cms-types-inlinesite (Source)</label>
                         <location>ccm-cms-types-inlinesite/src</location>
                     </source-folder>
@@ -709,8 +733,8 @@
                         <location>ccm-cms-types-organization/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-cms-types-organizationalunit (Source)</label>
-                        <location>ccm-cms-types-organizationalunit/src</location>
+                        <label>ccm-cms-types-person (Source)</label>
+                        <location>ccm-cms-types-person/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-types-pressrelease (Source)</label>
@@ -873,6 +897,14 @@
                         <location>ccm-ldn-terms/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-ldn-types-contact (Source)</label>
+                        <location>ccm-ldn-types-contact/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-types-esdservice (Source)</label>
+                        <location>ccm-ldn-types-esdservice/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-ldn-util (Source)</label>
                         <location>ccm-ldn-util/src</location>
                     </source-folder>
@@ -901,12 +933,20 @@
                         <location>ccm-zes-aplaws/web</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-sci-publications/src</label>
+                        <label>ccm-sci-bundles (Source)</label>
+                        <location>ccm-sci-bundles/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-sci-publications (Source)</label>
                         <location>ccm-sci-publications/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-sci-types-organization/src</label>
+                        <label>ccm-sci-types-organization (Source)</label>
                         <location>ccm-sci-types-organization/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-sci-types-organizationwithpublications (Source)</label>
+                        <location>ccm-sci-types-organizationwithpublications/src</location>
                     </source-folder>
                     <source-file>
                         <location>build.xml</location>
@@ -933,11 +973,10 @@
                 <package-root>ccm-cms-assets-imagestep/src</package-root>
                 <package-root>ccm-cms-assets-notes/src</package-root>
                 <package-root>ccm-cms-assets-relatedlink/src</package-root>
+                <package-root>ccm-cms-publicpersonalprofile/src</package-root>
                 <package-root>ccm-cms-types-address/src</package-root>
                 <package-root>ccm-cms-types-agenda/src</package-root>
                 <package-root>ccm-cms-types-article/src</package-root>
-                <package-root>ccm-cms-types-baseAddress/src</package-root>
-                <package-root>ccm-cms-types-baseContact/src</package-root>
                 <package-root>ccm-cms-types-bookmark/src</package-root>
                 <package-root>ccm-cms-types-contact/src</package-root>
                 <package-root>ccm-cms-types-esdservice/src</package-root>
@@ -950,6 +989,7 @@
                 <package-root>ccm-cms-types-glossaryitem/src</package-root>
                 <package-root>ccm-cms-types-healthCareFacility/src</package-root>
                 <package-root>ccm-cms-types-htmlform/src</package-root>
+                <package-root>ccm-cms-types-image/src</package-root>
                 <package-root>ccm-cms-types-inlinesite/src</package-root>
                 <package-root>ccm-cms-types-job/src</package-root>
                 <package-root>ccm-cms-types-legalnotice/src</package-root>
@@ -959,7 +999,7 @@
                 <package-root>ccm-cms-types-mparticle/src</package-root>
                 <package-root>ccm-cms-types-newsitem/src</package-root>
                 <package-root>ccm-cms-types-organization/src</package-root>
-                <package-root>ccm-cms-types-organizationalunit/src</package-root>
+                <package-root>ccm-cms-types-person/src</package-root>
                 <package-root>ccm-cms-types-pressrelease/src</package-root>
                 <package-root>ccm-cms-types-project/src</package-root>
                 <package-root>ccm-cms-types-researchnetwork/src</package-root>
@@ -1000,6 +1040,8 @@
                 <package-root>ccm-ldn-shortcuts/src</package-root>
                 <package-root>ccm-ldn-subsite/src</package-root>
                 <package-root>ccm-ldn-terms/src</package-root>
+                <package-root>ccm-ldn-types-contact/src</package-root>
+                <package-root>ccm-ldn-types-esdservice/src</package-root>
                 <package-root>ccm-ldn-util/src</package-root>
                 <package-root>ccm-gen-aplaws/src</package-root>
                 <package-root>ccm-gen-aplaws/web</package-root>
@@ -1007,8 +1049,10 @@
                 <package-root>ccm-shp-aplaws/web</package-root>
                 <package-root>ccm-zes-aplaws/src</package-root>
                 <package-root>ccm-zes-aplaws/web</package-root>
+                <package-root>ccm-sci-bundles/src</package-root>
                 <package-root>ccm-sci-publications/src</package-root>
                 <package-root>ccm-sci-types-organization/src</package-root>
+                <package-root>ccm-sci-types-organizationwithpublications/src</package-root>
                 <classpath mode="compile">ccm-core/lib/log4j.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/saxon.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/pdfbox-1.4.0.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/fop.jar:tools-ng/devel/lib/ccm-servlet-2.3.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/postgresql-jdbc.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>

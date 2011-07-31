@@ -15,6 +15,21 @@
   </context-param>
 
 
+  <!-- Require secure connection by redirect to host-port part
+       of parameter waf.web.secure_server               
+  <filter>
+    <filter-name>secured</filter-name>
+    <filter-class>com.arsdigita.web.SecureFilter</filter-class>
+  </filter>
+  -->
+  <!-- Initialize Profiler timers
+       NOT USED with standard / production                                  
+  <filter>
+    <filter-name>profiler</filter-name>
+    <filter-class>com.arsdigita.profiler.ProfilerFilter</filter-class>
+  </filter>
+  -->
+
   <filter>
     <filter-name>shortcuts</filter-name>
     <filter-class>com.arsdigita.london.shortcuts.ShortcutFilter</filter-class>
@@ -25,12 +40,22 @@
     <filter-class>com.arsdigita.london.subsite.SubsiteFilter</filter-class>
   </filter>
 
+<!--    NOT USED HERE
+  <filter-mapping>
+    <filter-name>secured</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>profiler</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+-->
+
+
   <filter-mapping>
     <filter-name>subsite</filter-name>
-    <url-pattern>/ccm/*</url-pattern>
-<!-- please check: with or w/o ccm?
     <url-pattern>/*</url-pattern>
--->
   </filter-mapping>
 
   <filter-mapping>
@@ -133,7 +158,6 @@
     <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
   </servlet>
 
-
  <servlet>
    <servlet-name>TextOnlyServlet</servlet-name>
    <display-name>Text Only Servlet</display-name>
@@ -179,8 +203,6 @@
     <servlet-class>com.arsdigita.forum.ForumServlet</servlet-class>
   </servlet>
   <!-- module ccm-forum  -  servlet declarations END    -->  
-
-<!-- XXX hack -->
 
   <servlet>
     <servlet-name>portal-files</servlet-name>
@@ -281,33 +303,33 @@
   </servlet>
   <!-- module ccm-ldn-terms  -  servlet declarations END   -->
 
-  <!-- module ccm-ldn-themes  -  servlet declarations BEGIN   -->
+  <!-- module ccm-themedirector  -  servlet declarations BEGIN   -->
   <servlet>
     <servlet-name>theme-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-theme</param-value>
+      <param-value>/templates/ccm-themedirector</param-value>
     </init-param>
   </servlet>
 
   <servlet>
      <servlet-name>ThemeDownload</servlet-name>
-     <servlet-class>com.arsdigita.london.theme.dispatcher.ThemeDownloadServlet</servlet-class>
+     <servlet-class>com.arsdigita.themedirector.dispatcher.ThemeDownloadServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>ThemePreviewServlet</servlet-name>
      <display-name>Servlet to allow admins to preview look/feel</display-name>
     <servlet-class>
-     com.arsdigita.london.theme.dispatcher.InternalThemePrefixerServlet
+     com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet
     </servlet-class>
     <init-param>
       <param-name>prefix</param-name>
       <param-value>/theme</param-value>
     </init-param>
   </servlet>
-  <!-- module ccm-ldn-themes  -  servlet declarations END   -->
+  <!-- module ccm-themedirector  -  servlet declarations END   -->
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      MODULES SERVLET MAPPINGS SECTION
@@ -380,7 +402,7 @@
   </servlet-mapping>
   <!-- module ccm-ldn-terms  -  servlet mappings END  -->
 
-  <!-- module ccm-ldn-theme  -  servlet mappings BEGIN   -->
+  <!-- module ccm-themedirector  -  servlet mappings BEGIN   -->
   <servlet-mapping>
     <servlet-name>theme-files</servlet-name>
     <url-pattern>/theme-files/*</url-pattern>
@@ -395,7 +417,7 @@
     <servlet-name>ThemePreviewServlet</servlet-name>
     <url-pattern>/theme/*</url-pattern>
   </servlet-mapping>
-  <!-- module ccm-ldn-themes  -  servlet mappings END   -->
+  <!-- module ccm-themedirector  -  servlet mappings END   -->
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -477,7 +499,6 @@
      <servlet-name>PrintFriendlyServlet</servlet-name>
      <url-pattern>/print/*</url-pattern>
  </servlet-mapping>
-
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      ERROR PAGES

@@ -52,6 +52,7 @@
   </filter-mapping>
 -->
 
+
   <filter-mapping>
     <filter-name>subsite</filter-name>
     <url-pattern>/*</url-pattern>
@@ -500,6 +501,7 @@
      <servlet-name>PrintFriendlyServlet</servlet-name>
      <url-pattern>/print/*</url-pattern>
  </servlet-mapping>
+
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      ERROR PAGES

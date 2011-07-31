@@ -1,7 +1,7 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
-          xmlns:define="/WEB-INF/bebop-define.tld" 
-          xmlns:show="/WEB-INF/bebop-show.tld"
-	  version="1.2">
+       xmlns:define="/WEB-INF/bebop-define.tld" 
+         xmlns:show="/WEB-INF/bebop-show.tld"
+	    version="1.2">
 
   <jsp:directive.page
     import="com.arsdigita.london.navigation.NavigationModel,
@@ -11,7 +11,7 @@
     NavigationModel model = new CMSNavigationModel();
   </jsp:declaration>
 
-  <define:page name="itemPage" application="content" 
+  <define:page name="itemPage" application="content-section" 
     title="APLAWS" cache="true">
 
     <define:component name="categoryPath"

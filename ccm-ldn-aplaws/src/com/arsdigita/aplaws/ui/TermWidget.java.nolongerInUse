@@ -132,7 +132,7 @@ public class TermWidget extends Widget {
         }
 
         Element el = generateCategory(widget, domain.getModel(), ids, null);
-        
+
         /**
          * Used by kea based keyphrase extraction facility.
          * (Added r1885) 
@@ -268,7 +268,7 @@ public class TermWidget extends Widget {
 	    //	recognisable attribute has to be in the XML for each snippet that is transformed,
 	    // hence add it to the parent
 	    el.addAttribute("expand",  "all" );
-	}	
+	}
 	
 	List roots = (List) children.get(root.getID());
         if (null != roots) {

@@ -9,7 +9,7 @@
                     name="aplaws-gen" 
               prettyName="APLAWS plus" 
                  version="1-1-2" 
-                 release="alpha-1" 
+                 release="trunk" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -29,6 +29,8 @@
         <ccm:application name="ccm-cms-assets-imagestep"/>
         <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
+
+        <ccm:application name="ccm-cms-publicpersonalprofile"/>
 
 <!--    <ccm:application name="ccm-cms-types-address"/>              -->
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
@@ -52,6 +54,7 @@
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
+        <ccm:application name="ccm-cms-types-person"/>
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
 <!-- Fuer OpenCCM aktivieren:                                        -->

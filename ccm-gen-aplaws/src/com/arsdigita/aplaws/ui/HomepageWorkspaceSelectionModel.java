@@ -41,6 +41,10 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 
+/** 
+ * 
+ * 
+ */
 public class HomepageWorkspaceSelectionModel {
     private RequestLocal m_loaded = new RequestLocal();
     private RequestLocal m_global = new RequestLocal();

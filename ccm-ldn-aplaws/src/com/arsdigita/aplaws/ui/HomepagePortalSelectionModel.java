@@ -22,8 +22,14 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.domain.DomainObject;
 
+import org.apache.log4j.Logger;
+
 public class HomepagePortalSelectionModel extends AbstractSingleSelectionModel
     implements PortalSelectionModel {
+
+    /** Private logger instance for debugging  */
+    private static Logger s_log = Logger.getLogger(
+                                  HomepagePortalSelectionModel.class);
 
     private HomepageWorkspaceSelectionModel m_workspace;
     private int m_column;
@@ -32,6 +38,13 @@ public class HomepagePortalSelectionModel extends AbstractSingleSelectionModel
                                         int column) {
         m_workspace = workspace;
         m_column = column;
+
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Constructor HomepageWorkspaceSelectionModel " + " [" +
+                        "Workspace: " + m_workspace + "," +
+                        "Columns: " + column +  "]");
+        }
+
     }
 
     public void onCustomize(PageState state) {

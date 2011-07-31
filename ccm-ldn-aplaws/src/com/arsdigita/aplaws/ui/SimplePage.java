@@ -25,7 +25,14 @@ import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 import com.arsdigita.web.Web;
 
-
+/**
+ * <p>
+ * Special implementation of <code>com.arsdigita.ui.SimplePage</code> as 
+ * the base page to serve bebop pages.</p>
+ *
+ * <p>Activated by pointing the parameter <code>waf.bebop.base_page</code> 
+ * to it.</p>
+ */
 public class SimplePage extends com.arsdigita.ui.SimplePage {
 
     public SimplePage(String application,
@@ -39,6 +46,14 @@ public class SimplePage extends com.arsdigita.ui.SimplePage {
                                      Document parent) {
         Element page = super.generateXMLHelper(state, parent);
         
+        /*
+         * TODO: What specific funcionality is added here and what is
+         * its purpose and why is the bebop standard implementation
+         * insufficient.
+         *
+         * Two xml attributes are added in addition to the bebop standard
+         * implementation.
+         */
         if (Web.getContext().getRequestURL() != null) {
             page.addAttribute("url", Web.getContext().getRequestURL().toString());
             

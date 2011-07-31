@@ -12,26 +12,36 @@ http://::host::/__ccm__/servlet/content-item/index.xsl?oid=::item_template_oid::
 
 # added by Quasimodo
 # Theme with single entry point (e.g Mandalay)
-http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/start.xsl
+http://::host::/resource/::webapp::/themes/::themedir::/::theme::/start.xsl
 
 # Theme, with optional locale & prefix
-http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::-::prefix::-::locale::.xsl
-http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::-::prefix::.xsl
+http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::-::locale::.xsl
+http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::.xsl
 
 # Theme, with optional locale
-http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::-::locale::.xsl
-http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::.xsl
+http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::locale::.xsl
+http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::.xsl
 
 # APLAWS default, with locale and prefix
 # XXX change ROOT -> ccm-ldn-aplaws
+http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::-::prefix::-::locale::.xsl
+http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::-::prefix::.xsl
 http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::-::locale::.xsl
 http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::.xsl
 
 # APLAWS default, with locale
 # XXX change ROOT -> ccm-ldn-aplaws
+http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::-::locale::.xsl
+http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::.xsl
 http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::locale::.xsl
 http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::.xsl
 
 # Global default, from application's own web app
 http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::-::locale::.xsl
 http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::.xsl
+
+# Global default, from application's own web app - relocated version >= 6.6.1
+http://::host::/resource/ROOT/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/resource/ROOT/themes/heirloom/apps/::application::/xsl/::url::.xsl
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::.xsl

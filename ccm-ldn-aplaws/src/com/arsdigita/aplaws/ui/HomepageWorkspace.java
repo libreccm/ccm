@@ -18,22 +18,32 @@ package com.arsdigita.aplaws.ui;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.portalworkspace.ui.PersistentPortal;
+import com.arsdigita.portalworkspace.Workspace;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.xml.Element;
+import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.portalworkspace.ui.PersistentPortal;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
-import com.arsdigita.portalworkspace.Workspace;
-import com.arsdigita.xml.Element;
+import com.arsdigita.kernel.Party;
+
+import org.apache.log4j.Logger;
 
 
+/** 
+ * 
+ * 
+ */
 public class HomepageWorkspace extends SimpleContainer {
     
+    /** Private logger instance for debugging  */
+    private static Logger s_log = Logger.getLogger(
+                                  HomepageWorkspace.class);
+
     private HomepagePortalSelectionModel m_model;
     private ActionLink m_reset;
     private ActionLink m_browse;
@@ -47,10 +57,19 @@ public class HomepageWorkspace extends SimpleContainer {
     public HomepageWorkspace() {
         super("portal:homepageWorkspace", PortalConstants.PORTAL_XML_NS);
         m_customizable = false;
+
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Constructor HomepageWorkspace finished. " );
+        }
+
     }
     
     public void setModel(HomepagePortalSelectionModel model) {
         m_model = model;
+
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("setModel: " + m_model );
+        }
     }
     
     public void setCustomizable(boolean customizable) {

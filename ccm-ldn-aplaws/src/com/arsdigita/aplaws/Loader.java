@@ -57,6 +57,9 @@ import org.apache.log4j.Logger;
 /**
  * Loader.
  *
+ * Creates category domains in the terms application according to 
+ * configuration files and adds jsp templates to navigation.
+ *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $
  */
@@ -313,7 +316,7 @@ public class Loader extends PackageLoader {
                         " in context " + context);
         }
 
-        Domain domain = Domain.retrieve(domainKey);
+        Domain domain = Domain.retrieve(domainKey);  // package com.arsdigita.london.terms
         Application app = Application.retrieveApplicationForPath(appURL);
         domain.setAsRootForObject(app, context);
         if (app instanceof ContentSection) {
@@ -322,8 +325,8 @@ public class Loader extends PackageLoader {
             Set categorizeRoles = new HashSet();
             while (coll.next()) {
                 Role role = coll.getRole();
-                final DataQuery privs = RoleFactory.getRolePrivileges
-                    (app.getID(), role.getGroup().getID());
+                final DataQuery privs = RoleFactory.getRolePrivileges(
+                        app.getID(), role.getGroup().getID());
                 while (privs.next()) {
                     String priv = (String) privs.get(RoleFactory.PRIVILEGE);
                     if (priv.equals(SecurityManager.CMS_CATEGORY_ADMIN)) {
@@ -332,7 +335,7 @@ public class Loader extends PackageLoader {
                         categorizeRoles.add(role);
                     }
                 }
-                
+
             }
             RootCategoryCollection catCollection = Category.getRootCategories(((ContentSection) app));
             while (catCollection.next()) {
