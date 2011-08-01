@@ -9,10 +9,13 @@
 	</requires>
 	<provides>
                 <table name="ct_public_personal_profiles"/>
+                <table name="publicpersonalprofile"/>
 		<initializer class="com.arsdigita.cms.contenttypes.PublicPersonalProfileInitializer"/>
+                <initializer class="com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileInitializer"/>
 	</provides>	
 	<scripts>
 		<schema directory="ccm-cms-publicpersonalprofile"/>
 		<data class="com.arsdigita.cms.contenttypes.PublicPersonalProfileLoader"/>
+                <data class="com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileLoader"/>
 	</scripts>
 </load>
