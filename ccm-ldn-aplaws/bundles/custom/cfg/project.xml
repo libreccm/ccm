@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- project.xml -custom- containing all modules as of aplaws 1.1.x        -->
+<!-- A set of core modules is active, others are commented out and should 
+     activated (uncomment) according to customers requirements.            -->
+
+<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+               xmlns:ccm="http://ccm.redhat.com/ccm-project" 
+               ccmVersion="6.1" 
+               name="aplaws" 
+               prettyName="APLAWS plus Custom Spin" 
+               version="1-1-5" 
+               release="-custom"
+               webxml="web.xml-aplaws" 
+               webapp="ROOT" 
+   xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
+
+  <ccm:build>
+      
+        <!-- Core Modules, mandatory part of any Aplaws installation.     -->
+        <!-- Do NOT edit this section!                                    -->
+        <ccm:application name="ccm-core"/>
+        <ccm:application name="ccm-cms"/>
+        
+        <ccm:application name="ccm-cms-assets-imagestep"/>
+        <ccm:application name="ccm-cms-assets-relatedlink"/>
+
+        <ccm:application name="ccm-cms-types-article"/>
+        <ccm:application name="ccm-cms-types-contact"/>
+        <ccm:application name="ccm-cms-types-esdservice"/>
+        <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-filestorageitem"/>
+        <ccm:application name="ccm-cms-types-formitem"/>
+        <ccm:application name="ccm-cms-types-formsectionitem"/>
+        <ccm:application name="ccm-cms-types-simpleaddress"/>
+        <ccm:application name="ccm-cms-types-siteproxy"/>
+        <ccm:application name="ccm-cms-types-xmlfeed"/>
+
+        <ccm:application name="ccm-ldn-aplaws"/>
+        <ccm:application name="ccm-ldn-atoz"/>
+        <ccm:application name="ccm-ldn-dublin"/>
+        <ccm:application name="ccm-ldn-exporter"/>
+        <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-importer"/>
+        <ccm:application name="ccm-ldn-navigation"/>
+        <ccm:application name="ccm-ldn-rss"/>
+        <ccm:application name="ccm-ldn-search"/>
+        <ccm:application name="ccm-ldn-shortcuts"/>
+        <ccm:application name="ccm-ldn-subsite"/>
+        <ccm:application name="ccm-ldn-terms"/>
+        <ccm:application name="ccm-ldn-util"/>
+
+        <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-themedirector"/>
+
+
+        <!-- Optional Modules for an Aplaws installation.                 -->
+        <!-- Uncomment according to your site's requirements.             -->
+
+        <!-- Additional Assets                                     -->
+<!--    <ccm:application name="ccm-cms-assets-fileattachment"/>    -->
+<!--    <ccm:application name="ccm-cms-assets-notes"/>             -->
+
+        <!-- Additional Content Types                                     -->
+<!--    <ccm:application name="ccm-cms-types-agenda"/>                -->
+<!--    <ccm:application name="ccm-cms-types-bookmark"/>              -->
+<!--    <ccm:application name="ccm-cms-types-faqitem"/>               -->
+<!--    <ccm:application name="ccm-cms-types-glossaryitem"/>          -->
+<!--    <ccm:application name="ccm-cms-types-htmlform"/>              -->
+<!--    <ccm:application name="ccm-cms-types-image"/>                 -->
+<!--    <ccm:application name="ccm-cms-types-inlinesite"/>            -->
+<!--    <ccm:application name="ccm-cms-types-job"/>                   -->
+<!--    <ccm:application name="ccm-cms-types-legalnotice"/>           -->
+<!--    <ccm:application name="ccm-cms-types-minutes"/>               -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/>              -->
+<!--    <ccm:application name="ccm-cms-types-mparticle"/>             -->
+<!--    <ccm:application name="ccm-cms-types-newsitem"/>              -->
+<!--    <ccm:application name="ccm-cms-types-organization"/>          -->
+<!--    <ccm:application name="ccm-cms-types-pressrelease"/>          -->
+<!--    <ccm:application name="ccm-cms-types-service"/>               -->
+
+        <!-- Additional Content Applications                              -->
+<!--    <ccm:application name="ccm-auth-http"/>                       -->
+<!--    <ccm:application name="ccm-bookmarks"/>                       -->
+<!--    <ccm:application name="ccm-docmngr"/>                         -->
+<!--    <ccm:application name="ccm-docrepo"/>                         -->
+<!--    <ccm:application name="ccm-faq"/>                             -->
+<!--    <ccm:application name="ccm-formbuilder-pdf"/>                 -->
+<!--    <ccm:application name="ccm-forum"/>                           -->
+<!--    <ccm:application name="ccm-forum-categorised"/>               -->
+<!--    <ccm:application name="ccm-portalserver"/>                    -->
+<!--    <ccm:application name="ccm-portlet"/>                         -->
+<!--    <ccm:application name="ccm-portlet-helloworld"/>              -->
+<!--    <ccm:application name="ccm-simplesurvey"/>                    -->
+<!--    <ccm:application name="ccm-user-preferences"/>                -->
+<!--    <ccm:application name="ccm-weblog"/>                          -->
+<!--    <ccm:application name="ccm-webpage"/>                         -->
+
+
+<!-- tools will be downloaded from trunk, but does not
+     contain java code to be compiled!
+        <ccm:application name="tools"/>           -->
+
+
+  </ccm:build>
+</ccm:project>

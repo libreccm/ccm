@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml - (ldn)devel - containing those modules as of aplaws 1.0.5 
+<!-- project.xml - (ldn)devel - containing those modules as of aplaws 1.1.x 
      which are part of ccm-ldn-aplaws devel (and standard) bundle                               
-     To be synchronized with ccm-ldn-aplaws/bundle/devel/cfg/applications.cfg -->
+     To be synchronized with ccm-ldn-aplaws/bundle/devel/cfg/project.xml -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
                     name="aplaws" 
               prettyName="APLAWS plus (devel)"
-                 version="1-1-0" 
-                 release="rc-3" 
+                 version="1-1-5" 
+                 release="devel" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT"
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -27,15 +27,13 @@
 
         <!--  Content assets   -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
-        <ccm:application name="ccm-ldn-dublin"/>
 
         <!--  Content types   -->
         <ccm:application name="ccm-cms-types-article"/>
         <ccm:application name="ccm-cms-types-contact"/>
-        <!-- esdservice needs ccm-cms-types-contact or ccm-ldn-ccm-types-contact 
-             not decided yet which one to choose    
-        <ccm:application name="ccm-cms-types-esdservice"/>     --> 
+        <ccm:application name="ccm-cms-types-esdservice"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
@@ -50,8 +48,9 @@
         <!--  Applications   -->
         <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-atoz"/>
+        <ccm:application name="ccm-ldn-dublin"/>
+        <ccm:application name="ccm-ldn-importer"/>
         <ccm:application name="ccm-ldn-navigation"/>
-        <ccm:application name="ccm-ldn-portal"/>
         <ccm:application name="ccm-ldn-rss"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
@@ -61,8 +60,8 @@
 
         <!--  Extra apps   -->
         <ccm:application name="ccm-forum"/>     
-        <ccm:application name="ccm-ldn-importer"/>
-        <ccm:application name="ccm-ldn-theme"/>
+        <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-themedirector"/>
 
 
 <!-- tools will be downloaded from trunk, but does not
