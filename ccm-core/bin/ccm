@@ -47,5 +47,5 @@ fi
 #Convert to absolute path:
 CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
 
-echo "executing ccm-run"
-java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "$@"
+echo "Starting CCM-Tool..."
+java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" "$@"
