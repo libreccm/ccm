@@ -12,12 +12,16 @@
     indent="yes"
     xalan:indent-amount="4"/>
 
+  <!-- gets project.xml as input file and combines its content and the content
+       of the file application.xml of each modules included in the  build
+       (tag ccm:build) into one (temporary) output file .tmp.project.xml for
+       further processing by xalan and build-template.xsl                    -->
   <xsl:template match="ccm:project">
     <xsl:element name="ccm:project">
       <xsl:copy-of select="@*"/>
       <xsl:copy-of select="*"/>
       <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
-        <xsl:copy-of select="document(concat(@name,'/application.xml'),/ccm:project)"/>
+        <xsl:copy-of select="document(concat('../../../../',@name,'/application.xml'),/ccm:project)"/>
       </xsl:for-each>
     </xsl:element>
   </xsl:template>

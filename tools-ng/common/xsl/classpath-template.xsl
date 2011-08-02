@@ -5,6 +5,10 @@
   xmlns:ccm="http://ccm.redhat.com/ccm-project"
   exclude-result-prefixes="ccm">
 
+  <!--             =========================
+                   CURRENTLY NO LONGER USED.                                      
+                   =========================                                -->
+                   
   <xsl:output method="text"
     encoding="UTF-8"
     indent="yes"

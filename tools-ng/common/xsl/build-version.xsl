@@ -7,6 +7,11 @@
   xmlns:ccm="http://ccm.redhat.com/ccm-project"
   exclude-result-prefixes="ccm common">
 
+  <!--             =========================
+                   CURRENTLY NO LONGER USED.                                      
+                   =========================                                -->
+                   
+
   <xsl:output method="text" />
 
   <xsl:template match="ccm:project">

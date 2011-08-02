@@ -27,7 +27,7 @@ See http://aplaws.org
 
 Java 6.x
 Ant 1.7.x
-Oracle 10g RDBMS or PostgresQL up to version 8.2
+Oracle 10g RDBMS or PostgresQL up to version 8.4
 
 3. HOW TO USE
 

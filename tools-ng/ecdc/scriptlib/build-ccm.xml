@@ -61,16 +61,29 @@
  	
  	<target name="prepare-load">
  	    <echo>prepare bundle ${ccm.bundle.folder}</echo>
+ <!--   bundle file applications.cfg replace by project.xml, now part of bundle
 		<copy file="${ccm.bundle.folder}/cfg/applications.cfg"
                       tofile=".tmp.applications.cfg" overwrite="yes" />
 		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />
 		<replaceregexp file=".tmp.applications.cfg"
                        match="[ \t\r\n]+" replace=" " flags="gs" />
-		<loadfile property="applications" srcFile=".tmp.applications.cfg" />
-		<delete file=".tmp.applications.cfg"/>
+  -->
+        <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
+            <classpath refid="ccm.tools.classpath"/>
+            <arg value="-IN"/>
+            <arg value="${ccm.bundle.folder}/cfg/project.xml"/>
+            <arg value="-OUT"/>
+            <arg value=".tmp.applications.list"/>
+            <arg value="-XSL"/>
+            <arg value="${ccm.tools.xsl.dir}/listapps.xsl"/>
+            <arg value="-TEXT"/>
+        </java>
+		<loadfile property="applications" srcFile=".tmp.applications.list" />
+    	<delete file=".tmp.applications.list"/>
 		<tstamp>
 			<format pattern="yyyymmddhhmmss" property="timestamp" />
 		</tstamp>
+        <echo>Included: ${applications}</echo>
 
 		<!-- classpath used by command line tools load-bundle, update, ...        -->
 		<path id="ccm.classpath">

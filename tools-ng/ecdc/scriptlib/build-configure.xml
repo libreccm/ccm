@@ -11,21 +11,21 @@
 <project name="configure" default="configure">
 
     <target name="configure">
-        <echo>Validating the schema of project.xml</echo>
+        <echo>Validating the schema of bundle's project.xml</echo>
 
         <!-- http://xerces.apache.org/xerces2-j/samples-dom.html#Counter -->
         <java classname="dom.Counter" classpathref="ccm.tools.classpath"
               errorproperty="project.validation.errors"
               outputproperty="project.validation.output">
-            <arg value="-s" />
-            <arg value="-f" />
-            <arg value="-v" />
-            <arg value="${ccm.project.dir}/project.xml" />
+            <arg value="-s" />  <!--  turn on Schema validation support -->
+            <arg value="-f" />  <!--  turn on Schema full checking      -->
+            <arg value="-v" />  <!--  turn on validation                -->
+            <arg value="${ccm.bundle.folder}/cfg/project.xml" />
         </java>
         <if>
           <equals arg1="${project.validation.errors}" arg2="" />
           <then>
-              <echo>Validating the schema of project.xml successful</echo>
+              <echo>Validating the schema of bundle's project.xml successful</echo>
           </then>
           <else>
             <fail message="${project.validation.errors}" />
@@ -43,14 +43,14 @@
         </xslt>
         -->
 
-        <!-- Building the core: build-projects.xml from projects.xml with all
+        <!-- Building build-projects.xml from projects.xml with all
              targets for compile / build / deploy
              uses currently the xsl templates used by the ccm scripts       -->
         <echo message="Regenerating build-projects.xml" />
         <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
             <classpath refid="ccm.tools.classpath"/>
             <arg value="-IN"/>
-            <arg value="project.xml"/>
+            <arg value="${ccm.bundle.folder}/cfg/project.xml"/>
             <arg value="-OUT"/>
             <arg value=".tmp.project.xml"/>
             <arg value="-XSL"/>

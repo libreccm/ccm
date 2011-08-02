@@ -13,12 +13,12 @@
                 <source-folder>
                     <label>webapps</label>
                     <type>doc_root</type>
-                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.26/webapps</location>
+                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.32/webapps</location>
                 </source-folder>
                 <source-folder>
                     <label>WEB-INF</label>
                     <type>web_inf</type>
-                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.26/webapps/ROOT/WEB-INF</location>
+                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.32/webapps/ROOT/WEB-INF</location>
                 </source-folder>
                 <source-folder>
                     <label>CCM (trunk)</label>
@@ -741,10 +741,6 @@
                         <location>ccm-cms-types-pressrelease/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-cms-types-project (Source)</label>
-                        <location>ccm-cms-types-project/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>ccm-cms-types-researchnetwork (Source)</label>
                         <location>ccm-cms-types-researchnetwork/src</location>
                     </source-folder>
@@ -1001,7 +997,6 @@
                 <package-root>ccm-cms-types-organization/src</package-root>
                 <package-root>ccm-cms-types-person/src</package-root>
                 <package-root>ccm-cms-types-pressrelease/src</package-root>
-                <package-root>ccm-cms-types-project/src</package-root>
                 <package-root>ccm-cms-types-researchnetwork/src</package-root>
                 <package-root>ccm-cms-types-simpleaddress/src</package-root>
                 <package-root>ccm-cms-types-service/src</package-root>
