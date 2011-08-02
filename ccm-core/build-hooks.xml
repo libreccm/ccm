@@ -56,6 +56,8 @@
     <mkdir dir="${this.deploy.dir}/WEB-INF/conf"/>
     <copy todir="${this.deploy.dir}/WEB-INF/conf"
           file="${src.dir}/log4j.properties"/>
+    <!-- project.xml moved to bundle cfg directory where it replaces
+         former application.cfg                                            -->
     <xslt style="${ccm.tools.xsl.dir}/build-version.xsl" 
           in="${ccm.bundle.folder}/cfg/project.xml"
           out="${build.classes.dir}/ccm-version.properties" 
