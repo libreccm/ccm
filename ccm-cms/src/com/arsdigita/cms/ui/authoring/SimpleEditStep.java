@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
  * b). call add() zero or more times
  *
  * @author Stanislav Freidin
- * @version $Id: SimpleEditStep.java 1638 2007-09-17 11:48:34Z chrisg23 $
+ * @version $Id: SimpleEditStep.java 2185 2011-06-20 21:16:02Z pboy $
  */
 public class SimpleEditStep extends SecurityPropertyEditor 
     implements AuthoringStepComponent, RequestListener {

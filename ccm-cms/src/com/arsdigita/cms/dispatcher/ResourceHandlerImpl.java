@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: ResourceHandlerImpl.java 287 2005-02-22 00:29:02Z sskracic $  
+ * @version $Id: ResourceHandlerImpl.java 2090 2010-04-17 08:04:14Z pboy $  
  **/
 public abstract class ResourceHandlerImpl implements ResourceHandler {
 

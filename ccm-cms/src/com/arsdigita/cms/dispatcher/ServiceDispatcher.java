@@ -68,7 +68,7 @@ import java.util.Map;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: ServiceDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ServiceDispatcher.java 2116 2011-01-13 17:13:58Z pboy $
  */
 public class ServiceDispatcher extends LockableImpl implements Dispatcher {
 

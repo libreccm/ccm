@@ -34,7 +34,7 @@ import java.io.IOException;
  * @author Jack Chung
  *
  * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: Asset.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Asset.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public abstract class Asset extends ContentItem {
 

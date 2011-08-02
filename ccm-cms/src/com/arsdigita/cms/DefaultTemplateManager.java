@@ -30,7 +30,7 @@ import com.arsdigita.mimetypes.MimeType;
  * com.arsdigita.cms.TemplateManager template manager}.
  *
  * @author Karl Goldstein (karlg@arsdigita.com)
- * @version $Id: DefaultTemplateManager.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DefaultTemplateManager.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class DefaultTemplateManager implements TemplateManager {
 

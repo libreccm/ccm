@@ -33,7 +33,7 @@ import java.math.BigDecimal;
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Xixi D'Moon (xdmoon@arsdigita.com)
  * @version $Revision: #11 $ $Date: 2004/08/17 $
- * @version $Id: PhaseDefinition.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: PhaseDefinition.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class PhaseDefinition extends ACSObject {
 

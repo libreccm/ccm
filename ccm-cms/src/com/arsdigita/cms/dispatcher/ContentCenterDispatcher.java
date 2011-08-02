@@ -67,7 +67,7 @@ import org.apache.log4j.Logger;
  * </ol>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: ContentCenterDispatcher.java 1967 2009-08-29 21:05:51Z pboy $
+ * @version $Id: ContentCenterDispatcher.java 2161 2011-02-02 00:16:13Z pboy $
  */
 public class ContentCenterDispatcher extends LockableImpl
     implements Dispatcher {

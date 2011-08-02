@@ -15,7 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: table-content_types.sql 287 2005-02-22 00:29:02Z sskracic $
+-- $Id: table-content_types.sql 2161 2011-02-02 00:16:13Z pboy $
 -- $DateTime: 2004/08/17 23:15:09 $
 
 create table content_types (

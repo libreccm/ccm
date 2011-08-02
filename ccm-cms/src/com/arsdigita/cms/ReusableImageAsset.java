@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
  * @author Scott Seago (sseago@redhat.com)
  * @author Stanislav Freidin
  *
- * @version $Id: ReusableImageAsset.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ReusableImageAsset.java 2218 2011-06-22 23:55:36Z pboy $
  */
 public class ReusableImageAsset extends ImageAsset {
 

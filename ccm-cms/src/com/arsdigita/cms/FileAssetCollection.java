@@ -32,7 +32,7 @@ import com.arsdigita.persistence.PersistenceException;
  *
  * @author <a href="mailto:scott@arsdigita.com">Scott Seago</a>
  * @version 1.0
- * @version $Id: FileAssetCollection.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: FileAssetCollection.java 2090 2010-04-17 08:04:14Z pboy $ 
  */
 public class FileAssetCollection extends DomainCollection {
 

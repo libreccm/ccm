@@ -74,7 +74,7 @@ import java.math.BigDecimal;
  *
  * in order to get the current content section.
  *
- * @version $Id: CreationSelector.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: CreationSelector.java 2185 2011-06-20 21:16:02Z pboy $
  */
 public class CreationSelector extends MetaForm {
 

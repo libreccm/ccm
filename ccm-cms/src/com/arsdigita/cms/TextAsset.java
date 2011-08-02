@@ -37,7 +37,7 @@ import java.math.BigDecimal;
  * @author Jack Chung (flattop@arsdigita.com)
  *
  * @version $Revision: #14 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: TextAsset.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TextAsset.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class TextAsset extends Asset {
 

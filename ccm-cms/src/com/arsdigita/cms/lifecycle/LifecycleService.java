@@ -40,7 +40,7 @@ import java.sql.SQLException;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: LifecycleService.java 2070 2010-01-28 08:47:41Z pboy $ 
+ * @version $Id: LifecycleService.java 2161 2011-02-02 00:16:13Z pboy $ 
  */
 
 public class LifecycleService extends DomainObject{

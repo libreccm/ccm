@@ -35,7 +35,7 @@ import com.arsdigita.xml.Element;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #10 $ $Date: 2004/08/17 $
- * @version $Id: ContentPanel.java 1848 2009-03-10 03:17:42Z terry $
+ * @version $Id: ContentPanel.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class ContentPanel extends SimpleComponent {
 

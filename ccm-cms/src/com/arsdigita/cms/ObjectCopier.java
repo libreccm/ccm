@@ -52,7 +52,7 @@ import org.apache.log4j.Logger;
  * <p>
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
- * @version $Id: ObjectCopier.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: ObjectCopier.java 2090 2010-04-17 08:04:14Z pboy $
  * @see ContentItem
  * @see ContentItem#copyProperty(ContentItem, String, ItemCopier)
  */

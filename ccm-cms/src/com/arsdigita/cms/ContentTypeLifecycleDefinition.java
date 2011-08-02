@@ -33,7 +33,7 @@ import java.math.BigDecimal;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: ContentTypeLifecycleDefinition.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContentTypeLifecycleDefinition.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class ContentTypeLifecycleDefinition extends DomainObject {
 

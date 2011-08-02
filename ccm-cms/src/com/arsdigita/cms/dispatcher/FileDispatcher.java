@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
  *
  * @author Karl Goldstein (karlg@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: FileDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: FileDispatcher.java 2140 2011-01-16 12:04:20Z pboy $
  **/
 public class FileDispatcher implements ChainedDispatcher {
 

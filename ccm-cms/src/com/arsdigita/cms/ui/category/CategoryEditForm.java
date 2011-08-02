@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
  * XXX
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: CategoryEditForm.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: CategoryEditForm.java 2090 2010-04-17 08:04:14Z pboy $
  */
 final class CategoryEditForm extends BaseCategoryForm {
 

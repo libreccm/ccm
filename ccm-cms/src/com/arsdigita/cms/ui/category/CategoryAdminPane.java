@@ -63,7 +63,7 @@ import org.apache.log4j.Logger;
  * A split pane for the Category Administration UI.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: CategoryAdminPane.java 1795 2009-02-07 10:47:32Z pboy $
+ * @version $Id: CategoryAdminPane.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public final class CategoryAdminPane extends BaseAdminPane {
 

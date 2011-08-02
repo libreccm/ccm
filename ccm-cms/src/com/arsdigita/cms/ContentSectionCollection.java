@@ -30,7 +30,7 @@ import com.arsdigita.persistence.DataCollection;
  * @see com.arsdigita.persistence.DataCollection
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ContentSectionCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContentSectionCollection.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class ContentSectionCollection extends DomainCollection {
 

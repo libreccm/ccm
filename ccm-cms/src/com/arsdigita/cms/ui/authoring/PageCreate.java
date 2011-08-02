@@ -43,7 +43,7 @@ import org.apache.log4j.Logger;
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: PageCreate.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: PageCreate.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class PageCreate extends BasicPageForm
         implements FormSubmissionListener, CreationComponent {

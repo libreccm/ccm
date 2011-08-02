@@ -30,7 +30,7 @@ import java.util.List;
  * <p>The context bar of the content center UI.</p>
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: WorkspaceContextBar.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: WorkspaceContextBar.java 2090 2010-04-17 08:04:14Z pboy $
  */
 class WorkspaceContextBar extends ContextBar {
 

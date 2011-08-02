@@ -35,7 +35,7 @@ import com.arsdigita.persistence.DataQuery;
  *
  * @author Uday Mathur (umathur@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: DataQueryExistsListener.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DataQueryExistsListener.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public abstract class DataQueryExistsListener 
         implements FormValidationListener {

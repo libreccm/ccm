@@ -83,7 +83,7 @@ import com.arsdigita.util.UncheckedWrapperException;
  * {@link com.arsdigita.cms.ui.templates.TemplateBody}
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TextAssetBody.java 1949 2009-06-25 08:30:50Z terry $
+ * @version $Id: TextAssetBody.java 2167 2011-06-19 21:12:12Z pboy $
  */
 public abstract class TextAssetBody extends SecurityPropertyEditor
         implements Resettable, AuthoringStepComponent, RequestListener {

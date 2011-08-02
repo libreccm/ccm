@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
  * A servlet used for downloading DPAssets.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: DownloadAsset.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DownloadAsset.java 2173 2011-06-19 23:28:55Z pboy $
  */
 public class DownloadAsset extends BaseAsset {
 

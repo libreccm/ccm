@@ -39,7 +39,7 @@ import javax.servlet.ServletException;
 
 /**
  *
- * @version $Id: BaseAsset.java 1967 2009-08-29 21:05:51Z pboy $
+ * @version $Id: BaseAsset.java 2173 2011-06-19 23:28:55Z pboy $
  */
 class BaseAsset extends ResourceHandlerImpl {
 

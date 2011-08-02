@@ -34,7 +34,7 @@ import java.util.Map;
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  *
- * @version $Id: Template.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: Template.java 2167 2011-06-19 21:12:12Z pboy $
  */
 public class Template extends TextAsset {
 

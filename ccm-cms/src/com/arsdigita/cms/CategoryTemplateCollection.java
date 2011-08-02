@@ -28,7 +28,7 @@ import com.arsdigita.persistence.DataCollection;
  * @see DataCollection
  * @see ItemTemplateCollection
  *
- * @version $Id: CategoryTemplateCollection.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: CategoryTemplateCollection.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class CategoryTemplateCollection extends TemplateCollection {
 

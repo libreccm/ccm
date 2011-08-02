@@ -24,7 +24,7 @@ import com.arsdigita.util.UncheckedWrapperException;
  * Publish to file exception.
  *
  * @author Jeff Teeters (teeters@arsdigita.com)
- * @version $Id: PublishToFileException.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: PublishToFileException.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class PublishToFileException extends UncheckedWrapperException {
 

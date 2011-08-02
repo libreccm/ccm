@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
  * internal templating implementation.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: SectionTemplateMapping.java 1940 2009-05-29 07:15:05Z terry $
+ * @version $Id: SectionTemplateMapping.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class SectionTemplateMapping extends TemplateMapping {
 

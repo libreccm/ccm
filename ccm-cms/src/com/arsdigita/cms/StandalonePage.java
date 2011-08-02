@@ -33,7 +33,7 @@ import java.math.BigDecimal;
  * a piece of JSP code, represented as an internal, one-off template.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: StandalonePage.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: StandalonePage.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class StandalonePage extends ContentPage {
 

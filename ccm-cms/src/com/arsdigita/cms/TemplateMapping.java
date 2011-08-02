@@ -34,7 +34,7 @@ import java.math.BigDecimal;
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  *
- * @version $Id: TemplateMapping.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TemplateMapping.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public abstract class TemplateMapping extends ACSObject {
 

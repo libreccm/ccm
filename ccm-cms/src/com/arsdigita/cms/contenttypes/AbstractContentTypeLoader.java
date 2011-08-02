@@ -56,7 +56,7 @@ import org.apache.log4j.Logger;
  * that can be used by content types to reduce code duplication.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #754 $ $Date: 2005/09/02 $ $Author: sskracic $
+ * @version $Revision: #754 $ $Date: 2005/09/02 $ $Author: pboy $
  **/
 public abstract class AbstractContentTypeLoader extends PackageLoader {
 

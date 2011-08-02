@@ -62,7 +62,7 @@ import org.apache.log4j.Logger;
  *
  * @author Jack Chung
  * @version $Revision: #15 $ $Date: 2004/08/17 $
- * @version $Id: KitPanel.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: KitPanel.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class KitPanel extends BoxPanel
     implements ActionListener, TableActionListener {

@@ -38,7 +38,7 @@ import java.util.Set;
  * or care about this class.
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
- * @version $Id: VersionUpdater.java 1940 2009-05-29 07:15:05Z terry $
+ * @version $Id: VersionUpdater.java 2090 2010-04-17 08:04:14Z pboy $
  */
 
 class VersionUpdater extends DomainService {

@@ -49,7 +49,7 @@ import org.apache.log4j.Logger;
  * CMS.</p>
  *
  * @author Michael Pih
- * @version $Id: SecurityManager.java 1344 2006-10-10 09:41:56Z sskracic $
+ * @version $Id: SecurityManager.java 2161 2011-02-02 00:16:13Z pboy $
  */
 public class SecurityManager implements Security, SecurityConstants {
 

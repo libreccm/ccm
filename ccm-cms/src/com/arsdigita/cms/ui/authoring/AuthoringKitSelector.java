@@ -40,7 +40,7 @@ import java.util.Map;
  * Selects a component based on content type. Helper class for {@link
  * com.arsdigita.cms.ui.authoring.WizardSelector}.
  *
- * @version $Id: AuthoringKitSelector.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: AuthoringKitSelector.java 2090 2010-04-17 08:04:14Z pboy $ 
  */
 public abstract class AuthoringKitSelector extends SimpleContainer {
 

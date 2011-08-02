@@ -15,7 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: oracle-se-create.sql 1305 2006-09-01 08:54:11Z sskracic $
+-- $Id: oracle-se-create.sql 2140 2011-01-16 12:04:20Z pboy $
 -- 
 
 @@ ddl/oracle-se/create.sql

@@ -82,7 +82,7 @@ import org.apache.log4j.Logger;
  *
  * @author Xixi D'Moon (xdmoon@arsdigita.com)
  * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: PageEditDynamic.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: PageEditDynamic.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class PageEditDynamic extends SecurityPropertyEditor {
 

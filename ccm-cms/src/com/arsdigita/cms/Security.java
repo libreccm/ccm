@@ -28,7 +28,7 @@ import com.arsdigita.kernel.Party;
  * <p>An interface for making access checks within a content section.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: Security.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: Security.java 2090 2010-04-17 08:04:14Z pboy $ 
  */
 public interface Security {
 

@@ -28,7 +28,7 @@ import java.math.BigDecimal;
  * editors, hence this is a separate class and has its own TaskType
  *
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Id: EditingTaskURLGenerator.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: EditingTaskURLGenerator.java 2090 2010-04-17 08:04:14Z pboy $
  * */
 
 public class EditingTaskURLGenerator implements TaskURLGenerator {

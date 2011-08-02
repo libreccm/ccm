@@ -39,7 +39,7 @@ import java.util.Date;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #14 $ $Date: 2004/08/17 $
- * @version $Id: LifecycleDefinition.java 2070 2010-01-28 08:47:41Z pboy $
+ * @version $Id: LifecycleDefinition.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class LifecycleDefinition extends ACSObject {
 

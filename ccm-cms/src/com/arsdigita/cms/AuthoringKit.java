@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Revision: #17 $ $Date: 2004/08/17 $
- * @version $Id: AuthoringKit.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: AuthoringKit.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class AuthoringKit extends ACSObject {
 

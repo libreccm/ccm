@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Peter Boy &lt;pb@zes.uni-bremen.de&gt;
- * @version $Id: Initializer.java 1428 2007-01-24 12:39:56Z sskracic $
+ * @version $Id: Initializer.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

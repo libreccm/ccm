@@ -31,7 +31,7 @@ import java.math.BigDecimal;
  * authoring steps} in a particular order.
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Id: AuthoringKitStepAssociation.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: AuthoringKitStepAssociation.java 2136 2011-01-14 09:15:10Z pboy $
  */
 public class AuthoringKitStepAssociation extends DomainObject {
 

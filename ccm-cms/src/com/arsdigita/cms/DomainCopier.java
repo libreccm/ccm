@@ -42,7 +42,7 @@ import java.util.Iterator;
  * Recursively copies a domain object.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: DomainCopier.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: DomainCopier.java 2218 2011-06-22 23:55:36Z pboy $
  */
 class DomainCopier extends DomainService {
 

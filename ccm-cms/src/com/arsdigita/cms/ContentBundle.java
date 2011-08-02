@@ -54,7 +54,7 @@ import org.apache.log4j.Logger;
  *
  * @author Shashin Shinde
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ContentBundle.java 2017 2009-10-04 09:03:45Z pboy $
+ * @version $Id: ContentBundle.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class ContentBundle extends ContentItem {
     

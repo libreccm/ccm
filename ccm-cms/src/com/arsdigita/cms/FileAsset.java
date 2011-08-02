@@ -39,7 +39,7 @@ import java.util.Locale;
  * file, such as an image.
  *
  * @author Scott Seago (scott@arsdigita.com)
- * @version $Id: FileAsset.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: FileAsset.java 2155 2011-01-21 01:17:02Z pboy $
  */
 public class FileAsset extends BinaryAsset {
 

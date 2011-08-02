@@ -29,7 +29,7 @@ import java.math.BigDecimal;
  * in the Item Management part of the CMS UI.
  *
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Id: DeployTaskURLGenerator.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DeployTaskURLGenerator.java 2090 2010-04-17 08:04:14Z pboy $
  * */
 
 public class DeployTaskURLGenerator implements TaskURLGenerator {

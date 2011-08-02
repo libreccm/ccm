@@ -32,7 +32,7 @@ import com.arsdigita.persistence.PersistenceException;
  *
  * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
  * @version 1.0
- * @version $Id: ImageAssetCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ImageAssetCollection.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class ImageAssetCollection extends DomainCollection {
 

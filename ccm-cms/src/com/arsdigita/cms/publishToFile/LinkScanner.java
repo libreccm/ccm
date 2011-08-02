@@ -58,7 +58,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
  *   VALUE  = ([^\s'"]+ | '[^']*' | "[^"]*")
  *   WS = \s*
  * @author <a href="mailto:dlutter@redhat.com">David Lutterkort</a>
- * @version $Id: LinkScanner.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: LinkScanner.java 2167 2011-06-19 21:12:12Z pboy $
  */
 class LinkScanner {
 

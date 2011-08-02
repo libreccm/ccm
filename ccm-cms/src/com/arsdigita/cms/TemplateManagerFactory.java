@@ -26,7 +26,7 @@ package com.arsdigita.cms;
  *
  * @author Karl Goldstein (karlg@arsdigita.com)
  * @version $Revision: #8 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: TemplateManagerFactory.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TemplateManagerFactory.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class TemplateManagerFactory {
 

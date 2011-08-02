@@ -90,7 +90,7 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:pihman@arsdigita.com">Michael Pih</a>
  * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
  * @version $Revision: #37 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: ContentSection.java 1308 2006-09-01 11:00:05Z sskracic $
+ * @version $Id: ContentSection.java 2209 2011-06-22 07:59:10Z pboy $
  */
 public class ContentSection extends Application {
 

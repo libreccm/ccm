@@ -15,7 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: comment-content_types.sql 287 2005-02-22 00:29:02Z sskracic $
+-- $Id: comment-content_types.sql 2155 2011-01-21 01:17:02Z pboy $
 -- $DateTime: 2004/08/17 23:15:09 $
 
 comment on table content_types is '

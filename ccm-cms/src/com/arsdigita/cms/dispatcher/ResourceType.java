@@ -36,7 +36,7 @@ import com.arsdigita.persistence.SessionManager;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: ResourceType.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ResourceType.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class ResourceType extends DomainObject {
 

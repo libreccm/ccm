@@ -29,7 +29,7 @@ import java.net.URLEncoder;
  * ContentItem and the Task.
  *
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Id: FinishTaskURLGenerator.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: FinishTaskURLGenerator.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class FinishTaskURLGenerator implements TaskURLGenerator {
 

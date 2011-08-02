@@ -39,7 +39,7 @@ import com.arsdigita.util.Assert;
  *
  * @author Randy Graebner (randyg@redhat.com)
  *
- * @version $Id: ContentGroupAssociation.java 1967 2009-08-29 21:05:51Z pboy $
+ * @version $Id: ContentGroupAssociation.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class ContentGroupAssociation extends ContentItem {
 

@@ -15,7 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-// $Id: PublishedLink.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $Id: PublishedLink.pdl 2140 2011-01-16 12:04:20Z pboy $
 // $DateTime: 2004/08/17 23:15:09 $
 model com.arsdigita.cms;
 

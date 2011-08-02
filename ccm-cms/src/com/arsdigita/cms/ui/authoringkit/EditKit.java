@@ -51,7 +51,7 @@ import java.math.BigDecimal;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #12 $ $Date: 2004/08/17 $
- * @version $Id: EditKit.java 754 2005-09-02 13:26:17Z sskracic $ 
+ * @version $Id: EditKit.java 2090 2010-04-17 08:04:14Z pboy $ 
  */
 public class EditKit extends Form
     implements FormProcessListener, FormInitListener {

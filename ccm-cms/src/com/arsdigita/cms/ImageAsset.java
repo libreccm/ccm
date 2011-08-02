@@ -53,7 +53,7 @@ import org.apache.log4j.Logger;
  * @author Jack Chung
  * @author Stanislav Freidin
  *
- * @version $Id: ImageAsset.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ImageAsset.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class ImageAsset extends BinaryAsset {
 
@@ -158,7 +158,7 @@ public class ImageAsset extends BinaryAsset {
      * @param defaultMimeType The default mime type for the file
      */
     public void loadFromFile(String fileName, File file, String defaultMimeType)
-            throws IOException {
+        throws IOException {
 
         // Guess mime type
         MimeType mime = MimeType.guessMimeTypeFromFile(fileName);

@@ -68,7 +68,7 @@ import org.apache.log4j.Logger;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Id: CMSPage.java 1967 2009-08-29 21:05:51Z pboy $
+ * @version $Id: CMSPage.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class CMSPage extends Page implements ResourceHandler {
 

@@ -25,7 +25,7 @@ import com.arsdigita.persistence.DataCollection;
  * This class contains a collection of {@link SectionTemplateMapping}s
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: SectionTemplateCollection.java 1940 2009-05-29 07:15:05Z terry $
+ * @version $Id: SectionTemplateCollection.java 2090 2010-04-17 08:04:14Z pboy $
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection

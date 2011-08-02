@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
  * @see com.arsdigita.cms.CMS
  *
  * @author Daniel Berrange
- * @version $Id: CMSContext.java 778 2005-09-12 14:55:36Z fabrice $
+ * @version $Id: CMSContext.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public final class CMSContext {
 

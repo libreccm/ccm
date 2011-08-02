@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: SimpleCache.java 287 2005-02-22 00:29:02Z sskracic $  
+ * @version $Id: SimpleCache.java 2090 2010-04-17 08:04:14Z pboy $  
  */
 public class SimpleCache extends Hashtable{
 

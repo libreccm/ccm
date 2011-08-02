@@ -86,7 +86,7 @@ import java.util.ArrayList;
  * This constructor will be called when the component is automatically
  * instantiated by the <code>AuthoringKitWizard</code>.</p>
  *
- * @version $Id: AuthoringKitWizard.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: AuthoringKitWizard.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class AuthoringKitWizard extends LayoutPanel implements Resettable {
 

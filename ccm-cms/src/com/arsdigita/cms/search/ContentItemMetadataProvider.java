@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:berrange@redhat.com">Daniel Berrange</a>
  * @version $Revision: 1.1.2.1 $ $Date: 2005/10/04 12:09:55 $
- * @version $Id: ContentItemMetadataProvider.java 1263 2006-07-17 08:18:47Z cgyg9330 $
+ * @version $Id: ContentItemMetadataProvider.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public abstract class ContentItemMetadataProvider implements MetadataProvider {
     private static final Logger s_log = 

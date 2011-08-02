@@ -33,7 +33,7 @@ import java.math.BigDecimal;
 /**
  * Represents a mapping from (category + content type) to a template.
  *
- * @version $Id: CategoryTemplateMapping.java 1940 2009-05-29 07:15:05Z terry $
+ * @version $Id: CategoryTemplateMapping.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class CategoryTemplateMapping extends TemplateMapping {
 

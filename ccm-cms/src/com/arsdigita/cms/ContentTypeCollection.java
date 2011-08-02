@@ -31,7 +31,7 @@ import com.arsdigita.persistence.Filter;
  * @see com.arsdigita.persistence.DataCollection
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Id: ContentTypeCollection.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: ContentTypeCollection.java 2090 2010-04-17 08:04:14Z pboy $ 
  */
 public class ContentTypeCollection extends DomainCollection {
 

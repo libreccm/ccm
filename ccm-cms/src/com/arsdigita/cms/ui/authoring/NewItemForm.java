@@ -53,7 +53,7 @@ import java.math.BigDecimal;
  *
  * @author Stanislav Freidin (sfreidin@arsdigtia.com)
  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: NewItemForm.java 1652 2007-09-18 10:35:42Z chrisg23 $ 
+ * @version $Id: NewItemForm.java 2161 2011-02-02 00:16:13Z pboy $ 
  */
 public abstract class NewItemForm extends Form {
 

@@ -48,7 +48,7 @@ import java.util.StringTokenizer;
  * Created Mon Jan 20 14:30:03 2003.
  *
  * @author <a href="mailto:mhanisch@redhat.com">Michael Hanisch</a>
- * @version $Id: MultilingualItemResolver.java 2026 2009-11-02 10:04:34Z pboy $
+ * @version $Id: MultilingualItemResolver.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class MultilingualItemResolver extends AbstractItemResolver implements ItemResolver {
     

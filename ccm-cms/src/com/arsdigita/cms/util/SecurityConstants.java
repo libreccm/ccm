@@ -26,7 +26,7 @@ package com.arsdigita.cms.util;
  *
  * @author Michael Pih
  * @version $Revision: #7 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: SecurityConstants.java 1280 2006-07-27 09:12:09Z cgyg9330 $
+ * @version $Id: SecurityConstants.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public interface SecurityConstants {
 

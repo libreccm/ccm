@@ -24,7 +24,7 @@ package com.arsdigita.cms;
  *
  * @author Karl Goldstein (karlg at arsdigita dot com)
  *
- * @version $Id: PageLocations.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: PageLocations.java 2090 2010-04-17 08:04:14Z pboy $
  **/
 public interface PageLocations {
     public String SECTION_PAGE = "admin/index.jsp";

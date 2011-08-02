@@ -32,7 +32,7 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:berrange@redhat.com">Daniel Berrange</a>
  * @version $Revision: #5 $ $Date: 2004/08/17 $
- * @version $Id: ContentPageMetadataProvider.java 1166 2006-06-14 11:45:15Z fabrice $
+ * @version $Id: ContentPageMetadataProvider.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class ContentPageMetadataProvider extends ContentItemMetadataProvider {
 

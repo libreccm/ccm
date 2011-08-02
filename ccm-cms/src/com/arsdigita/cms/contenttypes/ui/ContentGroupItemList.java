@@ -50,7 +50,7 @@ import java.math.BigDecimal;
 /**
  * This displays a sortable list of items within a given content group
  *
- * @version $Id: ContentGroupItemList.java 1967 2009-08-29 21:05:51Z pboy $ 
+ * @version $Id: ContentGroupItemList.java 2090 2010-04-17 08:04:14Z pboy $ 
  */
 class ContentGroupItemList extends SortableList {
 

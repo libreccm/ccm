@@ -25,7 +25,7 @@ import com.arsdigita.util.Assert;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #11 $ $Date: 2004/08/17 $
- * @version $Id: Duration.java 2070 2010-01-28 08:47:41Z pboy $
+ * @version $Id: Duration.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class Duration {
 

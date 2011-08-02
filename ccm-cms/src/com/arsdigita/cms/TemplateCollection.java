@@ -30,7 +30,7 @@ import com.arsdigita.mimetypes.MimeType;
  * link attributes.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TemplateCollection.java 1940 2009-05-29 07:15:05Z terry $
+ * @version $Id: TemplateCollection.java 2090 2010-04-17 08:04:14Z pboy $
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection

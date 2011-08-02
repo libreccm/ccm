@@ -29,7 +29,7 @@ import com.arsdigita.cms.BinaryAsset;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: StreamAsset.java 1166 2006-06-14 11:45:15Z fabrice $
+ * @version $Id: StreamAsset.java 2173 2011-06-19 23:28:55Z pboy $
  */
 public class StreamAsset extends BaseAsset {
 

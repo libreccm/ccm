@@ -41,7 +41,7 @@ import javax.servlet.ServletException;
  *
  * @author Randy Graebner (randyg@redhat.com)
  * @version $Revision: #18 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Revision: #18 $Id: CategorizedObjectsList.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Revision: #18 $Id: CategorizedObjectsList.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class CategorizedObjectsList extends SortableCategoryList {
 

@@ -39,7 +39,7 @@ import javax.servlet.ServletException;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #11 $ $Date: 2004/08/17 $
- * @version $Id: SimplePageResolver.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: SimplePageResolver.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class SimplePageResolver extends PageResolver {
 

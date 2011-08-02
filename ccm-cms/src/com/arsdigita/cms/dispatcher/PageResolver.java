@@ -32,7 +32,7 @@ import java.util.HashMap;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #8 $ $Date: 2004/08/17 $
- * @version $Id: PageResolver.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: PageResolver.java 2090 2010-04-17 08:04:14Z pboy $ 
  */
 public abstract class PageResolver {
 
