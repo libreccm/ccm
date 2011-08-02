@@ -26,7 +26,7 @@ import com.arsdigita.persistence.DataObject;
  *
  * @author Stanislav Freidin
  * @author Gavin Doughtie
- * @version $Id: DomainServiceInterfaceExposer.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DomainServiceInterfaceExposer.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class DomainServiceInterfaceExposer extends DomainService {

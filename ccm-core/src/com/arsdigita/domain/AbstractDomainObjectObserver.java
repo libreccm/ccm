@@ -25,7 +25,7 @@ import com.arsdigita.persistence.DataObject;
  * Abstract implementation of <code>DomainObjectObserver</code>.
  *
  * @author Justin Ross
- * @version $Id: AbstractDomainObjectObserver.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: AbstractDomainObjectObserver.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public abstract class AbstractDomainObjectObserver
         implements DomainObjectObserver {

@@ -28,7 +28,7 @@ import com.arsdigita.persistence.DataObject;
  * multiple domain objects that wrap the same data object.
  *
  * @author Joseph Bank
- * @version $Id: DomainObjectObserver.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DomainObjectObserver.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public interface DomainObjectObserver {
 

@@ -30,7 +30,7 @@ import com.arsdigita.persistence.DataCollection;
  * @see com.arsdigita.persistence.DataObject
  *
  * @author Oumi Mehrotra
- * @version $Id: DomainService.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DomainService.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public abstract class DomainService {
 

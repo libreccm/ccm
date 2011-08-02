@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * (such as ACSObjectInstantiator) to provide the default behavior
  * of instiating a domain class using reflection.
  * 
- * @version $Id: ReflectionInstantiator.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ReflectionInstantiator.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public class ReflectionInstantiator extends DomainObjectInstantiator {
 

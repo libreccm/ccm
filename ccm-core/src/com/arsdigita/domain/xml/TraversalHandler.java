@@ -41,7 +41,7 @@ import java.util.HashMap;
  * TraversalHandler
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Id: TraversalHandler.java 1534 2007-03-23 12:08:00Z chrisgilbert23 $
+ * @version $Id: TraversalHandler.java 2089 2010-04-17 07:55:43Z pboy $
  **/
 
 public class TraversalHandler extends DefaultHandler {

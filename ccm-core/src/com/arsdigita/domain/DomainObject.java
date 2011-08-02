@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
  * @see com.arsdigita.persistence.DataObject
  *
  * @version 1.0
- * @version $Id: DomainObject.java 738 2005-09-01 12:36:52Z sskracic $
+ * @version $Id: DomainObject.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public abstract class DomainObject {
 

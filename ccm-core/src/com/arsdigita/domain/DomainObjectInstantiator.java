@@ -66,7 +66,7 @@ import com.arsdigita.persistence.DataObject;
  *
  * @author Oumi Mehrotra
  * @version 1.0
- * @version $Id: DomainObjectInstantiator.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DomainObjectInstantiator.java 2089 2010-04-17 07:55:43Z pboy $
  **/
 public abstract class DomainObjectInstantiator {
 

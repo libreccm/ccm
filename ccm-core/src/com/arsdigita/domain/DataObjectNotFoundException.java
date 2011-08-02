@@ -23,7 +23,7 @@ package com.arsdigita.domain;
  * cannot be found.
  *
  * @author Oumi Mehrota
- * @version $Id: DataObjectNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DataObjectNotFoundException.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public class DataObjectNotFoundException extends RuntimeException {
 

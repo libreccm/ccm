@@ -28,7 +28,7 @@ package com.arsdigita.domain;
  * robust.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Id: GlobalObserver.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: GlobalObserver.java 2089 2010-04-17 07:55:43Z pboy $
  */
 
 public interface GlobalObserver extends DomainObjectObserver {

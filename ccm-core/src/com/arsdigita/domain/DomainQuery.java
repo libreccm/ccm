@@ -34,7 +34,7 @@ import java.util.Map;
  *
  * @author Oumi Mehrotra
  * @author Matthew Booth
- * @version $Id: DomainQuery.java 1045 2005-12-09 13:41:22Z sskracic $
+ * @version $Id: DomainQuery.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public abstract class DomainQuery implements DataQuery {
 

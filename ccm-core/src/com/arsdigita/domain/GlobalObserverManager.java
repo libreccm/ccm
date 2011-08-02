@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
  * to select which objects to observe.
  * 
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Id: GlobalObserverManager.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: GlobalObserverManager.java 2070 2010-01-28 08:47:41Z pboy $
  */
 
 public class GlobalObserverManager {

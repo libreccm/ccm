@@ -57,7 +57,7 @@
     <copy todir="${this.deploy.dir}/WEB-INF/conf"
           file="${src.dir}/log4j.properties"/>
     <xslt style="${ccm.tools.xsl.dir}/build-version.xsl" 
-          in="${ccm.project.dir}/project.xml"
+          in="${ccm.bundle.folder}/cfg/project.xml"
           out="${build.classes.dir}/ccm-version.properties" 
           classpathref="ccm.tools.classpath" force="yes" />
   </target>
