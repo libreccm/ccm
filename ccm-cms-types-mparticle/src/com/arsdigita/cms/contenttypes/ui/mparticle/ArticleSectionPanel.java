@@ -52,7 +52,7 @@ import org.apache.log4j.Logger;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #7 $ $Date: 2004/08/17 $
- * @version $Id: ArticleSectionPanel.java 1167 2006-06-14 12:27:28Z fabrice $
+ * @version $Id: ArticleSectionPanel.java 2143 2011-01-16 12:26:49Z pboy $
  */
 public class ArticleSectionPanel extends SimpleComponent implements
         ExtraXMLGenerator {

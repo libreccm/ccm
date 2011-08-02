@@ -31,7 +31,7 @@ import com.arsdigita.persistence.PersistenceException;
  * @see DataCollection
  *
  * @author <a href="mailto:hbrock@redhat.com">Hugh Brock</a>
- * @version $Id: ArticleSectionCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ArticleSectionCollection.java 2099 2010-04-17 15:35:14Z pboy $
  */
 public class ArticleSectionCollection extends DomainCollection {
 

@@ -38,7 +38,7 @@ import java.math.BigDecimal;
  * Represents a section within a MultiPartArticle
  *
  * @author <a href="mailto:dturner@arsdigita.com">Dave Turner</a>
- * @version $Id: ArticleSection.java 1500 2007-03-20 09:25:45Z chrisgilbert23 $
+ * @version $Id: ArticleSection.java 2099 2010-04-17 15:35:14Z pboy $
  */
 public class ArticleSection extends ContentPage {
     private static final Logger s_log = Logger.getLogger(ArticleSection.class);

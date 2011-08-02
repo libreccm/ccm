@@ -51,7 +51,7 @@ import java.math.BigDecimal;
  * selected MultiPartArticle.
  *
  * @author <a href="mailto:dturner@arsdigita.com">Dave Turner</a>
- * @version $Id: SectionTable.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: SectionTable.java 2099 2010-04-17 15:35:14Z pboy $
  */
 public class SectionTable extends Table
 {

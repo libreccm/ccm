@@ -36,7 +36,7 @@ import java.util.HashSet;
  * CMS content type that represents a multi-part article.
  *
  * @author <a href="mailto:dturner@arsdigita.com">Dave Turner</a>
- * @version $Id: MultiPartArticle.java 1500 2007-03-20 09:25:45Z chrisgilbert23 $
+ * @version $Id: MultiPartArticle.java 2167 2011-06-19 21:12:12Z pboy $
  */
 public class MultiPartArticle extends ContentPage {
 

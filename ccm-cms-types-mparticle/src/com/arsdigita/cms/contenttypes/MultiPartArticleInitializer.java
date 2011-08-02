@@ -30,7 +30,7 @@ import com.arsdigita.search.MetadataProviderRegistry;
  * The MultiPartArticle initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: MultiPartArticleInitializer.java 2099 2010-04-17 15:35:14Z pboy $
+ * @version $Id: MultiPartArticleInitializer.java 2212 2011-06-22 08:39:04Z pboy $
  */
 public class MultiPartArticleInitializer extends ContentTypeInitializer {
 

@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * MultiPartArticle Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: MultiPartArticleLoader.java 2099 2010-04-17 15:35:14Z pboy $
+ * @version $Id: MultiPartArticleLoader.java 2143 2011-01-16 12:26:49Z pboy $
  */
 public class MultiPartArticleLoader extends AbstractContentTypeLoader {
 
