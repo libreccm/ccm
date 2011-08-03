@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml - (ldn)standard - containing those modules as of aplaws 1.1.x 
-     which are part of ccm-ldn-aplaws  standard bundle                               
-     To be synchronized with ccm-ldn-aplaws/bundle/devel/cfg/project.xml    -->
+<!-- project.xml - (ldn)standard - containing those modules of current
+     aplaws repository which are used by most Local Authorities.             -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
