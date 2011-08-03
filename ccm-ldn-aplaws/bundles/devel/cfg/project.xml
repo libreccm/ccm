@@ -18,7 +18,7 @@
 
 <ccm:databases>
         <ccm:database name="postgres"/>
-        <ccm:database name="oracle"/>
+        <ccm:database name="oracle-se"/>
 </ccm:databases>
 
 
@@ -62,7 +62,7 @@
 
         <ccm:application name="ccm-core"/>
 
-        <ccm:application name="ccm-docmngr"/>
+        <ccm:application name="ccm-docmgr"/>
         <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-faq"/>
         <ccm:application name="ccm-formbuilder-pdf"/>

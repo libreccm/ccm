@@ -35,6 +35,7 @@
 
         <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-atoz"/>
+        <ccm:application name="ccm-ldn-dublin"/> 
         <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
@@ -86,7 +87,6 @@
 <!--    <ccm:application name="ccm-forum"/>                           -->
 <!--    <ccm:application name="ccm-forum-categorised"/>               -->
 
-<!--    <ccm:application name="ccm-ldn-dublin"/>                      -->
 <!--    <ccm:application name="ccm-ldn-exporter"/>                    -->
 <!--    <ccm:application name="ccm-ldn-freeform"/>                    -->
 <!--    <ccm:application name="ccm-ldn-importer"/>                    -->

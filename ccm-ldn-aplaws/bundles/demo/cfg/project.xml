@@ -17,6 +17,7 @@
 
 <ccm:databases>
         <ccm:database name="postgres"/>
+        <ccm:database name="oracle-se"/>
 </ccm:databases>
 
 
