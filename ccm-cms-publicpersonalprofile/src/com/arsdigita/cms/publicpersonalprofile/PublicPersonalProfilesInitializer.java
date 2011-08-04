@@ -17,9 +17,9 @@ import com.arsdigita.runtime.RuntimeConfig;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class PublicPersonalProfileInitializer extends CompoundInitializer {
+public class PublicPersonalProfilesInitializer extends CompoundInitializer {
 
-    public PublicPersonalProfileInitializer() {
+    public PublicPersonalProfilesInitializer() {
         final String jdbcUrl = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(jdbcUrl);
 
@@ -33,13 +33,13 @@ public class PublicPersonalProfileInitializer extends CompoundInitializer {
         super.init(event);
 
         DomainObjectFactory.registerInstantiator(
-                PublicPersonalProfile.BASE_DATA_OBJECT_TYPE,
+                PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE,
                                                  new ACSObjectInstantiator() {
 
             @Override
             public DomainObject doNewInstance(
                     final DataObject dataObject) {
-                return new PublicPersonalProfile(dataObject);
+                return new PublicPersonalProfiles(dataObject);
             }
         });
     }

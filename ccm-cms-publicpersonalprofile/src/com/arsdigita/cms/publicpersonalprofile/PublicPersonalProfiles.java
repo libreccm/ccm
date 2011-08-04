@@ -11,21 +11,21 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class PublicPersonalProfile extends Application {
+public class PublicPersonalProfiles extends Application {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile";
 
-    public PublicPersonalProfile(final DataObject dobj) {
+    public PublicPersonalProfiles(final DataObject dobj) {
         super(dobj);
     }
 
-    public PublicPersonalProfile(final OID oid)
+    public PublicPersonalProfiles(final OID oid)
             throws DataObjectNotFoundException {
         super(oid);
     }
 
-    public PublicPersonalProfile(final BigDecimal id)
+    public PublicPersonalProfiles(final BigDecimal id)
             throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }

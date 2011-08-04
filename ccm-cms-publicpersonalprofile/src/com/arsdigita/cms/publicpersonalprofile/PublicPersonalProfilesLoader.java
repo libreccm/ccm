@@ -17,11 +17,11 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class PublicPersonalProfileLoader extends PackageLoader {
+public class PublicPersonalProfilesLoader extends PackageLoader {
 
     private static final Logger logger =
                                 Logger.getLogger(
-            PublicPersonalProfileLoader.class);
+            PublicPersonalProfilesLoader.class);
 
     @Override
     public void run(final ScriptContext ctx) {
@@ -35,9 +35,9 @@ public class PublicPersonalProfileLoader extends PackageLoader {
                 /*ApplicationSetup setup = new ApplicationSetup(logger);
                 
                 setup.setApplicationObjectType(
-                PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+                PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE);
                 setup.setKey("profiles");
-                setup.setTitle("PublicPersonalProfile");
+                setup.setTitle("PublicPersonalProfiles");
                 setup.setDescription("Display public personal profiles");
                 
                 setup.setInstantiator(new ACSObjectInstantiator() {
@@ -45,7 +45,7 @@ public class PublicPersonalProfileLoader extends PackageLoader {
                 @Override
                 public DomainObject doNewInstance(
                 final DataObject dataObject) {
-                return new PublicPersonalProfile(dataObject);
+                return new PublicPersonalProfiles(dataObject);
                 }
                 });
                 
@@ -53,7 +53,7 @@ public class PublicPersonalProfileLoader extends PackageLoader {
                 type.save();
                 
                 if (!Application.isInstalled(
-                PublicPersonalProfile.BASE_DATA_OBJECT_TYPE,
+                PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE,
                 "/profiles/")) {
                 /*Application app = Application.createRootApplication(type,
                 "profiles",
@@ -68,11 +68,11 @@ public class PublicPersonalProfileLoader extends PackageLoader {
 
                 ApplicationType type =
                                 new ApplicationType("PublicPersonalProfile",
-                                                    PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+                                                    PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE);
                 type.setDescription("PublicPersonalProfile Viewer");
 
                 Application.createApplication(
-                        PublicPersonalProfile.BASE_DATA_OBJECT_TYPE,
+                        PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE,
                                               "profiles",
                                               "PublicPersonalProfiles",
                                               null);

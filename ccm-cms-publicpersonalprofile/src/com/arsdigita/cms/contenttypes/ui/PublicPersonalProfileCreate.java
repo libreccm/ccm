@@ -149,7 +149,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
         final ContentPage item = createContentPage(state);
         item.setLanguage((String) data.get(LANGUAGE));
         item.setName(name);
-        item.setTitle(title);
+        item.setTitle(title);        
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
@@ -162,6 +162,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
         PublicPersonalProfile profile = new PublicPersonalProfile(item.
                 getOID());
         profile.setOwner(owner);
+        profile.setProfileUrl(owner.getSurname().toLowerCase());
         profile.save();
 
         m_parent.editItem(state, item);
