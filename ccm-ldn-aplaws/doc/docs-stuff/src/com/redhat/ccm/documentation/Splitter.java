@@ -7,7 +7,7 @@ import java.util.*;
  * Splitter
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Id: Splitter.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Splitter.java 2122 2011-01-13 17:31:49Z pboy $
  **/
 
 public class Splitter {

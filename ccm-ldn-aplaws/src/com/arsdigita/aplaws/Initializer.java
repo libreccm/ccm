@@ -31,7 +31,7 @@ import com.arsdigita.templating.PatternStylesheetResolver;
 /**
  * The APLAWS initializer.
  *
- * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
+ * @version $Id: Initializer.java 2212 2011-06-22 08:39:04Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

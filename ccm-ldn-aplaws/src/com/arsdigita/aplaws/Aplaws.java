@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
  * Central entry point for the london APLAWS integration and configuration
  * module.
  * Provides just a handle into config file.
- * @version "$Id: Aplaws.java 1297 2006-08-25 18:17:50Z apevec $
+ * @version "$Id: Aplaws.java 2184 2011-06-20 01:00:01Z pboy $
  */
 public class Aplaws {
 

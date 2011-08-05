@@ -11,7 +11,7 @@
                     name="aplaws" 
               prettyName="APLAWS plus (devel)"
                  version="1-1-5" 
-                 release="-devel" 
+                 release="devel" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT"
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -50,6 +50,7 @@
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
         <ccm:application name="ccm-cms-types-minutes"/>
+        <!-- Currently no known function                     -->
         <ccm:application name="ccm-cms-types-motditem"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
@@ -57,12 +58,14 @@
         <ccm:application name="ccm-cms-types-pressrelease"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-simpleaddress"/>
+        <!-- Currently siteproxy is a prerequisite for ccm-ldn-atoz        -->
         <ccm:application name="ccm-cms-types-siteproxy"/>
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 
         <ccm:application name="ccm-core"/>
 
-        <ccm:application name="ccm-docmgr"/>
+  <!--  Currently broken. c.ad.cms....DocLinkInitializer doesn't load
+        <ccm:application name="ccm-docmgr"/>                               -->
         <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-faq"/>
         <ccm:application name="ccm-formbuilder-pdf"/>
@@ -85,8 +88,11 @@
 
         <ccm:application name="ccm-portalserver"/>
         <ccm:application name="ccm-portalworkspace"/>
-        <ccm:application name="ccm-portlet"/>
-        <ccm:application name="ccm-portlet-helloworld"/>
+  <!--  Currently broken. 
+        Missing file: ccm-portlet/postgres-create.sql
+        <ccm:application name="ccm-portlet"/>                 -->
+  <!--  Currently ant configure error , depends on ccm-portlet
+        <ccm:application name="ccm-portlet-helloworld"/>      -->
         <ccm:application name="ccm-simplesurvey"/>
         <ccm:application name="ccm-themedirector"/>
         <ccm:application name="ccm-user-preferences"/>
