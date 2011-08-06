@@ -15,6 +15,12 @@ public class PublicPersonalProfiles extends Application {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile";
+    private static PublicPersonalProfileConfig config =
+                                               new PublicPersonalProfileConfig();
+
+    static {
+        config.load();
+    }
 
     public PublicPersonalProfiles(final DataObject dobj) {
         super(dobj);
@@ -28,6 +34,10 @@ public class PublicPersonalProfiles extends Application {
     public PublicPersonalProfiles(final BigDecimal id)
             throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
+    }
+
+    public static PublicPersonalProfileConfig getConfig() {
+        return config;
     }
 
     @Override

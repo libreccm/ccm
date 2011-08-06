@@ -1,5 +1,6 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
+import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
@@ -73,9 +74,9 @@ public class PublicPersonalProfilesLoader extends PackageLoader {
 
                 Application.createApplication(
                         PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE,
-                                              "profiles",
-                                              "PublicPersonalProfiles",
-                                              null);
+                        "profiles",
+                        "PublicPersonalProfiles",
+                        null);                             
             }
         }.run();
 

@@ -1,5 +1,6 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
+import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -34,13 +35,13 @@ public class PublicPersonalProfilesInitializer extends CompoundInitializer {
 
         DomainObjectFactory.registerInstantiator(
                 PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE,
-                                                 new ACSObjectInstantiator() {
+                new ACSObjectInstantiator() {
 
-            @Override
-            public DomainObject doNewInstance(
-                    final DataObject dataObject) {
-                return new PublicPersonalProfiles(dataObject);
-            }
-        });
+                    @Override
+                    public DomainObject doNewInstance(
+                            final DataObject dataObject) {
+                        return new PublicPersonalProfiles(dataObject);
+                    }
+                });
     }
 }

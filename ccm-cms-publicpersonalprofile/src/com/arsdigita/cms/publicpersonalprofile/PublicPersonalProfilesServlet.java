@@ -2,9 +2,15 @@ package com.arsdigita.cms.publicpersonalprofile;
 
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
+import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
+import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
@@ -16,6 +22,8 @@ import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,7 +90,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             Label label;*/
 
             page = PageFactory.buildPage("PublicPersonalProfile",
-                                         "Hello World from profiles");
+                                         "");
             /*form = new Form("HelloWorld");*/
 
             if (pathTokens.length < 1) {
@@ -157,7 +165,33 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 }
                 profileElem.setText(owner.getFullName());
 
-                createNavigation(profile, root);
+                createNavigation(profile, root, navPath);
+
+                if (navPath == null) {
+                    //ToDo: Show start page.
+                } else {
+                    final DataCollection links =
+                                         RelatedLink.getRelatedLinks(profile,
+                                                                     PublicPersonalProfile.LINK_LIST_NAME);
+                    links.addFilter(String.format("linkTitle = '%s'", navPath));
+
+                    if (links.size() == 0) {
+                        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        return;
+                    } else {
+                        links.next();
+                        final RelatedLink link =
+                                          (RelatedLink) DomainObjectFactory.
+                                newInstance(links.getDataObject());
+                        final ContentItem item = link.getTargetItem();
+                        final PublicPersonalProfileXmlGenerator generator =
+                                                                new PublicPersonalProfileXmlGenerator(
+                                item);
+                        generator.generateXML(new PageState(page, request,
+                                                            response),
+                                              root, "");
+                    }
+                }
             }
 
 
@@ -171,7 +205,25 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     }
 
     private void createNavigation(final PublicPersonalProfile profile,
-                                  final Element root) {
+                                  final Element root,
+                                  final String navPath) {
+        PublicPersonalProfileConfig config = PublicPersonalProfiles.getConfig();
+
+        String homeLabelsStr = config.getHomeNavItemLabels();
+
+        Map<String, String> homeLabels = new HashMap<String, String>();
+        String[] homeLabelsArry = homeLabelsStr.split(",");
+        String[] homeLabelSplit;
+        for (String homeLabelEntry : homeLabelsArry) {
+            homeLabelSplit = homeLabelEntry.split(":");
+            if (homeLabelSplit.length == 2) {
+                homeLabels.put(homeLabelSplit[0].trim(),
+                               homeLabelSplit[1].trim());
+            } else {
+                continue;
+            }
+        }
+
         Element navRoot =
                 root.newChildElement("nav:categoryMenu",
                                      "http://ccm.redhat.com/london/navigation");
@@ -195,11 +247,77 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         navHome.addAttribute("AbstractTree", "AbstractTree");
         navHome.addAttribute("description", "");
         navHome.addAttribute("id", profile.getID().toString());
-        navHome.addAttribute("isSelected", "true");
+        if (navPath == null) {
+            navHome.addAttribute("isSelected", "true");
+        } else {
+            navHome.addAttribute("isSelected", "false");
+        }
         navHome.addAttribute("sortKey", "");
-        navHome.addAttribute("title", "Allgemein");
+        String homeLabel = homeLabels.get(DispatcherHelper.getNegotiatedLocale().
+                getLanguage());
+        if (homeLabel == null) {
+            navHome.addAttribute("title", "Home");
+        } else {
+            navHome.addAttribute("title", homeLabel);
+        }
         navHome.addAttribute("url", String.format("/ccm/%s",
                                                   profile.getProfileUrl()));
+
+        //Get the available Navigation items
+        PublicPersonalProfileNavItemCollection navItems =
+                                               new PublicPersonalProfileNavItemCollection();
+        navItems.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+                getLanguage());
+        final Map<String, PublicPersonalProfileNavItem> navItemMap =
+                                                        new HashMap<String, PublicPersonalProfileNavItem>();
+        PublicPersonalProfileNavItem navItem;
+        while (navItems.next()) {
+            navItem = navItems.getNavItem();
+            navItemMap.put(navItem.getKey(), navItem);
+        }
+
+        //Get the related links of the profiles
+        DataCollection links =
+                       RelatedLink.getRelatedLinks(profile,
+                                                   PublicPersonalProfile.LINK_LIST_NAME);
+        links.addOrder(Link.ORDER);
+        RelatedLink link;
+        String navLinkKey;
+        Element navElem;
+        while (links.next()) {
+            link = (RelatedLink) DomainObjectFactory.newInstance(links.
+                    getDataObject());
+
+            navLinkKey = link.getTitle();
+            navItem = navItemMap.get(navLinkKey);
+
+            if (navItem == null) {
+                //ToDo
+            }
+
+            navElem =
+            navList.newChildElement("nav:category",
+                                    "http://ccm.redhat.com/london/navigation");
+            navElem.addAttribute("AbstractTree", "AbstractTree");
+            navElem.addAttribute("description", "");
+            //navHome.addAttribute("id", "");
+            if ((navPath != null) && navPath.equals(navLinkKey)) {
+                navElem.addAttribute("isSelected", "true");
+            } else {
+                navElem.addAttribute("isSelected", "false");
+            }
+            navElem.addAttribute("sortKey", "");
+            if (navItem == null) {
+                navElem.addAttribute("title", navLinkKey);
+            } else {
+                navElem.addAttribute("title", navItem.getLabel());
+            }
+            navElem.addAttribute("url", String.format("/ccm/profiles/%s/%s",
+                                                      profile.getProfileUrl(),
+                                                      navLinkKey));
+
+        }
+
 
     }
 }
