@@ -15,7 +15,7 @@ public class PublicPersonalProfiles extends Application {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile";
-    private static PublicPersonalProfileConfig config =
+    private final static PublicPersonalProfileConfig config =
                                                new PublicPersonalProfileConfig();
 
     static {
