@@ -211,7 +211,7 @@ public class GenericPersonContactTable extends Table implements
                             lang).getName();
 
                     // Close collection to prevent open ResultSet
-                    contacttypes.close();
+                    //contacttypes.close();
 
                     return name;
                 case 1:

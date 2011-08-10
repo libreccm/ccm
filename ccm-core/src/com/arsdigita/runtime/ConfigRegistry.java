@@ -251,7 +251,7 @@ public class ConfigRegistry {
      * @param context a subclass of {@link
      * com.arsdigita.runtime.AbstractConfig}
      *
-     * @return true iff this ConfigRegistry contains a mapping for
+     * @return true if this ConfigRegistry contains a mapping for
      * <code>context</code>
      **/
     public boolean isConfigured(Class context) {
@@ -337,7 +337,7 @@ public class ConfigRegistry {
                 String storage = attrs.getValue(uri, "storage");
                 // XXX: Is there a better way to handle errors that
                 // includes line number information?
-                if (klass == null || storage == null) {
+                if ((klass == null) || (storage == null)) {
                     throw new IllegalArgumentException(
                             "class and storage attributes are required");
                 }
