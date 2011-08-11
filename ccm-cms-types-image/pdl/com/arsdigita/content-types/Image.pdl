@@ -12,7 +12,7 @@ object type Image extends ContentPage {
               BigDecimal[0..1]    height = ct_images.height INTEGER;
 
               String [0..1]     caption  = ct_images.caption VARCHAR(400);
-              String [0..1] description  = ct_images.description VARCHAR(500);
+              String [0..1] description  = ct_images.description VARCHAR(1000);
               String [0..1]      artist  = ct_images.artist VARCHAR(200);
               Date   [0..1] publishDate  = ct_images.publish_date DATE;
               Boolean[0..1]     skipDay  = ct_images.skip_day;

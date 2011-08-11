@@ -94,7 +94,7 @@ public class ImagePropertyForm
 
         add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.description")));
         ParameterModel descriptionParam = new StringParameter(Image.DESCRIPTION);
-        descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 500));
+        descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea description = new TextArea(descriptionParam);
         description.setRows(10);
         description.setCols(60);
