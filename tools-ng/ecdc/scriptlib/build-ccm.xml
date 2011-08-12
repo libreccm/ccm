@@ -3,35 +3,66 @@
 <!--  Already definded:
 		ccm.project.dir:		base dir of the development project
 		app.server.bundles.zip	name of the installation file
-		app.server.parent.dir	name of the dir to install into the server into
-		app.server.home.dir	dir the server are installed into (i.e. CATALINA_HOME)
-		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_BASE)
+		app.server.parent.dir	name of the dir to install the server into
+		app.server.home.dir	    dir the server is installed into (i.e. CATALINA_HOME)
+		app.server.deploy.dir	dir the server is installed into (i.e. CATALINA_BASE)
 		app.server.conf.dir		name of the servers configuration dir
 		app.server.webapp.dir	distribution dir for web applications      -->
 
 <project name="load">
 
 	<target name="load-bundle" depends="prepare-load">
-		<echo>Loading bundle ${ccm.bundle.folder} into ${ccm.home}</echo>
+		<echo>Loading bundle ${this.bundle.folder} into ${ccm.home}</echo>
 
-		<java classname="com.arsdigita.packaging.MasterTool"  fork="yes">
+		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
             <classpath refid="ccm.classpath" />
 		    <sysproperty key="ccm.home" value="${ccm.home}" />
-		    <arg line="load ${applications} --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" />
+		    <arg line="load ${applications} --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
+		</java>
+	</target>
+
+	<target name="load-bundle-interactive" depends="prepare-load">
+		<echo>Loading bundle ${this.bundle.folder} interactively into ${ccm.home}</echo>
+
+		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
+            <classpath refid="ccm.classpath" />
+		    <sysproperty key="ccm.home" value="${ccm.home}" />
+		    <arg line="load ${applications} --interactive --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
 		</java>
 	</target>
 
     <target name="load-bundle-config" depends="prepare-load">
-        <echo>load ${applications} --init using ${ccm.bundle.folder}/cfg/integration.properties</echo> 
-        <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+        <echo>load ${applications} --init using ${this.bundle.folder}/cfg/integration.properties</echo> 
+        <java classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
             <sysproperty key="ccm.home" value="${ccm.home}" />
-            <arg line="load  ${applications} --config --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" /> 
+            <arg line="load  ${applications} --config --parameter-file ${this.bundle.folder}/cfg/integration.properties" /> 
         </java> 
+    </target>
+
+    <target name="load-bundle-config-interactive" depends="prepare-load">
+        <echo>load ${applications} --init using ${this.bundle.folder}/cfg/integration.properties</echo> 
+        <java classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true" >
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="load  ${applications} --config --interactive --parameter-file ${this.bundle.folder}/cfg/integration.properties" /> 
+        </java> 
+    </target>
+
+    <target name="load-bundle-data" depends="prepare-load">
+        <echo>load data only executing</echo>
+        <echo>load --data  ${applications}</echo>
+        <java classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="load --data ${applications}" />
+        </java>
     </target>
 
 	<target name="load" depends="prepare-load">
  	    <echo>load ${applications} </echo>
- 	    <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+ 	    <java classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
  	          <sysproperty key="ccm.home" value="${ccm.home}" />
               <!--
  	              <sysproperty key="log4j.configuration"
@@ -43,26 +74,21 @@
         </java>
     </target>
 
-    <target name="load-data" depends="prepare-load">
-        <echo>load --data ${applications}</echo>
-        <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
-            <sysproperty key="ccm.home" value="${ccm.home}" />
-            <arg line="load --data ${applications}" />
-        </java>
-    </target>
-
     <target name="load-init" depends="prepare-load">
         <echo>load --init ${applications}</echo>
-        <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+        <java    classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
             <sysproperty key="ccm.home" value="${ccm.home}" />
             <arg line="load --data ${applications}" />
  	    </java>
  	</target>
  	
  	<target name="prepare-load">
- 	    <echo>prepare bundle ${ccm.bundle.folder}</echo>
- <!--   bundle file applications.cfg replace by project.xml, now part of bundle
-		<copy file="${ccm.bundle.folder}/cfg/applications.cfg"
+        <property value="${app.server.webapp.dir}/ROOT/WEB-INF/bin/bundle"
+                  name="this.bundle.folder" />
+ 	    <echo>prepare bundle ${this.bundle.folder}</echo>
+ <!--   bundle file applications.cfg replaced by project.xml, now part of bundle
+		<copy file="${this.bundle.folder}/cfg/applications.cfg"
                       tofile=".tmp.applications.cfg" overwrite="yes" />
 		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />
 		<replaceregexp file=".tmp.applications.cfg"
@@ -71,7 +97,7 @@
         <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
             <classpath refid="ccm.tools.classpath"/>
             <arg value="-IN"/>
-            <arg value="${ccm.bundle.folder}/cfg/project.xml"/>
+            <arg value="${this.bundle.folder}/cfg/project.xml"/>
             <arg value="-OUT"/>
             <arg value=".tmp.applications.list"/>
             <arg value="-XSL"/>

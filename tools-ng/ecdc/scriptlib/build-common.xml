@@ -4,7 +4,7 @@
 
     <!-- build-common
          defines essential system variables and reads configuration property 
-	 files which configure the specialized scripts.                      -->
+         files which configure the specialized scripts.                      -->
     <fail message="Property ccm.project.dir not set  "
           unless="ccm.project.dir" />
 

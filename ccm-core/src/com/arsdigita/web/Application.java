@@ -731,6 +731,7 @@ public class Application extends Resource {
         return URL.SERVLET_DIR + "/legacy-adapter";
     }
 
+    @Override
     protected void beforeSave() {
         if (isPropertyModified(PRIMARY_URL) || isNew()) {
             BaseDispatcher.scheduleRefresh();
@@ -740,6 +741,7 @@ public class Application extends Resource {
     }
 
     // This should be done through PDL
+    @Override
     public void beforeDelete() {
         super.beforeDelete();
         SiteNode node = getSiteNode();
@@ -748,6 +750,7 @@ public class Application extends Resource {
         }
     }
 
+    @Override
     public void afterDelete() {
         BaseDispatcher.scheduleRefresh();
     }
@@ -796,6 +799,7 @@ public class Application extends Resource {
 
 	// if application name changes, change name of container group
 	
+    @Override
     public void setTitle (String title) {
 	super.setTitle(title);
 	Group containerGroup = getGroup();

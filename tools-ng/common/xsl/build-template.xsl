@@ -176,6 +176,10 @@
     <property value="com.arsdigita.persistence.pdl.PDL" name="ddl.generator.classname"/>
     <property value="com.arsdigita.persistence.pdl.TestPDLGenerator" name="test.ddl.generator.classname"/>
 
+    <!-- Determines the web.xml file to use. If the project.xml file contains
+         a ccm:project/webxml property this name is used to search for the file
+         in later steps. Otherwise the name is set to the stub file web.xml-core
+    -->
     <xsl:choose>
       <xsl:when test="@webxml">
         <property name="webxml.source.file">
@@ -697,7 +701,7 @@
               <exclude name="**/package.html"/>
               <exclude name="**/*.java"/>
               <!-- exclude files which are no longer used - during
-                    transation and code clean-up phase only              -->
+                    transition and code clean-up phase only              -->
               <exclude name="**/*.java.nolongerInUse"/>
               <exclude name="**/**.nolongerInUse"/>
             </fileset>
@@ -816,7 +820,9 @@
     <xsl:param name="sourcexml"/>
     <mkdir dir="{$name}/${{build.sql.dir}}/${{apps.{$name}.name}}/${{ddl.dir}}/{$database}"/>
     <java failonerror="yes" classname="${{ddl.generator.classname}}" fork="yes">
+<!-- TESTING
       <sysproperty key="java.ext.dirs" value="${{ccm.java.ext.dirs}}"/>
+  -->
       <classpath refid="{$name}.build.classpath"/>
       <arg line="-quiet"/>
       <arg line="-generate-ddl {$name}/${{build.sql.dir}}/${{apps.{$name}.name}}/${{ddl.dir}}/{$database}"/>
@@ -880,7 +886,9 @@
     <target name="verify-pdl" depends="init" unless="pdl.no.verify"
             description="Verifies that the PDL files compile">
       <java classname="${{ddl.generator.classname}}" failonerror="yes" fork="yes">
+<!-- TESTING
         <sysproperty key="java.ext.dirs" value="${{ccm.java.ext.dirs}}"/>
+  -->
         <classpath refid="server.build.classpath"/>
         <arg line="${{pdl.args}}"/>
         <xsl:call-template name="TargetPdlPath">
@@ -1207,8 +1215,11 @@
           </not>
         </and>
       </condition>
-      <condition property="resolved.webxml.source.file" value="${{webxml.source.file}}">
-        <not><isset property="resolved.webxml.source.file"/></not>
+      <condition property="resolved.webxml.source.file" 
+                    value="${{webxml.source.file}}">
+        <not>
+            <isset property="resolved.webxml.source.file"/>
+        </not>
       </condition>
       <echo message="web.xml to use: ${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}" />
     </target>
@@ -1256,12 +1267,41 @@
         <delete file="${{mergedWebXML}}"/>
     </target>    
 
+    <target name="copy-bundle-init" depends="init">
+        
+      <available file="${{ccm.bundle.folder}}" type="dir"
+                 property="root.bundle.exists"/>
+                 
+      <condition property="resolved.bundle.source.dir"
+                 value="${{ccm.bundle.folder}}">
+        <and>
+          <isset property="root.bundle.exists"/>
+          <available file="${{this.deploy.dir}}/WEB-INF/bin"/>
+        </and>
+      </condition>
+      <echo message="Bundle to use: ${{resolved.bundle.source.dir}}" />
+    </target>
+
+    <!-- Copies the installation bundle actually used by this deploy to the
+         WEB-INF directory of the deploy target so it can be used by the
+         load-bundle step on the server machine and outside the development 
+         environment.                                                        -->
+    <target name="copy-bundle"
+            depends="init,copy-bundle-init" if="root.webapp.exists">
+                
+      <copy todir="${{this.deploy.dir}}/WEB-INF/bin/bundle" overwrite="yes">
+            <fileset dir="${{resolved.bundle.source.dir}}" />
+      </copy>
+      
+    </target>
+
     <!-- Master deploy -->
     <target name="deploy"
-         depends="init,deploy-global,deploy-local,copy-webxml">
+         depends="init,deploy-global,deploy-local,copy-webxml,copy-bundle">
       <xsl:attribute name="description">
           Builds and deploys all applications, also deploys prebuilt applications and config files
       </xsl:attribute>
+      <echo>Deploy completed!</echo> 
     </target>
   </xsl:template>  <!-- TargetDeploy -->
 
@@ -1397,7 +1437,7 @@
     </xsl:for-each>
 
     <!-- Master package -->
-                      <!-- depends="init,deploy-global,deploy-local,copy-webxml" -->
+    <!-- depends="init,deploy-global,deploy-local,copy-webxml" -->
     <!-- Step through the list of modules and package each one built  -->
     <target name="package">
       <xsl:attribute name="description">
@@ -1422,7 +1462,7 @@
 
 
     <!-- Master step create-war -->
-         <!-- depends="init,deploy-global,deploy-local,copy-webxml" -->
+    <!-- depends="init,deploy-global,deploy-local,copy-webxml" -->
     <target name="create-war">
       <xsl:attribute name="description">
           Creates a WAR file of the deployed application.
@@ -1531,7 +1571,9 @@
     <xsl:param name="sourcexml"/>
     <mkdir dir="{$target}/${{build.test.sql.dir}}/${{ddl.dir}}/{$database}"/>
     <java failonerror="yes" classname="${{test.ddl.generator.classname}}" fork="yes">
+<!-- TESTING
       <sysproperty key="java.ext.dirs" value="${{ccm.java.ext.dirs}}"/>
+      -->
       <classpath refid="{$target}.build.classpath"/>
       <arg line="-quiet"/>
       <arg line="-generate-ddl {$target}/${{build.test.sql.dir}}/{$database}"/>
@@ -1863,6 +1905,8 @@
       </xsl:for-each>
     </target>
 
+    <!-- Generates Javadoc from included modules and stores it into its own
+         subdirectory dir                                                    -->
     <target name="javadoc" depends="init,javadoc-combine-src"
             description="Generates the combined API documentation">
       <mkdir dir="${{javadoc.dir}}"/>
@@ -1898,6 +1942,7 @@
       </javadoc>
     </target>
 
+    <!-- Deploy junit test environment, currently not uptodate               -->
     <target name="deploy-test">
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
@@ -2010,17 +2055,20 @@
       </xsl:for-each>
 
 	<!-- should be deprecated, TODO: check for usage  -->
+<!-- TESTwise excluded    
       <path id="ccm.java.ext.dirs">
-        <!-- no longer present in APLAWS 1.0.4
+        < ! - - no longer present in APLAWS 1.0.4
         <dirset dir="${{ccm.tools.dir}}">
           <include name="lib/security"/>
         </dirset>
-        -->
+        - - >
         <pathelement path="${{java.ext.dirs}}"/>
       </path>
 
       <pathconvert dirsep="/" pathsep=":" property="ccm.java.ext.dirs"
                    refid="ccm.java.ext.dirs"/>
+-->      
+                   
       <condition property="junit.jvmargs"
        value="-Xdebug -Xrunjdwp:transport=dt_socket,address=${{test.remote.port}},
                server=y,suspend=y -Xnoagent -Djava.compiler=NONE">
