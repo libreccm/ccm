@@ -163,13 +163,18 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 PublicPersonalProfile profile =
                                       (PublicPersonalProfile) DomainObjectFactory.
                         newInstance(profiles.getDataObject());
-                Element profileElem = root.newChildElement("profile");
+                Element profileElem =
+                        root.newChildElement("ppp:profile",
+                                             "http://www,arsdigita.com/publicPersonalProfile/1.0");
                 GenericPerson owner = profile.getOwner();
                 if (owner == null) {
                     throw new IllegalStateException(
                             "Failed to get owner of profile.");
                 }
-                profileElem.setText(owner.getFullName());
+                Element profileOwnerName = profileElem.newChildElement(
+                        "ppp:ownerName",
+                        "http://www,arsdigita.com/publicPersonalProfile/1.0");
+                profileOwnerName.setText(owner.getFullName());
 
                 createNavigation(profile, root, navPath);
 
@@ -361,19 +366,19 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                               "");
 
         /*if (owner.hasContacts()) {
-            final GenericPersonContactCollection contacts = owner.getContacts();
-            final String contactType = config.getContactType();
-
-            contacts.addFilter(String.format("link.link_key = '%s'",
-                                             contactType));
-
-            if (contacts.size() > 0) {
-                contacts.next();
-                PublicPersonalProfileXmlGenerator contactXml =
-                                                  new PublicPersonalProfileXmlGenerator(
-                        contacts.getContact());
-                contactXml.generateXML(state, profileOwnerElem, "");
-            }
+        final GenericPersonContactCollection contacts = owner.getContacts();
+        final String contactType = config.getContactType();
+        
+        contacts.addFilter(String.format("link.link_key = '%s'",
+        contactType));
+        
+        if (contacts.size() > 0) {
+        contacts.next();
+        PublicPersonalProfileXmlGenerator contactXml =
+        new PublicPersonalProfileXmlGenerator(
+        contacts.getContact());
+        contactXml.generateXML(state, profileOwnerElem, "");
+        }
         }*/
     }
 }
