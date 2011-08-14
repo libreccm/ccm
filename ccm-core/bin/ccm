@@ -10,16 +10,33 @@
 # PATH, you have to adjust the paths.
 CCM_LIB_DIR="../lib"
 CCM_HOME_DIR="../.."
-# Path of the lib directory of the Tomcat Server which runs the CCM installation.
-# If the CATALINA_HOME enviroment variable is not set on your system you have
-# either to set this environment variable (recommened)
-# to adjust this path to point to the lib directory of your Tomcat installation
-# (if you installed the Tomcat using the package manager of your distribution
-# this is usally /usr/share/tomcat6/lib)
-# To set an environment variable you have usally to add an file to the /etc/profile.d 
-# directory, for example tomcat.sh. In this file, you can set environment variables
-# using the 'export' command. This line might look like this:
-# export CATALINA_HOME=/usr/share/tomcat6/lib
+
+# We need CATALINA_HOME environment variable to access Tomcat's lib dir.
+if [[ -z "$CATALINA_HOME" ]] ;  then
+  echo CATALINE_HOME not set. Guessing ... 
+
+  if [ -f /etc/tomcat6/tomcat6.conf ] 
+    then
+      . /etc/tomcat6/tomcat6.conf 
+      echo 
+      echo Using CATALINA_HOME = $CATALINA_HOME
+      echo If this doesn\'t work use
+      echo export CATALINA_HOME=/path/to/tomcat/installation
+      echo to point us to the correct location.
+    else
+      echo
+      echo ===================================================
+      echo Environment variable CATALINA_HOME not set. We need
+      echo to know the location of Tomcat\'s lib directory.
+      echo So use 
+      echo export CATALINA_HOME=/path/to/tomcat/installation
+      echo to point us to the correct location and run ccm
+      echo again.
+      echo ===================================================
+      echo
+      exit 1
+  fi
+fi
 CATALINA_LIB_DIR="${CATALINA_HOME}/lib"
 
 # Script logic starts here
@@ -32,9 +49,9 @@ then
     exit 1
 fi
 
-if [ ! -d ${CCM_HOME_DIR}/__ccm__ ]
+if [ ! -d ${CCM_HOME_DIR}/WEB-INF ]
 then
-    echo "Error: CCM_HOME_DIR path is invalid \(no __ccm__ directory in CCM_HOME_DIR\)."
+    echo "Error: CCM_HOME_DIR path is invalid \(no WEB-INF directory in CCM_HOME_DIR\)."
     exit 1
 fi
 
@@ -48,4 +65,16 @@ fi
 CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
 
 echo "Starting CCM-Tool..."
-java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" "$@"
+if [ "$1" = "prepare" ] ; then
+  echo
+  echo =====================================
+  echo $1: 
+  echo - Initializes ccm after installation.
+  echo - Execute only ONCE!
+  echo =====================================
+  echo
+  param="load --interactive --packagekeys-file  bundle/cfg/package-key.list --parameter-file bundle/cfg/integration.properties"
+  java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" $param 
+else
+  java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" "$@"
+fi

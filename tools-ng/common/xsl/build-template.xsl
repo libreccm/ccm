@@ -1279,6 +1279,8 @@
           <available file="${{this.deploy.dir}}/WEB-INF/bin"/>
         </and>
       </condition>
+      <property name="this.bundle.dir"
+                value="${{this.deploy.dir}}/WEB-INF/bin/bundle" />
       <echo message="Bundle to use: ${{resolved.bundle.source.dir}}" />
     </target>
 
@@ -1288,10 +1290,28 @@
          environment.                                                        -->
     <target name="copy-bundle"
             depends="init,copy-bundle-init" if="root.webapp.exists">
-                
+<!--                
       <copy todir="${{this.deploy.dir}}/WEB-INF/bin/bundle" overwrite="yes">
+      -->
+      <copy todir="${{this.bundle.dir}}" overwrite="yes">
             <fileset dir="${{resolved.bundle.source.dir}}" />
       </copy>
+      
+      <!-- Autogenerate from project.xml a file containing a space delimited
+           list of package keys included in this build. Used during
+           initialization of a *.war file distribution as simplification and
+           replacement for a series of package keys as command line
+           parameters by Load class (load-bundle step).                      -->
+      <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
+            <classpath refid="ccm.tools.classpath"/>
+            <arg value="-IN"/>
+            <arg value="${{this.deploy.dir}}/WEB-INF/bin/bundle/cfg/project.xml"/>
+            <arg value="-OUT"/>
+            <arg value="${{this.deploy.dir}}/WEB-INF/bin/bundle/cfg/package-key.list"/>
+            <arg value="-XSL"/>
+            <arg value="${{ccm.tools.xsl.dir}}/listapps.xsl"/>
+            <arg value="-TEXT"/>
+      </java>
       
     </target>
 

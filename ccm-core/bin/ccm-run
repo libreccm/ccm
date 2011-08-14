@@ -1,48 +1,51 @@
 #!/bin/bash
 
-set -x
+# This script is a wrapper for calling the CCM commandline utilites 
+# used for maintence of a CCM installation.
 
-if [ -z "$CCM_HOME" ]
+# Variables for directories.
+# The path are relative to the bin directory of the CCM installation. This
+# means that this script has to be executed from the bin directory. If you
+# want to use this script from another directory, or include it into your 
+# PATH, you have to adjust the paths.
+CCM_LIB_DIR="../lib"
+CCM_HOME_DIR="../.."
+# Path of the lib directory of the Tomcat Server which runs the CCM installation.
+# If the CATALINA_HOME enviroment variable is not set on your system you have
+# either to set this environment variable (recommened)
+# to adjust this path to point to the lib directory of your Tomcat installation
+# (if you installed the Tomcat using the package manager of your distribution
+# this is usally /usr/share/tomcat6/lib)
+# To set an environment variable you have usally to add an file to the /etc/profile.d 
+# directory, for example tomcat.sh. In this file, you can set environment variables
+# using the 'export' command. This line might look like this:
+# export CATALINA_HOME=/usr/share/tomcat6/lib
+CATALINA_LIB_DIR="${CATALINA_HOME}/lib"
+
+# Script logic starts here
+echo "checking if all paths are correct..."
+files=$(ls ${CCM_LIB_DIR}/ccm-core*.jar 2> /dev/null | wc -l)
+
+if [ "$files" == "0" ]
 then
-  return 1
+    echo "Error: CCM_LIB_DIR is invalid \(no ccm-core*.jar file\(s\) in CCM_LIB_DIR\)."
+    exit 1
 fi
 
-# System values
-[ -f "/etc/ccm/ccm.conf" ] && . "/etc/ccm/ccm.conf"
-
-# Optional server-specific values
-[ -f "$CCM_HOME/conf/ccm.conf" ] && . "$CCM_HOME/conf/ccm.conf"
-
-if [ -z "$CCM_CLASSPATH" ]
+if [ ! -d ${CCM_HOME_DIR}/__ccm__ ]
 then
-
-  CCM_CLASSPATH="$CCM_CLASSPATH_CUSTOM"
-
-  for dir in `ls -d $CCM_HOME/conf/*`
-  do
-    CCM_CLASSPATH=$CCM_CLASSPATH:$dir
-  done
-
-  if [ -n "$CCM_APPS" ]
-  then
-    for APP in $CCM_APPS
-    do
-      [ -f "/usr/share/java/$APP.jar" ] && CCM_CLASSPATH="$CCM_CLASSPATH:/usr/share/java/$APP.jar"
-      if [ -d "/usr/share/java/$APP" ]
-      then
-        for file in `ls /usr/share/java/$APP`
-        do
-          CCM_CLASSPATH=$CCM_CLASSPATH:/usr/share/java/$APP/$file
-        done
-      fi
-    done
-  else
-    echo foo
-  fi
+    echo "Error: CCM_HOME_DIR path is invalid \(no __ccm__ directory in CCM_HOME_DIR\)."
+    exit 1
 fi
 
-CCM_CLASSPATH=`echo $CCM_CLASSPATH | sed -e 's/::/:/g' | sed -e 's/:$//' | sed -e 's/^://'`
+if [ ! -f ${CATALINA_LIB_DIR}/catalina.jar ]
+then
+    echo "Error: CATALINA_LIB_DIR is invalid \(no catalina.jar in CATALINA_LIB_DIR\)."
+    exit 1
+fi
 
-echo $CCM_CLASSPATH | tr : "\n"
+#Convert to absolute path:
+CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
 
-java -cp $CCM_CLASSPATH -Dccm.home=$CCM_HOME "$@"
+echo "executing ccm-run"
+java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "$@"

@@ -11,13 +11,13 @@
 
 <project name="load">
 
-	<target name="load-bundle" depends="prepare-load">
+    <target name="load-bundle" depends="prepare-load">
 		<echo>Loading bundle ${this.bundle.folder} into ${ccm.home}</echo>
 
 		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
             <classpath refid="ccm.classpath" />
 		    <sysproperty key="ccm.home" value="${ccm.home}" />
-		    <arg line="load ${applications} --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
+		    <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
 		</java>
 	</target>
 
@@ -27,7 +27,7 @@
 		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
             <classpath refid="ccm.classpath" />
 		    <sysproperty key="ccm.home" value="${ccm.home}" />
-		    <arg line="load ${applications} --interactive --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
+		    <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list --interactive  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
 		</java>
 	</target>
 
@@ -187,17 +187,23 @@
                 <filter token="new.app.name" value="${new.app.name}" />
             </filterset>
         </copy>
-        <copy tofile="${new.app.name}/src/${new.app.name}.config" file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.config" preservelastmodified="true" verbose="true">
+        <copy tofile="${new.app.name}/src/${new.app.name}.config" 
+                file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.config" 
+                preservelastmodified="true" verbose="true">
             <filterset>
                 <filter token="new.app.name" value="${new.app.name}" />
             </filterset>
         </copy>
-        <copy tofile="${new.app.name}/src/${new.app.name}.load" file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.load" preservelastmodified="true" verbose="true">
+        <copy tofile="${new.app.name}/src/${new.app.name}.load" 
+                file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.load" 
+                preservelastmodified="true" verbose="true">
             <filterset>
                 <filter token="new.app.name" value="${new.app.name}" />
             </filterset>
         </copy>
-        <copy tofile="${new.app.name}/src/${new.app.name}.upgrade" file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.upgrade" preservelastmodified="true" verbose="true">
+        <copy tofile="${new.app.name}/src/${new.app.name}.upgrade" 
+                file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.upgrade" 
+                preservelastmodified="true" verbose="true">
             <filterset>
                 <filter token="new.app.name" value="${new.app.name}" />
             </filterset>

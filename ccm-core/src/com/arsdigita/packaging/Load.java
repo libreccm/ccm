@@ -39,6 +39,7 @@ import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ParameterContext;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +57,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
@@ -100,6 +102,13 @@ class Load extends Command {
 
     static {
         logger.debug("Static initalizer starting...");
+        OPTIONS.addOption
+            (OptionBuilder
+             .hasArg()
+             .withLongOpt("packagekeys-file")
+             .withArgName("FILE")
+             .withDescription("Use PACKAGE_KEYS from FILE instead of command line")
+             .create());
         OPTIONS.addOption
             (OptionBuilder
              .hasArg(false)
@@ -185,15 +194,32 @@ class Load extends Command {
             System.err.println(e.getMessage());
             return false;
         }
-
+        
         // fill with command line arguments which is a list of packages by their
         // package-keys to load.
         List packages = line.getArgList();
+
+        if (line.hasOption("packagekeys-file")) {
+            String file = line.getOptionValue("packagekeys-file");
+            logger.debug("File with package keys: " + file );
+            try {
+                Scanner sc = new Scanner(new File(file));
+                while (sc.hasNext()) {
+                    packages.add(sc.next());            
+                }
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                return false;
+            }
+        }
+        
         if (packages.isEmpty()) {
             usage(OPTIONS, System.err, "PACKAGE-KEYS");
             return false;
         }
-
+        
+        
+        
         if (line.hasOption("usage") || line.hasOption("help")) {
             usage(OPTIONS, System.out, "PACKAGE-KEYS");
             return true;
