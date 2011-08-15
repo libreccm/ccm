@@ -42,6 +42,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                 Logger.getLogger(
             PublicPersonalProfilesServlet.class);
     private static final String PREVIEW = "preview";
+    private static final String PPP_NS =
+                                "http://www.arsdigita.com/PublicPersonalProfile/1.0";
     private final PublicPersonalProfileConfig config = PublicPersonalProfiles.
             getConfig();
 
@@ -164,16 +166,14 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                       (PublicPersonalProfile) DomainObjectFactory.
                         newInstance(profiles.getDataObject());
                 Element profileElem =
-                        root.newChildElement("ppp:profile",
-                                             "http://www,arsdigita.com/publicPersonalProfile/1.0");
+                        root.newChildElement("ppp:profile", PPP_NS);
                 GenericPerson owner = profile.getOwner();
                 if (owner == null) {
                     throw new IllegalStateException(
                             "Failed to get owner of profile.");
                 }
                 Element profileOwnerName = profileElem.newChildElement(
-                        "ppp:ownerName",
-                        "http://www,arsdigita.com/publicPersonalProfile/1.0");
+                        "ppp:ownerName", PPP_NS);
                 profileOwnerName.setText(owner.getFullName());
 
                 createNavigation(profile, root, navPath);
