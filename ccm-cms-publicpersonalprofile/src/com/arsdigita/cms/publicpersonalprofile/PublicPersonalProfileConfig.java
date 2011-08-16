@@ -14,7 +14,7 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
 
     private final Parameter homeNavItemLabels;
     private final Parameter showPersonInfoEverywhere;
-    private final Parameter contactType;
+    // private final Parameter contactType;
 
     public PublicPersonalProfileConfig() {
         homeNavItemLabels = new StringParameter(
@@ -25,17 +25,17 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
         showPersonInfoEverywhere =
         new BooleanParameter(
                 "com.arsdigita.cms.publicpersonalprofile.show_person_info_everywhere",
-                Parameter.REQUIRED, 
+                Parameter.REQUIRED,
                 false);
 
-        contactType = new StringParameter(
-                "com.arsdigita.cms.publicpersonalprofile.contactType",
-                                          Parameter.REQUIRED,
-                                          "commonContact");
+        /*   contactType = new StringParameter(
+        "com.arsdigita.cms.publicpersonalprofile.contactType",
+        Parameter.REQUIRED,
+        "commonContact");*/
 
         register(homeNavItemLabels);
         register(showPersonInfoEverywhere);
-        register(contactType);
+        // register(contactType);
 
         loadInfo();
     }
@@ -47,8 +47,7 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
     public final Boolean getShowPersonInfoEverywhere() {
         return (Boolean) get(showPersonInfoEverywhere);
     }
-    
-    public final String getContactType() {
-        return (String) get(contactType);
-    }
+    /*  public final String getContactType() {
+    return (String) get(contactType);
+    }*/
 }

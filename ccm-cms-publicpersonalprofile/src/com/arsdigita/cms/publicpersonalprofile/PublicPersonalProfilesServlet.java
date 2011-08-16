@@ -5,6 +5,10 @@ import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contentassets.RelatedLink;
+import com.arsdigita.cms.contenttypes.GenericAddress;
+import com.arsdigita.cms.contenttypes.GenericContact;
+import com.arsdigita.cms.contenttypes.GenericContactEntry;
+import com.arsdigita.cms.contenttypes.GenericContactEntryCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.Link;
@@ -12,8 +16,10 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.templating.PresentationManager;
@@ -23,6 +29,7 @@ import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -334,51 +341,108 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                          final PageState state) {
         Element profileOwnerElem = profileElem.newChildElement(
                 "profileOwner");
-        /*if ((owner.getSurname() != null)
-        && !owner.getSurname().trim().isEmpty()) {
-        Element surname =
-        profileOwnerElem.newChildElement("surname");
-        surname.setText(owner.getSurname());
+        if ((owner.getSurname() != null)
+            && !owner.getSurname().trim().isEmpty()) {
+            Element surname =
+                    profileOwnerElem.newChildElement("surname");
+            surname.setText(owner.getSurname());
         }
-        if ((owner.getGivenName() != null) 
-        && !owner.getGivenName().trim().isEmpty()) {
-        Element givenName = profileOwnerElem.newChildElement(
-        "givenName");
-        givenName.setText(owner.getGivenName());
+        if ((owner.getGivenName() != null)
+            && !owner.getGivenName().trim().isEmpty()) {
+            Element givenName = profileOwnerElem.newChildElement(
+                    "givenName");
+            givenName.setText(owner.getGivenName());
         }
-        if ((owner.getTitlePre() != null) 
-        && !owner.getTitlePre().trim().isEmpty()) {
-        Element titlePre = profileOwnerElem.newChildElement("titlePre");
-        titlePre.setText(owner.getTitlePre());
+        if ((owner.getTitlePre() != null)
+            && !owner.getTitlePre().trim().isEmpty()) {
+            Element titlePre = profileOwnerElem.newChildElement("titlePre");
+            titlePre.setText(owner.getTitlePre());
         }
         if ((owner.getTitlePost() != null)
-        && !owner.getTitlePost().trim().isEmpty()) {
-        Element titlePost = profileOwnerElem.newChildElement(
-        "titlePost");
-        titlePost.setText(owner.getTitlePost());
-        }*/
-
-        PublicPersonalProfileXmlGenerator personXml =
-                                          new PublicPersonalProfileXmlGenerator(
-                owner);
-        personXml.generateXML(state,
-                              profileOwnerElem,
-                              "");
-
-        /*if (owner.hasContacts()) {
-        final GenericPersonContactCollection contacts = owner.getContacts();
-        final String contactType = config.getContactType();
-        
-        contacts.addFilter(String.format("link.link_key = '%s'",
-        contactType));
-        
-        if (contacts.size() > 0) {
-        contacts.next();
-        PublicPersonalProfileXmlGenerator contactXml =
-        new PublicPersonalProfileXmlGenerator(
-        contacts.getContact());
-        contactXml.generateXML(state, profileOwnerElem, "");
+            && !owner.getTitlePost().trim().isEmpty()) {
+            Element titlePost = profileOwnerElem.newChildElement(
+                    "titlePost");
+            titlePost.setText(owner.getTitlePost());
         }
-        }*/
+
+        /*PublicPersonalProfileXmlGenerator personXml =
+        new PublicPersonalProfileXmlGenerator(
+        owner);
+        personXml.generateXML(state,
+        profileOwnerElem,
+        "PublicPersonalProfile");*/
+
+        if (owner.hasContacts()) {
+            final GenericPersonContactCollection contacts = owner.getContacts();
+            //final String contactType = config.getContactType();
+
+            /*contacts.addFilter(String.format("link.link_key = '%s'",
+            contactType));*/
+
+            if (contacts.size() > 0) {
+                contacts.next();
+                generateContactXml(profileOwnerElem,
+                                   contacts.getContact(),
+                                   state);
+                /*PublicPersonalProfileXmlGenerator contactXml =
+                new PublicPersonalProfileXmlGenerator(
+                contacts.getContact());
+                contactXml.generateXML(state, profileOwnerElem, "");*/
+            }
+        }
+                
+        DataCollection imgAttachments = (DataCollection) owner.get("imageAttachments");
+        if (imgAttachments.size() > 0) {
+            imgAttachments.next();
+            final DataObject imgAttachment = imgAttachments.getDataObject();
+            final DataObject image = (DataObject) imgAttachment.get("image");
+            
+            final BigDecimal imageId = (BigDecimal) image.get("id");
+                                   
+            Element imageElem = profileOwnerElem.newChildElement("image");
+            imageElem.addAttribute("id", imageId.toString());
+        }
+    }
+
+    private void generateContactXml(final Element profileOwnerElem,
+                                    final GenericContact contact,
+                                    final PageState state) {
+        final Element contactElem = profileOwnerElem.newChildElement("contact");
+        final Element entriesElem = contactElem.newChildElement("entries");
+
+        final GenericContactEntryCollection entries =
+                                            contact.getContactEntries();
+        Element entryElem;
+        GenericContactEntry entry;
+        while (entries.next()) {
+            entry = entries.getContactEntry();
+
+            entryElem = entriesElem.newChildElement("entry");
+            entryElem.addAttribute("key", entry.getKey());
+            entryElem.setText(entry.getValue());
+        }
+
+        if (contact.hasAddress()) {
+            final Element addressElem = contactElem.newChildElement("address");
+            final GenericAddress address = contact.getAddress();
+
+            final Element addressTxtElem = addressElem.newChildElement(
+                    "addressTxt");
+            addressTxtElem.setText(address.getAddress());
+
+            final Element postalCodeElem = addressElem.newChildElement(
+                    "postalCode");
+            postalCodeElem.setText(address.getPostalCode());
+
+            final Element cityElem = addressElem.newChildElement("city");
+            cityElem.setText(address.getCity());
+
+            final Element stateElem = addressElem.newChildElement("state");
+            stateElem.setText(address.getState());
+
+            final Element isoCodeElem = addressElem.newChildElement(
+                    "isoCountryCode");
+            isoCodeElem.setText(address.getIsoCountryCode());
+        }
     }
 }
