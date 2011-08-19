@@ -29,7 +29,6 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import org.apache.log4j.Logger;
 
 /**
@@ -131,17 +130,11 @@ public class PublicPersonalProfileNavigationTable
 
         @Override
         public int getColumnCount() {
-            return mockNav.length;
+            return table.getColumnModel().size();
         }
 
         @Override
-        public boolean nextRow() {
-            /*if (index < (mockNav.length - 1)) {
-            index++;
-            return true;
-            } else {
-            return false;
-            }*/
+        public boolean nextRow() {         
             return linkCollection.next();
         }
 

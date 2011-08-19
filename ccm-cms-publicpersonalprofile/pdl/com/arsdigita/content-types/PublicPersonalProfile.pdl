@@ -29,7 +29,7 @@ association {
 
 object type PublicPersonalProfileNavItem {
 
-    BigDecimal[1..1] id = ct_public_personal_profile_nav_items.object_id INTEGER;
+    BigDecimal[1..1] navItemId = ct_public_personal_profile_nav_items.object_id INTEGER;
     String[0..1] key = ct_public_personal_profile_nav_items.key VARCHAR(128);
     String[0..1] lang = ct_public_personal_profile_nav_items.lang VARCHAR(2);
     String[0..1] label = ct_public_personal_profile_nav_items.label VARCHAR(128);
@@ -37,5 +37,7 @@ object type PublicPersonalProfileNavItem {
     String[0..1] generatorClass =  ct_public_personal_profile_nav_items.generator_class VARCHAR(1024);
 
     unique(key, lang, label);
-    object key (id);
+    object key (navItemId);
+    //reference key ( ct_public_personal_profile_nav_items.id);
+
 }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 public class PublicPersonalProfileNavItem extends DomainObject {
 
-    public static final String ID = "id";
+    public static final String ID = "navItemId";
     public static final String KEY = "key";
     public static final String LANG = "lang";
     public static final String LABEL = "label";
@@ -62,6 +62,10 @@ public class PublicPersonalProfileNavItem extends DomainObject {
 
     public final BigDecimal getId() {
         return(BigDecimal) get(ID);
+    }
+    
+    public final void setId(final BigDecimal id) {
+        set(ID, id);
     }
 
     public final String getKey() {

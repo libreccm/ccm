@@ -1,8 +1,19 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
+import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsTable;
+import com.arsdigita.bebop.BoxPanel;
+import com.arsdigita.bebop.ColumnPanel;
+import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.FormSection;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.Table;
+import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.bebop.table.TableColumn;
+import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericAddress;
@@ -15,8 +26,9 @@ import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
+import com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileGlobalizationUtil;
+import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
 import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -24,6 +36,7 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
+import com.arsdigita.toolbox.ui.ApplicationAuthenticationListener;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.xml.Document;
@@ -48,6 +61,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     private static final Logger logger =
                                 Logger.getLogger(
             PublicPersonalProfilesServlet.class);
+    private static final String ADMIN = "admin";
     private static final String PREVIEW = "preview";
     private static final String PPP_NS =
                                 "http://www.arsdigita.com/PublicPersonalProfile/1.0";
@@ -99,126 +113,119 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             String navPath = null;
 
             Page page;
-            /*Form form;
-            Label label;*/
+
 
             page = PageFactory.buildPage("PublicPersonalProfile",
                                          "");
-            /*form = new Form("HelloWorld");*/
 
             if (pathTokens.length < 1) {
                 //ToDo: Fehlerbehandlung?
             } else {
-                if ((pathTokens.length > 1)
-                    && PREVIEW.equals(pathTokens[0])) {
-                    preview = true;
-                    profileOwner = pathTokens[1];
-                    if (pathTokens.length > 2) {
-                        navPath = pathTokens[2];
-                    }
-                } else {
-                    profileOwner = pathTokens[0];
-                    if (pathTokens.length > 1) {
-                        navPath = pathTokens[1];
-                    }
+                if (ADMIN.equals(pathTokens[0])) {
+                    showAdminPage(page, request, response);
+                    return;
                 }
-            }
 
-            /*form.add(new Label(String.format("Member: %s", member)));
-            
-            if (pathTokens.length > 1) {
-            for(int i = 1; i < pathTokens.length; i++) {
-            form.add(new Label(String.format("%d: %s", i, pathTokens[i])));
-            }
-            }
-            
-            label = new Label(String.format(
-            "Hello World! From profiles, path = %s", path));
-            
-            form.add(label);
-            page.add(form);*/
-
-            page.lock();
-
-            Document document = page.buildDocument(request, response);
-            Element root = document.getRootElement();
-            //Element test = root.newChildElement("test");
-            //test.setText("test");
-
-            final Session session = SessionManager.getSession();
-
-            DataCollection profiles =
-                           session.retrieve(
-                    com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
-            profiles.addFilter(String.format("profileUrl = '%s'", profileOwner));
-            if (preview) {
-                profiles.addFilter(String.format("version = '%s'",
-                                                 ContentItem.DRAFT));
-            } else {
-                profiles.addFilter(String.format("version = '%s'",
-                                                 ContentItem.LIVE));
-            }
-
-            if (profiles.size() == 0) {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                return;
-            } else if (profiles.size() > 1) {
-                throw new IllegalStateException(
-                        "More than one matching members found...");
-            } else {
-                final PageState state = new PageState(page, request, response);
-
-                profiles.next();
-                PublicPersonalProfile profile =
-                                      (PublicPersonalProfile) DomainObjectFactory.
-                        newInstance(profiles.getDataObject());
-                Element profileElem =
-                        root.newChildElement("ppp:profile", PPP_NS);
-                GenericPerson owner = profile.getOwner();
-                if (owner == null) {
-                    throw new IllegalStateException(
-                            "Failed to get owner of profile.");
-                }
-                Element profileOwnerName = profileElem.newChildElement(
-                        "ppp:ownerName", PPP_NS);
-                profileOwnerName.setText(owner.getFullName());
-
-                createNavigation(profile, root, navPath);
-
-                if (navPath == null) {
-                    generateProfileOwnerXml(profileElem, owner, state);
-                } else {
-                    final DataCollection links =
-                                         RelatedLink.getRelatedLinks(profile,
-                                                                     PublicPersonalProfile.LINK_LIST_NAME);
-                    links.addFilter(String.format("linkTitle = '%s'", navPath));
-
-                    if (links.size() == 0) {
-                        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                        return;
-                    } else {
-                        if (config.getShowPersonInfoEverywhere()) {
-                            generateProfileOwnerXml(profileElem, owner, state);
+                if (pathTokens.length > 1) {
+                    if (PREVIEW.equals(pathTokens[0])) {
+                        preview = true;
+                        profileOwner = pathTokens[1];
+                        if (pathTokens.length > 2) {
+                            navPath = pathTokens[2];
                         }
-
-                        links.next();
-                        final RelatedLink link =
-                                          (RelatedLink) DomainObjectFactory.
-                                newInstance(links.getDataObject());
-                        final ContentItem item = link.getTargetItem();
-                        final PublicPersonalProfileXmlGenerator generator =
-                                                                new PublicPersonalProfileXmlGenerator(
-                                item);
-                        generator.generateXML(new PageState(page, request,
-                                                            response),
-                                              root, "");
+                    } else {
+                        profileOwner = pathTokens[0];
+                        if (pathTokens.length > 1) {
+                            navPath = pathTokens[1];
+                        }
                     }
                 }
+
+                page.lock();
+
+                Document document = page.buildDocument(request, response);
+                Element root = document.getRootElement();
+
+                final Session session = SessionManager.getSession();
+
+                DataCollection profiles =
+                               session.retrieve(
+                        com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+                profiles.addFilter(String.format("profileUrl = '%s'",
+                                                 profileOwner));
+                if (preview) {
+                    profiles.addFilter(String.format("version = '%s'",
+                                                     ContentItem.DRAFT));
+                } else {
+                    profiles.addFilter(String.format("version = '%s'",
+                                                     ContentItem.LIVE));
+                }
+
+                if (profiles.size() == 0) {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    return;
+                } else if (profiles.size() > 1) {
+                    throw new IllegalStateException(
+                            "More than one matching members found...");
+                } else {
+                    final PageState state = new PageState(page, request,
+                                                          response);
+
+                    profiles.next();
+                    PublicPersonalProfile profile =
+                                          (PublicPersonalProfile) DomainObjectFactory.
+                            newInstance(profiles.getDataObject());
+                    Element profileElem =
+                            root.newChildElement("ppp:profile", PPP_NS);
+                    GenericPerson owner = profile.getOwner();
+                    if (owner == null) {
+                        throw new IllegalStateException(
+                                "Failed to get owner of profile.");
+                    }
+                    Element profileOwnerName = profileElem.newChildElement(
+                            "ppp:ownerName", PPP_NS);
+                    profileOwnerName.setText(owner.getFullName());
+
+                    createNavigation(profile, root, navPath);
+
+                    if (navPath == null) {
+                        generateProfileOwnerXml(profileElem, owner, state);
+                    } else {
+                        final DataCollection links =
+                                             RelatedLink.getRelatedLinks(profile,
+                                                                         PublicPersonalProfile.LINK_LIST_NAME);
+                        links.addFilter(String.format("linkTitle = '%s'",
+                                                      navPath));
+
+                        if (links.size() == 0) {
+                            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                            return;
+                        } else {
+                            if (config.getShowPersonInfoEverywhere()) {
+                                generateProfileOwnerXml(profileElem, owner,
+                                                        state);
+                            }
+
+                            links.next();
+                            final RelatedLink link =
+                                              (RelatedLink) DomainObjectFactory.
+                                    newInstance(links.getDataObject());
+                            final ContentItem item = link.getTargetItem();
+                            final PublicPersonalProfileXmlGenerator generator =
+                                                                    new PublicPersonalProfileXmlGenerator(
+                                    item);
+                            generator.generateXML(new PageState(page, request,
+                                                                response),
+                                                  root, "");
+                        }
+                    }
+                }
+
+                PresentationManager presentationManager = Templating.
+                        getPresentationManager();
+                presentationManager.servePage(document, request, response);
             }
 
-            PresentationManager presentationManager = Templating.
-                    getPresentationManager();
-            presentationManager.servePage(document, request, response);
         }
 
     }
@@ -390,15 +397,16 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 contactXml.generateXML(state, profileOwnerElem, "");*/
             }
         }
-                
-        DataCollection imgAttachments = (DataCollection) owner.get("imageAttachments");
+
+        DataCollection imgAttachments = (DataCollection) owner.get(
+                "imageAttachments");
         if (imgAttachments.size() > 0) {
             imgAttachments.next();
             final DataObject imgAttachment = imgAttachments.getDataObject();
             final DataObject image = (DataObject) imgAttachment.get("image");
-            
+
             final BigDecimal imageId = (BigDecimal) image.get("id");
-                                   
+
             Element imageElem = profileOwnerElem.newChildElement("image");
             imageElem.addAttribute("id", imageId.toString());
         }
@@ -444,5 +452,47 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     "isoCountryCode");
             isoCodeElem.setText(address.getIsoCountryCode());
         }
+    }
+
+    private void showAdminPage(final Page page,
+                               final HttpServletRequest request,
+                               final HttpServletResponse response)
+            throws ServletException {
+
+        page.addRequestListener(new ApplicationAuthenticationListener());
+
+        final Form form = new Form("PublicPersonalProfileAdmin");
+
+        //form.add(new Label("Admin"));
+
+        //final Label label = new Label("for PublicPersonalProfile");
+
+        //form.add(label);
+
+        page.setClassAttr("adminPage");
+
+        
+        
+        final BoxPanel box = new BoxPanel(BoxPanel.VERTICAL);        
+        final FormSection tableSection = new FormSection(box);
+        
+        final PublicPersonalProfileNavItemsTable table =
+                                                 new PublicPersonalProfileNavItemsTable();
+        
+        
+        box.add(table);
+        form.add(tableSection);                                                                
+              
+        box.add(new PublicPersonalProfileNavItemsAddForm());
+        
+        page.add(form);
+        page.lock();
+
+        final Document document = page.buildDocument(request, response);
+
+        final PresentationManager presentationManager = Templating.
+                getPresentationManager();
+        presentationManager.servePage(document, request, response);
+
     }
 }
