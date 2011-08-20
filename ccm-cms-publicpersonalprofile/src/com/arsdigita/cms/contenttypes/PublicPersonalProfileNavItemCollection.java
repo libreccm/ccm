@@ -1,6 +1,5 @@
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
@@ -104,80 +103,93 @@ public class PublicPersonalProfileNavItemCollection extends DomainCollection {
     }
 
     public void swapWithNext(final PublicPersonalProfileNavItem navItem) {
-        final int order1 = navItem.getOrder();
-        final int order2 = order1 + 1;
-
-        final PublicPersonalProfileNavItemCollection navItems1 =
+        final PublicPersonalProfileNavItemCollection collection =
                                                      new PublicPersonalProfileNavItemCollection();
-        navItems1.addFilter(String.format("navItemOrder = %d", order1));
+        collection.addOrder("navItemOrder, key, lang, label");
 
-        final PublicPersonalProfileNavItemCollection navItems2 =
-                                                     new PublicPersonalProfileNavItemCollection();
-        navItems2.addFilter(String.format("navItemOrder = %d", order2));
+        final List<List<PublicPersonalProfileNavItem>> navItems =
+                                                       generateNavItemList(
+                new PublicPersonalProfileNavItemCollection());
 
-        final List<PublicPersonalProfileNavItem> navItemsList1 =
-                                                 new ArrayList<PublicPersonalProfileNavItem>();
-        final List<PublicPersonalProfileNavItem> navItemsList2 =
-                                                 new ArrayList<PublicPersonalProfileNavItem>();
-
-        while (navItems1.next()) {
-            navItemsList1.add(navItems1.getNavItem());
-        }
-        navItems1.rewind();
-
-        while (navItems2.next()) {
-            navItemsList2.add(navItems2.getNavItem());
-        }
-        navItems2.rewind();
-
-        navItems1.close();
-        navItems2.close();
-
-        for (PublicPersonalProfileNavItem item : navItemsList1) {
-            item.setOrder(order2);
+        int i = 0;
+        for (i = 0; i < navItems.size(); i++) {
+            if (navItem.getKey().equals(navItems.get(i).get(0).getKey())) {
+                break;
+            }
         }
 
-        for (PublicPersonalProfileNavItem item : navItemsList2) {
-            item.setOrder(order1);
+        if (i == navItems.size() - 1) {
+            throw new IllegalArgumentException(
+                    "Provided navItem instance is the last one, therefore there is no next item to switch with.");
         }
+
+        final int navItemOrder = navItem.getOrder();
+        final int nextOrder = navItems.get(i + 1).get(0).getOrder();
+        
+        for(PublicPersonalProfileNavItem item : navItems.get(i)) {
+            item.setOrder(nextOrder);
+        }
+        
+        for(PublicPersonalProfileNavItem item : navItems.get(i + 1)) {
+            item.setOrder(navItemOrder);            
+        }      
     }
 
     public void swapWithPrevious(final PublicPersonalProfileNavItem navItem) {
-        final int order1 = navItem.getOrder();
-        final int order2 = order1 - 1;
-
-        final PublicPersonalProfileNavItemCollection navItems1 =
+         final PublicPersonalProfileNavItemCollection collection =
                                                      new PublicPersonalProfileNavItemCollection();
-        navItems1.addFilter(String.format("navItemOrder = %d", order1));
+        collection.addOrder("key");
 
-        final PublicPersonalProfileNavItemCollection navItems2 =
-                                                     new PublicPersonalProfileNavItemCollection();
-        navItems2.addFilter(String.format("navItemOrder = %d", order2));
+        final List<List<PublicPersonalProfileNavItem>> navItems =
+                                                       generateNavItemList(
+                new PublicPersonalProfileNavItemCollection());
 
-        final List<PublicPersonalProfileNavItem> navItemsList1 =
-                                                 new ArrayList<PublicPersonalProfileNavItem>();
-        final List<PublicPersonalProfileNavItem> navItemsList2 =
-                                                 new ArrayList<PublicPersonalProfileNavItem>();
-
-        while (navItems1.next()) {
-            navItemsList1.add(navItems1.getNavItem());
-        }
-        navItems1.rewind();
-
-        while (navItems2.next()) {
-            navItemsList2.add(navItems2.getNavItem());
-        }
-        navItems2.rewind();
-
-        navItems1.close();
-        navItems2.close();
-
-        for (PublicPersonalProfileNavItem item : navItemsList1) {
-            item.setOrder(order2);
+        int i = 0;
+        for (i = 0; i < navItems.size(); i++) {
+            if (navItem.getKey().equals(navItems.get(i).get(0).getKey())) {
+                break;
+            }
         }
 
-        for (PublicPersonalProfileNavItem item : navItemsList2) {
-            item.setOrder(order1);
+        if (i == 0) {
+            throw new IllegalArgumentException(
+                    "Provided navItem instance is the first one, therefore there is no previous item to switch with.");
         }
+
+        final int navItemOrder = navItem.getOrder();
+        final int nextOrder = navItems.get(i - 1).get(0).getOrder();
+        
+        for(PublicPersonalProfileNavItem item : navItems.get(i)) {
+            item.setOrder(nextOrder);
+        }
+        
+        for(PublicPersonalProfileNavItem item : navItems.get(i - 1)) {
+            item.setOrder(navItemOrder);            
+        }               
+    }
+
+    private List<List<PublicPersonalProfileNavItem>> generateNavItemList(
+            final PublicPersonalProfileNavItemCollection collection) {
+        final List<List<PublicPersonalProfileNavItem>> list =
+                                                       new ArrayList<List<PublicPersonalProfileNavItem>>();
+
+        String lastKey = "";
+        PublicPersonalProfileNavItem current;
+        List<PublicPersonalProfileNavItem> currentSubList = null;
+
+        collection.rewind();
+        while (collection.next()) {
+            current = collection.getNavItem();
+
+            if (!current.getKey().equals(lastKey)) {
+                currentSubList = new ArrayList<PublicPersonalProfileNavItem>();
+                list.add(currentSubList);
+            }
+
+            currentSubList.add(current);
+            lastKey = current.getKey();
+        }
+
+        return list;
     }
 }
