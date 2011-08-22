@@ -1363,8 +1363,8 @@
 
       <!-- Package Jar Classes -->
       <target name="package-jar-classes-{$name}" depends="init,jar-classes-{$name}">
-        <mkdir dir="${{package.dir}}/binaries/"/>
-        <copy todir="${{package.dir}}/binaries/"
+        <mkdir dir="${{package.dir}}/{$name}/"/>
+        <copy todir="${{package.dir}}/{$name}/"
               file="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar"/>
         <!-- system.jar no longer needed nor supported. See related comments above.
              Preserved here just in case the mechanism will be needed for another
@@ -1382,8 +1382,8 @@
       <xsl:if test="$haspdldir">
         <target name="package-pdl-{$name}" depends="init,jar-pdl-{$name}">
 
-          <mkdir dir="${{package.dir}}/binaries/"/>
-          <copy todir="${{package.dir}}/binaries/">
+          <mkdir dir="${{package.dir}}/{$name}/"/>
+          <copy todir="${{package.dir}}/{$name}/">
             <fileset dir="{$name}/${{build.dir}}">
               <include name="*pdl.jar"/>
             </fileset>
@@ -1396,8 +1396,8 @@
       <xsl:if test="$hassqldir or $haspdldir">
         <target  name="package-sql-{$name}"
               depends="init,generate-ddl-{$name},jar-sql-{$name}">
-          <mkdir dir="${{package.dir}}/binaries/"/>
-          <copy todir="${{package.dir}}/binaries/">
+          <mkdir dir="${{package.dir}}/{$name}/"/>
+          <copy todir="${{package.dir}}/{$name}/">
             <fileset dir="{$name}/${{build.dir}}">
               <include name="*sql.jar"/>
             </fileset>
@@ -1408,8 +1408,8 @@
       <!-- Package external libs, not developed by the CCM project.
            Located in a modules lib directory.                       -->
       <target name="package-lib-{$name}" depends="init">
-        <mkdir dir="${{package.dir}}/binaries/{$name}/lib/"/>
-        <copy todir="${{package.dir}}/binaries/{$name}/lib/" preservelastmodified="true">
+        <mkdir dir="${{package.dir}}/{$name}/lib/"/>
+        <copy todir="${{package.dir}}/{$name}/lib/" preservelastmodified="true">
           <fileset dir="{$name}">
             <include name="${{lib.dir}}/**"/>
           </fileset>
@@ -1419,12 +1419,23 @@
 
       <!-- Package web directory -->
       <target name="package-web-{$name}" depends="init">
-        <mkdir dir="${{package.dir}}/binaries/{$name}/web/"/>
-        <copy todir="${{package.dir}}/binaries/{$name}/web/">
+        <mkdir dir="${{package.dir}}/{$name}/web/"/>
+        <copy todir="${{package.dir}}/{$name}/web/">
           <fileset dir="{$name}">
             <include name="${{web.dir}}/**"/>
           </fileset>
           <mapper type="glob" to="*" from="${{web.dir}}${{file.separator}}*"/>
+        </copy>
+      </target>
+
+      <!-- Package application.xml file -->
+      <target name="package-applxml-{$name}" depends="init">
+        <mkdir dir="${{package.dir}}/{$name}"/>
+        <copy todir="${{package.dir}}/{$name}">
+          <fileset dir="{$name}">
+            <include name="application.xml"/>
+          </fileset>
+          <!-- <mapper type="glob" to="*" from="${{web.dir}}${{file.separator}}*"/> -->
         </copy>
       </target>
 
@@ -1450,8 +1461,9 @@
           -->
           <xsl:value-of select="concat(',package-lib-',$name)"/>
           <xsl:value-of select="concat(',package-web-',$name)"/>
+          <xsl:value-of select="concat(',package-applxml-',$name)"/>
         </xsl:attribute>
-        <echo message="Package created for '{$name}' in ${{package.dir}}/binaries/"/>
+        <echo message="Package created for '{$name}' in ${{package.dir}}"/>
       </target>
 
     </xsl:for-each>
