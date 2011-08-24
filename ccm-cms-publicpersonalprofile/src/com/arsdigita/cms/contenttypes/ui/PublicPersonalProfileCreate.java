@@ -41,20 +41,20 @@ import java.util.Date;
  * @version $Id$
  */
 public class PublicPersonalProfileCreate extends PageCreate {
-    
+
     private static final String SELECTED_PERSON = "selectedPerson";
     private static final PublicPersonalProfileConfig config =
                                                      new PublicPersonalProfileConfig();
-    
+
     static {
         config.load();
     }
-    
+
     public PublicPersonalProfileCreate(final ItemSelectionModel itemModel,
                                        final CreationSelector parent) {
         super(itemModel, parent);
     }
-    
+
     @Override
     public void addWidgets() {
         //super.addWidgets();
@@ -67,19 +67,19 @@ public class PublicPersonalProfileCreate extends PageCreate {
         add(new Label(type.getLabel()));
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
-        
+
         add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.create.select_person")));
         ParameterModel ownerModel =
                        new StringParameter(PublicPersonalProfile.OWNER);
         SingleSelect ownerSelect = new SingleSelect(ownerModel);
-        ownerSelect.addValidationListener(new NotNullValidationListener());        
-        
+        ownerSelect.addValidationListener(new NotNullValidationListener());
+
         String personType = config.getPersonType();
         if ((personType == null) || (personType.isEmpty())) {
             personType = "com.arsdigita.cms.contenttypes.GenericPerson";
         }
-        
+
         ContentTypeCollection types = ContentType.getAllContentTypes();
         types.addFilter(String.format("className = '%s'", personType));
         if (types.size() == 0) {
@@ -98,7 +98,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
                     getFullName()));
         }
         add(ownerSelect);
-        
+
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             add(new Label(GlobalizationUtil.globalize(
                     "cms.ui.authoring.page_launch_date")));
@@ -115,64 +115,91 @@ public class PublicPersonalProfileCreate extends PageCreate {
             add(launchDate);
         }
     }
-    
+
     @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {
         Folder folder = m_parent.getFolder(fse.getPageState());
         Assert.exists(folder);
         String id = (String) fse.getFormData().get(
                 PublicPersonalProfile.OWNER);
-        
+
         if ((id == null) || id.trim().isEmpty()) {
             fse.getFormData().addError(PublicPersonalProfileGlobalizationUtil.
                     globalize("publicpersonalprofile.ui.person.required"));
             return;
         }
-        
+
         GenericPerson owner = new GenericPerson(new BigDecimal(id));
-        
+
         validateNameUniqueness(folder,
                                fse,
                                String.format("%s-profile",
                                              GenericPerson.urlSave(
                 owner.getFullName())));
     }
-    
+
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
         final FormData data = fse.getFormData();
         final PageState state = fse.getPageState();
         final ContentSection section = m_parent.getContentSection(state);
         final Folder folder = m_parent.getFolder(state);
-        
+
         Assert.exists(section, ContentSection.class);
-        
+
         String id = (String) fse.getFormData().get(
                 PublicPersonalProfile.OWNER);
-        
+
         GenericPerson owner = new GenericPerson(new BigDecimal(id));
         String name = String.format("%s-profile",
                                     GenericPerson.urlSave(owner.getFullName()));
         String title = String.format("%s (Profil)", owner.getFullName());
-        
+
         final ContentPage item = createContentPage(state);
         item.setLanguage((String) data.get(LANGUAGE));
         item.setName(name);
-        item.setTitle(title);        
+        item.setTitle(title);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
-        
+
         final ContentBundle bundle = new ContentBundle(item);
         bundle.setParent(folder);
         bundle.setContentSection(m_parent.getContentSection(state));
         bundle.save();
-        
+
         PublicPersonalProfile profile = new PublicPersonalProfile(item.getOID());
         profile.setOwner(owner);
-        profile.setProfileUrl(owner.getSurname().toLowerCase());
+        //profile.setProfileUrl(owner.getSurname().toLowerCase());
+        profile.setProfileUrl(createProfileUrl(owner));
         profile.save();
-        
+
         m_parent.editItem(state, item);
+    }
+
+    private String createProfileUrl(final GenericPerson owner) {
+        String profileUrl = owner.getSurname().toLowerCase();
+        int i = 1;
+
+        DataCollection profiles = SessionManager.getSession().retrieve(
+                PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+        profiles.addFilter(String.format("profileUrl = '%s'",
+                                         profileUrl));
+        profiles.addFilter(String.format("version = '%s'", ContentItem.DRAFT));
+
+        while (profiles.size() > 0) {
+            i++;
+
+            profileUrl = String.format("%s%d",
+                                       owner.getSurname().toLowerCase(),
+                                       i);
+            profiles.reset();
+            profiles.addFilter(String.format("profileUrl = '%s'",
+                                             profileUrl));
+            profiles.addFilter(
+                    String.format("version = '%s'", ContentItem.DRAFT));
+        }
+        
+        return profileUrl;
     }
 }

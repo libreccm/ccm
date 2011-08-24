@@ -81,7 +81,8 @@ public class PublicPersonalProfilePropertyForm
         if ((profile != null)
             && getSaveCancelSection().getSaveButton().isSelected(state)) {
             profile.setProfileUrl(((String) data.get(
-                    PublicPersonalProfile.PROFILE_URL)).toLowerCase());
+                                   PublicPersonalProfile.PROFILE_URL)).
+                    toLowerCase());
 
             profile.save();
         }
@@ -91,24 +92,40 @@ public class PublicPersonalProfilePropertyForm
     public void validate(FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
-        
-        
-        String profilesUrl = (String) data.get(PublicPersonalProfile.PROFILE_URL);
+
+
+        String profilesUrl =
+               (String) data.get(PublicPersonalProfile.PROFILE_URL);
         if ((profilesUrl == null) || profilesUrl.isEmpty()) {
-            data.addError(PublicPersonalProfileGlobalizationUtil.globalize("publicpersonalprofile.ui.profile_url.required"));            
+            data.addError(PublicPersonalProfileGlobalizationUtil.globalize(
+                    "publicpersonalprofile.ui.profile_url.required"));
         }
-        
-        DataCollection profiles = SessionManager.getSession().retrieve(PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
-        profiles.addFilter(String.format("profileUrl = '%s'", ((String)data.get(PublicPersonalProfile.PROFILE_URL)).toLowerCase()));
+
+        if ("admin".equalsIgnoreCase(profilesUrl)) {
+            data.addError(PublicPersonalProfileGlobalizationUtil.globalize(
+                    "publicpersonalprofile.ui.profile_url.reserved"));
+        }
+
+        DataCollection profiles = SessionManager.getSession().retrieve(
+                PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+        profiles.addFilter(String.format("profileUrl = '%s'",
+                                         ((String) data.get(
+                                          PublicPersonalProfile.PROFILE_URL)).
+                toLowerCase()));
         profiles.addFilter(String.format("version = '%s'", ContentItem.DRAFT));
         if (profiles.size() > 1) {
-            data.addError(PublicPersonalProfileGlobalizationUtil.globalize("publicpersonalprofile.ui.profile_url.already_in_use"));
-        } else if(profiles.size() == 1) {
+            data.addError(PublicPersonalProfileGlobalizationUtil.globalize(
+                    "publicpersonalprofile.ui.profile_url.already_in_use"));
+        } else if (profiles.size() == 1) {
             profiles.next();
-            PublicPersonalProfile profile = (PublicPersonalProfile) DomainObjectFactory.newInstance(profiles.getDataObject());
-            
-            if (!(profile.getID().equals(itemModel.getSelectedItem(state).getID()))) {
-                data.addError(PublicPersonalProfileGlobalizationUtil.globalize("publicpersonalprofile.ui.profile_url.already_in_use"));
+            PublicPersonalProfile profile =
+                                  (PublicPersonalProfile) DomainObjectFactory.
+                    newInstance(profiles.getDataObject());
+
+            if (!(profile.getID().equals(
+                  itemModel.getSelectedItem(state).getID()))) {
+                data.addError(PublicPersonalProfileGlobalizationUtil.globalize(
+                        "publicpersonalprofile.ui.profile_url.already_in_use"));
             }
         }
     }
