@@ -2,18 +2,11 @@ package com.arsdigita.cms.publicpersonalprofile;
 
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsTable;
 import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormSection;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.Table;
-import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.bebop.table.TableColumn;
-import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericAddress;
@@ -26,7 +19,6 @@ import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
-import com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileGlobalizationUtil;
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -126,7 +118,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     return;
                 }
 
-                if (pathTokens.length > 1) {
+                if (pathTokens.length >= 1) {
                     if (PREVIEW.equals(pathTokens[0])) {
                         preview = true;
                         profileOwner = pathTokens[1];
