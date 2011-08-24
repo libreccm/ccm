@@ -276,7 +276,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         } else {
             navHome.addAttribute("title", homeLabel);
         }
-        navHome.addAttribute("url", String.format("/ccm/%s",
+        navHome.addAttribute("url", String.format("/ccm/profiles/%s",
                                                   profile.getProfileUrl()));
 
         //Get the available Navigation items
