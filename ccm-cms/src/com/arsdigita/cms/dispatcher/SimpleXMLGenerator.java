@@ -18,11 +18,13 @@
  */
 package com.arsdigita.cms.dispatcher;
 
+import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.UserDefinedContentItem;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -54,7 +56,7 @@ import java.util.Iterator;
 public class SimpleXMLGenerator implements XMLGenerator {
 
     private static final Logger s_log =
-                          Logger.getLogger(SimpleXMLGenerator.class);
+                                Logger.getLogger(SimpleXMLGenerator.class);
     public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.
             getName();
 
@@ -101,13 +103,15 @@ public class SimpleXMLGenerator implements XMLGenerator {
         // Note that the xml that is generated is only of use if you DO NOT CACHE content pages.
         // cg.
 
-        PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.
-                get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
+        PermissionDescriptor edit =
+                             new PermissionDescriptor(PrivilegeDescriptor.get(
+                SecurityManager.CMS_EDIT_ITEM), item, currentParty);
         if (PermissionService.checkPermission(edit)) {
             parent.addAttribute("canEdit", "true");
         }
-        PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.
-                get(SecurityManager.CMS_PUBLISH), item, currentParty);
+        PermissionDescriptor publish =
+                             new PermissionDescriptor(PrivilegeDescriptor.get(
+                SecurityManager.CMS_PUBLISH), item, currentParty);
         if (PermissionService.checkPermission(publish)) {
             parent.addAttribute("canPublish", "true");
         }
@@ -117,7 +121,9 @@ public class SimpleXMLGenerator implements XMLGenerator {
         if (!item.getClass().getName().equals(className)) {
             s_log.info("Specializing item");
             try {
-                item = (ContentItem) DomainObjectFactory.newInstance(new OID(item. getObjectType().getQualifiedName(), item.getID()));
+                item =
+                (ContentItem) DomainObjectFactory.newInstance(new OID(item.
+                        getObjectType().getQualifiedName(), item.getID()));
             } catch (DataObjectNotFoundException ex) {
                 throw new UncheckedWrapperException(
                         (String) GlobalizationUtil.globalize(
@@ -143,7 +149,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
             // This is the preferred method
             Element content = startElement(useContext);
 
-            ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(content);
+            ContentItemXMLRenderer renderer =
+                                   new ContentItemXMLRenderer(content);
 
             renderer.setWrapAttributes(true);
             renderer.setWrapRoot(false);
@@ -153,11 +160,15 @@ public class SimpleXMLGenerator implements XMLGenerator {
             renderer.walk(item, ADAPTER_CONTEXT);
 
             parent.addContent(content);
+
+            for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
+                generator.generateXML(item, parent, state);
+            }
         }
     }
 
     /**
-     * Fetches the current content item. This method can be overidden to
+     * Fetches the current content item. This method can be overridden to
      * fetch any {@link com.arsdigita.cms.ContentItem}, but by default,
      * it fetches the <code>ContentItem</code> that is set in the page state
      * by the dispatcher.

@@ -241,7 +241,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     private VersionCache m_live;
     private boolean m_wasNew;
     private Reporter m_reporter;
-    private BasicAuditTrail m_audit_trail;
+    private BasicAuditTrail m_audit_trail;   
 
     /**
      * Default constructor. This creates a new content item.
@@ -1548,7 +1548,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public ContentItem copy() {
         return copy(null, false);
     }
-    
+
     public ContentItem copy(String lang) {
         return copy(null, false, lang);
     }
@@ -1578,7 +1578,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
         return newItem;
     }
-    
+
     final public ContentItem copy(final ContentItem newParent,
                                   final boolean copyServices,
                                   final String lang) {
@@ -1591,8 +1591,6 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
         return newItem;
     }
-    
-    
 
     /**
      * Performs the actual mechanics of copying a content item.
@@ -2171,14 +2169,13 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public String getLastModifiedIP() {
         return m_audit_trail.getLastModifiedIP();
     }
-    protected static List extraXMLGenerators = new ArrayList();
-
+    
     /**
      * Override this to explicit that your content items
-     * have extra XML to generate.
-     * ATM This is used in navigation for GreetingItems.
+     * have extra XML to generate.      
+     * @return A list of all extra XML Generators for this content item.
      */
-    public List getExtraXMLGenerators() {
-        return extraXMLGenerators;
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        return new ArrayList<ExtraXMLGenerator>();
     }
 }

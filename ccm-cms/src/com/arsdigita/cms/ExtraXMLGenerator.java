@@ -6,7 +6,6 @@ package com.arsdigita.cms;
 
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.ContentItem;
 import com.arsdigita.xml.Element;
 
 /**
@@ -20,11 +19,15 @@ public interface ExtraXMLGenerator {
 
     /**
      * Specify the XML for a given content item.
+     * @param item The content item to render
+     * @param element The element to add the rendered content to
+     * @param state The current page state
      */
     public void generateXML(ContentItem item, Element element, PageState state);
 
     /**
      * Add all required global parameters.
+     * @param p The page which contains to item to render
      */
     public void addGlobalStateParams(Page p);
 }

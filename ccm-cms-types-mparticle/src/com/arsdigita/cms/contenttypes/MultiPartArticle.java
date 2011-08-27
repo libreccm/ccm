@@ -19,6 +19,8 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.mparticle.ArticleSectionPanel;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataAssociation;
@@ -29,8 +31,7 @@ import com.arsdigita.persistence.OID;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 /**
  * CMS content type that represents a multi-part article.
@@ -292,5 +293,14 @@ public class MultiPartArticle extends ContentPage {
         }
     }
     
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        
+        //generators.add(new ArticleSectionPanel());
+        generators.add(new ArticleSectionXMLGenerator());
+        
+        return generators;
+    }
   
 }

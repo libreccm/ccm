@@ -59,7 +59,7 @@
           </table>
         </td>
       </tr>
-    </table>    
+    </table>       
   </xsl:template>
   
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="cms:CT_text"
@@ -84,6 +84,6 @@
           </a>
         </div>
       </xsl:if>
-    </xsl:for-each>
+    </xsl:for-each>    
   </xsl:template>
 </xsl:stylesheet>
