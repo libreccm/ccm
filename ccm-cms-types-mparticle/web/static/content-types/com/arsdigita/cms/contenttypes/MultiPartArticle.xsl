@@ -60,6 +60,7 @@
         </td>
       </tr>
     </table>       
+    <xsl:apply-templates/>
   </xsl:template>
   
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="cms:CT_text"
@@ -85,5 +86,6 @@
         </div>
       </xsl:if>
     </xsl:for-each>    
-  </xsl:template>
+    <xsl:apply-templates/>
+  </xsl:template>  
 </xsl:stylesheet>

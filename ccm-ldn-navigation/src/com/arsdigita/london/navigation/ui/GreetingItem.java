@@ -17,6 +17,9 @@
  */
 package com.arsdigita.london.navigation.ui;
 
+import com.arsdigita.bebop.PageState;
+import java.util.logging.Level;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +29,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
@@ -123,6 +127,15 @@ public class GreetingItem extends AbstractComponent {
         renderer.walk(baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT);*/
 
         generateGreetingItemXml(itemEl, baseItem);
+        
+        for(ExtraXMLGenerator generator : baseItem.getExtraXMLGenerators()) {
+            try {
+                generator.generateXML(baseItem, content, new PageState(null, request,
+                                                                   response));
+            } catch (ServletException ex) {
+                s_log.error(ex);
+            }
+        }
        
         return content;        
     }

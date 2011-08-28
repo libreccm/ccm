@@ -50,20 +50,22 @@ public class MultiPartArticleLoader extends AbstractContentTypeLoader {
      */
     public MultiPartArticleLoader() {
 
-        m_template = new ResourceParameter
+        //Not needed anymore
+        /*m_template = new ResourceParameter
             ("com.arsdigita.cms.contenttypes.mparticle.template",
              Parameter.REQUIRED,
              "/WEB-INF/content-types/com/arsdigita/cms/contenttypes" +
              "/mparticle-item.jsp");
 
-        register(m_template);
+        register(m_template);*/
     }
 
     public String[] getTypes() {
         return TYPES;
     }
 
-    @Override
+    //Not needed anymore
+    /*@Override
     protected void prepareSection(final ContentSection section,
                                   final ContentType type,
                                   final LifecycleDefinition ld,
@@ -75,5 +77,5 @@ public class MultiPartArticleLoader extends AbstractContentTypeLoader {
                            (InputStream)get(m_template),
                            section, type,ld, wf);
 
-    }
+    }*/
 }
