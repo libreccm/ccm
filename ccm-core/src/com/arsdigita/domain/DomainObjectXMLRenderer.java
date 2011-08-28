@@ -352,7 +352,7 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 
                         // Quasimodo: BEGIN
                         // Add attributes for date and time
-                        Locale negLocale = com.arsdigita.dispatcher.DispatcherHelper.getNegotiatedLocale();
+                        Locale negLocale = com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale();
                         DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, negLocale);
                         DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT, negLocale);
                         element.addAttribute("date", dateFormatter.format(date));

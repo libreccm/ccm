@@ -19,9 +19,10 @@
 package com.arsdigita.categorization;
 
 import com.arsdigita.db.Sequences;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainServiceInterfaceExposer;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -403,7 +404,7 @@ public class Category extends ACSObject {
      * @return the category name.
      */
     public String getName() {
-        return getName(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        return getName(GlobalizationHelper.getNegotiatedLocale().getLanguage());
     }
 
     /**
@@ -585,7 +586,7 @@ public class Category extends ACSObject {
      */
     public String getDescription() {
         return getDescription(
-                DispatcherHelper.getNegotiatedLocale().getLanguage());
+                GlobalizationHelper.getNegotiatedLocale().getLanguage());
     }
 
     /**
@@ -658,7 +659,7 @@ public class Category extends ACSObject {
      * @return URL component used when browsing categories
      */
     public String getURL() {
-        return getURL(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        return getURL(GlobalizationHelper.getNegotiatedLocale().getLanguage());
     }
 
     /**
@@ -735,7 +736,7 @@ public class Category extends ACSObject {
      * otherwise.
      */
     public boolean isEnabled() {
-        return isEnabled(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        return isEnabled(GlobalizationHelper.getNegotiatedLocale().getLanguage());
     }
 
     /**

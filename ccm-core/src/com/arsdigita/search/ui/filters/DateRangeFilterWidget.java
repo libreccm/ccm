@@ -24,7 +24,7 @@ import com.arsdigita.search.FilterSpecification;
 import com.arsdigita.search.FilterType;
 import com.arsdigita.xml.Element;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.search.filters.DateRangeFilterSpecification;
 
 
@@ -74,7 +74,7 @@ public class DateRangeFilterWidget extends FilterWidget {
         String x = "";
 
         Locale defaultLocale = Locale.getDefault();
-        Locale locale = DispatcherHelper.getNegotiatedLocale();
+        Locale locale = GlobalizationHelper.getNegotiatedLocale();
 
         // Get the current Pattern
         // XXX This is really, really, really, really, really, really bad

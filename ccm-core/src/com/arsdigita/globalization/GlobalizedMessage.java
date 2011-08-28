@@ -46,8 +46,7 @@ import org.apache.log4j.Logger;
 public class GlobalizedMessage {
 
     private static final Logger s_cat =
-        Logger.getLogger(GlobalizedMessage.class.getName());
-
+            Logger.getLogger(GlobalizedMessage.class.getName());
     private String m_key = "";
     private String m_bundleName = "";
     private Object[] m_args = null;
@@ -179,7 +178,8 @@ public class GlobalizedMessage {
      *                GlobalizedObject?
      */
     public Object localize() {
-        return localize(Kernel.getContext().getLocale());
+//        return localize(Kernel.getContext().getLocale());
+        return localize(com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale());
     }
 
     /**
@@ -204,7 +204,8 @@ public class GlobalizedMessage {
      *                GlobalizedObject?
      */
     public Object localize(HttpServletRequest request) {
-        return localize(Kernel.getContext().getLocale());
+//        return localize(Kernel.getContext().getLocale());
+        return localize(com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale());
     }
 
     /**
@@ -241,8 +242,7 @@ public class GlobalizedMessage {
         } catch (MissingResourceException e) {
             if (s_cat.isDebugEnabled()) {
                 s_cat.debug(
-                            "ResourceBundle " + getBundleName() + " was not found."
-                            );
+                        "ResourceBundle " + getBundleName() + " was not found.");
             }
         }
 

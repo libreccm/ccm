@@ -36,7 +36,8 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 // This interface contains the XML element name of this class
 // in a constant which is used when generating XML
 import com.arsdigita.bebop.util.BebopConstants;
-import com.arsdigita.dispatcher.DispatcherHelper;
+
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import com.arsdigita.xml.Element;
 import java.text.SimpleDateFormat;
@@ -278,7 +279,7 @@ public class Date extends Widget implements BebopConstants {
     public void generateLocalizedWidget(PageState ps, Element date) {
 
         Locale defaultLocale = Locale.getDefault();
-        Locale locale = DispatcherHelper.getNegotiatedLocale();
+        Locale locale = GlobalizationHelper.getNegotiatedLocale();
 
         // Get the current Pattern
         // XXX This is really, really, really, really, really, really bad
@@ -376,7 +377,7 @@ public class Date extends Widget implements BebopConstants {
 
     private void populateMonthOptions() {
 
-        Locale locale = DispatcherHelper.getNegotiatedLocale();
+        Locale locale = GlobalizationHelper.getNegotiatedLocale();
 
         if (m_locale == null || (locale != null && !m_locale.equals(locale))) {
 
@@ -398,7 +399,7 @@ public class Date extends Widget implements BebopConstants {
                     m_month.addOption(new Option(String.valueOf(i), months[i]));
                 }
             }
-            m_locale = DispatcherHelper.getNegotiatedLocale();
+            m_locale = GlobalizationHelper.getNegotiatedLocale();
         }
     }
 }

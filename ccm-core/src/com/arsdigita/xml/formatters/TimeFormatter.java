@@ -18,7 +18,7 @@
  */
 package com.arsdigita.xml.formatters;
 
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Formatter;
 import java.util.Locale;
 import java.util.Date;
@@ -38,7 +38,7 @@ public class TimeFormatter implements Formatter {
     public String format(Object value) {
         Date date = (Date) value;
 
-        Locale locale = DispatcherHelper.getNegotiatedLocale();
+        Locale locale = GlobalizationHelper.getNegotiatedLocale();
 
         DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 

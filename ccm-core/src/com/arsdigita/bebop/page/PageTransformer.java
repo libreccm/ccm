@@ -35,6 +35,7 @@ import com.arsdigita.web.Web;
 import com.arsdigita.xml.Document;
 import com.arsdigita.bebop.Bebop;
 
+import com.arsdigita.globalization.GlobalizationHelper;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -59,6 +60,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import com.arsdigita.templating.XSLParameterGenerator;
 
+import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
@@ -88,6 +90,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("contextPath",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 return request.getContextPath();
             }
@@ -96,6 +99,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("root-context-prefix",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 return Web.getConfig().getDispatcherContextPath();
             }
@@ -104,6 +108,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("context-prefix",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 return Web.getContext().getRequestURL().getContextPath();
             }
@@ -112,6 +117,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("static-prefix",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 return Web.getContext().getRequestURL().getContextPath()
                        + com.arsdigita.web.URL.STATIC_DIR;
@@ -121,6 +127,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("dispatcher-prefix",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 return com.arsdigita.web.URL.getDispatcherPath();
             }
@@ -129,6 +136,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("dcp-on-buttons",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 if (Bebop.getConfig().doubleClickProtectionOnButtons()) {
                     return "true";
@@ -142,6 +150,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("dcp-on-links",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 if (Bebop.getConfig().doubleClickProtectionOnLinks()) {
                     return "true";
@@ -156,6 +165,7 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("user-agent",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
                 return request.getHeader("User-Agent");
             }
@@ -164,8 +174,19 @@ public class PageTransformer implements PresentationManager {
         registerXSLParameterGenerator("negotiated-language",
                                       new XSLParameterGenerator() {
 
+            @Override
             public String generateValue(HttpServletRequest request) {
-                return DispatcherHelper.getNegotiatedLocale().getLanguage();
+                return GlobalizationHelper.getNegotiatedLocale().getLanguage();
+            }
+        });
+
+        registerXSLParameterGenerator("selected-language",
+                                      new XSLParameterGenerator() {
+
+            @Override
+            public String generateValue(HttpServletRequest request) {
+                Locale selectedLocale =  com.arsdigita.globalization.GlobalizationHelper.getSelectedLocale(request);
+                return (selectedLocale != null) ? selectedLocale.toString() : "";
             }
         });
         s_log.debug("Static initalizer finished.");
@@ -247,6 +268,7 @@ public class PageTransformer implements PresentationManager {
      * HttpServletResponse, Map)} to implement the
      * <code>PresentationManager</code> interface.
      */
+    @Override
     public void servePage(final Document doc,
                           final HttpServletRequest req,
                           final HttpServletResponse resp) {

@@ -27,7 +27,7 @@ import com.arsdigita.bebop.parameters.NumberInRangeValidationListener;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.util.BebopConstants;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 import java.text.DateFormat;
@@ -344,7 +344,7 @@ public class Time extends Widget implements BebopConstants {
     }
 
     private boolean has12HourClock() {
-        Locale locale = DispatcherHelper.getNegotiatedLocale();
+        Locale locale = GlobalizationHelper.getNegotiatedLocale();
         DateFormat format_12Hour = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US);
         DateFormat format_locale = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 
