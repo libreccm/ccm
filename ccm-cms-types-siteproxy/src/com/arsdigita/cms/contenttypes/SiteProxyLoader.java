@@ -62,7 +62,8 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
         return TYPES;
     }
 
-    @Override
+    //A special template is not longer necessary.
+    /*@Override
     protected void prepareSection(final ContentSection section,
                                   final ContentType type,
                                   final LifecycleDefinition ld,
@@ -74,5 +75,5 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
                            (InputStream)get(m_template),
                            section, type,ld, wf);
 
-    }
+    }*/
 }

@@ -2171,8 +2171,24 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
     
     /**
+     * <p>
      * Override this to explicit that your content items
-     * have extra XML to generate.      
+     * have extra XML to generate. An overriding implementation should call 
+     * the super method, and append its generators to the list. Example:
+     * </p>
+     * <pre>
+     * {@code
+     * @Override
+     * public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+     *   final List<ExtraXMLGenerators> generators = 
+     *     super.getExtraXMLGenerators();
+     *   
+     *   generators.add(new YourExtraXMLGenerator());
+     * 
+     *   return generators;
+     * }
+     * }
+     * </pre>     
      * @return A list of all extra XML Generators for this content item.
      */
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {

@@ -24,9 +24,11 @@ import org.apache.log4j.Logger;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import java.util.List;
 
 /**
  * This content type represents a SiteProxy.
@@ -105,11 +107,21 @@ public class SiteProxy extends ContentPage {
         set(USED_IN_ATOZ, new Boolean(usedInAtoZ));
     }
 
+    @Override
     protected void initialize() {
         super.initialize();
 
         if (isNew()) {
             set(USED_IN_ATOZ, Boolean.FALSE);
         }
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        
+        generators.add(new SiteProxyExtraXMLGenerator());
+        
+        return generators;
     }
 }
