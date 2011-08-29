@@ -162,7 +162,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
             parent.addContent(content);
 
             /*
-             * 2011-08-27: Introduced to remove the annoying special templates
+             * 2011-08-27 jensp: Introduced to remove the annoying special templates
              * for MultiPartArticle, SiteProxy and others. The method called
              * here was already definied but not used. 
              */
