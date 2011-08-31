@@ -56,11 +56,13 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         /* Create the edit component for this SimpleEditStep and the corresponding link */
         BasicPageForm editBasicSheet = new GenericPersonPropertyForm(itemModel,
                                                                      this);
-        basicProperties.add(EDIT_SHEET_NAME, (String) ContenttypesGlobalizationUtil.
-                globalize("cms.contenttypes.ui.person.edit_basic_properties").
+        basicProperties.add(EDIT_SHEET_NAME,
+                            (String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.edit_basic_properties").
                 localize(), new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel), editBasicSheet.
-                getSaveCancelSection().getCancelButton());
+                                                              itemModel),
+                            editBasicSheet.getSaveCancelSection().
+                getCancelButton());
 
         /* Set the displayComponent for this step */
         basicProperties.setDisplayComponent(getGenericPersonPropertySheet(
@@ -74,6 +76,13 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
 
 //        GenericPersonContactPropertiesStep contactProperties = new GenericPersonContactPropertiesStep(itemModel, parent);
 //        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact").localize()), contactProperties);
+
+        GenericPersonAliasPropertiesStep aliasStep =
+                                         new GenericPersonAliasPropertiesStep(
+                itemModel, parent);
+        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.
+                globalize("cms.contenttypes.ui.person.alias").localize()),
+                                  aliasStep);
 
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);
@@ -104,7 +113,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
 
             public String format(DomainObject item,
                                  String attribute,
-                                 PageState state) {              
+                                 PageState state) {
                 GenericPerson person = (GenericPerson) item;
                 if (person.getBirthdate() != null) {
                     return DateFormat.getDateInstance(DateFormat.LONG).format(person.
@@ -127,7 +136,8 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                 //ContentPage page = (ContentPage) item;
                 GenericPerson person = (GenericPerson) item;
                 if (person.getGender() != null) {
-                    return (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender." + person.
+                    return (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender."
+                                                                            + person.
                             getGender().toLowerCase()).localize();
                 } else {
                     return (String) ContenttypesGlobalizationUtil.globalize(

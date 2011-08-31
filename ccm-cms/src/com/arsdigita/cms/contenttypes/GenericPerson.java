@@ -22,6 +22,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.RelationAttributeInterface;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -49,8 +50,10 @@ public class GenericPerson extends ContentPage implements
     public static final String CONTACTS = "contacts";
     public static final String CONTACTS_KEY = "link_key";
     public static final String CONTACTS_ORDER = "link_order";
+    public static final String ALIAS = "alias";
+    public static final String DABIN_ID = "dabinId";
     private static final String RELATION_ATTRIBUTES =
-                                "contacts.link_key:GenericContactType";
+                                "contacts.link_key:GenericContactType";    
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericPerson";
@@ -138,8 +141,28 @@ public class GenericPerson extends ContentPage implements
         set(GENDER, gender);
     }
 
+    public GenericPerson getAlias() {
+        return (GenericPerson) DomainObjectFactory.newInstance((DataObject) get(ALIAS));
+    }
+    
+    public void setAlias(final GenericPerson alias) {
+        set(ALIAS, alias);
+    }
+    
+    public void unsetAlias() {
+        set(ALIAS, null);
+    }
+    
+    public Integer getDabinId() {
+        return (Integer)get(DABIN_ID);
+    }
+    
+    public void setDabinId(final Integer dabinId) {
+        set(DABIN_ID, dabinId);
+    }
+    
     /**
-     * A convinient method which combines {@code titlePre}, {@code givenName),
+     * A convenient method which combines {@code titlePre}, {@code givenName),
      * {@code surname} and {@code titlePost}.
      *
      * @return {@code titlePre} {@code givenName) {@code surnameName} {@code titlePost}

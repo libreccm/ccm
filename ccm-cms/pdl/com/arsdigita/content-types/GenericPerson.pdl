@@ -30,5 +30,10 @@ object type GenericPerson extends ContentPage {
     Date[0..1] birthdate   = cms_persons.birthdate DATE;
     String[0..1] gender    = cms_persons.gender CHAR(1);
 
+    GenericPerson[0..1] alias = join cms_persons.alias_id 
+                                  to cms_persons.person_id;
+
+    Integer[0..1] dabinId = cms_persons.dabin_id INTEGER;                                  
+
     reference key (cms_persons.person_id);
 }
