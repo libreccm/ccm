@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
+ * Copyright (c) 2011 Jens Pelzetter, 
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,17 +19,19 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- * Loader for {@link SciMember}
  *
- * @author Jens Pelzetter
+ * @author Jens Pelzetter 
+ * @version $Id$
  */
 public class SciMemberLoader extends AbstractContentTypeLoader {
-
+    
     private static final String[] TYPES = {
-        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SciMember.xml"};
-
+        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SciMember.xml"
+    };
+    
     @Override
     public String[] getTypes() {
         return TYPES;
     }
+    
 }

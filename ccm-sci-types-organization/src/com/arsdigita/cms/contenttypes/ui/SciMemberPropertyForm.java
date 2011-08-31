@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
- * for the Center of Social Politics of the University of Bremen
+ * Copyright (c) 2010 Jens Pelzetter 
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -24,11 +23,9 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciMember;
-import org.apache.log4j.Logger;
 
 /**
  * Form for editing the basic properties of a {@link SciMember}. This form
