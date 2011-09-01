@@ -8,9 +8,11 @@
 	<provides>
 		<table name="ct_sci_members"/>
 		<initializer class="com.arsdigita.cms.contenttypes.SciMemberInitializer"/>
+                <initializer class="com.arsdigita.cms.dabin.PersonImporterInitializer"/>
 	</provides> 
 	<scripts>
 		<schema directory="ccm-sci-types-member"/>
 		<data class="com.arsdigita.cms.contenttypes.SciMemberLoader"/>
+                <data class="com.arsdigita.cms.dabin.PersonImporterLoader"/>
 	</scripts>
 </load>
