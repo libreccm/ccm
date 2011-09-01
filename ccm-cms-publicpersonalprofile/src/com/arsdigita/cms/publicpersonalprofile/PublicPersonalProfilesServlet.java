@@ -34,9 +34,12 @@ import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.rmi.ServerException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -198,17 +201,71 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                         state);
                             }
 
-                            links.next();
-                            final RelatedLink link =
-                                              (RelatedLink) DomainObjectFactory.
-                                    newInstance(links.getDataObject());
-                            final ContentItem item = link.getTargetItem();
-                            final PublicPersonalProfileXmlGenerator generator =
-                                                                    new PublicPersonalProfileXmlGenerator(
-                                    item);
-                            generator.generateXML(new PageState(page, request,
-                                                                response),
-                                                  root, "");
+                            PublicPersonalProfileNavItemCollection navItems =
+                                                                   new PublicPersonalProfileNavItemCollection();
+                            navItems.addLanguageFilter(DispatcherHelper.
+                                    getNegotiatedLocale().
+                                    getLanguage());
+                            navItems.addKeyFilter(navPath);
+                            navItems.next();
+
+                            if (navItems.getNavItem().getGeneratorClass()
+                                != null) {
+                                try {
+                                    Object generatorObj =
+                                           Class.forName(navItems.getNavItem().
+                                            getGeneratorClass()).getConstructor().
+                                            newInstance();
+                                                                        
+                                    if (generatorObj instanceof ContentGenerator) {
+                                        final ContentGenerator generator = (ContentGenerator) generatorObj;
+                                        
+                                        generator.generateContent(root, owner);
+                                        
+                                    } else {
+                                        throw new ServerException(String.format(
+                                                "Class '%s' is not a ContentGenerator.",
+                                                navItems.getNavItem().
+                                                getGeneratorClass()));
+                                    }
+
+                                } catch (InstantiationException ex) {
+                                    throw new ServletException(
+                                            "Failed to create generator", ex);
+                                } catch (IllegalAccessException ex) {
+                                    throw new ServletException(
+                                            "Failed to create generator", ex);
+                                } catch (IllegalArgumentException ex) {
+                                    throw new ServletException(
+                                            "Failed to create generator", ex);
+                                } catch (InvocationTargetException ex) {
+                                    throw new ServletException(
+                                            "Failed to create generator", ex);
+                                } catch (ClassNotFoundException ex) {
+                                    throw new ServletException(
+                                            "Failed to create generator", ex);
+                                } catch (NoSuchMethodException ex) {
+                                    throw new ServletException(
+                                            "Failed to create generator", ex);
+                                }
+                            } else {
+
+                                links.next();
+                                final RelatedLink link =
+                                                  (RelatedLink) DomainObjectFactory.
+                                        newInstance(links.getDataObject());
+                                final ContentItem item = link.getTargetItem();
+                                final PublicPersonalProfileXmlGenerator generator =
+                                                                        new PublicPersonalProfileXmlGenerator(
+                                        item);
+                                generator.generateXML(new PageState(page,
+                                                                    request,
+                                                                    response),
+                                                      root,
+                                                      "");
+                            }
+
+                            navItems.close();
                         }
                     }
                 }
@@ -463,20 +520,20 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
         page.setClassAttr("adminPage");
 
-        
-        
-        final BoxPanel box = new BoxPanel(BoxPanel.VERTICAL);        
+
+
+        final BoxPanel box = new BoxPanel(BoxPanel.VERTICAL);
         final FormSection tableSection = new FormSection(box);
-        
+
         final PublicPersonalProfileNavItemsTable table =
                                                  new PublicPersonalProfileNavItemsTable();
-        
-        
+
+
         box.add(table);
-        form.add(tableSection);                                                                
-              
+        form.add(tableSection);
+
         box.add(new PublicPersonalProfileNavItemsAddForm());
-        
+
         page.add(form);
         page.lock();
 
