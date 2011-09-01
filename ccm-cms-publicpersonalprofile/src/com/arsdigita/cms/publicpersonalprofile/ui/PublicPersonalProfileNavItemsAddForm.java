@@ -26,8 +26,12 @@ import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.Pair;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -152,12 +156,25 @@ public class PublicPersonalProfileNavItemsAddForm
                 navItemMap.put(navItems.getNavItem().getKey(), navItems.
                         getNavItem());
             }
+            final List<PublicPersonalProfileNavItem> navItemsList =
+                                                     new ArrayList<PublicPersonalProfileNavItem>(navItemMap.
+                    values());
+
             final int numberOfKeys = navItemMap.size();
 
             PublicPersonalProfileNavItem item;
             if (selected == null) {
                 item = new PublicPersonalProfileNavItem();
-                item.setId(new BigDecimal(navItems.size() + 1));
+                Collections.sort(navItemsList,
+                                 new Comparator<PublicPersonalProfileNavItem>() {
+
+                    public int compare(final PublicPersonalProfileNavItem item1,
+                                       final PublicPersonalProfileNavItem item2) {
+                        return item1.getId().compareTo(item2.getId());
+                    }
+                });
+                item.setId(navItemsList.get(navItemsList.size() - 1).getId().add(
+                        BigDecimal.ONE));
             } else {
                 item = selected;
             }
@@ -173,7 +190,16 @@ public class PublicPersonalProfileNavItemsAddForm
                                                navItemMap.get((String) data.get(
                     PublicPersonalProfileNavItem.KEY));
             if (navItem == null) {
-                item.setOrder(numberOfKeys + 1);
+                Collections.sort(navItemsList,
+                                 new Comparator<PublicPersonalProfileNavItem>() {
+
+                    public int compare(final PublicPersonalProfileNavItem item1,
+                                       final PublicPersonalProfileNavItem item2) {
+                        return item1.getOrder().compareTo(item2.getOrder());
+                    }
+                });
+                item.setOrder(navItemsList.get(navItemsList.size() - 1).getOrder()
+                              + 1);
             } else {
                 item.setOrder(navItem.getOrder());
             }
