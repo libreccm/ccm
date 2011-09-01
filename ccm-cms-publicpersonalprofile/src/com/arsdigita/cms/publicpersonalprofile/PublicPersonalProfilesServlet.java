@@ -22,6 +22,7 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Session;
@@ -39,7 +40,6 @@ import java.math.BigDecimal;
 import java.rmi.ServerException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,6 +60,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     private static final String PREVIEW = "preview";
     private static final String PPP_NS =
                                 "http://www.arsdigita.com/PublicPersonalProfile/1.0";
+    public static final String SELECTED_NAV_ITEM = "selectedNavItem";
     private final PublicPersonalProfileConfig config = PublicPersonalProfiles.
             getConfig();
 
@@ -216,12 +217,13 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                            Class.forName(navItems.getNavItem().
                                             getGeneratorClass()).getConstructor().
                                             newInstance();
-                                                                        
+
                                     if (generatorObj instanceof ContentGenerator) {
-                                        final ContentGenerator generator = (ContentGenerator) generatorObj;
-                                        
+                                        final ContentGenerator generator =
+                                                               (ContentGenerator) generatorObj;
+
                                         generator.generateContent(root, owner);
-                                        
+
                                     } else {
                                         throw new ServerException(String.format(
                                                 "Class '%s' is not a ContentGenerator.",
@@ -520,19 +522,19 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
         page.setClassAttr("adminPage");
 
-
-
         final BoxPanel box = new BoxPanel(BoxPanel.VERTICAL);
         final FormSection tableSection = new FormSection(box);
 
+        final PublicPersonalProfileNavItemsAddForm addForm =
+                                                   new PublicPersonalProfileNavItemsAddForm();
         final PublicPersonalProfileNavItemsTable table =
-                                                 new PublicPersonalProfileNavItemsTable();
-
+                                                 new PublicPersonalProfileNavItemsTable(
+                addForm);
 
         box.add(table);
         form.add(tableSection);
 
-        box.add(new PublicPersonalProfileNavItemsAddForm());
+        box.add(addForm);
 
         page.add(form);
         page.lock();

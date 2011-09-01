@@ -15,10 +15,8 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileGlobalizationUtil;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,9 +32,14 @@ public class PublicPersonalProfileNavItemsTable
     private final static String TABLE_COL_UP = "table_col_up";
     private final static String TABLE_COL_DOWN = "table_col_down";
     private final static String TABLE_COL_DELETE = "table_col_delete";
-    private final static String TABLE_COL_EDIT = "table_col_delete";
+    private final static String TABLE_COL_EDIT = "table_col_edit";
+    private final PublicPersonalProfileNavItemsAddForm addForm;
 
-    public PublicPersonalProfileNavItemsTable() {
+    public PublicPersonalProfileNavItemsTable(
+            final PublicPersonalProfileNavItemsAddForm addForm) {
+
+        this.addForm = addForm;
+
         setEmptyView(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.no_nav_items")));
 
@@ -114,19 +117,20 @@ public class PublicPersonalProfileNavItemsTable
         private final PageState state;
         private final PublicPersonalProfileNavItemCollection navItems =
                                                              new PublicPersonalProfileNavItemCollection();
-        private int lastOrder = 0;   
+        private int lastOrder = 0;
         private int numberOfKeys;
 
         public PublicPersonalProfileNavItemsTableModel(final Table table,
                                                        final PageState state) {
             this.table = table;
-            this.state = state;  
-            final PublicPersonalProfileNavItemCollection items = new PublicPersonalProfileNavItemCollection();
+            this.state = state;
+            final PublicPersonalProfileNavItemCollection items =
+                                                         new PublicPersonalProfileNavItemCollection();
             final Set<String> keys = new HashSet<String>();
-            while(items.next()) {
+            while (items.next()) {
                 keys.add(items.getNavItem().getKey());
             }
-            numberOfKeys = keys.size();            
+            numberOfKeys = keys.size();
         }
 
         public int getColumnCount() {
@@ -164,7 +168,7 @@ public class PublicPersonalProfileNavItemsTable
                                 "publicpersonalprofile.ui.navitem.up").localize();
                     }
                 case 7:
-                    if ((navItems.getNavItem().getOrder() == lastOrder) 
+                    if ((navItems.getNavItem().getOrder() == lastOrder)
                         || (navItems.getNavItem().getOrder() == numberOfKeys)) {
                         return null;
                     } else {
@@ -290,7 +294,9 @@ public class PublicPersonalProfileNavItemsTable
                 intValue());
 
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
+            addForm.setSelectedNavItem(navItem);
         } else if (TABLE_COL_DELETE.equals(column.getHeaderKey().toString())) {
+            navItem.delete();
         } else if (TABLE_COL_UP.equals(column.getHeaderKey().toString())) {
             navItems.swapWithPrevious(navItem);
         } else if (TABLE_COL_DOWN.equals(column.getHeaderKey().toString())) {
