@@ -1,0 +1,11 @@
+<load>
+    <requires>
+         <table name="cms_items"/>
+    </requires>
+    <provides>
+        <initializer class="com.arsdigita.cms.dabin.PersonImporterInitializer"/>
+    </provides>
+    <scripts>
+        <data class="com.arsdigita.cms.dabin.PersonImporterLoader"/>
+    </scripts>
+</load>

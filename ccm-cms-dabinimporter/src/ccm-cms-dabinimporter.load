@@ -1,4 +1,3 @@
-
 <load>
     <requires>
          <table name="cms_items"/>
