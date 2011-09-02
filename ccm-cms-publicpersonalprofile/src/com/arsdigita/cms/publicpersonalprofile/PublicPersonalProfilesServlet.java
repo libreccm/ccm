@@ -7,6 +7,8 @@ import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericAddress;
@@ -522,14 +524,22 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
         page.setClassAttr("adminPage");
 
+        final StringParameter navItemKeyParam = new StringParameter(
+                "selectedNavItem");
+        final ParameterSingleSelectionModel navItemSelect =
+                                            new ParameterSingleSelectionModel(
+                navItemKeyParam);
+        
+        page.addGlobalStateParam(navItemKeyParam);
+
         final BoxPanel box = new BoxPanel(BoxPanel.VERTICAL);
         final FormSection tableSection = new FormSection(box);
 
         final PublicPersonalProfileNavItemsAddForm addForm =
-                                                   new PublicPersonalProfileNavItemsAddForm();
+                                                   new PublicPersonalProfileNavItemsAddForm(navItemSelect);
         final PublicPersonalProfileNavItemsTable table =
                                                  new PublicPersonalProfileNavItemsTable(
-                addForm);
+                navItemSelect);
 
         box.add(table);
         form.add(tableSection);

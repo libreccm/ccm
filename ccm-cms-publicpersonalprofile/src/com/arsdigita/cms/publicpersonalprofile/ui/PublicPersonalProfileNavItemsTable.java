@@ -4,6 +4,7 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.event.TableActionListener;
@@ -32,13 +33,13 @@ public class PublicPersonalProfileNavItemsTable
     private final static String TABLE_COL_UP = "table_col_up";
     private final static String TABLE_COL_DOWN = "table_col_down";
     private final static String TABLE_COL_DELETE = "table_col_delete";
-    private final static String TABLE_COL_EDIT = "table_col_edit";
-    private final PublicPersonalProfileNavItemsAddForm addForm;
+    private final static String TABLE_COL_EDIT = "table_col_edit";    
+    private final ParameterSingleSelectionModel navItemSelect;
 
     public PublicPersonalProfileNavItemsTable(
-            final PublicPersonalProfileNavItemsAddForm addForm) {
-
-        this.addForm = addForm;
+            final ParameterSingleSelectionModel navItemSelect) {
+ 
+        this.navItemSelect = navItemSelect;
 
         setEmptyView(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.no_nav_items")));
@@ -294,7 +295,7 @@ public class PublicPersonalProfileNavItemsTable
                 intValue());
 
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
-            addForm.setSelectedNavItem(navItem);
+            navItemSelect.setSelectedKey(state, navItem.getId());
         } else if (TABLE_COL_DELETE.equals(column.getHeaderKey().toString())) {
             navItem.delete();
         } else if (TABLE_COL_UP.equals(column.getHeaderKey().toString())) {

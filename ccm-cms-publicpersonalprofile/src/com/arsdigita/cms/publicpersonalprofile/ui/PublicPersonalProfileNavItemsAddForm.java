@@ -6,6 +6,7 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
@@ -48,10 +49,13 @@ public class PublicPersonalProfileNavItemsAddForm
 
     private final FormSection widgetSection;
     private final SaveCancelSection saveCancelSection;
-    private PublicPersonalProfileNavItem selected;
+    private final ParameterSingleSelectionModel navItemSelect;
 
-    public PublicPersonalProfileNavItemsAddForm() {
+    public PublicPersonalProfileNavItemsAddForm(
+            final ParameterSingleSelectionModel navItemSelect) {
         super(new ColumnPanel(2));
+
+        this.navItemSelect = navItemSelect;
 
         widgetSection = new FormSection(new ColumnPanel(2, true));
         super.add(widgetSection, ColumnPanel.INSERT);
@@ -124,12 +128,30 @@ public class PublicPersonalProfileNavItemsAddForm
         final FormData data = fse.getFormData();
         final PageState state = fse.getPageState();
 
-        if (selected == null) {
+        if (navItemSelect.getSelectedKey(state) == null) {
             data.put(PublicPersonalProfileNavItem.KEY, "");
             data.put(PublicPersonalProfileNavItem.LANG, "");
             data.put(PublicPersonalProfileNavItem.LABEL, "");
             data.put(PublicPersonalProfileNavItem.GENERATOR_CLASS, "");
         } else {
+            PublicPersonalProfileNavItemCollection navItems =
+                                                   new PublicPersonalProfileNavItemCollection();
+            navItems.addFilter(
+                    String.format("navItemId = %s",
+                                  navItemSelect.getSelectedKey(state).
+                    toString()));
+
+            if (navItems.size() == 0) {
+                throw new IllegalStateException(
+                        String.format("No nav item with id '%s' found.",
+                                      navItemSelect.getSelectedKey(
+                        state).toString()));
+            }
+
+            navItems.next();
+            PublicPersonalProfileNavItem selected = navItems.getNavItem();
+            navItems.close();
+
             data.put(PublicPersonalProfileNavItem.KEY,
                      selected.getKey());
             data.put(PublicPersonalProfileNavItem.LANG,
@@ -160,10 +182,8 @@ public class PublicPersonalProfileNavItemsAddForm
                                                      new ArrayList<PublicPersonalProfileNavItem>(navItemMap.
                     values());
 
-            final int numberOfKeys = navItemMap.size();
-
             PublicPersonalProfileNavItem item;
-            if (selected == null) {
+            if (navItemSelect.getSelectedKey(state) == null) {
                 item = new PublicPersonalProfileNavItem();
                 Collections.sort(navItemsList,
                                  new Comparator<PublicPersonalProfileNavItem>() {
@@ -173,10 +193,30 @@ public class PublicPersonalProfileNavItemsAddForm
                         return item1.getId().compareTo(item2.getId());
                     }
                 });
-                item.setId(navItemsList.get(navItemsList.size() - 1).getId().add(
-                        BigDecimal.ONE));
+                if (navItemsList.size() > 0) {
+                    item.setId(navItemsList.get(navItemsList.size() - 1).getId().
+                            add(
+                            BigDecimal.ONE));
+                } else {
+                    item.setId(BigDecimal.ONE);
+                }
             } else {
-                item = selected;
+                navItems.reset();
+                navItems.addFilter(
+                        String.format("navItemId = %s",
+                                      navItemSelect.getSelectedKey(state).
+                        toString()));
+
+                if (navItems.size() == 0) {
+                    throw new IllegalStateException(
+                            String.format("No nav item with id '%s' found.",
+                                          navItemSelect.getSelectedKey(
+                            state).toString()));
+                }
+
+                navItems.next();
+                item = navItems.getNavItem();
+                navItems.close();
             }
 
             item.setKey((String) data.get(PublicPersonalProfileNavItem.KEY));
@@ -198,8 +238,13 @@ public class PublicPersonalProfileNavItemsAddForm
                         return item1.getOrder().compareTo(item2.getOrder());
                     }
                 });
-                item.setOrder(navItemsList.get(navItemsList.size() - 1).getOrder()
-                              + 1);
+                if (navItemsList.size() > 0) {
+                    item.setOrder(navItemsList.get(navItemsList.size() - 1).
+                            getOrder()
+                                  + 1);
+                } else {
+                    item.setOrder(1);
+                }
             } else {
                 item.setOrder(navItem.getOrder());
             }
@@ -207,7 +252,7 @@ public class PublicPersonalProfileNavItemsAddForm
             item.save();
         }
 
-        this.selected = null;
+        navItemSelect.clearSelection(state);
         data.put(PublicPersonalProfileNavItem.KEY, "");
         data.put(PublicPersonalProfileNavItem.LANG, "");
         data.put(PublicPersonalProfileNavItem.LABEL, "");
@@ -226,16 +271,11 @@ public class PublicPersonalProfileNavItemsAddForm
         final FormData data = fse.getFormData();
 
         if (saveCancelSection.getCancelButton().isSelected(state)) {
-            this.selected = null;
+            navItemSelect.clearSelection(state);
             data.put(PublicPersonalProfileNavItem.KEY, "");
             data.put(PublicPersonalProfileNavItem.LANG, "");
             data.put(PublicPersonalProfileNavItem.LABEL, "");
             data.put(PublicPersonalProfileNavItem.GENERATOR_CLASS, "");
         }
-    }
-
-    protected void setSelectedNavItem(
-            final PublicPersonalProfileNavItem selected) {
-        this.selected = selected;
     }
 }
