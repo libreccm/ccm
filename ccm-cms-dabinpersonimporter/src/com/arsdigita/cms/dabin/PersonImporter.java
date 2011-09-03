@@ -1,9 +1,19 @@
 package com.arsdigita.cms.dabin;
 
 import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.contentassets.RelatedLink;
+import com.arsdigita.cms.contenttypes.Address;
+import com.arsdigita.cms.contenttypes.Contact;
+import com.arsdigita.cms.contenttypes.GenericContactEntry;
+import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.Link;
+import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.SciAuthor;
+import com.arsdigita.cms.contenttypes.SciMember;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
@@ -14,6 +24,7 @@ import com.arsdigita.persistence.TransactionContext;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,14 +49,26 @@ public class PersonImporter extends Program {
     private Properties config;
     private Connection connection = null;
     private ContentSection membersSection;
+    private ContentSection membersContactsSection;
     private ContentSection authorsSection;
+    private ContentSection authorsContactsSection;
     private ContentSection personsSection;
+    private ContentSection personsContactsSection;
+    private ContentSection addressSection;
     private LifecycleDefinition membersLifecycle;
+    private LifecycleDefinition membersContactsLifecycle;
     private LifecycleDefinition authorsLifecycle;
+    private LifecycleDefinition authorsContactsLifecycle;
     private LifecycleDefinition personsLifecycle;
+    private LifecycleDefinition personsContactsLifecycle;
+    private LifecycleDefinition addressLifecycle;
     private Folder membersFolder;
+    private Folder membersContactsFolder;
     private Folder authorsFolder;
+    private Folder authorsContactsFolder;
     private Folder personsFolder;
+    private Folder personsContactsFolder;
+    private Folder addressFolder;
     private Category membersActiveCategory;
     private Category membersFormerCategory;
     private Category membersAssociatedCategory;
@@ -116,34 +139,68 @@ public class PersonImporter extends Program {
 
         membersSection = getContentSection(config.getProperty(
                 "members.contentsection"));
+        membersContactsSection = getContentSection(config.getProperty(
+                "members.contacts.contentsection"));
         authorsSection = getContentSection(config.getProperty(
                 "members.contentsection"));
+        authorsContactsSection = getContentSection(config.getProperty(
+                "members.contacts.contentsection"));
         personsSection = getContentSection(config.getProperty(
                 "members.contentsection"));
+        personsContactsSection = getContentSection(config.getProperty(
+                "members.contacts.contentsection"));
+        addressSection = getContentSection((config.getProperty(
+                                            "address.contentsection")));
 
         LifecycleDefinitionCollection lifecycles = membersSection.
                 getLifecycleDefinitions();
         while (lifecycles.next()) {
             membersLifecycle = lifecycles.getLifecycleDefinition();
         }
+        lifecycles = membersContactsSection.getLifecycleDefinitions();
+        while (lifecycles.next()) {
+            membersContactsLifecycle = lifecycles.getLifecycleDefinition();
+        }
 
         lifecycles = authorsSection.getLifecycleDefinitions();
         while (lifecycles.next()) {
             authorsLifecycle = lifecycles.getLifecycleDefinition();
+        }
+        lifecycles = authorsContactsSection.getLifecycleDefinitions();
+        while (lifecycles.next()) {
+            authorsContactsLifecycle = lifecycles.getLifecycleDefinition();
         }
 
         lifecycles = personsSection.getLifecycleDefinitions();
         while (lifecycles.next()) {
             personsLifecycle = lifecycles.getLifecycleDefinition();
         }
+        lifecycles = personsContactsSection.getLifecycleDefinitions();
+        while (lifecycles.next()) {
+            personsContactsLifecycle = lifecycles.getLifecycleDefinition();
+        }
 
         final String membersFolderPath = config.getProperty("members.folder");
+        final String membersContactsFolderPath = config.getProperty(
+                "members.contacts.folder");
         final String authorsFolderPath = config.getProperty("authors.folder");
+        final String authorsContactsFolderPath = config.getProperty(
+                "authors.contacts.folder");
         final String personsFolderPath = config.getProperty("persons.folder");
+        final String personsContactsFolderPath = config.getProperty(
+                "persons.contacts.folder");
+        final String addressFolderPath = config.getProperty("address.folder");
 
         membersFolder = getOrCreateFolder(membersSection, membersFolderPath);
+        membersContactsFolder = getOrCreateFolder(membersContactsSection,
+                                                  membersContactsFolderPath);
         authorsFolder = getOrCreateFolder(authorsSection, authorsFolderPath);
+        authorsContactsFolder = getOrCreateFolder(authorsContactsSection,
+                                                  authorsContactsFolderPath);
         personsFolder = getOrCreateFolder(personsSection, personsFolderPath);
+        personsContactsFolder = getOrCreateFolder(personsContactsSection,
+                                                  personsContactsFolderPath);
+        addressFolder = getOrCreateFolder(addressSection, addressFolderPath);
 
         membersActiveCategory = new Category(new BigDecimal(config.getProperty(
                 "members.active.category")));
@@ -185,7 +242,7 @@ public class PersonImporter extends Program {
             final Statement stmt = connection.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
-            
+
             final ResultSet result =
                             stmt.executeQuery("SELECT Abteilung_Id, Name "
                                               + "FROM abteilung "
@@ -250,13 +307,33 @@ public class PersonImporter extends Program {
 
         System.out.println("Configuration values:");
         System.out.println("---------------------");
-        System.out.printf("membersSection = %s\n", membersSection.getName());
-        System.out.printf("authorsSection = %s\n", authorsSection.getName());
-        System.out.printf("personsSection = %s\n", personsSection.getName());
+        System.out.printf("membersSection         = %s\n", membersSection.
+                getName());
+        System.out.printf("membersContactsSection = %s\n",
+                          membersContactsSection.getName());
+        System.out.printf("authorsSection         = %s\n", authorsSection.
+                getName());
+        System.out.printf("authorsContactsSection = %s\n",
+                          authorsContactsSection.getName());
+        System.out.printf("personsSection         = %s\n", personsSection.
+                getName());
+        System.out.printf("personsContactsSection = %s\n",
+                          personsContactsSection.getName());
         System.out.println("");
-        System.out.printf("membersFolder = %s\n", membersFolder.getPath());
-        System.out.printf("authorsFolder = %s\n", authorsFolder.getPath());
-        System.out.printf("personsFolder = %s\n", personsFolder.getPath());
+        System.out.printf("membersFolder         = %s\n",
+                          membersFolder.getPath());
+        System.out.printf("membersContactsFolder = %s\n",
+                          membersFolder.getPath());
+        System.out.printf("authorsFolder         = %s\n",
+                          authorsFolder.getPath());
+        System.out.printf("authorsContactsFolder = %s\n",
+                          authorsFolder.getPath());
+        System.out.printf("personsFolder         = %s\n",
+                          personsFolder.getPath());
+        System.out.printf("personsContactsFolder = %s\n",
+                          personsFolder.getPath());
+        System.out.printf("addressFolder         = %s\n",
+                          addressFolder.getPath());
         System.out.println("");
         System.out.printf("membersActiveCategory = %s\n",
                           membersActiveCategory.getName());
@@ -323,38 +400,274 @@ public class PersonImporter extends Program {
                     + "JOIN abteilunglink "
                     + "ON person.Person_Id = abteilunglink.Person_Id "
                     + "ORDER BY person.Name");
-            
+
             result.last();
             final long number = result.getRow();
             result.beforeFirst();
 
-            System.out.printf("Found %d persons in the DaBIn database.", number);
-            
+            System.out.printf("Found %d persons in the DaBIn database.\n",
+                              number);
+
             int i = 1;
-            while (result.next()) {
-                System.out.printf("Processing person '%d' of '%d':\n", i, number);                
-                System.out.printf("\tPerson_Id = %s\n", 
-                                  result.getString("person.Person_Id"));
-                System.out.printf("\tAnrede = %s\n", 
-                                  result.getString("person.Anrede"));
-                System.out.printf("\tName = %s\n", 
-                                  result.getString("person.Name"));
-                System.out.printf("\tVorname = %s\n", 
-                                  result.getString("person.Vorname"));
-                System.out.printf("\tAnstellung = %s\n", 
-                                  result.getString("person.Anstellung"));
-                System.out.printf("\tEigenschaft = %s\n", 
-                                  result.getString("person.Eigenschaft"));
-                System.out.printf("\tAngaben = %s\n", 
-                                  result.getString("person.Angaben"));
-                System.out.printf("\tAbteilung_Id = %s\n", 
-                                  result.getString("abteilunglink.Abteilung_Id"));
-                System.out.println("");
-                
-                i++;
+
+            final TransactionContext tctx = SessionManager.getSession().
+                    getTransactionContext();
+
+            tctx.beginTxn();
+
+            System.out.println("Creating address...");
+            final Address address = new Address();
+            address.setName(config.getProperty("address.name"));
+            address.setTitle(config.getProperty("address.title"));
+            address.setAddress(config.getProperty("address.data"));
+            address.setPostalCode(config.getProperty("address.code"));
+            address.setCity(config.getProperty("address.city"));
+            address.setIsoCountryCode(config.getProperty("address.country"));
+            address.setLanguage("de");
+
+            final ContentBundle addressBundle = new ContentBundle(address);
+            addressBundle.setDefaultLanguage("de");
+
+            address.setContentSection(addressSection);
+            addressBundle.setContentSection(addressSection);
+            addressFolder.addItem(addressBundle);
+
+            try {
+                while (result.next()) {
+                    System.out.printf("Processing person '%d' of '%d':\n", i,
+                                      number);
+                    System.out.printf("\tPerson_Id = %s\n",
+                                      result.getString("person.Person_Id"));
+                    System.out.printf("\tAnrede = %s\n",
+                                      result.getString("person.Anrede"));
+                    System.out.printf("\tName = %s\n",
+                                      result.getString("person.Name"));
+                    System.out.printf("\tVorname = %s\n",
+                                      result.getString("person.Vorname"));
+                    System.out.printf("\tAnstellung = %s\n",
+                                      result.getString("person.Anstellung"));
+                    System.out.printf("\tEigenschaft = %s\n",
+                                      result.getString("person.Eigenschaft"));
+                    System.out.printf("\tAngaben = %s\n",
+                                      result.getString("person.Angaben"));
+                    System.out.printf("\tAbteilung_Id = %s\n",
+                                      result.getString(
+                            "abteilunglink.Abteilung_Id"));
+                    System.out.println("");
+
+                    GenericPerson person;
+                    ContentSection section;
+                    ContentSection contactsSection;
+                    Folder folder;
+                    Folder contactsFolder;
+                    LifecycleDefinition lifecycleDefinition;
+                    LifecycleDefinition contactLifecycleDefinition;
+                    Category category = null;
+                    if ("Aktiv".equals(result.getString("person.Eigenschaft"))) {
+                        person = new SciMember();
+                        section = membersSection;
+                        folder = membersFolder;
+                        contactsSection = membersContactsSection;
+                        contactsFolder = membersContactsFolder;
+                        category = membersActiveCategory;
+                        lifecycleDefinition = membersLifecycle;
+                        contactLifecycleDefinition = membersContactsLifecycle;
+                        category = membersActiveCategory;
+                    } else if ("Ehemalig".equals(result.getString(
+                            "person.Eigenschaft"))) {
+                        person = new SciMember();
+                        section = membersSection;
+                        folder = membersFolder;
+                        contactsSection = membersContactsSection;
+                        contactsFolder = membersContactsFolder;
+                        category = membersFormerCategory;
+                        lifecycleDefinition = membersLifecycle;
+                        contactLifecycleDefinition = membersContactsLifecycle;
+                        category = membersFormerCategory;
+                    } else if ("Assoziert".equals(result.getString(
+                            "person.Eigenschaft"))) {
+                        person = new SciMember();
+                        section = membersSection;
+                        folder = membersFolder;
+                        contactsSection = membersContactsSection;
+                        contactsFolder = membersContactsFolder;
+                        category = membersAssociatedCategory;
+                        lifecycleDefinition = membersLifecycle;
+                        category = membersAssociatedCategory;
+                        contactLifecycleDefinition = membersContactsLifecycle;
+                    } else if ("Autor".equals(result.getString(
+                            "person.Eigenschaft"))) {
+                        person = new SciAuthor();
+                        section = authorsSection;
+                        folder = authorsFolder;
+                        contactsSection = authorsContactsSection;
+                        contactsFolder = authorsContactsFolder;
+                        lifecycleDefinition = authorsLifecycle;
+                        contactLifecycleDefinition = authorsContactsLifecycle;
+                    } else {
+                        person = new Person();
+                        section = personsSection;
+                        folder = personsFolder;
+                        contactsSection = personsContactsSection;
+                        contactsFolder = personsContactsFolder;
+                        lifecycleDefinition = personsLifecycle;
+                        contactLifecycleDefinition = personsContactsLifecycle;
+                    }
+
+                    person.setSurname(result.getString("person.Name"));
+                    person.setGivenName(result.getString("person.Vorname"));
+                    person.setTitlePre(result.getString("person.Anrede"));
+                    person.setDabinId(result.getInt("person.Person_Id"));
+                    person.setLanguage("de");
+                    person.setContentSection(section);
+                    person.setLifecycle(createLifecycle(lifecycleDefinition));
+                    person.save();
+
+                    resolveDuplicateNameAndTitle(person, folder);
+
+                    ContentBundle personBundle = new ContentBundle(person);
+                    personBundle.setDefaultLanguage("de");
+                    personBundle.setContentSection(section);
+                    folder.addItem(personBundle);
+                    personBundle.setLifecycle(createLifecycle(
+                            lifecycleDefinition));
+                    personBundle.save();
+
+
+                    if (category != null) {
+                        category.addChild(personBundle);
+                    }
+
+                    if ("Aktiv".equals(result.getString("person.Eigenschaft"))
+                        || "Ehemalig".equals(result.getString(
+                            "person.Eigenschaft"))
+                        || "Assoziert".equals(result.getString(
+                            "person.Eigenschaft"))) {
+                        if (!result.getString("abteilunglink.Abteilung_Id").
+                                isEmpty()) {
+                            Category depCat = null;
+
+                            if ("Aktiv".equals(result.getString(
+                                    "person.Eigenschaft"))) {
+                                depCat =
+                                membersActiveDepartmentCategories.get(result.
+                                        getString("abteilunglink.Abteilung_Id"));
+                            } else if ("Ehemalig".equals(result.getString(
+                                    "person.Eigenschaft"))) {
+                                depCat =
+                                membersFormerDepartmentCategories.get(result.
+                                        getString("abteilunglink.Abteilung_Id"));
+                            } else if ("Assoziert".equals(result.getString(
+                                    "person.Eigenscahaft"))) {
+                                depCat = membersAssociatedDepartmentCategories.
+                                        get(result.getString(
+                                        "abteilunglink.Abteilung_Id"));
+                            }
+
+                            if (depCat != null) {
+                                depCat.addChild(personBundle);
+                            }
+                        }
+                    }
+
+                    if (!result.getString("person.Angaben").isEmpty()) {
+                        Contact contact = new Contact();
+                        contact.setLanguage("de");
+                        contact.setName(String.format("kontakt-%s", person.
+                                getName()));
+                        contact.setTitle(String.format("Kontakt %s", person.
+                                getTitle()));
+                        contact.setPerson(person, "commonContact");
+
+
+                        final String[] contactData =
+                                       result.getString("person.Angaben").split(
+                                "\n");
+                        String homepage = null;
+                        for (String token : contactData) {
+                            String key;
+                            String value;
+
+                            if (token.indexOf("=") < 0) {
+                                System.err.printf("Warning: Invalid contact entry: '%s'"
+                                                  + "Skiping.", token);
+                                continue;
+                            }
+                            key = token.substring(0, token.indexOf('=')).trim();
+                            value =
+                            token.substring(token.indexOf('=') + 1).trim();
+
+                            if ("Raum_1".equals(key)) {
+                                contact.addContactEntry(
+                                        new GenericContactEntry(contact,
+                                                                "office",
+                                                                value,
+                                                                ""));
+                            } else if ("Tel_1".equals(key)
+                                       && value.startsWith("Fax: ")) {
+                                contact.addContactEntry(new GenericContactEntry(
+                                        contact,
+                                        "fax",
+                                        value.substring(6),
+                                        ""));
+                            } else if ("Tel_1".equals(key)) {
+                                contact.addContactEntry(
+                                        new GenericContactEntry(contact,
+                                                                "phoneOffice",
+                                                                value,
+                                                                ""));
+                            } else if ("eMail_1".equals(key)) {
+                                contact.addContactEntry(
+                                        new GenericContactEntry(contact,
+                                                                "email",
+                                                                value,
+                                                                ""));
+                            } else if ("WWW_1".equals(key)) {
+                                contact.addContactEntry(
+                                        new GenericContactEntry(contact,
+                                                                "homepage",
+                                                                value,
+                                                                ""));
+                                homepage = value;
+                            }
+                        }
+
+                        contact.setAddress(address);
+
+                        contact.setContentSection(contactsSection);
+                        contact.setLifecycle(createLifecycle(
+                                contactLifecycleDefinition));
+                        ContentBundle contactBundle = new ContentBundle(contact);
+                        contactBundle.setDefaultLanguage("de");
+                        contactBundle.setContentSection(contactsSection);
+                        contactsFolder.addItem(contactBundle);
+                        contactBundle.save();
+
+                        if (homepage != null) {
+                            RelatedLink homepageLink;
+                            homepageLink = new RelatedLink();
+                            homepageLink.setTitle("Persönliche Homepage");
+                            homepageLink.setTargetType(Link.EXTERNAL_LINK);
+                            homepageLink.setTargetURI(homepage);
+                            homepageLink.setLinkListName("NONE");
+                            homepageLink.setLinkOwner(person);
+                            homepageLink.save();
+                        }
+                    }
+
+                    i++;
+                }
+
+                tctx.commitTxn();
+            } catch (UnsupportedEncodingException ex) {
+                System.err.println("Error: ");
+                ex.printStackTrace(System.err);
+                return;
+            } finally {
+                if (tctx.inTxn()) {
+                    tctx.abortTxn();
+                }
             }
-
-
         } catch (SQLException ex) {
             System.err.println("Failed to load departments.");
             ex.printStackTrace(System.err);

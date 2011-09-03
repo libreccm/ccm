@@ -10,9 +10,10 @@
         <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>        
         <ccm:requires name="ccm-cms-types-address" version="6.6.0" relation="ge"/>
         <ccm:requires name="ccm-cms-types-contact" version="6.6.0" relation="ge"/>
-	<ccm:requires name="ccm-cms-types-person" version="6.6.0" relation="ge"/>
+        <ccm:requires name="ccm-cms-types-person" version="6.6.0" relation="ge"/>
         <ccm:requires name="ccm-sci-types-member" version="6.6.0" relation="ge"/>
-        <ccm:requires name="ccm-sci-publications" version="6.6.0" relation="ge"/>                
+        <ccm:requires name="ccm-sci-publications" version="6.6.0" relation="ge"/>  
+        <ccm:requires name="ccm-cms-assets-relatedlink" version="6.6.0" relation="ge"/>
     </ccm:dependencies>
     <ccm:contacts>
         <ccm:contact uri="http://www.pwi.uni-bremen.de" type="website"/>
