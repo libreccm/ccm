@@ -22,7 +22,10 @@
     <description>HostInit deploys CCM into a servlet container. Specifically it deploys
                  ADDON packages.
     </description>
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/> 
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    <taskdef    name="webxmlmerge"
+           classname="com.arsdigita.ant.WebXMLMergeTask"
+           classpath="webxml-mergetool.jar"/>
 
     <!-- base directory of the development environment
          default is parent directory of build.xml (sysprop basedir) -->
@@ -44,47 +47,120 @@
         <echo message="Packages available:" />
         <echo message="===================" />
         <echo message="                   " />
-         <echo message="${prop.repo.filelist}"/>
+        <echo message="${prop.repo.filelist}"/>
 
     </target>
 
 
     <target name="add"  depends="init">
         
-        <echo>Packages requested: ${ccm.packages}  </echo>
+        <echo message="Packages requested: ${ccm.requested.packages}"  />
+        <echo message="  " />
 
-        <foreach target="copy-dir"
-                  param="dirname" 
-                   list="${ccm.packages}"
+        <foreach target="copy-package"
+                  param="packagename" 
+                   list="${ccm.requested.packages}"
               delimiter=" "                 />
 
     </target>
 
-    <target name="copy-dir" >
+    <target name="copy-package"  depends="package-notInstalled,package-dependenciesOK" >
   
-        <echo> Package working on: ${dirname}  </echo>
+        <echo>Package working on: ${packagename}  </echo>
 
         <copy            todir="${ccm.home.dir}" 
                      overwrite="true" 
               includeEmptyDirs="true"
                    failonerror="false"
                        verbose="true" >
-           <fileset dir="${ccm.repo.dir}/${dirname}/web" />
+           <fileset dir="${ccm.repo.dir}/${packagename}/web" />
         </copy>  
         <copy            todir="${ccm.home.dir}/WEB-INF/lib" 
                      overwrite="true" 
               includeEmptyDirs="true"
                    failonerror="false"
                        verbose="true" >
-           <fileset dir="${ccm.repo.dir}/${dirname}" includes="*.jar" />
+           <fileset dir="${ccm.repo.dir}/${packagename}" includes="*.jar" />
         </copy>  
         <copy            todir="${ccm.home.dir}/WEB-INF/lib" 
                      overwrite="true" 
               includeEmptyDirs="true"
                    failonerror="false"
                        verbose="true" >
-           <fileset dir="${ccm.repo.dir}/${dirname}/lib" />
+           <fileset dir="${ccm.repo.dir}/${packagename}/lib" />
         </copy>  
+
+        <if>
+            <resourceexists>
+                <file file="${ccm.repo.dir}/${packagename}/web/WEB-INF/web.${packagename}.xml"/>
+            </resourceexists>
+
+            <then>
+                <echo message="Merging  web.${packagename}.xml" />
+
+                <webxmlmerge originalfile="${ccm.home.dir}/WEB-INF/web.xml"
+                                mergefile="${ccm.repo.dir}/${packagename}/web/WEB-INF/web.${packagename}.xml" 
+                                 destfile="${ccm.home.dir}/WEB-INF/.merged.web.xml"    /> 
+
+                <copy  file="${ccm.home.dir}/WEB-INF/.merged.web.xml"
+                     tofile="${ccm.home.dir}/WEB-INF/web.xml"  
+                  overwrite="yes"/>
+                <delete file="${ccm.home.dir}/WEB-INF/.merged.web.xml"/>
+
+            </then>
+
+            <else>
+                <echo message="No web.xml fragment to merge." />
+            </else>
+
+        </if>
+        <echo>Installation of package ${packagename} completed. </echo>
+        <echo message="  " />
+
+    </target>
+
+    <target name="package-notInstalled" depends="init">
+        <!-- Target will fail and abort build if parameter packagename 
+             is already installed in property war.packages.config        -->
+        <fail message="${packagename} already installed! " >
+            <condition >
+                <matches string="${waf.config.packages}"
+                          pattern="${packagename}"   />
+            </condition>
+        </fail>
+    </target>
+
+    <target name="package-dependenciesOK" depends="init">
+        <!-- Target will fail and abort build if parameter packagename 
+             has dependencies which are not already installed. 
+             Each package must have at least 1 dependency: ccm-core.        -->
+        <xmlproperty file="${ccm.repo.dir}/${packagename}/application.xml"
+                     collapseAttributes="true"                          />
+        <fail message="${packagename} has no requirements defined. Contact developer!" 
+              unless="ccm:application.ccm:dependencies.ccm:requires.name"  />
+ 
+        <echo message="Checking dependencies for ${packagename}"        />
+        <foreach target="package-dependencyCheck"
+                  param="requirement" 
+                   list="${ccm:application.ccm:dependencies.ccm:requires.name}"
+              delimiter=","                                                       />
+    </target>
+
+    <target name="package-dependencyCheck" depends="init">
+
+        <fail message="${requirement} not installed nor in installation list! " >
+            <condition >
+             <not>
+                <or>
+                <matches string="${waf.config.packages}"
+                          pattern="${packagename}"   />
+                <matches string="${ccm.requested.packages}"
+                          pattern="${packagename}"   />
+                </or>
+             </not>
+            </condition>
+        </fail>
+      <echo message="Requirement ${requirement} fullfilled." />
 
     </target>
 
@@ -92,11 +168,11 @@
     <target name="info" depends="init">
         
         <echo>Info requested for Package(s): </echo>
-        <echo>${ccm.packages}  </echo>
+        <echo>${ccm.requested.packages}</echo>
 
         <foreach target="show-info"
-                  param="dirname" 
-                   list="${ccm.packages}"
+                  param="packagename" 
+                   list="${ccm.requested.packages}"
               delimiter=" "                 />
 
     </target>
@@ -105,9 +181,10 @@
   
         <!-- for debugging
         <echo> Package working on: ${dirname}  </echo>                -->
-        <xmlproperty file="${ccm.repo.dir}/${dirname}/application.xml"
+        <xmlproperty file="${ccm.repo.dir}/${packagename}/application.xml"
                      collapseAttributes="true"                          />
 
+        <echo message="   " />
         <echo message="${ccm:application.name}: ${ccm:application.prettyName}" />
         <echo message="================================================================" />
         <echo message="   " />
@@ -120,9 +197,13 @@
 
 
     <target name="init">
+        <!-- Initialisation task: Sets initial values for several properties, checks
+             existence of required properties or system values, checks and evaluates
+             command line parameters.                                                  -->
+
+        <!-- root project dir (where build.xml lives, WEB-INF/bin/libexec by default   -->
         <property name="ccm.project.dir" value="${basedir}" />
-        <!--  Debugging only
-        <echo message="Project base directory is ${ccm.project.dir} "/>  -->
+
         <!-- Check for required variables   -->
         <!-- Property ccm.home.dir must be defined by invoking script! -->
         <fail message="ccm.home.dir or CCM_HOME_DIR not set.
@@ -132,17 +213,43 @@
         <fail message="ccm.repo.dir or CCM_REPO_DIR not set.
                        Please check the configuration."
               unless="ccm.repo.dir" />
-        <!-- Property ccm.packages must be defined by invoking script!
-             May be empty.                                             -->
-        <fail message="ccm.packages not set.
-                       Please check input and configuration."
-              unless="ccm.packages" />
-        <!--  For debugging uncomment
-        <echoproperties prefix="ccm." /> 
-        <echoproperties prefix="ant." />    -->
+
+        <if>
+            <isset property="ccm.packages.filename" />
+
+            <then>
+                <!-- <echo message="Processing file ${ccm.packages.filename}" /> -->
+		<loadfile property="ccm.requested.packages" 
+                           srcFile="${ccm.packages.filename}"       >
+                    <!-- Probably a bug in loadfile: Without striplinebreak an addional
+                         (empty) element is added to the property                   -->
+                    <filterchain>
+                        <striplinebreaks/>
+                    </filterchain>
+
+                </loadfile>
+                <fail message="File ${ccm.packages.filename} not valid."
+                       unless="ccm.requested.packages" />
+
+            </then>
+            <else>
+                <!-- Property ccm.packages must be defined by invoking script
+                     if no file for package list is definded. May be empty.             -->
+                <fail message="ccm.packages not set.
+                               Please check input and configuration."
+                       unless="ccm.packages" />
+
+
+                <property name="ccm.requested.packages" value="${ccm.packages}" />
+            </else>
+        </if>
+
+        <!-- Registry for waf.config.packages must exist. -->
+        <property file="../../conf/registry/registry.properties"/>
+        <fail message="Registry not found. Guess: try to use 'ccm  prepare' first." 
+              unless="waf.config.packages" />
 
     </target>
-
 
     <target name="usage">
         <echo>

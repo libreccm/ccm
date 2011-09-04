@@ -1224,6 +1224,9 @@
       <echo message="web.xml to use: ${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}" />
     </target>
 
+    <!-- Determines which web.xml should be used (as specified in project.xml),
+         copies this file into WEB-INF.xml and invokes merge-xml to merge the
+         web.*.xml stub of each module (it exist) into that file as necessary -->
     <target name="copy-webxml"
             depends="init,copy-webxml-init" if="root.webapp.exists">
       <copy file="${{resolved.webxml.source.file}}"
@@ -1261,8 +1264,11 @@
             importClass(Packages.com.liferay.portal.kernel.xml.SAXReaderUtil);
             new FileUtil().setFile(FileImpl.getInstance());
             new SAXReaderUtil().setSAXReader(new SAXReaderImpl());
+            <!-- takes the original web.xml file, merges the web.*.xml stub file
+                 from a package to include and merges both into mergedWebXML -->
             var builder = new WebXMLBuilder(originalWebXML, customWebXML, mergedWebXML);
         </script>
+        <!-- the merged file becomes the new original web.xml                -->
         <copy tofile="${{originalWebXML}}" file="${{mergedWebXML}}" overwrite="yes"/>
         <delete file="${{mergedWebXML}}"/>
     </target>    

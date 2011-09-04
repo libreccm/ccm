@@ -104,8 +104,7 @@
             <arg value="${ccm.tools.xsl.dir}/listapps.xsl"/>
             <arg value="-TEXT"/>
         </java>
-		<loadfile property="applications" srcFile=".tmp.applications.list" />
-    	<delete file=".tmp.applications.list"/>
+     	<delete file=".tmp.applications.list"/>
 		<tstamp>
 			<format pattern="yyyymmddhhmmss" property="timestamp" />
 		</tstamp>

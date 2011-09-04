@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ANT build file which copies CCM addon packages into an deployed CCM application
+     and thus extends its functionality. 
+     It checks for package dependencies, and installation consistency (e.g. completes
+     the web.xml file if necessary.
+
+     TASKS (targets):
+         list               lists avaiblable addon packages in source repo.
+         add {packagelist}  adds one or more packages to the aplaws application directory.
+         info {package}     displays info about a package (from package's application.xml).
+-->
+
+<!-- Required variables:
+        ccm.home.dir:          base dir of the web application (document root)
+                               Example: /srv/aplaws/webapps/ROOT
+                               Target of deployment
+        ccm.repo.dir:          base dir where ccm packages are stored.
+                               Example: /home/aplaws/aplaws-repo
+                               Source of deployment 
+-->
+<project name="CCM Content and Collaboration Management HostInit task " default="usage">
+    <description>HostInit deploys CCM into a servlet container. Specifically it deploys
+                 ADDON packages.
+    </description>
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/> 
+
+    <!-- base directory of the development environment
+         default is parent directory of build.xml (sysprop basedir) -->
+    <!-- Prefix used to access environment variables, globally visibel -->
+    <property environment="env"/>
+
+    <target name="list" depends="init">
+
+        <dirset id="repo.contents" dir="${ccm.repo.dir}" includes="ccm-*"/>
+        <property name="prop.repo.contents" refid="repo.contents"/>
+        <propertyregex property="prop.repo.filelist"
+                          input="${prop.repo.contents}"
+                         regexp=";"
+                        replace="${line.separator}"
+                       override="true"
+                   defaultValue="no match"
+                         global="true"  /> 
+        <echo message="                   " />
+        <echo message="Packages available:" />
+        <echo message="===================" />
+        <echo message="                   " />
+         <echo message="${prop.repo.filelist}"/>
+
+    </target>
+
+
+    <target name="add"  depends="init">
+        
+        <echo>Packages requested: ${ccm.packages}  </echo>
+
+        <foreach target="copy-dir"
+                  param="dirname" 
+                   list="${ccm.packages}"
+              delimiter=" "                 />
+
+    </target>
+
+    <target name="copy-dir" >
+  
+        <echo> Package working on: ${dirname}  </echo>
+
+        <copy            todir="${ccm.home.dir}" 
+                     overwrite="true" 
+              includeEmptyDirs="true"
+                   failonerror="false"
+                       verbose="true" >
+           <fileset dir="${ccm.repo.dir}/${dirname}/web" />
+        </copy>  
+        <copy            todir="${ccm.home.dir}/WEB-INF/lib" 
+                     overwrite="true" 
+              includeEmptyDirs="true"
+                   failonerror="false"
+                       verbose="true" >
+           <fileset dir="${ccm.repo.dir}/${dirname}" includes="*.jar" />
+        </copy>  
+        <copy            todir="${ccm.home.dir}/WEB-INF/lib" 
+                     overwrite="true" 
+              includeEmptyDirs="true"
+                   failonerror="false"
+                       verbose="true" >
+           <fileset dir="${ccm.repo.dir}/${dirname}/lib" />
+        </copy>  
+
+    </target>
+
+
+    <target name="info" depends="init">
+        
+        <echo>Info requested for Package(s): </echo>
+        <echo>${ccm.packages}  </echo>
+
+        <foreach target="show-info"
+                  param="dirname" 
+                   list="${ccm.packages}"
+              delimiter=" "                 />
+
+    </target>
+
+    <target name="show-info" >
+  
+        <!-- for debugging
+        <echo> Package working on: ${dirname}  </echo>                -->
+        <xmlproperty file="${ccm.repo.dir}/${dirname}/application.xml"
+                     collapseAttributes="true"                          />
+
+        <echo message="${ccm:application.name}: ${ccm:application.prettyName}" />
+        <echo message="================================================================" />
+        <echo message="   " />
+        <echo message="${ccm:application.ccm:description}" />
+        <echo message="   " />
+        <echo message="Requires:" />
+        <echo message="${ccm:application.ccm:dependencies.ccm:requires.name}" />
+
+    </target>
+
+
+    <target name="init">
+        <property name="ccm.project.dir" value="${basedir}" />
+        <!--  Debugging only
+        <echo message="Project base directory is ${ccm.project.dir} "/>  -->
+        <!-- Check for required variables   -->
+        <!-- Property ccm.home.dir must be defined by invoking script! -->
+        <fail message="ccm.home.dir or CCM_HOME_DIR not set.
+                       Please check the configuration."
+              unless="ccm.home.dir" />
+        <!-- Property ccm.repo.dir must be defined by invoking script! -->
+        <fail message="ccm.repo.dir or CCM_REPO_DIR not set.
+                       Please check the configuration."
+              unless="ccm.repo.dir" />
+        <!-- Property ccm.packages must be defined by invoking script!
+             May be empty.                                             -->
+        <fail message="ccm.packages not set.
+                       Please check input and configuration."
+              unless="ccm.packages" />
+        <!--  For debugging uncomment
+        <echoproperties prefix="ccm." /> 
+        <echoproperties prefix="ant." />    -->
+
+    </target>
+
+
+    <target name="usage">
+        <echo>
+            Base directory is ${basedir}
+            USAGE:
+               ccm-host list               lists avaiblable addon packages
+               ccm-host add {packagelist}  adds one or more packages to the aplaws application directory.
+               ccm-host info {package}     displays info about a package.
+        </echo>
+    </target>
+
+</project>

@@ -14,36 +14,6 @@
 # PATH, you have to adjust the paths.
 CCM_LIB_DIR="../lib"
 CCM_HOME_DIR="../.."
-# echo "CCM_LIB_DIR is " ${CCM_LIB_DIR}
-# echo "CCM_HOME_DIR is " ${CCM_HOME_DIR}
-
-# We need CATALINA_HOME environment variable to access Tomcat's lib dir.
-#if [[ -z "$CATALINA_HOME" ]] ;  then
-#  echo CATALINE_HOME not set. Guessing ... 
-
-#  if [ -f /etc/tomcat6/tomcat6.conf ] 
-#    then
-#      . /etc/tomcat6/tomcat6.conf 
-#      echo 
-#      echo Using CATALINA_HOME = $CATALINA_HOME
-#      echo If this doesn\'t work use
-#      echo export CATALINA_HOME=/path/to/tomcat/installation
-#      echo to point us to the correct location.
-#    else
-#      echo
-#      echo ===================================================
-#      echo Environment variable CATALINA_HOME not set. We need
-#      echo to know the location of Tomcat\'s lib directory.
-#      echo So use 
-#      echo export CATALINA_HOME=/path/to/tomcat/installation
-#      echo to point us to the correct location and run ccm
-#      echo again.
-#      echo ===================================================
-#      echo
-#      exit 1
-#  fi
-#fi
-#CATALINA_LIB_DIR="${CATALINA_HOME}/lib"
 
 # We need CCM_REPO environment variable to access the source dir.
 if [[ -z "$CCM_REPO" ]] ;  then
@@ -73,7 +43,7 @@ if [[ -z "$CCM_REPO" ]] ;  then
       echo "	export CCM_REPO=/path/to/repo     "
       echo to point us to the correct location and run 
       echo ccm-hostinit again or execute
-      echo "	CCM_REPO=/path/to/repo ccm-hostinit  [task]  "
+      echo "	CCM_REPO=/path/to/repo sh ccm-hostinit  [task]  "
       echo again
       echo ===================================================
       echo
@@ -97,26 +67,24 @@ then
     exit 1
 fi
 
-#if [ ! -f ${CATALINA_LIB_DIR}/catalina.jar ]
-#then
-#    echo "Error: CATALINA_LIB_DIR is invalid \(no catalina.jar in CATALINA_LIB_DIR\)."
-#    exit 1
-#fi
-
 #Convert to absolute path:
 CCM_HOME=`cd ${CCM_HOME_DIR}; pwd`
-# echo "CCM_HOME_DIR: " ${CCM_HOME_DIR}
-# echo "PARAMETER before shift: " "$@"
 ANT_HOME_DIR="./libexec/ant"
 ANT_HOME=`cd ${ANT_HOME_DIR}; pwd`
 export  ANT_HOME
-# echo "ANT_HOME: "  ${ANT_HOME}
-# echo "Starting CCM-Tool..."
-#  java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR}  "com.arsdigita.packaging.MasterTool" "$@"
+
 TASK="$1"
-# shift
 shift
-# echo "PARAMETER after shift: " "$@"
-PACKAGES="$@" ${PACKAGES}
-# echo "Packages: "  ${PACKAGES}
-exec libexec/ant/bin/ant  ${TASK} -quiet -f libexec/build.xml -Dccm.home.dir=${CCM_HOME} -Dccm.repo.dir=${CCM_REPO} -Dccm.packages="${PACKAGES}"
+
+if [ "$1" = "--packagefile" ]
+  then
+    # Absolute path of current dir
+    MY_DIR=`pwd`
+    # Construct absolute (canonical) filename
+    FILENAME=${MY_DIR}/$2
+    exec libexec/ant/bin/ant  ${TASK} -quiet  -f libexec/build.xml -Dccm.home.dir=${CCM_HOME} -Dccm.repo.dir=${CCM_REPO} -Dccm.packages.filename="${FILENAME}"
+  else
+    PACKAGES="$@" 
+    exec libexec/ant/bin/ant  ${TASK} -quiet  -f libexec/build.xml -Dccm.home.dir=${CCM_HOME} -Dccm.repo.dir=${CCM_REPO} -Dccm.packages="${PACKAGES}"
+fi
+

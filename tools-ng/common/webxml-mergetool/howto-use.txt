@@ -1,0 +1,34 @@
+webxml-mergetool
+
+Purpose:
+
+Takes an existing web.xml deployment descriptor (original file) and 
+a web.xml fragment (merge file) and inserts those elements of merge file
+which are not already in original file into original file and save the
+combined content in destination file.
+
+Usage:
+
+The tool acts as an ANT task. 
+
+At beginning of build.xml: 
+
+    <taskdef    name="webxmlmerge"
+           classname="com.arsdigita.ant.WebXMLMergeTask"
+           classpath="webxml-mergetool.jar"/>
+
+To use add at appropriate location: 
+
+
+  <webxmlmerge originalfile="${ccm.home.dir}/WEB-INF/web.xml"
+      mergefile="${ccm.repo.dir}/${packagename}/web/WEB-INF/web.${packagename}.xml" 
+       destfile="${ccm.home.dir}/WEB-INF/.merged.web.xml"    /> 
+
+
+Eventually followed by
+
+  <copy  file="${ccm.home.dir}/WEB-INF/.merged.web.xml"
+       tofile="${ccm.home.dir}/WEB-INF/web.xml"  
+    overwrite="yes"/>
+  <delete file="${ccm.home.dir}/WEB-INF/.merged.web.xml"/>
+  
