@@ -39,7 +39,8 @@ import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.ui.ItemSearchWidget;
-import com.arsdigita.dispatcher.DispatcherHelper;
+
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import org.apache.log4j.Logger;
 
@@ -96,7 +97,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         // Add the Options to the SingleSelect widget
         GenericContactTypeCollection contacttypes =
                                      new GenericContactTypeCollection();
-        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
 
         while (contacttypes.next()) {

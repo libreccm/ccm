@@ -41,7 +41,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import org.apache.log4j.Logger;
 
 /**
@@ -94,7 +94,7 @@ public class GenericOrganizationalUnitContactAddForm
 
         GenericContactTypeCollection contacttypes =
                                      new GenericContactTypeCollection();
-        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
 
         while (contacttypes.next()) {

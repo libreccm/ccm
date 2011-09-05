@@ -30,7 +30,8 @@ import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
-import com.arsdigita.dispatcher.DispatcherHelper;
+
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import org.apache.log4j.Logger;
 
@@ -112,7 +113,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
 
         // Add the Options to the SingleSelect widget
         GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
-        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
 
         while (contacttypes.next()) {
             RelationAttribute ct = contacttypes.getRelationAttribute();

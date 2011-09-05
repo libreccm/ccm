@@ -43,8 +43,8 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -184,7 +184,7 @@ public class GenericPersonContactTable extends Table implements
                     s_log.debug(String.format(
                             "Getting human readable contact type for contact type \"%s\"...",
                             m_contactCollection.getContactType()));
-                    String lang = DispatcherHelper.getNegotiatedLocale().
+                    String lang = GlobalizationHelper.getNegotiatedLocale().
                             getLanguage();
                     if (contacttypes.size() <= 0) {
                         s_log.warn("No contact entry types found. Using key as "

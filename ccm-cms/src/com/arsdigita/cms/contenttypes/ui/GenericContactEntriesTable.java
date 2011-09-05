@@ -39,7 +39,7 @@ import com.arsdigita.cms.contenttypes.GenericContactEntryKeys;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 
@@ -149,7 +149,7 @@ public class GenericContactEntriesTable extends Table implements TableActionList
             switch (columnIndex) {
                 case 0:
                     GenericContactEntryKeys keys = new GenericContactEntryKeys(m_contactEntry.getKey());
-                    keys.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+                    keys.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
                     if (keys.next()) {
                         Object key =  keys.getName();
                         

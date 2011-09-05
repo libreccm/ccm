@@ -33,7 +33,8 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.contenttypes.GenericContactEntryKeys;
-import com.arsdigita.dispatcher.DispatcherHelper;
+
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import org.apache.log4j.Logger;
 
@@ -65,7 +66,7 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         
         // Add the Options to the SingleSelect widget
         GenericContactEntryKeys keyList = new GenericContactEntryKeys();
-        keyList.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
         while(keyList.next()) {
             String currentKey = keyList.getKey();
             contactEntryKey.addOption(new Option(currentKey, keyList.getName()));

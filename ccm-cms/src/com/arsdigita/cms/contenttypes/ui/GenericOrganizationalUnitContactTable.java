@@ -43,16 +43,22 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 ;
 
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.LockableImpl;
 
 import java.math.BigDecimal;
 
+import org.apache.log4j.Logger;
+import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
+import org.apache.log4j.Logger;
+import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
@@ -192,7 +198,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                             "Getting human readable contact type for contact type \"%s\"...",
                             m_contactCollection.getContactType()));
                     String lang =
-                           DispatcherHelper.getNegotiatedLocale().
+                           GlobalizationHelper.getNegotiatedLocale().
                             getLanguage();
                     if (m_contacttypes.size() <= 0) {
                         s_log.warn(String.format("No matching relation "
@@ -218,11 +224,11 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                                 "Human readable contact type is: \"%s\"...",
                                 m_contacttypes.getRelationAttribute(
                                 m_contactCollection.getContactType(),
-                                DispatcherHelper.getNegotiatedLocale().
+                                GlobalizationHelper.getNegotiatedLocale().
                                 getLanguage()).getName()));
                         return m_contacttypes.getRelationAttribute(
                                 m_contactCollection.getContactType(),
-                                DispatcherHelper.getNegotiatedLocale().
+                                GlobalizationHelper.getNegotiatedLocale().
                                 getLanguage()).getName();
                     }
                 case 1:

@@ -42,7 +42,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import org.apache.log4j.Logger;
 
 /**
@@ -97,7 +97,7 @@ public class GenericOrganizationalUnitPersonAddForm
                 globalize("cms.ui.select_one").localize())));
         RelationAttributeCollection roles = new RelationAttributeCollection(
                 getRoleAttributeName());
-        roles.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
         while (roles.next()) {
             RelationAttribute role;
@@ -119,7 +119,7 @@ public class GenericOrganizationalUnitPersonAddForm
         RelationAttributeCollection statusColl =
                                     new RelationAttributeCollection(
                 getStatusAttributeName());
-        statusColl.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        statusColl.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
         while (statusColl.next()) {
             RelationAttribute status;

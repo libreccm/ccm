@@ -9,6 +9,7 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
@@ -110,7 +111,7 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
                 RelationAttributeCollection relationAttributeCollection =
                                             new RelationAttributeCollection(
                         m_relationAttribute, key);
-                relationAttributeCollection.addLanguageFilter(DispatcherHelper.
+                relationAttributeCollection.addLanguageFilter(GlobalizationHelper.
                         getNegotiatedLocale().getLanguage());
                 if (relationAttributeCollection.size() > 0) {
                     relationAttributeCollection.next();

@@ -31,7 +31,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
@@ -147,7 +147,7 @@ public abstract class CompoundContentItemPanel
 
             bundle = (ContentBundle) item;
 
-            resolved = bundle.getInstance(DispatcherHelper.getNegotiatedLocale().
+            resolved = bundle.getInstance(GlobalizationHelper.getNegotiatedLocale().
                     getLanguage());
 
             if (resolved == null) {

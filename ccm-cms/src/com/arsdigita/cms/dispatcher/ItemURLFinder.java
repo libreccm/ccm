@@ -59,6 +59,7 @@ public class ItemURLFinder implements URLFinder {
      * @return
      * @throws NoValidURLException
      */
+    @Override
     public String find(OID oid, String context) throws NoValidURLException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Locating " + oid + " in " + context);
@@ -100,6 +101,7 @@ public class ItemURLFinder implements URLFinder {
      * @return
      * @throws NoValidURLException
      */
+    @Override
     public String find(OID oid) throws NoValidURLException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Locating " + oid);
