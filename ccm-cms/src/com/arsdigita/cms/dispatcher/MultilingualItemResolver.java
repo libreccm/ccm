@@ -27,9 +27,9 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
-import com.arsdigita.web.Web;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -86,6 +86,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * #getCurrentContext}.
      * @return The content item, or null if no such item exists
      */
+    @Override
     public ContentItem getItem(final ContentSection section,
             String url,
             final String context) {
@@ -214,6 +215,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * @see ContentItem#LIVE
      * @see ContentItem#DRAFT
      */
+    @Override
     public String getCurrentContext(final PageState state) {
         s_log.debug("Getting the current context");
         
@@ -262,6 +264,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
             final BigDecimal itemId,
             final String name,
@@ -284,6 +287,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
             final BigDecimal itemId,
             final String name,
@@ -335,6 +339,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
             final ContentItem item,
             final ContentSection section,
@@ -355,6 +360,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
             final ContentItem item,
             ContentSection section,
@@ -404,6 +410,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * @param request The HTTP request
      * @return The master page
      */
+    @Override
     public CMSPage getMasterPage(final ContentItem item,
             final HttpServletRequest request)
             throws ServletException {
@@ -485,7 +492,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
          */
         final StringBuffer url = new StringBuffer(400);
         //url.append(section.getURL());
-        url.append(section.getPath() + "/");
+        url.append(section.getPath()).append("/");
         
         /*
          * add template context, if one is given
@@ -493,7 +500,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         // This is breaking URL's...not sure why it's here. XXX
         // this should work with the appropriate logic. trying again.
         if (!(templateContext == null || templateContext.length() == 0)) {
-            url.append(TEMPLATE_CONTEXT_PREFIX + templateContext + "/");
+            url.append(TEMPLATE_CONTEXT_PREFIX).append(templateContext).append("/");
         }
         
         // Try to retrieve the bundle.
@@ -524,7 +531,9 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
             
             url.append(item.getPath());
         }
-        
+/*        
+         * This will append the language to the url, which will in turn render
+         * the language negotiation inoperative
         final String language = item.getLanguage();
         
         if (language == null) {
@@ -540,7 +549,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         if (s_log.isDebugEnabled()) {
             s_log.debug("Generated live URL " + url.toString());
         }
-        
+*/        
         return url.toString();
     }
     
@@ -579,7 +588,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         // This is breaking URL's...not sure why it's here. XXX
         // this should work with the appropriate logic. trying again.
         if (!(templateContext == null || templateContext.length() == 0)) {
-            url.append(TEMPLATE_CONTEXT_PREFIX + templateContext + "/");
+            url.append(TEMPLATE_CONTEXT_PREFIX).append(templateContext).append("/");
         }
         
         // Try to retrieve the bundle.
@@ -611,7 +620,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
             s_log.debug("Encoding the language of the item passed in, '" +
                     language + "'");
             
-            url.append("." + language);
+            url.append(".").append(language);
         }
         
         if (s_log.isDebugEnabled()) {
@@ -863,29 +872,9 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
             if (lang == null) {
                 s_log.debug("The URL has no language encoded in it; " +
                         "negotiating the language");
-                /*
-                 * Either there were no extensions at all, or
-                 * neither one of them matched one of the
-                 * supported languages.  So the ContentBundle has
-                 * to decide which language it will show; this
-                 * decision is based on the preferred languages as
-                 * defined in the client's request.
-                 */
-                // TODO: do something about this UCI (Unknown Content Item)...
-                
-                // XXX sketchy getRequest
-                HttpServletRequest req = Web.getRequest();
-                final ContentItem resolved;
-                if (req != null) {
-                    resolved = ((ContentBundle) item).negotiate(req.getLocales());
-                } else {
-                    // fallback to the primary instance when request is not available
-                    resolved = ((ContentBundle) item).getPrimaryInstance();
-                }
-                if (s_log.isDebugEnabled()) {
-                    s_log.debug("Resolved URL to item " + resolved);
-                }
-                return resolved;
+                // There is no language, so we get the negotiated locale and call
+                // this method again with a proper language
+                return this.getItemFromLangAndBundle(GlobalizationHelper.getNegotiatedLocale().getLanguage(), item);
             } else {
                 s_log.debug("The URL is encoded with a langauge; " +
                         "fetching the appropriate item from " +
