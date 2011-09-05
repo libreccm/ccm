@@ -24,7 +24,6 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Session;
@@ -70,8 +69,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     protected void doService(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Application app) throws ServletException,
-                                                           IOException {
-        PublicPersonalProfileConfig config = PublicPersonalProfiles.getConfig();
+                                                           IOException {        
         String path = "";
 
         logger.debug("PublicPersonalProfileServlet is starting...");
@@ -188,6 +186,16 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                     if (navPath == null) {
                         generateProfileOwnerXml(profileElem, owner, state);
+                        
+                        /*DataCollection relatedLinks = RelatedLink.getRelatedLinks(profile, "NONE");                       
+                        if (relatedLinks.size() > 0) {
+                            
+                        }
+                        
+                        DataCollection notes = Note.getNotes(profile);
+                        if (notes.size() > 0) {
+                            
+                        } */                       
                     } else {
                         final DataCollection links =
                                              RelatedLink.getRelatedLinks(profile,
@@ -424,14 +432,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     "titlePost");
             titlePost.setText(owner.getTitlePost());
         }
-
-        /*PublicPersonalProfileXmlGenerator personXml =
-        new PublicPersonalProfileXmlGenerator(
-        owner);
-        personXml.generateXML(state,
-        profileOwnerElem,
-        "PublicPersonalProfile");*/
-
+    
         if (owner.hasContacts()) {
             final GenericPersonContactCollection contacts = owner.getContacts();
             //final String contactType = config.getContactType();
@@ -443,11 +444,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 contacts.next();
                 generateContactXml(profileOwnerElem,
                                    contacts.getContact(),
-                                   state);
-                /*PublicPersonalProfileXmlGenerator contactXml =
-                new PublicPersonalProfileXmlGenerator(
-                contacts.getContact());
-                contactXml.generateXML(state, profileOwnerElem, "");*/
+                                   state);                
             }
         }
 

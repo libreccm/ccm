@@ -659,10 +659,6 @@ public class PersonImporter extends Program {
                 }
 
                 tctx.commitTxn();
-            } catch (UnsupportedEncodingException ex) {
-                System.err.println("Error: ");
-                ex.printStackTrace(System.err);
-                return;
             } finally {
                 if (tctx.inTxn()) {
                     tctx.abortTxn();

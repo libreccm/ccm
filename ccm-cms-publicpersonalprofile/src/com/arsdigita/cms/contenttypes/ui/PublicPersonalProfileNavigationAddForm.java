@@ -8,6 +8,8 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
@@ -28,6 +30,8 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
+import com.arsdigita.util.UncheckedWrapperException;
+import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
 
 /**
@@ -76,8 +80,38 @@ public class PublicPersonalProfileNavigationAddForm
         SingleSelect navItemSelect = new SingleSelect(navItemModel);
         navItemSelect.addValidationListener(new NotNullValidationListener());
         navItemSelect.addValidationListener(new NotEmptyValidationListener());
+        try {
+            navItemSelect.addPrintListener(new PrintListener() {
 
-        navItemSelect.addOption(new Option("", ""));
+                public void prepare(final PrintEvent event) {
+                    SingleSelect select = (SingleSelect) event.getTarget();
+
+                    select.addOption(new Option("", ""));
+                    PublicPersonalProfileNavItemCollection navItems =
+                                                           new PublicPersonalProfileNavItemCollection();
+                    navItems.addLanguageFilter(DispatcherHelper.
+                            getNegotiatedLocale().
+                            getLanguage());
+                    if (showGenerated()) {
+                        navItems.addFilter("generatorClass is not null");
+                    } else {
+                        navItems.addFilter("generatorClass is null");
+                    }
+
+                    PublicPersonalProfileNavItem navItem;
+                    while (navItems.next()) {
+                        navItem = navItems.getNavItem();
+
+                        select.addOption(new Option(navItem.getKey(),
+                                                    navItem.getLabel()));
+                    }
+                }
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException(ex);
+        }
+
+        /*navItemSelect.addOption(new Option("", ""));
 
         PublicPersonalProfileNavItemCollection navItems =
                                                new PublicPersonalProfileNavItemCollection();
@@ -95,7 +129,7 @@ public class PublicPersonalProfileNavigationAddForm
 
             navItemSelect.addOption(new Option(navItem.getKey(),
                                                navItem.getLabel()));
-        }
+        }*/
         add(navItemSelect);
 
         if (!showGenerated()) {
