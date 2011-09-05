@@ -30,6 +30,7 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObjectCache;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
@@ -59,6 +60,17 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+/**
+ * 
+ * Repaired ItemURLCache to save multilingual items with automatic
+ * language negotiation. The cahce now uses the remaining url part
+ * and the language concatinated as a hash table key. The delimiter
+ * is CACHE_KEY_DELIMITER.
+ * 
+ * @author unknown
+ * @author Sören Bernstein <sbernstein@quasiweb.de>
+ */
 
 public class ContentSectionServlet extends BaseApplicationServlet {
 
@@ -91,6 +103,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     public static final String MEDIA_TYPE = "templateContext";
 
     private static boolean s_cacheItems = true;
+    
+    private static final String CACHE_KEY_DELIMITER = "%";
 
     /**
      * @see com.arsdigita.web.BaseApplicationServlet#doService
@@ -335,7 +349,12 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 s_log.debug("Trying to get content item for URL " + url +
                             " from cache");
             }
-            item = itemURLCacheGet(section, url);
+            
+            // Get the negotiated locale
+            String lang = GlobalizationHelper.getNegotiatedLocale().getLanguage();
+            
+            item = itemURLCacheGet(section, url, lang);
+            item = null;
 
             if (item == null) {
                 if (s_log.isDebugEnabled()) {
@@ -345,7 +364,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 }
                 //item not cached, so retreive it and cache it
                 item = itemResolver.getItem(section, url, ContentItem.LIVE);
-                itemURLCachePut(section, url, item);
+                itemURLCachePut(section, url, lang, item);
             } else if (s_log.isDebugEnabled()) {
                 s_log.debug("Found content item in cache");
             }
@@ -417,9 +436,10 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
     private static synchronized void itemURLCachePut(ContentSection section, 
                                                      String sURL,
+                                                     String lang,
                                                      BigDecimal itemID) {
         
-        getItemURLCache(section).put(sURL, itemID);
+        getItemURLCache(section).put(sURL + CACHE_KEY_DELIMITER + lang, itemID);
     }
 
     /**
@@ -430,15 +450,16 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      */
     public static synchronized void itemURLCachePut(ContentSection section, 
                                                     String sURL,
+                                                    String lang,
                                                     ContentItem item) {
         if (sURL == null || item == null) {
             return;
         }
         if (s_log.isDebugEnabled()) {
-            s_log.debug("adding cached entry for url " + sURL);
+            s_log.debug("adding cached entry for url " + sURL + " and language " + lang);
         }
 
-        itemURLCachePut(section, sURL, item.getID());
+        itemURLCachePut(section, sURL, lang, item.getID());
     }
 
     /**
@@ -447,11 +468,12 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * @param sURL the cache entry key to remove
      */
     public static synchronized void itemURLCacheRemove(ContentSection section, 
-                                                       String sURL) {
+                                                       String sURL,
+                                                       String lang) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("removing cached entry for url " + sURL);
+            s_log.debug("removing cached entry for url " + sURL + "and language " + lang);
         }
-        getItemURLCache(section).remove(sURL);
+        getItemURLCache(section).remove(sURL + CACHE_KEY_DELIMITER + lang);
     }
 
     /**
@@ -461,8 +483,10 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * @return the ContentItem in the cache, or null
      */
     public static ContentItem itemURLCacheGet(ContentSection section, 
-                                              final String sURL) {
-        final BigDecimal itemID = (BigDecimal) getItemURLCache(section).get(sURL);
+                                              final String sURL,
+                                              final String lang) {
+        final BigDecimal itemID = (BigDecimal) getItemURLCache(section)
+                .get(sURL + CACHE_KEY_DELIMITER + lang);
 
         if (itemID == null) {
             return null;
