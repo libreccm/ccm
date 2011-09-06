@@ -558,7 +558,7 @@ public class PersonImporter extends Program {
                                 membersFormerDepartmentCategories.get(result.
                                         getString("abteilunglink.Abteilung_Id"));
                             } else if ("Assoziert".equals(result.getString(
-                                    "person.Eigenscahaft"))) {
+                                    "person.Eigenschaft"))) {
                                 depCat = membersAssociatedDepartmentCategories.
                                         get(result.getString(
                                         "abteilunglink.Abteilung_Id"));
@@ -573,9 +573,9 @@ public class PersonImporter extends Program {
                     if (!result.getString("person.Angaben").isEmpty()) {
                         Contact contact = new Contact();
                         contact.setLanguage("de");
-                        contact.setName(String.format("kontakt-%s", person.
+                        contact.setName(String.format("%s-kontakt", person.
                                 getName()));
-                        contact.setTitle(String.format("Kontakt %s", person.
+                        contact.setTitle(String.format("%s Kontakt", person.
                                 getTitle()));
                         contact.setPerson(person, "commonContact");
 

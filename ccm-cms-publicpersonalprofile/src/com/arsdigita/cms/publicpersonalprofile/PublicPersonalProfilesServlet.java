@@ -69,7 +69,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     protected void doService(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Application app) throws ServletException,
-                                                           IOException {        
+                                                           IOException {
         String path = "";
 
         logger.debug("PublicPersonalProfileServlet is starting...");
@@ -164,7 +164,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     throw new IllegalStateException(
                             "More than one matching members found...");
                 } else {
-                    final PageState state = new PageState(page, request,
+                    final PageState state = new PageState(page,
+                                                          request,
                                                           response);
 
                     profiles.next();
@@ -185,17 +186,22 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     createNavigation(profile, root, navPath);
 
                     if (navPath == null) {
-                        generateProfileOwnerXml(profileElem, owner, state);
-                        
+                        final PublicPersonalProfileXmlGenerator generator =
+                                                                new PublicPersonalProfileXmlGenerator(
+                                profile);
+                        generator.generateXML(state, root, "");
+
+                        //generateProfileOwnerXml(profileElem, owner, state);                        
+
                         /*DataCollection relatedLinks = RelatedLink.getRelatedLinks(profile, "NONE");                       
                         if (relatedLinks.size() > 0) {
-                            
+                        
                         }
                         
                         DataCollection notes = Note.getNotes(profile);
                         if (notes.size() > 0) {
-                            
-                        } */                       
+                        
+                        } */
                     } else {
                         final DataCollection links =
                                              RelatedLink.getRelatedLinks(profile,
@@ -270,9 +276,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                 final PublicPersonalProfileXmlGenerator generator =
                                                                         new PublicPersonalProfileXmlGenerator(
                                         item);
-                                generator.generateXML(new PageState(page,
-                                                                    request,
-                                                                    response),
+                                generator.generateXML(state,
                                                       root,
                                                       "");
                             }
@@ -432,7 +436,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     "titlePost");
             titlePost.setText(owner.getTitlePost());
         }
-    
+
         if (owner.hasContacts()) {
             final GenericPersonContactCollection contacts = owner.getContacts();
             //final String contactType = config.getContactType();
@@ -444,7 +448,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 contacts.next();
                 generateContactXml(profileOwnerElem,
                                    contacts.getContact(),
-                                   state);                
+                                   state);
             }
         }
 
@@ -526,14 +530,15 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final ParameterSingleSelectionModel navItemSelect =
                                             new ParameterSingleSelectionModel(
                 navItemKeyParam);
-        
+
         page.addGlobalStateParam(navItemKeyParam);
 
         final BoxPanel box = new BoxPanel(BoxPanel.VERTICAL);
         final FormSection tableSection = new FormSection(box);
 
         final PublicPersonalProfileNavItemsAddForm addForm =
-                                                   new PublicPersonalProfileNavItemsAddForm(navItemSelect);
+                                                   new PublicPersonalProfileNavItemsAddForm(
+                navItemSelect);
         final PublicPersonalProfileNavItemsTable table =
                                                  new PublicPersonalProfileNavItemsTable(
                 navItemSelect);

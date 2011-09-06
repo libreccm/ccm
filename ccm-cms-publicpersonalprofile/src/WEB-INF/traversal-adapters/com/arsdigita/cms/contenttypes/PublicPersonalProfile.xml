@@ -11,6 +11,14 @@
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/profileUrl"/>
             </xrd:attributes>
+            
+            <xrd:associations rule="include">
+                <xrd:property name="/object/owner"/>
+                <xrd:property name="/object/owner/contacts"/>
+                <xrd:property name="/object/owner/contacts/contactentries"/>
+                <xrd:property name="/object/owner/contacts/address"/>
+                 
+            </xrd:associations>
         </xrd:adapter>
     
     </xrd:context>
