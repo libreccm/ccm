@@ -11,8 +11,6 @@ import com.arsdigita.cms.contenttypes.Contact;
 import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Link;
-import com.arsdigita.cms.contenttypes.Person;
-import com.arsdigita.cms.contenttypes.SciAuthor;
 import com.arsdigita.cms.contenttypes.SciMember;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
@@ -24,7 +22,6 @@ import com.arsdigita.persistence.TransactionContext;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -399,6 +396,7 @@ public class PersonImporter extends Program {
                     + "FROM person "
                     + "JOIN abteilunglink "
                     + "ON person.Person_Id = abteilunglink.Person_Id "
+                    + "WHERE Eigenschaft = 'Aktiv' OR Eigenschaft = 'Ehemalig' "
                     + "ORDER BY person.Name");
 
             result.last();
@@ -433,7 +431,7 @@ public class PersonImporter extends Program {
             addressFolder.addItem(addressBundle);
 
             try {
-                while (result.next()) {
+                while (result.next()) {                    
                     System.out.printf("Processing person '%d' of '%d':\n", i,
                                       number);
                     System.out.printf("\tPerson_Id = %s\n",
@@ -455,13 +453,13 @@ public class PersonImporter extends Program {
                             "abteilunglink.Abteilung_Id"));
                     System.out.println("");
 
-                    GenericPerson person;
-                    ContentSection section;
-                    ContentSection contactsSection;
-                    Folder folder;
-                    Folder contactsFolder;
-                    LifecycleDefinition lifecycleDefinition;
-                    LifecycleDefinition contactLifecycleDefinition;
+                    GenericPerson person = null;
+                    ContentSection section = null;
+                    ContentSection contactsSection = null;
+                    Folder folder = null;
+                    Folder contactsFolder = null;
+                    LifecycleDefinition lifecycleDefinition = null;
+                    LifecycleDefinition contactLifecycleDefinition = null;
                     Category category = null;
                     if ("Aktiv".equals(result.getString("person.Eigenschaft"))) {
                         person = new SciMember();
@@ -495,24 +493,7 @@ public class PersonImporter extends Program {
                         lifecycleDefinition = membersLifecycle;
                         category = membersAssociatedCategory;
                         contactLifecycleDefinition = membersContactsLifecycle;
-                    } else if ("Autor".equals(result.getString(
-                            "person.Eigenschaft"))) {
-                        person = new SciAuthor();
-                        section = authorsSection;
-                        folder = authorsFolder;
-                        contactsSection = authorsContactsSection;
-                        contactsFolder = authorsContactsFolder;
-                        lifecycleDefinition = authorsLifecycle;
-                        contactLifecycleDefinition = authorsContactsLifecycle;
-                    } else {
-                        person = new Person();
-                        section = personsSection;
-                        folder = personsFolder;
-                        contactsSection = personsContactsSection;
-                        contactsFolder = personsContactsFolder;
-                        lifecycleDefinition = personsLifecycle;
-                        contactLifecycleDefinition = personsContactsLifecycle;
-                    }
+                    } 
 
                     person.setSurname(result.getString("person.Name"));
                     person.setGivenName(result.getString("person.Vorname"));
