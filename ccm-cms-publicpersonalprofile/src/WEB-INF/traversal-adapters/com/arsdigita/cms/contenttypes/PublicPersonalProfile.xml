@@ -17,7 +17,8 @@
                 <xrd:property name="/object/owner/contacts"/>
                 <xrd:property name="/object/owner/contacts/contactentries"/>
                 <xrd:property name="/object/owner/contacts/address"/>
-                 
+                <xrd:property name="/object/owner/imageAttachments"/>                 
+                <xrd:property name="/object/owner/imageAttachments/image"/>                 
             </xrd:associations>
         </xrd:adapter>
     

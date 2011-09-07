@@ -17,10 +17,9 @@ import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.GenericContactEntryCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
-import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
-import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
+import com.arsdigita.cms.contenttypes.PublicPersonalProfileXmlUtil;
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -39,8 +38,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.ServerException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -183,7 +180,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             "ppp:ownerName", PPP_NS);
                     profileOwnerName.setText(owner.getFullName());
 
-                    createNavigation(profile, root, navPath);
+                    final PublicPersonalProfileXmlUtil util = new PublicPersonalProfileXmlUtil();
+                    util.createNavigation(profile, root, navPath);
 
                     if (navPath == null) {
                         final PublicPersonalProfileXmlGenerator generator =
@@ -241,7 +239,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                         generator.generateContent(root, owner);
 
                                     } else {
-                                        throw new ServerException(String.format(
+                                        throw new ServletException(String.format(
                                                 "Class '%s' is not a ContentGenerator.",
                                                 navItems.getNavItem().
                                                 getGeneratorClass()));
@@ -295,7 +293,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
     }
 
-    private void createNavigation(final PublicPersonalProfile profile,
+    /*private void createNavigation(final PublicPersonalProfile profile,
                                   final Element root,
                                   final String navPath) {
         String homeLabelsStr = config.getHomeNavItemLabels();
@@ -406,7 +404,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                       navLinkKey));
 
         }
-    }
+    }*/
 
     private void generateProfileOwnerXml(final Element profileElem,
                                          final GenericPerson owner,

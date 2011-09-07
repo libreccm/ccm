@@ -1,6 +1,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import java.math.BigDecimal;
 import com.arsdigita.persistence.OID;
@@ -8,6 +9,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.util.Assert;
+import java.util.List;
 
 /**
  *
@@ -80,5 +82,14 @@ public class PublicPersonalProfile extends ContentPage {
 
     public void setProfileUrl(String profileUrl) {
         set(PROFILE_URL, profileUrl);
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        
+        generators.add(new PublicPersonalProfileExtraXmlGenerator());
+                
+        return generators;
     }
 }
