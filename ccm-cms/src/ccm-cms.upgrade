@@ -1,5 +1,4 @@
 <upgrade>
-
   <version from="6.0.0" to="6.0.1">
     <script sql="ccm-cms/upgrade/::database::-6.0.0-6.0.1.sql"/>
   </version>
@@ -43,5 +42,9 @@
   <version from="6.6.1" to="6.6.2">
     <script class="com.arsdigita.cms.upgrade.AddNewStyleApplicationEntries"/>
     <script sql="ccm-cms/upgrade/::database::-6.6.1-6.6.2.sql"/>
+  </version>
+  <version from="6.6.2" to="6.6.3">
+    <!-- This update is only applicable for the development tree at UHB!  -->
+    <script sql="ccm-cms/upgrade/::database::-6.6.2-6.6.3.sql"/>
   </version>
 </upgrade>
