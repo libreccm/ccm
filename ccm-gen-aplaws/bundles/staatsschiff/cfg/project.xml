@@ -7,8 +7,8 @@
               ccmVersion="6.1" 
                     name="aplaws-staatsschiff" 
               prettyName="APLAWS plus" 
-                 version="1-1-1" 
-                 release="780" 
+                 version="1-1-4" 
+                 release="1110" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">

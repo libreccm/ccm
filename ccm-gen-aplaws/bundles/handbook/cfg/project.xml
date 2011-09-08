@@ -7,8 +7,8 @@
               ccmVersion="6.1" 
                     name="aplaws-handbook" 
               prettyName="APLAWS plus" 
-                 version="1-1-0" 
-                 release="423" 
+                 version="1-1-4" 
+                 release="r1110" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -30,54 +30,26 @@
 <!--   Content Types   -->
 <!--   - - - - - - -    -->
         <ccm:application name="ccm-cms-types-address"/>
-<!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
         <ccm:application name="ccm-cms-types-article"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
         <ccm:application name="ccm-cms-types-contact"/>
-<!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
-<!--    <ccm:application name="ccm-cms-types-event"/>                -->
         <ccm:application name="ccm-cms-types-faqitem"/>              
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
         <ccm:application name="ccm-cms-types-glossaryitem"/>         
-<!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
-<!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
-<!--    <ccm:application name="ccm-cms-types-job"/>                  -->
-<!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
-<!--    <ccm:application name="ccm-cms-types-minutes"/>              -->
         <ccm:application name="ccm-cms-types-member"/>
-<!--    <ccm:application name="ccm-cms-types-motditem"/>             -->
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
-<!--    <ccm:application name="ccm-cms-types-organization"/>         -->
-<!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
-<!--    <ccm:application name="ccm-cms-types-service"/>              -->
-<!--    <ccm:application name="ccm-cms-types-siteproxy"/>            -->   
-<!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->      
 
 <!--  Applications   -->
 <!--  - - - - -  -   -->
-<!--    <ccm:application name="ccm-auth-http"/>                      -->
-<!--    <ccm:application name="ccm-bookmarks"/>                      -->
-<!--    had been temporarily excluded, produces errors in the build process   -->
         <ccm:application name="ccm-docmgr"/>                            
-<!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
-<!--    <ccm:application name="ccm-simplesurvey"/>                   -->
         <ccm:application name="ccm-user-preferences"/>
-<!--    <ccm:application name="ccm-weblog"/>                         -->
-<!--    <ccm:application name="ccm-webpage"/>                        -->
 
 <!--  LDN extension  -->
 <!--  - - - - - - -  -->
-<!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
-<!--    <ccm:application name="ccm-ldn-atoz"/>                       -->
-<!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
-<!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
-<!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
-<!--    <ccm:application name="ccm-ldn-image-step"/>                 -->
-<!--    <ccm:application name="ccm-ldn-importer"/>                   -->
         <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-portal"/>
         <ccm:application name="ccm-ldn-rss"/>                        
@@ -99,6 +71,35 @@
      contain java code to be compiled!
         <ccm:application name="tools"/>           -->
 
-
   </ccm:build>
+
+<!-- possible addons  --> 
+
+<!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
+<!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
+<!--    <ccm:application name="ccm-cms-types-event"/>                -->
+<!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
+<!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
+<!--    <ccm:application name="ccm-cms-types-job"/>                  -->
+<!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
+<!--    <ccm:application name="ccm-cms-types-minutes"/>              -->
+<!--    <ccm:application name="ccm-cms-types-organization"/>         -->
+<!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
+<!--    <ccm:application name="ccm-cms-types-service"/>              -->
+<!--    <ccm:application name="ccm-cms-types-siteproxy"/>            -->   
+<!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->      
+<!--    <ccm:application name="ccm-auth-http"/>                      -->
+<!--    <ccm:application name="ccm-bookmarks"/>                      -->
+<!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
+<!--    <ccm:application name="ccm-simplesurvey"/>                   -->
+<!--    <ccm:application name="ccm-weblog"/>                         -->
+<!--    <ccm:application name="ccm-webpage"/>                        -->
+<!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
+<!--    <ccm:application name="ccm-ldn-atoz"/>                       -->
+<!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
+<!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
+<!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
+<!--    <ccm:application name="ccm-ldn-importer"/>                   -->
+
+
 </ccm:project>

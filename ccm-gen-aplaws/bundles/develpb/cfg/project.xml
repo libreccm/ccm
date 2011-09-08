@@ -8,8 +8,8 @@
               ccmVersion="6.1" 
                     name="aplaws-gen" 
               prettyName="APLAWS plus" 
-                 version="1-1-2" 
-                 release="trunk" 
+                 version="1-1-4" 
+                 release="r1107" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
