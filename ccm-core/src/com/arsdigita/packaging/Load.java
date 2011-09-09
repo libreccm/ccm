@@ -81,15 +81,38 @@ import org.apache.log4j.Logger;
  *              configuration registry
  * Options:     [-usage]  	Display a usage message for load command 
  *              [-help|--help] 	Display a help message for load command
+ *              [--packagekeys-file FILE] Reads list of packages to load from
+ *                                        File (in addition to command line)
+ *              [--schema]  Loads just the schema for a package into the
+ *                          database, no data, no initializer
+ *              [--data]    Loads just data into the database, schema must exist
+ *                          already, initializers are not recorded
+ *              [--init]    Records the initializer and classes into database
+ *              [--config]  Creates entries in the registry (configuration repo)
+ *                          if set prevents any of the three data load steps
+ *                          described before to be executed!
+ *              [--interactive]  Ask interactively for config key values
+ *              [--parameters KEY=VALUE ...] configuration parameter from
+ *                                           command line. 
+ *              [--parameter-file FILE]   Alternativly reads config parameters
+ *                                        from FILE (multiple entries allowed). 
  *              [--recursive]	Recursively load required packages
- *              [--data] 
- *              [--config] 
- *              [--interactive] 
- *              [--schema] 
- *              [--parameters KEY=VALUE ...] 
- *              [--init] 
- *              [--parameter-file FILE]
  * 
+ * If neither of the options --config --schema --data --init is set, all four
+ * steps are performed (i.e. the usual loading step), e.g. 
+ * <code> ccm  load [ListOfPackages]</code>. Regarding configuration, if no 
+ * additional configuration options are given (either on command line or a
+ * configuration file) the packages are just added to registry.properties 
+ * (list of installed packages) and using eventually build in defaults (otherwise 
+ * fails) during runtime.
+ * If one of the four  parameters is set, none of the other tasks is executed
+ * implicitely but each desired step of the four must be explicitely specified!
+ * 
+ * If new package(s) should just be loaded into the datbase without touching the
+ * configuration registry, --schema  --data  --init must be performed.
+ * <code>ccm  load  --schema --data --init   [newPackage(s)]</code>
+ * May be necessary for an update which contains new modules already configured
+ * in the registry but missing in the (old) database.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: Load.java 736 2005-09-01 10:46:05Z sskracic $

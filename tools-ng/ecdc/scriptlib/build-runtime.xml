@@ -32,11 +32,6 @@
 		<copy file="tools-ng/devel/lib/postgresql-jdbc.jar"
                       todir="${app.server.shared.dir}" preservelastmodified="true"/>
 	</target>
-    
-    <target name="uninstall-liferay">
-        <echo>Uninstalling Liferay from ${app.server.webapp.dir}</echo>
-        <delete dir="${app.server.webapp.dir}/portal"/>
-    </target>
         
     <target name="install-liferay" depends="uninstall-liferay">
         <echo>Installing Liferay into ${app.server.webapp.dir}</echo>
@@ -52,6 +47,11 @@
               todir="${app.server.home.dir}/lib" preservelastmodified="true"/>
         <copy file="tools-ng/liferay/jta.jar" 
               todir="${app.server.home.dir}/lib" preservelastmodified="true"/>
+    </target>
+    
+    <target name="uninstall-liferay">
+        <echo>Uninstalling Liferay from ${app.server.webapp.dir}</echo>
+        <delete dir="${app.server.webapp.dir}/portal"/>
     </target>
 
 	<target name="start" description="Start the Tomcat server">
