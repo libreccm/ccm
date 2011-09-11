@@ -108,6 +108,7 @@ public class ObjectListPortlet extends Portlet {
         return (DataCollectionPropertyRenderer) entry[2];
     }
     
+    @Override
     public void initialize() {
         super.initialize();
         
@@ -159,7 +160,7 @@ public class ObjectListPortlet extends Portlet {
     }
     
     public void setCheckPermissions(boolean check) {
-        set(CHECK_PERMISSIONS, new Boolean(check));
+        set(CHECK_PERMISSIONS, Boolean.valueOf(check));
     }
     
     public boolean isCheckingPermissions() {
@@ -176,7 +177,7 @@ public class ObjectListPortlet extends Portlet {
     }
 
     public void setDescendCategories(boolean descend) {
-        set(DESCEND_CATEGORIES, new Boolean(descend));
+        set(DESCEND_CATEGORIES, Boolean.valueOf(descend));
     }
     
     public boolean isDescendingCategories() {
@@ -184,7 +185,7 @@ public class ObjectListPortlet extends Portlet {
     }
 
     public void setExcludeIndexObjects(boolean exclude) {
-        set(EXCLUDE_INDEX_OBJECTS, new Boolean(exclude));
+        set(EXCLUDE_INDEX_OBJECTS, Boolean.valueOf(exclude));
     }
     
     public boolean isExludingIndexObjects() {
@@ -192,7 +193,7 @@ public class ObjectListPortlet extends Portlet {
     }
 
     public void setProperties( Object[] properties ) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
 
         if( null != properties ) {
             for( int i = 0; i < properties.length; i++ ) {
@@ -209,7 +210,9 @@ public class ObjectListPortlet extends Portlet {
 
     public String[] getProperties() {
         String properties = (String) get( PROPERTIES );
-        if( null == properties ) return new String[] { };
+        if( null == properties ) {
+            return new String[] { };
+        }
 
         StringTokenizer tok = new StringTokenizer( properties, "," );
         String[] result = new String[ tok.countTokens() ];
@@ -254,6 +257,7 @@ public class ObjectListPortlet extends Portlet {
     }
 
 
+    @Override
     protected AbstractPortletRenderer doGetPortletRenderer() {
         return new ObjectListPortletRenderer(this);
     }
@@ -266,14 +270,17 @@ public class ObjectListPortlet extends Portlet {
             m_portlet = portlet;
         }
 
+        @Override
         protected ACSObject loadObject() {
             return null;
         }
         
+        @Override
         protected Category loadCategory() {
             return m_portlet.getFilterCategory();
         }
         
+        @Override
         protected Category[] loadCategoryPath() {
             Category cat = getCategory();
             if (cat == null) {
@@ -289,6 +296,7 @@ public class ObjectListPortlet extends Portlet {
             return (Category[])path.toArray(new Category[path.size()]);
         }
         
+        @Override
         protected Category loadRootCategory() {
             Category[] path = getCategoryPath();
             return path.length == 0 ? null : path[0];

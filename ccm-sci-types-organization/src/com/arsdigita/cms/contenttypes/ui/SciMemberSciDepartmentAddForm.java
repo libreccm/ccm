@@ -23,7 +23,7 @@ import com.arsdigita.cms.contenttypes.SciMemberSciDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 
 /**
  *
@@ -71,7 +71,7 @@ public class SciMemberSciDepartmentAddForm
                 globalize("cms.ui.select_one").localize())));
         RelationAttributeCollection roles = new RelationAttributeCollection(
                 "SciDepartmentRole");
-        roles.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
         while (roles.next()) {
             RelationAttribute role;
@@ -93,7 +93,7 @@ public class SciMemberSciDepartmentAddForm
         RelationAttributeCollection statusColl =
                                     new RelationAttributeCollection(
                 "GenericOrganizationalUnitMemberStatus");
-        statusColl.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        statusColl.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
         while (statusColl.next()) {
             RelationAttribute status;

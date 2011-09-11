@@ -32,7 +32,7 @@ import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -105,7 +105,7 @@ public class GreetingItem extends AbstractComponent {
          * language version.
          */
         //ContentItem baseItem = bundle.getPrimaryInstance();
-        ContentItem baseItem = bundle.getInstance(DispatcherHelper.
+        ContentItem baseItem = bundle.getInstance(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
         // If there is no matching language version for this content item
         if (baseItem == null) {

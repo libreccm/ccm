@@ -304,7 +304,7 @@ public class Element {
      * of the current element.
      */
     public String getText() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         org.w3c.dom.NodeList nl = m_element.getChildNodes();
 
@@ -335,7 +335,7 @@ public class Element {
     }
 
     public String getCDATASection() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         org.w3c.dom.NodeList nl = m_element.getChildNodes();
 
@@ -529,7 +529,7 @@ public class Element {
         // will return the same XMLHash
         List sortedList = getXMLFragments();
         Collections.sort(sortedList);
-        StringBuffer xml = new StringBuffer();
+        StringBuilder xml = new StringBuilder();
         Iterator xmlFragments = sortedList.iterator();
         while (xmlFragments.hasNext()) {
             xml.append(xmlFragments.next());

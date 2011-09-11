@@ -34,7 +34,8 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 // replaced by AgendaGlobalizationUtil
 // import com.arsdigita.cms.util.GlobalizationUtil; 
-import com.arsdigita.dispatcher.DispatcherHelper;
+
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import java.text.DateFormat;
 
@@ -92,7 +93,7 @@ public class AgendaPropertiesStep extends SimpleEditStep {
                                                PageState state) {
                               ContentPage page = (ContentPage) item;
                               if(page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale())
+                                  return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale())
                                       .format(page.getLaunchDate());
                               } else {
                                   return (String)AgendaGlobalizationUtil.globalize("cms.ui.unknown").localize();
@@ -121,7 +122,7 @@ public class AgendaPropertiesStep extends SimpleEditStep {
                                            PageState state) {
                           Agenda agenda = (Agenda) item;
                           if(agenda.getCreationDate() != null) {
-                              return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale())
+                              return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale())
                                   .format(agenda.getCreationDate());
                           } else {
                               return (String)AgendaGlobalizationUtil.globalize("cms.ui.unknown").localize();

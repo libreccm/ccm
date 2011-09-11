@@ -33,7 +33,7 @@ import com.arsdigita.cms.contenttypes.ArticleSection;
 import com.arsdigita.cms.contenttypes.ArticleSectionCollection;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 
@@ -141,7 +141,7 @@ public class ArticleSectionPanel extends SimpleComponent implements
 
             bundle = (ContentBundle) item;
 
-            resolved = bundle.getInstance(DispatcherHelper.getNegotiatedLocale().getLanguage());
+            resolved = bundle.getInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage());
             if (resolved == null) {
                 resolved = bundle.getPrimaryInstance();
             }

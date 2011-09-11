@@ -31,7 +31,8 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.contenttypes.util.NewsItemGlobalizationUtil;
-import com.arsdigita.dispatcher.DispatcherHelper;
+
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import java.text.DateFormat;
 
@@ -87,7 +88,7 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
                                 PageState state) {
                             ContentPage page = (ContentPage) item;
                             if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale()).format(page.getLaunchDate());
+                                return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale()).format(page.getLaunchDate());
                             } else {
                                 return (String) NewsItemGlobalizationUtil.globalize("cms.ui.unknown").localize();
                             }
@@ -123,7 +124,7 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
                             PageState state) {
                         NewsItem pr = (NewsItem) item;
                         if (pr.getNewsDate() != null) {
-                            return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale()).format(pr.getNewsDate());
+                            return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale()).format(pr.getNewsDate());
                         } else {
                             return (String) NewsItemGlobalizationUtil.globalize("cms.ui.unknown").localize();
                         }

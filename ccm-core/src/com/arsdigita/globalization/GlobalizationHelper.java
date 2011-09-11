@@ -18,6 +18,8 @@ import java.util.StringTokenizer;
  */
 public class GlobalizationHelper {
 
+    private static final String LANG_PARAM = "lang";
+    
     // Don't instantiate
     private GlobalizationHelper() {
     }
@@ -50,25 +52,16 @@ public class GlobalizationHelper {
                 preferedLocale = selectedLocale;
             } else {
 
-                // 
-                String lang = request.getParameter("lang");
+                locales = request.getLocales();
 
-                if (lang != null && kernelConfig.hasLanguage(lang)) {
+                // For everey element in the enumerator
+                while (locales.hasMoreElements()) {
 
-                    preferedLocale = new Locale(lang);
-                } else {
-
-                    locales = request.getLocales();
-
-                    // For everey element in the enumerator
-                    while (locales.hasMoreElements()) {
-
-                        // Test if the current locale is listed in the supported locales list
-                        java.util.Locale curLocale = (Locale) locales.nextElement();
-                        if (kernelConfig.hasLanguage(curLocale.getLanguage())) {
-                            preferedLocale = curLocale;
-                            break;
-                        }
+                    // Test if the current locale is listed in the supported locales list
+                    java.util.Locale curLocale = (Locale) locales.nextElement();
+                    if (kernelConfig.hasLanguage(curLocale.getLanguage())) {
+                        preferedLocale = curLocale;
+                        break;
                     }
                 }
             }
@@ -98,7 +91,7 @@ public class GlobalizationHelper {
      */
     public static Locale getSelectedLocale(ServletRequest request) {
 //        ServletRequest request = ((ServletRequest) DispatcherHelper.getRequest());
-        String paramValue = request.getParameter("selLang");
+        String paramValue = request.getParameter(LANG_PARAM);
         java.util.Locale selectedLocale = null;
 
         if (paramValue != null) {

@@ -96,7 +96,7 @@ public abstract class AbstractObjectList
         // Quasimodo: Begin
         // Limit list to objects in the negotiated language
         if (objects != null && objects.size() > 0) {
-            objects.addEqualsFilter("language", com.arsdigita.dispatcher.DispatcherHelper.getNegotiatedLocale().getLanguage());
+            objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
         }
         // Quasimodo: End
         

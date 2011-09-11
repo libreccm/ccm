@@ -295,7 +295,7 @@ public class DataCollectionRenderer extends LockableImpl {
 
                 // Quasimodo: BEGIN
                 // Add attributes for date and time
-                Locale negLocale = com.arsdigita.dispatcher.DispatcherHelper.
+                Locale negLocale = com.arsdigita.globalization.GlobalizationHelper.
                         getNegotiatedLocale();
                 DateFormat dateFormatter = DateFormat.getDateInstance(
                         DateFormat.MEDIUM, negLocale);

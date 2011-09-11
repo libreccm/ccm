@@ -48,7 +48,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -158,7 +158,7 @@ public class ImagePropertiesStep extends SimpleEditStep {
                             if (image.getSkipDay().booleanValue() == true || image.getSkipMonth().booleanValue() == true) {
                                 String month = "";
                                 if (image.getSkipMonth().booleanValue() == false) {
-                                    Locale locale = DispatcherHelper.getNegotiatedLocale();
+                                    Locale locale = GlobalizationHelper.getNegotiatedLocale();
 
                                     if (locale != null) {
 
