@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--    project.xml -Oxford Handbook - containing only those modules used for it    -->
+<!-- project.xml -Welfare State Futures (WSF) - containing only those modules used for it -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="aplaws-handbook" 
+                    name="aplaws-wsf" 
               prettyName="APLAWS plus" 
                  version="1-1-4" 
-                 release="r1110" 
+                 release="1110" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -29,26 +29,21 @@
 
 <!--   Content Types   -->
 <!--   - - - - - - -    -->
-        <ccm:application name="ccm-cms-types-address"/>
         <ccm:application name="ccm-cms-types-article"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
-        <ccm:application name="ccm-cms-types-contact"/>
         <ccm:application name="ccm-cms-types-faqitem"/>              
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
         <ccm:application name="ccm-cms-types-glossaryitem"/>         
-        <ccm:application name="ccm-cms-types-member"/>
+        <ccm:application name="ccm-cms-types-image"/>     
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
 
 <!--  Applications   -->
 <!--  - - - - -  -   -->
-        <ccm:application name="ccm-docmgr"/>                            
-        <ccm:application name="ccm-forum"/>
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-themedirector"/>
-        <ccm:application name="ccm-user-preferences"/>
 
 <!--  LDN extension  -->
 <!--  - - - - - - -  -->
@@ -63,6 +58,7 @@
 
 <!--  gen integration layer  -->
 <!--  - - - - - - -  -->
+        <ccm:application name="ccm-sci-publications"/>
         <ccm:application name="ccm-gen-aplaws"/>
 
 
@@ -71,11 +67,16 @@
      contain java code to be compiled!
         <ccm:application name="tools"/>           -->
 
+
   </ccm:build>
+  
+  <!-- Probable Addons  -->
 
-<!-- possible addons  --> 
-
+<!--   Content Types   -->
+<!--   - - - - - - -    -->
+<!--    <ccm:application name="ccm-cms-types-address"/>              -->
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
+<!--    <ccm:application name="ccm-cms-types-contact"/>              -->
 <!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
 <!--    <ccm:application name="ccm-cms-types-event"/>                -->
 <!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
@@ -83,23 +84,12 @@
 <!--    <ccm:application name="ccm-cms-types-job"/>                  -->
 <!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
 <!--    <ccm:application name="ccm-cms-types-minutes"/>              -->
+<!--    <ccm:application name="ccm-cms-types-member"/>               -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/>             -->
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
 <!--    <ccm:application name="ccm-cms-types-siteproxy"/>            -->   
 <!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->      
-<!--    <ccm:application name="ccm-auth-http"/>                      -->
-<!--    <ccm:application name="ccm-bookmarks"/>                      -->
-<!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
-<!--    <ccm:application name="ccm-simplesurvey"/>                   -->
-<!--    <ccm:application name="ccm-weblog"/>                         -->
-<!--    <ccm:application name="ccm-webpage"/>                        -->
-<!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
-<!--    <ccm:application name="ccm-ldn-atoz"/>                       -->
-<!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
-<!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
-<!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
-<!--    <ccm:application name="ccm-ldn-importer"/>                   -->
-
 
 </ccm:project>

@@ -40,12 +40,18 @@ public class MultiPartArticleConfig extends AbstractConfig {
 
     
     public MultiPartArticleConfig() {
-		m_searchResultFormat =  new EnumerationParameter("com.arsdigita.cms.types.mparticle.search.result_format", Parameter.REQUIRED,
+        
+		m_searchResultFormat =  new EnumerationParameter(
+                "com.arsdigita.cms.types.mparticle.search.result_format", 
+                Parameter.REQUIRED,
 	            SHORT_TITLE);
+        
 		m_searchResultFormat.put(SHORT_TITLE, SHORT_TITLE); 
 		m_searchResultFormat.put(PAGE_TOP_TITLE, PAGE_TOP_TITLE);
 		m_searchResultFormat.put(SECTION_TITLE, SECTION_TITLE);
+        
 		register(m_searchResultFormat);
+        
 	    loadInfo();
     }
 

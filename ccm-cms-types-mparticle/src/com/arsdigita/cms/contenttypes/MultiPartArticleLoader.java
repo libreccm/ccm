@@ -43,7 +43,8 @@ public class MultiPartArticleLoader extends AbstractContentTypeLoader {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/MultiPartArticle.xml"
     };
 
-    private ResourceParameter m_template;
+    //Not needed anymore
+/*  private ResourceParameter m_template;   */
 
     /**
      * MultiPartArticleLoader Constructor

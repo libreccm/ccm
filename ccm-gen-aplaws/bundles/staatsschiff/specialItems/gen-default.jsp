@@ -1,7 +1,8 @@
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
-       xmlns:define="/WEB-INF/bebop-define.tld" 
-         xmlns:show="/WEB-INF/bebop-show.tld"
-	    version="1.2">
+<jsp:root 
+  xmlns:jsp="http://java.sun.com/JSP/Page" 
+  xmlns:define="/WEB-INF/bebop-define.tld"
+  xmlns:show="/WEB-INF/bebop-show.tld"
+  version="1.2">
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
@@ -23,12 +24,6 @@
 
     <define:component name="greetingItem"
       classname="com.arsdigita.london.navigation.ui.GreetingItem"/>
-    <define:component name="sectionXML"
-      classname="com.arsdigita.cms.contenttypes.ui.mparticle.ArticleSectionPanel"/>
-    <jsp:scriptlet>
-        com.arsdigita.cms.ContentItem item = (com.arsdigita.cms.ContentItem)((com.arsdigita.london.navigation.ui.GreetingItem) greetingItem).getObject();
-        ((com.arsdigita.cms.contenttypes.ui.mparticle.ArticleSectionPanel) sectionXML).setContentItem(item);
-    </jsp:scriptlet>
     <define:component name="categoryPath"
       classname="com.arsdigita.london.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
@@ -49,7 +44,6 @@
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "definition");
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "summary");
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "lead");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "description");
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "eventDate");
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "startDate" );
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "endDate");
@@ -62,4 +56,3 @@
   </define:page>
   <show:all/>
 </jsp:root>
-

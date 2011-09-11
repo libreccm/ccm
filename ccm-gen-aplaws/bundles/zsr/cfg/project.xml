@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--    project.xml -Oxford Handbook - containing only those modules used for it    -->
+<!--    project.xml - ZSR - containing only those modules used for it    -->
+<!--    last changed:  Sept. 09, 2011 for release 1.1.4 (r1110)          -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -66,6 +67,8 @@
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>                             
 <!--    <ccm:application name="ccm-simplesurvey"/>                   -->
+        <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-themedirector"/>
 <!--    <ccm:application name="ccm-user-preferences"/>               -->
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
@@ -79,13 +82,11 @@
 <!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
 <!--    <ccm:application name="ccm-ldn-importer"/>                   -->
         <ccm:application name="ccm-ldn-navigation"/>
-        <ccm:application name="ccm-ldn-portal"/>
         <ccm:application name="ccm-ldn-rss"/>                           
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
         <ccm:application name="ccm-ldn-subsite"/>                    
         <ccm:application name="ccm-ldn-terms"/>
-        <ccm:application name="ccm-ldn-theme"/>
         <ccm:application name="ccm-ldn-util"/>
 
 

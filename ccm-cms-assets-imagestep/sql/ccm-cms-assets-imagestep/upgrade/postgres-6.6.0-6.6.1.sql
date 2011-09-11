@@ -1,4 +1,4 @@
-\echo ImageStep 6.5.0 -> 6.5.1 Upgrade Script (PostgreSQL)
+\echo ImageStep 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
 
 begin;
 

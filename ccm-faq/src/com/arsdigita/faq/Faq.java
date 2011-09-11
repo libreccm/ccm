@@ -34,11 +34,10 @@ import java.math.BigDecimal;
 /**
  * Faq class.
  *
+ * @version $Id: com/arsdigita/faq/Faq.java#5 $
  */
 
 public class Faq extends Application {
-
-    public static final String versionId = "$Id: //apps/faq/dev/src/com/arsdigita/faq/Faq.java#5 $ by $Author: dennis $, $DateTime: 2004/08/17 23:26:27 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.faq.Faq";
@@ -83,13 +82,13 @@ public class Faq extends Application {
                               new TypedText(answer, TypedText.TEXT_HTML));
     }
 
-    /**
-     * @deprecated use createQuestion(String, TypedText) instead
-     */
-    public QAPair createQuestion(String question, String answer,
-                                 String answerFormat) {
-        return createQuestion(question, new TypedText(answer, answerFormat));
-    }
+//  /**
+//   * @deprecated use createQuestion(String, TypedText) instead
+//   */
+//  public QAPair createQuestion(String question, String answer,
+//                               String answerFormat) {
+//      return createQuestion(question, new TypedText(answer, answerFormat));
+//  }
 
     public QAPair createQuestion(String question, TypedText answer) {
 
@@ -157,6 +156,11 @@ public class Faq extends Application {
             log.debug("Swapped: ");
         }
 
+    }
+
+    @Override
+    public String getServletPath() {
+        return "faq";
     }
 
 }

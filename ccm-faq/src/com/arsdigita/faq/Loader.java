@@ -79,20 +79,22 @@ public class Loader extends PackageLoader {
      */
     private void loadFAQApplicationType() {
 
-        /* Setup a new style legacy compatible application type.   */
-        //  ApplicationType type = ApplicationType.createApplicationType(
+    //  /* Setup a new style legacy compatible application type.   */
+    //  ApplicationType type = ApplicationType.createApplicationType(
     //                                        "faq",
     //                                        "Frequently Asked Questions",
     //                                        Faq.BASE_DATA_OBJECT_TYPE);
-        // Current code requires an apps specific dispatcher class. Has to be
-        // modified to be able to create a legacy free app type.
-   //   type.setDispatcherClass
-   //           ("com.arsdigita.faq.FaqDispatcher");
+    //  /* Current code requires an apps specific dispatcher class.         */
+    //  /* Has to be modified to be able to create a legacy free app type.  */
+    //  type.setDispatcherClass ("com.arsdigita.faq.FaqDispatcher");
 
         /* Setup as new stype legacy free aplcation */
+        // NOTE: The title "FAQ" is used to retrieve the application's
+        // name to determine the location of xsl files (by url-izing it). So
+        // DON'T modify it without synchronizing web directory tree accordingly!
         ApplicationType type = new ApplicationType("FAQ",
                                                    Faq.BASE_DATA_OBJECT_TYPE);
-        // type independent:
+        // set.Description is independent from application type:
         type.setDescription
             ("Frequently Asked Questions empower users to share knowledge.");
 
@@ -102,21 +104,19 @@ public class Loader extends PackageLoader {
 
     // ////////////////////////////////////////////////////////////////////////
     //
-    //        S e t u p    a   F A Q   a p p l i c a t i o n
+    //        S e t u p   o f   a p p l i c a t i o n   i n s t a n c e s
     //
     // ////////////////////////////////////////////////////////////////////////
+    
+    /**
+     * Creates a default FAQ application instance at address /faq/
+     * 
+     */
     private void setupDefaultFaq() {
 
-    //  try {
-    //      SiteNode sn = SiteNode.getSiteNode("/administration", false);
-    //      if (!"administration".equals(sn.getName())) {
-                Faq faq = Faq.create(
-                        "faq", "Default FAQ", null);
-                faq.save();
-    //      }
-    //  } catch (DataObjectNotFoundException e) {
-    //      Assert.fail(e.getMessage());
-    //  }
+        Faq faq = Faq.create("faq", "Default FAQ", null);
+        faq.setDescription("The default ccm-faq instance.");
+        faq.save();
     }
 
 
