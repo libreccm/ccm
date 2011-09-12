@@ -22,6 +22,7 @@ package com.arsdigita.london.rss;
 
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
@@ -63,6 +64,16 @@ public class Initializer extends CompoundInitializer {
     public void init(DomainInitEvent e) {
 
         super.init(e);
+
+        // Prerequisite to access a RSS channel instance
+        DomainObjectFactory.registerInstantiator(
+               RSS.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+                   @Override
+                   public DomainObject doNewInstance(DataObject dataObject) {
+                       return new RSS(dataObject);
+                   }
+               }
+        );
 
 
         e.getFactory().registerInstantiator(

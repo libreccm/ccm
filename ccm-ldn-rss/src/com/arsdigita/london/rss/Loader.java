@@ -64,7 +64,7 @@ public class Loader extends PackageLoader {
                 // (i.e. create application type)
                 setupChannelControlCenter();
 
-                // Load local fveeds into database
+                // Load local feeds into database
                 setupLocalFeeds();
 
                 // load portlet type into database
@@ -78,6 +78,8 @@ public class Loader extends PackageLoader {
      * (old style) compatible applicaiton.
      */
     public void setupChannelControlCenter() {
+        
+/*        
         ApplicationSetup setup = new ApplicationSetup(s_log);
 
         setup.setApplicationObjectType(RSS.BASE_DATA_OBJECT_TYPE);
@@ -93,7 +95,14 @@ public class Loader extends PackageLoader {
             });
         ApplicationType type = setup.run();
         type.save();
+*/
+        ApplicationType type = ApplicationType.createApplicationType(
+                                              "rss",
+                                              "RSS Channels",
+                                              RSS.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("RSS Channels");
 
+        
         if (!Application.isInstalled(RSS.BASE_DATA_OBJECT_TYPE,
                                      "/channels/")) {
             Application app =
