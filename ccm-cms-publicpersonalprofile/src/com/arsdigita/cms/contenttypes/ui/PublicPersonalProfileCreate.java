@@ -5,9 +5,11 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
@@ -32,8 +34,10 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.TooManyListenersException;
 
 /**
  *
@@ -75,28 +79,47 @@ public class PublicPersonalProfileCreate extends PageCreate {
         SingleSelect ownerSelect = new SingleSelect(ownerModel);
         ownerSelect.addValidationListener(new NotNullValidationListener());
 
-        String personType = config.getPersonType();
-        if ((personType == null) || (personType.isEmpty())) {
-            personType = "com.arsdigita.cms.contenttypes.GenericPerson";
+        try {
+            ownerSelect.addPrintListener(new PrintListener() {
+
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect ownerSelect = (SingleSelect) event.
+                            getTarget();
+
+                    String personType = config.getPersonType();
+                    if ((personType == null) || (personType.isEmpty())) {
+                        personType =
+                        "com.arsdigita.cms.contenttypes.GenericPerson";
+                    }
+
+                    ContentTypeCollection types =
+                                          ContentType.getAllContentTypes();
+                    types.addFilter(
+                            String.format("className = '%s'", personType));
+                    if (types.size() == 0) {
+                        personType =
+                        "com.arsdigita.cms.contenttypes.GenericPerson";
+                    }
+                    DataCollection persons = SessionManager.getSession().
+                            retrieve(
+                            personType);
+                    persons.addFilter("profile is null");
+                    persons.addFilter(String.format("version = '%s'",
+                                                    ContentItem.DRAFT));
+                    ownerSelect.addOption(new Option("", ""));
+                    while (persons.next()) {
+                        GenericPerson person =
+                                      (GenericPerson) DomainObjectFactory.
+                                newInstance(persons.getDataObject());
+                        ownerSelect.addOption(new Option(
+                                person.getID().toString(), person.getFullName()));
+                    }
+                }
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException(ex);
         }
 
-        ContentTypeCollection types = ContentType.getAllContentTypes();
-        types.addFilter(String.format("className = '%s'", personType));
-        if (types.size() == 0) {
-            personType = "com.arsdigita.cms.contenttypes.GenericPerson";
-        }
-        DataCollection persons = SessionManager.getSession().retrieve(
-                personType);
-        persons.addFilter("profile is null");
-        persons.addFilter(String.format("version = '%s'", ContentItem.DRAFT));
-        ownerSelect.addOption(new Option("", ""));
-        while (persons.next()) {
-            GenericPerson person =
-                          (GenericPerson) DomainObjectFactory.newInstance(persons.
-                    getDataObject());
-            ownerSelect.addOption(new Option(person.getID().toString(), person.
-                    getFullName()));
-        }
         add(ownerSelect);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
@@ -199,7 +222,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
             profiles.addFilter(
                     String.format("version = '%s'", ContentItem.DRAFT));
         }
-        
+
         return profileUrl;
     }
 }

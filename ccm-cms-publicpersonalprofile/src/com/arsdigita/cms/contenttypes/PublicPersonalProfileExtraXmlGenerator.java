@@ -38,7 +38,11 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
         final Element navigation = element.newChildElement("profileNavigation");
         final PublicPersonalProfileXmlUtil util =
                                            new PublicPersonalProfileXmlUtil();
-        util.createNavigation(profile, navigation, showItem);
+        String prefix = DispatcherHelper.getDispatcherPrefix(state.getRequest());
+        if (prefix == null) {
+            prefix = "";
+        }
+        util.createNavigation(profile, navigation, showItem, prefix, "", false);
 
         if ((showItem != null) && !showItem.trim().isEmpty()) {
             final Element profileContent = element.newChildElement(

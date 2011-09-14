@@ -21,8 +21,11 @@ public class PublicPersonalProfileXmlUtil {
             getConfig();
 
     public void createNavigation(final PublicPersonalProfile profile,
-                                    final Element root,
-                                    final String navPath) {
+                                 final Element root,
+                                 final String navPath,
+                                 final String prefix,
+                                 final String appPath,
+                                 final boolean previewMode) {
         String homeLabelsStr = config.getHomeNavItemLabels();
 
         Map<String, String> homeLabels = new HashMap<String, String>();
@@ -36,6 +39,13 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 continue;
             }
+        }
+      
+        String appUrl = null;
+        if (previewMode) {
+            appUrl = String.format("%s/ccm%s/preview", prefix, appPath);
+        } else {
+            appUrl = String.format("%s/ccm%s", prefix, appPath);
         }
 
         Element navRoot =
@@ -52,8 +62,15 @@ public class PublicPersonalProfileXmlUtil {
         navList.addAttribute("isSelected", "true");
         navList.addAttribute("sortKey", "");
         navList.addAttribute("title", "publicPersonalProfileNavList");
-        navList.addAttribute("url", String.format("/ccm/%s",
-                                                  profile.getProfileUrl()));
+        if (previewMode) {
+            navList.addAttribute("url", String.format("%s/%s",
+                                                      appUrl,
+                                                      profile.getProfileUrl()));
+        } else {
+            navList.addAttribute("url", String.format("%s/%s",
+                                                      appUrl,
+                                                      profile.getProfileUrl()));
+        }
 
         Element navHome =
                 navList.newChildElement("nav:category",
@@ -74,7 +91,8 @@ public class PublicPersonalProfileXmlUtil {
         } else {
             navHome.addAttribute("title", homeLabel);
         }
-        navHome.addAttribute("url", String.format("/ccm/profiles/%s",
+        navHome.addAttribute("url", String.format("%s/%s",
+                                                  appUrl,
                                                   profile.getProfileUrl()));
 
         //Get the available Navigation items
@@ -126,10 +144,11 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 navElem.addAttribute("title", navItem.getLabel());
             }
-            navElem.addAttribute("url", String.format("/ccm/profiles/%s/%s",
+            navElem.addAttribute("url", String.format("%s/%s/%s",
+                                                      appUrl,
                                                       profile.getProfileUrl(),
                                                       navLinkKey));
-            
+
             navElem.addAttribute("navItem", navLinkKey);
 
         }
