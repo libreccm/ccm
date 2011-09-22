@@ -28,10 +28,12 @@ import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -62,20 +64,84 @@ public abstract class SciOrganizationBasePanel
 
     protected class MemberListItem {
 
-        private GenericPerson member;
+        private String surname;
+        private String givenName;
+        private String titlePre;
+        private String titlePost;
+        private Date birthdate;
+        private String gender;
+        private DataCollection contacts;
+        //private GenericPerson member;
         private String role;
         private String status;
 
         public MemberListItem(final GenericPerson member,
                               final String role,
                               final String status) {
-            this.member = member;
+            /*this.member = member;
+            this.role = role;
+            this.status = status;*/
+            this(member.getSurname(),
+                 member.getGivenName(),
+                 member.getTitlePre(),
+                 member.getTitlePost(),
+                 member.getBirthdate(),
+                 member.getGender(),
+                 null,
+                 role,
+                 status);
+
+        }
+
+        public MemberListItem(final String surname,
+                              final String givenName,
+                              final String titlePre,
+                              final String titlePost,
+                              final Date birthdate,
+                              final String gender,
+                              final DataCollection contacts,
+                              final String role,
+                              final String status) {
+            this.surname = surname;
+            this.givenName = givenName;
+            this.titlePre = titlePre;
+            this.titlePost = titlePost;
+            this.birthdate = birthdate;
+            this.gender = gender;
+            this.contacts = contacts;
             this.role = role;
             this.status = status;
         }
 
-        public GenericPerson getMember() {
-            return member;
+        /*public GenericPerson getMember() {
+        return member;
+        }*/
+        public Date getBirthdate() {
+            return birthdate;
+        }
+
+        public DataCollection getContacts() {
+            return contacts;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public String getGivenName() {
+            return givenName;
+        }
+
+        public String getSurname() {
+            return surname;
+        }
+
+        public String getTitlePost() {
+            return titlePost;
+        }
+
+        public String getTitlePre() {
+            return titlePre;
         }
 
         public String getRole() {
@@ -86,18 +152,48 @@ public abstract class SciOrganizationBasePanel
             return status;
         }
 
+        /*@Override
+        public boolean equals(Object obj) {            
+        if (obj instanceof MemberListItem) {
+        MemberListItem other = (MemberListItem) obj;
+        
+        return member.equals(other.getMember());
+        } else {
+        return false;
+        }                        
+        }*/
         @Override
         public boolean equals(Object obj) {
-            /*if (obj == null) {
+            if (obj == null) {
                 return false;
             }
             if (getClass() != obj.getClass()) {
                 return false;
             }
             final MemberListItem other = (MemberListItem) obj;
-            if (this.member != other.member && (this.member == null
-                                                || !this.member.equals(
-                                                other.member))) {
+            if ((this.surname == null) ? (other.surname != null)
+                : !this.surname.equals(other.surname)) {
+                return false;
+            }
+            if ((this.givenName == null) ? (other.givenName != null)
+                : !this.givenName.equals(other.givenName)) {
+                return false;
+            }
+            if ((this.titlePre == null) ? (other.titlePre != null)
+                : !this.titlePre.equals(other.titlePre)) {
+                return false;
+            }
+            if ((this.titlePost == null) ? (other.titlePost != null)
+                : !this.titlePost.equals(other.titlePost)) {
+                return false;
+            }
+            if (this.birthdate != other.birthdate && (this.birthdate == null
+                                                      || !this.birthdate.equals(
+                                                      other.birthdate))) {
+                return false;
+            }
+            if ((this.gender == null) ? (other.gender != null)
+                : !this.gender.equals(other.gender)) {
                 return false;
             }
             if ((this.role == null) ? (other.role != null)
@@ -108,26 +204,32 @@ public abstract class SciOrganizationBasePanel
                 : !this.status.equals(other.status)) {
                 return false;
             }
-            return true;*/
-            if (obj instanceof MemberListItem) {
-                MemberListItem other = (MemberListItem) obj;
-                
-                return member.equals(other.getMember());
-            } else {
-                return false;
-            }
+            return true;
         }
 
+        /*@Override
+        public int hashCode() {       
+        return member.hashCode();
+        }*/
         @Override
         public int hashCode() {
-            /*int hash = 7;
+            int hash = 3;
             hash =
-            79 * hash + (this.member != null ? this.member.hashCode() : 0);
-            hash = 79 * hash + (this.role != null ? this.role.hashCode() : 0);
+            41 * hash + (this.surname != null ? this.surname.hashCode() : 0);
             hash =
-            79 * hash + (this.status != null ? this.status.hashCode() : 0);
-            return hash;*/
-            return member.hashCode();
+            41 * hash + (this.givenName != null ? this.givenName.hashCode() : 0);
+            hash =
+            41 * hash + (this.titlePre != null ? this.titlePre.hashCode() : 0);
+            hash =
+            41 * hash + (this.titlePost != null ? this.titlePost.hashCode() : 0);
+            hash =
+            41 * hash + (this.birthdate != null ? this.birthdate.hashCode() : 0);
+            hash =
+            41 * hash + (this.gender != null ? this.gender.hashCode() : 0);
+            hash = 41 * hash + (this.role != null ? this.role.hashCode() : 0);
+            hash =
+            41 * hash + (this.status != null ? this.status.hashCode() : 0);
+            return hash;
         }
     }
 
@@ -137,14 +239,22 @@ public abstract class SciOrganizationBasePanel
         public int compare(MemberListItem member1, MemberListItem member2) {
             int result = 0;
 
-            result =
+            /*result =
             member1.getMember().getSurname().compareToIgnoreCase(member2.
-                    getMember().
-                    getSurname());
+            getMember().
+            getSurname());
+            
+            if (result == 0) {
+            result = member1.getMember().getGivenName().compareTo(
+            member2.getMember().getGivenName());
+            }*/
+
+            result =
+            member1.getSurname().compareToIgnoreCase(member2.getSurname());
 
             if (result == 0) {
-                result = member1.getMember().getGivenName().compareTo(
-                        member2.getMember().getGivenName());
+                result =
+                member1.getGivenName().compareTo(member2.getGivenName());
             }
 
             return result;
@@ -200,12 +310,12 @@ public abstract class SciOrganizationBasePanel
 
         return filters;
     }
-    
+
     protected List<String> getFiltersForFormerAssociatedMembers() {
         List<String> filters;
         filters = new LinkedList<String>();
 
-        filters.add("link.status = 'associatedFormer'");        
+        filters.add("link.status = 'associatedFormer'");
 
         return filters;
     }
@@ -215,7 +325,7 @@ public abstract class SciOrganizationBasePanel
         filters = new LinkedList<String>();
 
         //filters.add("link.status = 'former'");        
-        filters.add("lower(link.status) like lower('%former%')");        
+        filters.add("lower(link.status) like lower('%former%')");
 
         return filters;
     }
@@ -249,6 +359,58 @@ public abstract class SciOrganizationBasePanel
         return filters;
     }
 
+    protected void generateMemberXML(final MemberListItem person,
+                                     final Element parent,
+                                     final String roleName,
+                                     final String status,
+                                     final PageState state) {
+        Element memberElem = parent.newChildElement("member");
+
+        memberElem.addAttribute("role", roleName);
+        memberElem.addAttribute("status", status);
+        //memberElem.addAttribute("oid", person.getOID().toString());
+
+        //Element title = memberElem.newChildElement("title");
+        //title.setText(person.getTitle());
+
+        if ((person.getTitlePre() != null)
+            && !person.getTitlePre().isEmpty()) {
+            Element titlePre = memberElem.newChildElement("titlePre");
+            titlePre.setText(person.getTitlePre());
+        }
+
+        Element surname = memberElem.newChildElement("surname");
+        surname.setText(person.getSurname());
+
+        Element givenName = memberElem.newChildElement("givenname");
+        givenName.setText(person.getGivenName());
+
+        if ((person.getTitlePost() != null)
+            && !person.getTitlePost().isEmpty()) {
+            Element titlePost = memberElem.newChildElement("titlePost");
+            titlePost.setText(person.getTitlePost());
+        }
+
+        if ((person.getContacts() != null)
+            && (person.getContacts().size() > 0)) {
+            GenericPersonContactCollection contacts;
+            contacts = new GenericPersonContactCollection(person.getContacts());
+
+            Element contactsElem =
+                    memberElem.newChildElement("contacts");
+
+            while (contacts.next()) {
+                generateContactXML(
+                        contacts.getContact(),
+                        contactsElem,
+                        state,
+                        contacts.getContactOrder(),
+                        false);
+            }
+        }
+    }
+
+    @Deprecated
     protected void generateMemberXML(final GenericPerson person,
                                      final Element parent,
                                      final String roleName,
@@ -368,7 +530,7 @@ public abstract class SciOrganizationBasePanel
                 "members");
 
         for (MemberListItem memberItem : membersWithoutDoublesToShow) {
-            generateMemberXML(memberItem.getMember(),
+            generateMemberXML(memberItem,
                               membersWithoutDoublesElem,
                               memberItem.getRole(),
                               memberItem.getStatus(),
@@ -384,9 +546,9 @@ public abstract class SciOrganizationBasePanel
 
         Element title = projectElem.newChildElement("title");
         title.setText(project.getTitle());
-        
+
         Element beginElem = projectElem.newChildElement("projectbegin");
-             
+
         if ((project.getAddendum() != null)
             && !(project.getAddendum().isEmpty())) {
             Element addendum = projectElem.newChildElement("addendum");
@@ -460,7 +622,6 @@ public abstract class SciOrganizationBasePanel
             }
         }
     }
-
     /**
      * Create the XML for the list of publications, using the special
      * RelatedLinks passed by the caller. To avoid a dependency to the
@@ -472,87 +633,87 @@ public abstract class SciOrganizationBasePanel
      * @param parent  The parent XML element for the XML created by this method
      * @param state The current page state.
      */
-   /* protected void generatePublicationsXML(final DataCollection links,
-                                           final Element parent,
-                                           final PageState state) {
-        RelatedLink link;
-        ContentItem publication;
-        List<ContentItem> publications;
-
-        publications = new ArrayList<ContentItem>();
-
-        while (links.next()) {
-            link = new RelatedLink(links.getDataObject());
-            publication = link.getTargetItem();
-
-            publications.add(publication);
-        }
-
-        Collections.sort(publications, new Comparator<ContentItem>() {
-
-            public int compare(ContentItem o1, ContentItem o2) {
-                Integer year1;
-                Integer year2;
-
-                if ((o1 == null) && o2 == null) {
-                    return 0;
-                } else if ((o1 == null) && (o2 != null)) {
-                    return -1;
-                } else if ((o1 != null) && o2 == null) {
-                    return 1;
-                }
-
-                year1 = (Integer) o1.get("yearOfPublication");
-                year2 = (Integer) o2.get("yearOfPublication");
-
-
-                if (year1.compareTo(year2)
-                    == 0) {
-                    String title1;
-                    String title2;
-
-                    title1 = (String) o1.get("title");
-                    title2 = (String) o2.get("title");
-
-                    return title1.compareTo(title2);
-                } else {
-                    return (year1.compareTo(year2)) * -1;
-                }
-            }
-        });
-
-        long pageNumber = getPageNumber(state);
-        long pageCount = getPageCount(publications.size());
-        long begin = getPaginatorBegin(pageNumber);
-        long count = getPaginatorCount(begin, publications.size());
-        long end = getPaginatorEnd(begin, count);
-        pageNumber = normalizePageNumber(pageCount, pageNumber);
-
-        createPaginatorElement(parent, pageNumber, pageCount, begin, end, count,
-                               end);
-        List<ContentItem> publicationsToShow = publications.subList((int) begin,
-                                                                    (int) end);
-
-        for (ContentItem pub : publicationsToShow) {
-            generatePublicationXML(pub, parent, state);
-        }
+    /* protected void generatePublicationsXML(final DataCollection links,
+    final Element parent,
+    final PageState state) {
+    RelatedLink link;
+    ContentItem publication;
+    List<ContentItem> publications;
+    
+    publications = new ArrayList<ContentItem>();
+    
+    while (links.next()) {
+    link = new RelatedLink(links.getDataObject());
+    publication = link.getTargetItem();
+    
+    publications.add(publication);
     }
-
+    
+    Collections.sort(publications, new Comparator<ContentItem>() {
+    
+    public int compare(ContentItem o1, ContentItem o2) {
+    Integer year1;
+    Integer year2;
+    
+    if ((o1 == null) && o2 == null) {
+    return 0;
+    } else if ((o1 == null) && (o2 != null)) {
+    return -1;
+    } else if ((o1 != null) && o2 == null) {
+    return 1;
+    }
+    
+    year1 = (Integer) o1.get("yearOfPublication");
+    year2 = (Integer) o2.get("yearOfPublication");
+    
+    
+    if (year1.compareTo(year2)
+    == 0) {
+    String title1;
+    String title2;
+    
+    title1 = (String) o1.get("title");
+    title2 = (String) o2.get("title");
+    
+    return title1.compareTo(title2);
+    } else {
+    return (year1.compareTo(year2)) * -1;
+    }
+    }
+    });
+    
+    long pageNumber = getPageNumber(state);
+    long pageCount = getPageCount(publications.size());
+    long begin = getPaginatorBegin(pageNumber);
+    long count = getPaginatorCount(begin, publications.size());
+    long end = getPaginatorEnd(begin, count);
+    pageNumber = normalizePageNumber(pageCount, pageNumber);
+    
+    createPaginatorElement(parent, pageNumber, pageCount, begin, end, count,
+    end);
+    List<ContentItem> publicationsToShow = publications.subList((int) begin,
+    (int) end);
+    
+    for (ContentItem pub : publicationsToShow) {
+    generatePublicationXML(pub, parent, state);
+    }
+    }
+    
     protected void generatePublicationXML(final ContentItem publication,
-                                          final Element parent,
-                                          final PageState state) {
-        Element publicationElem;
-        ContentItemXMLRenderer renderer;
-
-        if (publication == null) {
-            return;
-        }
-        
-        publicationElem = parent.newChildElement("publications");
-
-        renderer = new ContentItemXMLRenderer(publicationElem);
-        renderer.setWrapAttributes(true);
-
-        renderer.walk(publication, SimpleXMLGenerator.class.getName());
+    final Element parent,
+    final PageState state) {
+    Element publicationElem;
+    ContentItemXMLRenderer renderer;
+    
+    if (publication == null) {
+    return;
+    }
+    
+    publicationElem = parent.newChildElement("publications");
+    
+    renderer = new ContentItemXMLRenderer(publicationElem);
+    renderer.setWrapAttributes(true);
+    
+    renderer.walk(publication, SimpleXMLGenerator.class.getName());
     }*/
 }

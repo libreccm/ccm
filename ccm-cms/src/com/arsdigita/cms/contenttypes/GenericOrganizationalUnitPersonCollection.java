@@ -22,6 +22,7 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import java.util.Date;
 
 /**
  * Collection class for the GenericOrganizationalUnit -> Person relation.
@@ -70,4 +71,39 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
         return (GenericPerson) DomainObjectFactory.newInstance(m_dataCollection.
                 getDataObject());
     }
+
+    public String getSurname() {
+        return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.SURNAME);
+    }
+
+    public String getGivenName() {
+        return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.GIVENNAME);
+    }
+
+    public String getTitlePre() {
+        return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.TITLEPRE);
+    }
+
+    public String getTitlePost() {
+        return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.TITLEPOST);
+    }
+
+    public Date getBirthdate() {
+        return (Date) m_dataCollection.getDataObject().get(
+                GenericPerson.BIRTHDATE);
+    }
+
+    public String getGender() {
+        return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.GENDER);
+    }
+
+    public DataObject getAlias() {
+        return (DataObject) m_dataCollection.getDataObject().get(
+                GenericPerson.ALIAS);
+    }        
 }

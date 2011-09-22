@@ -263,7 +263,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
                 break;
             case ASSOCIATED:
                 queryName =
-                "com.arsdigita.cms.contenttypes.getIdsOfAssociatedMembersOfDepartment";
+                "com.arsdigita.cms.contenttypes.getIdsOfAssociatedMembersOfSciDepartment";
                 break;
             case FORMER:
                 queryName =

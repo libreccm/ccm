@@ -268,6 +268,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                                       final PageState state,
                                       final List<String> filters) {
         if (SciOrganization.getConfig().getOrganizationMembersMerge()) {
+            long begin = System.currentTimeMillis();
             List<MemberListItem> members;
             members = new LinkedList<MemberListItem>();
             GenericOrganizationalUnitPersonCollection orgaMembers;
@@ -289,6 +290,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             mergeMembers(departments, members, filters);
 
             generateMembersListXML(members, parent, state);
+            System.out.printf("Members XML generated in %d ms\n", System.currentTimeMillis() - begin);
         } else {
             GenericOrganizationalUnitPersonCollection orgaMembers;
             orgaMembers = orga.getPersons();
@@ -304,7 +306,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                           members);
             }
 
-            generateMembersListXML(members, parent, state);
+            generateMembersListXML(members, parent, state);            
         }
     }
 
