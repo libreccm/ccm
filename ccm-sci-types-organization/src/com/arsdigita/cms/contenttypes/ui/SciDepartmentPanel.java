@@ -281,7 +281,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             Element membersElem = parent.newChildElement("members");
 
             for (MemberListItem memberItem : membersToShow) {
-                generateMemberXML(memberItem.getMember(),
+                generateMemberXML(memberItem,
                                   membersElem,
                                   memberItem.getRole(),
                                   memberItem.getStatus(),
@@ -322,7 +322,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                                                                  (int) end);
 
             for (MemberListItem memberItem : membersToShow) {
-                generateMemberXML(memberItem.getMember(),
+                generateMemberXML(memberItem,
                                   membersElem,
                                   memberItem.getRole(),
                                   memberItem.getStatus(),
