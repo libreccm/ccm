@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
@@ -187,4 +188,39 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
     public GenericContact getContact() {
         return new GenericContact(m_dataCollection.getDataObject());
     }
+
+    public GenericPerson getPerson() {
+        DataCollection collection;
+
+        collection = (DataCollection) m_dataCollection.getDataObject().get(
+                GenericContact.PERSON);
+
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+
+            // Close Collection to prevent an open ResultSet
+            collection.close();
+
+            return (GenericPerson) DomainObjectFactory.newInstance(dobj);
+        }
+    }
+
+    public GenericAddress getAddress() {
+        return (GenericAddress) DomainObjectFactory.newInstance((DataObject) m_dataCollection.
+                getDataObject().get(
+                GenericContact.ADDRESS));
+    }
+
+    public GenericContactEntryCollection getContactEntries() {
+        return new GenericContactEntryCollection((DataCollection) m_dataCollection.
+                getDataObject().get(
+                GenericContact.CONTACT_ENTRIES));
+    }
+    
+    
 }

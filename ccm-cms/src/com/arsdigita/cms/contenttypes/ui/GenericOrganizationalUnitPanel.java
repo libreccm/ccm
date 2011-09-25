@@ -108,7 +108,8 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
     }
 
     protected void generateMembersXML(GenericOrganizationalUnit orga,
-                                      Element parent, PageState state) {
+                                      Element parent, 
+                                      PageState state) {
         GenericOrganizationalUnitPersonCollection persons;
         persons = orga.getPersons();
         long pageNumber = getPageNumber(state);
@@ -126,61 +127,68 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
         persons.setRange((int) begin + 1, (int) end + 1);
 
         while (persons.next()) {
-            GenericPerson person;
-            person = persons.getPerson();
-
             Element personElem = personsElem.newChildElement("member");
-            Element title = personElem.newChildElement("title");
-            title.setText(person.getTitle());
+            //Element title = personElem.newChildElement("title");
+            //title.setText(person.getTitle());
 
-            if ((person.getTitlePre() != null)
-                && !person.getTitlePre().isEmpty()) {
+            if ((persons.getTitlePre() != null)
+                && !persons.getTitlePre().isEmpty()) {
                 Element titlePre = personElem.newChildElement("titlePre");
-                titlePre.setText(person.getTitlePre());
+                titlePre.setText(persons.getTitlePre());
             }
 
             Element surname = personElem.newChildElement("surname");
-            surname.setText(person.getSurname());
+            surname.setText(persons.getSurname());
 
             Element givenName = personElem.newChildElement("givenname");
-            givenName.setText(person.getGivenName());
+            givenName.setText(persons.getGivenName());
 
-            if ((person.getTitlePost() != null)
-                && !person.getTitlePost().isEmpty()) {
+            if ((persons.getTitlePost() != null)
+                && !persons.getTitlePost().isEmpty()) {
                 Element titlePost = personElem.newChildElement("titlePost");
-                titlePost.setText(person.getTitlePost());
+                titlePost.setText(persons.getTitlePost());
             }
 
-            GenericPersonContactCollection contacts = person.getContacts();
+            GenericPersonContactCollection contacts =
+                                           new GenericPersonContactCollection(
+                    persons.getContacts());
             if ((contacts != null) && (contacts.size() > 0)) {
                 Element contactsElem =
                         personElem.newChildElement("contacts");
                 while (contacts.next()) {
-                    GenericContact contact = contacts.getContact();
 
-                    generateContactXML(contact, contactsElem, state, contacts.
-                            getContactOrder(), false);
+                    generateContactXML(contacts.getContactType(),
+                                       contacts.getPerson(),
+                                       contacts.getContactEntries(),
+                                       contacts.getAddress(),
+                                       contactsElem,
+                                       state,
+                                       contacts.getContactOrder(), 
+                                       false);
                 }
             }
         }
     }
 
-    protected void generateContactXML(final GenericContact contact,
-                                      final Element parent,
-                                      final PageState state,
-                                      final String order,
-                                      final boolean withPerson) {
+    protected void generateContactXML(
+            final String contactType,
+            final GenericPerson person,
+            final GenericContactEntryCollection contactEntries,
+            final GenericAddress address,
+            final Element parent,
+            final PageState state,
+            final String order,
+            final boolean withPerson) {
         Element contactElem = parent.newChildElement("contact");
         contactElem.addAttribute("order", order);
 
-        Element title = contactElem.newChildElement("title");
-        title.setText(contact.getTitle());
+        //Element title = contactElem.newChildElement("title");
+        //title.setText(contact.getTitle());
 
         Element typeElem = contactElem.newChildElement("type");
-        typeElem.setText(contact.getContactType());
+        typeElem.setText(contactType);
 
         if (withPerson) {
-            GenericPerson person = contact.getPerson();
             if (person != null) {
                 Element personElem = contactElem.newChildElement("person");
                 if ((person.getTitlePre() != null) && !person.getTitlePre().
@@ -205,8 +213,6 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             }
         }
 
-        GenericContactEntryCollection contactEntries =
-                                      contact.getContactEntries();
         if ((contactEntries != null)
             && (contactEntries.size() > 0)) {
             Element contactEntriesElem =
@@ -232,7 +238,6 @@ public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
             }
         }
 
-        GenericAddress address = contact.getAddress();
         if (address != null) {
             Element addressElem = contactElem.newChildElement(
                     "address");

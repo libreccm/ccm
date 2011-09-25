@@ -22,6 +22,7 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
 import java.util.Date;
 
 /**
@@ -72,6 +73,10 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
                 getDataObject());
     }
 
+    public OID getOID() {
+        return m_dataCollection.getDataObject().getOID();
+    }
+    
     public String getSurname() {
         return (String) m_dataCollection.getDataObject().get(
                 GenericPerson.SURNAME);
@@ -102,8 +107,13 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
                 GenericPerson.GENDER);
     }
 
+    public DataCollection getContacts() {
+        return (DataCollection) m_dataCollection.getDataObject().get(
+                GenericPerson.CONTACTS);
+    }
+
     public DataObject getAlias() {
         return (DataObject) m_dataCollection.getDataObject().get(
                 GenericPerson.ALIAS);
-    }        
+    }
 }

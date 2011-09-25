@@ -29,6 +29,7 @@ import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
 import java.util.Calendar;
 import java.util.Collections;
@@ -64,6 +65,7 @@ public abstract class SciOrganizationBasePanel
 
     protected class MemberListItem {
 
+        private OID oid;
         private String surname;
         private String givenName;
         private String titlePre;
@@ -81,7 +83,8 @@ public abstract class SciOrganizationBasePanel
             /*this.member = member;
             this.role = role;
             this.status = status;*/
-            this(member.getSurname(),
+            this(member.getOID(),
+                 member.getSurname(),
                  member.getGivenName(),
                  member.getTitlePre(),
                  member.getTitlePost(),
@@ -93,7 +96,8 @@ public abstract class SciOrganizationBasePanel
 
         }
 
-        public MemberListItem(final String surname,
+        public MemberListItem(final OID oid,
+                              final String surname,
                               final String givenName,
                               final String titlePre,
                               final String titlePost,
@@ -102,6 +106,7 @@ public abstract class SciOrganizationBasePanel
                               final DataCollection contacts,
                               final String role,
                               final String status) {
+            this.oid = oid;
             this.surname = surname;
             this.givenName = givenName;
             this.titlePre = titlePre;
@@ -116,6 +121,10 @@ public abstract class SciOrganizationBasePanel
         /*public GenericPerson getMember() {
         return member;
         }*/
+        public OID getOID() {
+            return oid;
+        }
+
         public Date getBirthdate() {
             return birthdate;
         }
@@ -368,7 +377,7 @@ public abstract class SciOrganizationBasePanel
 
         memberElem.addAttribute("role", roleName);
         memberElem.addAttribute("status", status);
-        //memberElem.addAttribute("oid", person.getOID().toString());
+        memberElem.addAttribute("oid", person.getOID().toString());
 
         //Element title = memberElem.newChildElement("title");
         //title.setText(person.getTitle());
@@ -401,7 +410,10 @@ public abstract class SciOrganizationBasePanel
 
             while (contacts.next()) {
                 generateContactXML(
-                        contacts.getContact(),
+                        contacts.getContactType(),
+                        contacts.getPerson(),
+                        contacts.getContactEntries(),
+                        contacts.getAddress(),
                         contactsElem,
                         state,
                         contacts.getContactOrder(),
@@ -453,7 +465,10 @@ public abstract class SciOrganizationBasePanel
 
             while (contacts.next()) {
                 generateContactXML(
-                        contacts.getContact(),
+                        contacts.getContactType(),
+                        contacts.getPerson(),
+                        contacts.getContactEntries(),
+                        contacts.getAddress(),
                         contactsElem,
                         state,
                         contacts.getContactOrder(),
@@ -462,6 +477,50 @@ public abstract class SciOrganizationBasePanel
         }
     }
 
+    protected void addMember(
+            final GenericOrganizationalUnitPersonCollection persons,
+            final List<MemberListItem> members) {
+        addMember(persons.getOID(),
+                  persons.getSurname(),
+                  persons.getGivenName(),
+                  persons.getTitlePre(),
+                  persons.getTitlePost(),
+                  persons.getBirthdate(),
+                  persons.getGender(),
+                  persons.getContacts(),
+                  persons.getRoleName(),
+                  persons.getStatus(),
+                  members);
+    }
+
+    private void addMember(final OID oid,
+                           final String surname,
+                           final String givenName,
+                           final String titlePre,
+                           final String titlePost,
+                           final Date birthdate,
+                           final String gender,
+                           final DataCollection contacts,
+                           final String role,
+                           final String status,
+                           final List<MemberListItem> members) {
+        MemberListItem listItem = new MemberListItem(oid,
+                                                     surname,
+                                                     givenName,
+                                                     titlePre,
+                                                     titlePost,
+                                                     birthdate,
+                                                     gender,
+                                                     contacts,
+                                                     role,
+                                                     status);
+
+        if (!members.contains(listItem)) {
+            members.add(listItem);
+        }
+    }
+
+    @Deprecated
     protected void addMember(final GenericPerson person,
                              final String roleName,
                              final String status,
@@ -486,7 +545,14 @@ public abstract class SciOrganizationBasePanel
             }
 
             while (departmentMembers.next()) {
-                addMember(departmentMembers.getPerson(),
+                addMember(departmentMembers.getOID(),
+                          departmentMembers.getSurname(),
+                          departmentMembers.getGivenName(),
+                          departmentMembers.getTitlePre(),
+                          departmentMembers.getTitlePost(),
+                          departmentMembers.getBirthdate(),
+                          departmentMembers.getGender(),
+                          null,
                           departmentMembers.getRoleName(),
                           departmentMembers.getStatus(),
                           members);
@@ -569,7 +635,15 @@ public abstract class SciOrganizationBasePanel
             Element membersElem = projectElem.newChildElement("members");
 
             while (members.next()) {
-                generateMemberXML(members.getPerson(),
+                generateMemberXML(new MemberListItem(members.getOID(),
+                                                     members.getSurname(),
+                                                     members.getGivenName(),
+                                                     members.getTitlePre(),
+                                                     members.getTitlePost(),
+                                                     members.getBirthdate(),
+                                                     members.getGender(),
+                                                     null, members.getRoleName(),
+                                                     members.getStatus()),
                                   membersElem,
                                   members.getRoleName(),
                                   members.getStatus(),
@@ -584,7 +658,10 @@ public abstract class SciOrganizationBasePanel
             Element contactsElem = projectElem.newChildElement("contacts");
 
             while (contacts.next()) {
-                generateContactXML(contacts.getContact(),
+                generateContactXML(contacts.getContactType(),
+                                   contacts.getPerson(),
+                                   contacts.getContactEntries(),
+                                   contacts.getAddress(),
                                    contactsElem,
                                    state,
                                    Integer.toString(contacts.getContactOrder()),

@@ -146,9 +146,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
             projectMembers = subProject.getPersons();
 
             while (projectMembers.next()) {
-                addMember(projectMembers.getPerson(),
-                          projectMembers.getRoleName(),
-                          projectMembers.getStatus(),
+                addMember(projectMembers,
                           members);
             }
 
@@ -173,9 +171,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         members = new LinkedList<MemberListItem>();
 
         while (projectMembers.next()) {
-            addMember(projectMembers.getPerson(),
-                      projectMembers.getRoleName(),
-                      projectMembers.getStatus(),
+            addMember(projectMembers,
                       members);
         }
 

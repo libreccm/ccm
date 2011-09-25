@@ -24,7 +24,6 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
-import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciDepartmentProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciDepartmentSubDepartmentsCollection;
@@ -200,17 +199,16 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             if (heads.size() > 0) {
                 Element headsElem = departmentElem.newChildElement("heads");
 
-                while (heads.next()) {
-                    GenericPerson head = heads.getPerson();
+                while (heads.next()) {                    
                     Element headElem = headsElem.newChildElement("head");
                     Element titlePre = headElem.newChildElement("titlePre");
-                    titlePre.setText(head.getTitlePre());
+                    titlePre.setText(heads.getTitlePre());
                     Element givenName = headElem.newChildElement("givenname");
-                    givenName.setText(head.getGivenName());
+                    givenName.setText(heads.getGivenName());
                     Element surname = headElem.newChildElement("surname");
-                    surname.setText(head.getSurname());
+                    surname.setText(heads.getSurname());
                     Element titlePost = headElem.newChildElement("titlePost");
-                    titlePost.setText(head.getTitlePost());
+                    titlePost.setText(heads.getTitlePost());
                 }
             }
 
@@ -221,7 +219,10 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                         departmentElem.newChildElement("contacts");
 
                 while (contacts.next()) {
-                    generateContactXML(contacts.getContact(),
+                    generateContactXML(contacts.getContactType(),
+                                       contacts.getPerson(),
+                                       contacts.getContactEntries(),
+                                       contacts.getAddress(),
                                        contactsElem,
                                        state,
                                        Integer.toString(
@@ -246,9 +247,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             }
 
             while (departmentsMembers.next()) {
-                addMember(departmentsMembers.getPerson(),
-                          departmentsMembers.getRoleName(),
-                          departmentsMembers.getStatus(),
+                addMember(departmentsMembers,
                           members);
             }
 
@@ -281,9 +280,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             departments = orga.getDepartments();
 
             while (orgaMembers.next()) {
-                addMember(orgaMembers.getPerson(),
-                          orgaMembers.getRoleName(),
-                          orgaMembers.getStatus(),
+                addMember(orgaMembers,
                           members);
             }
 
@@ -300,9 +297,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             List<MemberListItem> members = new LinkedList<MemberListItem>();
 
             while (orgaMembers.next()) {
-                addMember(orgaMembers.getPerson(),
-                          orgaMembers.getRoleName(),
-                          orgaMembers.getStatus(),
+                addMember(orgaMembers,
                           members);
             }
 

@@ -64,10 +64,10 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     private String show;
     private boolean displayDescription = true;
     private boolean displaySubDepartments = true;
-    private boolean displayProjects = true;    
+    private boolean displayProjects = true;
     private Map<String, Filter> projectFilters =
                                 new LinkedHashMap<String, Filter>();
-    
+
     public SciDepartmentPanel() {
         projectFilters.put(TITLE, new TextFilter(TITLE, TITLE));
     }
@@ -76,7 +76,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
     protected String getDefaultShowParam() {
         return SHOW_DESCRIPTION;
     }
-       
+
     @Override
     protected Class<? extends ContentItem> getAllowedClass() {
         return SciDepartment.class;
@@ -207,16 +207,15 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                 Element headsElem = subDepartmentElem.newChildElement("heads");
 
                 while (heads.next()) {
-                    GenericPerson head = heads.getPerson();
                     Element headElem = headsElem.newChildElement("head");
                     Element titlePre = headElem.newChildElement("titlePre");
-                    titlePre.setText(head.getTitlePre());
+                    titlePre.setText(heads.getTitlePre());
                     Element givenName = headElem.newChildElement("givenname");
-                    givenName.setText(head.getGivenName());
+                    givenName.setText(heads.getGivenName());
                     Element surname = headElem.newChildElement("surname");
-                    surname.setText(head.getSurname());
+                    surname.setText(heads.getSurname());
                     Element titlePost = headElem.newChildElement("titlePost");
-                    titlePost.setText(head.getTitlePost());
+                    titlePost.setText(heads.getTitlePost());
                 }
             }
 
@@ -227,7 +226,10 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                         "contacts");
 
                 while (contacts.next()) {
-                    generateContactXML(contacts.getContact(),
+                    generateContactXML(contacts.getContactType(),
+                                       contacts.getPerson(),
+                                       contacts.getContactEntries(),
+                                       contacts.getAddress(),
                                        contactsElem,
                                        state,
                                        Integer.toString(
@@ -255,9 +257,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             subDepartments = department.getSubDepartments();
 
             while (departmentMembers.next()) {
-                addMember(departmentMembers.getPerson(),
-                          departmentMembers.getRoleName(),
-                          departmentMembers.getStatus(),
+                addMember(departmentMembers,
                           members);
             }
 
@@ -297,9 +297,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             List<MemberListItem> members = new LinkedList<MemberListItem>();
 
             while (departmentMembers.next()) {
-                addMember(departmentMembers.getPerson(),
-                          departmentMembers.getRoleName(),
-                          departmentMembers.getStatus(),
+                addMember(departmentMembers,
                           members);
             }
 
@@ -340,7 +338,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             filterEntry.getValue().generateXml(filterElement);
         }
     }
-    
+
     protected void applyProjectFilters(
             final List<String> filters,
             final HttpServletRequest request) {
@@ -354,15 +352,15 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             }
         }
     }
-    
+
     protected void generateProjectsXML(final SciDepartment department,
                                        final Element parent,
                                        final PageState state,
                                        final List<String> filters) {
         Element controls = parent.newChildElement("filterControls");
         controls.addAttribute("customName", "sciDepartmentProjects");
-            controls.addAttribute("show", show);
-        
+        controls.addAttribute("show", show);
+
         if (SciDepartment.getConfig().getOrganizationProjectsMerge()) {
             List<SciProject> projects;
             projects = new LinkedList<SciProject>();
