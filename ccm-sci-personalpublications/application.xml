@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+		 name="ccm-sci-personalpublications"
+		 prettyName="OpenCCM PublicPersonalProfile Content generator"
+		 version="6.6.1"
+		 release="1"
+		 webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.6.0" release="ge"/>
+    <ccm:requires name="ccm-cms" version="6.6.0" release="ge"/>  
+    <ccm:requires name="ccm-cms-publicpersonalprofile" version="6.6.0" release="ge"/>
+    <ccm:requires name="ccm-sci-publications" version="6.6.0" release="ge"/>
+  </ccm:dependencies>
+  <ccm:directories>
+    <ccm:directory name="pdl"/>
+    <ccm:directory name="sql"/>
+    <ccm:directory name="src"/>
+  </ccm:directories>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    Content generator creating a list of the publications of a person.
+  </ccm:description>
+</ccm:application>
