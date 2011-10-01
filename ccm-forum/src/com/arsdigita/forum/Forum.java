@@ -330,6 +330,7 @@ public class Forum extends Application {
         if (isNew()) {
             setModerated(false);
             setNoticeboard(false);
+            setPublic(true);
             setAllowFileAttachments(false);
             setAllowImageUploads(false);
             setAutoSubscribeThreadCreator(false);
