@@ -1,5 +1,6 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
@@ -34,7 +36,8 @@ public class PersonalPublications implements ContentGenerator {
     }
 
     public void generateContent(final Element parent,
-                                final GenericPerson person) {
+                                final GenericPerson person,
+                                final PageState state) {
         DataCollection publications = (DataCollection) person.get("publication");
 
         if ((publications == null) || publications.size() == 0) {
@@ -47,9 +50,9 @@ public class PersonalPublications implements ContentGenerator {
             final Map<String, List<Publication>> groupedPublications =
                                                  processPublications(
                     publications);
-            
+
             generateGroupsXml(parent, groupedPublications);
-            generatePublicationsXml(parent, groupedPublications);
+            generatePublicationsXml(parent, groupedPublications, state);
         }
     }
 
@@ -127,14 +130,102 @@ public class PersonalPublications implements ContentGenerator {
 
     private void generateGroupsXml(final Element parent,
                                    final Map<String, List<Publication>> publications) {
+        final Element availableGroups = parent.newChildElement(
+                "availablePublicationGroups");
+
+        for (Map.Entry<String, List<Publication>> entry :
+             publications.entrySet()) {
+            if (!entry.getValue().isEmpty()) {
+                createAvailablePublicationGroupXml(availableGroups,
+                                                   entry.getKey());
+            }
+        }
     }
 
-    private void generatePublicationsXml(final Element parent,
-                                         final Map<String, List<Publication>> publications) {
+    private void createAvailablePublicationGroupXml(final Element parent,
+                                                    final String name) {
+        final Element group =
+                      parent.newChildElement("availablePublicationGroup");
+        group.addAttribute("name", name);
     }
 
-    private void generatePublicationXml(final Element publicationsElem,
-                                        final Publication publication) {
+    private void generatePublicationsXml(
+            final Element parent,
+            final Map<String, List<Publication>> publications,
+            final PageState state) {
+        final Element publicationsElem = parent.newChildElement("publications");
+
+        int numberOfPubs = 0;
+        int groupSplit = config.getGroupSplit();
+
+        for (List<Publication> list : publications.values()) {
+            numberOfPubs += list.size();
+        }
+
+        if (numberOfPubs < groupSplit) {
+            publicationsElem.addAttribute("all", "all");
+
+            for (Map.Entry<String, List<Publication>> entry : publications.
+                    entrySet()) {
+                if (entry.getValue().size() > 0) {
+                    generatePublicationGroupXml(publicationsElem,
+                                                entry.getKey(),
+                                                entry.getValue(),
+                                                state);
+                }
+            }
+        } else {
+            final HttpServletRequest request = state.getRequest();
+            final String[] defaultGroup = config.getDefaultGroup().split(",");
+
+            String groupToShow = request.getParameter("group");
+            if ((groupToShow == null)
+                || groupToShow.isEmpty()
+                || !(publications.containsKey(groupToShow))) {
+                int i = 0;
+                groupToShow = defaultGroup[i];
+                while ((publications.get(groupToShow).isEmpty())
+                       && i < defaultGroup.length) {
+                    groupToShow = defaultGroup[i];
+                    i++;
+                }
+            }
+
+            if (groupToShow == null) {
+                groupToShow = MISC;
+            }
+
+            generatePublicationGroupXml(publicationsElem,
+                                        groupToShow,
+                                        publications.get(groupToShow),
+                                        state);
+        }
+    }
+
+    private void generatePublicationGroupXml(final Element publicationsElem,
+                                             final String groupName,
+                                             final List<Publication> publications,
+                                             final PageState state) {
+        if (publications == null) {
+            return;
+        }
+
+        final Element groupElem = publicationsElem.newChildElement(
+                "publicationGroup");
+        groupElem.addAttribute("name", groupName);
+
+        for (Publication publication : publications) {
+            generatePublicationXml(groupElem, publication, state);
+        }
+    }
+
+    private void generatePublicationXml(final Element publicationGroupElem,
+                                        final Publication publication,
+                                        final PageState state) {
+        final PublicPersonalProfileXmlGenerator generator =
+                                                new PublicPersonalProfileXmlGenerator(
+                publication);
+        generator.generateXML(state, publicationGroupElem, "");
     }
 
     /**
@@ -167,7 +258,7 @@ public class PersonalPublications implements ContentGenerator {
             for (String groupToken : groupTokens) {
                 groupTokenSplit = groupToken.split(":");
                 if (groupTokenSplit.length != 2) {
-                    logger.debug(String.format(
+                    logger.warn(String.format(
                             "Invalid entry in publication group config: '%s'. "
                             + "Ignoring.",
                             groupToken));
@@ -213,7 +304,7 @@ public class PersonalPublications implements ContentGenerator {
             }
             authors2 = publication2.getAuthors();
             while (authors2.next()) {
-                author = authors1.getAuthor();
+                author = authors2.getAuthor();
                 authors2Buffer.append(author.getSurname());
                 authors2Buffer.append(author.getGivenName());
             }

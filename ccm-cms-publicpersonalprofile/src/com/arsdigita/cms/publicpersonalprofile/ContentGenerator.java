@@ -1,5 +1,6 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.xml.Element;
 
@@ -10,6 +11,6 @@ import com.arsdigita.xml.Element;
  */
 public interface ContentGenerator {
     
-    void generateContent(Element parent, GenericPerson person);
+    void generateContent(Element parent, GenericPerson person, PageState state);
     
 }

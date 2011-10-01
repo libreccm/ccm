@@ -77,8 +77,9 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
                             final ContentGenerator generator =
                                                    (ContentGenerator) generatorObj;
 
-                            generator.generateContent(profileContent, profile.
-                                    getOwner());
+                            generator.generateContent(profileContent,
+                                                      profile.getOwner(),
+                                                      state);
 
                         } else {
                             throw new UncheckedWrapperException(String.format(

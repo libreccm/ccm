@@ -11,9 +11,7 @@
     <ccm:requires name="ccm-cms-publicpersonalprofile" version="6.6.0" release="ge"/>
     <ccm:requires name="ccm-sci-publications" version="6.6.0" release="ge"/>
   </ccm:dependencies>
-  <ccm:directories>
-    <ccm:directory name="pdl"/>
-    <ccm:directory name="sql"/>
+  <ccm:directories>    
     <ccm:directory name="src"/>
   </ccm:directories>
   <ccm:contacts>

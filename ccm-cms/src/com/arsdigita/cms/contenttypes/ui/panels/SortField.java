@@ -1,6 +1,5 @@
 package com.arsdigita.cms.contenttypes.ui.panels;
 
-import com.arsdigita.cms.ContentItem;
 import com.arsdigita.xml.Element;
 import java.util.Comparator;
 
@@ -9,7 +8,7 @@ import java.util.Comparator;
  * @param <T> 
  * @author Jens Pelzetter 
  */
-public class SortField<T extends ContentItem> {
+public class SortField<T> {
 
     private String label;
     private Comparator<T> comparator;

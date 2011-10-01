@@ -37,7 +37,6 @@ import com.arsdigita.xml.Element;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.rmi.ServerException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -179,10 +178,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     Element profileOwnerName = profileElem.newChildElement(
                             "ppp:ownerName", PPP_NS);
                     profileOwnerName.setText(owner.getFullName());
-                  
+
                     final PublicPersonalProfileXmlUtil util =
                                                        new PublicPersonalProfileXmlUtil();
-                    String prefix = DispatcherHelper.getDispatcherPrefix(request);
+                    String prefix =
+                           DispatcherHelper.getDispatcherPrefix(request);
                     if (prefix == null) {
                         prefix = "";
                     }
@@ -246,7 +246,9 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                         final ContentGenerator generator =
                                                                (ContentGenerator) generatorObj;
 
-                                        generator.generateContent(root, owner);
+                                        generator.generateContent(root,
+                                                                  owner,
+                                                                  state);
 
                                     } else {
                                         throw new ServletException(String.format(
