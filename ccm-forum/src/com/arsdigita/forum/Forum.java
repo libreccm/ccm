@@ -63,6 +63,7 @@ import com.arsdigita.web.Application;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author chrisg23
+ * @author Jens Pelzetter (jensp)
  * @version $Revision:  1.7 $ 
  * @version $Id: Forum.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
@@ -70,15 +71,13 @@ public class Forum extends Application {
 
     /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(Forum.class);
-
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.forum.Forum";
+                               "com.arsdigita.forum.Forum";
     public static final String PACKAGE_TYPE = "forum";
-
     public static final String THREAD_SUBSCRIPTION_GROUPS_NAME =
-                                   "Thread Subscription Groups";
-
+                               "Thread Subscription Groups";
     private static final ForumConfig s_config = new ForumConfig();
+
     static {
         s_log.debug("Static initalizer starting...");
         s_config.load();
@@ -88,30 +87,27 @@ public class Forum extends Application {
     public static ForumConfig getConfig() {
         return s_config;
     }
-
-
     //////
     //Forum specific privileges
     /////
     public static final String FORUM_MODERATION_PRIVILEGE = "forum_moderation";
     public static final String CREATE_THREAD_PRIVILEGE = "forum_create_thread";
     public static final String RESPOND_TO_THREAD_PRIVILEGE = "forum_respond";
-	// separate read privilege required because all public users 
-	// have READ on homepage, which is parent of forum, hence
-	// everyone inherits READ cg
-	//
-	// note in hindsight, I have stopped homepage being set as
-	// permission context for forum, because site search checks 
-	// for READ privilege anyway, and so search results were being
-	// returned for non public posts. This means there is no longer 
-	// any need for a separate forum_read privilege, though it 
-	// does no harm. Now removed
+    // separate read privilege required because all public users 
+    // have READ on homepage, which is parent of forum, hence
+    // everyone inherits READ cg
+    //
+    // note in hindsight, I have stopped homepage being set as
+    // permission context for forum, because site search checks 
+    // for READ privilege anyway, and so search results were being
+    // returned for non public posts. This means there is no longer 
+    // any need for a separate forum_read privilege, though it 
+    // does no harm. Now removed
     //
     // pb: Reactivated READ privilege in order to provide forums for different
     // groups of users for their internal use and to provide private forums
     // for logged in users only (no public read access).
     public static final String FORUM_READ_PRIVILEGE = "forum_read";
-
     ///////
     // pdl forum attribute/association names
     ///////
@@ -120,21 +116,20 @@ public class Forum extends Application {
     private static final String MODERATION = "isModerated";
     private static final String PUBLIC = "isPublic";
     private static final String NOTICEBOARD = "isNoticeboard";
-
     private static final String ADMIN_GROUP = "adminGroup";
     private static final String MODERATION_GROUP = "moderationGroup";
     private static final String THREAD_CREATE_GROUP = "threadCreateGroup";
     private static final String THREAD_RESPONDER_GROUP = "threadRespondGroup";
     private static final String READ_GROUP = "readGroup";
-
     private static final String CATEGORY = "category";
     private static final String EXPIRE_AFTER = "expireAfter";
     private static final String LIFECYCLE_DEFINITION = "lifecycleDefinition";
     // additional attributes added chris.gilbert@westsussex.gov.uk
-    private static final String ALLOW_FILE_ATTACHMENTS = "fileAttachmentsAllowed";
+    private static final String ALLOW_FILE_ATTACHMENTS =
+                                "fileAttachmentsAllowed";
     private static final String ALLOW_IMAGE_UPLOADS = "imageUploadsAllowed";
     private static final String AUTOSUBSCRIBE_THREAD_STARTER =
-                                                   "autoSubscribeThreadStarter";
+                                "autoSubscribeThreadStarter";
     private static final String INTRODUCTION = "introduction";
     private static final String NO_CATEGORY_POSTS = "noCategoryPostsAllowed";
     private static final String ANONYMOUS_POSTS = "anonymousPostsAllowed";
@@ -202,10 +197,11 @@ public class Forum extends Application {
     public static Forum create(String urlName, String title,
                                Application parent, boolean moderated) {
         s_log.debug("creating forum " + title);
-        
-        Forum forum = (Forum) Application.createApplication(BASE_DATA_OBJECT_TYPE, 
-                                                            urlName,
-                                                            title, parent, true);
+
+        Forum forum = (Forum) Application.createApplication(
+                BASE_DATA_OBJECT_TYPE,
+                urlName,
+                title, parent, true);
 
         forum.setModerated(moderated);
         forum.setPublic(true);
@@ -237,8 +233,7 @@ public class Forum extends Application {
         if (category == null) {
             return createRootCategory();
         } else {
-            return (Category)DomainObjectFactory
-                .newInstance(category);
+            return (Category) DomainObjectFactory.newInstance(category);
         }
     }
 
@@ -279,7 +274,7 @@ public class Forum extends Application {
 
         Group moderators = new Group();
         moderators.setName(getTitle() + " Moderators");
-        setAssociation( MODERATION_GROUP, moderators );
+        setAssociation(MODERATION_GROUP, moderators);
         // This is bit of a hack.  For moderator messages to be sent out properly,
         // moderator group has to have proper primary email address.  Which means
         // it has to be unique among all primary email addresses.  Failing to the
@@ -288,8 +283,8 @@ public class Forum extends Application {
         // NPE when trying to retrieve sender's email address, thus stopping any
         // further message processing.
         //   Actually, the only hack involved is making the email address unique.
-        String email = "forum-moderator-" + getID() + "-" +
-                       moderators.getID() + "@" + s_config.getReplyHostName();
+        String email = "forum-moderator-" + getID() + "-" + moderators.getID()
+                       + "@" + s_config.getReplyHostName();
         moderators.setPrimaryEmail(new EmailAddress(email));
 
         // chris.gilbert@westsussex.gov.uk create additional groups for privilege
@@ -307,10 +302,10 @@ public class Forum extends Application {
         Group forumReaders = new Group();
         forumReaders.setName(getTitle() + " Readers");
         setAssociation(READ_GROUP, forumReaders);
-		
+
         Group container = getGroup();  // Application.getGroup(): get group
-                                       // associated with this application
-		
+        // associated with this application
+
         container.addSubgroup(administrators);
         container.addSubgroup(moderators);
         container.addSubgroup(threadCreators);
@@ -320,7 +315,7 @@ public class Forum extends Application {
         threadSubscriptions.setName(THREAD_SUBSCRIPTION_GROUPS_NAME);
         container.addSubgroup(threadSubscriptions);
         container.save();
-		
+
     }
 
     @Override
@@ -337,10 +332,9 @@ public class Forum extends Application {
             setNoCategoryPostsAllowed(true);
             setAnonymousPostsAllowed(false);
             createRootCategory();
-			
+
         }
     }
-
     private boolean m_wasNew;
 
     @Override
@@ -359,10 +353,10 @@ public class Forum extends Application {
             PermissionService.setContext(getRootCategory(), this);
             createGroups();
             if (getAdminGroup() != null) {
-                PermissionService.grantPermission( new PermissionDescriptor(
-                                                       PrivilegeDescriptor.ADMIN,
-                                                       this,
-                                                       getAdminGroup()));
+                PermissionService.grantPermission(new PermissionDescriptor(
+                        PrivilegeDescriptor.ADMIN,
+                        this,
+                        getAdminGroup()));
                 s_log.debug("Current user : "
                             + Kernel.getContext().getParty().getPrimaryEmail()
                             + " class is "
@@ -387,22 +381,22 @@ public class Forum extends Application {
                 //
             }
 
-            if (getModerationGroup() != null ) {
+            if (getModerationGroup() != null) {
                 PermissionService.grantPermission(
-                                      new PermissionDescriptor(
-                                              PrivilegeDescriptor.get(
-                                                  FORUM_MODERATION_PRIVILEGE),
-                                                  this,
-                                                  getModerationGroup()));
+                        new PermissionDescriptor(
+                        PrivilegeDescriptor.get(
+                        FORUM_MODERATION_PRIVILEGE),
+                        this,
+                        getModerationGroup()));
             }
 
             if (getThreadCreateGroup() != null) {
                 PermissionService.grantPermission(
-                                      new PermissionDescriptor(
-                                              PrivilegeDescriptor.get(
-                                                  CREATE_THREAD_PRIVILEGE),
-                                              this,
-                                              getThreadCreateGroup()));
+                        new PermissionDescriptor(
+                        PrivilegeDescriptor.get(
+                        CREATE_THREAD_PRIVILEGE),
+                        this,
+                        getThreadCreateGroup()));
                 // chris.gilbert@westsussex.gov.uk
                 // wouldn't do this normally, but this enables legacy implementations
                 // to use new version without any side effects
@@ -413,38 +407,43 @@ public class Forum extends Application {
 
             if (getThreadResponderGroup() != null) {
                 PermissionService.grantPermission(
-                                       new PermissionDescriptor(
-                                              PrivilegeDescriptor.get(
-                                                  RESPOND_TO_THREAD_PRIVILEGE),
-                                              this,
-                                              getThreadResponderGroup()));
+                        new PermissionDescriptor(
+                        PrivilegeDescriptor.get(
+                        RESPOND_TO_THREAD_PRIVILEGE),
+                        this,
+                        getThreadResponderGroup()));
             }
 
             if (getReadGroup() != null) {
                 PermissionService.grantPermission(
-                                       new PermissionDescriptor(
-                                              PrivilegeDescriptor.READ,
-                                              this,
-                                              getReadGroup()));
+                        new PermissionDescriptor(
+                        PrivilegeDescriptor.READ,
+                        this,
+                        getReadGroup()));
+                PermissionService.grantPermission(new PermissionDescriptor(
+                        PrivilegeDescriptor.get(FORUM_READ_PRIVILEGE),
+                        this,
+                        getReadGroup()));
             }
 
             KernelExcursion excursion = new KernelExcursion() {
-                    protected void excurse() {
-                        setParty(Kernel.getSystemParty());
-                        // FIXME
-                        // Workspace parentWorkspace =
-                        //     Workspace.getWorkspaceForApplication
-                        //         (Forum.this);
-                        //
-                        // if (parentWorkspace != null) {
-                        //     PermissionService.grantPermission
-                        //         (new PermissionDescriptor
-                        //          (PrivilegeDescriptor.WRITE,
-                        //           Forum.this,
-                        //           parentWorkspace.getMemberRole()));
-                        // }
 
-                    }
+                protected void excurse() {
+                    setParty(Kernel.getSystemParty());
+                    // FIXME
+                    // Workspace parentWorkspace =
+                    //     Workspace.getWorkspaceForApplication
+                    //         (Forum.this);
+                    //
+                    // if (parentWorkspace != null) {
+                    //     PermissionService.grantPermission
+                    //         (new PermissionDescriptor
+                    //          (PrivilegeDescriptor.WRITE,
+                    //           Forum.this,
+                    //           parentWorkspace.getMemberRole()));
+                    // }
+
+                }
             };
             excursion.run();
         }  //if mWasNew
@@ -457,19 +456,19 @@ public class Forum extends Application {
             }
 
         } finally {
-            if ( null != subs ) {
+            if (null != subs) {
                 subs.close();
             }
         }
 
 
-            // chris.gilbert@westsussex.gov.uk line removed.
-            // afterSave in Application sets permission
-            // context of forum to parent app (portal homepage)
-            // don't want to inherit permissions of portal,
-            // as public users have 'READ' privilege on this
-            // and so get shown postings in search results.
-            // super.afterSave();
+        // chris.gilbert@westsussex.gov.uk line removed.
+        // afterSave in Application sets permission
+        // context of forum to parent app (portal homepage)
+        // don't want to inherit permissions of portal,
+        // as public users have 'READ' privilege on this
+        // and so get shown postings in search results.
+        // super.afterSave();
 
     }  //Method afterSave()
 
@@ -477,12 +476,12 @@ public class Forum extends Application {
         return BASE_DATA_OBJECT_TYPE;
     }
 
-
     /**
      * Gets all the Subscriptions associated with this Forum.
      */
     public DataCollection getAllSubscriptions() {
-        DataAssociationCursor dac = ((DataAssociation) get(SUBSCRIPTIONS)).cursor();
+        DataAssociationCursor dac = ((DataAssociation) get(SUBSCRIPTIONS)).
+                cursor();
         return dac;
     }
 
@@ -510,7 +509,7 @@ public class Forum extends Application {
      * to use a custom DataQuery which does this.)
      */
     public DataAssociation getPosts() {
-        return (DataAssociation)get(POSTS);
+        return (DataAssociation) get(POSTS);
     }
 
     /**
@@ -537,11 +536,11 @@ public class Forum extends Application {
      * @return
      */
     public DataAssociation getSuppressedPosts() {
-		// doesn't use getPosts in view of the warning that it 
-		// may disappear
-		DataAssociation posts = (DataAssociation) get(POSTS);
-		posts.addEqualsFilter(Post.STATUS, Post.SUPPRESSED);
-		return posts;
+        // doesn't use getPosts in view of the warning that it 
+        // may disappear
+        DataAssociation posts = (DataAssociation) get(POSTS);
+        posts.addEqualsFilter(Post.STATUS, Post.SUPPRESSED);
+        return posts;
     }
 
     /**
@@ -549,7 +548,7 @@ public class Forum extends Application {
      * top-level posts which are not replies to any other post.
      */
     public ThreadCollection getThreads() {
-        return getThreads((BigDecimal)null);
+        return getThreads((BigDecimal) null);
     }
 
     /**
@@ -561,43 +560,42 @@ public class Forum extends Application {
     public ThreadCollection getThreads(Party party) {
         ThreadCollection threads = getThreads();
 
-        if (isModerated() &&
-            !canModerate(party)) {
-            s_log.debug( "Only showing approved threads" );
+        if (isModerated() && !canModerate(party)) {
+            s_log.debug("Only showing approved threads");
             threads.filterUnapproved(party);
         }
 
         return threads;
     }
 
-
     /**
      * Gets a ThreadCollection of the threads in a specific Category.
      */
     public ThreadCollection getThreads(BigDecimal categoryID) {
 
-         DataCollection threadsData
-             = SessionManager.getSession().retrieve(
+        DataCollection threadsData = SessionManager.getSession().retrieve(
                 MessageThread.BASE_DATA_OBJECT_TYPE);
 
 
-         threadsData.addEqualsFilter("root.objectID", getID());
+        threadsData.addEqualsFilter("root.objectID", getID());
 
-         if (categoryID != null) {
-             // XXX bad dep on ui package
-             if (categoryID.equals(com.arsdigita.forum.ui.Constants.TOPIC_NONE)) {
-                 Filter f = threadsData.addNotInSubqueryFilter
-                     ("root.id", "com.arsdigita.forum.uncategoryObject");
-             } else {
-                 Filter f = threadsData.addInSubqueryFilter
-                     ("root.id", "com.arsdigita.forum.categoryObject");
-                 f.set("categoryID", categoryID);
-             }
-         }
+        if (categoryID != null) {
+            // XXX bad dep on ui package
+            if (categoryID.equals(com.arsdigita.forum.ui.Constants.TOPIC_NONE)) {
+                Filter f =
+                       threadsData.addNotInSubqueryFilter("root.id",
+                                                          "com.arsdigita.forum.uncategoryObject");
+            } else {
+                Filter f =
+                       threadsData.addInSubqueryFilter("root.id",
+                                                       "com.arsdigita.forum.categoryObject");
+                f.set("categoryID", categoryID);
+            }
+        }
 
-         threadsData.addOrder("lastUpdate desc");
+        threadsData.addOrder("lastUpdate desc");
 
-         return new ThreadCollection(threadsData);
+        return new ThreadCollection(threadsData);
     }
 
     /**
@@ -609,16 +607,15 @@ public class Forum extends Application {
                                        Party party) {
         ThreadCollection threads = getThreads(categoryID);
 
-        if (isModerated() &&
-            !canModerate(party)) {
-            s_log.debug( "Only showing approved threads" );
+        if (isModerated() && !canModerate(party)) {
+            s_log.debug("Only showing approved threads");
             threads.filterUnapproved(party);
         }
 
         return threads;
 
 
-	}
+    }
 
     /**
      * Sets up instant and daily subscriptions for the forum.  Daily
@@ -631,6 +628,7 @@ public class Forum extends Application {
         s_log.debug("Creating subscriptions!");
 
         new KernelExcursion() {
+
             protected void excurse() {
                 setParty(Kernel.getSystemParty());
 
@@ -641,7 +639,7 @@ public class Forum extends Application {
                 new DailySubscription(Forum.this, party).save();
 
                 Group moderators = getModerationGroup();
-                if ( null != moderators ) {
+                if (null != moderators) {
 
                     s_log.debug("creatiing moderation subscription "
                                 + moderators.getName());
@@ -660,8 +658,8 @@ public class Forum extends Application {
      */
     public DataQuery getCategories() {
         Session session = SessionManager.getSession();
-        DataQuery query = session.retrieveQuery
-            ("com.arsdigita.forum.getCategorizationSummary");
+        DataQuery query = session.retrieveQuery(
+                "com.arsdigita.forum.getCategorizationSummary");
         query.setParameter("forumID", getID());
         return query;
     }
@@ -673,8 +671,8 @@ public class Forum extends Application {
      */
     public DataQuery getEmptyCategories() {
         Session session = SessionManager.getSession();
-        DataQuery query = session.retrieveQuery
-            ("com.arsdigita.forum.getUnusedCategories");
+        DataQuery query = session.retrieveQuery(
+                "com.arsdigita.forum.getUnusedCategories");
         query.setParameter("forumID", getID());
         return query;
     }
@@ -686,8 +684,8 @@ public class Forum extends Application {
      */
     public DataQuery getUnCategory() {
         Session session = SessionManager.getSession();
-        DataQuery query = session.retrieveQuery
-            ("com.arsdigita.forum.getUncategorizedSummary");
+        DataQuery query = session.retrieveQuery(
+                "com.arsdigita.forum.getUncategorizedSummary");
         query.setParameter("forumID", getID());
         return query;
     }
@@ -695,10 +693,11 @@ public class Forum extends Application {
     public DataAssociationCursor getFilledCategories() {
         Category root = getRootCategory();
         DataAssociationCursor cursor =
-            root.getRelatedCategories(Category.CHILD);
+                              root.getRelatedCategories(Category.CHILD);
 
-        Filter f = cursor.addInSubqueryFilter
-            ("id", "com.arsdigita.forum.filledCategories");
+        Filter f =
+               cursor.addInSubqueryFilter("id",
+                                          "com.arsdigita.forum.filledCategories");
         return cursor;
     }
 
@@ -721,23 +720,23 @@ public class Forum extends Application {
      * checks if the user can edit posts in this forum
      */
     public boolean canEdit(Party party) {
-        return (getConfig().canAdminEditPosts() &&
-                PermissionService.checkPermission(
-                    new PermissionDescriptor(PrivilegeDescriptor.EDIT,
-                                             this,
-                                             party)));
+        return (getConfig().canAdminEditPosts() && PermissionService.
+                checkPermission(
+                new PermissionDescriptor(PrivilegeDescriptor.EDIT,
+                                         this,
+                                         party)));
     }
 
     public boolean canAdminister(Party party) {
         return PermissionService.checkPermission(
-            new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
-                                     this,
-                                     party));
+                new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
+                                         this,
+                                         party));
     }
 
     public boolean canModerate(Party party) {
         return PermissionService.checkPermission(
-            new PermissionDescriptor(
+                new PermissionDescriptor(
                 PrivilegeDescriptor.get(FORUM_MODERATION_PRIVILEGE),
                 this,
                 party));
@@ -749,15 +748,13 @@ public class Forum extends Application {
      * automatically marked as approved.
      */
     public void setModerated(boolean moderate) {
-        Boolean old = (Boolean)get(MODERATION);
-        if (Boolean.TRUE.equals(old) &&
-            !moderate) {
+        Boolean old = (Boolean) get(MODERATION);
+        if (Boolean.TRUE.equals(old) && !moderate) {
 
             DataAssociationCursor posts = getPosts().cursor();
             posts.addEqualsFilter(Post.STATUS, Post.PENDING);
             while (posts.next()) {
-                Post post
-                    = (Post)DomainObjectFactory.newInstance(
+                Post post = (Post) DomainObjectFactory.newInstance(
                         posts.getDataObject());
                 post.setStatus(Post.APPROVED);
                 post.save();
@@ -768,13 +765,13 @@ public class Forum extends Application {
     }
 
     public boolean isModerated() {
-        Boolean isModerated = (Boolean)get(MODERATION);
+        Boolean isModerated = (Boolean) get(MODERATION);
         Assert.exists(isModerated);
         return isModerated.booleanValue();
     }
 
     public boolean isPublic() {
-        Boolean isPublic = (Boolean)get(PUBLIC);
+        Boolean isPublic = (Boolean) get(PUBLIC);
         Assert.exists(isPublic);
         return isPublic.booleanValue();
     }
@@ -800,13 +797,13 @@ public class Forum extends Application {
         DataObject dObj = (DataObject) get(ADMIN_GROUP);
         Assert.exists(dObj, DataObject.class);
         return (Group) DomainObjectFactory.newInstance(dObj);
-	}
+    }
 
     /** Returns the moderator group. Null if it doesn't exist */
     public Group getModerationGroup() {
-        DataObject dObj = (DataObject) get( MODERATION_GROUP );
+        DataObject dObj = (DataObject) get(MODERATION_GROUP);
         Assert.exists(dObj, DataObject.class);
-        return (Group)DomainObjectFactory.newInstance(dObj);
+        return (Group) DomainObjectFactory.newInstance(dObj);
     }
 
     /** Returns the thread create group. Null if it doesn't exist */
@@ -843,20 +840,21 @@ public class Forum extends Application {
         }
         LifecycleDefinition newLife = new LifecycleDefinition();
         newLife.setLabel("Delete expired noticeboard postings");
-		newLife.addPhaseDefinition("Forum posting lifespan",
+        newLife.addPhaseDefinition("Forum posting lifespan",
                                    null,
                                    new Integer(0),
-                                   new Integer(1440 * value),  // in minutes
+                                   new Integer(1440 * value), // in minutes
                                    null);
         setLifecycleDefinition(newLife);
         //   We must make sure that all existing postings in this forum
         // have the same expiration policy.
         DataAssociationCursor posts = getPosts().cursor();
         while (posts.next()) {
-            Post post = (Post) DomainObjectFactory.newInstance(posts.getDataObject());
-            if (post.getThread().getRootMessage().getID()
-                                                 .equals(post.getID())) {
-                s_log.debug("Resetting expiration lifecycle for " + post.getOID());
+            Post post = (Post) DomainObjectFactory.newInstance(posts.
+                    getDataObject());
+            if (post.getThread().getRootMessage().getID().equals(post.getID())) {
+                s_log.debug("Resetting expiration lifecycle for "
+                            + post.getOID());
                 post.setLifecycle(newLife);
             }
         }
@@ -892,7 +890,7 @@ public class Forum extends Application {
     public void setAdminGroup(Group group) {
         setAssociation(ADMIN_GROUP, group);
         PermissionService.grantPermission(
-            new PermissionDescriptor(PrivilegeDescriptor.ADMIN, this, group));
+                new PermissionDescriptor(PrivilegeDescriptor.ADMIN, this, group));
     }
 
     /**
@@ -904,10 +902,10 @@ public class Forum extends Application {
     public void setThreadCreatorGroup(Group group) {
         setAssociation(THREAD_CREATE_GROUP, group);
         PermissionService.grantPermission(
-            new PermissionDescriptor(
-				PrivilegeDescriptor.get(CREATE_THREAD_PRIVILEGE),
-				this,
-				group));
+                new PermissionDescriptor(
+                PrivilegeDescriptor.get(CREATE_THREAD_PRIVILEGE),
+                this,
+                group));
     }
 
     /**
@@ -919,10 +917,10 @@ public class Forum extends Application {
     public void setThreadResponderGroup(Group group) {
         setAssociation(THREAD_RESPONDER_GROUP, group);
         PermissionService.grantPermission(
-                    new PermissionDescriptor(
-                            PrivilegeDescriptor.get(RESPOND_TO_THREAD_PRIVILEGE),
-                                                    this,
-                                                    group));
+                new PermissionDescriptor(
+                PrivilegeDescriptor.get(RESPOND_TO_THREAD_PRIVILEGE),
+                this,
+                group));
     }
 
     /**
@@ -934,8 +932,8 @@ public class Forum extends Application {
     public void setReaderGroup(Group group) {
         setAssociation(READ_GROUP, group);
         PermissionService.grantPermission(
-                    new PermissionDescriptor(
-                            PrivilegeDescriptor.READ, this, group));
+                new PermissionDescriptor(
+                PrivilegeDescriptor.READ, this, group));
     }
 
     /**
@@ -944,40 +942,44 @@ public class Forum extends Application {
     public boolean allowFileAttachments() {
         return ((Boolean) get(ALLOW_FILE_ATTACHMENTS)).booleanValue();
     }
+
     public boolean allowImageUploads() {
         return ((Boolean) get(ALLOW_IMAGE_UPLOADS)).booleanValue();
     }
 
-	public boolean autoSubscribeThreadStarter() {
-		return ((Boolean) get(AUTOSUBSCRIBE_THREAD_STARTER)).booleanValue();
-	}
+    public boolean autoSubscribeThreadStarter() {
+        return ((Boolean) get(AUTOSUBSCRIBE_THREAD_STARTER)).booleanValue();
+    }
 
-	public boolean noCategoryPostsAllowed() {
-		return ((Boolean) get(NO_CATEGORY_POSTS)).booleanValue();
-	}
-	public boolean anonymousPostsAllowed() {
-			return ((Boolean) get(ANONYMOUS_POSTS)).booleanValue();
-		}
+    public boolean noCategoryPostsAllowed() {
+        return ((Boolean) get(NO_CATEGORY_POSTS)).booleanValue();
+    }
 
-	public void setAllowFileAttachments(boolean allow) {
-		set(ALLOW_FILE_ATTACHMENTS, new Boolean(allow));
-	}
-	public void setAllowImageUploads(boolean allow) {
-		set(ALLOW_IMAGE_UPLOADS, new Boolean(allow));
-	}
-	public void setAutoSubscribeThreadCreator(boolean subscribe) {
-		set(AUTOSUBSCRIBE_THREAD_STARTER, new Boolean(subscribe));
-	}
+    public boolean anonymousPostsAllowed() {
+        return ((Boolean) get(ANONYMOUS_POSTS)).booleanValue();
+    }
 
-	public void setNoCategoryPostsAllowed(boolean allow) {
-		set(NO_CATEGORY_POSTS, new Boolean(allow));
-	}
-	
+    public void setAllowFileAttachments(boolean allow) {
+        set(ALLOW_FILE_ATTACHMENTS, new Boolean(allow));
+    }
+
+    public void setAllowImageUploads(boolean allow) {
+        set(ALLOW_IMAGE_UPLOADS, new Boolean(allow));
+    }
+
+    public void setAutoSubscribeThreadCreator(boolean subscribe) {
+        set(AUTOSUBSCRIBE_THREAD_STARTER, new Boolean(subscribe));
+    }
+
+    public void setNoCategoryPostsAllowed(boolean allow) {
+        set(NO_CATEGORY_POSTS, new Boolean(allow));
+    }
+
     public void setAnonymousPostsAllowed(boolean allow) {
         set(ANONYMOUS_POSTS, new Boolean(allow));
     }
 
-    public void setTitle (String title) {
+    public void setTitle(String title) {
         String oldTitle = getTitle();
         super.setTitle(title);
         if (!oldTitle.equals(title)) {
@@ -990,21 +992,22 @@ public class Forum extends Application {
 
             DataCollection subscriptions = getSubscriptions();
             while (subscriptions.next()) {
-                ForumSubscription
-                    subscription = (ForumSubscription)DomainObjectFactory.
-                                       newInstance(subscriptions.getDataObject());
+                ForumSubscription subscription =
+                                  (ForumSubscription) DomainObjectFactory.
+                        newInstance(subscriptions.getDataObject());
                 subscription.getGroup().setName(subscription.getGroupName(this));
             }
 
             ThreadCollection threads = getThreads();
             while (threads.next()) {
                 ThreadSubscription threadSub = ThreadSubscription.
-                                                   getThreadSubscription(
-                                                   threads.getMessageThread());
-                threadSub.getGroup().setName(threadSub.getSubscriptionGroupName(this));
-				
+                        getThreadSubscription(
+                        threads.getMessageThread());
+                threadSub.getGroup().setName(threadSub.getSubscriptionGroupName(
+                        this));
+
             }
-						
+
         }
 
     }
@@ -1016,7 +1019,6 @@ public class Forum extends Application {
 //  public String getContextPath() {
 //      return "/ccm-forum";
 //  }
-
     /**
      * Returns the path name of the location of the applications servlet/JSP.
      *

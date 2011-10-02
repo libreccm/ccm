@@ -18,7 +18,6 @@
  */
 package com.arsdigita.forum;
 
-
 import com.arsdigita.forum.portlet.MyForumsPortlet;
 import com.arsdigita.forum.portlet.RecentPostingsPortlet;
 import com.arsdigita.kernel.EmailAddress;
@@ -38,7 +37,6 @@ import com.arsdigita.web.ApplicationType;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Loader executes nonrecurring at install time and loads (installs and
  * initializes) the Forum module.
@@ -57,6 +55,7 @@ public class Loader extends PackageLoader {
 
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
+
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
@@ -77,14 +76,13 @@ public class Loader extends PackageLoader {
      * @return
      */
     private static ApplicationType setupForumAppType() {
-        ApplicationType type = ApplicationType
-            .createApplicationType(Forum.PACKAGE_TYPE,
-                                   "Discussion Forum Application",
-                                   Forum.BASE_DATA_OBJECT_TYPE);
+        ApplicationType type =
+                        ApplicationType.createApplicationType(Forum.PACKAGE_TYPE,
+                                                              "Discussion Forum Application",
+                                                              Forum.BASE_DATA_OBJECT_TYPE);
         type.setDescription("An electronic bulletin board system.");
         return type;
     }
-
 
     /**
      * TODO: What is it for? Execution is currently commented out.
@@ -92,10 +90,10 @@ public class Loader extends PackageLoader {
      * @return
      */
     private static ApplicationType setupInboxAppType() {
-        ApplicationType type = ApplicationType
-            .createApplicationType(Forum.PACKAGE_TYPE,
-                                   "Inbox",
-                                   "com.arsdigita.forum.Inbox");
+        ApplicationType type =
+                        ApplicationType.createApplicationType(Forum.PACKAGE_TYPE,
+                                                              "Inbox",
+                                                              "com.arsdigita.forum.Inbox");
         type.setDescription("Inbox");
         return type;
     }
@@ -105,26 +103,27 @@ public class Loader extends PackageLoader {
      * @return
      */
     public static AppPortletType setupRecentPostingsPortletType() {
-        AppPortletType type = AppPortletType
-            .createAppPortletType("Recent Forum Postings",
-                                  PortletType.WIDE_PROFILE,
-                                  RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE);
+        AppPortletType type =
+                       AppPortletType.createAppPortletType(
+                "Recent Forum Postings",
+                PortletType.WIDE_PROFILE,
+                RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE);
         type.setProviderApplicationType(Forum.BASE_DATA_OBJECT_TYPE);
         type.setPortalApplication(true);
-        type.setDescription("Displays the most recent postings " +
-                            "to the bulletin board.");
+        type.setDescription("Displays the most recent postings "
+                            + "to the bulletin board.");
         return type;
     }
 
     public static PortletType setupMyForumsPortletType() {
-		
+
         PortletType type = PortletType.createPortletType(
-                                         "My Forums",
-                                         PortletType.WIDE_PROFILE,
-                                         MyForumsPortlet.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("Lists forums that user has access to, " + "" +
-                "           with last posting date");
-			
+                "My Forums",
+                PortletType.WIDE_PROFILE,
+                MyForumsPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Lists forums that user has access to, " + ""
+                            + "           with last posting date");
+
         return type;
     }
 
@@ -159,22 +158,18 @@ public class Loader extends PackageLoader {
      */
     public static void setupPrivileges() {
 
-        PrivilegeDescriptor.createPrivilege(
-                Forum.FORUM_MODERATION_PRIVILEGE);
-        PrivilegeDescriptor.createPrivilege(
-                Forum.CREATE_THREAD_PRIVILEGE);
-        PrivilegeDescriptor.createPrivilege(
-                Forum.RESPOND_TO_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(Forum.FORUM_READ_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(Forum.FORUM_MODERATION_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(Forum.CREATE_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE);
         // Establich privilege hierarchie, eg. moderation includes createThread
-        PrivilegeDescriptor.addChildPrivilege(
-                Forum.FORUM_MODERATION_PRIVILEGE,
-                Forum.CREATE_THREAD_PRIVILEGE);
-        PrivilegeDescriptor.addChildPrivilege(
-                Forum.CREATE_THREAD_PRIVILEGE,
-                Forum.RESPOND_TO_THREAD_PRIVILEGE);
-        PrivilegeDescriptor.addChildPrivilege(
-                Forum.RESPOND_TO_THREAD_PRIVILEGE,
-                PrivilegeDescriptor.READ.getName());  // general read privilege
+        PrivilegeDescriptor.addChildPrivilege(Forum.FORUM_MODERATION_PRIVILEGE,
+                                              Forum.CREATE_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.addChildPrivilege(Forum.CREATE_THREAD_PRIVILEGE,
+                                              Forum.RESPOND_TO_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.addChildPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE,
+                                              PrivilegeDescriptor.READ.getName());  // general read privilege
+        PrivilegeDescriptor.addChildPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE,
+                                              Forum.FORUM_READ_PRIVILEGE);
     }
-
 }

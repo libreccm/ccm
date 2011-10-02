@@ -55,13 +55,13 @@ import com.arsdigita.xml.Element;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author Chris Gilbert (chrisg23)
+ * @author Jens Pelzetter (jensp)
  * @version $Revision: 1.3 $ $Author: chrisg23 $ $Date: 2006/03/09 13:48:15 $
  */
 public class ForumUserCompactView extends ModalContainer implements Constants {
 
     /** Private logger instance for debugging purpose. */
     private static Logger s_log = Logger.getLogger(ForumUserCompactView.class);
-
     // Denotes the 6 panels of the user interface, also used as marker to store
     // and select the active panel
     /** Denotation of the 'threads' forum mode */
@@ -74,16 +74,15 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     public static final String MODE_MODERATION = "moderation";
     /** Denominator of the 'permission administration' forum mode
      *  (administrators only) */
-	public static final String MODE_PERMISSIONS = "permissions";
+    public static final String MODE_PERMISSIONS = "permissions";
     /** Denominator of the 'configuration' forum mode (administrators only)*/
-	public static final String MODE_SETUP = "setup";
+    public static final String MODE_SETUP = "setup";
     /** Holds the current active mode */
     private StringParameter m_mode;
-
     /** Object containing the threads panel (main working panel for users) */
     private ThreadsPanel m_threadsView;
     /** Object containing the topics panel */
-    private TopicsPanel  m_topicsView;
+    private TopicsPanel m_topicsView;
     /** Object containing the alerts management panel */
     private ForumAlertsView m_alertsView;
     /** Object containing the moderation panel */
@@ -104,9 +103,9 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
         m_mode = new StringParameter("mode");
 
         // setup panels which make up the forum
-        m_threadsView     = new ThreadsPanel();
+        m_threadsView = new ThreadsPanel();
         m_topicsView = new TopicsPanel();
-        m_alertsView     = new ForumAlertsView();
+        m_alertsView = new ForumAlertsView();
         // administration section
         m_moderationView = new ModerationView();
         m_setupView = new SetupView();
@@ -138,18 +137,18 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
      * @param state
      * @throws ServletException
      */
-    public void respond(PageState state)  throws ServletException {
-       
+    public void respond(PageState state) throws ServletException {
+
         super.respond(state);
 
         Party party = Kernel.getContext().getParty();
         Forum forum = ForumContext.getContext(state).getForum();
 
-        String mode = (String)state.getControlEventValue();
+        String mode = (String) state.getControlEventValue();
         state.setValue(m_mode, mode);
 
         setVisible(state, party, forum, mode);
-	}
+    }
 
     /**
      * Checks for the given forum mode (parameter value) whether its prerequisites
@@ -163,14 +162,15 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
      * @param forum  the forum instance to handle
      * @param mode   forum mode to check visibility for
      */
-    protected void setVisible( PageState state, Party party,
-                               Forum forum, String mode) {
+    protected void setVisible(PageState state, Party party,
+                              Forum forum, String mode) {
 
         PermissionDescriptor forumAdmin =
-                new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
+                             new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
+                                                      forum, party);
 
         PermissionService.assertPermission(forumAdmin);
-        
+
         if (MODE_TOPICS.equals(mode)) {
             if (Forum.getConfig().topicCreationByAdminOnly()) {
                 if (party == null) {
@@ -180,7 +180,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
             }
             setVisibleComponent(state, m_topicsView);
         } else if (MODE_ALERTS.equals(mode)) {
-			if (party == null) {
+            if (party == null) {
                 UserContext.redirectToLoginPage(state.getRequest());
             }
             setVisibleComponent(state, m_alertsView);
@@ -218,27 +218,27 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
      */
     @Override
     public void generateXML(PageState state, Element parent) {
-                            
+
         Element content = generateParent(parent);
         Forum forum = ForumContext.getContext(state).getForum();
         content.addAttribute("title", forum.getTitle());
-		content.addAttribute(
-			"noticeboard",
-			(new Boolean(forum.isNoticeboard())).toString());
+        content.addAttribute(
+                "noticeboard",
+                (new Boolean(forum.isNoticeboard())).toString());
 
         // If visitor not logged in, set user (=party) to publicUser
         Party party = Kernel.getContext().getParty();
-		if (party == null) {
-			party = Kernel.getPublicUser();
-		}
+        if (party == null) {
+            party = Kernel.getPublicUser();
+        }
 
-		// generate tab bar for panel (mode) selection
+        // generate tab bar for panel (mode) selection
         generateModes(state, content, party, forum);
         // generate 
-		generateChildrenXML(state, content);
-	}
+        generateChildrenXML(state, content);
+    }
 
-	/**
+    /**
      * Initializes the mode selection facility (usually a tab bar)
      *
      * @param state
@@ -249,20 +249,31 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     protected void generateModes(PageState state, Element content,
                                  Party party, Forum forum) {
 
-		PermissionDescriptor permission =
-			new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
+        PermissionDescriptor permission = new PermissionDescriptor(
+                PrivilegeDescriptor.ADMIN,
+                forum,
+                party);
+        PermissionDescriptor readPermission = new PermissionDescriptor(
+                PrivilegeDescriptor.get(Forum.FORUM_READ_PRIVILEGE),
+                forum,
+                party);
 
-		// currently thread panel is always shown. If read access should be
+
+        // currently thread panel is always shown. If read access should be
         // bound to logged in users, additional logic is required here.
-        generateModeXML(state, content, MODE_THREADS,
-                        Text.gz("forum.ui.modeThreads"));
+        // jensp 2011-10-02: Additional logic added
+        if (!forum.isPublic()
+            && PermissionService.checkPermission(readPermission)) {
+            generateModeXML(state, content, MODE_THREADS,
+                            Text.gz("forum.ui.modeThreads"));
+        } 
         // topics panel is always shoen as well if not restricted to admins.
-		if (!Forum.getConfig().topicCreationByAdminOnly()) {
-			generateModeXML(state, content, MODE_TOPICS,
+        if (!Forum.getConfig().topicCreationByAdminOnly()) {
+            generateModeXML(state, content, MODE_TOPICS,
                             Text.gz("forum.ui.modeTopics"));
-		}
+        }
         // alerts panel is always shown as well, no private read access avail.
-		generateModeXML(state, content, MODE_ALERTS,
+        generateModeXML(state, content, MODE_ALERTS,
                         Text.gz("forum.ui.modeAlerts"));
 
         // admin section
@@ -278,7 +289,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
             // In case topic creation is bound to admin (and therefore not
             // created above) we must create xml here.
             if (Forum.getConfig().topicCreationByAdminOnly()) {
-				generateModeXML(state, content, MODE_TOPICS,
+                generateModeXML(state, content, MODE_TOPICS,
                                 Text.gz("forum.ui.modeTopics"));
             }
         }
@@ -300,31 +311,31 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
                                    Element parent,
                                    String mode) {
         generateModeXML(state, parent, mode, null);
- /*
+        /*
         String current = (String)state.getValue(m_mode);
         if (current == null) {
-            current = MODE_THREADS;  // used as default mode
+        current = MODE_THREADS;  // used as default mode
         }
-
-		Element content =
-			parent.newChildElement(FORUM_XML_PREFIX + ":forumMode", FORUM_XML_NS);
-
+        
+        Element content =
+        parent.newChildElement(FORUM_XML_PREFIX + ":forumMode", FORUM_XML_NS);
+        
         state.setControlEvent(this, "mode", mode);
-
+        
         content.addAttribute("mode",
-                             mode);
-
+        mode);
+        
         try {
-            content.addAttribute("url",
-                                 state.stateAsURL());
+        content.addAttribute("url",
+        state.stateAsURL());
         } catch (IOException ex) {
-            throw new UncheckedWrapperException("cannot create url", ex);
+        throw new UncheckedWrapperException("cannot create url", ex);
         }
         content.addAttribute("selected",
-                             current.equals(mode) ? "1" : "0");
+        current.equals(mode) ? "1" : "0");
         state.clearControlEvent();
-
-  */
+        
+         */
     }
 
     /**
@@ -340,15 +351,16 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     protected void generateModeXML(PageState state,
                                    Element parent,
                                    String mode,
-                                   GlobalizedMessage label ) {
+                                   GlobalizedMessage label) {
 
-        String current = (String)state.getValue(m_mode);
+        String current = (String) state.getValue(m_mode);
         if (current == null) {
             current = MODE_THREADS;  // used as default mode
         }
 
-		Element content =
-			parent.newChildElement(FORUM_XML_PREFIX + ":forumMode", FORUM_XML_NS);
+        Element content =
+                parent.newChildElement(FORUM_XML_PREFIX + ":forumMode",
+                                       FORUM_XML_NS);
 
         state.setControlEvent(this, "mode", mode);
 
@@ -369,14 +381,11 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
                                  "UNAVAILABLE");
         } else {
             content.addAttribute("label",
-                                 (String)label.localize());
+                                 (String) label.localize());
         }
         // add if current mode is actually selected
         content.addAttribute("selected",
                              current.equals(mode) ? "1" : "0");
         state.clearControlEvent();
     }
-
 }
-
-
