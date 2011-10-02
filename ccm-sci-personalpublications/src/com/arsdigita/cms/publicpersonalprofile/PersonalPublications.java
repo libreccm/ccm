@@ -19,7 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * A {@link ContentGenerator} for personal profiles which displays all 
+ * publications of a person. The person and be organized in groups. The groups
+ * are configured via the configuration.
+ * 
+ * 
  * @author Jens Pelzetter
  * @version $Id$
  */

@@ -1,5 +1,6 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
@@ -13,8 +14,33 @@ import com.arsdigita.util.parameter.StringParameter;
 public class PersonalPublicationsConfig extends AbstractConfig {
 
     /**
-     * Groups of publications. See {@link PersonalPublications} for a detailed 
-     * explanation.
+     * <p>
+     * Groups of publications. The syntax for this string is as follows 
+     * (as EBNF):
+     * </p>
+     * <pre>
+     * publicationGroupsConfig = groupDefinition {";"groupDefinition};
+     * groupDefinition = groupName":"typeDef{";"type};
+     * typeDef = typeName["_ref"];
+     * </pre>
+     * <p>
+     * The groups definition string consists of one or more group definitions. 
+     * Group definitions are separated by the semicolon {@code ;}.
+     * Each groups definition consists of a group name and a comma separated 
+     * lists of type names. Group name and types names are separated by a colon.
+     * </p>
+     * <p>
+     * {@code groupName} and {@code typeName} are not shown in the above 
+     * grammar. A group name may contain all letters (uppercase and 
+     * lowercase), all numbers and the underscore "{@code _}". A type name
+     * is the fully qualified name of content type derived from 
+     * {@link Publication}. A type name can be followed by the literals
+     * {@code _ref} and {@code _noref}. If a type name is not followed by
+     * one of this literals, all publications of the type will be put into the 
+     * group. If the type name is followed by one of this literals, the property
+     * {@code reviewed} is checked. If the type has this property, publications
+     * can be split into reviewed and not reviewed publications.
+     * </p>
      */
     private final Parameter publicationGroups;
     /**
