@@ -1,0 +1,18 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>
+	<table name="cms_items"/>
+        <table name="ct_sciorga_projects"/>
+        <table name="publicpersonalprofile"/>
+        <table name="ct_public_personal_profiles"/>
+        <initalizer class="com.arsdigita.cms.Initializer"/>
+        <initalizer class="com.arsdigita.cms.contenttypes.PublicationInitalizer"/>
+        <initalizer class="com.arsdigita.cms.scipublications.SciProjectInitalizer"/>
+        <initalizer class="com.arsdigita.cms.contenttypes.PublicPersonalProfileInitalizer"/>
+        <initalizer class="com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfilesInitalizer"/>
+    </requires>
+    <provides>
+        <initalizer class="com.arsdigita.cms.publicpersonalprofile.PersonalProjectsInitalizer"/>        
+    </provides>    
+</load>

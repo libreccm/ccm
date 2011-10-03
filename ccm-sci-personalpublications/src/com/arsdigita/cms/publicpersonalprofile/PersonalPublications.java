@@ -42,8 +42,8 @@ public class PersonalPublications implements ContentGenerator {
     public void generateContent(final Element parent,
                                 final GenericPerson person,
                                 final PageState state) {
-        DataCollection publications = (DataCollection) person.get("publication");
-
+        final List<DataObject> publications = collectPublications(person);
+              
         if ((publications == null) || publications.size() == 0) {
             final Element publicationsElem = parent.newChildElement(
                     "publications");
@@ -59,6 +59,34 @@ public class PersonalPublications implements ContentGenerator {
             generatePublicationsXml(parent, groupedPublications, state);
         }
     }
+    
+    private List<DataObject> collectPublications(final GenericPerson person) {
+        final List<DataObject> publications = new ArrayList<DataObject>();
+        final DataCollection collection = (DataCollection) person.get("publication");
+        
+        while(collection.next()) {
+            publications.add(collection.getDataObject());
+        }
+        
+        if (person.getAlias() != null) {
+            collectPublications(person, publications);
+        }
+        
+        return publications;
+    }
+    
+    private void collectPublications(final GenericPerson alias,
+                                     final List<DataObject> publications) {
+        final DataCollection collection = (DataCollection) alias.get("publication");
+        
+         while(collection.next()) {
+            publications.add(collection.getDataObject());
+        }
+        
+        if (alias.getAlias() != null) {
+            collectPublications(alias, publications);
+        }        
+    }
 
     /**
      * Processes the publications and puts them into the groups.
@@ -69,7 +97,7 @@ public class PersonalPublications implements ContentGenerator {
      * as value.
      */
     private Map<String, List<Publication>> processPublications(
-            final DataCollection publications) {
+            final List<DataObject> publications) {
 
         final GroupConfig groupConfig = new GroupConfig(config.
                 getPublictionGroups());
@@ -80,15 +108,13 @@ public class PersonalPublications implements ContentGenerator {
             initalizePubGroupMap(pubGroups, group);
         }
         initalizePubGroupMap(pubGroups, MISC);
-
-        DataObject dobj;
+        
         Publication publication;
         String type;
         String groupName;
         Boolean reviewed;
         List<Publication> group;
-        while (publications.next()) {
-            dobj = publications.getDataObject();
+        for(DataObject dobj : publications) {            
             publication = (Publication) DomainObjectFactory.newInstance(dobj);
             type = publication.getClass().getName();
 
@@ -160,7 +186,7 @@ public class PersonalPublications implements ContentGenerator {
         final Element publicationsElem = parent.newChildElement("publications");
 
         int numberOfPubs = 0;
-        int groupSplit = config.getGroupSplit();
+        final int groupSplit = config.getGroupSplit();
 
         for (List<Publication> list : publications.values()) {
             numberOfPubs += list.size();
