@@ -262,11 +262,15 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
         // currently thread panel is always shown. If read access should be
         // bound to logged in users, additional logic is required here.
         // jensp 2011-10-02: Additional logic added
-        if (!forum.isPublic()
-            && PermissionService.checkPermission(readPermission)) {
+        if (forum.isPublic()) {
             generateModeXML(state, content, MODE_THREADS,
                             Text.gz("forum.ui.modeThreads"));
-        } 
+        } else {
+            if (PermissionService.checkPermission(readPermission)) {
+                generateModeXML(state, content, MODE_THREADS,
+                                Text.gz("forum.ui.modeThreads"));
+            }
+        }
         // topics panel is always shoen as well if not restricted to admins.
         if (!Forum.getConfig().topicCreationByAdminOnly()) {
             generateModeXML(state, content, MODE_TOPICS,
