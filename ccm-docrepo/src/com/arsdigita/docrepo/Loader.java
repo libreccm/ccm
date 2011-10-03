@@ -34,7 +34,7 @@ import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 
 /**
- * Document RFepository Loader
+ * Document Repository Loader
  *
  * @author pboy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: Loader.java $

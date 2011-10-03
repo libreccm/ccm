@@ -67,7 +67,7 @@ public class Initializer extends CompoundInitializer {
                }
         );
 
-                DomainObjectFactory.registerInstantiator
+        DomainObjectFactory.registerInstantiator
             (ResourceImpl.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
             @Override

@@ -334,7 +334,12 @@ public class Folder extends ResourceImpl implements Constants {
 
         Session session = SessionManager.getSession();
         DataQuery query = session.retrieveQuery
-            ("com.arsdigita.docs.getDirectChildren");
+            ("com.arsdigita.docrepo.getDirectChildren");
+        // with byline Version BASE_DATA_OBJECT_TYPE =
+        //                   "com.arsdigita.docs.ResourceImpl"
+        // so all retrieveQueries might have be to corrected.
+        //  ("com.arsdigita.docs.getDirectChildren");
+        // remove comment after intensive testing!
         query.setParameter("parentID", getID());
 
         while (query.next()) {

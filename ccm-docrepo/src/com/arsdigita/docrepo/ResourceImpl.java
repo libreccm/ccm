@@ -316,7 +316,12 @@ public abstract class ResourceImpl extends VersionedACSObject
         // Execute the data operation to update all children
         Session session = SessionManager.getSession();
         DataOperation op = session.retrieveDataOperation
-            ("com.arsdigita.docs.updateChildren");
+            ("com.arsdigita.docrepo.updateChildren");
+        // with byline Version BASE_DATA_OBJECT_TYPE =
+        //                   "com.arsdigita.docs.ResourceImpl"
+        // so all retrieveQueries might have be to corrected.
+        //  ("com.arsdigita.docs.updateChildren");
+        // remove comment after intensive testing!
         op.setParameter("rootPath", path);
         op.setParameter("oldPath", oldPath);
         op.setParameter("oldRootPathLength", new Integer(oldPath.length()+1));
@@ -574,7 +579,12 @@ public abstract class ResourceImpl extends VersionedACSObject
         String absPath = getPath() + SEPARATOR + path;
         Session session = SessionManager.getSession();
         DataQuery query = session.retrieveQuery
-            ("com.arsdigita.docs.getResourceByPath");
+            ("com.arsdigita.docrepo.getResourceByPath");
+        // with byline Version BASE_DATA_OBJECT_TYPE =
+        //                   "com.arsdigita.docs.ResourceImpl"
+        // so all retrieveQueries might have be to corrected.
+        //  ("com.arsdigita.docs.getResourceByPath");
+        // remove comment after intensive testing!
         query.setParameter("targetPath", absPath);
 
         if (query.next()) {

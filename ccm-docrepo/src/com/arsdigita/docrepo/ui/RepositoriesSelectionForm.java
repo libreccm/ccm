@@ -126,8 +126,13 @@ class RepositoriesSelectionForm extends Form
         if(selected.size() > 0 ) {
             DataOperation operation = SessionManager.getSession()
                 .retrieveDataOperation(
-                 "com.arsdigita.docs.addUserRepositoriesMapping");
-            operation.setParameter("userID", subscriber.getID());
+                 "com.arsdigita.docrepo.addUserRepositoriesMapping");
+         // with byline Version BASE_DATA_OBJECT_TYPE =
+        //                   "com.arsdigita.docs.ResourceImpl"
+        // so all retrieveQueries might have be to corrected.
+        //  "com.arsdigita.docs.addUserRepositoriesMapping");
+        // remove comment after intensive testing!
+           operation.setParameter("userID", subscriber.getID());
             operation.setParameter("repositoryIDs", selected);
             operation.execute();
             operation.close();
