@@ -17,10 +17,10 @@ package com.arsdigita.cms.contenttypes;
 
 
 /**
- * The CMS initializer.
+ * The HTMLForm initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: //ps/apps/london/htmlform/dev/src/com/arsdigita/cms/contenttypes/HTMLFormInitializer.java#2 $
+ * @version $Id: com/arsdigita/cms/contenttypes/HTMLFormInitializer.java#2 $
  */
 public class HTMLFormInitializer extends ContentTypeInitializer {
 
@@ -29,7 +29,9 @@ public class HTMLFormInitializer extends ContentTypeInitializer {
     }
 
 
+    @Override
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/HTMLForm.xsl" };
+        return new String[] { 
+            "/static/content-types/com/arsdigita/cms/contenttypes/HTMLForm.xsl" };
     }
 }

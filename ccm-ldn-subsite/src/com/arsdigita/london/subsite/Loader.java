@@ -44,13 +44,14 @@ public class Loader extends PackageLoader {
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+                
                 createApplication();
             }
         }.run();
     }
 
     /**
-     *  This creates and initializes the subsite application
+     *  This creates and initializes the subsite admin application
      */
     private void createApplication() {
         ApplicationType type = ApplicationType

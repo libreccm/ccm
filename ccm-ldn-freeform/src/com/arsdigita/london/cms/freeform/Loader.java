@@ -28,9 +28,6 @@ import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.Script;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.runtime.Startup;
-// pboy (Jan.09) deprecated, replacement: c.ad.util.JavaPropertyReader
-//               comments should be deleted after exentsiv testing
-// import com.arsdigita.util.config.JavaPropertyLoader;
 import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.jdbc.Connections;
 import java.sql.Connection;
@@ -43,10 +40,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Loader.java 1763 2009-01-22 20:01:31Z pboy $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 1763 2009-01-22 20:01:31Z pboy $" +
-        "$Author: pboy $" +
-        "$DateTime: 2003/11/08 01:27:15 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
