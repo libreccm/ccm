@@ -48,7 +48,7 @@
     </xrd:adapter>
   </xrd:context>
 
-  <xrd:context name="com.arsdigita.forum.ui.ThreadDisplay">
+  <xrd:context name="com.arsdigita.forum.ui.DiscussionPostsList">
     <xrd:adapter objectType="com.arsdigita.messaging.Message"
       formatter="com.arsdigita.forum.ui.MessageXMLFormatter">
 
