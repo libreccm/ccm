@@ -123,7 +123,7 @@ public class UserBanner extends SimpleComponent {
 
         content.addAttribute(
             "logoutURL",
-            URL.there(state.getRequest(),UI.getLoginPageURL()).toString());
+            URL.there(state.getRequest(),UI.getLogoutPageURL()).toString());
 
     }
 }
