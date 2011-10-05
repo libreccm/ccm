@@ -30,41 +30,41 @@ import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.PersonName;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
+import com.arsdigita.kernel.security.SecurityConfig;
 
 /**
  * Form used to add a new user to the system.
  *
  * @version $Id: UserAddForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 class UserAddForm extends UserForm
-    implements FormProcessListener,
-               FormInitListener,
-               AdminConstants
-{
+        implements FormProcessListener,
+                   FormInitListener,
+                   AdminConstants {
+
+    private SecurityConfig securityConfig = SecurityConfig.getConfig();
     private AdminSplitPanel m_adminPanel;
 
     /**
      * Default constructor.
      */
-
-    public UserAddForm (AdminSplitPanel adminPanel) {
+    public UserAddForm(AdminSplitPanel adminPanel) {
         super(USER_FORM_ADD);
         m_adminPanel = adminPanel;
 
         addInitListener(this);
         addProcessListener(this);
 
-        // Add validation listeners for required parameters
-
-        m_question.addValidationListener
-            (new NotEmptyValidationListener());
+        if (securityConfig.getEnableQuestion()) {
+            // Add validation listeners for required parameters        
+            // but only if SecurityConfig.getEnableQuestion is true (jensp 2011-10-05)
+            m_question.addValidationListener(new NotEmptyValidationListener());
+        }
     }
 
     /**
      *  Initialize the form
      */
-
     public void init(FormSectionEvent e) {
         PageState state = e.getPageState();
 
@@ -77,16 +77,14 @@ class UserAddForm extends UserForm
     /**
      * Process the form.
      */
-
-    public void process (FormSectionEvent e)
-        throws FormProcessException
-    {
+    public void process(FormSectionEvent e)
+            throws FormProcessException {
         PageState state = e.getPageState();
 
         User user = new User();
 
         String email =
-            ((InternetAddress) m_primaryEmail.getValue(state)).getAddress();
+               ((InternetAddress) m_primaryEmail.getValue(state)).getAddress();
 
         user.setPrimaryEmail(new EmailAddress(email));
         user.setScreenName((String) m_screenName.getValue(state));
@@ -106,10 +104,9 @@ class UserAddForm extends UserForm
         // Add optional additional email address
 
         InternetAddress additional =
-            (InternetAddress) m_additionalEmail.getValue(state);
+                        (InternetAddress) m_additionalEmail.getValue(state);
         if (additional != null) {
-            user.addEmailAddress
-                (new EmailAddress(additional.getAddress()));
+            user.addEmailAddress(new EmailAddress(additional.getAddress()));
         }
 
         // Make new user persistent
@@ -119,11 +116,13 @@ class UserAddForm extends UserForm
         // Save user authentication credentials.
 
         UserAuthentication auth =
-            UserAuthentication.createForUser(user);
+                           UserAuthentication.createForUser(user);
 
         auth.setPassword((String) m_password.getValue(state));
-        auth.setPasswordQuestion((String) m_question.getValue(state));
-        auth.setPasswordAnswer((String) m_answer.getValue(state));
+        if (securityConfig.getEnableQuestion()) {
+            auth.setPasswordQuestion((String) m_question.getValue(state));
+            auth.setPasswordAnswer((String) m_answer.getValue(state));
+        }
         auth.save();
 
         // Switch to browse tab.

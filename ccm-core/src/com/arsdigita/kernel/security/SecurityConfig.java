@@ -44,24 +44,20 @@ import org.apache.log4j.Logger;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
  * @version $Id: SecurityConfig.java 1471 2007-03-12 11:27:55Z chrisgilbert23 $
  */
-
 public class SecurityConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(SecurityConfig.class);
-
     private static SecurityConfig s_config = null;
-
     private static String s_systemAdministratorEmailAddress = null;
-
     /** Size of secret key in bytes. **/
     public static int SECRET_KEY_BYTES = 16;
-
     /** The class name of the SecurityHelper implementation. Must implement
-        SecurityHelper interface                                              */
-    private final Parameter m_securityHelperClass  = new SpecificClassParameter
-        ("waf.security_helper_class", Parameter.REQUIRED,
-         com.arsdigita.kernel.security.DefaultSecurityHelper.class,
-         com.arsdigita.kernel.security.SecurityHelper.class);
+    SecurityHelper interface                                              */
+    private final Parameter m_securityHelperClass =
+                            new SpecificClassParameter(
+            "waf.security_helper_class", Parameter.REQUIRED,
+                                                       com.arsdigita.kernel.security.DefaultSecurityHelper.class,
+                                                       com.arsdigita.kernel.security.SecurityHelper.class);
 //  /** This parameter is obsolete.                                           */
 //  private final Parameter m_sessionTrackingMethod  = new StringParameter
 //      ("waf.session_tracking_method", Parameter.REQUIRED, "cookie");
@@ -69,16 +65,15 @@ public class SecurityConfig extends AbstractConfig {
      *  Authentication is checked for all requests, but requests with one of
      *  these extensions will never cause a new cookie to be set.
      *  Include a leading dot for each extension.                             */
-    private final Parameter m_excludedExtensions  = new StringArrayParameter
-        ("waf.excluded_extensions", Parameter.REQUIRED,
-        new String[] { ".jpg", ".gif", ".png", ".pdf" } );
-    
+    private final Parameter m_excludedExtensions = new StringArrayParameter(
+            "waf.excluded_extensions", Parameter.REQUIRED,
+                                                                            new String[]{
+                ".jpg", ".gif", ".png", ".pdf"});
 // /////////////////////////////////////////////////////////////////////////////
 // This section completely moved to com.arsdigita.ui.UIConfig.
 // Configuration is not an Initializer task.
 // Retained here during transition, should be removed when completed (2011-02)
 // /////////////////////////////////////////////////////////////////////////////
-
 //  /** Key for the root page of the site.                                    */
 //  private final Parameter m_rootPage       = new StringParameter
 //      ("waf.pagemap.root", Parameter.REQUIRED, "register/");
@@ -112,17 +107,14 @@ public class SecurityConfig extends AbstractConfig {
 //      ("waf.pagemap.permission", Parameter.REQUIRED, "permissions/");
 //  private final Parameter m_permSinglePage = new StringParameter
 //      ("waf.pagemap.perm_single", Parameter.REQUIRED, "permissions/one");
-
 //  ////////////////////////////////////////////////////////////////////////////
-
-    
-    private final Parameter m_cookieDurationMinutes = new IntegerParameter
-        ("waf.pagemap.cookies_duration_minutes", Parameter.OPTIONAL, null);
-    private final Parameter m_cookieDomain = new StringParameter
-        ("waf.cookie_domain", Parameter.OPTIONAL, null);
-
-    private final Parameter m_loginConfig = new StringArrayParameter
-        ("waf.login_config", Parameter.REQUIRED, new String[] {
+    private final Parameter m_cookieDurationMinutes = new IntegerParameter(
+            "waf.pagemap.cookies_duration_minutes", Parameter.OPTIONAL, null);
+    private final Parameter m_cookieDomain = new StringParameter(
+            "waf.cookie_domain", Parameter.OPTIONAL, null);
+    private final Parameter m_loginConfig = new StringArrayParameter(
+            "waf.login_config", Parameter.REQUIRED,
+                                                                     new String[]{
                 "Request:com.arsdigita.kernel.security.AdminLoginModule:sufficient",
                 "Request:com.arsdigita.kernel.security.RecoveryLoginModule:sufficient",
                 "Request:com.arsdigita.kernel.security.CookieLoginModule:requisite",
@@ -131,15 +123,16 @@ public class SecurityConfig extends AbstractConfig {
                 "Register:com.arsdigita.kernel.security.CookieLoginModule:optional",
                 "RegisterSSO:com.arsdigita.kernel.security.SimpleSSOLoginModule:requisite",
                 "RegisterSSO:com.arsdigita.kernel.security.CookieLoginModule:optional"
-                }
-        );
-
-    private final Parameter m_adminEmail = new StringParameter
-        ("waf.admin.contact_email", Parameter.OPTIONAL, null);
-    private final Parameter m_autoRegistrationOn = new BooleanParameter
-        ("waf.auto_registration_on", Parameter.REQUIRED, Boolean.TRUE);
-    private final Parameter m_userBanOn = new BooleanParameter
-        ("waf.user_ban_on", Parameter.REQUIRED, Boolean.FALSE);
+            });
+    private final Parameter m_adminEmail = new StringParameter(
+            "waf.admin.contact_email", Parameter.OPTIONAL, null);
+    private final Parameter m_autoRegistrationOn = new BooleanParameter(
+            "waf.auto_registration_on", Parameter.REQUIRED, Boolean.TRUE);
+    private final Parameter m_userBanOn = new BooleanParameter("waf.user_ban_on",
+                                                               Parameter.REQUIRED,
+                                                               Boolean.FALSE);
+    private final Parameter m_enableQuestion = new BooleanParameter(
+            "waf.user_question.enable", Parameter.REQUIRED, Boolean.FALSE);
 
     /** 
      * Constructs an empty SecurityConfig object
@@ -169,6 +162,7 @@ public class SecurityConfig extends AbstractConfig {
         register(m_adminEmail);
         register(m_autoRegistrationOn);
         register(m_userBanOn);
+        register(m_enableQuestion);
 
         loadInfo();
     }
@@ -207,13 +201,12 @@ public class SecurityConfig extends AbstractConfig {
 //  public final String getSessionTrackingMethod() {
 //      return (String) get(m_sessionTrackingMethod);
 //  }
-
     /**
      * 
      * @return
      */
     public final List getExcludedExtensions() {
-        return Arrays.asList( (String[]) get(m_excludedExtensions));
+        return Arrays.asList((String[]) get(m_excludedExtensions));
     }
 
 //  MOVED, see above
@@ -254,37 +247,45 @@ public class SecurityConfig extends AbstractConfig {
 //      return (String) get(m_permSinglePage);
 //  }
 //  ///////////////////////////////////////////////////////////////////////////
-
     public String getCookieDomain() {
         return (String) get(m_cookieDomain);
     }
+
     String[] getLoginConfig() {
         return (String[]) get(m_loginConfig);
     }
+
     Integer getCookieDurationMinutes() {
         return (Integer) get(m_cookieDurationMinutes);
     }
+
     boolean isUserBanOn() {
         return ((Boolean) get(m_userBanOn)).booleanValue();
     }
-    
+
     public String getAdminContactEmail() {
         String email = (String) get(m_adminEmail);
-        if (email == null  ||  email.trim().length() == 0) {
+        if (email == null || email.trim().length() == 0) {
             email = getSystemAdministratorEmailAddress();
         }
         return email;
+    }
+    
+    public Boolean getEnableQuestion() {
+        return (Boolean) get(m_enableQuestion);
     }
 
     private static synchronized String getSystemAdministratorEmailAddress() {
         if (s_systemAdministratorEmailAddress == null) {
             ObjectPermissionCollection perms =
-                    PermissionService.getGrantedUniversalPermissions();
+                                       PermissionService.
+                    getGrantedUniversalPermissions();
             perms.addEqualsFilter("granteeIsUser", Boolean.TRUE);
             perms.clearOrder();
             perms.addOrder("granteeID");
             if (perms.next()) {
-                s_systemAdministratorEmailAddress = perms.getGranteeEmail().toString();
+                s_systemAdministratorEmailAddress = perms.getGranteeEmail().
+                        toString();
                 perms.close();
             } else {
                 // Haven't found anything.  We don't want to repeat this query
@@ -298,5 +299,4 @@ public class SecurityConfig extends AbstractConfig {
     public final boolean isAutoRegistrationOn() {
         return ((Boolean) get(m_autoRegistrationOn)).booleanValue();
     }
-
 }
