@@ -131,8 +131,7 @@ public class PublicationAuthorAddForm
         Publication publication = (Publication) getItemSelectionModel().
                 getSelectedObject(state);
 
-        if (!(this.getSaveCancelSection().getCancelButton().
-              isSelected(state))) {
+        if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             GenericPerson author;
             author = ((PublicationAuthorsPropertyStep) editStep).
                     getSelectedAuthor();
@@ -194,32 +193,43 @@ public class PublicationAuthorAddForm
     public void validate(FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
+        boolean editing = false; //Are we editing the association
 
         if ((((PublicationAuthorsPropertyStep) editStep).getSelectedAuthor()
              == null)
             && (data.get(ITEM_SEARCH) == null)) {
             data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.selectAuthor.no_author_selected"));
+                    "publications.ui.authors.selectAuthor.no_author_selected"));
             return;
         }
-        
-         Publication publication = (Publication) getItemSelectionModel().
-                getSelectedObject(state);         
-         GenericPerson author = (GenericPerson) data.get(ITEM_SEARCH);
-         if (!(author.getContentBundle().hasInstance(publication.getLanguage()))) {
-             data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.selectAuthor.no_suitable_language_variant"));
+
+        Publication publication = (Publication) getItemSelectionModel().
+                getSelectedObject(state);
+        GenericPerson author = (GenericPerson) data.get(ITEM_SEARCH);
+        if (author == null) {
+            author = ((PublicationAuthorsPropertyStep) editStep).
+                    getSelectedAuthor();
+            editing = true;
+        }
+        if (!(author.getContentBundle().hasInstance(publication.getLanguage()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.authors.selectAuthor.no_suitable_language_variant"));
             return;
-         }
-         
-         author = (GenericPerson) author.getContentBundle().getInstance(publication.getLanguage());
-         AuthorshipCollection authors = publication.getAuthors();
-         authors.addFilter(String.format("id = %s", author.getID().toString()));
-         if (authors.size() > 0) {
-             data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.selectAuthor.already_added"));
-         }
-         
-         authors.close();
+        }
+
+        if (!editing) {
+            author = (GenericPerson) author.getContentBundle().getInstance(publication.
+                    getLanguage());
+            AuthorshipCollection authors = publication.getAuthors();
+            authors.addFilter(
+                    String.format("id = %s", author.getID().toString()));
+            if (authors.size() > 0) {
+                data.addError(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.authors.selectAuthor.already_added"));
+            }
+
+            authors.close();
+        }
     }
 }
