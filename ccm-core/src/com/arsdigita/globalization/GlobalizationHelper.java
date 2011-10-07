@@ -11,6 +11,8 @@ import java.util.Enumeration;
 import javax.servlet.ServletRequest;
 import java.util.Locale;
 import java.util.StringTokenizer;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -90,19 +92,56 @@ public class GlobalizationHelper {
      * @return the selected locale as java.util.Locale or null if not defined
      */
     public static Locale getSelectedLocale(ServletRequest request) {
-//        ServletRequest request = ((ServletRequest) DispatcherHelper.getRequest());
-        String paramValue = request.getParameter(LANG_PARAM);
+        
+        // Return value
         java.util.Locale selectedLocale = null;
 
-        if (paramValue != null) {
-            StringTokenizer paramValues = new StringTokenizer(paramValue, "_");
-            if (paramValues.countTokens() > 1) {
-                selectedLocale = new java.util.Locale(paramValues.nextToken(), paramValues.nextToken());
-            } else {
-                selectedLocale = new java.util.Locale(paramValues.nextToken());
+        // Access current HttpSession or create a new one, if none exist
+        HttpSession session = ((HttpServletRequest) request).getSession(true);
+        // Get the session stored language string
+        String selectedSessionLang = (String) session.getAttribute(LANG_PARAM);
+        // Get the request langauge string
+        String selectedRequestLang = request.getParameter(LANG_PARAM);
+
+        // If there is a request language string, then this will have priority
+        // because this will only be the case, if someone selected another
+        // language with the language selector
+        if(selectedRequestLang != null) {
+            // Get the Locale object for the param
+            if((selectedLocale = scanLocale(selectedRequestLang)) != null) {
+                // Save the request parameter as session value
+                session.setAttribute(LANG_PARAM, selectedRequestLang);
+            }
+        } else {
+            // If there is a session stored language, use it
+            if(selectedSessionLang != null) {
+                selectedLocale = scanLocale(selectedSessionLang);
             }
         }
-
+        
         return selectedLocale;
     }
+    
+    /**
+     * Create a Locale from a browser provides language string
+     * 
+     * @param lang A string encoded locale, as provided by browsers
+     * @return A java.util.Locale representation of the language string
+     */
+    private static java.util.Locale scanLocale(String lang) {
+        
+        // Protect against empty lang string
+        if (lang != null) {
+            // Split the string and create the Locale object
+            StringTokenizer paramValues = new StringTokenizer(lang, "_");
+            if (paramValues.countTokens() > 1) {
+                return new java.util.Locale(paramValues.nextToken(), paramValues.nextToken());
+            } else {
+                return new java.util.Locale(paramValues.nextToken());
+            }
+        }
+        
+        return null;
+    }
+    
 }
