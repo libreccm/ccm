@@ -71,28 +71,29 @@ public class DRDispatcher extends BebopMapDispatcher implements DRConstants {
 
     private Page buildDMIndexPage() {
 
-        Page p = new DocrepoBasePage();
+        Page page = new DocrepoBasePage();
 
         /**
          * Create main administration tab.
          */
-        TabbedPane tb = new TabbedPane();
-        tb.setIdAttr("page-body");
+        TabbedPane tabbedPane = new TabbedPane();
+        tabbedPane.setIdAttr("page-body");
 
-        //tb.addTab(WS_BROWSE_TITLE, new BrowsePane());
+        tabbedPane.addTab(WS_BROWSE_TITLE, new BrowsePane());
 
         /*
         * Disable Repositories tab because
         * Still need to decide what to do with mounting
-        * repository, since repository are now application.
-        *
-        tb.addTab(WS_REPOSITORIES_TITLE, new RepositoryPane());
-        */
+        * repository, since repository are now application.*/        
+        tabbedPane.addTab(WS_REPOSITORIES_TITLE, new RepositoryPane());
+        
+        
 
-        p.add(new BrowsePane());
-        p.lock();
+        //p.add(new BrowsePane());
+        page.add(tabbedPane);
+        page.lock();
 
-        return p;
+        return page;
     }
 
 
