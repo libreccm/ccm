@@ -15,6 +15,7 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
     private final static PublicPersonalProfileConfig config = new PublicPersonalProfileConfig();
     private final Parameter personType;
     private final Parameter embedded;
+    private final Parameter showHomeNavEntry;
     private final Parameter homeNavItemLabels;
     private final Parameter showPersonInfoEverywhere;
     // private final Parameter contactType;
@@ -35,6 +36,11 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 false);
                 
+        showHomeNavEntry = new BooleanParameter(
+                "com.arsdigita.cms.publicpersonalprofile.showHomeNavEntry", 
+                Parameter.REQUIRED, 
+                true);
+        
         homeNavItemLabels = new StringParameter(
                 "com.arsdigita.cms.publicpersonalprofile.navitem.home.labels",
                 Parameter.REQUIRED,
@@ -50,9 +56,10 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
         "com.arsdigita.cms.publicpersonalprofile.contactType",
         Parameter.REQUIRED,
         "commonContact");*/
-
+        
         register(personType);
         register(embedded);
+        register(showHomeNavEntry);
         register(homeNavItemLabels);
         register(showPersonInfoEverywhere);
         // register(contactType);
@@ -66,6 +73,10 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
     
     public final Boolean getEmbedded() {
         return (Boolean) get(embedded);
+    }
+    
+    public final boolean getShowHomeNavEntry() {
+        return (Boolean) get(showHomeNavEntry);
     }
     
     public final String getHomeNavItemLabels() {

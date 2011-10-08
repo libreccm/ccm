@@ -17,7 +17,8 @@ import java.util.Map;
 public class PublicPersonalProfileXmlUtil {
 
     private final com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig config =
-                                                                                      PublicPersonalProfileConfig.getConfig();
+                                                                                      PublicPersonalProfileConfig.
+            getConfig();
 
     public void createNavigation(final PublicPersonalProfile profile,
                                  final Element root,
@@ -39,7 +40,7 @@ public class PublicPersonalProfileXmlUtil {
                 continue;
             }
         }
-      
+
         String appUrl = null;
         if (previewMode) {
             appUrl = String.format("%s/ccm%s/preview", prefix, appPath);
@@ -71,28 +72,31 @@ public class PublicPersonalProfileXmlUtil {
                                                       profile.getProfileUrl()));
         }
 
-        Element navHome =
-                navList.newChildElement("nav:category",
-                                        "http://ccm.redhat.com/london/navigation");
-        navHome.addAttribute("AbstractTree", "AbstractTree");
-        navHome.addAttribute("description", "");
-        navHome.addAttribute("id", profile.getID().toString());
-        if (navPath == null) {
-            navHome.addAttribute("isSelected", "true");
-        } else {
-            navHome.addAttribute("isSelected", "false");
+        if (config.getShowHomeNavEntry()) {
+            Element navHome =
+                    navList.newChildElement("nav:category",
+                                            "http://ccm.redhat.com/london/navigation");
+            navHome.addAttribute("AbstractTree", "AbstractTree");
+            navHome.addAttribute("description", "");
+            navHome.addAttribute("id", profile.getID().toString());
+            if (navPath == null) {
+                navHome.addAttribute("isSelected", "true");
+            } else {
+                navHome.addAttribute("isSelected", "false");
+            }
+            navHome.addAttribute("sortKey", "");
+            String homeLabel = homeLabels.get(DispatcherHelper.
+                    getNegotiatedLocale().
+                    getLanguage());
+            if (homeLabel == null) {
+                navHome.addAttribute("title", "Home");
+            } else {
+                navHome.addAttribute("title", homeLabel);
+            }
+            navHome.addAttribute("url", String.format("%s/%s",
+                                                      appUrl,
+                                                      profile.getProfileUrl()));
         }
-        navHome.addAttribute("sortKey", "");
-        String homeLabel = homeLabels.get(DispatcherHelper.getNegotiatedLocale().
-                getLanguage());
-        if (homeLabel == null) {
-            navHome.addAttribute("title", "Home");
-        } else {
-            navHome.addAttribute("title", homeLabel);
-        }
-        navHome.addAttribute("url", String.format("%s/%s",
-                                                  appUrl,
-                                                  profile.getProfileUrl()));
 
         //Get the available Navigation items
         PublicPersonalProfileNavItemCollection navItems =
@@ -106,6 +110,16 @@ public class PublicPersonalProfileXmlUtil {
             navItem = navItems.getNavItem();
             navItemMap.put(navItem.getKey(), navItem);
         }
+
+        final Element pathElem =
+                      root.newChildElement("nav:categoryPath",
+                                           "http://ccm.redhat.com/london/navigation");
+        final Element homeElem =
+                      pathElem.newChildElement("nav:category",
+                                               "http://ccm.redhat.com/london/navigation");
+        homeElem.addAttribute("url", String.format("%s/%s",
+                                                   appUrl,
+                                                   profile.getProfileUrl()));
 
         //Get the related links of the profiles
         DataCollection links =
@@ -134,6 +148,15 @@ public class PublicPersonalProfileXmlUtil {
             //navHome.addAttribute("id", "");
             if ((navPath != null) && navPath.equals(navLinkKey)) {
                 navElem.addAttribute("isSelected", "true");
+                final Element currentPathElem =
+                              pathElem.newChildElement("nav:category",
+                                                       "http://ccm.redhat.com/london/navigation");
+                currentPathElem.addAttribute("title", navItem.getLabel());
+                currentPathElem.addAttribute("url",
+                                             String.format("%s/%s/%s",
+                                                           appUrl,
+                                                           profile.getProfileUrl(),
+                                                           navLinkKey));
             } else {
                 navElem.addAttribute("isSelected", "false");
             }
