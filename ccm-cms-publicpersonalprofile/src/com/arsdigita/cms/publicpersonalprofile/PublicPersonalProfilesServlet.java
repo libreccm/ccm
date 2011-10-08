@@ -11,6 +11,7 @@ import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericAddress;
@@ -210,10 +211,29 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     final DataCollection images = ItemImageAttachment.getImageAttachments(profile);                    
                     if (!images.isEmpty()) {
                         images.next();
-                        final Element imageElem = profileElem.newChildElement("profileImage");
-                        ItemImageAttachment attachment = new ItemImageAttachment(images.getDataObject());
-                        //imageElem.addAttribute("oid", attachment.getImage().getOID().toString());
+                        final Element profileImageElem = profileElem.newChildElement("profileImage");
                         
+                        final Element attachmentElem = profileImageElem.newChildElement("imageAttachments");                                                        
+                        final ItemImageAttachment attachment = new ItemImageAttachment(images.getDataObject());                        
+                        attachmentElem.addAttribute("oid", attachment.getOID().toString());
+                        final Element caption = attachmentElem.newChildElement("caption");
+                        caption.setText(attachment.getCaption());
+                        final ReusableImageAsset image = attachment.getImage();
+                        final Element imageElem = attachmentElem.newChildElement("image");
+                        imageElem.addAttribute("oid", image.getOID().toString());
+                        final Element widthElem = imageElem.newChildElement("width");
+                        widthElem.setText(image.getWidth().toString());
+                        final Element heightElem = imageElem.newChildElement("height");
+                        heightElem.setText(image.getHeight().toString());
+                        final Element descElem = imageElem.newChildElement("description");
+                        descElem.setText(image.getDescription());
+                        final Element nameElem = imageElem.newChildElement("name");
+                        nameElem.setText(image.getName());
+                        final Element idElem = imageElem.newChildElement("id");
+                        idElem.setText(image.getID().toString());
+                        final Element displayNameElem = imageElem.newChildElement("displayName");                        
+                        displayNameElem.setText(image.getDisplayName());
+                                                                                                
                         images.close();
                     }
                                         
@@ -236,18 +256,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                                 new PublicPersonalProfileXmlGenerator(
                                 profile);
                         generator.generateXML(state, root, "");
-
-                        //generateProfileOwnerXml(profileElem, owner, state);                        
-
-                        /*DataCollection relatedLinks = RelatedLink.getRelatedLinks(profile, "NONE");                       
-                        if (relatedLinks.size() > 0) {
-                        
-                        }
-                        
-                        DataCollection notes = Note.getNotes(profile);
-                        if (notes.size() > 0) {
-                        
-                        } */
+                   
                     } else {
                         final DataCollection links =
                                              RelatedLink.getRelatedLinks(profile,
@@ -342,119 +351,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         }
 
     }
-
-    /*private void createNavigation(final PublicPersonalProfile profile,
-    final Element root,
-    final String navPath) {
-    String homeLabelsStr = config.getHomeNavItemLabels();
     
-    Map<String, String> homeLabels = new HashMap<String, String>();
-    String[] homeLabelsArry = homeLabelsStr.split(",");
-    String[] homeLabelSplit;
-    for (String homeLabelEntry : homeLabelsArry) {
-    homeLabelSplit = homeLabelEntry.split(":");
-    if (homeLabelSplit.length == 2) {
-    homeLabels.put(homeLabelSplit[0].trim(),
-    homeLabelSplit[1].trim());
-    } else {
-    continue;
-    }
-    }
-    
-    Element navRoot =
-    root.newChildElement("nav:categoryMenu",
-    "http://ccm.redhat.com/london/navigation");
-    navRoot.addAttribute("id", "categoryMenu");
-    
-    Element navList =
-    navRoot.newChildElement("nav:category",
-    "http://ccm.redhat.com/london/navigation");
-    navList.addAttribute("AbstractTree", "AbstractTree");
-    navList.addAttribute("description", "");
-    navList.addAttribute("id", "");
-    navList.addAttribute("isSelected", "true");
-    navList.addAttribute("sortKey", "");
-    navList.addAttribute("title", "publicPersonalProfileNavList");
-    navList.addAttribute("url", String.format("/ccm/%s",
-    profile.getProfileUrl()));
-    
-    Element navHome =
-    navList.newChildElement("nav:category",
-    "http://ccm.redhat.com/london/navigation");
-    navHome.addAttribute("AbstractTree", "AbstractTree");
-    navHome.addAttribute("description", "");
-    navHome.addAttribute("id", profile.getID().toString());
-    if (navPath == null) {
-    navHome.addAttribute("isSelected", "true");
-    } else {
-    navHome.addAttribute("isSelected", "false");
-    }
-    navHome.addAttribute("sortKey", "");
-    String homeLabel = homeLabels.get(DispatcherHelper.getNegotiatedLocale().
-    getLanguage());
-    if (homeLabel == null) {
-    navHome.addAttribute("title", "Home");
-    } else {
-    navHome.addAttribute("title", homeLabel);
-    }
-    navHome.addAttribute("url", String.format("/ccm/profiles/%s",
-    profile.getProfileUrl()));
-    
-    //Get the available Navigation items
-    PublicPersonalProfileNavItemCollection navItems =
-    new PublicPersonalProfileNavItemCollection();
-    navItems.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
-    getLanguage());
-    final Map<String, PublicPersonalProfileNavItem> navItemMap =
-    new HashMap<String, PublicPersonalProfileNavItem>();
-    PublicPersonalProfileNavItem navItem;
-    while (navItems.next()) {
-    navItem = navItems.getNavItem();
-    navItemMap.put(navItem.getKey(), navItem);
-    }
-    
-    //Get the related links of the profiles
-    DataCollection links =
-    RelatedLink.getRelatedLinks(profile,
-    PublicPersonalProfile.LINK_LIST_NAME);
-    links.addOrder(Link.ORDER);
-    RelatedLink link;
-    String navLinkKey;
-    Element navElem;
-    while (links.next()) {
-    link = (RelatedLink) DomainObjectFactory.newInstance(links.
-    getDataObject());
-    
-    navLinkKey = link.getTitle();
-    navItem = navItemMap.get(navLinkKey);
-    
-    if (navItem == null) {
-    //ToDo
-    }
-    
-    navElem =
-    navList.newChildElement("nav:category",
-    "http://ccm.redhat.com/london/navigation");
-    navElem.addAttribute("AbstractTree", "AbstractTree");
-    navElem.addAttribute("description", "");
-    //navHome.addAttribute("id", "");
-    if ((navPath != null) && navPath.equals(navLinkKey)) {
-    navElem.addAttribute("isSelected", "true");
-    } else {
-    navElem.addAttribute("isSelected", "false");
-    }
-    navElem.addAttribute("sortKey", "");
-    if (navItem == null) {
-    navElem.addAttribute("title", navLinkKey);
-    } else {
-    navElem.addAttribute("title", navItem.getLabel());
-    }
-    navElem.addAttribute("url", String.format("/ccm/profiles/%s/%s",
-    profile.getProfileUrl(),
-    navLinkKey));
-    
-    }
-    }*/
     private void generateProfileOwnerXml(final Element profileElem,
                                          final GenericPerson owner,
                                          final PageState state) {
@@ -486,11 +383,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
         if (owner.hasContacts()) {
             final GenericPersonContactCollection contacts = owner.getContacts();
-            //final String contactType = config.getContactType();
-
-            /*contacts.addFilter(String.format("link.link_key = '%s'",
-            contactType));*/
-
+           
             if (contacts.size() > 0) {
                 contacts.next();
                 generateContactXml(profileOwnerElem,
@@ -563,13 +456,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         page.addRequestListener(new ApplicationAuthenticationListener());
 
         final Form form = new Form("PublicPersonalProfileAdmin");
-
-        //form.add(new Label("Admin"));
-
-        //final Label label = new Label("for PublicPersonalProfile");
-
-        //form.add(label);
-
+      
         page.setClassAttr("adminPage");
 
         final StringParameter navItemKeyParam = new StringParameter(

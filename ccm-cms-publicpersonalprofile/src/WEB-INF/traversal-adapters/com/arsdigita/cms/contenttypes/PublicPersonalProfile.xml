@@ -10,6 +10,13 @@
         extends="com.arsdigita.cms.ContentPage">
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/profileUrl"/>
+                <xrd:property name="/object/owner/contacts/ancestors"/>
+                <xrd:property name="/object/owner/contacts/isDeleted"/>
+                <xrd:property name="/object/owner/contacts/version"/>
+                <xrd:property name="/object/owner/address/ancestors"/>
+                <xrd:property name="/object/owner/address/isDeleted"/>
+                <xrd:property name="/object/owner/address/version"/>
+                
             </xrd:attributes>
             
             <xrd:associations rule="include">
