@@ -18,9 +18,11 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.publicpersonalprofile.ContentGenerator;
+import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import java.math.BigDecimal;
 import com.arsdigita.persistence.OID;
@@ -44,13 +46,16 @@ import java.util.List;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class PublicPersonalProfile extends ContentPage {
+public class PublicPersonalProfile
+        extends ContentPage
+        implements CustomizedPreviewLink {
 
+    private static final PublicPersonalProfileConfig config = PublicPersonalProfileConfig.getConfig();
     public static final String OWNER = "owner";
-    public static final String PROFILE_URL = "profileUrl";   
+    public static final String PROFILE_URL = "profileUrl";
     public static final String LINK_LIST_NAME = "publicPersonalProfileNavItems";
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.PublicPersonalProfile";
+                               "com.arsdigita.cms.contenttypes.PublicPersonalProfile";    
 
     public PublicPersonalProfile() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -117,7 +122,7 @@ public class PublicPersonalProfile extends ContentPage {
      * 
      * @return The URL fragment of the profile used to build the URL of the 
      * profile.
-     
+    
      */
     public String getProfileUrl() {
         return (String) get(PROFILE_URL);
@@ -126,7 +131,7 @@ public class PublicPersonalProfile extends ContentPage {
     public void setProfileUrl(String profileUrl) {
         set(PROFILE_URL, profileUrl);
     }
-    
+
     /**
      * The profile has an extra XML Generator, which is primarily to render
      * the items and the navigation of the profile for the embedded view.
@@ -136,9 +141,17 @@ public class PublicPersonalProfile extends ContentPage {
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
-        
+
         generators.add(new PublicPersonalProfileExtraXmlGenerator());
-                
+
         return generators;
+    }
+
+    public String getPreviewUrl(final PageState state) {
+        if(config.getEmbedded()) {
+            return null;
+        } else {
+           return String.format("/profiles/preview/%s/", getProfileUrl());
+        }
     }
 }

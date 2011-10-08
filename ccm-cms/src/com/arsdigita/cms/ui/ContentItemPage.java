@@ -43,6 +43,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.PageLocations;
 import com.arsdigita.cms.Template;
+import com.arsdigita.cms.contenttypes.CustomizedPreviewLink;
 import com.arsdigita.cms.dispatcher.CMSDispatcher;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.ItemResolver;
@@ -76,9 +77,7 @@ import org.apache.log4j.Logger;
  */
 public class ContentItemPage extends CMSPage implements ActionListener {
 
-    private static final Logger s_log = Logger.getLogger
-        (ContentItemPage.class);
-
+    private static final Logger s_log = Logger.getLogger(ContentItemPage.class);
     /**
      * The URL parameter that must be passed in in order to set
      * the current tab. This is a KLUDGE right now because the
@@ -86,19 +85,16 @@ public class ContentItemPage extends CMSPage implements ActionListener {
      * state parameter
      */
     public static final String SET_TAB = "set_tab";
-
     /**
      * The name of the global state parameter that holds
      * the item id
      */
     public static final String ITEM_ID = "item_id";
-
     /**
      * The name of the global state parameter which holds the
      * return URL
      */
     public static final String RETURN_URL = "return_url";
-
     /**
      * The name of the global state parameter that determines whether
      * or not to use the streamlined authoring process (assuming the
@@ -109,12 +105,10 @@ public class ContentItemPage extends CMSPage implements ActionListener {
     public static final String STREAMLINED_CREATION_ACTIVE = "active";
     public static final String STREAMLINED_CREATION_INACTIVE = "active";
     private static int s_tabOrder = 0;
-
     /**
      * Index of the summary tab
      */
     public static final int SUMMARY_TAB = s_tabOrder++;
-
     /**
      * <p>The name of the state parameter which indicates the content
      * type of the item the user wishes to create.  or edit.</p>
@@ -123,20 +117,17 @@ public class ContentItemPage extends CMSPage implements ActionListener {
      * the id of the content type.</p>
      */
     public static final String CONTENT_TYPE = "content_type";
-
     public static final int AUTHORING_TAB = s_tabOrder++;
     public static final int LANGUAGE_TAB = s_tabOrder++;
     public static final int WORKFLOW_TAB = s_tabOrder++;
     public static final int PUBLISHING_TAB = s_tabOrder++;
     public static final int HISTORY_TAB = s_tabOrder++;
     public static final int TEMPLATES_TAB = s_tabOrder++;
-
     private final TabbedPane m_tabbedPane;
     private StringParameter m_returnURL;
     private ItemSelectionModel m_itemModel;
     private ACSObjectSelectionModel m_typeModel;
     private ContentItemRequestLocal m_item;
-
     private Summary m_summaryPane;
     private ItemWorkflowAdminPane m_workflowPane;
     private ItemLifecycleAdminPane m_lifecyclePane;
@@ -144,16 +135,17 @@ public class ContentItemPage extends CMSPage implements ActionListener {
     private ItemLanguages m_languagesPane;
     private ItemRevisionAdminPane m_revisionsPane;
     private ItemTemplates m_templatesPane;
-
     private Link m_previewLink;
 
     private class ItemRequestLocal extends ContentItemRequestLocal {
+
         protected final Object initialValue(final PageState state) {
             return CMS.getContext().getContentItem();
         }
     }
 
     private class TitlePrinter implements PrintListener {
+
         public final void prepare(final PrintEvent e) {
             final Label label = (Label) e.getTarget();
             final ContentItem item = m_item.getContentItem(e.getPageState());
@@ -180,25 +172,26 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         m_itemModel = new ItemSelectionModel(itemId);
 
         // Add the content type global state parameter
-        BigDecimalParameter contentType = new BigDecimalParameter
-            (CONTENT_TYPE);
+        BigDecimalParameter contentType = new BigDecimalParameter(CONTENT_TYPE);
         addGlobalStateParam(contentType);
 
         // Add the streamlined creation global state parameter
-        StringParameter streamlinedCreation = new StringParameter
-            (STREAMLINED_CREATION);
+        StringParameter streamlinedCreation = new StringParameter(
+                STREAMLINED_CREATION);
         addGlobalStateParam(streamlinedCreation);
 
-        m_typeModel = new ACSObjectSelectionModel
-            (ContentType.class.getName(), ContentType.BASE_DATA_OBJECT_TYPE, contentType);
+        m_typeModel = new ACSObjectSelectionModel(ContentType.class.getName(),
+                                                  ContentType.BASE_DATA_OBJECT_TYPE,
+                                                  contentType);
 
         // Validate the item ID parameter (caches the validation).
         getStateModel().addValidationListener(new FormValidationListener() {
-                public void validate(FormSectionEvent event)
-                        throws FormProcessException {
-                    validateItemID(event.getPageState());
-                }
-            });
+
+            public void validate(FormSectionEvent event)
+                    throws FormProcessException {
+                validateItemID(event.getPageState());
+            }
+        });
 
         // Add the return url global state parameter
         m_returnURL = new StringParameter(RETURN_URL);
@@ -222,40 +215,41 @@ public class ContentItemPage extends CMSPage implements ActionListener {
 
         m_tabbedPane.setIdAttr("page-body");
 
-        m_tabbedPane.addTab
-            (new Label(gz("cms.ui.item.summary")), m_summaryPane);
-        m_tabbedPane.addTab
-            (new Label(gz("cms.ui.item.authoring")), m_wizardPane);
-        m_tabbedPane.addTab
-            (new Label(gz("cms.ui.item.languages")), m_languagesPane);
-        m_tabbedPane.addTab
-            (new Label(gz("cms.ui.item.workflow")), m_workflowPane);
-        m_tabbedPane.addTab
-            (new Label(gz("cms.ui.item.lifecycles")), m_lifecyclePane);
-        m_tabbedPane.addTab
-            (new Label(gz("cms.ui.item.history")), m_revisionsPane);
-        m_tabbedPane.addTab
-            (new Label(gz("cms.ui.item.templates")), m_templatesPane);
+        m_tabbedPane.addTab(new Label(gz("cms.ui.item.summary")), m_summaryPane);
+        m_tabbedPane.addTab(new Label(gz("cms.ui.item.authoring")), m_wizardPane);
+        m_tabbedPane.addTab(new Label(gz("cms.ui.item.languages")),
+                            m_languagesPane);
+        m_tabbedPane.addTab(new Label(gz("cms.ui.item.workflow")),
+                            m_workflowPane);
+        m_tabbedPane.addTab(new Label(gz("cms.ui.item.lifecycles")),
+                            m_lifecyclePane);
+        m_tabbedPane.addTab(new Label(gz("cms.ui.item.history")),
+                            m_revisionsPane);
+        m_tabbedPane.addTab(new Label(gz("cms.ui.item.templates")),
+                            m_templatesPane);
 
         m_tabbedPane.addActionListener(new ActionListener() {
-                public final void actionPerformed(final ActionEvent e) {
-                    final PageState state = e.getPageState();
-                    final Component pane = m_tabbedPane.getCurrentPane(state);
 
-                    if (pane instanceof Resettable) {
-                        ((Resettable) pane).reset(state);
-                    }
+            public final void actionPerformed(final ActionEvent e) {
+                final PageState state = e.getPageState();
+                final Component pane = m_tabbedPane.getCurrentPane(state);
+
+                if (pane instanceof Resettable) {
+                    ((Resettable) pane).reset(state);
                 }
-            });
+            }
+        });
 
         // Build the preview link.
-        m_previewLink = new Link(new Label(gz("cms.ui.preview")), new PrintListener() {
-                public final void prepare(final PrintEvent e) {
-                    final Link link = (Link) e.getTarget();
-                    link.setTarget(getPreviewURL(e.getPageState()));
-                    link.setTargetFrame(Link.NEW_FRAME);
-                }
-            });
+        m_previewLink = new Link(new Label(gz("cms.ui.preview")),
+                                 new PrintListener() {
+
+            public final void prepare(final PrintEvent e) {
+                final Link link = (Link) e.getTarget();
+                link.setTarget(getPreviewURL(e.getPageState()));
+                link.setTargetFrame(Link.NEW_FRAME);
+            }
+        });
         m_previewLink.setIdAttr("preview_link");
         add(m_previewLink);
 
@@ -263,18 +257,19 @@ public class ContentItemPage extends CMSPage implements ActionListener {
 
         // Add validation to make sure we are not attempting to edit a live item
         getStateModel().addValidationListener(new FormValidationListener() {
-                public void validate(FormSectionEvent e) throws FormProcessException {
-                    PageState s = e.getPageState();
-                    FormData data = e.getFormData();
-                    final ContentItem item = m_item.getContentItem(s);
-                    if(item != null && ContentItem.LIVE.equals(item.getVersion())) {
-                        String err = "The item " + item.getID() +
-                            " is live and cannot be edited.";
-                        //          data.addError(err);
-                        throw new FormProcessException(err);
-                    }
+
+            public void validate(FormSectionEvent e) throws FormProcessException {
+                PageState s = e.getPageState();
+                FormData data = e.getFormData();
+                final ContentItem item = m_item.getContentItem(s);
+                if (item != null && ContentItem.LIVE.equals(item.getVersion())) {
+                    String err = "The item " + item.getID()
+                                 + " is live and cannot be edited.";
+                    //          data.addError(err);
+                    throw new FormProcessException(err);
                 }
-            });
+            }
+        });
 
         add(new DebugPanel());
     }
@@ -291,9 +286,8 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         final ContentItem item = m_item.getContentItem(state);
 
         if (item == null) {
-            throw new FormProcessException
-                ("The item_id supplied does not reference a valid " +
-                 "ContentItem.");
+            throw new FormProcessException("The item_id supplied does not reference a valid "
+                                           + "ContentItem.");
         }
     }
 
@@ -340,8 +334,9 @@ public class ContentItemPage extends CMSPage implements ActionListener {
             m_tabbedPane.setTabVisible(state, m_languagesPane, false);
             m_previewLink.setVisible(state, false);
         } else {
-	    m_tabbedPane.setTabVisible(state, m_templatesPane, !ContentSection.getConfig().getHideTemplatesTab());
-	}
+            m_tabbedPane.setTabVisible(state, m_templatesPane, !ContentSection.
+                    getConfig().getHideTemplatesTab());
+        }
 
         // Set the current tab based on parameters
         if (setTab != null) {
@@ -372,6 +367,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
                                     int tab) {
         return getItemURL(nodeURL, itemId, tab, false);
     }
+
     /**
      * Construct a URL for displaying a certain item
      *
@@ -386,14 +382,14 @@ public class ContentItemPage extends CMSPage implements ActionListener {
                                     boolean streamlinedCreation) {
         StringBuffer url = new StringBuffer();
 
-        url.append(nodeURL)
-            .append(PageLocations.ITEM_PAGE)
-            .append("?").append(ITEM_ID).append("=").append(itemId.toString())
-            .append("&").append(SET_TAB).append("=").append(tab);
+        url.append(nodeURL).append(PageLocations.ITEM_PAGE).append("?").append(
+                ITEM_ID).append("=").append(itemId.toString()).append("&").
+                append(SET_TAB).append("=").append(tab);
 
-        if (streamlinedCreation && 
-            ContentSection.getConfig().getUseStreamlinedCreation()) {
-            url.append("&").append(STREAMLINED_CREATION).append("=").append(STREAMLINED_CREATION_ACTIVE);
+        if (streamlinedCreation && ContentSection.getConfig().
+                getUseStreamlinedCreation()) {
+            url.append("&").append(STREAMLINED_CREATION).append("=").append(
+                    STREAMLINED_CREATION_ACTIVE);
         }
 
         return url.toString();
@@ -401,9 +397,8 @@ public class ContentItemPage extends CMSPage implements ActionListener {
 
     public static String getRelativeItemURL(BigDecimal itemId, int tab) {
         StringBuffer url = new StringBuffer();
-        url.append("item.jsp")
-            .append("?").append(ITEM_ID).append("=").append(itemId.toString())
-            .append("&").append(SET_TAB).append("=").append(tab);
+        url.append("item.jsp").append("?").append(ITEM_ID).append("=").append(itemId.
+                toString()).append("&").append(SET_TAB).append("=").append(tab);
         return url.toString();
     }
 
@@ -432,8 +427,9 @@ public class ContentItemPage extends CMSPage implements ActionListener {
      * @param tab The index of the tab to display
      */
     public static String getItemURL(BigDecimal itemId, int tab) {
-        final ContentItem item = (ContentItem) DomainObjectFactory.newInstance
-            (new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemId));
+        final ContentItem item =
+                          (ContentItem) DomainObjectFactory.newInstance(new OID(
+                ContentItem.BASE_DATA_OBJECT_TYPE, itemId));
 
         if (item == null) {
             return null;
@@ -452,7 +448,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         try {
             String returnURL = (String) state.getValue(m_returnURL);
             state.getResponse().sendRedirect(returnURL);
-        } catch(IOException e) {
+        } catch (IOException e) {
             s_log.error("IO Error redirecting back", e);
             // do nothing
         }
@@ -462,9 +458,27 @@ public class ContentItemPage extends CMSPage implements ActionListener {
      * Fetch the preview URL.
      */
     private String getPreviewURL(PageState state) {
-        ContentItem item = m_item.getContentItem(state);
-        ContentSection section = getContentSection(state);
-        ItemResolver itemResolver = section.getItemResolver();
+        final ContentItem item = m_item.getContentItem(state);
+
+        if (item instanceof CustomizedPreviewLink) {
+            final String previewLink = ((CustomizedPreviewLink) item).
+                    getPreviewUrl(
+                    state);
+            if ((previewLink == null) || previewLink.isEmpty()) {
+                return getDefaultPreviewLink(state, item);
+            } else {
+                return previewLink;
+            }
+        } else {
+            return getDefaultPreviewLink(state, item);
+        }
+    }
+
+    private String getDefaultPreviewLink(final PageState state,
+                                         final ContentItem item) {
+        final ContentSection section = CMS.getContext().getContentSection();
+        //ContentSection section = getContentSection(state);
+        final ItemResolver itemResolver = section.getItemResolver();
 
         // Pass in the "Live" context since we need it for the preview
         return itemResolver.generateItemURL(state, item, section,
@@ -480,8 +494,8 @@ public class ContentItemPage extends CMSPage implements ActionListener {
     }
 
     public static boolean isStreamlinedCreationActive(PageState state) {
-        return ContentSection.getConfig().getUseStreamlinedCreation() &&
-            STREAMLINED_CREATION_ACTIVE.equals
-            (state.getRequest().getParameter(STREAMLINED_CREATION));
+        return ContentSection.getConfig().getUseStreamlinedCreation()
+               && STREAMLINED_CREATION_ACTIVE.equals(state.getRequest().
+                getParameter(STREAMLINED_CREATION));
     }
 }

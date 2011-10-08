@@ -6,6 +6,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.ContentGenerator;
+import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileXmlGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -22,6 +23,9 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator {
 
+    private static final PublicPersonalProfileConfig config =
+                                                     PublicPersonalProfileConfig.
+            getConfig();
     public static final String SHOW_ITEM_PARAM = "showItem";
 
     public void generateXML(final ContentItem item,
@@ -35,14 +39,19 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
         final PublicPersonalProfile profile = (PublicPersonalProfile) item;
         final String showItem = state.getRequest().getParameter(SHOW_ITEM_PARAM);
 
-        final Element navigation = element.newChildElement("profileNavigation");
-        final PublicPersonalProfileXmlUtil util =
-                                           new PublicPersonalProfileXmlUtil();
-        String prefix = DispatcherHelper.getDispatcherPrefix(state.getRequest());
-        if (prefix == null) {
-            prefix = "";
+        if (config.getEmbedded()) {
+            final Element navigation = element.newChildElement(
+                    "profileNavigation");
+            final PublicPersonalProfileXmlUtil util =
+                                               new PublicPersonalProfileXmlUtil();
+            String prefix = DispatcherHelper.getDispatcherPrefix(state.
+                    getRequest());
+            if (prefix == null) {
+                prefix = "";
+            }
+            util.createNavigation(profile, navigation, showItem, prefix, "",
+                                  false);
         }
-        util.createNavigation(profile, navigation, showItem, prefix, "", false);
 
         if ((showItem != null) && !showItem.trim().isEmpty()) {
             final Element profileContent = element.newChildElement(

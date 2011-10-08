@@ -12,11 +12,29 @@ import com.arsdigita.util.parameter.StringParameter;
  */
 public class PublicPersonalProfileConfig extends AbstractConfig {
 
+    private final static PublicPersonalProfileConfig config = new PublicPersonalProfileConfig();
+    private final Parameter personType;
+    private final Parameter embedded;
     private final Parameter homeNavItemLabels;
     private final Parameter showPersonInfoEverywhere;
     // private final Parameter contactType;
+    
+    static {
+        config.load();
+    }
 
     public PublicPersonalProfileConfig() {
+        personType =
+        new StringParameter(
+                "com.arsdigita.cms.publicPersonalProfile.person_type",
+                            Parameter.REQUIRED,
+                            "com.arsdigita.cms.contenttypes.GenericPerson");
+        
+        embedded = new BooleanParameter(
+                "com.arsdigita.cms.publicpersonalprofile.embedded",
+                Parameter.REQUIRED,
+                false);
+                
         homeNavItemLabels = new StringParameter(
                 "com.arsdigita.cms.publicpersonalprofile.navitem.home.labels",
                 Parameter.REQUIRED,
@@ -33,6 +51,8 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
         Parameter.REQUIRED,
         "commonContact");*/
 
+        register(personType);
+        register(embedded);
         register(homeNavItemLabels);
         register(showPersonInfoEverywhere);
         // register(contactType);
@@ -40,6 +60,14 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
         loadInfo();
     }
 
+    public final String getPersonType() {
+        return (String) get(personType);
+    }
+    
+    public final Boolean getEmbedded() {
+        return (Boolean) get(embedded);
+    }
+    
     public final String getHomeNavItemLabels() {
         return (String) get(homeNavItemLabels);
     }
@@ -50,4 +78,8 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
     /*  public final String getContactType() {
     return (String) get(contactType);
     }*/
+    
+    public static PublicPersonalProfileConfig getConfig() {
+        return config;
+    }
 }

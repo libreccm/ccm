@@ -24,7 +24,7 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
-import com.arsdigita.cms.contenttypes.PublicPersonalProfileConfig;
+import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
 import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.LanguageWidget;
@@ -48,12 +48,8 @@ public class PublicPersonalProfileCreate extends PageCreate {
 
     private static final String SELECTED_PERSON = "selectedPerson";
     private static final PublicPersonalProfileConfig config =
-                                                     new PublicPersonalProfileConfig();
-
-    static {
-        config.load();
-    }
-
+                                                     PublicPersonalProfileConfig.getConfig();
+   
     public PublicPersonalProfileCreate(final ItemSelectionModel itemModel,
                                        final CreationSelector parent) {
         super(itemModel, parent);

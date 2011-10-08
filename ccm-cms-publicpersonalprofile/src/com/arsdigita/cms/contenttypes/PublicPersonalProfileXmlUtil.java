@@ -1,7 +1,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contentassets.RelatedLink;
-import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
+import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -17,8 +17,7 @@ import java.util.Map;
 public class PublicPersonalProfileXmlUtil {
 
     private final com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig config =
-                                                                                      PublicPersonalProfiles.
-            getConfig();
+                                                                                      PublicPersonalProfileConfig.getConfig();
 
     public void createNavigation(final PublicPersonalProfile profile,
                                  final Element root,

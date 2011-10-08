@@ -10,6 +10,8 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericAddress;
 import com.arsdigita.cms.contenttypes.GenericContact;
@@ -20,6 +22,8 @@ import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileXmlUtil;
+import com.arsdigita.cms.dispatcher.CMSDispatcher;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -32,6 +36,7 @@ import com.arsdigita.templating.Templating;
 import com.arsdigita.toolbox.ui.ApplicationAuthenticationListener;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;
+import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 import java.io.IOException;
@@ -58,7 +63,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     private static final String PPP_NS =
                                 "http://www.arsdigita.com/PublicPersonalProfile/1.0";
     public static final String SELECTED_NAV_ITEM = "selectedNavItem";
-    private final PublicPersonalProfileConfig config = PublicPersonalProfiles.
+    private final PublicPersonalProfileConfig config =
+                                              PublicPersonalProfileConfig.
             getConfig();
 
     @Override
@@ -168,6 +174,28 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     PublicPersonalProfile profile =
                                           (PublicPersonalProfile) DomainObjectFactory.
                             newInstance(profiles.getDataObject());
+
+                    if (config.getEmbedded()) {
+                        final ContentSection section =
+                                             profile.getContentSection();
+                        final ItemResolver resolver = section.getItemResolver();
+
+                        String context;
+                        if (preview) {
+                            context = CMSDispatcher.PREVIEW;
+                        } else {
+                            context = ContentItem.LIVE;
+                        }
+
+                        final String url = String.format("/ccm%s", resolver.
+                                generateItemURL(state,
+                                                profile,
+                                                section,
+                                                context));
+
+                        throw new RedirectSignal(url, false);
+                    }
+
                     Element profileElem =
                             root.newChildElement("ppp:profile", PPP_NS);
                     GenericPerson owner = profile.getOwner();
@@ -178,7 +206,17 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     Element profileOwnerName = profileElem.newChildElement(
                             "ppp:ownerName", PPP_NS);
                     profileOwnerName.setText(owner.getFullName());
-
+                    
+                    final DataCollection images = ItemImageAttachment.getImageAttachments(profile);                    
+                    if (!images.isEmpty()) {
+                        images.next();
+                        final Element imageElem = profileElem.newChildElement("profileImage");
+                        ItemImageAttachment attachment = new ItemImageAttachment(images.getDataObject());
+                        //imageElem.addAttribute("oid", attachment.getImage().getOID().toString());
+                        
+                        images.close();
+                    }
+                                        
                     final PublicPersonalProfileXmlUtil util =
                                                        new PublicPersonalProfileXmlUtil();
                     String prefix =
