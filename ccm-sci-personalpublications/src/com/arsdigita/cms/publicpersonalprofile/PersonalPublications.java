@@ -4,6 +4,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.ui.PublicationXmlHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -43,11 +44,12 @@ public class PersonalPublications implements ContentGenerator {
                                 final GenericPerson person,
                                 final PageState state) {
         final List<DataObject> publications = collectPublications(person);
-              
-        if ((publications == null) || publications.size() == 0) {
-            final Element publicationsElem = parent.newChildElement(
-                    "publications");
-            publicationsElem.newChildElement("noPublications");
+
+        final Element personalPubsElem = parent.newChildElement(
+                "personalPublications");
+
+        if ((publications == null) || publications.isEmpty()) {
+            personalPubsElem.newChildElement("noPublications");
 
             return;
         } else {
@@ -55,37 +57,39 @@ public class PersonalPublications implements ContentGenerator {
                                                  processPublications(
                     publications);
 
-            generateGroupsXml(parent, groupedPublications);
-            generatePublicationsXml(parent, groupedPublications, state);
+            generateGroupsXml(personalPubsElem, groupedPublications);
+            generatePublicationsXml(personalPubsElem, groupedPublications, state);
         }
     }
-    
+
     private List<DataObject> collectPublications(final GenericPerson person) {
         final List<DataObject> publications = new ArrayList<DataObject>();
-        final DataCollection collection = (DataCollection) person.get("publication");
-        
-        while(collection.next()) {
+        final DataCollection collection = (DataCollection) person.get(
+                "publication");
+
+        while (collection.next()) {
             publications.add(collection.getDataObject());
         }
-        
+
         if (person.getAlias() != null) {
             collectPublications(person, publications);
         }
-        
+
         return publications;
     }
-    
+
     private void collectPublications(final GenericPerson alias,
                                      final List<DataObject> publications) {
-        final DataCollection collection = (DataCollection) alias.get("publication");
-        
-         while(collection.next()) {
+        final DataCollection collection = (DataCollection) alias.get(
+                "publication");
+
+        while (collection.next()) {
             publications.add(collection.getDataObject());
         }
-        
+
         if (alias.getAlias() != null) {
             collectPublications(alias, publications);
-        }        
+        }
     }
 
     /**
@@ -108,18 +112,21 @@ public class PersonalPublications implements ContentGenerator {
             initalizePubGroupMap(pubGroups, group);
         }
         initalizePubGroupMap(pubGroups, MISC);
-        
+
         Publication publication;
         String type;
         String groupName;
         Boolean reviewed;
         List<Publication> group;
-        for(DataObject dobj : publications) {            
+        for (DataObject dobj : publications) {
             publication = (Publication) DomainObjectFactory.newInstance(dobj);
             type = publication.getClass().getName();
 
             if (dobj.getObjectType().hasProperty("reviewed")) {
                 reviewed = (Boolean) dobj.get("reviewed");
+                if (reviewed == null) {
+                    reviewed = Boolean.FALSE;
+                }
                 if (reviewed) {
                     groupName = groupConfig.getTypeGroupMap().get(String.format(
                             "%s_ref", type));
@@ -252,10 +259,13 @@ public class PersonalPublications implements ContentGenerator {
     private void generatePublicationXml(final Element publicationGroupElem,
                                         final Publication publication,
                                         final PageState state) {
-        final PublicPersonalProfileXmlGenerator generator =
+        /*final PublicPersonalProfileXmlGenerator generator =
                                                 new PublicPersonalProfileXmlGenerator(
                 publication);
-        generator.generateXML(state, publicationGroupElem, "");
+        generator.generateXML(state, publicationGroupElem, "");*/
+        final PublicationXmlHelper xmlHelper = new PublicationXmlHelper(
+                publicationGroupElem, publication);
+        xmlHelper.generateXml();
     }
 
     /**

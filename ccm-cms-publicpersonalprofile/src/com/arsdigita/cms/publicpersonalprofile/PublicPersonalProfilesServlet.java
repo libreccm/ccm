@@ -175,6 +175,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     PublicPersonalProfile profile =
                                           (PublicPersonalProfile) DomainObjectFactory.
                             newInstance(profiles.getDataObject());
+                    profiles.close();
 
                     if (config.getEmbedded()) {
                         final ContentSection section =
@@ -293,7 +294,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                         final ContentGenerator generator =
                                                                (ContentGenerator) generatorObj;
 
-                                        generator.generateContent(root,
+                                        generator.generateContent(profileElem,
                                                                   owner,
                                                                   state);
 
@@ -329,6 +330,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                 final RelatedLink link =
                                                   (RelatedLink) DomainObjectFactory.
                                         newInstance(links.getDataObject());
+                                links.close();
                                 final ContentItem item = link.getTargetItem();
                                 final PublicPersonalProfileXmlGenerator generator =
                                                                         new PublicPersonalProfileXmlGenerator(

@@ -608,7 +608,7 @@ public abstract class SciOrganizationBasePanel
                                       final Element parent,
                                       final PageState state) {
         Element projectElem = parent.newChildElement("project");
-        projectElem.addAttribute("oid", project.toString());
+        projectElem.addAttribute("oid", project.getOID().toString());
 
         Element title = projectElem.newChildElement("title");
         title.setText(project.getTitle());
