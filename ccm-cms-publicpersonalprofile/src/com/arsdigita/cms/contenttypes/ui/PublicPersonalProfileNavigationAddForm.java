@@ -27,7 +27,7 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -115,7 +115,7 @@ public class PublicPersonalProfileNavigationAddForm
 
         PublicPersonalProfileNavItemCollection navItems =
                                                new PublicPersonalProfileNavItemCollection();
-        navItems.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
         if (showGenerated()) {
             navItems.addFilter("generatorClass is not null");
@@ -166,7 +166,7 @@ public class PublicPersonalProfileNavigationAddForm
 
         PublicPersonalProfileNavItemCollection navItems =
                                                new PublicPersonalProfileNavItemCollection();
-        navItems.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
         navItems.addKeyFilter(navKey);
         navItems.next();

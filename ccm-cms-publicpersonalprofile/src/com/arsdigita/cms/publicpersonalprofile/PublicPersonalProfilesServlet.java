@@ -22,11 +22,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
-import com.arsdigita.cms.contenttypes.PublicPersonalProfileXmlUtil;
-import com.arsdigita.cms.dispatcher.CMSDispatcher;
-import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -294,16 +290,40 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                         final ContentGenerator generator =
                                                                (ContentGenerator) generatorObj;
 
-                                        generator.generateContent(profileElem,
-                                                                  owner,
-                                                                  state);
+        Element navHome =
+                navList.newChildElement("nav:category",
+                                        "http://ccm.redhat.com/london/navigation");
+        navHome.addAttribute("AbstractTree", "AbstractTree");
+        navHome.addAttribute("description", "");
+        navHome.addAttribute("id", profile.getID().toString());
+        if (navPath == null) {
+            navHome.addAttribute("isSelected", "true");
+        } else {
+            navHome.addAttribute("isSelected", "false");
+        }
+        navHome.addAttribute("sortKey", "");
+        String homeLabel = homeLabels.get(GlobalizationHelper.getNegotiatedLocale().
+                getLanguage());
+        if (homeLabel == null) {
+            navHome.addAttribute("title", "Home");
+        } else {
+            navHome.addAttribute("title", homeLabel);
+        }
+        navHome.addAttribute("url", String.format("/ccm/%s",
+                                                  profile.getProfileUrl()));
 
-                                    } else {
-                                        throw new ServletException(String.format(
-                                                "Class '%s' is not a ContentGenerator.",
-                                                navItems.getNavItem().
-                                                getGeneratorClass()));
-                                    }
+        //Get the available Navigation items
+        PublicPersonalProfileNavItemCollection navItems =
+                                               new PublicPersonalProfileNavItemCollection();
+        navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+                getLanguage());
+        final Map<String, PublicPersonalProfileNavItem> navItemMap =
+                                                        new HashMap<String, PublicPersonalProfileNavItem>();
+        PublicPersonalProfileNavItem navItem;
+        while (navItems.next()) {
+            navItem = navItems.getNavItem();
+            navItemMap.put(navItem.getKey(), navItem);
+        }
 
                                 } catch (InstantiationException ex) {
                                     throw new ServletException(

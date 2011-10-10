@@ -25,7 +25,7 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -145,7 +145,7 @@ public class PublicPersonalProfileNavigationTable
             ContentItem targetItem = link.getTargetItem();
             PublicPersonalProfileNavItem navItem;
 
-            navItem = navItems.getNavItem(key, DispatcherHelper.
+            navItem = navItems.getNavItem(key, GlobalizationHelper.
                     getNegotiatedLocale().
                     getLanguage());
             navItems.reset();
