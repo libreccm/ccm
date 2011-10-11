@@ -89,7 +89,7 @@ public class PublicPersonalProfileNavigationAddForm
                     select.addOption(new Option("", ""));
                     PublicPersonalProfileNavItemCollection navItems =
                                                            new PublicPersonalProfileNavItemCollection();
-                    navItems.addLanguageFilter(DispatcherHelper.
+                    navItems.addLanguageFilter(GlobalizationHelper.
                             getNegotiatedLocale().
                             getLanguage());
                     if (showGenerated()) {
