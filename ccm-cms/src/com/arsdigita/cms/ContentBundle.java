@@ -32,6 +32,8 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
@@ -57,42 +59,37 @@ import org.apache.log4j.Logger;
  * @version $Id: ContentBundle.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class ContentBundle extends ContentItem {
-    
-    private static final Logger s_log = Logger.getLogger(ContentBundle.class);
 
+    private static final Logger s_log = Logger.getLogger(ContentBundle.class);
     private static DomainObjectObserver s_instancesObserver =
-        new AbstractDomainObjectObserver() {
-            public void add(DomainObject dom, String name,
-                            DataObject dobj) {
-                if (INSTANCES.equals(name)) {
-                    if (dobj != null) {
-                        PermissionService.setContext(dobj.getOID(), dom.getOID());
+            new AbstractDomainObjectObserver() {
+
+                public void add(DomainObject dom, String name,
+                        DataObject dobj) {
+                    if (INSTANCES.equals(name)) {
+                        if (dobj != null) {
+                            PermissionService.setContext(dobj.getOID(), dom.getOID());
+                        }
                     }
                 }
-            }
-        };
-
+            };
     /**
      * The base data object type of a bundle
      */
     public static final String BASE_DATA_OBJECT_TYPE =
             "com.arsdigita.cms.ContentBundle";
-    
     /**
      * The primary instances association
      */
     public static final String INSTANCES = "instances";
-
     /**
      * The association to AtoZ aliases
      */
     public static final String ATOZ_ALIASING_PROVIDERS = "atozAliasingProviders";
-
     /**
      * The default language property
      */
     public static final String DEFAULT_LANGUAGE = "defaultLanguage";
-
     private boolean m_wasNew = false;
 
     /**
@@ -101,7 +98,7 @@ public class ContentBundle extends ContentItem {
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
-    
+
     /**
      * Creates a new bundle.
      *
@@ -109,16 +106,16 @@ public class ContentBundle extends ContentItem {
      */
     public ContentBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
-        
+
         Assert.exists(primary, ContentItem.class);
-        
+
         setDefaultLanguage(primary.getLanguage());
         setContentType(primary.getContentType());
         addInstance(primary);
-        
+
         super.setName(primary.getName());
     }
-    
+
     /**
      * Retrieves a bundle.
      *
@@ -127,7 +124,7 @@ public class ContentBundle extends ContentItem {
     public ContentBundle(final OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
-    
+
     /**
      * Retrieves a bundle.
      *
@@ -135,10 +132,10 @@ public class ContentBundle extends ContentItem {
      * retrieve
      */
     public ContentBundle(final BigDecimal id)
-    throws DataObjectNotFoundException {
+            throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
-    
+
     /**
      * Retrieves or creates a bundle using the <code>DataObject</code>
      * argument.
@@ -149,7 +146,7 @@ public class ContentBundle extends ContentItem {
     public ContentBundle(final DataObject object) {
         super(object);
     }
-    
+
     /**
      * Creates a bundle.
      *
@@ -159,15 +156,13 @@ public class ContentBundle extends ContentItem {
     public ContentBundle(final String type) {
         super(type);
     }
-    
-    
+
     protected ContentItem makeCopy() {
         final ContentBundle newItem = (ContentBundle) super.makeCopy();
-        
+
         final WorkflowTemplate template =
-                ContentTypeWorkflowTemplate.getWorkflowTemplate
-                (newItem.getContentSection(), newItem.getContentType());
-        
+                ContentTypeWorkflowTemplate.getWorkflowTemplate(newItem.getContentSection(), newItem.getContentType());
+
         if (template != null) {
             s_log.debug("Setting up new workflow template");
             ItemCollection instances = getInstances();
@@ -178,20 +173,20 @@ public class ContentBundle extends ContentItem {
                 workflow.setObjectID(instance.getID());
                 workflow.start(Web.getContext().getUser());
                 workflow.save();
-                
+
             }
         }
-        
+
         return newItem;
     }
-    
+
     /**
      * Gets the default language of the bundle.
      */
     public final String getDefaultLanguage() {
         return (String) get(DEFAULT_LANGUAGE);
     }
-    
+
     /**
      * Sets the default language of the bundle.
      */
@@ -201,10 +196,10 @@ public class ContentBundle extends ContentItem {
             Assert.isTrue(language.length() == 2,
                     language + " is not an ISO639 language code");
         }
-        
+
         set(DEFAULT_LANGUAGE, language);
     }
-    
+
     /**
      * Adds a language instance to this bundle.  This method will fail
      * if the bundle already contains a different instance for the
@@ -222,22 +217,22 @@ public class ContentBundle extends ContentItem {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Adding " + instance + " to bundle " + this);
         }
-        
+
         if (Assert.isEnabled()) {
             Assert.exists(instance, ContentItem.class);
             Assert.isFalse(hasInstance(instance.getLanguage()),
-                    "The bundle already contains an instance " +
-                    "for the language " + instance.getLanguage());
+                    "The bundle already contains an instance "
+                    + "for the language " + instance.getLanguage());
         }
-        
+
         instance.setParent(this);
         instance.setContentSection(getContentSection());
-        
+
         if (Assert.isEnabled()) {
             Assert.isEqual(this, instance.getParent());
         }
     }
-    
+
     /**
      * Removes a language instance from the bundle.  This method will
      * fail if <code>instance</code> is the primary instance.
@@ -256,14 +251,14 @@ public class ContentBundle extends ContentItem {
             Assert.isEqual(this, instance.getParent());
             Assert.isNotEqual(instance, getPrimaryInstance());
         }
-        
+
         instance.setParent(null);
-        
+
         if (Assert.isEnabled()) {
             Assert.isTrue(instance.getParent() == null);
         }
     }
-    
+
     /**
      * Gets the primary instance of this bundle.
      *
@@ -271,10 +266,10 @@ public class ContentBundle extends ContentItem {
      * the primary instance
      * @see #addInstance(ContentItem)
      */
-    public final ContentItem getPrimaryInstance() {        
+    public final ContentItem getPrimaryInstance() {
         return getInstance(getDefaultLanguage());
     }
-    
+
     /**
      * Produces a collection containing all language instances in this
      * bundle.
@@ -284,7 +279,7 @@ public class ContentBundle extends ContentItem {
     public final ItemCollection getInstances() {
         return new ItemCollection(instances());
     }
-    
+
     /**
      * Returns a language instance for <code>language</code> or
      * <code>null</code> if no such instance exists.
@@ -303,34 +298,49 @@ public class ContentBundle extends ContentItem {
         if (Assert.isEnabled()) {
             Assert.exists(language, String.class);
             Assert.isTrue(language.length() == 2,
-                    language + " does not look like a valid language " +
-                    "code");
+                    language + " does not look like a valid language "
+                    + "code");
         }
-        
-        final DataAssociationCursor instances = instances();
+
+        DataAssociationCursor instances = instances();
         instances.addEqualsFilter(LANGUAGE, language);
-        
+
         DataObject dataObject = null;
-        
+
         if (instances.next()) {
             final DataObject data = instances.getDataObject();
-            
+
             if (Assert.isEnabled()) {
                 //Assert.isFalse(instances.next(),
                 //               "There is more than one instance with the " +
                 //               "same language");
             }
-            
+
             instances.close();
-            
+
             return (ContentItem) DomainObjectFactory.newInstance(data);
         } else {
+
             instances.close();
-            
+
+            // Look for language invariant version
+            instances = instances();
+            instances.addEqualsFilter(LANGUAGE, "--");
+
+            if (instances.next()) {
+                final DataObject data = instances.getDataObject();
+
+                instances.close();
+
+                return (ContentItem) DomainObjectFactory.newInstance(data);
+            } else {
+                instances.close();
+            }
+
             return null;
         }
     }
-    
+
     /**
      * Tells whether <code>instance</code> is present in the bundle.
      *
@@ -339,13 +349,13 @@ public class ContentBundle extends ContentItem {
      */
     public final boolean hasInstance(final ContentItem instance) {
         Assert.exists(instance, ContentItem.class);
-        
+
         final DataAssociationCursor instances = instances();
         instances.addEqualsFilter(ID, instance.getID());
-        
+
         return !instances.isEmpty();
     }
-    
+
     /**
      * Utility method to check if this bundle already contains an
      * instance for the given <code>language</code>.
@@ -361,13 +371,17 @@ public class ContentBundle extends ContentItem {
             Assert.isTrue(language.length() == 2,
                     language + " is not an ISO639 language code");
         }
-        
+
         final DataAssociationCursor instances = instances();
-        instances.addEqualsFilter(LANGUAGE, language);
-        
+//        instances.addEqualsFilter(LANGUAGE, language);
+        FilterFactory ff = instances.getFilterFactory();
+        Filter filter = ff.or().
+                addFilter(ff.equals("language", language)).
+                addFilter(ff.equals("language", "--"));
+        instances.addFilter(filter);
         return !instances.isEmpty();
     }
-    
+
     /**
      * List all languages in which this item is available, i.e. the
      * language codes of all instances in this bundle.
@@ -379,24 +393,24 @@ public class ContentBundle extends ContentItem {
         // XXX For LIVE bundles, there might be several PENDING
         // instances with the same language. Maybe we should filter
         // these out and return only one?
-        
+
         final ItemCollection items = getInstances();
-        
+
         final Collection list = new ArrayList();
-        
+
         while (items.next()) {
             list.add(items.getLanguage());
         }
-        
+
         items.close();
-        
+
         if (Assert.isEnabled()) {
             Assert.isTrue(!list.isEmpty() || getInstances().isEmpty());
         }
-        
+
         return list;
     }
-    
+
     /**
      * Negotiate the right language instance for this bundle and return it.
      *
@@ -407,7 +421,6 @@ public class ContentBundle extends ContentItem {
      * <code>locales</code>
      * @pre locales != null
      */
-
     // Quasimodo:
     // Is this method ever used? Netbeans couldn't find anything.
     public ContentItem negotiate(Locale[] locales) {
@@ -423,28 +436,36 @@ public class ContentBundle extends ContentItem {
             language = (String) dataObject.get(LANGUAGE);
 
             // If language is not one of the supported languages, skip this entry
-            if(!supportedLanguages.contains(language)) {
+            if (!supportedLanguages.contains(language)) {
                 continue;
             }
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("negotiate: language= " + language);
             }
-            
+
             if (language != null) {
-                for (int i=0; i < locales.length; i++) {
-                    if (language.equals(locales[i].getLanguage())) {
-                        if (i < bestMatch || matchingInstance == null) {
-                            bestMatch = i;
-                            matchingInstance = dataObject;
-                            if (s_log.isDebugEnabled()) {
-                                s_log.debug("negotiate: "
-                                        + "bestMatch= " + i
-                                        + ", language= " + language);
-                            }
-                        } // else other match with less preferred language found
-                    }
-                } // end for
+                // If the current object is languange invariant and no better
+                // match is already found, match it with the lowest priority
+                if (language.equals("--") && matchingInstance == null) {
+                    bestMatch = locales.length;
+                    matchingInstance = dataObject;
+                } else {
+                    // In any other case
+                    for (int i = 0; i < locales.length; i++) {
+                        if (language.equals(locales[i].getLanguage())) {
+                            if (i < bestMatch || matchingInstance == null) {
+                                bestMatch = i;
+                                matchingInstance = dataObject;
+                                if (s_log.isDebugEnabled()) {
+                                    s_log.debug("negotiate: "
+                                            + "bestMatch= " + i
+                                            + ", language= " + language);
+                                }
+                            } // else other match with less preferred language found
+                        }
+                    } // end for
+                }
             } // end if
             if (bestMatch == 0 && matchingInstance != null) {
                 s_log.debug("negotiate: best possible match found, exiting");
@@ -453,14 +474,13 @@ public class ContentBundle extends ContentItem {
         }
         instancesCursor.close();
         if (matchingInstance != null) {
-            return (ContentItem) DomainObjectFactory.newInstance
-                    (matchingInstance);
+            return (ContentItem) DomainObjectFactory.newInstance(matchingInstance);
         } else {
             s_log.info("negotiate: no match found!");
             return null;
         }
     }
-    
+
     /**
      * Negotiate the right language instance for this bundle and return it.
      *
@@ -481,36 +501,42 @@ public class ContentBundle extends ContentItem {
         Locale loc = null;
         List languageCodes = new ArrayList();
         for (int i = 0; locales.hasMoreElements(); i++) {
-            loc = (Locale)locales.nextElement();
+            loc = (Locale) locales.nextElement();
 
             // Quasimodo:
             // Only add languages to the List which are supported by cms
-            if(supportedLanguages.contains(loc.getLanguage())) {
-                languageCodes.add( loc.getLanguage());
+            if (supportedLanguages.contains(loc.getLanguage())) {
+                languageCodes.add(loc.getLanguage());
             }
+
             if (s_log.isDebugEnabled()) {
-                s_log.debug("negotiate: pref " + i + ": "+ loc.getLanguage());
+                s_log.debug("negotiate: pref " + i + ": " + loc.getLanguage());
             }
         }
-        
+
+        // Add unspecified language for language invariant objects
+        if (supportedLanguages.contains("--")) {
+            languageCodes.add("--");
+        }
+
         final DataAssociationCursor instances = instances();
-        
+
         DataObject dataObject = null;
         int bestMatch = 0;
         DataObject match = null;
         String language = null;
-        
+
         while (instances.next()) {
             dataObject = instances.getDataObject();
             language = (String) dataObject.get(LANGUAGE);
-            
+
             if (s_log.isDebugEnabled()) {
                 s_log.debug("negotiate: language= " + language);
             }
-            
+
             if (language != null) {
-                for (int i=0; i < languageCodes.size(); i++) {
-                    if (language.equals( (String)languageCodes.get(i) )) {
+                for (int i = 0; i < languageCodes.size(); i++) {
+                    if (language.equals((String) languageCodes.get(i))) {
                         if (i < bestMatch || match == null) {
                             bestMatch = i;
                             match = dataObject;
@@ -523,58 +549,56 @@ public class ContentBundle extends ContentItem {
                     }
                 } // end for
             } // end if
-            
+
             if (bestMatch == 0 && match != null) {
                 s_log.debug("negotiate: best possible match found, exiting");
                 break;       // exit loop when best match is found
             }
         }
-        
+
         instances.close();
-        
+
         return (ContentItem) DomainObjectFactory.newInstance(match);
     }
-    
+
     // Methods from item that bundle overrides
-    
     protected void beforeSave() {
         super.beforeSave();
-        
+
         final ContentItem primary = getPrimaryInstance();
-        
+
         Assert.exists(getContentType(), ContentType.class);
-        
+
         if (primary != null) {
             primary.setContentSection(getContentSection());
         }
     }
-    
+
     protected boolean canPublishToFS() {
         return false;
     }
-    
+
     protected void publishToFS() {
         throw new UnsupportedOperationException();
     }
-    
+
     public ContentItem publish(final LifecycleDefinition definition,
             final Date start) {
         throw new UnsupportedOperationException();
     }
-    
+
     public Lifecycle getLifecycle() {
         // Bundles do not have lifecycles.
-        
+
         return null;
     }
-    
+
     public void setLifecycle(final Lifecycle lifecycle) {
         // I'd like to do the following, but VersionCopier calls
         // setLifecycle.
         //throw new UnsupportedOperationException();
     }
-    
-    
+
     /**
      * Ignore the <code>INSTANCES</code> property for
      * <code>ItemCopier.VERSION_COPY</code>.
@@ -597,57 +621,56 @@ public class ContentBundle extends ContentItem {
                 return true;
             }
         }
-        
+
         return super.copyProperty(source, property, copier);
     }
-    
+
     public boolean copyServices(final ContentItem source) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Copying services on bundle " + getName() + " " +
-                    getID() + " using source " + source.getID());
+            s_log.debug("Copying services on bundle " + getName() + " "
+                    + getID() + " using source " + source.getID());
         }
-        
+
         // Copy categories
         CategoryCollection categories = source.getCategoryCollection();
-        while (categories.next() ) {
+        while (categories.next()) {
             final Category category = categories.getCategory();
             category.addChild(this);
             category.save(); // XXX remove me
         }
         categories.close();
-        
+
         return true;
     }
-    
+
     protected void initialize() {
         super.initialize();
         addObserver(s_instancesObserver);
-        
+
         m_wasNew = isNew();
     }
-    
+
     protected void afterSave() {
         if (m_wasNew) {
             getPrimaryInstance().setContentSection(getContentSection());
         }
-        
+
         super.afterSave();
     }
-    
+
     // Utility methods
-    
     private DataAssociationCursor instances() {
         final DataAssociationCursor cursor =
                 ((DataAssociation) super.get(INSTANCES)).cursor();
-        
+
         return cursor;
     }
-    
+
     private DataAssociationCursor instances(final String version) {
         final DataAssociationCursor cursor = instances();
-        
+
         cursor.addEqualsFilter(VERSION, version);
-        
+
         return cursor;
     }
 }

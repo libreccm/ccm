@@ -63,7 +63,7 @@ public class LanguageUtil {
      *        at the server startup
      */
     public static void setSupportedLanguages(String languages) {
-        s_languages = languages;
+        s_languages = languages + ",--";
     }
     
     /** Get the comma separated list of all supported languages */
@@ -80,7 +80,7 @@ public class LanguageUtil {
         StringTokenizer tokenizer = new StringTokenizer(allLanguages , ",");
         Collection langList = new LinkedList();
         while (tokenizer.hasMoreElements()) {
-            String language = tokenizer.nextToken();
+            String language = tokenizer.nextToken().trim();
             langList.add(language);
         }
         return langList;
@@ -95,7 +95,7 @@ public class LanguageUtil {
         StringTokenizer tokenizer = new StringTokenizer(allLanguages , ",");
         Collection langList = new LinkedList();
         while (tokenizer.hasMoreElements()) {
-            String language = tokenizer.nextToken();
+            String language = tokenizer.nextToken().trim();
             langList.add(new Pair(language , getLang3LA(language)));
         }
         return langList;
@@ -110,7 +110,7 @@ public class LanguageUtil {
         StringTokenizer tokenizer = new StringTokenizer(allLanguages , ",");
         Collection langList = new LinkedList();
         while (tokenizer.hasMoreElements()) {
-            String language = tokenizer.nextToken();
+            String language = tokenizer.nextToken().trim();
             langList.add(new Pair(language , getLangFull(language)));
         }
         return langList;

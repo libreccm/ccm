@@ -24,6 +24,8 @@ import com.arsdigita.london.navigation.DataCollectionRenderer;
 
 import com.arsdigita.persistence.DataCollection;
 
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -94,9 +96,14 @@ public abstract class AbstractObjectList
         DataCollection objects = getObjects(request, response);
 
         // Quasimodo: Begin
-        // Limit list to objects in the negotiated language
+        // Limit list to objects in the negotiated language and language invariant items
         if (objects != null && objects.size() > 0) {
-            objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            FilterFactory ff = objects.getFilterFactory();
+            Filter filter = ff.or().
+                    addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                    addFilter(ff.equals("language", "--"));
+            objects.addFilter(filter);
+//            objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
         }
         // Quasimodo: End
         
