@@ -36,8 +36,6 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Authoring step to view/edit the simple attributes of the Event content type (and

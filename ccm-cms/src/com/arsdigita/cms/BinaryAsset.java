@@ -58,6 +58,7 @@ public abstract class BinaryAsset extends Asset {
      * @return the base PDL object type for this item. Child classes should
      *  override this method to return the correct value
      */
+    @Override
     public abstract String getBaseDataObjectType();
 
     /**

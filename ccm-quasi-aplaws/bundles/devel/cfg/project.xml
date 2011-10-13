@@ -96,6 +96,7 @@
 <!--  - - - - - - -  -->
         <ccm:application name="ccm-cms-dabinimporter"/>
 <!--	<ccm:application name="ccm-cms-publicpersonalprofile"/> -->
+        <ccm:application name="ccm-cms-publicpersonalprofile" />
         <ccm:application name="ccm-sci-types-organization"/>
         <ccm:application name="ccm-sci-publications"/>
         <ccm:application name="ccm-zes-aplaws"/> 

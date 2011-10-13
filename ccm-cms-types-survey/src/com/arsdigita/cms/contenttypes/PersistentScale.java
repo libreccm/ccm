@@ -9,6 +9,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.ListPanel;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.form.OptionGroup;
 import com.arsdigita.bebop.form.RadioGroup;
@@ -92,15 +93,18 @@ public class PersistentScale extends PersistentWidget {
         addScaleEntry("HACK For testing only 1:");
         addScaleEntry("HACK For testing only 2:");
         addScaleEntry("HACK For testing only 3:");
+        addScaleEntry("HACK For testing only with a very very long String which may be probably a two-liner, at least on small screens:");
 
         int i = 0;
         Iterator questionIter = m_questions.listIterator();
 
         // Component
-        SimpleContainer container = new SimpleContainer();
+        ListPanel listPanel = new ListPanel(ListPanel.ORDERED);
 
         // For every question generate a checkbox group with the defined options
         while (questionIter.hasNext()) {
+
+            SimpleContainer container = new SimpleContainer();
 
             // Question
             container.add(new Label((String) questionIter.next()));
@@ -108,9 +112,12 @@ public class PersistentScale extends PersistentWidget {
             // OptionGroup
             container.add(generateScaleOptionGroup(i));
 
+            // Add to ListPanel
+            listPanel.add(container);
+
         }
 
-        return container;
+        return listPanel;
     }
 
     /**
@@ -128,7 +135,8 @@ public class PersistentScale extends PersistentWidget {
 
         try {
             radioGroup = (RadioGroup) getOptionList().createOptionGroup(getParameterName() + "_" + nr);
-            radioGroup.setClassAttr("horizontal");
+            radioGroup.setLayout(RadioGroup.HORIZONTAL);
+            radioGroup.setHorizontalAlignment(RadioGroup.RIGHT);
         } catch (NullPointerException ex) {
             radioGroup = new RadioGroup(getParameterName() + "_" + nr);
         }
