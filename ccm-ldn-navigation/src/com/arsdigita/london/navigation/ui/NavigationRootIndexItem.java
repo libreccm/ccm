@@ -23,6 +23,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.london.navigation.Navigation;
 import com.arsdigita.xml.Element;
 
@@ -65,7 +66,9 @@ public class NavigationRootIndexItem extends AbstractComponent {
             /*Fix by Quasimodo*/
             /* getPrimaryInstance doesn't negotiate the language of the content item */
             /* ContentItem indexItem = ((ContentBundle) Navigation.getConfig().getDefaultCategoryRoot().getIndexObject()).getPrimaryInstance().getLiveVersion(); */
-            ContentItem indexItem = ((ContentBundle) Navigation.getConfig().getDefaultCategoryRoot().getIndexObject()).negotiate(request.getLocales());
+            ContentItem indexItem = ((ContentBundle) Navigation.getConfig().
+                    getDefaultCategoryRoot().getIndexObject()).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
             // if there is no matching language version for this content item
             if(indexItem == null) {
                 // get the primary instance instead (fallback)

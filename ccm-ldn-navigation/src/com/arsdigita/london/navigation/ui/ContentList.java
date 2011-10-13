@@ -26,6 +26,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.cms.ContentItemXMLRenderer;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
@@ -140,7 +141,8 @@ public class ContentList extends AbstractComponent {
                     /*Fix by Quasimodo*/
                     /* getPrimaryInstance doesn't negotiate the language of the content item */
                     /* ContentItem cIndexItem = ((ContentBundle) indexItem).getPrimaryInstance().getLiveVersion(); */
-                    ContentItem cItem = ((ContentBundle) indexItem).negotiate(request.getLocales());
+                    ContentItem cItem = ((ContentBundle) indexItem).
+                        getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
                     // If there is no matching language version for this content item
                     if(cItem == null) {
                         // get the primary instance instead (fallback)
@@ -176,7 +178,8 @@ public class ContentList extends AbstractComponent {
                     /*Fix by Quasimodo*/
                     /* getPrimaryInstance doesn't negotiate the language of the content item */
                     /* ContentItem cIndexItem = ((ContentBundle) indexItem).getPrimaryInstance().getLiveVersion(); */
-                    ContentItem cItem = ((ContentBundle) indexItem).negotiate(request.getLocales());
+                    ContentItem cItem = ((ContentBundle) indexItem).
+                        getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
                     // If there is no matching language version for this content item
                     if(cItem == null) {
                         // get the primary instance instead (fallback)
@@ -264,7 +267,8 @@ public class ContentList extends AbstractComponent {
                 /*Fix by Quasimodo*/
                 /* getPrimaryInstance doesn't negotiate the language of the content item */
                 /* item = ((ContentBundle) item).getPrimaryInstance(); */
-                item = ((ContentBundle) item).negotiate(DispatcherHelper.getRequest().getLocales());
+                item = ((ContentBundle) item).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
                 // If there is no matching language version for this content item
                 if(item == null) {
                 // get the primary instance instead (fallback)

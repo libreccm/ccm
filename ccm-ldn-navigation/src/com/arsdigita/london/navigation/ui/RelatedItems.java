@@ -23,6 +23,7 @@ import com.arsdigita.london.navigation.RelatedItemsQueryFactory;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
@@ -66,7 +67,8 @@ public class RelatedItems extends AbstractComponent {
             /*Fix by Quasimodo*/
             /* getPrimaryInstance doesn't negotiate the language of the content item */
             /* obj = ((ContentBundle) obj).getPrimaryInstance(); */
-            ContentItem cItem = ((ContentBundle) obj).negotiate(request.getLocales());
+            ContentItem cItem = ((ContentBundle) obj).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
             // if there is no matching language version of the content item
             if(cItem == null) {
                 // get the primary instance instead (fallback)

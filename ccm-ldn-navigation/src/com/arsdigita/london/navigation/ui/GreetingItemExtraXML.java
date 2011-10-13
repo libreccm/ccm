@@ -21,7 +21,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ExtraXMLGenerator;
-import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.london.navigation.Navigation;
 import com.arsdigita.xml.Element;
 
@@ -111,7 +111,8 @@ public class GreetingItemExtraXML extends AbstractComponent {
         /*Fix by Quasimodo*/
         /* getPrimaryInstance doesn't negotiate the language of the content item */
         /* ContentItem baseItem = bundle.getPrimaryInstance(); */
-        ContentItem baseItem = bundle.negotiate(DispatcherHelper.getRequest().getLocales());
+        ContentItem baseItem = bundle.
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
         // If there is no matching language version for this content item
         if(baseItem == null) {
         // get the primary instance instead (fallback)

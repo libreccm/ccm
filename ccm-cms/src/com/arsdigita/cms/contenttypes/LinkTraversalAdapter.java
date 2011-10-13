@@ -19,11 +19,11 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import org.apache.log4j.Logger;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.globalization.GlobalizationHelper;
 
 /**
  * An adapter for Links allowing pluggable
@@ -66,8 +66,8 @@ public class LinkTraversalAdapter
             s_log.debug(
                     "Found a link to a content bundle. Resolve this link to negotiated language.");
 
-            nObj = ((ContentBundle) obj).negotiate(DispatcherHelper.getRequest().
-                    getLocales());
+            nObj = ((ContentBundle) obj).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
         }
 
         return super.processProperty(nObj, path, prop, context);

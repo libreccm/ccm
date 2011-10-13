@@ -26,6 +26,7 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataOperation;
@@ -213,8 +214,8 @@ public class Link extends ACSObject {
             if (DispatcherHelper.getRequest() == null) {
                 ci = ((ContentBundle) acsObject).getPrimaryInstance();
             } else {
-                ci = ((ContentBundle) acsObject).negotiate(DispatcherHelper.
-                        getRequest().getLocales());
+                ci = ((ContentBundle) acsObject).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
             }
         } else {
             // else there are no language versions so just use the acsObject

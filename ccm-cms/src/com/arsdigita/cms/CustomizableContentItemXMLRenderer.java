@@ -24,6 +24,7 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
@@ -128,8 +129,8 @@ public class CustomizableContentItemXMLRenderer
 
         if (nObj instanceof ContentBundle) {
 
-            nObj = ((ContentBundle) obj).negotiate(DispatcherHelper.getRequest().
-                    getLocales());
+            nObj = ((ContentBundle) obj).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
         }
 
 

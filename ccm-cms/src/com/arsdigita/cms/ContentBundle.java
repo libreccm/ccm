@@ -28,6 +28,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectObserver;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
@@ -280,6 +281,14 @@ public class ContentBundle extends ContentItem {
         return new ItemCollection(instances());
     }
 
+    public final ContentItem getInstance(final Locale locale) {
+        return this.getInstance(locale.getLanguage(), false);
+    }
+
+    public final ContentItem getInstance(final Locale locale, boolean allowLanguageIndependent) {
+        return this.getInstance(locale.getLanguage(), allowLanguageIndependent);
+    }
+
     /**
      * Returns a language instance for <code>language</code> or
      * <code>null</code> if no such instance exists.
@@ -287,7 +296,11 @@ public class ContentBundle extends ContentItem {
      * This method does <strong>not</strong> do language negotiation,
      * it only returns an exact match for the given Locale or
      * <code>null</code> if no such match is found.
-     *
+     * 
+     * It will try to return a language independent version of the 
+     * content item, if there is one and {@code allowLanguageIndependent}
+     * is true.
+     * 
      * @param language the language for which to get an instance
      * @return the instance of this item which exactly matches the
      * <em>language</em> part of the Locale <code>l</code>
@@ -295,6 +308,10 @@ public class ContentBundle extends ContentItem {
      * @pre language != null
      */
     public final ContentItem getInstance(final String language) {
+        return this.getInstance(language, false);
+    }
+
+    public final ContentItem getInstance(final String language, boolean allowLanguageIndependent) {
         if (Assert.isEnabled()) {
             Assert.exists(language, String.class);
             Assert.isTrue(language.length() == 2,
@@ -302,43 +319,28 @@ public class ContentBundle extends ContentItem {
                     + "code");
         }
 
+        // The data object to return
+        ContentItem contentItem = null;
+
+        // Try to get the content item in the exact language
         DataAssociationCursor instances = instances();
         instances.addEqualsFilter(LANGUAGE, language);
 
-        DataObject dataObject = null;
-
         if (instances.next()) {
-            final DataObject data = instances.getDataObject();
-
-            if (Assert.isEnabled()) {
-                //Assert.isFalse(instances.next(),
-                //               "There is more than one instance with the " +
-                //               "same language");
-            }
-
-            instances.close();
-
-            return (ContentItem) DomainObjectFactory.newInstance(data);
-        } else {
-
-            instances.close();
-
-            // Look for language invariant version
-            instances = instances();
-            instances.addEqualsFilter(LANGUAGE, "--");
-
-            if (instances.next()) {
-                final DataObject data = instances.getDataObject();
-
-                instances.close();
-
-                return (ContentItem) DomainObjectFactory.newInstance(data);
-            } else {
-                instances.close();
-            }
-
-            return null;
+            contentItem = (ContentItem) DomainObjectFactory.newInstance(instances.getDataObject());
+            ;
         }
+
+        instances.close();
+
+        // Try to get a language independent version of the content item,
+        // if we couldn't find an exact match and language independent
+        // content items are acceptable.
+        if (contentItem == null && allowLanguageIndependent == true) {
+            contentItem = this.getInstance("--", false);
+        }
+
+        return contentItem;
     }
 
     /**
@@ -366,19 +368,33 @@ public class ContentBundle extends ContentItem {
      * @see ContentItem#getLanguage()
      */
     public final boolean hasInstance(final String language) {
+        return this.hasInstance(language, false);
+    }
+
+    public final boolean hasInstance(final String language, boolean allowLanguageIndependent) {
         if (Assert.isEnabled()) {
             Assert.exists(language, String.class);
             Assert.isTrue(language.length() == 2,
                     language + " is not an ISO639 language code");
         }
 
+        boolean retVal = false;
+
         final DataAssociationCursor instances = instances();
-//        instances.addEqualsFilter(LANGUAGE, language);
-        FilterFactory ff = instances.getFilterFactory();
-        Filter filter = ff.or().
-                addFilter(ff.equals("language", language)).
-                addFilter(ff.equals("language", "--"));
-        instances.addFilter(filter);
+
+        // If allowLanguageIndependent == false (default case), only search 
+        // for an exact language match
+        if (allowLanguageIndependent == false) {
+            instances.addEqualsFilter(LANGUAGE, language);
+        } // Else, search also for language independent version
+        else {
+
+            FilterFactory ff = instances.getFilterFactory();
+            instances.addFilter(
+                    ff.or().addFilter(ff.equals(LANGUAGE, language)).
+                    addFilter(ff.equals(LANGUAGE, "--")));
+        }
+
         return !instances.isEmpty();
     }
 
@@ -420,9 +436,13 @@ public class ContentBundle extends ContentItem {
      * if there is no language instance for any of the locales in
      * <code>locales</code>
      * @pre locales != null
+     * @deprecated Locale negotiation takes place in 
+     *  {@link com.arsdigita.globalization.GlobalizationHelper}.
+     *  Use {@link #getInstance(java.lang.String)} instead.
      */
     // Quasimodo:
     // Is this method ever used? Netbeans couldn't find anything.
+    @Deprecated
     public ContentItem negotiate(Locale[] locales) {
         Assert.exists(locales);
         String supportedLanguages = LanguageUtil.getSupportedLanguages();
@@ -445,7 +465,7 @@ public class ContentBundle extends ContentItem {
             }
 
             if (language != null) {
-                // If the current object is languange invariant and no better
+                // If the current object is languange independent and no better
                 // match is already found, match it with the lowest priority
                 if (language.equals("--") && matchingInstance == null) {
                     bestMatch = locales.length;
@@ -490,7 +510,11 @@ public class ContentBundle extends ContentItem {
      * @return the negotiated language instance or <code>null</code> if there
      *  is no language instance for any of the locales in <code>locales</code>.
      * @pre locales != null
+     * @deprecated Locale negotiation takes place in 
+     *  {@link com.arsdigita.globalization.GlobalizationHelper}.
+     *  Use {@link #getInstance(java.lang.String)} instead.
      */
+    @Deprecated
     public ContentItem negotiate(Enumeration locales) {
         String supportedLanguages = LanguageUtil.getSupportedLanguages();
 
@@ -514,7 +538,7 @@ public class ContentBundle extends ContentItem {
             }
         }
 
-        // Add unspecified language for language invariant objects
+        // Add unspecified language for language independent objects
         if (supportedLanguages.contains("--")) {
             languageCodes.add("--");
         }

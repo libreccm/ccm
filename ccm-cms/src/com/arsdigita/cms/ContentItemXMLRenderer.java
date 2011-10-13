@@ -53,8 +53,8 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
 
         if (nObj instanceof ContentBundle) {
 
-            nObj = ((ContentBundle) obj).negotiate(DispatcherHelper.getRequest().
-                    getLocales());
+            nObj = ((ContentBundle) obj).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
         }
 
         super.walk(adapter, nObj, path, context, linkObject);

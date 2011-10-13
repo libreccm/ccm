@@ -2,9 +2,9 @@ package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.contenttypes.LinkTraversalAdapter;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.metadata.Property;
 
 /**
@@ -35,8 +35,8 @@ public class RelatedLinkTraversalAdapter extends LinkTraversalAdapter {
 
         if (obj instanceof ContentBundle) {
 
-            nObj = ((ContentBundle) obj).negotiate(DispatcherHelper.getRequest().
-                    getLocales());
+            nObj = ((ContentBundle) obj).
+                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
         }
 
         if (nObj instanceof RelatedLink) {
