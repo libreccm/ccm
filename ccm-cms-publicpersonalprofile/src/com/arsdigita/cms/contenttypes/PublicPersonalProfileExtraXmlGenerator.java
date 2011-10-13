@@ -8,6 +8,7 @@ import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.ContentGenerator;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileXmlGenerator;
+import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
@@ -25,7 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator {
 
     private static final PublicPersonalProfileConfig config =
-                                                     PublicPersonalProfileConfig.
+                                                     PublicPersonalProfiles.
             getConfig();
     public static final String SHOW_ITEM_PARAM = "showItem";
 

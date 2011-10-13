@@ -14,9 +14,13 @@ import java.math.BigDecimal;
 public class PublicPersonalProfiles extends Application {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile";
-    private final static PublicPersonalProfileConfig config = PublicPersonalProfileConfig.getConfig();
-                                                   
+            "com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile";
+    private final static PublicPersonalProfileConfig config = new PublicPersonalProfileConfig(); // PublicPersonalProfileConfig.getConfig();
+
+    static {
+        config.load();
+    }
+
     public PublicPersonalProfiles(final DataObject dobj) {
         super(dobj);
     }
@@ -34,5 +38,9 @@ public class PublicPersonalProfiles extends Application {
     @Override
     public String getServletPath() {
         return "/profiles/";
+    }
+
+    public static PublicPersonalProfileConfig getConfig() {
+        return config;
     }
 }

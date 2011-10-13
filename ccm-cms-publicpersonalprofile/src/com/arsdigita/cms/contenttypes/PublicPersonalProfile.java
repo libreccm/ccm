@@ -23,6 +23,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.publicpersonalprofile.ContentGenerator;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
+import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import java.math.BigDecimal;
 import com.arsdigita.persistence.OID;
@@ -50,7 +51,7 @@ public class PublicPersonalProfile
         extends ContentPage
         implements CustomizedPreviewLink {
 
-    private static final PublicPersonalProfileConfig config = PublicPersonalProfileConfig.getConfig();
+    private static final PublicPersonalProfileConfig config = PublicPersonalProfiles.getConfig();
     public static final String OWNER = "owner";
     public static final String PROFILE_URL = "profileUrl";
     public static final String LINK_LIST_NAME = "publicPersonalProfileNavItems";

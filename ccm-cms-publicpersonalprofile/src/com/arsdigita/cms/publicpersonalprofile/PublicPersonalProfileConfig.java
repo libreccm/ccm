@@ -20,9 +20,9 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
     private final Parameter showPersonInfoEverywhere;
     // private final Parameter contactType;
     
-    static {
+    /*static {
         config.load();
-    }
+    }*/
 
     public PublicPersonalProfileConfig() {
         personType =
@@ -90,7 +90,7 @@ public class PublicPersonalProfileConfig extends AbstractConfig {
     return (String) get(contactType);
     }*/
     
-    public static PublicPersonalProfileConfig getConfig() {
+    /*public static PublicPersonalProfileConfig getConfig() {
         return config;
-    }
+    }*/
 }
