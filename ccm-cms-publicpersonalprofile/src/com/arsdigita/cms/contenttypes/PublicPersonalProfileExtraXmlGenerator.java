@@ -10,6 +10,7 @@ import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileXmlGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
@@ -69,7 +70,7 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
             } else {
                 PublicPersonalProfileNavItemCollection navItems =
                                                        new PublicPersonalProfileNavItemCollection();
-                navItems.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+                navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                         getLanguage());
                 navItems.addKeyFilter(showItem);
                 navItems.next();

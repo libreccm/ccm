@@ -2,8 +2,8 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
 import java.util.HashMap;
@@ -85,7 +85,7 @@ public class PublicPersonalProfileXmlUtil {
                 navHome.addAttribute("isSelected", "false");
             }
             navHome.addAttribute("sortKey", "");
-            String homeLabel = homeLabels.get(DispatcherHelper.
+            String homeLabel = homeLabels.get(GlobalizationHelper.
                     getNegotiatedLocale().
                     getLanguage());
             if (homeLabel == null) {
@@ -101,7 +101,7 @@ public class PublicPersonalProfileXmlUtil {
         //Get the available Navigation items
         PublicPersonalProfileNavItemCollection navItems =
                                                new PublicPersonalProfileNavItemCollection();
-        navItems.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+        navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
         final Map<String, PublicPersonalProfileNavItem> navItemMap =
                                                         new HashMap<String, PublicPersonalProfileNavItem>();
