@@ -85,13 +85,8 @@ public class PublicPersonalProfileXmlUtil {
                 navHome.addAttribute("isSelected", "false");
             }
             navHome.addAttribute("sortKey", "");
-<<<<<<< .mine
-            String homeLabel = homeLabels.get(DispatcherHelper.getNegotiatedLocale().
-=======
-            String homeLabel = homeLabels.get(GlobalizationHelper.
-                    getNegotiatedLocale().
->>>>>>> .r1165
-                    getLanguage());
+
+            String homeLabel = homeLabels.get(GlobalizationHelper.getNegotiatedLocale().getLanguage());
             if (homeLabel == null) {
                 navHome.addAttribute("title", "Home");
             } else {
