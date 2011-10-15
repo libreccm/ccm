@@ -360,8 +360,7 @@ public class ItemSearchFolderBrowser extends Table {
             return 3;
         }
 
-        public boolean nextRow() {
-            System.out.println("test");
+        public boolean nextRow() {           
             return m_itemColl != null ? m_itemColl.next() : false;
         }
 
