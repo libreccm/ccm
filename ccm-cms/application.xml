@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-cms"
   prettyName="Red Hat CCM Content Management System"
-  version="6.6.3"
+  version="6.6.4"
   release="1"
   webapp="ROOT">
   <ccm:dependencies>

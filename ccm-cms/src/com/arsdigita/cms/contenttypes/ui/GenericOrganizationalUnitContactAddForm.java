@@ -85,7 +85,7 @@ public class GenericOrganizationalUnitContactAddForm
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(
-                GenericOrganizationalUnit.CONTACT_TYPE);
+                GenericOrganizationalUnitContactCollection.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("",
@@ -148,7 +148,7 @@ public class GenericOrganizationalUnitContactAddForm
 
                 orgaunit.addContact(contact,
                                     (String) data.get(
-                        GenericOrganizationalUnit.CONTACT_TYPE));
+                        GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
             } else {
                 GenericOrganizationalUnitContactCollection contacts;
 

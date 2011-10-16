@@ -327,8 +327,7 @@ public class ContentBundle extends ContentItem {
         instances.addEqualsFilter(LANGUAGE, language);
 
         if (instances.next()) {
-            contentItem = (ContentItem) DomainObjectFactory.newInstance(instances.getDataObject());
-            ;
+            contentItem = (ContentItem) DomainObjectFactory.newInstance(instances.getDataObject());            
         }
 
         instances.close();

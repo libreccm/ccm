@@ -68,3 +68,78 @@ association {
    String[0..1] status = cms_organizationalunits_person_map.status VARCHAR(100);
 
 }
+
+//Used build hierarchies of organizational units
+association {
+    
+    GenericOrganizationalUnit[0..n] superiorOrgaunits = join cms_organizationalunits.organizationalunit_id
+                                                           to cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id,
+                                                         join cms_organizationalunits_hierarchy_map.superior_orgaunit_id
+                                                           to cms_organizationalunits.organizationalunit_id;
+
+    GenericOrganizationalUnit[0..n] subordinateOrgaunits = join cms_organizationalunits.organizationalunit_id
+                                                              to cms_organizationalunits_hierarchy_map.superior_orgaunit_id,
+                                                            join cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+                                                              to cms_organizationalunits.organizationalunit_id;
+
+    //Additonal attributes for the assoication
+    //Optional string for *internal* data
+    String[0..n] assocType = cms_organizationalunits_hierarchy_map.assoc_type VARCHAR(128);
+    //Integers for sorting
+    Integer[0..1] superiorOrgaUnitOrder = cms_organizationalunits_hierarchy_map.superior_orgaunit_order INTEGER;
+    Integer[0..1] subordinateOrgaUnitOrder = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_order INTEGER;
+}
+
+query getIdsOfSubordinateOrgaUnitsRecursivly{
+    BigDecimal orgaunitId;
+    String orgaunitName;
+    
+    do {
+        with recursive subordinate_orgaunits(orgaunit_id, orgaunit_name) AS (
+            select cms_organizationalunits.organizationalunit_id as orgaunit_id,
+                   cms_items.name as orgaunit_name
+            from cms_organizationalunits 
+            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
+            where cms_organizationalunits.organizationalunit_id = :orgaunitId
+            union all 
+            select ou.organizationalunit_id as orgaunit_id,
+                   cms_items.name as orgaunit_name
+            from subordinate_orgaunits sou,
+                 cms_organizationalunits.organizationalunit_id
+            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
+            join cms_organizationalunits_hierarchy_map on ou.organizationalunit_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+            where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id
+        )
+        select orgaunit_id, orgaunit_name from subordinateOrgaUnits;
+    } map {
+        orgaunitId = subordinate_orgaunits.orgaunit_id;
+        orgaunitName = subordinate_orgaunits.orgaunit_name;
+    }
+}
+
+query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
+    BigDecimal orgaunitId;
+    String orgaunitName;
+    
+    do {
+        with recursive subordinate_orgaunits(orgaunit_id, orgaunit_name) AS (
+            select cms_organizationalunits.organizationalunit_id as orgaunit_id,
+                   cms_items.name as orgaunit_name
+            from cms_organizationalunits 
+            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
+            where cms_organizationalunits.organizationalunit_id = :orgaunitId
+            union all 
+            select ou.organizationalunit_id as orgaunit_id,
+                   cms_items.name as orgaunit_name
+            from subordinate_orgaunits sou,
+                 cms_organizationalunits.organizationalunit_id
+            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
+            join cms_organizationalunits_hierarchy_map on ou.organizationalunit_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+            where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id and cms_organizationalunits_hierarchy_map.assoc_type = :assocType
+        )
+        select orgaunit_id, orgaunit_name from subordinateOrgaUnits;
+    } map {
+        orgaunitId = subordinate_orgaunits.orgaunit_id;
+        orgaunitName = subordinate_orgaunits.orgaunit_name;
+    }
+}

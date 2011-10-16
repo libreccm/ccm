@@ -19,7 +19,7 @@
         </xrd:adapter>
     </xrd:context>
 
-    <xrd:context name="sciProjectList">
+    <xrd:context name="com.arsdigita.cms.contenttypes.SciProjectListXmlGenerator">
         <xrd:adapter objectType="com.arsdigita.cms.contenttypes.SciProject" extends="com.arsdigita.cms.ContentPage">-->
             <!--<xrd:attributes rule="exclude">
                 <xrd:property name="/object/projectDescription"/>
