@@ -183,7 +183,7 @@ public class MetadataRoot extends Element {
      * @return The ObjectType or null.
      **/
 
-    public ObjectType getObjectType(String name) {
+    public ObjectType getObjectType(String name) {                         
 	return ObjectType.wrap(m_root.getObjectType(name));
     }
 

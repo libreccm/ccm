@@ -36,7 +36,7 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public abstract class GenericOrganizationalUnitSubordinateOrgaUnitsTable
+public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
         extends Table {
 
     private final Logger logger =

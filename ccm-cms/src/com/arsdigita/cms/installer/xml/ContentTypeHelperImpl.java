@@ -32,6 +32,7 @@ import com.arsdigita.search.MetadataProviderRegistry;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
@@ -229,7 +230,21 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         ObjectType type = SessionManager.getMetadataRoot().getObjectType(
                 m_objectType);
         if (type == null) {
-            throw new IllegalArgumentException(String.format("No object type for '%s'", m_objectType));
+            final StringBuffer buffer = new StringBuffer();
+            
+            final Collection objectTypes = SessionManager.getMetadataRoot().getObjectTypes();
+            ObjectType objectType;            
+            for(Object obj : objectTypes) {
+                objectType = (ObjectType) obj;
+               buffer.append('\t');
+               buffer.append(objectType.getQualifiedName());
+               buffer.append('\n');
+            } 
+            
+            throw new IllegalArgumentException(String.format(
+                    "No object type for '%s'. Available object types:\n%s", 
+                    m_objectType, 
+                    buffer.toString()));
         }
         if (type.isSubtypeOf(ContentPage.BASE_DATA_OBJECT_TYPE)
             && !isInternal()) {
