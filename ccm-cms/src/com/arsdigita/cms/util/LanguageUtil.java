@@ -20,7 +20,9 @@ package com.arsdigita.cms.util;
 
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.Pair;
 
@@ -36,6 +38,7 @@ import java.util.StringTokenizer;
  * Utility methods for dealing with the multilingual items.
  *
  * @author Shashin Shinde (sshinde@redhat.com)
+ * @author Sören Bernstein
  */
 public class LanguageUtil {
     
@@ -63,7 +66,11 @@ public class LanguageUtil {
      *        at the server startup
      */
     public static void setSupportedLanguages(String languages) {
-        s_languages = languages + ",--";
+        if(Kernel.getConfig().languageIndependentItems()) {
+            s_languages = languages + "," + GlobalizationHelper.LANG_INDEPENDENT;
+        } else {
+            s_languages = languages;
+        }
     }
     
     /** Get the comma separated list of all supported languages */

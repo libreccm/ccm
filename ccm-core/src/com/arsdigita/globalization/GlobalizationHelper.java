@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 public class GlobalizationHelper {
 
+    public static final String LANG_INDEPENDENT = "--";
     private static final String LANG_PARAM = "lang";
     
     // Don't instantiate

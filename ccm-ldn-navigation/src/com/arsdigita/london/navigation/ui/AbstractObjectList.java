@@ -15,10 +15,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
-
 package com.arsdigita.london.navigation.ui;
 
+import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.london.navigation.DataCollectionDefinition;
 import com.arsdigita.london.navigation.DataCollectionRenderer;
 
@@ -34,9 +34,9 @@ import com.arsdigita.xml.Element;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class AbstractObjectList 
-    extends AbstractComponent implements ObjectList {
-    
+public abstract class AbstractObjectList
+        extends AbstractComponent implements ObjectList {
+
     private DataCollectionRenderer m_renderer = new DataCollectionRenderer();
     private DataCollectionDefinition m_definition = new DataCollectionDefinition();
 
@@ -57,14 +57,14 @@ public abstract class AbstractObjectList
     public final DataCollectionRenderer getRenderer() {
         return m_renderer;
     }
-    
+
     protected DataCollection getObjects(HttpServletRequest request,
-                                        HttpServletResponse response) {
-    	// definition needs to know if the renderer is rendering a date 
-    	// attribute so that it can decide whether to order by date for 
-    	// a date order category
-    	m_definition.setDateAttribute(m_renderer);
-       
+            HttpServletResponse response) {
+        // definition needs to know if the renderer is rendering a date 
+        // attribute so that it can decide whether to order by date for 
+        // a date order category
+        m_definition.setDateAttribute(m_renderer);
+
         return m_definition.getDataCollection(getModel());
     }
 
@@ -76,9 +76,9 @@ public abstract class AbstractObjectList
     }
 
     public Element generateObjectListXML(HttpServletRequest request,
-                                         HttpServletResponse response) {
+            HttpServletResponse response) {
         Assert.isLocked(this);
-        
+
         String pageNumberValue = request.getParameter("pageNumber");
         Integer pageNumber = null;
         try {
@@ -89,24 +89,26 @@ public abstract class AbstractObjectList
             }
         } catch (NumberFormatException ex) {
             throw new UncheckedWrapperException(
-                "cannot parse page number " + pageNumber, ex
-            );
+                    "cannot parse page number " + pageNumber, ex);
         }
-        
+
         DataCollection objects = getObjects(request, response);
 
         // Quasimodo: Begin
         // Limit list to objects in the negotiated language and language invariant items
         if (objects != null && objects.size() > 0) {
-            FilterFactory ff = objects.getFilterFactory();
-            Filter filter = ff.or().
-                    addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
-                    addFilter(ff.equals("language", "--"));
-            objects.addFilter(filter);
-//            objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            if (Kernel.getConfig().languageIndependentItems()) {
+                FilterFactory ff = objects.getFilterFactory();
+                Filter filter = ff.or().
+                        addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                        addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT));
+                objects.addFilter(filter);
+            } else {
+                objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            }
         }
         // Quasimodo: End
-        
+
         return m_renderer.generateXML(objects, pageNumber.intValue());
     }
 }
