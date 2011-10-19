@@ -98,7 +98,7 @@ public class SciProjectPropertyForm
         final SciProject project = (SciProject) super.processBasicWidgets(fse);
 
         if ((project != null)
-            && getSaveCancelSection().getCancelButton().isSelected(state)) {
+            && getSaveCancelSection().getSaveButton().isSelected(state)) {
             project.setBegin((java.util.Date) data.get(SciProject.BEGIN));
             project.setEnd((java.util.Date) data.get(SciProject.END));
             project.setProjectShortDescription((String) data.get(
