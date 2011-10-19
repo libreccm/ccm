@@ -34,7 +34,7 @@
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) projectList).getDefinition().setDescendCategories(true);
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) projectList).getDefinition().setExcludeIndexObjects(false);
 	((com.arsdigita.london.navigation.ui.object.ComplexObjectList) projectList).getDefinition().setFilterCategory(false);
-	((com.arsdigita.london.navigation.ui.object.ComplexObjectList) projectList).getDefinition().setAddOrder("title");
+	((com.arsdigita.london.navigation.ui.object.ComplexObjectList) projectList).getDefinition().addOrder("title");
       ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) projectList).getRenderer().setSpecializeObjectsContext("sciProjectList");
         if((request.getParameterMap().get("DaBInId") != null) &amp;&amp; (((String[])request.getParameterMap().get("DaBInId")).length &gt; 0)) {
           String[] params = (String[]) request.getParameterMap().get("DaBInId");
