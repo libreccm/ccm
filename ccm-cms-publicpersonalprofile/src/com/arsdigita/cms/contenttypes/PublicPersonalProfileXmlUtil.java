@@ -1,7 +1,9 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
@@ -62,15 +64,12 @@ public class PublicPersonalProfileXmlUtil {
         navList.addAttribute("isSelected", "true");
         navList.addAttribute("sortKey", "");
         navList.addAttribute("title", "publicPersonalProfileNavList");
-        if (previewMode) {
-            navList.addAttribute("url", String.format("%s/%s",
-                    appUrl,
-                    profile.getProfileUrl()));
-        } else {
-            navList.addAttribute("url", String.format("%s/%s",
-                    appUrl,
-                    profile.getProfileUrl()));
-        }
+        /*navList.addAttribute("url", String.format("%s/%s",
+        appUrl,
+        profile.getProfileUrl()));*/
+        navList.addAttribute("url", String.format("/ccm/%s",
+                UI.getConfig().getRootPage()));
+
 
         if (config.getShowHomeNavEntry()) {
             Element navHome =
@@ -92,11 +91,11 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 navHome.addAttribute("title", homeLabel);
             }
-            //navHome.addAttribute("url", String.format("%s/%s",
-            //                                        appUrl,
-            //                                      profile.getProfileUrl()));
-            navHome.addAttribute("url", String.format("/ccm/%s",
-                    UI.getConfig().getRootPage()));
+            navHome.addAttribute("url", String.format("%s/%s",
+                    appUrl,
+                    profile.getProfileUrl()));
+            //navHome.addAttribute("url", String.format("/ccm/%s",
+            //      UI.getConfig().getRootPage()));
         }
 
         //Get the available Navigation items
@@ -123,6 +122,13 @@ public class PublicPersonalProfileXmlUtil {
         //                                       profile.getProfileUrl()));
         homeElem.addAttribute("url", String.format("/ccm/%s",
                 UI.getConfig().getRootPage()));
+
+        final Element profileElem = pathElem.newChildElement("nav:category",
+                "http://ccm.redhat.com/london/navigation");
+        profileElem.addAttribute("url", String.format("%s/%s",
+                appUrl,
+                profile.getProfileUrl()));
+        profileElem.addAttribute("title", profile.getOwner().getFullName());
 
         //Get the related links of the profiles
         DataCollection links =

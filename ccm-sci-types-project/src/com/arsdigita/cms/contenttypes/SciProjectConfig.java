@@ -75,7 +75,7 @@ public class SciProjectConfig extends AbstractConfig {
         enableFundingVolume = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_funding_volume", 
                 Parameter.REQUIRED, 
-                this);
+                Boolean.TRUE);
         
         fundingVolumeLength = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_funding_length", 
@@ -126,23 +126,25 @@ public class SciProjectConfig extends AbstractConfig {
         return (Boolean) get(enableMembersMerge);
     }
     
-    public boolean getEnableFunding() {
+    public final boolean getEnableFunding() {
         return (Boolean) get(enableFunding);        
     }
     
-    public boolean getEnableFundingDhtml() {
+    public final boolean getEnableFundingDhtml() {
         return (Boolean) get(enableFundingDhtml);        
     }
     
-    public boolean getEnableFundingVolume() {
-        return (Boolean) get(enableFundingVolume);
+    public final boolean getEnableFundingVolume() {
+        Object value = get(enableFundingVolume);
+        return (Boolean) value;
+        //return (Boolean) get(enableFundingVolume);
     }
     
-    public int getFundingVolumeLength() {
+    public final int getFundingVolumeLength() {
         return (Integer) get(fundingVolumeLength);
     }
     
-    public String getPermittedPersonType() {
+    public final String getPermittedPersonType() {
         return (String) get(permittedPersonType);
     }
 }

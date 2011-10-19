@@ -24,7 +24,7 @@
 	      labelKey="sciorganization.ui.project.members"
 	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	      descriptionKey="sciorganization.ui.project.members.description"
-	      component="com.arsdigita.cms.contenttypes.ui.SciProjectMemberStep"
+	      component="com.arsdigita.cms.contenttypes.ui.SciProjectMembersStep"
 	      ordering="2"/>
               
             <ctd:authoring-step
