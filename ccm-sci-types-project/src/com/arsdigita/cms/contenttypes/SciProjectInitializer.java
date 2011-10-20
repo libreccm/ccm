@@ -22,7 +22,7 @@ public class SciProjectInitializer extends ContentTypeInitializer {
     public void init(final DomainInitEvent event) {
         super.init(event);
         
-        SciProjectConfig config = SciProject.getConfig();
+        final SciProjectConfig config = SciProject.getConfig();
         
         if (config.getEnableSubProjectsStep()) {
             AuthoringKitWizard.registerAssetStep(SciProject.BASE_DATA_OBJECT_TYPE, 

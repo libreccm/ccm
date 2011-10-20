@@ -23,7 +23,7 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
 public class GenericOrganizationalUnitSuperiorOrgaUnitAddForm
         extends BasicItemForm
         implements FormProcessListener,
-                   FormInitListener {
+        FormInitListener {
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "superiorOrgaUnits";
@@ -34,16 +34,16 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitAddForm
             final GenericOrgaUnitSuperiorOrgaUnitAddFormCustomizer customizer) {
         super("SuperiorOrgaUnitsAddForm", itemModel);
         this.customizer = customizer;
-    }
-
-    @Override
-    protected void addWidgets() {
         add(new Label(customizer.getSelectSuperiorOrgaUnitLabel()));
         itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 customizer.getSuperiorOrgaUnitType()));
         add(itemSearch);
+    }
+
+    @Override
+    protected void addWidgets() {
     }
 
     @Override
@@ -58,15 +58,14 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitAddForm
         final FormData data = fse.getFormData();
         final PageState state = fse.getPageState();
         final GenericOrganizationalUnit orgaunit =
-                                        (GenericOrganizationalUnit) getItemSelectionModel().
+                (GenericOrganizationalUnit) getItemSelectionModel().
                 getSelectedObject(state);
 
         if (getSaveCancelSection().getSaveButton().isSelected(state)) {
             GenericOrganizationalUnit supOrgaUnit =
-                                      (GenericOrganizationalUnit) data.get(
+                    (GenericOrganizationalUnit) data.get(
                     ITEM_SEARCH);
-            supOrgaUnit = (GenericOrganizationalUnit) supOrgaUnit.
-                    getContentBundle().getInstance(orgaunit.getLanguage(), true);
+            supOrgaUnit = (GenericOrganizationalUnit) supOrgaUnit.getContentBundle().getInstance(orgaunit.getLanguage(), true);
 
             orgaunit.addSuperiorOrgaUnit(orgaunit, customizer.getAssocType());
         }
@@ -85,24 +84,24 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitAddForm
         }
 
         final GenericOrganizationalUnit orgaunit =
-                                        (GenericOrganizationalUnit) getItemSelectionModel().
+                (GenericOrganizationalUnit) getItemSelectionModel().
                 getSelectedObject(state);
         GenericOrganizationalUnit supOrgaUnit =
-                                  (GenericOrganizationalUnit) data.get(
+                (GenericOrganizationalUnit) data.get(
                 ITEM_SEARCH);
         if (!(supOrgaUnit.getContentBundle().hasInstance(orgaunit.getLanguage(),
-                                                         true))) {
+                true))) {
             data.addError(customizer.getNoSuitableLanguageVariantMessage());
             return;
         }
-        
+
         supOrgaUnit = (GenericOrganizationalUnit) supOrgaUnit.getContentBundle().getInstance(orgaunit.getLanguage(), true);
-        
+
         if (orgaunit.getID().equals(supOrgaUnit.getID())) {
             data.addError(customizer.getAddingToItselfMessage());
             return;
         }
-        
+
         final GenericOrganizationalUnitSuperiorCollection supOrgaUnits = orgaunit.getSuperiorOrgaUnits();
         supOrgaUnits.addFilter(String.format("id = %s", supOrgaUnit.getID().toString()));
         if (supOrgaUnits.size() > 0) {

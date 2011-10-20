@@ -100,7 +100,7 @@ public abstract class BasicItemForm
         addProcessListener(this);
         addValidationListener(this);
     }
-
+    
     /**
      * Construct a new BasicItemForm with nothing on it
      *
@@ -181,6 +181,7 @@ public abstract class BasicItemForm
 
     }
 
+    @Override
     public void generateXML(PageState ps, Element parent) {
         m_script.generateXML(ps, parent);
         super.generateXML(ps, parent);
@@ -369,6 +370,7 @@ public abstract class BasicItemForm
      *
      * @param pc the component to add to this BasicPageForm
      * */
+    @Override
     public void add(Component pc) {
         m_widgetSection.add(pc);
     }
@@ -383,6 +385,7 @@ public abstract class BasicItemForm
      * @param constraints layout constraints (a
      * bitwise OR of static ints in the particular layout)
      * */
+    @Override
     public void add(Component pc, int constraints) {
         m_widgetSection.add(pc, constraints);
     }

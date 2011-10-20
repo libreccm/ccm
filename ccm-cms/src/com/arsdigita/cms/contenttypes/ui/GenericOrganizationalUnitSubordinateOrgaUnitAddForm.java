@@ -35,22 +35,29 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitAddForm
             final GenericOrgaUnitSubordinateOrgaUnitAddFormCustomizer customizer) {
         super("SubordinateOrgaUnitsAddForm", itemModel);
         this.customizer = customizer;
-    }
-
-    @Override
-    protected void addWidgets() {
+        
         add(new Label(customizer.getSelectSubordinateOrgaUnitLabel()));
         itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 customizer.getSubordinateOrgaUnitType()));
-        add(itemSearch);
+        add(itemSearch);       
+    }
+
+    @Override
+    protected void addWidgets() {
+        /*add(new Label(customizer.getSelectSubordinateOrgaUnitLabel()));
+        itemSearch = new ItemSearchWidget(
+                ITEM_SEARCH,
+                ContentType.findByAssociatedObjectType(
+                customizer.getSubordinateOrgaUnitType()));
+        add(itemSearch);       */
     }
 
     @Override
     public void init(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
-
+                
         setVisible(state, true);
     }
 
