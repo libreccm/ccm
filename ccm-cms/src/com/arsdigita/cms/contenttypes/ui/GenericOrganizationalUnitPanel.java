@@ -37,7 +37,10 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Jens Pelzetter
+ * 
+ * @deprecated Replaced with {@link GenericOrgaUnitExtraXmlGenerator}.
  */
+@Deprecated
 public class GenericOrganizationalUnitPanel extends CompoundContentItemPanel {
 
     private final static Logger logger =
