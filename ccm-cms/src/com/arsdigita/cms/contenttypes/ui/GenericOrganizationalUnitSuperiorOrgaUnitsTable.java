@@ -107,7 +107,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
             superiorOrgaUnits = orgaunit.getSuperiorOrgaUnits();
             if ((customizer.getAssocType() != null)
                 && !(customizer.getAssocType().isEmpty())) {
-                superiorOrgaUnits.addFilter(String.format("assocType = '%s",
+                superiorOrgaUnits.addFilter(String.format("link.assocType = '%s'",
                                                           customizer.
                         getAssocType()));
             }
@@ -297,7 +297,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                     getSelectedObject(state);
             final GenericOrganizationalUnit supOrgaUnit =
                                             (GenericOrganizationalUnit) DomainObjectFactory.
-                    newInstance((OID) event.getRowKey());
+                    newInstance(OID.valueOf((String)event.getRowKey()));
             final GenericOrganizationalUnitSuperiorCollection supOrgaUnits =
                                                               orgaunit.
                     getSuperiorOrgaUnits();

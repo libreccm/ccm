@@ -25,7 +25,7 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
     public GenericOrganizationalUnitSuperiorCollection(
             final DataCollection dataCollection) {
         super(dataCollection);
-        m_dataCollection.addOrder(SUPERIOR_ORGAUNIT_ORDER + " asc");
+        m_dataCollection.addOrder(LINK_SUPERIOR_ORGAUNIT_ORDER + " asc");
     }
 
     public String getAssocType() {

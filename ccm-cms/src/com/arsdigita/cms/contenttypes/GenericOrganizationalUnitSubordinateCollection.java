@@ -4,9 +4,11 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import java.math.BigDecimal;
 
 /**
  *
@@ -25,7 +27,7 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
     public GenericOrganizationalUnitSubordinateCollection(
             final DataCollection dataCollection) {
         super(dataCollection);
-        m_dataCollection.addOrder(SUBORDINATE_ORGAUNIT_ORDER + " asc");
+        m_dataCollection.addOrder(LINK_SUBORDINATE_ORGAUNIT_ORDER + " asc");
     }
 
     public String getAssocType() {
@@ -130,7 +132,11 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
         return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(m_dataCollection.
                 getDataObject());
     }
-
+    
+    public BigDecimal getId() {
+        return (BigDecimal) m_dataCollection.getDataObject().get(ACSObject.ID);
+    }
+    
     public OID getOID() {
         return m_dataCollection.getDataObject().getOID();
     }

@@ -32,13 +32,13 @@ public class SciProjectConfig extends AbstractConfig {
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_sub_projects_step",
                 Parameter.REQUIRED,
-                Boolean.FALSE);
+                Boolean.TRUE);
 
         enableSuperProjectsStep =
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_super_projects_step",
                 Parameter.REQUIRED,
-                Boolean.FALSE);
+                Boolean.TRUE);
 
         shortDescMaxLength = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.shortdesc.max_length",

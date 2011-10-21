@@ -84,7 +84,7 @@ association {
 
     //Additonal attributes for the assoication
     //Optional string for *internal* data
-    String[0..n] assocType = cms_organizationalunits_hierarchy_map.assoc_type VARCHAR(128);
+    String[0..1] assocType = cms_organizationalunits_hierarchy_map.assoc_type VARCHAR(128);
     //Integers for sorting
     Integer[0..1] superiorOrgaUnitOrder = cms_organizationalunits_hierarchy_map.superior_orgaunit_order INTEGER;
     Integer[0..1] subordinateOrgaUnitOrder = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_order INTEGER;

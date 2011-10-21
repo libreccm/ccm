@@ -37,7 +37,7 @@ public class SciProjectDescriptionEditForm
     @Override
     protected void addWidgets() {
         add(new Label(SciProjectGlobalizationUtil.globalize(
-                "sciorganization.ui.project.description")));
+                "sciproject.ui.description")));
         final ParameterModel descParam = new StringParameter(
                 SciProject.PROJECT_DESCRIPTION);
         final TextArea desc;
@@ -68,7 +68,7 @@ public class SciProjectDescriptionEditForm
 
         if (config.getEnableFundingVolume()) {
             add(new Label(SciProjectGlobalizationUtil.globalize(
-                    "sciproject.ui.funding_volume")));
+                    "sciproject.ui.funding.volume")));
             final ParameterModel fundingVolumeParam = new StringParameter(
                     SciProject.FUNDING_VOLUME);
             final TextField fundingVolume = new TextField(fundingVolumeParam);

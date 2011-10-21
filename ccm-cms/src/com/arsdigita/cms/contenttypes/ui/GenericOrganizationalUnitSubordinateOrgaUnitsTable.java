@@ -23,6 +23,7 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
@@ -118,9 +119,9 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
             subordinateOrgaUnits = orgaunit.getSubordinateOrgaUnits();
             if ((customizer.getAssocType() != null)
                 && !(customizer.getAssocType().isEmpty())) {
-                subordinateOrgaUnits.addFilter(String.format("assocType = '%s",
-                                                             customizer.
-                        getAssocType()));
+                subordinateOrgaUnits.addFilter(String.format(
+                        "link.assocType = '%s'",
+                        customizer.getAssocType()));
             }
             this.customizer = customizer;
         }
@@ -161,7 +162,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
 
         @Override
         public Object getKeyAt(final int columnIndex) {
-            return subordinateOrgaUnits.getOID();
+            return subordinateOrgaUnits.getId();
         }
     }
 
@@ -180,8 +181,8 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
             final com.arsdigita.cms.SecurityManager securityManager = Utilities.
                     getSecurityManager(state);
             final GenericOrganizationalUnit subordinateOrgaUnit =
-                                            (GenericOrganizationalUnit) DomainObjectFactory.
-                    newInstance((OID) key);
+                                            new GenericOrganizationalUnit(
+                    (BigDecimal) key);
 
             final boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
@@ -301,7 +302,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
             }
         }
     }
-   
+
     private class ActionListener implements TableActionListener {
 
         @Override
@@ -313,8 +314,8 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
                     getSelectedObject(
                     state);
             final GenericOrganizationalUnit subOrgaUnit =
-                                            (GenericOrganizationalUnit) DomainObjectFactory.
-                    newInstance((OID) event.getRowKey());
+                                            new GenericOrganizationalUnit(
+                    new BigDecimal((String)event.getRowKey()));
             final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
                                                                  orgaunit.
                     getSubordinateOrgaUnits();

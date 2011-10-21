@@ -47,7 +47,7 @@ public class SciProjectSubProjectsStep extends SimpleEditStep {
 
                     public String getNothingSelectedMessage() {
                         return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.nothing_selected").
+                                "sciproject.ui.subproject.select.nothing").
                                 localize();
                     }
 
@@ -112,12 +112,12 @@ public class SciProjectSubProjectsStep extends SimpleEditStep {
 
                     public String getUpLabel() {
                          return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.up").localize();
+                                "sciproject.ui.subproject.order.up").localize();
                     }
 
                     public String getDownLabel() {
                        return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.down").localize();
+                                "sciproject.ui.subproject.order.down").localize();
                     }
 
                     public String getConfirmRemoveLabel() {

@@ -170,20 +170,23 @@ public class GenericOrganizationalUnit extends ContentPage {
                  assocType);
         link.set(
                 GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
-                getSuperiorOrgaUnits().size());
+                (int) getSuperiorOrgaUnits().size());
+        link.set(
+                GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
+                ((int) getSubordinateOrgaUnits().size()) + 1);
         link.save();
     }
 
     public void addSuperiorOrgaUnit(final GenericOrganizationalUnit orgaunit) {
         addSuperiorOrgaUnit(orgaunit, "");
     }
-    
+
     public void removeSuperiorOrgaUnit(
             final GenericOrganizationalUnit orgaunit) {
         Assert.exists(orgaunit, GenericOrganizationalUnit.class);
         remove(SUPERIOR_ORGAUNITS, orgaunit);
     }
-    
+
     public boolean hasSuperiorOrgaUnits() {
         return !getSuperiorOrgaUnits().isEmpty();
     }
@@ -218,23 +221,25 @@ public class GenericOrganizationalUnit extends ContentPage {
 
         final DataObject link = add(SUBORDINATE_ORGAUNITS, orgaunit);
         link.set(GenericOrganizationalUnitSubordinateCollection.ASSOCTYPE,
-                 assocType);
+                 assocType);                
         link.set(
                 GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
-                 getSubordinateOrgaUnits().size());
+                (int) getSubordinateOrgaUnits().size());
+        link.set(GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
+                 ((int) getSuperiorOrgaUnits().size()) + 1);
         link.save();
     }
-    
-     public void addSubordinateOrgaUnit(final GenericOrganizationalUnit orgaunit) {
-         addSubordinateOrgaUnit(orgaunit, "");
-     }
-     
-      public void removeSubordinateOrgaUnit(
+
+    public void addSubordinateOrgaUnit(final GenericOrganizationalUnit orgaunit) {
+        addSubordinateOrgaUnit(orgaunit, "");
+    }
+
+    public void removeSubordinateOrgaUnit(
             final GenericOrganizationalUnit orgaunit) {
         Assert.exists(orgaunit, GenericOrganizationalUnit.class);
         remove(SUBORDINATE_ORGAUNITS, orgaunit);
     }
-    
+
     public boolean hasSubordinateOrgaUnits() {
         return !getSubordinateOrgaUnits().isEmpty();
     }

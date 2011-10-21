@@ -14,7 +14,7 @@
             
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_properties.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
 	      descriptionKey="sciorganization.ui.project_properties.title"
 	      descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectPropertiesStep"
@@ -22,14 +22,14 @@
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.project.members"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
 	      descriptionKey="sciorganization.ui.project.members.description"
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectMembersStep"
 	      ordering="2"/>
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_description.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
 	      descriptionKey="sciorganization.ui.project_description.title"
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectDescriptionStep"
 	      ordering="3"/>

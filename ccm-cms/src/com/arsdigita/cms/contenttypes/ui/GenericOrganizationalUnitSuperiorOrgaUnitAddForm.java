@@ -67,7 +67,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitAddForm
                     ITEM_SEARCH);
             supOrgaUnit = (GenericOrganizationalUnit) supOrgaUnit.getContentBundle().getInstance(orgaunit.getLanguage(), true);
 
-            orgaunit.addSuperiorOrgaUnit(orgaunit, customizer.getAssocType());
+            orgaunit.addSuperiorOrgaUnit(supOrgaUnit, customizer.getAssocType());
         }
 
         init(fse);

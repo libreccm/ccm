@@ -33,7 +33,7 @@ public class SciProjectDescriptionStep extends SimpleEditStep {
                       new SciProjectDescriptionEditForm(itemModel);
         add(EDIT_PROJECT_DESC_SHEET_NAME,
             (String) SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.edit_desc").localize(),
+                "sciproject.ui.desc.edit").localize(),
             new WorkflowLockedComponentAccess(editDescForm, itemModel),
             editDescForm.getSaveCancelSection().getCancelButton());
 
@@ -42,7 +42,7 @@ public class SciProjectDescriptionStep extends SimpleEditStep {
                 itemModel);
         add(UPLOAD_PROJECT_DESC_SHEET_NAME,
             (String) SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.upload_desc").localize(),
+                "sciproject.ui.desc.upload").localize(),
             new WorkflowLockedComponentAccess(uploadDescForm, itemModel),
             uploadDescForm.getSaveCancelSection().getCancelButton());
 
@@ -57,16 +57,16 @@ public class SciProjectDescriptionStep extends SimpleEditStep {
                 itemModel);
 
         sheet.add(SciProjectGlobalizationUtil.globalize(
-                "sciorganization.ui.project.desc"),
+                "sciproject.ui.desc"),
                   SciProject.PROJECT_DESCRIPTION);
         if (SciProject.getConfig().getEnableFunding()) {
             sheet.add(SciProjectGlobalizationUtil.globalize(
-                    "sciorganization.ui.project.funding"),
+                    "sciproject.ui.funding"),
                       SciProject.FUNDING);
         }
         if (SciProject.getConfig().getEnableFundingVolume()) {
             sheet.add(SciProjectGlobalizationUtil.globalize(
-                    "sciproject.ui.funding_volume"),
+                    "sciproject.ui.funding.volume"),
                       SciProject.FUNDING_VOLUME);
         }
 

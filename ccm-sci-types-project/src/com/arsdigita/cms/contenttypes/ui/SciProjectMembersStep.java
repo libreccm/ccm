@@ -38,7 +38,7 @@ implements GenericOrganizationalUnitPersonSelector{
         final BasicItemForm addMemberSheet = new SciProjectMemberAddForm(
                 itemModel, this);
         add(ADD_PROJECT_MEMBER_SHEET_NAME, 
-            (String) SciProjectGlobalizationUtil.globalize("sciproject.ui.add_member").localize(),
+            (String) SciProjectGlobalizationUtil.globalize("sciproject.ui.members.add").localize(),
             new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
             addMemberSheet.getSaveCancelSection().getCancelButton());
         
