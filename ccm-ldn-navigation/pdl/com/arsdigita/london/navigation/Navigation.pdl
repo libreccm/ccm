@@ -6,6 +6,23 @@ object type Navigation extends Application {
     reference key (nav_app.application_id);
 }
 
+// Subquery for AbstractObjectList used as a filter
+// to figure out which object have a match in the
+// selected languages and don't have to match to a
+// language independent content item
+query getParentIDsOfMatchedItems {
+  BigDecimal parent;
+
+  do {
+    select parent_id
+      from cms_items
+     where version  = 'live'
+       and language = :language
+  } map {
+    parent = parent_id;
+  }
+}
+
 query ItemsByCategory {
     BigDecimal itemID;
 

@@ -101,7 +101,10 @@ public abstract class AbstractObjectList
                 FilterFactory ff = objects.getFilterFactory();
                 Filter filter = ff.or().
                         addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
-                        addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT));
+                        addFilter(ff.and().
+                            addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(ff.notIn("parent", "com.arsdigita.london.navigation.getParentIDsOfMatchedItems")
+                                .set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
                 objects.addFilter(filter);
             } else {
                 objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
