@@ -1,5 +1,7 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.SciProjectExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
@@ -7,6 +9,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -283,5 +286,12 @@ public class SciProject extends GenericOrganizationalUnit {
                 return false;
             }
         }
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new SciProjectExtraXmlGenerator());
+        return generators;
     }
 }

@@ -90,6 +90,9 @@ association {
     Integer[0..1] subordinateOrgaUnitOrder = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_order INTEGER;
 }
 
+//Returns the ids of all organizational units which are a subordinate orga unit
+//of this orga unit of a subordinate orga unit
+//@param orgaunitId The id of the organizational unit to start with
 query getIdsOfSubordinateOrgaUnitsRecursivly{
     BigDecimal orgaunitId;
     String orgaunitName;
@@ -105,18 +108,22 @@ query getIdsOfSubordinateOrgaUnitsRecursivly{
             select ou.organizationalunit_id as orgaunit_id,
                    cms_items.name as orgaunit_name
             from subordinate_orgaunits sou,
-                 cms_organizationalunits.organizationalunit_id
-            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
+                 cms_organizationalunits ou
+            join cms_items on ou.organizationalunit_id = cms_items.item_id
             join cms_organizationalunits_hierarchy_map on ou.organizationalunit_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
             where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id
         )
-        select orgaunit_id, orgaunit_name from subordinateOrgaUnits;
+        select orgaunit_id, orgaunit_name from subordinate_orgaunits
     } map {
         orgaunitId = subordinate_orgaunits.orgaunit_id;
         orgaunitName = subordinate_orgaunits.orgaunit_name;
     }
 }
 
+//Same as above but with an addional parameter
+//@param orgaunitId The id of the organizational unit to start with
+//@param assocType Include only subordinate orga units with the specified assoc
+//type
 query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
     BigDecimal orgaunitId;
     String orgaunitName;
@@ -132,14 +139,38 @@ query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
             select ou.organizationalunit_id as orgaunit_id,
                    cms_items.name as orgaunit_name
             from subordinate_orgaunits sou,
-                 cms_organizationalunits.organizationalunit_id
-            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
+                 cms_organizationalunits ou
+            join cms_items on ou.organizationalunit_id = cms_items.item_id
             join cms_organizationalunits_hierarchy_map on ou.organizationalunit_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
             where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id and cms_organizationalunits_hierarchy_map.assoc_type = :assocType
         )
-        select orgaunit_id, orgaunit_name from subordinateOrgaUnits;
+        select orgaunit_id, orgaunit_name from subordinate_orgaunits
     } map {
         orgaunitId = subordinate_orgaunits.orgaunit_id;
         orgaunitName = subordinate_orgaunits.orgaunit_name;
+    }
+}
+
+//Gets the members of several orga units
+//@param orgaUnitsIds comma separated list of the ids of orga units to include
+query getIdsOfMembersOfOrgaUnits {
+    BigDecimal memberId;
+    BigDecimal orgaunitId;
+    String surname;
+    String givenname;
+    String roleName;
+    String status;
+
+    do {
+        select distinct on (cms_persons.person_id) cms_persons.person_id, cms_persons.surname, cms_persons.givenname, cms_organizationalunits_person_map.organizationalunit_id, cms_organizationalunits_person_map.role_name, cms_organizationalunits_person_map.status
+        from cms_persons 
+        join cms_organizationalunits_person_map on cms_persons.person_id = cms_organizationalunits_person_map.person_id       
+    } map {
+        memberId = cms_persons.person_id;
+        orgaunitId = cms_organizationalunits_person_map.organizationalunit_id;
+        surname = cms_persons.surname;
+        givenname = cms_persons.givenname;
+        roleName = cms_organizationalunits_person_map.role_name;
+        status = cms_organizationalunits_person_map.status;        
     }
 }

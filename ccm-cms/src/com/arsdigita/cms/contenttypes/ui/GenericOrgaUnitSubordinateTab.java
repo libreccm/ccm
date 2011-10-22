@@ -64,7 +64,7 @@ public abstract class GenericOrgaUnitSubordinateTab
             final GenericOrganizationalUnit orgaunit,
             final Element parent,
             final PageState state) {
-        final SubordinateXmlLGenerator generator = new SubordinateXmlLGenerator(
+        final XmlLGenerator generator = new XmlLGenerator(
                 orgaunit);
         generator.generateXML(state, parent, "");
     }
@@ -136,11 +136,11 @@ public abstract class GenericOrgaUnitSubordinateTab
         //Nothing now
     }
 
-    private class SubordinateXmlLGenerator extends SimpleXMLGenerator {
+    private class XmlLGenerator extends SimpleXMLGenerator {
 
         private final GenericOrganizationalUnit orgaunit;
 
-        public SubordinateXmlLGenerator(final GenericOrganizationalUnit orgaunit) {
+        public XmlLGenerator(final GenericOrganizationalUnit orgaunit) {
             super();
             this.orgaunit = orgaunit;
         }

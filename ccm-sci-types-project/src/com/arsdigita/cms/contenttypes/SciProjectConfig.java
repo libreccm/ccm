@@ -25,6 +25,7 @@ public class SciProjectConfig extends AbstractConfig {
     private final Parameter enableFundingVolume;
     private final Parameter fundingVolumeLength;
     private final Parameter permittedPersonType;
+    private final Parameter tabs;
 
     public SciProjectConfig() {
 
@@ -86,6 +87,11 @@ public class SciProjectConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.sciproject.permitted_person_type",
                 Parameter.REQUIRED,
                 "com.arsdigita.cms.contenttypes.GenericPerson");
+        
+        tabs = new StringParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.tabs",
+                Parameter.REQUIRED,
+                "summary:com.arsdigita.cms.contenttypes.ui.SciProjectSummaryTab;desc:com.arsdigita.cms.contenttypes.ui.SciProjectDescTab");
 
         register(enableSubProjectsStep);
         register(enableSuperProjectsStep);
@@ -98,6 +104,7 @@ public class SciProjectConfig extends AbstractConfig {
         register(enableFundingVolume);        
         register(fundingVolumeLength);
         register(permittedPersonType);
+        register(tabs);
 
         loadInfo();
     }
@@ -146,5 +153,9 @@ public class SciProjectConfig extends AbstractConfig {
     
     public final String getPermittedPersonType() {
         return (String) get(permittedPersonType);
+    }
+    
+    public final String getTabs() {
+        return (String) get(tabs);
     }
 }
