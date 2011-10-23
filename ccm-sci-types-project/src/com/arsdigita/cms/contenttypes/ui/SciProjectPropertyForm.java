@@ -10,7 +10,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Date;
 import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.parameters.DateParameter;
+import com.arsdigita.bebop.parameters.IncompleteDateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -50,7 +50,7 @@ public class SciProjectPropertyForm
 
         add(new Label(SciProjectGlobalizationUtil.globalize(
                 "sciproject.ui.begin")));
-        ParameterModel beginParam = new DateParameter(SciProject.BEGIN);
+        ParameterModel beginParam = new IncompleteDateParameter(SciProject.BEGIN);
         Calendar today = new GregorianCalendar();
         Date begin = new Date(beginParam);
         begin.setYearRange(1970, (today.get(Calendar.YEAR) + 2));
@@ -58,7 +58,7 @@ public class SciProjectPropertyForm
 
         add(new Label(SciProjectGlobalizationUtil.globalize(
                 "sciproject.ui.end")));
-        ParameterModel endParam = new DateParameter(SciProject.END);
+        ParameterModel endParam = new IncompleteDateParameter(SciProject.END);
         Date end = new Date(endParam);
         end.setYearRange(1970, (today.get(Calendar.YEAR) + 8));
         add(end);

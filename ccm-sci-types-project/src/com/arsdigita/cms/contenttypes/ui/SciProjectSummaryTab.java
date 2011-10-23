@@ -54,20 +54,19 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final Element projectSummaryElem = parent.newChildElement(
                 "projectSummary");
 
-        generateBasicDataXml(project, parent);
-        
-        if(config.isShowingMembers()) {
-            generateMembersXml(project, parent, state);
-        }
-        
-        if (config.isShowingContacts()) {
-            generateContactsXml(project, parent, state);
-        }
-        
-        if (config.isShowingSubProjects()) {
-            generateSubProjectsXml(project, parent, state);
+        generateBasicDataXml(project, projectSummaryElem);
+
+        if (config.isShowingMembers()) {
+            generateMembersXml(project, projectSummaryElem, state);
         }
 
+        if (config.isShowingContacts()) {
+            generateContactsXml(project, projectSummaryElem, state);
+        }
+
+        if (config.isShowingSubProjects()) {
+            generateSubProjectsXml(project, projectSummaryElem, state);
+        }
 
         logger.debug(String.format("Generated XML for summary tab of project "
                                    + "'%s' in %d ms.",
@@ -84,24 +83,27 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             final SciProject project,
             final Element parent) {
         final long start = System.currentTimeMillis();
-        final Element addendumElem = parent.newChildElement("addendum");
-        if ((project.getAddendum() != null) && !project.getAddendum().isEmpty()) {
+        if ((project.getAddendum() != null) 
+            && !project.getAddendum().trim().isEmpty()) {
+            final Element addendumElem = parent.newChildElement("addendum");
             addendumElem.setText(project.getAddendum());
         }
 
-        final Element lifeSpanElem = parent.newChildElement("lifeSpan");
-        final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if (project.getBegin() != null) {
-            lifeSpanElem.addAttribute("begin",
-                                      dateFormat.format(project.getBegin()));
-        }
-        if (project.getEnd() != null) {
-            lifeSpanElem.addAttribute("end",
-                                      dateFormat.format(project.getEnd()));
+        if ((project.getBegin() != null) || (project.getEnd() != null)) {
+            final Element lifeSpanElem = parent.newChildElement("lifeSpan");
+            final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            if (project.getBegin() != null) {
+                lifeSpanElem.addAttribute("begin",
+                                          dateFormat.format(project.getBegin()));
+            }
+            if (project.getEnd() != null) {
+                lifeSpanElem.addAttribute("end",
+                                          dateFormat.format(project.getEnd()));
+            }
         }
 
         if ((project.getProjectShortDescription() != null)
-            && !project.getProjectShortDescription().isEmpty()) {
+            && !project.getProjectShortDescription().trim().isEmpty()) {
             final Element shortDescElem = parent.newChildElement("shortDesc");
             shortDescElem.setText(project.getProjectShortDescription());
         }
@@ -152,7 +154,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
             while (personsQuery.next()) {
                 generateMemberXml((BigDecimal) personsQuery.get("memberId"),
-                                  parent,
+                                  membersElem,
                                   state);
             }
         } else {
@@ -191,6 +193,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
+        generator.setUseExtraXml(false);
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for member '%s' in %d ms.",
                                    member.getFullName(),
@@ -220,6 +223,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                       final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(contact);
+        generator.setUseExtraXml(false);
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for contact '%s' in %d ms.",
                                    contact.getName(),
@@ -230,6 +234,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                           final Element parent,
                                           final PageState state) {
         final long start = System.currentTimeMillis();
+        final Element subProjectsElem = parent.newChildElement("subProjects");
         final GenericOrganizationalUnitSubordinateCollection subProjects =
                                                              project.
                 getSubordinateOrgaUnits();
@@ -239,7 +244,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         while (subProjects.next()) {
             generateSubProjectXml(
                     (SciProject) subProjects.getGenericOrganizationalUnit(),
-                    parent,
+                    subProjectsElem,
                     state);
         }
         logger.debug(String.format("Generated XML for subprojects of "
@@ -252,9 +257,12 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                          final Element parent,
                                          final PageState state) {
         final long start = System.currentTimeMillis();
-        final Element subProjectElem = parent.newChildElement("subProject");
+        final XmlGenerator generator = new XmlGenerator(subProject);
+        generator.setUseExtraXml(false);
+        generator.generateXML(state, parent, "");        
+        /*final Element subProjectElem = parent.newChildElement("subProject");
         final Element subProjectTitle = subProjectElem.newChildElement("title");
-        subProjectTitle.setText(subProject.getTitle());
+        subProjectTitle.setText(subProject.getTitle());*/
         logger.debug(String.format("Generated XML for subproject '%s' in"
                                    + "%d ms",
                                    subProject.getName(),
@@ -267,7 +275,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
         public XmlGenerator(final ContentItem item) {
             super();
-            this.item = item;
+            this.item = item;            
         }
 
         @Override
