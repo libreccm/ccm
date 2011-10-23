@@ -14,7 +14,7 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  */
 public class SciProjectSuperProjectsStep extends SimpleEditStep {
 
-    private String ADD_SUPERPROJECT_SHEET_NAME = "SciProjectAddSuperProject";
+    private final static String ADD_SUPERPROJECT_SHEET_NAME = "SciProjectAddSuperProject";
     public final static String ASSOC_TYPE = "SubProject";
 
     public SciProjectSuperProjectsStep(final ItemSelectionModel itemModel,

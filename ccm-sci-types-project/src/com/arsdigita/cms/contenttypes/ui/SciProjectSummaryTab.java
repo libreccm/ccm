@@ -7,6 +7,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSuperiorCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
@@ -64,6 +65,10 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             generateContactsXml(project, projectSummaryElem, state);
         }
 
+        if (config.isShowingInvolvedOrgas()) {
+            generateInvolvedOrgasXml(project, projectSummaryElem, state);
+        }
+
         if (config.isShowingSubProjects()) {
             generateSubProjectsXml(project, projectSummaryElem, state);
         }
@@ -83,7 +88,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             final SciProject project,
             final Element parent) {
         final long start = System.currentTimeMillis();
-        if ((project.getAddendum() != null) 
+        if ((project.getAddendum() != null)
             && !project.getAddendum().trim().isEmpty()) {
             final Element addendumElem = parent.newChildElement("addendum");
             addendumElem.setText(project.getAddendum());
@@ -207,6 +212,10 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final GenericOrganizationalUnitContactCollection contacts = project.
                 getContacts();
 
+        if ((contacts == null) || contacts.isEmpty()) {
+            return;
+        }
+
         final Element contactsElem = parent.newChildElement("contacts");
 
         while (contacts.next()) {
@@ -230,17 +239,70 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                    System.currentTimeMillis() - start));
     }
 
+    protected void generateInvolvedOrgasXml(final SciProject project,
+                                            final Element parent,
+                                            final PageState state) {
+        final long start = System.currentTimeMillis();
+        final GenericOrganizationalUnitSuperiorCollection orgas = project.getSuperiorOrgaUnits();
+        
+        if (orgas == null) {
+            return;
+        }
+        
+        orgas.addFilter(String.format("link.assocType = '%s'",
+                        SciProjectInvolvedOrganizationsStep.ASSOC_TYPE));
+        
+        if (orgas.isEmpty()) {
+            return;
+        }
+        
+        final Element involvedElem = parent.newChildElement("involvedOrganizations");
+        while(orgas.next()) {
+            generateInvolvedOrgaXml(orgas.getGenericOrganizationalUnit(), 
+                                    involvedElem, 
+                                    state);
+        }
+        logger.debug(String.format("Generated XML for involved organizations "
+                                   + "of project '%s' in %d ms.",
+                                   project.getName(),
+                                   System.currentTimeMillis() - start));
+    }
+
+    protected void generateInvolvedOrgaXml(
+            final GenericOrganizationalUnit involved,
+            final Element parent,
+            final PageState state) {
+        final long start = System.currentTimeMillis();
+        final XmlGenerator generator = new XmlGenerator(involved);
+        generator.setUseExtraXml(false);
+        generator.generateXML(state, parent, "");
+        logger.debug(String.format("Generated XML for involved organization "
+                                   + "'%s' in %d ms.",
+                                   involved.getName(),
+                                   System.currentTimeMillis() - start));
+    }
+
     protected void generateSubProjectsXml(final SciProject project,
                                           final Element parent,
                                           final PageState state) {
         final long start = System.currentTimeMillis();
-        final Element subProjectsElem = parent.newChildElement("subProjects");
         final GenericOrganizationalUnitSubordinateCollection subProjects =
                                                              project.
                 getSubordinateOrgaUnits();
+
+        if (subProjects == null) {
+            return;
+        }
+
         subProjects.addFilter(
                 String.format("link.assocType = '%s'",
                               SciProjectSubProjectsStep.ASSOC_TYPE));
+
+        if (subProjects.isEmpty()) {
+            return;
+        }
+
+        final Element subProjectsElem = parent.newChildElement("subProjects");
         while (subProjects.next()) {
             generateSubProjectXml(
                     (SciProject) subProjects.getGenericOrganizationalUnit(),
@@ -259,7 +321,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(subProject);
         generator.setUseExtraXml(false);
-        generator.generateXML(state, parent, "");        
+        generator.generateXML(state, parent, "");
         /*final Element subProjectElem = parent.newChildElement("subProject");
         final Element subProjectTitle = subProjectElem.newChildElement("title");
         subProjectTitle.setText(subProject.getTitle());*/
@@ -275,7 +337,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
         public XmlGenerator(final ContentItem item) {
             super();
-            this.item = item;            
+            this.item = item;
         }
 
         @Override
