@@ -29,6 +29,7 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectObserver;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
@@ -308,7 +309,7 @@ public class ContentBundle extends ContentItem {
      * @pre language != null
      */
     public final ContentItem getInstance(final String language) {
-        return this.getInstance(language, false);
+        return this.getInstance(language, Kernel.getConfig().languageIndependentItems());
     }
 
     public final ContentItem getInstance(final String language, boolean allowLanguageIndependent) {
