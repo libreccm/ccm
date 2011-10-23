@@ -59,6 +59,14 @@ public class SimpleXMLGenerator implements XMLGenerator {
                                 Logger.getLogger(SimpleXMLGenerator.class);
     public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.
             getName();
+    /**
+     * jensp 2011-10-23: Sometimes the extra XML is not needed, for example 
+     * when embedding the XML of a content item into the XML output of another
+     * content item. The default value {@code true}. To change the value
+     * call {@link #setUseExtraXml(booelan)} after creating an instance of 
+     * your generator.
+     */
+    private boolean useExtraXml = true;
 
     // Register general purpose adaptor for all content items
     static {
@@ -76,6 +84,10 @@ public class SimpleXMLGenerator implements XMLGenerator {
     }
 
     public SimpleXMLGenerator() {
+    }
+
+    public void setUseExtraXml(final boolean useExtraXml) {
+        this.useExtraXml = useExtraXml;
     }
 
     /**
@@ -165,9 +177,14 @@ public class SimpleXMLGenerator implements XMLGenerator {
              * 2011-08-27 jensp: Introduced to remove the annoying special templates
              * for MultiPartArticle, SiteProxy and others. The method called
              * here was already definied but not used. 
+             * 
+             * 2011-10-23 jensp: It is not possible to disable the use of
+             * extra XML.
              */
-            for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
-                generator.generateXML(item, parent, state);
+            if (useExtraXml) {
+                for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
+                    generator.generateXML(item, parent, state);
+                }
             }
         }
     }
