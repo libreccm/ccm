@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+name="ccm-sci-types-department"
+prettyName="Scientific CMS Department content type"
+version = "6.6.4"
+release="1"
+webapp="ROOT">
+
+    <ccm:dependencies>
+        <ccm:requires name="ccm-core" version="6.6.3" relation="ge"/>  
+        <ccm:requires name="ccm-cms" version="6.6.4" relation="ge"/>
+    </ccm:dependencies>
+    <ccm:directories>
+        <ccm:directory name="pdl"/>
+        <ccm:directory name="sql"/>
+        <ccm:directory name="src"/>
+    </ccm:directories>s
+    <ccm:contacts>
+        <ccm:contact uri="http://www.scientificcms.org" type="website"/>
+        <ccm:contact uri="mailto:info@scientificcms.org" type="support"/>
+    </ccm:contacts>
+    <ccm:description>
+        Content type for a departments of scientific organizations.
+    </ccm:description>
+</ccm:application>

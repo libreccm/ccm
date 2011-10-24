@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.authoring;
 
-
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;

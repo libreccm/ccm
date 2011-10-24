@@ -1,0 +1,87 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type SciDepartment extends GenericOrganizationalUnit {
+    String[0..1] departmentShortDescription = ct_sci_departments.shortdescription VARCHAR(5000);
+    String[0..1] departmentDescription = ct_sci_departments.description CLOB;
+
+    reference key ( ct_sci_departments.department_id );
+}
+
+query getIdsOfContactsOfSciDepartment {
+    BigDecimal contactId;
+
+    do {
+        select cms_organizationalunits_contact_map.contact_id 
+        from cms_organizationalunits_contact_map        
+        where cms_organizationalunits_contact_map.organizationalunit_id = :department        
+    } map {
+        contactId = cms_organizationalunits_contact_map.contact_id;
+    }
+}
+
+query getIdsOfSubDepartmentsOfSciDepartment {
+    BigDecimal departmentId;
+
+    do {
+        select cms_organizationalunit_hierarchy_map.subordinate_orgaunit_id
+        from cms_organizationalunit_hierarchy_map
+        where cms_organizationalunit_hierarchy_map.superior_orgaunit_id = :department
+        and cms_organizationalunit_hierarchy_map.assoc_type = 'subDepartment'
+    } map {
+        departmentId = ct_sciorga_Departments_subDepartments_map.Department_id;
+    }
+}
+
+query getIdsOfMembersOfSciDepartment {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map      
+        where cms_organizationalunits_person_map.organizationalunit_id = :department
+    } map {
+        memberId = cms_organizationalunits_person_map.person_id;
+    }
+}
+
+query getIdsOfActiveMembersOfSciDepartment {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map        
+        where cms_organizationalunits_person_map.organizationalunit_id = :department 
+        and cms_organizationalunits_person_map.status = 'active'
+    } map {
+        memberId = cms_organizationalunits_person_map.person_id;
+    }
+}
+
+query getIdsOfAssociatedMembersOfSciDepartment {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map       
+        where cms_organizationalunits_person_map.organizationalunit_id = :department 
+        and cms_organizationalunits_person_map.status = 'associated'
+    } map {
+        memberId = cms_organizationalunits_person_map.personId;
+    }
+}
+
+query getIdsOfFormerMembersOfSciDepartment {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.cms_persons.person_id
+        from cms_organizationalunits_person_map   
+        where cms_organizationalunits_person_map.organizationalunit_id = :department 
+        and (cms_organizationalunits_person_map.status = 'former' or cms_organizationalunits_person_map.status = 'associatedFormer')
+    } map {
+        memberId = cms_organizationalunits_person_map.personId;
+    }
+}

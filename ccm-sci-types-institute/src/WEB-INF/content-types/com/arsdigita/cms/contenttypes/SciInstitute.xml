@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+                       
+    <ctd:content-type
+      label="SciInstitute"
+      description="Institutes of scientific organizations."
+      objectType="com.arsdigita.cms.contenttypes.SciInstitute"
+      classname="com.arsdigita.cms.contenttypes.SciInstitute">
+          
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+            
+            <ctd:authoring-step
+	      labelKey="sciorganization.ui.institute_properties.title"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      descriptionKey="sciorganization.ui.institute_properties.title"
+	      descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      component="com.arsdigita.cms.contenttypes.ui.SciInstitutePropertiesStep"
+	      ordering="1"/>
+              
+            <ctd:authoring-step
+	      labelKey="sciorganization.ui.institute.members"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      descriptionKey="sciorganization.ui.institute.members.description"
+	      component="com.arsdigita.cms.contenttypes.ui.SciInstituteMembersStep"
+	      ordering="2"/>
+              
+            <ctd:authoring-step
+	      labelKey="sciorganization.ui.institute_description.title"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      descriptionKey="sciorganization.ui.institute_description.title"
+	      component="com.arsdigita.cms.contenttypes.ui.SciInstituteDescriptionStep"
+	      ordering="3"/>
+              
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+            
+        </ctd:authoring-kit>
+          
+    </ctd:content-type>                        
+                       
+</ctd:content-types>

@@ -1,0 +1,16 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>
+        <table name="cms_items"/>
+        <initializer class="com.arsdigita.cms.Initializer"/>
+    </requires>
+    <provides>
+        <table name="ct_sci_institutes"/>
+        <initializer class="com.arsdigita.cms.contenttypes.SciInstituteInitializer"/>
+    </provides>
+    <scripts>
+        <schema directory="ccm-sci-types-institute"/>
+        <data class="com.arsdigita.cms.contenttypes.SciInstituteLoader"/>
+    </scripts>
+</load>

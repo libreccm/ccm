@@ -1,0 +1,87 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type SciInstitute extends GenericOrganizationalUnit {
+    String[0..1] instituteShortDescription = ct_sci_instituts.shortdescription VARCHAR(5000);
+    String[0..1] instituteDescription = ct_sci_instituts.description CLOB;
+
+    reference key ( ct_sci_instituts.institute_id );
+}
+
+query getIdsOfContactsOfSciInstitute {
+    BigDecimal contactId;
+
+    do {
+        select cms_organizationalunits_contact_map.contact_id 
+        from cms_organizationalunits_contact_map        
+        where cms_organizationalunits_contact_map.organizationalunit_id = :institute        
+    } map {
+        contactId = cms_organizationalunits_contact_map.contact_id;
+    }
+}
+
+query getIdsOfSubInstitutesOfSciInstitute {
+    BigDecimal instituteId;
+
+    do {
+        select cms_organizationalunit_hierarchy_map.subordinate_orgaunit_id
+        from cms_organizationalunit_hierarchy_map
+        where cms_organizationalunit_hierarchy_map.superior_orgaunit_id = :institute
+        and cms_organizationalunit_hierarchy_map.assoc_type = 'subInstitute'
+    } map {
+        instituteId = ct_sciorga_Institutes_subInstitutes_map.Institute_id;
+    }
+}
+
+query getIdsOfMembersOfSciInstitute {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map      
+        where cms_organizationalunits_person_map.organizationalunit_id = :institute
+    } map {
+        memberId = cms_organizationalunits_person_map.person_id;
+    }
+}
+
+query getIdsOfActiveMembersOfSciInstitute {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map        
+        where cms_organizationalunits_person_map.organizationalunit_id = :institute 
+        and cms_organizationalunits_person_map.status = 'active'
+    } map {
+        memberId = cms_organizationalunits_person_map.person_id;
+    }
+}
+
+query getIdsOfAssociatedMembersOfSciInstitute {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.person_id
+        from cms_organizationalunits_person_map       
+        where cms_organizationalunits_person_map.organizationalunit_id = :institute 
+        and cms_organizationalunits_person_map.status = 'associated'
+    } map {
+        memberId = cms_organizationalunits_person_map.personId;
+    }
+}
+
+query getIdsOfFormerMembersOfSciInstitute {
+    BigDecimal memberId;
+
+    do {
+        select cms_organizationalunits_person_map.cms_persons.person_id
+        from cms_organizationalunits_person_map   
+        where cms_organizationalunits_person_map.organizationalunit_id = :institute 
+        and (cms_organizationalunits_person_map.status = 'former' or cms_organizationalunits_person_map.status = 'associatedFormer')
+    } map {
+        memberId = cms_organizationalunits_person_map.personId;
+    }
+}

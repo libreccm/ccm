@@ -132,8 +132,8 @@ public class SciProject extends GenericOrganizationalUnit {
     public boolean hasContacts() {
         boolean result = false;
 
-        DataQuery query =
-                  SessionManager.getSession().retrieveQuery(
+        final DataQuery query =
+                        SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfContactsOfSciProject");
         query.setParameter("project", getID());
 
@@ -181,7 +181,8 @@ public class SciProject extends GenericOrganizationalUnit {
                 break;
         }
 
-        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        final DataQuery query = SessionManager.getSession().retrieveQuery(
+                queryName);
         query.setParameter("project", getID());
 
         if (query.size() > 0) {
@@ -248,7 +249,8 @@ public class SciProject extends GenericOrganizationalUnit {
                 break;
         }
 
-        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
+        final DataQuery query = SessionManager.getSession().retrieveQuery(
+                queryName);
         query.setParameter("project", projectId);
 
         if (query.size() > 0) {
@@ -287,7 +289,7 @@ public class SciProject extends GenericOrganizationalUnit {
             }
         }
     }
-    
+
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();

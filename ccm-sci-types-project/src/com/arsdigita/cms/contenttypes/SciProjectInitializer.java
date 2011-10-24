@@ -28,34 +28,34 @@ public class SciProjectInitializer extends ContentTypeInitializer {
         if (config.getEnableSubProjectsStep()) {
             AuthoringKitWizard.registerAssetStep(
                     SciProject.BASE_DATA_OBJECT_TYPE,
-                                                 SciProjectSubProjectsStep.class,
-                                                 SciProjectGlobalizationUtil.
-                    globalize("sciproject.ui.subprojects.title"),
-                                                 SciProjectGlobalizationUtil.
-                    globalize("sciproject.ui.subprojects.description"),
-                                                 10);
+                    SciProjectSubProjectsStep.class,
+                    SciProjectGlobalizationUtil.globalize(
+                    "sciproject.ui.subprojects.title"),
+                    SciProjectGlobalizationUtil.globalize(
+                    "sciproject.ui.subprojects.description"),
+                    10);
         }
 
         if (config.getEnableSuperProjectsStep()) {
             AuthoringKitWizard.registerAssetStep(
                     SciProject.BASE_DATA_OBJECT_TYPE,
-                                                 SciProjectSuperProjectsStep.class,
-                                                 SciProjectGlobalizationUtil.
-                    globalize("sciproject.ui.superprojects.title"),
-                                                 SciProjectGlobalizationUtil.
-                    globalize("sciproject.ui.superprojects.description"),
-                                                 20);
+                    SciProjectSuperProjectsStep.class,
+                    SciProjectGlobalizationUtil.globalize(
+                    "sciproject.ui.superprojects.title"),
+                    SciProjectGlobalizationUtil.globalize(
+                    "sciproject.ui.superprojects.description"),
+                    20);
         }
 
         if (config.getEnableInvolvedOrgasStep()) {
             AuthoringKitWizard.registerAssetStep(
                     SciProject.BASE_DATA_OBJECT_TYPE,
-                                                 SciProjectInvolvedOrganizationsStep.class,
-                                                 SciProjectGlobalizationUtil.
-                    globalize("sciproject.ui.involved_orgas.title"),
-                                                 SciProjectGlobalizationUtil.
-                    globalize("sciproject.ui.involved_orgas.description"),
-                                                 30);
+                    SciProjectInvolvedOrganizationsStep.class,
+                    SciProjectGlobalizationUtil.globalize(
+                    "sciproject.ui.involved_orgas.title"),
+                    SciProjectGlobalizationUtil.globalize(
+                    "sciproject.ui.involved_orgas.description"),
+                    30);
         }
     }
 

@@ -82,7 +82,7 @@ public class SciProjectPropertiesStep
                                                 parent,
                                                 EDIT_SHEET_NAME);
 
-        BasicPageForm editBasicSheet = new SciProjectPropertyForm(itemModel,
+        final BasicPageForm editBasicSheet = new SciProjectPropertyForm(itemModel,
                                                                   this);
 
         basicProperties.add(EDIT_SHEET_NAME,
