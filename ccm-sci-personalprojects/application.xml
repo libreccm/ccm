@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-		 name="ccm-sci-personalpublications"
+		 name="ccm-sci-personalprojects"
 		 prettyName="OpenCCM PublicPersonalProfile Content generator"
 		 version="6.6.1"
 		 release="1"

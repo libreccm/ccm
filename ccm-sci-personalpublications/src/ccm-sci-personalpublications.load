@@ -2,7 +2,7 @@
     <requires>
         <table name="inits"/>
         <table name="acs_objects"/>
-	<table name="cms_items"/>
+        <table name="cms_items"/>
         <table name="ct_publications"/>
         <table name="publicpersonalprofile"/>
         <table name="ct_public_personal_profiles"/>
