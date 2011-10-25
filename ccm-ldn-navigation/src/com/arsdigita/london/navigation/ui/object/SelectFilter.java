@@ -16,6 +16,7 @@ import java.util.Set;
  * paginator) and using each distinct value of the property as option.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class SelectFilter implements Filter {
 
@@ -129,8 +130,13 @@ public class SelectFilter implements Filter {
         while (objects.next()) {
             dobj = objects.getDataObject();
 
-            option = (dobj.get(property)).toString();
+            final Object propValue = dobj.get(property);
+            if (propValue == null) {
+                continue; 
+            } else {
+            option = propValue.toString();
             optionsSet.add(option);
+            }
         }
 
         options = new ArrayList<String>(optionsSet);

@@ -74,15 +74,11 @@ public class DefinePage extends DefineContainer implements JSPConstants {
     private Class m_pageClass;
     private boolean m_cache = true;
     private static final Logger s_log =
-        Logger.getLogger(DefinePage.class.getName());
-
+            Logger.getLogger(DefinePage.class.getName());
     private static CacheTable s_pageCache = new CacheTable("PageCache");
     // maps URL(/packages/foo/www/asdf.jsp) -> {Page, creation date}
     // should this be a CacheTable or not?
     private static Map s_pageLocks = new HashMap();
-
-
-  
 
     /**
      * Creates a Bebop Page instance.  A page tag is a special case
@@ -90,8 +86,7 @@ public class DefinePage extends DefineContainer implements JSPConstants {
      */
     public int doStartTag() throws JspException {
         if (m_cache) {
-            String cacheKey = DispatcherHelper.getCurrentResourcePath
-                ((HttpServletRequest)pageContext.getRequest());
+            String cacheKey = DispatcherHelper.getCurrentResourcePath((HttpServletRequest) pageContext.getRequest());
             Object pageLock;
             // First off all we have the global synchronization
             // block to get the page's unique sync object.
@@ -104,19 +99,18 @@ public class DefinePage extends DefineContainer implements JSPConstants {
             }
             // Now we just synchronize against our specific page.
             synchronized (pageLock) {
-            	
-            	CachedPage cached = (CachedPage)s_pageCache.get(cacheKey);
+
+                CachedPage cached = (CachedPage) s_pageCache.get(cacheKey);
                 if (cached != null) {
-					Object[] pair = cached.getPageTimeStampPair();
-                
-                    long pageDate = ((Long)pair[1]).longValue();
-                    File jspFile = new File(pageContext.getServletContext()
-                                            .getRealPath(cacheKey));
+                    Object[] pair = cached.getPageTimeStampPair();
+
+                    long pageDate = ((Long) pair[1]).longValue();
+                    File jspFile = new File(pageContext.getServletContext().getRealPath(cacheKey));
                     if (jspFile.lastModified() <= pageDate) {
                         // jsp file is not newer than cached page,
                         // and page hasn't been marked as dirty by anyone so we can use the cached page.
 
-                        Page page = (Page)pair[0];
+                        Page page = (Page) pair[0];
 
                         // We may have to for the page to be locked
                         // by another thread
@@ -134,7 +128,7 @@ public class DefinePage extends DefineContainer implements JSPConstants {
                             }
                         }
                     }
-                    m_page = (Page)pair[0];
+                    m_page = (Page) pair[0];
                     pageContext.setAttribute(getName(), m_page);
                     return SKIP_BODY;
                 }
@@ -142,8 +136,8 @@ public class DefinePage extends DefineContainer implements JSPConstants {
 
 
                 m_page = buildPage();
-              //  s_pageCache.put(cacheKey,
-                 //               new CachedPage(new Object[] {m_page,
+                //  s_pageCache.put(cacheKey,
+                //               new CachedPage(new Object[] {m_page,
                 //                              new Long(System.currentTimeMillis())}));
 
 
@@ -162,11 +156,10 @@ public class DefinePage extends DefineContainer implements JSPConstants {
      * 
      * 
      */
-    public static void invalidatePage (String resourceURL) {
-    	s_log.debug("page - " + resourceURL + " removed from cache");
+    public static void invalidatePage(String resourceURL) {
+        s_log.debug("page - " + resourceURL + " removed from cache");
         s_pageCache.remove(resourceURL);
     }
-
 
     private Page buildPage() throws JspException {
         Page page;
@@ -177,11 +170,11 @@ public class DefinePage extends DefineContainer implements JSPConstants {
 
         if (m_pageClass == null) {
             page = PageFactory.buildPage(m_application,
-                                           m_title,
-                                           getName());
+                    m_title,
+                    getName());
         } else {
             try {
-                page = (Page)m_pageClass.newInstance();
+                page = (Page) m_pageClass.newInstance();
             } catch (IllegalAccessException e) {
                 throw new JspWrapperException("cannot create page class instance", e);
             } catch (InstantiationException e) {
@@ -196,7 +189,7 @@ public class DefinePage extends DefineContainer implements JSPConstants {
         // we *might* be nested, but probably aren't
         Tag t = getParent();
         if (t != null && t instanceof DefineContainer) {
-            ((BodyTag)t).doAfterBody();
+            ((BodyTag) t).doAfterBody();
         }
 
         return page;
@@ -219,8 +212,7 @@ public class DefinePage extends DefineContainer implements JSPConstants {
     public int doEndTag() throws JspException {
         try {
             if (m_cache) {
-                String cacheKey = DispatcherHelper.getCurrentResourcePath
-                    ((HttpServletRequest)pageContext.getRequest());
+                String cacheKey = DispatcherHelper.getCurrentResourcePath((HttpServletRequest) pageContext.getRequest());
                 Object pageLock;
                 // Global lock to get hold of page sync object
                 synchronized (s_pageLocks) {
@@ -231,17 +223,17 @@ public class DefinePage extends DefineContainer implements JSPConstants {
                     }
                 }
                 // Now sync just on this page
-                synchronized(pageLock) {
+                synchronized (pageLock) {
                     if (!m_page.isLocked()) {
                         m_page.lock();
-						CachedPage cached = (CachedPage)s_pageCache.get(cacheKey);
-                		// cache page in end tag because hashcode of cached page relies on 
+                        CachedPage cached = (CachedPage) s_pageCache.get(cacheKey);
+                        // cache page in end tag because hashcode of cached page relies on 
                         // components that are added between start and end tag
                         if (cached == null) {
-							s_pageCache.put(cacheKey,
-											                new CachedPage(new Object[] {m_page,
-											                              new Long(System.currentTimeMillis())}));
-                		}
+                            s_pageCache.put(cacheKey,
+                                    new CachedPage(new Object[]{m_page,
+                                        new Long(System.currentTimeMillis())}));
+                        }
                         // Now notify anyone waiting for us to lock the page
                         // that we're all done. see doStartTag()
                         if (s_log.isDebugEnabled()) {
@@ -260,36 +252,33 @@ public class DefinePage extends DefineContainer implements JSPConstants {
                 // nested...
                 // treat like a slave component, a page nested
                 // within another page
-                ((DefineContainer)t).addComponent(new SlaveComponent(m_page));
+                ((DefineContainer) t).addComponent(new SlaveComponent(m_page));
                 // if we're nested
             } else if (m_master != null) {
                 // if we have a master page, then we pass control to it,
                 // with the current (m_page) as a request attribute.
-                pageContext.getRequest()
-                    .setAttribute("com.arsdigita.bebop.SlavePage", m_page);
+                pageContext.getRequest().setAttribute("com.arsdigita.bebop.SlavePage", m_page);
                 DispatcherHelper.forwardRequestByPath(m_master, pageContext);
             } else {
                 // pass on the document to the ShowAll code. Note ugly
                 // long-range code dependency voodoo here.
                 HttpServletRequest req =
-                    (HttpServletRequest)pageContext.getRequest();
+                        (HttpServletRequest) pageContext.getRequest();
                 HttpServletResponse resp =
-                    (HttpServletResponse)pageContext.getResponse();
+                        (HttpServletResponse) pageContext.getResponse();
 
                 Document doc;
                 PageState state;
 
                 try {
-                    doc = new Document ();
-                    state = m_page.process (req, resp);
+                    doc = new Document();
+                    state = m_page.process(req, resp);
+                } catch (ParserConfigurationException ex) {
+                    throw new UncheckedWrapperException(ex);
+                } catch (ServletException ex) {
+                    throw new UncheckedWrapperException(ex);
                 }
-                catch (ParserConfigurationException ex) {
-                    throw new UncheckedWrapperException (ex);
-                }
-                catch (ServletException ex) {
-                    throw new UncheckedWrapperException (ex);
-                }
-                m_page.generateXML (state, doc);
+                m_page.generateXML(state, doc);
 
                 req.setAttribute(INPUT_DOC_ATTRIBUTE, doc);
                 pageContext.setAttribute(INPUT_PAGE_STATE_ATTRIBUTE, state);
@@ -302,6 +291,8 @@ public class DefinePage extends DefineContainer implements JSPConstants {
             } catch (Throwable nested) {
                 // serving error page failed, so
                 // percolate error up to top-level
+                s_log.error("PageContext failed to handle exceptionb exception: ",
+                        nested);
                 throw new UncheckedWrapperException(e);
             }
             return SKIP_PAGE;
