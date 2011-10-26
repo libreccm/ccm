@@ -41,8 +41,12 @@ import java.util.List;
  */
 public class SciProject extends GenericOrganizationalUnit {
 
-    public static final String BEGIN = "projectbegin";
-    public static final String END = "projectend";
+    public static final String BEGIN = "projectBegin";
+    public static final String BEGIN_SKIP_MONTH = "projectBeginSkipMonth";
+    public static final String BEGIN_SKIP_DAY = "projectBeginSkipDay";
+    public static final String END = "projectEnd";
+    public static final String END_SKIP_MONTH = "projectEndSkipMonth";
+    public static final String END_SKIP_DAY = "projectEndSkipDay";
     public static final String PROJECT_SHORT_DESCRIPTION = "projectShortDesc";
     public static final String PROJECT_DESCRIPTION = "projectDescription";
     public static final String FUNDING = "funding";
@@ -87,6 +91,32 @@ public class SciProject extends GenericOrganizationalUnit {
     public void setBegin(Date begin) {
         set(BEGIN, begin);
     }
+    
+    public Boolean getBeginSkipMonth() {
+        final Object value = get(BEGIN_SKIP_MONTH);
+        if (value == null) {
+            return false;
+        } else {
+            return (Boolean) value;
+        }
+    }
+    
+    public void setBeginSkipMonth(final Boolean skipMonth) {
+        set(BEGIN_SKIP_MONTH, skipMonth);
+    }
+    
+    public Boolean getBeginSkipDay() {
+        final Object value = get(BEGIN_SKIP_DAY);
+        if (value == null) {
+            return false;
+        } else {
+            return (Boolean) value;
+        }
+    }
+    
+    public void setBeginSkipDay(final Boolean skipDay) {
+        set(BEGIN_SKIP_DAY, skipDay);
+    }
 
     public Date getEnd() {
         return (Date) get(END);
@@ -94,6 +124,32 @@ public class SciProject extends GenericOrganizationalUnit {
 
     public void setEnd(Date end) {
         set(END, end);
+    }
+    
+    public Boolean getEndSkipMonth() {
+        final Object value = get(END_SKIP_MONTH);
+        if (value == null) {
+            return false;
+        } else {
+            return (Boolean) value;
+        }
+    }
+    
+    public void setEndSkipMonth(final Boolean skipMonth) {
+        set(END_SKIP_MONTH, skipMonth);
+    }
+    
+    public Boolean getEndSkipDay() {
+        final Object value = get(END_SKIP_DAY);
+        if (value == null) {
+            return false;
+        } else {
+            return (Boolean) value;
+        }
+    }
+    
+    public void setEndSkipDay(final Boolean skipDay) {
+        set(END_SKIP_DAY, skipDay);
     }
 
     public String getProjectShortDescription() {

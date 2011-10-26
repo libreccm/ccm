@@ -5,8 +5,12 @@ import com.arsdigita.cms.*;
 
 object type SciProject extends GenericOrganizationalUnit {
 
-    Date[0..1] projectbegin = ct_sci_projects.projectbegin DATE;
-    Date[0..1] projectend = ct_sci_projects.projectend DATE;
+    Date[0..1] projectBegin = ct_sci_projects.projectbegin DATE;
+    Boolean[0..1] projectBeginSkipMonth = ct_sci_projects.projectbegin_skip_month;
+    Boolean[0..1] projectBeginSkipDay = ct_sci_projects.projectbegin_skip_day;
+    Date[0..1] projectEnd = ct_sci_projects.projectend DATE;
+    Boolean[0..1] projectEndSkipMonth = ct_sci_projects.projectend_skip_month;
+    Boolean[0..1] projectEndSkipDay = ct_sci_projects.projectend_skip_day;
     String[0..1] projectShortDesc = ct_sci_projects.shortdesc VARCHAR(5000);
     String[0..1] projectDescription = ct_sci_projects.description CLOB;
     String[0..1] funding = ct_sci_projects.funding CLOB;

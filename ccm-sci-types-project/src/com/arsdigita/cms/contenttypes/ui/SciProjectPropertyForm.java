@@ -9,7 +9,9 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Date;
+import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.bebop.parameters.IncompleteDateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
@@ -48,17 +50,42 @@ public class SciProjectPropertyForm
     public void addWidgets() {
         super.addWidgets();
 
+        final ParameterModel beginSkipMonthParam =
+                             new BooleanParameter(SciProject.BEGIN_SKIP_MONTH);
+        final Hidden beginSkipMonth = new Hidden(beginSkipMonthParam);
+        add(beginSkipMonth);
+
+        final ParameterModel beginSkipDayParam =
+                             new BooleanParameter(SciProject.BEGIN_SKIP_DAY);
+        final Hidden beginSkipDay = new Hidden(beginSkipDayParam);
+        add(beginSkipDay);
+
         add(new Label(SciProjectGlobalizationUtil.globalize(
                 "sciproject.ui.begin")));
-        ParameterModel beginParam = new IncompleteDateParameter(SciProject.BEGIN);
-        Calendar today = new GregorianCalendar();
-        Date begin = new Date(beginParam);
+        final IncompleteDateParameter beginParam =
+                             new IncompleteDateParameter(SciProject.BEGIN);
+        beginParam.allowSkipMonth(true);
+        beginParam.allowSkipDay(true);                
+        final Calendar today = new GregorianCalendar();
+        final Date begin = new Date(beginParam);        
         begin.setYearRange(1970, (today.get(Calendar.YEAR) + 2));
         add(begin);
 
+        final ParameterModel endSkipMonthParam =
+                             new BooleanParameter(SciProject.END_SKIP_MONTH);
+        final Hidden endSkipMonth = new Hidden(endSkipMonthParam);
+        add(endSkipMonth);
+
+        final ParameterModel endSkipDayParam = new BooleanParameter(
+                SciProject.END_SKIP_DAY);
+        final Hidden endSkipDay = new Hidden(endSkipDayParam);
+        add(endSkipDay);
+
         add(new Label(SciProjectGlobalizationUtil.globalize(
                 "sciproject.ui.end")));
-        ParameterModel endParam = new IncompleteDateParameter(SciProject.END);
+        final IncompleteDateParameter endParam = new IncompleteDateParameter(SciProject.END);
+        endParam.allowSkipMonth(true);
+        endParam.allowSkipDay(true);
         Date end = new Date(endParam);
         end.setYearRange(1970, (today.get(Calendar.YEAR) + 8));
         add(end);
@@ -84,7 +111,11 @@ public class SciProjectPropertyForm
         final SciProject project = (SciProject) super.initBasicWidgets(fse);
 
         data.put(SciProject.BEGIN, project.getBegin());
+        data.put(SciProject.BEGIN_SKIP_MONTH, project.getBeginSkipMonth());
+        data.put(SciProject.BEGIN_SKIP_DAY, project.getBeginSkipDay());
         data.put(SciProject.END, project.getEnd());
+        data.put(SciProject.END_SKIP_MONTH, project.getEndSkipMonth());
+        data.put(SciProject.END_SKIP_DAY, project.getEndSkipDay());
         data.put(SciProject.PROJECT_SHORT_DESCRIPTION,
                  project.getProjectShortDescription());
     }
@@ -99,8 +130,19 @@ public class SciProjectPropertyForm
 
         if ((project != null)
             && getSaveCancelSection().getSaveButton().isSelected(state)) {
-            project.setBegin((java.util.Date) data.get(SciProject.BEGIN));
-            project.setEnd((java.util.Date) data.get(SciProject.END));
+            project.setBeginSkipMonth(((IncompleteDateParameter) data.
+                                       getParameter(SciProject.BEGIN).
+                                       getModel()).isMonthSkipped());
+            project.setBeginSkipDay(
+                    ((IncompleteDateParameter) data.getParameter(
+                     SciProject.BEGIN).getModel()).isDaySkipped());
+            project.setBegin((java.util.Date) data.get(SciProject.BEGIN));            
+            project.setEndSkipMonth(
+                    ((IncompleteDateParameter) data.getParameter(
+                     SciProject.END).getModel()).isMonthSkipped());
+            project.setEndSkipDay(((IncompleteDateParameter) data.getParameter(
+                                   SciProject.END).getModel()).isDaySkipped());
+            project.setEnd((java.util.Date) data.get(SciProject.END));                        
             project.setProjectShortDescription((String) data.get(
                     SciProject.PROJECT_SHORT_DESCRIPTION));
 
