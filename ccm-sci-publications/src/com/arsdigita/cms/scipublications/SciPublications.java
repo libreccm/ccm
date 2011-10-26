@@ -40,7 +40,7 @@ public class SciPublications extends Application {
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.scipublications.SciPublications";
 
-    public SciPublications(DataObject dobj) {
+    public SciPublications(final DataObject dobj) {
         super(dobj);
     }
 

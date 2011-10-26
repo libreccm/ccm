@@ -30,34 +30,45 @@ public class SciPublicationsLoader extends PackageLoader {
             protected void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
-                ApplicationSetup setup = new ApplicationSetup(logger);
-
+                /*ApplicationSetup setup = new ApplicationSetup(logger);
+                
                 setup.setApplicationObjectType(
-                        SciPublications.BASE_DATA_OBJECT_TYPE);
+                SciPublications.BASE_DATA_OBJECT_TYPE);
                 setup.setKey("scipubliations");
                 setup.setTitle("sci-publications");
                 setup.setDescription(
-                        "Provides several functions like export and import for publications.");
+                "Provides several functions like export and import for publications.");
                 //setup.setSingleton(true);
                 setup.setInstantiator(new ACSObjectInstantiator() {
-                   @Override
-                   public DomainObject doNewInstance(DataObject dataObject) {
-                       return new SciPublications(dataObject);
-                   }
+                @Override
+                public DomainObject doNewInstance(DataObject dataObject) {
+                return new SciPublications(dataObject);
+                }
                 });
-
+                
                 ApplicationType type = setup.run();
                 type.save();
-
+                
                 //Install the application and mount the app at 'scipublications'.
                 if (!Application.isInstalled(
-                        SciPublications.BASE_DATA_OBJECT_TYPE, "/scipublications/")) {
-                    Application app = Application.createApplication(type,
-                                                                    "scipublications",
-                                                                    "SciPublications",
-                                                                    null);
-                    app.save();
-                }
+                SciPublications.BASE_DATA_OBJECT_TYPE, "/scipublications/")) {
+                Application app = Application.createApplication(type,
+                "scipublications",
+                "SciPublications",
+                null);
+                app.save();
+                }*/
+
+                final ApplicationType type = new ApplicationType(
+                        "SciPublications",
+                        SciPublications.BASE_DATA_OBJECT_TYPE);
+                type.setDescription("Publications Import and Export");
+                
+                Application.createApplication(
+                        SciPublications.BASE_DATA_OBJECT_TYPE, 
+                        "scipublications", 
+                        "SciPublications", 
+                        null);
 
             }
         }.run();
