@@ -19,11 +19,16 @@
 package com.arsdigita.bebop.parameters;
 
 import com.arsdigita.globalization.Globalization;
+import com.arsdigita.globalization.GlobalizationHelper;
+
 import com.arsdigita.util.StringUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -85,7 +90,7 @@ public class TimeParameter extends ParameterModel
 
         if (!StringUtils.emptyString(hour)) {
             int hourInt = Integer.parseInt(hour);
-            if (hourInt == 12) {
+            if ((hourInt == 12) && has12HourClock()) {
                 hourInt = 0;
             }
             c.set(Calendar.HOUR, hourInt);
@@ -124,4 +129,17 @@ public class TimeParameter extends ParameterModel
         return Date.class;
     }
 
+      private boolean has12HourClock() {
+        Locale locale = GlobalizationHelper.getNegotiatedLocale();
+        DateFormat format_12Hour = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US);
+        DateFormat format_locale = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+
+        String midnight = "";
+        try {
+            midnight = format_locale.format(format_12Hour.parse("12:00 AM"));
+        } catch (ParseException ignore) {
+        }
+
+        return midnight.contains("12");
+    }
 }
