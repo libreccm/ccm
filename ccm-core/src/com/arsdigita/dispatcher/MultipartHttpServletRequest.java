@@ -371,10 +371,12 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
     }
 
     private String convertToString( Object value ) throws IOException {
-        if( value instanceof String ) return (String) value;
+        if( value instanceof String ) {
+            return (String) value;
+        }
 
         if( value instanceof ByteArrayInputStream ) {
-            StringBuffer output = new StringBuffer();
+            StringBuilder output = new StringBuilder();
 
             InputStreamReader reader;
             try {
@@ -391,7 +393,9 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
             int read = bufSize;
             while( bufSize == read ) {
                 read = reader.read( buffer, 0, bufSize );
-                if( read > 0 ) output.append( buffer, 0, read );
+                if( read > 0 ) {
+                    output.append( buffer, 0, read );
+                }
             }
 
             return output.toString();

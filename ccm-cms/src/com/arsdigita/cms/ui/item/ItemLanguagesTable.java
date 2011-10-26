@@ -46,7 +46,6 @@ import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
-
 /**
  * Displays a list of all language instances of an item.
  *
@@ -76,17 +75,17 @@ public class ItemLanguagesTable extends DataTable {
      * Builds the query for all the language instances in the current Bundle
      */
     private static class LanguagesBuilder extends LockableImpl
-        implements DataQueryBuilder {
+            implements DataQueryBuilder {
 
         ItemSelectionModel m_model;
-        
+
         public LanguagesBuilder(ItemSelectionModel model) {
             super();
             m_model = model;
         }
-        
+
         public DataQuery makeDataQuery(DataTable t, PageState s) {
-            ContentPage multiLingual = (ContentPage)m_model.getSelectedObject(s);
+            ContentPage multiLingual = (ContentPage) m_model.getSelectedObject(s);
             DataQuery q = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.getBundledItems");
             q.setParameter("bundleID", multiLingual.getContentBundle().getID());
             return q;
@@ -101,14 +100,13 @@ public class ItemLanguagesTable extends DataTable {
      * Renders the full language name.
      */
     private static class LanguageRenderer implements TableCellRenderer {
+
         public Component getComponent(Table table, PageState state, Object value,
-                                      boolean isSelected, Object key,
-                                      int row, int column) {
+                boolean isSelected, Object key,
+                int row, int column) {
             BigDecimal id = (BigDecimal) key;
-            String target = ContentItemPage.getRelativeItemURL
-                (id, ContentItemPage.AUTHORING_TAB);
-            GlobalizedMessage fullName = LanguageUtil.globalize((String)value);
-            return new Link(new Label(fullName), target);
+            String target = ContentItemPage.getRelativeItemURL(id, ContentItemPage.AUTHORING_TAB);
+            return new Link(new Label(LanguageUtil.getLangFull((String) value)), target);
         }
     }
 
@@ -116,6 +114,7 @@ public class ItemLanguagesTable extends DataTable {
      * Delete language instance action link.
      */
     private static class ActionCellRenderer implements TableCellRenderer {
+
         private static final Logger logger = Logger.getLogger(ActionCellRenderer.class);
         private static Label s_noAction;
         private static Label s_primary;
@@ -131,15 +130,15 @@ public class ItemLanguagesTable extends DataTable {
             s_link.setConfirmation("Permanently delete this item?"); // XXX G11N ?
             logger.debug("Static initalizer finished.");
         }
-
         private ItemSelectionModel m_model;
 
         public ActionCellRenderer(ItemSelectionModel model) {
             m_model = model;
         }
+
         public Component getComponent(Table table, PageState state, Object value,
-                                      boolean isSelected, Object key,
-                                      int row, int column) {
+                boolean isSelected, Object key,
+                int row, int column) {
             if (m_model.getSelectedKey(state).equals(key)) {
                 return s_noAction;
             } else {
@@ -148,8 +147,8 @@ public class ItemLanguagesTable extends DataTable {
                 OID oid = new OID(ContentPage.BASE_DATA_OBJECT_TYPE, id);
                 try {
                     ContentPage item = (ContentPage) DomainObjectFactory.newInstance(oid);
-                    if ( item.getLanguage().equals(
-                             item.getContentBundle().getDefaultLanguage())) {
+                    if (item.getLanguage().equals(
+                            item.getContentBundle().getDefaultLanguage())) {
                         return s_primary;
                     }
                 } catch (com.arsdigita.domain.DataObjectNotFoundException ex) {
@@ -162,10 +161,11 @@ public class ItemLanguagesTable extends DataTable {
 
     // delete one language instance
     private class InstanceDeleter extends TableActionAdapter {
+
         public void cellSelected(TableActionEvent e) {
             int col = e.getColumn().intValue();
 
-            if ( m_deleteColumn != getColumn(col) ) {
+            if (m_deleteColumn != getColumn(col)) {
                 return;
             }
 
@@ -184,5 +184,4 @@ public class ItemLanguagesTable extends DataTable {
             ((Table) e.getSource()).clearSelection(s);
         }
     }
-    
 }

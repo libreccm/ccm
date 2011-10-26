@@ -18,7 +18,6 @@
  */
 package com.arsdigita.globalization;
 
-import com.arsdigita.kernel.Kernel;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -178,7 +177,6 @@ public class GlobalizedMessage {
      *                GlobalizedObject?
      */
     public Object localize() {
-//        return localize(Kernel.getContext().getLocale());
         return localize(com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale());
     }
 
@@ -204,7 +202,6 @@ public class GlobalizedMessage {
      *                GlobalizedObject?
      */
     public Object localize(HttpServletRequest request) {
-//        return localize(Kernel.getContext().getLocale());
         return localize(com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale());
     }
 

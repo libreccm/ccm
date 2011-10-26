@@ -34,7 +34,6 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
@@ -66,6 +65,7 @@ public class ContentBundle extends ContentItem {
     private static DomainObjectObserver s_instancesObserver =
             new AbstractDomainObjectObserver() {
 
+                @Override
                 public void add(DomainObject dom, String name,
                         DataObject dobj) {
                     if (INSTANCES.equals(name)) {
@@ -97,6 +97,7 @@ public class ContentBundle extends ContentItem {
     /**
      * Returns the data object type for this bundle.
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -159,6 +160,7 @@ public class ContentBundle extends ContentItem {
         super(type);
     }
 
+    @Override
     protected ContentItem makeCopy() {
         final ContentBundle newItem = (ContentBundle) super.makeCopy();
 
@@ -328,7 +330,7 @@ public class ContentBundle extends ContentItem {
         instances.addEqualsFilter(LANGUAGE, language);
 
         if (instances.next()) {
-            contentItem = (ContentItem) DomainObjectFactory.newInstance(instances.getDataObject());            
+            contentItem = (ContentItem) DomainObjectFactory.newInstance(instances.getDataObject());
         }
 
         instances.close();
@@ -377,8 +379,6 @@ public class ContentBundle extends ContentItem {
             Assert.isTrue(language.length() == 2,
                     language + " is not an ISO639 language code");
         }
-
-        boolean retVal = false;
 
         final DataAssociationCursor instances = instances();
 
@@ -586,6 +586,7 @@ public class ContentBundle extends ContentItem {
     }
 
     // Methods from item that bundle overrides
+    @Override
     protected void beforeSave() {
         super.beforeSave();
 
@@ -598,25 +599,30 @@ public class ContentBundle extends ContentItem {
         }
     }
 
+    @Override
     protected boolean canPublishToFS() {
         return false;
     }
 
+    @Override
     protected void publishToFS() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public ContentItem publish(final LifecycleDefinition definition,
             final Date start) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Lifecycle getLifecycle() {
         // Bundles do not have lifecycles.
 
         return null;
     }
 
+    @Override
     public void setLifecycle(final Lifecycle lifecycle) {
         // I'd like to do the following, but VersionCopier calls
         // setLifecycle.
@@ -635,6 +641,7 @@ public class ContentBundle extends ContentItem {
      *   that regular metadata-driven methods should be used
      *   to copy the property.
      */
+    @Override
     public boolean copyProperty(final CustomCopy source,
             final Property property,
             final ItemCopier copier) {
@@ -649,6 +656,7 @@ public class ContentBundle extends ContentItem {
         return super.copyProperty(source, property, copier);
     }
 
+    @Override
     public boolean copyServices(final ContentItem source) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Copying services on bundle " + getName() + " "
@@ -667,6 +675,7 @@ public class ContentBundle extends ContentItem {
         return true;
     }
 
+    @Override
     protected void initialize() {
         super.initialize();
         addObserver(s_instancesObserver);
@@ -674,6 +683,7 @@ public class ContentBundle extends ContentItem {
         m_wasNew = isNew();
     }
 
+    @Override
     protected void afterSave() {
         if (m_wasNew) {
             getPrimaryInstance().setContentSection(getContentSection());

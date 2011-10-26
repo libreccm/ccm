@@ -18,7 +18,6 @@
 package com.arsdigita.london.navigation.ui;
 
 import com.arsdigita.bebop.PageState;
-import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
