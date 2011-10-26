@@ -108,6 +108,7 @@ public class EventPropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      **/
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
@@ -236,6 +237,7 @@ public class EventPropertyForm extends BasicPageForm
 
     }
 
+    @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         FormData d = e.getFormData();
         java.util.Date startDate = d.getDate(START_DATE);
@@ -249,7 +251,10 @@ public class EventPropertyForm extends BasicPageForm
         }
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** Form initialisation hook. Fills widgets with data.
+     * @param fse 
+     */
+    @Override
     public void init(FormSectionEvent fse) {
         // Do some initialization hook stuff
         FormData data = fse.getFormData();
@@ -300,7 +305,10 @@ public class EventPropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves Event object. */
+    /** Form processing hook. Saves Event object.
+     * @param fse 
+     */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 
