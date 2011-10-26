@@ -1,6 +1,5 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
-import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;

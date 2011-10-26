@@ -19,24 +19,62 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitPublicationsStep;
+import com.arsdigita.cms.contenttypes.ui.PublicationGenericOrganizationalUnitsStep;
+import com.arsdigita.cms.contenttypes.ui.PublicationGlobalizationUtil;
+import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+import com.arsdigita.runtime.DomainInitEvent;
+
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class PublicationInitializer extends ContentTypeInitializer {
-  
+
     public PublicationInitializer() {
         super("ccm-sci-publications.pdl.mf", Publication.BASE_DATA_OBJECT_TYPE);
     }
 
     @Override
+    public void init(final DomainInitEvent event) {
+        super.init(event);
+
+        final PublicationsConfig config = Publication.getConfig();
+
+        if (config.getAttachOrgaUnitsStep()) {
+            AuthoringKitWizard.registerAssetStep(
+                    Publication.BASE_DATA_OBJECT_TYPE,
+                    PublicationGenericOrganizationalUnitsStep.class,
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.orgaunits.title"),
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.orgaunits.description"),
+                    10);
+        }
+
+        final String attacToStr = config.getAttachPublicationsStepTo();
+        final String[] attachToCts = attacToStr.split(";");
+        for (String attachTo : attachToCts) {
+            AuthoringKitWizard.registerAssetStep(
+                    attachTo,
+                    GenericOrganizationalUnitPublicationsStep.class,
+                    PublicationGlobalizationUtil.globalize(
+                    "genericorganizationalunit.ui.publications.title"),
+                    PublicationGlobalizationUtil.globalize(
+                    "genericorganizationalunit.ui.publications.description"),
+                    10);
+        }
+    }
+
+    @Override
     public String[] getStylesheets() {
-        return new String[]{"/static/content-types/com/arsdigita/cms/contenttypes/Publication.xsl"};
+        return new String[]{
+                    "/static/content-types/com/arsdigita/cms/contenttypes/Publication.xsl"};
     }
 
     @Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Publication.xml";
     }
-
 }
