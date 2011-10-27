@@ -90,9 +90,17 @@ public class TimeParameter extends ParameterModel
 
         if (!StringUtils.emptyString(hour)) {
             int hourInt = Integer.parseInt(hour);
+/* Das ist alles Blödsinn. Beim 24-Stundenformat brauchen wir das sowieso nicht.
+Beim 12-Stunden-Formato müßte es, wenn überhaupt, anderherum sein: Aus einer 
+eingetragenen 0 in den Stunden muß eine 12 werden. ABER: Die Informationen
+werden in einem Calendar-Object gespeichert, das intern immer 24-Stunden-Format
+verwendet. Das 12-Stunden-Format ist eine Frage der Formatierung und somit 
+hier irrelevant. Es bleibt zu testet, ob ein 12:00 AM im Caendar-Object tatsächlich
+zu 0:00 Uhr wird.
             if ((hourInt == 12) && has12HourClock()) {
                 hourInt = 0;
             }
+*/
             c.set(Calendar.HOUR, hourInt);
         }
 

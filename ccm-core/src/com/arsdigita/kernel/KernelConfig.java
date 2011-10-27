@@ -81,6 +81,9 @@ public final class KernelConfig extends AbstractConfig {
              "en,de,fr,nl,it,pt,es");
     private final Parameter m_languageIndependentItems = new BooleanParameter
             ("waf.kernel.language_independent_items", Parameter.REQUIRED, Boolean.FALSE);
+    private final Parameter m_languageIndependentCode = new StringParameter
+            ("waf.kernel.languages_independent_code", Parameter.OPTIONAL,
+             "--");
 
     public KernelConfig() {
 
@@ -104,6 +107,7 @@ public final class KernelConfig extends AbstractConfig {
         register(m_secureLogin);
         register(m_supportedLanguages);
         register(m_languageIndependentItems);
+        register(m_languageIndependentCode);
 
         loadInfo();
     }
@@ -177,6 +181,13 @@ public final class KernelConfig extends AbstractConfig {
      */
     public final StringTokenizer getSupportedLanguagesTokenizer() {
         return new StringTokenizer(this.getSupportedLanguages(), ",", false);
+    }
+
+    /**
+     * Returns the languagesIndependentCode as String.
+     */
+    public final String getLanguagesIndependentCode() {
+        return (String) get(m_languageIndependentCode);
     }
 
     /**
