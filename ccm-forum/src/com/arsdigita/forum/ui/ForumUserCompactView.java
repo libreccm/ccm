@@ -169,8 +169,6 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
                              new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
                                                       forum, party);
 
-        PermissionService.assertPermission(forumAdmin);
-
         if (MODE_TOPICS.equals(mode)) {
             if (Forum.getConfig().topicCreationByAdminOnly()) {
                 if (party == null) {
