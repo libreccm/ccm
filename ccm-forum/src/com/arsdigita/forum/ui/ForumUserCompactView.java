@@ -193,7 +193,6 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
                 UserContext.redirectToLoginPage(state.getRequest());
             }
             PermissionService.assertPermission(forumAdmin);
-
             setVisibleComponent(state, m_permissionsView);
         } else if (MODE_SETUP.equals(mode)) {
             if (party == null) {
@@ -202,7 +201,9 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
             PermissionService.assertPermission(forumAdmin);
             setVisibleComponent(state, m_setupView);
         } else if (MODE_THREADS.equals(mode)) {
-            PermissionService.assertPermission(forumAdmin);
+            if (party == null) {
+                UserContext.redirectToLoginPage(state.getRequest());
+            }
             setVisibleComponent(state, m_threadsView);
         }
     }
@@ -247,7 +248,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     protected void generateModes(PageState state, Element content,
                                  Party party, Forum forum) {
 
-        PermissionDescriptor permission = new PermissionDescriptor(
+        PermissionDescriptor adminPermission = new PermissionDescriptor(
                 PrivilegeDescriptor.ADMIN,
                 forum,
                 party);
@@ -269,7 +270,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
                                 Text.gz("forum.ui.modeThreads"));
             }
         }
-        // topics panel is always shoen as well if not restricted to admins.
+        // topics panel is always shown as well if not restricted to admins.
         if (!Forum.getConfig().topicCreationByAdminOnly()) {
             generateModeXML(state, content, MODE_TOPICS,
                             Text.gz("forum.ui.modeTopics"));
@@ -279,7 +280,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
                         Text.gz("forum.ui.modeAlerts"));
 
         // admin section
-        if (PermissionService.checkPermission(permission)) {
+        if (PermissionService.checkPermission(adminPermission)) {
             generateModeXML(state, content, MODE_MODERATION,
                             Text.gz("forum.ui.modeAlerts"));
             if (Forum.getConfig().showNewTabs()) {
@@ -313,31 +314,6 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
                                    Element parent,
                                    String mode) {
         generateModeXML(state, parent, mode, null);
-        /*
-        String current = (String)state.getValue(m_mode);
-        if (current == null) {
-        current = MODE_THREADS;  // used as default mode
-        }
-        
-        Element content =
-        parent.newChildElement(FORUM_XML_PREFIX + ":forumMode", FORUM_XML_NS);
-        
-        state.setControlEvent(this, "mode", mode);
-        
-        content.addAttribute("mode",
-        mode);
-        
-        try {
-        content.addAttribute("url",
-        state.stateAsURL());
-        } catch (IOException ex) {
-        throw new UncheckedWrapperException("cannot create url", ex);
-        }
-        content.addAttribute("selected",
-        current.equals(mode) ? "1" : "0");
-        state.clearControlEvent();
-        
-         */
     }
 
     /**

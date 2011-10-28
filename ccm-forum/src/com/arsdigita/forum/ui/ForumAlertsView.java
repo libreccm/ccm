@@ -109,17 +109,17 @@ class ForumAlertsView extends SimpleContainer implements Constants {
                     ForumSubscription fSub =
                         ForumSubscription.getFromForum(forum);
                     if (fSub.isSubscribed(party)) {
-                        instant.setValue(s,"Yes");
+                        instant.setValue(s,Text.gzAsStr("forum.ui.yes"));
                     } else {
-                        instant.setValue(s, "No");
+                        instant.setValue(s, Text.gzAsStr("forum.ui.no"));
                     }
 
                     DailySubscription dSub = (DailySubscription)
                         DailySubscription.getFromForum(forum);
                     if (dSub.isSubscribed(party)) {
-                        daily.setValue(s,"Yes");
+                        daily.setValue(s,Text.gzAsStr("forum.ui.yes"));
                     } else {
-                        daily.setValue(s, "No");
+                        daily.setValue(s, Text.gzAsStr("forum.ui.no"));
                     }
                 }
             });
@@ -138,9 +138,9 @@ class ForumAlertsView extends SimpleContainer implements Constants {
                     DailySubscription dSub = (DailySubscription)
                         DailySubscription.getFromForum(forum);
 
-                    if (data.get("instant").equals("Yes")) {
+                    if (data.get("instant").equals(Text.gzAsStr("forum.ui.yes"))) {
                         fSub.subscribe(party);
-                    } else if (data.get("instant").equals("No")) {
+                    } else if (data.get("instant").equals(Text.gzAsStr("forum.ui.no"))) {
                         fSub.unsubscribe(party);
                     } else {
                         throw new FormProcessException(
@@ -149,9 +149,9 @@ class ForumAlertsView extends SimpleContainer implements Constants {
                     }
                     fSub.save();
 
-                    if (data.get("daily").equals("Yes")) {
+                    if (data.get("daily").equals(Text.gzAsStr("forum.ui.yes"))) {
                         dSub.subscribe(party);
-                    } else if (data.get("daily").equals("No")) {
+                    } else if (data.get("daily").equals(Text.gzAsStr("forum.ui.no"))) {
                         dSub.unsubscribe(party);
                     } else {
                         throw new FormProcessException(
