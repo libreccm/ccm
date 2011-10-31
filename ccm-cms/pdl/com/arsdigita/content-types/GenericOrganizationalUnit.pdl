@@ -152,7 +152,8 @@ query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
 }
 
 //Gets the members of several orga units
-//@param orgaUnitsIds comma separated list of the ids of orga units to include
+//add a filter (organizationalunit_id = $id1 or organizationalunit_id = $id2 or ...) 
+//to restrict to orga units
 query getIdsOfMembersOfOrgaUnits {
     BigDecimal memberId;
     BigDecimal orgaunitId;

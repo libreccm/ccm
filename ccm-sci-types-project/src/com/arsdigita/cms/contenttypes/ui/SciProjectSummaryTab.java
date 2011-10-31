@@ -84,9 +84,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
      * @param project
      * @param parent  
      */
-    protected void generateBasicDataXml(
-            final SciProject project,
-            final Element parent) {
+    protected void generateBasicDataXml(final SciProject project,
+                                        final Element parent) {
         final long start = System.currentTimeMillis();
         if ((project.getAddendum() != null)
             && !project.getAddendum().trim().isEmpty()) {
@@ -154,8 +153,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             }
             personsQuery.addFilter(personsFilter.toString());
 
-            personsQuery.addOrder("surname");
-            personsQuery.addOrder("givenname");
+            personsQuery.addOrder(GenericPerson.SURNAME);
+            personsQuery.addOrder(GenericPerson.GIVENNAME);
 
             while (personsQuery.next()) {
                 generateMemberXml((BigDecimal) personsQuery.get("memberId"),
@@ -243,23 +242,26 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                             final Element parent,
                                             final PageState state) {
         final long start = System.currentTimeMillis();
-        final GenericOrganizationalUnitSuperiorCollection orgas = project.getSuperiorOrgaUnits();
-        
+        final GenericOrganizationalUnitSuperiorCollection orgas = project.
+                getSuperiorOrgaUnits();
+
         if (orgas == null) {
             return;
         }
-        
-        orgas.addFilter(String.format("link.assocType = '%s'",
-                        SciProjectInvolvedOrganizationsStep.ASSOC_TYPE));
-        
+
+        orgas.addFilter(
+                String.format("link.assocType = '%s'",
+                              SciProjectInvolvedOrganizationsStep.ASSOC_TYPE));
+
         if (orgas.isEmpty()) {
             return;
         }
-        
-        final Element involvedElem = parent.newChildElement("involvedOrganizations");
-        while(orgas.next()) {
-            generateInvolvedOrgaXml(orgas.getGenericOrganizationalUnit(), 
-                                    involvedElem, 
+
+        final Element involvedElem = parent.newChildElement(
+                "involvedOrganizations");
+        while (orgas.next()) {
+            generateInvolvedOrgaXml(orgas.getGenericOrganizationalUnit(),
+                                    involvedElem,
                                     state);
         }
         logger.debug(String.format("Generated XML for involved organizations "

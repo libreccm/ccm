@@ -67,6 +67,69 @@ association {
     Integer[0..1] publicationOrder = cms_organizationalunits_publications_map.publication_order INTEGER;
 }
 
+//Retrieves the publications (the ids). Allows filtering for a orgaunit id 
+//For each author there will be on row in the result
+query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
+    BigDecimal publicationId;
+    String objectType;
+    BigDecimal orgaunitId;
+    String title;
+    Integer year;
+    String authorSurname;
+    String authorGivenname;
+
+    do {
+        select cms_pages.item_id, cms_pages.title, acs_objects.object_type, cms_organizationalunits.organizationalunit_id, ct_publications.year, cms_persons.surname, cms_persons.givenname
+        from cms_pages 
+        join ct_publications on cms_pages.item_id = ct_publications.publication_id 
+        join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
+        join cms_persons on ct_publications_authorship.person_id = cms_persons.person_id 
+        join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
+        join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id
+        join acs_objects on cms_pages.item_id = acs_objects.object_id
+    } map {
+        publicationId = cms_pages.item_id;
+        objectType = acs_objects.object_type;
+        orgaunitId = cms_organizationalunits.organizationalunit_id;
+        title = cms_pages.title;
+        year = ct_publications.year;
+        authorSurname = cms_persons.surname;
+        authorGivenname = cms_persons.givenname;
+    }
+}
+
+//Retrieves the publications (the ids). Allows filtering for a orgaunit id 
+//The authors are merged into one field in the result, each publication will 
+//only appear one time
+query getIdsOfPublicationsForOrgaUnit {
+    BigDecimal publicationId;
+    String objectType;
+    BigDecimal orgaunitId;
+    String title;
+    Integer year;
+    String authors;
+
+    do {
+        select cms_pages.item_id, acs_object.object_type, cms_pages.title, cms_organizationalunits.organizationalunit_id, ct_publications.year, (select array_to_string (array (select cms_persons.surname || ', ' || cms_persons.givenname 
+                                                                                                                                                        from cms_persons
+                                                                                                                                                        join ct_publications_authorship_map on cms_persons.person_id = ct_publications_authorship.person_id
+                                                                                                                                                        where ct_publications_authorship.publication_id = cms_pages.item_id), '; ')) as authors
+        from cms_pages
+        join ct_publications on cms_pages.item_id = ct_publications.publication_id 
+        join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
+        join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id
+        join acs_objects on cms_pages.item_id = acs_objects.object_id
+    } map {
+        publicationId = cms_pages.item_id;
+        objectType = acs_objects.object_type;
+        orgaunitId = cms_organizationalunits.organizationalunit_id;
+        title = cms_pages.title;
+        year = ct_publications.year;
+        authors = authors;
+    }
+}
+
+//Old, possible obsolete queries. Will be removed soon
 query getAllYearsOfPublication {
     Integer yearOfPublication;
 

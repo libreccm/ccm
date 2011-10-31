@@ -49,6 +49,8 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
     }
 
     public void swapWithNext(final GenericOrganizationalUnit orgaunit) {
+        
+        
         if (orgaunit == null) {
             throw new IllegalArgumentException(
                     "Parameter orgaunit is null. Can't swap position with null");

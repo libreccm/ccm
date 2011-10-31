@@ -184,7 +184,9 @@ public class SciProject extends GenericOrganizationalUnit {
         set(FUNDING_VOLUME, fundingVolume);
     }
 
-    @Override
+    
+    /*Method is not use commented out. 
+     * @Override    
     public boolean hasContacts() {
         boolean result = false;
 
@@ -202,16 +204,16 @@ public class SciProject extends GenericOrganizationalUnit {
         query.close();
 
         return result;
-    }
+    }*/
 
-    /**
-     * 
+    /*
+     * Not used anywhere
      * @param merge Should I also look into the projects and return true
      * if the organization or at least one of the projects has members?
      * @param status 
      * @return 
      */
-    public boolean hasMembers(final boolean merge,
+    /*public boolean hasMembers(final boolean merge,
                               final SciProjectMemberStatus status) {
         String queryName;
 
@@ -276,9 +278,9 @@ public class SciProject extends GenericOrganizationalUnit {
                 return false;
             }
         }
-    }
+    }*/
 
-    private boolean hasMembers(final BigDecimal projectId,
+    /*private boolean hasMembers(final BigDecimal projectId,
                                final boolean merge,
                                final SciProjectMemberStatus status) {
         String queryName;
@@ -344,7 +346,7 @@ public class SciProject extends GenericOrganizationalUnit {
                 return false;
             }
         }
-    }
+    }*/
 
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
