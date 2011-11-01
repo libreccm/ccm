@@ -13,6 +13,7 @@ import com.arsdigita.cms.contenttypes.Expertise;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -77,11 +78,16 @@ public class ExpertiseOrganizationForm
                     "publications.ui.expertise.organization.no_orga_selected"));
             return;
         }
-        
-        Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
-        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
-        if (!(orga.getContentBundle().hasInstance(expertise.getLanguage(), true))) {
-            data.addError(PublicationGlobalizationUtil.globalize(
+
+        Expertise expertise = (Expertise) getItemSelectionModel().
+                getSelectedObject(state);
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
+                ITEM_SEARCH);
+        if (!(orga.getContentBundle().hasInstance(expertise.getLanguage(),
+                                                  Kernel.getConfig().
+              languageIndependentItems()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
                     "publications.ui.expertise.organization.no_suitable_language_variant"));
             return;
         }

@@ -35,6 +35,7 @@ import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.VolumeInSeriesCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
@@ -119,7 +120,9 @@ public class SeriesVolumeAddForm extends BasicItemForm {
         Series series = (Series) getItemSelectionModel().
                 getSelectedObject(state);
         Publication volume = (Publication) data.get(ITEM_SEARCH);
-        if (!(volume.getContentBundle().hasInstance(series.getLanguage(), true))) {
+        if (!(volume.getContentBundle().hasInstance(series.getLanguage(),
+                                                    Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.series.volume_of_series.no_suitable_language_variant"));

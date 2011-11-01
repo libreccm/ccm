@@ -32,6 +32,7 @@ import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  * Form for adding an associatio between an article in a journal and a journal.
@@ -87,23 +88,28 @@ public class ArticleInJournalJournalForm
 
     @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {
-        final PageState state= fse.getPageState();
+        final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
-        
+
         if (data.get(ITEM_SEARCH) == null) {
-            data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInJournal.selectJournal.no_journal_selected"));
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.articleInJournal.selectJournal.no_journal_selected"));
             return;
         }
-        
-        ArticleInJournal article = (ArticleInJournal) getItemSelectionModel().getSelectedObject(
+
+        ArticleInJournal article = (ArticleInJournal) getItemSelectionModel().
+                getSelectedObject(
                 state);
         Journal journal = (Journal) data.get(ITEM_SEARCH);
-        
-        if (!(journal.getContentBundle().hasInstance(article.getLanguage(), true))) {
-               data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInJournal.selectJournal.no_suitable_language_variant"));
+
+        if (!(journal.getContentBundle().hasInstance(article.getLanguage(),
+                                                     Kernel.getConfig().
+              languageIndependentItems()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.articleInJournal.selectJournal.no_suitable_language_variant"));
             return;
-        }                
+        }
     }
 }

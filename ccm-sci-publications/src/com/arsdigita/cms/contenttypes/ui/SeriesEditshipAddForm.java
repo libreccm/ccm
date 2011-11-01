@@ -35,6 +35,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -177,39 +178,44 @@ public class SeriesEditshipAddForm
                 fse.getPageState())) {
             editStep.setSelectedEditor(null);
             editStep.setSelectedEditorDateFrom(null);
-            editStep.setSelectedEditorDateTo(null);           
+            editStep.setSelectedEditorDateTo(null);
         }
-        
+
         init(fse);
     }
-    
+
     @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
-        
+
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.no_editor_selected"));
+                    "publications.ui.series.editship.no_editor_selected"));
             return;
         }
-        
-        Series series = (Series) getItemSelectionModel().getSelectedObject(state);
+
+        Series series =
+               (Series) getItemSelectionModel().getSelectedObject(state);
         GenericPerson editor = (GenericPerson) data.get(ITEM_SEARCH);
-        if (!(editor.getContentBundle().hasInstance(series.getLanguage(), true))) {
-            data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.no_suitable_language_variant"));
+        if (!(editor.getContentBundle().hasInstance(series.getLanguage(),
+                                                    Kernel.getConfig().
+              languageIndependentItems()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.editship.no_suitable_language_variant"));
             return;
         }
-        
-        editor = (GenericPerson) editor.getContentBundle().getInstance(series.getLanguage());
+
+        editor = (GenericPerson) editor.getContentBundle().getInstance(series.
+                getLanguage());
         EditshipCollection editors = series.getEditors();
         editors.addFilter(String.format("id = %s", editor.getID().toString()));
         if (editors.size() > 0) {
             data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.already_added"));
+                    "publications.ui.series.editship.already_added"));
         }
-        
+
         editors.close();
     }
 }

@@ -14,7 +14,7 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationGenericOrganizationalsUnitCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -86,7 +86,8 @@ public class PublicationGenericOrganizationalUnitAddForm
         GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) data.
                 get(ITEM_SEARCH);
         if (!(orgaunit.getContentBundle().hasInstance(publication.getLanguage(),
-                                                      true))) {
+                                                      Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(PublicationGlobalizationUtil.globalize(
                     "publications.ui.orgaunit.no_suitable_language_variant"));
             return;

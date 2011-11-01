@@ -42,6 +42,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
@@ -202,7 +203,9 @@ public class GenericOrganizationalUnitContactAddForm
 
             GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
-            if (!(contact.getContentBundle().hasInstance(orgaunit.getLanguage(), true))) {
+            if (!(contact.getContentBundle().hasInstance(orgaunit.getLanguage(),
+                                                         Kernel.getConfig().
+                  languageIndependentItems()))) {
                 data.addError(
                         ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.genericorgaunit.select_contact.no_suitable_language_variant"));

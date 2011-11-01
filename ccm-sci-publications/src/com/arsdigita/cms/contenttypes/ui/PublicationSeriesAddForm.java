@@ -35,6 +35,7 @@ import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -108,7 +109,9 @@ public class PublicationSeriesAddForm
         Publication publication = (Publication) getItemSelectionModel().
                 getSelectedObject(state);
         Series series = (Series) data.get(ITEM_SEARCH);
-        if (!(series.getContentBundle().hasInstance(publication.getLanguage(), true))) {
+        if (!(series.getContentBundle().hasInstance(publication.getLanguage(),
+                                                    Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.series.select_series.no_suitable_language_variant"));

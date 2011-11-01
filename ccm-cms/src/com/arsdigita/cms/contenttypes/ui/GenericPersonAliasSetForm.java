@@ -17,6 +17,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.UncheckedWrapperException;
 
 /**
@@ -137,7 +138,9 @@ public class GenericPersonAliasSetForm
         } else if (person.equals(data.get(ITEM_SEARCH))) {
             data.addError(ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.person.alias.select.same_as_person"));
-        } else if (!alias.getContentBundle().hasInstance(person.getLanguage(), true)) {
+        } else if (!alias.getContentBundle().hasInstance(person.getLanguage(),
+                                                         Kernel.getConfig().
+                languageIndependentItems())) {
             data.addError(
                     ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.person.alias.select.no_suitable_language_variant"));

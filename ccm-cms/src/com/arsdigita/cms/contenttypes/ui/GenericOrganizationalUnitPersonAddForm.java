@@ -43,6 +43,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
@@ -245,11 +246,13 @@ public class GenericOrganizationalUnitPersonAddForm
 
             GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
 
-            if (!(person.getContentBundle().hasInstance(orga.getLanguage(), true))) {
+            if (!(person.getContentBundle().hasInstance(orga.getLanguage(),
+                                                        Kernel.getConfig().
+                  languageIndependentItems()))) {
                 data.addError(
                         ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.genericorgaunit.person.no_suitable_language_variant"));
-                
+
                 return;
             }
 
@@ -265,7 +268,7 @@ public class GenericOrganizationalUnitPersonAddForm
                         ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.genericorgaunit.person.already_added"));
             }
-            
+
             persons.close();
         }
     }

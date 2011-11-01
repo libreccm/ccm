@@ -33,6 +33,7 @@ import com.arsdigita.cms.contenttypes.InProceedingsCollection;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -105,14 +106,17 @@ public class ProceedingsPapersAddForm
         Proceedings proceedings = (Proceedings) getItemSelectionModel().
                 getSelectedObject(state);
         InProceedings paper = (InProceedings) data.get(ITEM_SEARCH);
-        if (!(paper.getContentBundle().hasInstance(proceedings.getLanguage(), true))) {
+        if (!(paper.getContentBundle().hasInstance(proceedings.getLanguage(),
+                                                   Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.select_paper.no_suitable_language_variant"));
             return;
         }
-        
-        paper = (InProceedings) paper.getContentBundle().getInstance(proceedings.getLanguage());
+
+        paper = (InProceedings) paper.getContentBundle().getInstance(proceedings.
+                getLanguage());
         InProceedingsCollection papers = proceedings.getPapers();
         papers.addFilter(String.format("id = %s", paper.getID().toString()));
         if (papers.size() > 0) {

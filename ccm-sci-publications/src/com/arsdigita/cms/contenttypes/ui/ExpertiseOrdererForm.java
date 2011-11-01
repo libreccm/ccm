@@ -13,6 +13,7 @@ import com.arsdigita.cms.contenttypes.Expertise;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -66,24 +67,31 @@ public class ExpertiseOrdererForm
 
         init(fse);
     }
-    
-    @Override public void validate(FormSectionEvent fse) throws FormProcessException {
+
+    @Override
+    public void validate(FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
-        
+
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.orderer.no_orderer_selected"));
-            
+                    "publications.ui.expertise.orderer.no_orderer_selected"));
+
             return;
-        } 
-        
-        Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
-        GenericOrganizationalUnit orderer = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);        
-        if (!(orderer.getContentBundle().hasInstance(expertise.getLanguage(), true))) {
-              data.addError(PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.orderer.no_suitable_langauge_variant"));
-            
+        }
+
+        Expertise expertise = (Expertise) getItemSelectionModel().
+                getSelectedObject(state);
+        GenericOrganizationalUnit orderer =
+                                  (GenericOrganizationalUnit) data.get(
+                ITEM_SEARCH);
+        if (!(orderer.getContentBundle().hasInstance(expertise.getLanguage(),
+                                                     Kernel.getConfig().
+              languageIndependentItems()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
+                    "publications.ui.expertise.orderer.no_suitable_langauge_variant"));
+
             return;
         }
     }

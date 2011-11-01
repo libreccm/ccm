@@ -32,6 +32,7 @@ import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  * Form for adding an association between an ArticleInCollectedVolume and a
@@ -102,16 +103,22 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
                     "publications.ui.articleInCollectedVolume.selectCollectedVolume.no_collected_volume_selected"));
             return;
         }
-        
-        ArticleInCollectedVolume article = (ArticleInCollectedVolume) getItemSelectionModel().getSelectedObject(state);
-        
-        CollectedVolume collectedVolume = (CollectedVolume) data.get(ITEM_SEARCH);
-        
-        if (!(collectedVolume.getContentBundle().hasInstance(article.getLanguage(), true))) {
-             data.addError(
+
+        ArticleInCollectedVolume article =
+                                 (ArticleInCollectedVolume) getItemSelectionModel().
+                getSelectedObject(state);
+
+        CollectedVolume collectedVolume =
+                        (CollectedVolume) data.get(ITEM_SEARCH);
+
+        if (!(collectedVolume.getContentBundle().hasInstance(
+              article.getLanguage(),
+                                                             Kernel.getConfig().
+              languageIndependentItems()))) {
+            data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.articleInCollectedVolume.selectCollectedVolume.no_suitable_language_variant"));
             return;
-        }                        
+        }
     }
 }

@@ -25,6 +25,7 @@ import com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitSubordinateOrg
 import com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitSubordinateOrgaUnitsTable;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -77,7 +78,7 @@ public class GenericOrganizationalUnit extends ContentPage {
     public GenericOrganizationalUnit(final String type) {
         super(type);
     }
-        
+
     public String getAddendum() {
         return (String) get(ADDENDUM);
     }
@@ -131,9 +132,11 @@ public class GenericOrganizationalUnit extends ContentPage {
         GenericPerson personToLink = person;
 
         final ContentBundle bundle = person.getContentBundle();
-        if ((bundle != null) && (bundle.hasInstance(this.getLanguage(), true))) {
+        if ((bundle != null) && (bundle.hasInstance(this.getLanguage(), Kernel.
+                                 getConfig().
+                                 languageIndependentItems()))) {
             personToLink =
-            (GenericPerson) bundle.getInstance(this.getLanguage(), true);
+            (GenericPerson) bundle.getInstance(this.getLanguage());
         }
 
         Assert.exists(personToLink, GenericPerson.class);
@@ -221,11 +224,12 @@ public class GenericOrganizationalUnit extends ContentPage {
 
         final DataObject link = add(SUBORDINATE_ORGAUNITS, orgaunit);
         link.set(GenericOrganizationalUnitSubordinateCollection.ASSOCTYPE,
-                 assocType);                
+                 assocType);
         link.set(
                 GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
                 (int) getSubordinateOrgaUnits().size());
-        link.set(GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
+        link.set(
+                GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
                  ((int) getSuperiorOrgaUnits().size()) + 1);
         link.save();
     }

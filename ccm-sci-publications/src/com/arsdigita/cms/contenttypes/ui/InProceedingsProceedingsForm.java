@@ -32,6 +32,7 @@ import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  * Form for adding an association between a InProceedings publication and
@@ -103,7 +104,7 @@ public class InProceedingsProceedingsForm
                 getSelectedObject(state);
         Proceedings proceedings = (Proceedings) data.get(ITEM_SEARCH);
         if (!(proceedings.getContentBundle().hasInstance(inProceedings.
-              getLanguage(), true))) {
+              getLanguage(), Kernel.getConfig().languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.inProceedings.selectProceedings.no_suitable_language_variant"));

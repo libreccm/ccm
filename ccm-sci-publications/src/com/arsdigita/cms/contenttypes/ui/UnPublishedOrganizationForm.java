@@ -13,6 +13,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -82,8 +83,11 @@ public class UnPublishedOrganizationForm
                 getSelectedObject(state);
         GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
                 ITEM_SEARCH);
-        if (!(orga.getContentBundle().hasInstance(unPublished.getLanguage(), true))) {
-            data.addError(PublicationGlobalizationUtil.globalize(
+        if (!(orga.getContentBundle().hasInstance(unPublished.getLanguage(),
+                                                  Kernel.getConfig().
+              languageIndependentItems()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
                     "publications.ui.unpublished.organization.no_suitable_language_variant"));
             return;
         }

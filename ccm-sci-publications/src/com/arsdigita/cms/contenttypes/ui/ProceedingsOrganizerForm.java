@@ -13,6 +13,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -83,8 +84,11 @@ public class ProceedingsOrganizerForm
                 getSelectedObject(state);
         GenericOrganizationalUnit organizer = (GenericOrganizationalUnit) data.
                 get(ITEM_SEARCH);
-        if (!(organizer.getContentBundle().hasInstance(proceedings.getLanguage(), true))) {
-            data.addError(PublicationGlobalizationUtil.globalize(
+        if (!(organizer.getContentBundle().hasInstance(proceedings.getLanguage(),
+                                                       Kernel.getConfig().
+              languageIndependentItems()))) {
+            data.addError(
+                    PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.organizer.no_suitable_language_variant"));
             return;
         }

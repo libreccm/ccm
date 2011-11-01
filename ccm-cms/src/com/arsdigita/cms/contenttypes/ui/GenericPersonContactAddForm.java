@@ -42,6 +42,7 @@ import com.arsdigita.cms.ui.ItemSearchWidget;
 
 import com.arsdigita.globalization.GlobalizationHelper;
 
+import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
@@ -156,24 +157,27 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
-        if (!(contact.getContentBundle().hasInstance(person.getLanguage(), true))) {
+        if (!(contact.getContentBundle().hasInstance(person.getLanguage(),
+                                                     Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(
                     ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.person.select_contact.no_suitable_language_variant"));
 
             return;
         }
-        
-        contact = (GenericContact) contact.getContentBundle().getInstance(person.getLanguage());
+
+        contact = (GenericContact) contact.getContentBundle().getInstance(person.
+                getLanguage());
         GenericPersonContactCollection contacts = person.getContacts();
-        
+
         contacts.addFilter(String.format("id = %s", contact.getID().toString()));
         if (contacts.size() > 0) {
-             data.addError(
+            data.addError(
                     ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.person.select_contact.already_added"));
-        }    
-        
-        contacts.close();        
+        }
+
+        contacts.close();
     }
 }

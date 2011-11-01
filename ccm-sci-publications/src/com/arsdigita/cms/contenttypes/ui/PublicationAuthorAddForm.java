@@ -37,6 +37,7 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
+import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
@@ -211,7 +212,9 @@ public class PublicationAuthorAddForm
                     getSelectedAuthor();
             editing = true;
         }
-        if (!(author.getContentBundle().hasInstance(publication.getLanguage(), true))) {
+        if (!(author.getContentBundle().hasInstance(publication.getLanguage(),
+                                                    Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.authors.selectAuthor.no_suitable_language_variant"));

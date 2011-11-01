@@ -33,6 +33,7 @@ import com.arsdigita.cms.contenttypes.ArticleInJournalCollection;
 import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
@@ -109,7 +110,9 @@ public class JournalArticleAddForm
         Journal journal = (Journal) getItemSelectionModel().getSelectedObject(
                 state);
         ArticleInJournal article = (ArticleInJournal) data.get(ITEM_SEARCH);
-        if (!(article.getContentBundle().hasInstance(journal.getLanguage(), true))) {
+        if (!(article.getContentBundle().hasInstance(journal.getLanguage(),
+                                                     Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.journal.articles.select_article.no_suitable_language_variant"));

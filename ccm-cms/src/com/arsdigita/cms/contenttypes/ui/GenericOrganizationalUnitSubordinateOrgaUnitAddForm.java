@@ -13,6 +13,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  * Form for adding a subordinate organizational unit to a organizational unit.
@@ -35,29 +36,29 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitAddForm
             final GenericOrgaUnitSubordinateOrgaUnitAddFormCustomizer customizer) {
         super("SubordinateOrgaUnitsAddForm", itemModel);
         this.customizer = customizer;
-        
+
         add(new Label(customizer.getSelectSubordinateOrgaUnitLabel()));
         itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 customizer.getSubordinateOrgaUnitType()));
-        add(itemSearch);       
+        add(itemSearch);
     }
 
     @Override
     protected void addWidgets() {
         /*add(new Label(customizer.getSelectSubordinateOrgaUnitLabel()));
         itemSearch = new ItemSearchWidget(
-                ITEM_SEARCH,
-                ContentType.findByAssociatedObjectType(
-                customizer.getSubordinateOrgaUnitType()));
+        ITEM_SEARCH,
+        ContentType.findByAssociatedObjectType(
+        customizer.getSubordinateOrgaUnitType()));
         add(itemSearch);       */
     }
 
     @Override
     public void init(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
-                
+
         setVisible(state, true);
     }
 
@@ -76,7 +77,8 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitAddForm
             subOrgaUnit = (GenericOrganizationalUnit) subOrgaUnit.
                     getContentBundle().getInstance(orgaunit.getLanguage(), true);
 
-            orgaunit.addSubordinateOrgaUnit(subOrgaUnit, customizer.getAssocType());
+            orgaunit.addSubordinateOrgaUnit(subOrgaUnit,
+                                            customizer.getAssocType());
         }
 
         init(fse);
@@ -97,26 +99,31 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitAddForm
                                         (GenericOrganizationalUnit) getItemSelectionModel().
                 getSelectedObject(state);
         GenericOrganizationalUnit subOrgaUnit =
-                                        (GenericOrganizationalUnit) data.get(
+                                  (GenericOrganizationalUnit) data.get(
                 ITEM_SEARCH);
         if (!(subOrgaUnit.getContentBundle().hasInstance(orgaunit.getLanguage(),
-                                                         true))) {
+                                                         Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(customizer.getNoSuitableLanguageVariantMessage());
             return;
         }
-        
-        subOrgaUnit = (GenericOrganizationalUnit) subOrgaUnit.getContentBundle().getInstance(orgaunit.getLanguage(), true);
-        
+
+        subOrgaUnit = (GenericOrganizationalUnit) subOrgaUnit.getContentBundle().
+                getInstance(orgaunit.getLanguage(), true);
+
         if (orgaunit.getID().equals(subOrgaUnit.getID())) {
             data.addError(customizer.getAddingToItselfMessage());
             return;
         }
-        
-        final GenericOrganizationalUnitSubordinateCollection subOrgaUnits = orgaunit.getSubordinateOrgaUnits();
-        subOrgaUnits.addFilter(String.format("id = %s", subOrgaUnit.getID().toString()));
+
+        final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
+                                                             orgaunit.
+                getSubordinateOrgaUnits();
+        subOrgaUnits.addFilter(String.format("id = %s", subOrgaUnit.getID().
+                toString()));
         if (subOrgaUnits.size() > 0) {
             data.addError(customizer.getAlreadyAddedMessage());
         }
-        subOrgaUnits.close();        
-    } 
+        subOrgaUnits.close();
+    }
 }

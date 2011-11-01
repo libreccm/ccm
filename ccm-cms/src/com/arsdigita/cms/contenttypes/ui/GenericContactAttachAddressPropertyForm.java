@@ -19,6 +19,7 @@ import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.UncheckedWrapperException;
 
 import org.apache.log4j.Logger;
@@ -162,7 +163,9 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
         
           GenericAddress address = (GenericAddress) data.get(ITEM_SEARCH);
           
-          if (!(address.getContentBundle().hasInstance(contact.getLanguage(), true))) {
+        if (!(address.getContentBundle().hasInstance(contact.getLanguage(),
+                                                     Kernel.getConfig().
+              languageIndependentItems()))) {
               data.addError( ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.contact.select_address.no_suitable_language_variant"));
           }

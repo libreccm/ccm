@@ -13,6 +13,7 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -85,7 +86,9 @@ public class PublicationWithPublisherSetPublisherForm
                                  (PublicationWithPublisher) getItemSelectionModel().
                 getSelectedObject(state);
         Publisher publisher = (Publisher) data.get(ITEM_SEARCH);
-        if (!(publisher.getContentBundle().hasInstance(publication.getLanguage(), true))) {
+        if (!(publisher.getContentBundle().hasInstance(publication.getLanguage(),
+                                                       Kernel.getConfig().
+              languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.with_publisher.publisher.no_suitable_language_variant"));

@@ -13,6 +13,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -82,7 +83,8 @@ public class InternetArticleOrganizationForm
                 getSelectedObject(state);
         GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
                 ITEM_SEARCH);
-        if (!(orga.getContentBundle().hasInstance(article.getLanguage(), true))) {
+        if (!(orga.getContentBundle().hasInstance(article.getLanguage(), Kernel.
+              getConfig().languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.internetarticle.select_organization.no_suitable_language_variant"));
