@@ -202,7 +202,7 @@ public class GenericOrganizationalUnitContactAddForm
 
             GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
-            if (!(contact.getContentBundle().hasInstance(orgaunit.getLanguage()))) {
+            if (!(contact.getContentBundle().hasInstance(orgaunit.getLanguage(), true))) {
                 data.addError(
                         ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.genericorgaunit.select_contact.no_suitable_language_variant"));

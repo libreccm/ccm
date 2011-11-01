@@ -131,9 +131,9 @@ public class GenericOrganizationalUnit extends ContentPage {
         GenericPerson personToLink = person;
 
         final ContentBundle bundle = person.getContentBundle();
-        if ((bundle != null) && (bundle.hasInstance(this.getLanguage()))) {
+        if ((bundle != null) && (bundle.hasInstance(this.getLanguage(), true))) {
             personToLink =
-            (GenericPerson) bundle.getInstance(this.getLanguage());
+            (GenericPerson) bundle.getInstance(this.getLanguage(), true);
         }
 
         Assert.exists(personToLink, GenericPerson.class);

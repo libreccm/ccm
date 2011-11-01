@@ -82,7 +82,7 @@ public class InternetArticleOrganizationForm
                 getSelectedObject(state);
         GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
                 ITEM_SEARCH);
-        if (!(orga.getContentBundle().hasInstance(article.getLanguage()))) {
+        if (!(orga.getContentBundle().hasInstance(article.getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.internetarticle.select_organization.no_suitable_language_variant"));

@@ -196,7 +196,7 @@ public class SeriesEditshipAddForm
         
         Series series = (Series) getItemSelectionModel().getSelectedObject(state);
         GenericPerson editor = (GenericPerson) data.get(ITEM_SEARCH);
-        if (!(editor.getContentBundle().hasInstance(series.getLanguage()))) {
+        if (!(editor.getContentBundle().hasInstance(series.getLanguage(), true))) {
             data.addError(PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.editship.no_suitable_language_variant"));
             return;

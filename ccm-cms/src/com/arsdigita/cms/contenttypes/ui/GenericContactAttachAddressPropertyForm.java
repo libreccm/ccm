@@ -162,7 +162,7 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
         
           GenericAddress address = (GenericAddress) data.get(ITEM_SEARCH);
           
-          if (!(address.getContentBundle().hasInstance(contact.getLanguage()))) {
+          if (!(address.getContentBundle().hasInstance(contact.getLanguage(), true))) {
               data.addError( ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.contact.select_address.no_suitable_language_variant"));
           }

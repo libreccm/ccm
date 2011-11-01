@@ -80,7 +80,7 @@ public class ExpertiseOrdererForm
         
         Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
         GenericOrganizationalUnit orderer = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);        
-        if (!(orderer.getContentBundle().hasInstance(expertise.getLanguage()))) {
+        if (!(orderer.getContentBundle().hasInstance(expertise.getLanguage(), true))) {
               data.addError(PublicationGlobalizationUtil.globalize(
                 "publications.ui.expertise.orderer.no_suitable_langauge_variant"));
             

@@ -156,7 +156,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
-        if (!(contact.getContentBundle().hasInstance(person.getLanguage()))) {
+        if (!(contact.getContentBundle().hasInstance(person.getLanguage(), true))) {
             data.addError(
                     ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.person.select_contact.no_suitable_language_variant"));

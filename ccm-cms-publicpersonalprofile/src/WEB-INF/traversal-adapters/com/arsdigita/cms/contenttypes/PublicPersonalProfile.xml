@@ -15,18 +15,22 @@
                 <xrd:property name="/object/owner/contacts/version"/>
                 <xrd:property name="/object/owner/address/ancestors"/>
                 <xrd:property name="/object/owner/address/isDeleted"/>
-                <xrd:property name="/object/owner/address/version"/>
-                
+                <xrd:property name="/object/owner/address/version"/>               
             </xrd:attributes>
-            
+                                   
             <xrd:associations rule="include">
                 <xrd:property name="/object/owner"/>
                 <xrd:property name="/object/owner/contacts"/>
                 <xrd:property name="/object/owner/contacts/contactentries"/>
                 <xrd:property name="/object/owner/contacts/address"/>
                 <xrd:property name="/object/owner/imageAttachments"/>                 
-                <xrd:property name="/object/owner/imageAttachments/image"/>                 
+                <xrd:property name="/object/owner/imageAttachments/image"/>                
             </xrd:associations>
+            
+            <!--<xrd:associations rule="exclude">
+                <xrd:property name="/object/imageAttachments"/>                 
+                <xrd:property name="/object/imageAttachments/image"/>                
+            </xrd:associations>-->
         </xrd:adapter>
     
     </xrd:context>

@@ -100,7 +100,7 @@ public class ArticleInJournalJournalForm
                 state);
         Journal journal = (Journal) data.get(ITEM_SEARCH);
         
-        if (!(journal.getContentBundle().hasInstance(article.getLanguage()))) {
+        if (!(journal.getContentBundle().hasInstance(article.getLanguage(), true))) {
                data.addError(PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleInJournal.selectJournal.no_suitable_language_variant"));
             return;

@@ -245,7 +245,7 @@ public class GenericOrganizationalUnitPersonAddForm
 
             GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
 
-            if (!(person.getContentBundle().hasInstance(orga.getLanguage()))) {
+            if (!(person.getContentBundle().hasInstance(orga.getLanguage(), true))) {
                 data.addError(
                         ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.genericorgaunit.person.no_suitable_language_variant"));

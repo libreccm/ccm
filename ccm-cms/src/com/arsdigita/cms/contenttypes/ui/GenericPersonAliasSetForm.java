@@ -137,7 +137,7 @@ public class GenericPersonAliasSetForm
         } else if (person.equals(data.get(ITEM_SEARCH))) {
             data.addError(ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.person.alias.select.same_as_person"));
-        } else if (!alias.getContentBundle().hasInstance(person.getLanguage())) {
+        } else if (!alias.getContentBundle().hasInstance(person.getLanguage(), true)) {
             data.addError(
                     ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.person.alias.select.no_suitable_language_variant"));

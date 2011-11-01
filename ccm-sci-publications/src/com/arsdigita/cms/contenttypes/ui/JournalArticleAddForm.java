@@ -109,7 +109,7 @@ public class JournalArticleAddForm
         Journal journal = (Journal) getItemSelectionModel().getSelectedObject(
                 state);
         ArticleInJournal article = (ArticleInJournal) data.get(ITEM_SEARCH);
-        if (!(article.getContentBundle().hasInstance(journal.getLanguage()))) {
+        if (!(article.getContentBundle().hasInstance(journal.getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.journal.articles.select_article.no_suitable_language_variant"));

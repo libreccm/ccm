@@ -119,7 +119,7 @@ public class SeriesVolumeAddForm extends BasicItemForm {
         Series series = (Series) getItemSelectionModel().
                 getSelectedObject(state);
         Publication volume = (Publication) data.get(ITEM_SEARCH);
-        if (!(volume.getContentBundle().hasInstance(series.getLanguage()))) {
+        if (!(volume.getContentBundle().hasInstance(series.getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.series.volume_of_series.no_suitable_language_variant"));

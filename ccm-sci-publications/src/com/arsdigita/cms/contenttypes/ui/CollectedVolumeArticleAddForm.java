@@ -112,7 +112,7 @@ public class CollectedVolumeArticleAddForm
         CollectedVolume collectedVolume = (CollectedVolume) getItemSelectionModel().getSelectedObject(state);
         ArticleInCollectedVolume article = (ArticleInCollectedVolume) data.get(ITEM_SEARCH);
         
-        if (!(article.getContentBundle().hasInstance(collectedVolume.getLanguage()))) {
+        if (!(article.getContentBundle().hasInstance(collectedVolume.getLanguage(), true))) {
              data.addError(PublicationGlobalizationUtil.globalize(
                 "publications.ui.collected_volume.articles.select_article.no_suitable_language_variant"));
             return;

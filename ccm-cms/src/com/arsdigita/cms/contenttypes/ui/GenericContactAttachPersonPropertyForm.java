@@ -192,7 +192,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
                 getSelectedObject(state);
         GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
         
-        if (!(person.getContentBundle().hasInstance(contact.getLanguage()))) {
+        if (!(person.getContentBundle().hasInstance(contact.getLanguage(), true))) {
             data.addError("cms.contenttypes.ui.contact.select_person.no_suitable_language_variant");
         }
         

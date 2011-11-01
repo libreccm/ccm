@@ -83,7 +83,7 @@ public class ProceedingsOrganizerForm
                 getSelectedObject(state);
         GenericOrganizationalUnit organizer = (GenericOrganizationalUnit) data.
                 get(ITEM_SEARCH);
-        if (!(organizer.getContentBundle().hasInstance(proceedings.getLanguage()))) {
+        if (!(organizer.getContentBundle().hasInstance(proceedings.getLanguage(), true))) {
             data.addError(PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.organizer.no_suitable_language_variant"));
             return;

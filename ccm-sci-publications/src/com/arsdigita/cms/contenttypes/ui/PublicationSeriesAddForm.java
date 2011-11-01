@@ -108,7 +108,7 @@ public class PublicationSeriesAddForm
         Publication publication = (Publication) getItemSelectionModel().
                 getSelectedObject(state);
         Series series = (Series) data.get(ITEM_SEARCH);
-        if (!(series.getContentBundle().hasInstance(publication.getLanguage()))) {
+        if (!(series.getContentBundle().hasInstance(publication.getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.series.select_series.no_suitable_language_variant"));

@@ -82,7 +82,7 @@ public class UnPublishedOrganizationForm
                 getSelectedObject(state);
         GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
                 ITEM_SEARCH);
-        if (!(orga.getContentBundle().hasInstance(unPublished.getLanguage()))) {
+        if (!(orga.getContentBundle().hasInstance(unPublished.getLanguage(), true))) {
             data.addError(PublicationGlobalizationUtil.globalize(
                     "publications.ui.unpublished.organization.no_suitable_language_variant"));
             return;

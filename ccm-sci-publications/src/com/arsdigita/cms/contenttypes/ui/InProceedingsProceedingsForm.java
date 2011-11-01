@@ -103,7 +103,7 @@ public class InProceedingsProceedingsForm
                 getSelectedObject(state);
         Proceedings proceedings = (Proceedings) data.get(ITEM_SEARCH);
         if (!(proceedings.getContentBundle().hasInstance(inProceedings.
-              getLanguage()))) {
+              getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.inProceedings.selectProceedings.no_suitable_language_variant"));

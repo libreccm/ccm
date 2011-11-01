@@ -85,7 +85,7 @@ public class PublicationWithPublisherSetPublisherForm
                                  (PublicationWithPublisher) getItemSelectionModel().
                 getSelectedObject(state);
         Publisher publisher = (Publisher) data.get(ITEM_SEARCH);
-        if (!(publisher.getContentBundle().hasInstance(publication.getLanguage()))) {
+        if (!(publisher.getContentBundle().hasInstance(publication.getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.with_publisher.publisher.no_suitable_language_variant"));

@@ -80,7 +80,7 @@ public class ExpertiseOrganizationForm
         
         Expertise expertise = (Expertise) getItemSelectionModel().getSelectedObject(state);
         GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
-        if (!(orga.getContentBundle().hasInstance(expertise.getLanguage()))) {
+        if (!(orga.getContentBundle().hasInstance(expertise.getLanguage(), true))) {
             data.addError(PublicationGlobalizationUtil.globalize(
                     "publications.ui.expertise.organization.no_suitable_language_variant"));
             return;

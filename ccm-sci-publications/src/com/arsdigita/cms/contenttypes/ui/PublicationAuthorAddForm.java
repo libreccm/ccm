@@ -211,7 +211,7 @@ public class PublicationAuthorAddForm
                     getSelectedAuthor();
             editing = true;
         }
-        if (!(author.getContentBundle().hasInstance(publication.getLanguage()))) {
+        if (!(author.getContentBundle().hasInstance(publication.getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.authors.selectAuthor.no_suitable_language_variant"));

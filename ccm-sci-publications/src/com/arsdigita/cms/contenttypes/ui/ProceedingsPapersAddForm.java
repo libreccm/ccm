@@ -105,7 +105,7 @@ public class ProceedingsPapersAddForm
         Proceedings proceedings = (Proceedings) getItemSelectionModel().
                 getSelectedObject(state);
         InProceedings paper = (InProceedings) data.get(ITEM_SEARCH);
-        if (!(paper.getContentBundle().hasInstance(proceedings.getLanguage()))) {
+        if (!(paper.getContentBundle().hasInstance(proceedings.getLanguage(), true))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.select_paper.no_suitable_language_variant"));
