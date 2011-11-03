@@ -37,7 +37,9 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TooManyListenersException;
 
 /**
@@ -53,7 +55,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
             getConfig();
 
     public PublicPersonalProfileCreate(final ItemSelectionModel itemModel,
-                                       final CreationSelector parent) {
+            final CreationSelector parent) {
         super(itemModel, parent);
     }
 
@@ -73,7 +75,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
         add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.create.select_person")));
         ParameterModel ownerModel =
-                       new StringParameter(PublicPersonalProfile.OWNER);
+                new StringParameter(PublicPersonalProfile.OWNER);
         SingleSelect ownerSelect = new SingleSelect(ownerModel);
         ownerSelect.addValidationListener(new NotNullValidationListener());
 
@@ -81,36 +83,48 @@ public class PublicPersonalProfileCreate extends PageCreate {
             ownerSelect.addPrintListener(new PrintListener() {
 
                 public void prepare(final PrintEvent event) {
-                    final SingleSelect ownerSelect = (SingleSelect) event.
-                            getTarget();
+                    final SingleSelect ownerSelect = (SingleSelect) event.getTarget();
 
                     String personType = config.getPersonType();
                     if ((personType == null) || (personType.isEmpty())) {
                         personType =
-                        "com.arsdigita.cms.contenttypes.GenericPerson";
+                                "com.arsdigita.cms.contenttypes.GenericPerson";
                     }
 
                     ContentTypeCollection types =
-                                          ContentType.getAllContentTypes();
+                            ContentType.getAllContentTypes();
                     types.addFilter(
                             String.format("className = '%s'", personType));
                     if (types.size() == 0) {
                         personType =
-                        "com.arsdigita.cms.contenttypes.GenericPerson";
+                                "com.arsdigita.cms.contenttypes.GenericPerson";
                     }
                     DataCollection persons = SessionManager.getSession().
                             retrieve(
                             personType);
                     persons.addFilter("profile is null");
                     persons.addFilter(String.format("version = '%s'",
-                                                    ContentItem.DRAFT));
+                            ContentItem.DRAFT));
+                    persons.addOrder("surname asc");
+                    persons.addOrder("givenname asc");
+                    persons.addOrder("language asc");
                     ownerSelect.addOption(new Option("", ""));
+
+                    //Store the parent ids of processed items to remove double entries.
+                    final List<BigDecimal> processed = new ArrayList<BigDecimal>();
                     while (persons.next()) {
                         GenericPerson person =
-                                      (GenericPerson) DomainObjectFactory.
-                                newInstance(persons.getDataObject());
-                        ownerSelect.addOption(new Option(
-                                person.getID().toString(), person.getFullName()));
+                                (GenericPerson) DomainObjectFactory.newInstance(persons.getDataObject());
+                        if (processed.contains(person.getParent().getID())) {
+                            continue;
+                        } else {
+                            ownerSelect.addOption(new Option(
+                                    person.getID().toString(),
+                                    String.format("%s (%s)",
+                                    person.getFullName(),
+                                    person.getLanguage())));
+                            processed.add(person.getParent().getID());
+                        }
                     }
                 }
             });
@@ -125,7 +139,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
                     "cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
             com.arsdigita.bebop.form.Date launchDate =
-                                          new com.arsdigita.bebop.form.Date(
+                    new com.arsdigita.bebop.form.Date(
                     launchDateParam);
             if (ContentSection.getConfig().getRequireLaunchDate()) {
                 launchDate.addValidationListener(
@@ -145,17 +159,16 @@ public class PublicPersonalProfileCreate extends PageCreate {
                 PublicPersonalProfile.OWNER);
 
         if ((id == null) || id.trim().isEmpty()) {
-            fse.getFormData().addError(PublicPersonalProfileGlobalizationUtil.
-                    globalize("publicpersonalprofile.ui.person.required"));
+            fse.getFormData().addError(PublicPersonalProfileGlobalizationUtil.globalize("publicpersonalprofile.ui.person.required"));
             return;
         }
 
         GenericPerson owner = new GenericPerson(new BigDecimal(id));
 
         validateNameUniqueness(folder,
-                               fse,
-                               String.format("%s-profile",
-                                             GenericPerson.urlSave(
+                fse,
+                String.format("%s-profile",
+                GenericPerson.urlSave(
                 owner.getFullName())));
     }
 
@@ -173,7 +186,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
 
         GenericPerson owner = new GenericPerson(new BigDecimal(id));
         String name = String.format("%s-profile",
-                                    GenericPerson.urlSave(owner.getFullName()));
+                GenericPerson.urlSave(owner.getFullName()));
         String title = String.format("%s (Profil)", owner.getFullName());
 
         final ContentPage item = createContentPage(state);
@@ -207,18 +220,18 @@ public class PublicPersonalProfileCreate extends PageCreate {
         DataCollection profiles = SessionManager.getSession().retrieve(
                 PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
         profiles.addFilter(String.format("profileUrl = '%s'",
-                                         profileUrl));
+                profileUrl));
         profiles.addFilter(String.format("version = '%s'", ContentItem.DRAFT));
 
         while (profiles.size() > 0) {
             i++;
 
             profileUrl = String.format("%s%d",
-                                       owner.getSurname().toLowerCase(),
-                                       i);
+                    owner.getSurname().toLowerCase(),
+                    i);
             profiles.reset();
             profiles.addFilter(String.format("profileUrl = '%s'",
-                                             profileUrl));
+                    profileUrl));
             profiles.addFilter(
                     String.format("version = '%s'", ContentItem.DRAFT));
         }

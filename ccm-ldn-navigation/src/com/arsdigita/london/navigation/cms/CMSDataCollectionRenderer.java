@@ -28,7 +28,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
 
 public class CMSDataCollectionRenderer extends DataCollectionRenderer {
-
+    
     public CMSDataCollectionRenderer() {
         addAttribute("masterVersion.id");
     }
@@ -62,7 +62,7 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
              * the object in the detail view and the list view. It is now 
              * possible to set the adapter context used from a JSP template, 
              * using DataCollectionRenderer#setSpecializeObjectsContext(String).
-             */
+             */          
             renderer.walk(obj, getSpecializeObjectsContext());
         }
     }

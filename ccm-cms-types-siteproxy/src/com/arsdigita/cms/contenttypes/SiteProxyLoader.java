@@ -19,14 +19,8 @@
 package com.arsdigita.cms.contenttypes;
 
 // import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
-import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.lifecycle.LifecycleDefinition;
-import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ResourceParameter;
 // import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.workflow.simple.WorkflowTemplate;
-import java.io.InputStream;
 // import java.net.MalformedURLException;
 
 
@@ -48,7 +42,7 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
     /**
      * SiteProxyLoader Constructor
      */
-    public SiteProxyLoader() {
+    /*public SiteProxyLoader() {
         m_template = new ResourceParameter
             ("com.arsdigita.cms.contenttypes.siteproxy.defaulttemplate", 
              Parameter.REQUIRED,
@@ -56,7 +50,7 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
              "/siteproxy-item.jsp");
 
         register(m_template);
-    }
+    }*/
 
     public String[] getTypes() {
         return TYPES;

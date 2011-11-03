@@ -85,18 +85,18 @@ public abstract class DomainObjectTraversal {
      * @param context the context in which the adapter should be used
      */
     public static void registerAdapter(final ObjectType type,
-                                       final DomainObjectTraversalAdapter adapter,
-                                       final String context) {
+            final DomainObjectTraversalAdapter adapter,
+            final String context) {
         Assert.exists(adapter,
-                      "The DomainObjectTraversalAdapter is null for context '"
-                      + context + "' and object type '" + type);
+                "The DomainObjectTraversalAdapter is null for context '"
+                + context + "' and object type '" + type);
         Assert.exists(type, "The ObjectType for context '" + context
-                            + "' and adapter '" + adapter + "' is null");
+                + "' and adapter '" + adapter + "' is null");
         Assert.exists(context, String.class);
         if (s_log.isDebugEnabled()) {
             s_log.debug("Registering adapter " + adapter.getClass()
-                        + " for object type " + type.getQualifiedName()
-                        + " in context " + context);
+                    + " for object type " + type.getQualifiedName()
+                    + " in context " + context);
         }
         s_adapters.put(new AdapterKey(type, context), adapter);
     }
@@ -109,13 +109,12 @@ public abstract class DomainObjectTraversal {
      * @param context the context in which the adapter should be used
      */
     public static void unregisterAdapter(final ObjectType type,
-                                         final String context) {
+            final String context) {
         Assert.exists(type, ObjectType.class);
         Assert.exists(context, String.class);
 
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Removing adapter " + " for object type " + type.
-                    getQualifiedName() + " in context " + context);
+            s_log.debug("Removing adapter " + " for object type " + type.getQualifiedName() + " in context " + context);
         }
 
         s_adapters.remove(new AdapterKey(type, context));
@@ -130,11 +129,11 @@ public abstract class DomainObjectTraversal {
      * @param context the context in which the adapter should be used
      */
     public static void registerAdapter(final String type,
-                                       final DomainObjectTraversalAdapter adapter,
-                                       final String context) {
+            final DomainObjectTraversalAdapter adapter,
+            final String context) {
         registerAdapter(SessionManager.getMetadataRoot().getObjectType(type),
-                        adapter,
-                        context);
+                adapter,
+                context);
     }
 
     /**
@@ -145,9 +144,9 @@ public abstract class DomainObjectTraversal {
      * @param context the context in which the adapter should be used
      */
     public static void unregisterAdapter(final String type,
-                                         final String context) {
+            final String context) {
         unregisterAdapter(SessionManager.getMetadataRoot().getObjectType(type),
-                          context);
+                context);
     }
 
     /**
@@ -164,7 +163,7 @@ public abstract class DomainObjectTraversal {
         Assert.exists(context, String.class);
         if (s_log.isDebugEnabled()) {
             s_log.debug("lookupAdapter for type " + type.getQualifiedName()
-                        + " in context " + context);
+                    + " in context " + context);
 
         }
 
@@ -182,12 +181,12 @@ public abstract class DomainObjectTraversal {
      * @param context the adapter context
      */
     public static DomainObjectTraversalAdapter findAdapter(ObjectType type,
-                                                           final String context) {
+            final String context) {
         Assert.exists(type, ObjectType.class);
         Assert.exists(context, String.class);
         if (s_log.isDebugEnabled()) {
             s_log.debug("findAdapter for type " + type.getQualifiedName()
-                        + " in context " + context);
+                    + " in context " + context);
 
             StringBuilder buf = new StringBuilder();
             buf.append("Adapters contain:\n");
@@ -207,8 +206,7 @@ public abstract class DomainObjectTraversal {
             tmpType = tmpType.getSupertype();
         }
         if (adapter == null) {
-            s_log.warn("Could not find adapter for object type " + type.
-                    getQualifiedName() + " in context " + context);
+            s_log.warn("Could not find adapter for object type " + type.getQualifiedName() + " in context " + context);
         }
         return adapter;
     }
@@ -221,13 +219,12 @@ public abstract class DomainObjectTraversal {
      * @param context the context for the traversal adapter
      */
     public void walk(final DomainObject obj,
-                     final String context) {
-        final DomainObjectTraversalAdapter adapter = findAdapter(obj.
-                getObjectType(),
-                                                                 context);
+            final String context) {
+        final DomainObjectTraversalAdapter adapter = findAdapter(obj.getObjectType(),
+                context);
         if (adapter == null) {
             final String errorMsg = "No adapter for object " + obj.getOID()
-                                    + " in context " + context;
+                    + " in context " + context;
             s_log.error(errorMsg);
             throw new IllegalArgumentException(errorMsg);
         }
@@ -235,8 +232,8 @@ public abstract class DomainObjectTraversal {
     }
 
     protected void walk(final DomainObject obj,
-                        final String context,
-                        final DomainObjectTraversalAdapter adapter) {
+            final String context,
+            final DomainObjectTraversalAdapter adapter) {
         Assert.exists(adapter, DomainObjectTraversalAdapter.class);
         walk(adapter, obj, "/object", context, null);
     }
@@ -248,12 +245,12 @@ public abstract class DomainObjectTraversal {
     // content item during XML generation, I have to test for ContentBundle and
     // negotiate the language version. This is not possible in com.arsdigita.ccm.
     protected void walk(final DomainObjectTraversalAdapter adapter,
-                        final DomainObject obj,
-                        final String path,
-                        final String context,
-                        final DomainObject linkObject) {
+            final DomainObject obj,
+            final String path,
+            final String context,
+            final DomainObject linkObject) {
         s_log.debug(String.format("Walking with path %s and context %s...", path,
-                                  context));
+                context));
         OID oid = obj.getOID();
         OID linkOid = null;
         if (linkObject != null) {
@@ -274,10 +271,10 @@ public abstract class DomainObjectTraversal {
         if (linkObject != null) {
             beginLink(linkObject, path);
             walk(adapter,
-                 linkObject,
-                 appendToPath(path, LINK_NAME),
-                 context,
-                 null);
+                    linkObject,
+                    appendToPath(path, LINK_NAME),
+                    context,
+                    null);
             endLink(linkObject, path);
         }
 
@@ -289,13 +286,12 @@ public abstract class DomainObjectTraversal {
             String propName = prop.getName();
 
             if (!adapter.processProperty(obj,
-                                         appendToPath(path, prop.getName()),
-                                         prop,
-                                         context)) {
+                    appendToPath(path, prop.getName()),
+                    prop,
+                    context)) {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Not processing " + appendToPath(path, prop.
-                            getName()) + " in object " + oid + " and context "
-                                + context + " with adapter " + adapter.getClass().
+                    s_log.debug("Not processing " + appendToPath(path, prop.getName()) + " in object " + oid + " and context "
+                            + context + " with adapter " + adapter.getClass().
                             getName());
                 }
                 continue;
@@ -304,7 +300,7 @@ public abstract class DomainObjectTraversal {
             if (propValue == null) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Object " + oid.toString() + " doesn't "
-                                + "contain property " + propName);
+                            + "contain property " + propName);
                 }
                 continue;
             }
@@ -321,10 +317,10 @@ public abstract class DomainObjectTraversal {
                 beginRole(obj, path, prop);
 
                 walk(adapter,
-                     DomainObjectFactory.newInstance((DataObject) propValue),
-                     appendToPath(path, propName),
-                     context,
-                     null);
+                        DomainObjectFactory.newInstance((DataObject) propValue),
+                        appendToPath(path, propName),
+                        context,
+                        null);
 
                 endRole(obj, path, prop);
             } else if (propValue instanceof DataAssociation) {
@@ -333,15 +329,14 @@ public abstract class DomainObjectTraversal {
                 // see #25808 - this hack prevents the content field of cms_files
                 // (which is a blob) from being queried when all we need is a
                 // list of the files on an item..
-                if (prop.getName().equals("fileAttachments") && !Domain.
-                        getConfig().queryBlobContentForFileAttachments()) {
+                if (prop.getName().equals("fileAttachments") && !Domain.getConfig().queryBlobContentForFileAttachments()) {
                     // make true a config
                     DataQuery fileAttachmentsQuery =
-                              SessionManager.getSession().retrieveQuery(
+                            SessionManager.getSession().retrieveQuery(
                             "com.arsdigita.cms.contentassets.fileAttachmentsQuery");
 
                     fileAttachmentsQuery.setParameter("item_id",
-                                                      obj.getOID().get("id"));
+                            obj.getOID().get("id"));
 
                     DataCollection files = new DataQueryDataCollectionAdapter(
                             fileAttachmentsQuery, "file");
@@ -349,10 +344,10 @@ public abstract class DomainObjectTraversal {
                     while (files.next()) {
                         DataObject file = files.getDataObject();
                         walk(adapter,
-                             DomainObjectFactory.newInstance(file),
-                             appendToPath(path, propName),
-                             context,
-                             null);
+                                DomainObjectFactory.newInstance(file),
+                                appendToPath(path, propName),
+                                context,
+                                null);
                     }
 
                 } else {
@@ -362,11 +357,11 @@ public abstract class DomainObjectTraversal {
                     s_log.debug(prop.getName() + " is a DataAssociation");
                     }
                     beginAssociation(obj, path, prop);
-
+                    
                     DataAssociationCursor daCursor =
                     ((DataAssociation) propValue).
                     getDataAssociationCursor();
-
+                    
                     while (daCursor.next()) {
                     s_log.debug("Processing data assoication cursor...");
                     DataObject link = daCursor.getLink();
@@ -384,12 +379,12 @@ public abstract class DomainObjectTraversal {
                     endAssociation(obj, path, prop);*/
 
                     walkDataAssociations(adapter,
-                                         obj,
-                                         path,
-                                         context,
-                                         prop,
-                                         propName,
-                                         propValue);
+                            obj,
+                            path,
+                            context,
+                            prop,
+                            propName,
+                            propValue);
                 }
             } else {
                 // Unknown property value type - do nothing
@@ -401,49 +396,49 @@ public abstract class DomainObjectTraversal {
     }
 
     protected void walkDataAssociations(DomainObjectTraversalAdapter adapter,
-                                        DomainObject obj,
-                                        String path,
-                                        String context,
-                                        Property prop,
-                                        String propName,
-                                        Object propValue) {
+            DomainObject obj,
+            String path,
+            String context,
+            Property prop,
+            String propName,
+            Object propValue) {
         s_log.debug(String.format("%s is a DataAssociation", prop.getName()));
 
         beginAssociation(obj, path, prop);
 
         DataAssociationCursor daCursor =
-                              ((DataAssociation) propValue).
-                getDataAssociationCursor();
+                ((DataAssociation) propValue).getDataAssociationCursor();
 
         while (daCursor.next()) {
             walkDataAssociation(adapter,
-                                obj,
-                                path,
-                                context,
-                                propName,
-                                daCursor);
+                    obj,
+                    path,
+                    context,
+                    propName,
+                    daCursor);
         }
 
         endAssociation(obj, path, prop);
     }
 
     protected void walkDataAssociation(DomainObjectTraversalAdapter adapter,
-                                       DomainObject obj,
-                                       String path,
-                                       String context,
-                                       String propName,
-                                       DataAssociationCursor daCursor) {
-        s_log.debug("Processing data assoication cursor...");
+            DomainObject obj,
+            String path,
+            String context,
+            String propName,
+            DataAssociationCursor daCursor) {
+        s_log.debug(String.format("Processing data assoication cursor for object '%s'...",
+                obj.getOID().toString()));
         DataObject link = daCursor.getLink();
         DomainObject linkObj = null;
         if (link != null) {
             linkObj = new LinkDomainObject(link);
         }
         walk(adapter,
-             DomainObjectFactory.newInstance(daCursor.getDataObject()),
-             appendToPath(path, propName),
-             context,
-             linkObj);
+                DomainObjectFactory.newInstance(daCursor.getDataObject()),
+                appendToPath(path, propName),
+                context,
+                linkObj);
     }
 
     /**
@@ -451,14 +446,14 @@ public abstract class DomainObjectTraversal {
      * starts
      */
     protected abstract void beginObject(DomainObject obj,
-                                        String path);
+            String path);
 
     /**
      * Method called when the procesing of an object
      * completes
      */
     protected abstract void endObject(DomainObject obj,
-                                      String path);
+            String path);
 
     /**
      * Method called when the processing of a Link Object
@@ -481,49 +476,49 @@ public abstract class DomainObjectTraversal {
      * is encountered for a second time.
      */
     protected abstract void revisitObject(DomainObject obj,
-                                          String path);
+            String path);
 
     /**
      * Method called when an attribute is encountered
      */
     protected abstract void handleAttribute(DomainObject obj,
-                                            String path,
-                                            Property property);
+            String path,
+            Property property);
 
     /**
      * Method called when the processing of a role
      * starts
      */
     protected abstract void beginRole(DomainObject obj,
-                                      String path,
-                                      Property property);
+            String path,
+            Property property);
 
     /**
      * Method called when the procesing of a role
      * completes
      */
     protected abstract void endRole(DomainObject obj,
-                                    String path,
-                                    Property property);
+            String path,
+            Property property);
 
     /**
      * Method called when the processing of an association
      * starts
      */
     protected abstract void beginAssociation(DomainObject obj,
-                                             String path,
-                                             Property property);
+            String path,
+            Property property);
 
     /**
      * Method called when the procesing of an association
      * completes
      */
     protected abstract void endAssociation(DomainObject obj,
-                                           String path,
-                                           Property property);
+            String path,
+            Property property);
 
     protected String appendToPath(String path,
-                                  String name) {
+            String name) {
         if (path.endsWith("/" + name)) {
             path = path + "+";
         } else if (!path.endsWith("/" + name + "+")) {
@@ -561,7 +556,7 @@ public abstract class DomainObjectTraversal {
         private final String m_context;
 
         public AdapterKey(ObjectType type,
-                          String context) {
+                String context) {
             Assert.exists(type, ObjectType.class);
             Assert.exists(context, String.class);
             m_type = type;
@@ -601,7 +596,7 @@ public abstract class DomainObjectTraversal {
 
         @Override
         public Object get(String attr) {
-        return super.get(attr);
-    }
+            return super.get(attr);
+        }
     }
 }
