@@ -49,8 +49,9 @@ public class PublicPersonalProfileCreate extends PageCreate {
 
     private static final String SELECTED_PERSON = "selectedPerson";
     private static final PublicPersonalProfileConfig config =
-                                                     PublicPersonalProfiles.getConfig();
-   
+                                                     PublicPersonalProfiles.
+            getConfig();
+
     public PublicPersonalProfileCreate(final ItemSelectionModel itemModel,
                                        final CreationSelector parent) {
         super(itemModel, parent);
@@ -187,6 +188,8 @@ public class PublicPersonalProfileCreate extends PageCreate {
         bundle.setParent(folder);
         bundle.setContentSection(m_parent.getContentSection(state));
         bundle.save();
+
+        m_workflowSection.applyWorkflow(state, item);
 
         PublicPersonalProfile profile = new PublicPersonalProfile(item.getOID());
         profile.setOwner(owner);
