@@ -1,0 +1,1381 @@
+<html>
+<head>
+<!-- 
+
+          **** WARNING ****
+
+This file was automatically created by htmltoc.pl
+
+Do not edit - all changes will be lost
+
+          **** WARNING **** 
+
+-->
+<title>APLAWS-II: Content Type Schemas</title>
+<style>
+.schema {
+  border: 1px solid black;
+  margin: 1em;
+  padding: 1em;
+  background: rgb(192,230,230);
+}
+</style>
+</head>
+
+<body bgcolor="white" text="black">
+
+<h1>APLAWS-II: Content Type Schemas</h1>
+
+<p>
+<big><strong><em>Draft 1 August 2003</em></strong></big>
+</p>
+
+<a name="toc"></a><table align="center">
+<tr bgcolor="#ffdfff">
+<td align="left">1</td>
+<!--<td>....</td>-->
+<td><a href="#1">Introduction</a></td>
+</tr>
+<tr bgcolor="#ffdfff">
+<td align="left">2</td>
+<!--<td>....</td>-->
+<td><a href="#2">Content Types</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.1</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.1">Address</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.2</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.2">Agenda</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.3</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.3">Article</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.4</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.4">Event</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.5</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.5">File Storage Item</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.6</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.6">Job</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.7</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.7">Legal Notice</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.8</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.8">Minutes</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.9</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.9">Multi-part Article</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.10</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.10">News Item</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.11</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.11">Press Release</a></td>
+</tr>
+<tr bgcolor="#dfffff">
+<td align="left">2.12</td>
+<!--<td>....</td>-->
+<td>....<a href="#2.12">Service</a></td>
+</tr>
+</table>
+
+<h2><a name="1" href="#toc">1 Introduction</a></h2>
+
+<p>
+This document provides XML Schemas for the principle APLAWS
+content types. These schemas correspond to the XML generated
+for presenting content items for viewing. Other uses of XML
+wrt to content types (ie search indexing, import / export) may
+use different XML schemas. In addition to the basic content type 
+attributes, these schemas also describe the XML generated for links, 
+file attachments and dublin core metadata that are associated with 
+any content type. 
+</p>
+
+<p>
+The official specification for XML schemas can be found at the
+<a href="http://www.w3.org/XML/Schema">W3C</a> site. For a gentler introduction, the O'Reilly
+<a href="http://www.oreilly.com/catalog/xmlschema/">XML Schema book</a> is recommended reading.
+</p>
+
+<h2><a name="2" href="#toc">2 Content Types</a></h2>
+
+<h3><a name="2.1" href="#toc">2.1 Address</a></h3>
+
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinAddress" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinAddress"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="address" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="postalCode" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="phone" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="mobile" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="fax" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="email" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="notes" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="uri" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.2" href="#toc">2.2 Agenda</a></h3>
+
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinAgenda" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinAgenda"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="textAsset"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="agendaDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="location" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="attendees" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="subjectItems" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="contactInfo" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="summary" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="creationDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.3" href="#toc">2.3 Article</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinArticle" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinArticle"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="textAsset"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="imageCaptions"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="caption" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="imageAsset"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="mimeType"&gt;
+                                 &lt;xs:complexType&gt;
+                                    &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                                    &lt;xs:sequence&gt;
+                                       &lt;xs:element name="mimeType" type="xs:string"&gt;&lt;/xs:element&gt;
+                                       &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                                       &lt;xs:element name="fileExtension" type="xs:string"&gt;&lt;/xs:element&gt;
+                                    &lt;/xs:sequence&gt;
+                                 &lt;/xs:complexType&gt;
+                              &lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="width" type="xs:double"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="height" type="xs:double"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="lead" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.4" href="#toc">2.4 Event</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinEvent" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinEvent"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="textAsset"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="startDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="endDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="startTime" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="endTime" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="eventDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="location" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="lead" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="mainContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="eventType" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="mapLink" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="cost" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.5" href="#toc">2.5 File Storage Item</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinFileStorageItem" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinFileStorageItem"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="file"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.6" href="#toc">2.6 Job</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinJob" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinJob"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="grade" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="closingDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="salary" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="body" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="refNumber" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="department" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="jobDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="personSpecification" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="contactDetails" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.7" href="#toc">2.7 Legal Notice</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinLegalNotice" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinLegalNotice"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="textAsset"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="governmentUID" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.8" href="#toc">2.8 Minutes</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinMinutes" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinMinutes"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="textAsset"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="minuteNumber" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="actionItem" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="attendees" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="descriptionOfMinutes" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.9" href="#toc">2.9 Multi-part Article</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinMultiPartArticle" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinMultiPartArticle"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="summary" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="sections"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="rank" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="text"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="image"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="mimeType"&gt;
+                                 &lt;xs:complexType&gt;
+                                    &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                                    &lt;xs:sequence&gt;
+                                       &lt;xs:element name="mimeType" type="xs:string"&gt;&lt;/xs:element&gt;
+                                       &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                                       &lt;xs:element name="fileExtension" type="xs:string"&gt;&lt;/xs:element&gt;
+                                    &lt;/xs:sequence&gt;
+                                 &lt;/xs:complexType&gt;
+                              &lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="width" type="xs:double"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="height" type="xs:double"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.10" href="#toc">2.10 News Item</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinNewsItem" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinNewsItem"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="textAsset"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="imageCaptions"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="caption" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="imageAsset"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="mimeType"&gt;
+                                 &lt;xs:complexType&gt;
+                                    &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                                    &lt;xs:sequence&gt;
+                                       &lt;xs:element name="mimeType" type="xs:string"&gt;&lt;/xs:element&gt;
+                                       &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                                       &lt;xs:element name="fileExtension" type="xs:string"&gt;&lt;/xs:element&gt;
+                                    &lt;/xs:sequence&gt;
+                                 &lt;/xs:complexType&gt;
+                              &lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="width" type="xs:double"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="height" type="xs:double"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="lead" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="newsDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="isHomepage" type="xs:boolean"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.11" href="#toc">2.11 Press Release</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinPressRelease" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinPressRelease"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="textAsset"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="content" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="contactInfo" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="summary" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="referenceCode" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+<h3><a name="2.12" href="#toc">2.12 Service</a></h3>
+<pre class="schema">
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinService" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/london/cms/dublin/types/DublinService"&gt;
+   &lt;xs:element name="object"&gt;
+      &lt;xs:complexType&gt;
+         &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+         &lt;xs:sequence&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="links"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="linkTitle" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element name="targetType" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetURI" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetWindow" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="brokenAt" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="linkOrder" type="xs:integer"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="targetItem"&gt;
+                        &lt;xs:complexType&gt;
+                           &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                           &lt;xs:sequence&gt;
+                              &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                              &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+                           &lt;/xs:sequence&gt;
+                        &lt;/xs:complexType&gt;
+                     &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="type"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element name="label" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="description" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+            &lt;xs:element name="name" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="language" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="title" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="launchDate" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="summary" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="servicesProvided" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="openingTimes" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="address" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element minOccurs="0" name="contacts" type="xs:string"&gt;&lt;/xs:element&gt;
+            &lt;xs:element name="dublinCore"&gt;
+               &lt;xs:complexType&gt;
+                  &lt;xs:attribute name="oid" type="xs:string"&gt;&lt;/xs:attribute&gt;
+                  &lt;xs:sequence&gt;
+                     &lt;xs:element minOccurs="0" name="dcAudience" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcContributor" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDateValid" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcLanguage" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcDescription" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcIdentifier" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPreservation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcPublisher" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRelation" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcRights" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcSource" type="xs:string"&gt;&lt;/xs:element&gt;
+                     &lt;xs:element minOccurs="0" name="dcKeywords" type="xs:string"&gt;&lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+               &lt;/xs:complexType&gt;
+            &lt;/xs:element&gt;
+         &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+   &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</pre>
+
+
+
+
+<hr align="center" width="80%">
+<p>
+Written by Daniel Berrange (berrange@redhat.com)
+Generated by htmltoc.pl.<br>
+</p>
+
+</body>
+</html>

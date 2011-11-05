@@ -1,0 +1,925 @@
+<chapter id="ch-development-environment">
+    <title>The Development Environment</title>
+
+    <sect1 id="s1-starting-development">
+      <title>Starting development</title>
+    <para>Once you have your project setup, you should use the
+commands from the &CCM; build tools to set up your environment variables
+    and begin development. You should always login as
+your development user or <command>su -
+    <replaceable>developmentuser</replaceable></command>,
+<command>ccm-profile <replaceable>projectname</replaceable></command>,
+and <command>cddev</command>. Please see <xref
+linkend="s2-ccm-profile"> , and <xref linkend="s2-cddev">.
+</para> </sect1>
+  
+<sect1 id="s1-quick-steps-development">
+  <title>Quick Development Guide for the impatient</title>
+  <para> Here is a outline of the steps for starting development the
+first time. Each step has a reference link to the detailed
+documentation in the later section. While this will get you started,
+not all the commands are referenced from this section, you should read
+through the whole document to familiarize yourself with the command
+set and take full advantage of the build environment.
+
+  <orderedlist>
+    <listitem>
+      <para>Log in as the development user</para>
+    </listitem>
+  </orderedlist>
+  <orderedlist>
+    <listitem>
+      <para>Set up your shell environment variables with the command
+<command>ccm-profile <optional>project_name</optional></command>
+(<xref linkend="s2-ccm-profile"/>).
+</para>
+    </listitem>
+  </orderedlist>
+  <orderedlist>
+    <listitem>
+      <para><command>cddev</command> to get to the dev directory
+(<xref linkend="s2-cddev"/>).</para>
+    </listitem>
+  </orderedlist>
+  <orderedlist>
+    <listitem>
+      <para>Edit <filename>ant.properties</filename> and
+<filename>project.xml</filename> (<xref linkend="s2-ant-dot-properties"/>
+      <xref linkend="s1-project-xml">.</para>
+    </listitem>
+  </orderedlist>
+  <orderedlist>
+    <listitem>
+      <para>Generate <filename>config.vars</filename> with the command
+<command>ant make-config</command>
+      (<xref linkend="s1-config-dot-vars"/>, 
+    </para>
+    </listitem>
+  </orderedlist>
+  <orderedlist>
+    <listitem>
+      <para>Create server readable configuration file
+<filename>enterprise.init</filename> with the command <command>ant
+make-init</command> (<xref linkend="s2-ant-make-init"/>).
+    </para>
+    </listitem>
+    <listitem>
+      <para>
+        Deploy the code with <command>ant deploy</command> (<xref
+linkend="s2-ant-deploy"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Load the datamodel by going into the web directory and running
+        the apropreate create script (<xref linkend="s1-dev-database"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Start the server with <command>ccm-start</command>, follow the progress with <command>tailllogs</command>
+      (<xref linkend="s2-ccm-start"/>, <xref linkend="s2-taillogs"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+</para>
+    
+</sect1>
+
+  <sect1 id="s1-useful-commands">
+    <title>Useful Commands</title>
+
+    <sect2 id="s2-ccm-profile">
+      <title>ccm-profile</title>
+      <screen><command>ccm-profile <optional>project_name</optional></command></screen>
+                    <para>This command sets up the environment
+variables in your shell. It also makes all
+                    other commands available, and customizes them to work with
+                    a particular project.</para>
+
+                    <note>
+                        <title>Note</title>
+                        <para>Because <command>ccm-profile</command> creates all
+                        the other build tool commands, it must be run first.
+                        Failing to run <command>ccm-profile</command> will most
+                        likely result in the error <computeroutput>command not
+                        found</computeroutput> when trying to execute any other
+                        build tool command.</para>
+                    </note>
+    </sect2>
+
+    <sect2 id="s2-cddev">
+      <title>cddev</title>
+                    <para>Change directory to the current project's development
+                    directory. See the section on <xref linkend="s1-project-directory"> for an explanation of its contents.</para>
+    </sect2>
+
+            <sect2 id="s2-cdweb">
+              <title>cdweb</title>
+                    <para>Change directory to the current project's web
+                    directory. This contains the logs, configuration files and
+                    the deployed web application. Changes are not normally made
+                    directly in this directory or any of its sub-directories.
+                    Rather changes are made automatically by the build
+                    tools.</para>
+
+                    <warning>
+                        <title>Warning</title>
+                        <para>Making changes directly in the web directory can
+                        cause unpredictable results.</para>
+                    </warning>
+            </sect2>
+
+            <sect2 id="s2-taillogs">
+              <title>taillogs</title>
+            <para>The APLAWS server will generate a variety of logs
+while it is running. The location of the log files are determined by
+the configuration parameter in <filename>config.vars</filename> called
+<command>log-dir</command>. Usually this is set to a subdirectory
+called <filename>logs</filename> in the dev directory (
+<xref linkend="s2-web-directory">). The <command>taillogs</command>
+displays new entries in all log files immediately as they are added. To quit, type
+                    <keycombo><keycap>Ctrl</keycap><keycap>C</keycap></keycombo>. The log files displayed are located at <filename>/var/ccm-devel/web/<replaceable>username</replaceable>/<replaceable>projectname</replaceable>/logs/</filename>.
+                  
+</para>
+
+                    <note>
+                        <title>Note</title>
+                        <para>When they grow above a certain size (by default
+                        1MB), log files are rolled, which means the log file is
+                        renamed and a new one is created for new entries. If
+                        this happens to a file while you are viewing it, you
+                        will stop seeing updates. If you suspect this has
+                        happened, stop <command>taillogs</command> and restart
+                        it.</para>
+                    </note>
+
+            </sect2>
+
+            <sect2 id="s2-tailccm">
+              <title>tailccm</title>
+                    <para>The same as <command>taillogs</command>, except just
+                    for <filename>/var/ccm-devel/web/<replaceable>username</replaceable>/<replaceable>projectname</replaceable>/logs/ccm.log</filename>.</para>
+            </sect2>
+
+            <sect2 id="s2-ccm-start">
+              <title>ccm-start</title>
+                    <para>Start your instance running. After running this
+                    command you should run <command>tailccm</command> or
+                    <command>taillogs</command> which will show you when the
+                    initialization process has completed.</para>
+
+                    <para>It is also possible to pass arguments to
+                    <command>ccm-start</command>, which will be passed directly
+                    to the servlet container. For example:</para>
+
+<screen>
+<command>ccm-start</command> <option>-Djava.compiler=none</option>
+</screen>
+
+                    <para>This particular example will start the instance with
+                    the JIT compiler switched off.</para>
+            </sect2>
+
+            <sect2 id="s2-ccm-stop">
+              <title>ccm-stop</title>
+                    <para>Stop the instance.</para>
+
+                    <warning>
+                        <title>Warning</title>
+                        <para>The <command>ccm-stop</command> command only
+                        signals the servlet container to stop. Depending on
+                        what the instance is doing, it can take a short while
+                        for all processes to actually shut down. You should
+                        take care that all java processes have stopped before
+                        trying to start a new instance, as this can cause
+                        unpredictable results.</para>
+                    </warning>
+            </sect2>
+
+            <sect2 id="s2-ccm-configure.sh">
+              <title>ccm-configure.sh</title>
+                    <para> If you want to work off of a different
+version of APLAWS or want to add a new application you will need to
+                    change your <filename>project.xml</filename>(<xref linkend="s2-project-dot-xml">). You will need to
+reconfigure the project area by running
+<command>ccm-configure.sh</command>. This command creates or updates
+the
+                    <filename>build.xml</filename> file in the
+<emphasis>project</emphasis> directory from the information
+                    contained in <filename>project.xml</filename>. It should be
+                    executed every time a change is made to
+                    <filename>project.xml</filename>.  </para>
+
+                    <para>Unlike other commands, you must be in the same
+                    directory as <filename>project.xml</filename> when executing
+                    <command>ccm-configure.sh</command>.</para>
+            </sect2>
+
+    </sect1>
+
+    <sect1 id="s1-project-directory">
+        <title>The Dev Directory</title>
+
+        <para>The dev directory is the top level development directory, it is located in <filename>/var/ccm-devel/dev/<replaceable>username</replaceable>/<replaceable>projectname</replaceable></filename>. It
+        contains information for the build process and all the source code in
+        subdirectories.  The dev directory contains a variety of configuration files for customizing ant, the servlet container, and APLAWS for your project. </para>
+
+        <sect2 id="s2-directory-structure">
+          <title>The Dev Directory Structure</title>
+        <screen>
+/var/ccm-devel/dev/<replaceable>username</replaceable>/<replaceable>projectname</replaceable>
+        |
+        |
+        +--+ project.xml
+        |
+        |
+        +--+ ant.properties
+        |
+        |
+        +--+ config.vars
+        |
+        |
+        +--+ enterprise.init
+        |
+        |
+        +--+ <replaceable>application directory</replaceable>
+        </screen>
+</sect2>
+
+
+            <sect2 id="s2-project-dot-xml">
+              <title>project.xml</title>
+                    <para>Contains a description of the project and its
+                    components.  This file is used to generate build.xml, and
+                    to contains all the metadata required for creating a
+                    project package. It is described fully in the 
+                    <xref linkend="s1-project-xml">.</para>
+            </sect2>
+
+            <sect2 id="s2-ant-dot-properties">
+                <title>ant.properties</title>
+                    <para>This contains information required by
+                    <application>ant</application>, which is used for building
+                    &CCM; projects. The only option which may require alteration
+                    in this file is <command>ccm.servlet.engine</command>. For
+                    APLAWS projects, this should be set to
+                    <option>resin</option>.</para>
+            </sect2>
+
+            <sect2 id="s2-build-dot-xml">
+                <title>build.xml</title>
+                    <para>This file is used directly by
+                    <application>ant</application>, and should never be edited
+                    directly. It is created automatically by the
+                    <command>ccm-configure.sh</command> command from the
+                    information contained in
+                    <filename>project.xml</filename>.</para>
+            </sect2>
+            <sect2 id="s2-config-dot-vars">
+              <title><filename>config.vars</filename></title>
+              <para>
+                This file stores the configuration parameters for your
+development server. You will need to generate and edit this file to
+                before you can get your server running. It is explained in more detail in the <xref linkend="s1-config-dot-vars">.
+              </para>
+            </sect2>
+
+            <sect2 id="s2-enterprise-dot-init">
+              <title><filename>enterprise.init</filename></title>
+              <para>This file is generated from <filename>config.vars</filename> and <filename>enterprise.init.in</filename> files in the application directories. This is the file that the server reads at startup. It is explained in more detail in the <xref linkend="s1-config-dot-vars">.
+            </para>
+            </sect2>
+          </sect1>
+
+        <sect1 id="s1-project-xml">
+            <title>The <filename>project.xml</filename> file</title>
+
+            <para>This file describes the project and its components for the
+            development and package building tools.</para>
+
+            <para>Below is a sample <filename>project.xml</filename>
+            file.</para>
+
+<screen>
+  <computeroutput>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+
+    &lt;ccm:project name="aplaws_<userinput>borough</userinput>"
+       prettyName="APLAWS - <userinput>Borough</userinput>"
+             type="project"
+<userinput>versionFrom="aplaws_<userinput>borough</userinput>"</userinput>
+          extends="aplaws"
+   extendsVersion="1.2.15"
+<userinput>version="0.8.3"</userinput>
+<userinput>release="1"</userinput>
+        xmlns:ccm="http://ccm.redhat.com/ccm-project"&gt;
+
+  &lt;!-- List all project specific applications here --&gt;
+  &lt;ccm:build&gt;
+    &lt;ccm:application name="aplaws_<userinput>borough</userinput>" prettyName="aplaws_<userinput>borough</userinput>" buildOrder="1"/&gt;
+  &lt;/ccm:build&gt;
+
+  &lt;!-- List all shared, pre-built applications here --&gt;
+  &lt;ccm:prebuilt&gt;
+    &lt;!--&lt;ccm:application name="cms" version="5.0.0" buildOrder="1"/&gt; --&gt;
+  &lt;/ccm:prebuilt&gt;
+
+&lt;/ccm:project&gt;
+</computeroutput>
+</screen>
+        
+            <para>The attributes of the <command>&lt;ccm:project&gt;</command>
+            tag define the highest level information about the project:</para>
+
+
+       <sect2 id="s2-px-name">
+                    <title>name</title>
+                        <para>The machine friendly name of the project. This is
+                        the name of the package when you create one, the name of
+                        a number of directories created when installing the
+                        package, and the name of the System V service the
+                        package creates.</para>
+
+                        <para>You will not typically change the value of this
+                        attribute once it has been set.</para>
+                </sect2>
+
+                <sect2 id="s2-px-prettyname">
+                    <title>prettyName</title>
+                        <para>This is a more descriptive name for the project
+                        for use when making a package.</para>
+                </sect2>
+
+                <sect2 id="s2-px-type">
+                    <title>type</title>
+                        <para>This attribute should always have the value
+                        <option>project</option> for APLAWS based
+                        projects.</para>
+                </sect2>
+
+                <sect2 id="s2-px-version-from">
+                    <title>versionFrom</title>
+                        <para>This is the name of an application subdirectory
+                        which contains a file called
+                        <filename>application.xml</filename>. If the
+                        <command>versionFrom</command> attribute is used, the
+                        version number for the package is taken from that file,
+                        instead of <filename>project.xml</filename>. The format
+                        of this file is explained in the
+                        <xref linkend="s2-application-dot-xml">.</para>
+
+                        <para>For APLAWS this will typically be your "-custom"
+                        directory containing custom styling.</para>
+                </sect2>
+
+                <sect2 id="s2-px-version">
+                  <title>version</title>
+                  <para>This is the version number of the project. The
+version number is used when an RPM is built from the development
+environment. If the <emphasis>versionFrom</emphasis> attribute exists
+it will be ignored and the version numbers in the
+                  <filename>application.xml</filename> will be
+used. Please see <xref linkend="s2-ax-version">.</para>
+                </sect2>
+
+   <sect2 id="s2-px-release">
+                  <title>release</title>
+                  <para>This is the release number of the project. The
+version number is used when an RPM is built from the development
+environment. If the <emphasis>versionFrom</emphasis> attribute exists
+it will be ignored and the release number in the
+<filename>application.xml</filename> will be used. Please see <xref linkend="s2-ax-release"> </para>
+                </sect2>
+
+                <sect2 id="s2-px-extends">
+                    <title>extends</title>
+                        <para>This is the name of the project you are
+                        extending. In order for this to work, you will have to
+                        have installed the development package for that project.
+                        For example, for aplaws you will have installed a
+                        package called
+                        <filename>aplaws-devel-1.2.<replaceable>xx</replaceable>-<replaceable>y</replaceable></filename>.
+                        </para>
+
+                        <para>You will not typically change the value of this
+                        attribute once it has been set.</para>
+                </sect2>
+
+                <sect2 id="s2-px-extends-version">
+                    <title>extendsVersion</title>
+                        <para>This is the version of the <emphasis>project which
+                        you are extending</emphasis>. For example, if you
+                        installed <filename>aplaws-devel-1.2.15-3</filename>,
+                        extendsVersion would be set to <option>1.2.15</option>.
+                        Note that the release number ("-3") is omitted.</para>
+
+                        <para>You will update this value every time you install
+                        a new version of the aplaws-devel package.</para>
+                </sect2>
+
+
+
+                <sect2 id="s2-px-ccm-build">
+                    <title>&lt;ccm:build&gt;</title>
+            <para>In addition to the above attributes, there are 2 sections
+            where the structure of the application is defined.</para>
+
+                        <para>This section contains a list of applications which
+                        will be compiled and included in this project. For every
+                        application listed here, there must be an application
+                        subdirectory with the same name in the project
+                        directory.</para>
+
+                        <para>The <command>buildOrder</command> attribute is
+                        used to define which order the applications should be
+                        built in. If an application uses components provided by
+                        another application you will have to make sure they are
+                        built in the correct order.</para>
+
+                        <para>Another option not shown in the example above is
+                        the <command>overwrite</command> attribute. If set to
+                        <option>yes</option>, files in this application which
+                        overlap with existing files will overwrite the existing
+                        ones. This is primarily used for overriding XSL
+                        stylesheets. Thus in an APLAWS project, the 
+                        application containing custom styling will typically use
+                        this option.</para>
+                </sect2>
+
+                <sect2 id="s2-px-ccm-prebuilt">
+                    <title>&lt;ccm:prebuilt&gt;</title>
+                        <para>This section contains a list of pre-built
+                        applications. These application do not need to be
+                        compiled, but will be deployed and packaged as part of
+                        this project.</para>
+
+                        <para>In the same way as the <command>extends</command>
+                        and <command>extendsVersion</command> attributes of
+                        <command>&lt;ccm:project&gt;</command> refer to the
+                        extended applications development package, the
+                        <command>name</command> and <command>version</command>
+                        attributes of <command>&lt;ccm:prebuilt&gt;</command>
+                        refer to the development package of a prebuilt
+                        application.</para>
+
+                        <para>APLAWS projects do not normally use any prebuilt
+                        applications. It is fine for this section to be
+                        empty or, as in the example above, the contents to be
+                        commented out.</para>
+                </sect2>
+    </sect1>
+
+    <sect1 id="s1-config-dot-vars">
+      <title>Server Configuration <filename>config.vars</filename> and <filename>enterprise.init</filename></title>
+          <para>The server initialization file for a &CCM; based project is
+          called <filename>enterprise.init</filename>.  It is generated from a
+          number of fragments in its component applications usually stored in 
+          <filename>
+            <replaceable>application</replaceable>/etc/enterprise.init.in
+          </filename> and from the parameter values set in
+<filename>config.vars</filename>. <filename>config.vars</filename>
+in turn, is created by pulling all
+                placeholder variables out of
+                <filename>enterprise.init.in</filename> fragments in a project's
+                component applications. <filename>config.vars</filename> and <filename>enterprise.init</filename> does not exist at the beginning of the project. Here are the steps you must take at the beginning of a project. 
+
+                <orderedlist>
+                  <listitem><para>Run <command> ant make-config </command> (<xref linkend="s2-ant-make-config">) - this will generate <filename>config.vars</filename>.
+</para></listitem>
+<listitem><para>Edit <filename>config.vars</filename> and set the parameters to suit your project.
+</para></listitem>
+
+<listitem><para> Run <command>ant make-init </command>  - This will generate
+<filename>enterprise.init</filename> from the values in
+<filename>config.vars</filename> and the various
+<filename>enterprise.init.in</filename> files (<xref
+linkend="s2-ant-make-init"/>).
+ </para></listitem>
+                </orderedlist>
+</para>
+
+<note><title>Note:</title><para>You should always edit <filename>config.vars</filename> and
+not <filename>enterprise.init</filename>. The changes you make to
+<filename>config.vars</filename> is merged into
+<filename>enterprise.init</filename> with the ant command <command>ant
+make-init</command> (<xref
+linkend="s2-ant-make-init"/>).</para>
+    </note>
+
+      <sect2 id="s2-sample-config-dot-vars">
+        <title>Sample <filename>config.vars</filename></title>
+
+        <para>
+          APLAWS is designed to be configurable, however you can leave
+many of these parameters as they are to get a basic installation. At the bare minimum you will need to edit the following paramters. 
+
+          <itemizedlist>
+            <listitem>
+              <para><command>db-pass</command>: Database password
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>db-user</command>: Database user
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>debug-mode</command>: Determines wheather whitespace is
+stripped from the HTML output. This should be set to true for
+development.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>jdbc-url</command>: The JDBC URL to the
+                database instance. For Oracle this value should match
+                the entry in
+<filename>$ORACLE_HOME/network/admin/tnsnames.ora</filename>. For
+Postgres the entry should be
+<command>jdbc:postgresql://<userinput>servername</userinput>/<userinput>databasename</userinput>.
+</command>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>log-dir</command>: This should point to 
+                <filename>/var/ccm-devel/web/<replaceable>username</replaceable>/<replaceable>projectname</replaceable>/logs</filename>
+                for the <command>taillogs</command> to work.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>lucene-index-location</command>: On a
+Postgres environment the search engine needs to be set to Lucene. The
+index location should be a directory that the development user can
+write to, the recommended directory is
+<filename>/var/ccm-devel/web/<replaceable>username</replaceable>/<replaceable>projectname</replaceable>/lucene.dat</filename>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>search-lucene-enabled</command>: Set to false
+for Oracle, true for a Postgres environment.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>search-intermedia-enabled</command>: Set to
+true for Oracle, false for Postgres.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>state-dir</command>: The directory where
+server state files will be written, this should be a directory that's
+writable by the development user. The recommended directory is
+<filename>/var/ccm-devel/web/<replaceable>username</replaceable>/<replaceable>projectname</replaceable>/run</filename>.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <command>xslt-engine</command>: Options are Xalan,
+Saxon, and JD.XSLT. The recommended parser is JD.XSLT.
+              </para>
+            </listitem>
+          </itemizedlist>
+
+can leave many of this values as they are. But you will need to change
+the values of parameters such as db-pass, db-user, jdbc-url, log-dir,
+state-dir. The # sign is a comment marker, below is
+          an annotated <filename>config.vars</filename>.
+        </para>
+
+        <para>
+          <screen>
+          <computeroutput>
+# ACS initialization file
+admin-answer = 6  # Answer for web admin user's password reminder question
+admin-email = admin@example.com  # email address of the web admin user
+admin-forename = Administrator  # Forename of the web admin user
+admin-password = 123456  # web admin user's password
+admin-question = 12345  # web admin user password reminder question
+admin-surname = Account # web admin user's surname
+autoRegistration = true # redirect to registration form for unknown email addresses
+cache-expiry = 900 
+cache-peers =  # peer servers for multi-tiered environment, leave blank for development
+caching-active = yes
+<userinput>db-pass = ccm_xyz # Database password</userinput>
+db-pool = 10 # database connection pool size
+<userinput>db-user = ccm  # Database useranme</userinput>
+<userinput>debug-mode = true # Turn HTML indentation on/off for development</userinput>
+default-locale = en_GB
+default-scheme = http
+developer-support = false
+dispatcher-context-path = # leading URL stub 
+dispatcher-servlet-path = 
+dmi-active = false
+dmi-data-model-file = "/WEB-INF/sql/ccm-core/default/dmi/dmi-create.sql"
+dmi-xml-files = { "core-dmi.xml", "/WEB-INF/sql/ccm-core" }
+hostname = ccm.example.com # hostname of the server
+<userinput>jdbc-url = jdbc:oracle:oci8:@(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = oracle)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = ora8) (SRVR = DEDICATED))) #JDBC URL for the database server</userinput>
+<userinput>log-dir = /var/ccm-devel/web/username/projectname/logs
+# Log directory for the server, this value should point to the logs directory in your web directory</userinput>
+log-level = warn
+log-size = 1000000
+login-stylesheet = login_en.xsl
+<userinput>lucene-index-location = /var/ccm-devel/web/username/projectname/lucene
+# If the database is Postgres the value should be changed to point to a directory in the web directory.
+</userinput>
+page-map = WEB-INF/resources/hereford-login-page-map.xml
+permissionsDMLChecking = false
+rememberLoginByDefault = true
+<userinput>search-intermedia-enabled = true
+# Change to false on a postgres environment
+</userinput>
+<userinput>search-lucene-enabled = false
+# Change to true on a postgres environment
+</userinput>
+search-lucene-indexer-id = 0
+server-name = localhost
+server-port = 8080
+<userinput>sitename = My APLAWS site
+# name of your website</userinput>
+smtp-host = localhost
+<userinput>state-dir = /var/ccm-devel/web/username/projectname/state
+# Value should point to a writable directory in the web directory
+</userinput>
+subsite-dispatcher-class = com.arsdigita.ui.login.SubsiteDispatcher
+workflow-send-alerts = true
+workflow-sender-email = workflow-alerts@example.com
+# email notification sender for workflow alerts
+workflow-sender-given-name = Workflow # Name of alert sender
+workflow-sender-surname = Alerts # Surname of alert sender
+<userinput>xslt-engine = JD.XSLT
+# XSLT parser, options are Saxon, Xalan, JD.XSLT. JD.XSLT is recommended
+</userinput>
+<userinput>xslt-timeout = 60
+# interval for XSLT, set to a smaller number for development
+</userinput>
+
+
+# CMS initialization file
+cms-item-adapters = /WEB-INF/resources/hereford-item-adapters.xml
+content-center-map = /WEB-INF/resources/content-center-map.xml
+content-digest-sender = article-digest@herefordshire.gov.uk
+content-section-name = content
+default-folder-template = /default/folder.jsp
+default-item-template = /default/item.jsp
+default-root-category = true
+forms-content-digest-sender = forms-digest@herefordshire.gov.uk
+forms-section-name = forms
+overdue-alert-interval = 24
+overdue-duration = 96
+overdue-max-alerts = 5
+overdue-send-alerts = false
+publish-to-fs-servers = "http://servlet1/", "http://servlet2/"
+publish-to-fs-source = "http://servlet1/"
+publish-to-fs-this-server = "http://servlet1/"
+search-engine = intermedia
+template-root = /packages/content-section/templates
+
+# Portal initialization file
+portal-url = /portal/
+
+# Forum initialization file, the third item in the forum list of lists is weather the forum is moderated or not
+adminCanEditPosts = true
+authorCanEditPosts = true
+digestUserEmail = digests
+forums = {{"forum1", "Forum #1", false, "nasakai@redhat.com", "Forum #1 Moderation" },  {"forum2", "Forum #2", false, "nasakai@redhat.com", "Forum #2 Moderation"}}
+replyHostName = devnull.redhat.com
+
+# 
+search-spider-delay = 60
+search-spider-frequency = 0
+search-spider-urls = "http://www.redhat.com/", "http://www.example.org/"
+
+# Navigation initialization file
+default-content-section-url = "/content/"
+related-items-purpose = "DUBLINCORE"
+
+# Noticeboard initialization file
+adminCanEditNotices = true
+authorCanEditNotices = true
+noticeboards = {{"noticeboard", "Noticeboard"}}
+
+# 
+chat-control-host = localhost
+chat-control-port = 8200
+chat-public-host = localhost
+chat-public-port = 8200
+chat-start-server = false
+
+# System Properties
+project-name = hereford
+</computeroutput>
+</screen>
+        </para>
+
+
+      </sect2>
+    </sect1>
+
+
+    <sect1 id="s1-deploying-with-ant">
+        <title>Deploying with Ant</title>
+
+        <para>Compilation and deployment of &CCM; and &CCM; based projects is
+        done using <application>ant</application>. The options you can
+give to the <command>ant</command> command are called
+<emphasis>targets</emphasis>, and they are defined in the
+<filename>build.xml</filename> file.  There are two types of ant
+targets that you will be using.  The first set is the configuration
+targets such as  <command>ant
+make-config</command>, <command>ant
+update-config</command>, and <command>ant
+make-init</command>. The second set are the
+<emphasis>deploy</emphasis> targets : The &CCM; build
+        tools configures ant to compile or copy the files from the
+ and the
+shared source directory
+ into the web
+directory. The most commonly used deploy targets are the following: <command>ant
+deploy-config</command>, <command>ant deploy</command>, and
+<command>ant
+deploy-<replaceable>application</replaceable></command>.For a complete list for your project, type
+<command>ant</command> on its own.  Please see <xref linkend="s2-ant-make-config">,<xref
+linkend="s2-ant-update-config"/>, <xref
+linkend="s2-ant-make-init"/>, <xref linkend="s2-project-directory"/>, <xref linkend="s2-shared-source-directory"/>, <xref linkend="s2-web-directory">, <xref
+linkend="s2-ant-deploy-config"/>, <xref
+linkend="s2-ant-deploy"/>, <xref linkend="s2-ant-make-init"></para>
+
+        <note>
+            <title>Note</title>
+            <para>Ant's configuration file is <filename>build.xml</filename>.
+            This file is automatically generated by
+            <command>ccm-configure.sh</command> from
+            <filename>project.xml</filename>. Immediately after creating a
+            project or making any change to <filename>project.xml</filename>,
+            you must re-run <command>ccm-configure.sh</command> otherwise ant
+            will not work as desired.</para>
+        </note>
+
+        <caution>
+          <para>          While you should not need to edit build.xml yourself, if you
+would like to find out more, you can refer to the documentation at
+          the <ulink url="http://ant.apache.org/">ant homepage</ulink>.</para>
+        </caution>
+        <note><title>Running ant:</title>
+          <para>          All ant commands must be run from the top level project
+directory (the directory that contains
+<filename>build.xml</filename>. This should be the directory that you
+are in after you execute <command>cddev</command> (<xref
+linkend="s2-cddev"/>).</para>
+        </note>
+
+        <sect2 id="s2-ant-make-config">
+          <title><filename>ant make-config</filename></title>
+          <para>Generates the configuration file <filename>config.vars</filename> by pulling all
+                placeholder variables out of
+                <filename>enterprise.init.in</filename> fragments in a project's
+                component applications.
+           </para>
+
+                <caution>
+                    <title>Caution</title>
+                    <para>Only run <command>ant</command>
+                    <option>make-config</option>
+<emphasis>once</emphasis> as subsequent executions will overwrite any
+customizations you have made to your <filename>config.vars</filename>
+.
+After the initial creation, keep it up-to-date with <command>ant update-config</command> (<xref linkend="s2-ant-update-config">).</para>
+                </caution>
+          </sect2>
+            <sect2 id="s2-ant-update-config">
+<title>
+<command>ant update-config</command>
+</title>
+<para>
+  Examines the <filename>enterprise.init.in</filename> files and adds any new/changed parameters to <filename>config.vars</filename>. This command will preserve the parameter values that you have set. 
+</para>
+            </sect2>
+
+            <sect2 id="s2-ant-make-init">
+                <title>ant make-init</title>
+
+                <para>This command will generate <filename>enterprise.init</filename> by
+                concatenated all <filename>enterprise.init.in</filename>
+                fragments in component applications and substituting values in
+                <filename>config.vars</filename>.</para>
+
+                <note><title>Note:</title>
+                <para>This only creates <filename>enterprise.init</filename> in
+                the development directory. For it to be used it must be
+                deployed. This is one of the tasks performed by the
+                <command>deploy</command> target, or to deploy it on its own you
+                can use <command>ant deploy-config</command>
+ (<xref linkend="s2-ant-deploy-config">) </para>
+</note></sect2>
+                <sect2 id="s2-ant-deploy-config">
+<title>
+<command>ant deploy-config</command>
+</title>
+
+<para> This deploys only configuration information. This includes
+<filename>enterprise.init</filename> and
+<filename>web.xml</filename>. Use this target if you have made changes
+to either of these files, for example by using the
+<option>make-init</option> target. This command copies
+<filename>enterprise.init</filename> from the dev directory to the
+web directory. The file is located at
+<filename>/var/ccm-devel/web/<replaceable>username</replaceable>/<replaceable>projectname</replaceable>/webapps/ccm/WEB-INF/resources/enterprise.init</filename>.</para>
+
+                </sect2>
+        
+                <sect2 id="s2-ant-deploy">
+                    <title><command>ant deploy</command></title>
+                        <para>This deploys the entire project including all
+                        applications, the parent project if any and all
+                        configuration information.</para>
+                </sect2>
+
+                <sect2 id="s3-deploy-application">
+                    <title><command>deploy-<replaceable>application</replaceable></command></title>
+                        <para>When you have only made changes to a single
+                        application and don't need to redeploy the whole
+                        project, use this target to deploy just a single
+                        application.</para>
+
+                        <para>For example, <command>ant</command>
+                        <option>deploy-aplaws-custom</option> will deploy only
+                        the <filename>aplaws-custom</filename>
+                        application.</para>
+                </sect2>
+
+
+
+                <sect2 id="s2-ant-clean">
+                    <title><command>ant clean</command></title>
+                        <para>This removes all deployed files and directories,
+                        and all compiled classes from build
+directories. In other words this commands removes files in
+<filename>webapps/ccm</filename> in the development web directory (<xref
+linkend="s2-web-directory"/>).  Use
+                        this when you need to be sure that your project is
+                        rebuilt cleanly, for example after changing
+                        <filename>project.xml</filename> or before building a
+                        package for deployment on a live server.</para>
+                </sect2>
+    </sect1>
+    
+    <sect1 id="s1-dev-database">
+      <title>Setting Up the Database</title>
+      <para> You will need to have a database instance that you can
+use for development. These steps should be conducted by your DBA, the
+following is the instructions for Postgres and Oracle environments. If
+you need instructions on setting up your database server please see
+<xref linkend="s3-pg-createdatabase"/>.
+      </para>
+
+      <sect2 id="s2-pg-load-datamodel">
+        <title>Loading the Datamodel for Postgres</title>
+        <para>
+          <command>cdweb</command> to change to the web directory and
+          change into <filename>webapps/ccm/WEB-INF/sql</filename>. You will
+          find a file called <command>postgres-create.sh</command>.
+          Run this command with your database parameters to load the
+datamodel.
+          <screen>
+            <computeroutput>
+$ sh postgres-create.sh <userinput>dbname</userinput> <userinput>dbusername</userinput> <userinput>db server hostname</userinput>
+          </computeroutput>
+  </screen>
+
+        </para>
+      </sect2>
+
+      <sect2 id="s2-ora-load-datamodel">
+        <title>Loading the Datamodel for Oracle</title>
+      <para>
+          <command>cdweb</command> to change to the web directory and
+          change into <filename>webapps/ccm/WEB-INF/sql</filename>. You will
+          find a file called <command>oracle-create.sh</command>, the
+          argument for this script should be the database connection
+string you use to connect to the database via
+<command>sqlplus</command>. For example, if you connect to your Oracle
+instance with the following command:
+          <screen>
+            <computeroutput>
+sqlplus  <userinput>my_aplaws/my_aplaws@myoracleserver</userinput> 
+</computeroutput>
+          </screen>
+
+          Then you should run <command>oracle-create.sh</command> like this:
+          <screen>
+            <computeroutput>
+$ sh oracle-create.sh <userinput>my_aplaws/my_aplaws@myoracleserver</userinput>
+</computeroutput>
+          </screen>
+        </para>
+      </sect2>
+    </sect1>
+</chapter>
+
+
