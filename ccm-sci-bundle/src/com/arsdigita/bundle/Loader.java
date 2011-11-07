@@ -18,7 +18,7 @@
 
 package com.arsdigita.bundle;
 
-import com.arsdigita.london.navigation.Template;
+// import com.arsdigita.london.navigation.Template;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
 
@@ -34,7 +34,8 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.StringParameter;
+import com.arsdigita.util.parameter.StringArrayParameter;
+// import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Application;
 
 import org.apache.log4j.Logger;
@@ -42,10 +43,11 @@ import org.apache.log4j.Logger;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
- * <p>Loader executes nonrecurring at install time and loads (installs and
- * initializes) the ScientificCMS integration module persistently into database.</p>
+ * Loader executes nonrecurring at install time and loads (installs and
+ * initializes) the ScientificCMS integration module persistently into database.
  *
  * Creates category domains in the terms application according to 
  * configuration files and adds jsp templates to navigation.
@@ -56,78 +58,126 @@ import java.util.Set;
  */
 public class Loader extends PackageLoader {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Loader.class);
-
-    // Name of files containing an initial category tree(s).
-    // Files are stored as part of the jar, so classloader can find them.
-    // ToDo: relocate files user accessible outside the jar.
-    private static final String[] categoryFiles = new String[]{
-        "WEB-INF/sci/zes-nav-domain-1.00.xml",
-        "WEB-INF/sci/zes-nav-hierarchy-1.00.xml"
-    };
-
-    private StringParameter m_navigationDomain;
-    // private StringParameter m_servicesDomain;
-    // private StringParameter m_interactionDomain;
-    // private StringParameter m_subjectDomain;
-    // private StringParameter m_rssDomain;
+    
+    /**
+     * List of comma separated sets of application instance specifications,
+     * optionally used to create arbitrary custom application instances 
+     * according to local sites requirements.
+     * It's the developers / administrators responsibility to ensure all
+     * necessary application types have been created previously.
+     * Example:
+     *   "FULL_QUALIFIED_CLASS_NAME : URL : TITLE , 
+     *    FULL_QUALIFIED_CLASS_NAME : URL : TITLE ,
+     *    ....                                    ,
+     *    FULL_QUALIFIED_CLASS_NAME : URL : TITLE "
+     */
+    private Parameter m_customApplicationInstances = new StringArrayParameter(
+                "com.arsdigita.bundle.local_app_instances",
+                Parameter.OPTIONAL, null
+                );
+    
+    /**
+     * Comma separated list of fully qualified filenames, each file containing
+     * a set of Terms domain catagories definitions. These form an initial set
+     * of category tree(s), at minimum for navigation, optionally additional
+     * domains.
+     * Files are stored as part of the jar, so classloader can find them.
+     */
+    private Parameter m_categoryFiles = new StringArrayParameter(
+                "com.arsdigita.bundle.category_files",
+                Parameter.REQUIRED,new String[]{
+                    "WEB-INF/sci/sci-nav-domain-1.00.xml",
+                    "WEB-INF/sci/sci-nav-hierarchy-1.00.xml" }
+                );
 
     /**
-     * Constructor 
+     * List of comma separated sets of domain mappings.
+     * It's the developers / administrators responsibility to ensure all
+     * necessary category domains have been imported previously and are spelled
+     * correctly. The list may contain set for different domain key and/or
+     * different applications and contexts. If an domain key requires several
+     * applications, repeat the key and specify a different application and/or
+     * context
+     * Example:
+     *   "DOMAIN_KEY_1 : APP_URL_1 [: CONTEXT_1] , 
+     *    DOMAIN_KEY_1 : APP_URL_2 [: CONTEXT_1] ,
+     *    DOMAIN_KEY_2 : APP_URL_1 [: CONTEXT] ,
+     *    ....                             ,
+     *    DOMAIN_KEY_n : APP_URL_n [: CONTEXT_n] "
+     * 
+     */
+    private Parameter m_domainMappings = new StringArrayParameter(
+                "com.arsdigita.bundle.domain_mappings",
+                Parameter.REQUIRED,new String[]{ "STD-NAV:/navigation/",
+                                                 "STD-NAV:/content/",
+                                                 "STD-NAV:/portal/"      }
+                );
+
+    
+    /**
+     * Constructor
      */
     public Loader() {
 
-        // Es werden stumpf mehrere Kategorisierungsdomains fuer TERMS 
-        // definiert und dann über xml Dateien gefüllt:
-        // navigationDomain f. Navigation
-        // subjectDomain f. ???
-        // interactionDomain f. ???
-        // rssDomain fuer vermutlich RSS Feed
-        //
-        m_navigationDomain = new StringParameter(
-                "com.arsdigita.aplaws.navigation_domain",
-                Parameter.REQUIRED,
-                "STD-NAV");
-        // Registers to the context by adding the parameter to a map of parameters
-        register(m_navigationDomain);
-
-        /*
-         * You may add more catagory domains by adding resources
-         * according the following schema
-         */
-
-        /* currently not used
-        m_subjectDomain = new StringParameter(
-            "com.arsdigita.aplaws.subject_domain",
-            Parameter.REQUIRED,
-            "LGCL");
-        register(m_subjectDomain);
-         */
-
-        /* currently not used
-        m_interactionDomain = new StringParameter(
-            "com.arsdigita.aplaws.subject_domain",
-            Parameter.REQUIRED,
-            "LGIL");
-        register(m_interactionDomain);
-         */
-        
-        /* currently not used
-        m_rssDomain = new StringParameter(
-            "com.arsdigita.aplaws.rss_domain",
-            Parameter.REQUIRED,
-            "APLAWS-RSS");
-        register(m_rssDomain);
-         */
-
+        // Register defined parametgers to the context by adding 
+        // the parameter to a map of parameters
+        register(m_customApplicationInstances);
+        register(m_categoryFiles);
+        register(m_domainMappings);
 
     }
 
 
     public void run(final ScriptContext ctx) {
 
-        String[] files = categoryFiles;
+        /* Create site specific custom applications instances of arbitrary
+         * type specified by optional configuration parameter.
+         * Typically used to create additional navigation instances for alternativ 
+         * navigation tree(s) or additional content sections.
+         */
+        String[] customApplicationInstances = (String[]) get(m_customApplicationInstances);
+        if ( customApplicationInstances != null) {
+            
+            for (int i = 0 ; i < customApplicationInstances.length ; i++) {
+            
+                final String aCustomApplicationInstance = customApplicationInstances[i];
 
+                StringTokenizer tok = new StringTokenizer( aCustomApplicationInstance, ":" );
+                String type = null;    // full qualified class name
+                String url = null;     // url fragment (last part)
+                String title = null;   // title of new application instance
+                String parent = null;  // parent class name
+                for ( int j = 0; tok.hasMoreTokens(); j++ ) {
+                    if ( 0 == j ) {
+                        type = tok.nextToken();
+                    } else if ( 1 == j ) {
+                        url = tok.nextToken();
+                    } else if ( 2 == j ) { 
+                        title = tok.nextToken();
+                    } else if ( 3 == j ) { 
+                        parent = tok.nextToken();
+                    } else {
+                        parent = null;
+                    }
+                }
+
+                Application.createApplication(type, url, title, null);
+            }
+
+        }
+
+        
+        /* Import from the categories definition files: Create Terms domains 
+         * and populate them with categories                                  
+         * (alternatively this could be delegated to terms.Loader because it's
+         * all Terms)                                                         
+         * Creates one or more Terms domains, but NO domain mapping for navigation.
+         * Therefore, registerDomains is required for /navigation/ otherwise
+         * the systems throws NPE for ccm/navigation.
+         */
+        String[] files = (String[]) get(m_categoryFiles);
         final Parser parser = new Parser();
         // for each filename in the array of files containing categories
         for (int i = 0 ; i < files.length ; i++) {
@@ -135,57 +185,49 @@ public class Loader extends PackageLoader {
             if (s_log.isInfoEnabled()) {
                 s_log.info("Process " + file);
             }
+            /* Import a Terms category domain.                                */
             parser.parse(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream(file));
         }
 
-        String navigationKey = (String) get(m_navigationDomain);
-        registerDomain(navigationKey, "/navigation/", null);
-        registerDomain(navigationKey, "/content/", null);
-        registerDomain(navigationKey, "/portal/", null);
-        //registerDomain(navigationKey, "/admin/subsite/", null);
 
-        /*
-         * You may add more catagory domains by adding resources
-         * according the following schema
+        /* Creates domain mappings according to configuration file. By default
+         * at least one domain mapping for standard navigation is created,
+         * otherwise navigation wouldn't work.
+         * IOt is the developers / administrators responsibility that KEY is
+         * existent, i.e. previously importet in the previous step. 
          */
+        String[] domainMappings = (String[]) get(m_domainMappings);
+        for (int i = 0 ; i < domainMappings.length ; i++) {
+            
+            final String aDomainMapping = domainMappings[i];
 
-        // String subjectKey = (String)get(m_subjectDomain);
-        // registerDomain(subjectKey, "/search/", null);
-        // registerDomain(subjectKey, "/content/", "subject");
+            StringTokenizer tok = new StringTokenizer( aDomainMapping, ":" );
+            String key = null;
+            String app = null;
+            String context = null;
+            for ( int j = 0; tok.hasMoreTokens(); j++ ) {
+                if ( 0 == j ) {
+                    key = tok.nextToken();
+                } else if ( 1 == j ) {
+                    app = tok.nextToken();
+                } else if ( 2 == j ) { 
+                    context = tok.nextToken();
+                } else {
+                    context = null;
+                }
+            }
 
-        // String servicesKey = (String)get(m_servicesDomain);
-        // registerDomain(servicesKey, "/services/", null);
-        // registerDomain(servicesKey, "/content/", "services");
+            registerDomain(key, app, context);
 
-        // String rssKey = (String)get(m_rssDomain);
-        // registerDomain(rssKey, "/channels/", null);
-        // registerDomain(rssKey, "/content/", "rss");
+        }
+        
 
-        // String interactionKey = (String)get(m_interactionDomain);
-        // registerDomain(interactionKey, "/content/", "interaction");
+        // registerServicesTemplate("/services/");  wird nicht gebraucht        
 
-
-
-        // register new / addidional JSP templates (index pages) in Navigation
-        // registerServicesTemplate("/services/");  wird nicht gebraucht
-        registerNavigationTemplates();
-
-        // Switch /portal/ to use 1 column layout for funky aplaws stuff.
-        // pboy: This will have no effect at all. A portal page created at
-        // url /portal/ (and beneath) will always use the homepage jsp's which
-        // are hardcoded to create a three column design and ignore any
-        // column configuration. All portal pages at other urls are not
-        // affect by this setting which touches only the one application (portal)
-        // at url /portal/. Portal pages at other urls use the corresponding
-        // configuration parameter for its initial value and number of columns
-        // may be modified at any time using configuration ui.
-/*      Workspace portal = (Workspace)Application
-              .retrieveApplicationForPath("/portal/");
-        portal.setDefaultLayout(PageLayout
-              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));             */
     }  // end run method
 
+    
 //  public void registerServicesTemplate(String appURL) {
 //      Application app = Application.retrieveApplicationForPath(appURL);
 //      Assert.exists(app, Application.class);
@@ -203,144 +245,17 @@ public class Loader extends PackageLoader {
 //                           Template.DEFAULT_USE_CONTEXT );
 //  }
     
+    
     /**
-     * Use Package com.arsdigita.london.navigation to add additional
-     * templates (JSP page - index page) for use in navigation.
-     * These JSP pages can be choosen in admin/navigation as index
-     * pages for one or more specific categories.
+     * Determines the Terms domain using domainKey as well as the application
+     * instance using appURL and then creates a domain mapping using context
+     * as domain context.
      * 
-     * TODO: make configurable without recompiling!
-     */
-    public void registerNavigationTemplates() {
-
-        Template template;
-
-        /*  In navigation werden bereits Grund-Templates erstellt.
-         */
-        template = Template.create(
-                "ZeS AtoZ paginator",
-                "ZeS AtoZ paginator index page",
-                "/packages/navigation/templates/zes-atoz.jsp");
-
-        template = Template.create(
-                "ZeS Default",
-                "ZeS default index page",
-                "/packages/navigation/templates/zes-default.jsp");
-
-        template = Template.create(
-                "ZeS Portalseite",
-                "ZeS Portal Page",
-                "/packages/navigation/templates/zes-portal.jsp");
-
-        template = Template.create(
-                "ZeS Recent",
-                "ZeS reverse order page",
-                "/packages/navigation/templates/zes-recent.jsp");
-
-        template = Template.create(
-                "ZeS Welcome Page",
-                "ZeS Welcome Page for navigation",
-                "/packages/navigation/templates/zes-welcome.jsp");
-
-        template =
-        Template.create(
-                "MultiPartArticle as Index Item",
-                "Display a MultiPartArticle as index item",
-                "/packages/navigation/templates/mparticle-index.jsp");
-
-
-        template =
-        Template.create(
-                "Specializing list",
-                "Displays a list of items as the ordinary template, but specializes the objects in the list.",
-                "/packages/navigation/templates/SpecializingList.jsp");
-
-        template =
-        Template.create(
-                "SciProject list",
-                "Displays a list of SciProject items, including some attributes.",
-                "/packages/navigation/templates/SciProjectList.jsp");
-
-        template =
-        Template.create(
-                "SciPublication list",
-                "Displays a list of publication items, including some attributes.",
-                "/packages/navigation/templates/SciPublicationList.jsp");
-
-    }
-
-    /**
-     * Function to create an empty default domain in terms, preconfigured
-     * for navigation. It may be populated manually by the user/publisher 
-     * using the terms admin application.
-     * This step is useful only if no specific navigation tree is
-     * delivered.  
-     */
-    // -- public void registerDefaultNavigationDomain() {
-    // -- private StringParameter m_customNavKey;
-    // -- private URLParameter    m_customNavDomainURL;
-    // -- private StringParameter m_customNavPath;
-    // -- private StringParameter m_customNavUseContext;
-    // -- private StringParameter m_customNavTitle;
-    // -- private StringParameter m_customNavDesc;
-    // -- m_customNavKey = new StringParameter(
-    // --     "com.arsdigita.aplaws.custom_nav_key",
-    // --     Parameter.REQUIRED,
-    // --     "APLAWS-NAVIGATION");
-
-    /*   Zugriff auf Website wird nicht benötigt, aber der Parameter bei Einrichtung
-     *   der Kategorien. Funktion URL prüft auf korrekte Syntax, nicht auf Existenz
-     */
-    // -- try {
-    // --     m_customNavDomainURL = new URLParameter(
-    // --         "com.arsdigita.aplaws.custom_nav_domain_url",
-    // --         Parameter.REQUIRED,
-    // --         new URL("http://www.aplaws.org.uk/" +
-    // --                 "standards/custom/1.00/termslist.xml"));
-    // -- } catch (MalformedURLException ex) {
-    // --     throw new UncheckedWrapperException("Cannot parse url", ex);
-    // -- }
-    // -- m_customNavPath = new StringParameter(
-    // --     "com.arsdigita.aplaws.custom_nav_path",
-    // --     Parameter.REQUIRED,
-    // --     "local");
-    // -- m_customNavUseContext = new StringParameter(
-    // --     "com.arsdigita.aplaws.custom_nav_use_context",
-    // --     Parameter.REQUIRED,
-    // --     "local");
-    // -- m_customNavTitle = new StringParameter(
-    // --     "com.arsdigita.aplaws.custom_nav_title",
-    // --     Parameter.REQUIRED,
-    // --     "APLAWS Custom Navigation");
-    // -- m_customNavDesc = new StringParameter(
-    // --     "com.arsdigita.aplaws.custom_nav_desc",
-    // --     Parameter.REQUIRED,
-    // --     "Installation specific navigation tree");
-    // -- register(m_customNavDesc);
-    // -- register(m_customNavDomainURL);
-    // -- register(m_customNavKey);
-    // -- register(m_customNavPath);
-    // -- register(m_customNavTitle);
-    // -- register(m_customNavUseContext);
-    // -- String customNavPath = (String)get(m_customNavPath);
-    // -- String customNavTitle = (String)get(m_customNavTitle);
-    // Package com.arsdigita.web
-    // Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE,
-    //                               customNavPath,
-    //                               customNavTitle,
-    //                               null);
-    // -- String customNavDesc = (String)get(m_customNavDesc);
-    // -- String customNavKey = (String)get(m_customNavKey);
-    // -- String customNavUseContext = (String)get(m_customNavUseContext);
-    // -- URL customNavDomainURL = (URL)get(m_customNavDomainURL);
-    // -- Domain.create(customNavKey, customNavDomainURL,
-    // --               customNavTitle, customNavDesc, "1.0.0", new Date());
-    // registerDomain(customNavKey, '/'+customNavPath+'/', null);
-    // -- registerDomain(customNavKey, "/content/", customNavUseContext);
-    // -- }
-    /**
-     * Use Package com.arsdigita.london.terms to register a Domain for
-     * Categorisation
+     * Uses Package com.arsdigita.london.terms.Domain (!) 
+     * 
+     * @param domainKey
+     * @param appURL
+     * @param context 
      */
     public void registerDomain(String domainKey,
                                String appURL,
@@ -350,9 +265,14 @@ public class Loader extends PackageLoader {
                         + " in context " + context);
         }
 
-        Domain domain = Domain.retrieve(domainKey);  // package com.arsdigita.london.terms
+        /* Determine Domain and Application objects, both MUST exist!         */
+        Domain domain = Domain.retrieve(domainKey);  
         Application app = Application.retrieveApplicationForPath(appURL);
+        
+        /* Create domain mapping                                              */
         domain.setAsRootForObject(app, context);
+        
+        /* Create permissions and roles for content-center applications only  */
         if (app instanceof ContentSection) {
             RoleCollection coll = ((ContentSection) app).getStaffGroup().getOrderedRoles();
             Set adminRoles = new HashSet();

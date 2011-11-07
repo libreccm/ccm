@@ -53,7 +53,7 @@
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    Scientific CMS  OPTIONAL packages                                    -->
-<!--    Various combinations of these packages make up specific editions     -->
+<!--    Various combinations of packages make up specific editions           -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Assets   -->
@@ -75,9 +75,7 @@
         <ccm:application name="ccm-portalserver"/>
 
 <!--   LDN extension  -->
-<!--    temporyrily excluded because configuration has to be cleared
         <ccm:application name="ccm-ldn-rss"/>                        
--->
 
 <!--   SCI extension  -->
 <!--
