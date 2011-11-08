@@ -24,7 +24,6 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  *

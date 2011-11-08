@@ -67,6 +67,12 @@ public class SimpleXMLGenerator implements XMLGenerator {
      * your generator.
      */
     private boolean useExtraXml = true;
+    /**
+     * Allows to overwrite the name and the namespace of the XML element
+     * used to wrap the rendered item. 
+     */
+    private String itemElemName = "cms:item";
+    private String itemElemNs = CMS.CMS_XML_NS;
 
     // Register general purpose adaptor for all content items
     static {
@@ -90,6 +96,14 @@ public class SimpleXMLGenerator implements XMLGenerator {
         this.useExtraXml = useExtraXml;
     }
 
+    public void setItemElemName(final String itemElemName,
+                                final String itemElemNs) {
+        this.itemElemName = itemElemName;        
+        this.itemElemNs = itemElemNs;
+    }
+    
+    
+    
     /**
      * Generates the XML to render the content panel.
      *
@@ -247,7 +261,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
     }
 
     private Element startElement(String useContext) {
-        Element element = new Element("cms:item", CMS.CMS_XML_NS);
+        //Element element = new Element("cms:item", CMS.CMS_XML_NS);
+        final Element element = new Element(itemElemName, itemElemNs);
         if (useContext != null) {
             element.addAttribute("useContext", useContext);
         }

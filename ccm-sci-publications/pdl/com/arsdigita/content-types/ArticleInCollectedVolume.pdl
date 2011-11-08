@@ -28,7 +28,7 @@ object type ArticleInCollectedVolume extends Publication {
        Integer[0..1] pagesFrom = ct_article_in_collected_volume.pages_from INTEGER;
        Integer[0..1] pagesTo = ct_article_in_collected_volume.pages_to INTEGER;
        String[0..1] chapter = ct_article_in_collected_volume.chapter VARCHAR(512);
-       Boolean[0..1] reviewed = ct_article_in_collected_volume.reviewed BIT;
+       //Moved to Publication Boolean[0..1] reviewed = ct_article_in_collected_volume.reviewed BIT;
        
        
        reference key (ct_article_in_collected_volume.article_id);

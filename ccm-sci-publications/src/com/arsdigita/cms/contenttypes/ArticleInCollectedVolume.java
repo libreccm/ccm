@@ -37,7 +37,7 @@ public class ArticleInCollectedVolume extends Publication {
     public final static String PAGES_TO = "pagesTo";
     public final static String CHAPTER = "chapter";
     public final static String COLLECTED_VOLUME = "collectedVolume";
-    public static final String REVIEWED = "reviewed";
+    //public static final String REVIEWED = "reviewed";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.ArticleInCollectedVolume";
 
@@ -88,13 +88,13 @@ public class ArticleInCollectedVolume extends Publication {
         set(CHAPTER, chapter);
     }
 
-    public Boolean getReviewed() {
+    /*public Boolean getReviewed() {
         return (Boolean) get(REVIEWED);
     }
 
     public void setReviewed(Boolean reviewed) {
         set(REVIEWED, reviewed);
-    }
+//    }*/
 
     public CollectedVolume getCollectedVolume() {
         DataCollection collection;

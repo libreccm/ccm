@@ -26,6 +26,6 @@ import com.arsdigita.cms.ContentPage;
 object type WorkingPaper extends UnPublished {
 
        reference key (ct_working_paper.working_paper_id);
-       Boolean[0..1] reviewed = ct_working_paper.reviewed BIT;
+       //Moved to publication Boolean[0..1] reviewed = ct_working_paper.reviewed BIT;
 
 }

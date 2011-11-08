@@ -53,7 +53,7 @@ public class AuthorshipCollection extends DomainCollection {
     }
 
     public Boolean isEditor() {
-        System.out.printf("isEditor?\n");
+        //System.out.printf("isEditor?\n");
         return (Boolean) m_dataCollection.get(LINKEDITOR);
     }
 

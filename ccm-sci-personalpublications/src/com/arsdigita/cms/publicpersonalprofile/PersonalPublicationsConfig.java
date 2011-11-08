@@ -35,7 +35,7 @@ public class PersonalPublicationsConfig extends AbstractConfig {
      * lowercase), all numbers and the underscore "{@code _}". A type name
      * is the fully qualified name of content type derived from 
      * {@link Publication}. A type name can be followed by the literals
-     * {@code _ref} and {@code _noref}. If a type name is not followed by
+     * {@code _reviewed} and {@code _notriewed}. If a type name is not followed by
      * one of this literals, all publications of the type will be put into the 
      * group. If the type name is followed by one of this literals, the property
      * {@code reviewed} is checked. If the type has this property, publications
@@ -61,6 +61,10 @@ public class PersonalPublicationsConfig extends AbstractConfig {
      * be used here.
      */
     private final Parameter defaultGroup;
+    
+    private final Parameter pageSize;
+    
+    private final Parameter order;
 
     public PersonalPublicationsConfig() {
         publicationGroups =
@@ -70,22 +74,34 @@ public class PersonalPublicationsConfig extends AbstractConfig {
                 "monographs:com.arsdigita.cms.contenttypes.Monograph;"
                 + "collectedVolumeArticles:com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;"
                 + "journalArticles:com.arsdigita.cms.contenttypes.ArticleInJournal;"
-                + "journalArticlesRef:com.arsdigita.cms.contenttypes.ArticleInJournal_ref;"
+                + "journalArticlesReviewed:com.arsdigita.cms.contenttypes.ArticleInJournal_reviewed;"
                 + "collectedVolumes:com.arsdigita.cms.contenttypes.CollectedVolume");
 
         groupSplit = new IntegerParameter(
                 "com.arsdigita.cms.publicpersonlprofile.publications.groupSplit",
                 Parameter.REQUIRED,
-                32);
+                12);
 
         defaultGroup = new StringParameter(
                 "com.arsdigita.cms.publicpersonalprofile.publications.defaultGroup",
                 Parameter.REQUIRED,
-                "monographs,journalArticlesRef,journalArticles,misc");
+                "monographs,journalArticlesReviewed,journalArticles,misc");
+        
+        pageSize = new IntegerParameter(
+                "com.arsdigita.cms.publicpersonlprofile.publications.pageSize", 
+                Parameter.REQUIRED, 
+                10);
+        
+        order = new StringParameter(
+                "com.arsdigita.cms.publicpersonlprofile.publications.order", 
+                Parameter.REQUIRED, 
+                "year,title");
                
         register(publicationGroups);
         register(groupSplit);
         register(defaultGroup);
+        register(pageSize);
+        register(order);
 
         loadInfo();
     }
@@ -100,5 +116,13 @@ public class PersonalPublicationsConfig extends AbstractConfig {
     
     public final String getDefaultGroup() {
         return (String) get(defaultGroup);
+    }
+    
+    public final Integer getPageSize() {
+        return (Integer) get(pageSize);
+    }
+    
+    public final String getOrder() {
+        return (String) get(order);
     }
 }

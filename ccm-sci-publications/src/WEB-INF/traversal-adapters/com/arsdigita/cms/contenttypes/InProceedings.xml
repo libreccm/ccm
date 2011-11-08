@@ -4,15 +4,20 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
 
-  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator" >
+    <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator" >
 
-    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.InProceedings"
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.InProceedings"
 		 extends="com.arsdigita.cms.contenttypes.Publication">
-      <xrd:associations rule="include">
-	<xrd:property name="/object/proceedings"/>
-      </xrd:associations>
-    </xrd:adapter>
+            <xrd:associations rule="include">
+           
+                <xrd:attributes rule="exclude">
+                    <xrd:property name="/object/reviewed"/>
+                </xrd:attributes>
+          
+                <xrd:property name="/object/proceedings"/>
+            </xrd:associations>
+        </xrd:adapter>
 
-  </xrd:context>
+    </xrd:context>
 
 </xrd:adapters>

@@ -45,12 +45,24 @@ import java.math.BigDecimal;
  * This class is not a directly usable Content type. Its is only used to
  * define some common attributes needed for all kinds of publications.
  * </p>
+ * <p>
+ * As of version 6.6.1 of this module, the reviewed property has been moved 
+ * from the types {@link ArticleInCollectedVolume}, {@link ArticleInJournal}, 
+ * {@link CollectedVolume}, {@link Monograph} and {@link WorkingPaper} to this
+ * class. This has been done for performance reasons. Several use cases demanded
+ * the use of a data query (for performance reasons) over all publications with
+ * the option to filter for reviewed publications. Since the reviewed property
+ * was only available for some types this was not possible, even with joins.
+ * The publications types which do not need the reviewed property will not show
+ * this property in their forms. Also, the reviewed property was excluded from
+ * the XML of these types using their traversal adapters.
+ * </p>
  *
  *
  * @author Jens Pelzetter
  */
 public class Publication extends ContentPage {
-    
+
     public final static String YEAR_OF_PUBLICATION = "yearOfPublication";
     public final static String ABSTRACT = "abstract";
     public final static String MISC = "misc";
@@ -60,31 +72,32 @@ public class Publication extends ContentPage {
     public final static String SERIES = "series";
     public final static String ORGAUNITS = "orgaunits";
     public final static String ORGAUNIT_PUBLICATIONS = "publications";
+    public static final String REVIEWED = "reviewed";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Publication";
     private final static PublicationsConfig config = new PublicationsConfig();
-    
+
     static {
         config.load();
     }
-    
+
     public Publication() {
         this(BASE_DATA_OBJECT_TYPE);
     }
-    
+
     public Publication(final BigDecimal id) throws
             DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
-    
+
     public Publication(final OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
-    
+
     public Publication(final DataObject obj) {
         super(obj);
     }
-    
+
     public Publication(final String type) {
         super(type);
     }
@@ -92,7 +105,7 @@ public class Publication extends ContentPage {
     public static PublicationsConfig getConfig() {
         return config;
     }
-    
+
     /**
      * Gets the year of publications.
      *
@@ -149,6 +162,14 @@ public class Publication extends ContentPage {
         set(MISC, misc);
     }
 
+    public Boolean getReviewed() {
+        return (Boolean) get(REVIEWED);
+    }
+
+    public void setReviewed(Boolean reviewed) {
+        set(REVIEWED, reviewed);
+    }
+
     /**
      * Retrieves a collection of the authors of the publication.
      *
@@ -167,9 +188,9 @@ public class Publication extends ContentPage {
      */
     public void addAuthor(final GenericPerson author, final Boolean editor) {
         Assert.exists(author, GenericPerson.class);
-        
+
         DataObject link = add(AUTHORS, author);
-        
+
         link.set(EDITOR, editor);
         link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
     }
@@ -193,69 +214,70 @@ public class Publication extends ContentPage {
     public boolean hasAuthors() {
         return !getAuthors().isEmpty();
     }
-    
+
     public SeriesCollection getSeries() {
         return new SeriesCollection((DataCollection) get(SERIES));
     }
-    
+
     public void addSeries(final Series series) {
         Assert.exists(series, Series.class);
-        
+
         add(SERIES, series);
     }
-    
+
     public void removeSeries(final Series series) {
         Assert.exists(series, Series.class);
-        
+
         remove(SERIES, series);
     }
-    
+
     public boolean hasSeries() {
         return !getSeries().isEmpty();
     }
-    
+
     public PublicationGenericOrganizationalsUnitCollection getOrganizationalUnits() {
         return new PublicationGenericOrganizationalsUnitCollection((DataCollection) get(
                 ORGAUNITS));
     }
-    
+
     public void addOrganizationalUnit(final GenericOrganizationalUnit orgaunit) {
         Assert.exists(orgaunit, GenericOrganizationalUnit.class);
-        
+
         add(ORGAUNITS, orgaunit);
     }
-    
+
     public void removeOrganizationalUnit(
             final GenericOrganizationalUnit orgaunit) {
         Assert.exists(orgaunit, GenericOrganizationalUnit.class);
-        
+
         remove(ORGAUNITS, orgaunit);
     }
-    
+
     public boolean hasOrganizationalUnits() {
         return !getOrganizationalUnits().isEmpty();
     }
-    
+
     public static GenericOrganizationalUnitPublicationsCollection getPublications(
             final GenericOrganizationalUnit orgaunit) {
         final DataCollection dataCollection = (DataCollection) orgaunit.get(
                 ORGAUNIT_PUBLICATIONS);
-        
-        return new GenericOrganizationalUnitPublicationsCollection(dataCollection);
+
+        return new GenericOrganizationalUnitPublicationsCollection(
+                dataCollection);
     }
-    
+
     public static void addPublication(final GenericOrganizationalUnit orgaunit,
                                       final Publication publication) {
         Assert.exists(publication);
-        
+
         orgaunit.add(ORGAUNIT_PUBLICATIONS, publication);
     }
-    
+
     public static void removePublication(
             final GenericOrganizationalUnit orgaunit,
             final Publication publication) {
         Assert.exists(publication);
-        
-        orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);        
+
+        orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);
     }
 }

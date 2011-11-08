@@ -1,6 +1,5 @@
 //
-// Copyright (C) 2010 Jens Pelzetter, for the Center of Social Politics (ZeS) of
-// the University of Bremen
+// Copyright (C) 2010, 2011 Jens Pelzetter
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License
@@ -28,6 +27,13 @@ object type Publication extends ContentPage {
        Integer[0..1] yearOfPublication = ct_publications.year INTEGER;
        String[0..1] abstract = ct_publications.abstract VARCHAR(4096);
        String[0..1] misc = ct_publications.misc VARCHAR(4096);
+       //The reviewed property has been moved for performance reasons. It
+       //is necessary to have access to this property from a data query    
+       //over all publications of a person. Since this property was only 
+       //available on some types, it was not possible to use joins *and*
+       //get publications of *all* types. But exactly this use case appears on
+       //several points.
+       Boolean[0..1] reviewed = ct_publications.reviewed BIT ;
 
        reference key (ct_publications.publication_id);
 }
@@ -79,7 +85,13 @@ query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
     String authorGivenname;
 
     do {
-        select cms_pages.item_id, cms_pages.title, acs_objects.object_type, cms_organizationalunits.organizationalunit_id, ct_publications.year, cms_persons.surname, cms_persons.givenname
+        select cms_pages.item_id, 
+               cms_pages.title, 
+               acs_objects.object_type, 
+               cms_organizationalunits.organizationalunit_id, 
+               ct_publications.year, 
+               cms_persons.surname, 
+               cms_persons.givenname
         from cms_pages 
         join ct_publications on cms_pages.item_id = ct_publications.publication_id 
         join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
@@ -110,10 +122,15 @@ query getIdsOfPublicationsForOrgaUnit {
     String authors;
 
     do {
-        select cms_pages.item_id, acs_object.object_type, cms_pages.title, cms_organizationalunits.organizationalunit_id, ct_publications.year, (select array_to_string (array (select cms_persons.surname || ', ' || cms_persons.givenname 
-                                                                                                                                                        from cms_persons
-                                                                                                                                                        join ct_publications_authorship_map on cms_persons.person_id = ct_publications_authorship.person_id
-                                                                                                                                                        where ct_publications_authorship.publication_id = cms_pages.item_id), '; ')) as authors
+        select cms_pages.item_id, 
+               acs_objects.object_type, 
+               cms_pages.title, 
+               cms_organizationalunits.organizationalunit_id, 
+               ct_publications.year, 
+               (select array_to_string (array (select cms_persons.surname || ', ' || cms_persons.givenname 
+                from cms_persons
+                join ct_publications_authorship on cms_persons.person_id = ct_publications_authorship.person_id
+                where ct_publications_authorship.publication_id = cms_pages.item_id), '; ')) as authors
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id 
         join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
@@ -126,6 +143,72 @@ query getIdsOfPublicationsForOrgaUnit {
         title = cms_pages.title;
         year = ct_publications.year;
         authors = authors;
+    }
+}
+
+//Retrieves all publications of an author
+query getPublicationsForAuthor {
+    BigDecimal publicationId;
+    BigDecimal authorId;
+    String objectType;    
+    String title;
+    Integer year;   
+    Boolean reviewed;
+
+    do {
+        select cms_pages.item_id, 
+               acs_objects.object_type, 
+               cms_pages.title, 
+               ct_publications_authorship.person_id, 
+               ct_publications.year, 
+               ct_publications.reviewed
+        from cms_pages
+        join ct_publications on cms_pages.item_id = ct_publications.publication_id
+        join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
+        join acs_objects on cms_pages.item_id = acs_objects.object_id
+    } map {    
+        publicationId = cms_pages.item_id;
+        objectType = acs_objects.object_type;
+        authorId = ct_publications_authorship.person_id;
+        title = cms_pages.title;
+        year = ct_publications.year;        
+        reviewed = ct_publications.reviewed;
+    }
+}
+
+//Retrieves all publications of an author
+query getPublicationsForAuthorWithAuthors {
+    BigDecimal publicationId;
+    BigDecimal authorId;
+    String objectType;    
+    String title;
+    Integer year;
+    String authors;
+    Boolean reviewed;
+
+    do {
+        select cms_pages.item_id, 
+               acs_objects.object_type, 
+               cms_pages.title, 
+               ct_publications_authorship.person_id, 
+               ct_publications.year, 
+               ct_publications.reviewed, 
+               (select array_to_string(array (select cms_persons.surname || ', ' || cms_persons.givenname
+                from cms_persons
+                join ct_publications_authorship on cms_persons.person_id = ct_publications_authorship.person_id
+                where ct_publications_authorship.publication_id = cms_pages.item_id), '; ')) as authors
+        from cms_pages
+        join ct_publications on cms_pages.item_id = ct_publications.publication_id
+        join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
+        join acs_objects on cms_pages.item_id = acs_objects.object_id
+    } map {    
+        publicationId = cms_pages.item_id;
+        objectType = acs_objects.object_type;
+        authorId = ct_publications_authorship.person_id;
+        title = cms_pages.title;
+        year = ct_publications.year;
+        authors = authors;
+        reviewed = ct_publications.reviewed;
     }
 }
 

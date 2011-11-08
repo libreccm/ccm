@@ -27,7 +27,7 @@ object type CollectedVolume extends PublicationWithPublisher {
        
        reference key (ct_collected_volume.collected_volume_id);
 
-       Boolean[0..1] reviewed = ct_collected_volume.reviewed BIT;		
+       //Moved to publication Boolean[0..1] reviewed = ct_collected_volume.reviewed BIT;		
 }
 
 

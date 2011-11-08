@@ -1,6 +1,5 @@
 package com.arsdigita.cms.contenttypes.ui.panels;
 
-import com.arsdigita.cms.contenttypes.ui.GenericOrgaUnitTab;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
@@ -8,9 +7,11 @@ import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 /**
- * Paginator class for the classes implementing {@link GenericOrgaUnitTab}.
+ * Paginator class for the classes implementing 
+ * {@link com.arsdigita.cms.contenttypes.ui.GenericOrgaUnitTab}.
  * 
  * @author Jens Pelzetter 
  * @version $Id$
@@ -21,6 +22,7 @@ public class Paginator {
     private final int pageSize;
     private int pageNumber;
     private final int objectCount;
+    private final Logger logger = Logger.getLogger(Paginator.class);
 
     public Paginator(final HttpServletRequest request,
                      final int objectCount) {
@@ -30,7 +32,17 @@ public class Paginator {
     public Paginator(final HttpServletRequest request,
                      final int objectCount,
                      final int pageSize) {
-        pageNumber = Integer.parseInt(request.getParameter(PAGE_NUMBER));
+        final String pageNumberStr = request.getParameter(PAGE_NUMBER);
+        if (pageNumberStr == null) {
+            logger.debug("No pageNumber parameter in request setting page number"
+                         + " to 1.");
+            pageNumber = 1;
+        } else {
+            pageNumber = Integer.parseInt(pageNumberStr);
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug(String.format("pageNumber = %d", pageNumber));
+        }
         this.objectCount = objectCount;
         this.pageSize = pageSize;
 
@@ -65,6 +77,18 @@ public class Paginator {
     }
 
     public void applyLimits(final DataQuery query) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Paginator values: ");
+            logger.debug(String.format(" objectCount = %d", objectCount));
+            logger.debug(String.format("    begin    = %d", getBegin()));
+            logger.debug(String.format("      end    = %d", getEnd()));
+            logger.debug(String.format("pageCount    = %d", getPageCount()));
+            logger.debug(String.format("    count    = %d", getCount()));
+        }
+
+        logger.debug(String.format("Applying limits: %d, %d",
+                                   getBegin(),
+                                   getEnd()));
         query.setRange(getBegin(), getEnd());
     }
 
@@ -92,7 +116,11 @@ public class Paginator {
     }
 
     private int getBegin() {
-        return (pageNumber - 1) * pageSize;
+        if (pageNumber == 1) {
+            return 1;
+        } else {
+            return (pageNumber - 1) * pageSize;
+        }
     }
 
     private int getCount() {

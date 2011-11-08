@@ -30,7 +30,7 @@ import java.math.BigDecimal;
  */
 public class Monograph extends PublicationWithPublisher {
 
-    public static final String REVIEWED = "reviewed";
+    //public static final String REVIEWED = "reviewed";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Monograph";
 
@@ -54,12 +54,12 @@ public class Monograph extends PublicationWithPublisher {
         super(type);
     }
 
-    public Boolean getReviewed() {
+    /*public Boolean getReviewed() {
         return (Boolean) get(REVIEWED);
     }
 
     public void setReviewed(Boolean reviewed) {
         set(REVIEWED, reviewed);
-    }
+    }*/
   
 }

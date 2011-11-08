@@ -37,8 +37,17 @@ public class PublicationXmlHelper {
     }
 
     public void generateXml() {
-        Element publicationElem = parent.newChildElement(
-                "publications");
+        generateXml(true);
+    }
+    
+    public void generateXml(boolean wrap) {
+        Element publicationElem;
+        if (wrap) {
+            publicationElem = parent.newChildElement(
+                    "publications");
+        } else {
+            publicationElem = parent;
+        }
 
         generateSystemXml(publicationElem);
         generatePublicationXml(publicationElem);
@@ -142,13 +151,13 @@ public class PublicationXmlHelper {
         publicationElem.addAttribute("oid", publication.getOID().toString());
         publicationElem.addAttribute("version", publication.getVersion());
         generateXmlElement(publicationElem, "title", publication.getTitle());
-        System.out.printf("\n\npublication.oid = '%s'", publication.getOID());
-        System.out.printf("publication.title = '%s'\n\n", publication.getTitle());
+        //System.out.printf("\n\npublication.oid = '%s'", publication.getOID());
+        //System.out.printf("publication.title = '%s'\n\n", publication.getTitle());
         if (publication.getYearOfPublication() != null) {
             Element yearElem = publicationElem.newChildElement(
                     "yearOfPublication");
             yearElem.setText(publication.getYearOfPublication().toString());
-        }      
+        }
         generateXmlElement(publicationElem, "misc", publication.getMisc());
         generateXmlElement(parent, "abstract", publication.getAbstract());
         generateAuthorsXml(publicationElem);
@@ -161,7 +170,7 @@ public class PublicationXmlHelper {
             return;
         }
 
-        while (authors.next()) {                       
+        while (authors.next()) {
             Element authorsElem = publicationElem.newChildElement(
                     "authors");
             Element linkElem = authorsElem.newChildElement("link");
@@ -243,7 +252,7 @@ public class PublicationXmlHelper {
             PublicationXmlHelper xmlHelper =
                                  new PublicationXmlHelper(collectedVolumeElem,
                                                           collectedVolume);
-            xmlHelper.generateXml();
+            xmlHelper.generateXml(false);
         }
     }
 
@@ -268,7 +277,7 @@ public class PublicationXmlHelper {
             PublicationXmlHelper xmlHelper = new PublicationXmlHelper(
                     journalElem,
                     journal);
-            xmlHelper.generateXml();
+            xmlHelper.generateXml(false);
         }
     }
 
@@ -317,7 +326,7 @@ public class PublicationXmlHelper {
         PublicationXmlHelper xmlHelper = new PublicationXmlHelper(
                 proceedingsElem,
                 inProceedings.getProceedings());
-        xmlHelper.generateXml();
+        xmlHelper.generateXml(false);
     }
 
     private void generateInternetArticleXml(final Element publicationElem) {
