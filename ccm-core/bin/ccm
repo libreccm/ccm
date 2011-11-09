@@ -17,15 +17,16 @@ CCM_HOME_DIR="../.."
 if [[ -z "$CATALINA_HOME" ]] ;  then
   echo CATALINE_HOME not set. Guessing ... 
 
-  if [ -f /etc/tomcat6/tomcat6.conf ] 
-    then
-      . /etc/tomcat6/tomcat6.conf 
-      echo 
-      echo Using CATALINA_HOME = $CATALINA_HOME
-      echo If this doesn\'t work use
-      echo export CATALINA_HOME=/path/to/tomcat/installation
-      echo to point us to the correct location.
-    else
+  if [ -d /usr/share/tomcat6 ]
+      then
+      CATALINA_HOME = "/usr/share/tomcat6"
+  elif [ -d /usr/share/tomcat-6 ]
+      then
+      CATALINA_HOME = "/usr/share/tomcat-6"
+  elif [ -d /opt/tomcat6 ]
+      then
+      CATALINA_HOME = "/opt/tomcat6"
+  else
       echo
       echo ===================================================
       echo Environment variable CATALINA_HOME not set. We need
@@ -36,8 +37,15 @@ if [[ -z "$CATALINA_HOME" ]] ;  then
       echo again.
       echo ===================================================
       echo
-      exit 1
+      exit 1      
   fi
+      
+  echo 
+  echo Using CATALINA_HOME = $CATALINA_HOME
+  echo If this doesn\'t work use
+  echo export CATALINA_HOME=/path/to/tomcat/installation
+  echo to point us to the correct location.
+  
 fi
 CATALINA_LIB_DIR="${CATALINA_HOME}/lib"
 

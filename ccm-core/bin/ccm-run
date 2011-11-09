@@ -10,16 +10,41 @@
 # PATH, you have to adjust the paths.
 CCM_LIB_DIR="../lib"
 CCM_HOME_DIR="../.."
-# Path of the lib directory of the Tomcat Server which runs the CCM installation.
-# If the CATALINA_HOME enviroment variable is not set on your system you have
-# either to set this environment variable (recommened)
-# to adjust this path to point to the lib directory of your Tomcat installation
-# (if you installed the Tomcat using the package manager of your distribution
-# this is usally /usr/share/tomcat6/lib)
-# To set an environment variable you have usally to add an file to the /etc/profile.d 
-# directory, for example tomcat.sh. In this file, you can set environment variables
-# using the 'export' command. This line might look like this:
-# export CATALINA_HOME=/usr/share/tomcat6/lib
+
+# We need CATALINA_HOME environment variable to access Tomcat's lib dir.
+if [[ -z "$CATALINA_HOME" ]] ;  then
+  echo CATALINE_HOME not set. Guessing ... 
+
+  if [ -d /usr/share/tomcat6 ]
+      then
+      CATALINA_HOME = "/usr/share/tomcat6"
+  elif [ -d /usr/share/tomcat-6 ]
+      then
+      CATALINA_HOME = "/usr/share/tomcat-6"
+  elif [ -d /opt/tomcat6 ]
+      then
+      CATALINA_HOME = "/opt/tomcat6"
+  else
+      echo
+      echo ===================================================
+      echo Environment variable CATALINA_HOME not set. We need
+      echo to know the location of Tomcat\'s lib directory.
+      echo So use 
+      echo export CATALINA_HOME=/path/to/tomcat/installation
+      echo to point us to the correct location and run ccm
+      echo again.
+      echo ===================================================
+      echo
+      exit 1      
+  fi
+      
+  echo 
+  echo Using CATALINA_HOME = $CATALINA_HOME
+  echo If this doesn\'t work use
+  echo export CATALINA_HOME=/path/to/tomcat/installation
+  echo to point us to the correct location.
+  
+fi
 CATALINA_LIB_DIR="${CATALINA_HOME}/lib"
 
 # Script logic starts here
