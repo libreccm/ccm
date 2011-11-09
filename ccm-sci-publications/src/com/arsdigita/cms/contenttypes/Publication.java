@@ -20,12 +20,14 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -279,5 +281,12 @@ public class Publication extends ContentPage {
         Assert.exists(publication);
 
         orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();        
+        generators.add(new SciPublicationExtraXmlGenerator());        
+        return generators;
     }
 }

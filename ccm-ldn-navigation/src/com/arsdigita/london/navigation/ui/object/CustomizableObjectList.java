@@ -3,9 +3,11 @@ package com.arsdigita.london.navigation.ui.object;
 import com.arsdigita.london.navigation.Navigation;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
@@ -265,7 +267,7 @@ public class CustomizableObjectList extends ComplexObjectList {
                                HttpServletResponse response) {
         //Some stuff for the list (copied from ComplexObjectList)
         Element content = Navigation.newElement("customizableObjectList");
-
+                
         if (m_customName != null) {
             content.addAttribute(CUSTOM_NAME, m_customName);
         }
@@ -281,6 +283,13 @@ public class CustomizableObjectList extends ComplexObjectList {
         //- The HttpRequest is available here.
         //So we use the HTTP request directly, which allows use to use a
         //dedicated parameter for each of the filters.
+        /*if (request.getCharacterEncoding() == null) {*/
+            try {
+                request.setCharacterEncoding("UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                logger.error(ex);
+            }
+        //}
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             String value = request.getParameter(filterEntry.getKey());
 
