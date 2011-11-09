@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Document   : domain-nav-zes-1.00.xml
+    Document   : domain-nav-sci-1.00.xml
     Created on : 8. Aug. 2007, 10:00
     Author     : pb
     Description:
@@ -10,16 +10,17 @@
 
 <terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" 
               about="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml" 
-              key="ZES-NAV" 
-              title="ZeS Navigation List" 
+              key="STD-NAV" 
+              title="Sci Navigation List" 
               version="1.00" released="2007-08-10">
 
   <terms:term id="1000" name="Institut" inAtoZ="false"/>
     <terms:term id="1200" name="Abteilungen" inAtoZ="false"/>
-      <terms:term id="1220" name="Abteilung Theorie und Verfassung des Wohlfahrsstaates" inAtoZ="false"/>
-      <terms:term id="1220" name="Abteilung Institutionen und Geschichte des Wohlfahrsstaates" inAtoZ="false"/>
-      <terms:term id="1220" name="Wirtschaftswissenschaftliche Abteilung" inAtoZ="false"/>
-      <terms:term id="1220" name="Geschlechterpolitik im Wohlfahrtsstaat" inAtoZ="false"/>
+      <terms:term id="1220" name="Abteilung 1" inAtoZ="false"/>
+      <terms:term id="1240" name="Abteilung 2" inAtoZ="false"/>
+      <terms:term id="1260" name="Abteilung 3" inAtoZ="false"/>
+      <terms:term id="1280" name="Abteilung 4" inAtoZ="false"/>
+      <terms:term id="1300" name="Abteilung 5" inAtoZ="false"/>
     <terms:term id="1400" name="Mitglieder" inAtoZ="false"/>
     <terms:term id="1600" name="Bibliothek" inAtoZ="false"/>
     <terms:term id="1800" name="Ankündigungen" inAtoZ="false"/>
@@ -30,15 +31,15 @@
       <terms:term id="3420" name="Publikationen" inAtoZ="false"/>
       <terms:term id="3440" name="Arbeitspapiere" inAtoZ="false"/>
       <terms:term id="3460" name="Schriftenreihe" inAtoZ="false"/>
-      <terms:term id="3480" name="ZeS Report" inAtoZ="false"/>
+      <terms:term id="3480" name="Sci Report" inAtoZ="false"/>
       <terms:term id="3500" name="Jahresberichte" inAtoZ="false"/>
-    <terms:term id="3800" name="Gesundheitspolitisches Kolloquium" inAtoZ="false"/>
-    <terms:term id="4000" name="Jour Fix" inAtoZ="false"/>
-    <terms:term id="4200" name="Tagungen" inAtoZ="false"/>
+    <terms:term id="3600" name="Kolloquium" inAtoZ="false"/>
+    <terms:term id="3800" name="Jour Fix" inAtoZ="false"/>
+    <terms:term id="4000" name="Tagungen" inAtoZ="false"/>
   
   <terms:term id="5000" name="Lehre und Studium" inAtoZ="false"/>
-    <terms:term id="5100" name="Masterstudiengang Sozialpolitik" inAtoZ="false"/>
-    <terms:term id="5350" name="Weitere Lehre" inAtoZ="false"/>
+    <terms:term id="5200" name="Masterstudiengang Sci" inAtoZ="false"/>
+    <terms:term id="5400" name="Weitere Lehre" inAtoZ="false"/>
     
   <terms:term id="9002" name="Archiv" inAtoZ="false"/>
   <terms:term id="9200" name="Informative Links" inAtoZ="false"/>

@@ -88,8 +88,8 @@ public class Loader extends PackageLoader {
     private Parameter m_categoryFiles = new StringArrayParameter(
                 "com.arsdigita.bundle.category_files",
                 Parameter.REQUIRED,new String[]{
-                    "WEB-INF/sci/sci-nav-domain-1.00.xml",
-                    "WEB-INF/sci/sci-nav-hierarchy-1.00.xml" }
+                    "bundle/categories/sci-nav-domain-1.00.xml",
+                    "bundle/categories/sci-nav-hierarchy-1.00.xml" }
                 );
 
     /**
@@ -121,7 +121,7 @@ public class Loader extends PackageLoader {
      */
     public Loader() {
 
-        // Register defined parametgers to the context by adding 
+        // Register defined parameters to the context by adding 
         // the parameter to a map of parameters
         register(m_customApplicationInstances);
         register(m_categoryFiles);

@@ -1300,7 +1300,21 @@
       <copy todir="${{this.deploy.dir}}/WEB-INF/bin/bundle" overwrite="yes">
       -->
       <copy todir="${{this.bundle.dir}}" overwrite="yes">
-            <fileset dir="${{resolved.bundle.source.dir}}" />
+            <fileset dir="${{resolved.bundle.source.dir}}" >
+                <include name="cfg/" />
+                <include name="res/" />
+                <exclude name="**placeholder.info**" />
+                <exclude name="res/**README**" />
+            </fileset>
+      </copy>
+
+      <copy todir="${{this.deploy.dir}}" overwrite="yes">
+            <fileset dir="${{resolved.bundle.source.dir}}" >
+                <include name="templates/" />
+                <include name="themes/" />
+                <exclude name="**placeholder.info**" />
+                <exclude name="**README**" />
+            </fileset>
       </copy>
       
       <!-- Autogenerate from project.xml a file containing a space delimited

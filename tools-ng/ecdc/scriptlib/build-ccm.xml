@@ -134,6 +134,8 @@
 			<path refid="ccm.tools.classpath"/>
 			<!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/classes"/>  -->
 			<pathelement location="${app.server.webapp.dir}/ROOT/WEB-INF/classes"/>
+			<!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/classes"/>  -->
+			<pathelement location="${this.bundle.folder}/res"/>
 			<!--  <fileset dir="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/lib" includes="**/*.jar" />  -->
 			<fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
 		</path>
