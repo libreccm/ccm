@@ -177,10 +177,10 @@ public class Loader extends PackageLoader {
     }
 
     public void setupTemplates() throws IOException {
+        
         String templatesFile = (String)get(m_templatesFile);
         InputStream file = Thread.currentThread().getContextClassLoader()
                                  .getResourceAsStream(templatesFile);
-
         BufferedReader templates =
             new BufferedReader( new InputStreamReader( file ) );
 
@@ -219,5 +219,6 @@ public class Loader extends PackageLoader {
 
             template = templates.readLine();
         }
+        
     }
 }

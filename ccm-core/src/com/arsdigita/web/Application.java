@@ -176,11 +176,12 @@ public class Application extends Resource {
      * @param createContainerGroup
      * @return
      */
-    public static Application createApplication(final String typeName,
-						final String fragment,
-						final String title,
-						final Application parent,
-						final boolean createContainerGroup) {
+    public static Application createApplication(
+                                  final String typeName,
+                                  final String fragment,
+                                  final String title,
+                                  final Application parent,
+                                  final boolean createContainerGroup) {
         final ApplicationType type = ApplicationType
                                      .retrieveApplicationTypeForApplication(
                                                                       typeName);

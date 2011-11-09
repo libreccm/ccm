@@ -1,3 +1,13 @@
+<!--
+   A default item page (index page) provided by ccm-navigation package. Sites
+   will probably use a customized index page. 
+   Set the actual in dex page to be used by parameter
+      com.arsdigita.london.navigation.default_template
+
+   ##Title: Default Items Page
+   ##Descr: Default Navigation Index Page, ordering items in ascending order
+   ##Path : /templates/ccm-ldn-navigation/navigation/nav-default.jsp
+-->
 <jsp:root 
   xmlns:jsp="http://java.sun.com/JSP/Page" 
   xmlns:define="/WEB-INF/bebop-define.tld"

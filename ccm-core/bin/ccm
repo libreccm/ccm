@@ -9,6 +9,8 @@
 # want to use this script from another directory, or include it into your 
 # PATH, you have to adjust the paths.
 CCM_LIB_DIR="../lib"
+CCM_RES_DIR="./bundle/res/"
+CCM_CLASS_DIR="../classes"
 CCM_HOME_DIR="../.."
 
 # We need CATALINA_HOME environment variable to access Tomcat's lib dir.
@@ -64,6 +66,10 @@ fi
 #Convert to absolute path:
 CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
 
+#Constructing classpath
+CCM_CLASSPATH="${CCM_LIB_DIR}/*:${CATALINA_LIB_DIR}/*:${CCM_RES_DIR}:${CCM_CLASS_DIR}/"
+echo "Classpath is: $CCM_CLASSPATH"
+
 echo "Starting CCM-Tool..."
 if [ "$1" = "prepare" ] ; then
   echo
@@ -74,7 +80,7 @@ if [ "$1" = "prepare" ] ; then
   echo =====================================
   echo
   param="load --interactive --packagekeys-file  bundle/cfg/package-key.list --parameter-file bundle/cfg/integration.properties"
-  java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" $param 
+  java -cp $CCM_CLASSPATH -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" $param 
 else
-  java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" "$@"
+  java -cp $CCM_CLASSPATH -Dccm.home=${CCM_HOME_DIR} "com.arsdigita.packaging.MasterTool" "$@"
 fi

@@ -1,3 +1,4 @@
-Recent items,List of items ordered with most recent first,/packages/navigation/templates/recent.jsp
-A-Z items,List of items paginated as A-Z,/packages/navigation/templates/atoz.jsp
-Calendar items,List of items browsable through Calendar,/packages/navigation/templates/calendar.jsp
+Navigation Default Index Page,Default Navigation Index Page ordering items in ascending order,/templates/ccm-ldn-navigation/navigation/nav-default.jsp
+Navigation Recent Items,List of items ordered with most recent first,/templates/ccm-ldn-navigation/navigation/nav-recent.jsp
+Navigation A-Z Items,List of items paginated as A-Z,/templates/ccm-ldn-navigation/navigation/nav-atoz.jsp
+Navigation Demo Items Page,Demo items page,/templates/ccm-ldn-navigation/navigation/nav-demo.jsp

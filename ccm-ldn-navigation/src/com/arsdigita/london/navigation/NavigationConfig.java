@@ -57,11 +57,20 @@ public final class NavigationConfig extends AbstractConfig {
     private static final Logger s_log = Logger.getLogger(NavigationConfig.class);
 
     /** The cache lifetime for category index pages in seconds. Default 1 hour */
-    private final Parameter m_indexPageCacheLifetime;
+    private final Parameter m_indexPageCacheLifetime = new IntegerParameter
+            ("com.arsdigita.london.navigation.index_page_cache_lifetime",
+             Parameter.REQUIRED, new Integer(3600));
+    
     /** Generate full item URLs instead of going via search redirector. Default true */
-    private final Parameter m_generateItemURL;
-    /** The default category template. Default: /packages/navigation/templates/default.jsp */
-    private final Parameter m_defaultTemplate;
+    private final Parameter m_generateItemURL = new BooleanParameter
+            ("com.arsdigita.london.navigation.generate_item_url",
+             Parameter.REQUIRED, new Boolean(true));
+    
+    /** The default category template.                                        */
+    private final Parameter m_defaultTemplate = new StringParameter
+            ("com.arsdigita.london.navigation.default_template",
+             Parameter.REQUIRED, "/templates/ccm-ldn-navigation/navigation/nav-default.jsp");
+    
     /** If no template for category, should it get template from parent, or
      * fall back on default? Default: true */
     private final Parameter m_inheritTemplates;
@@ -103,15 +112,6 @@ public final class NavigationConfig extends AbstractConfig {
     private TreeCatProvider m_treeCatProvider = null;
 
     public NavigationConfig() {
-        m_indexPageCacheLifetime = new IntegerParameter
-            ("com.arsdigita.london.navigation.index_page_cache_lifetime",
-             Parameter.REQUIRED, new Integer(3600));
-        m_generateItemURL = new BooleanParameter
-            ("com.arsdigita.london.navigation.generate_item_url",
-             Parameter.REQUIRED, new Boolean(true));
-        m_defaultTemplate = new StringParameter
-            ("com.arsdigita.london.navigation.default_template",
-             Parameter.REQUIRED, "/packages/navigation/templates/default.jsp");
 	// not desirable default value (IMHO) but retains existing behaviour
         m_inheritTemplates = new BooleanParameter
             ("com.arsdigita.london.navigation.inherit_templates",
