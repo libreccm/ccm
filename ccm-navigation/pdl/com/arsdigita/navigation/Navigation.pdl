@@ -1,0 +1,114 @@
+model com.arsdigita.navigation;
+
+import com.arsdigita.web.Application;
+
+object type Navigation extends Application {
+    reference key (nav_app.application_id);
+}
+
+// Subquery for AbstractObjectList used as a filter
+// to figure out which object have a match in the
+// selected languages and don't have to match to a
+// language independent content item
+query getParentIDsOfMatchedItems {
+  BigDecimal parent;
+
+  do {
+    select parent_id
+      from cms_items
+     where version  = 'live'
+       and language = :language
+  } map {
+    parent = parent_id;
+  }
+}
+
+query ItemsByCategory {
+    BigDecimal itemID;
+
+    do {
+	select i.item_id
+	from cms_items i, content_types t
+	where t.object_type = :contentType
+	and i.type_id = t.type_id
+	and i.version = 'live'
+        and exists (select 1
+                    from cat_object_category_map m
+                    where m.object_id = i.item_id
+                    and category_id = :categoryID)
+	order by i.item_id desc
+    } map {
+	itemID = i.item_id; 
+    }
+}
+
+query NavigationCategoriesByLetter {
+    BigDecimal categoryID;
+    String name;
+    String description;
+
+    do {
+        select c.category_id, c.name, c.description
+        from cat_categories c,
+             cat_category_category_map m
+        where c.category_id = m.related_category_id
+          and c.default_ancestors like (
+            select r.default_ancestors || '%' from cat_categories r where r.name = 'Navigation'
+          )
+          and upper(c.name) like :letter||'%'
+        order by upper(c.name)
+    } map {
+        categoryID = c.category_id;
+        name = c.name;
+        description = c.description;
+    }
+}
+
+query DirectoryCategories {
+    BigDecimal categoryID;
+    BigDecimal parentID;
+    String name;
+    String description;
+    String path;
+    
+    // XXX use site node category map & cat purposes rather than name
+    // XXX limit to depth 3
+    do {
+        select c.category_id, m.category_id as parent_id, c.name, c.description, c.default_ancestors
+        from cat_categories c,
+             cat_category_category_map m
+        where c.category_id = m.related_category_id
+          and c.default_ancestors like (
+            select r.default_ancestors || '%' from cat_categories r where r.category_id = :id
+        )
+          and c.enabled_p = '1'
+        order by c.default_ancestors
+    } map {
+        categoryID = c.category_id;
+        parentID = parent_id;
+        name = c.name;
+        description = c.description;
+        path = c.default_ancestors;
+    }
+}
+
+query RecentL2Items {
+    BigDecimal itemID;
+
+    do {
+        select i.item_id
+        from cms_items i, content_types t
+        where t.object_type = :contentType
+        and i.type_id = t.type_id
+        and i.version = 'live'
+        and exists (select 1
+                    from cat_object_category_map m
+                    where m.object_id = i.item_id
+                    and category_id in (select related_category_id
+                                        from cat_category_category_map
+                                        where category_id = :l1CategoryID))
+        order by i.item_id desc
+    } map {
+        itemID = i.item_id; 
+    }
+}

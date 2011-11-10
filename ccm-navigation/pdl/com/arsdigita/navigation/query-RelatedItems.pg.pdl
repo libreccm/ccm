@@ -1,0 +1,108 @@
+//
+// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+//
+// The contents of this file are subject to the ArsDigita Public 
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.arsdigita.com/ADPL.txt
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.navigation;
+
+// This query returns related items with an exact category map,
+// It has replaced the one below since, although it is technically
+// correct, it was found to return faaaar to many rows!
+query RelatedItems {
+   BigDecimal itemID;
+   BigDecimal workingID;
+   String title;
+   String type;
+   String objectType;
+
+   do {
+       select distinct i.item_id, 
+              p.title, 
+              t.label,
+              o.object_type,
+              i.master_id
+         from cms_items i, 
+              cms_bundles b,
+              acs_objects o,
+              cms_pages p, 
+              content_types t,
+              cat_object_category_map ocm1,
+              cat_object_category_map ocm2,
+              cat_cat_subcat_trans_index ccs1
+        where i.version = 'live'
+          and b.bundle_id not in :bundleIDs
+          and p.item_id = i.item_id
+          and i.item_id = o.object_id
+          and t.type_id = i.type_id
+          and i.parent_id = b.bundle_id
+          and i.language = b.default_language
+          and ocm1.object_id = b.bundle_id
+          and ocm1.category_id = ocm2.category_id
+          and ocm2.object_id = :bundleID
+          and ocm2.category_id = ccs1.subcategory_id
+          and ccs1.category_id = :categoryID
+   } map {
+       itemID = i.item_id;
+       title = p.title;
+       type = t.label;
+       objectType = o.object_type;
+       workingID = i.master_id;
+   }
+}
+
+
+// The above query is not entirely clear since I've
+// removed the nested queries in favour of joins
+//
+// The basic plan is:
+//  Get all live content items
+//     with a 'Subject' category matching
+//     a subject category assigned to item foo
+// 
+// The complication is that it needs to treat
+// subject categories heirarchically.
+
+// To do this we pull out all 'subject' categories,
+// then restrict it by those that are assigned to the
+// current item.
+
+// This query should be equivalent to the one above
+// select i.item_id, 
+//         p.title, 
+//         t.label
+//    from cms_items i, 
+//         cms_pages p, 
+//         content_types t,
+//         cat_object_category_map ocm1
+//   where i.version = 'live'
+//     and i.item_id <> 734036
+//     and p.item_id = i.item_id
+//     and t.type_id = i.type_id
+//     and ocm1.object_id = i.item_id
+//     and ocm1.category_id in (
+//         -- Get all categories with the specified
+//         -- category purpose
+//         select ccs1.subcategory_id
+//           from cat_cat_subcat_trans_index ccs1,
+//                cat_category_purpose_map m
+//          where m.purpose_id = 9909
+//            and ccs1.category_id = m.category_id
+//            and ccs.subcategory_id in (
+//                -- Get all categories & children for item
+//                select ccs2.subcategory_id
+//                  from cat_object_category_map ocm2,
+//                       cat_cat_subcat_trans_index ccs2
+//                 where ocm2.object_id = 734036
+//                   and ocm2.category_id = ccs2.category_id
+//                )
+//         );
+//

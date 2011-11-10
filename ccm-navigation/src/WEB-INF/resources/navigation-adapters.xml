@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <xrd:context name="com.arsdigita.navigation.ui.QuickLinks">
+    <xrd:adapter objectType="com.arsdigita.navigation.QuickLink">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.navigation.ui.admin.QuickLinkListing">
+    <xrd:adapter objectType="com.arsdigita.navigation.QuickLink">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>

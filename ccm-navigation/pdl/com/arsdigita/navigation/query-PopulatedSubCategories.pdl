@@ -1,0 +1,56 @@
+model com.arsdigita.navigation;
+
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.categorization.Category;
+
+query PopulatedSubcategories {
+	ACSObject objectInSubCat;
+	Category subCat;
+	options {
+        WRAP_QUERIES = false;
+    }
+    
+    do {
+    
+		select a.object_id,
+		       a.object_type,
+		       a.display_name,
+			   a.default_domain_class,
+			   c.category_id,
+			   c.description,
+		       c.name,
+		       c.url,
+		       c.enabled_p,
+		       c.abstract_p,
+		       c.default_ancestors 
+		from acs_objects a,
+			 acs_objects b,
+			 cat_categories c,
+			 cat_object_category_map d,
+			 cat_category_category_map e,
+			 cms_items f
+		where e.category_id in :categoryID
+		and   c.category_id = e.related_category_id
+		and   b.object_id = c.category_id
+		and   d.category_id = e.related_category_id
+		and   e.relation_type = 'child'
+		and   a.object_id = d.object_id
+		and   f.item_id(+) = a.object_id
+		and   nvl(f.version, 'live') = 'live'
+	} map {
+		objectInSubCat.id = a.object_id;
+		objectInSubCat.objectType = a.object_type;
+		objectInSubCat.displayName = a.display_name;
+		objectInSubCat.defaultDomainClass = a.default_domain_class;
+		subCat.id = c.category_id;
+		subCat.description = c.description;
+		subCat.name = c.name;
+		subCat.url = c.url;
+		subCat.isEnabled = c.enabled_p;
+		subCat.isAbstract = c.abstract_p;
+		subCat.defaultAncestors = c.default_ancestors;
+		
+		
+	}
+}

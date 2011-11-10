@@ -1,0 +1,17 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+    <initializer class="com.arsdigita.london.util.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.navigation.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-navigation"/>
+    <data class="com.arsdigita.navigation.Loader"/>
+  </scripts>
+</load>
