@@ -56,6 +56,9 @@
             <arg value="-XSL"/>
             <arg value="${ccm.tools.xsl.dir}/combine.xsl"/>
             <arg value="-XML"/>
+            <arg value="-PARAM"/>
+            <arg value="ProjectDir"/>
+            <arg value="${ccm.project.dir}"/>
         </java>
         <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
             <classpath refid="ccm.tools.classpath"/>
