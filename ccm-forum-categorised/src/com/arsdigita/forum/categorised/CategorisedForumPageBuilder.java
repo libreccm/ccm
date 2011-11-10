@@ -13,8 +13,8 @@ import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.ForumPageBuilder;
 import com.arsdigita.forum.ui.ForumUserCompactView;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.london.navigation.ui.category.Menu;
-import com.arsdigita.london.navigation.ui.category.Path;
+import com.arsdigita.navigation.ui.category.Menu;
+import com.arsdigita.navigation.ui.category.Path;
 
 /**
  * @author cgyg9330

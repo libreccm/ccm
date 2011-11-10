@@ -58,8 +58,8 @@ import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
-import com.arsdigita.london.navigation.ui.admin.CategorySelectionModel;
-import com.arsdigita.london.navigation.ui.admin.CategoryTree;
+import com.arsdigita.navigation.ui.admin.CategorySelectionModel;
+import com.arsdigita.navigation.ui.admin.CategoryTree;
 import com.arsdigita.xml.Element;
 
 /**

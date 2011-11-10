@@ -18,7 +18,7 @@
 
 package com.arsdigita.cms.contentassets.imagestep;
 
-import com.arsdigita.london.navigation.DataCollectionPropertyRenderer;
+import com.arsdigita.navigation.DataCollectionPropertyRenderer;
 
 import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;

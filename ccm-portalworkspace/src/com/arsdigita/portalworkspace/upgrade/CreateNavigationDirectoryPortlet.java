@@ -2,7 +2,7 @@ package com.arsdigita.portalworkspace.upgrade;
 
 import org.apache.commons.cli.CommandLine;
 
-import com.arsdigita.london.navigation.portlet.NavigationTreePortlet;
+import com.arsdigita.navigation.portlet.NavigationTreePortlet;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.packaging.Program;
 

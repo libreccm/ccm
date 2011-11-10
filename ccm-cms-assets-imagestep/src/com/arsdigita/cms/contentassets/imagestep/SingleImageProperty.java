@@ -18,7 +18,7 @@
 
 package com.arsdigita.cms.contentassets.imagestep;
 
-import com.arsdigita.london.navigation.DataCollectionProperty;
+import com.arsdigita.navigation.DataCollectionProperty;
 
 import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.DataCollection;

@@ -7,13 +7,8 @@
 package com.arsdigita.forum.categorised;
 
 import com.arsdigita.bebop.Page;
-// import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ui.authoring.EmptyPage;
-// import com.arsdigita.forum.ForumPageBuilder;
 import com.arsdigita.forum.PageBuilder;
-// import com.arsdigita.forum.ThreadPageBuilder;
-// import com.arsdigita.london.navigation.ui.category.Menu;
-// import com.arsdigita.london.navigation.ui.category.Path;
 import com.arsdigita.london.terms.ui.CategorySubtree;
 
 /**

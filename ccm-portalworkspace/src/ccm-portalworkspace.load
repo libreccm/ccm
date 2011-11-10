@@ -7,7 +7,7 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
     <initializer class="com.arsdigita.london.util.Initializer"/>
 
-<!-- <initializer class="com.arsdigita.london.navigation.Initializer"/> -->
+<!-- <initializer class="com.arsdigita.navigation.Initializer"/> -->
 <!-- <initializer class="com.arsdigita.london.rss.Initializer"/>  -->
   </requires>
   <provides>

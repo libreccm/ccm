@@ -19,7 +19,7 @@
 
 package com.arsdigita.london.cms.dublin;
 
-import com.arsdigita.london.navigation.RelatedItemsQuery;
+import com.arsdigita.navigation.RelatedItemsQuery;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.categorization.Category;

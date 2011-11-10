@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.london.navigation.DataCollectionDefinition;
+import com.arsdigita.navigation.DataCollectionDefinition;
 import com.arsdigita.london.subsite.Site;
 import com.arsdigita.london.subsite.Subsite;
 import com.arsdigita.london.subsite.SubsiteContext;

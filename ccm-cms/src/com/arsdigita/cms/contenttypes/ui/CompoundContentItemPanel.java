@@ -217,7 +217,7 @@ public abstract class CompoundContentItemPanel
         Element paginator;
         paginator =
         parent.newChildElement("nav:paginator",
-                               "http://ccm.redhat.com/london/navigation");
+                               "http://ccm.redhat.com/navigation");
 
         URL requestURL = Web.getContext().getRequestURL();
 

@@ -47,7 +47,7 @@ public class GenericOrgaUnitPaginator<T extends DataQuery> {
     public void generateXml(final Element parent) {
         final Element paginatorElem = parent.newChildElement(
                 "nav:paginator",
-                "http://ccm.redhat.com/london/navigation");
+                "http://ccm.redhat.com/navigation");
 
         final URL requestUrl = Web.getContext().getRequestURL();
         final ParameterMap parameters = new ParameterMap();

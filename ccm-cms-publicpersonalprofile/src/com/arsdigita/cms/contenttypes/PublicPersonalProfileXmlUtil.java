@@ -1,9 +1,27 @@
+/*
+ * Copyright (C) 2011-2004 Jens Pelzetter All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.CMS;
+// import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
-import com.arsdigita.dispatcher.DispatcherHelper;
+// import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
@@ -52,12 +70,12 @@ public class PublicPersonalProfileXmlUtil {
 
         Element navRoot =
                 root.newChildElement("nav:categoryMenu",
-                "http://ccm.redhat.com/london/navigation");
+                "http://ccm.redhat.com/navigation");
         navRoot.addAttribute("id", "categoryMenu");
 
         Element navList =
                 navRoot.newChildElement("nav:category",
-                "http://ccm.redhat.com/london/navigation");
+                "http://ccm.redhat.com/navigation");
         navList.addAttribute("AbstractTree", "AbstractTree");
         navList.addAttribute("description", "");
         navList.addAttribute("id", "");
@@ -74,7 +92,7 @@ public class PublicPersonalProfileXmlUtil {
         if (config.getShowHomeNavEntry()) {
             Element navHome =
                     navList.newChildElement("nav:category",
-                    "http://ccm.redhat.com/london/navigation");
+                    "http://ccm.redhat.com/navigation");
             navHome.addAttribute("AbstractTree", "AbstractTree");
             navHome.addAttribute("description", "");
             navHome.addAttribute("id", profile.getID().toString());
@@ -113,10 +131,10 @@ public class PublicPersonalProfileXmlUtil {
 
         final Element pathElem =
                 root.newChildElement("nav:categoryPath",
-                "http://ccm.redhat.com/london/navigation");
+                "http://ccm.redhat.com/navigation");
         final Element homeElem =
                 pathElem.newChildElement("nav:category",
-                "http://ccm.redhat.com/london/navigation");
+                "http://ccm.redhat.com/navigation");
         //homeElem.addAttribute("url", String.format("%s/%s",
         //                                         appUrl,
         //                                       profile.getProfileUrl()));
@@ -124,7 +142,7 @@ public class PublicPersonalProfileXmlUtil {
                 UI.getConfig().getRootPage()));
 
         final Element profileElem = pathElem.newChildElement("nav:category",
-                "http://ccm.redhat.com/london/navigation");
+                "http://ccm.redhat.com/navigation");
         profileElem.addAttribute("url", String.format("%s/%s",
                 appUrl,
                 profile.getProfileUrl()));
@@ -150,7 +168,7 @@ public class PublicPersonalProfileXmlUtil {
 
             navElem =
                     navList.newChildElement("nav:category",
-                    "http://ccm.redhat.com/london/navigation");
+                    "http://ccm.redhat.com/navigation");
             navElem.addAttribute("AbstractTree", "AbstractTree");
             navElem.addAttribute("description", "");
             //navHome.addAttribute("id", "");
@@ -158,7 +176,7 @@ public class PublicPersonalProfileXmlUtil {
                 navElem.addAttribute("isSelected", "true");
                 final Element currentPathElem =
                         pathElem.newChildElement("nav:category",
-                        "http://ccm.redhat.com/london/navigation");
+                        "http://ccm.redhat.com/navigation");
                 currentPathElem.addAttribute("title", navItem.getLabel());
                 currentPathElem.addAttribute("url",
                         String.format("%s/%s/%s",

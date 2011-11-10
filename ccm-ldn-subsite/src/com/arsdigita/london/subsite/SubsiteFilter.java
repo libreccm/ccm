@@ -31,7 +31,7 @@ import java.io.IOException;
 import com.arsdigita.web.BaseFilter;
 import com.arsdigita.web.URL;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.london.navigation.NavigationContext;
+import com.arsdigita.navigation.NavigationContext;
 
 import org.apache.log4j.Logger;
 

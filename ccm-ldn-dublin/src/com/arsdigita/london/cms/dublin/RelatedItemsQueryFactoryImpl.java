@@ -19,8 +19,8 @@
 
 package com.arsdigita.london.cms.dublin;
 
-import com.arsdigita.london.navigation.RelatedItemsQuery;
-import com.arsdigita.london.navigation.RelatedItemsQueryFactory;
+import com.arsdigita.navigation.RelatedItemsQuery;
+import com.arsdigita.navigation.RelatedItemsQueryFactory;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.util.StringUtils;

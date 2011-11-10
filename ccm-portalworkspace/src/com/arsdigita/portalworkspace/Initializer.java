@@ -300,10 +300,10 @@ public class Initializer extends CompoundInitializer {
 
         FlashPortletInitializer.initialize();
 
-        // import from london.navigation required 
+        // import from navigation required 
         // causes horizontal dependency between portal and navigation
         // required by NavigationTreePortlet (formerly NavigationDirectroryPortlet)
-        // now moved to ldn-navigation ??
+        // now moved to navigation ??
 //      ApplicationNavigationModel.register(Workspace.class.getName(),
 //			            new DefaultNavigationModel());
     }

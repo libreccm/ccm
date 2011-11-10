@@ -43,7 +43,7 @@ public class DublinTestSetup extends CoreTestSetup {
         addRequiredInitializer("com.arsdigita.london.util.Initializer");
         addRequiredInitializer("com.arsdigita.london.atoz.Initializer");
         addRequiredInitializer("com.arsdigita.london.terms.Initializer");
-        addRequiredInitializer("com.arsdigita.london.navigation.Initializer");
+        addRequiredInitializer("com.arsdigita.navigation.Initializer");
         addRequiredInitializer("com.arsdigita.london.cms.dublin.Initializer");
         super.setUp();
     }

@@ -19,7 +19,7 @@
  */
 package com.arsdigita.cms;
 
-import com.arsdigita.dispatcher.DispatcherHelper;
+// import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectTraversalAdapter;
@@ -247,7 +247,7 @@ public class CustomizableContentItemXMLRenderer
             "nav:paginator");*/
             Element paginator =
                     new Element("nav:paginator",
-                                "http://ccm.redhat.com/london/navigation");
+                                "http://ccm.redhat.com/navigation");
             getCurrentElement().addContent(paginator);
 
             ParameterMap map = new ParameterMap();

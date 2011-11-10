@@ -95,20 +95,20 @@ public class ThemeDirector extends Application {
      *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
      *   <init-param>
      *     <param-name>template-path</param-name>
-     *     <param-value>/templates/ccm-ldn-theme</param-value>
+     *     <param-value>/templates/ccm-themedirector</param-value>
      *   </init-param>
      * </servlet>
      *
      * <servlet-mapping>
      *   <servlet-name>theme-files</servlet-name>
-     *   <url-pattern>/ccm-ldn-theme/files/*</url-pattern>
+     *   <url-pattern>/ccm-themedirector/files/*</url-pattern>
      * </servlet-mapping>
      *
      * @return path name to the applications servlet/JSP
      */
+    @Override
     public String getServletPath() {
-        // sufficient if executed in its own web application context (ccm-ldn-theme)
+        // return "/files";
         return "/theme-files";
-        // return "/ccm-ldn-theme/files";
     }
 }

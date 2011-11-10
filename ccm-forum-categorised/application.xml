@@ -9,7 +9,7 @@
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-forum" version="6.4.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-navigation" version="6.4.0" relation="ge"/>
+    <ccm:requires name="ccm-navigation" version="6.4.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-terms" version="6.4.0" relation="ge"/>
 <!--    <ccm:requires name="ccm-ldn-aplaws" version="6.4.0" relation="ge"/>
     <ccm:requires name="ccm-gen-aplaws" version="6.4.0" relation="ge"/>  -->
