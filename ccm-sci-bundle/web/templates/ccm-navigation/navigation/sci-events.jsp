@@ -6,9 +6,9 @@
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.Navigation"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionDefinition"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionRenderer"/>
+  <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>
+  <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionDefinition"/>
+  <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionRenderer"/>
 
   <jsp:scriptlet>
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
@@ -23,19 +23,19 @@
     title="Navigation" cache="true">
 
     <define:component name="greetingItem"
-      classname="com.arsdigita.london.navigation.ui.GreetingItem"/>
+      classname="com.arsdigita.navigation.ui.GreetingItem"/>
     <define:component name="categoryPath"
-      classname="com.arsdigita.london.navigation.ui.category.Path"/>
+      classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
-      classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+      classname="com.arsdigita.navigation.ui.category.Menu"/>
     <define:component name="eventList"
-      classname="com.arsdigita.london.navigation.ui.object.ComplexObjectList"/>
+      classname="com.arsdigita.navigation.ui.object.ComplexObjectList"/>
     <jsp:scriptlet>
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).setDefinition(new CMSDataCollectionDefinition());
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).setRenderer(new CMSDataCollectionRenderer());
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getDefinition().setObjectType("com.arsdigita.cms.contenttypes.Event");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).setDefinition(new CMSDataCollectionDefinition());
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).setRenderer(new CMSDataCollectionRenderer());
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getDefinition().setObjectType("com.arsdigita.cms.contenttypes.Event");
 
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).setSQLFilter("(endDate &gt;= :today and (endTime &gt; :time or endTime is null)) or (endDate is null and startDate &gt;= :today)");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).setSQLFilter("(endDate &gt;= :today and (endTime &gt; :time or endTime is null)) or (endDate is null and startDate &gt;= :today)");
 
       // Java ist mal wieder kompliziert. Man braucht ein Calender-Object, damit man Datumsarithmetik betreiben kann. java.util.Calendar ist allerdings          // abstract. Deshalb muß man java.util.GregorianCalendar verwenden. Dann kann man mit der add-Methode verschiedene Felder manipulieren.                    // Aber Achtung - die add-Method liefert void zurück. Daher kann man das nicht alles in einer Zeile machen. Also Variablen anlegen.                        // Komplizierter geht's wohl nicht mehr.
       java.util.GregorianCalendar now = new java.util.GregorianCalendar();
@@ -50,23 +50,23 @@
                                                               now.get(java.util.GregorianCalendar.MINUTE),
                                                               now.get(java.util.GregorianCalendar.SECOND))).getTime();
 
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).setParameter("today", today);
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).setParameter("time", time);
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).setParameter("today", today);
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).setParameter("time", time);
 
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getDefinition().setDescendCategories(true);
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getDefinition().addOrder("startDate");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getDefinition().setDescendCategories(true);
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getDefinition().addOrder("startDate");
 
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("objectType");
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("title");
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("lead");
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("eventDate");
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("launchDate");
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("startDate");
-      ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("endDate");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("objectType");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("title");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("lead");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("eventDate");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("launchDate");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("startDate");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("endDate");
 </jsp:scriptlet>
 
     <define:component name="assignedTerms"
-         classname="com.arsdigita.london.navigation.ui.CategoryIndexAssignedTerms"/>
+         classname="com.arsdigita.navigation.ui.CategoryIndexAssignedTerms"/>
 
   </define:page>
   <show:all/>

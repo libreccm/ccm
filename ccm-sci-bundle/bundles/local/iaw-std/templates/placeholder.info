@@ -9,4 +9,4 @@ to the default template files. In the later case a developer must
 provide a customised template.txt file replacing the default file
    /src/WEB-INF/navigation/sci-templates.txt
 This file must be specified in parameter 
-   com.arsdigita.london.navigation.templates_file
+   com.arsdigita.navigation.templates_file

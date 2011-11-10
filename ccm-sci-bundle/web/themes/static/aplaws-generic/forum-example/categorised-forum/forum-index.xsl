@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns:forum="http://www.arsdigita.com/forum/1.0"
 				xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-				xmlns:nav="http://ccm.redhat.com/london/navigation" 
+				xmlns:nav="http://ccm.redhat.com/navigation" 
 				xmlns:search="http://rhea.redhat.com/search/1.0" 
 				xmlns:portal="http://www.uk.arsdigita.com/portal/1.0" 				
 				xmlns:cms="http://www.arsdigita.com/cms/1.0" 	

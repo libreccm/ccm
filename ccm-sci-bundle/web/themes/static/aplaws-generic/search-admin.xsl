@@ -6,7 +6,7 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
   xmlns:ui="http://www.arsdigita.com/ui/1.0"
   xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/london/navigation"
+  xmlns:nav="http://ccm.redhat.com/navigation"
   xmlns:search="http://rhea.redhat.com/search/1.0"
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search"
 	version="1.0">

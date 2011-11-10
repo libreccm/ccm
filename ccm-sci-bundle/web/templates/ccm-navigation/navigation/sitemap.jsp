@@ -19,13 +19,13 @@
     </jsp:scriptlet>
 
     <define:component name="categoryPath"
-      classname="com.arsdigita.london.navigation.ui.category.Path"/>
+      classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
-      classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+      classname="com.arsdigita.navigation.ui.category.Menu"/>
     <define:component name="categoryNav"
-                      classname="com.arsdigita.london.navigation.ui.category.Hierarchy">
+                      classname="com.arsdigita.navigation.ui.category.Hierarchy">
       <jsp:scriptlet>
-        ((com.arsdigita.london.navigation.ui.category.Hierarchy) categoryNav).setShowItems(false);
+        ((com.arsdigita.navigation.ui.category.Hierarchy) categoryNav).setShowItems(false);
       </jsp:scriptlet>
     </define:component>
 

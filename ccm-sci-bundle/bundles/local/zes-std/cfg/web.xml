@@ -219,11 +219,11 @@
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-navigation</param-value>
+      <param-value>/templates/ccm-navigation</param-value>
     </init-param>
     <init-param>
       <param-name>file-resolver</param-name>
-      <param-value>com.arsdigita.london.navigation.NavigationFileResolver</param-value>
+      <param-value>com.arsdigita.navigation.NavigationFileResolver</param-value>
     </init-param>
   </servlet>
 
@@ -363,7 +363,7 @@
 
   <servlet-mapping>
     <servlet-name>navigation-files</servlet-name>
-    <url-pattern>/ccm-ldn-navigation/files/*</url-pattern>
+    <url-pattern>/ccm-navigation/files/*</url-pattern>
   </servlet-mapping>
 
   <!-- module ccm-ldn-rss  -  servlet mappings   -->

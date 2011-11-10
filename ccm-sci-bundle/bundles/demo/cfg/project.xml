@@ -35,11 +35,11 @@
         <ccm:application name="ccm-cms-types-formsectionitem"/>
 
 <!--   Applications   -->
+        <ccm:application name="ccm-navigation"/>
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->
-        <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
         <ccm:application name="ccm-ldn-subsite"/>                    

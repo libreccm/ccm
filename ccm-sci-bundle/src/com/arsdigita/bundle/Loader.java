@@ -18,7 +18,6 @@
 
 package com.arsdigita.bundle;
 
-// import com.arsdigita.london.navigation.Template;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
 
@@ -35,7 +34,6 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
-// import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Application;
 
 import org.apache.log4j.Logger;

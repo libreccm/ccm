@@ -46,6 +46,7 @@
 <!--  Applications   -->
 <!--  - - - - -  -   -->
         <ccm:application name="ccm-forum"/>                
+        <ccm:application name="ccm-navigation"/>
         <ccm:application name="ccm-portalworkspace"/>                
         <ccm:application name="ccm-simplesurvey"/>                
         <ccm:application name="ccm-themedirector"/>                
@@ -53,7 +54,6 @@
 
 <!--  LDN extension  -->
 <!--  - - - - - - -  -->
-        <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-rss"/>                        
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
