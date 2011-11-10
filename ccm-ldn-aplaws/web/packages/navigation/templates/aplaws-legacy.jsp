@@ -5,9 +5,9 @@
 
     <jsp:directive.page import="
 	com.arsdigita.cms.contenttypes.Article,
-	com.arsdigita.london.navigation.ui.CategoryItemNav,
-	com.arsdigita.london.navigation.ui.CategoryNav,
-	com.arsdigita.london.navigation.ui.ItemList"/>
+	com.arsdigita.navigation.ui.CategoryItemNav,
+	com.arsdigita.navigation.ui.CategoryNav,
+	com.arsdigita.navigation.ui.ItemList"/>
 <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
 
 <jsp:scriptlet>DispatcherHelper.cacheForWorld( response );</jsp:scriptlet>
@@ -16,25 +16,25 @@
   title="APLAWS" cache="true">
 
 <define:component name="categoryNav"
-    classname="com.arsdigita.london.navigation.ui.CategoryNav">
+    classname="com.arsdigita.navigation.ui.CategoryNav">
   <jsp:scriptlet> 
   ((CategoryNav) categoryNav).setUseItemID(false); 
   </jsp:scriptlet>
 </define:component>
 
 <define:component name="categoryItemNav"
-    classname="com.arsdigita.london.navigation.ui.CategoryItemNav">
+    classname="com.arsdigita.navigation.ui.CategoryItemNav">
   <jsp:scriptlet> 
   ((CategoryItemNav) categoryItemNav).setUseItemID(false); 
   </jsp:scriptlet>
 </define:component>
 
 <define:component name="greetingComponent"
-    classname="com.arsdigita.london.navigation.ui.GreetingItem">
+    classname="com.arsdigita.navigation.ui.GreetingItem">
 </define:component>
 
 <define:component name="fixedPromoComponent"
-    classname="com.arsdigita.london.navigation.ui.ItemList">
+    classname="com.arsdigita.navigation.ui.ItemList">
   <jsp:scriptlet>
   ItemList fixedPromo = (ItemList) fixedPromoComponent;
   fixedPromo.setObjectType( Article.BASE_DATA_OBJECT_TYPE );
@@ -47,7 +47,7 @@
 </define:component>
 
 <define:component name="dynamicPromoComponent"
-    classname="com.arsdigita.london.navigation.ui.ItemList">
+    classname="com.arsdigita.navigation.ui.ItemList">
   <jsp:scriptlet>
   ItemList dynamicPromo = (ItemList) dynamicPromoComponent;
   dynamicPromo.setObjectType( Article.BASE_DATA_OBJECT_TYPE );
@@ -61,11 +61,11 @@
 </define:component>
 
 <define:component name="L3ContentPane"
-    classname="com.arsdigita.london.navigation.ui.L3ContentPane">
+    classname="com.arsdigita.navigation.ui.L3ContentPane">
 </define:component>
 
 <define:component name="relatedItemsComponent"
-    classname="com.arsdigita.london.navigation.ui.RelatedItems">
+    classname="com.arsdigita.navigation.ui.RelatedItems">
 </define:component>
 
 </define:page>

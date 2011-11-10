@@ -37,9 +37,9 @@ import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.URLParameter;
 import com.arsdigita.web.Application;
 
-import com.arsdigita.london.navigation.Navigation;
-import com.arsdigita.london.navigation.Template;
-import com.arsdigita.london.navigation.TemplateMapping;
+import com.arsdigita.navigation.Navigation;
+import com.arsdigita.navigation.Template;
+import com.arsdigita.navigation.TemplateMapping;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
 // import com.arsdigita.portalworkspace.PageLayout;
@@ -55,7 +55,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
- * Loader.
+ * Loader executes nonrecurring at install time and loads (installs and
+ * initializes) the APLAWS integration module persistently into database.
  *
  * Creates category domains in the terms application according to 
  * configuration files and adds jsp templates to navigation.
@@ -204,14 +205,19 @@ public class Loader extends PackageLoader {
 
 
     public void run(final ScriptContext ctx) {
+        
+        /*                                                                   */
         Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE,
                                       "services",
                                       "Services",
                                       null);
 
+        /* Create an additional Navigation application instance used as an
+         * custom navigation tree in addition or as an alternative to the
+         * standard APLAWS LGL navigation tree.
+         */
         String customNavPath = (String)get(m_customNavPath);
         String customNavTitle = (String)get(m_customNavTitle);
-
         Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE,
                                       customNavPath,
                                       customNavTitle,
@@ -221,11 +227,13 @@ public class Loader extends PackageLoader {
             s_esdFilesLite : s_esdFiles;
 
         final Parser parser = new Parser();
+        // for each filename in the array of files containing categories
         for (int i = 0 ; i < files.length ; i++) {
             final String file = files[i];
             if (s_log.isInfoEnabled()) {
                 s_log.info("Process " + file);
             }
+            /* Import a Terms category domain.                                */
             parser.parse(Thread.currentThread().getContextClassLoader
                          ().getResourceAsStream
                          (file));
@@ -307,6 +315,17 @@ public class Loader extends PackageLoader {
             "/packages/navigation/templates/aplaws-portal.jsp");
     }
     
+    /**
+     * Determines the Terms domain using domainKey as well as the application
+     * instance using appURL and then creates a domain mapping using context
+     * as domain context.
+     * 
+     * Uses Package com.arsdigita.london.terms.Domain (!) 
+     * 
+     * @param domainKey
+     * @param appURL
+     * @param context 
+     */
     public void registerDomain(String domainKey,
                                String appURL,
                                String context) {
@@ -316,9 +335,14 @@ public class Loader extends PackageLoader {
                         " in context " + context);
         }
 
+        /* Determine Domain and Application objects, both MUST exist!         */
         Domain domain = Domain.retrieve(domainKey);  // package com.arsdigita.london.terms
         Application app = Application.retrieveApplicationForPath(appURL);
+        
+        /* Create domain mapping                                              */
         domain.setAsRootForObject(app, context);
+        
+        /* Create permissions and roles for content-center applications only  */
         if (app instanceof ContentSection) {
             RoleCollection coll = ((ContentSection) app).getStaffGroup().getOrderedRoles();
             Set adminRoles = new HashSet();

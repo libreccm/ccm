@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
-<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" about="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml" key="APLAWS-NAV" title="APLAWS Navigation List" version="1.03" released="2004-03-24">
+<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" 
+                    about="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml" 
+                      key="APLAWS-NAV" 
+                    title="APLAWS Navigation List" 
+                  version="1.03"
+                 released="2004-03-24">
   <terms:term id="1" name="Business" inAtoZ="false"/>
   <terms:term id="1007" name="Jobs and careers" inAtoZ="false"/>
   <terms:term id="1021" name="Legal services" inAtoZ="false"/>

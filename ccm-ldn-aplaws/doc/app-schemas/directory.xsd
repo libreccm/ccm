@@ -15,7 +15,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.DirectoryComponent</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.DirectoryComponent</gen:class>
       </xs:appinfo>
     </xs:annotation>
 

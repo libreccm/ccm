@@ -5,7 +5,7 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
   xmlns:ui="http://www.arsdigita.com/ui/1.0"
   xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/london/navigation"
+  xmlns:nav="http://ccm.redhat.com/navigation"
 	xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
   exclude-result-prefixes="xsl bebop aplaws ui nav cms terms"
 	version="1.0">
@@ -293,7 +293,7 @@
 	       				<xsl:value-of select="nav:attribute[@name='launchDate']"/> - 
 	          			<!-- line above displays the locale specific version of the date - personally I think
 	          			     the default long version looks awful - maybe short format can be specified in 
-	          			     com.arsdigita.london.navigation.DataCollectionRenderer. Alternative approach
+	          			     com.arsdigita.navigation.DataCollectionRenderer. Alternative approach
                              is to construct short date with the available attributes eg UK version below 
                              (which could do with some left padding on day & month so that the dates align correctly)
                         <xsl:value-of select="nav:attribute[@name='launchDate']/@day"/>/

@@ -5,7 +5,7 @@
   version="1.2">
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.Navigation"/>
+  <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
   <jsp:directive.page import="com.arsdigita.aplaws.ui.CategoryPortalSelectionModel"/>
 
@@ -22,13 +22,13 @@
     title="Navigation" cache="true">
 
     <define:component name="categoryPath"
-      classname="com.arsdigita.london.navigation.ui.category.Path"/>
+      classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
-      classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+      classname="com.arsdigita.navigation.ui.category.Menu"/>
     <define:component name="portalWorkspace"
-      classname="com.arsdigita.london.portal.ui.WorkspaceViewer"/>
+      classname="com.arsdigita.portalworkspace.ui.WorkspaceViewer"/>
     <jsp:scriptlet>
-      ((com.arsdigita.london.portal.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
+      ((com.arsdigita.portalworkspace.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
     </jsp:scriptlet>
   </define:page>
 

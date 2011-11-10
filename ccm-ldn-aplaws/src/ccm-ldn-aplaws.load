@@ -5,8 +5,8 @@
     <initializer class="com.arsdigita.core.Initializer"/>
     <table name="cms_items"/>
     <initializer class="com.arsdigita.cms.Initializer"/>
+    <initializer class="com.arsdigita.navigation.Initializer"/>
     <initializer class="com.arsdigita.portalworkspace.Initializer"/>
-    <initializer class="com.arsdigita.london.navigation.Initializer"/>
     <initializer class="com.arsdigita.london.search.Initializer"/>
     <initializer class="com.arsdigita.london.subsite.Initializer"/>
     <initializer class="com.arsdigita.london.terms.Initializer"/>

@@ -67,7 +67,6 @@
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
         <ccm:application name="ccm-ldn-importer"/>
-        <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-rss"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
@@ -80,6 +79,7 @@
         <ccm:application name="ccm-faq"/>
         <ccm:application name="ccm-forum"/>     
         <ccm:application name="ccm-forum-categorised"/>     
+        <ccm:application name="ccm-navigation"/>
         <ccm:application name="ccm-portalserver"/>
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-themedirector"/>

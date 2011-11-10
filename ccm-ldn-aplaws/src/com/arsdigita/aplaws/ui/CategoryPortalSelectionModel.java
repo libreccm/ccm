@@ -18,8 +18,8 @@
 
 package com.arsdigita.aplaws.ui;
 
-import com.arsdigita.london.navigation.Navigation;
-import com.arsdigita.london.navigation.NavigationModel;
+import com.arsdigita.navigation.Navigation;
+import com.arsdigita.navigation.NavigationModel;
 
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.DataCollection;
