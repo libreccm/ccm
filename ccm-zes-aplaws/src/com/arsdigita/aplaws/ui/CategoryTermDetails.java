@@ -22,7 +22,7 @@ import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.ui.AbstractTermDetails;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.london.navigation.Navigation;
+import com.arsdigita.navigation.Navigation;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.domain.DomainObjectFactory;

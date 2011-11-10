@@ -24,7 +24,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.london.navigation.Navigation;
+import com.arsdigita.navigation.Navigation;
 import com.arsdigita.london.terms.ui.AbstractAssignedTerms;
 
 import org.apache.log4j.Logger;

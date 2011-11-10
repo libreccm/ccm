@@ -4,8 +4,8 @@
           version="1.2">
 
     <jsp:directive.page
-        import="com.arsdigita.london.navigation.NavigationModel,
-        com.arsdigita.london.navigation.cms.CMSNavigationModel"/>
+        import="com.arsdigita.navigation.NavigationModel,
+        com.arsdigita.navigation.cms.CMSNavigationModel"/>
 
     <jsp:declaration>
     NavigationModel model = new CMSNavigationModel();
@@ -15,15 +15,15 @@
                  title="APLAWS" cache="false">
 
         <define:component name="categoryPath"
-                          classname="com.arsdigita.london.navigation.ui.category.Path"/>
+                          classname="com.arsdigita.navigation.ui.category.Path"/>
         <jsp:scriptlet>
-       ((com.arsdigita.london.navigation.ui.category.Path)categoryPath)
+       ((com.arsdigita.navigation.ui.category.Path)categoryPath)
          .setModel(model);
         </jsp:scriptlet>
         <define:component name="categoryMenu"
-                          classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+                          classname="com.arsdigita.navigation.ui.category.Menu"/>
         <jsp:scriptlet>
-       ((com.arsdigita.london.navigation.ui.category.Menu)categoryMenu)
+       ((com.arsdigita.navigation.ui.category.Menu)categoryMenu)
          .setModel(model);
         </jsp:scriptlet>
         <define:component name="itemXML"
@@ -32,10 +32,10 @@
                           classname="com.arsdigita.cms.contenttypes.ui.SciProjectWithPublicationsPanel"/>
 
         <define:component name="relatedItems"
-                          classname="com.arsdigita.london.navigation.ui.RelatedItems"/>
+                          classname="com.arsdigita.navigation.ui.RelatedItems"/>
 
         <define:component name="assignedTerms"
-                          classname="com.arsdigita.aplaws.ui.AssignedItemTerms"/>
+                          classname="com.arsdigita.bundle.ui.AssignedItemTerms"/>
     </define:page>
 
     <show:all/>

@@ -18,7 +18,7 @@
 
 package com.arsdigita.aplaws;
 
-import com.arsdigita.london.navigation.Template;
+import com.arsdigita.navigation.Template;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
 // import com.arsdigita.portalworkspace.PageLayout;
