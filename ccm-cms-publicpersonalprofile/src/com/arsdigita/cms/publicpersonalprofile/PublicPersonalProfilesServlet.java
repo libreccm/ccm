@@ -25,12 +25,15 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileXmlUtil;
 import com.arsdigita.cms.dispatcher.CMSDispatcher;
 import com.arsdigita.cms.dispatcher.ItemResolver;
+import com.arsdigita.cms.dispatcher.XMLGenerator;
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
 import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.templating.PresentationManager;
@@ -110,6 +113,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             boolean preview = false;
             String profileOwner = "";
             String navPath = null;
+            String itemPath = null;
 
             Page page;
 
@@ -132,10 +136,16 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                         if (pathTokens.length > 2) {
                             navPath = pathTokens[2];
                         }
+                        if (pathTokens.length > 3) {
+                            itemPath = pathTokens[3];
+                        }
                     } else {
                         profileOwner = pathTokens[0];
                         if (pathTokens.length > 1) {
                             navPath = pathTokens[1];
+                        }
+                        if (pathTokens.length > 2) {
+                            itemPath = pathTokens[2];
                         }
                     }
                 }
@@ -258,86 +268,112 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                         generator.generateXML(state, root, "");
 
                     } else {
-                        final DataCollection links =
-                                RelatedLink.getRelatedLinks(profile,
-                                PublicPersonalProfile.LINK_LIST_NAME);
-                        links.addFilter(String.format("linkTitle = '%s'",
-                                navPath));
+                        if (itemPath == null) {
+                            final DataCollection links =
+                                    RelatedLink.getRelatedLinks(profile,
+                                    PublicPersonalProfile.LINK_LIST_NAME);
+                            links.addFilter(String.format("linkTitle = '%s'",
+                                    navPath));
 
-                        if (links.size() == 0) {
-                            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                            return;
+                            if (links.size() == 0) {
+                                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                                return;
+                            } else {
+                                if (config.getShowPersonInfoEverywhere()) {
+                                    generateProfileOwnerXml(profileElem, owner,
+                                            state);
+                                }
+
+                                PublicPersonalProfileNavItemCollection navItems =
+                                        new PublicPersonalProfileNavItemCollection();
+                                navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+                                        getLanguage());
+                                navItems.addKeyFilter(navPath);
+                                navItems.next();
+
+                                if (navItems.getNavItem().getGeneratorClass()
+                                        != null) {
+                                    try {
+                                        Object generatorObj =
+                                                Class.forName(navItems.getNavItem().
+                                                getGeneratorClass()).getConstructor().
+                                                newInstance();
+
+                                        if (generatorObj instanceof ContentGenerator) {
+                                            final ContentGenerator generator =
+                                                    (ContentGenerator) generatorObj;
+
+                                            generator.generateContent(profileElem,
+                                                    owner,
+                                                    state);
+
+                                        } else {
+                                            throw new ServletException(String.format(
+                                                    "Class '%s' is not a ContentGenerator.",
+                                                    navItems.getNavItem().
+                                                    getGeneratorClass()));
+                                        }
+
+                                    } catch (InstantiationException ex) {
+                                        throw new ServletException(
+                                                "Failed to create generator", ex);
+                                    } catch (IllegalAccessException ex) {
+                                        throw new ServletException(
+                                                "Failed to create generator", ex);
+                                    } catch (IllegalArgumentException ex) {
+                                        throw new ServletException(
+                                                "Failed to create generator", ex);
+                                    } catch (InvocationTargetException ex) {
+                                        throw new ServletException(
+                                                "Failed to create generator", ex);
+                                    } catch (ClassNotFoundException ex) {
+                                        throw new ServletException(
+                                                "Failed to create generator", ex);
+                                    } catch (NoSuchMethodException ex) {
+                                        throw new ServletException(
+                                                "Failed to create generator", ex);
+                                    }
+                                } else {
+
+                                    links.next();
+                                    final RelatedLink link =
+                                            (RelatedLink) DomainObjectFactory.newInstance(links.getDataObject());
+                                    links.close();
+                                    final ContentItem item = link.getTargetItem();
+                                    final PublicPersonalProfileXmlGenerator generator =
+                                            new PublicPersonalProfileXmlGenerator(
+                                            item);
+                                    generator.generateXML(state,
+                                            root,
+                                            "");
+                                }
+
+                                navItems.close();
+                            }
                         } else {
                             if (config.getShowPersonInfoEverywhere()) {
                                 generateProfileOwnerXml(profileElem, owner,
                                         state);
                             }
 
-                            PublicPersonalProfileNavItemCollection navItems =
-                                    new PublicPersonalProfileNavItemCollection();
-                            navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                                    getLanguage());
-                            navItems.addKeyFilter(navPath);
-                            navItems.next();
+                            final OID itemOid = OID.valueOf(itemPath);
+                            try {
+                                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(itemOid);
 
-                            if (navItems.getNavItem().getGeneratorClass()
-                                    != null) {
-                                try {
-                                    Object generatorObj =
-                                            Class.forName(navItems.getNavItem().
-                                            getGeneratorClass()).getConstructor().
-                                            newInstance();
-
-                                    if (generatorObj instanceof ContentGenerator) {
-                                        final ContentGenerator generator =
-                                                (ContentGenerator) generatorObj;
-
-                                        generator.generateContent(profileElem,
-                                                owner,
-                                                state);
-
-                                    } else {
-                                        throw new ServletException(String.format(
-                                                "Class '%s' is not a ContentGenerator.",
-                                                navItems.getNavItem().
-                                                getGeneratorClass()));
-                                    }
-
-                                } catch (InstantiationException ex) {
-                                    throw new ServletException(
-                                            "Failed to create generator", ex);
-                                } catch (IllegalAccessException ex) {
-                                    throw new ServletException(
-                                            "Failed to create generator", ex);
-                                } catch (IllegalArgumentException ex) {
-                                    throw new ServletException(
-                                            "Failed to create generator", ex);
-                                } catch (InvocationTargetException ex) {
-                                    throw new ServletException(
-                                            "Failed to create generator", ex);
-                                } catch (ClassNotFoundException ex) {
-                                    throw new ServletException(
-                                            "Failed to create generator", ex);
-                                } catch (NoSuchMethodException ex) {
-                                    throw new ServletException(
-                                            "Failed to create generator", ex);
-                                }
-                            } else {
-
-                                links.next();
-                                final RelatedLink link =
-                                        (RelatedLink) DomainObjectFactory.newInstance(links.getDataObject());
-                                links.close();
-                                final ContentItem item = link.getTargetItem();
                                 final PublicPersonalProfileXmlGenerator generator =
                                         new PublicPersonalProfileXmlGenerator(
                                         item);
-                                generator.generateXML(state,
-                                        root,
-                                        "");
+                                generator.generateXML(state, root, "");
+
+                            } catch (DataObjectNotFoundException ex) {
+                                logger.error(String.format(
+                                        "Item '%s' not found: ",
+                                        itemPath),
+                                        ex);
+                                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                                return;
                             }
 
-                            navItems.close();
                         }
                     }
                 }
