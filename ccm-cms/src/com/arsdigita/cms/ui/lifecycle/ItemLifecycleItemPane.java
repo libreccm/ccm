@@ -18,12 +18,17 @@
  */
 package com.arsdigita.cms.ui.lifecycle;
 
+import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.event.FormSectionEvent;
 import java.text.DateFormat;
 
 import org.apache.log4j.Logger;
 
 import com.arsdigita.bebop.ActionLink;
+import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
@@ -31,6 +36,13 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.Select;
+import com.arsdigita.bebop.form.SingleSelect;
+import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
@@ -64,9 +76,8 @@ import com.arsdigita.xml.Element;
  */
 class ItemLifecycleItemPane extends BaseItemPane {
 
-    private static final Logger s_log = Logger.getLogger
-        (ItemLifecycleItemPane.class);
-
+    private static final Logger s_log = Logger.getLogger(
+            ItemLifecycleItemPane.class);
     private final ContentItemRequestLocal m_item;
     private final LifecycleRequestLocal m_lifecycle;
     private final SimpleContainer m_detailPane;
@@ -85,45 +96,51 @@ class ItemLifecycleItemPane extends BaseItemPane {
     }
 
     private class SummarySection extends Section {
+
         public SummarySection() {
             setHeading(new Label(gz("cms.ui.lifecycle.details")));
 
             final ActionGroup group = new ActionGroup();
             setBody(group);
 
-            group.setSubject(new Properties());
-            group.addAction(new UnpublishLink());
-            group.addAction(new RepublishLink());
-            if (!ContentSection.getConfig().hideResetLifecycleLink()){
-                group.addAction(new RepublishAndResetLink());
+            if (CMS.getConfig().getUseOldStyleItemLifecycleItemPane()) {
+                group.setSubject(new Properties());
+                group.addAction(new UnpublishLink());
+                group.addAction(new RepublishLink());
+                if (!ContentSection.getConfig().hideResetLifecycleLink()) {
+                    group.addAction(new RepublishAndResetLink());
+                }
+            } else {
+                group.addAction(new ActionForm());
             }
+
         }
 
         private class Properties extends PropertyList {
+
             protected final java.util.List properties(final PageState state) {
                 final java.util.List props = super.properties(state);
                 final Lifecycle cycle = m_lifecycle.getLifecycle(state);
 
-                final DateFormat format = DateFormat.getDateTimeInstance
-                    (DateFormat.FULL,
-                     ContentSection.getConfig().getHideTimezone() ? DateFormat.SHORT : DateFormat.FULL);
+                final DateFormat format =
+                                 DateFormat.getDateTimeInstance(DateFormat.FULL,
+                                                                ContentSection.
+                        getConfig().getHideTimezone() ? DateFormat.SHORT
+                                                                : DateFormat.FULL);
 
                 props.add(new Property(gz("cms.ui.name"),
                                        cycle.getLabel()));
-                props.add(new Property
-                          (gz("cms.ui.item.lifecycle.start_date"),
-                           format.format(cycle.getStartDate())));
+                props.add(new Property(gz("cms.ui.item.lifecycle.start_date"),
+                                       format.format(cycle.getStartDate())));
 
                 final java.util.Date endDate = cycle.getEndDate();
 
                 if (endDate == null) {
-                    props.add(new Property
-                              (gz("cms.ui.item.lifecycle.end_date"),
-                               lz("cms.ui.none")));
+                    props.add(new Property(gz("cms.ui.item.lifecycle.end_date"),
+                                           lz("cms.ui.none")));
                 } else {
-                    props.add(new Property
-                              (gz("cms.ui.item.lifecycle.end_date"),
-                               format.format(endDate)));
+                    props.add(new Property(gz("cms.ui.item.lifecycle.end_date"),
+                                           format.format(endDate)));
                 }
 
                 return props;
@@ -132,9 +149,12 @@ class ItemLifecycleItemPane extends BaseItemPane {
     }
 
     private class PublishLink extends ActionLink {
+
         private RequestLocal m_canPublish = new RequestLocal();
 
-        PublishLink(Component c) { super(c); }
+        PublishLink(Component c) {
+            super(c);
+        }
 
         public void generateXML(PageState ps, Element parent) {
             Boolean canPublish = (Boolean) m_canPublish.get(ps);
@@ -155,18 +175,19 @@ class ItemLifecycleItemPane extends BaseItemPane {
             if (canPublish.booleanValue()) {
                 if (s_log.isDebugEnabled()) {
                     ContentItem item = m_item.getContentItem(ps);
-                    s_log.debug ("User can publish " + item.getOID());
+                    s_log.debug("User can publish " + item.getOID());
                 }
 
                 super.generateXML(ps, parent);
             } else if (s_log.isDebugEnabled()) {
                 ContentItem item = m_item.getContentItem(ps);
-                s_log.debug ("User cannot publish " + item.getOID());
+                s_log.debug("User cannot publish " + item.getOID());
             }
         }
     }
 
     private class UnpublishLink extends PublishLink {
+
         UnpublishLink() {
             super(new Label(gz("cms.ui.item.lifecycle.unpublish")));
 
@@ -174,15 +195,16 @@ class ItemLifecycleItemPane extends BaseItemPane {
         }
 
         private class Listener implements ActionListener {
+
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
                 final ContentItem item = m_item.getContentItem(state);
 
                 item.unpublish();
 
-                final String target = URL.getDispatcherPath() +
-                    ContentItemPage.getItemURL(item,
-                                               ContentItemPage.AUTHORING_TAB);
+                final String target = URL.getDispatcherPath() + ContentItemPage.
+                        getItemURL(item,
+                                   ContentItemPage.AUTHORING_TAB);
 
                 throw new RedirectSignal(target, true);
             }
@@ -193,14 +215,15 @@ class ItemLifecycleItemPane extends BaseItemPane {
         item.republish(reset);
         Workflow workflow = Workflow.getObjectWorkflow(item);
         try {
-            ItemLifecycleSelectForm.finish(workflow, item, Web
-                    .getContext().getUser());
+            ItemLifecycleSelectForm.finish(workflow, item, Web.getContext().
+                    getUser());
         } catch (TaskException te) {
             throw new UncheckedWrapperException(te);
         }
     }
 
     private class RepublishLink extends PublishLink {
+
         RepublishLink() {
             super(new Label(gz("cms.ui.item.lifecycle.republish")));
 
@@ -208,20 +231,23 @@ class ItemLifecycleItemPane extends BaseItemPane {
         }
 
         private class Listener implements ActionListener {
+
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
                 final ContentItem item = m_item.getContentItem(state);
 
                 republish(item, false);
                 if (ContentSection.getConfig().getUseStreamlinedCreation()) {
-                    throw new RedirectSignal(URL.there(state.getRequest(),
-                            Utilities.getWorkspaceURL()), true);
+                    throw new RedirectSignal(
+                            URL.there(state.getRequest(),
+                                      Utilities.getWorkspaceURL()), true);
                 }
             }
         }
     }
 
     private class RepublishAndResetLink extends PublishLink {
+
         RepublishAndResetLink() {
             super(new Label(gz("cms.ui.item.lifecycle.republish_and_reset")));
 
@@ -233,20 +259,23 @@ class ItemLifecycleItemPane extends BaseItemPane {
         }
 
         private class Listener implements ActionListener {
+
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
                 final ContentItem item = m_item.getContentItem(state);
 
                 republish(item, true);
                 if (ContentSection.getConfig().getUseStreamlinedCreation()) {
-                    throw new RedirectSignal(URL.there(state.getRequest(),
-                            Utilities.getWorkspaceURL()), true);
+                    throw new RedirectSignal(
+                            URL.there(state.getRequest(),
+                                      Utilities.getWorkspaceURL()), true);
                 }
             }
         }
     }
 
     private class PhaseSection extends Section {
+
         PhaseSection() {
             super(gz("cms.ui.lifecycle.phases"));
 
@@ -258,14 +287,108 @@ class ItemLifecycleItemPane extends BaseItemPane {
     }
 
     private class PhaseTable extends Table {
+
         PhaseTable() {
             super(new ItemPhaseTableModelBuilder(m_lifecycle),
-                  new String[] {
-                      lz("cms.ui.name"),
-                      lz("cms.ui.description"),
-                      lz("cms.ui.item.lifecycle.start_date"),
-                      lz("cms.ui.item.lifecycle.end_date")
-                  });
+                  new String[]{
+                        lz("cms.ui.name"),
+                        lz("cms.ui.description"),
+                        lz("cms.ui.item.lifecycle.start_date"),
+                        lz("cms.ui.item.lifecycle.end_date")
+                    });
+        }
+    }
+
+    private class ActionForm
+            extends Form
+            implements FormProcessListener,
+                       FormInitListener {
+
+        private static final String LIFECYCLE_ACTION =
+                                    "itemLifecycleItemPaneActionSelect";
+        private static final String REPUBLISH = "republish";
+        private static final String UNPUBLISH = "unpublish";
+        private static final String REPUBLISH_AND_RESET = "republishAndReset";
+        private final Submit submit;
+        private final Label notAuthorized;
+
+        public ActionForm() {
+            super("itemLifecycleItemPaneActionForm");
+
+            final BoxPanel actionPanel = new BoxPanel(BoxPanel.HORIZONTAL);
+            final SingleSelect actionSelect = new SingleSelect(
+                    LIFECYCLE_ACTION);
+
+            actionSelect.addOption(new Option(REPUBLISH, (String) gz(
+                    "cms.ui.item.lifecycle.republish").localize()));
+            if (!ContentSection.getConfig().hideResetLifecycleLink()) {
+                actionSelect.addOption(new Option(REPUBLISH_AND_RESET,
+                                                  (String) gz(
+                        "cms.ui.item.lifecycle.republish_and_reset").
+                        localize()));
+            }
+            actionSelect.addOption(new Option(UNPUBLISH, (String) gz(
+                    "cms.ui.item.lifecycle.unpublish").localize()));
+
+            submit = new Submit(gz("cms.ui.item.lifecycle.do"));
+            notAuthorized = new Label(gz(
+                    "cms.ui.item.lifecycle.do.not_authorized"));
+
+            actionPanel.add(actionSelect);
+            actionPanel.add(submit);
+            actionPanel.add(notAuthorized);
+            add(actionPanel);
+
+            addInitListener(this);
+            addProcessListener(this);
+        }
+
+        public void init(FormSectionEvent fse) throws FormProcessException {
+            final PageState state = fse.getPageState();
+            final ContentItem item = m_item.getContentItem(state);
+
+            final SecurityManager sm = Utilities.getSecurityManager(state);
+
+            if (sm.canAccess(state.getRequest(),
+                             SecurityManager.PUBLISH,
+                             item)) {
+                submit.setVisible(state, true);
+                notAuthorized.setVisible(state, false);
+            } else {
+                submit.setVisible(state, false);
+                notAuthorized.setVisible(state, true);
+            }
+        }
+
+        public void process(final FormSectionEvent fse) throws
+                FormProcessException {
+            final PageState state = fse.getPageState();
+            final FormData data = fse.getFormData();
+
+            String selected = (String) data.get(LIFECYCLE_ACTION);
+            final ContentItem item = m_item.getContentItem(state);
+
+            if (REPUBLISH.equals(selected)) {
+                republish(item, false);
+
+                if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                    throw new RedirectSignal(
+                            URL.there(state.getRequest(),
+                                      Utilities.getWorkspaceURL()), true);
+                }
+            } else if (REPUBLISH_AND_RESET.equals(selected)) {
+                republish(item, true);
+
+                if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                    throw new RedirectSignal(
+                            URL.there(state.getRequest(),
+                                      Utilities.getWorkspaceURL()), true);
+                }
+            } else if (UNPUBLISH.equals(selected)) {
+                item.unpublish();
+            } else {
+                throw new IllegalArgumentException("Illegal selection");
+            }
         }
     }
 }
