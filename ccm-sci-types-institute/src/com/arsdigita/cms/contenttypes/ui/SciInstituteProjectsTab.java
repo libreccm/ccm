@@ -6,7 +6,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciInstitute;
 import com.arsdigita.cms.contenttypes.ui.panels.CompareFilter;
 import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
@@ -25,12 +25,12 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
+public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
-    private final Logger logger = Logger.getLogger(
-            SciDepartmentProjectsTab.class);
-    private static final SciDepartmentProjectsTabConfig config =
-                                                        new SciDepartmentProjectsTabConfig();
+    private final Logger logger =
+                         Logger.getLogger(SciInstituteProjectsTab.class);
+    private final static SciInstituteProjectsTabConfig config =
+                                                new SciInstituteProjectsTabConfig();
     private static final String STATUS_PARAM = "projectStatus";
     private static final String TITLE_PARAM = "projectTitle";
     private final CompareFilter statusFilter = new CompareFilter(STATUS_PARAM,
@@ -58,7 +58,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
         final boolean result = !getData(orgaunit).isEmpty();
 
-        logger.debug(String.format("Needed %d ms to determine if department "
+        logger.debug(String.format("Needed %d ms to determine if institute "
                                    + "'%s' has projects.",
                                    System.currentTimeMillis() - start,
                                    orgaunit.getName()));
@@ -66,10 +66,10 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         return result;
     }
 
-    public void generateXml(final GenericOrganizationalUnit orgaunit,
+    public void generateXml(final GenericOrganizationalUnit orgaunit, 
                             final Element parent,
                             final PageState state) {
-        final long start = System.currentTimeMillis();
+         final long start = System.currentTimeMillis();
         final DataQuery projects = getData(orgaunit);
         final HttpServletRequest request = state.getRequest();
 
@@ -124,14 +124,13 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));
     }
-
-    protected DataQuery getData(final GenericOrganizationalUnit orgaunit) {
+     protected DataQuery getData(final GenericOrganizationalUnit orgaunit) {
         final long start = System.currentTimeMillis();
 
-        if (!(orgaunit instanceof SciDepartment)) {
+        if (!(orgaunit instanceof SciInstitute)) {
             throw new IllegalArgumentException(String.format(
                     "This tab can only process instances of "
-                    + "'com.arsdigita.cms.contenttypes.SciDepartment'. Provided "
+                    + "'com.arsdigita.cms.contenttypes.SciInstitute'. Provided "
                     + "object is of type '%s'",
                     orgaunit.getClass().getName()));
         }
@@ -148,7 +147,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
             subDepartmentsQuery.setParameter("orgaunitId",
                                              orgaunit.getID().toString());
             subDepartmentsQuery.setParameter("assocType",
-                                             SciDepartmentProjectsStep.ASSOC_TYPE);
+                                             SciInstituteProjectsStep.ASSOC_TYPE);
 
             while (subDepartmentsQuery.next()) {
                 if (projectsFilter.length() > 0) {
@@ -166,15 +165,15 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         projectsQuery.addFilter(projectsFilter.toString());
 
         logger.debug(String.format(
-                "Got projects of department '%s'"
+                "Got projects of institute '%s'"
                 + "in '%d ms'. MergeProjects is set to '%b'.",
                 orgaunit.getName(),
                 System.currentTimeMillis() - start,
                 config.isMergingProjects()));
         return projectsQuery;
     }
-
-    private void applyStatusFilter(final DataQuery projects,
+     
+      private void applyStatusFilter(final DataQuery projects,
                                    final HttpServletRequest request) {
         final String statusValue = request.getParameter(STATUS_PARAM);
         if ((statusValue != null) && !(statusValue.trim().isEmpty())) {

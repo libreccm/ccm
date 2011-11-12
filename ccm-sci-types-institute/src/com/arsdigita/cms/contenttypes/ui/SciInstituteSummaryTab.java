@@ -6,7 +6,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
-import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciInstitute;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
@@ -17,12 +17,12 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
+public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
 
     private final Logger logger =
-                         Logger.getLogger(SciDepartmentSummaryTab.class);
-    private final static SciDepartmentSummaryTabConfig config =
-                                                       new SciDepartmentSummaryTabConfig();
+                         Logger.getLogger(SciInstituteSummaryTab.class);
+    private final static SciInstituteSummaryTabConfig config =
+                                                      new SciInstituteSummaryTabConfig();
 
     static {
         config.load();
@@ -36,54 +36,100 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
-        if (!(orgaunit instanceof SciDepartment)) {
+        if (!(orgaunit instanceof SciInstitute)) {
             throw new IllegalArgumentException(String.format(
-                    "This tab can only process instances of SciDpartment."
+                    "This tab can only process instances of SciInstitute."
                     + "The provided object is of type '%s',",
                     orgaunit.getClass().getName()));
         }
 
         final long start = System.currentTimeMillis();
-        final SciDepartment department = (SciDepartment) orgaunit;
+        final SciInstitute institute = (SciInstitute) orgaunit;
 
-        final Element departmentSummaryElem = parent.newChildElement(
-                "departmentSummary");
+        final Element instituteSummaryElem = parent.newChildElement(
+                "instituteSummary");
 
-        generateShortDescXml(department, departmentSummaryElem);
+        generateShortDescXml(institute, instituteSummaryElem);
 
         if (config.isShowingHead()) {
-            generateHeadOfDepartmentXml(department, departmentSummaryElem, state);
+            generateHeadOfInstituteXml(institute, instituteSummaryElem, state);
         }
 
-        if (config.isShowingSubDepartment()) {
-            generateSubDepartmentsXml(department, departmentSummaryElem, state);
-        }
-
-        logger.debug(String.format("Generated XML for summary tab of department "
+        logger.debug(String.format("Generated XML for summary tab of institute "
                                    + "'%s' in %d ms.",
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));
     }
 
-    protected void generateShortDescXml(final SciDepartment department,
+    protected void generateShortDescXml(final SciInstitute department,
                                         final Element parent) {
         final long start = System.currentTimeMillis();
 
         if ((department != null)
-            && !department.getDepartmentShortDescription().trim().isEmpty()) {
+            && !department.getInstituteShortDescription().trim().isEmpty()) {
             final Element shortDescElem = parent.newChildElement("shortDesc");
-            shortDescElem.setText(department.getDepartmentShortDescription());
+            shortDescElem.setText(department.getInstituteShortDescription());
         }
 
-        logger.debug(String.format("Generated short desc XML for department '%s' "
+        logger.debug(String.format("Generated short desc XML for institute '%s' "
                                    + "in %d ms",
                                    department.getName(),
                                    System.currentTimeMillis() - start));
     }
 
-    protected void generateHeadOfDepartmentXml(final SciDepartment department,
-                                               final Element parent,
-                                               final PageState state) {
+    protected void generateHeadOfInstituteXml(final SciInstitute institute,
+                                              final Element parent,
+                                              final PageState state) {
+        final long start = System.currentTimeMillis();
+        final String headRoleStr = config.getHeadRole();
+        final String activeStatusStr = config.getActiveStatus();
+
+        final String[] headRoles = headRoleStr.split(",");
+        final String[] activeStatuses = activeStatusStr.split(",");
+
+        final StringBuffer roleFilter = new StringBuffer();
+        for (String headRole : headRoles) {
+            if (roleFilter.length() > 0) {
+                roleFilter.append(',');
+            }
+            roleFilter.append(String.format("%s = '%s'",
+                                            GenericOrganizationalUnitPersonCollection.LINK_PERSON_ROLE,
+                                            headRole));
+        }
+
+        final StringBuffer statusFilter = new StringBuffer();
+        for (String activeStatus : activeStatuses) {
+            if (statusFilter.length() > 0) {
+                statusFilter.append(",");
+            }
+            statusFilter.append(String.format("%s = '%s'",
+                                              GenericOrganizationalUnitPersonCollection.LINK_STATUS,
+                                              activeStatus));
+        }
+
+        final Element headsElem = parent.newChildElement("heads");
+
+        final GenericOrganizationalUnitPersonCollection heads = institute.
+                getPersons();
+        heads.addFilter(roleFilter.toString());
+        heads.addFilter(statusFilter.toString());
+        heads.addOrder("surname");
+        heads.addOrder("givenname");
+
+        while (heads.next()) {
+            generateMemberXml(heads.getPerson(), headsElem, state);
+        }
+
+        logger.debug(String.format("Generated head of department XML for institute '%s' "
+                                   + "in %d ms",
+                                   institute.getName(),
+                                   System.currentTimeMillis() - start));
+    }
+
+    protected void generateHeadOfDepartmentXml(
+            final GenericOrganizationalUnit department,
+            final Element parent,
+            final PageState state) {
         final long start = System.currentTimeMillis();
         final String headRoleStr = config.getHeadRole();
         final String activeStatusStr = config.getActiveStatus();
@@ -130,58 +176,61 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                    System.currentTimeMillis() - start));
     }
 
-    protected void generateSubDepartmentsXml(final SciDepartment department,
-                                             final Element parent,
-                                             final PageState state) {
+    protected void generateDepartmentsXml(final SciInstitute institute,
+                                          final Element parent,
+                                          final PageState state) {
         final long start = System.currentTimeMillis();
 
-        final GenericOrganizationalUnitSubordinateCollection subDepartments =
-                                                             department.
+        final GenericOrganizationalUnitSubordinateCollection departments =
+                                                             institute.
                 getSubordinateOrgaUnits();
-        subDepartments.addFilter(
+        departments.addFilter(
                 String.format("%s = '%s",
                               GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE,
-                              SciDepartmentSubDepartmentsStep.ASSOC_TYPE));
+                              SciInstituteDepartmentsStep.ASSOC_TYPE));
 
-        final Element subDepsElem = parent.newChildElement("subDepartments");
+        final Element subDepsElem = parent.newChildElement("departments");
 
-        while (subDepartments.next()) {
-            generateSubDepartmentXml(
-                    subDepartments.getGenericOrganizationalUnit(),
+        while (departments.next()) {
+            generateDepartmentXml(
+                    departments.getGenericOrganizationalUnit(),
                     subDepsElem,
                     state);
         }
 
-        logger.debug(String.format("Generated sub departments XML for department '%s' "
+        logger.debug(String.format("Generated sub departments XML for institute '%s' "
                                    + "in %d ms",
-                                   department.getName(),
+                                   institute.getName(),
                                    System.currentTimeMillis() - start));
     }
 
-    protected void generateSubDepartmentXml(
+    protected void generateDepartmentXml(
             final GenericOrganizationalUnit orgaunit,
             final Element parent,
             final PageState state) {
         final long start = System.currentTimeMillis();
 
-        if (!(orgaunit instanceof SciDepartment)) {
-            throw new IllegalArgumentException(String.format("Can't process "
-                    + "orgaunit '%s' as sub department because the orgaunit is "
+        if (!(orgaunit.getClass().getName().equals(
+              "com.arsdigita.cms.contenttypes.SciDepartment"))) {
+            throw new IllegalArgumentException(String.format(
+                    "Can't process "
+                    + "orgaunit '%s' as department because the orgaunit is "
                     + "not a SciDepartment but of type '%s'.",
                     orgaunit.getName(),
-                    orgaunit.getClass().getName()));
+                    orgaunit.getClass().
+                    getName()));
         }
-        
-        final SciDepartment subDepartment = (SciDepartment) orgaunit;
-        
-        final Element subDepElem = parent.newChildElement("subDepartment");
-        subDepElem.addAttribute("oid", subDepartment.getOID().toString());
+
+        final GenericOrganizationalUnit department = orgaunit;
+
+        final Element subDepElem = parent.newChildElement("department");
+        subDepElem.addAttribute("oid", department.getOID().toString());
         final Element nameElem = subDepElem.newChildElement("title");
-        nameElem.setText(subDepartment.getTitle());
-        
-        generateHeadOfDepartmentXml(subDepartment, subDepElem, state);
-                
-        logger.debug(String.format("Generated XML for sub department '%s' "
+        nameElem.setText(department.getTitle());
+
+        generateHeadOfDepartmentXml(department, subDepElem, state);
+
+        logger.debug(String.format("Generated XML for department '%s' "
                                    + "in %d ms",
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));

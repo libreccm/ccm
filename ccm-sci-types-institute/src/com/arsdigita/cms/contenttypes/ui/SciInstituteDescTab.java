@@ -2,7 +2,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciInstitute;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
 
@@ -11,9 +11,9 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class SciDepartmentDescTab implements GenericOrgaUnitTab {
+public class SciInstituteDescTab implements GenericOrgaUnitTab {
 
-    public final Logger logger = Logger.getLogger(SciDepartmentDescTab.class);
+    public final Logger logger = Logger.getLogger(SciInstituteDescTab.class);
 
     public boolean hasData(final GenericOrganizationalUnit orgaunit) {
         final long start = System.currentTimeMillis();
@@ -27,8 +27,8 @@ public class SciDepartmentDescTab implements GenericOrgaUnitTab {
         }
 
         if (logger.isDebugEnabled()) {
-            logger.debug(String.format("Needed %d ms to determine if department '%s' "
-                                       + "has a description.",
+            logger.debug(String.format("Needed %d ms to determine if institute "
+                                       + "'%s' has a description.",
                                        System.currentTimeMillis() - start,
                                        orgaunit.getName()));
         }
@@ -53,13 +53,13 @@ public class SciDepartmentDescTab implements GenericOrgaUnitTab {
         descElem.setText(desc.getDesc());
 
         logger.debug(String.format("Generated XML for description tab of "
-                                   + "department '%s' in %d ms",
+                                   + "institute '%s' in %d ms",
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));
     }
 
     private Desc getData(final GenericOrganizationalUnit orgaunit) {
-        if (!(orgaunit instanceof SciDepartment)) {
+        if (!(orgaunit instanceof SciInstitute)) {
             throw new IllegalArgumentException(String.format(
                     "This tab can only process instances of "
                     + "'com.arsdigita.cms.contenttypes.SciDepartment'. Provided "
@@ -67,10 +67,10 @@ public class SciDepartmentDescTab implements GenericOrgaUnitTab {
                     orgaunit.getClass().getName()));
         }
 
-        final SciDepartment department = (SciDepartment) orgaunit;
+        final SciInstitute institute = (SciInstitute) orgaunit;
         final Desc desc = new Desc();
-        desc.setShortDesc(department.getDepartmentShortDescription());
-        desc.setDesc(department.getDepartmentDescription());
+        desc.setShortDesc(institute.getInstituteShortDescription());
+        desc.setDesc(institute.getInstituteDescription());
         return desc;
     }
 

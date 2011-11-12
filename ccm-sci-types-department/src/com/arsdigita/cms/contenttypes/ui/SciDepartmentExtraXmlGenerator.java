@@ -1,24 +1,21 @@
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ExtraXMLGenerator;
-import com.arsdigita.xml.Element;
+import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciDepartmentConfig;
 
 /**
  *
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class SciDepartmentExtraXmlGenerator implements ExtraXMLGenerator {
+public class SciDepartmentExtraXmlGenerator 
+extends GenericOrgaUnitExtraXmlGenerator  {
 
-    public void generateXML(ContentItem item, Element element, PageState state) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void addGlobalStateParams(Page p) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    @Override
+    public String getTabConfig() {
+        final SciDepartmentConfig config = SciDepartment.getConfig();
+        
+        return config.getTabs();
     }
     
 }
