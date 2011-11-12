@@ -1,0 +1,11 @@
+ScientificCMS Default Items Page,Sci Default Navigation Index Page ordering items in ascending order,/templates/ccm-navigation/navigation/sci-default.jsp
+ScientificCMS Recent Items Page,Sci List of items ordered with most recent first,/templates/ccm-navigation/navigation/sci-recent.jsp
+ScientificCMS A-Z Items,Sci List of items paginated as A-Z,/templates/ccm-navigation/navigation/sci-atoz.jsp
+ScientificCMS Events Page,Sci Events Page ordering events in ??? order,/templates/ccm-navigation/navigation/sci-events.jsp
+ScientificCMS Portal Page,Sci Portal Page for embedding a portal page as navigation leaves page,/templates/ccm-navigation/navigation/sci-portal.jsp
+ScientificCMS Portal Welcome Page,Sci Portal page meant as site welcome page,/templates/ccm-navigation/navigation/sci-portal-welcome.jsp
+ScientificCMS Navigation Welcome Page,Sci site welcome page created by navigation root term,/templates/ccm-navigation/navigation/sci-welcome.jsp
+ScientificCMS Specializing Items List,Sci Specialising List item page,/templates/ccm-navigation/navigation/SpecializingList.jsp
+ScientificCMS Publications List,Sci publications listing page,/templates/ccm-navigation/navigation/SciPublicationList.jsp
+IAW Events Page,IAW Events Page ordering events in ??? order,/templates/ccm-navigation/navigation/iaw-events.jsp
+IAW Archive Page,IAW Archive Page ordering ??? in ??? order,/templates/ccm-navigation/navigation/iaw-archive.jsp

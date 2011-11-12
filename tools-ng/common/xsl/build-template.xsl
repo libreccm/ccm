@@ -189,7 +189,7 @@
         </property>
       </xsl:when>
       <xsl:otherwise>
-        <property name="webxml.source.file" value="web.xml-core"/>
+        <property name="webxml.source.file" value="web.ccm-core.xml"/>
       </xsl:otherwise>
     </xsl:choose>
     <echo message="web.xml file requested: ${{webxml.source.file}}" />
@@ -1202,38 +1202,52 @@
       </xsl:attribute>
     </target>
 
-    <target name="copy-webxml-init" depends="init">
+    <!-- Determines whether web.xml as specified in webxml.source.file exists, 
+         determines its fully qualified file name and stores it in 
+         property "resolved.webxml.source.file"                              -->
+    <target name="copy-webxml-init" depends="copy-bundle-init,init">
       <available file="${{this.deploy.dir}}/WEB-INF" type="dir"
                  property="root.webapp.exists"/>
+      <!--           
+      <echo message="TEST 1: ${{resolved.bundle.source.dir}}"/>
+      <echo message="TEST 2: ${{webxml.source.file}}"/>                      -->
+      <!-- First check, if file exist in bundle dir                          -->
+      <condition property="resolved.webxml.source.file" 
+                    value="${{resolved.bundle.source.dir}}/cfg/${{webxml.source.file}}">
+        <and>
+          <isset property="root.webapp.exists"/>
+          <available file="${{resolved.bundle.source.dir}}/cfg/${{webxml.source.file}}"/>
+          <not>
+              <isset property="resolved.webxml.source.file"/>
+          </not>
+        </and>
+      </condition>
+      <!-- Otherwise the file should already be in WEB-INF                   -->
       <condition property="resolved.webxml.source.file"
                  value="${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}">
         <and>
           <isset property="root.webapp.exists"/>
           <available file="${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}"/>
           <not>
-            <available file="${{webxml.source.file}}"/>
+            <isset property="resolved.webxml.source.file"/>
           </not>
         </and>
       </condition>
-      <condition property="resolved.webxml.source.file" 
-                    value="${{webxml.source.file}}">
-        <not>
-            <isset property="resolved.webxml.source.file"/>
-        </not>
-      </condition>
-      <echo message="web.xml to use: ${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}" />
+      
+      <echo message="web.xml to use: ${{resolved.webxml.source.file}}" />
     </target>
 
-    <!-- Determines which web.xml should be used (as specified in project.xml),
-         copies this file into WEB-INF.xml and invokes merge-xml to merge the
-         web.*.xml stub of each module (it exist) into that file as necessary -->
+    <!-- Uses target copy-webxml-init to determines which web.xml should  
+         be used (as specified in project.xml), copies this file into  
+         WEB-INF.xml and invokes merge-xml to merge the web.*.xml stub of 
+         each module (it exist) into that file as necessary                  -->
     <target name="copy-webxml"
             depends="init,copy-webxml-init" if="root.webapp.exists">
       <copy file="${{resolved.webxml.source.file}}"
-            tofile="${{this.deploy.dir}}/WEB-INF/web.xml" overwrite="yes"/>
+          tofile="${{this.deploy.dir}}/WEB-INF/web.xml" overwrite="yes"/>
       <foreach param="file" target="merge-webxml">
          <path>
-           <fileset dir="${{this.deploy.dir}}/WEB-INF" includes="web.*.xml"/>
+           <fileset dir="${{this.deploy.dir}}/WEB-INF" includes="web.ccm-*.xml"/>
          </path>
       </foreach>
     </target>
@@ -1243,8 +1257,8 @@
         <property name="customWebXML" value="${{file}}"/>
         <property name="originalWebXML" value="${{this.deploy.dir}}/WEB-INF/web.xml"/>
         <property name="mergedWebXML" value="${{customWebXML}}.merged"/>
-        <!-- manager property javax avoids dependency on bsf which introduced a lot 
-             of cross-OS problems                                                  -->
+        <!-- manager property javax avoids dependency on bsf which introduced  
+             a lot of cross-OS problems                                      -->
         <script language="javascript" manager="javax">
             <classpath>
                 <fileset dir="tools-ng/webxml/lib" includes="*.jar"/>
