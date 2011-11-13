@@ -27,13 +27,19 @@ object type Publication extends ContentPage {
        Integer[0..1] yearOfPublication = ct_publications.year INTEGER;
        String[0..1] abstract = ct_publications.abstract VARCHAR(4096);
        String[0..1] misc = ct_publications.misc VARCHAR(4096);
-       //The reviewed property has been moved for performance reasons. It
+       //The reviewed property has been moved here for performance reasons. It
        //is necessary to have access to this property from a data query    
        //over all publications of a person. Since this property was only 
        //available on some types, it was not possible to use joins *and*
        //get publications of *all* types. But exactly this use case appears on
        //several points.
-       Boolean[0..1] reviewed = ct_publications.reviewed BIT ;
+       Boolean[0..1] reviewed = ct_publications.reviewed BIT;
+       //This property is for internal use only. It updated automatically when
+       //an author is added or removed. It contains a string with the names
+       //of all authors of the publications and is used for efficient queries
+       //(ordering by publications by their authors requires joins or subqueries
+       //without this field)
+       String[0..1] authorsStr = ct_publications.authors VARCHAR(2048);
 
        reference key (ct_publications.publication_id);
 }
@@ -193,10 +199,11 @@ query getPublicationsForAuthorWithAuthors {
                ct_publications_authorship.person_id, 
                ct_publications.year, 
                ct_publications.reviewed, 
-               (select array_to_string(array (select cms_persons.surname || ', ' || cms_persons.givenname
-                from cms_persons
-                join ct_publications_authorship on cms_persons.person_id = ct_publications_authorship.person_id
-                where ct_publications_authorship.publication_id = cms_pages.item_id), '; ')) as authors
+               ct_publications.authors
+               //(select array_to_string(array (select cms_persons.surname || ', ' || cms_persons.givenname
+               // from cms_persons
+               // join ct_publications_authorship on cms_persons.person_id = ct_publications_authorship.person_id
+               // where ct_publications_authorship.publication_id = cms_pages.item_id order by ct_publications_authorship.authorship_order), '; ')) as authors
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id
         join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
@@ -207,7 +214,7 @@ query getPublicationsForAuthorWithAuthors {
         authorId = ct_publications_authorship.person_id;
         title = cms_pages.title;
         year = ct_publications.year;
-        authors = authors;
+        authors = ct_publications.authors;
         reviewed = ct_publications.reviewed;
     }
 }

@@ -109,7 +109,7 @@ public class InternetArticlePropertyForm
                 ParameterData data = event.getParameterData();
                 String value = (String) data.getValue();
 
-                if(value.isEmpty()) {
+                if (value.isEmpty()) {
                     return;
                 }
 
@@ -143,6 +143,24 @@ public class InternetArticlePropertyForm
                 pubDateParam);
         pubDate.setYearRange(1900, today.get(Calendar.YEAR) + 2);
         add(pubDate);
+
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.url").localize()));
+        ParameterModel urlModel = new StringParameter(InternetArticle.URL);
+        TextField url = new TextField(urlModel);
+        add(url);
+        
+         add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.urn").localize()));
+        ParameterModel urnModel = new StringParameter(InternetArticle.URN);
+        TextField urn = new TextField(urnModel);
+        add(urn);
+        
+         add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.doi").localize()));
+        ParameterModel doiModel = new StringParameter(InternetArticle.DOI);
+        TextField doi = new TextField(doiModel);
+        add(doi);
     }
 
     @Override
@@ -159,6 +177,9 @@ public class InternetArticlePropertyForm
         data.put(InternetArticle.ISSN, article.getISSN());
         data.put(InternetArticle.LAST_ACCESSED,
                  article.getLastAccessed());
+        data.put(InternetArticle.URL, article.getUrl());
+        data.put(InternetArticle.URN, article.getUrn());
+        data.put(InternetArticle.DOI, article.getDoi());
     }
 
     @Override
@@ -180,6 +201,9 @@ public class InternetArticlePropertyForm
             article.setISSN(issn);
             article.setLastAccessed(
                     (Date) data.get(InternetArticle.LAST_ACCESSED));
+            article.setUrl((String) data.get(InternetArticle.URL));
+            article.setUrn((String) data.get(InternetArticle.URN));
+            article.setDoi((String) data.get(InternetArticle.DOI));
 
             article.save();
         }

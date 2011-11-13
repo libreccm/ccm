@@ -32,8 +32,10 @@ object type InternetArticle extends Publication {
        String[0..1] issn = ct_internet_article.issn VARCHAR(9);
        Date[0..1] lastAccessed = ct_internet_article.last_accessed DATE;
        Date[0..1] publicationDate = ct_internet_article.publicationDate DATE;
-       
-
+       String[0..1] url = ct_internet_article.url VARCHAR(2048);
+       String[0..1] urn = ct_internet_article.urn VARCHAR(2048);
+       String[0..1] doi = ct_internet_article.doi VARCHAR(2048);
+              
        reference key (ct_internet_article.internet_article_id);
 }
 

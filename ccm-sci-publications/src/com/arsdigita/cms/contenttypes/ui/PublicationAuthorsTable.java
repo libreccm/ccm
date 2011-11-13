@@ -435,10 +435,10 @@ public class PublicationAuthorsTable
             publication.removeAuthor(author);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
             s_log.info("UP");
-            authors.swapWithPrevious(author);
+            publication.swapWithPreviousAuthor(author);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
             s_log.info("DOWN");
-            authors.swapWithNext(author);
+            publication.swapWithNextAuthor(author);
         }
     }
 

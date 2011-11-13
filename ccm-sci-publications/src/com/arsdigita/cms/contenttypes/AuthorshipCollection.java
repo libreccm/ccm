@@ -157,6 +157,14 @@ public class AuthorshipCollection extends DomainCollection {
         this.rewind();
     }
 
+    public String getSurname() {
+        return (String) m_dataCollection.getDataObject().get(GenericPerson.SURNAME);        
+    }
+    
+    public String getGivenName() {
+        return (String) m_dataCollection.getDataObject().get(GenericPerson.GIVENNAME);
+    }
+            
     public GenericPerson getAuthor() {
         return new GenericPerson(m_dataCollection.getDataObject());
     }

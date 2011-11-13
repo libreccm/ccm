@@ -42,32 +42,45 @@ public class InternetArticlePropertiesStep extends PublicationPropertiesStep {
 
     public static Component getInternetArticlePropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
+        DomainObjectPropertySheet sheet =
+                                  (DomainObjectPropertySheet) PublicationPropertiesStep.
                 getPublicationPropertySheet(itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.place"),
-                InternetArticle.PLACE);
-     
+                  InternetArticle.PLACE);
+
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number"),
-                InternetArticle.NUMBER);
+                  InternetArticle.NUMBER);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number_of_pages"),
-                InternetArticle.NUMBER_OF_PAGES);
+                  InternetArticle.NUMBER_OF_PAGES);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.edition"),
-                InternetArticle.EDITION);
+                  InternetArticle.EDITION);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.issn"),
-                InternetArticle.ISSN);
+                  InternetArticle.ISSN);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.lastAccessed"),
-                InternetArticle.LAST_ACCESSED);
+                  InternetArticle.LAST_ACCESSED);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.url"),
+                  InternetArticle.URL);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.urn"),
+                  InternetArticle.URN);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.doi"),
+                  InternetArticle.DOI);
 
         return sheet;
     }
@@ -101,8 +114,8 @@ public class InternetArticlePropertiesStep extends PublicationPropertiesStep {
     }
 
     @Override
-    protected  void addSteps(final ItemSelectionModel itemModel,
-            final AuthoringKitWizard parent) {
+    protected void addSteps(final ItemSelectionModel itemModel,
+                            final AuthoringKitWizard parent) {
         super.addSteps(itemModel, parent);
 
         addStep(new InternetArticleOrganizationStep(itemModel, parent),

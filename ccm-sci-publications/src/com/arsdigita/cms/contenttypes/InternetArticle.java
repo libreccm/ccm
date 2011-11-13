@@ -42,6 +42,9 @@ public class InternetArticle extends Publication {
     public static final String ISSN = "issn";
     public static final String LAST_ACCESSED = "lastAccessed";
     public static final String PUBLICATION_DATE = "publicationDate";
+    public static final String URL = "url";
+    public static final String URN = "urn";
+    public static final String DOI = "doi";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.InternetArticle";
 
@@ -154,5 +157,29 @@ public class InternetArticle extends Publication {
 
     public void setPublicationDate(Date pubDate) {
         set(PUBLICATION_DATE, pubDate);
+    }
+    
+    public String getUrl() {
+        return (String) get(URL);
+    }
+    
+    public void setUrl(final String url)  {
+        set(URL, url);
+    }
+    
+    public String getUrn() {
+        return (String) get(URN);
+    }
+    
+    public void setUrn(final String urn)  {
+        set(URN, urn);
+    }
+    
+    public String getDoi() {
+        return (String) get(DOI);
+    }
+    
+    public void setDoi(final String doi)  {
+        set(DOI, doi);
     }
 }

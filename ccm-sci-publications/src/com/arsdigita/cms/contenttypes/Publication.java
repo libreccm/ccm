@@ -69,6 +69,7 @@ public class Publication extends ContentPage {
     public final static String ABSTRACT = "abstract";
     public final static String MISC = "misc";
     public final static String AUTHORS = "authors";
+    private final static String AUTHORS_STR = "authorsStr"; //authorsStr is an interal field only for use in data queries, and is updated automatically
     public final static String EDITOR = "editor";
     public final static String AUTHOR_ORDER = "authorOrder";
     public final static String SERIES = "series";
@@ -195,6 +196,8 @@ public class Publication extends ContentPage {
 
         link.set(EDITOR, editor);
         link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
+        
+        updateAuthorsStr();
     }
 
     /**
@@ -205,6 +208,32 @@ public class Publication extends ContentPage {
     public void removeAuthor(final GenericPerson author) {
         Assert.exists(author, GenericPerson.class);
         remove(AUTHORS, author);
+        
+        updateAuthorsStr();
+    }
+    
+    public void swapWithPreviousAuthor(final GenericPerson author) {
+        getAuthors().swapWithPrevious(author);
+        updateAuthorsStr();
+    }
+    
+    public void swapWithNextAuthor(final GenericPerson author) {
+        getAuthors().swapWithNext(author);
+        updateAuthorsStr();
+    }
+    
+    protected void updateAuthorsStr() {
+        final AuthorshipCollection authors = getAuthors();
+        StringBuilder builder = new StringBuilder();
+        while(authors.next()) {
+            if (builder.length() > 0) {
+                builder.append("; ");
+            }
+            builder.append(authors.getSurname());
+            builder.append(", ");
+            builder.append(authors.getGivenName());
+        }
+        set(AUTHORS_STR, builder.toString());        
     }
 
     /**
