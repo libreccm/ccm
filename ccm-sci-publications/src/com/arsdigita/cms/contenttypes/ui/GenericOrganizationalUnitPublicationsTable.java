@@ -50,12 +50,12 @@ public class GenericOrganizationalUnitPublicationsTable
         columnModel.add(new TableColumn(
                 0,
                 PublicationGlobalizationUtil.globalize(
-                "genericorganizationalunit.ui.publications.columns.name"),
+                "genericorganizationalunit.ui.publications.columns.name").localize(),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
                 PublicationGlobalizationUtil.globalize(
-                "genericorganizationalunit.ui.publications.columns.remove"),
+                "genericorganizationalunit.ui.publications.columns.remove").localize(),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));

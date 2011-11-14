@@ -38,8 +38,9 @@ public class GenericOrganizationalUnitPublicationAddForm
     public void addWidgets() {
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "genericorganizationalunit.ui.publication.select").localize()));
-        itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(Publication.class.getName()));
+        itemSearch = new ItemSearchWidget(ITEM_SEARCH,
+                                          ContentType.findByAssociatedObjectType(Publication.class.
+                getName()));
         add(itemSearch);
     }
 

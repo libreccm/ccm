@@ -65,6 +65,8 @@ public class PublicationGenericOrganizationalUnitAddForm
                     ITEM_SEARCH);
             orgaunit = (GenericOrganizationalUnit) orgaunit.getContentBundle().
                     getInstance(publication.getLanguage(), true);
+            
+            publication.addOrganizationalUnit(orgaunit);
         }
 
         init(fse);

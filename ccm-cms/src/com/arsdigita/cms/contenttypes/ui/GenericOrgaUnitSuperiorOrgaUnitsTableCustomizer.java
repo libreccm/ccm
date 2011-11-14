@@ -72,4 +72,10 @@ public interface GenericOrgaUnitSuperiorOrgaUnitsTableCustomizer {
      */
     String getAssocType();
     
+    /**
+     * Content type to restrict to item shown to. May be {@code null}.
+     * @return 
+     */
+    String getContentType();
+    
 }

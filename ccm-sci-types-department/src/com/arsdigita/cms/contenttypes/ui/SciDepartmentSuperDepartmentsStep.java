@@ -139,6 +139,10 @@ public class SciDepartmentSuperDepartmentsStep extends SimpleEditStep {
                     public String getAssocType() {
                         return ASSOC_TYPE;
                     }
+                    
+                    public String getContentType() {
+                        return "com.arsdigita.cms.contenttypes.SciDepartment";
+                    }
                 });
         
         setDisplayComponent(superDeparmentsTable);

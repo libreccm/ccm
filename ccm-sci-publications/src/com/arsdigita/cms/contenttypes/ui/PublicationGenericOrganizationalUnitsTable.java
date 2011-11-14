@@ -118,7 +118,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                     return orgaunits.getTitle();
                 case 1:
                     return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.orgaunits.remove");
+                            "publications.ui.orgaunits.remove").localize();
                 default:
                     return null;
             }

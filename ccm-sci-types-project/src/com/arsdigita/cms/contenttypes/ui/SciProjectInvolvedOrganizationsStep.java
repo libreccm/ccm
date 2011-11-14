@@ -128,6 +128,10 @@ public class SciProjectInvolvedOrganizationsStep extends SimpleEditStep {
             public String getAssocType() {
                 return ASSOC_TYPE;
             }
+            
+            public String getContentType() {
+                return null;
+            }
         });
         
         setDisplayComponent(involvedTable);

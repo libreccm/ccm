@@ -107,9 +107,16 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
             superiorOrgaUnits = orgaunit.getSuperiorOrgaUnits();
             if ((customizer.getAssocType() != null)
                 && !(customizer.getAssocType().isEmpty())) {
-                superiorOrgaUnits.addFilter(String.format("link.assocType = '%s'",
+                superiorOrgaUnits.addFilter(String.format(
+                        "link.assocType = '%s'",
                                                           customizer.
                         getAssocType()));
+            }
+            if ((customizer.getContentType() != null)
+                && !(customizer.getContentType().isEmpty())) {
+                superiorOrgaUnits.addFilter(String.format("objectType = '%s'",
+                                                          customizer.
+                        getContentType()));
             }
             this.customizer = customizer;
         }
@@ -297,7 +304,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                     getSelectedObject(state);
             final GenericOrganizationalUnit supOrgaUnit =
                                             (GenericOrganizationalUnit) DomainObjectFactory.
-                    newInstance(OID.valueOf((String)event.getRowKey()));
+                    newInstance(OID.valueOf((String) event.getRowKey()));
             final GenericOrganizationalUnitSuperiorCollection supOrgaUnits =
                                                               orgaunit.
                     getSuperiorOrgaUnits();
@@ -307,11 +314,11 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
             final String headerKey = column.getHeaderKey().toString();
             if (TABLE_COL_EDIT.equals(headerKey)) {
                 //Nothing now
-            } else if(TABLE_COL_DEL.equals(headerKey)) {
+            } else if (TABLE_COL_DEL.equals(headerKey)) {
                 orgaunit.removeSuperiorOrgaUnit(supOrgaUnit);
             } else if (TABLE_COL_UP.equals(headerKey)) {
-                supOrgaUnits.swapWithPrevious(supOrgaUnit);                
-            } else if(TABLE_COL_DOWN.equals(headerKey)) {
+                supOrgaUnits.swapWithPrevious(supOrgaUnit);
+            } else if (TABLE_COL_DOWN.equals(headerKey)) {
                 supOrgaUnits.swapWithNext(supOrgaUnit);
             }
         }

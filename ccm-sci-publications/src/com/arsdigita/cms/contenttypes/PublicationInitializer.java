@@ -24,6 +24,7 @@ import com.arsdigita.cms.contenttypes.ui.PublicationGenericOrganizationalUnitsSt
 import com.arsdigita.cms.contenttypes.ui.PublicationGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.runtime.DomainInitEvent;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -31,6 +32,8 @@ import com.arsdigita.runtime.DomainInitEvent;
  * @version $Id$
  */
 public class PublicationInitializer extends ContentTypeInitializer {
+
+    private final Logger logger = Logger.getLogger(PublicationInitializer.class);
 
     public PublicationInitializer() {
         super("ccm-sci-publications.pdl.mf", Publication.BASE_DATA_OBJECT_TYPE);
@@ -53,9 +56,17 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     10);
         }
 
-        final String attacToStr = config.getAttachPublicationsStepTo();
-        final String[] attachToCts = attacToStr.split(";");
+        final String attachToStr = config.getAttachPublicationsStepTo();
+        final String[] attachToCts = attachToStr.split(";");
+        if (logger.isInfoEnabled()) {
+            logger.info(String.format("Attaching publications step to: %s",
+                                      attachToStr));
+        }
         for (String attachTo : attachToCts) {
+            if (logger.isInfoEnabled()) {
+                logger.info(String.format("Attaching publications step to: '%s'",
+                                          attachTo));
+            }
             AuthoringKitWizard.registerAssetStep(
                     attachTo,
                     GenericOrganizationalUnitPublicationsStep.class,

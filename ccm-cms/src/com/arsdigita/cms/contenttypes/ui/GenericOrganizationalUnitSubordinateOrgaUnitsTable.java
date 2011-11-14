@@ -121,6 +121,12 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
                         "link.assocType = '%s'",
                         customizer.getAssocType()));
             }
+            if ((customizer.getContentType() != null)
+                && !(customizer.getContentType().isEmpty())) {
+                subordinateOrgaUnits.addFilter(String.format("objectType = '%s'",
+                                                             customizer.
+                        getContentType()));
+            }
             this.customizer = customizer;
         }
 
@@ -313,7 +319,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
                     state);
             final GenericOrganizationalUnit subOrgaUnit =
                                             new GenericOrganizationalUnit(
-                    new BigDecimal((String)event.getRowKey()));
+                    new BigDecimal((String) event.getRowKey()));
             final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
                                                                  orgaunit.
                     getSubordinateOrgaUnits();

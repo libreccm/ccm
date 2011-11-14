@@ -61,14 +61,14 @@ public interface GenericOrgaUnitSubordinateOrgaUnitsTableCustomizer {
      * 
      * @return Label for the down links
      */
-    String getDownLabel();    
+    String getDownLabel();
 
     /**
      * 
      * @return Text for the confirmation message when deleting an association.
      */
     String getConfirmRemoveLabel();
-    
+
     /**
      * 
      * @return The value of the {@code assocType} property of the association
@@ -77,4 +77,10 @@ public interface GenericOrgaUnitSubordinateOrgaUnitsTableCustomizer {
      * is filtered using the return value.
      */
     String getAssocType();
+
+    /**
+     * Content type to restrict to item shown to. May be {@code null}.
+     * @return 
+     */
+    String getContentType();
 }
