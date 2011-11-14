@@ -28,6 +28,38 @@ update nav_templates
   where url like '%packages/navigation/templates%'; 
 
 
+-- AAP: update jsp names
+update nav_templates
+    set url=replace(url,'aap-atoz','sci-atoz'),
+        description=replace(description,'AAP','SCI'),
+        title=replace(title,'AAP','SCI')
+  where url like '%aap-atoz%'; 
+
+update nav_templates
+    set url=replace(url,'aap-default' ,'sci-default'),
+        description=replace(description,'AAP','SCI'),
+        title=replace(title,'AAP','SCI')
+  where url like '%aap-default%'; 
+
+update nav_templates
+    set url=replace(url,'aap-portal' ,'sci-portal'),
+        description=replace(description,'AAP','SCI'),
+        title=replace(title,'AAP','SCI')
+  where url like '%aap-portal%'; 
+
+update nav_templates
+    set url=replace(url,'aap-recent' ,'sci-recent'),
+        description=replace(description,'AAP','SCI'),
+        title=replace(title,'AAP','SCI')
+  where url like '%aap-recent%'; 
+
+update nav_templates
+    set url=replace(url,'aap-welcome' ,'sci-welcome'),
+        description=replace(description,'AAP','SCI'),
+        title=replace(title,'AAP','SCI')
+  where url like '%aap-welcome%'; 
+
+
 -- IAW: update jsp names
 update nav_templates
     set url=replace(url,'iaw-atoz','sci-atoz'),

@@ -4,7 +4,7 @@
   xmlns:show="/WEB-INF/bebop-show.tld"
   version="1.2">
 
-  <%-- JSP template to use a portal page as index page in navigation  --%>
+  <!-- JSP template to use a portal page as index page in navigation  -->
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>

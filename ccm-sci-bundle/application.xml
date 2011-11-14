@@ -19,9 +19,9 @@
   </ccm:dependencies>
 
   <ccm:directories>
-    <!--  not required 
+    <!--  pdl is empty and not used, buf required because we use sql for 
+          some update3 scripts.                                             -->
     <ccm:directory name="pdl"/>
-    -->
     <ccm:directory name="src"/>
     <ccm:directory name="sql"/>
   </ccm:directories>
