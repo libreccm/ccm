@@ -69,8 +69,8 @@ import java.util.StringTokenizer;
 public class ItemSearchFolderBrowser extends Table {
 
     private static final org.apache.log4j.Logger s_log =
-            org.apache.log4j.Logger.getLogger(ItemSearchFolderBrowser.class);
-    
+                                                 org.apache.log4j.Logger.
+            getLogger(ItemSearchFolderBrowser.class);
     private static GlobalizedMessage[] s_headers = {
         globalize("cms.ui.folder.name"),
         globalize("cms.ui.folder.title"),
@@ -88,7 +88,8 @@ public class ItemSearchFolderBrowser extends Table {
         FolderTableModelBuilder builder = new FolderTableModelBuilder();
         setModelBuilder(builder);
 
-        m_paginator = new Paginator(builder, ContentSection.getConfig().getFolderBrowseListSize());
+        m_paginator = new Paginator(builder, ContentSection.getConfig().
+                getFolderBrowseListSize());
 
         m_currentFolder = currentFolder;
 
@@ -155,7 +156,6 @@ public class ItemSearchFolderBrowser extends Table {
                 return new Integer((int) itemColl.size());
             }
         };
-
         private RequestLocal m_itemColl = new RequestLocal() {
 
             @Override
@@ -164,21 +164,23 @@ public class ItemSearchFolderBrowser extends Table {
 
                 itemColl.addOrder("item.name");
                 itemColl.setRange(new Integer(m_paginator.getFirst(state)),
-                        new Integer(m_paginator.getLast(state) + 1));
+                                  new Integer(m_paginator.getLast(state) + 1));
 
                 return itemColl;
             }
         };
 
         public TableModel makeModel(Table t, PageState s) {
-            FolderSelectionModel sel = ((ItemSearchFolderBrowser) t).getFolderSelectionModel();
+            FolderSelectionModel sel = ((ItemSearchFolderBrowser) t).
+                    getFolderSelectionModel();
             Folder f = getCurrentFolder(s);
 
             if (s_log.isDebugEnabled()) {
                 if (null == f) {
                     s_log.debug("Selected folder is null");
                 } else {
-                    s_log.debug("Selected folder: " + f.getLabel() + " " + f.getOID().toString());
+                    s_log.debug("Selected folder: " + f.getLabel() + " " + f.
+                            getOID().toString());
                 }
             }
 
@@ -186,7 +188,8 @@ public class ItemSearchFolderBrowser extends Table {
                 return Table.EMPTY_MODEL;
             } else {
                 t.getRowSelectionModel().clearSelection(s);
-                return new FolderTableModel((Folder.ItemCollection) m_itemColl.get(s));
+                return new FolderTableModel((Folder.ItemCollection) m_itemColl.
+                        get(s));
             }
         }
 
@@ -199,7 +202,8 @@ public class ItemSearchFolderBrowser extends Table {
             }
 
             BigDecimal singleTypeID =
-                    (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+                       (BigDecimal) state.getValue(new BigDecimalParameter(
+                    ItemSearch.SINGLE_TYPE_PARAM));
 
             if (singleTypeID != null) {
 
@@ -210,27 +214,77 @@ public class ItemSearchFolderBrowser extends Table {
                 CompoundFilter or = ff.or();
 
                 // The content type must be either of the requested type
-                or.addFilter(ff.equals(ContentItem.CONTENT_TYPE + "." + ContentType.ID, singleTypeID));
+                or.addFilter(ff.equals(ContentItem.CONTENT_TYPE + "."
+                                       + ContentType.ID, singleTypeID));
 
                 // Or must be a sibling of the requested type
-                try {
-                    ContentType ct = new ContentType(singleTypeID);
-
-                    StringTokenizer strTok = new StringTokenizer(ct.getDescendants(), "/");
-                    while (strTok.hasMoreElements()) {
-                        or.addFilter(ff.equals(ContentItem.CONTENT_TYPE + "." + ContentType.ID, (String) strTok.nextElement()));
-                    }
+                /*
+                 * jensp 2011-11-14: The orginal code here was only traversing
+                 * one level, but ContentType hierarchies may have several 
+                 * levels. Therefore, this code was replaced by method which is 
+                 * called recursivly until the type with no descendents is 
+                 * reached.
+                 */
+                createSiblingFilter(or, ff, singleTypeID);
+                /*try {
+                ContentType ct = new ContentType(singleTypeID);
+                
+                StringTokenizer strTok = new StringTokenizer(ct.
+                getDescendants(), "/");
+                while (strTok.hasMoreElements()) {
+                or.addFilter(ff.equals(ContentItem.CONTENT_TYPE + "."
+                + ContentType.ID,
+                (String) strTok.nextElement()));
+                }
                 } catch (Exception ex) {
-                    // WTF? The selected content type does not exist in the table???
-                }                                
+                // WTF? The selected content type does not exist in the table???
+                s_log.error(String.format(
+                "Something is very wrong here, the ContentType '%s' "
+                + "seems not to exist. Ignoring for now, but please "
+                + "make your checks.",
+                singleTypeID.toString()),
+                ex);
+                }*/
 
                 itemColl.addFilter(or);
-                                
+
             }
-            
+
             itemColl.addOrder("isFolder desc");
             itemColl.addOrder("lower(item." + ContentItem.NAME + ") ");
             return itemColl;
+        }
+
+        private void createSiblingFilter(final CompoundFilter filter,
+                                         final FilterFactory filterFactory,
+                                         final BigDecimal typeId) {
+            final ContentType type = new ContentType(typeId);
+            if ((type.getDescendants() == null)
+                || type.getDescendants().trim().isEmpty()) {
+                return;
+            } else {
+                final String[] descendantsIds = type.getDescendants().split("/");
+
+                for (String descendantId : descendantsIds) {
+                    filter.addFilter(filterFactory.equals(String.format(
+                            ContentItem.CONTENT_TYPE + "." + ContentType.ID),
+                                                          descendantId));
+                    createSiblingFilter(filter, filterFactory, descendantId);
+                }
+            }
+        }
+
+        private void createSiblingFilter(final CompoundFilter filter,
+                                         final FilterFactory filterFactory,
+                                         final String typeId) {
+            try {
+                final BigDecimal _typeId = new BigDecimal(typeId);
+                createSiblingFilter(filter, filterFactory, _typeId);
+            } catch (NumberFormatException ex) {
+                s_log.error(String.format("Failed to parse typeId '%s'.",
+                                          typeId),
+                            ex);
+            }
         }
 
         public int getTotalSize(Paginator paginator, PageState state) {
@@ -251,7 +305,8 @@ public class ItemSearchFolderBrowser extends Table {
             int size = ((Integer) m_size.get(state)).intValue();
 
             return ItemSearchFolderBrowser.this.isVisible(state)
-                    && (size > ContentSection.getConfig().getFolderBrowseListSize());
+                   && (size
+                       > ContentSection.getConfig().getFolderBrowseListSize());
         }
     }
 
@@ -267,12 +322,13 @@ public class ItemSearchFolderBrowser extends Table {
 
         @Override
         public Component getComponent(Table table, PageState state,
-                Object value, boolean isSelected,
-                Object key, int row, int column) {
+                                      Object value, boolean isSelected,
+                                      Object key, int row, int column) {
             Folder.ItemCollection coll = (Folder.ItemCollection) value;
             String name = coll.getName();
             if (coll.isFolder()) {
-                return super.getComponent(table, state, name, isSelected, key, row, column);
+                return super.getComponent(table, state, name, isSelected, key,
+                                          row, column);
             } else {
                 ContentSection section = CMS.getContext().getContentSection();
                 BigDecimal id = (BigDecimal) key;
@@ -289,18 +345,23 @@ public class ItemSearchFolderBrowser extends Table {
                     SimpleContainer container = new SimpleContainer();
 
                     String widget =
-                            (String) state.getValue(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
-                    boolean useURL = "true".equals(state.getValue(new StringParameter(ItemSearchPopup.URL_PARAM)));
+                           (String) state.getValue(new StringParameter(
+                            ItemSearchPopup.WIDGET_PARAM));
+                    boolean useURL =
+                            "true".equals(state.getValue(new StringParameter(
+                            ItemSearchPopup.URL_PARAM)));
 
                     String fillString = useURL
-                            ? ItemSearchPopup.getItemURL(state.getRequest(),
-                            coll.getDomainObject().getOID())
-                            : id
-                            + " (" + name + ")";
+                                        ? ItemSearchPopup.getItemURL(state.
+                            getRequest(),
+                                                                     coll.
+                            getDomainObject().getOID())
+                                        : id
+                                          + " (" + name + ")";
 
                     Label js = new Label(generateJSLabel(id, widget,
-                            fillString),
-                            false);
+                                                         fillString),
+                                         false);
                     container.add(js);
 
                     String url = "#";
@@ -319,24 +380,27 @@ public class ItemSearchFolderBrowser extends Table {
         private String generateJSLabel(BigDecimal id, String widget, String fill) {
             StringBuilder buffer = new StringBuilder();
             buffer.append(" <script language=javascript> "
-                    + " <!-- \n"
-                    + " function fillItem"
-                    + id
-                    + "() { \n"
-                    + " window.opener.document."
-                    + widget + ".value=\"" + fill + "\";\n");
+                          + " <!-- \n"
+                          + " function fillItem"
+                          + id
+                          + "() { \n"
+                          + " window.opener.document."
+                          + widget + ".value=\"" + fill + "\";\n");
             // set protocol to 'other' in FCKEditor, else relative url prepended by http://
-            if (Bebop.getConfig().getDHTMLEditor().equals(BebopConstants.BEBOP_FCKEDITOR)) {
-                buffer.append(" if(window.opener.document.getElementById('cmbLinkProtocol')) {\n");
-                buffer.append("  window.opener.document.getElementById('cmbLinkProtocol').value=\"\";\n");
+            if (Bebop.getConfig().getDHTMLEditor().equals(
+                    BebopConstants.BEBOP_FCKEDITOR)) {
+                buffer.append(
+                        " if(window.opener.document.getElementById('cmbLinkProtocol')) {\n");
+                buffer.append(
+                        "  window.opener.document.getElementById('cmbLinkProtocol').value=\"\";\n");
                 buffer.append(" }\n");
             }
 
             buffer.append(" self.close(); \n"
-                    + " return false; \n"
-                    + " } \n"
-                    + " --> \n"
-                    + " </script> ");
+                          + " return false; \n"
+                          + " } \n"
+                          + " --> \n"
+                          + " </script> ");
 
             return buffer.toString();
         }
@@ -360,7 +424,7 @@ public class ItemSearchFolderBrowser extends Table {
             return 3;
         }
 
-        public boolean nextRow() {           
+        public boolean nextRow() {
             return m_itemColl != null ? m_itemColl.next() : false;
         }
 
@@ -373,15 +437,16 @@ public class ItemSearchFolderBrowser extends Table {
                 case TYPE:
                     return m_itemColl.getTypeLabel();
                 default:
-                    throw new IndexOutOfBoundsException("Column index " + columnIndex
-                            + " not in table model.");
+                    throw new IndexOutOfBoundsException("Column index "
+                                                        + columnIndex
+                                                        + " not in table model.");
             }
         }
 
         public Object getKeyAt(int columnIndex) {
             // Mark folders by using their negative ID (dirty, dirty)
             return (m_itemColl.isFolder()) ? m_itemColl.getID().negate()
-                    : m_itemColl.getID();
+                   : m_itemColl.getID();
         }
     }
 
