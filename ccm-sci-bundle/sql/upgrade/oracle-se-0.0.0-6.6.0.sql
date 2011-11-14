@@ -21,13 +21,6 @@
 -- Internal use at Bremen University only!
 -- Updates various university sites from als ccm-xxx-aplaws to scm-sci-bundle
 
-@@ default/6.6.0-6.6.1/ren_table_workspaces.sql
-@@ default/6.6.0-6.6.1/ren_table_workspace_pages.sql
-@@ default/6.6.0-6.6.1/ren_table_workspace_page_layouts.sql
-@@ default/6.6.0-6.6.1/ren_table_workspace_workspace_map.sql
-@@ default/6.6.0-6.6.1/ren_table_workspace_themes.sql
-@@ default/6.6.0-6.6.1/ren_table_themeapplications.sql
+@@ default/0.0.0-6.6.0/upd_system_tables.sql
+@@ default/0.0.0-6.6.0/upd_nav_templates_table.sql
 
-@@ default/6.6.0-6.6.1/add_constraints.sql
-
-@@ default/6.6.0-6.6.1/upd_system_tables.sql
