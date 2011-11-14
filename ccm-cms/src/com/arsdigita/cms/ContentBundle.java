@@ -388,11 +388,14 @@ public class ContentBundle extends ContentItem {
             instances.addEqualsFilter(LANGUAGE, language);
         } // Else, search also for language independent version
         else {
-
-            FilterFactory ff = instances.getFilterFactory();
+            /*FilterFactory ff = instances.getFilterFactory();
             instances.addFilter(
                     ff.or().addFilter(ff.equals(LANGUAGE, language)).
-                    addFilter(ff.equals(LANGUAGE, "--")));
+                    addFilter(ff.equals(LANGUAGE, "--")));*/
+            instances.addFilter(String.format("(%s = '%s' or %s = '--')",
+                                              LANGUAGE,
+                                              language,
+                                              LANGUAGE));
         }
 
         return !instances.isEmpty();
