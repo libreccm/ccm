@@ -23,6 +23,7 @@
     <ccm:directory name="pdl"/>
     -->
     <ccm:directory name="src"/>
+    <ccm:directory name="sql"/>
   </ccm:directories>
 
   <ccm:contacts>
