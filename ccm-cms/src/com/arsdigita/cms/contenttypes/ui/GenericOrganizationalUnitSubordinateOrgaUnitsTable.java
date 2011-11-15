@@ -295,6 +295,18 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
             final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
                                                                  orgaunit.
                     getSubordinateOrgaUnits();
+            if ((customizer.getAssocType() != null)
+                && !(customizer.getAssocType().isEmpty())) {
+                subOrgaUnits.addFilter(String.format(
+                        "link.assocType = '%s'",
+                        customizer.getAssocType()));
+            }
+            if ((customizer.getContentType() != null)
+                && !(customizer.getContentType().isEmpty())) {
+                subOrgaUnits.addFilter(String.format("objectType = '%s'",
+                                                             customizer.
+                        getContentType()));
+            }
 
             if ((subOrgaUnits.size() - 1) == row) {
                 final Label label = new Label("");

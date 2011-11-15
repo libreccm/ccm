@@ -21,7 +21,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPublicationsColle
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.developersupport.Comodifications;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 
@@ -221,8 +220,8 @@ public class GenericOrganizationalUnitPublicationsTable
         public void cellSelected(final TableActionEvent event) {
             final PageState state = event.getPageState();
 
-            final Publication publication = new Publication((BigDecimal) event.
-                    getRowKey());
+            final Publication publication = new Publication(new BigDecimal(event.
+                    getRowKey().toString()));
             final GenericOrganizationalUnit orgaunit =
                                             (GenericOrganizationalUnit) itemModel.
                     getSelectedObject(state);
