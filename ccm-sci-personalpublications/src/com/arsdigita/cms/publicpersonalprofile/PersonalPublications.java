@@ -8,7 +8,11 @@ import com.arsdigita.cms.contenttypes.ui.PublicationXmlHelper;
 import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
@@ -193,6 +197,18 @@ public class PersonalPublications implements ContentGenerator {
                                    final boolean addOrders) {
         query.addFilter(String.format("authorId = %s",
                                       person.getID().toString()));
+         /*if (Kernel.getConfig().languageIndependentItems()) {
+                FilterFactory ff = query.getFilterFactory();
+                Filter filter = ff.or().
+                        addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                        addFilter(ff.and().
+                            addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems")
+                                .set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                query.addFilter(filter);
+            } else {*/
+                query.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            //}
         if (addOrders) {
             final String[] orders = config.getOrder().split(",");
             for (String order : orders) {

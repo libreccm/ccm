@@ -234,8 +234,8 @@ public class PublicationXmlHelper {
         final ArticleInCollectedVolume article =
                                        (ArticleInCollectedVolume) publication;
 
-        generateXmlElement(publicationElem, "pageFrom", article.getPagesFrom());
-        generateXmlElement(publicationElem, "pageTo", article.getPagesTo());
+        generateXmlElement(publicationElem, "pagesFrom", article.getPagesFrom());
+        generateXmlElement(publicationElem, "pagesTo", article.getPagesTo());
         generateXmlElement(publicationElem, "chapter", article.getChapter());
         generateXmlElement(publicationElem, "reviewed", article.getReviewed());
         generateCollectedVolumeLinkXml(publicationElem, article);
@@ -261,8 +261,8 @@ public class PublicationXmlHelper {
 
         generateXmlElement(publicationElem, "volume", article.getVolume());
         generateXmlElement(publicationElem, "issue", article.getIssue());
-        generateXmlElement(publicationElem, "pageFrom", article.getPagesFrom());
-        generateXmlElement(publicationElem, "pageTo", article.getPagesTo());
+        generateXmlElement(publicationElem, "pagesFrom", article.getPagesFrom());
+        generateXmlElement(publicationElem, "pagesTo", article.getPagesTo());
         generateXmlElement(publicationElem, "reviewed", article.getReviewed());
 
         generateJournalLinkXml(publicationElem, article);
@@ -309,15 +309,15 @@ public class PublicationXmlHelper {
     private void generateGreyLiteratureXml(final Element publicationElem) {
         GreyLiterature grey = (GreyLiterature) publication;
 
-        generateXmlElement(publicationElem, "pageFrom", grey.getPagesFrom());
-        generateXmlElement(publicationElem, "pageTo", grey.getPagesTo());
+        generateXmlElement(publicationElem, "pagesFrom", grey.getPagesFrom());
+        generateXmlElement(publicationElem, "pagesTo", grey.getPagesTo());
     }
 
     private void generateInProceedingsXml(final Element publicationElem) {
         InProceedings inProceedings = (InProceedings) publication;
 
         generateXmlElement(publicationElem,
-                           "pageFrom",
+                           "pagesFrom",
                            inProceedings.getPagesFrom());
         generateXmlElement(publicationElem,
                            "pagesTo",

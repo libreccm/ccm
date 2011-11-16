@@ -11,12 +11,16 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSuperiorCollectio
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
@@ -95,14 +99,30 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
         if ((project.getBegin() != null) || (project.getEnd() != null)) {
             final Element lifeSpanElem = parent.newChildElement("lifeSpan");
-            final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
             if (project.getBegin() != null) {
-                lifeSpanElem.addAttribute("begin",
-                                          dateFormat.format(project.getBegin()));
+                final Element beginElem = lifeSpanElem.newChildElement("begin");
+                addDateAttributes(beginElem, project.getBegin());        
+                
+                final Element beginSkipMonthElem = lifeSpanElem.newChildElement(
+                        "beginSkipMonth");
+                beginSkipMonthElem.setText(project.getBeginSkipMonth().toString());
+                
+                final Element beginSkipDayElem = lifeSpanElem.newChildElement(
+                        "beginSkipDay");
+                beginSkipDayElem.setText(project.getBeginSkipDay().toString());
             }
-            if (project.getEnd() != null) {
-                lifeSpanElem.addAttribute("end",
-                                          dateFormat.format(project.getEnd()));
+            if (project.getEnd() != null) {                
+                final Element endElem = lifeSpanElem.newChildElement("end");
+                addDateAttributes(endElem, project.getEnd());
+                
+                final Element endSkipMonthElem = lifeSpanElem.newChildElement(
+                        "endSkipMonth");
+                endSkipMonthElem.setText(project.getEndSkipMonth().toString());
+                
+                final Element endSkipDayElem = lifeSpanElem.newChildElement(
+                        "endSkipDay");
+                endSkipDayElem.setText(project.getEndSkipDay().toString());
             }
         }
 
@@ -116,6 +136,41 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                    + "in %d ms",
                                    project.getName(),
                                    System.currentTimeMillis() - start));
+    }
+
+    private void addDateAttributes(final Element elem, final Date date) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        elem.addAttribute("year",
+                          Integer.toString(cal.get(
+                Calendar.YEAR)));
+        elem.addAttribute("month",
+                          Integer.toString(cal.get(
+                Calendar.MONTH) + 1));
+        elem.addAttribute("day",
+                          Integer.toString(cal.get(
+                Calendar.DAY_OF_MONTH)));
+        elem.addAttribute("hour",
+                          Integer.toString(cal.get(
+                Calendar.HOUR_OF_DAY)));
+        elem.addAttribute("minute",
+                          Integer.toString(cal.get(
+                Calendar.MINUTE)));
+        elem.addAttribute("second",
+                          Integer.toString(cal.get(
+                Calendar.SECOND)));
+
+        final Locale negLocale = GlobalizationHelper.getNegotiatedLocale();
+        final DateFormat dateFormat = DateFormat.getDateInstance(
+                DateFormat.MEDIUM, negLocale);
+        final DateFormat longDateFormat = DateFormat.getDateInstance(
+                DateFormat.LONG, negLocale);
+        final DateFormat timeFormat = DateFormat.getDateInstance(
+                DateFormat.SHORT, negLocale);
+        elem.addAttribute("date", dateFormat.format(date));
+        elem.addAttribute("longDate", longDateFormat.format(date));
+        elem.addAttribute("time", timeFormat.format(date));
     }
 
     protected void generateMembersXml(final SciProject project,

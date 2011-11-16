@@ -89,7 +89,11 @@ public class Paginator {
         logger.debug(String.format("Applying limits: %d, %d",
                                    getBegin(),
                                    getEnd()));
-        query.setRange(getBegin(), getEnd());
+        if (getBegin() == getEnd()) {
+            query.setRange(getBegin(), getEnd() + 1);
+        } else {
+            query.setRange(getBegin(), getEnd());
+        }
     }
 
     public int getPageCount() {

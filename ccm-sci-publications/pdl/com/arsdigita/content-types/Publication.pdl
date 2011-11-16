@@ -89,6 +89,7 @@ query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
     Integer year;
     String authorSurname;
     String authorGivenname;
+    String language;
 
     do {
         select cms_pages.item_id, 
@@ -97,7 +98,8 @@ query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
                cms_organizationalunits.organizationalunit_id, 
                ct_publications.year, 
                cms_persons.surname, 
-               cms_persons.givenname
+               cms_persons.givenname,
+               cms_items.language
         from cms_pages 
         join ct_publications on cms_pages.item_id = ct_publications.publication_id 
         join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
@@ -105,6 +107,7 @@ query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
         join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
         join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id
         join acs_objects on cms_pages.item_id = acs_objects.object_id
+        join cms_items on cms_items.item_id = cms_pages.item_id;
     } map {
         publicationId = cms_pages.item_id;
         objectType = acs_objects.object_type;
@@ -113,6 +116,7 @@ query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
         year = ct_publications.year;
         authorSurname = cms_persons.surname;
         authorGivenname = cms_persons.givenname;
+        language = cms_items.item_id;
     }
 }
 
@@ -126,6 +130,7 @@ query getIdsOfPublicationsForOrgaUnit {
     String title;
     Integer year;
     String authors;
+    String language;
 
     do {
         select cms_pages.item_id, 
@@ -133,22 +138,21 @@ query getIdsOfPublicationsForOrgaUnit {
                cms_pages.title, 
                cms_organizationalunits.organizationalunit_id, 
                ct_publications.year, 
-               (select array_to_string (array (select cms_persons.surname || ', ' || cms_persons.givenname 
-                from cms_persons
-                join ct_publications_authorship on cms_persons.person_id = ct_publications_authorship.person_id
-                where ct_publications_authorship.publication_id = cms_pages.item_id), '; ')) as authors
+               ct_publications.authors              
+               cms_items.language
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id 
         join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
-        join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id
+        join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id        
         join acs_objects on cms_pages.item_id = acs_objects.object_id
+        join cms_items on cms_pages.item_id = cms_items.item_id
     } map {
         publicationId = cms_pages.item_id;
         objectType = acs_objects.object_type;
         orgaunitId = cms_organizationalunits.organizationalunit_id;
         title = cms_pages.title;
-        year = ct_publications.year;
-        authors = authors;
+        year = ct_publications.year;        
+        authors = ct_publications.authors;
     }
 }
 
@@ -159,6 +163,7 @@ query getPublicationsForAuthor {
     String objectType;    
     String title;
     Integer year;   
+    String language;
     Boolean reviewed;
 
     do {
@@ -167,10 +172,12 @@ query getPublicationsForAuthor {
                cms_pages.title, 
                ct_publications_authorship.person_id, 
                ct_publications.year, 
+               cms_items.language,
                ct_publications.reviewed
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id
         join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
+        join cms_items on cms_pages.item_id = cms_items.item_id
         join acs_objects on cms_pages.item_id = acs_objects.object_id
     } map {    
         publicationId = cms_pages.item_id;
@@ -178,6 +185,7 @@ query getPublicationsForAuthor {
         authorId = ct_publications_authorship.person_id;
         title = cms_pages.title;
         year = ct_publications.year;        
+        language = ct_items.language;
         reviewed = ct_publications.reviewed;
     }
 }
@@ -190,6 +198,7 @@ query getPublicationsForAuthorWithAuthors {
     String title;
     Integer year;
     String authors;
+    String language;
     Boolean reviewed;
 
     do {
@@ -207,6 +216,7 @@ query getPublicationsForAuthorWithAuthors {
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id
         join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
+        join cms_items on cms_pages.item_id = cms_items.item_id
         join acs_objects on cms_pages.item_id = acs_objects.object_id
     } map {    
         publicationId = cms_pages.item_id;
@@ -215,6 +225,7 @@ query getPublicationsForAuthorWithAuthors {
         title = cms_pages.title;
         year = ct_publications.year;
         authors = ct_publications.authors;
+        language = ct_items.language;
         reviewed = ct_publications.reviewed;
     }
 }

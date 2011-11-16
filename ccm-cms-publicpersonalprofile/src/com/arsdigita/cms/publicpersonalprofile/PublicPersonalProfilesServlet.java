@@ -61,33 +61,33 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
     private static final long serialVersionUID = -1495852395804455609L;
     private static final Logger logger =
-            Logger.getLogger(
+                                Logger.getLogger(
             PublicPersonalProfilesServlet.class);
     private static final String ADMIN = "admin";
     private static final String PREVIEW = "preview";
     private static final String PPP_NS =
-            "http://www.arsdigita.com/PublicPersonalProfile/1.0";
+                                "http://www.arsdigita.com/PublicPersonalProfile/1.0";
     public static final String SELECTED_NAV_ITEM = "selectedNavItem";
     private final PublicPersonalProfileConfig config =
-            PublicPersonalProfiles.getConfig();
+                                              PublicPersonalProfiles.getConfig();
 
     @Override
     protected void doService(final HttpServletRequest request,
-            final HttpServletResponse response,
-            final Application app) throws ServletException,
-            IOException {
+                             final HttpServletResponse response,
+                             final Application app) throws ServletException,
+                                                           IOException {
         String path = "";
 
         logger.debug("PublicPersonalProfileServlet is starting...");
         logger.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
 
         logger.debug("Extracting path from pathInfo by removing leading and "
-                + "trailing slashes...");
+                     + "trailing slashes...");
         if (request.getPathInfo() != null) {
             if ("/".equals(request.getPathInfo())) {
                 path = "";
             } else if (request.getPathInfo().startsWith("/")
-                    && request.getPathInfo().endsWith("/")) {
+                       && request.getPathInfo().endsWith("/")) {
                 path = request.getPathInfo().substring(1, request.getPathInfo().
                         length() - 1);
             } else if (request.getPathInfo().startsWith("/")) {
@@ -119,7 +119,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
 
             page = PageFactory.buildPage("PublicPersonalProfile",
-                    "");
+                                         "");
 
             if (pathTokens.length < 1) {
                 //ToDo: Fehlerbehandlung?
@@ -150,6 +150,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     }
                 }
 
+                if (preview) {
+                    page.addRequestListener(
+                            new ApplicationAuthenticationListener());
+                }
+
                 page.lock();
 
                 Document document = page.buildDocument(request, response);
@@ -158,16 +163,16 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 final Session session = SessionManager.getSession();
 
                 DataCollection profiles =
-                        session.retrieve(
+                               session.retrieve(
                         com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
                 profiles.addFilter(String.format("profileUrl = '%s'",
-                        profileOwner));
+                                                 profileOwner));
                 if (preview) {
                     profiles.addFilter(String.format("version = '%s'",
-                            ContentItem.DRAFT));
+                                                     ContentItem.DRAFT));
                 } else {
                     profiles.addFilter(String.format("version = '%s'",
-                            ContentItem.LIVE));
+                                                     ContentItem.LIVE));
                 }
 
                 if (profiles.size() == 0) {
@@ -178,17 +183,18 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             "More than one matching members found...");
                 } else {
                     final PageState state = new PageState(page,
-                            request,
-                            response);
+                                                          request,
+                                                          response);
 
                     profiles.next();
                     PublicPersonalProfile profile =
-                            (PublicPersonalProfile) DomainObjectFactory.newInstance(profiles.getDataObject());
+                                          (PublicPersonalProfile) DomainObjectFactory.
+                            newInstance(profiles.getDataObject());
                     profiles.close();
 
                     if (config.getEmbedded()) {
                         final ContentSection section =
-                                profile.getContentSection();
+                                             profile.getContentSection();
                         final ItemResolver resolver = section.getItemResolver();
 
                         String context;
@@ -198,10 +204,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             context = ContentItem.LIVE;
                         }
 
-                        final String url = String.format("/ccm%s", resolver.generateItemURL(state,
-                                profile,
-                                section,
-                                context));
+                        final String url = String.format("/ccm%s", resolver.
+                                generateItemURL(state,
+                                                profile,
+                                                section,
+                                                context));
 
                         throw new RedirectSignal(url, false);
                     }
@@ -217,98 +224,117 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             "ppp:ownerName", PPP_NS);
                     profileOwnerName.setText(owner.getFullName());
 
-                    final DataCollection images = ItemImageAttachment.getImageAttachments(profile);
+                    final DataCollection images = ItemImageAttachment.
+                            getImageAttachments(profile);
                     if (!images.isEmpty()) {
                         images.next();
-                        final Element profileImageElem = profileElem.newChildElement("ppp:profileImage",
-                                PPP_NS);
+                        final Element profileImageElem = profileElem.
+                                newChildElement("ppp:profileImage",
+                                                PPP_NS);
 
-                        final Element attachmentElem = profileImageElem.newChildElement("imageAttachments");
-                        final ItemImageAttachment attachment = new ItemImageAttachment(images.getDataObject());
-                        attachmentElem.addAttribute("oid", attachment.getOID().toString());
-                        final Element caption = attachmentElem.newChildElement("caption");
+                        final Element attachmentElem = profileImageElem.
+                                newChildElement("imageAttachments");
+                        final ItemImageAttachment attachment =
+                                                  new ItemImageAttachment(images.
+                                getDataObject());
+                        attachmentElem.addAttribute("oid", attachment.getOID().
+                                toString());
+                        final Element caption = attachmentElem.newChildElement(
+                                "caption");
                         caption.setText(attachment.getCaption());
                         final ReusableImageAsset image = attachment.getImage();
-                        final Element imageElem = attachmentElem.newChildElement("image");
+                        final Element imageElem =
+                                      attachmentElem.newChildElement("image");
                         imageElem.addAttribute("oid", image.getOID().toString());
-                        final Element widthElem = imageElem.newChildElement("width");
+                        final Element widthElem = imageElem.newChildElement(
+                                "width");
                         widthElem.setText(image.getWidth().toString());
-                        final Element heightElem = imageElem.newChildElement("height");
+                        final Element heightElem = imageElem.newChildElement(
+                                "height");
                         heightElem.setText(image.getHeight().toString());
-                        final Element descElem = imageElem.newChildElement("description");
+                        final Element descElem = imageElem.newChildElement(
+                                "description");
                         descElem.setText(image.getDescription());
-                        final Element nameElem = imageElem.newChildElement("name");
+                        final Element nameElem = imageElem.newChildElement(
+                                "name");
                         nameElem.setText(image.getName());
                         final Element idElem = imageElem.newChildElement("id");
                         idElem.setText(image.getID().toString());
-                        final Element displayNameElem = imageElem.newChildElement("displayName");
+                        final Element displayNameElem = imageElem.
+                                newChildElement("displayName");
                         displayNameElem.setText(image.getDisplayName());
 
                         images.close();
                     }
 
                     final PublicPersonalProfileXmlUtil util =
-                            new PublicPersonalProfileXmlUtil();
+                                                       new PublicPersonalProfileXmlUtil();
                     String prefix =
-                            DispatcherHelper.getDispatcherPrefix(request);
+                           DispatcherHelper.getDispatcherPrefix(request);
                     if (prefix == null) {
                         prefix = "";
                     }
                     util.createNavigation(profile,
-                            root,
-                            navPath,
-                            prefix,
-                            app.getPath(),
-                            preview);
+                                          root,
+                                          navPath,
+                                          prefix,
+                                          app.getPath(),
+                                          preview);
 
                     if (navPath == null) {
                         final PublicPersonalProfileXmlGenerator generator =
-                                new PublicPersonalProfileXmlGenerator(
+                                                                new PublicPersonalProfileXmlGenerator(
                                 profile);
                         generator.generateXML(state, root, "");
 
                     } else {
                         if (itemPath == null) {
                             final DataCollection links =
-                                    RelatedLink.getRelatedLinks(profile,
-                                    PublicPersonalProfile.LINK_LIST_NAME);
+                                                 RelatedLink.getRelatedLinks(
+                                    profile,
+                                                                             PublicPersonalProfile.LINK_LIST_NAME);
                             links.addFilter(String.format("linkTitle = '%s'",
-                                    navPath));
+                                                          navPath));
 
                             if (links.size() == 0) {
-                                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                                response.setStatus(
+                                        HttpServletResponse.SC_NOT_FOUND);
                                 return;
                             } else {
                                 if (config.getShowPersonInfoEverywhere()) {
                                     generateProfileOwnerXml(profileElem, owner,
-                                            state);
+                                                            state);
                                 }
 
                                 PublicPersonalProfileNavItemCollection navItems =
-                                        new PublicPersonalProfileNavItemCollection();
-                                navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+                                                                       new PublicPersonalProfileNavItemCollection();
+                                navItems.addLanguageFilter(GlobalizationHelper.
+                                        getNegotiatedLocale().
                                         getLanguage());
                                 navItems.addKeyFilter(navPath);
                                 navItems.next();
 
                                 if (navItems.getNavItem().getGeneratorClass()
-                                        != null) {
+                                    != null) {
                                     try {
                                         Object generatorObj =
-                                                Class.forName(navItems.getNavItem().
-                                                getGeneratorClass()).getConstructor().
+                                               Class.forName(navItems.getNavItem().
+                                                getGeneratorClass()).
+                                                getConstructor().
                                                 newInstance();
 
                                         if (generatorObj instanceof ContentGenerator) {
                                             final ContentGenerator generator =
-                                                    (ContentGenerator) generatorObj;
+                                                                   (ContentGenerator) generatorObj;
 
-                                            generator.generateContent(profileElem,
-                                                    owner,
-                                                    state);
+                                            generator.generateContent(
+                                                    profileElem,
+                                                                      owner,
+                                                                      state);
 
                                         } else {
-                                            throw new ServletException(String.format(
+                                            throw new ServletException(String.
+                                                    format(
                                                     "Class '%s' is not a ContentGenerator.",
                                                     navItems.getNavItem().
                                                     getGeneratorClass()));
@@ -337,15 +363,17 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                                     links.next();
                                     final RelatedLink link =
-                                            (RelatedLink) DomainObjectFactory.newInstance(links.getDataObject());
+                                                      (RelatedLink) DomainObjectFactory.
+                                            newInstance(links.getDataObject());
                                     links.close();
-                                    final ContentItem item = link.getTargetItem();
+                                    final ContentItem item =
+                                                      link.getTargetItem();
                                     final PublicPersonalProfileXmlGenerator generator =
-                                            new PublicPersonalProfileXmlGenerator(
+                                                                            new PublicPersonalProfileXmlGenerator(
                                             item);
                                     generator.generateXML(state,
-                                            root,
-                                            "");
+                                                          root,
+                                                          "");
                                 }
 
                                 navItems.close();
@@ -353,15 +381,17 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                         } else {
                             if (config.getShowPersonInfoEverywhere()) {
                                 generateProfileOwnerXml(profileElem, owner,
-                                        state);
+                                                        state);
                             }
 
                             final OID itemOid = OID.valueOf(itemPath);
                             try {
-                                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(itemOid);
+                                final ContentItem item =
+                                                  (ContentItem) DomainObjectFactory.
+                                        newInstance(itemOid);
 
                                 final PublicPersonalProfileXmlGenerator generator =
-                                        new PublicPersonalProfileXmlGenerator(
+                                                                        new PublicPersonalProfileXmlGenerator(
                                         item);
                                 generator.generateXML(state, root, "");
 
@@ -369,8 +399,9 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                 logger.error(String.format(
                                         "Item '%s' not found: ",
                                         itemPath),
-                                        ex);
-                                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                                             ex);
+                                response.setStatus(
+                                        HttpServletResponse.SC_NOT_FOUND);
                                 return;
                             }
 
@@ -378,7 +409,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     }
                 }
 
-                PresentationManager presentationManager = Templating.getPresentationManager();
+                PresentationManager presentationManager = Templating.
+                        getPresentationManager();
                 presentationManager.servePage(document, request, response);
             }
 
@@ -387,29 +419,29 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     }
 
     private void generateProfileOwnerXml(final Element profileElem,
-            final GenericPerson owner,
-            final PageState state) {
+                                         final GenericPerson owner,
+                                         final PageState state) {
         Element profileOwnerElem = profileElem.newChildElement(
                 "profileOwner");
         if ((owner.getSurname() != null)
-                && !owner.getSurname().trim().isEmpty()) {
+            && !owner.getSurname().trim().isEmpty()) {
             Element surname =
                     profileOwnerElem.newChildElement("surname");
             surname.setText(owner.getSurname());
         }
         if ((owner.getGivenName() != null)
-                && !owner.getGivenName().trim().isEmpty()) {
+            && !owner.getGivenName().trim().isEmpty()) {
             Element givenName = profileOwnerElem.newChildElement(
                     "givenName");
             givenName.setText(owner.getGivenName());
         }
         if ((owner.getTitlePre() != null)
-                && !owner.getTitlePre().trim().isEmpty()) {
+            && !owner.getTitlePre().trim().isEmpty()) {
             Element titlePre = profileOwnerElem.newChildElement("titlePre");
             titlePre.setText(owner.getTitlePre());
         }
         if ((owner.getTitlePost() != null)
-                && !owner.getTitlePost().trim().isEmpty()) {
+            && !owner.getTitlePost().trim().isEmpty()) {
             Element titlePost = profileOwnerElem.newChildElement(
                     "titlePost");
             titlePost.setText(owner.getTitlePost());
@@ -421,8 +453,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             if (contacts.size() > 0) {
                 contacts.next();
                 generateContactXml(profileOwnerElem,
-                        contacts.getContact(),
-                        state);
+                                   contacts.getContact(),
+                                   state);
             }
         }
 
@@ -441,13 +473,13 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     }
 
     private void generateContactXml(final Element profileOwnerElem,
-            final GenericContact contact,
-            final PageState state) {
+                                    final GenericContact contact,
+                                    final PageState state) {
         final Element contactElem = profileOwnerElem.newChildElement("contact");
         final Element entriesElem = contactElem.newChildElement("entries");
 
         final GenericContactEntryCollection entries =
-                contact.getContactEntries();
+                                            contact.getContactEntries();
         Element entryElem;
         GenericContactEntry entry;
         while (entries.next()) {
@@ -483,8 +515,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     }
 
     private void showAdminPage(final Page page,
-            final HttpServletRequest request,
-            final HttpServletResponse response)
+                               final HttpServletRequest request,
+                               final HttpServletResponse response)
             throws ServletException {
 
         page.addRequestListener(new ApplicationAuthenticationListener());
@@ -496,7 +528,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final StringParameter navItemKeyParam = new StringParameter(
                 "selectedNavItem");
         final ParameterSingleSelectionModel navItemSelect =
-                new ParameterSingleSelectionModel(
+                                            new ParameterSingleSelectionModel(
                 navItemKeyParam);
 
         page.addGlobalStateParam(navItemKeyParam);
@@ -505,10 +537,10 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final FormSection tableSection = new FormSection(box);
 
         final PublicPersonalProfileNavItemsAddForm addForm =
-                new PublicPersonalProfileNavItemsAddForm(
+                                                   new PublicPersonalProfileNavItemsAddForm(
                 navItemSelect);
         final PublicPersonalProfileNavItemsTable table =
-                new PublicPersonalProfileNavItemsTable(
+                                                 new PublicPersonalProfileNavItemsTable(
                 navItemSelect);
 
         box.add(table);
@@ -521,7 +553,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
         final Document document = page.buildDocument(request, response);
 
-        final PresentationManager presentationManager = Templating.getPresentationManager();
+        final PresentationManager presentationManager = Templating.
+                getPresentationManager();
         presentationManager.servePage(document, request, response);
 
     }
