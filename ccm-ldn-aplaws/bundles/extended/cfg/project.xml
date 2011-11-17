@@ -6,9 +6,9 @@
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
                ccmVersion="6.1" 
                name="aplaws" 
-               prettyName="APLAWS plus" 
-               version="1-1-5" 
-               release="extended"
+               prettyName="APLAWS plus Extended Spin" 
+               version="2-0-0" 
+               release="ext-beta-1-r2240"
                webxml="web.xml-aplaws" 
                webapp="ROOT" 
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -21,7 +21,6 @@
         <!--  Content assets   -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
         <ccm:application name="ccm-cms-assets-imagestep"/>
-        <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
         <!--  Content types   -->
@@ -37,13 +36,10 @@
         <ccm:application name="ccm-cms-types-formsectionitem"/>
         <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-htmlform"/>
-        <ccm:application name="ccm-cms-types-image"/>
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
         <ccm:application name="ccm-cms-types-minutes"/>
-        <!-- Without any useful known function                 -->
-<!--    <ccm:application name="ccm-cms-types-motditem"/>       -->
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-organization"/>
@@ -54,6 +50,12 @@
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 
         <!--  Applications   -->
+        <ccm:application name="ccm-forum"/>     
+        <ccm:application name="ccm-navigation"/>
+        <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-themedirector"/>
+
+        <!--  ldn extensions (LAW functionality)   -->
         <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-atoz"/>
         <ccm:application name="ccm-ldn-dublin"/>
@@ -67,28 +69,31 @@
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
-        <!--  Extra apps   -->
+  </ccm:build>
+
+        <!--  Addon Packages    -->
+
         <!-- Authentification against a Windows domain         -->
 <!--    <ccm:application name="ccm-auth-http"/>                -->
         <!-- Completely untested                               -->
 <!--    <ccm:application name="ccm-bookmarks"/>                -->
        <!-- Currently doesn't work                             -->
 <!--    <ccm:application name="ccm-docmngr"/>                  -->
-        <ccm:application name="ccm-docrepo"/>
-        <ccm:application name="ccm-faq"/>
+<!--    <ccm:application name="ccm-docrepo"/>                  -->
+<!--    <ccm:application name="ccm-faq"/>                      -->
         <!-- Without any useful known function                 -->
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>          -->
-        <ccm:application name="ccm-forum"/>     
-        <ccm:application name="ccm-forum-categorised"/>     
-        <ccm:application name="ccm-navigation"/>
-        <ccm:application name="ccm-portalserver"/>
-        <ccm:application name="ccm-portalworkspace"/>
+<!--    <ccm:application name="ccm-forum-categorised"/>        -->
+<!--    <ccm:application name="ccm-cms-types-image"/>          -->
+<!--    <ccm:application name="ccm-cms-assets-notes"/>         -->
+        <!-- Without any useful known function                 -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/>       -->
+<!--    <ccm:application name="ccm-portalserver"/>             -->
         <!-- Completely untested                               -->
 <!--    <ccm:application name="ccm-portlet"/>                  -->
 <!--    <ccm:application name="ccm-portlet-helloworld"/>       -->
        <!-- Currently doesn't work                             -->
 <!--    <ccm:application name="ccm-simplesurvey"/>             -->
-        <ccm:application name="ccm-themedirector"/>
         <!-- Without any useful known function                 -->
 <!--    <ccm:application name="ccm-user-preferences"/>         -->
         <!-- Completely untested                               -->
@@ -99,6 +104,4 @@
      contain java code to be compiled!
         <ccm:application name="tools"/>           -->
 
-
-  </ccm:build>
 </ccm:project>
