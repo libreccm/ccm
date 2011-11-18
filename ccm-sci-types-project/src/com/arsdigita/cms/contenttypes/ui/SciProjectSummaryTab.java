@@ -17,7 +17,6 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -214,6 +213,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             while (personsQuery.next()) {
                 generateMemberXml((BigDecimal) personsQuery.get("memberId"),
                                   membersElem,
+                                  (String) personsQuery.get("roleName"),
                                   state);
             }
         } else {
@@ -224,7 +224,10 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             members.addOrder("givenname");
 
             while (members.next()) {
-                generateMemberXml(members.getPerson(), membersElem, state);
+                generateMemberXml(members.getPerson(), 
+                                  membersElem, 
+                                  members.getRoleName(), 
+                                  state);
             }
         }
 
@@ -237,6 +240,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
     protected void generateMemberXml(final BigDecimal memberId,
                                      final Element parent,
+                                     final String role,
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final GenericPerson member = new GenericPerson(memberId);
@@ -244,15 +248,18 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                    + "in %d ms.",
                                    member.getFullName(),
                                    System.currentTimeMillis() - start));
-        generateMemberXml(member, parent, state);
+        generateMemberXml(member, parent, role, state);
     }
 
     protected void generateMemberXml(final GenericPerson member,
                                      final Element parent,
+                                     final String role,
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
         generator.setUseExtraXml(false);
+        generator.setItemElemName("member", "");
+        generator.addItemAttribute("role", role);
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for member '%s' in %d ms.",
                                    member.getFullName(),
@@ -287,6 +294,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(contact);
         generator.setUseExtraXml(false);
+        generator.setItemElemName("contact", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for contact '%s' in %d ms.",
                                    contact.getName(),

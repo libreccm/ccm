@@ -61,9 +61,7 @@ public class PersonalPublicationsConfig extends AbstractConfig {
      * be used here.
      */
     private final Parameter defaultGroup;
-    
     private final Parameter pageSize;
-    
     private final Parameter order;
 
     public PersonalPublicationsConfig() {
@@ -73,8 +71,8 @@ public class PersonalPublicationsConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 "monographs:com.arsdigita.cms.contenttypes.Monograph;"
                 + "collectedVolumeArticles:com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;"
-                + "journalArticles:com.arsdigita.cms.contenttypes.ArticleInJournal;"
                 + "journalArticlesReviewed:com.arsdigita.cms.contenttypes.ArticleInJournal_reviewed;"
+                + "journalArticles:com.arsdigita.cms.contenttypes.ArticleInJournal_notreviewed;"
                 + "collectedVolumes:com.arsdigita.cms.contenttypes.CollectedVolume");
 
         groupSplit = new IntegerParameter(
@@ -82,21 +80,22 @@ public class PersonalPublicationsConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 12);
 
-        defaultGroup = new StringParameter(
+        defaultGroup =
+        new StringParameter(
                 "com.arsdigita.cms.publicpersonalprofile.publications.defaultGroup",
                 Parameter.REQUIRED,
                 "monographs,journalArticlesReviewed,journalArticles,misc");
-        
+
         pageSize = new IntegerParameter(
-                "com.arsdigita.cms.publicpersonlprofile.publications.pageSize", 
-                Parameter.REQUIRED, 
+                "com.arsdigita.cms.publicpersonlprofile.publications.pageSize",
+                Parameter.REQUIRED,
                 10);
-        
+
         order = new StringParameter(
-                "com.arsdigita.cms.publicpersonlprofile.publications.order", 
-                Parameter.REQUIRED, 
+                "com.arsdigita.cms.publicpersonlprofile.publications.order",
+                Parameter.REQUIRED,
                 "year,title");
-               
+
         register(publicationGroups);
         register(groupSplit);
         register(defaultGroup);
@@ -113,15 +112,15 @@ public class PersonalPublicationsConfig extends AbstractConfig {
     public final Integer getGroupSplit() {
         return (Integer) get(groupSplit);
     }
-    
+
     public final String getDefaultGroup() {
         return (String) get(defaultGroup);
     }
-    
+
     public final Integer getPageSize() {
         return (Integer) get(pageSize);
     }
-    
+
     public final String getOrder() {
         return (String) get(order);
     }

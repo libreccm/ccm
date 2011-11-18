@@ -121,7 +121,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         heads.addOrder("givenname");
 
         while (heads.next()) {
-            generateMemberXml(heads.getPerson(), headsElem, state);
+            generateHeadXml(heads.getPerson(), headsElem, state);
         }
 
         logger.debug(String.format("Generated head of department XML for department '%s' "
@@ -139,7 +139,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                                              department.
                 getSubordinateOrgaUnits();
         subDepartments.addFilter(
-                String.format("%s = '%s",
+                String.format("%s = '%s'",
                               GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE,
                               SciDepartmentSubDepartmentsStep.ASSOC_TYPE));
 
@@ -187,7 +187,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                    System.currentTimeMillis() - start));
     }
 
-    protected void generateMemberXml(final BigDecimal memberId,
+    protected void generateHeadXml(final BigDecimal memberId,
                                      final Element parent,
                                      final PageState state) {
         final long start = System.currentTimeMillis();
@@ -196,15 +196,16 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                    + "in %d ms.",
                                    member.getFullName(),
                                    System.currentTimeMillis() - start));
-        generateMemberXml(member, parent, state);
+        generateHeadXml(member, parent, state);
     }
 
-    protected void generateMemberXml(final GenericPerson member,
+    protected void generateHeadXml(final GenericPerson member,
                                      final Element parent,
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
         generator.setUseExtraXml(false);
+        generator.setItemElemName("head", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for member '%s' in %d ms.",
                                    member.getFullName(),

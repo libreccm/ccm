@@ -161,11 +161,23 @@ query getIdsOfMembersOfOrgaUnits {
     String givenname;
     String roleName;
     String status;
+    
+    options {
+            WRAP_QUERIES = false;
+    }
 
-    do {
-        select distinct on (cms_persons.person_id) cms_persons.person_id, cms_persons.surname, cms_persons.givenname, cms_organizationalunits_person_map.organizationalunit_id, cms_organizationalunits_person_map.role_name, cms_organizationalunits_person_map.status
+    do {        
+        select distinct on (cms_persons.person_id) 
+                                                   cms_persons.person_id, 
+                                                   cms_persons.surname, 
+                                                   cms_persons.givenname, 
+                                                   cms_organizationalunits_person_map.organizationalunit_id, 
+                                                   cms_organizationalunits_person_map.role_name, 
+                                                   cms_organizationalunits_person_map.status
         from cms_persons 
-        join cms_organizationalunits_person_map on cms_persons.person_id = cms_organizationalunits_person_map.person_id       
+        join cms_organizationalunits_person_map on cms_persons.person_id = cms_organizationalunits_person_map.person_id
+        where cms_organizationalunits_person_map.organizationalunit_id in :orgaunitIds
+        
     } map {
         memberId = cms_persons.person_id;
         orgaunitId = cms_organizationalunits_person_map.organizationalunit_id;
@@ -175,3 +187,4 @@ query getIdsOfMembersOfOrgaUnits {
         status = cms_organizationalunits_person_map.status;        
     }
 }
+//select distinct on (cms_persons.person_id) 

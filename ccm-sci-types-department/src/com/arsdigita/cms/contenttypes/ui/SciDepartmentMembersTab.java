@@ -3,7 +3,6 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.ui.panels.CompareFilter;
@@ -14,6 +13,9 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -24,14 +26,15 @@ import org.apache.log4j.Logger;
  */
 public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
-    private final Logger logger = Logger.getLogger(SciDepartmentMembersTab.class);
+    private final Logger logger =
+                         Logger.getLogger(SciDepartmentMembersTab.class);
     private static final SciDepartmentMembersTabConfig config =
-                                                      new SciDepartmentMembersTabConfig();
+                                                       new SciDepartmentMembersTabConfig();
     private static final String STATUS_PARAM = "memberStatus";
     private static final String SURNAME_PARAM = "memberSurname";
     private final CompareFilter statusFilter = new CompareFilter(
             STATUS_PARAM,
-            GenericOrganizationalUnitPersonCollection.LINK_STATUS,
+            "status",
             false,
             false,
             false);
@@ -79,12 +82,24 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
         final Element filtersElem = depMembersElem.newChildElement("filters");
 
+        statusFilter.generateXml(filtersElem);
+
+        if (persons.isEmpty()) {
+            if ((surnameFilter != null)
+                && (surnameFilter.getFilter() != null)
+                && !(surnameFilter.getFilter().trim().isEmpty())) {
+                surnameFilter.generateXml(filtersElem);
+            }
+            depMembersElem.newChildElement("noMembers");
+            return;
+        }
+
         final Paginator paginator = new Paginator(request,
                                                   (int) persons.size(),
                                                   config.getPageSize());
 
-        statusFilter.generateXml(filtersElem);
-        if (paginator.getPageCount() > config.getEnableSearchLimit()) {
+        if ((paginator.getPageCount() > config.getEnableSearchLimit())
+            || !(surnameFilter.getFilter().trim().isEmpty())) {
             surnameFilter.generateXml(filtersElem);
         }
 
@@ -118,6 +133,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                 retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
         final StringBuffer personsFilter = new StringBuffer();
+        final List<String> orgaUnitIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
             final DataQuery subDepartmentsQuery =
@@ -135,13 +151,17 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                 personsFilter.append(String.format("orgaunitId = %s",
                                                    subDepartmentsQuery.get(
                         "orgaunitId").toString()));
+                orgaUnitIds.add(subDepartmentsQuery.get(
+                        "orgaunitId").toString());
             }
         } else {
             personsFilter.append(String.format("orgaunitId = %s",
                                                orgaunit.getID().toString()));
+            orgaUnitIds.add(orgaunit.getID().toString());
         }
-
-        personsQuery.addFilter(personsFilter.toString());
+               
+        //personsQuery.addFilter(personsFilter.toString());        
+        personsQuery.setParameter("orgaunitIds", orgaUnitIds);
 
         personsQuery.addOrder(GenericPerson.SURNAME);
         personsQuery.addOrder(GenericPerson.GIVENNAME);
@@ -162,7 +182,10 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             statusFilter.setValue(statusValue);
         }
 
-        persons.addFilter(statusFilter.getFilter());
+        String filter = statusFilter.getFilter();
+        if ((filter != null) && !(filter.trim().isEmpty())) {
+            persons.addFilter(statusFilter.getFilter());
+        }
     }
 
     private void applySurnameFilter(final DataQuery persons,
@@ -172,7 +195,10 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             surnameFilter.setValue(surnameValue);
         }
 
-        persons.addFilter(surnameFilter.getFilter());
+        final String filter = surnameFilter.getFilter();
+        if ((filter != null) && !(filter.trim().isEmpty())) {
+            persons.addFilter(filter);
+        }
     }
 
     protected void generateMemberXml(final BigDecimal memberId,
@@ -193,6 +219,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
         generator.setUseExtraXml(false);
+        generator.setItemElemName("member", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for member '%s' in %d ms.",
                                    member.getFullName(),

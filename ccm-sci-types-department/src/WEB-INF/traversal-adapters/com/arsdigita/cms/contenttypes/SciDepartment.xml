@@ -10,10 +10,10 @@
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/departmentDescription"/>
             </xrd:attributes>
-            <xrd:associations rule="include">
+            <!--<xrd:associations rule="include">
                 <xrd:property name="/object/contacts"/>
                 <xrd:property name="/object/persons"/>
-            </xrd:associations>
+            </xrd:associations>-->
         </xrd:adapter>
     </xrd:context>
     

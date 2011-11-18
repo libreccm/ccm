@@ -42,14 +42,16 @@ public class SciDepartmentDescTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final Desc desc = getData(orgaunit);
 
+        final Element descTabElem = parent.newChildElement("departmentDescription");
+        
         if ((desc.getShortDesc() != null)
             && !desc.getShortDesc().trim().isEmpty()) {
-            final Element shortDescElem = parent.newChildElement(
+            final Element shortDescElem = descTabElem.newChildElement(
                     "shortDescription");
             shortDescElem.setText(desc.getShortDesc());
         }
 
-        final Element descElem = parent.newChildElement("description");
+        final Element descElem = descTabElem.newChildElement("description");
         descElem.setText(desc.getDesc());
 
         logger.debug(String.format("Generated XML for description tab of "

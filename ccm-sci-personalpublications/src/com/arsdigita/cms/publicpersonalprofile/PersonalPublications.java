@@ -251,7 +251,7 @@ public class PersonalPublications implements ContentGenerator {
         if (typeToken.endsWith("_reviewed")) {
             return String.format("(objectType = '%s' and reviewed = 'true')",
                                  typeToken.substring(0, typeToken.length() - 9));
-        } else if (typeToken.endsWith("notreviewed")) {
+        } else if (typeToken.endsWith("_notreviewed")) {
             return String.format(
                     "(objectType = '%s' and (reviewed = 'false' or reviewed is null))",
                     typeToken.substring(0, typeToken.length() - 12));

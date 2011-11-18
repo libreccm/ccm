@@ -144,8 +144,14 @@ public class GenericOrganizationalUnitContactAddForm
             if (selectedContact == null) {
                 GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
-                contact = (GenericContact) contact.getContentBundle().
-                        getInstance(orgaunit.getLanguage());
+                if (orgaunit.getLanguage().equals(
+                        GlobalizationHelper.LANG_INDEPENDENT)) {
+                    contact = (GenericContact) contact.getContentBundle().
+                            getPrimaryInstance();
+                } else {
+                    contact = (GenericContact) contact.getContentBundle().
+                            getInstance(orgaunit.getLanguage());
+                }
 
                 orgaunit.addContact(contact,
                                     (String) data.get(
@@ -203,18 +209,29 @@ public class GenericOrganizationalUnitContactAddForm
 
             GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
-            if (!(contact.getContentBundle().hasInstance(orgaunit.getLanguage(),
-                                                         Kernel.getConfig().
-                  languageIndependentItems()))) {
-                data.addError(
-                        ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.genericorgaunit.select_contact.no_suitable_language_variant"));
+            if (!(orgaunit.getLanguage().equals(
+                  GlobalizationHelper.LANG_INDEPENDENT))) {
+                if (!(contact.getContentBundle().hasInstance(orgaunit.
+                      getLanguage(),
+                                                             Kernel.getConfig().
+                      languageIndependentItems()))) {
+                    data.addError(
+                            ContenttypesGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.genericorgaunit.select_contact.no_suitable_language_variant"));
 
-                return;
+                    return;
+                }
             }
 
-            contact = (GenericContact) contact.getContentBundle().getInstance(orgaunit.
-                    getLanguage());
+
+            if (orgaunit.getLanguage().equals(
+                    GlobalizationHelper.LANG_INDEPENDENT)) {
+                contact = (GenericContact) contact.getContentBundle().
+                        getPrimaryInstance();
+            } else {
+                contact = (GenericContact) contact.getContentBundle().
+                        getInstance(orgaunit.getLanguage());
+            }
             GenericOrganizationalUnitContactCollection contacts = orgaunit.
                     getContacts();
 

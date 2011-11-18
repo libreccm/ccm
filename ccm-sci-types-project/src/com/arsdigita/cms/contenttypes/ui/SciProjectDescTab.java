@@ -39,24 +39,26 @@ public class SciProjectDescTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final Desc desc = getData(orgaunit);
 
+        final Element descTabElem = parent.newChildElement("projectDescription");
+        
         if ((desc.getShortDesc() != null) 
             && !desc.getShortDesc().trim().isEmpty()) {
-            final Element shortDescElem = parent.newChildElement("shortDescription");
+            final Element shortDescElem = descTabElem.newChildElement("shortDescription");
             shortDescElem.setText(desc.getShortDesc());
         }
         
-        final Element descElem = parent.newChildElement("description");
+        final Element descElem = descTabElem.newChildElement("description");
         descElem.setText(desc.getDesc());
 
         if ((desc.getFunding() != null) 
             && !desc.getFunding().trim().isEmpty()) {
-            final Element fundingElem = parent.newChildElement("funding");
+            final Element fundingElem = descTabElem.newChildElement("funding");
             fundingElem.setText(desc.getFunding());
         }
 
         if ((desc.getFundingVolume() != null)
             && !desc.getFundingVolume().trim().isEmpty()) {
-            final Element volumeElem = parent.newChildElement("fundingVolume");
+            final Element volumeElem = descTabElem.newChildElement("fundingVolume");
             volumeElem.setText(desc.getFundingVolume());
         }
 

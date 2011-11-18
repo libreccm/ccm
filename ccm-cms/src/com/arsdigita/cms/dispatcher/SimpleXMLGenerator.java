@@ -45,6 +45,8 @@ import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * <p>The default <tt>XMLGenerator</tt> implementation.</p>
@@ -67,6 +69,11 @@ public class SimpleXMLGenerator implements XMLGenerator {
      * your generator.
      */
     private boolean useExtraXml = true;
+    /**
+     * Extra attributes for the cms:item element.
+     */
+    private Map<String, String> itemAttributes =
+                                new LinkedHashMap<String, String>();
     /**
      * Allows to overwrite the name and the namespace of the XML element
      * used to wrap the rendered item. 
@@ -96,14 +103,17 @@ public class SimpleXMLGenerator implements XMLGenerator {
         this.useExtraXml = useExtraXml;
     }
 
+    public void addItemAttribute(final String name,
+                                 final String value) {
+        itemAttributes.put(name, value);
+    }
+
     public void setItemElemName(final String itemElemName,
                                 final String itemElemNs) {
-        this.itemElemName = itemElemName;        
+        this.itemElemName = itemElemName;
         this.itemElemNs = itemElemNs;
     }
-    
-    
-    
+
     /**
      * Generates the XML to render the content panel.
      *
@@ -266,6 +276,11 @@ public class SimpleXMLGenerator implements XMLGenerator {
         if (useContext != null) {
             element.addAttribute("useContext", useContext);
         }
+
+        for (Map.Entry<String, String> attr : itemAttributes.entrySet()) {
+            element.addAttribute(attr.getKey(), attr.getValue());
+        }
+
         return element;
     }
 

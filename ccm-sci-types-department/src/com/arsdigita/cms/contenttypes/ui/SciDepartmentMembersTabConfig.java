@@ -27,7 +27,7 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
 
         pageSize =
         new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.tabs.embers.page_size",
+                "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.page_size",
                              Parameter.REQUIRED,
                              30);
 
@@ -35,7 +35,7 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
         new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.enable_search_limit",
                 Parameter.REQUIRED,
-                2);
+                0);
 
         mergeMembers =
         new BooleanParameter(

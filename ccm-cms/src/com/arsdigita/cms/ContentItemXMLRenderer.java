@@ -115,8 +115,10 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
                         getNegotiatedLocale().getLanguage());
                 if (relationAttributeCollection.size() > 0) {
                     relationAttributeCollection.next();
-                    Element element = newElement(m_element, m_keyName);
+                    Element element = newElement(m_element, m_keyName);                    
                     element.setText(relationAttributeCollection.getName());
+                    Element elementId = newElement(m_element, m_keyName + "Id");
+                    elementId.setText(relationAttributeCollection.getKey());
                     relationAttributeCollection.close();
                 }
                 return;

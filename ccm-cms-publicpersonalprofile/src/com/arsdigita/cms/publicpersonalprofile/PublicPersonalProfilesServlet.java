@@ -9,6 +9,7 @@ import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ReusableImageAsset;
@@ -292,7 +293,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             final DataCollection links =
                                                  RelatedLink.getRelatedLinks(
                                     profile,
-                                                                             PublicPersonalProfile.LINK_LIST_NAME);
+                                    PublicPersonalProfile.LINK_LIST_NAME);
                             links.addFilter(String.format("linkTitle = '%s'",
                                                           navPath));
 
@@ -329,8 +330,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                                             generator.generateContent(
                                                     profileElem,
-                                                                      owner,
-                                                                      state);
+                                                    owner,
+                                                    state);
 
                                         } else {
                                             throw new ServletException(String.
@@ -368,11 +369,14 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                     links.close();
                                     final ContentItem item =
                                                       link.getTargetItem();
+                                    final Element contentPanelElem = root.
+                                            newChildElement("cms:contentPanel",
+                                                            CMS.CMS_XML_NS);
                                     final PublicPersonalProfileXmlGenerator generator =
                                                                             new PublicPersonalProfileXmlGenerator(
                                             item);
                                     generator.generateXML(state,
-                                                          root,
+                                                          contentPanelElem,
                                                           "");
                                 }
 
@@ -390,10 +394,16 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                   (ContentItem) DomainObjectFactory.
                                         newInstance(itemOid);
 
+                                final Element contentPanelElem = root.
+                                        newChildElement("cms:contentPanel",
+                                                        CMS.CMS_XML_NS);
+
                                 final PublicPersonalProfileXmlGenerator generator =
                                                                         new PublicPersonalProfileXmlGenerator(
                                         item);
-                                generator.generateXML(state, root, "");
+                                generator.generateXML(state,
+                                                      contentPanelElem,
+                                                      "");
 
                             } catch (DataObjectNotFoundException ex) {
                                 logger.error(String.format(
