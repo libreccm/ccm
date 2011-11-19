@@ -132,7 +132,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         final DataQuery personsQuery = SessionManager.getSession().
                 retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
-        final StringBuffer personsFilter = new StringBuffer();
+        //final StringBuffer personsFilter = new StringBuffer();
         final List<String> orgaUnitIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
@@ -145,18 +145,18 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                              SciDepartmentSubDepartmentsStep.ASSOC_TYPE);
 
             while (subDepartmentsQuery.next()) {
-                if (personsFilter.length() > 0) {
+                /*if (personsFilter.length() > 0) {
                     personsFilter.append(" or ");
                 }
                 personsFilter.append(String.format("orgaunitId = %s",
                                                    subDepartmentsQuery.get(
-                        "orgaunitId").toString()));
+                        "orgaunitId").toString()));*/
                 orgaUnitIds.add(subDepartmentsQuery.get(
                         "orgaunitId").toString());
             }
         } else {
-            personsFilter.append(String.format("orgaunitId = %s",
-                                               orgaunit.getID().toString()));
+            /*personsFilter.append(String.format("orgaunitId = %s",
+                                               orgaunit.getID().toString()));*/
             orgaUnitIds.add(orgaunit.getID().toString());
         }
                

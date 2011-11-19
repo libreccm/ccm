@@ -17,8 +17,10 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import org.apache.log4j.Logger;
 
@@ -101,24 +103,25 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
             if (project.getBegin() != null) {
                 final Element beginElem = lifeSpanElem.newChildElement("begin");
-                addDateAttributes(beginElem, project.getBegin());        
-                
+                addDateAttributes(beginElem, project.getBegin());
+
                 final Element beginSkipMonthElem = lifeSpanElem.newChildElement(
                         "beginSkipMonth");
-                beginSkipMonthElem.setText(project.getBeginSkipMonth().toString());
-                
+                beginSkipMonthElem.setText(
+                        project.getBeginSkipMonth().toString());
+
                 final Element beginSkipDayElem = lifeSpanElem.newChildElement(
                         "beginSkipDay");
                 beginSkipDayElem.setText(project.getBeginSkipDay().toString());
             }
-            if (project.getEnd() != null) {                
+            if (project.getEnd() != null) {
                 final Element endElem = lifeSpanElem.newChildElement("end");
                 addDateAttributes(endElem, project.getEnd());
-                
+
                 final Element endSkipMonthElem = lifeSpanElem.newChildElement(
                         "endSkipMonth");
                 endSkipMonthElem.setText(project.getEndSkipMonth().toString());
-                
+
                 final Element endSkipDayElem = lifeSpanElem.newChildElement(
                         "endSkipDay");
                 endSkipDayElem.setText(project.getEndSkipDay().toString());
@@ -196,16 +199,19 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                     retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
 
-            final StringBuffer personsFilter = new StringBuffer();
+            //final StringBuffer personsFilter = new StringBuffer();
+            final List<String> projectIds = new ArrayList<String>();
             while (subProjectsQuery.next()) {
-                if (personsFilter.length() > 0) {
-                    personsFilter.append(" or ");
+                /*if (personsFilter.length() > 0) {
+                personsFilter.append(" or ");
                 }
                 personsFilter.append(String.format("orgaunitId = %s",
-                                                   subProjectsQuery.get(
-                        "orgaunitId").toString()));
+                subProjectsQuery.get(
+                "orgaunitId").toString()));*/
+                projectIds.add(subProjectsQuery.get("orgaunitId").toString());
             }
-            personsQuery.addFilter(personsFilter.toString());
+            //personsQuery.addFilter(personsFilter.toString());
+            personsQuery.setParameter("orgaunitIds", projectIds);
 
             personsQuery.addOrder(GenericPerson.SURNAME);
             personsQuery.addOrder(GenericPerson.GIVENNAME);
@@ -224,9 +230,9 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             members.addOrder("givenname");
 
             while (members.next()) {
-                generateMemberXml(members.getPerson(), 
-                                  membersElem, 
-                                  members.getRoleName(), 
+                generateMemberXml(members.getPerson(),
+                                  membersElem,
+                                  members.getRoleName(),
                                   state);
             }
         }

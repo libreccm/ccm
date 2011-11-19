@@ -70,7 +70,7 @@ public class SciDepartmentConfig extends AbstractConfig {
         new StringParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.tabs",
                 Parameter.REQUIRED,
-                "summary:com.arsdigita.cms.contenttypes.ui.SciDepartmentSummaryTab;desc:com.arsdigita.cms.contenttypes.ui.SciDepartmentDescTab;members:com.arsdigita.cms.contenttypes.ui.SciDepartmentMembersTab");
+                "summary:com.arsdigita.cms.contenttypes.ui.SciDepartmentSummaryTab;desc:com.arsdigita.cms.contenttypes.ui.SciDepartmentDescTab;members:com.arsdigita.cms.contenttypes.ui.SciDepartmentMembersTab;projects:com.arsdigita.cms.contenttypes.ui.SciDepartmentProjectsTab;publications:com.arsdigita.cms.contenttypes.ui.SciDepartmentPublicationsTab");
 
         register(enableSubDepartmentsStep);
         register(enableSuperDepartmentsStep);

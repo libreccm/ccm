@@ -16,11 +16,13 @@ import java.util.Map;
 public class CompareFilter implements Filter {
 
     private static final String ALL = "--ALL--";
+    private static final String NONE = "--NONE--";
     private final String property;
     private final String label;
     private final boolean allOption;
     private final boolean allOptionIsDefault;
     private final boolean propertyIsNumeric;
+    private boolean emptyDefaultOption = false;
     private Map<String, Option> options = new LinkedHashMap<String, Option>();
     private String value;
 
@@ -34,6 +36,16 @@ public class CompareFilter implements Filter {
         this.allOption = allOption;
         this.allOptionIsDefault = allOptionIsDefault;
         this.propertyIsNumeric = propertyIsNumeric;
+    }
+
+    public CompareFilter(final String label,
+                         final String property,
+                         final boolean allOption,
+                         final boolean allOptionIsDefault,
+                         final boolean propertyIsNumeric,
+                         final boolean emptyDefaultOption) {
+        this(label, property, allOption, allOptionIsDefault, propertyIsNumeric);
+        this.emptyDefaultOption = true;
     }
 
     @Override
@@ -67,13 +79,15 @@ public class CompareFilter implements Filter {
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {
                 value = ALL;
+            } else if (emptyDefaultOption) {
+                return "";
             } else {
                 value =
                 new ArrayList<Option>(options.values()).get(0).getLabel();
             }
         }
 
-        if (ALL.equals(value)) {
+        if (ALL.equals(value) || NONE.equals(value)) {
             return "";
         }
 
@@ -132,6 +146,8 @@ public class CompareFilter implements Filter {
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {
                 selected = ALL;
+            } else if (emptyDefaultOption) {
+                selected = NONE;
             } else {
                 List<Option> optionsList =
                              new ArrayList<Option>(options.values());
@@ -151,6 +167,10 @@ public class CompareFilter implements Filter {
             option.addAttribute("label", ALL);
         }
 
+        if (emptyDefaultOption) {
+            final Element emptyOption = filter.newChildElement("option");
+            emptyOption.addAttribute("label", NONE);
+        }
         Element option;
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             option = filter.newChildElement("option");

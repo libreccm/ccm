@@ -18,6 +18,7 @@ import java.util.Set;
  */
 public class SelectFilter implements Filter {
 
+    public static final String NONE = "--NONE--";
     public static final String ALL = "--ALL--";
     private final String property;
     private final String label;
@@ -27,6 +28,7 @@ public class SelectFilter implements Filter {
     private final boolean allOptionIsDefault;
     private final boolean reverseOptions;
     private final boolean propertyIsNumeric;
+    private boolean emptyDefaultOption = false;
     private String value;
 
     public SelectFilter(final String label,
@@ -42,6 +44,18 @@ public class SelectFilter implements Filter {
         this.allOption = allOption;
         this.allOptionIsDefault = allOptionIsDefault;
         this.propertyIsNumeric = propertyIsNumeric;
+    }
+    
+    public SelectFilter(final String label,
+                        final String property,
+                        final boolean reverseOptions,
+                        final boolean allOption,
+                        final boolean allOptionIsDefault,
+                        final boolean propertyIsNumeric,
+                        final boolean emptyDefaultOption) {
+        this(label, property, reverseOptions, allOption, allOptionIsDefault,
+             propertyIsNumeric);
+        this.emptyDefaultOption = emptyDefaultOption;
     }
 
     @Override
@@ -60,19 +74,18 @@ public class SelectFilter implements Filter {
         this.queryProperty = queryProperty;
     }
 
-    public String getFilter() {
-        List<String> options;
-
-        options = getOptions();
+    public String getFilter() {        
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {
                 value = ALL;
+            } else if(emptyDefaultOption) {
+                value = NONE;
             } else {
-                value = options.get(0);
+                value = getOptions().get(0);
             }
         }
 
-        if (ALL.equals(value)) {
+        if (ALL.equals(value) || NONE.equals(value)) {
             return null;
         }
 
@@ -95,9 +108,15 @@ public class SelectFilter implements Filter {
         filter = parent.newChildElement("filter");
         filter.addAttribute("type", "select");
 
+        if(options.isEmpty()) {
+            return;
+        }
+        
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {
                 selected = ALL;
+            } else if(emptyDefaultOption) {
+                selected = NONE;
             } else {
                 selected = options.get(0);
             }
@@ -108,6 +127,11 @@ public class SelectFilter implements Filter {
         filter.addAttribute("label", label);
         filter.addAttribute("selected", selected);
 
+        if (emptyDefaultOption) {
+            optionElem = filter.newChildElement("option");
+            optionElem.addAttribute("label", NONE);
+        }
+        
         if (allOption) {
             optionElem = filter.newChildElement("option");
             optionElem.addAttribute("label", ALL);
@@ -135,7 +159,7 @@ public class SelectFilter implements Filter {
         List<String> options;
 
         optionsSet = new HashSet<String>();
-                
+              
         while(dataQuery.next()) {
             obj = dataQuery.get(queryProperty);
             if (obj == null) {

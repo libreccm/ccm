@@ -30,9 +30,10 @@ query getIdsOfProjectsOfOrgaUnit {
     do {
         select distinct on (ct_sci_projects.project_id) ct_sci_projects.project_id, cms_pages.title, ct_sci_projects.projectbegin, ct_sci_projects.projectend, cms_organizationalunits_hierarchy_map.superior_orgaunit_id
         from ct_sci_projects
-        join cms_pages on ct_sci_project.project_id = cms_pages.item_id
-        join cms_organizationalunits_hierarchy_map on ct_sci_projects = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+        join cms_pages on ct_sci_projects.project_id = cms_pages.item_id
+        join cms_organizationalunits_hierarchy_map on ct_sci_projects.project_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
         where cms_organizationalunits_hierarchy_map.assoc_type = 'ProjectOf'
+        and cms_organizationalunits_hierarchy_map.superior_orgaunit_id in :orgaunitIds
     } map {
         projectId = ct_sci_projects.project_id;
         orgaunitId = cms_organizationalunits_hierarchy_map.superior_orgaunit_id;

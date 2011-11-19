@@ -107,7 +107,8 @@ query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
         join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
         join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id
         join acs_objects on cms_pages.item_id = acs_objects.object_id
-        join cms_items on cms_items.item_id = cms_pages.item_id;
+        join cms_items on cms_items.item_id = cms_pages.item_id
+        where cms_organizationalunits.organizationalunit_id in :orgaunitIds
     } map {
         publicationId = cms_pages.item_id;
         objectType = acs_objects.object_type;
@@ -131,6 +132,7 @@ query getIdsOfPublicationsForOrgaUnit {
     Integer year;
     String authors;
     String language;
+    Boolean reviewed;
 
     do {
         select cms_pages.item_id, 
@@ -138,14 +140,16 @@ query getIdsOfPublicationsForOrgaUnit {
                cms_pages.title, 
                cms_organizationalunits.organizationalunit_id, 
                ct_publications.year, 
-               ct_publications.authors              
-               cms_items.language
+               ct_publications.authors,              
+               cms_items.language,
+               ct_publications.reviewed
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id 
         join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
         join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id        
         join acs_objects on cms_pages.item_id = acs_objects.object_id
         join cms_items on cms_pages.item_id = cms_items.item_id
+        where cms_organizationalunits.organizationalunit_id in :orgaunitIds
     } map {
         publicationId = cms_pages.item_id;
         objectType = acs_objects.object_type;
@@ -153,6 +157,8 @@ query getIdsOfPublicationsForOrgaUnit {
         title = cms_pages.title;
         year = ct_publications.year;        
         authors = ct_publications.authors;
+        language = cms_items.language;
+        reviewed = ct_publications.reviewed;
     }
 }
 

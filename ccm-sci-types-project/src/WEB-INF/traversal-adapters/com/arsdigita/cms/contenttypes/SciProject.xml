@@ -13,8 +13,8 @@
                 <xrd:property name="/object/fundingVolume"/>
             </xrd:attributes>
             <xrd:associations rule="include">
-            <!--    <xrd:property name="/object/contacts"/>
-                <xrd:property name="/object/persons"/> -->
+            <!--    <xrd:property name="/object/contacts"/> -->
+                <xrd:property name="/object/persons"/>
             </xrd:associations>
         </xrd:adapter>
     </xrd:context>

@@ -94,7 +94,7 @@ public class PersonalPublicationsConfig extends AbstractConfig {
         order = new StringParameter(
                 "com.arsdigita.cms.publicpersonlprofile.publications.order",
                 Parameter.REQUIRED,
-                "year,title");
+                "year,authors,title");
 
         register(publicationGroups);
         register(groupSplit);
