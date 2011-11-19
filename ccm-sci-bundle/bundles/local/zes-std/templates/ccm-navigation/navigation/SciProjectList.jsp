@@ -6,11 +6,11 @@
 
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
     <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
-    <jsp:directive.page import="com.arsdigita.london.navigation.Navigation"/>
-    <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionDefinition"/>
-    <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionRenderer"/>
-    <jsp:directive.page import="com.arsdigita.london.navigation.ui.object.CustomizableObjectList"/>
-    <jsp:directive.page import="com.arsdigita.london.navigation.ui.object.CompareFilter"/>
+    <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>
+    <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionDefinition"/>
+    <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionRenderer"/>
+    <jsp:directive.page import="com.arsdigita.navigation.ui.object.CustomizableObjectList"/>
+    <jsp:directive.page import="com.arsdigita.navigation.ui.object.CompareFilter"/>
 
     <jsp:scriptlet>
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
@@ -24,13 +24,13 @@
     <define:page name="defaultItemPage" application="navigation"
                  title="Navigation" cache="false">
         <define:component name="greetingItem"
-                          classname="com.arsdigita.london.navigation.ui.GreetingItem"/>
+                          classname="com.arsdigita.navigation.ui.GreetingItem"/>
         <define:component name="categoryPath"
-                          classname="com.arsdigita.london.navigation.ui.category.Path"/>
+                          classname="com.arsdigita.navigation.ui.category.Path"/>
         <define:component name="categoryMenu"
-                          classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+                          classname="com.arsdigita.navigation.ui.category.Menu"/>
         <define:component name="itemList"
-                          classname="com.arsdigita.london.navigation.ui.object.CustomizableObjectList"/>
+                          classname="com.arsdigita.navigation.ui.object.CustomizableObjectList"/>
 
       <jsp:scriptlet>
       CustomizableObjectList objList = (CustomizableObjectList) itemList;
@@ -59,7 +59,7 @@
       </jsp:scriptlet>
 
       <define:component name="assignedTerms"
-                        classname="com.arsdigita.london.navigation.ui.CategoryIndexAssignedTerms"/>
+                        classname="com.arsdigita.navigation.ui.CategoryIndexAssignedTerms"/>
 
     </define:page>
     <show:all/>

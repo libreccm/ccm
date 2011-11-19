@@ -28,7 +28,7 @@
         <define:component name="greetingItem"
                           classname="com.arsdigita.navigation.ui.CustomizableGreetingItem"/>
         <jsp:scriptlet>
-            ((com.arsdigita.london.navigation.ui.CustomizableGreetingItem) greetingItem).loadTraversalAdapter("com.arsdigita.cms.contenttypes.SciDepartment",
+            ((com.arsdigita.navigation.ui.CustomizableGreetingItem) greetingItem).loadTraversalAdapter("com.arsdigita.cms.contenttypes.SciDepartment",
                              SimpleXMLGenerator.ADAPTER_CONTEXT);
         ((com.arsdigita.navigation.ui.CustomizableGreetingItem) greetingItem).getTraversalAdapter().addAttributeProperty("/object/departmentDescription");
         ((com.arsdigita.navigation.ui.CustomizableGreetingItem) greetingItem).getTraversalAdapter().clearAssociationProperties();

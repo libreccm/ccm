@@ -5,9 +5,9 @@
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.Navigation"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionDefinition"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionRenderer"/>
+  <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>
+  <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionDefinition"/>
+  <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionRenderer"/>
 
   <jsp:scriptlet>
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
@@ -22,44 +22,44 @@
     title="Navigation" cache="false">
 
     <define:component name="greetingItem"
-      classname="com.arsdigita.london.navigation.ui.GreetingItem"/>
+      classname="com.arsdigita.navigation.ui.GreetingItem"/>
     <define:component name="sectionXML"
       classname="com.arsdigita.cms.contenttypes.ui.SciOrganizationWithPublicationsPanel"/>
     <jsp:scriptlet>
-        com.arsdigita.cms.ContentItem item = (com.arsdigita.cms.ContentItem)((com.arsdigita.london.navigation.ui.GreetingItem) greetingItem).getObject();
+        com.arsdigita.cms.ContentItem item = (com.arsdigita.cms.ContentItem)((com.arsdigita.navigation.ui.GreetingItem) greetingItem).getObject();
         ((com.arsdigita.cms.contenttypes.ui.SciOrganizationPanel) sectionXML).setContentItem(item);
     </jsp:scriptlet>
     <define:component name="categoryPath"
-      classname="com.arsdigita.london.navigation.ui.category.Path"/>
+      classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
-      classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+      classname="com.arsdigita.navigation.ui.category.Menu"/>
     <define:component name="itemList"
-      classname="com.arsdigita.london.navigation.ui.object.SimpleObjectList"/>
+      classname="com.arsdigita.navigation.ui.object.SimpleObjectList"/>
     <jsp:scriptlet>
       ((com.arsdigita.cms.contenttypes.ui.SciOrganizationPanel)sectionXML).setPageSize(30);
 
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).setDefinition(new CMSDataCollectionDefinition());
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).setRenderer(new CMSDataCollectionRenderer());
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getDefinition().setObjectType("com.arsdigita.cms.ContentPage");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).setDefinition(new CMSDataCollectionDefinition());
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).setRenderer(new CMSDataCollectionRenderer());
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getDefinition().setObjectType("com.arsdigita.cms.ContentPage");
 
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getDefinition().setDescendCategories(false);      
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getDefinition().addOrder("parent.categories.link.sortKey");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getDefinition().setDescendCategories(false);      
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getDefinition().addOrder("parent.categories.link.sortKey");
       
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(30);
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("objectType");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("title");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "definition");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "summary");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "lead");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "description");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "eventDate");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "startDate" );
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "endDate");
-      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "newsDate");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(30);
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("objectType");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("title");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "definition");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "summary");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "lead");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "description");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "eventDate");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "startDate" );
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "endDate");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "newsDate");
     </jsp:scriptlet>
 
     <define:component name="assignedTerms"
-         classname="com.arsdigita.london.navigation.ui.CategoryIndexAssignedTerms"/>
+         classname="com.arsdigita.navigation.ui.CategoryIndexAssignedTerms"/>
 
   </define:page>
   <show:all/>

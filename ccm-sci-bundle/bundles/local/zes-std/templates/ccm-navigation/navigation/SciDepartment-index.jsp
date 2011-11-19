@@ -26,7 +26,7 @@
     <define:component name="sectionXML"
       classname="com.arsdigita.cms.contenttypes.ui.SciDepartmentWithPublicationsPanel"/>
     <jsp:scriptlet>
-        com.arsdigita.cms.ContentItem item = (com.arsdigita.cms.ContentItem)((com.arsdigita.london.navigation.ui.GreetingItem) greetingItem).getObject();
+        com.arsdigita.cms.ContentItem item = (com.arsdigita.cms.ContentItem)((com.arsdigita.navigation.ui.GreetingItem) greetingItem).getObject();
         ((com.arsdigita.cms.contenttypes.ui.SciDepartmentPanel) sectionXML).setContentItem(item);
     </jsp:scriptlet>
     <define:component name="categoryPath"

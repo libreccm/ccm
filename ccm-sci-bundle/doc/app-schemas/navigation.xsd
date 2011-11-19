@@ -12,7 +12,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.category.Root</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.category.Root</gen:class>
       </xs:appinfo>
     </xs:annotation>
 
@@ -31,7 +31,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.category.TopLevel</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.category.TopLevel</gen:class>
       </xs:appinfo>
     </xs:annotation>
 
@@ -50,7 +50,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.category.Siblings</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.category.Siblings</gen:class>
       </xs:appinfo>
     </xs:annotation>
 
@@ -68,7 +68,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.category.Children</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.category.Children</gen:class>
       </xs:appinfo>
     </xs:annotation>
 
@@ -87,7 +87,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.category.Path</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.category.Path</gen:class>
       </xs:appinfo>
     </xs:annotation>
 
@@ -108,7 +108,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.category.Menu</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.category.Menu</gen:class>
       </xs:appinfo>
     </xs:annotation>
 
@@ -127,7 +127,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.navigation.ui.category.Hierarchy</gen:class>
+        <gen:class>com.arsdigita.navigation.ui.category.Hierarchy</gen:class>
       </xs:appinfo>
     </xs:annotation>
 

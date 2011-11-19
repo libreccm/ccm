@@ -13,9 +13,9 @@
     title="APLAWS" cache="true">
 
     <define:component name="categoryPath"
-      classname="com.arsdigita.london.navigation.ui.category.Path"/>
+      classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
-      classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+      classname="com.arsdigita.navigation.ui.category.Menu"/>
     <define:component name="itemSummary"
       classname="com.arsdigita.aplaws.ui.TermItemSummary"/>
 

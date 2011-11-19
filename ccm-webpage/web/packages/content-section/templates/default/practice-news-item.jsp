@@ -6,20 +6,20 @@
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
-  <jsp:directive.page import="com.arsdigita.london.navigation.Navigation"/>
+  <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>
 
   <define:page name="itemPage" application="navigation"
     title="Navigation" cache="true">
 
     <define:component name="categoryPath"
-      classname="com.arsdigita.london.navigation.ui.CategoryPath"/>
+      classname="com.arsdigita.navigation.ui.CategoryPath"/>
     <jsp:scriptlet>
-      ((com.arsdigita.london.navigation.ui.CategoryPath) categoryPath).setSelectionType( com.arsdigita.london.navigation.ui.Selection.USE_ITEM_ID );
+      ((com.arsdigita.navigation.ui.CategoryPath) categoryPath).setSelectionType( com.arsdigita.navigation.ui.Selection.USE_ITEM_ID );
     </jsp:scriptlet>
     <define:component name="categoryNavRecursive"
-      classname="com.arsdigita.london.navigation.ui.CategoryNavRecursive"/>
+      classname="com.arsdigita.navigation.ui.CategoryNavRecursive"/>
     <jsp:scriptlet>
-      ((com.arsdigita.london.navigation.ui.CategoryNavRecursive) categoryNavRecursive).setSelectionType( com.arsdigita.london.navigation.ui.Selection.USE_ITEM_ID );
+      ((com.arsdigita.navigation.ui.CategoryNavRecursive) categoryNavRecursive).setSelectionType( com.arsdigita.navigation.ui.Selection.USE_ITEM_ID );
     </jsp:scriptlet>
     <define:component name="contentPanel"
       classname="com.arsdigita.cms.webpage.ui.ContentPanelWebpageNode"/>
