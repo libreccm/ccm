@@ -66,7 +66,7 @@ public class SciInstituteConfig extends AbstractConfig {
         new StringParameter(
                 "com.arsdigita.cms.contenttypes.sciinstitute.tabs",
                 Parameter.REQUIRED,
-                "summary:com.arsdigita.cms.contenttypes.ui.SciInstituteSummaryTab");
+                "summary:com.arsdigita.cms.contenttypes.ui.SciInstituteSummaryTab;desc:com.arsdigita.cms.contenttypes.ui.SciInstituteDescTab;members:com.arsdigita.cms.contenttypes.ui.SciInstituteMembersTab;projects:com.arsdigita.cms.contenttypes.ui.SciInstituteProjectsTab;publications:com.arsdigita.cms.contenttypes.ui.SciInstitutePublicationsTab");
 
         register(enableDepartmentsStep);
         register(enableDepartmentInstitutesStep);

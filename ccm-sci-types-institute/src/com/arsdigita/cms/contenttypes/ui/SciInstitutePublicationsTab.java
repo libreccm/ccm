@@ -17,6 +17,8 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -34,16 +36,17 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
     private static final String YEAR_PARAM = "year";
     private static final String TITLE_PARAM = "title";
     private static final String AUTHOR_PARAM = "author";
-    private static final String SORT_PARAM = "sortBy";
+    /*private static final String SORT_PARAM = "sortBy";
     private static final String SORT_BY_YEAR_ASC = "yearAsc";
     private static final String SORT_BY_YEAR_DESC = "yearDesc";
     private static final String SORT_BY_TITLE = "title";
-    private static final String SORT_BY_AUTHOR = "author";
+    private static final String SORT_BY_AUTHOR = "author";*/
     private final SelectFilter yearFilter = new SelectFilter(YEAR_PARAM,
                                                              YEAR_PARAM,
                                                              true,
+                                                             true,
                                                              false,
-                                                             false,
+                                                             true,
                                                              true);
     private final TextFilter titleFilter = new TextFilter(TITLE_PARAM,
                                                           ContentPage.TITLE);
@@ -97,15 +100,15 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         final String yearValue = request.getParameter(YEAR_PARAM);
         final String titleValue = request.getParameter(TITLE_PARAM);
         final String authorValue = request.getParameter(AUTHOR_PARAM);
-        final String sortValue = request.getParameter(SORT_PARAM);
+        //final String sortValue = request.getParameter(SORT_PARAM);
 
         final Element filtersElem = publicationsElem.newChildElement(
                 "filters");
 
         if (((yearValue == null) || yearValue.trim().isEmpty())
             && ((titleValue == null) || titleValue.trim().isEmpty())
-            && ((authorValue == null) || authorValue.trim().isEmpty())
-            && ((sortValue == null) || sortValue.trim().isEmpty())) {
+            && ((authorValue == null) || authorValue.trim().isEmpty())) {
+            // && ((sortValue == null) || sortValue.trim().isEmpty())) {
 
             publicationsElem.newChildElement("greeting");
 
@@ -119,53 +122,65 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
 
             publications.setRange(1, config.getGreetingSize() + 1);
 
+            yearFilter.setDataQuery(publications, "year");
+            
             yearFilter.generateXml(filtersElem);
             titleFilter.generateXml(filtersElem);
             authorFilter.generateXml(filtersElem);
 
         } else {
 
-            if (SORT_BY_AUTHOR.equals(sortValue)) {
-                if (config.getOneRowPerAuthor()) {
-                    publications.addOrder("surname");
-                } else {
-                    publications.addOrder("authors");
-                }
-                publications.addOrder("title");
-                publications.addOrder("year asc");
+            /*if (SORT_BY_AUTHOR.equals(sortValue)) {
+            if (config.getOneRowPerAuthor()) {
+            publications.addOrder("surname");
+            } else {
+            publications.addOrder("authors");
+            }
+            publications.addOrder("title");
+            publications.addOrder("year asc");
             } else if (SORT_BY_TITLE.equals(sortValue)) {
-                publications.addOrder("title");
-                if (config.getOneRowPerAuthor()) {
-                    publications.addOrder("surname");
-                } else {
-                    publications.addOrder("authors");
-                }
-                publications.addOrder("year asc");
+            publications.addOrder("title");
+            if (config.getOneRowPerAuthor()) {
+            publications.addOrder("surname");
+            } else {
+            publications.addOrder("authors");
+            }
+            publications.addOrder("year asc");
             } else if (SORT_BY_YEAR_ASC.equals(sortValue)) {
-                publications.addOrder("year asc");
-                if (config.getOneRowPerAuthor()) {
-                    publications.addOrder("surname");
-                } else {
-                    publications.addOrder("authors");
-                }
-                publications.addOrder("title");
+            publications.addOrder("year asc");
+            if (config.getOneRowPerAuthor()) {
+            publications.addOrder("surname");
+            } else {
+            publications.addOrder("authors");
+            }
+            publications.addOrder("title");
             } else if (SORT_BY_YEAR_DESC.equals(sortValue)) {
-                publications.addOrder("year desc");
-                if (config.getOneRowPerAuthor()) {
-                    publications.addOrder("surname");
-                } else {
-                    publications.addOrder("authors");
-                }
+            publications.addOrder("year desc");
+            if (config.getOneRowPerAuthor()) {
+            publications.addOrder("surname");
+            } else {
+            publications.addOrder("authors");
+            }
+            publications.addOrder("title");
+            } else {
+            if (config.getOneRowPerAuthor()) {
+            publications.addOrder("surname");
+            } else {
+            publications.addOrder("authors");
+            }
+            publications.addOrder("title");
+            publications.addOrder("year asc");
+            }*/
+
+            if (config.getOneRowPerAuthor()) {
+                publications.addOrder("surname");
                 publications.addOrder("title");
             } else {
-                if (config.getOneRowPerAuthor()) {
-                    publications.addOrder("surname");
-                } else {
-                    publications.addOrder("authors");
-                }
+                publications.addOrder("authors");
                 publications.addOrder("title");
-                publications.addOrder("year asc");
             }
+
+            yearFilter.setDataQuery(publications, "year");
 
             applyYearFilter(publications, request);
             applyTitleFilter(publications, request);
@@ -185,18 +200,18 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             paginator.generateXml(publicationsElem);
         }
 
-        final Element sortFieldsElem = publicationsElem.newChildElement(
-                "sortFields");
+        /*final Element sortFieldsElem = publicationsElem.newChildElement(
+        "sortFields");
         sortFieldsElem.addAttribute("sortBy", sortValue);
-
+        
         sortFieldsElem.newChildElement("sortField").addAttribute("label",
-                                                                 SORT_BY_AUTHOR);
+        SORT_BY_AUTHOR);
         sortFieldsElem.newChildElement("sortField").addAttribute("label",
-                                                                 SORT_BY_TITLE);
+        SORT_BY_TITLE);
         sortFieldsElem.newChildElement("sortField").addAttribute("label",
-                                                                 SORT_BY_YEAR_ASC);
+        SORT_BY_YEAR_ASC);
         sortFieldsElem.newChildElement("sortField").addAttribute("label",
-                                                                 SORT_BY_YEAR_DESC);
+        SORT_BY_YEAR_DESC);*/
 
         while (publications.next()) {
             generatePublicationXml(
@@ -236,7 +251,8 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                     retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForOrgaUnit");
         }
-        final StringBuffer publicationsFilter = new StringBuffer();
+        //final StringBuffer publicationsFilter = new StringBuffer();
+        final List<String> orgaunitIds = new ArrayList<String>();
 
         if (config.isMergingPublications()) {
             final DataQuery departmentsQuery =
@@ -247,19 +263,22 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             departmentsQuery.setParameter("assocType",
                                           SciInstituteDepartmentsStep.ASSOC_TYPE);
             while (departmentsQuery.next()) {
-                if (publicationsFilter.length() > 0) {
-                    publicationsFilter.append(" or ");
+                /*if (publicationsFilter.length() > 0) {
+                publicationsFilter.append(" or ");
                 }
                 publicationsFilter.append(String.format("orgaunitId = %s",
-                                                        departmentsQuery.get(
-                        "orgaunitId").toString()));
+                departmentsQuery.get(
+                "orgaunitId").toString()));*/
+                orgaunitIds.add(departmentsQuery.get("orgaunitId").toString());
             }
         } else {
-            publicationsFilter.append(String.format("orgaunitId = %s",
-                                                    orgaunit.getID().toString()));
+            /*publicationsFilter.append(String.format("orgaunitId = %s",
+                                                    orgaunit.getID().toString()));*/
+            orgaunitIds.add(orgaunit.getID().toString());
         }
 
-        publicationsQuery.addFilter(publicationsFilter.toString());
+        //publicationsQuery.addFilter(publicationsFilter.toString());
+        publicationsQuery.setParameter("orgaunitIds", orgaunitIds);
 
         logger.debug(String.format(
                 "Got publications of institute '%s'"
@@ -277,7 +296,10 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             yearFilter.setValue(yearValue);
         }
 
-        publications.addFilter(yearFilter.getFilter());
+         if ((yearFilter.getFilter() != null)
+            && !(yearFilter.getFilter().isEmpty())) {
+            publications.addFilter(yearFilter.getFilter());
+        }
     }
 
     private void applyTitleFilter(final DataQuery publications,
@@ -287,7 +309,10 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             titleFilter.setValue(titleValue);
         }
 
-        publications.addFilter(titleFilter.getFilter());
+        if ((titleFilter.getFilter() != null)
+            && !(titleFilter.getFilter().isEmpty())) {
+            publications.addFilter(titleFilter.getFilter());
+        }
     }
 
     private void applyAuthorFilter(final DataQuery publications,
@@ -297,7 +322,10 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             authorFilter.setValue(authorValue);
         }
 
-        publications.addFilter(authorFilter.getFilter());
+        if ((authorFilter.getFilter() != null)
+            && !(authorFilter.getFilter().isEmpty())) {
+            publications.addFilter(authorFilter.getFilter());
+        }
     }
 
     private void generatePublicationXml(final BigDecimal publicationId,
@@ -319,6 +347,8 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                                         final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(publication);
+        generator.setUseExtraXml(false);
+        generator.setItemElemName("publication", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format(
                 "Generated XML for publication '%s' in %d ms.",

@@ -99,7 +99,8 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                                   config.getPageSize());
 
         if ((paginator.getPageCount() > config.getEnableSearchLimit())
-            || !(surnameFilter.getFilter().trim().isEmpty())) {
+            || ((surnameFilter.getFilter() != null) 
+                && !(surnameFilter.getFilter().trim().isEmpty()))) {
             surnameFilter.generateXml(filtersElem);
         }
 
@@ -146,20 +147,19 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
             while (subDepartmentsQuery.next()) {
                 /*if (personsFilter.length() > 0) {
-                    personsFilter.append(" or ");
+                personsFilter.append(" or ");
                 }
                 personsFilter.append(String.format("orgaunitId = %s",
-                                                   subDepartmentsQuery.get(
-                        "orgaunitId").toString()));*/
-                orgaUnitIds.add(subDepartmentsQuery.get(
-                        "orgaunitId").toString());
+                subDepartmentsQuery.get(
+                "orgaunitId").toString()));*/
+                orgaUnitIds.add(subDepartmentsQuery.get("orgaunitId").toString());
             }
         } else {
             /*personsFilter.append(String.format("orgaunitId = %s",
-                                               orgaunit.getID().toString()));*/
+            orgaunit.getID().toString()));*/
             orgaUnitIds.add(orgaunit.getID().toString());
         }
-               
+
         //personsQuery.addFilter(personsFilter.toString());        
         personsQuery.setParameter("orgaunitIds", orgaUnitIds);
 
@@ -182,9 +182,9 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             statusFilter.setValue(statusValue);
         }
 
-        String filter = statusFilter.getFilter();
+        final String filter = statusFilter.getFilter();
         if ((filter != null) && !(filter.trim().isEmpty())) {
-            persons.addFilter(statusFilter.getFilter());
+            persons.addFilter(filter);
         }
     }
 

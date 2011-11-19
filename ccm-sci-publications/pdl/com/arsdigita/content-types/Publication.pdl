@@ -92,14 +92,14 @@ query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
     String language;
 
     do {
-        select cms_pages.item_id, 
-               cms_pages.title, 
-               acs_objects.object_type, 
-               cms_organizationalunits.organizationalunit_id, 
-               ct_publications.year, 
-               cms_persons.surname, 
-               cms_persons.givenname,
-               cms_items.language
+        select distinct on (cms_pages.item_id) cms_pages.item_id, 
+                                               cms_pages.title, 
+                                               acs_objects.object_type, 
+                                               cms_organizationalunits.organizationalunit_id, 
+                                               ct_publications.year, 
+                                               cms_persons.surname, 
+                                               cms_persons.givenname,
+                                               cms_items.language
         from cms_pages 
         join ct_publications on cms_pages.item_id = ct_publications.publication_id 
         join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
@@ -135,14 +135,14 @@ query getIdsOfPublicationsForOrgaUnit {
     Boolean reviewed;
 
     do {
-        select cms_pages.item_id, 
-               acs_objects.object_type, 
-               cms_pages.title, 
-               cms_organizationalunits.organizationalunit_id, 
-               ct_publications.year, 
-               ct_publications.authors,              
-               cms_items.language,
-               ct_publications.reviewed
+        select distinct on (cms_pages.item_id) cms_pages.item_id, 
+                                               acs_objects.object_type, 
+                                               cms_pages.title, 
+                                               cms_organizationalunits.organizationalunit_id, 
+                                               ct_publications.year, 
+                                               ct_publications.authors,              
+                                               cms_items.language,
+                                               ct_publications.reviewed
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id 
         join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
