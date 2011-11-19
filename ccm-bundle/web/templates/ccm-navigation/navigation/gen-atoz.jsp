@@ -38,7 +38,7 @@
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getDefinition().setDescendCategories(false);      
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getDefinition().addOrder("title");
       
-      ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().setPageSize(20);
+      ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().setPageSize(30);
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().addAttribute("objectType");
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().addAttribute( "title");
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().addAttribute( "definition");

@@ -86,8 +86,8 @@ public class Loader extends PackageLoader {
     private Parameter m_categoryFiles = new StringArrayParameter(
                 "com.arsdigita.bundle.category_files",
                 Parameter.REQUIRED,new String[]{
-                    "bundle/categories/sci-nav-domain-1.00.xml",
-                    "bundle/categories/sci-nav-hierarchy-1.00.xml" }
+                    "bundle/categories/gen-nav-domain-1.00.xml",
+                    "bundle/categories/gen-nav-hierarchy-1.00.xml" }
                 );
 
     /**

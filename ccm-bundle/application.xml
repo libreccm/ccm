@@ -8,9 +8,9 @@
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-subsite" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-navigation" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-portalworkspace" version="6.6.1" relation="ge"/>
+    <ccm:requires name="ccm-ldn-subsite" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-search" version="6.6.0" relation="ge"/>
   </ccm:dependencies>

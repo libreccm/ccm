@@ -21,7 +21,6 @@
   <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionRenderer"/>
   <jsp:directive.page import="com.arsdigita.navigation.DataCollectionDefinition"/>
   <jsp:directive.page import="com.arsdigita.navigation.DataCollectionRenderer"/>
-  
 
   <jsp:scriptlet>
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
