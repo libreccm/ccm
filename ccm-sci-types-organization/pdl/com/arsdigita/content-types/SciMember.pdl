@@ -1,8 +1,0 @@
-model com.arsdigita.cms.contenttypes;
-
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.cms.*;
-
-object type SciMember extends GenericPerson {     
-       reference key ( ct_sciorga_members.member_id );
-}
