@@ -8,11 +8,8 @@
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" release="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" release="ge"/>  
-    <ccm:requires name="ccm-cms-publicpersonalprofile" version="6.6.0" release="ge"/>
-    <!-- For now this module depends on the complete organization module. Will 
-    be changed to ccm-sci-types-project when the current ccm-sci-types-organization
-    module has been split -->
-    <ccm:requires name="ccm-sci-types-organization" version="6.6.0" release="ge"/>
+    <ccm:requires name="ccm-cms-publicpersonalprofile" version="6.6.0" release="ge"/>   
+    <ccm:requires name="ccm-sci-types-project" version="6.6.0" release="ge"/>
   </ccm:dependencies>
   <ccm:directories>    
     <ccm:directory name="src"/>
