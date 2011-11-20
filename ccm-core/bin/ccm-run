@@ -17,13 +17,13 @@ if [[ -z "$CATALINA_HOME" ]] ;  then
 
   if [ -d /usr/share/tomcat6 ]
       then
-      CATALINA_HOME = "/usr/share/tomcat6"
+      CATALINA_HOME="/usr/share/tomcat6"
   elif [ -d /usr/share/tomcat-6 ]
       then
-      CATALINA_HOME = "/usr/share/tomcat-6"
+      CATALINA_HOME="/usr/share/tomcat-6"
   elif [ -d /opt/tomcat6 ]
       then
-      CATALINA_HOME = "/opt/tomcat6"
+      CATALINA_HOME="/opt/tomcat6"
   else
       echo
       echo ===================================================
