@@ -4,10 +4,10 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
 object type SciInstitute extends GenericOrganizationalUnit {
-    String[0..1] instituteShortDescription = ct_sci_instituts.shortdescription VARCHAR(5000);
-    String[0..1] instituteDescription = ct_sci_instituts.description CLOB;
+    String[0..1] instituteShortDescription = ct_sci_institutes.shortdescription VARCHAR(5000);
+    String[0..1] instituteDescription = ct_sci_institutes.description CLOB;
 
-    reference key ( ct_sci_instituts.institute_id );
+    reference key ( ct_sci_institutes.institute_id );
 }
 
 query getIdsOfContactsOfSciInstitute {
