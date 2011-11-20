@@ -51,6 +51,8 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
     private final TextFilter titleFilter = new TextFilter(TITLE_PARAM,
                                                           ContentPage.TITLE);
     private final TextFilter authorFilter;
+    private boolean excludeWorkingPapers = false;
+    private boolean onlyWorkingPapers = false;
 
     static {
         config.load();
@@ -64,6 +66,14 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         } else {
             authorFilter = new TextFilter(AUTHOR_PARAM, "authors");
         }
+    }
+
+    public void setExcludeWorkingPapers(final boolean excludeWorkingPapers) {
+        this.excludeWorkingPapers = excludeWorkingPapers;
+    }
+
+    public void setOnlyWorkingPapers(final boolean onlyWorkingPapers) {
+        this.onlyWorkingPapers = onlyWorkingPapers;
     }
 
     public boolean hasData(final GenericOrganizationalUnit orgaunit) {
@@ -105,6 +115,22 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         final Element filtersElem = publicationsElem.newChildElement(
                 "filters");
 
+        if (excludeWorkingPapers && onlyWorkingPapers) {
+            throw new IllegalStateException(
+                    "onlyWorkingPapers and excludeWorkingPapers are both set "
+                    + "to true. This is not possible.");
+        }
+
+        if (excludeWorkingPapers) {
+            publications.addFilter(
+                    "objectType != 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+        }
+
+        if (onlyWorkingPapers) {
+            publications.addFilter(
+                    "objectType = 'com.arsdigita.cms.contenttypes.WorkingPaper'");
+        }
+
         if (((yearValue == null) || yearValue.trim().isEmpty())
             && ((titleValue == null) || titleValue.trim().isEmpty())
             && ((authorValue == null) || authorValue.trim().isEmpty())) {
@@ -123,7 +149,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             publications.setRange(1, config.getGreetingSize() + 1);
 
             yearFilter.setDataQuery(publications, "year");
-            
+
             yearFilter.generateXml(filtersElem);
             titleFilter.generateXml(filtersElem);
             authorFilter.generateXml(filtersElem);
@@ -273,7 +299,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             }
         } else {
             /*publicationsFilter.append(String.format("orgaunitId = %s",
-                                                    orgaunit.getID().toString()));*/
+            orgaunit.getID().toString()));*/
             orgaunitIds.add(orgaunit.getID().toString());
         }
 
@@ -296,7 +322,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             yearFilter.setValue(yearValue);
         }
 
-         if ((yearFilter.getFilter() != null)
+        if ((yearFilter.getFilter() != null)
             && !(yearFilter.getFilter().isEmpty())) {
             publications.addFilter(yearFilter.getFilter());
         }
