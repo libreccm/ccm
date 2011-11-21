@@ -66,6 +66,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
 
         if ((department != null)
+            && (department.getInstituteShortDescription() != null)
             && !department.getInstituteShortDescription().trim().isEmpty()) {
             final Element shortDescElem = parent.newChildElement("shortDesc");
             shortDescElem.setText(department.getInstituteShortDescription());

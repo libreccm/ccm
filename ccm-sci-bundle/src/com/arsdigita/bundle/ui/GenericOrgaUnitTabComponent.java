@@ -59,7 +59,8 @@ public class GenericOrgaUnitTabComponent extends AbstractComponent {
         GenericOrganizationalUnit orgaunit =
                                   (GenericOrganizationalUnit) DomainObjectFactory.
                 newInstance(orgaunitOid);
-        if (!DispatcherHelper.getDispatcherPrefix(request).equals("preview")) {
+        if ((DispatcherHelper.getDispatcherPrefix(request) == null) 
+            || !DispatcherHelper.getDispatcherPrefix(request).equals("preview")) {
             orgaunit = (GenericOrganizationalUnit) orgaunit.getLiveVersion();
         }
 

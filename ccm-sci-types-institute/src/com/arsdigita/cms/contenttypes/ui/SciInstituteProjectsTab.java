@@ -96,7 +96,7 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
         final HttpServletRequest request = state.getRequest();
 
         final Element depProjectsElem = parent.newChildElement(
-                "departmentProjects");
+                "instituteProjects");
         final Element filtersElem = depProjectsElem.newChildElement(
                 "filters");
 
