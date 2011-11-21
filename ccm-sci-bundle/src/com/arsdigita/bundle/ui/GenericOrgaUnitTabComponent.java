@@ -2,6 +2,7 @@ package com.arsdigita.bundle.ui;
 
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.ui.GenericOrgaUnitTab;
 import com.arsdigita.dispatcher.DispatcherHelper;
@@ -59,18 +60,27 @@ public class GenericOrgaUnitTabComponent extends AbstractComponent {
         GenericOrganizationalUnit orgaunit =
                                   (GenericOrganizationalUnit) DomainObjectFactory.
                 newInstance(orgaunitOid);
-        if ((DispatcherHelper.getDispatcherPrefix(request) == null) 
+        if ((DispatcherHelper.getDispatcherPrefix(request) == null)
             || !DispatcherHelper.getDispatcherPrefix(request).equals("preview")) {
             orgaunit = (GenericOrganizationalUnit) orgaunit.getLiveVersion();
         }
 
-        final Element tabsElem = new Element("orgaUnitTabs");
+        final Element contentPanelElem = new Element("cms:contentPanel",
+                                                     CMS.CMS_XML_NS);
+        final Element cmsItemElem = contentPanelElem.newChildElement("cms:item", CMS.CMS_XML_NS);
+        cmsItemElem.addAttribute("oid", orgaunitOid.toString());
+        final Element objTypeElem = cmsItemElem.newChildElement("objectType");
+        objTypeElem.setText(orgaunit.getClass().getName());
+        
+        final Element tabsElem =
+                      contentPanelElem.newChildElement("orgaUnitTabs");//new Element("orgaUnitTabs");
         final Element selectedTabElem = tabsElem.newChildElement("selectedTab");
 
         if (orgaunit != null) {
             tab.generateXml(orgaunit, selectedTabElem, state);
         }
 
-        return tabsElem;
+        //return tabsElem;
+        return contentPanelElem;
     }
 }
