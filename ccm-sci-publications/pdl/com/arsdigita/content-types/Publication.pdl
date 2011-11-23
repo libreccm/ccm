@@ -171,6 +171,7 @@ query getPublicationsForAuthor {
     Integer year;   
     String language;
     Boolean reviewed;
+    String authors;
 
     do {
         select cms_pages.item_id, 
@@ -179,7 +180,8 @@ query getPublicationsForAuthor {
                ct_publications_authorship.person_id, 
                ct_publications.year, 
                cms_items.language,
-               ct_publications.reviewed
+               ct_publications.reviewed,
+               ct_publications.authors
         from cms_pages
         join ct_publications on cms_pages.item_id = ct_publications.publication_id
         join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
@@ -193,6 +195,7 @@ query getPublicationsForAuthor {
         year = ct_publications.year;        
         language = ct_items.language;
         reviewed = ct_publications.reviewed;
+        authors = ct_publications.authors;
     }
 }
 
