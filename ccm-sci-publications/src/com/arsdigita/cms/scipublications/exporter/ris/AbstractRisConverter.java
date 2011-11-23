@@ -41,14 +41,14 @@ public abstract class AbstractRisConverter implements RisConverter {
         if (authors != null) {
             while (authors.next()) {
                 if (authors.isEditor()) {
-                    getRisBuilder().addField(RisFields.AU,
+                    getRisBuilder().addField(RisFields.ED,
                                              String.format("%s,%s",
                                                            authors.getAuthor().
                             getSurname(),
                                                            authors.getAuthor().
                             getGivenName()));
                 } else {
-                    getRisBuilder().addField(RisFields.ED,
+                    getRisBuilder().addField(RisFields.AU,
                                              String.format("%s,%s",
                                                            authors.getAuthor().
                             getSurname(),
