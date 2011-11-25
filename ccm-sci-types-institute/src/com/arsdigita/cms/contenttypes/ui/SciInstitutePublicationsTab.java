@@ -138,7 +138,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
 
             publicationsElem.newChildElement("greeting");
 
-            publications.addOrder("year");
+            publications.addOrder("year desc");
             if (config.getOneRowPerAuthor()) {
                 publications.addOrder("surname");
             } else {
@@ -374,7 +374,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(publication);
         generator.setUseExtraXml(false);
-        generator.setItemElemName("publication", "");
+        generator.setItemElemName("publications", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format(
                 "Generated XML for publication '%s' in %d ms.",

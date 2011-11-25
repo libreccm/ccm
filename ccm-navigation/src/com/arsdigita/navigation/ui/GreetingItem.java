@@ -66,7 +66,7 @@ public class GreetingItem extends AbstractComponent {
             return null;
         }
 
-        if (!ContentItem.VERSION.equals(item.getVersion())) {
+        if (!ContentItem.LIVE.equals(item.getVersion())) {
             item = item.getLiveVersion();
         }
 

@@ -175,7 +175,7 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
             subDepartmentsQuery.setParameter("orgaunitId",
                                              orgaunit.getID().toString());
             subDepartmentsQuery.setParameter("assocType",
-                                             SciInstituteProjectsStep.ASSOC_TYPE);
+                                             SciInstituteDepartmentsStep.ASSOC_TYPE);
 
             while (subDepartmentsQuery.next()) {
                 /*if (projectsFilter.length() > 0) {

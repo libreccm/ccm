@@ -112,7 +112,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
             depPublicationsElem.newChildElement("greeting");
 
-            publications.addOrder("year");
+            publications.addOrder("year desc");
             if (config.getOneRowPerAuthor()) {
                 publications.addOrder("surname");
             } else {
@@ -172,6 +172,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
             publications.addOrder("year asc");
             }*/
 
+            publications.addOrder("year desc");
             if (config.getOneRowPerAuthor()) {
                 publications.addOrder("surname");
                 publications.addOrder("title");
@@ -180,7 +181,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
                 publications.addOrder("title");
             }
 
-            yearFilter.setDataQuery(publications, "year");
+            yearFilter.setDataQuery(getData(orgaunit), "year");            
             
             applyYearFilter(publications, request);
             applyTitleFilter(publications, request);
@@ -351,7 +352,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(publication);
         generator.setUseExtraXml(false);
-        generator.setItemElemName("publication", "");
+        generator.setItemElemName("publications", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format(
                 "Generated XML for publication '%s' in %d ms.",
