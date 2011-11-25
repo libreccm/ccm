@@ -54,6 +54,8 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
         if (config.isShowingHead()) {
             generateHeadOfInstituteXml(institute, instituteSummaryElem, state);
         }
+        
+        generateDepartmentsXml(institute, instituteSummaryElem, state);
 
         logger.debug(String.format("Generated XML for summary tab of institute "
                                    + "'%s' in %d ms.",

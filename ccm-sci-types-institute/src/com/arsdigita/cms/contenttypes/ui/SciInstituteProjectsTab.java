@@ -99,21 +99,19 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
                 "instituteProjects");
         final Element filtersElem = depProjectsElem.newChildElement(
                 "filters");
-
-        statusFilter.generateXml(filtersElem);
-
+        
         if (((request.getParameter(STATUS_PARAM) == null)
              || (request.getParameter(STATUS_PARAM).trim().isEmpty())
-             || (statusFilter.getFilter() == null)
-             || (statusFilter.getFilter().trim().isEmpty()))
+           )
             && ((request.getParameter(TITLE_PARAM) == null)
-                || request.getParameter(TITLE_PARAM).trim().isEmpty())
-            || (titleFilter.getFilter() == null)
-            || !(titleFilter.getFilter().trim().isEmpty())) {
+                || request.getParameter(TITLE_PARAM).trim().isEmpty()
+                )) {
 
+            statusFilter.generateXml(filtersElem);
+            
             depProjectsElem.newChildElement("greeting");
 
-            projects.addOrder("projectBegin");
+            projects.addOrder("projectBegin desc");
             projects.addOrder("title");
 
             projects.setRange(1, config.getGreetingSize() + 1);
@@ -127,6 +125,8 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
             applyStatusFilter(projects, request);
             applyTitleFilter(projects, request);
 
+            statusFilter.generateXml(filtersElem);
+            
             final Paginator paginator = new Paginator(request,
                                                       (int) projects.size(),
                                                       config.getPageSize());
@@ -188,7 +188,7 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
             }
         } else {
             /*projectsFilter.append(String.format("orgaunitId = %s",
-                                                orgaunit.getID().toString()));*/
+            orgaunit.getID().toString()));*/
             orgaunitIds.add(orgaunit.getID().toString());
         }
 

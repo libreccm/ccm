@@ -100,20 +100,16 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         final Element filtersElem = depProjectsElem.newChildElement(
                 "filters");
 
-        statusFilter.generateXml(filtersElem);
-
         if (((request.getParameter(STATUS_PARAM) == null)
-             || (request.getParameter(STATUS_PARAM).trim().isEmpty())
-             || (statusFilter.getFilter() == null)
-             || (statusFilter.getFilter().trim().isEmpty()))
+             || (request.getParameter(STATUS_PARAM).trim().isEmpty()))
             && ((request.getParameter(TITLE_PARAM) == null)
-                || request.getParameter(TITLE_PARAM).trim().isEmpty())
-                || (titleFilter.getFilter() == null)
-                || !(titleFilter.getFilter().trim().isEmpty())) {
+                || request.getParameter(TITLE_PARAM).trim().isEmpty())) {
+
+            statusFilter.generateXml(filtersElem);
 
             depProjectsElem.newChildElement("greeting");
 
-            projects.addOrder("projectBegin");
+            projects.addOrder("projectBegin desc");
             projects.addOrder("title");
 
             projects.setRange(1, config.getGreetingSize() + 1);
@@ -123,9 +119,10 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         } else {
             projects.addOrder("title");
 
-
             applyStatusFilter(projects, request);
             applyTitleFilter(projects, request);
+
+            statusFilter.generateXml(filtersElem);
 
             final Paginator paginator = new Paginator(request,
                                                       (int) projects.size(),
@@ -138,7 +135,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
             paginator.applyLimits(projects);
             paginator.generateXml(depProjectsElem);
         }
-              
+
         while (projects.next()) {
             generateProjectXml((BigDecimal) projects.get("projectId"),
                                depProjectsElem,
@@ -251,7 +248,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         final XmlGenerator generator = new XmlGenerator(project);
         generator.setItemElemName("project", "");
         generator.setUseExtraXml(false);
-        generator.generateXML(state, parent, "");        
+        generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for project '%s' in %d ms.",
                                    project.getName(),
                                    System.currentTimeMillis() - start));
