@@ -45,9 +45,10 @@ public class LanguageAwareObjectCopier extends ObjectCopier {
                 m_traversed.add(selem, reverse);
 
                 DomainObject telem = copy(source, target, selem, prop);
-                if (telem instanceof ContentPage) {
-                    ContentPage tpage = (ContentPage) telem;                    
-                    telem = tpage.getContentBundle().getInstance(language);
+                if ((telem instanceof ContentPage) 
+                    && ((ContentPage) telem).getContentBundle() != null) {                    
+                    telem = ((ContentPage) telem).getContentBundle().getInstance(
+                            language);
                 }
 
                 DataObject tgtLink = null;

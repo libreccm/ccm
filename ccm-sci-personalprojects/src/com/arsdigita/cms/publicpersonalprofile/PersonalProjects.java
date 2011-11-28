@@ -120,7 +120,8 @@ public class PersonalProjects implements ContentGenerator {
         final Calendar today = new GregorianCalendar();
         final Date todayDate = today.getTime();
         for (SciProject project : projects) {
-            if (project.getEnd().before(todayDate)) {
+            if ((project.getEnd() != null) 
+                && project.getEnd().before(todayDate)) {
                 finishedProjects.add(project);
             } else {
                 currentProjects.add(project);

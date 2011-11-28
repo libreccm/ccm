@@ -131,7 +131,9 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                     "objectType = 'com.arsdigita.cms.contenttypes.WorkingPaper'");
         }
 
-        if (((yearValue == null) || yearValue.trim().isEmpty())
+        if (((yearValue == null)
+             || yearValue.trim().isEmpty()
+             || SelectFilter.NONE.equals(yearValue))
             && ((titleValue == null) || titleValue.trim().isEmpty())
             && ((authorValue == null) || authorValue.trim().isEmpty())) {
             // && ((sortValue == null) || sortValue.trim().isEmpty())) {
@@ -146,14 +148,13 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             }
             publications.addOrder("title");
 
-            publications.setRange(1, config.getGreetingSize() + 1);
-
-            yearFilter.setDataQuery(publications, "year");
+            yearFilter.setDataQuery(getData(orgaunit), "year");
 
             yearFilter.generateXml(filtersElem);
             titleFilter.generateXml(filtersElem);
             authorFilter.generateXml(filtersElem);
 
+            publications.setRange(1, config.getGreetingSize() + 1);
         } else {
 
             /*if (SORT_BY_AUTHOR.equals(sortValue)) {
@@ -206,7 +207,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                 publications.addOrder("title");
             }
 
-            yearFilter.setDataQuery(publications, "year");
+            yearFilter.setDataQuery(getData(orgaunit), "year");
 
             applyYearFilter(publications, request);
             applyTitleFilter(publications, request);
@@ -216,8 +217,8 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                                                       (int) publications.size(),
                                                       config.getPageSize());
 
-            if (paginator.getPageCount() > config.getEnableSearchLimit()) {
-                yearFilter.generateXml(filtersElem);
+            yearFilter.generateXml(filtersElem);
+            if (paginator.getPageCount() > config.getEnableSearchLimit()) {                
                 titleFilter.generateXml(filtersElem);
                 authorFilter.generateXml(filtersElem);
             }

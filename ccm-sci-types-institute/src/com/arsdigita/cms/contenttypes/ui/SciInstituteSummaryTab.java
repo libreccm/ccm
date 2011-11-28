@@ -258,6 +258,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
+        generator.setItemElemName("head", "");
         generator.setUseExtraXml(false);
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for member '%s' in %d ms.",
