@@ -64,7 +64,7 @@ public class LanguageUtil {
      *        at the server startup
      */
     public static void setSupportedLanguages(String languages) {
-        if (Kernel.getConfig().languageIndependentItems() && !languages.contains(GlobalizationHelper.LANG_INDEPENDENT)) {
+        if (Kernel.getConfig().languageIndependentItems() && languages.indexOf(GlobalizationHelper.LANG_INDEPENDENT) >= 0) {
             s_languages = languages.replace(" ", "").trim() + "," + GlobalizationHelper.LANG_INDEPENDENT;
         } else {
             s_languages = languages.replace(" ", "").trim();
