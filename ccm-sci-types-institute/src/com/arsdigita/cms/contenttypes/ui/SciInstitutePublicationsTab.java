@@ -207,19 +207,40 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                 publications.addOrder("title");
             }
 
-            yearFilter.setDataQuery(getData(orgaunit), "year");
+            final DataQuery yearQuery = getData(orgaunit);
+            yearFilter.setDataQuery(yearQuery, "year");
 
             applyYearFilter(publications, request);
             applyTitleFilter(publications, request);
             applyAuthorFilter(publications, request);
+            
+            applyTitleFilter(yearQuery, request);
+            applyAuthorFilter(yearQuery, request);
+
+            if (publications.isEmpty()) {
+                yearFilter.generateXml(filtersElem);
+                titleFilter.generateXml(filtersElem);
+                authorFilter.generateXml(filtersElem);
+
+                publicationsElem.newChildElement("noPublications");
+
+                return;
+            }
 
             final Paginator paginator = new Paginator(request,
                                                       (int) publications.size(),
                                                       config.getPageSize());
 
             yearFilter.generateXml(filtersElem);
-            if (paginator.getPageCount() > config.getEnableSearchLimit()) {                
+            if ((paginator.getPageCount() > config.getEnableSearchLimit())
+                || ((request.getParameter(TITLE_PARAM) != null)
+                    && !(request.getParameter(TITLE_PARAM).trim().isEmpty()))) {
                 titleFilter.generateXml(filtersElem);
+            }
+
+            if ((paginator.getPageCount() > config.getEnableSearchLimit())
+                || ((request.getParameter(AUTHOR_PARAM) != null)
+                    && !(request.getParameter(AUTHOR_PARAM).trim().isEmpty()))) {
                 authorFilter.generateXml(filtersElem);
             }
 

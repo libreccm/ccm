@@ -107,6 +107,7 @@ public class SelectFilter implements Filter {
 
         filter = parent.newChildElement("filter");
         filter.addAttribute("type", "select");
+        filter.addAttribute("label", label);
 
         if(options.isEmpty()) {
             return;
@@ -123,8 +124,7 @@ public class SelectFilter implements Filter {
         } else {
             selected = value;
         }
-
-        filter.addAttribute("label", label);
+        
         filter.addAttribute("selected", selected);
 
         if (emptyDefaultOption) {

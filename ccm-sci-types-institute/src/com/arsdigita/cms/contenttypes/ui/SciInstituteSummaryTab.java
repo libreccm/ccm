@@ -190,7 +190,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
                                                              institute.
                 getSubordinateOrgaUnits();
         departments.addFilter(
-                String.format("%s = '%s",
+                String.format("%s = '%s'",
                               GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE,
                               SciInstituteDepartmentsStep.ASSOC_TYPE));
 

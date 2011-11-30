@@ -99,18 +99,17 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
                 "instituteProjects");
         final Element filtersElem = depProjectsElem.newChildElement(
                 "filters");
-        
+
         if (((request.getParameter(STATUS_PARAM) == null)
-             || (request.getParameter(STATUS_PARAM).trim().isEmpty())
-           )
+             || (request.getParameter(STATUS_PARAM).trim().isEmpty()))
             && ((request.getParameter(TITLE_PARAM) == null)
-                || request.getParameter(TITLE_PARAM).trim().isEmpty()
-                )) {
+                || request.getParameter(TITLE_PARAM).trim().isEmpty())) {
 
             statusFilter.generateXml(filtersElem);
-            
+
             depProjectsElem.newChildElement("greeting");
 
+            projects.addOrder("projectEnd desc");
             projects.addOrder("projectBegin desc");
             projects.addOrder("title");
 
@@ -121,28 +120,35 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
         } else {
             projects.addOrder("title");
 
-
             applyStatusFilter(projects, request);
             applyTitleFilter(projects, request);
 
             statusFilter.generateXml(filtersElem);
-            
-            final Paginator paginator = new Paginator(request,
-                                                      (int) projects.size(),
-                                                      config.getPageSize());
 
-            if (paginator.getPageCount() > config.getEnableSearchLimit()) {
+            if (projects.isEmpty()) {
                 titleFilter.generateXml(filtersElem);
+                
+                depProjectsElem.newChildElement("noProjects");
+            } else {
+                final Paginator paginator = new Paginator(request,
+                                                          (int) projects.size(),
+                                                          config.getPageSize());
+
+                if ((paginator.getPageCount() > config.getEnableSearchLimit())
+                    || ((request.getParameter(TITLE_PARAM) != null)
+                        || !(request.getParameter(TITLE_PARAM).trim().isEmpty()))) {
+                    titleFilter.generateXml(filtersElem);
+                }
+
+                paginator.applyLimits(projects);
+                paginator.generateXml(depProjectsElem);
             }
 
-            paginator.applyLimits(projects);
-            paginator.generateXml(depProjectsElem);
-        }
-
-        while (projects.next()) {
-            generateProjectXml((BigDecimal) projects.get("projectId"),
-                               depProjectsElem,
-                               state);
+            while (projects.next()) {
+                generateProjectXml((BigDecimal) projects.get("projectId"),
+                                   depProjectsElem,
+                                   state);
+            }
         }
 
         logger.debug(String.format("Generated projects list of department '%s' "
