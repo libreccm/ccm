@@ -76,10 +76,10 @@ public class Loader extends PackageLoader {
      * @return
      */
     private static ApplicationType setupForumAppType() {
-        ApplicationType type =
-                        ApplicationType.createApplicationType(Forum.PACKAGE_TYPE,
-                                                              "Discussion Forum Application",
-                                                              Forum.BASE_DATA_OBJECT_TYPE);
+        ApplicationType type =  ApplicationType
+                                .createApplicationType(Forum.PACKAGE_TYPE,
+                                                       "Discussion Forum Application",
+                                                       Forum.BASE_DATA_OBJECT_TYPE);
         type.setDescription("An electronic bulletin board system.");
         return type;
     }

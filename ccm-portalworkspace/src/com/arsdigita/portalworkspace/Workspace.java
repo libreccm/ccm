@@ -215,33 +215,38 @@ public class Workspace extends Application {
     }
 
     /**
-     * Does the real work to create a workspace as a legacy free application
-     * in the storage (db)
+     * Does the real work to create a workspace instance as a
+     * legacy free application in the storage (db)
      *
-     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the
-     * process of application creation uses it as createGroupContainer
      *
-     * @param url
-     * @param title
-     * @param layout
-     * @param parent
-     * @param isPublic whether to create a workspace group
+     * @param url of the application (last part, its "name")
+     * @param title the application to be created
+     * @param layout layout to use for this instance
+     * @param parent, url of the parent part if any, null otherwise 
+     * @param isPublic whether the group that will be created for this instance
+     *                 should be created with the public user as a member
      * @return
      */
     public static Workspace createWorkspace(ApplicationType type,
-                                            String url, String title,
+                                            String url, 
+                                            String title,
                                             PageLayout layout,
                                             Application parent,
                                             boolean isPublic) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Creating group workspace, isPublic:" + isPublic
-                        + " on " + url + " with parent "
-                        + (parent == null ? "none" : parent.getOID().toString()));
+            s_log.debug("Creating portal workspace on " + url
+                        + " with parent "
+                        + (parent == null ? "none" : parent.getOID().toString())
+                        + "and public access is: " + isPublic);
         }
+        
         if (layout==null) layout = PageLayout.getDefaultLayout();
 
+        /* A container group is always created fo a portal workspace instance. */
+        // MODIFIED
+        /* A container group is NOT created fo a portal workspace instance here. */
         Workspace workspace = (Workspace) Application.createApplication(
-                         type, url, title, parent, isPublic );
+                         type, url, title, parent, true );
         workspace.setupGroups(title, isPublic);
         workspace.setDefaultLayout(layout);
         return workspace;
@@ -315,13 +320,17 @@ public class Workspace extends Application {
     @Override
     public void beforeSave() {
         // If no permissions are configured, then setup empty groups
-        if (get(PARTY) == null) {
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("No party is set, creating shared workspace "
-                            + getOID());
-            }
-            setupGroups(getTitle(), false);
-        }
+//  DOES NOT WORK AS DESIGNED!
+//  Is always invoked BEFORE any group setup can take place therefore always
+//  dreating an empty (and doubled) group.
+//  (pb 2011-11)
+//      if (get(PARTY) == null) {
+//          if (s_log.isDebugEnabled()) {
+//              s_log.debug("No party is set, creating shared workspace "
+//                          + getOID());
+//          }
+//          setupGroups(getTitle(), false);
+//      }
         // Setup the default layout.
         if (isNew() && getDefaultLayout() == null) {
             setDefaultLayout(PageLayout.getDefaultLayout());
@@ -384,6 +393,7 @@ public class Workspace extends Application {
      * @param isPublic
      */
     private void setupGroups(String title, boolean isPublic) {
+        
         Group members = new Group();
         members.setName(title);
         members.save();
@@ -394,7 +404,7 @@ public class Workspace extends Application {
         // own groups so doesn't need a hierarchy and (b) hierarchy would
         // mean for a given workspace, role would be on the same level
         // as member groups of sub workspaces - messy & confusing
-        getApplicationType().getGroup().addSubgroup(members);
+  //    getApplicationType().getGroup().addSubgroup(members);
 
         Role admins = members.createRole("Administrators");
         admins.save();
@@ -413,6 +423,12 @@ public class Workspace extends Application {
             members.addMemberOrSubgroup(thePublic);
             members.save();
         }
+
+ //     getApplicationType().getGroup().addSubgroup(members);
+        Group container = getGroup();  // Application.getGroup(): get group
+                                       // associated with this application
+        container.addSubgroup(members);
+        container.save();
 
         setParty(members);
     }

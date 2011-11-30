@@ -171,11 +171,13 @@ public class Forum extends Application {
     }
 
     /**
+     * Convenient class for creation of a standard forum. Property "Moderated"
+     * is set to false. 
      * 
      * @param urlName of the forum to  be created
      * @param title of forum to be created
      * @param parent object of forum to be created
-     * @return
+     * @return Forum instance
      */
     public static Forum create(String urlName, String title,
                                Application parent) {
@@ -198,10 +200,12 @@ public class Forum extends Application {
                                Application parent, boolean moderated) {
         s_log.debug("creating forum " + title);
 
+        /* Create an aplication instance including a container group in the
+         * user administration (5. parameter true) named according to the 
+         * forum title.                                                      */
         Forum forum = (Forum) Application.createApplication(
-                BASE_DATA_OBJECT_TYPE,
-                urlName,
-                title, parent, true);
+                                          BASE_DATA_OBJECT_TYPE, urlName,
+                                          title, parent, true);
 
         forum.setModerated(moderated);
         forum.setPublic(true);

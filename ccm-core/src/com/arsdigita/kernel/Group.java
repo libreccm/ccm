@@ -56,6 +56,7 @@ public class Group extends Party {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.kernel.Group";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -165,7 +166,7 @@ public class Group extends Party {
      * Currently, this is the same as getMemberUsers().  However, in
      * the future we may allow other types of parties to be members
      * of groups (specifically, we may allow groups to be members of groups).
-     * <P>
+     * 
      * NOTE: Any prior calls to addMember() or removeMember() will not
      * affect the resulting collection unless save() has been called after
      * adding or removing the member(s).
@@ -178,7 +179,7 @@ public class Group extends Party {
 
     /**
      * Returns a collection of users that are direct members of this group.
-     * <P>
+     * 
      * NOTE: Any prior calls to addMember() or removeMember() will not
      * affect the resulting collection unless save() has been called after
      * adding or removing the member(s).

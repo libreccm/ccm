@@ -18,13 +18,10 @@
 
 package com.arsdigita.portalworkspace;
 
-// import com.arsdigita.domain.DomainObject;
-// import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.loader.PackageLoader;
-// import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portalworkspace.portlet.ApplicationDirectoryPortlet;
 import com.arsdigita.portalworkspace.portlet.ContentDirectoryPortlet;
 import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
@@ -41,7 +38,6 @@ import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Application;
-// import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 
 import org.apache.log4j.Logger;
@@ -74,10 +70,12 @@ public class Loader extends PackageLoader {
     private StringParameter m_title = new StringParameter(
                                 "com.arsdigita.portalworkspace.default_title",
                                 Parameter.REQUIRED,
-			        "Portal Homepage");
+                                "Portal Homepage");
 
-    /** Actually a kind of misnomer. In the creation process it is used to
-     *  indicate whether a Containergroup should be created.
+    /** 
+     * If true the group created for the instance of portal workspace will
+     * contain the public user as a member.
+     * NOTE: Current implementation actually doesn't check for access permission!
      */
     private BooleanParameter m_isPublic = new BooleanParameter(
 			"com.arsdigita.portalworkspace.default_is_public",
@@ -122,9 +120,13 @@ public class Loader extends PackageLoader {
     }
 
     /**
+     * Prepares creation of application type by checking proper formatting of
+     * applications url and determining whether a parent is specified as part
+     * of the url.
      * 
-     * @param url
-     * @param isPublic
+     * @param url Sting containing the full url (including parents url in any
+     * @param isPublic if true the group created for this instance will include
+     *                 the public user as a member
      * @param title
      */
     private void createApplication(String url, Boolean isPublic, String title) {
@@ -138,13 +140,16 @@ public class Loader extends PackageLoader {
             s_log.debug("process url " + url);
             Assert.isTrue(url.startsWith("/"), "url starts not with /");
             Assert.isTrue(url.endsWith("/"), "url ends not with /");
-            Assert.isTrue(!url.equals("/"), "url is not /");
+            Assert.isTrue(!url.equals("/"), "url is just /");
 
-            int last = url.lastIndexOf("/", url.length() - 2);
-            s_log.debug("last slash at " + last);
+            int last = url.lastIndexOf("/"               // last = 0 is leading slash
+                                      ,url.length() - 2);// trailing slash excluded
+            s_log.debug("last slash at " + last);        // last > 0 : multipe elements
+            
             Application parent = null;
             String name = null;
-            if (last > 0) {
+            
+            if (last > 0) {         // url has more than 1 part = has a parent
                 String base = url.substring(0, last + 1);
                 s_log.debug("Finding parent at " + base);
                 parent = Application.retrieveApplicationForPath(base);
@@ -154,9 +159,7 @@ public class Loader extends PackageLoader {
             }
             s_log.debug("node name is " + name);
 
-            // set up the portal default node (instance)
-            //  Workspace workspace = Workspace.createWorkspace(name, title,
-            //      parent, Boolean.TRUE.equals(isPublic));
+            // set up the portal workspace default node (instance)
             Workspace workspace = Workspace.createWorkspace(type, name, title,
 					null, parent, Boolean.TRUE.equals(isPublic));
 			
@@ -175,16 +178,21 @@ public class Loader extends PackageLoader {
      * to lower case.
      * "Portal Workspace" will become "portal-workspace".
      *
-     * @return
+     * @return created ApplicationType 
      */
     private ApplicationType setupWorkspaceType() {
 
         s_log.debug("Creating an application type for portal workspace. " +
                     "Base Data Object Type: " + Workspace.BASE_DATA_OBJECT_TYPE);
 
-        ApplicationType type = new ApplicationType( "Portal Workspace",
-                                                Workspace.BASE_DATA_OBJECT_TYPE );
+        /* Create legacy-free application type                                */
+        ApplicationType type = new ApplicationType( 
+                                       "Portal Workspace",
+                                        Workspace.BASE_DATA_OBJECT_TYPE );
         type.setDescription("Portal based collaborative workspaces");
+        /* Create an application type specific group in user administration   *
+         * which serves as a container for subgroups, each subgroup coupled   *
+         * to an application (instances) of this type.                        */
         type.createGroup();
         return type;
 

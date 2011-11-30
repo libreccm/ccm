@@ -98,7 +98,7 @@ public class Initializer extends CompoundInitializer {
                     }
                 });
 
-	e.getFactory().registerInstantiator(
+        e.getFactory().registerInstantiator(
                 WorkspacePage.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
                     @Override

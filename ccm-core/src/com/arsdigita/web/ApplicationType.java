@@ -84,6 +84,13 @@ public class ApplicationType extends ResourceType {
         super(dataObjectType);
     }
 
+    /**
+     * Convenient class constructs an ApplicationType object which does not
+     * create a container group. 
+     * @param objectType
+     * @param title
+     * @param applicationObjectType 
+     */
     protected ApplicationType(final String objectType,
                               final String title,
                               final String applicationObjectType) {
@@ -118,6 +125,7 @@ public class ApplicationType extends ResourceType {
         setApplicationObjectType(applicationObjectType);
 
         setDefaults();
+        
         if (createContainerGroup) {
             createGroup();
         }
@@ -705,13 +713,20 @@ public class ApplicationType extends ResourceType {
 	setAssociation("containerGroup", group);
     }
     
+    /**
+     * Create a group in user administration for this application type. This
+     * group is used as a container (hence the name in pdl/table col) for
+     * subgroup for application instances of this type. 
+     * It is named using the application types title followed by the constant
+     * "groups". No localisation yet!
+     */
     public void createGroup () {
-    	Assert.isEqual(getGroup(), null, "Group has already been created for " +
-                     "Application Type " + getTitle());
-    	Group group = new Group();
-    	group.setName(getTitle() + " Groups");
-	setAssociation("containerGroup", group);
-    
+        Assert.isEqual(getGroup(), null, "Group has already been created for " +
+                                         "Application Type " + getTitle());
+        Group group = new Group();
+        group.setName(getTitle() + " Groups");
+        setAssociation("containerGroup", group);
+
     }
     
     /**
