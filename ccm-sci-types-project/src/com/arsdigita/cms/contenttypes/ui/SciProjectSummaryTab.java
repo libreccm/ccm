@@ -78,6 +78,10 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
             generateSubProjectsXml(project, projectSummaryElem, state);
         }
 
+        if (config.isShowingFunding()) {
+            generateFundingXml(project, projectSummaryElem, state);
+        }
+
         logger.debug(String.format("Generated XML for summary tab of project "
                                    + "'%s' in %d ms.",
                                    orgaunit.getName(),
@@ -400,6 +404,23 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                    + "%d ms",
                                    subProject.getName(),
                                    System.currentTimeMillis() - start));
+    }
+
+    protected void generateFundingXml(final SciProject project,
+                                      final Element parent,
+                                      final PageState state) {
+        if ((project.getFunding() != null)
+            && !project.getFunding().trim().isEmpty()) {
+            final Element fundingElem = parent.newChildElement("funding");
+            fundingElem.setText(project.getFunding());
+        }
+
+        if ((project.getFundingVolume() != null)
+            && !project.getFundingVolume().trim().isEmpty()) {
+            final Element fundingVolumeElem = parent.newChildElement(
+                    "fundingVolume");
+            fundingVolumeElem.setText(project.getFundingVolume());
+        }
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {

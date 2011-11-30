@@ -17,6 +17,7 @@ public class SciProjectSummaryTabConfig extends AbstractConfig {
     private final Parameter showContacts;
     private final Parameter showInvolvedOrgas;
     private final Parameter showSubProjects;
+    private final Parameter showFunding;
 
     public SciProjectSummaryTabConfig() {
         showMembers =
@@ -49,11 +50,18 @@ public class SciProjectSummaryTabConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 true);
         
+        showFunding =
+        new BooleanParameter("com.arsdigita.cms.contenttypes.sciproject.summarytab.funding.show",
+                Parameter.REQUIRED,
+                true);
+        
+        
         register(showMembers);
         register(mergeMembers);
         register(showContacts);
         register(showInvolvedOrgas);
         register(showSubProjects);
+        register(showFunding);
         
         loadInfo();
     }
@@ -76,5 +84,9 @@ public class SciProjectSummaryTabConfig extends AbstractConfig {
     
     public final boolean isShowingSubProjects() {
         return (Boolean) get(showSubProjects);
+    }
+    
+    public final boolean isShowingFunding() {
+        return (Boolean) get(showFunding);
     }
 }
