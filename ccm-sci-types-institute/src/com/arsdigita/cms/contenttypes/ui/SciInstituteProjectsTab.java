@@ -19,6 +19,7 @@ import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -32,19 +33,19 @@ import org.apache.log4j.Logger;
 public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
     private final Logger logger =
-                         Logger.getLogger(SciInstituteProjectsTab.class);
+            Logger.getLogger(SciInstituteProjectsTab.class);
     private final static SciInstituteProjectsTabConfig config =
-                                                       new SciInstituteProjectsTabConfig();
+            new SciInstituteProjectsTabConfig();
     private static final String STATUS_PARAM = "projectStatus";
     private static final String TITLE_PARAM = "projectTitle";
     private final CompareFilter statusFilter = new CompareFilter(STATUS_PARAM,
-                                                                 "projectEnd",
-                                                                 false,
-                                                                 false,
-                                                                 false,
-                                                                 true);
+            "projectEnd",
+            false,
+            false,
+            false,
+            true);
     private final TextFilter titleFilter = new TextFilter(TITLE_PARAM,
-                                                          ContentPage.TITLE);
+            ContentPage.TITLE);
 
     static {
         config.load();
@@ -53,18 +54,18 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
     public SciInstituteProjectsTab() {
         final Calendar now = new GregorianCalendar();
         final String today = String.format("%d-%02d-%02d",
-                                           now.get(Calendar.YEAR),
-                                           now.get(Calendar.MONTH) + 1,
-                                           now.get(Calendar.DAY_OF_MONTH));
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH) + 1,
+                now.get(Calendar.DAY_OF_MONTH));
 
         statusFilter.addOption("currentProjects",
-                               CompareFilter.Operators.GTEQ,
-                               today,
-                               true);
+                CompareFilter.Operators.GTEQ,
+                today,
+                true);
         statusFilter.addOption("finishedProjects",
-                               CompareFilter.Operators.LT,
-                               today,
-                               false);
+                CompareFilter.Operators.LT,
+                today,
+                false);
     }
 
     public boolean hasData(final GenericOrganizationalUnit orgaunit) {
@@ -81,16 +82,16 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
         final boolean result = !getData(orgaunit).isEmpty();
 
         logger.debug(String.format("Needed %d ms to determine if institute "
-                                   + "'%s' has projects.",
-                                   System.currentTimeMillis() - start,
-                                   orgaunit.getName()));
+                + "'%s' has projects.",
+                System.currentTimeMillis() - start,
+                orgaunit.getName()));
 
         return result;
     }
 
     public void generateXml(final GenericOrganizationalUnit orgaunit,
-                            final Element parent,
-                            final PageState state) {
+            final Element parent,
+            final PageState state) {
         final long start = System.currentTimeMillis();
         final DataQuery projects = getData(orgaunit);
         final HttpServletRequest request = state.getRequest();
@@ -101,8 +102,8 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
                 "filters");
 
         if (((request.getParameter(STATUS_PARAM) == null)
-             || (request.getParameter(STATUS_PARAM).trim().isEmpty()))
-            && ((request.getParameter(TITLE_PARAM) == null)
+                || (request.getParameter(STATUS_PARAM).trim().isEmpty()))
+                && ((request.getParameter(TITLE_PARAM) == null)
                 || request.getParameter(TITLE_PARAM).trim().isEmpty())) {
 
             statusFilter.generateXml(filtersElem);
@@ -111,6 +112,10 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
             projects.addOrder("projectEnd desc");
             projects.addOrder("projectBegin desc");
+            //projects.addOrder("projectEnd desc nulls last");
+            //projects.addOrder("projectBegin desc nulls last");
+            //projects.addOrderWithNull("projectEnd", null, false);
+            //projects.addOrderWithNull("projectBegin", null, false);
             projects.addOrder("title");
 
             projects.setRange(1, config.getGreetingSize() + 1);
@@ -127,15 +132,17 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
             if (projects.isEmpty()) {
                 titleFilter.generateXml(filtersElem);
-                
+
                 depProjectsElem.newChildElement("noProjects");
+
+                return;
             } else {
                 final Paginator paginator = new Paginator(request,
-                                                          (int) projects.size(),
-                                                          config.getPageSize());
+                        (int) projects.size(),
+                        config.getPageSize());
 
                 if ((paginator.getPageCount() > config.getEnableSearchLimit())
-                    || ((request.getParameter(TITLE_PARAM) != null)
+                        || ((request.getParameter(TITLE_PARAM) != null)
                         || !(request.getParameter(TITLE_PARAM).trim().isEmpty()))) {
                     titleFilter.generateXml(filtersElem);
                 }
@@ -143,18 +150,18 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
                 paginator.applyLimits(projects);
                 paginator.generateXml(depProjectsElem);
             }
+        }
 
-            while (projects.next()) {
-                generateProjectXml((BigDecimal) projects.get("projectId"),
-                                   depProjectsElem,
-                                   state);
-            }
+        while (projects.next()) {
+            generateProjectXml((BigDecimal) projects.get("projectId"),
+                    depProjectsElem,
+                    state);
         }
 
         logger.debug(String.format("Generated projects list of department '%s' "
-                                   + "in %d ms.",
-                                   orgaunit.getName(),
-                                   System.currentTimeMillis() - start));
+                + "in %d ms.",
+                orgaunit.getName(),
+                System.currentTimeMillis() - start));
     }
 
     protected DataQuery getData(final GenericOrganizationalUnit orgaunit) {
@@ -176,12 +183,12 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
         if (config.isMergingProjects()) {
             final DataQuery subDepartmentsQuery =
-                            SessionManager.getSession().retrieveQuery(
+                    SessionManager.getSession().retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             subDepartmentsQuery.setParameter("orgaunitId",
-                                             orgaunit.getID().toString());
+                    orgaunit.getID().toString());
             subDepartmentsQuery.setParameter("assocType",
-                                             SciInstituteDepartmentsStep.ASSOC_TYPE);
+                    SciInstituteDepartmentsStep.ASSOC_TYPE);
 
             while (subDepartmentsQuery.next()) {
                 /*if (projectsFilter.length() > 0) {
@@ -211,56 +218,55 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
     }
 
     private void applyStatusFilter(final DataQuery projects,
-                                   final HttpServletRequest request) {
+            final HttpServletRequest request) {
         final String statusValue = request.getParameter(STATUS_PARAM);
         if ((statusValue != null) && !(statusValue.trim().isEmpty())) {
             statusFilter.setValue(statusValue);
         }
 
         if ((statusFilter.getFilter() != null)
-            && !(statusFilter.getFilter().trim().isEmpty())) {
+                && !(statusFilter.getFilter().trim().isEmpty())) {
             projects.addFilter(statusFilter.getFilter());
         }
     }
 
     private void applyTitleFilter(final DataQuery projects,
-                                  final HttpServletRequest request) {
+            final HttpServletRequest request) {
         final String titleValue = request.getParameter(TITLE_PARAM);
         if ((titleValue != null) && !(titleValue.trim().isEmpty())) {
             titleFilter.setValue(titleValue);
         }
 
         if ((titleFilter.getFilter() != null)
-            && !(titleFilter.getFilter().trim().isEmpty())) {
+                && !(titleFilter.getFilter().trim().isEmpty())) {
             projects.addFilter(titleFilter.getFilter());
         }
     }
 
     private void generateProjectXml(final BigDecimal projectId,
-                                    final Element parent,
-                                    final PageState state) {
+            final Element parent,
+            final PageState state) {
         final long start = System.currentTimeMillis();
-        final ContentPage project = (ContentPage) DomainObjectFactory.
-                newInstance(new OID(
+        final ContentPage project = (ContentPage) DomainObjectFactory.newInstance(new OID(
                 "com.arsdigita.cms.contenttypes.SciProject", projectId));
         logger.debug(String.format("Got domain object for project '%s' "
-                                   + "in %d ms.",
-                                   project.getName(),
-                                   System.currentTimeMillis() - start));
+                + "in %d ms.",
+                project.getName(),
+                System.currentTimeMillis() - start));
         generateProjectXml(project, parent, state);
     }
 
     private void generateProjectXml(final ContentPage project,
-                                    final Element parent,
-                                    final PageState state) {
+            final Element parent,
+            final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(project);
         generator.setItemElemName("project", "");
         generator.setUseExtraXml(false);
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for project '%s' in %d ms.",
-                                   project.getName(),
-                                   System.currentTimeMillis() - start));
+                project.getName(),
+                System.currentTimeMillis() - start));
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {
