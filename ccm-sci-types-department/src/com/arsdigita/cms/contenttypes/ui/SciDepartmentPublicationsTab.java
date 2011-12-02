@@ -114,11 +114,22 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
             publications.addOrder("year desc");
             if (config.getOneRowPerAuthor()) {
-                publications.addOrder("surname");
+                publications.addOrder("case when (authorSurname is null) "
+                                      + "then 'zzzz' "
+                                      + "else authorSurname "
+                                      + "end asc");
+                publications.addOrder("case when (authorGivenname is null) "
+                                      + "then 'zzzz' "
+                                      + "else  authorGivenname "
+                                      + "end asc");
             } else {
-                publications.addOrder("authors");
+                publications.addOrder("case when ((authors is null) "
+                                      + "or (char_length(authors) = 0)) "
+                                      + "then 'zzzz' "
+                                      + "else authors "
+                                      + "end asc");
             }
-            publications.addOrder("title");
+            publications.addOrder("title asc");
 
             publications.setRange(1, config.getGreetingSize() + 1);
 
@@ -174,39 +185,49 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
             publications.addOrder("year desc");
             if (config.getOneRowPerAuthor()) {
-                publications.addOrder("surname");
-                publications.addOrder("title");
+                publications.addOrder("case when (authorSurname is null) "
+                                      + "then 'zzzz' "
+                                      + "else authorSurname "
+                                      + "end asc");
+                publications.addOrder("case when (authorGivenname is null) "
+                                      + "then 'zzzz' "
+                                      + "else  authorGivenname "
+                                      + "end asc");
             } else {
-                publications.addOrder("authors");
-                publications.addOrder("title");
+                publications.addOrder("case when ((authors is null) "
+                                      + "or (char_length(authors) = 0)) "
+                                      + "then 'zzzz' "
+                                      + "else authors "
+                                      + "end asc");
             }
+            publications.addOrder("title");
 
             final DataQuery yearQuery = getData(orgaunit);
-            yearFilter.setDataQuery(yearQuery, "year");            
-            
+            yearFilter.setDataQuery(yearQuery, "year");
+
             applyYearFilter(publications, request);
             applyTitleFilter(publications, request);
             applyAuthorFilter(publications, request);
-            
+
             applyTitleFilter(yearQuery, request);
             applyAuthorFilter(yearQuery, request);
-            
+
             if (publications.isEmpty()) {
                 yearFilter.generateXml(filtersElem);
                 titleFilter.generateXml(filtersElem);
                 authorFilter.generateXml(filtersElem);
-                
+
                 depPublicationsElem.newChildElement("noPublications");
-                
+
                 return;
-                
+
             }
 
             final Paginator paginator = new Paginator(request,
                                                       (int) publications.size(),
                                                       config.getPageSize());
 
-            yearFilter.generateXml(filtersElem);            
+            yearFilter.generateXml(filtersElem);
             if ((paginator.getPageCount() > config.getEnableSearchLimit())
                 || ((request.getParameter(TITLE_PARAM) != null)
                     && !(request.getParameter(TITLE_PARAM).trim().isEmpty()))) {

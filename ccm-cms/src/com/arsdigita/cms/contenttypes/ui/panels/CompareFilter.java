@@ -15,8 +15,8 @@ import java.util.Map;
  */
 public class CompareFilter implements Filter {
 
-    private static final String ALL = "--ALL--";
-    private static final String NONE = "--NONE--";
+    public static final String ALL = "--ALL--";
+    public static final String NONE = "--NONE--";
     private final String property;
     private final String label;
     private final boolean allOption;

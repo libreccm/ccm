@@ -142,11 +142,21 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
 
             publications.addOrder("year desc");
             if (config.getOneRowPerAuthor()) {
-                publications.addOrder("surname");
+                publications.addOrder("case when (authorSurname is null) "
+                                      + "then 'zzzz' "
+                                      + "else authorSurname "
+                                      + "end asc");
+                publications.addOrder("case when (authorGivenname is null) "
+                                      + "then 'zzzz' "
+                                      + "else  authorGivenname "
+                                      + "end asc");
             } else {
-                publications.addOrder("authors");
+                publications.addOrder("case when (authors is null) "
+                                      + "then 'zzzz' "
+                                      + "else authors "
+                                      + "end asc");
             }
-            publications.addOrder("title");
+            publications.addOrder("title asc");
 
             yearFilter.setDataQuery(getData(orgaunit), "year");
 
@@ -200,12 +210,21 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             }*/
 
             if (config.getOneRowPerAuthor()) {
-                publications.addOrder("surname");
-                publications.addOrder("title");
+                publications.addOrder("case when (authorSurname is null) "
+                                      + "then 'zzzz' "
+                                      + "else authorSurname "
+                                      + "end asc");
+                publications.addOrder("case when (authorGivenname is null) "
+                                      + "then 'zzzz' "
+                                      + "else  authorGivenname "
+                                      + "end asc");
             } else {
-                publications.addOrder("authors");
-                publications.addOrder("title");
+                publications.addOrder("case when (authors is null) "
+                                      + "then 'zzzz' "
+                                      + "else authors "
+                                      + "end asc");
             }
+            publications.addOrder("title asc");
 
             final DataQuery yearQuery = getData(orgaunit);
             yearFilter.setDataQuery(yearQuery, "year");
@@ -213,7 +232,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
             applyYearFilter(publications, request);
             applyTitleFilter(publications, request);
             applyAuthorFilter(publications, request);
-            
+
             applyTitleFilter(yearQuery, request);
             applyAuthorFilter(yearQuery, request);
 

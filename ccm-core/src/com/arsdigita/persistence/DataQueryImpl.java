@@ -48,6 +48,7 @@ import com.redhat.persistence.pdl.PDL;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -445,7 +446,7 @@ class DataQueryImpl implements DataQuery {
         }
 
         Object secondElement = orderTwo;
-        if (orderTwo instanceof String && orderTwo != null) {
+        if ((orderTwo != null) && (orderTwo instanceof String)) {
             Path two = unalias(Path.get((String) orderTwo));
             // XXX:
             if (!hasProperty(two)) {
@@ -464,6 +465,10 @@ class DataQueryImpl implements DataQuery {
                     }
                 }
             }
+        }
+        
+        if ((orderTwo != null) && (orderTwo instanceof Date)) {
+            
         }
 
         addOrder("case when (" + orderOne + " is null) then " +
