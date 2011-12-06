@@ -132,7 +132,7 @@ public class PersonalProjects implements ContentGenerator {
     private void processProjects(final List<SciProject> projects,
             final List<SciProject> currentProjects,
             final List<SciProject> finishedProjects) {
-        final Calendar today = new GregorianCalendar();
+        final Calendar today = new GregorianCalendar();        
         final Date todayDate = today.getTime();
         for (SciProject project : projects) {
             if ((project.getEnd() != null)
