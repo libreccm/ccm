@@ -123,8 +123,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
                                       + "else  authorGivenname "
                                       + "end asc");
             } else {
-                publications.addOrder("case when ((authors is null) "
-                                      + "or (char_length(authors) = 0)) "
+                publications.addOrder("case when (authors is null) "                                     
                                       + "then 'zzzz' "
                                       + "else authors "
                                       + "end asc");
@@ -194,8 +193,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
                                       + "else  authorGivenname "
                                       + "end asc");
             } else {
-                publications.addOrder("case when ((authors is null) "
-                                      + "or (char_length(authors) = 0)) "
+                publications.addOrder("case when (authors is null) "                                      
                                       + "then 'zzzz' "
                                       + "else authors "
                                       + "end asc");
