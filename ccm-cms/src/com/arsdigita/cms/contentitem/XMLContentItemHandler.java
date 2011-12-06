@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.installer.xml;
+package com.arsdigita.cms.contentitem;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
@@ -29,6 +29,7 @@ import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
+
 import java.lang.reflect.Constructor;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -36,10 +37,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
+
 import org.apache.log4j.Logger;
 import org.apache.oro.text.perl.Perl5Util;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+
 
 /**
  * Parses and XML file definition of content items in a folder.
@@ -81,8 +85,8 @@ import org.xml.sax.helpers.DefaultHandler;
  *              &lt;/ccm:item-properties&gt;
  *
  *              &lt;ccm:content-item
- *                                helperClass="com.arsdigita.cms.installer.xml.ContentBundleHelper"
- *                                association-name="birdWatch" &gt;
+ *                      helperClass="com.arsdigita.cms.installer.xml.ContentBundleHelper"
+ *                      association-name="birdWatch" &gt;
  *                  &lt;!-- Nested ContentItems (nested within another content-item)
  *                       are created and associated with the encapsulating item.
  *                       These are defined as regular content-items, except for a
@@ -101,8 +105,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * </PRE>
  *
  */
-
-
 public class XMLContentItemHandler extends DefaultHandler {
     private static final Logger s_log 
         = Logger.getLogger(XMLContentItemHandler.class);
@@ -140,6 +142,7 @@ public class XMLContentItemHandler extends DefaultHandler {
     }
 
 
+    @Override
     public void startElement( String uri, String name,  
                               String qName, Attributes atts) {
 
@@ -160,7 +163,7 @@ public class XMLContentItemHandler extends DefaultHandler {
             currFolderTree.addSubTree ( newFolderTree );
             currFolderTree = newFolderTree;
 
-            m_folder = (Folder) currFolderTree.getFolderHelper().createContentItem ( true );
+            m_folder = (Folder) currFolderTree.getFolderHelper().createContentItem(true );
 
         } else if ( qName.equals(CONTENT_ITEM)) { 
             /*
@@ -224,6 +227,7 @@ public class XMLContentItemHandler extends DefaultHandler {
         }
     }
     
+    @Override
     public void characters(char[] ch, 
                            int start, 
                            int length) {
@@ -231,6 +235,7 @@ public class XMLContentItemHandler extends DefaultHandler {
         m_body = new String(ch, start, length);
     }
     
+    @Override
     public void endElement( String uri, String name,  
                             String qName) {
 

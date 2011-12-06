@@ -1,6 +1,5 @@
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.installer.xml.XMLContentTypeHandler;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.persistence.Session;

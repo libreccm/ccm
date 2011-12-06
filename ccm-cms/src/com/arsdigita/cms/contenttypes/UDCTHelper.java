@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.installer.xml;
+package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.AuthoringKit;
 import com.arsdigita.cms.AuthoringStep;
@@ -37,6 +37,10 @@ import org.apache.oro.text.perl.Perl5Util;
 
 import java.math.BigDecimal;
 
+/** 
+ * 
+ * 
+ */
 public class UDCTHelper extends ContentTypeHelperImpl implements ContentTypeHelper {
     private static final Logger s_log 
         = Logger.getLogger(UDCTHelper.class);
@@ -54,6 +58,10 @@ public class UDCTHelper extends ContentTypeHelperImpl implements ContentTypeHelp
     private int m_stepCount = 1;
     // Flag to avoid the duplication of categorization step
     private boolean m_hasCategoryStep = false;
+
+    /**
+     * Constructor
+     */
     public UDCTHelper() {
         // this is predefined
         setCreateComponent(CREATION_COMPONENT);
@@ -88,6 +96,11 @@ public class UDCTHelper extends ContentTypeHelperImpl implements ContentTypeHelp
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
+    @Override
     public AuthoringKit createAuthoringKit() {
         setCreateComponent(CREATION_COMPONENT);
         AuthoringKit kit = super.createAuthoringKit();
@@ -96,12 +109,21 @@ public class UDCTHelper extends ContentTypeHelperImpl implements ContentTypeHelp
         return kit;
     }
 
+    /** 
+     * 
+     * @return 
+     */
     private DynamicObjectType createDOT() {
         DynamicObjectType dot = new DynamicObjectType(m_name, m_parentType);            
         dot.save();
         return dot;
     }
 
+    /**
+     * 
+     * @return 
+     */
+    @Override
     public ContentType createType() {
 
         MetadataRoot root = SessionManager.getMetadataRoot();
@@ -161,6 +183,14 @@ public class UDCTHelper extends ContentTypeHelperImpl implements ContentTypeHelp
         m_type.save();
     }
 
+    /** 
+     * 
+     * @param label
+     * @param description
+     * @param component
+     * @param ordering 
+     */
+    @Override
     public void addAuthoringStep(String label, 
                                  String description,
                                  String component,

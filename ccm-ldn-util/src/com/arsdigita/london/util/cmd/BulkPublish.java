@@ -32,7 +32,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.installer.xml.ContentBundleHelper;
+import com.arsdigita.cms.contentitem.ContentBundleHelper;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 
 import org.apache.commons.cli.CommandLine;

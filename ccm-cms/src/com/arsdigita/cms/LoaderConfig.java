@@ -31,11 +31,20 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+//  IMPLEMENTATION NOTE
+//  Class is a result of migrating the old enterprise.init based 
+//  initialization process and not yet completed. Functionality is
+//  basically OK so far, but code urgently needs cleaning up and a
+//  check for useful bits.
+
+
 /**
- * Module enables administrators to configure some features of the CMS application
- * at install time. It is read in and processed only once and configuration is
- * persisted in database. Currently there is no way to alter these features
- * later after the installation step.
+ * Container for various configuration parameters for ccm-cms package loader.
+ * 
+ * The parameters are basically immutable for users and administrators and only
+ * accessible to developers and require recompilation. Specifying any of these
+ * parameters during installation takes no effect at all! Parameters which have
+ * to be modifiable must be included in Loader class itself!
  *
  * @author pb
  * @version $Id: LoaderConfig.java  $
@@ -56,16 +65,11 @@ public final class LoaderConfig extends AbstractConfig {
     public static synchronized LoaderConfig getInstance() {
         if (s_conf == null) {
             s_conf = new LoaderConfig();
-        /* Currently LoaderConfig does not process parameters stored in a
-         * properties file. In order to do so the class must be added to
-         * ccm-cms.config, a storage file specified and the load() commented
-         * in.
-         * Before it can be used meaningfully, ccm-xxx-aplaws must be enhanced
-         * to be able tp process dynamically e.g. section name and other
-         * parameter values. Currently, section name is hardcoded (content) as
-         * well as creating terms domains etc.
+        /* Parameters are not stored in registry nor modified by installation
+         * specification. It is not possible to process a config object at
+         * Load time!
+         * s_conf.load();
          */
-        //  s_conf.load();
         }
 
         return s_conf;
@@ -125,23 +129,26 @@ public final class LoaderConfig extends AbstractConfig {
     //      s_log.debug("Set cache items to " + cacheItems);
     //      ItemDispatcher.setCacheItems(cacheItems);
 
-    // /////////////////////////////////////////////////////
-    // Following parameter is used by c.ad.cms.installer.xml
-    // to load definition(s) of content types to database.
-    // (Definitions describe sections to be included in
-    // authoring steps).
-    // /////////////////////////////////////////////////////
 
     /**
-     * List of Paths to XML files that contain content type definition(s).
+     * Comma separated list of XML definition files for internal content types 
+     * (base types).
+     * 
+     * Each internal content type (see package com/arsdigita/cms/contenttypes)
+     * requires an entry in this list in order to get CMS Loader to load it
+     * into permanent storage (equivalent to the Loader of each external
+     * content type package). 
+     * 
+     * Each definition file name has to be fully qualified relative to
+     * application (context) root.
      * Example:
      * contentTypeDefinitions = { "/WEB-INF/content-types/Template.xml" };
-     * An entry in this list is required by internal content types (see package
-     * ccm-cms/src/com/arsdigita/cms/contenttypes)
+     * 
+     * This parameter should be altered only by developers!
      */
     private final Parameter m_ctDefFiles =
             new StringArrayParameter(
-                "com.arsdigita.cms.loader.contenttype_definition_files",
+                "com.arsdigita.cms.loader.internal_cts",
                 Parameter.REQUIRED,
                 // Generic*.xml added by Quasi in enterprise.init for
                 // new generic Basetypes in addition to article
@@ -163,16 +170,8 @@ public final class LoaderConfig extends AbstractConfig {
     // ///////////////////////////////////////////////////////////////////////
 
 
-    /**
-     * The name of the content section, the default value used for initial
-     * setup.
-     */
-    private final Parameter 
-            m_contentSectionName = new StringParameter(
-                                   "com.arsdigita.cms.loader.section_name",
-                                   Parameter.REQUIRED,
-                                   "content");
-
+    // Section Name, configured by Loader parameter
+    
     // Root Folder, set autonomously by ContentSection.create() method
 
     // Template Folder, set autonomously by ContentSection.create() method
@@ -224,12 +223,16 @@ public final class LoaderConfig extends AbstractConfig {
      * When the list is empty and the first default content section is created,
      * all installed content types will get registered. This behaviour should
      * not be altered without very good reasons.
+     * 
+     * While loading ccm-cms no external content type packages are available
+     * because all content types depend on ccm-cms. Therefore this parameter
+     * can not beused in loader context.
      */
-    private final Parameter
-            m_contentTypeList = new StringArrayParameter(
-                                    "com.arsdigita.cms.loader.section_ctypes_list",
-                                    Parameter.REQUIRED,
-                                    new String[] {}  );
+  //private final Parameter
+  //        m_contentTypeList = new StringArrayParameter(
+  //                                "com.arsdigita.cms.loader.section_ctypes_list",
+  //                                Parameter.REQUIRED,
+  //                                new String[] {}  );
 
     // Page Resolver Class, set autonomously by ContentSection.create() method.
 
@@ -309,7 +312,6 @@ public final class LoaderConfig extends AbstractConfig {
 //                  Parameter.REQUIRED,
 //                  new String[] {"/WEB-INF/resources/article-categories.xml",
 //                                "/WEB-INF/resources/navigation-categories.xml"}  );
-
 
     /** List of widgets used in applications forms. Each widget is described by
         application indicator, widget name (singular & plural), model class name
@@ -486,12 +488,11 @@ public final class LoaderConfig extends AbstractConfig {
             register(m_ctDefFiles);
 
             // Parameters for creating a content section
-            register(m_contentSectionName);
             register(m_isPublic);
             register(m_itemResolverClass);
             register(m_templateResolverClass);
 
-            register(m_contentTypeList);
+    //      register(m_contentTypeList);
             register(m_useSectionCategories);
             register(m_categoryFileList);
 
@@ -504,9 +505,7 @@ public final class LoaderConfig extends AbstractConfig {
 //          register(m_overdueAlertInterval);
 //          register(m_maxAlerts);
 
-
-
-
+            // Does not work at load time!
             // loadInfo();
 
     }
@@ -542,12 +541,6 @@ public final class LoaderConfig extends AbstractConfig {
     }
 
 
-    /**
-     * Retrieve the name of the content-section
-     */
-    public String getContentSectionName() {
-        return (String) get(m_contentSectionName);
-    }
 
 
     /**
@@ -694,9 +687,9 @@ public final class LoaderConfig extends AbstractConfig {
     /**
      * Retrieve the 
      */
-    public List getContentSectionsContentTypes() {
-        String[] contentTypes = (String[]) get(m_contentTypeList);
-        return Arrays.asList(contentTypes);
-    }
+//  public List getContentSectionsContentTypes() {
+//      String[] contentTypes = (String[]) get(m_contentTypeList);
+//      return Arrays.asList(contentTypes);
+//  }
 
 }

@@ -30,6 +30,9 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 //  WORK IN PROGRESS !!
+//  Currentliy just a minimal implementation ready to switch cms-service from an
+//  old style package-type application to a new style legacy compatible
+//  application based an classes web.Application etc.
 
 /**
  * Application domain class for the CMS Service application, a CMS module which

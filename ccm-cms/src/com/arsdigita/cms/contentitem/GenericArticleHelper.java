@@ -16,8 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.installer.xml;
+package com.arsdigita.cms.contentitem;
 
+import com.arsdigita.cms.contentitem.ContentPageHelper;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.TextAsset;
 import com.arsdigita.cms.contenttypes.GenericArticle;

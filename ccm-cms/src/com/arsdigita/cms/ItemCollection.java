@@ -29,13 +29,12 @@ import java.math.BigDecimal;
 /**
  * Represents a set of {@link com.arsdigita.cms.ContentItem content
  * items}.
+ * @see com.arsdigita.domain.DomainCollection
+ * @see com.arsdigita.persistence.DataCollection
  *
  * @author <a href="mailto:pihman@arsdigita.com">Michael Pih</a>
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
  * @version $Revision: #14 $ $Date: 2004/08/17 $
- *
- * @see com.arsdigita.domain.DomainCollection
- * @see com.arsdigita.persistence.DataCollection
  */
 public class ItemCollection extends DomainCollection {
 

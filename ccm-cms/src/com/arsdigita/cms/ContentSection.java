@@ -1076,13 +1076,13 @@ public class ContentSection extends Application {
         String trc = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
 
         ContentSection section = ContentSection.create(name,
-                folder,
-                category,
-                staff,
-                prc,
-                irc,
-                xgc,
-                trc);
+                                                       folder,
+                                                       category,
+                                                       staff,
+                                                       prc,
+                                                       irc,
+                                                       xgc,
+                                                       trc);
 
         // Set the default context on the root folder to
         // the content section
@@ -1106,21 +1106,23 @@ public class ContentSection extends Application {
      * @return The new content section
      */
     public static ContentSection create(String name,
-            Folder folder,
-            Category category,
-            Group staff,
-            String prc,
-            String irc,
-            String xgc) {
+                                        Folder folder,
+                                        Category category,
+                                        Group staff,
+                                        String prc,
+                                        String irc,
+                                        String xgc) {
+        /** Set default as template resolver class name */
+        String trc = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
         return ContentSection.create(
-                name,
-                folder,
-                category,
-                staff,
-                prc,
-                irc,
-                xgc,
-                "com.arsdigita.cms.dispatcher.DefaultTemplateResolver");
+                                     name,
+                                     folder,
+                                     category,
+                                     staff,
+                                     prc,
+                                     irc,
+                                     xgc,
+                                     trc);
     }
 
     /**
@@ -1138,13 +1140,13 @@ public class ContentSection extends Application {
      * @return The new content section
      */
     public static ContentSection create(String name,
-            Folder folder,
-            Category category,
-            Group staff,
-            String prc,
-            String irc,
-            String xgc,
-            String trc) {
+                                        Folder folder,
+                                        Category category,
+                                        Group staff,
+                                        String prc,
+                                        String irc,
+                                        String xgc,
+                                        String trc) {
 
         // This could be moved out of here and into the Installer
         // (passing it into a modified version of create)
@@ -1164,15 +1166,15 @@ public class ContentSection extends Application {
                                  .createApplication(BASE_DATA_OBJECT_TYPE
                                                     , name, name, null);
         section.initialize(name,
-                folder,
-                category,
-                staff,
-                prc,
-                irc,
-                xgc,
-                trc,
-                templates,
-                viewers);
+                           folder,
+                           category,
+                           staff,
+                           prc,
+                           irc,
+                           xgc,
+                           trc,
+                           templates,
+                           viewers);
 
         return section;
     }
@@ -1310,8 +1312,4 @@ public class ContentSection extends Application {
         return URL.SERVLET_DIR + "/content-section";
     }
 
-//  @Override
-//  public String getStylesheetPath() {
-//      return STYLESHEET;
-//  }
 }

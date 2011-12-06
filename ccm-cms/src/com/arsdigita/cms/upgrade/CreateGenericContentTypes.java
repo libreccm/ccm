@@ -23,7 +23,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.ContentTypeWorkflowTemplate;
-import com.arsdigita.cms.installer.xml.XMLContentTypeHandler;
+import com.arsdigita.cms.contenttypes.XMLContentTypeHandler;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;

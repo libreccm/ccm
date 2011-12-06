@@ -25,7 +25,6 @@ import com.arsdigita.cms.ContentTypeWorkflowTemplate;
 import com.arsdigita.cms.Template;
 import com.arsdigita.cms.TemplateManager;
 import com.arsdigita.cms.TemplateManagerFactory;
-import com.arsdigita.cms.installer.xml.XMLContentTypeHandler;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -60,19 +59,30 @@ import org.apache.log4j.Logger;
  **/
 public abstract class AbstractContentTypeLoader extends PackageLoader {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(
-            AbstractContentTypeLoader.class);
+                                               AbstractContentTypeLoader.class);
 
+    /**
+     * 
+     * @param ctx 
+     */
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
 
             protected void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+                
                 createTypes(ctx);
+                
             }
         }.run();
     }
 
+    /**
+     * 
+     * @param ctx 
+     */
     private void createTypes(ScriptContext ctx) {
         XMLContentTypeHandler handler = new XMLContentTypeHandler();
         String[] contentTypes = getTypes();
@@ -83,10 +93,12 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
         List types = handler.getContentTypes();
         Session ssn = ctx.getSession();
         DataCollection sections = ssn.retrieve(
-                ContentSection.BASE_DATA_OBJECT_TYPE);
+                                      ContentSection.BASE_DATA_OBJECT_TYPE);
 
         while (sections.next()) {
-            ContentSection section = (ContentSection) DomainObjectFactory.newInstance(sections.getDataObject());
+            ContentSection section = (ContentSection) 
+                                     DomainObjectFactory.newInstance(
+                                                         sections.getDataObject());
             if (!isLoadableInto(section)) {
                 continue;
             }
@@ -128,6 +140,9 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
     protected abstract String[] getTypes();
 
+    /*
+     * 
+     */
     private boolean isLoadableInto(ContentSection section) {
         if (section == null) {
             throw new NullPointerException("section");

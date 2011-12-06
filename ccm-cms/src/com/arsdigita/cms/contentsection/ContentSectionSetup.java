@@ -33,7 +33,6 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
 import com.arsdigita.domain.DataObjectNotFoundException;
-//import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.Role;
@@ -72,7 +71,6 @@ import org.xml.sax.helpers.DefaultHandler;
 public final class ContentSectionSetup {
 
     private static Logger s_log = Logger.getLogger(ContentSectionSetup.class);
-    private final static String STYLESHEET = "/packages/content-section/xsl/cms.xsl";
     private HashMap m_tasks = new HashMap();
     private LifecycleDefinition m_lcd;
     private WorkflowTemplate m_wf;
@@ -457,6 +455,11 @@ public final class ContentSectionSetup {
         return type;
     }
 
+    /**
+     * 
+     * @param type
+     * @param filename 
+     */
     void registerTemplate(ContentType type, String filename) {
         // Use the base of the file name (ie without path & extension)
         // as the template name
@@ -675,5 +678,7 @@ public final class ContentSectionSetup {
                 m_cats.pop();
             }
         }
-    }
+    }  // END private class CategoryHandler
+    
+    
 }
