@@ -24,12 +24,12 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.status_values",
                 Parameter.REQUIRED,
                 new String[]{"active", "associated", "former"});
-
+    
         pageSize =
         new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.page_size",
-                             Parameter.REQUIRED,
-                             30);
+                Parameter.REQUIRED,
+                30);
 
         enableSearchLimit =
         new IntegerParameter(
@@ -43,7 +43,7 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.TRUE);
 
-        register(statusValues);
+        register(statusValues);       
         register(pageSize);
         register(enableSearchLimit);
         register(mergeMembers);

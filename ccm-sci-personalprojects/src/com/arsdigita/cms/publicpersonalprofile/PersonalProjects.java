@@ -9,6 +9,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
@@ -18,6 +19,7 @@ import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -25,6 +27,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -44,17 +47,17 @@ public class PersonalProjects implements ContentGenerator {
     private final static String CURRENT_PROJECTS = "currentProjects";
     private final static String FINISHED_PROJECTS = "finishedProjects";
     private final static PersonalProjectsConfig config =
-            new PersonalProjectsConfig();
+                                                new PersonalProjectsConfig();
     private final static Logger logger =
-            Logger.getLogger(PersonalProjects.class);
+                                Logger.getLogger(PersonalProjects.class);
 
     static {
         config.load();
     }
 
     public void generateContent(final Element parent,
-            final GenericPerson person,
-            final PageState state) {
+                                final GenericPerson person,
+                                final PageState state) {
         final List<SciProject> projects = collectProjects(person);
 
         final Element personalProjectsElem = parent.newChildElement(
@@ -67,14 +70,21 @@ public class PersonalProjects implements ContentGenerator {
         } else {
             final List<SciProject> currentProjects = new ArrayList<SciProject>();
             final List<SciProject> finishedProjects =
-                    new ArrayList<SciProject>();
+                                   new ArrayList<SciProject>();
 
-            processProjects(projects, currentProjects, finishedProjects);
-            generateGroupsXml(personalProjectsElem, currentProjects, finishedProjects);
+            String sortBy = config.getSortBy();
+            String sortByParam = state.getRequest().getParameter("sortBy");
+            if ((sortByParam != null) && !(sortByParam.trim().isEmpty())) {
+                sortBy = sortByParam;
+            }
+
+            processProjects(projects, currentProjects, finishedProjects, sortBy);
+            generateGroupsXml(personalProjectsElem, currentProjects,
+                              finishedProjects);
             generateProjectsXml(personalProjectsElem,
-                    currentProjects,
-                    finishedProjects,
-                    state);
+                                currentProjects,
+                                finishedProjects,
+                                state);
         }
     }
 
@@ -86,13 +96,22 @@ public class PersonalProjects implements ContentGenerator {
         if (Kernel.getConfig().languageIndependentItems()) {
             FilterFactory ff = collection.getFilterFactory();
             Filter filter = ff.or().
-                    addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                    addFilter(ff.equals("language",
+                                        com.arsdigita.globalization.GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage())).
                     addFilter(ff.and().
-                    addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(ff.notIn("parent", "com.arsdigita.london.navigation.getParentIDsOfMatchedItems").set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                    addFilter(ff.equals("language",
+                                        GlobalizationHelper.LANG_INDEPENDENT)).
+                    addFilter(ff.notIn("parent",
+                                       "com.arsdigita.london.navigation.getParentIDsOfMatchedItems").
+                    set("language",
+                        com.arsdigita.globalization.GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage())));
             collection.addFilter(filter);
         } else {
-            collection.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            collection.addEqualsFilter("language",
+                                       com.arsdigita.globalization.GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage());
         }
         DomainObject obj;
         while (collection.next()) {
@@ -112,7 +131,7 @@ public class PersonalProjects implements ContentGenerator {
     }
 
     private void collectProjects(final GenericPerson alias,
-            final List<SciProject> projects) {
+                                 final List<SciProject> projects) {
         final DataCollection collection = (DataCollection) alias.get(
                 "organizationalunit");
         DomainObject obj;
@@ -130,27 +149,34 @@ public class PersonalProjects implements ContentGenerator {
     }
 
     private void processProjects(final List<SciProject> projects,
-            final List<SciProject> currentProjects,
-            final List<SciProject> finishedProjects) {
-        final Calendar today = new GregorianCalendar();        
+                                 final List<SciProject> currentProjects,
+                                 final List<SciProject> finishedProjects,
+                                 final String sortBy) {
+        final Calendar today = new GregorianCalendar();
         final Date todayDate = today.getTime();
         for (SciProject project : projects) {
             if ((project.getEnd() != null)
-                    && project.getEnd().before(todayDate)) {
+                && project.getEnd().before(todayDate)) {
                 finishedProjects.add(project);
             } else {
                 currentProjects.add(project);
             }
         }
 
-        final ProjectComparator comparator = new ProjectComparator();
+        Comparator<SciProject> comparator;
+        if ("date".equals(sortBy)) {
+            comparator = new ProjectByDateComparator();
+        } else {
+            comparator = new ProjectByTitleComparator();
+
+        }
         Collections.sort(currentProjects, comparator);
         Collections.sort(finishedProjects, comparator);
     }
 
     private void generateGroupsXml(final Element parent,
-            final List<SciProject> currentProjects,
-            final List<SciProject> finishedProjects) {
+                                   final List<SciProject> currentProjects,
+                                   final List<SciProject> finishedProjects) {
         final Element availableGroups = parent.newChildElement(
                 "availableProjectGroups");
 
@@ -164,32 +190,32 @@ public class PersonalProjects implements ContentGenerator {
     }
 
     private void createAvailableProjectGroupXml(final Element parent,
-            final String name) {
+                                                final String name) {
         final Element group = parent.newChildElement("availableProjectGroup");
         group.addAttribute("name", name);
     }
 
     private void generateProjectsXml(final Element parent,
-            final List<SciProject> currentProjects,
-            final List<SciProject> finishedProjects,
-            final PageState state) {
+                                     final List<SciProject> currentProjects,
+                                     final List<SciProject> finishedProjects,
+                                     final PageState state) {
         final Element projectsElem = parent.newChildElement("projects");
 
         final int numberOfProjects = currentProjects.size()
-                + finishedProjects.size();
+                                     + finishedProjects.size();
         final int groupSplit = config.getGroupSplit();
 
         if (numberOfProjects < groupSplit) {
             projectsElem.addAttribute("all", "all");
 
             generateProjectsGroupXml(projectsElem,
-                    CURRENT_PROJECTS,
-                    currentProjects,
-                    state);
+                                     CURRENT_PROJECTS,
+                                     currentProjects,
+                                     state);
             generateProjectsGroupXml(projectsElem,
-                    FINISHED_PROJECTS,
-                    finishedProjects,
-                    state);
+                                     FINISHED_PROJECTS,
+                                     finishedProjects,
+                                     state);
         } else {
             final HttpServletRequest request = state.getRequest();
 
@@ -199,29 +225,29 @@ public class PersonalProjects implements ContentGenerator {
             }
 
             if (currentProjects.isEmpty()
-                    && CURRENT_PROJECTS.equals(groupToShow)) {
+                && CURRENT_PROJECTS.equals(groupToShow)) {
                 groupToShow = FINISHED_PROJECTS;
             }
 
             if (CURRENT_PROJECTS.equals(groupToShow)) {
                 generateProjectsGroupXml(projectsElem,
-                        CURRENT_PROJECTS,
-                        currentProjects,
-                        state);
+                                         CURRENT_PROJECTS,
+                                         currentProjects,
+                                         state);
             } else if (FINISHED_PROJECTS.equals(groupToShow)) {
                 generateProjectsGroupXml(projectsElem,
-                        FINISHED_PROJECTS,
-                        finishedProjects,
-                        state);
+                                         FINISHED_PROJECTS,
+                                         finishedProjects,
+                                         state);
             }
         }
 
     }
 
     private void generateProjectsGroupXml(final Element projectsElem,
-            final String groupName,
-            final List<SciProject> projects,
-            final PageState state) {
+                                          final String groupName,
+                                          final List<SciProject> projects,
+                                          final PageState state) {
         if (projects == null) {
             return;
         }
@@ -235,8 +261,8 @@ public class PersonalProjects implements ContentGenerator {
     }
 
     private void generateProjectXml(final Element projectGroupElem,
-            final SciProject project,
-            final PageState state) {
+                                    final SciProject project,
+                                    final PageState state) {
         /*final PublicPersonalProfileXmlGenerator generator =
         new PublicPersonalProfileXmlGenerator(
         project);
@@ -250,15 +276,55 @@ public class PersonalProjects implements ContentGenerator {
         //Element beginElem = projectElem.newChildElement("projectbegin");
 
         if ((project.getAddendum() != null)
-                && !(project.getAddendum().isEmpty())) {
+            && !(project.getAddendum().isEmpty())) {
             Element addendum = projectElem.newChildElement("addendum");
             addendum.setText(project.getAddendum());
         }
 
         if ((project.getProjectShortDescription() != null)
-                && !(project.getProjectShortDescription().isEmpty())) {
+            && !(project.getProjectShortDescription().isEmpty())) {
             Element shortDesc = projectElem.newChildElement("shortDescription");
             shortDesc.setText(project.getProjectShortDescription());
+        }
+
+        if ((project.getBegin() != null)) {
+            final Element durationElem = projectElem.newChildElement("duration");
+            final Element beginElem = durationElem.newChildElement("begin");
+            addDateAttributes(beginElem, project.getBegin());
+            final Element beginSkipDayElem = durationElem.newChildElement(
+                    "beginSkipDay");
+            if (project.getBeginSkipDay()) {
+                beginSkipDayElem.setText("true");
+            } else {
+                beginSkipDayElem.setText("false");
+            }
+            final Element beginSkipMonthElem = durationElem.newChildElement(
+                    "beginSkipMonth");
+            if (project.getBeginSkipMonth()) {
+                beginSkipMonthElem.setText("true");
+            } else {
+                beginSkipMonthElem.setText("false");
+            }
+
+
+            if (project.getEnd() != null) {
+                final Element endElement = durationElem.newChildElement("end");
+                addDateAttributes(endElement, project.getEnd());
+                final Element endSkipDayElem = durationElem.newChildElement(
+                        "endSkipDay");
+                if (project.getEndSkipDay()) {
+                    endSkipDayElem.setText("true");
+                } else {
+                    endSkipDayElem.setText("false");
+                }
+                final Element endSkipMonthElem = durationElem.newChildElement(
+                        "endSkipMonth");
+                if (project.getEndSkipMonth()) {
+                    endSkipMonthElem.setText("true");
+                } else {
+                    endSkipMonthElem.setText("false");
+                }
+            }
         }
 
         GenericOrganizationalUnitPersonCollection members;
@@ -270,18 +336,18 @@ public class PersonalProjects implements ContentGenerator {
 
             while (members.next()) {
                 generateMemberXML(new MemberListItem(members.getOID(),
-                        members.getSurname(),
-                        members.getGivenName(),
-                        members.getTitlePre(),
-                        members.getTitlePost(),
-                        members.getBirthdate(),
-                        members.getGender(),
-                        null, members.getRoleName(),
-                        members.getStatus()),
-                        membersElem,
-                        members.getRoleName(),
-                        members.getStatus(),
-                        state);
+                                                     members.getSurname(),
+                                                     members.getGivenName(),
+                                                     members.getTitlePre(),
+                                                     members.getTitlePost(),
+                                                     members.getBirthdate(),
+                                                     members.getGender(),
+                                                     null, members.getRoleName(),
+                                                     members.getStatus()),
+                                  membersElem,
+                                  members.getRoleName(),
+                                  members.getStatus(),
+                                  state);
             }
         }
 
@@ -293,22 +359,22 @@ public class PersonalProjects implements ContentGenerator {
 
             while (contacts.next()) {
                 generateContactXML(contacts.getContactType(),
-                        contacts.getPerson(),
-                        contacts.getContactEntries(),
-                        contacts.getAddress(),
-                        contactsElem,
-                        state,
-                        Integer.toString(contacts.getContactOrder()),
-                        true);
+                                   contacts.getPerson(),
+                                   contacts.getContactEntries(),
+                                   contacts.getAddress(),
+                                   contactsElem,
+                                   state,
+                                   Integer.toString(contacts.getContactOrder()),
+                                   true);
             }
         }
     }
 
     protected void generateMemberXML(final MemberListItem person,
-            final Element parent,
-            final String roleName,
-            final String status,
-            final PageState state) {
+                                     final Element parent,
+                                     final String roleName,
+                                     final String status,
+                                     final PageState state) {
         Element memberElem = parent.newChildElement("member");
 
         memberElem.addAttribute("role", roleName);
@@ -319,7 +385,7 @@ public class PersonalProjects implements ContentGenerator {
         //title.setText(person.getTitle());
 
         if ((person.getTitlePre() != null)
-                && !person.getTitlePre().isEmpty()) {
+            && !person.getTitlePre().isEmpty()) {
             Element titlePre = memberElem.newChildElement("titlePre");
             titlePre.setText(person.getTitlePre());
         }
@@ -331,13 +397,13 @@ public class PersonalProjects implements ContentGenerator {
         givenName.setText(person.getGivenName());
 
         if ((person.getTitlePost() != null)
-                && !person.getTitlePost().isEmpty()) {
+            && !person.getTitlePost().isEmpty()) {
             Element titlePost = memberElem.newChildElement("titlePost");
             titlePost.setText(person.getTitlePost());
         }
 
         if ((person.getContacts() != null)
-                && (person.getContacts().size() > 0)) {
+            && (person.getContacts().size() > 0)) {
             GenericPersonContactCollection contacts;
             contacts = new GenericPersonContactCollection(person.getContacts());
 
@@ -393,7 +459,7 @@ public class PersonalProjects implements ContentGenerator {
                 surname.setText(person.getSurname());
 
                 if ((person.getTitlePost() != null)
-                        && !person.getTitlePost().isEmpty()) {
+                    && !person.getTitlePost().isEmpty()) {
                     Element titlePost = contactElem.newChildElement(
                             "titlePost");
                     titlePost.setText(person.getTitlePost());
@@ -402,23 +468,23 @@ public class PersonalProjects implements ContentGenerator {
         }
 
         if ((contactEntries != null)
-                && (contactEntries.size() > 0)) {
+            && (contactEntries.size() > 0)) {
             Element contactEntriesElem =
                     contactElem.newChildElement("contactEntries");
             while (contactEntries.next()) {
                 GenericContactEntry contactEntry =
-                        contactEntries.getContactEntry();
+                                    contactEntries.getContactEntry();
                 Element contactEntryElem =
                         contactEntriesElem.newChildElement(
                         "contactEntry");
                 contactEntryElem.addAttribute("key",
-                        contactEntry.getKey());
+                                              contactEntry.getKey());
                 Element valueElem = contactEntryElem.newChildElement(
                         "value");
                 valueElem.setText(contactEntry.getValue());
 
                 if ((contactEntry.getDescription() != null)
-                        && !contactEntry.getDescription().isEmpty()) {
+                    && !contactEntry.getDescription().isEmpty()) {
                     Element descElem = contactEntryElem.newChildElement(
                             "description");
                     descElem.setText(contactEntry.getDescription());
@@ -458,34 +524,34 @@ public class PersonalProjects implements ContentGenerator {
         private String status;
 
         public MemberListItem(final GenericPerson member,
-                final String role,
-                final String status) {
+                              final String role,
+                              final String status) {
             /*this.member = member;
             this.role = role;
             this.status = status;*/
             this(member.getOID(),
-                    member.getSurname(),
-                    member.getGivenName(),
-                    member.getTitlePre(),
-                    member.getTitlePost(),
-                    member.getBirthdate(),
-                    member.getGender(),
-                    null,
-                    role,
-                    status);
+                 member.getSurname(),
+                 member.getGivenName(),
+                 member.getTitlePre(),
+                 member.getTitlePost(),
+                 member.getBirthdate(),
+                 member.getGender(),
+                 null,
+                 role,
+                 status);
 
         }
 
         public MemberListItem(final OID oid,
-                final String surname,
-                final String givenName,
-                final String titlePre,
-                final String titlePost,
-                final Date birthdate,
-                final String gender,
-                final DataCollection contacts,
-                final String role,
-                final String status) {
+                              final String surname,
+                              final String givenName,
+                              final String titlePre,
+                              final String titlePost,
+                              final Date birthdate,
+                              final String gender,
+                              final DataCollection contacts,
+                              final String role,
+                              final String status) {
             this.oid = oid;
             this.surname = surname;
             this.givenName = givenName;
@@ -561,36 +627,36 @@ public class PersonalProjects implements ContentGenerator {
             }
             final MemberListItem other = (MemberListItem) obj;
             if ((this.surname == null) ? (other.surname != null)
-                    : !this.surname.equals(other.surname)) {
+                : !this.surname.equals(other.surname)) {
                 return false;
             }
             if ((this.givenName == null) ? (other.givenName != null)
-                    : !this.givenName.equals(other.givenName)) {
+                : !this.givenName.equals(other.givenName)) {
                 return false;
             }
             if ((this.titlePre == null) ? (other.titlePre != null)
-                    : !this.titlePre.equals(other.titlePre)) {
+                : !this.titlePre.equals(other.titlePre)) {
                 return false;
             }
             if ((this.titlePost == null) ? (other.titlePost != null)
-                    : !this.titlePost.equals(other.titlePost)) {
+                : !this.titlePost.equals(other.titlePost)) {
                 return false;
             }
             if (this.birthdate != other.birthdate && (this.birthdate == null
-                    || !this.birthdate.equals(
-                    other.birthdate))) {
+                                                      || !this.birthdate.equals(
+                                                      other.birthdate))) {
                 return false;
             }
             if ((this.gender == null) ? (other.gender != null)
-                    : !this.gender.equals(other.gender)) {
+                : !this.gender.equals(other.gender)) {
                 return false;
             }
             if ((this.role == null) ? (other.role != null)
-                    : !this.role.equals(other.role)) {
+                : !this.role.equals(other.role)) {
                 return false;
             }
             if ((this.status == null) ? (other.status != null)
-                    : !this.status.equals(other.status)) {
+                : !this.status.equals(other.status)) {
                 return false;
             }
             return true;
@@ -604,29 +670,80 @@ public class PersonalProjects implements ContentGenerator {
         public int hashCode() {
             int hash = 3;
             hash =
-                    41 * hash + (this.surname != null ? this.surname.hashCode() : 0);
+            41 * hash + (this.surname != null ? this.surname.hashCode() : 0);
             hash =
-                    41 * hash + (this.givenName != null ? this.givenName.hashCode() : 0);
+            41 * hash + (this.givenName != null ? this.givenName.hashCode() : 0);
             hash =
-                    41 * hash + (this.titlePre != null ? this.titlePre.hashCode() : 0);
+            41 * hash + (this.titlePre != null ? this.titlePre.hashCode() : 0);
             hash =
-                    41 * hash + (this.titlePost != null ? this.titlePost.hashCode() : 0);
+            41 * hash + (this.titlePost != null ? this.titlePost.hashCode() : 0);
             hash =
-                    41 * hash + (this.birthdate != null ? this.birthdate.hashCode() : 0);
+            41 * hash + (this.birthdate != null ? this.birthdate.hashCode() : 0);
             hash =
-                    41 * hash + (this.gender != null ? this.gender.hashCode() : 0);
+            41 * hash + (this.gender != null ? this.gender.hashCode() : 0);
             hash = 41 * hash + (this.role != null ? this.role.hashCode() : 0);
             hash =
-                    41 * hash + (this.status != null ? this.status.hashCode() : 0);
+            41 * hash + (this.status != null ? this.status.hashCode() : 0);
             return hash;
         }
     }
 
-    private class ProjectComparator implements Comparator<SciProject> {
+    private class ProjectByTitleComparator implements Comparator<SciProject> {
 
         public int compare(final SciProject project1,
-                final SciProject project2) {
+                           final SciProject project2) {
             return project1.getTitle().compareTo(project2.getTitle());
         }
+    }
+
+    private class ProjectByDateComparator implements Comparator<SciProject> {
+
+        public int compare(final SciProject project1,
+                           final SciProject project2) {
+            int ret = project2.getBegin().compareTo(project1.getBegin());
+            if (ret == 0) {
+                ret = project2.getEnd().compareTo(project1.getBegin());
+            }
+            if (ret == 0) {
+                ret = project1.getTitle().compareTo(project2.getTitle());
+            }
+
+            return ret;
+        }
+    }
+
+    private void addDateAttributes(final Element elem, final Date date) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        elem.addAttribute("year",
+                          Integer.toString(cal.get(
+                Calendar.YEAR)));
+        elem.addAttribute("month",
+                          Integer.toString(cal.get(
+                Calendar.MONTH) + 1));
+        elem.addAttribute("day",
+                          Integer.toString(cal.get(
+                Calendar.DAY_OF_MONTH)));
+        elem.addAttribute("hour",
+                          Integer.toString(cal.get(
+                Calendar.HOUR_OF_DAY)));
+        elem.addAttribute("minute",
+                          Integer.toString(cal.get(
+                Calendar.MINUTE)));
+        elem.addAttribute("second",
+                          Integer.toString(cal.get(
+                Calendar.SECOND)));
+
+        final Locale negLocale = GlobalizationHelper.getNegotiatedLocale();
+        final DateFormat dateFormat = DateFormat.getDateInstance(
+                DateFormat.MEDIUM, negLocale);
+        final DateFormat longDateFormat = DateFormat.getDateInstance(
+                DateFormat.LONG, negLocale);
+        final DateFormat timeFormat = DateFormat.getDateInstance(
+                DateFormat.SHORT, negLocale);
+        elem.addAttribute("date", dateFormat.format(date));
+        elem.addAttribute("longDate", longDateFormat.format(date));
+        elem.addAttribute("time", timeFormat.format(date));
     }
 }
