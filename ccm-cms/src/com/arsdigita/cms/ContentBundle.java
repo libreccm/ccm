@@ -339,7 +339,7 @@ public class ContentBundle extends ContentItem {
         // if we couldn't find an exact match and language independent
         // content items are acceptable.
         if (contentItem == null && allowLanguageIndependent == true) {
-            contentItem = this.getInstance("--", false);
+            contentItem = this.getInstance(GlobalizationHelper.LANG_INDEPENDENT, false);
         }
 
         return contentItem;
