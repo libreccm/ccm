@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml SCI devel - containing only modules used for ScientificCMS  -->
+<!--    project.xml - ccm - containing only those modules used for 
+                            CCM development                      -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="ScientificCMS" 
-              prettyName="Scientific CMS" 
-                 version="1-1-6" 
-                 release="devel" 
-                  webxml="web-sci.xml" 
+                    name="librecms-ccm" 
+              prettyName="LibreCMS OpenCCM" 
+                 version="0-0-0" 
+                 release="trunk-r1323" 
+                  webxml="web-ccm.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
@@ -21,7 +22,7 @@
 <ccm:build>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Scientific CMS set of CORE packages                                  -->
+<!--    LibreCMS set of CORE packages                                        -->
 <!--    NONE can be omitted for technical reasons / internal dependencies    -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
@@ -41,24 +42,25 @@
 
 <!--   Applications   -->
         <ccm:application name="ccm-navigation"/>
+        <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
-        <ccm:application name="ccm-ldn-subsite"/>                    
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
-<!--   SCI extension  -->
-        <ccm:application name="ccm-sci-bundle"/>
+<!--   LibreCMS bundle  -->
+        <ccm:application name="ccm-bundle"/>
 
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Scientific CMS  OPTIONAL packages                                    -->
-<!--    Various combinations of these packages make up specific editions     -->
+<!--    Libre CMS                                                            -->
+<!--    Set of packages which make up a specific site                        -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Assets   -->
@@ -85,7 +87,7 @@
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Scientific CMS   potential ADD-ONS packages                          -->
+<!--    Libre CMS   potential ADD-ONS packages                               -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--  CMS Content Types  -->
@@ -132,7 +134,7 @@
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Scientific CMS   list of OBSOLETE modules                            -->
+<!--    Libre CMS   list of OBSOLETE modules                                 -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->

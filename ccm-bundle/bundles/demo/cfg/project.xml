@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml SCI devel - containing only modules used for ScientificCMS  -->
+<!--  project.xml LibreCMS devel - containing only modules used for LibreCMS  -->
 
-<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="ScientificCMS" 
-              prettyName="Scientific CMS" 
-                 version="1-1-6" 
-                 release="devel" 
-                  webxml="web-sci.xml" 
+                    name="librecms-ccm" 
+              prettyName="LibreCMS OpenCCM" 
+                 version="0-0-0" 
+                 release="trunk-r1323" 
+                  webxml="web-ccm.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
-  <ccm:build>
+<ccm:databases>
+	<ccm:database name="postgres"/>
+</ccm:databases>
+
+
+<ccm:build>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    Scientific CMS set of CORE packages                                  -->
@@ -36,13 +41,14 @@
 
 <!--   Applications   -->
         <ccm:application name="ccm-navigation"/>
+        <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
-        <ccm:application name="ccm-ldn-subsite"/>                    
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 

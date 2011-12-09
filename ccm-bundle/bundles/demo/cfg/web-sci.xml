@@ -4,8 +4,8 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
                version="2.4">
 
-  <display-name>Scientific CMS</display-name> 
-  <description>Content and Collaboration Management for Scientific Institutions</description>
+  <display-name>LibreCMS DEMO Site</display-name> 
+  <description>Community and Content Management</description>
 
   <!-- path and filename of the log4j user accessible config file
        WEB-INF/conf/log4j.properties is the built-in default value -->
@@ -17,14 +17,13 @@
 
   <!-- Require secure connection by redirect to host-port part
        of parameter waf.web.secure_server               
-       NOT USED with ZeS                                        
   <filter>
     <filter-name>secured</filter-name>
     <filter-class>com.arsdigita.web.SecureFilter</filter-class>
   </filter>
   -->
   <!-- Initialize Profiler timers
-       NOT USED with ZeS standard / production                                  
+       NOT USED with standard / production                                  
   <filter>
     <filter-name>profiler</filter-name>
     <filter-class>com.arsdigita.profiler.ProfilerFilter</filter-class>
@@ -38,7 +37,7 @@
 
   <filter>
     <filter-name>subsite</filter-name>
-    <filter-class>com.arsdigita.london.subsite.SubsiteFilter</filter-class>
+    <filter-class>com.arsdigita.subsite.SubsiteFilter</filter-class>
   </filter>
 
 <!--    NOT USED HERE
@@ -277,7 +276,7 @@
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-subsite</param-value>
+      <param-value>/templates/ccm-subsite</param-value>
     </init-param>
   </servlet>
   <!-- module ccm-ldn-subsite  -  servlet declarations END  -->
@@ -375,7 +374,7 @@
   <!-- module ccm-ldn-subsite  -  servlet mappings BEGIN  -->
   <servlet-mapping>
     <servlet-name>subsite-files</servlet-name>
-    <url-pattern>/ccm-ldn-subsite/files/*</url-pattern>
+    <url-pattern>/ccm-subsite/files/*</url-pattern>
   </servlet-mapping>
   <!-- module ccm-ldn-subsite  -  servlet mappings END  -->
 

@@ -31,7 +31,7 @@ import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portalworkspace.WorkspacePageCollection;
 
-import com.arsdigita.london.subsite.Subsite;
+import com.arsdigita.subsite.Subsite;
 
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
