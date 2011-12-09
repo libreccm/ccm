@@ -35,6 +35,8 @@ public class EventConfig extends AbstractConfig {
     private final Parameter m_useHtmlDateDescription;
     private final Parameter m_startYear;
     private final Parameter m_endYearDelta;
+    private final Parameter m_leadTextOptional;
+    private final Parameter m_startTimeOptional;
     
     public EventConfig() {
         m_hideDateDescription = new BooleanParameter(
@@ -77,6 +79,16 @@ public class EventConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 new Integer(3));
         
+        m_leadTextOptional = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.event.lead_text_optional",
+                Parameter.REQUIRED,
+                new Boolean(false));
+        
+        m_startTimeOptional = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.event.start_time_optional",
+                Parameter.REQUIRED,
+                new Boolean(false));
+        
         register(m_hideDateDescription);
         register(m_hideMainContributor);
         register(m_hideEventType);
@@ -85,6 +97,8 @@ public class EventConfig extends AbstractConfig {
         register(m_useHtmlDateDescription);
         register(m_startYear);
         register(m_endYearDelta);
+        register(m_leadTextOptional);
+        register(m_startTimeOptional);
         
         loadInfo();
     }
@@ -112,6 +126,12 @@ public class EventConfig extends AbstractConfig {
     }
     public final int getEndYearDelta() {
         return ((Integer) get(m_endYearDelta)).intValue();
+    }
+    public final boolean isLeadTextOptional() {
+        return ((Boolean) get(m_leadTextOptional)).booleanValue();
+    }
+    public final boolean isStartTimeOptional() {
+        return ((Boolean) get(m_startTimeOptional)).booleanValue();
     }
 }
 

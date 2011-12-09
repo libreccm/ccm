@@ -115,8 +115,9 @@ public class EventPropertyForm extends BasicPageForm
         /* Summary (lead) */
         add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead").localize()));
         ParameterModel leadParam = new StringParameter(LEAD);
-        //leadParam
-        //    .addParameterListener(new NotNullValidationListener());
+        if(Event.getConfig().isLeadTextOptional()) {
+            leadParam.addParameterListener(new NotNullValidationListener());
+        }
         TextArea lead = new TextArea(leadParam);
         lead.setCols(50);
         lead.setRows(5);
@@ -134,7 +135,9 @@ public class EventPropertyForm extends BasicPageForm
 
         ParameterModel eventStartTimeParam = new TimeParameter(START_TIME);
         add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time").localize()));
-        eventStartTimeParam.addParameterListener(new NotNullValidationListener());
+        if(Event.getConfig().isStartTimeOptional()) {
+            eventStartTimeParam.addParameterListener(new NotNullValidationListener());
+        }
         Time startTime = new Time(eventStartTimeParam);
         add(startTime);
 
