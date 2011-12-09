@@ -1057,6 +1057,43 @@ public class ContentSection extends Application {
     }
 
     /**
+     * Retrieve the default content section in the system.
+     * 
+     * Default section is the first section created during setup, therefore it
+     * is recognized as the one with the lowest id.
+     *
+     * @return The default content section.
+     */
+    public static ContentSection getDefaultSection() {
+        ContentSectionCollection sections = getAllSections();
+        sections.addOrder(ID);
+        sections.next();  // positions on the first section
+        ContentSection section = (ContentSection) sections.getDomainObject();
+        if (sections.isFirst() ) {
+            sections.close();
+            s_log.warn("Default section is "+section.getName() );
+            return section;
+        } else {
+            sections.close();
+            s_log.warn("Section found: "+section.getName()+", but not first." );
+            return null;
+        }
+    }
+
+    /**
+     * Convenience method to retrieve the name of the default content section 
+     * in the system.
+     * 
+     * Default section is the first section created during setup, therefore it
+     * is recognized as the one with the lowest id.
+     *
+     * @return The default content section name.
+     */
+    public static String getDefaultSectionName() {
+        return getDefaultSection().getBaseDataObjectType(); 
+    }
+
+    /**
      * Creates a content section of the given name using default values and
      * returns it.
      *

@@ -37,7 +37,7 @@ public class ContentSectionCollection extends DomainCollection {
     /**
      * Constructor.
      *
-     **/
+     */
     public ContentSectionCollection(DataCollection dataCollection) {
         super(dataCollection);
     }
@@ -50,6 +50,7 @@ public class ContentSectionCollection extends DomainCollection {
      * (e.g. "primaryURL" in order to sort by section name
      * see c.ad.london.util.cmd.SiteMapList as an example ).
      */
+    @Override
     public void addOrder(String order) {
         m_dataCollection.addOrder(order);
     }
@@ -59,6 +60,7 @@ public class ContentSectionCollection extends DomainCollection {
      * the collection.
      *
      */
+    @Override
     public DomainObject getDomainObject() {
         return new ContentSection(m_dataCollection.getDataObject());
     }

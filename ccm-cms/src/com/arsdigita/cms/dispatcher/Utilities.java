@@ -24,8 +24,6 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
-//import com.arsdigita.cms.installer.ServiceInstaller;
-// import com.arsdigita.cms.installer.WorkspaceInstaller;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelContext;
@@ -53,9 +51,6 @@ import java.util.Map;
  * @version $Id: Utilities.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class Utilities {
-
-//  public final static String CMS_WORKSPACE = WorkspaceInstaller.PACKAGE_KEY;
-//  public final static String CMS_SERVICE = ServiceInstaller.PACKAGE_KEY;
 
     // Used for caching util lookups
     private static HashMap m_cache = new HashMap();
@@ -181,7 +176,7 @@ public class Utilities {
         if ( !instances.next() ) {
             instances.close();
             throw new RuntimeException(
-                                       "Failed to locate an instance of the singleton package: " + key);
+                  "Failed to locate an instance of the singleton package: " + key);
         } else {
             instance = instances.getPackageInstance();
             instances.close();
@@ -192,7 +187,7 @@ public class Utilities {
         if ( !nodes.next() ) {
             nodes.close();
             throw new RuntimeException(
-                                       "Failed to locate a mountpoint for the singleton package: " + key);
+                  "Failed to locate a mountpoint for the singleton package: " + key);
         } else {
             node = nodes.getSiteNode();
             nodes.close();
@@ -341,7 +336,8 @@ public class Utilities {
      * the browser does not cache tha page
      *
      * @param response The HTTP response
-     * @deprecated use com.arsdigita.dispatcher.DispatcherHelper.cacheDisable(HttpServletResponse)
+     * @deprecated use
+     * com.arsdigita.dispatcher.DispatcherHelper.cacheDisable(HttpServletResponse)
      */
     public static void disableBrowserCache(HttpServletResponse response) {
         response.addHeader("pragma", "no-cache");

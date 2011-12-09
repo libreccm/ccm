@@ -58,7 +58,7 @@ import org.apache.log4j.Logger;
 //  ccm/admin/sitemap lists them appropriately.
 //
 //  Next Try
-//  Refactor using legacy compatible web/Application and ApplicationSetup
+//  Refactor using legacy compatible web/Application and ApplicationSetup  DONE
 
 
 /**
@@ -117,48 +117,10 @@ public class Loader extends PackageLoader {
                     );
 
 
-    
-//  Nolonger used
-//  /**
-//   * Constant string used as key for creating CMS (content-section) as a
-//   * legacy application.
-//   */
-//  private final static String CMS_PACKAGE_KEY = "content-section";
-//  /**
-//   * Dispatcher class for CMS (needed to be assigned to a legacy application).
-//   */
-//  private final static String CMS_DISPATCHER_CLASS =
-//          "com.arsdigita.cms.dispatcher.ContentSectionDispatcher";
 
-//  /**
-//   * Constant string used as key for creating Workspace (content-center) as a
-//   * legacy application.
-//   */
-//  public static final String WORKSPACE_PACKAGE_KEY   = "content-center";
-//  private static final String WORKSPACE_INSTANCE_NAME = "Content Center";
-//  /**
-//   * Dispatcher class for Workspace (content-center) (needed to be assigned
-//   * to a legacy application).
-//   */
-//  private static final String WORKSPACE_DISPATCHER_CLASS =
-//          "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
-//  // To be updated soon...
-//  // "com.arsdigita.dispatcher.DefaultPackageDispatcher";
-
-//  No longer used, moved to class Service
-//  /**
-//   * Name of the CMS service package instance, i.e. its URL.
-//   */
-//  private final static String SERVICE_URL = "cms-service";
-//  /**
-//   * Constant string used as key for creating service package as a
-//   * legacy application.
-//   */
-//  public final static String SERVICE_PACKAGE_KEY = "cms-service";
-
-    /**
-     * 
-     */
+    /** List of classnames of internal base content types (needed in every
+     *  section created), generated while loading those content types in 
+     *  loadContentTypeDefinitions(files) for later use in register step.     */
     private ArrayList m_content_type_list = new ArrayList();
 
     /**
@@ -438,12 +400,13 @@ public class Loader extends PackageLoader {
 
             /* Register internal base content types. Paramter is a list of
              * class names created by internal content type load method.
-             * @see loadContentTypeDefinitions(List)                          */
+             * @see loadContentTypeDefinitions(List)                          
+             * External content types (provided by additional packages) are
+             * not available at CMS load time and can not processed by Loader.
+             * Registration of those content types are dealt with in the 
+             * respective Loader or in the CMS workspace GUI.                 
+             * For each created section the base types get registered.        */
             setup.registerContentTypes(m_content_type_list);
-            
-            // See method doc above. No external content types available at 
-            // cms load time, 
-            // setup.registerContentTypes(s_conf.getContentSectionsContentTypes());
             
             // Section specific categories, usually not used.
             // During initial load at install time nor used at all!

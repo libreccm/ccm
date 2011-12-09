@@ -106,28 +106,28 @@ public final class LoaderConfig extends AbstractConfig {
 //                                   Parameter.REQUIRED,
 //                                   "/WEB-INF/resources/content-center-map.xml");
 
-            // Update master object if upgrading from old versioning
-            // XXX: shouldn't we just gut this section (and
-            // VersioningUpgrader)? It is an upgrade fix from 5.1 or
-            // earlier, and relying on VersionedACSObject is
-            // deprecated
-            // (pboy): Default value is false and this value didn't change for
-            //  a very long period. Class can be excluded from source.
-    //      final boolean updateMaster =
-    //          ((Boolean)m_conf.getParameter(UPDATE_MASTER)).booleanValue();
-    //      if (updateMaster) {
-    //          VersioningUpgrader.updateMasterObject();
-    //      }
+// Update master object if upgrading from old versioning
+// XXX: shouldn't we just gut this section (and
+// VersioningUpgrader)? It is an upgrade fix from 5.1 or
+// earlier, and relying on VersionedACSObject is
+// deprecated
+// (pboy): Default value is false and this value didn't change for
+//  a very long period. Class can be excluded from source.
+//      final boolean updateMaster =
+//          ((Boolean)m_conf.getParameter(UPDATE_MASTER)).booleanValue();
+//      if (updateMaster) {
+//          VersioningUpgrader.updateMasterObject();
+//      }
 
-            // XXX: ItemDispatcher is no longer used. Is the following
-            // still a valid enterprise.init parameter? Do we need to
-            // set ContentSectionServlet.s_cacheItems instead of the
-            // below (which is currently always true), or does this go
-            // away entirely?
-    //      final boolean cacheItems =
-    //          ((Boolean)m_conf.getParameter(CACHE_ITEMS)).booleanValue();
-    //      s_log.debug("Set cache items to " + cacheItems);
-    //      ItemDispatcher.setCacheItems(cacheItems);
+// XXX: ItemDispatcher is no longer used. Is the following
+// still a valid enterprise.init parameter? Do we need to
+// set ContentSectionServlet.s_cacheItems instead of the
+// below (which is currently always true), or does this go
+// away entirely?
+//  final boolean cacheItems =
+//          ((Boolean)m_conf.getParameter(CACHE_ITEMS)).booleanValue();
+//      s_log.debug("Set cache items to " + cacheItems);
+//      ItemDispatcher.setCacheItems(cacheItems);
 
 
     /**
@@ -186,11 +186,13 @@ public final class LoaderConfig extends AbstractConfig {
      * Not implemented yet! We need a new parameter type "list" which must have
      * multidimensional capabilities.
      */
-//  private final Parameter
-//          m_staffGroup = new StringParameter(
-//                         "com.arsdigita.cms.loader.section_staff_group",
-//                         Parameter.REQUIRED,
-//                         null);
+    /*
+    private final Parameter
+            m_staffGroup = new StringParameter(
+                           "com.arsdigita.cms.loader.section_staff_group",
+                           Parameter.REQUIRED,
+                           null);
+     */
     private List m_staffGroup;
 
 
@@ -207,32 +209,6 @@ public final class LoaderConfig extends AbstractConfig {
                            "com.arsdigita.cms.loader.section_is_public",
                            Parameter.REQUIRED,
                            true);
-
-    /**
-     * List of content types to register in the given content-section.
-     *
-     * Example:
-     *    {
-     *     "com.arsdigita.cms.contenttypes.Address",
-     *     "com.arsdigita.cms.contenttypes.Article",
-     *     "com.arsdigita.cms.contenttypes.Contact"
-     *    }
-     *
-     * Parameter name "TYPES" in the old initializer code, empty by default in
-     * the former enterprise.init file.
-     * When the list is empty and the first default content section is created,
-     * all installed content types will get registered. This behaviour should
-     * not be altered without very good reasons.
-     * 
-     * While loading ccm-cms no external content type packages are available
-     * because all content types depend on ccm-cms. Therefore this parameter
-     * can not beused in loader context.
-     */
-  //private final Parameter
-  //        m_contentTypeList = new StringArrayParameter(
-  //                                "com.arsdigita.cms.loader.section_ctypes_list",
-  //                                Parameter.REQUIRED,
-  //                                new String[] {}  );
 
     // Page Resolver Class, set autonomously by ContentSection.create() method.
 
@@ -410,22 +386,24 @@ public final class LoaderConfig extends AbstractConfig {
                     "List of all installed packages")
                 );
 
-//  Currently not a Loader task. There is no way to persist tasks preferences
-//  on a per section base.
-//  /**
-//   * When to generate email alerts: by default, generate email alerts
-//   * on enable, finish, and rollback (happens on rejection) changes.
-//   * There are four action types for each task type: enable,
-//   * disable, finish, and rollback. Note that the values below are
-//   * based on the task labels, and as such are not globalized.
-//   */
-//  private final Parameter
-//          m_taskAlerts = new StringArrayParameter(
-//      	    "com.arsdigita.cms.task_alerts",
-//      	    Parameter.REQUIRED, new String[] {
-//      		    "Authoring:enable:finish:rollback",
-//      		    "Approval:enable:finish:rollback",
-//      		    "Deploy:enable:finish:rollback" }  );
+    //  Currently not a Loader task. There is no way to persist tasks preferences
+    //  on a per section base.
+     /**
+     * When to generate email alerts: by default, generate email alerts
+     * on enable, finish, and rollback (happens on rejection) changes.
+     * There are four action types for each task type: enable,
+     * disable, finish, and rollback. Note that the values below are
+     * based on the task labels, and as such are not globalized.
+     */
+    /*
+    private final Parameter
+            m_taskAlerts = new StringArrayParameter(
+        	    "com.arsdigita.cms.task_alerts",
+        	    Parameter.REQUIRED, new String[] {
+        		    "Authoring:enable:finish:rollback",
+        		    "Approval:enable:finish:rollback",
+        		    "Deploy:enable:finish:rollback" }  );
+     */
 
 
     // ///////////////////////////////////////////////////////////////////////
@@ -492,7 +470,6 @@ public final class LoaderConfig extends AbstractConfig {
             register(m_itemResolverClass);
             register(m_templateResolverClass);
 
-    //      register(m_contentTypeList);
             register(m_useSectionCategories);
             register(m_categoryFileList);
 
@@ -684,12 +661,5 @@ public final class LoaderConfig extends AbstractConfig {
     public List getDataQueries() {
         return dataQueries;
             }
-    /**
-     * Retrieve the 
-     */
-//  public List getContentSectionsContentTypes() {
-//      String[] contentTypes = (String[]) get(m_contentTypeList);
-//      return Arrays.asList(contentTypes);
-//  }
 
 }

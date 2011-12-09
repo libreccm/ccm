@@ -531,10 +531,12 @@ public final class CMSConfig extends AbstractConfig {
     // ///////////////////////////////////////////
     // Content Section config related parameters
     // ///////////////////////////////////////////
-    private final Parameter m_defaultSection = new StringParameter(
-            "com.arsdigita.cms.default_content_section",
-            Parameter.REQUIRED,
-            "content");
+//  Nolonger used, 
+//  replaced by c.ad.cms.ContentSection.getDefaultSection().getName()
+//  private final Parameter m_defaultSection = new StringParameter(
+//          "com.arsdigita.cms.default_content_section",
+//          Parameter.REQUIRED,
+//          "content");
     // ///////////////////////////////////////////
     // Content Section creation parameters
     // XXX these are probably temporary parameters, as the
@@ -655,7 +657,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_contentCenterMap);
 
         // Content Section config related parameters
-        register(m_defaultSection);
+        // register(m_defaultSection);
 
         // Content Section creation parameters
         register(m_defaultItemResolverClass);
@@ -712,8 +714,14 @@ public final class CMSConfig extends AbstractConfig {
         return (InputStream) get(m_itemAdapters);
     }
 
+    /**
+     * 
+     * @deprecated 
+     * use com.arsdigita.cms.ContentSection.getDefaultSection().getName() instead
+     */
     public final String getDefaultContentSection() {
-        return (String) get(m_defaultSection);
+        // return (String) get(m_defaultSection);
+        return (String) ContentSection.getDefaultSection().getName();
     }
 
     public final boolean getUseStreamlinedCreation() {
