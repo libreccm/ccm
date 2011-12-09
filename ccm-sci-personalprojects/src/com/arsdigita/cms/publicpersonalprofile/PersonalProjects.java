@@ -9,7 +9,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
-import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
@@ -700,8 +699,13 @@ public class PersonalProjects implements ContentGenerator {
 
         public int compare(final SciProject project1,
                            final SciProject project2) {
-            int ret = project2.getBegin().compareTo(project1.getBegin());
-            if (ret == 0) {
+            int ret = 0;
+            if ((project2.getBegin() != null) && (project1.getBegin() != null)) {
+                ret = project2.getBegin().compareTo(project1.getBegin());
+            }
+            if ((ret == 0)
+                && (project2.getEnd() != null)
+                && (project1.getEnd() != null)) {
                 ret = project2.getEnd().compareTo(project1.getBegin());
             }
             if (ret == 0) {

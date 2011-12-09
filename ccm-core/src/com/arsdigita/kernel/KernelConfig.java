@@ -82,7 +82,7 @@ public final class KernelConfig extends AbstractConfig {
     private final Parameter m_languageIndependentItems = new BooleanParameter
             ("waf.kernel.language_independent_items", Parameter.REQUIRED, Boolean.FALSE);
     private final Parameter m_languageIndependentCode = new StringParameter
-            ("waf.kernel.languages_independent_code", Parameter.OPTIONAL,
+            ("waf.kernel.language_independent_code", Parameter.OPTIONAL,
              "--");
 
     public KernelConfig() {

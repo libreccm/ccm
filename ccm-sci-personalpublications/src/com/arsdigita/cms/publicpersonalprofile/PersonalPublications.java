@@ -8,6 +8,8 @@ import com.arsdigita.cms.contenttypes.ui.PublicationXmlHelper;
 import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -117,7 +119,7 @@ public class PersonalPublications implements ContentGenerator {
                                     groupQueries.get(MISC),
                                     state,
                                     false,
-                                    true);                
+                                    true);
             } else {
 
                 final List<String> availableGroups = new ArrayList<String>();
@@ -147,7 +149,7 @@ public class PersonalPublications implements ContentGenerator {
                             currentTimeMillis() - start));
                     logger.debug(String.format(
                             "Determined if misc group is available in %d ms",
-                                               System.currentTimeMillis() - b1));
+                            System.currentTimeMillis() - b1));
                     logger.debug(String.format("Determined available groups "
                                                + "in %d ms.",
                                                System.currentTimeMillis()
@@ -174,42 +176,70 @@ public class PersonalPublications implements ContentGenerator {
             }
 
             allQuery.close();
-             logger.debug(String.format("12: %d ms until now...", System.
-                        currentTimeMillis() - start));
+            logger.debug(String.format("12: %d ms until now...", System.
+                    currentTimeMillis() - start));
         }
 
         if (logger.isDebugEnabled()) {
             logger.warn(String.format("Generated publications of %d publications "
-                                       + "for '%s' (%s) in %d ms.",
-                                       overallSize,
-                                       person.getFullName(),
-                                       person.getID().toString(),
-                                       System.currentTimeMillis() - start));
+                                      + "for '%s' (%s) in %d ms.",
+                                      overallSize,
+                                      person.getFullName(),
+                                      person.getID().toString(),
+                                      System.currentTimeMillis() - start));
         }
     }
 
     private void applyAuthorFilter(final GenericPerson person,
                                    final DataQuery query,
                                    final boolean addOrders) {
-        query.addFilter(String.format("authorId = %s",
-                                      person.getID().toString()));
-         /*if (Kernel.getConfig().languageIndependentItems()) {
-                FilterFactory ff = query.getFilterFactory();
-                Filter filter = ff.or().
-                        addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
-                        addFilter(ff.and().
-                            addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                            addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems")
-                                .set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
-                query.addFilter(filter);
-            } else {*/
-                query.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
-            //}
+        final StringBuilder authorFilterBuilder = new StringBuilder();
+        authorFilterBuilder.append('(');
+        authorFilterBuilder.append(String.format("authorId = %s",
+                                                 person.getID().toString()));
+        if (person.getAlias() != null) {
+            addAliasToFilter(authorFilterBuilder, person.getAlias());
+        }
+
+        authorFilterBuilder.append(')');
+
+        query.addFilter(authorFilterBuilder.toString());
+
+        /*query.addFilter(String.format("authorId = %s",
+        person.getID().toString()));*/
+        if (Kernel.getConfig().languageIndependentItems()) {
+            /*FilterFactory ff = query.getFilterFactory();
+            Filter filter = ff.or().
+            addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+            addFilter(ff.and().
+            addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
+            addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems")
+            .set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+            query.addFilter(filter);*/
+            query.addFilter(
+                    String.format("(language = '%s' or language = '%s')",
+                                  GlobalizationHelper.getNegotiatedLocale().
+                    getLanguage(),
+                                  GlobalizationHelper.LANG_INDEPENDENT));
+        } else {
+            query.addEqualsFilter("language",
+                                  com.arsdigita.globalization.GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage());
+        }
         if (addOrders) {
             final String[] orders = config.getOrder().split(",");
             for (String order : orders) {
                 query.addOrder(order);
             }
+        }
+    }
+
+    private void addAliasToFilter(final StringBuilder builder,
+                                  final GenericPerson alias) {
+        builder.append(String.format("or authorId = %s", alias.getID().toString()));
+
+        if (alias.getAlias() != null) {
+            addAliasToFilter(builder, alias.getAlias());
         }
     }
 
@@ -350,8 +380,9 @@ public class PersonalPublications implements ContentGenerator {
         /*final XmlGenerator generator = new XmlGenerator(publication);
         generator.setItemElemName("publications", "");
         generator.generateXML(state, parent, "");*/
-        final PublicationXmlHelper xmlHelper = new PublicationXmlHelper(parent,
-                                                                        (Publication) publication);
+        final PublicationXmlHelper xmlHelper =
+                                   new PublicationXmlHelper(parent,
+                                                            (Publication) publication);
         xmlHelper.generateXml();
         if (logger.isDebugEnabled()) {
             logger.debug(String.format("Generated XML for publication '%s' "

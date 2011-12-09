@@ -39,7 +39,6 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.Select;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.CMS;

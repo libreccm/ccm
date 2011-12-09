@@ -21,12 +21,12 @@ package com.arsdigita.cms.lifecycle;
 import com.arsdigita.runtime.AbstractConfig;
 // import com.arsdigita.runtime.CCMResourceManager;
 // import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 // import com.arsdigita.util.parameter.StringParameter;
 
 import org.apache.log4j.Logger;
-
 
 /**
  * LifecycleConfig
@@ -37,7 +37,6 @@ import org.apache.log4j.Logger;
 public class LifecycleConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(LifecycleConfig.class);
-
     private static LifecycleConfig s_conf;
 
     /**
@@ -55,30 +54,30 @@ public class LifecycleConfig extends AbstractConfig {
 
         return s_conf;
     }
-
     /**
      * How long do we wait (in seconds) after system startup before we start
      * processing lifecycles?
      */
-    private IntegerParameter m_delay = new IntegerParameter
-        ("com.arsdigita.cms.lifecycle.delay", Parameter.REQUIRED,
-        new Integer(60));
+    private IntegerParameter m_delay = new IntegerParameter(
+            "com.arsdigita.cms.lifecycle.delay", Parameter.REQUIRED,
+            new Integer(60));
     /**
      * How often (in seconds) does the system look for pending items to make
      * live and live items to expire? A value of 0 disables LC background thread.
      */
-    private IntegerParameter m_frequency = new IntegerParameter
-        ("com.arsdigita.cms.lifecycle.frequency", Parameter.REQUIRED,
-        new Integer(600));
-
+    private IntegerParameter m_frequency =
+                             new IntegerParameter(
+            "com.arsdigita.cms.lifecycle.frequency", Parameter.REQUIRED,
+            new Integer(600));
+    
     /**
      * Constructor.
      * Do not use it directly!
      */
     public LifecycleConfig() {
         register(m_delay);
-        register(m_frequency);
-        
+        register(m_frequency);      
+
         loadInfo();
     }
 
@@ -99,5 +98,5 @@ public class LifecycleConfig extends AbstractConfig {
         s_log.debug("frequency time retrieved.");
         return ((Integer) get(m_frequency)).intValue();
     }
-
+   
 }
