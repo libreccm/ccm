@@ -3,7 +3,7 @@
     <table name="inits"/>
     <table name="acs_objects"/>
     <initializer class="com.arsdigita.core.Initializer"/>
-    <initializer class="com.arsdigita.london.subsite.Initializer"/>
+    <initializer class="com.arsdigita.subsite.Initializer"/>
   </requires>
   <provides>
   <!--

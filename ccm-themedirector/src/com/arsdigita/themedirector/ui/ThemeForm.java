@@ -43,8 +43,8 @@ import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.ThemeDirector;
 import com.arsdigita.themedirector.util.GlobalizationUtil;
 import com.arsdigita.themedirector.util.ManifestReader;
-import com.arsdigita.london.subsite.Subsite;
-import com.arsdigita.london.subsite.Site;
+import com.arsdigita.subsite.Subsite;
+import com.arsdigita.subsite.Site;
 import com.arsdigita.toolbox.ui.Cancellable;
 import com.arsdigita.web.Web;
 

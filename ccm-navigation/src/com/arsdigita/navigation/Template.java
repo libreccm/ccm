@@ -37,6 +37,10 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.math.BigDecimal;
 
+/** 
+ * 
+ * 
+ */
 public class Template extends DomainObject {
     private static final Logger s_log = Logger.getLogger(Template.class);
 
@@ -58,6 +62,9 @@ public class Template extends DomainObject {
     private static final String TEMPLATES_FOR_CATEGORY = 
         "com.arsdigita.navigation.getTemplatesForCategory";
 
+    /**
+     * Constructor 
+     */
     protected Template() {
         this(BASE_DATA_OBJECT_TYPE);
     }
@@ -71,6 +78,9 @@ public class Template extends DomainObject {
     }
 
 
+    /**
+     * 
+     */
     public void initialize() {
         super.initialize();
         

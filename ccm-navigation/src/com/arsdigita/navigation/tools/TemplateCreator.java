@@ -24,6 +24,12 @@ import com.arsdigita.london.util.Transaction;
 
 import org.apache.commons.cli.CommandLine;
 
+/**
+ * Maintenance CLI procedure to insert additional jsp templates (used in
+ * navigation/admin) which determine  how to display the index page for each
+ * node of the navigation tree.
+ * 
+ */
 public class TemplateCreator extends Program {
     public TemplateCreator() {
         super( "Navigation Create Category Template",
@@ -51,6 +57,10 @@ public class TemplateCreator extends Program {
         txn.run();
     }
 
+    /** 
+     * 
+     * @param args 
+     */
     public static void main( String[] args ) {
         new TemplateCreator().run( args );
     }

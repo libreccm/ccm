@@ -25,8 +25,8 @@ import com.arsdigita.themedirector.ThemeDirector;
 import com.arsdigita.templating.XSLParameterGenerator;
 import javax.servlet.http.HttpServletRequest;
 import com.arsdigita.web.Web;
-import com.arsdigita.london.subsite.Subsite;
-import com.arsdigita.london.subsite.SubsiteContext;
+import com.arsdigita.subsite.Subsite;
+import com.arsdigita.subsite.SubsiteContext;
 
 
 /**

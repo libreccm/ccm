@@ -21,7 +21,7 @@ package com.arsdigita.themedirector;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.templating.PatternGenerator;
 
-import com.arsdigita.london.subsite.Subsite;
+import com.arsdigita.subsite.Subsite;
 
 import javax.servlet.http.HttpServletRequest;
 

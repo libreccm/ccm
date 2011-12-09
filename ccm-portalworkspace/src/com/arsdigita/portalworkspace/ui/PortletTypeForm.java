@@ -38,7 +38,7 @@ import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.portalworkspace.Workspace;
-import com.arsdigita.london.subsite.Subsite;
+import com.arsdigita.subsite.Subsite;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.portal.PortletTypeCollection;

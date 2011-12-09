@@ -21,7 +21,7 @@ package com.arsdigita.themedirector.ui.listeners;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.london.subsite.Subsite;
+import com.arsdigita.subsite.Subsite;
 import com.arsdigita.themedirector.Theme;
 import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.ThemeFile;
