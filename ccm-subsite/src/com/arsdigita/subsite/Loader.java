@@ -31,9 +31,11 @@ import com.arsdigita.web.Application;
 import org.apache.log4j.Logger;
 
 /**
- * Loads the subsite application and type
+ * Executes nonrecurring at install time and loads (installs and initializes)
+ * the ccm-subsite module persistently into database.
  *
  * @author Daniel Berrange
+ * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Loader extends PackageLoader {
@@ -51,21 +53,37 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     *  This creates and initializes the subsite admin application
+     * Creates ccm-subsite as a legacy-free application type and initializes
+     * an administration instance. Subsite itself is a filter servlet activated
+     * in web applications web.xml.
      */
     private void createApplication() {
-        ApplicationType type = ApplicationType
-            .createApplicationType("subsite",
-                                   "CCM Subsite Admin",
-                                   Subsite.BASE_DATA_OBJECT_TYPE);
+        
+        /* Create new application type, legacy free application type 
+         * 
+         * NOTE: The wording in the title parameter of ApplicationType (first
+         * parameter) determines the name of the subdirectory for the 
+         * XSL stylesheets. It gets "urlized", i.e. trimming leading and 
+         * trailing blanks and replacing blanks between words and illegal 
+         * characters with an hyphen and converted to lower case.
+         * Example: "Subsite" will become "subsite".
+         */
+        ApplicationType type = new ApplicationType
+                                       ("Subsite",
+                                        Subsite.BASE_DATA_OBJECT_TYPE);
         type.setDescription("CCM subsite administration");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");
 
-        Application app =
-            Application.createApplication(type,
-                                          "subsite",
-                                          "CCM Subsite Admin",
-                                          admin);
+        /* Create an application instance as a legacy free app.
+         * Whether a legacy compatible or a legacy free application is
+         * created depends on the type of ApplicationType above. No need to
+         * modify anything here                                               */
+        Application app = Application
+                          .createApplication(type,
+                                             "subsite",
+                                             "Subsite Administration",
+                                             admin);
+        app.setDescription("CCM subsite administration GUI");
     }
 }

@@ -24,16 +24,16 @@ import com.arsdigita.cms.TemplateContext;
 
 
 object type Site extends ACSObject {
-  String[1..1] title = subsite_site.title VARCHAR(100);
-  String[0..1] description = subsite_site.description VARCHAR(4000);
-  unique String[1..1] hostname = subsite_site.hostname VARCHAR(250);
-  String[0..1] styleDirectory = subsite_site.style_dir VARCHAR(50);
+  String[1..1] title = subsite_sites.title VARCHAR(100);
+  String[0..1] description = subsite_sites.description VARCHAR(4000);
+  unique String[1..1] hostname = subsite_sites.hostname VARCHAR(250);
+  String[0..1] styleDirectory = subsite_sites.style_dir VARCHAR(50);
 
-  Application[1..1] frontPage = join subsite_site.front_page_id
+  Application[1..1] frontPage = join subsite_sites.front_page_id
                                   to applications.application_id;
-  component TemplateContext[1..1] templateContext = join subsite_site.template_context
+  component TemplateContext[1..1] templateContext = join subsite_sites.template_context
                                             to cms_template_use_contexts.use_context;
 
 
-  reference key (subsite_site.site_id);
+  reference key (subsite_sites.site_id);
 }

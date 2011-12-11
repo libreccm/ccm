@@ -41,9 +41,13 @@ public class Site extends ACSObject {
     public static final String BASE_DATA_OBJECT_TYPE = 
                                "com.arsdigita.subsite.Site";
 
+    /** Title for a subsite, text field. */
     public static final String TITLE = "title";
+    /** Description for a subsite, text field. */
     public static final String DESCRIPTION = "description";
+    /** Subsite host name, text field, must be unique. */
     public static final String HOSTNAME = "hostname";
+    /** Directory containin the theme to be used for the subsite. */
     public static final String STYLE_DIRECTORY = "styleDirectory";
     public static final String FRONT_PAGE = "frontPage";
     public static final String TEMPLATE_CONTEXT = "templateContext";

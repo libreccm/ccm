@@ -29,6 +29,10 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 
 
+/**
+ * 
+ * 
+ */
 public class SiteListing extends SimpleComponent {
     
     private SiteSelectionModel m_site;
@@ -37,6 +41,7 @@ public class SiteListing extends SimpleComponent {
         m_site = site;
     }
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         Element content = parent.newChildElement(

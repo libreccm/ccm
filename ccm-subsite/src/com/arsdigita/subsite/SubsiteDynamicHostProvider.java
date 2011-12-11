@@ -18,8 +18,6 @@
  */
 package com.arsdigita.subsite;
 
-// import com.arsdigita.subsite.Subsite;
-// import com.arsdigita.util.servlet.HttpHost;
 import com.arsdigita.web.ServerDynamicHostProvider;
 
 import org.apache.log4j.Logger;
@@ -29,7 +27,9 @@ import java.net.MalformedURLException;
 
 public class SubsiteDynamicHostProvider extends ServerDynamicHostProvider {
 
-    private static final Logger s_log = Logger.getLogger(SubsiteDynamicHostProvider.class);
+    /** A logger instance, primarily to assist debugging .  */
+    private static final Logger s_log = 
+                         Logger.getLogger(SubsiteDynamicHostProvider.class);
 
     public SubsiteDynamicHostProvider() {
         super();

@@ -18,11 +18,6 @@
 
 package com.arsdigita.subsite.ui;
 
-import com.arsdigita.subsite.Site;
-import com.arsdigita.subsite.Subsite;
-import com.arsdigita.london.util.ui.CategoryPicker;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.util.StringUtils;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.SaveCancelSection;
@@ -47,22 +42,34 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationType;
-import com.arsdigita.util.Assert;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.london.util.ui.CategoryPicker;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.subsite.Site;
+import com.arsdigita.subsite.Subsite;
+import com.arsdigita.util.StringUtils;
+import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.Classes;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationType;
+
 import java.util.TooManyListenersException;
 import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 
+
+/**
+ * Class creates the administration input form.
+ * 
+ */
 public class SiteForm extends Form {
     
     private SiteSelectionModel m_site;
 
+    /** Input field subsite title  */
     private TextField m_title;
     private TextField m_hostname;
     private TextArea m_description;
@@ -79,6 +86,7 @@ public class SiteForm extends Form {
     private final static String OTHER_STYLE_LABEL = "Other (type in box below)";
 
     /**
+     * Constructor create input widgets and adds them to form.
      * 
      * @param name
      * @param site 
@@ -91,33 +99,35 @@ public class SiteForm extends Form {
         
         m_site = site;
 
+        /* Setup text input field for subsite title property                  */
         m_title = new TextField(new StringParameter("title"));
         m_title.addValidationListener(new NotNullValidationListener());
         m_title.setMetaDataAttribute("title", "Title");
         m_title.setHint("Enter the title of the subsite, upto 80 characters");
         m_title.setSize(40);
-        add(m_title);
+        add(m_title);       // adds title input field to form
 
-        /* Setup text input field for hostname                                */
+        /* Setup text input field for hostname property                       */
         m_hostname = new TextField(new StringParameter("hostname"));
         m_hostname.addValidationListener(new NotNullValidationListener());
         m_hostname.addValidationListener(new HostNameValidationListener());
         m_hostname.setMetaDataAttribute("title", "Hostname");
-        m_hostname.setSize(35);
+        m_hostname.setSize(40);
         m_hostname.setHint(
             "Enter the hostname for the subsite, eg business.example.com"
                           );
         add(m_hostname);       // adds hostname input field to form
 
+        /* Setup text input area for description property                     */
         m_description = new TextArea(new StringParameter("description"));
         m_description.addValidationListener(new NotNullValidationListener());
         m_description.setMetaDataAttribute("title", "Description");
-        m_description.setCols(40);
+        m_description.setCols(45);
         m_description.setRows(4);
         m_description.setHint(
             "Enter a short description for the subsite, upto 4000 characters"
         );
-        add(m_description);
+        add(m_description);       // adds description input field to form
 
         /* Setup Radio selection group for subsite start page (front page)   */
         m_customHomepage = new RadioGroup("customHome");
@@ -143,6 +153,7 @@ public class SiteForm extends Form {
         }
         add(m_customHomepage);  // adds Radio group start page to form
 
+        /* Setup text inpout field for subsite start page (front page)   */
         m_customHomepage_url = new TextField(
                                    new StringParameter("customHomepage_url"));
         m_customHomepage_url.setMetaDataAttribute("title", 
@@ -168,6 +179,7 @@ public class SiteForm extends Form {
         }
         add(m_themes);  // adds themes selection box to form
 
+        /* Setup text input field to manually enter a style direcotry       */
         m_styleDir = new TextField(new StringParameter("styleDir"));
         m_styleDir.setMetaDataAttribute("title", "XSLT Directory (Other)");
         m_styleDir.setSize(40);
@@ -175,8 +187,9 @@ public class SiteForm extends Form {
             "Enter the directory for the custom XSLT styles, "  +
             "or leave blank for the default styling"
         );
-        add(m_styleDir);
+        add(m_styleDir);  // adds inputfield style dir to form
 
+        /* Setup selection box for cagtegory domain                          */
         m_rootCategory = (CategoryPicker)Classes.newInstance(
             Subsite.getConfig().getRootCategoryPicker(),
             new Class[] { String.class },
@@ -187,7 +200,7 @@ public class SiteForm extends Form {
             ((Widget)m_rootCategory)
                 .setHint("Select a root navigation category");
         }
-        add(m_rootCategory);
+        add(m_rootCategory);  // adds domain category selection box to form
         
         m_buttons = new SaveCancelSection();
         m_buttons.getSaveButton().setHint("Save the details in the form");
@@ -341,6 +354,7 @@ public class SiteForm extends Form {
      * 
      */
     private class SiteProcessListener implements FormProcessListener {
+        
         public void process(FormSectionEvent e) 
             throws FormProcessException {
             PageState state = e.getPageState();

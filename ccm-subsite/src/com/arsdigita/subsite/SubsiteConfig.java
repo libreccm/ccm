@@ -24,12 +24,9 @@ import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.util.parameter.StringParameter;
-// import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.london.util.ui.ApplicationCategoryPicker;
+
 import java.io.InputStream;
-// import java.io.IOException;
-// import java.net.URL;
-// import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -38,9 +35,33 @@ import org.apache.log4j.Logger;
 
 public class SubsiteConfig extends AbstractConfig {
     
+    /** A logger instance to assist debugging.  */
     private static final Logger s_log = Logger.getLogger(SubsiteConfig.class);
 
+    /** Singelton config object.  */
+    private static SubsiteConfig s_conf;
+
+    /**
+     * Gain a SubsiteConfig object.
+     *
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized SubsiteConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new SubsiteConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+    /**                                                                      */
     private Map m_themes = new HashMap();
+
+    // //////////////////////////////////////////////////////////////////////// 
+    // Set of configuration parameters
 
     /** 
      * 

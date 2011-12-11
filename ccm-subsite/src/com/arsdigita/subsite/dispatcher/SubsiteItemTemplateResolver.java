@@ -35,12 +35,31 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 
+/**
+ * Service class for content cneter (CMS) application.
+ * 
+ * This class extends the CMS default resolver class and adds subsite
+ * specific functionality.
+ * 
+ * Usage: Set CMS parameter
+ *    com.arsdigita.cms.default_template_resolver_class = ...
+ * to this class.
+ */
 public class SubsiteItemTemplateResolver extends DefaultTemplateResolver {
 
+    /** A logger instance, primarily to assist debugging .  */
     private static final Logger s_log = 
-        Logger.getLogger(SubsiteItemTemplateResolver.class);
+                         Logger.getLogger(SubsiteItemTemplateResolver.class);
     
 
+    /**
+     * 
+     * @param section
+     * @param item
+     * @param request
+     * @return 
+     */
+    @Override
     protected String getDefaultTemplate(ContentSection section,
                                         ContentItem item,
                                         HttpServletRequest request) {
@@ -77,6 +96,11 @@ public class SubsiteItemTemplateResolver extends DefaultTemplateResolver {
         return super.getDefaultTemplate(section, item, request);
     }
 
+    /**
+     * 
+     * @param name
+     * @return 
+     */
     protected boolean templateExists(String name) {
         String fullpath = ContentSection.getConfig().getTemplateRoot() 
             + "/" + name;
@@ -89,6 +113,12 @@ public class SubsiteItemTemplateResolver extends DefaultTemplateResolver {
         return exists;
     }
     
+    /**
+     * 
+     * @param request
+     * @return 
+     */
+    @Override
     public String getTemplateContext(HttpServletRequest request) {
         String context = (String) request.getAttribute("templateContext");
         

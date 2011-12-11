@@ -31,22 +31,19 @@ import org.apache.log4j.Logger;
  */
 public class Subsite extends Application {
     
+    /** A logger instance to assist debugging.  */
     private static final Logger s_log = Logger.getLogger(Subsite.class);
 
+    // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.subsite.Subsite";
-    public static final String SUBSITE_XML_NS 
-        = "http://ccm.redhat.com/subsite/1.0";
-    public static final String SUBSITE_XML_PREFIX 
-        = "subsite:";
+                                              = "com.arsdigita.subsite.Subsite";
+    
+    public static final String SUBSITE_XML_NS = "http://ccm.redhat.com/subsite/1.0";
+    
+    public static final String SUBSITE_XML_PREFIX = "subsite:";
 
-    private static final SubsiteConfig s_config = new SubsiteConfig();
-
-    static {
-        s_log.debug("Static initalizer starting...");
-        s_config.load();
-        s_log.debug("Static initalizer finished.");
-    }
+   /** Config object containing various parameter    */
+    private static final SubsiteConfig s_config = SubsiteConfig.getConfig();
         
     private static final SubsiteContext s_context = new SubsiteContext();
     
@@ -55,33 +52,44 @@ public class Subsite extends Application {
      *
      * @post return != null
      */
-    public static final SubsiteContext getContext() {
+    public static SubsiteContext getContext() {
         return s_context;
     }    
 
-    public static final SubsiteConfig getConfig() {
+    /** Service method to provide clients access to configuration.            */
+    public static SubsiteConfig getConfig() {
         return s_config;
     }
 
 
     
+    /**
+     * 
+     * @param obj 
+     */
     public Subsite(DataObject obj) {
         super(obj);
     }
 
+    /**
+     * Constructor retrieving subsite from the database usings its OID.
+     *
+     * @param oid the OID of the subsite
+     * @throws DataObjectNotFoundException 
+     */
     public Subsite(OID oid) 
         throws DataObjectNotFoundException {
 
         super(oid);
     }    
 
-//  /*
-//   * Application specific method only required if installed in its own
-//   * web application context
-//   */
-//  public String getContextPath() {
-//      return "/ccm-ldn-subsite";
-//  }
+    //  /*
+    //   * Application specific method only required if installed in its own
+    //   * web application context
+    //   */
+    //  public String getContextPath() {
+    //      return "/ccm-ldn-subsite";
+    //  }
 
     /**
      * Returns the path name of the location of the applications servlet/JSP.
@@ -110,6 +118,7 @@ public class Subsite extends Application {
      *
      * @return path name to the applications servlet/JSP
      */
+    @Override
     public String getServletPath() {
         // return "/files";
         return "/ccm-subsite/files";

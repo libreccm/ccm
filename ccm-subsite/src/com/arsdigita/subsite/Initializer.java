@@ -39,7 +39,7 @@ import com.arsdigita.templating.PatternStylesheetResolver;
 import com.arsdigita.xml.XML;
 
 /**
- * Initializes the Subsite system
+ * Executes recurring at each system startup and initializes the Subsite system.
  * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
@@ -76,17 +76,4 @@ public class Initializer extends CompoundInitializer {
 
     }
 
-    // TODO - once the core initializers are ported this should be moved
-    // to be a DomainEvent instead of a LegacyInitEvent
-//  public void init(LegacyInitEvent evt) {
-//      super.init(evt);
-        
-//      XML.parse(Subsite.getConfig().getTraversalAdapters(),
-//                new TraversalHandler());
-
-//      PatternStylesheetResolver.registerPatternGenerator(
-//          "subsite", new SubsitePatternGenerator()
-//      );
-
-//  }
 }

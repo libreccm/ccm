@@ -49,6 +49,7 @@ import org.apache.log4j.Logger;
  */
 public class SubsiteFilter extends BaseFilter {
     
+    /** A logger instance, primarily to assist debugging .  */
     private static final Logger s_log = Logger.getLogger(SubsiteFilter.class);
 
     /**

@@ -13,8 +13,8 @@
 
   <!-- IMPORT DEFINITIONS ccm-ldn-shortcuts installed into the main CCM webapp
   -->
-  <xsl:import href="../../../../packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../packages/ui/xsl/ui.xsl"/>
+  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../../packages/ui/xsl/ui.xsl"/>
   
   <xsl:param name="dispatcher-prefix"/>
 

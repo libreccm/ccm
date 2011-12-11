@@ -21,10 +21,18 @@ package com.arsdigita.subsite.ui;
 import com.arsdigita.subsite.Subsite;
 import com.arsdigita.bebop.SimpleContainer;
 
+/**
+ * 
+ * 
+ */
 public class ControlCenterPanel extends SimpleContainer {
 
     private SiteSelectionModel m_site;
     
+    /**
+     * 
+     * @param site 
+     */
     public ControlCenterPanel(SiteSelectionModel site) {
         super(Subsite.SUBSITE_XML_PREFIX + "controlCenter",
               Subsite.SUBSITE_XML_NS);

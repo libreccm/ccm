@@ -47,6 +47,7 @@ import org.apache.log4j.Logger;
  */
 public final class SubsiteContext {
 
+    /** A logger instance, primarly to assist debugging .  */
     private static final Logger s_log = Logger.getLogger(SubsiteContext.class);
 
     public static final String SITE_REQUEST_ATTRIBUTE  = Site.class.getName();

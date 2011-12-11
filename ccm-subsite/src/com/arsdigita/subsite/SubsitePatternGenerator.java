@@ -18,10 +18,13 @@
 
 package com.arsdigita.subsite;
 
-// import com.arsdigita.subsite.Subsite;
 import com.arsdigita.templating.PatternGenerator;
 import javax.servlet.http.HttpServletRequest;
 
+/** 
+ * 
+ * @author pb
+ */
 public class SubsitePatternGenerator implements PatternGenerator {
     
     public String[] generateValues(String key,
