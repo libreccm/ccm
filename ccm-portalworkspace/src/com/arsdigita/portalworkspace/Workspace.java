@@ -75,6 +75,7 @@ public class Workspace extends Application {
     /** Config object containing various parameter    */
     private static final WorkspaceConfig s_config = WorkspaceConfig.getConfig();
 
+    /** Service method to provide client classes access to configuration.            */
     public static WorkspaceConfig getConfig() {
         return s_config;
     }

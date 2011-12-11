@@ -27,8 +27,8 @@ import com.arsdigita.persistence.metadata.CompoundType;
 import java.util.Map;
 
 /**
- * This is the base class that all other domain query classes
- * would extend. It provides a facade on to a contained <code>DataQuery</code>.
+ * This is the base class that all other domain query classes would extend.
+ * It provides a facade on to a contained <code>DataQuery</code>.
  *
  * @see com.arsdigita.persistence.DataQuery
  *

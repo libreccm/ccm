@@ -97,23 +97,27 @@ import org.apache.log4j.Logger;
  * <p>
  * <b>Persistence Details:</b> The default constructor of
  * <code>ACSObjectSelectionModel</code> will attempt to use the
- * {@link DomainObjectFactory} to automatically instantiate the correct Java subclass
- * of {@link ACSObject}. However, it is also possible to use an alternate constructor
- * in order to force the <code>ACSObjectSelectionModel</code> to manually instantiate
- * the objects:
+ * {@link DomainObjectFactory} to automatically instantiate the correct Java 
+ * subclass of {@link ACSObject}. However, it is also possible to use an
+ * alternate constructor in order to force the <code>ACSObjectSelectionModel</code>
+ * to manually instantiate the objects:
  *
- * <blockquote><pre><code>ACSObjectSelectionModel model = new ACSObjectSelectionModel("com.arsdigita.cms.Article", "com.arsdigita.cms.Article", "item_id");</code></pre></blockquote>
+ * <blockquote><pre><code>
+ * ACSObjectSelectionModel model = 
+ *     new ACSObjectSelectionModel("com.arsdigita.cms.Article", 
+ *                                 "com.arsdigita.cms.Article", "item_id");
+ * </code></pre></blockquote>
  *
- * In this case, the model will attempt to use reflection to instantiate the correct
- * subclass of <code>ACSObject</code>. In addition, the supplementary
+ * In this case, the model will attempt to use reflection to instantiate the
+ * correct subclass of <code>ACSObject</code>. In addition, the supplementary
  * constructor makes it possible to create new objects in the database
  * using the {@link #createACSObject(BigDecimal)} method.
  *
- * @version $Id: ACSObjectSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
- * @author Stanislav Freidin
  * @see com.arsdigita.bebop.SingleSelectionModel
  * @see com.arsdigita.bebop.ParameterSingleSelectionModel
  *
+ * @author Stanislav Freidin
+ * @version $Id: ACSObjectSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ACSObjectSelectionModel implements DomainObjectSelectionModel {
 
@@ -178,9 +182,9 @@ public class ACSObjectSelectionModel implements DomainObjectSelectionModel {
      * @param parameterName The name of the state parameter which will
      *    be used to store the object ID.
      */
-    public ACSObjectSelectionModel(
-                                   String javaClass, String objectType, String parameterName
-                                   ) {
+    public ACSObjectSelectionModel( String javaClass, 
+                                    String objectType, 
+                                    String parameterName ) {
         this(javaClass, objectType, new BigDecimalParameter(parameterName));
     }
 
@@ -197,9 +201,9 @@ public class ACSObjectSelectionModel implements DomainObjectSelectionModel {
      * @param parameter The state parameter which should be used to store
      *    the object ID
      */
-    public ACSObjectSelectionModel(
-                                   String javaClass, String objectType, BigDecimalParameter parameter
-                                   ) {
+    public ACSObjectSelectionModel( String javaClass, 
+                                    String objectType, 
+                                    BigDecimalParameter parameter ) {
         this(javaClass, objectType,
              new ParameterSingleSelectionModel(parameter));
     }
@@ -217,9 +221,9 @@ public class ACSObjectSelectionModel implements DomainObjectSelectionModel {
      * @param model The {@link SingleSelectionModel} which will supply
      *    a {@link BigDecimal} ID of the currently selected object
      */
-    public ACSObjectSelectionModel(
-                                   String javaClass, String objectType, SingleSelectionModel model
-                                   ) {
+    public ACSObjectSelectionModel( String javaClass, 
+                                    String objectType, 
+                                    SingleSelectionModel model ) {
         m_loaded = new RequestLocal() {
                 protected Object initialValue(PageState state) {
                     return Boolean.FALSE;
@@ -232,9 +236,8 @@ public class ACSObjectSelectionModel implements DomainObjectSelectionModel {
                 m_javaClass = Class.forName(javaClass);
                 m_constructor = m_javaClass.getConstructor(new Class[]{OID.class});
             } catch (Exception e) {
-                throw new UncheckedWrapperException(
-                                                    "Problem loading class " + javaClass, e
-                                                    );
+                throw new UncheckedWrapperException( "Problem loading class " 
+                                                     + javaClass, e );
             }
         }
 

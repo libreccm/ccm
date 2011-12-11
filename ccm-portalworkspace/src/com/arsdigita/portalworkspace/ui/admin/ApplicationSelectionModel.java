@@ -26,21 +26,19 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
 
 /**
- * This selection model has a default value which will be return when nothing is
- * selected.
+ * This selection model adds an (optional?) default value which will be returned
+ * when nothing is selected.
  */
 
 public class ApplicationSelectionModel extends ACSObjectSelectionModel {
-
-	// public static final BigDecimalParameter PARAM =
-	// (BigDecimalParameter)PermissionsPane.getObjectIDParam();
 
 	public static final String DEFAULT_PARAM_NAME = "app_id";
 
 	private boolean m_hasDefaultValue;
 
+    /** Creates a s_logging category with name = full name of class */
 	private static final Logger s_log = Logger
-			.getLogger(ApplicationSelectionModel.class);
+			                    .getLogger(ApplicationSelectionModel.class);
 
     /**
      * Constructor 
@@ -112,6 +110,7 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
      * Override ACSObjectSelectionModel methods to default to the default
      * Application
      */
+    @Override
     public boolean isSelected(PageState state) {
         if (m_hasDefaultValue && !super.isSelected(state)) {
             return (getDefaultApplication() != null);
@@ -124,6 +123,7 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
      * @param state
      * @return
      */
+    @Override
     public DomainObject getSelectedObject(PageState state) {
 		if (m_hasDefaultValue && !super.isSelected(state)) {
 			return getDefaultApplication();
@@ -137,6 +137,7 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
      * @param state
      * @return
      */
+    @Override
     public Object getSelectedKey(PageState state) {
 		if (m_hasDefaultValue && !super.isSelected(state)) {
 			return getDefaultApplication();

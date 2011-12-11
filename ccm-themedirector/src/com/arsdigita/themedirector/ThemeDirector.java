@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
  */
 public class ThemeDirector extends Application {
 
+    /** A logger instance, primarily to assist debugging .  */
     private static final Logger s_log = Logger.getLogger(ThemeDirector.class);
 
     public static final String DEFAULT_THEME = "defaultTheme";
@@ -38,14 +39,11 @@ public class ThemeDirector extends Application {
     public static final String BASE_DATA_OBJECT_TYPE  =
                                "com.arsdigita.themedirector.ThemeDirector";
 
-    public static ThemeDirectorConfig s_config = new ThemeDirectorConfig();
+    /** Config object containing various parameter    */
+    private static final ThemeDirectorConfig s_config = 
+                                             ThemeDirectorConfig.getConfig();
 
-    static {
-        s_log.debug("Static initalizer starting...");
-        s_config.load();
-        s_log.debug("Static initalizer finished.");
-    }
-
+    /** Service method to provide clients access to configuration.            */
     public static ThemeDirectorConfig getConfig() {
         return s_config;
     }

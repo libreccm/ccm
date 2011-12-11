@@ -4,7 +4,7 @@
 <%@ page import = "com.arsdigita.web.LoginSignal" %>
 <%@ page import = "org.apache.log4j.Logger" %>
 <%@ page import = "com.arsdigita.dispatcher.AccessDeniedException" %>
-<%@ page import = "com.arsdigita.london.subsite.Site" %>
+<%@ page import = "com.arsdigita.subsite.Site" %>
 <%@ page import = "java.math.BigDecimal" %>
 <%@ page import = "com.arsdigita.domain.DataObjectNotFoundException" %>
 <%@ page import = "com.arsdigita.persistence.SessionManager" %>

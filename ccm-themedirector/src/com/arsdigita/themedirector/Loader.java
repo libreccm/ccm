@@ -32,6 +32,7 @@ import org.apache.log4j.Logger;
  * Loader.
  *
  * @author Randy Graebner &lt;randyg@redhat.com&gt;
+ * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: Loader.java 2004 2009-10-03 22:23:08Z pboy $
  */
 public class Loader extends PackageLoader implements ThemeDirectorConstants {
@@ -59,8 +60,7 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
      * to lower case.
      * Example: "Theme Director" will become "theme-director".
      *
-     * Creates an entry in table application_types and a corresponding entry in
-     * apm_package_types
+     * Creates an entry in table application_types 
      */
     private void setupThemeDirector() {
 

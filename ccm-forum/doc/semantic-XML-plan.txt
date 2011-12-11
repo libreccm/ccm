@@ -67,7 +67,7 @@ bebop List or Table class:
 This generates XML looking like:
 
       <subsite:siteListing>
-        <object oid="[com.arsdigita.london.subsite.Site:{id=30008}]">
+        <object oid="[com.arsdigita.subsite.Site:{id=30008}]">
           <id>30008</id>
           <title>Another Site</title>
           <description>Some other stuff</description>
@@ -80,7 +80,7 @@ This generates XML looking like:
             <primaryURL>/portal/some.example.com/</primaryURL>
           </frontPage>
         </object>
-        <object oid="[com.arsdigita.london.subsite.Site:{id=32018}]">
+        <object oid="[com.arsdigita.subsite.Site:{id=32018}]">
           <id>32018</id>
           <title>My Site</title>
           <description>Some stuff</description>
