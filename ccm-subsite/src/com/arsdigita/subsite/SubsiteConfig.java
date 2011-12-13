@@ -23,6 +23,7 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ResourceParameter;
+import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.london.util.ui.ApplicationCategoryPicker;
 
@@ -80,6 +81,18 @@ public class SubsiteConfig extends AbstractConfig {
             StringParameter("com.arsdigita.subsite.front_page_application",
                             Parameter.REQUIRED,
                             "com.arsdigita.portalworkspace.Workspace");
+    /** Array of class name of application types, which are usable as front page
+     *  application for a subsite and whose instances are to be included in a
+     *  selection box to choose a custom front page appplication  for a specific
+     *  subsite. 
+     */
+    private Parameter m_frontPageApplicationTypes= new 
+            StringArrayParameter("com.arsdigita.subsite.front_page_application",
+                            Parameter.REQUIRED, new String[] {
+                            "com.arsdigita.navigation.Navigation",    
+                            "com.arsdigita.portalworkspace.Workspace",
+                            "com.arsdigita.portalserver.Portalsite"
+                             });
 
     /**  
      * 
@@ -105,6 +118,7 @@ public class SubsiteConfig extends AbstractConfig {
 
         register(m_adapters);
         register(m_frontPageApplicationTypeParameter);
+        register(m_frontPageApplicationTypes);
         register(m_frontPageParentURLParameter);
         register(m_rootCategoryPicker);
      
@@ -121,6 +135,14 @@ public class SubsiteConfig extends AbstractConfig {
      */
     public String getFrontPageApplicationType() {
         return (String)get(m_frontPageApplicationTypeParameter);
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public String[] getFrontPageApplicationTypes() {
+        return (String[])get(m_frontPageApplicationTypes);
     }
 
     public String getFrontPageParentURL() {

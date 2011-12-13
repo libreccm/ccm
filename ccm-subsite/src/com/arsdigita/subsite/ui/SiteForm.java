@@ -25,7 +25,6 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.Widget;
 import com.arsdigita.bebop.event.PrintListener;
@@ -43,47 +42,62 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.util.ui.CategoryPicker;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.subsite.Site;
 import com.arsdigita.subsite.Subsite;
+import com.arsdigita.ui.UI;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.Classes;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationType;
+import com.arsdigita.web.ApplicationCollection;
+
+import java.math.BigDecimal;
 
 import java.util.TooManyListenersException;
 import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Class creates the administration input form.
  * 
+ * Used by ControlCenterPanel to construct the 'create new site' and
+ * 'edit existing site' input forms.
  */
 public class SiteForm extends Form {
+
+    /** A logger instance.  */
+    private static final Logger s_log = Logger.getLogger(SiteForm.class);
     
     private SiteSelectionModel m_site;
+    private BigDecimal siteDefaultRootPageID;
 
     /** Input field subsite title  */
     private TextField m_title;
     private TextField m_hostname;
     private TextArea m_description;
-    private RadioGroup m_customHomepage;
-    private TextField m_customHomepage_url;
+    private SingleSelect m_customFrontpageApp;
     private TextField m_styleDir;
     private CategoryPicker m_rootCategory;
     private SingleSelect m_themes;
     private SaveCancelSection m_buttons;
 
+    private final static String DEFAULT_APP = "DEFAULT_APP";
+    private final static String DEFAULT_APP_LABEL = "Site Wide Default       ";
+
     private final static String DEFAULT_STYLE = "DEFAULT_STYLE";
-    private final static String DEFAULT_STYLE_LABEL = "Site Wide Default";
+    private final static String DEFAULT_STYLE_LABEL = "Site Wide Default       ";
     private final static String OTHER_STYLE = "OTHER_STYLE";
     private final static String OTHER_STYLE_LABEL = "Other (type in box below)";
+    
 
     /**
      * Constructor create input widgets and adds them to form.
@@ -98,6 +112,11 @@ public class SiteForm extends Form {
         setRedirecting(true);
         
         m_site = site;
+            String defAppPath = UI.getRootPageURL() ;
+            s_log.debug("defAppPath is: " + defAppPath );
+        siteDefaultRootPageID = 
+            Application.retrieveApplicationForPath(defAppPath )
+                       .getID();
 
         /* Setup text input field for subsite title property                  */
         m_title = new TextField(new StringParameter("title"));
@@ -106,6 +125,7 @@ public class SiteForm extends Form {
         m_title.setHint("Enter the title of the subsite, upto 80 characters");
         m_title.setSize(40);
         add(m_title);       // adds title input field to form
+
 
         /* Setup text input field for hostname property                       */
         m_hostname = new TextField(new StringParameter("hostname"));
@@ -118,6 +138,7 @@ public class SiteForm extends Form {
                           );
         add(m_hostname);       // adds hostname input field to form
 
+        
         /* Setup text input area for description property                     */
         m_description = new TextArea(new StringParameter("description"));
         m_description.addValidationListener(new NotNullValidationListener());
@@ -129,49 +150,30 @@ public class SiteForm extends Form {
         );
         add(m_description);       // adds description input field to form
 
-        /* Setup Radio selection group for subsite start page (front page)   */
-        m_customHomepage = new RadioGroup("customHome");
-        m_customHomepage.addOption(new Option(Boolean.FALSE.toString(),
-                                              "Use main site homepage"));
-        m_customHomepage.addOption(new Option(Boolean.TRUE.toString(),
-                                              "Create custom homepage"));
-        m_customHomepage.addValidationListener(new NotNullValidationListener());
-        m_customHomepage.setHint(
-            "Select to create a custom homepage for the subsite"
-        );
+
+        /* Setup selection box for subsite start page (front page) Application
+         * by URL                                                             */
+        m_customFrontpageApp = new SingleSelect(
+                                   new StringParameter("customFrontpageApp"));
+        m_customFrontpageApp.setMetaDataAttribute("title", 
+                                                 "Front Page (url)");
+        // m_customFrontpageApp.setSize(40);
+        m_customFrontpageApp.setHint(
+                         "Select the name (url) of the subsite custom homepage");
         try {
-            m_customHomepage.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent e) {
-                        RadioGroup target = (RadioGroup)e.getTarget();
-                        if (m_site.isSelected(e.getPageState())) {
-                            target.setReadOnly();
-                        }
-                    }
-                });
+            m_customFrontpageApp.addPrintListener(new FrontpageAppListener());
         } catch (TooManyListenersException ex) {
-            throw new UncheckedWrapperException("cannot happen", ex);
+            throw new UncheckedWrapperException("This cannot happen", ex);
         }
-        add(m_customHomepage);  // adds Radio group start page to form
+        add(m_customFrontpageApp);  // adds  selectfield start page to form
 
-        /* Setup text inpout field for subsite start page (front page)   */
-        m_customHomepage_url = new TextField(
-                                   new StringParameter("customHomepage_url"));
-        m_customHomepage_url.setMetaDataAttribute("title", 
-                                                  "Front Page name (url)");
-        m_customHomepage_url.setSize(40);
-        m_customHomepage_url.setHint(
-            "Enter the name of the custom homepage, i.e. the last part of url. "  +
-            "  "
-        );
-        add(m_customHomepage_url);  // adds inputfield start page to form
-
+        
         /* Setup selection box for themes   */
         m_themes  = new SingleSelect(new StringParameter("selectStyleDir"));
         m_themes.setMetaDataAttribute("title", "XSLT Directory");
-        m_themes.setHint("Select an existing theme from the list, " +
-                         "select 'Other' to type something below or " + 
-                         "select 'Site Wide Default' to get the default " +
-                         "themes.");
+        m_themes.setHint("Select an existing theme from the list, select" +
+                         " 'Other' to type something below or select" + 
+                         " 'Site Wide Default' to get the default themes." );
         try {
             m_themes.addPrintListener(new ThemesListener());
         } catch (TooManyListenersException ex) {
@@ -179,21 +181,21 @@ public class SiteForm extends Form {
         }
         add(m_themes);  // adds themes selection box to form
 
+
         /* Setup text input field to manually enter a style direcotry       */
         m_styleDir = new TextField(new StringParameter("styleDir"));
         m_styleDir.setMetaDataAttribute("title", "XSLT Directory (Other)");
         m_styleDir.setSize(40);
-        m_styleDir.setHint(
-            "Enter the directory for the custom XSLT styles, "  +
-            "or leave blank for the default styling"
-        );
+        m_styleDir.setHint( "Enter the directory for the custom XSLT styles, " 
+                           +"or leave blank for the default styling."        );
         add(m_styleDir);  // adds inputfield style dir to form
+
 
         /* Setup selection box for cagtegory domain                          */
         m_rootCategory = (CategoryPicker)Classes.newInstance(
-            Subsite.getConfig().getRootCategoryPicker(),
-            new Class[] { String.class },
-            new Object[] { "rootCategory" });
+                             Subsite.getConfig().getRootCategoryPicker(),
+                             new Class[] { String.class },
+                             new Object[] { "rootCategory" });
         if (m_rootCategory instanceof Widget) {
             ((Widget)m_rootCategory)
                 .setMetaDataAttribute("title", "Root category");
@@ -202,11 +204,13 @@ public class SiteForm extends Form {
         }
         add(m_rootCategory);  // adds domain category selection box to form
         
+
         m_buttons = new SaveCancelSection();
         m_buttons.getSaveButton().setHint("Save the details in the form");
         m_buttons.getCancelButton().setHint("Abort changes & reset the form");
         add(m_buttons);
         
+
         addSubmissionListener(new SiteSubmissionListener());
         addProcessListener(new SiteProcessListener());
         addInitListener(new SiteInitListener());
@@ -229,9 +233,10 @@ public class SiteForm extends Form {
     }
 
     /**
-     * 
+     * Validate the subsite form user input.
      */
     private class SiteValidationListener implements FormValidationListener {
+        
         public void validate(FormSectionEvent e) {
             PageState state = e.getPageState();
             if (!m_buttons.getCancelButton().isSelected(state)) {
@@ -262,12 +267,26 @@ public class SiteForm extends Form {
                             OTHER_STYLE_LABEL + "'");
                     }
                 }
-            }
-        }
+                
+                /* Check whether a valid Root category has been selected. The
+                 * default entry "-- pick one--" provides a null String
+                 * ( null pointer exception).                                 */
+                try {
+                    Category testExist = m_rootCategory.getCategory(state);
+                    String test = testExist.getDefaultDomainClass();
+                    }
+                catch (Exception ex) {
+                    data.addError(
+                        "No valid category selected. Check category selection!");
+                }
+                            
+            }   // End if (!m_buttons ...)
+        }  // End validate(FormSectionEvent e)
+        
     }
 
     /** 
-     * 
+     * Checks whether hostname is alreafy in use.
      */
     private class HostNameValidationListener implements ParameterListener {
         public void validate(ParameterEvent e) {
@@ -294,26 +313,42 @@ public class SiteForm extends Form {
     }
 
     /** 
-     * 
+     * Initializes the form.
+     * (when a new input form is requested by user either by editing an
+     * existing subsite or by creating a new one).
      */
     private class SiteInitListener implements FormInitListener {
+        
         public void init(FormSectionEvent e) 
             throws FormProcessException {
             PageState state = e.getPageState();
 
             Site site = m_site.getSelectedSite(state);
             
+            
             if (site == null) {
                 m_title.setValue(state, null);
-                m_description.setValue(state, null);
                 m_hostname.setValue(state, null);
+                m_description.setValue(state, null);
+                m_customFrontpageApp.setValue(state, DEFAULT_APP);
                 m_styleDir.setValue(state, null);
                 m_themes.setValue(state, DEFAULT_STYLE);
                 m_rootCategory.setCategory(state, null);
             } else {
-                Category root = site.getRootCategory();
+                m_title.setValue(state, site.getTitle());
+                m_hostname.setValue(state, site.getHostname());
+                m_description.setValue(state, site.getDescription());
+                
+                // BigDecimal siteDefaultRootPageID
+                BigDecimal currentFrontpageID = site.getFrontPage().getID(); 
+                s_log.debug(" Site default frontpage is: "+siteDefaultRootPageID
+                           +", Current frontpage is: "+currentFrontpageID) ;
+                m_customFrontpageApp.setValue(
+                        state,
+                        currentFrontpageID == siteDefaultRootPageID ?
+                            DEFAULT_APP : currentFrontpageID.toString() );
+                
                 String styleURL = site.getStyleDirectory();
-
                 // if the value is in the config map, then styleDir is
                 // empty and themeDir gets the value.  Otherwise, if the
                 // value is null, themeDir gets DEFAULT and styleDir is
@@ -332,20 +367,11 @@ public class SiteForm extends Form {
                         styleDir = styleURL;
                     }
                 }
-
-                m_title.setValue(state, site.getTitle());
-                m_description.setValue(state, site.getDescription());
-                m_hostname.setValue(state, site.getHostname());
                 m_styleDir.setValue(state, styleDir);
                 m_themes.setValue(state, themeDir);
-                m_rootCategory.setCategory(state, root);
 
-                m_customHomepage.setValue(
-                    state,
-                    site.getFrontPage().getPrimaryURL()
-                    .equals(Subsite.getConfig().getFrontPageParentURL()) ?
-                    Boolean.FALSE.toString() :
-                    Boolean.TRUE.toString());
+                Category root = site.getRootCategory();
+                m_rootCategory.setCategory(state, root);
             }
         }
     }
@@ -357,11 +383,13 @@ public class SiteForm extends Form {
         
         public void process(FormSectionEvent e) 
             throws FormProcessException {
+            
             PageState state = e.getPageState();
             
             Category root = m_rootCategory.getCategory(state);
 
             Site site = m_site.getSelectedSite(state);
+            
             String style = (String)m_styleDir.getValue(state);
             String theme = (String)m_themes.getValue(state);
             if (style != null) {
@@ -373,62 +401,68 @@ public class SiteForm extends Form {
                     styleDir = theme;
                 }
             }
+            
+            /* Pre-process selected frontpage application: retrieve application */
+            String subsiteSelectedFrontpage = (String) m_customFrontpageApp
+                                                       .getValue(state);
+            s_log.debug(" Site default frontpage ID is: " + siteDefaultRootPageID
+                       +", selected frontpage Value is: "
+                       +subsiteSelectedFrontpage) ;
+            Application frontpageApp ; 
+            if (subsiteSelectedFrontpage.equals(DEFAULT_APP)) {
+                s_log.debug("About to create frontpage app ID: " + DEFAULT_APP );
+                frontpageApp =  Application
+                    .retrieveApplication(siteDefaultRootPageID);
+            } else {
+                s_log.debug("About to create frontpage app ID: " 
+                           + subsiteSelectedFrontpage );
+                frontpageApp =  Application
+                    .retrieveApplication(new BigDecimal(subsiteSelectedFrontpage));
+            }
+            Assert.exists(frontpageApp,Application.class);
+            s_log.debug("Created frontpage app ID: " + frontpageApp.getID() );
+            
             if (site == null) {   // (sub)site not yet exists, create new one  
 
-                /* Retrieve application type object */
-                ApplicationType appType = ApplicationType
-                    .retrieveApplicationTypeForApplication
-                    (Subsite.getConfig().getFrontPageApplicationType());
-                Assert.exists(appType,ApplicationType.class);
-                
-                /* Retrieve parent application object */
-                Application parentApp =  Application
-                    .retrieveApplicationForPath(
-                        Subsite.getConfig().getFrontPageParentURL());
-                Assert.exists(parentApp,Application.class);
-                
-                Application frontPage = null;
-                if (Boolean.TRUE.toString()
-                                .equals(m_customHomepage.getValue(state))) {
+                if (!siteDefaultRootPageID.equals(frontpageApp.getID()) ) {
                     
-                    // custom homepage selected - create one
-                    // hostname hard coded as front page url
-                    frontPage = Application.createApplication
-                                          ( appType,
-                                            (String)m_hostname.getValue(state),
-                                            (String)m_title.getValue(state),
-                                            parentApp
-                                          );
-                    frontPage.setDescription((String)m_description.getValue(state));
-                    Category.setRootForObject(frontPage,root);
+                    // Previous version executed setRoot.... for newly created
+                    // application, which were created for the purpose to serve
+                    // as a dedicated front page application for the created 
+                    // subsite with an added comment:
+                    // "NB, explicitly don't set cat on shared front page!"
+                    s_log.debug("Front page application ID: " 
+                               + frontpageApp.getID() );
+                    s_log.debug("About to set cat on dedicated front page."  );
+                    Category.setRootForObject(frontpageApp,root);
                     
-                } else { 
-                    
-                    frontPage = parentApp;
-                    // NB, explicitly don't set cat on shared front page!
                 }
-                
+                                    
                 // actually create a new subsite
                 site = Site.create((String)m_title.getValue(state),
                                    (String)m_description.getValue(state),
                                    (String)m_hostname.getValue(state),
                                    styleDir,
                                    root,
-                                   frontPage);
+                                   frontpageApp);
                 
             } else {   // (sub)site already exists, modify mutable configuration 
                 
-                // FRONT_PAGE Application not mutable
                 site.setTitle((String)m_title.getValue(state));
                 site.setDescription((String)m_description.getValue(state));
                 site.setHostname((String)m_hostname.getValue(state));
                 site.setStyleDirectory(styleDir);
                 site.setRootCategory(root);
+                // XXX Check: Frontpage application was not mutable in previous
+                // version! Check if we explicitly have to handle cat whether 
+                // or not frontpage is shared. See comment above!
+                site.setFrontPage(frontpageApp);
                 
             }
             m_site.clearSelection(state);
                         
-            Application app = Application.retrieveApplicationForPath("/navigation/");
+            Application app = Application
+                              .retrieveApplicationForPath("/navigation/");
             Category.setRootForObject(app, 
                                       root, 
                                       site.getTemplateContext().getContext());
@@ -436,11 +470,50 @@ public class SiteForm extends Form {
         }
     }
 
+    
+    /**
+     * 
+     */
+    private class FrontpageAppListener implements PrintListener {
+        
+        public void prepare(PrintEvent e) {
+            final SingleSelect target = (SingleSelect)e.getTarget();
+            // final PageState state = e.getPageState();
+            ApplicationCollection customApps ;
 
+            // target.addOption(new Option(SELECT_APP, SELECT_APP_LABEL));
+            target.addOption(new Option(DEFAULT_APP, DEFAULT_APP_LABEL));
+            
+            String[] customAppTypes = (String[])Subsite.getConfig()
+                                                .getFrontPageApplicationTypes();
+            if ( customAppTypes != null) {
+                for (int i=0; i < customAppTypes.length; i++) {
+                    customApps = Application.retrieveAllApplications(
+                                                             customAppTypes[i]);
+                        while(customApps.next()) {
+                            /* Create an entry for each application, consisting
+                             * of the (BigDecimal) ID as value and the URL as
+                             * label.                                         */
+                            String appID = customApps.get(ACSObject.ID).toString() ; 
+                            target.addOption( new
+                                    Option(appID , 
+                                           ( customApps.getPrimaryURL()
+                                           +"("+appID+")")    ));
+                        } 
+                }
+            
+            }
+            
+        }
+        
+    }
+    
+    
     /**
      * 
      */
     private class ThemesListener implements PrintListener {
+        
         public void prepare(PrintEvent e) {
             SingleSelect target = (SingleSelect)e.getTarget();
             PageState state = e.getPageState();
@@ -458,5 +531,6 @@ public class SiteForm extends Form {
             }
             target.addOption(new Option(OTHER_STYLE, OTHER_STYLE_LABEL));
         }
+        
     }
 }

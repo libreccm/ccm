@@ -49,6 +49,7 @@
         <ccm:application name="ccm-navigation"/>
         <ccm:application name="ccm-portalworkspace"/>                
         <ccm:application name="ccm-simplesurvey"/>                
+        <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>                
         <ccm:application name="ccm-user-preferences"/>
 
@@ -57,7 +58,6 @@
         <ccm:application name="ccm-ldn-rss"/>                        
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
-        <ccm:application name="ccm-ldn-subsite"/>                    
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
