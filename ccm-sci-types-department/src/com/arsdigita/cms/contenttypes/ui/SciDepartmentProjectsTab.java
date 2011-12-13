@@ -12,6 +12,7 @@ import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -19,7 +20,6 @@ import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -111,11 +111,11 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                           + "end desc");
         projects.addOrder("title asc");
 
-        if (((request.getParameter(STATUS_PARAM) == null)
-             || request.getParameter(STATUS_PARAM).trim().isEmpty()
-             || CompareFilter.NONE.equals(request.getParameter(STATUS_PARAM)))
-            && ((request.getParameter(TITLE_PARAM) == null)
-                || request.getParameter(TITLE_PARAM).trim().isEmpty())) {
+        if (((Globalization.decodeParameter(request, STATUS_PARAM) == null)
+             || Globalization.decodeParameter(request, STATUS_PARAM).trim().isEmpty()
+             || CompareFilter.NONE.equals(Globalization.decodeParameter(request, STATUS_PARAM)))
+            && ((Globalization.decodeParameter(request, TITLE_PARAM) == null)
+                || Globalization.decodeParameter(request, TITLE_PARAM).trim().isEmpty())) {
 
             statusFilter.generateXml(filtersElem);
 
@@ -153,8 +153,8 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                                           config.getPageSize());
 
                 if ((paginator.getPageCount() > config.getEnableSearchLimit())
-                    || ((request.getParameter(TITLE_PARAM) != null)
-                        || !(request.getParameter(TITLE_PARAM).trim().isEmpty()))) {
+                    || ((Globalization.decodeParameter(request, TITLE_PARAM) != null)
+                        || !(Globalization.decodeParameter(request, TITLE_PARAM).trim().isEmpty()))) {
                     titleFilter.generateXml(filtersElem);
                 }
 
@@ -230,7 +230,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
     private void applyStatusFilter(final DataQuery projects,
                                    final HttpServletRequest request) {
-        final String statusValue = request.getParameter(STATUS_PARAM);
+        final String statusValue = Globalization.decodeParameter(request, STATUS_PARAM);
         if ((statusValue != null) && !(statusValue.trim().isEmpty())) {
             statusFilter.setValue(statusValue);
         }
@@ -243,7 +243,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
     private void applyTitleFilter(final DataQuery projects,
                                   final HttpServletRequest request) {
-        final String titleValue = request.getParameter(TITLE_PARAM);
+        final String titleValue = Globalization.decodeParameter(request, TITLE_PARAM);
         if ((titleValue != null) && !(titleValue.trim().isEmpty())) {
             titleFilter.setValue(titleValue);
         }

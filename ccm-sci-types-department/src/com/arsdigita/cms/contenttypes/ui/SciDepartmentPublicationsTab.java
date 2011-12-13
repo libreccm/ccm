@@ -12,6 +12,7 @@ import com.arsdigita.cms.contenttypes.ui.panels.SelectFilter;
 import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -97,10 +98,10 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
         final Element depPublicationsElem = parent.newChildElement(
                 "departmentPublications");
 
-        final String yearValue = request.getParameter(YEAR_PARAM);
-        final String titleValue = request.getParameter(TITLE_PARAM);
-        final String authorValue = request.getParameter(AUTHOR_PARAM);
-        //final String sortValue = request.getParameter(SORT_PARAM);
+        final String yearValue = Globalization.decodeParameter(request, YEAR_PARAM);
+        final String titleValue = Globalization.decodeParameter(request, TITLE_PARAM);
+        final String authorValue = Globalization.decodeParameter(request, AUTHOR_PARAM);
+        //final String sortValue = Globalization.decodeParameter(request, SORT_PARAM);
 
         final Element filtersElem = depPublicationsElem.newChildElement(
                 "filters");
@@ -227,14 +228,14 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
             yearFilter.generateXml(filtersElem);
             if ((paginator.getPageCount() > config.getEnableSearchLimit())
-                || ((request.getParameter(TITLE_PARAM) != null)
-                    && !(request.getParameter(TITLE_PARAM).trim().isEmpty()))) {
+                || ((Globalization.decodeParameter(request, TITLE_PARAM) != null)
+                    && !(Globalization.decodeParameter(request, TITLE_PARAM).trim().isEmpty()))) {
                 titleFilter.generateXml(filtersElem);
             }
 
             if ((paginator.getPageCount() > config.getEnableSearchLimit())
-                || ((request.getParameter(AUTHOR_PARAM) != null)
-                    && !(request.getParameter(AUTHOR_PARAM).trim().isEmpty()))) {
+                || ((Globalization.decodeParameter(request, AUTHOR_PARAM) != null)
+                    && !(Globalization.decodeParameter(request, AUTHOR_PARAM).trim().isEmpty()))) {
                 authorFilter.generateXml(filtersElem);
             }
 
@@ -333,7 +334,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
     private void applyYearFilter(final DataQuery publications,
                                  final HttpServletRequest request) {
-        final String yearValue = request.getParameter(YEAR_PARAM);
+        final String yearValue = Globalization.decodeParameter(request, YEAR_PARAM);
         if ((yearValue != null) && !(yearValue.trim().isEmpty())) {
             yearFilter.setValue(yearValue);
         }
@@ -346,7 +347,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
     private void applyTitleFilter(final DataQuery publications,
                                   final HttpServletRequest request) {
-        final String titleValue = request.getParameter(TITLE_PARAM);
+        final String titleValue = Globalization.decodeParameter(request, TITLE_PARAM);
         if ((titleValue != null) && !(titleValue.trim().isEmpty())) {
             titleFilter.setValue(titleValue);
         }
@@ -359,7 +360,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
     private void applyAuthorFilter(final DataQuery publications,
                                    final HttpServletRequest request) {
-        final String authorValue = request.getParameter(AUTHOR_PARAM);
+        final String authorValue = Globalization.decodeParameter(request, AUTHOR_PARAM);
         if ((authorValue != null) && !(authorValue.trim().isEmpty())) {
             authorFilter.setValue(authorValue);
         }

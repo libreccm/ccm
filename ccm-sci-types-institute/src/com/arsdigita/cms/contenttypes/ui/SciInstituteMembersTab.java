@@ -9,6 +9,7 @@ import com.arsdigita.cms.contenttypes.ui.panels.CompareFilter;
 import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
@@ -175,7 +176,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
 
     private void applyStatusFilter(final DataQuery persons,
                                    final HttpServletRequest request) {
-        final String statusValue = request.getParameter(STATUS_PARAM);
+        final String statusValue = Globalization.decodeParameter(request, STATUS_PARAM);
         if ((statusValue != null) && !(statusValue.trim().isEmpty())) {
             statusFilter.setValue(statusValue);
         }
@@ -188,7 +189,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
 
     private void applySurnameFilter(final DataQuery persons,
                                     final HttpServletRequest request) {
-        final String surnameValue = request.getParameter(SURNAME_PARAM);
+        final String surnameValue = Globalization.decodeParameter(request, SURNAME_PARAM);
         if ((surnameValue != null) && !(surnameValue.trim().isEmpty())) {
             surnameFilter.setValue(surnameValue);
         }
