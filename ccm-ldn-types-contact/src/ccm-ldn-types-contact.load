@@ -6,15 +6,15 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_contact_types"/>
-    <table name="ct_contact_address"/>
-    <table name="ct_contact_phones"/>
-    <table name="ct_contacts"/>
+    <table name="ct_ldn_contact_types"/>
+    <table name="ct_ldn_contact_address"/>
+    <table name="ct_ldn_contact_phones"/>
+    <table name="ct_ldn_contacts"/>
 
-    <initializer class="com.arsdigita.cms.contenttypes.ContactInitializer"/>
+    <initializer class="com.arsdigita.london.contenttypes.ContactInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-ldn-types-contact"/>
-    <data class="com.arsdigita.cms.contenttypes.ContactLoader"/>
+    <data class="com.arsdigita.london.contenttypes.ContactLoader"/>
   </scripts>
 </load>

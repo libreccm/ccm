@@ -3,15 +3,15 @@
     <table name="inits"/>
     <table name="acs_objects"/>
     <table name="cms_items"/>
-    <table name="ct_contacts"/>
+    <table name="ct_ldn_contacts"/>
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_esdservice"/>
-    <initializer class="com.arsdigita.cms.contenttypes.ESDServiceInitializer"/>
+    <table name="ct_ldn_esdservice"/>
+    <initializer class="com.arsdigita.london.contenttypes.ESDServiceInitializer"/>
   </provides>
   <scripts>
-    <schema directory="ccm-cms-types-esdservice"/>
-    <data class="com.arsdigita.cms.contenttypes.ESDServiceLoader"/>
+    <schema directory="ccm-ldn-types-esdservice"/>
+    <data class="com.arsdigita.london.contenttypes.ESDServiceLoader"/>
   </scripts>
 </load>
