@@ -29,12 +29,25 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 
 
+/** 
+ * 
+ * 
+ */
 public class RootCategoryPicker extends AbstractCategoryPicker {
     
+    /**
+     * 
+     * @param name 
+     */
     public RootCategoryPicker(String name) {
         super(name);
     }
     
+    /**
+     * 
+     * @param state
+     * @param target 
+     */
     protected void addOptions(PageState state,
                               SingleSelect target) {
         DataCollection domains = SessionManager.getSession()

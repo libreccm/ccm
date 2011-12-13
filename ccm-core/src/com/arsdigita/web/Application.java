@@ -247,7 +247,9 @@ public class Application extends Resource {
                                     final Application parent,
                                     final boolean createContainerGroup) {
         
-	final Application app =	(Application) Resource.createResource(type, title, parent);
+	final Application app =	(Application) Resource.createResource(type, 
+                                                                  title, 
+                                                                  parent);
 	if (createContainerGroup) {
 	    app.createGroup();
 	}
@@ -444,6 +446,10 @@ public class Application extends Resource {
     }
 
     // COMPAT XXX
+    /**
+     * @deprecated refactor not using deprecated class PackageType. Use
+     * ApplicationType instead
+     */
     public PackageType getPackageType() {
         return getApplicationType().getPackageType();
     }
@@ -488,13 +494,23 @@ public class Application extends Resource {
         return children;
     }
 
+    /**
+     * 
+     * @param applicationType
+     * @return 
+     */
     public ApplicationCollection getChildApplicationsForType
-        (String applicationType) {
+                                                    (String applicationType) {
         ApplicationCollection children = getChildApplications();
         children.addEqualsFilter("objectType", applicationType);
         return children;
     }
 
+    /**
+     * 
+     * @return
+     * @deprecated refactor to use other methods of class aüpplication instead
+     */
     private PackageInstance getPackageInstance() {
         DataObject dataObject = (DataObject) get("packageInstance");
 
@@ -503,13 +519,23 @@ public class Application extends Resource {
         return new PackageInstance(dataObject);
     }
 
+    /**
+     * 
+     * @return
+     * @deprecated refactor to use other methods of class aüpplication instead
+     */
     private void setPackageInstance(PackageInstance packageInstance) {
         Assert.exists(packageInstance, PackageInstance.class);
 
         setAssociation("packageInstance", packageInstance);
     }
 
-    // Can return null.  XXX Needs to be getSiteNodes instead.
+    /** 
+     * 
+     * Needs to be getSiteNodes instead.
+     * @return Can return null.
+     * @deprecated 
+     */
     public SiteNode getSiteNode() {
         DataObject packageInstance = (DataObject)get("packageInstance");
 
@@ -629,15 +655,40 @@ public class Application extends Resource {
         return getApplicationType().getRelevantPrivileges();
     }
 
+    /**
+     * Retrieve all installed applications (portlets excluded).
+     * @return a collection of installed 
+     */
     public static ApplicationCollection retrieveAllApplications() {
         DataCollection dataCollection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
+        // exclude all portlets (no application at all) and portal panes
+        // (no application but sort of "sub-application").
         dataCollection.addEqualsFilter
             ("resourceType.hasFullPageView", Boolean.TRUE);
              
         ApplicationCollection apps = new ApplicationCollection
             (dataCollection);
+
+        return apps;
+    }
+    /**
+     * Retrieve all installed applications (portlets excluded).
+     * @return a collection of installed 
+     */
+    public static ApplicationCollection retrieveAllApplications(String 
+                                                                applicationType) {
+        DataCollection dataCollection = SessionManager.getSession()
+                                        .retrieve(BASE_DATA_OBJECT_TYPE);
+
+        // exclude all portlets (no application at all) and portal panes
+        // (no application but sort of "sub-application").
+        dataCollection.addEqualsFilter
+            ("resourceType.hasFullPageView", Boolean.TRUE);
+        dataCollection.addEqualsFilter("objectType", applicationType);
+             
+        ApplicationCollection apps = new ApplicationCollection(dataCollection);
 
         return apps;
     }

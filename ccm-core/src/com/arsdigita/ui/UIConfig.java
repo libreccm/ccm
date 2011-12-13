@@ -241,7 +241,10 @@ public class UIConfig extends AbstractConfig {
     }
 
     /**
-     * Retrieve systems root page (entry page) url.
+     * Retrieve the site's root page url - i.e. the front page, the 
+     * (usually public) top level entry page for the site.
+     * By default it is the login page, but usually the root page of the main
+     * presentation application, e.g. portal, navigation, forum, etc. 
      * 
      * @return root page url
      */

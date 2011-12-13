@@ -22,16 +22,16 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 
 /**
- *     A class
- *    representing an HTML <code>SELECT</code> element with
- *    a single selection.
+ * A class representing an HTML <code>SELECT</code> element with
+ * a single selection.
  *
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
  *    @author Rory Solomon 
  *    @author Michael Pih 
  *    @author Christian Brechb&uuml;hler (christian@arsdigita.com)
- *    @version $Id: SingleSelect.java 287 2005-02-22 00:29:02Z sskracic $ */
+ *    @version $Id: SingleSelect.java 287 2005-02-22 00:29:02Z sskracic $ 
+ */
 public class SingleSelect extends Select {
 
     /** The XML tag.
@@ -67,6 +67,7 @@ public class SingleSelect extends Select {
     /** State that this is a single select
      *  @return false
      */
+    @Override
     public boolean isMultiple() {
         return false;
     }

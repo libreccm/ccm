@@ -81,13 +81,13 @@
         <ccm:application name="ccm-ldn-rss"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-shortcuts"/>
-        <ccm:application name="ccm-ldn-subsite"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
         <ccm:application name="ccm-navigation"/>
         <ccm:application name="ccm-portalserver"/>
         <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-subsite"/>
   <!--  Currently broken. 
         Missing file: ccm-portlet/postgres-create.sql
         <ccm:application name="ccm-portlet"/>                 -->
