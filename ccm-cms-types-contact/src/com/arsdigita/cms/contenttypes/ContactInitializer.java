@@ -16,12 +16,14 @@ public class ContactInitializer extends ContentTypeInitializer {
                 Contact.BASE_DATA_OBJECT_TYPE);
     }
     
+    @Override
     public String[] getStylesheets() {
         return new String[] {
             "/static/content-types/com/arsdigita/cms/contenttypes/Contact.xsl"
         };
     }
     
+    @Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Contact.xml";
     }

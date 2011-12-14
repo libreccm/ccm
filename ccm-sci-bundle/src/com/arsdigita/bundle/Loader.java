@@ -72,7 +72,7 @@ public class Loader extends PackageLoader {
      *    FULL_QUALIFIED_CLASS_NAME : URL : TITLE "
      */
     private Parameter m_customApplicationInstances = new StringArrayParameter(
-                "com.arsdigita.bundle.local_app_instances",
+                "com.arsdigita.bundle.loader.local_app_instances",
                 Parameter.OPTIONAL, null
                 );
     
@@ -84,7 +84,7 @@ public class Loader extends PackageLoader {
      * Files are stored as part of the jar, so classloader can find them.
      */
     private Parameter m_categoryFiles = new StringArrayParameter(
-                "com.arsdigita.bundle.category_files",
+                "com.arsdigita.bundle.loader.category_files",
                 Parameter.REQUIRED,new String[]{
                     "bundle/categories/sci-nav-domain-1.00.xml",
                     "bundle/categories/sci-nav-hierarchy-1.00.xml" }
@@ -107,7 +107,7 @@ public class Loader extends PackageLoader {
      * 
      */
     private Parameter m_domainMappings = new StringArrayParameter(
-                "com.arsdigita.bundle.domain_mappings",
+                "com.arsdigita.bundle.loader.domain_mappings",
                 Parameter.REQUIRED,new String[]{ "STD-NAV:/navigation/",
                                                  "STD-NAV:/content/",
                                                  "STD-NAV:/portal/"      }
