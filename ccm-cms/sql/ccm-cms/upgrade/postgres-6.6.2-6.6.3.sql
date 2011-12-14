@@ -26,5 +26,6 @@
 begin;
 
 \i ../default/upgrade/6.6.2-6.6.3/upd_table_persons.sql
+\i ../default/upgrade/6.6.2-6.6.3/create_orgaunit_hierarchy_table.sql
 
 commit;
