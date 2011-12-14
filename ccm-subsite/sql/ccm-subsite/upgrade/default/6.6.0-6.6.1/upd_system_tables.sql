@@ -32,7 +32,7 @@ update init_requirements
  where init  like  '%london.subsite%' ;
 
 update init_requirements
-   set required_init=replace(required_init,'london.subsite', 'subsie')
+   set required_init=replace(required_init,'london.subsite', 'subsite')
  where required_init  like  '%london.subsite%' ;
 
 ALTER TABLE ONLY init_requirements
