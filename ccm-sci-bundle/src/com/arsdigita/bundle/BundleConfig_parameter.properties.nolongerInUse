@@ -1,0 +1,4 @@
+com.arsdigita.aplaws.ajax_expand_on_all_branches.title=Use Ajax on all branch expansions
+com.arsdigita.aplaws.ajax_expand_on_all_branches.purpose=Use Ajax on all branches, or bring back entire subtree on expansion of top level root
+com.arsdigita.aplaws.ajax_expand_on_all_branches.example=true|false
+com.arsdigita.aplaws.ajax_expand_on_all_branches.format=[boolean]
