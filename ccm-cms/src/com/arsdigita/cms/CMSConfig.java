@@ -587,6 +587,19 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.lifecycle.use_old_style_item_lifecycle_item_pane",
             Parameter.REQUIRED,
             false);
+    
+    ////////////////////////////////////////////////
+    //Actives threaded publishing. If active, the publish process for 
+    //content items will run in a separate thread. May useful if you have
+    //large objects. 
+    //
+    //WARNING: Not tested very much. Use at your own risk.
+    //
+    ////////////////////////////////////////////////////
+    private final Parameter m_threadPublishing = new BooleanParameter(
+            "com.arsdigita.cms.lifecycle.threaded_publishing",
+            Parameter.REQUIRED,
+            false);
 
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -651,7 +664,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_categoryTreeOrdering);
         register(m_hasContactsAuthoringStep);
         register(m_hideTextAssetUploadFile);
-        register(m_allowContentCreateInSectionListing);        
+        register(m_allowContentCreateInSectionListing);
 
         // Content Center (Workspace) config related parameters
         register(m_contentCenterMap);
@@ -667,8 +680,9 @@ public final class CMSConfig extends AbstractConfig {
 
         register(m_folderBrowseListSize);
         register(m_folderAtoZShowLimit);
-        
+
         register(m_useOldStyleItemLifecycleItemPane);
+        register(m_threadPublishing);
 
         // publishToFile package related parameter
         // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
@@ -1067,8 +1081,12 @@ public final class CMSConfig extends AbstractConfig {
     public Integer getFolderAtoZShowLimit() {
         return (Integer) get(m_folderAtoZShowLimit);
     }
-    
+
     public Boolean getUseOldStyleItemLifecycleItemPane() {
         return (Boolean) get(m_useOldStyleItemLifecycleItemPane);
+    }
+
+    public Boolean getThreadedPublishing() {
+        return (Boolean) get(m_threadPublishing);
     }
 }

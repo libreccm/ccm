@@ -42,6 +42,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
@@ -50,6 +51,8 @@ import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.ui.BaseItemPane;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.ui.item.ContentItemRequestLocal;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.PropertyList;
 import com.arsdigita.toolbox.ui.Section;
@@ -71,6 +74,7 @@ import com.arsdigita.xml.Element;
  * @author Jack Chung
  * @author Xixi D'Moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Jens Pelzetter jens@jp-digital.de
  * @version $Id: ItemLifecycleItemPane.java 1942 2009-05-29 07:53:23Z terry $
  */
 class ItemLifecycleItemPane extends BaseItemPane {
@@ -235,12 +239,60 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 final PageState state = e.getPageState();
                 final ContentItem item = m_item.getContentItem(state);
 
-                republish(item, false);
-                if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                /*
+                 * jensp 2011-12-14: Check is threaded publishing is active. If
+                 * yes, execute publishing in a thread.
+                 */
+                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                    final Republisher republisher = new Republisher(item);
+                    final Thread thread = new Thread(republisher);
+
+                    thread.start();
+
                     throw new RedirectSignal(
-                            URL.there(state.getRequest(),
-                                      Utilities.getWorkspaceURL()), true);
+                            URL.getDispatcherPath()
+                            + ContentItemPage.getItemURL(item,
+                                                         ContentItemPage.PUBLISHING_TAB),
+                            true);
+                    /*
+                     * jensp 2011-12-14 end
+                     */
+                } else {
+                    republish(item, false);
+                    if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                        throw new RedirectSignal(
+                                URL.there(state.getRequest(),
+                                          Utilities.getWorkspaceURL()), true);
+                    }
                 }
+            }
+        }
+
+        /**
+         * @author Jens Pelzetter
+         */
+        private class Republisher implements Runnable {
+
+            /**
+             * Saves OID of item as a string. This is necessary because it is
+             * not possible to access to same data object instance from 
+             * multiple threads. So we have to create a new instance a the
+             * data object in the run method. To avoid any sort a problems, 
+             * we store the OID as a string and convert it back to an OID in
+             * the run method.
+             */
+            private final String itemOid;
+
+            private Republisher(final ContentItem item) {
+                itemOid = item.getOID().toString();
+            }
+
+            public void run() {
+                final ContentItem item = (ContentItem) DomainObjectFactory.
+                        newInstance(OID.valueOf(itemOid));
+                PublishLock.getInstance().lock(item);
+                republish(item, false);
+                PublishLock.getInstance().unlock(item);
             }
         }
     }
@@ -263,12 +315,60 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 final PageState state = e.getPageState();
                 final ContentItem item = m_item.getContentItem(state);
 
-                republish(item, true);
-                if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                /**
+                 * jensp 2011-12-14: Execute is a thread if 
+                 * threaded publishing is active.
+                 */
+                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                    final Republisher republisher = new Republisher(item);
+                    final Thread thread = new Thread(republisher);
+
+                    thread.start();
+
                     throw new RedirectSignal(
-                            URL.there(state.getRequest(),
-                                      Utilities.getWorkspaceURL()), true);
+                            URL.getDispatcherPath()
+                            + ContentItemPage.getItemURL(item,
+                                                         ContentItemPage.PUBLISHING_TAB),
+                            true);
+                } else {
+                    /**
+                     * jensp 2011-12-14 end
+                     */
+                    republish(item, true);
+                    if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                        throw new RedirectSignal(
+                                URL.there(state.getRequest(),
+                                          Utilities.getWorkspaceURL()), true);
+                    }
                 }
+            }
+        }
+
+        /**
+         * @author Jens Pelzetter
+         */
+        private class Republisher implements Runnable {
+
+            /**
+             * Saves OID of item as a string. This is necessary because it is
+             * not possible to access to same data object instance from 
+             * multiple threads. So we have to create a new instance a the
+             * data object in the run method. To avoid any sort a problems, 
+             * we store the OID as a string and convert it back to an OID in
+             * the run method.
+             */
+            private final String itemOid;
+
+            private Republisher(final ContentItem item) {
+                itemOid = item.getOID().toString();
+            }
+
+            public void run() {
+                final ContentItem item = (ContentItem) DomainObjectFactory.
+                        newInstance(OID.valueOf(itemOid));
+                PublishLock.getInstance().lock(item);
+                republish(item, true);
+                PublishLock.getInstance().unlock(item);
             }
         }
     }
@@ -298,6 +398,12 @@ class ItemLifecycleItemPane extends BaseItemPane {
         }
     }
 
+    /**
+     * New style pane. Uses a select box for the action to avoid wrong clicks
+     * on unpublish.
+     * 
+     * @author Jens Pelzetter
+     */
     private class ActionForm
             extends Form
             implements FormProcessListener,
@@ -367,26 +473,120 @@ class ItemLifecycleItemPane extends BaseItemPane {
             String selected = (String) data.get(LIFECYCLE_ACTION);
             final ContentItem item = m_item.getContentItem(state);
 
+            /**
+             * Republish/Republish and Reset are executed in the thread
+             * if threaded publishing is active.
+             */
             if (REPUBLISH.equals(selected)) {
-                republish(item, false);
+                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                    final RepublishRunner runner = new RepublishRunner(item);
+                    final Thread thread = new Thread(runner);
 
-                if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                    thread.start();
+
                     throw new RedirectSignal(
-                            URL.there(state.getRequest(),
-                                      Utilities.getWorkspaceURL()), true);
+                            URL.getDispatcherPath()
+                            + ContentItemPage.getItemURL(item,
+                                                         ContentItemPage.PUBLISHING_TAB),
+                            true);
+                } else {
+                    republish(item, false);
+
+                    if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                        throw new RedirectSignal(
+                                URL.there(state.getRequest(),
+                                          Utilities.getWorkspaceURL()), true);
+                    }
                 }
             } else if (REPUBLISH_AND_RESET.equals(selected)) {
-                republish(item, true);
+                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                    final RepublishAndResetRunner runner =
+                                                  new RepublishAndResetRunner(
+                            item);
+                    final Thread thread = new Thread(runner);
 
-                if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                    thread.start();
+
                     throw new RedirectSignal(
-                            URL.there(state.getRequest(),
-                                      Utilities.getWorkspaceURL()), true);
+                            URL.getDispatcherPath()
+                            + ContentItemPage.getItemURL(item,
+                                                         ContentItemPage.PUBLISHING_TAB),
+                            true);
+                } else {
+                    republish(item, true);
+
+                    if (ContentSection.getConfig().getUseStreamlinedCreation()) {
+                        throw new RedirectSignal(
+                                URL.there(state.getRequest(),
+                                          Utilities.getWorkspaceURL()), true);
+                    }
                 }
             } else if (UNPUBLISH.equals(selected)) {
                 item.unpublish();
             } else {
                 throw new IllegalArgumentException("Illegal selection");
+            }
+        }
+
+        private class RepublishRunner implements Runnable {
+
+            /**
+             * Saves OID of item as a string. This is necessary because it is
+             * not possible to access to same data object instance from 
+             * multiple threads. So we have to create a new instance a the
+             * data object in the run method. To avoid any sort a problems, 
+             * we store the OID as a string and convert it back to an OID in
+             * the run method.
+             */
+            private final String itemOid;
+
+            private RepublishRunner(final ContentItem item) {
+                itemOid = item.getOID().toString();
+            }
+
+            private void doRepublish() {
+                final ContentItem item = (ContentItem) DomainObjectFactory.
+                        newInstance(OID.valueOf(itemOid));
+                republish(item, false);
+            }
+
+            public void run() {
+                final ContentItem item = (ContentItem) DomainObjectFactory.
+                        newInstance(OID.valueOf(itemOid));
+                PublishLock.getInstance().lock(item);
+                doRepublish();
+                PublishLock.getInstance().unlock(item);
+            }
+        }
+
+        private class RepublishAndResetRunner implements Runnable {
+
+            /**
+             * Saves OID of item as a string. This is necessary because it is
+             * not possible to access to same data object instance from 
+             * multiple threads. So we have to create a new instance a the
+             * data object in the run method. To avoid any sort a problems, 
+             * we store the OID as a string and convert it back to an OID in
+             * the run method.
+             */
+            private final String itemOid;
+
+            private RepublishAndResetRunner(final ContentItem item) {
+                itemOid = item.getOID().toString();
+            }
+
+            private void doRepublishAndReset() {
+                final ContentItem item = (ContentItem) DomainObjectFactory.
+                        newInstance(OID.valueOf(itemOid));
+                republish(item, true);
+            }
+
+            public void run() {
+                final ContentItem item = (ContentItem) DomainObjectFactory.
+                        newInstance(OID.valueOf(itemOid));
+                PublishLock.getInstance().lock(item);
+                doRepublishAndReset();
+                PublishLock.getInstance().unlock(item);
             }
         }
     }
