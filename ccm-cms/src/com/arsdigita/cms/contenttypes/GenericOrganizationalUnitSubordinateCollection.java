@@ -49,8 +49,8 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
     }
 
     public void swapWithNext(final GenericOrganizationalUnit orgaunit) {
-        
-        
+
+
         if (orgaunit == null) {
             throw new IllegalArgumentException(
                     "Parameter orgaunit is null. Can't swap position with null");
@@ -87,6 +87,8 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
         next();
         setSubordinateOrder(currentIndex);
         rewind();
+        
+        normalizeOrder();
     }
 
     public void swapWithPrevious(final GenericOrganizationalUnit orgaunit) {
@@ -128,17 +130,30 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
         next();
         setSubordinateOrder(previousIndex);
         rewind();
+        
+        normalizeOrder();
+    }
+
+    private void normalizeOrder() {
+        this.rewind();
+
+        int i = 1;
+        while (this.next()) {
+            setSubordinateOrder(i);
+            i++;
+        }
+        this.rewind();
     }
 
     public GenericOrganizationalUnit getGenericOrganizationalUnit() {
         return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(m_dataCollection.
                 getDataObject());
     }
-    
+
     public BigDecimal getId() {
         return (BigDecimal) m_dataCollection.getDataObject().get(ACSObject.ID);
     }
-    
+
     public OID getOID() {
         return m_dataCollection.getDataObject().getOID();
     }

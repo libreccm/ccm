@@ -229,6 +229,7 @@ public class RelatedLink extends Link {
                 "com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
                 "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
                 this.getLinkListName());
+         normalizeOrder();
     }
 
     /**
@@ -241,6 +242,7 @@ public class RelatedLink extends Link {
                 "com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
                 "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
                 this.getLinkListName());
+         normalizeOrder();
     }
 
     /**
@@ -298,7 +300,22 @@ public class RelatedLink extends Link {
             link.setOrder(sortKey);
             link.save();
         }
-
+    }
+    
+    /**
+     * This method normalizes the order column of the related links of this 
+     * item. This means that the order column of the first related link will 
+     * have the value 1 after calling this method, and so one.
+     */
+    private void normalizeOrder() {
+        final DataCollection relatedLinks = getRelatedLinks(getLinkOwner(),
+                                                            getLinkListName());
+        int i = 1;
+        while(relatedLinks.next()) {
+            relatedLinks.getDataObject().set(ORDER, i);
+            relatedLinks.getDataObject().save();
+            i++;
+        }
     }
 
     /**

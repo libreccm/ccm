@@ -83,6 +83,8 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
         next();
         setSuperiorOrder(currentIndex);
         rewind();
+        
+        normalizeOrder();
     }
 
     public void swapWithPrevious(final GenericOrganizationalUnit orgaunit) {
@@ -124,6 +126,19 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
         next();
         setSuperiorOrder(previousIndex);
         rewind();
+        
+        normalizeOrder();
+    }
+    
+     private void normalizeOrder() {
+        this.rewind();
+
+        int i = 1;
+        while (this.next()) {
+            setSuperiorOrder(i);
+            i++;
+        }
+        this.rewind();
     }
 
     public GenericOrganizationalUnit getGenericOrganizationalUnit() {

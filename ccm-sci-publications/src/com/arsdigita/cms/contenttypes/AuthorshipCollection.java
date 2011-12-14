@@ -107,6 +107,8 @@ public class AuthorshipCollection extends DomainCollection {
         this.next();
         this.setAuthorshipOrder(currentIndex);
         this.rewind();
+
+        normalizeOrder();
     }
 
     public void swapWithPrevious(GenericPerson author) {
@@ -155,16 +157,31 @@ public class AuthorshipCollection extends DomainCollection {
         this.next();
         this.setAuthorshipOrder(previousIndex);
         this.rewind();
+
+        normalizeOrder();
+    }
+
+    private void normalizeOrder() {
+        this.rewind();
+
+        int i = 1;
+        while (this.next()) {
+            setAuthorshipOrder(i);
+            i++;
+        }
+        this.rewind();
     }
 
     public String getSurname() {
-        return (String) m_dataCollection.getDataObject().get(GenericPerson.SURNAME);        
+        return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.SURNAME);
     }
-    
+
     public String getGivenName() {
-        return (String) m_dataCollection.getDataObject().get(GenericPerson.GIVENNAME);
+        return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.GIVENNAME);
     }
-            
+
     public GenericPerson getAuthor() {
         return new GenericPerson(m_dataCollection.getDataObject());
     }
