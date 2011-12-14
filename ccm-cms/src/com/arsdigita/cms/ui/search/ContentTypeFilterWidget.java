@@ -100,7 +100,7 @@ public class ContentTypeFilterWidget extends FilterWidget {
 
         // If the section and parent type both equals the preset from initializer
         // there is no need to get a new ContentTypeCollection
-        if (getContentSection() != m_section && parentType != m_parentType) {
+        if (getContentSection() != m_section || parentType != m_parentType) {
 
             if (getContentSection() != null) {
                 ContentSection section = getContentSection();

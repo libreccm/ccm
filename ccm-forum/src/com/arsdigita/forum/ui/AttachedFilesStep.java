@@ -356,7 +356,7 @@ public class AttachedFilesStep
 		while(files.next()) {
 			PostFileAttachment file = (PostFileAttachment) DomainObjectFactory.newInstance(
 										files.getDataObject());
-			DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(p.newChildElement("files"));
+			DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(p.newChildElement(FORUM_XML_PREFIX + "files"));
 			xr.setWrapRoot(false);
 			xr.setWrapAttributes(true);
 			xr.setWrapObjects(false);
