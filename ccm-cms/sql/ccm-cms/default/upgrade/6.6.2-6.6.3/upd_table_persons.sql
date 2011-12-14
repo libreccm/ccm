@@ -26,3 +26,23 @@ ALTER TABLE cms_persons
 
 ALTER TABLE cms_persons 
     ADD COLUMN dabin_id INTEGER;
+
+CREATE TABLE cms_organizationalunits_hierarchy_map (
+    superior_orgaunit_id integer NOT NULL,
+    subordinate_orgaunit_id integer NOT NULL,
+    assoc_type character varying(128),
+    superior_orgaunit_order integer,
+    subordinate_orgaunit_order integer
+);
+
+-- No sure how to get db owner here
+ALTER TABLE public.cms_organizationalunits_hierarchy_map OWNER TO iaw;
+
+ALTER TABLE ONLY cms_organizationalunits_hierarchy_map
+    ADD CONSTRAINT cms_org_hie_map_sub_or_p_nykpq PRIMARY KEY (subordinate_orgaunit_id, superior_orgaunit_id);
+
+ALTER TABLE ONLY cms_organizationalunits_hierarchy_map
+    ADD CONSTRAINT cms_org_hie_map_sub_or_f_xq5is FOREIGN KEY (subordinate_orgaunit_id) REFERENCES cms_organizationalunits(organizationalunit_id);
+
+ALTER TABLE ONLY cms_organizationalunits_hierarchy_map
+    ADD CONSTRAINT cms_org_hie_map_sup_or_f_qchkn FOREIGN KEY (superior_orgaunit_id) REFERENCES cms_organizationalunits(organizationalunit_id);
