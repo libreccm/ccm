@@ -70,6 +70,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
 
         if ((department != null)
+            && (department.getDepartmentShortDescription() != null)
             && !department.getDepartmentShortDescription().trim().isEmpty()) {
             final Element shortDescElem = parent.newChildElement("shortDesc");
             shortDescElem.setText(department.getDepartmentShortDescription());
