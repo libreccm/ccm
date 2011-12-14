@@ -1,0 +1,14 @@
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.*;
+
+object type PublishLock {
+
+    BigDecimal[1..1] id = cms_publish_lock.lock_id INTEGER;
+    String[0..1] lockedOid = cms_publish_lock.locked_oid VARCHAR(2048);
+    Date[0..1] timestamp = cms_publish_lock.lock_timestamp TIMESTAMP;
+    String[0..1] action = cms_publish_lock.action VARCHAR(256);
+
+    object key(id);
+
+}
