@@ -1,6 +1,5 @@
-2007-08-06:
-./ccm-shp-aplaws/src/WEB-INF/content-types/c...types/aplaws-mparticle-item.jsp
-<define:page name="itemPage" application="content  changed to
-<define:page name="itemPage" application="content-section"
-as is all other contenttyp jsp pages. Requires corresponding modification
-in the theme! 
+2011-09-15:
+===========
+
+Initial Release, based on ccm-ldn-aplaws which tailors CCM for use by UK
+Local Authorities.
