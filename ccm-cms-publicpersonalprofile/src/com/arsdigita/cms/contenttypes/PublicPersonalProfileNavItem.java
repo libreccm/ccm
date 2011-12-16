@@ -7,7 +7,8 @@ import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
 
 /**
- *
+ * A possible navigation entry for a public personal profile.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */

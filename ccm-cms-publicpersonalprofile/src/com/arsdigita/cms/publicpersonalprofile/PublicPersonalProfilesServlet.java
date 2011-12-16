@@ -54,7 +54,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Servlet for the PublicPersonalProfile application.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */
@@ -482,6 +483,13 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         }
     }
 
+    /**
+     * Generates the contact XML for the person
+     * 
+     * @param profileOwnerElem
+     * @param contact
+     * @param state 
+     */
     private void generateContactXml(final Element profileOwnerElem,
                                     final GenericContact contact,
                                     final PageState state) {
@@ -524,6 +532,14 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         }
     }
 
+    /**
+     * Renders the admin page.
+     * 
+     * @param page
+     * @param request
+     * @param response
+     * @throws ServletException 
+     */
     private void showAdminPage(final Page page,
                                final HttpServletRequest request,
                                final HttpServletResponse response)
