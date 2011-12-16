@@ -7,7 +7,8 @@ import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Tab which shown the description of an institute.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */

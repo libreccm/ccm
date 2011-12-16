@@ -8,7 +8,11 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 /**
- *
+ * Step for associating a project with institutes. Activated if the
+ * ccm-sci-types-project module is installed and the 
+ * {@code com.arsdigita.cms.contenttypes.sciinstitute.enable.project_institutes_step} 
+ * is set to true.
+ * 
  * @author Jens Pelzetter  
  * @version $Id$
  */

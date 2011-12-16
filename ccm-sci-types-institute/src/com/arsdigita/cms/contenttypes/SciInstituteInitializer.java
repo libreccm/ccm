@@ -28,6 +28,7 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
 
         final SciInstituteConfig config = SciInstitute.getConfig();
 
+        //Add the authoring steps for departments if the department type is installed
         final ContentTypeCollection contentTypes = ContentType.
                 getAllContentTypes();
         contentTypes.addFilter(
@@ -58,6 +59,8 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
         }
 
         contentTypes.reset();
+
+        //Add the authoring steps for projects if the project type is installed
         contentTypes.addFilter(
                 "associatedObjectType = 'com.arsdigita.cms.contenttypes.SciProject'");
 

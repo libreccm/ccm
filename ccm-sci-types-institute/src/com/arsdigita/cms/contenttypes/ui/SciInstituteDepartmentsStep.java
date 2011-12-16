@@ -7,7 +7,10 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 /**
- *
+ * Authoring step for adding departments to an institute. This step is
+ * attached by the initializer if the ccm-sci-types-department module 
+ * has been installed.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */

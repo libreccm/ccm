@@ -26,7 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Shows a list of projects of an institute. Projects of departments are merged 
+ * into the list.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */

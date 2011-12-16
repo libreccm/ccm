@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Tab for showing a list of members of an institute.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */

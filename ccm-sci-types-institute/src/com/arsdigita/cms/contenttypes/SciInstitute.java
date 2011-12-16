@@ -9,10 +9,10 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import java.math.BigDecimal;
 import java.util.List;
-import org.omg.PortableInterceptor.ACTIVE;
 
 /**
- *
+ * An content type for representing scientifc institutes.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */
@@ -90,6 +90,12 @@ public class SciInstitute extends GenericOrganizationalUnit {
         return result;
     }
 
+    /**
+     * Used to check if a institute has members with a specific status.
+     * @param merge
+     * @param status
+     * @return 
+     */
     public boolean hasMembers(final boolean merge,
                               final SciInstituteMemberStatus status) {
         String queryName;

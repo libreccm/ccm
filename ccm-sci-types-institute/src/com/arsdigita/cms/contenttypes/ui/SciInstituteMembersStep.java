@@ -9,7 +9,8 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 /**
- *
+ * 
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */
