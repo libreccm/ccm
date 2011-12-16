@@ -48,7 +48,6 @@
     <script sql="ccm-cms/upgrade/::database::-6.6.2-6.6.3.sql"/>
   </version>
  <version from="6.6.3" to="6.6.4">
-    <!-- This update is only applicable for the development tree at UHB!  -->
     <script sql="ccm-cms/upgrade/::database::-6.6.3-6.6.4.sql"/>
   </version>
 </upgrade>

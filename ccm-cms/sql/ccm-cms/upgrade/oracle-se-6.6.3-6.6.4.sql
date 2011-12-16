@@ -15,17 +15,10 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2011/09/06 23:15:09 $
+-- $Id: oracle-se-6.6.2-6.6.3.sql  2011-09-06 15:10:39Z pboy $
 
--- This update is only applicable for the internal development tree at
--- University of Bremen !  Don't use for the APLAWS main trunk on
--- fedorahosted!
 
-\echo ScientificCMS 6.6.3 -> 6.6.4 Upgrade Script (PostgreSQL)
+PROMPT Red Hat Enterprise CMS 6.6.3 -> 6.6.4 Upgrade Script (Oracle)
 
-begin;
-
-\i ../default/upgrade/6.6.3-6.6.4/create_orgaunit_hierarchy_table.sql
-\i ../default/upgrade/6.6.3-6.6.4/create_publish_lock_table.sql
-
-commit;
+@@ ../default/upgrade/6.6.3-6.6.4/create_orgaunit_hierarchy_table.sql
+@@ ../default/upgrade/6.6.3-6.6.4/create_publish_lock_table.sql

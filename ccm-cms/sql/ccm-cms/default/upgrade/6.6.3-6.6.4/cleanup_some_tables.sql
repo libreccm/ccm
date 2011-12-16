@@ -1,5 +1,4 @@
 --
--- Copyright (C) 2011 Peter Boy All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,17 +14,18 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2011/09/06 23:15:09 $
+-- $Id: cleanup_tables.sql pboy $
 
--- This update is only applicable for the internal development tree at
--- University of Bremen !  Don't use for the APLAWS main trunk on
--- fedorahosted!
 
-\echo ScientificCMS 6.6.3 -> 6.6.4 Upgrade Script (PostgreSQL)
 
-begin;
+-- db staatsschiff-114, wsf-114
+-- ALTER TABLE ONLY cms_persons
+--     DROP CONSTRAINT cms_persons_alias_id_fkey;
+-- db iaw-114
+ALTER TABLE ONLY cms_persons
+    DROP CONSTRAINT cms_persons_aliasid_fkey;
+ALTER TABLE cms_persons
+  ADD CONSTRAINT cms_persons_alias_id_f_uaoxu FOREIGN KEY (alias_id)
+      REFERENCES cms_persons (person_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
 
-\i ../default/upgrade/6.6.3-6.6.4/create_orgaunit_hierarchy_table.sql
-\i ../default/upgrade/6.6.3-6.6.4/create_publish_lock_table.sql
-
-commit;

@@ -198,7 +198,7 @@ public class Loader extends PackageLoader {
      * (e.g. 6.6.1-6.6.2).
      */
     public static ApplicationType loadWorkspaceApplicationType() {
-        s_log.warn("Creating CMS Workspace...");
+        s_log.debug("Creating CMS Workspace...");
 
 //      Creating of Workspace package using new style c.ad.web.Application 
 //      in legacy compatible mode. Needs refactoring of the Workspace package.
@@ -226,7 +226,7 @@ public class Loader extends PackageLoader {
 
         ApplicationType workspaceType = appsetup.run();
         workspaceType.save();
-        s_log.warn("CMS Workspace type created.");
+        s_log.debug("CMS Workspace type created.");
 
         return workspaceType;
     }
@@ -239,7 +239,7 @@ public class Loader extends PackageLoader {
                                                 ApplicationType workspaceType) {
         // create legacy compatible  application instance,
         // old-style package key used as url fragment where to install the instance
-        s_log.warn("Creating CMS Workspace instance ...");
+        s_log.debug("Creating CMS Workspace instance ...");
         Workspace app = (Workspace) Application.createApplication(
                 workspaceType, // type
                 Workspace.PACKAGE_KEY, // url fragment
@@ -247,7 +247,7 @@ public class Loader extends PackageLoader {
                 null);                  // parent
         app.setDescription("The default CMS workspace instance.");
         app.save();
-        s_log.warn("CMS Workspace instance " + Workspace.PACKAGE_KEY + " created.");
+        s_log.debug("CMS Workspace instance " + Workspace.PACKAGE_KEY + " created.");
 
         s_log.debug("Done loading CMS Workspace.");
     }
@@ -363,7 +363,7 @@ public class Loader extends PackageLoader {
         for (int i = 0 ; i < sectionNames.length ; i++) {
             
             final String sectionName = sectionNames[i];
-            s_log.warn("Creating content section on /" + sectionName);
+            s_log.debug("Creating content section on /" + sectionName);
 
             // Step 1: Validate name for section
             Util.validateURLParameter("name", sectionName);

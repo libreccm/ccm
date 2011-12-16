@@ -15,11 +15,8 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: upd_table_persons.sql pboy $
+-- $Id: create_orgaunit_hierarchy_map.sql pboy $
 
--- This update is only applicable for the internal development tree at
--- University of Bremen !  Don't use for the APLAWS main trunk on
--- fedorahosted!
 
 CREATE TABLE cms_organizationalunits_hierarchy_map (
     superior_orgaunit_id integer NOT NULL,
@@ -29,14 +26,17 @@ CREATE TABLE cms_organizationalunits_hierarchy_map (
     subordinate_orgaunit_order integer
 );
 
--- No sure how to get db owner here
--- ALTER TABLE public.cms_organizationalunits_hierarchy_map OWNER TO iaw;
 
 ALTER TABLE ONLY cms_organizationalunits_hierarchy_map
-    ADD CONSTRAINT cms_org_hie_map_sub_or_p_nykpq PRIMARY KEY (subordinate_orgaunit_id, superior_orgaunit_id);
+    ADD CONSTRAINT cms_org_hie_map_sub_or_p_nykpq 
+    PRIMARY KEY (subordinate_orgaunit_id, superior_orgaunit_id);
 
 ALTER TABLE ONLY cms_organizationalunits_hierarchy_map
-    ADD CONSTRAINT cms_org_hie_map_sub_or_f_xq5is FOREIGN KEY (subordinate_orgaunit_id) REFERENCES cms_organizationalunits(organizationalunit_id);
+    ADD CONSTRAINT cms_org_hie_map_sub_or_f_xq5is 
+    FOREIGN KEY (subordinate_orgaunit_id) 
+    REFERENCES cms_organizationalunits(organizationalunit_id);
 
 ALTER TABLE ONLY cms_organizationalunits_hierarchy_map
-    ADD CONSTRAINT cms_org_hie_map_sup_or_f_qchkn FOREIGN KEY (superior_orgaunit_id) REFERENCES cms_organizationalunits(organizationalunit_id);
+    ADD CONSTRAINT cms_org_hie_map_sup_or_f_qchkn 
+    FOREIGN KEY (superior_orgaunit_id) 
+    REFERENCES cms_organizationalunits(organizationalunit_id);

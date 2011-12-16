@@ -56,6 +56,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
+import org.apache.log4j.Level;
 
 /**
  * <p>A content section represents a collection of content that is
@@ -1071,11 +1072,11 @@ public class ContentSection extends Application {
         ContentSection section = (ContentSection) sections.getDomainObject();
         if (sections.isFirst() ) {
             sections.close();
-            s_log.warn("Default section is "+section.getName() );
+            s_log.debug("Default section is "+section.getName() );
             return section;
         } else {
             sections.close();
-            s_log.warn("Section found: "+section.getName()+", but not first." );
+            s_log.debug("Section found: "+section.getName()+", but not first." );
             return null;
         }
     }
