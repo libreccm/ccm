@@ -1,10 +1,14 @@
 package com.arsdigita.cms;
 
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.metadata.Property;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
@@ -20,9 +24,9 @@ public class LanguageAwareObjectCopier extends ObjectCopier {
 
     public LanguageAwareObjectCopier(String language) {
         super();
-        this.language = language;               
+        this.language = language;
     }
-       
+
     @Override
     protected void copyCollection(final DomainObject source,
                                   final DomainObject target,
@@ -36,7 +40,7 @@ public class LanguageAwareObjectCopier extends ObjectCopier {
             final String name = prop.getName();
 
             final DataAssociation sass = (DataAssociation) get(source, name);
-            final DataAssociationCursor scursor = sass.cursor();
+            final DataAssociationCursor scursor = sass.cursor();            
             final Property reverse = prop.getAssociatedProperty();
 
             while (scursor.next()) {
@@ -45,12 +49,12 @@ public class LanguageAwareObjectCopier extends ObjectCopier {
                 m_traversed.add(selem, reverse);
 
                 DomainObject telem = copy(source, target, selem, prop);
-                if ((telem instanceof ContentPage) 
-                    && ((ContentPage) telem).getContentBundle() != null) {                    
+                if ((telem instanceof ContentPage)
+                    && ((ContentPage) telem).getContentBundle() != null) {
                     telem = ((ContentPage) telem).getContentBundle().getInstance(
                             language);
-                }
-
+                }                             
+                
                 DataObject tgtLink = null;
 
                 // removing this assert since copy will return null in the

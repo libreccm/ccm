@@ -69,7 +69,7 @@
         <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>
 <!--    <ccm:application name="ccm-simplesurvey"/>                   -->
-        <ccm:application name="ccm-user-preferences"/>
+<!--        <ccm:application name="ccm-user-preferences"/>           -->
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
 

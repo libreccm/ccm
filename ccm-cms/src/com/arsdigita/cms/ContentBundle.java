@@ -392,10 +392,11 @@ public class ContentBundle extends ContentItem {
             instances.addFilter(
                     ff.or().addFilter(ff.equals(LANGUAGE, language)).
                     addFilter(ff.equals(LANGUAGE, "--")));*/
-            instances.addFilter(String.format("(%s = '%s' or %s = '--')",
+            instances.addFilter(String.format("(%s = '%s' or %s = '%s')",
                                               LANGUAGE,
                                               language,
-                                              LANGUAGE));
+                                              LANGUAGE,
+                                              GlobalizationHelper.LANG_INDEPENDENT));
         }
 
         return !instances.isEmpty();

@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.aplaws.ui;
+package com.arsdigita.bundle.ui;
 
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.ActionLink;

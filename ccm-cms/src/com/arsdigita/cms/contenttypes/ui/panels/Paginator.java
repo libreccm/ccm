@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 public class Paginator {
 
     private static final String PAGE_NUMBER = "pageNumber";
+    private static final String PAGE_SIZE = "pageSize";
     private final int pageSize;
     private int pageNumber;
     private final int objectCount;
@@ -44,7 +45,13 @@ public class Paginator {
             logger.debug(String.format("pageNumber = %d", pageNumber));
         }
         this.objectCount = objectCount;
-        this.pageSize = pageSize;
+        
+        if (request.getParameter(PAGE_SIZE) == null) {
+            this.pageSize = pageSize;
+        } else {
+            final String pageSizeStr = request.getParameter(PAGE_SIZE);
+            this.pageSize = Integer.parseInt(pageSizeStr);
+        }
 
         normalizePageNumber();
     }
@@ -72,7 +79,7 @@ public class Paginator {
         paginatorElem.addAttribute("pageCount", Integer.toString(getPageCount()));
         paginatorElem.addAttribute("pageSize", Integer.toString(pageSize));
         paginatorElem.addAttribute("objectBegin", Integer.toString(getBegin()));
-        paginatorElem.addAttribute("objectEnd", Integer.toString(getEnd()));
+        paginatorElem.addAttribute("objectEnd", Integer.toString(getEnd() - 1));
         paginatorElem.addAttribute("objectCount", Integer.toString(objectCount));
     }
 
@@ -90,9 +97,9 @@ public class Paginator {
                                    getBegin(),
                                    getEnd()));
         /*if (getBegin() == getEnd()) {
-            query.setRange(getBegin(), getEnd() + 1);
+        query.setRange(getBegin(), getEnd() + 1);
         } else {*/
-            query.setRange(getBegin(), getEnd() + 1);
+        query.setRange(getBegin(), getEnd() + 1);
         //}
     }
 
@@ -123,7 +130,7 @@ public class Paginator {
         if (pageNumber == 1) {
             return 1;
         } else {
-            return (pageNumber - 1) * pageSize;
+            return ((pageNumber - 1) * pageSize) + 1;
         }
     }
 

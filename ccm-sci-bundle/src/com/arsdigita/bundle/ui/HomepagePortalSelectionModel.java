@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.aplaws.ui;
+package com.arsdigita.bundle.ui;
 
 import com.arsdigita.bebop.AbstractSingleSelectionModel;
 import com.arsdigita.portalworkspace.ui.PortalSelectionModel;

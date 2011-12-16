@@ -11,7 +11,7 @@ import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
 
 /**
- *
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */

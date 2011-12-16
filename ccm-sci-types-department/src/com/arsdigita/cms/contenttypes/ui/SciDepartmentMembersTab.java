@@ -10,7 +10,11 @@ import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.Globalization;
+import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
@@ -99,7 +103,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                                   config.getPageSize());
 
         if ((paginator.getPageCount() > config.getEnableSearchLimit())
-            || ((surnameFilter.getFilter() != null) 
+            || ((surnameFilter.getFilter() != null)
                 && !(surnameFilter.getFilter().trim().isEmpty()))) {
             surnameFilter.generateXml(filtersElem);
         }
@@ -163,6 +167,31 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         //personsQuery.addFilter(personsFilter.toString());        
         personsQuery.setParameter("orgaunitIds", orgaUnitIds);
 
+        /**
+         * Filter for language independent items
+         */
+        /*if (Kernel.getConfig().languageIndependentItems()) {
+            FilterFactory ff = personsQuery.getFilterFactory();
+            Filter filter = ff.or().
+                    addFilter(ff.equals("language",
+                                        com.arsdigita.globalization.GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage())).
+                    addFilter(ff.and().
+                    addFilter(ff.equals("language",
+                                        GlobalizationHelper.LANG_INDEPENDENT)).
+                    addFilter(ff.notIn("parentId",
+                                       "com.arsdigita.cms.contenttypes.getParentIDsOfMatchedItems").
+                    set("language",
+                        com.arsdigita.globalization.GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage())));
+            personsQuery.addFilter(filter);
+        } else {
+            personsQuery.addEqualsFilter("language",
+                                         com.arsdigita.globalization.GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage());
+        }*/
+
+
         personsQuery.addOrder(GenericPerson.SURNAME);
         personsQuery.addOrder(GenericPerson.GIVENNAME);
 
@@ -177,7 +206,8 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
     private void applyStatusFilter(final DataQuery persons,
                                    final HttpServletRequest request) {
-        final String statusValue = Globalization.decodeParameter(request, STATUS_PARAM);
+        final String statusValue = Globalization.decodeParameter(request,
+                                                                 STATUS_PARAM);
         if ((statusValue != null) && !(statusValue.trim().isEmpty())) {
             statusFilter.setValue(statusValue);
         }
@@ -190,7 +220,8 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
     private void applySurnameFilter(final DataQuery persons,
                                     final HttpServletRequest request) {
-        final String surnameValue = Globalization.decodeParameter(request, SURNAME_PARAM);
+        final String surnameValue = Globalization.decodeParameter(request,
+                                                                  SURNAME_PARAM);
         if ((surnameValue != null) && !(surnameValue.trim().isEmpty())) {
             surnameFilter.setValue(surnameValue);
         }
