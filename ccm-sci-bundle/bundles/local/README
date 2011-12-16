@@ -1,0 +1,29 @@
+This directory should host custom site specific bundles which are not
+to be stored in the central software repository.
+
+For each site specific bundle a subdirectory should be created which 
+in turn hosts the bundles subdirectories cfg, res, templates and themes.
+
+Example:
+ 
+~/local/mysite
+~/local/mysite/cfg
+~/local/mysite/res
+~/local/mysite/templates
+~/local/mysite/themes
+
+This site specific bundle is activated in local.ccm.properties by:
+
+> ccm.bundle.folder=${ccm.project.dir}/ccm-sci-bundle/bundles/local/mysite
+
+By default subversion is configured to ignore all unversioned lower case 
+names in this directory so the directory mysite will not be stored in 
+repository. 
+
+Instead it is recommended to store the bundle either in a seperate 
+respository or in its own branch in the repository, eg.
+
+> svn import -m 'Save mysite.' mysite  https://myrepo.dom/svn/bundles/mysite
+
+If other versioning systems are used their configuration should be created
+accordingly.

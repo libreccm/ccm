@@ -40,42 +40,50 @@ public final class BebopConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(BebopConfig.class);
 
-    private final Parameter m_presenter;
-    private final Parameter m_page;
-    /** Pointer to JTidy validation listener config file  */
-    private final Parameter m_tidy;
-    private final Parameter m_fancyErrors;
-    private final Parameter m_dcpOnButtons;
-    private final Parameter m_dcpOnLinks;
-    private final Parameter m_enableTreeSelect;
+    /**
+     * 
+     */
+    private final Parameter m_presenter = new SingletonParameter
+            ("waf.bebop.presentation_manager", Parameter.REQUIRED,
+             new PageTransformer());
+    /**
+     * 
+     */
+    private final Parameter m_page = new ClassParameter
+            ("waf.bebop.base_page", Parameter.REQUIRED, SimplePage.class);
+    /** Pointer to JTidy validation listener config file                     */
+    private final Parameter m_tidy = new StringParameter
+            ("waf.bebop.tidy_config_file", Parameter.REQUIRED,
+             "com/arsdigita/bebop/parameters/tidy.properties");
+    private final Parameter m_fancyErrors = new BooleanParameter
+            ("waf.bebop.fancy_xsl_errors",
+             Parameter.REQUIRED,
+             Boolean.FALSE);
+    /** Double Click Protection, enabled by default for all buttons in a form.*/
+    private final Parameter m_dcpOnButtons = new BooleanParameter
+            ("waf.bebop.dcp_on_buttons", Parameter.REQUIRED, Boolean.TRUE);
+    /** Double Click Protection, disabled by default for all links.           */
+    private final Parameter m_dcpOnLinks = new BooleanParameter
+            ("waf.bebop.dcp_on_links", Parameter.REQUIRED, Boolean.FALSE);
+    /**
+     * 
+     */
+    private final Parameter m_enableTreeSelect = new BooleanParameter
+            ("waf.bebop.enable_tree_select_attribute",
+             Parameter.REQUIRED,
+             Boolean.FALSE);
     /** List of supported DHTML editors, first one is default (Xinha) */
     private final EnumerationParameter m_dhtmlEditor;
     /** Path to DHTML editor source file, relativ to document root */
     private final Parameter m_dhtmlEditorSrcFile;
-    private final Parameter m_showClassName;
+    /**                                                                       */
+    private final Parameter m_showClassName = new BooleanParameter
+            ("waf.bebop.show_class_name", Parameter.OPTIONAL, Boolean.FALSE);
 
+    /** 
+     * 
+     */
     public BebopConfig() {
-        m_presenter = new SingletonParameter
-            ("waf.bebop.presentation_manager", Parameter.REQUIRED,
-             new PageTransformer());
-
-        m_page = new ClassParameter
-            ("waf.bebop.base_page", Parameter.REQUIRED, SimplePage.class);
-
-        /* Pointer to JTidy validation listener config file  */
-        m_tidy = new StringParameter
-            ("waf.bebop.tidy_config_file", Parameter.REQUIRED,
-             "com/arsdigita/bebop/parameters/tidy.properties");
-
-        m_fancyErrors = new BooleanParameter
-            ("waf.bebop.fancy_xsl_errors",
-             Parameter.REQUIRED,
-             Boolean.FALSE);
-
-        m_enableTreeSelect = new BooleanParameter
-            ("waf.bebop.enable_tree_select_attribute",
-             Parameter.REQUIRED,
-             Boolean.FALSE);
 
         /** List of supported DHTML editors, first one is default (Xinha) */
         m_dhtmlEditor = new EnumerationParameter("waf.bebop.dhtml_editor",
@@ -89,14 +97,6 @@ public final class BebopConfig extends AbstractConfig {
         m_dhtmlEditorSrcFile = new StringParameter
             ("waf.bebop.dhtml_editor_src", Parameter.REQUIRED,
              "/assets/xinha/XinhaLoader.js");
-        
-        m_dcpOnButtons = new BooleanParameter
-            ("waf.bebop.dcp_on_buttons", Parameter.REQUIRED, Boolean.TRUE);
-        m_dcpOnLinks = new BooleanParameter
-            ("waf.bebop.dcp_on_links", Parameter.REQUIRED, Boolean.FALSE);
-
-        m_showClassName = new BooleanParameter
-            ("waf.bebop.show_class_name", Parameter.OPTIONAL, Boolean.FALSE);
 
         register(m_presenter);
         register(m_page);

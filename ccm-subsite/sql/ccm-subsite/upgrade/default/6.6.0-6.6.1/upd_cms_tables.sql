@@ -1,4 +1,5 @@
 --
+-- Copyright (C) 2011 Peter Boy All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -14,18 +15,12 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: cleanup_tables.sql pboy $
+-- $Id: upd_cms_tables.sql pboy $
+
+-- adjust cms tables to the new name of application subsite
 
 
-
--- db staatsschiff-114, wsf-114
--- ALTER TABLE ONLY cms_persons
---     DROP CONSTRAINT cms_persons_alias_id_fkey;
--- db iaw-114
-ALTER TABLE ONLY cms_persons
-    DROP CONSTRAINT cms_persons_aliasid_fkey;
-ALTER TABLE cms_persons
-  ADD CONSTRAINT cms_persons_alias_id_f_uaoxu FOREIGN KEY (alias_id)
-      REFERENCES cms_persons (person_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+update content_sections
+   set template_resolver_class = replace(template_resolver_class,
+                                         'london.subsite', 'subsite');
 

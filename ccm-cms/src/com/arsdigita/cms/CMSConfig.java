@@ -192,7 +192,7 @@ public final class CMSConfig extends AbstractConfig {
                             new DHTMLEditorConfigParameter(
             "com.arsdigita.cms.dhtml_editor_config",
             Parameter.REQUIRED,
-            new DHTMLEditor.Config("XinhaConfig",
+            new DHTMLEditor.Config("Xinha.Config",
                                    "/assets/xinha/CCMcmsXinhaConfig.js"));
     //   previous parameter definition:
     // > DHTMLEditor.Config.STANDARD); <

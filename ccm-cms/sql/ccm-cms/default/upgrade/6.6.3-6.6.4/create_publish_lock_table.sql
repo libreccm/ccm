@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2011 Peter Boy All Rights Reserved.
+-- Copyright (C) 2011 Jens Pelzetter All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,25 +15,17 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2010/11/10 23:15:09 $
+-- $Id: create_publish_lock_table.sql pboy $
 
-\echo Red Hat Enterprise ccm-subsite 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
 
-begin;
 
--- drop table subsite_app - not needed anyway
-\i default/6.6.0-6.6.1/drop_app_table.sql
+CREATE TABLE cms_publish_lock (
+    lock_id integer NOT NULL,
+    locked_oid character varying(2048),
+    lock_timestamp timestamp with time zone,
+    action character varying(256)
+);
 
--- rename table containing defined subsites following ccm naming conventions
-\i default/6.6.0-6.6.1/ren_sites_table.sql
+ALTER TABLE ONLY cms_publish_lock
+    ADD CONSTRAINT cms_publis_loc_lock_id_p_8n7d0 PRIMARY KEY (lock_id);
 
--- rename application from london.subsite to subsite
-\i default/6.6.0-6.6.1/upd_system_tables.sql
-
--- remove legacy compatible bits
-\i default/6.6.0-6.6.1/remove_legacy_entries.sql
-
--- adjust class name in content_sections table
-\i default/6.6.0-6.6.1/upd_cms_tables.sql
-
-commit;
