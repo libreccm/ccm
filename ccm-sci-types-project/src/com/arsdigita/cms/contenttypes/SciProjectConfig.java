@@ -29,7 +29,7 @@ public class SciProjectConfig extends AbstractConfig {
     private final Parameter tabs;
 
     public SciProjectConfig() {
-
+        
         enableSubProjectsStep =
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_sub_projects_step",

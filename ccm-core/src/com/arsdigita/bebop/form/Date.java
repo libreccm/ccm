@@ -59,18 +59,19 @@ public class Date extends Widget implements BebopConstants {
     protected TextField m_day;
     private int m_year_begin;
     private int m_year_end;
-    private Locale m_locale;
+    private Locale m_locale;    
 
     // Inner classes for the fragment widgets
     protected class YearFragment extends SingleSelect {
 
         protected Date parent;
-
+        private boolean autoCurrentYear; //Decide wether to set the current year if year is null
+                
         public YearFragment(String name, Date parent) {
             super(name);
             this.parent = parent;
         }
-
+                
         @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
@@ -78,6 +79,10 @@ public class Date extends Widget implements BebopConstants {
                 return null;
             }
             return new ParameterData(getParameterModel(), value);
+        }
+        
+        public void setAutoCurrentYear(final boolean autoCurrentYear) {
+            this.autoCurrentYear = autoCurrentYear;
         }
 
         @Override
@@ -89,7 +94,7 @@ public class Date extends Widget implements BebopConstants {
                 }
             }
             Object value = parent.getFragmentValue(ps, Calendar.YEAR);
-            if (value == null) {
+            if ((value == null) && autoCurrentYear) {
                 Calendar currentTime = GregorianCalendar.getInstance();
                 int currentYear = currentTime.get(Calendar.YEAR);
                 value = new Integer(currentYear);
@@ -195,6 +200,10 @@ public class Date extends Widget implements BebopConstants {
         this(new DateParameter(name));
     }
 
+    public void setAutoCurrentYear(final boolean autoCurrentYear) {
+        ((YearFragment) m_year).setAutoCurrentYear(autoCurrentYear);
+    }
+    
     public void setYearRange(int yearBegin, int yearEnd) {
         Assert.isUnlocked(this);
         if (yearBegin != m_year_begin || yearEnd != m_year_end) {

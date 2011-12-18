@@ -163,7 +163,7 @@ public class PublicationWithPublisher extends Publication {
      * @param publisher The publisher of the publication.
      */
     public void setPublisher(Publisher publisher) {
-        Publisher oldPublisher;
+        final Publisher oldPublisher;
 
         oldPublisher = getPublisher();
         if (oldPublisher != null) {

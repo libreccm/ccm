@@ -68,6 +68,7 @@ public class SciProjectPropertyForm
         beginParam.allowSkipDay(true);                
         final Calendar today = new GregorianCalendar();
         final Date begin = new Date(beginParam);        
+        begin.setAutoCurrentYear(false);
         begin.setYearRange(1970, (today.get(Calendar.YEAR) + 2));
         add(begin);
 
@@ -87,6 +88,7 @@ public class SciProjectPropertyForm
         endParam.allowSkipMonth(true);
         endParam.allowSkipDay(true);
         Date end = new Date(endParam);
+        end.setAutoCurrentYear(false);
         end.setYearRange(1970, (today.get(Calendar.YEAR) + 8));
         add(end);
 

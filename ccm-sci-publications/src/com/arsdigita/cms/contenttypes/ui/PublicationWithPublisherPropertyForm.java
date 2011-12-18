@@ -33,10 +33,8 @@ import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
-import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import org.apache.log4j.Logger;
 

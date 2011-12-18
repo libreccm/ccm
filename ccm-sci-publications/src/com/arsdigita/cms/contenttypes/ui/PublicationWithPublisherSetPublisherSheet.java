@@ -54,7 +54,7 @@ public class PublicationWithPublisherSetPublisherSheet
                 1,
                 PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.publisher.remove").localize(),
-                TABLE_COL_EDIT));
+                TABLE_COL_DEL));
 
         setModelBuilder(new PublicationWithPublisherSetPublisherSheetModelBuilder(
                 itemModel));

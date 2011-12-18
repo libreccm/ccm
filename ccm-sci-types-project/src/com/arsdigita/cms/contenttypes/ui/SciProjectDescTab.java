@@ -7,7 +7,8 @@ import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Displays the description text for a project.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */

@@ -25,7 +25,10 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Summary tab for projects, displays lifespan of the project, the short 
+ * description, the project team (aka members), a contact, the involved 
+ * organizations and the information about the funding of the project.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */
@@ -350,7 +353,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(involved);
         generator.setUseExtraXml(false);
-        generator.generateXML(state, parent, "");
+        generator.setItemElemName("organization", "");
+        generator.generateXML(state, parent, "");        
         logger.debug(String.format("Generated XML for involved organization "
                                    + "'%s' in %d ms.",
                                    involved.getName(),
