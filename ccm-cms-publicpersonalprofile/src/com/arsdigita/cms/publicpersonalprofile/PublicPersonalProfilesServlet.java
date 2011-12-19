@@ -26,13 +26,14 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileXmlUtil;
 import com.arsdigita.cms.dispatcher.CMSDispatcher;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.XMLGenerator;
+import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.publicpersonalprofile.ui.PublicPersonalProfileNavItemsAddForm;
+import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -43,6 +44,7 @@ import com.arsdigita.templating.Templating;
 import com.arsdigita.toolbox.ui.ApplicationAuthenticationListener;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;
+import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
@@ -153,11 +155,6 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     }
                 }
 
-                if (preview) {
-                    page.addRequestListener(
-                            new ApplicationAuthenticationListener(PrivilegeDescriptor.EDIT));
-                }
-
                 page.lock();
 
                 Document document = page.buildDocument(request, response);
@@ -195,6 +192,32 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             newInstance(profiles.getDataObject());
                     profiles.close();
 
+                    if (preview) {
+                        if (Kernel.getContext().getParty() == null) {
+                            throw new LoginSignal(request);
+                        } else {
+
+                            com.arsdigita.cms.SecurityManager securityManager =
+                                                              Utilities.
+                                    getSecurityManager(state);
+                                                        
+                            final boolean canEdit = securityManager.canAccess(
+                                    state.getRequest(),
+                                    com.arsdigita.cms.SecurityManager.PREVIEW_PAGES,
+                                    profile);
+
+                            if (!canEdit) {
+                            throw new AccessDeniedException("user " + Kernel.
+                                    getContext().getParty().getOID()
+                                                            + " doesn't have the "
+                                                            + com.arsdigita.cms.SecurityManager.EDIT_ITEM
+                                                            + " privilege on "
+                                                            + profile.getOID().
+                                    toString());
+                            }
+                        }
+                    }
+                    
                     if (config.getEmbedded()) {
                         final ContentSection section =
                                              profile.getContentSection();
