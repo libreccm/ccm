@@ -32,6 +32,7 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -154,7 +155,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                 if (preview) {
                     page.addRequestListener(
-                            new ApplicationAuthenticationListener());
+                            new ApplicationAuthenticationListener(PrivilegeDescriptor.EDIT));
                 }
 
                 page.lock();
