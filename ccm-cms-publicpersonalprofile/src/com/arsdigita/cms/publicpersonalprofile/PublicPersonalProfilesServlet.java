@@ -11,6 +11,7 @@ import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
@@ -162,17 +163,30 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                 final Session session = SessionManager.getSession();
 
-                DataCollection profiles =
-                               session.retrieve(
-                        com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+                /*DataCollection profiles =
+                session.retrieve(
+                com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
                 profiles.addFilter(String.format("profileUrl = '%s'",
-                                                 profileOwner));
+                profileOwner));
                 if (preview) {
-                    profiles.addFilter(String.format("version = '%s'",
-                                                     ContentItem.DRAFT));
+                profiles.addFilter(String.format("version = '%s'",
+                ContentItem.DRAFT));
                 } else {
-                    profiles.addFilter(String.format("version = '%s'",
-                                                     ContentItem.LIVE));
+                profiles.addFilter(String.format("version = '%s'",
+                ContentItem.LIVE));
+                }*/
+
+                DataCollection profiles = getProfiles(session,
+                                                      profileOwner,
+                                                      preview,
+                                                      GlobalizationHelper.
+                        getNegotiatedLocale().getLanguage());
+
+                if (profiles.isEmpty()) {
+                    profiles = getProfiles(session,
+                                           profileOwner,
+                                           preview,
+                                           GlobalizationHelper.LANG_INDEPENDENT);
                 }
 
                 if (profiles.size() == 0) {
@@ -200,24 +214,25 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             com.arsdigita.cms.SecurityManager securityManager =
                                                               Utilities.
                                     getSecurityManager(state);
-                                                        
+
                             final boolean canEdit = securityManager.canAccess(
                                     state.getRequest(),
                                     com.arsdigita.cms.SecurityManager.PREVIEW_PAGES,
                                     profile);
 
                             if (!canEdit) {
-                            throw new AccessDeniedException("user " + Kernel.
-                                    getContext().getParty().getOID()
-                                                            + " doesn't have the "
-                                                            + com.arsdigita.cms.SecurityManager.EDIT_ITEM
-                                                            + " privilege on "
-                                                            + profile.getOID().
-                                    toString());
+                                throw new AccessDeniedException("user "
+                                                                + Kernel.
+                                        getContext().getParty().getOID()
+                                                                + " doesn't have the "
+                                                                + com.arsdigita.cms.SecurityManager.EDIT_ITEM
+                                                                + " privilege on "
+                                                                + profile.getOID().
+                                        toString());
                             }
                         }
                     }
-                    
+
                     if (config.getEmbedded()) {
                         final ContentSection section =
                                              profile.getContentSection();
@@ -392,8 +407,47 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                       (RelatedLink) DomainObjectFactory.
                                             newInstance(links.getDataObject());
                                     links.close();
-                                    final ContentItem item =
-                                                      link.getTargetItem();
+                                    ContentItem item =
+                                                link.getTargetItem();
+
+                                    if (item instanceof ContentPage) {
+                                        ContentPage contentPage =
+                                                    (ContentPage) item;
+                                        logger.error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+                                                     + contentPage.
+                                                getContentBundle().
+                                                hasInstance(GlobalizationHelper.
+                                                getNegotiatedLocale().
+                                                getLanguage()));
+                                        if (contentPage.getContentBundle().
+                                                hasInstance(GlobalizationHelper.
+                                                getNegotiatedLocale().
+                                                getLanguage())) {
+                                            contentPage =
+                                            (ContentPage) contentPage.
+                                                    getContentBundle().
+                                                    getInstance(GlobalizationHelper.
+                                                    getNegotiatedLocale().
+                                                    getLanguage());
+                                            item = (ContentItem) contentPage;
+                                        } else {
+                                            logger.error(
+                                                    String.format(
+                                                    "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+                                                    itemPath,
+                                                    GlobalizationHelper.
+                                                    getNegotiatedLocale().
+                                                    getLanguage(),
+                                                    Kernel.getConfig().
+                                                    languageIndependentItems(),
+                                                    GlobalizationHelper.LANG_INDEPENDENT));
+                                            response.setStatus(
+                                                    HttpServletResponse.SC_NOT_FOUND);
+                                            return;
+                                        }
+                                    }
+
+
                                     final Element contentPanelElem = root.
                                             newChildElement("cms:contentPanel",
                                                             CMS.CMS_XML_NS);
@@ -415,9 +469,41 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                             final OID itemOid = OID.valueOf(itemPath);
                             try {
-                                final ContentItem item =
-                                                  (ContentItem) DomainObjectFactory.
+                                ContentItem item =
+                                            (ContentItem) DomainObjectFactory.
                                         newInstance(itemOid);
+
+                                if (item instanceof ContentPage) {
+                                    ContentPage contentPage = (ContentPage) item;
+                                    logger.error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+                                                 + contentPage.getContentBundle().
+                                            hasInstance(GlobalizationHelper.
+                                            getNegotiatedLocale().getLanguage()));
+                                    if (contentPage.getContentBundle().
+                                            hasInstance(GlobalizationHelper.
+                                            getNegotiatedLocale().getLanguage())) {
+                                        contentPage = (ContentPage) contentPage.
+                                                getContentBundle().getInstance(GlobalizationHelper.
+                                                getNegotiatedLocale().
+                                                getLanguage());
+                                        item = (ContentItem) contentPage;
+                                    } else {
+                                        logger.error(
+                                                String.format(
+                                                "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+                                                itemPath,
+                                                GlobalizationHelper.
+                                                getNegotiatedLocale().
+                                                getLanguage(),
+                                                Kernel.getConfig().
+                                                languageIndependentItems(),
+                                                GlobalizationHelper.LANG_INDEPENDENT));
+                                        response.setStatus(
+                                                HttpServletResponse.SC_NOT_FOUND);
+                                        return;
+                                    }
+                                }
+
 
                                 final Element contentPanelElem = root.
                                         newChildElement("cms:contentPanel",
@@ -607,5 +693,27 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 getPresentationManager();
         presentationManager.servePage(document, request, response);
 
+    }
+
+    private DataCollection getProfiles(final Session session,
+                                       final String profileOwner,
+                                       final boolean preview,
+                                       final String language) {
+        DataCollection profiles =
+                       session.retrieve(
+                com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+        profiles.addFilter(String.format("profileUrl = '%s'",
+                                         profileOwner));
+        if (preview) {
+            profiles.addFilter(String.format("version = '%s'",
+                                             ContentItem.DRAFT));
+        } else {
+            profiles.addFilter(String.format("version = '%s'",
+                                             ContentItem.LIVE));
+        }
+
+        profiles.addFilter(String.format("language = '%s'", language));
+
+        return profiles;
     }
 }

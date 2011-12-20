@@ -248,7 +248,7 @@ public class GenericPerson extends ContentPage implements
             }
 
             // Replace all special chars that are not yet replaced with a dash
-            return out.replaceAll("[^A-Za-z0-9-]", "_");
+            return out.replaceAll("[^A-Za-z0-9-]", "_").toLowerCase();
         }
 
         return in;

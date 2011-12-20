@@ -236,6 +236,6 @@ public class PublicPersonalProfileCreate extends PageCreate {
                     String.format("version = '%s'", ContentItem.DRAFT));
         }
 
-        return profileUrl;
+        return GenericPerson.urlSave(profileUrl).toLowerCase();
     }
 }
