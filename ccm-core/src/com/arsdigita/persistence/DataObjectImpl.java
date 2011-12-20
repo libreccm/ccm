@@ -164,7 +164,7 @@ class DataObjectImpl implements DataObject {
         return m_ssn;
     }
 
-    private com.redhat.persistence.metadata.Property convert(String property) {     
+    private com.redhat.persistence.metadata.Property convert(String property) {
         return C.prop(m_ssn.getRoot(), getObjectType().getProperty(property));
     }
 
@@ -199,9 +199,9 @@ class DataObjectImpl implements DataObject {
 
             throw new PersistenceException(String.format(
                     "no such property: %s for %s. Available properties: %s",
-                                                         property.toString(),
-                                                         this.toString(),
-                                                         builder.toString()));
+                    property.toString(),
+                    this.toString(),
+                    builder.toString()));
         }
         if (prop.isCollection()) {
             if (isDisconnected()) {
@@ -422,7 +422,8 @@ class DataObjectImpl implements DataObject {
             getSsn().flush();
             getSsn().assertFlushed(this);
         } catch (ProtoException pe) {
-            throw PersistenceException.newInstance(pe);
+            throw PersistenceException.newInstance(
+                    String.format("on oid '%s'", m_oid.toString()), pe);
         }
     }
 
