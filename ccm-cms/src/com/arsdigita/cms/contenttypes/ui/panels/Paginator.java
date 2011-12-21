@@ -79,7 +79,7 @@ public class Paginator {
         paginatorElem.addAttribute("pageCount", Integer.toString(getPageCount()));
         paginatorElem.addAttribute("pageSize", Integer.toString(pageSize));
         paginatorElem.addAttribute("objectBegin", Integer.toString(getBegin()));
-        paginatorElem.addAttribute("objectEnd", Integer.toString(getEnd() - 1));
+        paginatorElem.addAttribute("objectEnd", Integer.toString(getEnd()));
         paginatorElem.addAttribute("objectCount", Integer.toString(objectCount));
     }
 
