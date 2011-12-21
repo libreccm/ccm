@@ -16,6 +16,7 @@ public class SciDepartmentSummaryTabConfig extends AbstractConfig {
     private final Parameter headRole;
     private final Parameter activeStatus;
     private final Parameter showSubDepartments;
+    private final Parameter showContacts;
 
     public SciDepartmentSummaryTabConfig() {
 
@@ -41,10 +42,16 @@ public class SciDepartmentSummaryTabConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 true);
         
+        showContacts = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.scidepartment.summarytab.contacts.show",
+                Parameter.REQUIRED,
+                true);
+        
         register(showHeads);
         register(headRole);
         register(activeStatus);
         register(showSubDepartments);
+        register(showContacts);
 
         loadInfo();
     }
@@ -63,5 +70,9 @@ public class SciDepartmentSummaryTabConfig extends AbstractConfig {
     
     public final boolean isShowingSubDepartment() {
         return (Boolean) get(showSubDepartments);
+    }
+    
+    public final boolean isShowingContacts() {
+        return (Boolean) get(showContacts);
     }
 }

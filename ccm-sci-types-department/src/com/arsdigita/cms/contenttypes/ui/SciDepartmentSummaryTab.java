@@ -2,7 +2,9 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -57,6 +59,10 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
 
         if (config.isShowingSubDepartment()) {
             generateSubDepartmentsXml(department, departmentSummaryElem, state);
+        }
+        
+        if (config.isShowingContacts()) {
+            generateContactsXml(department, departmentSummaryElem, state);
         }
 
         logger.debug(String.format("Generated XML for summary tab of department "
@@ -213,6 +219,41 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                    System.currentTimeMillis() - start));
     }
 
+     protected void generateContactsXml(final SciDepartment department,
+                                       final Element parent,
+                                       final PageState state) {
+        final long start = System.currentTimeMillis();
+        final GenericOrganizationalUnitContactCollection contacts = department.
+                getContacts();
+
+        if ((contacts == null) || contacts.isEmpty()) {
+            return;
+        }
+
+        final Element contactsElem = parent.newChildElement("contacts");
+
+        while (contacts.next()) {
+            generateContactXml(contacts.getContact(), contactsElem, state);
+        }
+        logger.debug(String.format("Generated XML for contacts of project '%s'"
+                                   + " in %d ms.",
+                                   department.getName(),
+                                   System.currentTimeMillis() - start));
+    }
+
+    protected void generateContactXml(final GenericContact contact,
+                                      final Element parent,
+                                      final PageState state) {
+        final long start = System.currentTimeMillis();
+        final XmlGenerator generator = new XmlGenerator(contact);
+        generator.setUseExtraXml(false);
+        generator.setItemElemName("contact", "");
+        generator.generateXML(state, parent, "");
+        logger.debug(String.format("Generated XML for contact '%s' in %d ms.",
+                                   contact.getName(),
+                                   System.currentTimeMillis() - start));
+    }
+    
     private class XmlGenerator extends SimpleXMLGenerator {
 
         private final ContentItem item;

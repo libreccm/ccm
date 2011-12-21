@@ -114,20 +114,26 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
         projects.addOrder("title asc");
 
         if (((Globalization.decodeParameter(request, STATUS_PARAM) == null)
-             || Globalization.decodeParameter(request, STATUS_PARAM).trim().isEmpty()
-             || CompareFilter.NONE.equals(Globalization.decodeParameter(request, STATUS_PARAM)))
+             || Globalization.decodeParameter(request, STATUS_PARAM).trim().
+             isEmpty()
+             || CompareFilter.NONE.equals(
+             Globalization.decodeParameter(request, STATUS_PARAM)))
             && ((Globalization.decodeParameter(request, TITLE_PARAM) == null)
-                || Globalization.decodeParameter(request, TITLE_PARAM).trim().isEmpty())) {
+                || Globalization.decodeParameter(request, TITLE_PARAM).trim().
+                isEmpty())) {
 
             statusFilter.generateXml(filtersElem);
 
             depProjectsElem.newChildElement("greeting");
 
-            //projects.addOrder("projectEnd desc nulls last");
-            //projects.addOrder("projectBegin desc nulls last");
-            //projects.addOrderWithNull("projectEnd", null, false);
-            //projects.addOrderWithNull("projectBegin", null, false);
-            //projects.addOrder("title");
+            final Calendar now = new GregorianCalendar();
+            final String today = String.format("%d-%02d-%02d",
+                                               now.get(Calendar.YEAR),
+                                               now.get(Calendar.MONTH) + 1,
+                                               now.get(Calendar.DAY_OF_MONTH));
+
+            projects.addFilter(String.format(
+                    "(projectEnd >= '%s') or (projectEnd is null)", today));            
 
             projects.setRange(1, config.getGreetingSize() + 1);
 
@@ -153,8 +159,10 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
                                                           config.getPageSize());
 
                 if ((paginator.getPageCount() > config.getEnableSearchLimit())
-                    || ((Globalization.decodeParameter(request, TITLE_PARAM) != null)
-                        || !(Globalization.decodeParameter(request, TITLE_PARAM).trim().isEmpty()))) {
+                    || ((Globalization.decodeParameter(request, TITLE_PARAM)
+                         != null)
+                        || !(Globalization.decodeParameter(request, TITLE_PARAM).
+                             trim().isEmpty()))) {
                     titleFilter.generateXml(filtersElem);
                 }
 
@@ -230,7 +238,8 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
     private void applyStatusFilter(final DataQuery projects,
                                    final HttpServletRequest request) {
-        final String statusValue = Globalization.decodeParameter(request, STATUS_PARAM);
+        final String statusValue = Globalization.decodeParameter(request,
+                                                                 STATUS_PARAM);
         if ((statusValue != null) && !(statusValue.trim().isEmpty())) {
             statusFilter.setValue(statusValue);
         }
@@ -243,7 +252,8 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
     private void applyTitleFilter(final DataQuery projects,
                                   final HttpServletRequest request) {
-        final String titleValue = Globalization.decodeParameter(request, TITLE_PARAM);
+        final String titleValue = Globalization.decodeParameter(request,
+                                                                TITLE_PARAM);
         if ((titleValue != null) && !(titleValue.trim().isEmpty())) {
             titleFilter.setValue(titleValue);
         }
