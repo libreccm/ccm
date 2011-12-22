@@ -123,7 +123,6 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
             Page page;
 
-
             page = PageFactory.buildPage("PublicPersonalProfile",
                                          "");
 
@@ -182,12 +181,12 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                       GlobalizationHelper.
                         getNegotiatedLocale().getLanguage());
 
-                if (profiles.isEmpty()) {
+                /*if (profiles.isEmpty()) {
                     profiles = getProfiles(session,
                                            profileOwner,
                                            preview,
                                            GlobalizationHelper.LANG_INDEPENDENT);
-                }
+                }*/
 
                 if (profiles.size() == 0) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
