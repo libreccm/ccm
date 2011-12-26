@@ -8,7 +8,7 @@
     <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
     <init-param>
       <param-name>uri</param-name>
-      <param-value>/ccm-shortcuts/</param-value>
+      <param-value>/ccm-ldn-shortcuts/</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -18,7 +18,7 @@
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-shortcuts</param-value>
+      <param-value>/templates/ccm-ldn-shortcuts</param-value>
     </init-param>
   </servlet>
 
