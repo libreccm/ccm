@@ -48,8 +48,8 @@ object type Contact extends ContentPage {
 
 association {
 		Contact[0..1] associatedContactForItem =
-                join cms_items.item_id to contact_content_item_map.item_id,
-                join contact_content_item_map.contact_id to ct_ldn_contacts.contact_id;
+                join cms_items.item_id to ct_ldn_contact_content_item_map.item_id,
+                join ct_ldn_contact_content_item_map.contact_id to ct_ldn_contacts.contact_id;
         ContentItem[0..n] associatedContentItemsForContact =
                 join ct_ldn_contacts.contact_id to ldn_contact_content_item_map.contact_id,
                 join ldn_contact_content_item_map.item_id to cms_items.item_id;
@@ -62,13 +62,13 @@ association {
 
 data operation removeContactFromContentItemAssociation {
 	do {
-		delete from ldn_contact_content_item_map where item_id = :itemID		
+		delete from ct_ldn_contact_content_item_map where item_id = :itemID		
 	}	
 }
 
 data operation removeContactFromAllAssociations {
 	do {
-		delete from ldn_contact_content_item_map where contact_id = :contactID
+		delete from ct_ldn_contact_content_item_map where contact_id = :contactID
 	}
 }
 
@@ -78,7 +78,7 @@ query getContactForItem {
 	do {
 		select contact_id, item_id 
 			from 
-		ldn_contact_content_item_map
+		ct_ldn_contact_content_item_map
 			where
 		item_id = :itemID
 	} map { 

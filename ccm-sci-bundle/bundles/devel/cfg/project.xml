@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml SCI devel - containing only modules used for ScientificCMS  -->
+<!--  project.xml SCI devel - containing only modules used for 
+                              ScientificCMS  development                     -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -12,6 +13,11 @@
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
+
+<ccm:databases>
+	<ccm:database name="postgres"/>
+</ccm:databases>
+
 
   <ccm:build>
 
@@ -74,7 +80,6 @@
 
 <!--   Applications   -->
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
-        <ccm:application name="ccm-portalserver"/>
 
 <!--   LDN extension  -->
 <!--    temporyrily excluded because configuration has to be cleared
@@ -123,6 +128,7 @@
         <ccm:application name="ccm-forum"/>  
         <ccm:application name="ccm-forum-categorised"/>
 <!--
+        <ccm:application name="ccm-portalserver"/>
         <ccm:application name="ccm-weblog"/>
         <ccm:application name="ccm-webpage"/>
 -->

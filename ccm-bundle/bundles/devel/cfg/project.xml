@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--    project.xml - ccm - containing only those modules used for 
-                            CCM development                      -->
+<!--    project.xml - ccm devel - containing only those modules used for 
+                                  generic CCM / LibreCMS development         -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -77,7 +77,6 @@
 
 <!--   Applications   -->
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
-        <ccm:application name="ccm-portalserver"/>
 
 <!--   LDN extension  -->
 <!--    temporyrily excluded because configuration has to be cleared
@@ -115,6 +114,7 @@
         <ccm:application name="ccm-auth-http"/>
         <ccm:application name="ccm-bookmarks"/>
         <ccm:application name="ccm-docmgr"/>
+        <ccm:application name="ccm-portalserver"/>
 -->
 <!--
         <ccm:application name="ccm-weblog"/>

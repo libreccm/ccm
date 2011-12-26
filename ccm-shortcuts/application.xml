@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  name="ccm-shortcuts"
+  prettyName="Shortcuts"
+  version="6.6.1"
+  release="1" 
+  webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
+  </ccm:dependencies>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    The Red Hat Web Application Framework is a platform for writing
+    database-backed web applications in Java.
+  </ccm:description>
+</ccm:application>

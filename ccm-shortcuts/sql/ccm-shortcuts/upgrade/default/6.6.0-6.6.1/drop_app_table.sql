@@ -15,16 +15,9 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2011/09/06 23:15:09 $
+-- $Id: drop_app_table.sql pboy $
 
--- This update is only applicable for the internal development tree at
--- University of Bremen !  Don't use for the APLAWS main trunk on
--- fedorahosted!
+-- drops table subsite_app which just contained application type id and is
+-- never used for any action. 
 
-\echo Red Hat Enterprise CMS 6.6.2 -> 6.6.3 Upgrade Script (PostgreSQL)
-
-begin;
-
-\i ../default/upgrade/6.6.2-6.6.3/upd_table_persons.sql
-
-commit;
+drop table sc_app ;

@@ -9,7 +9,7 @@
   -->
   <!-- path to xsl if installed in the main (common) web context   
   -->
-  <xsl:import href="../../../__ccm__/apps/subsite/xsl/index.xsl"/>
+  <xsl:import href="../../heirloom/apps/subsite/xsl/index.xsl"/>
 
   <xsl:import href="lib/page.xsl"/>
 

@@ -171,13 +171,6 @@ public class Loader extends PackageLoader {
      *
      * No localization here because it is an invariant configuration.
      *
-     * NOTE: The wording in the title parameter of ApplicationType determines
-     * the name of the subdirectory for the XSL stylesheets.
-     * It gets "urlized", i.e. trimming leading and trailing blanks and replacing
-     * blanks between words and illegal characters with an hyphen and converted
-     * to lower case.
-     * "Portal Workspace" will become "portal-workspace".
-     *
      * @return created ApplicationType 
      */
     private ApplicationType setupWorkspaceType() {
@@ -185,7 +178,14 @@ public class Loader extends PackageLoader {
         s_log.debug("Creating an application type for portal workspace. " +
                     "Base Data Object Type: " + Workspace.BASE_DATA_OBJECT_TYPE);
 
-        /* Create legacy-free application type                                */
+        /* Create legacy-free application type                                
+         *
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "Portal Workspace" will become "portal-workspace".                */
         ApplicationType type = new ApplicationType( 
                                        "Portal Workspace",
                                         Workspace.BASE_DATA_OBJECT_TYPE );

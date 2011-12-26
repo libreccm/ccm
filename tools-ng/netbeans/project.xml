@@ -296,6 +296,12 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-bundle (Source)</label>
+                    <type>java</type>
+                    <location>ccm-bundle/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-calendar (Source)</label>
                     <type>java</type>
                     <location>ccm-calendar/src</location>
@@ -338,6 +344,12 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-navigation (Source)</label>
+                    <type>java</type>
+                    <location>ccm-navigation/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-portalserver (Source)</label>
                     <type>java</type>
                     <location>ccm-portalserver/src</location>
@@ -368,9 +380,21 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-shortcuts (Source)</label>
+                    <type>java</type>
+                    <location>ccm-shortcuts/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-simplesurvey (Source)</label>
                     <type>java</type>
                     <location>ccm-simplesurvey/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-subsite (Source)</label>
+                    <type>java</type>
+                    <location>ccm-subsite/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -440,12 +464,6 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-ldn-navigation (Source)</label>
-                    <type>java</type>
-                    <location>ccm-ldn-navigation/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>ccm-ldn-rss (Source)</label>
                     <type>java</type>
                     <location>ccm-ldn-rss/src</location>
@@ -455,18 +473,6 @@
                     <label>ccm-ldn-search (Source)</label>
                     <type>java</type>
                     <location>ccm-ldn-search/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-ldn-shortcuts (Source)</label>
-                    <type>java</type>
-                    <location>ccm-ldn-shortcuts/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-ldn-subsite (Source)</label>
-                    <type>java</type>
-                    <location>ccm-ldn-subsite/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -518,21 +524,9 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-zes-aplaws (Source)</label>
+                    <label>ccm-sci-bundle (Source)</label>
                     <type>java</type>
-                    <location>ccm-zes-aplaws/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-zes-aplaws (Web)</label>
-                    <type>java</type>
-                    <location>ccm-zes-aplaws/web</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-sci-bundles (Source)</label>
-                    <type>java</type>
-                    <location>ccm-sci-bundles/src</location>
+                    <location>ccm-sci-bundle/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -773,6 +767,10 @@
                         <location>ccm-bookmarks/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-bundle (Source)</label>
+                        <location>ccm-bundle/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-calendar (Source)</label>
                         <location>ccm-calendar/src</location>
                     </source-folder>
@@ -801,6 +799,10 @@
                         <location>ccm-forum-categorised/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-navigation (Source)</label>
+                        <location>ccm-navigation/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-portalserver (Source)</label>
                         <location>ccm-portalserver/src</location>
                     </source-folder>
@@ -821,10 +823,18 @@
                         <location>ccm-portlet-motd/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-shortcuts (Source)</label>
+                        <location>ccm-shortcuts/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-simplesurvey (Source)</label>
                         <location>ccm-simplesurvey/src</location>
                     </source-folder>
-                    <source-folder style="packages">
+                     <source-folder style="packages">
+                        <label>ccm-subsite (Source)</label>
+                        <location>ccm-subsite/src</location>
+                    </source-folder>
+                   <source-folder style="packages">
                         <label>ccm-themedirector (Source)</label>
                         <location>ccm-themedirector/src</location>
                     </source-folder>
@@ -869,24 +879,12 @@
                         <location>ccm-ldn-importer/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-ldn-navigation (Source)</label>
-                        <location>ccm-ldn-navigation/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>ccm-ldn-rss (Source)</label>
                         <location>ccm-ldn-rss/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-ldn-search (Source)</label>
                         <location>ccm-ldn-search/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>ccm-ldn-shortcuts (Source)</label>
-                        <location>ccm-ldn-shortcuts/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>ccm-ldn-subsite (Source)</label>
-                        <location>ccm-ldn-subsite/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-ldn-terms (Source)</label>
@@ -929,8 +927,8 @@
                         <location>ccm-zes-aplaws/web</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-sci-bundles (Source)</label>
-                        <location>ccm-sci-bundles/src</location>
+                        <label>ccm-sci-bundle (Source)</label>
+                        <location>ccm-sci-bundle/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-sci-publications (Source)</label>
@@ -1005,6 +1003,7 @@
                 <package-root>ccm-cms-types-xmlfeed/src</package-root>
                 <package-root>ccm-auth-http/src</package-root>
                 <package-root>ccm-bookmarks/src</package-root>
+                <package-root>ccm-bundle/src</package-root>
                 <package-root>ccm-calendar/src</package-root>
                 <package-root>ccm-docmgr/src</package-root>
                 <package-root>ccm-docrepo/src</package-root>
@@ -1012,12 +1011,15 @@
                 <package-root>ccm-formbuilder-pdf/src</package-root>
                 <package-root>ccm-forum/src</package-root>
                 <package-root>ccm-forum-categorised/src</package-root>
+                <package-root>ccm-navigation/src</package-root>
                 <package-root>ccm-portalserver/src</package-root>
                 <package-root>ccm-portalworkspace/src</package-root>
                 <package-root>ccm-portlet-bookmarks/src</package-root>
                 <package-root>ccm-portlet-latestnews/src</package-root>
                 <package-root>ccm-portlet-motd/src</package-root>
+                <package-root>ccm-shortcuts/src</package-root>
                 <package-root>ccm-simplesurvey/src</package-root>
+                <package-root>ccm-subsite/src</package-root>
                 <package-root>ccm-themedirector/src</package-root>
                 <package-root>ccm-user-preferences/src</package-root>
                 <package-root>ccm-weblog/src</package-root>
@@ -1029,11 +1031,8 @@
                 <package-root>ccm-ldn-freeform/src</package-root>
                 <package-root>ccm-ldn-image-step/src</package-root>
                 <package-root>ccm-ldn-importer/src</package-root>
-                <package-root>ccm-ldn-navigation/src</package-root>
                 <package-root>ccm-ldn-rss/src</package-root>
                 <package-root>ccm-ldn-search/src</package-root>
-                <package-root>ccm-ldn-shortcuts/src</package-root>
-                <package-root>ccm-ldn-subsite/src</package-root>
                 <package-root>ccm-ldn-terms/src</package-root>
                 <package-root>ccm-ldn-types-contact/src</package-root>
                 <package-root>ccm-ldn-types-esdservice/src</package-root>
@@ -1044,7 +1043,7 @@
                 <package-root>ccm-shp-aplaws/web</package-root>
                 <package-root>ccm-zes-aplaws/src</package-root>
                 <package-root>ccm-zes-aplaws/web</package-root>
-                <package-root>ccm-sci-bundles/src</package-root>
+                <package-root>ccm-sci-bundle/src</package-root>
                 <package-root>ccm-sci-publications/src</package-root>
                 <package-root>ccm-sci-types-organization/src</package-root>
                 <package-root>ccm-sci-types-organizationwithpublications/src</package-root>

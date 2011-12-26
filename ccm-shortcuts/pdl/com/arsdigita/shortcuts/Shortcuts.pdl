@@ -14,16 +14,14 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-//
-// $Id: Subsite.pdl  pboy $
 
-model com.arsdigita.subsite;
+model com.arsdigita.shortcuts;
 
 import com.arsdigita.web.Application;
 
-object type Subsite extends Application {
+object type Shortcuts extends Application {
     // nothing to persist
-    // there is only one instance of subsite (the admin application) and
+    // there is only one instance of shortcuts (the admin application) and
     // no instance specific settings to be persisted.
-    // reference key (subsite_app.application_id);
+    // reference key (sc_app.application_id);
 }
