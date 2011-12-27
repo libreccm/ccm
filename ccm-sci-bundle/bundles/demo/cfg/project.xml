@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml SCI devel - containing only modules used for ScientificCMS  -->
+<!--  project.xml SCI demo  - containing only modules used for 
+                              ScientificCMS  DEMO exition                      -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -12,6 +13,11 @@
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
+
+<ccm:databases>
+	<ccm:database name="postgres"/>
+</ccm:databases>
+
 
   <ccm:build>
 
@@ -38,12 +44,14 @@
         <ccm:application name="ccm-navigation"/>
         <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-portalworkspace-homepage"/>
+        <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
+
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->
         <ccm:application name="ccm-ldn-search"/>
-        <ccm:application name="ccm-ldn-shortcuts"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 

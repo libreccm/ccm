@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+		 name="ccm-portalworkspace-frontpage"
+		 prettyName="OpenCCM Portalworkspace Custom Frontpage"
+		 version="6.6.0"
+		 release="1"
+		 webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.6.0" release="ge"/>
+    <ccm:requires name="ccm-portalworkspace" version="6.6.0" release="ge"/>  
+    <ccm:requires name="ccm-subsite" version="6.6.0" release="ge"/>
+    <!-- Navigation used in CategoryPortalSelectionModel, which seems not to 
+         be used anywhere in the code. Check jsp's for usage. May be not part 
+         of custom homepage model                                           -->
+    <ccm:requires name="ccm-navigation" version="6.6.0" release="ge"/>
+  </ccm:dependencies>
+  <ccm:directories>    
+    <ccm:directory name="src"/>
+    <ccm:directory name="web"/>
+  </ccm:directories>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    Extension for ccm-portalworkspace to provide a custom frontpage for a site.
+    It uses a popular 3 column design (hardcoded unmutable) using 3 panes
+    which may further be divided into columns. 
+  </ccm:description>
+</ccm:application>

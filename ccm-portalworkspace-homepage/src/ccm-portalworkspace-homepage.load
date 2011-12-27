@@ -1,0 +1,9 @@
+<load>
+    <requires>
+        <!-- NOTHING 
+        <table name="pw_workspaces"/>                                      -->
+    </requires>
+    <provides>
+        <!-- NOTHING to provide                                            -->
+    </provides>    
+</load>

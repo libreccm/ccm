@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml LibreCMS devel - containing only modules used for LibreCMS  -->
+<!--  project.xml LibreCMS demo - containing only modules used for 
+                                  LibreCMS DEMO edition                 -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -21,7 +22,7 @@
 <ccm:build>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Scientific CMS set of CORE packages                                  -->
+<!--    LibreCMS set of CORE packages                                        -->
 <!--    NONE can be omitted for technical reasons / internal dependencies    -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
@@ -43,12 +44,14 @@
         <ccm:application name="ccm-navigation"/>
         <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-portalworkspace-homepage"/>
+        <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
+
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->
         <ccm:application name="ccm-ldn-search"/>
-        <ccm:application name="ccm-ldn-shortcuts"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
@@ -85,22 +88,13 @@
         <ccm:application name="ccm-ldn-rss"/>                        
 -->
 
-<!--   SCI extension  -->
-<!--
-        <ccm:application name="ccm-sci-personalprojects"/>
--->
-        <ccm:application name="ccm-sci-personalpublications"/>
-        <ccm:application name="ccm-sci-publications"/>
-
-        <ccm:application name="ccm-sci-types-member"/>
-
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    Scientific CMS   potential ADD-ONS packages                          -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
-<!--   Content Types   -->
+<!--  CMS Content Types  -->
 <!--    
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
@@ -117,7 +111,7 @@
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 -->
 
-<!--   Applications   -->
+<!--  Applications   -->
 <!--
         <ccm:application name="ccm-auth-http"/>
         <ccm:application name="ccm-bookmarks"/>

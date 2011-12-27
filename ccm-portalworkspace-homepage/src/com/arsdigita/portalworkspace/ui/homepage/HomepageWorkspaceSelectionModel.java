@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.aplaws.ui;
+package com.arsdigita.portalworkspace.ui.homepage;
 
 
 import com.arsdigita.bebop.RequestLocal;
@@ -41,7 +41,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import org.apache.log4j.Logger;
 
 
-/** 
+/**
  * 
  * 
  */
@@ -75,10 +75,11 @@ public class HomepageWorkspaceSelectionModel {
                                          right,
                                          party);
             // Always ensure admin gets global portal
-	    // don't use custom portals if asked not to
-            if (m_custom.get(state) == null ||
-                PermissionService.checkPermission(admin) ||
-		!Workspace.getConfig().getCreateUserWorkspaces()) {
+	        // don't use custom portals if asked not to
+            if (m_custom.get(state) == null 
+                                       || PermissionService.checkPermission(admin) 
+                                       || !Workspace.getConfig()
+                                                    .getCreateUserWorkspaces()) {
                 s_log.debug("Returning global portal");
                 return (WorkspacePage)m_right.get(state);
             } else {
@@ -102,9 +103,8 @@ public class HomepageWorkspaceSelectionModel {
 
         // When customizing right column, may need to clone
         // for a personal portal
-	// don't use custom portals if asked not to
-        if (column == 2 &&
-	    Workspace.getConfig().getCreateUserWorkspaces()) {
+        // don't use custom portals if asked not to
+        if (column == 2 && Workspace.getConfig().getCreateUserWorkspaces()) {
             Workspace global = getTopWorkspace();
 
             WorkspacePage right = (WorkspacePage)m_right.get(state);
@@ -167,9 +167,8 @@ public class HomepageWorkspaceSelectionModel {
         
         WorkspacePage clear = null;
 
-	// don't use custom portals if asked not to
-        if (column == 2 &&
-	    Workspace.getConfig().getCreateUserWorkspaces()) {
+        // don't use custom portals if asked not to
+        if (column == 2 && Workspace.getConfig().getCreateUserWorkspaces()) {
             // If we find a custom workspace, then delete it, 
             // otherwise just clear the portlets.
             Workspace global = getTopWorkspace();

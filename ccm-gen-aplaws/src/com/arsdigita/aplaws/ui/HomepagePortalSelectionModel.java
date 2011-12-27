@@ -15,6 +15,8 @@
 
 package com.arsdigita.aplaws.ui;
 
+import com.arsdigita.portalworkspace.ui.HomepagePortalSelectionModel;
+import com.arsdigita.portalworkspace.ui.HomepageWorkspaceSelectionModel;
 import com.arsdigita.bebop.AbstractSingleSelectionModel;
 import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
 import com.arsdigita.portalworkspace.WorkspacePage;

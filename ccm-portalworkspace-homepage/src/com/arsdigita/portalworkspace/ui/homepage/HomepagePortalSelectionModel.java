@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.aplaws.ui;
+package com.arsdigita.portalworkspace.ui.homepage;
 
 import com.arsdigita.bebop.AbstractSingleSelectionModel;
 import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
@@ -24,6 +24,10 @@ import com.arsdigita.domain.DomainObject;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Used via jsp! See ~/templates/ccm-portalworkspace/portal/index.jsp
+ * Service class for HomepageWorkspace
+ */
 public class HomepagePortalSelectionModel extends AbstractSingleSelectionModel
     implements PortalSelectionModel {
 

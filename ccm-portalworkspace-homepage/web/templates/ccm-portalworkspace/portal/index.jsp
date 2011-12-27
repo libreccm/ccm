@@ -5,17 +5,20 @@
 
     <jsp:directive.page
         import="com.arsdigita.dispatcher.DispatcherHelper,
-		com.arsdigita.aplaws.ui.*"/>
+                com.arsdigita.portalworkspace.ui.homepage.*"/>
 
     <jsp:scriptlet>
         DispatcherHelper.cacheForWorld(response,900);
     </jsp:scriptlet>
 
-<define:page name="itemPage" application="portal" title="APLAWS" cache="true">
+<define:page name="itemPage" application="portal" title="OpenCCM" cache="true">
 
-  <define:component name="left" classname="com.arsdigita.aplaws.ui.HomepageWorkspace" />
-  <define:component name="middle" classname="com.arsdigita.aplaws.ui.HomepageWorkspace" />
-  <define:component name="right" classname="com.arsdigita.aplaws.ui.HomepageWorkspace" />
+  <define:component name="left" 
+               classname="com.arsdigita.portalworkspace.ui.homepage.HomepageWorkspace" />
+  <define:component name="middle" 
+               classname="com.arsdigita.portalworkspace.ui.homepage.HomepageWorkspace" />
+  <define:component name="right" 
+               classname="com.arsdigita.portalworkspace.ui.homepage.HomepageWorkspace" />
 
   <jsp:scriptlet>
 HomepageWorkspaceSelectionModel workspace = new HomepageWorkspaceSelectionModel();

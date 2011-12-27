@@ -16,6 +16,7 @@
 package com.arsdigita.aplaws.ui;
 
 
+import com.arsdigita.portalworkspace.ui.HomepageWorkspaceSelectionModel;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.PageState;
 

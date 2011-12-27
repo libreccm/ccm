@@ -32,12 +32,12 @@
 
   <filter>
     <filter-name>shortcuts</filter-name>
-    <filter-class>com.arsdigita.london.shortcuts.ShortcutFilter</filter-class>
+    <filter-class>com.arsdigita.shortcuts.ShortcutFilter</filter-class>
   </filter>
 
   <filter>
     <filter-name>subsite</filter-name>
-    <filter-class>com.arsdigita.london.subsite.SubsiteFilter</filter-class>
+    <filter-class>com.arsdigita.subsite.SubsiteFilter</filter-class>
   </filter>
 
 <!--    NOT USED HERE
@@ -271,26 +271,26 @@
   </servlet>
   <!-- module ccm-ldn-search  -  servlet declarations END  -->
 
-  <!-- module ccm-ldn-shortcuts  -  servlet definitions   -->
+  <!-- module ccm-shortcuts  -  servlet definitions   -->
   <servlet>
     <servlet-name>shortcuts-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-shortcuts</param-value>
+      <param-value>/templates/ccm-shortcuts</param-value>
     </init-param>
   </servlet>
 
-  <!-- module ccm-ldn-subsite  -  servlet declarations BEGIN  -->
+  <!-- module ccm-subsite  -  servlet declarations BEGIN  -->
   <servlet>
     <servlet-name>subsite-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-subsite</param-value>
+      <param-value>/templates/ccm-subsite</param-value>
     </init-param>
   </servlet>
-  <!-- module ccm-ldn-subsite  -  servlet declarations END  -->
+  <!-- module ccm-subsite  -  servlet declarations END  -->
 
   <!-- module ccm-ldn-terms  -  servlet declarations BEGIN   -->
   <servlet>
@@ -382,18 +382,18 @@
   </servlet-mapping>
   <!-- module ccm-ldn-search  -  servlet mappings END  -->
 
-  <!-- module ccm-ldn-shortcuts  -  servlet mappings   -->
+  <!-- module ccm-shortcuts  -  servlet mappings   -->
   <servlet-mapping>
     <servlet-name>shortcuts-files</servlet-name>
-    <url-pattern>/ccm-ldn-shortcuts/files/*</url-pattern>
+    <url-pattern>/ccm-shortcuts/files/*</url-pattern>
   </servlet-mapping>
 
-  <!-- module ccm-ldn-subsite  -  servlet mappings BEGIN  -->
+  <!-- module ccm-subsite  -  servlet mappings BEGIN  -->
   <servlet-mapping>
     <servlet-name>subsite-files</servlet-name>
-    <url-pattern>/ccm-ldn-subsite/files/*</url-pattern>
+    <url-pattern>/ccm-subsite/files/*</url-pattern>
   </servlet-mapping>
-  <!-- module ccm-ldn-subsite  -  servlet mappings END  -->
+  <!-- module ccm-subsite  -  servlet mappings END  -->
 
   <!-- module ccm-ldn-terms  -  servlet mappings BEGIN  -->
   <servlet-mapping>

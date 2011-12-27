@@ -36,7 +36,6 @@
         <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-atoz"/>
         <ccm:application name="ccm-ldn-dublin"/> 
-        <ccm:application name="ccm-ldn-shortcuts"/>
         <ccm:application name="ccm-ldn-subsite"/>
         <ccm:application name="ccm-ldn-rss"/>
         <ccm:application name="ccm-ldn-terms"/>
@@ -44,7 +43,9 @@
 
         <ccm:application name="ccm-navigation"/>
         <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-portalworkspace-homepage"/>
         <ccm:application name="ccm-search"/>
+        <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-themedirector"/>
 
 

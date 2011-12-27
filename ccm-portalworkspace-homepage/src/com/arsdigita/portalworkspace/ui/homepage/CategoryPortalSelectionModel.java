@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.aplaws.ui;
+package com.arsdigita.portalworkspace.ui.homepage;
 
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.NavigationModel;
@@ -33,8 +33,17 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
 
+/**
+ * 
+ * 
+ */
 public class CategoryPortalSelectionModel extends WorkspaceSelectionModel {
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     protected Workspace getDefaultWorkspace(PageState state) {
         NavigationModel model = Navigation.getConfig().getDefaultModel();
         Category cat = model.getCategory();
