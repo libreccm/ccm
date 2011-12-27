@@ -13,6 +13,19 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
+    Package provides the ability to provide abbreviated URLs for long internal
+    or external URLS.
+    Example: For the internal url
+    /ccm/content/events/2008/excellence
+    you may define a shortcut
+    /ccm/excellence
+    
+    Users may access the page by the short URL, the system provides the
+    necessary rewriting.
+    
+    This is especially usefull for static formally required pages which are
+    often part of the theme, e.g. contact, webmaster, or imprint.
+    
     The Red Hat Web Application Framework is a platform for writing
     database-backed web applications in Java.
   </ccm:description>
