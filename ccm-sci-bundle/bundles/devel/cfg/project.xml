@@ -95,6 +95,7 @@
         <ccm:application name="ccm-sci-publications"/>
 
         <ccm:application name="ccm-sci-types-member"/>
+        <ccm:application name="ccm-sci-types-project"/>
 
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-		 name="ccm-portalworkspace-frontpage"
+		 name="ccm-portalworkspace-homepage"
 		 prettyName="OpenCCM Portalworkspace Custom Frontpage"
 		 version="6.6.0"
 		 release="1"

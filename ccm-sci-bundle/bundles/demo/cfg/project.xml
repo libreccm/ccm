@@ -9,7 +9,7 @@
                     name="ScientificCMS" 
               prettyName="Scientific CMS" 
                  version="1-1-6" 
-                 release="devel" 
+                 release="demo" 
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -96,6 +96,7 @@
         <ccm:application name="ccm-sci-publications"/>
 
         <ccm:application name="ccm-sci-types-member"/>
+        <ccm:application name="ccm-sci-types-project"/>
 
 
 
