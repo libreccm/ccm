@@ -18,16 +18,14 @@
  */
 package com.arsdigita.forum;
 
-import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.Asset;
 import com.arsdigita.cms.dispatcher.AssetURLFinder;
 
 import com.arsdigita.kernel.NoValidURLException;
 import com.arsdigita.kernel.URLFinder;
-import com.arsdigita.kernel.URLService;
-import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.util.Assert;
+import com.arsdigita.web.Web;
+import com.arsdigita.web.WebConfig;
 
 /**
  * @author chris.gilbert@westsussex.gov.uk
@@ -36,32 +34,41 @@ import com.arsdigita.util.Assert;
  */
 public class PostFileAttachmentURLFinder implements URLFinder {
 
-	private static final AssetURLFinder s_assetFinder = new AssetURLFinder();
+    private static final AssetURLFinder s_assetFinder = new AssetURLFinder();
 
-	/**
-	  * 
-	  * find URL for a file attachment by finding its post
-	  * 
-	  * @param oid the OID of the file attachment
-	  * @param content the context of the search (ie draft/live)
-	  */
-	public String find(OID oid, String context) throws NoValidURLException {
-		// a draft attachment is one where the post hasn't been saved yet
-		// the behaviour is the same as far as finding the url goes
-		return find(oid);
-		
-		
-	}
+    /**
+     * 
+     * find URL for a file attachment by finding its post
+     * 
+     * @param oid the OID of the file attachment
+     * @param content the context of the search (ie draft/live)
+     */
+    public String find(OID oid, String context) throws NoValidURLException {
+        // a draft attachment is one where the post hasn't been saved yet
+        // the behaviour is the same as far as finding the url goes
+        return find(oid);
 
-	/**
-	  * 
-	  * find URL for the context of a file attachment. Delegates to
-	  * AssetURLFinder.
-	  * 
-	  * @param oid the OID of the file attachment
-	  * 
-	  */
-	public String find(OID oid) throws NoValidURLException {
-		return s_assetFinder.find(oid);
-	}
+
+    }
+
+    /**
+     * 
+     * find URL for the context of a file attachment. Delegates to
+     * AssetURLFinder.
+     * 
+     * @param oid the OID of the file attachment
+     * 
+     */
+    public String find(OID oid) throws NoValidURLException {
+        WebConfig config = Web.getConfig();
+
+        StringBuilder url = new StringBuilder();
+        url.append(config.getDispatcherServletPath());
+        url.append(config.getDispatcherContextPath());
+        url.append("/cms-service/download/asset/?asset_id=");
+        url.append(oid.get(Asset.ID).toString());
+
+        return url.toString();
+//		return s_assetFinder.find(oid);
+    }
 }

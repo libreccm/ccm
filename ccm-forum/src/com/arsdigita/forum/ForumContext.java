@@ -161,6 +161,16 @@ public final class ForumContext {
      * 
      * @return
      */
+    public boolean canDelete(Post post) {
+        Party party = Kernel.getContext().getParty();
+        
+        return post.canDelete(party);
+    }
+    
+    /**
+     * 
+     * @return
+     */
     public boolean canModerate() {
         return m_canModerate;
     }

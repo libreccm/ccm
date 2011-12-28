@@ -31,7 +31,7 @@ import java.math.BigDecimal;
 
 public interface Constants {
 
-	static final String FORUM_XML_PREFIX = "forum";
+    static final String FORUM_XML_PREFIX = "forum";
     static final String FORUM_XML_NS = "http://www.arsdigita.com/forum/1.0";
 
     static final String FORUM_MODE_VIEW = "view";

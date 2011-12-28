@@ -731,6 +731,18 @@ public class Forum extends Application {
                                          party)));
     }
 
+    /**
+     * checks if the user can delete posts in this forum
+     */
+    public boolean canDelete(Party party) {
+        return ((getConfig().canAdminEditPosts() 
+                || getConfig().canAuthorDeletePosts())
+                && PermissionService.checkPermission(
+                new PermissionDescriptor(PrivilegeDescriptor.DELETE,
+                                         this,
+                                         party)));
+    }
+
     public boolean canAdminister(Party party) {
         return PermissionService.checkPermission(
                 new PermissionDescriptor(PrivilegeDescriptor.ADMIN,

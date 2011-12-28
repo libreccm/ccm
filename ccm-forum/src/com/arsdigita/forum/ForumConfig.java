@@ -49,6 +49,7 @@ public class ForumConfig extends AbstractConfig {
 
     private Parameter m_adminEditPosts;
     private Parameter m_authorEditPosts;
+    private Parameter m_authorDeletePosts;
     private Parameter m_digestUserEmail;
     private Parameter m_replyHostName;
     private Parameter m_disablePageCaching;
@@ -72,6 +73,10 @@ public class ForumConfig extends AbstractConfig {
             Boolean.TRUE);
         m_authorEditPosts = new BooleanParameter(
             "com.arsdigita.forum.author_can_edit_posts",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
+        m_authorDeletePosts = new BooleanParameter(
+            "com.arsdigita.forum.author_can_delete_posts",
             Parameter.REQUIRED,
             Boolean.TRUE);
         m_replyHostName = new StringParameter(
@@ -134,6 +139,7 @@ public class ForumConfig extends AbstractConfig {
         register(m_digestUserEmail);
         register(m_adminEditPosts);
         register(m_authorEditPosts);
+        register(m_authorDeletePosts);
         register(m_replyHostName);
         register(m_adapters);
         register(m_disablePageCaching);
@@ -162,6 +168,10 @@ public class ForumConfig extends AbstractConfig {
         return ((Boolean)get(m_authorEditPosts)).booleanValue();
     }
 
+    boolean canAuthorDeletePosts() {
+        return ((Boolean)get(m_authorDeletePosts)).booleanValue();
+    }
+    
     public String getDigestUserEmail() {
         String email = (String)get(m_digestUserEmail);
         if (email == null) {
@@ -295,5 +305,5 @@ public class ForumConfig extends AbstractConfig {
     public boolean deleteNotifications () {
     	return ((Boolean)get(m_deleteSentSubscriptionNotifications)).booleanValue();
     }
-    
+
 }

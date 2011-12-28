@@ -68,18 +68,15 @@ import com.arsdigita.xml.XML;
 public class DiscussionPostsList extends SimpleComponent implements Constants {
 
     private static final Logger s_log =
-        Logger.getLogger(DiscussionPostsList.class);
-
+            Logger.getLogger(DiscussionPostsList.class);
     private IntegerParameter m_pageNumber =
-                                     new IntegerParameter(PAGINATOR_PARAM);
-	private int m_pageSize = Forum.getConfig().getThreadPageSize();
-
+            new IntegerParameter(PAGINATOR_PARAM);
+    private int m_pageSize = Forum.getConfig().getThreadPageSize();
     private static final String ACTION_EDIT = "edit";
     private static final String ACTION_DELETE = "delete";
     private static final String ACTION_REPLY = "reply";
     private static final String ACTION_APPROVE = "approve";
     private static final String ACTION_REJECT = "reject";
-
     private DiscussionThreadSimpleView m_threadMessagesPanel;
     private ACSObjectSelectionModel m_post;
 
@@ -90,11 +87,10 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
      * @param threadMessagesPanel
      */
     public DiscussionPostsList(ACSObjectSelectionModel post,
-                               DiscussionThreadSimpleView threadMessagesPanel) {
+            DiscussionThreadSimpleView threadMessagesPanel) {
         m_threadMessagesPanel = threadMessagesPanel;
         m_post = post;
     }
-
 
     /** 
      * 
@@ -112,56 +108,66 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
      * @throws ServletException
      */
     public void respond(PageState state)
-        throws ServletException {
+            throws ServletException {
         super.respond(state);
 
         String key = state.getControlEventName();
         String value = state.getControlEventValue();
 
         OID oid = new OID(Post.BASE_DATA_OBJECT_TYPE,
-                          new BigDecimal(value));
+                new BigDecimal(value));
 
         ForumContext ctx = ForumContext.getContext(state);
-        Post post = (Post)DomainObjectFactory.newInstance(oid);
+        Post post = (Post) DomainObjectFactory.newInstance(oid);
 
         if (ACTION_EDIT.equals(key)) {
             m_post.setSelectedObject(state, post);
             m_threadMessagesPanel.makeEditFormVisible(state);
         } else if (ACTION_DELETE.equals(key)) {
-            Assert.isTrue(ctx.canAdminister(), "can administer forums");
+//            Assert.isTrue(ctx.canDelete(post), "can administer forums");
 
             MessageThread thread = ctx.getMessageThread();
             ThreadedMessage root = thread.getRootMessage();
 
-            if ( s_log.isDebugEnabled() ) {
-                s_log.debug("message: " + post.getOID() +
-                            " root: " + root.getOID() +
-                            " thread: " + thread.getOID());
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("message: " + post.getOID()
+                        + " root: " + root.getOID()
+                        + " thread: " + thread.getOID());
             }
 
-            if ( ctx.getForum().isModerated() ) {
-                if ( !ctx.canModerate() ) {
+            if (ctx.getForum().isModerated()) {
+                if (!ctx.canModerate()) {
+                    Assert.isTrue(ctx.canAdminister(), "can administer forums");
+    
                     post.setStatus(Post.SUPPRESSED);
                     post.save();
                 } else if (post.equals(root)) {
+                    Assert.isTrue(ctx.canDelete(post), "can delete posts");
+
                     s_log.debug("Deleting entire thread");
                     post.delete();
 
                     Forum forum = ctx.getForum();
-                    URL url = URL.there(state.getRequest(), forum, null );
-                    throw new RedirectSignal( url, true );
+                    URL url = URL.there(state.getRequest(), forum, null);
+                    throw new RedirectSignal(url, true);
                 } else {
+                    Assert.isTrue(ctx.canDelete(post), "can delete posts");
+                    
                     s_log.debug("Deleting message");
                     post.delete();
                 }
             } else if (post.equals(root)) {
+                Assert.isTrue(ctx.canDelete(post), "can delete posts");
+                
                 s_log.debug("Deleting entire thread");
                 post.delete();
 
                 Forum forum = ctx.getForum();
-                URL url = URL.there(state.getRequest(), forum, null );
-                throw new RedirectSignal( url, true );
+                URL url = URL.there(state.getRequest(), forum, null);
+                throw new RedirectSignal(url, true);
             } else {
+                Assert.isTrue(ctx.canDelete(post), "can delete posts");
+                
                 s_log.debug("Deleting message");
                 post.delete();
             }
@@ -179,9 +185,9 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
 
         state.clearControlEvent();
         try {
-            throw new RedirectSignal( state.stateAsURL(), true );
-        } catch( IOException ex ) {
-            throw new UncheckedWrapperException( ex );
+            throw new RedirectSignal(state.stateAsURL(), true);
+        } catch (IOException ex) {
+            throw new UncheckedWrapperException(ex);
         }
     }
 
@@ -197,10 +203,9 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
         Forum forum = context.getForum();
 
         BigDecimal rootID = context.getMessageThread().
-            getRootMessage().getID();
+                getRootMessage().getID();
 
-        DataCollection messages = SessionManager.getSession().retrieve
-            (Post.BASE_DATA_OBJECT_TYPE);
+        DataCollection messages = SessionManager.getSession().retrieve(Post.BASE_DATA_OBJECT_TYPE);
 
         // Hide replies if we're in noticeboard mode
         if (forum.isNoticeboard()) {
@@ -210,21 +215,14 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
 
         FilterFactory ff = messages.getFilterFactory();
         messages.addFilter(
-            ff.or()
-            .addFilter(ff.and()
-                       .addFilter(ff.equals("root", null))
-                       .addFilter(ff.equals("id", rootID)))
-            .addFilter(ff.equals("root", rootID)));
+                ff.or().addFilter(ff.and().addFilter(ff.equals("root", null)).addFilter(ff.equals("id", rootID))).addFilter(ff.equals("root", rootID)));
 
         messages.addOrderWithNull("sortKey", "---", true);
 
         // Add a filter to only show approved messages
         if (forum.isModerated() && !forum.canModerate(party)) {
-            messages.addFilter(ff.or()
-                               .addFilter(ff.equals("status", Post.APPROVED))
-                               .addFilter(ff.equals("sender.id", party == null ?
-                                                    null : party.getID()))
-                              );
+            messages.addFilter(ff.or().addFilter(ff.equals("status", Post.APPROVED)).addFilter(ff.equals("sender.id", party == null
+                    ? null : party.getID())));
         }
 
         return new DomainCollection(messages);
@@ -237,22 +235,21 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
      */
     @Override
     public void generateXML(PageState state,
-                            Element parent) {
-        Element content = parent.newChildElement(FORUM_XML_PREFIX +
-                                                 ":threadDisplay",
-                                                 FORUM_XML_NS);
+            Element parent) {
+        Element content = parent.newChildElement(FORUM_XML_PREFIX
+                + ":threadDisplay",
+                FORUM_XML_NS);
         exportAttributes(content);
 
         Forum forum = ForumContext.getContext(state).getForum();
         content.addAttribute("forumTitle", forum.getTitle());
-        content.addAttribute("noticeboard", (new Boolean(forum.isNoticeboard())).
-                                                 toString());
+        content.addAttribute("noticeboard", (new Boolean(forum.isNoticeboard())).toString());
         DomainCollection messages = getMessages(state);
 
-        Integer page = (Integer)state.getValue(m_pageNumber);
+        Integer page = (Integer) state.getValue(m_pageNumber);
         int pageNumber = (page == null ? 1 : page.intValue());
         long objectCount = messages.size();
-        int pageCount = (int)Math.ceil((double)objectCount / (double)m_pageSize);
+        int pageCount = (int) Math.ceil((double) objectCount / (double) m_pageSize);
 
         if (pageNumber < 1) {
             pageNumber = 1;
@@ -262,29 +259,30 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
             pageNumber = (pageCount == 0 ? 1 : pageCount);
         }
 
-        long begin = ((pageNumber-1) * m_pageSize);
-        int count = (int)Math.min(m_pageSize, (objectCount - begin));
+        long begin = ((pageNumber - 1) * m_pageSize);
+        int count = (int) Math.min(m_pageSize, (objectCount - begin));
         long end = begin + count;
 
         generatePaginatorXML(content,
-                             pageNumber,
-                             pageCount,
-                             m_pageSize,
-                             begin,
-                             end,
-                             objectCount);
+                pageNumber,
+                pageCount,
+                m_pageSize,
+                begin,
+                end,
+                objectCount);
 
         if (begin != 0 || end != 0) {
-            messages.setRange(new Integer((int)begin+1),
-                             new Integer((int)end+1));
+            messages.setRange(new Integer((int) begin + 1),
+                    new Integer((int) end + 1));
         }
 
         while (messages.next()) {
-            Post message = (Post)messages.getDomainObject();
+            Post message = (Post) messages.getDomainObject();
             Element messageEl = content.newChildElement(FORUM_XML_PREFIX + ":message",
-                                                        FORUM_XML_NS);
+                    FORUM_XML_NS);
 
-            generateActionXML(state, messageEl, message);
+            generateActionXML(state, messageEl, message,
+                    (messages.getPosition() == messages.size()) ? true : false );
 
             DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(messageEl);
             xr.setWrapRoot(false);
@@ -299,60 +297,62 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
     /** 
      * 
      * @param state
-     * @param parent
-     * @param post
+     * @param parent Parent XML element to add any additional elements
+     * @param post Current post to generate action links for
+     * @param isLast Post is last in list
      */
     protected void generateActionXML(PageState state,
-                                     Element parent,
-                                     Post post) {
+            Element parent,
+            Post post,
+            boolean isLast) {
         ForumContext ctx = ForumContext.getContext(state);
-
-        String status = post.getStatus();
-        if (ctx.canModerate()) {
-            if (!status.equals(Post.REJECTED) &&
-                !status.equals(Post.SUPPRESSED) ) {
-                parent.addAttribute("rejectURL",
-                                    makeURL(state, ACTION_REJECT, post));
-            }
-        }
-
-        if (ctx.canModerate() &&
-            !post.getStatus().equals(post.APPROVED)) {
-            parent.addAttribute("approveURL",
-                                makeURL(state, ACTION_APPROVE, post));
-        }
-
-        if (ctx.canAdminister()) {
-            parent.addAttribute("deleteURL",
-                                makeURL(state, ACTION_DELETE, post));
-        }
-
 
         Party party = Kernel.getContext().getParty();
         if (party == null) {
-        	party = Kernel.getPublicUser();
-        }
-        if (post.canEdit(party)) {
-            parent.addAttribute("editURL",
-                                makeURL(state, ACTION_EDIT, post));
+            party = Kernel.getPublicUser();
         }
 
-		PermissionDescriptor canRespond = new PermissionDescriptor(
-                    PrivilegeDescriptor.get(Forum.RESPOND_TO_THREAD_PRIVILEGE),
-                    Kernel.getContext().getResource(), party);
-		
-        if (!ctx.getForum().isNoticeboard() && PermissionService.
-                                               checkPermission(canRespond)) {
+        String status = post.getStatus();
+        if (ctx.canModerate()) {
+            if (!status.equals(Post.REJECTED)
+                    && !status.equals(Post.SUPPRESSED)) {
+                parent.addAttribute("rejectURL",
+                        makeURL(state, ACTION_REJECT, post));
+            }
+        }
+
+        if (ctx.canModerate()
+                && !post.getStatus().equals(post.APPROVED)) {
+            parent.addAttribute("approveURL",
+                    makeURL(state, ACTION_APPROVE, post));
+        }
+
+        if (ctx.canAdminister() || (post.canDelete(party) && isLast)) {
+            parent.addAttribute("deleteURL",
+                    makeURL(state, ACTION_DELETE, post));
+        }
+
+
+        if (post.canEdit(party)) {
+            parent.addAttribute("editURL",
+                    makeURL(state, ACTION_EDIT, post));
+        }
+
+        PermissionDescriptor canRespond = new PermissionDescriptor(
+                PrivilegeDescriptor.get(Forum.RESPOND_TO_THREAD_PRIVILEGE),
+                Kernel.getContext().getResource(), party);
+
+        if (!ctx.getForum().isNoticeboard() && PermissionService.checkPermission(canRespond)) {
             parent.addAttribute("replyURL",
-                                makeURL(state, ACTION_REPLY, post));
+                    makeURL(state, ACTION_REPLY, post));
         }
 
     }
 
     protected String makeURL(PageState state,
-                             String action,
-                             Post post) {
-        state.setControlEvent(this, action,post.getID().toString());
+            String action,
+            Post post) {
+        state.setControlEvent(this, action, post.getID().toString());
 
         String url = null;
         try {
@@ -365,35 +365,34 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
     }
 
     protected void generatePaginatorXML(Element parent,
-                                        int pageNumber,
-                                        int pageCount,
-                                        int pageSize,
-                                        long begin,
-                                        long end,
-                                        long objectCount) {
-        Element paginator = parent.newChildElement(FORUM_XML_PREFIX +
-                                                   ":paginator", FORUM_XML_NS);
+            int pageNumber,
+            int pageCount,
+            int pageSize,
+            long begin,
+            long end,
+            long objectCount) {
+        Element paginator = parent.newChildElement(FORUM_XML_PREFIX
+                + ":paginator", FORUM_XML_NS);
 
         URL here = Web.getContext().getRequestURL();
         ParameterMap params = new ParameterMap(here.getParameterMap());
         params.clearParameter(PAGINATOR_PARAM);
 
         URL url = new URL(here.getScheme(),
-                          here.getServerName(),
-                          here.getServerPort(),
-                          here.getContextPath(),
-                          here.getServletPath(),
-                          here.getPathInfo(),
-                          params);
+                here.getServerName(),
+                here.getServerPort(),
+                here.getContextPath(),
+                here.getServletPath(),
+                here.getPathInfo(),
+                params);
 
         paginator.addAttribute("param", PAGINATOR_PARAM);
         paginator.addAttribute("baseURL", XML.format(url));
         paginator.addAttribute("pageNumber", XML.format(new Integer(pageNumber)));
         paginator.addAttribute("pageCount", XML.format(new Integer(pageCount)));
         paginator.addAttribute("pageSize", XML.format(new Integer(pageSize)));
-        paginator.addAttribute("objectBegin", XML.format(new Long(begin+1)));
+        paginator.addAttribute("objectBegin", XML.format(new Long(begin + 1)));
         paginator.addAttribute("objectEnd", XML.format(new Long(end)));
         paginator.addAttribute("objectCount", XML.format(new Long(objectCount)));
     }
-
 }
