@@ -6,8 +6,6 @@
   version="1.0">
   
   
-  <xsl:output method="html" indent="yes"/>
-  
   <!-- This is a backport from Mandalay v0.9 to support Xinha editor with the -->
   <!-- generic theme. Xinha is the follow-up of the discontinued HTMLArea. -->
   
@@ -24,18 +22,17 @@
  
       <script type="text/javascript">
         _editor_url = "<xsl:value-of select="@editor_url"/>";
-        <!-- There is no $lang variable in the original theme, so this is hardcodes to english -->
-        _editor_lang ="<xsl:value-of select="en"/>";
-
+        _editor_lang = "en";
+<!--        _editor_skin = "silva";-->
+        
         <!-- DE Definiere, welche Textareas zu Xinha-Editoren werden sollen -->
         <!-- EN Define all textares which should become xinha editors -->
-
         xinha_editors = [
         <xsl:for-each select="//bebop:xinha">
           'ta_<xsl:value-of select="@name"/>'<xsl:if test="position() != last()">, </xsl:if>
         </xsl:for-each>
         ];
-
+        
         <!-- DE Lade die angegebenen Plugins falls angegeben -->
         <!-- EN Load the mentioned plugins if any-->
         xinha_plugins = null;
@@ -47,14 +44,21 @@
           ];
         </xsl:if>
       </script>      
-
-      <!-- DE Lade die externe JavaScript-Datei fuer Xinha -->
+    
+      <!-- DE Lade die externe JavaScript-Datei für Xinha -->
       <script type="text/javascript" src="{@editor_src}"/>
       
       <!-- DE Lade die angegebene Konfiguration -->
       <script type="text/javascript">
         <xsl:attribute name="src">
-          <xsl:value-of select="bebop:config[@name='Xinha.Config']/@path"/>
+          <xsl:choose>
+            <xsl:when test="bebop:config[@name='XinhaConfig']">
+              <xsl:value-of select="bebop:config[@name='XinhaConfig']/@path"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="bebop:config[@name='Xinha.Config']/@path"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:attribute>
       </script>
     
@@ -64,5 +68,4 @@
       <xsl:value-of disable-output-escaping="no" select="text()"/>
     </textarea>
   </xsl:template>
-
 </xsl:stylesheet>
