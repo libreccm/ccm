@@ -45,7 +45,7 @@
   "Toggle Borders": "Afficher / Masquer les bordures",
   "Save as": "Enregistrer sous",
   "Insert/Overwrite": "Insertion / Remplacement",
-  "&mdash; format &mdash;": "&mdash; Format &mdash;",
+  "&#8212; format &#8212;": "&#8212; Format &#8212;",
   "Heading 1": "Titre 1",
   "Heading 2": "Titre 2",
   "Heading 3": "Titre 3",
@@ -132,9 +132,11 @@
   "You must enter the URL": "Vous devez entrer l'URL",
 
   // toolbar
+/*
   "button_bold": "fr/bold.gif",
   "button_underline": "fr/underline.gif",
   "button_strikethrough": "fr/strikethrough.gif",
+*/
 
   // Editor Help
   "Xinha Help": "Aide Xinha",

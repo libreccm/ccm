@@ -54,7 +54,7 @@
       <!-- DE Lade die angegebene Konfiguration -->
       <script type="text/javascript">
         <xsl:attribute name="src">
-          <xsl:value-of select="bebop:config[@name='XinhaConfig']/@path"/>
+          <xsl:value-of select="bebop:config[@name='Xinha.Config']/@path"/>
         </xsl:attribute>
       </script>
     

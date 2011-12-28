@@ -13,15 +13,15 @@
     --  of the file to remove the auto-example-generating code and allow for the
     --  use of the file as a boilerplate.
     --
-    --  $HeadURL:http://svn.xinha.webfactional.com/trunk/examples/testbed.html $
-    --  $LastChangedDate:2008-04-12 14:39:04 +0200 (Sa, 12 Apr 2008) $
-    --  $LastChangedRevision:987 $
-    --  $LastChangedBy:ray $
+    --  $HeadURL: http://svn.xinha.org/trunk/examples/testbed.html $
+    --  $LastChangedDate: 2009-11-08 17:36:46 +1300 (Sun, 08 Nov 2009) $
+    --  $LastChangedRevision: 1197 $
+    --  $LastChangedBy: gogo $
     --------------------------------------------------------------------------->
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Example of Xinha</title>
-  <link rel="stylesheet" href="full_example.css" />
+  <link rel="stylesheet" href="files/full_example.css" />
 
   <script type="text/javascript">
     // You must set _editor_url to the URL (including trailing slash) where
@@ -54,7 +54,7 @@
 
       xinha_plugins = xinha_plugins ? xinha_plugins :
       [
-        'CharacterMap', 'SpellChecker', 'Linker'
+        'CharacterMap', 'SpellChecker', 'Linker', 'ContextMenu'
       ];
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
              if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
@@ -85,10 +85,11 @@
        xinha_config = xinha_config ? xinha_config : new Xinha.Config();
        xinha_config.fullPage = true;
        xinha_config.CharacterMap.mode = 'panel';
+       xinha_config.ContextMenu.customHooks = { 'a': [ ['Label', function() { alert('Action'); }, 'Tooltip', '/xinha/images/ed_copy.gif' ] ] }
 /*
        // We can load an external stylesheet like this - NOTE : YOU MUST GIVE AN ABSOLUTE URL
       //  otherwise it won't work!
-      xinha_config.stylistLoadStylesheet(document.location.href.replace(/[^\/]*\.html/, 'stylist.css'));
+      xinha_config.stylistLoadStylesheet(document.location.href.replace(/[^\/]*\.html/, 'files/stylist.css'));
 
       // Or we can load styles directly
       xinha_config.stylistLoadStyles('p.red_text { color:red }');

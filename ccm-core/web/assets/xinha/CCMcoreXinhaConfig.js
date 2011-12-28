@@ -5,11 +5,15 @@
  * options.                                                                             */
 /* It is based on the original configuration file XinhaConfig.js (compressed version)   */
 /* http://svn.xinha.webfactional.com/trunk/examples/XinhaConfig.js                      */
+_editor_skin = "silva";
+_editor_icons = "Crystal";
 xinha_init=null;
 xinha_config=null;
 xinha_init=xinha_init?xinha_init:function(){
 xinha_editors=xinha_editors?xinha_editors:["myTextArea","anotherOne"];
-xinha_plugins=xinha_plugins?xinha_plugins:["CharacterMap","ContextMenu","SmartReplace","Stylist","TableOperations"];
+xinha_plugins=xinha_plugins?xinha_plugins:["CharacterMap","CharCounter",
+    "ContextMenu","DefinitionList","FindReplace","ListType","QuickTag",
+    "SmartReplace","Stylist","TableOperations","UnFormat"];
 if(!Xinha.loadPlugins(xinha_plugins,xinha_init)){
 return;
 }
@@ -22,11 +26,21 @@ xinha_config=xinha_config?xinha_config():new Xinha.Config();
     ["separator","subscript","superscript"],
     ["separator","justifyleft","justifycenter","justifyright","justifyfull"],
     ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
-    ["separator","inserthorizontalrule","createlink"],
-    ["separator","undo","redo","selectall"], (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite"]),
-    ["separator","clearfonts","removeformat"],
-    ["separator","htmlmode","showhelp","about"]
+    ["separator","createlink"],
+    ["separator","undo","redo","selectall"], 
+    (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite"]),
+    ["separator","killword","clearfonts","removeformat"],
+    ["linebreak","separator","htmlmode","showhelp","about"]
   ];
+xinha_config.formatblock =
+	  {
+	      "&mdash; format &mdash;"  : "",
+	      "Heading 3": "h3",
+	      "Heading 4": "h4",
+	      "Heading 5": "h5",
+	      "Heading 6": "h6",
+	      "Normal"   : "p"
+	  };
 
 xinha_config.pageStyleSheets=[_editor_url+"examples/full_example.css"];
 xinha_editors=Xinha.makeEditors(xinha_editors,xinha_config,xinha_plugins);
