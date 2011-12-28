@@ -1,0 +1,19 @@
+Warning: This no longer works with the current version of RHL.  Please refer to Xresources.txt.
+
+In your .Xdefaults file, you'll find entries for the display
+properties of Emacs. If you wish, you can substitute those entries
+with the following, which will give you a larger Emacs window, and
+change the default color of the background, cursor and pointer.
+
+----------------begin cut-------------------------
+
+emacs*Background: Wheat
+emacs*Foreground: Black
+emacs*pointerColor: Blue
+emacs*cursorColor: Red
+emacs*bitmapIcon: on
+emacs*font: fixed
+emacs.geometry: 100x45
+
+
+---------------end cut---------------------------

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://aplaws.org/schemas/content-types/com/arsdigita/cms/contenttypes/NewsItem">
+  <xs:element name="object">
+    <xs:complexType>
+      <xs:attribute name="oid" type="xs:string"/>
+      <xs:sequence>
+        <xs:element name="objectType" type="xs:string"/>
+        <xs:element minOccurs="0" name="type">
+          <xs:complexType>
+            <xs:attribute name="oid" type="xs:string"/>
+            <xs:sequence>
+              <xs:element name="label" type="xs:string"/>
+              <xs:element minOccurs="0" name="description" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element minOccurs="0" name="language" type="xs:string"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="fileAttachments">
+          <xs:complexType>
+            <xs:attribute name="oid" type="xs:string"/>
+            <xs:sequence>
+              <xs:element name="id" type="xs:double"/>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element minOccurs="0" name="description" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="links">
+          <xs:complexType>
+            <xs:attribute name="oid" type="xs:string"/>
+            <xs:sequence>
+              <xs:element name="linkTitle" type="xs:string"/>
+              <xs:element minOccurs="0" name="linkDescription" type="xs:string"/>
+              <xs:element name="targetType" type="xs:string"/>
+              <xs:element minOccurs="0" name="targetURI" type="xs:string"/>
+              <xs:element minOccurs="0" name="targetItem">
+                <xs:complexType>
+                  <xs:attribute name="oid" type="xs:string"/>
+                  <xs:sequence>
+                    <xs:element name="version" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="targetWindow" type="xs:string"/>
+              <xs:element minOccurs="0" name="linkOrder" type="xs:integer"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="title" type="xs:string"/>
+        <xs:element minOccurs="0" name="launchDate" type="xs:string"/>
+        <xs:element minOccurs="0" name="dublinCore">
+          <xs:complexType>
+            <xs:attribute name="oid" type="xs:string"/>
+            <xs:sequence>
+              <xs:element name="version" type="xs:string"/>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcAudience" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcContributor" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcCoverage" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcCoveragePostcode" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcCoverageSpatialRef" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcCoverageUnit" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcDateValid" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcDisposalReview" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcLanguage" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcTemporalBegin" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcTemporalEnd" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcCreatorOwner" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcCreatorContact" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcDescription" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcIdentifier" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcPreservation" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcPublisher" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcRelation" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcRights" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcSource" type="xs:string"/>
+              <xs:element minOccurs="0" name="dcKeywords" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="textAsset">
+          <xs:complexType>
+            <xs:attribute name="oid" type="xs:string"/>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="description" type="xs:string"/>
+              <xs:element minOccurs="0" name="content" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="imageCaptions">
+          <xs:complexType>
+            <xs:attribute name="oid" type="xs:string"/>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="caption" type="xs:string"/>
+              <xs:element minOccurs="0" name="imageAsset">
+                <xs:complexType>
+                  <xs:attribute name="oid" type="xs:string"/>
+                  <xs:sequence>
+                    <xs:element name="id" type="xs:double"/>
+                    <xs:element minOccurs="0" name="description" type="xs:string"/>
+                    <xs:element minOccurs="0" name="mimeType">
+                      <xs:complexType>
+                        <xs:attribute name="oid" type="xs:string"/>
+                        <xs:sequence>
+                          <xs:element name="mimeType" type="xs:string"/>
+                          <xs:element name="label" type="xs:string"/>
+                          <xs:element name="fileExtension" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="width" type="xs:double"/>
+                    <xs:element minOccurs="0" name="height" type="xs:double"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="lead" type="xs:string"/>
+        <xs:element minOccurs="0" name="newsDate" type="xs:string"/>
+        <xs:element name="isHomepage" type="xs:boolean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
