@@ -31,6 +31,8 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.util.UncheckedWrapperException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
 
@@ -52,6 +54,7 @@ public class PublicPersonalProfileNavigationAddForm
     private final String ITEM_SEARCH = "itemSearch";
     private ItemSelectionModel itemModel;
     private SimpleEditStep editStep;
+    private List<String> autoNavItemKeys = new ArrayList<String>();
 
     public PublicPersonalProfileNavigationAddForm(
             final ItemSelectionModel itemModel,
@@ -92,18 +95,26 @@ public class PublicPersonalProfileNavigationAddForm
                     navItems.addLanguageFilter(GlobalizationHelper.
                             getNegotiatedLocale().
                             getLanguage());
-                    if (showGenerated()) {
-                        navItems.addFilter("generatorClass is not null");
+                    /*if (showGenerated()) {
+                    navItems.addFilter("generatorClass is not null");
                     } else {
-                        navItems.addFilter("generatorClass is null");
-                    }
+                    navItems.addFilter("generatorClass is null");
+                    }*/
 
                     PublicPersonalProfileNavItem navItem;
+                    String label;
                     while (navItems.next()) {
                         navItem = navItems.getNavItem();
 
-                        select.addOption(new Option(navItem.getKey(),
-                                                    navItem.getLabel()));
+                        if (navItem.getGeneratorClass() == null) {
+                            label = navItem.getLabel();
+                        } else {
+                            label = String.format("%s (auto)",
+                                                  navItem.getLabel());
+                            autoNavItemKeys.add(navItem.getKey());
+                        }
+
+                        select.addOption(new Option(navItem.getKey(), label));
                     }
                 }
             });
@@ -112,35 +123,34 @@ public class PublicPersonalProfileNavigationAddForm
         }
 
         /*navItemSelect.addOption(new Option("", ""));
-
+        
         PublicPersonalProfileNavItemCollection navItems =
-                                               new PublicPersonalProfileNavItemCollection();
+        new PublicPersonalProfileNavItemCollection();
         navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                getLanguage());
+        getLanguage());
         if (showGenerated()) {
-            navItems.addFilter("generatorClass is not null");
+        navItems.addFilter("generatorClass is not null");
         } else {
-            navItems.addFilter("generatorClass is null");
+        navItems.addFilter("generatorClass is null");
         }
-
+        
         PublicPersonalProfileNavItem navItem;
         while (navItems.next()) {
-            navItem = navItems.getNavItem();
-
-            navItemSelect.addOption(new Option(navItem.getKey(),
-                                               navItem.getLabel()));
+        navItem = navItems.getNavItem();
+        
+        navItemSelect.addOption(new Option(navItem.getKey(),
+        navItem.getLabel()));
         }*/
         add(navItemSelect);
 
-        if (!showGenerated()) {
-            add(new Label((String) PublicPersonalProfileGlobalizationUtil.
-                    globalize(
-                    "publicpersonalprofile.ui.nav.select_target").
-                    localize()));
-            itemSearch = new ItemSearchWidget(ITEM_SEARCH);
-            itemSearch.addValidationListener(this);
-            add(this.itemSearch);
-        }
+        //if (!showGenerated()) {
+        add(new Label((String) PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.nav.select_target").
+                localize()));
+        itemSearch = new ItemSearchWidget(ITEM_SEARCH);
+        itemSearch.addValidationListener(this);
+        add(this.itemSearch);
+        //}
     }
 
     @Override
@@ -178,11 +188,15 @@ public class PublicPersonalProfileNavigationAddForm
         link.setTargetType(Link.INTERNAL_LINK);
 
         ContentItem targetItem;
-        if (showGenerated()) {
-            //For generated content the target is the profile itself.
+        //if (showGenerated()) {
+        //For generated content the target is the profile itself.
+        //targetItem = profile;
+        //} else {
+        targetItem = (ContentItem) data.get(ITEM_SEARCH);
+        //
+        //}
+        if (targetItem == null) {
             targetItem = profile;
-        } else {
-            targetItem = (ContentItem) data.get(ITEM_SEARCH);
         }
 
         if (targetItem.getParent() instanceof ContentBundle) {
@@ -200,7 +214,10 @@ public class PublicPersonalProfileNavigationAddForm
         PageState state = fse.getPageState();
         FormData data = fse.getFormData();
 
-        if (!showGenerated() && data.get(ITEM_SEARCH) == null) {
+        //if (!showGenerated() && data.get(ITEM_SEARCH) == null) {
+        if (!(autoNavItemKeys.contains(
+              (String) data.get(PublicPersonalProfileNavItem.KEY)))
+            && data.get(ITEM_SEARCH) == null) {
             data.addError(
                     new GlobalizedMessage(
                     "parameter_is_required",
@@ -209,7 +226,7 @@ public class PublicPersonalProfileNavigationAddForm
 
     }
 
-    protected boolean showGenerated() {
-        return false;
-    }
+    /*protected boolean showGenerated() {
+    return false;
+    }*/
 }

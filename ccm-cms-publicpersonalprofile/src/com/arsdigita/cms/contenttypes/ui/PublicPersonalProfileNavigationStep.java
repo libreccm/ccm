@@ -38,7 +38,7 @@ public class PublicPersonalProfileNavigationStep extends SimpleEditStep {
             new WorkflowLockedComponentAccess(editNavItemSheet, itemModel),
             editNavItemSheet.getSaveCancelSection().getCancelButton());
 
-        BasicItemForm editGeneratedNavItemSheet =
+        /*BasicItemForm editGeneratedNavItemSheet =
                       new PublicPersonalProfileNavigationGeneratedAddForm(
                 itemModel,
                 this);
@@ -48,7 +48,7 @@ public class PublicPersonalProfileNavigationStep extends SimpleEditStep {
                 localize(),
             new WorkflowLockedComponentAccess(editGeneratedNavItemSheet,
                                               itemModel),
-            editGeneratedNavItemSheet.getSaveCancelSection().getCancelButton());
+            editGeneratedNavItemSheet.getSaveCancelSection().getCancelButton());*/
 
         PublicPersonalProfileNavigationTable navTable =
                                              new PublicPersonalProfileNavigationTable(

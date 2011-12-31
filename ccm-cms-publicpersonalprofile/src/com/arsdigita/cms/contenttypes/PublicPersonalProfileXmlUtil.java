@@ -24,7 +24,6 @@ import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
 // import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.ui.UI;
 import com.arsdigita.xml.Element;
@@ -105,8 +104,9 @@ public class PublicPersonalProfileXmlUtil {
             }
             navHome.addAttribute("sortKey", "");
 
-            String homeLabel = homeLabels.get(GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage());
+            /*String homeLabel = homeLabels.get(GlobalizationHelper.
+            getNegotiatedLocale().getLanguage());*/
+            String homeLabel = homeLabels.get(profile.getLanguage());
             if (homeLabel == null) {
                 navHome.addAttribute("title", "Home");
             } else {
@@ -122,8 +122,9 @@ public class PublicPersonalProfileXmlUtil {
         //Get the available Navigation items
         PublicPersonalProfileNavItemCollection navItems =
                                                new PublicPersonalProfileNavItemCollection();
-        navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                getLanguage());
+        /*navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+        getLanguage());*/
+        navItems.addLanguageFilter(profile.getLanguage());
         final Map<String, PublicPersonalProfileNavItem> navItemMap =
                                                         new HashMap<String, PublicPersonalProfileNavItem>();
         PublicPersonalProfileNavItem navItem;
@@ -175,8 +176,13 @@ public class PublicPersonalProfileXmlUtil {
             if (!(targetItem instanceof PublicPersonalProfile)
                 && (targetItem instanceof ContentPage)) {
                 ContentPage targetPage = (ContentPage) targetItem;
-                if (!(targetPage.getContentBundle().hasInstance(GlobalizationHelper.
-                      getNegotiatedLocale().getLanguage(),
+                /*if (!(targetPage.getContentBundle().hasInstance(GlobalizationHelper.
+                getNegotiatedLocale().getLanguage(),
+                false))) {
+                continue;
+                }*/
+                if (!(targetPage.getContentBundle().hasInstance(profile.
+                      getLanguage(),
                                                                 false))) {
                     continue;
                 }

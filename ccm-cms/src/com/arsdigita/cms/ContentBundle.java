@@ -34,7 +34,6 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;

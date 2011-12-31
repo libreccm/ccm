@@ -11,6 +11,8 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
@@ -46,12 +48,13 @@ public class PersonalPublications implements ContentGenerator {
     @Override
     public void generateContent(final Element parent,
                                 final GenericPerson person,
-                                final PageState state) {
+                                final PageState state,
+                                final String language) {
         final long start = System.currentTimeMillis();
 
         final DataQuery allQuery = SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getPublicationsForAuthor");
-        applyAuthorFilter(person, allQuery, true);
+        applyAuthorFilter(person, allQuery, true, language);
 
         final Element personalPubsElem = parent.newChildElement(
                 "personalPublications");
@@ -83,7 +86,8 @@ public class PersonalPublications implements ContentGenerator {
                 createGroupQuery(person,
                                  entry.getKey(),
                                  entry.getValue(),
-                                 groupQueries);
+                                 groupQueries,
+                                 language);
                 logger.debug(String.format("3: %d ms until now...", System.
                         currentTimeMillis() - start));
             }
@@ -92,7 +96,7 @@ public class PersonalPublications implements ContentGenerator {
             final DataQuery miscQuery = SessionManager.getSession().
                     retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getPublicationsForAuthor");
-            applyAuthorFilter(person, miscQuery, true);
+            applyAuthorFilter(person, miscQuery, true, language);
             miscQuery.addFilter(miscFilter);
             groupQueries.put(MISC, miscQuery);
             logger.debug(String.format("4: %d ms until now...", System.
@@ -192,7 +196,8 @@ public class PersonalPublications implements ContentGenerator {
 
     private void applyAuthorFilter(final GenericPerson person,
                                    final DataQuery query,
-                                   final boolean addOrders) {
+                                   final boolean addOrders,
+                                   final String language) {
         final StringBuilder authorFilterBuilder = new StringBuilder();
         authorFilterBuilder.append('(');
         authorFilterBuilder.append(String.format("authorId = %s",
@@ -208,23 +213,27 @@ public class PersonalPublications implements ContentGenerator {
         /*query.addFilter(String.format("authorId = %s",
         person.getID().toString()));*/
         if (Kernel.getConfig().languageIndependentItems()) {
-            /*FilterFactory ff = query.getFilterFactory();
+            FilterFactory ff = query.getFilterFactory();
             Filter filter = ff.or().
-            addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+            addFilter(ff.equals("language", language)).
             addFilter(ff.and().
             addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
             addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems")
-            .set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
-            query.addFilter(filter);*/
-            query.addFilter(
-                    String.format("(language = '%s' or language = '%s')",
-                                  GlobalizationHelper.getNegotiatedLocale().
-                    getLanguage(),
-                                  GlobalizationHelper.LANG_INDEPENDENT));
+            .set("language", language)));
+            query.addFilter(filter);
+            /*query.addFilter(
+            String.format("(language = '%s' or language = '%s')",
+            GlobalizationHelper.getNegotiatedLocale().
+            getLanguage(),
+            GlobalizationHelper.LANG_INDEPENDENT));*/
+            /*query.addFilter(String.format("language = '%s' or language = '%s'",
+                                          language,
+                                          GlobalizationHelper.LANG_INDEPENDENT));*/
         } else {
-            query.addEqualsFilter("language",
-                                  com.arsdigita.globalization.GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage());
+            /*query.addEqualsFilter("language",
+            com.arsdigita.globalization.GlobalizationHelper.
+            getNegotiatedLocale().getLanguage());*/
+            query.addEqualsFilter("language", language);
         }
         if (addOrders) {
             final String[] orders = config.getOrder().split(",");
@@ -236,7 +245,8 @@ public class PersonalPublications implements ContentGenerator {
 
     private void addAliasToFilter(final StringBuilder builder,
                                   final GenericPerson alias) {
-        builder.append(String.format("or authorId = %s", alias.getID().toString()));
+        builder.append(String.format("or authorId = %s",
+                                     alias.getID().toString()));
 
         if (alias.getAlias() != null) {
             addAliasToFilter(builder, alias.getAlias());
@@ -430,10 +440,11 @@ public class PersonalPublications implements ContentGenerator {
     private void createGroupQuery(final GenericPerson author,
                                   final String groupName,
                                   final List<String> typeTokens,
-                                  final Map<String, DataQuery> groupQueries) {
+                                  final Map<String, DataQuery> groupQueries,
+                                  final String language) {
         final DataQuery query = SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getPublicationsForAuthor");
-        applyAuthorFilter(author, query, true);
+        applyAuthorFilter(author, query, true, language);
         applyFiltersForTypeTokens(typeTokens, query);
 
         groupQueries.put(groupName, query);

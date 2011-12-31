@@ -2,6 +2,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
@@ -10,6 +11,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollec
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -60,7 +62,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         if (config.isShowingSubDepartment()) {
             generateSubDepartmentsXml(department, departmentSummaryElem, state);
         }
-        
+
         if (config.isShowingContacts()) {
             generateContactsXml(department, departmentSummaryElem, state);
         }
@@ -172,22 +174,24 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
 
         if (!(orgaunit instanceof SciDepartment)) {
-            throw new IllegalArgumentException(String.format("Can't process "
+            throw new IllegalArgumentException(String.format(
+                    "Can't process "
                     + "orgaunit '%s' as sub department because the orgaunit is "
                     + "not a SciDepartment but of type '%s'.",
                     orgaunit.getName(),
-                    orgaunit.getClass().getName()));
+                    orgaunit.getClass().
+                    getName()));
         }
-        
+
         final SciDepartment subDepartment = (SciDepartment) orgaunit;
-        
+
         final Element subDepElem = parent.newChildElement("subDepartment");
         subDepElem.addAttribute("oid", subDepartment.getOID().toString());
         final Element nameElem = subDepElem.newChildElement("title");
         nameElem.setText(subDepartment.getTitle());
-        
+
         generateHeadOfDepartmentXml(subDepartment, subDepElem, state);
-                
+
         logger.debug(String.format("Generated XML for sub department '%s' "
                                    + "in %d ms",
                                    orgaunit.getName(),
@@ -195,8 +199,8 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
     }
 
     protected void generateHeadXml(final BigDecimal memberId,
-                                     final Element parent,
-                                     final PageState state) {
+                                   final Element parent,
+                                   final PageState state) {
         final long start = System.currentTimeMillis();
         final GenericPerson member = new GenericPerson(memberId);
         logger.debug(String.format("Got domain object for member '%s' "
@@ -207,8 +211,8 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
     }
 
     protected void generateHeadXml(final GenericPerson member,
-                                     final Element parent,
-                                     final PageState state) {
+                                   final Element parent,
+                                   final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
         generator.setUseExtraXml(false);
@@ -219,7 +223,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                    System.currentTimeMillis() - start));
     }
 
-     protected void generateContactsXml(final SciDepartment department,
+    protected void generateContactsXml(final SciDepartment department,
                                        final Element parent,
                                        final PageState state) {
         final long start = System.currentTimeMillis();
@@ -233,7 +237,10 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         final Element contactsElem = parent.newChildElement("contacts");
 
         while (contacts.next()) {
-            generateContactXml(contacts.getContact(), contactsElem, state);
+            generateContactXml(contacts.getContact(),
+                               contacts.getContactType(),
+                               contactsElem,
+                               state);
         }
         logger.debug(String.format("Generated XML for contacts of project '%s'"
                                    + " in %d ms.",
@@ -242,18 +249,41 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
     }
 
     protected void generateContactXml(final GenericContact contact,
+                                      final String contactType,
                                       final Element parent,
                                       final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(contact);
         generator.setUseExtraXml(false);
         generator.setItemElemName("contact", "");
+        generator.addItemAttribute("contactType",
+                                   getContactTypeName(contactType));
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for contact '%s' in %d ms.",
                                    contact.getName(),
                                    System.currentTimeMillis() - start));
     }
-    
+
+    private String getContactTypeName(final String contactTypeKey) {
+        final RelationAttributeCollection relAttrs =
+                                          new RelationAttributeCollection();
+        relAttrs.addFilter(String.format("attribute = '%s'",
+                                         "GenericContactTypes"));
+        relAttrs.addFilter(String.format("attr_key = '%s'", contactTypeKey));
+        relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.
+                getNegotiatedLocale().getLanguage()));
+
+        if (relAttrs.isEmpty()) {
+            return contactTypeKey;
+        } else {
+            relAttrs.next();
+            final String result = relAttrs.getName();
+            relAttrs.close();
+            return result;
+        }
+
+    }
+
     private class XmlGenerator extends SimpleXMLGenerator {
 
         private final ContentItem item;

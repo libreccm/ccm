@@ -14,10 +14,9 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.Filter;
-import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,8 +55,10 @@ public class PersonalProjects implements ContentGenerator {
 
     public void generateContent(final Element parent,
                                 final GenericPerson person,
-                                final PageState state) {
-        final List<SciProject> projects = collectProjects(person);
+                                final PageState state,
+                                final String profileLanguage) {
+        final List<SciProject> projects = collectProjects(person,
+                                                          profileLanguage);
 
         final Element personalProjectsElem = parent.newChildElement(
                 "personalProjects");
@@ -87,36 +88,67 @@ public class PersonalProjects implements ContentGenerator {
         }
     }
 
-    private List<SciProject> collectProjects(final GenericPerson person) {
+    private List<SciProject> collectProjects(final GenericPerson person,
+                                             final String language) {
         final List<SciProject> projects = new ArrayList<SciProject>();
 
+        /*final DataCollection collection = (DataCollection) person.get(
+        "organizationalunit");
+        if (Kernel.getConfig().languageIndependentItems()) {*/
+        /* FilterFactory ff = collection.getFilterFactory();
+        Filter filter = ff.or().*/
+        /*addFilter(ff.equals("language",
+        com.arsdigita.globalization.GlobalizationHelper.
+        getNegotiatedLocale().getLanguage())).*/
+        /*addFilter(ff.equals("language", language)).
+        addFilter(ff.and().
+        addFilter(ff.equals("language",
+        GlobalizationHelper.LANG_INDEPENDENT)).
+        addFilter(ff.notIn("parent",
+        "com.arsdigita.london.navigation.getParentIDsOfMatchedItems").
+        set("language",
+        com.arsdigita.globalization.GlobalizationHelper.
+        getNegotiatedLocale().getLanguage())));
+        collection.addFilter(filter);*/
+        /*collection.addFilter(
+        String.format("(language = '%s' or language = '%s')",
+        language,
+        GlobalizationHelper.LANG_INDEPENDENT));
+        } else {
+        /*collection.addEqualsFilter("language",
+        com.arsdigita.globalization.GlobalizationHelper.
+        getNegotiatedLocale().getLanguage());*/
+        /* collection.addEqualsFilter("language", language);
+        }*/
+        final List<BigDecimal> processed = new ArrayList<BigDecimal>();
         final DataCollection collection = (DataCollection) person.get(
                 "organizationalunit");
-        if (Kernel.getConfig().languageIndependentItems()) {
-            FilterFactory ff = collection.getFilterFactory();
-            Filter filter = ff.or().
-                    addFilter(ff.equals("language",
-                                        com.arsdigita.globalization.GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage())).
-                    addFilter(ff.and().
-                    addFilter(ff.equals("language",
-                                        GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(ff.notIn("parent",
-                                       "com.arsdigita.london.navigation.getParentIDsOfMatchedItems").
-                    set("language",
-                        com.arsdigita.globalization.GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage())));
-            collection.addFilter(filter);
-        } else {
-            collection.addEqualsFilter("language",
-                                       com.arsdigita.globalization.GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage());
-        }
+        collection.addFilter(String.format("language = '%s'", language));
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
             if (obj instanceof SciProject) {
+                processed.add(((SciProject) obj).getParent().getID());
                 projects.add((SciProject) obj);
+            }
+        }
+
+        if (Kernel.getConfig().languageIndependentItems()) {
+            final DataCollection collectionLi = (DataCollection) person.get(
+                    "organizationalunit");
+            collectionLi.addFilter(
+                    String.format("language = '%s'",
+                                  GlobalizationHelper.LANG_INDEPENDENT));
+
+            while (collectionLi.next()) {
+                obj =
+                DomainObjectFactory.newInstance(collectionLi.getDataObject());
+                if (obj instanceof SciProject) {
+                    if (!(processed.contains(((SciProject) obj).getParent().
+                          getID()))) {
+                        projects.add((SciProject) obj);
+                    }
+                }
             }
         }
 
@@ -124,8 +156,6 @@ public class PersonalProjects implements ContentGenerator {
             collectProjects(person.getAlias(), projects);
 
         }
-
-
         return projects;
     }
 

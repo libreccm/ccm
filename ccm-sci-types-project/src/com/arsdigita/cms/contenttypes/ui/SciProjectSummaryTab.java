@@ -2,6 +2,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
@@ -293,7 +294,10 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final Element contactsElem = parent.newChildElement("contacts");
 
         while (contacts.next()) {
-            generateContactXml(contacts.getContact(), contactsElem, state);
+            generateContactXml(contacts.getContact(),
+                               contacts.getContactType(),
+                               contactsElem,
+                               state);
         }
         logger.debug(String.format("Generated XML for contacts of project '%s'"
                                    + " in %d ms.",
@@ -302,16 +306,39 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
     }
 
     protected void generateContactXml(final GenericContact contact,
+                                      final String contactType,
                                       final Element parent,
                                       final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(contact);
         generator.setUseExtraXml(false);
         generator.setItemElemName("contact", "");
+        generator.addItemAttribute("contactType",
+                                   getContactTypeName(contactType));
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for contact '%s' in %d ms.",
                                    contact.getName(),
                                    System.currentTimeMillis() - start));
+    }
+
+    private String getContactTypeName(final String contactTypeKey) {
+        final RelationAttributeCollection relAttrs =
+                                          new RelationAttributeCollection();
+        relAttrs.addFilter(String.format("attribute = '%s'",
+                                         "GenericContactTypes"));
+        relAttrs.addFilter(String.format("attr_key = '%s'", contactTypeKey));
+        relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.
+                getNegotiatedLocale().getLanguage()));
+
+        if (relAttrs.isEmpty()) {
+            return contactTypeKey;
+        } else {
+            relAttrs.next();
+            final String result = relAttrs.getName();
+            relAttrs.close();
+            return result;
+        }
+
     }
 
     protected void generateInvolvedOrgasXml(final SciProject project,
@@ -354,7 +381,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final XmlGenerator generator = new XmlGenerator(involved);
         generator.setUseExtraXml(false);
         generator.setItemElemName("organization", "");
-        generator.generateXML(state, parent, "");        
+        generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for involved organization "
                                    + "'%s' in %d ms.",
                                    involved.getName(),

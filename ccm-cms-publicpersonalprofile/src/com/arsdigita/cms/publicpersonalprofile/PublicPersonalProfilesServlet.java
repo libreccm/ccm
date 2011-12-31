@@ -37,6 +37,8 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
@@ -82,6 +84,270 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                              final HttpServletResponse response,
                              final Application app) throws ServletException,
                                                            IOException {
+
+        logger.debug("PublicPersonalProfileServlet is starting...");
+        logger.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
+
+        logger.debug("Extracting path from pathInfo by removing leading and "
+                     + "trailing slashes...");
+
+        final String pathStr = getPath(request);
+
+        logger.debug(String.format("path = %s", pathStr));
+
+        //Displays a text/plain page with a message.
+        if (pathStr.isEmpty()) {
+            logger.debug("pathInfo is null, responding with default...");
+
+            response.setContentType("text/plain");
+            response.getWriter().append("Please choose an application.");
+        } else {
+            final Path path;
+            try {
+                path = new Path(pathStr);
+            } catch (IllegalArgumentException ex) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                                   ex.getMessage());
+                return;
+            }
+
+            final Page page = PageFactory.buildPage("PublicPersonalProfile",
+                                                    "");
+
+            if (path.getAdmin()) {
+                showAdminPage(page, request, response);
+                return;
+            }
+
+            page.lock();
+
+            final Document document = page.buildDocument(request, response);
+            final Element root = document.getRootElement();
+
+            final Session session = SessionManager.getSession();
+
+            /*final DataCollection profiles = getProfiles(session,
+            path.getProfileOwner(),
+            path.getPreview(),
+            GlobalizationHelper.
+            getNegotiatedLocale().getLanguage());
+            
+            if (profiles.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+            } else if (profiles.size() > 1) {
+            throw new IllegalStateException(
+            "More than one matching members found.");
+            }
+            
+            profiles.next();
+            PublicPersonalProfile profile =
+            (PublicPersonalProfile) DomainObjectFactory.
+            newInstance(profiles.getDataObject());
+            profiles.close();*/
+
+            PublicPersonalProfile profile = getProfile(
+                    session,
+                    path.getProfileOwner(),
+                    path.getPreview(),
+                    GlobalizationHelper.getNegotiatedLocale().getLanguage());
+
+            if (profile == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
+            if (path.getNavPath() != null) {
+                final DataCollection links = RelatedLink.getRelatedLinks(
+                        profile,
+                        PublicPersonalProfile.LINK_LIST_NAME);
+                links.addFilter(String.format("linkTitle = '%s'",
+                                              path.getNavPath()));
+                if (links.isEmpty()) {
+                    profile = getProfile(session,
+                                         path.getProfileOwner(),
+                                         path.getPreview(),
+                                         GlobalizationHelper.LANG_INDEPENDENT,
+                                         false);
+                } else {
+                    links.next();
+                    final RelatedLink link = (RelatedLink) DomainObjectFactory.
+                            newInstance(
+                            links.getDataObject());
+                    links.close();
+
+                    ContentItem item = link.getTargetItem();
+
+                    if ((item instanceof ContentPage)
+                        && !(item instanceof PublicPersonalProfile)) {
+                        ContentPage contentPage =
+                                    (ContentPage) item;
+
+                        if (contentPage.getContentBundle().hasInstance(profile.
+                                getLanguage(),
+                                                                       false)) {
+                            contentPage =
+                            (ContentPage) contentPage.getContentBundle().
+                                    getInstance(profile.getLanguage());
+                            item = (ContentItem) contentPage;
+                        } else {
+                            profile =
+                            getProfile(session,
+                                       path.getProfileOwner(),
+                                       path.getPreview(),
+                                       GlobalizationHelper.LANG_INDEPENDENT);
+                        }
+                    }
+                }
+            }
+
+            final PageState state = new PageState(page,
+                                                  request,
+                                                  response);
+
+            if (path.getPreview()) {
+                if (Kernel.getContext().getParty() == null) {
+                    throw new LoginSignal(request);
+                } else {
+
+                    com.arsdigita.cms.SecurityManager securityManager =
+                                                      Utilities.
+                            getSecurityManager(state);
+
+                    final boolean canEdit = securityManager.canAccess(
+                            state.getRequest(),
+                            com.arsdigita.cms.SecurityManager.PREVIEW_PAGES,
+                            profile);
+
+                    if (!canEdit) {
+                        throw new AccessDeniedException("user "
+                                                        + Kernel.getContext().
+                                getParty().getOID()
+                                                        + " doesn't have the "
+                                                        + com.arsdigita.cms.SecurityManager.EDIT_ITEM
+                                                        + " privilege on "
+                                                        + profile.getOID().
+                                toString());
+                    }
+                }
+            }
+
+            if (config.getEmbedded()) {
+                final ContentSection section =
+                                     profile.getContentSection();
+                final ItemResolver resolver = section.getItemResolver();
+
+                String context;
+                if (path.getPreview()) {
+                    context = CMSDispatcher.PREVIEW;
+                } else {
+                    context = ContentItem.LIVE;
+                }
+
+                final String url = String.format("/ccm%s", resolver.
+                        generateItemURL(state,
+                                        profile,
+                                        section,
+                                        context));
+
+                throw new RedirectSignal(url, false);
+            }
+
+            Element profileElem =
+                    root.newChildElement("ppp:profile", PPP_NS);
+            GenericPerson owner = profile.getOwner();
+            if (owner == null) {
+                throw new IllegalStateException(
+                        "Failed to get owner of profile.");
+            }
+            Element profileOwnerName = profileElem.newChildElement(
+                    "ppp:ownerName", PPP_NS);
+            profileOwnerName.setText(owner.getFullName());
+            //Add an attribute with the lang of the owner item of debugging.
+            profileOwnerName.addAttribute("ownerItemLang", owner.getLanguage());
+
+            final DataCollection images = ItemImageAttachment.
+                    getImageAttachments(profile);
+            if (!images.isEmpty()) {
+                images.next();
+                final Element profileImageElem =
+                              profileElem.newChildElement("ppp:profileImage",
+                                                          PPP_NS);
+                final Element attachmentElem = profileImageElem.newChildElement(
+                        "imageAttachments");
+                final ItemImageAttachment attachment =
+                                          new ItemImageAttachment(images.
+                        getDataObject());
+                attachmentElem.addAttribute("oid", attachment.getOID().
+                        toString());
+                final Element caption = attachmentElem.newChildElement(
+                        "caption");
+                caption.setText(attachment.getCaption());
+                final ReusableImageAsset image = attachment.getImage();
+                final Element imageElem =
+                              attachmentElem.newChildElement("image");
+                imageElem.addAttribute("oid", image.getOID().toString());
+                final Element widthElem = imageElem.newChildElement(
+                        "width");
+                widthElem.setText(image.getWidth().toString());
+                final Element heightElem = imageElem.newChildElement(
+                        "height");
+                heightElem.setText(image.getHeight().toString());
+                final Element descElem = imageElem.newChildElement(
+                        "description");
+                descElem.setText(image.getDescription());
+                final Element nameElem = imageElem.newChildElement(
+                        "name");
+                nameElem.setText(image.getName());
+                final Element idElem = imageElem.newChildElement("id");
+                idElem.setText(image.getID().toString());
+                final Element displayNameElem = imageElem.newChildElement(
+                        "displayName");
+                displayNameElem.setText(image.getDisplayName());
+
+                images.close();
+            }
+
+            final PublicPersonalProfileXmlUtil util =
+                                               new PublicPersonalProfileXmlUtil();
+            String prefix =
+                   DispatcherHelper.getDispatcherPrefix(request);
+            if (prefix == null) {
+                prefix = "";
+            }
+            util.createNavigation(profile,
+                                  root,
+                                  path.getNavPath(),
+                                  prefix,
+                                  app.getPath(),
+                                  path.getPreview());
+
+            if (path.getNavPath() == null) {
+                final PublicPersonalProfileXmlGenerator generator =
+                                                        new PublicPersonalProfileXmlGenerator(
+                        profile);
+                generator.generateXML(state, root, "");
+            } else {
+                if (path.getItemPath() == null) {
+                    showNavItem(response, profile, path, root,
+                                profileElem, state);
+                } else {
+                    showItem(response, profile, path, root,
+                             profileElem, state);
+                }
+            }
+
+            PresentationManager presentationManager = Templating.
+                    getPresentationManager();
+            presentationManager.servePage(document, request, response);
+        }
+    }
+
+    //@Override
+    protected void olddoService(final HttpServletRequest request,
+                                final HttpServletResponse response,
+                                final Application app) throws ServletException,
+                                                              IOException {
         String path = "";
 
         logger.debug("PublicPersonalProfileServlet is starting...");
@@ -179,17 +445,19 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                       profileOwner,
                                                       preview,
                                                       GlobalizationHelper.
-                        getNegotiatedLocale().getLanguage());
+                        getNegotiatedLocale().getLanguage(),
+                                                      Kernel.getConfig().
+                        languageIndependentItems());
 
                 /*if (profiles.isEmpty()) {
-                    profiles = getProfiles(session,
-                                           profileOwner,
-                                           preview,
-                                           GlobalizationHelper.LANG_INDEPENDENT);
+                profiles = getProfiles(session,
+                profileOwner,
+                preview,
+                GlobalizationHelper.LANG_INDEPENDENT);
                 }*/
 
                 if (profiles.size() == 0) {
-                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
                 } else if (profiles.size() > 1) {
                     throw new IllegalStateException(
@@ -337,7 +605,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                           navPath));
 
                             if (links.size() == 0) {
-                                response.setStatus(
+                                response.sendError(
                                         HttpServletResponse.SC_NOT_FOUND);
                                 return;
                             } else {
@@ -370,7 +638,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                             generator.generateContent(
                                                     profileElem,
                                                     owner,
-                                                    state);
+                                                    state,
+                                                    profile.getLanguage());
 
                                         } else {
                                             throw new ServletException(String.
@@ -440,7 +709,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                     Kernel.getConfig().
                                                     languageIndependentItems(),
                                                     GlobalizationHelper.LANG_INDEPENDENT));
-                                            response.setStatus(
+                                            response.sendError(
                                                     HttpServletResponse.SC_NOT_FOUND);
                                             return;
                                         }
@@ -497,7 +766,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                 Kernel.getConfig().
                                                 languageIndependentItems(),
                                                 GlobalizationHelper.LANG_INDEPENDENT));
-                                        response.setStatus(
+                                        response.sendError(
                                                 HttpServletResponse.SC_NOT_FOUND);
                                         return;
                                     }
@@ -520,7 +789,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                         "Item '%s' not found: ",
                                         itemPath),
                                              ex);
-                                response.setStatus(
+                                response.sendError(
                                         HttpServletResponse.SC_NOT_FOUND);
                                 return;
                             }
@@ -694,12 +963,229 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
     }
 
+    private void showNavItem(final HttpServletResponse response,
+                             final PublicPersonalProfile profile,
+                             final Path path,
+                             final Element root,
+                             final Element profileElem,
+                             final PageState state) throws IOException,
+                                                           ServletException {
+        final DataCollection links =
+                             RelatedLink.getRelatedLinks(
+                profile,
+                PublicPersonalProfile.LINK_LIST_NAME);
+        links.addFilter(String.format("linkTitle = '%s'",
+                                      path.getNavPath()));
+
+        if (links.size() == 0) {
+            response.sendError(
+                    HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        if (config.getShowPersonInfoEverywhere()) {
+            generateProfileOwnerXml(profileElem, profile.getOwner(), state);
+        }
+
+        final PublicPersonalProfileNavItemCollection navItems =
+                                                     new PublicPersonalProfileNavItemCollection();
+        navItems.addLanguageFilter(profile.getLanguage());
+        navItems.addKeyFilter(path.getNavPath());
+        navItems.next();
+
+        links.next();
+        final RelatedLink link = (RelatedLink) DomainObjectFactory.newInstance(
+                links.getDataObject());
+        links.close();
+
+        ContentItem item = link.getTargetItem();
+
+        if ((item instanceof ContentPage)
+            && !(item instanceof PublicPersonalProfile)) {
+            ContentPage contentPage =
+                        (ContentPage) item;
+            /*logger.debug("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+            + contentPage.getContentBundle().
+            hasInstance(GlobalizationHelper.getNegotiatedLocale().
+            getLanguage()));
+            if (contentPage.getContentBundle().
+            hasInstance(GlobalizationHelper.getNegotiatedLocale().
+            getLanguage())) {
+            contentPage =
+            (ContentPage) contentPage.getContentBundle().
+            getInstance(GlobalizationHelper.getNegotiatedLocale().
+            getLanguage());
+            item = (ContentItem) contentPage;
+            } else {
+            logger.error(
+            String.format(
+            "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+            path.getNavPath(),
+            GlobalizationHelper.getNegotiatedLocale().
+            getLanguage(),
+            Kernel.getConfig().
+            languageIndependentItems(),
+            GlobalizationHelper.LANG_INDEPENDENT));
+            response.sendError(
+            HttpServletResponse.SC_NOT_FOUND);
+            return;
+            }*/
+            if (contentPage.getContentBundle().hasInstance(profile.getLanguage(),
+                                                           false)) {
+                contentPage =
+                (ContentPage) contentPage.getContentBundle().
+                        getInstance(profile.getLanguage());
+                item = (ContentItem) contentPage;
+            } else {
+                response.sendError(
+                        HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
+
+            final Element contentPanelElem =
+                          root.newChildElement("cms:contentPanel",
+                                               CMS.CMS_XML_NS);
+            final PublicPersonalProfileXmlGenerator generator =
+                                                    new PublicPersonalProfileXmlGenerator(
+                    item);
+            generator.generateXML(state,
+                                  contentPanelElem,
+                                  "");
+        }
+
+        if (navItems.getNavItem().getGeneratorClass() != null) {
+            try {
+                Object generatorObj =
+                       Class.forName(navItems.getNavItem().
+                        getGeneratorClass()).
+                        getConstructor().
+                        newInstance();
+
+                if (generatorObj instanceof ContentGenerator) {
+                    final ContentGenerator generator =
+                                           (ContentGenerator) generatorObj;
+
+                    generator.generateContent(profileElem,
+                                              profile.getOwner(),
+                                              state,
+                                              profile.getLanguage());
+
+                } else {
+                    throw new ServletException(String.format(
+                            "Class '%s' is not a ContentGenerator.",
+                            navItems.getNavItem().
+                            getGeneratorClass()));
+                }
+
+            } catch (InstantiationException ex) {
+                throw new ServletException(
+                        "Failed to create generator", ex);
+            } catch (IllegalAccessException ex) {
+                throw new ServletException(
+                        "Failed to create generator", ex);
+            } catch (IllegalArgumentException ex) {
+                throw new ServletException(
+                        "Failed to create generator", ex);
+            } catch (InvocationTargetException ex) {
+                throw new ServletException(
+                        "Failed to create generator", ex);
+            } catch (ClassNotFoundException ex) {
+                throw new ServletException(
+                        "Failed to create generator", ex);
+            } catch (NoSuchMethodException ex) {
+                throw new ServletException(
+                        "Failed to create generator", ex);
+            }
+        }
+
+        navItems.close();
+    }
+
+    private void showItem(final HttpServletResponse response,
+                          final PublicPersonalProfile profile,
+                          final Path path,
+                          final Element root,
+                          final Element profileElem,
+                          final PageState state) throws IOException {
+        if (config.getShowPersonInfoEverywhere()) {
+            generateProfileOwnerXml(profileElem, profile.getOwner(), state);
+        }
+
+        final OID itemOid = OID.valueOf(path.getItemPath());
+
+        try {
+            ContentItem item =
+                        (ContentItem) DomainObjectFactory.newInstance(
+                    itemOid);
+
+            if (item instanceof ContentPage) {
+                ContentPage contentPage = (ContentPage) item;
+                /*logger.debug("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+                + contentPage.getContentBundle().
+                hasInstance(GlobalizationHelper.getNegotiatedLocale().
+                getLanguage()));
+                if (contentPage.getContentBundle().
+                hasInstance(GlobalizationHelper.getNegotiatedLocale().
+                getLanguage())) {
+                contentPage = (ContentPage) contentPage.getContentBundle().
+                getInstance(GlobalizationHelper.getNegotiatedLocale().
+                getLanguage());
+                item = (ContentItem) contentPage;
+                } else {
+                logger.error(
+                String.format(
+                "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+                path.getItemPath(),
+                GlobalizationHelper.getNegotiatedLocale().
+                getLanguage(),
+                Kernel.getConfig().
+                languageIndependentItems(),
+                GlobalizationHelper.LANG_INDEPENDENT));
+                response.sendError(
+                HttpServletResponse.SC_NOT_FOUND);
+                return;
+                }*/
+                if (contentPage.getContentBundle().hasInstance(profile.
+                        getLanguage(), false)) {
+                    contentPage = (ContentPage) contentPage.getContentBundle().
+                            getInstance(profile.getLanguage());
+                } else {
+                    response.sendError(
+                            HttpServletResponse.SC_NOT_FOUND);
+                    return;
+                }
+            }
+
+
+            final Element contentPanelElem =
+                          root.newChildElement("cms:contentPanel",
+                                               CMS.CMS_XML_NS);
+
+            final PublicPersonalProfileXmlGenerator generator =
+                                                    new PublicPersonalProfileXmlGenerator(
+                    item);
+            generator.generateXML(state,
+                                  contentPanelElem,
+                                  "");
+        } catch (DataObjectNotFoundException ex) {
+            logger.error(String.format(
+                    "Item '%s' not found: ",
+                    path.getItemPath()),
+                         ex);
+            response.sendError(
+                    HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+    }
+
     private DataCollection getProfiles(final Session session,
                                        final String profileOwner,
                                        final boolean preview,
-                                       final String language) {
-        DataCollection profiles =
-                       session.retrieve(
+                                       final String language,
+                                       final boolean allowLangIndependent) {
+        final DataCollection profiles =
+                             session.retrieve(
                 com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
         profiles.addFilter(String.format("profileUrl = '%s'",
                                          profileOwner));
@@ -711,8 +1197,150 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                              ContentItem.LIVE));
         }
 
-        profiles.addFilter(String.format("language = '%s'", language));
+        if (allowLangIndependent) {
+            FilterFactory ff = profiles.getFilterFactory();
+            Filter filter = ff.or().
+                    addFilter(ff.equals("language", language)).
+                    addFilter(ff.and().
+                    addFilter(ff.equals("language",
+                                        GlobalizationHelper.LANG_INDEPENDENT)).
+                    addFilter(ff.notIn("parent",
+                                       "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                    set("language", language)));
+            profiles.addFilter(filter);
+        } else {
+            profiles.addFilter(String.format("language = '%s'", language));
+        }
 
         return profiles;
+    }
+
+    private PublicPersonalProfile getProfile(final Session session,
+                                             final String profileOwner,
+                                             final boolean preview,
+                                             final String language) {
+        return getProfile(session,
+                          profileOwner,
+                          preview,
+                          language,
+                          Kernel.getConfig().languageIndependentItems());
+    }
+
+    private PublicPersonalProfile getProfile(final Session session,
+                                             final String profileOwner,
+                                             final boolean preview,
+                                             final String language,
+                                             final boolean allowLangIndependent) {
+        final DataCollection profiles = getProfiles(session,
+                                                    profileOwner,
+                                                    preview,
+                                                    language,
+                                                    allowLangIndependent);
+
+        if (profiles.isEmpty()) {
+            return null;
+        } else if (profiles.size() > 1) {
+            throw new IllegalStateException(
+                    "More than one matching members found.");
+        } else {
+            profiles.next();
+            PublicPersonalProfile profile =
+                                  (PublicPersonalProfile) DomainObjectFactory.
+                    newInstance(profiles.getDataObject());
+            profiles.close();
+
+            return profile;
+        }
+    }
+
+    private String getPath(final HttpServletRequest request) {
+        String path = "";
+
+        if (request.getPathInfo() != null) {
+            if ("/".equals(request.getPathInfo())) {
+                path = "";
+            } else if (request.getPathInfo().startsWith("/")
+                       && request.getPathInfo().endsWith("/")) {
+                path = request.getPathInfo().substring(1, request.getPathInfo().
+                        length() - 1);
+            } else if (request.getPathInfo().startsWith("/")) {
+                path = request.getPathInfo().substring(1);
+            } else if (request.getPathInfo().endsWith("/")) {
+                path = request.getPathInfo().substring(0, request.getPathInfo().
+                        length() - 1);
+            } else {
+                path = request.getPathInfo();
+            }
+        }
+
+        return path;
+    }
+
+    private class Path {
+
+        private final boolean admin;
+        private final boolean preview;
+        private final String profileOwner;
+        private final String navPath;
+        private final String itemPath;
+
+        public Path(final String path) {
+            final String[] pathTokens = path.split("/");
+            final int ownerTokenPos;
+
+            if (pathTokens.length < 1) {
+                throw new IllegalArgumentException(
+                        "Illegal path. Missing profile owner.");
+            } else {
+                admin = ADMIN.equals(pathTokens[0]);
+
+                preview = PREVIEW.equals(pathTokens[0]);
+
+                if (preview) {
+                    ownerTokenPos = 1;
+                } else {
+                    ownerTokenPos = 0;
+                }
+
+                if (pathTokens.length < (ownerTokenPos + 1)) {
+                    throw new IllegalArgumentException(
+                            "Illegal path. Missing profile owner.");
+                } else {
+                    profileOwner = pathTokens[ownerTokenPos];
+                }
+
+                if (pathTokens.length > (ownerTokenPos + 1)) {
+                    navPath = pathTokens[ownerTokenPos + 1];
+                } else {
+                    navPath = null;
+                }
+
+                if (pathTokens.length > (ownerTokenPos + 2)) {
+                    itemPath = pathTokens[ownerTokenPos + 2];
+                } else {
+                    itemPath = null;
+                }
+            }
+        }
+
+        public boolean getAdmin() {
+            return admin;
+        }
+
+        public boolean getPreview() {
+            return preview;
+        }
+
+        public String getProfileOwner() {
+            return profileOwner;
+        }
+
+        public String getNavPath() {
+            return navPath;
+        }
+
+        public String getItemPath() {
+            return itemPath;
+        }
     }
 }

@@ -16,8 +16,8 @@ public class PublicPersonalProfileNavigationGeneratedAddForm extends PublicPerso
         super("PublicPersonalProfileNavGeneratedAddForm", itemModel, editStep);
     }
 
-    @Override
+    /*@Override
     public boolean showGenerated() {
         return true;
-    }
+    }*/
 }

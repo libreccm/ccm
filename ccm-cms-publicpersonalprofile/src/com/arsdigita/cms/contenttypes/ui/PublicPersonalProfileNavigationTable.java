@@ -26,6 +26,7 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -134,7 +135,7 @@ public class PublicPersonalProfileNavigationTable
         }
 
         @Override
-        public boolean nextRow() {         
+        public boolean nextRow() {
             return linkCollection.next();
         }
 
@@ -146,19 +147,32 @@ public class PublicPersonalProfileNavigationTable
             PublicPersonalProfileNavItem navItem;
 
             navItem = navItems.getNavItem(key, GlobalizationHelper.
-                    getNegotiatedLocale().
-                    getLanguage());
+                    getNegotiatedLocale().getLanguage());
+            navItems.reset();
+            if ((navItem == null) && (Kernel.getConfig().languageIndependentItems())) {
+                navItem = navItems.getNavItem(key, GlobalizationHelper.
+                    LANG_INDEPENDENT);
+            }
             navItems.reset();
 
             switch (columnIndex) {
                 case 0:
                     //return mockNav[index];
-                    return navItem.getLabel();
-                case 1:
                     if (navItem.getGeneratorClass() == null) {
-                        return targetItem;
+                        return navItem.getLabel();
                     } else {
+                        return String.format("%s (auto)", navItem.getLabel());
+                    }
+                case 1:
+                    /*if (navItem.getGeneratorClass() == null) {
+                    return targetItem;
+                    } else {
+                    return null;
+                    }*/
+                    if (targetItem instanceof PublicPersonalProfile) {
                         return null;
+                    } else {
+                        return targetItem;
                     }
                 case 2:
                     return PublicPersonalProfileGlobalizationUtil.globalize(

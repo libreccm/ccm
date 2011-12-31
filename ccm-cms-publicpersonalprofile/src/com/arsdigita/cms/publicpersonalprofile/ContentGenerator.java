@@ -19,7 +19,11 @@ public interface ContentGenerator {
      * @param parent XML element to attach the content to
      * @param person The person to be used as data source
      * @param state The current page state.
+     * @param profileLanguage  
      */
-    void generateContent(Element parent, GenericPerson person, PageState state);
+    void generateContent(Element parent, 
+                         GenericPerson person, 
+                         PageState state, 
+                         String profileLanguage);
     
 }
