@@ -14,7 +14,8 @@ public class ExampleGenerator implements ContentGenerator {
 
     public void generateContent(final Element parent,
                                 final GenericPerson person,
-                                final PageState state) {
+                                final PageState state,
+                                final String profileLanguage) {
         Element message = parent.newChildElement("message");
 
         message.setText("Hello World!");

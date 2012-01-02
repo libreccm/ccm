@@ -90,7 +90,8 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
 
                             generator.generateContent(profileContent,
                                                       profile.getOwner(),
-                                                      state);
+                                                      state,
+                                                      profile.getLanguage());
 
                         } else {
                             throw new UncheckedWrapperException(String.format(
