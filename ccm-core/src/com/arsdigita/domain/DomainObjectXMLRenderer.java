@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import com.arsdigita.xml.XML;
 import java.text.DateFormat;
+import java.text.FieldPosition;
 import java.util.Stack;
 
 import java.util.Map;
@@ -338,11 +339,15 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
                     Element element = newElement(m_element, name);
                     element.setText((String) format(obj, path, property, value));
 
-                    // locale-independent date output
+                    // Quasimodo:
+                    // Special handling of date field, should be done somewhere else
+                    // but that seems to be a problem
                     if (value instanceof Date) {
                         Date date = (Date) value;
                         Calendar calDate = Calendar.getInstance();
                         calDate.setTime(date);
+                        
+                        // locale-independent date output
                         element.addAttribute("year", Integer.toString(calDate.get(Calendar.YEAR)));
                         element.addAttribute("month", Integer.toString(calDate.get(Calendar.MONTH) + 1));
                         element.addAttribute("day", Integer.toString(calDate.get(Calendar.DAY_OF_MONTH)));
@@ -359,6 +364,7 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
                         element.addAttribute("date", dateFormatter.format(date));
                         element.addAttribute("longDate", longDateFormatter.format(date));
                         element.addAttribute("time", timeFormatter.format(date));
+                        element.addAttribute("monthName", calDate.getDisplayName(Calendar.MONTH, Calendar.LONG, negLocale));
                         // Quasimodo: END
 
                     }
