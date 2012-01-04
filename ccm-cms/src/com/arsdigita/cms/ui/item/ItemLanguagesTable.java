@@ -64,9 +64,11 @@ public class ItemLanguagesTable extends DataTable {
         super(new LanguagesBuilder(model));
         m_model = model;
 
-        addColumn("cms.ui.language.header", ContentPage.LANGUAGE, false, new LanguageRenderer());
+        addColumn("cms.ui.language.header", ContentPage.LANGUAGE, false,
+                  new LanguageRenderer());
         addColumn("cms.title", ContentPage.TITLE);
-        m_deleteColumn = addColumn("cms.ui.action", new ActionCellRenderer(m_model));
+        m_deleteColumn = addColumn("cms.ui.action", new ActionCellRenderer(
+                m_model));
         setResourceBundle(GlobalizationUtil.getBundleName());
         addTableActionListener(new InstanceDeleter());
     }
@@ -85,8 +87,10 @@ public class ItemLanguagesTable extends DataTable {
         }
 
         public DataQuery makeDataQuery(DataTable t, PageState s) {
-            ContentPage multiLingual = (ContentPage) m_model.getSelectedObject(s);
-            DataQuery q = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.getBundledItems");
+            ContentPage multiLingual =
+                        (ContentPage) m_model.getSelectedObject(s);
+            DataQuery q = SessionManager.getSession().retrieveQuery(
+                    "com.arsdigita.cms.getBundledItems");
             q.setParameter("bundleID", multiLingual.getContentBundle().getID());
             return q;
         }
@@ -102,11 +106,14 @@ public class ItemLanguagesTable extends DataTable {
     private static class LanguageRenderer implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
             BigDecimal id = (BigDecimal) key;
-            String target = ContentItemPage.getRelativeItemURL(id, ContentItemPage.AUTHORING_TAB);
-            return new Link(new Label(LanguageUtil.getLangFull((String) value)), target);
+            String target =
+                   ContentItemPage.getRelativeItemURL(id,
+                                                      ContentItemPage.AUTHORING_TAB);
+            return new Link(new Label(LanguageUtil.getLangFull((String) value)),
+                            target);
         }
     }
 
@@ -115,7 +122,8 @@ public class ItemLanguagesTable extends DataTable {
      */
     private static class ActionCellRenderer implements TableCellRenderer {
 
-        private static final Logger logger = Logger.getLogger(ActionCellRenderer.class);
+        private static final Logger logger =
+                                    Logger.getLogger(ActionCellRenderer.class);
         private static Label s_noAction;
         private static Label s_primary;
         private static ControlLink s_link;
@@ -124,9 +132,11 @@ public class ItemLanguagesTable extends DataTable {
             logger.debug("Static initializer is starting...");
             s_noAction = new Label("&nbsp;", false);
             s_noAction.lock();
-            s_primary = new Label(GlobalizationUtil.globalize("cms.ui.primary_instance"), false);
+            s_primary = new Label(GlobalizationUtil.globalize(
+                    "cms.ui.primary_instance"), false);
             s_primary.lock();
-            s_link = new ControlLink(new Label(GlobalizationUtil.globalize("cms.ui.delete")));
+            s_link = new ControlLink(new Label(GlobalizationUtil.globalize(
+                    "cms.ui.delete")));
             s_link.setConfirmation("Permanently delete this item?"); // XXX G11N ?
             logger.debug("Static initalizer finished.");
         }
@@ -137,8 +147,8 @@ public class ItemLanguagesTable extends DataTable {
         }
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
             if (m_model.getSelectedKey(state).equals(key)) {
                 return s_noAction;
             } else {
@@ -146,10 +156,13 @@ public class ItemLanguagesTable extends DataTable {
                 BigDecimal id = new BigDecimal(key.toString());
                 OID oid = new OID(ContentPage.BASE_DATA_OBJECT_TYPE, id);
                 try {
-                    ContentPage item = (ContentPage) DomainObjectFactory.newInstance(oid);
+                    ContentPage item = (ContentPage) DomainObjectFactory.
+                            newInstance(oid);
                     if (item.getLanguage().equals(
                             item.getContentBundle().getDefaultLanguage())) {
                         return s_primary;
+                    } else if (item.getLiveVersion() != null) {
+                        return s_noAction;
                     }
                 } catch (com.arsdigita.domain.DataObjectNotFoundException ex) {
                     return s_noAction;
@@ -174,7 +187,8 @@ public class ItemLanguagesTable extends DataTable {
 
             OID oid = new OID(ContentPage.BASE_DATA_OBJECT_TYPE, id);
             try {
-                ContentPage item = (ContentPage) DomainObjectFactory.newInstance(oid);
+                ContentPage item =
+                            (ContentPage) DomainObjectFactory.newInstance(oid);
                 ContentBundle bundle = item.getContentBundle();
                 bundle.removeInstance(item);
                 item.delete();
