@@ -17,6 +17,8 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.contenttypes.Review;
+import com.arsdigita.cms.contenttypes.Series;
+import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.xml.Element;
@@ -161,6 +163,7 @@ public class PublicationXmlHelper {
         generateXmlElement(publicationElem, "misc", publication.getMisc());
         generateXmlElement(parent, "abstract", publication.getAbstract());
         generateAuthorsXml(publicationElem);
+        generateSeriesCollXml(publicationElem);
     }
 
     private void generateAuthorsXml(final Element publicationElem) {
@@ -229,6 +232,28 @@ public class PublicationXmlHelper {
         publisherPlaceElem.setText(publisher.getPlace());
     }
 
+    private void generateSeriesCollXml(final Element publicationElem) {
+        if ((publication.getSeries() == null) 
+            || publication.getSeries().isEmpty()) {
+            return;
+        }
+        
+        final SeriesCollection series = publication.getSeries();
+                
+        while(series.next()) {
+            generateSeriesXml(publicationElem, series.getSeries());
+        }
+    }
+    
+    private void generateSeriesXml(final Element publicationElem,
+                                   final Series series) {
+        final Element seriesElem = publicationElem.newChildElement("series");
+        
+        final Element title = seriesElem.newChildElement("title");
+        
+        title.setText(series.getTitle());
+    }
+    
     private void generateArticleInCollectedVolumeXml(
             final Element publicationElem) {
         final ArticleInCollectedVolume article =
