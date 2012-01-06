@@ -247,4 +247,9 @@ public class GenericOrganizationalUnit extends ContentPage {
     public boolean hasSubordinateOrgaUnits() {
         return !getSubordinateOrgaUnits().isEmpty();
     }
+    
+    @Override
+    public String getSearchSummary() {
+        return String.format("%s %s", getTitle(), getAddendum());
+    }
 }

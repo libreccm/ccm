@@ -306,4 +306,9 @@ public class GenericPerson extends ContentPage implements
     public String getRelationAttributeKey(String propertyName) {
         return null;
     }
+    
+    @Override
+    public String getSearchSummary() {
+        return getFullName();
+    }
 }

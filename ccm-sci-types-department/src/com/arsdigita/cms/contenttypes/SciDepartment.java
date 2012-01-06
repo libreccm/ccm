@@ -230,4 +230,9 @@ public class SciDepartment extends GenericOrganizationalUnit {
         generators.add(new SciDepartmentExtraXmlGenerator());
         return generators;
     }
+    
+    @Override
+    public String getSearchSummary() {
+        return getDepartmentShortDescription();
+    }
 }

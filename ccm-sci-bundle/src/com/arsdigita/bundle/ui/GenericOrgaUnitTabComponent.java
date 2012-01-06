@@ -7,6 +7,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.ui.GenericOrgaUnitTab;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.navigation.ui.AbstractComponent;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -60,6 +61,13 @@ public class GenericOrgaUnitTabComponent extends AbstractComponent {
         GenericOrganizationalUnit orgaunit =
                                   (GenericOrganizationalUnit) DomainObjectFactory.
                 newInstance(orgaunitOid);
+
+        if (!(orgaunit.getLanguage().equals(GlobalizationHelper.
+              getNegotiatedLocale().getLanguage()))) {
+            orgaunit = (GenericOrganizationalUnit) orgaunit.getContentBundle().
+                    getInstance(GlobalizationHelper.getNegotiatedLocale());
+        }
+
         if ((DispatcherHelper.getDispatcherPrefix(request) == null)
             || !DispatcherHelper.getDispatcherPrefix(request).equals("preview")) {
             orgaunit = (GenericOrganizationalUnit) orgaunit.getLiveVersion();
@@ -67,11 +75,13 @@ public class GenericOrgaUnitTabComponent extends AbstractComponent {
 
         final Element contentPanelElem = new Element("cms:contentPanel",
                                                      CMS.CMS_XML_NS);
-        final Element cmsItemElem = contentPanelElem.newChildElement("cms:item", CMS.CMS_XML_NS);
+        final Element cmsItemElem =
+                      contentPanelElem.newChildElement("cms:item",
+                                                       CMS.CMS_XML_NS);
         cmsItemElem.addAttribute("oid", orgaunitOid.toString());
         final Element objTypeElem = cmsItemElem.newChildElement("objectType");
         objTypeElem.setText(orgaunit.getClass().getName());
-        
+
         final Element tabsElem =
                       contentPanelElem.newChildElement("orgaUnitTabs");//new Element("orgaUnitTabs");
         final Element selectedTabElem = tabsElem.newChildElement("selectedTab");

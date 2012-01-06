@@ -237,4 +237,9 @@ public class SciInstitute extends GenericOrganizationalUnit {
         generators.add(new SciInstituteExtraXmlGenerator());
         return generators;
     }
+    
+    @Override
+    public String getSearchSummary() {
+        return getInstituteShortDescription();
+    }
 }

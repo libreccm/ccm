@@ -366,4 +366,9 @@ public class SciProject extends GenericOrganizationalUnit {
         generators.add(new SciProjectExtraXmlGenerator());
         return generators;
     }
+
+    @Override
+    public String getSearchSummary() {
+        return getProjectShortDescription();
+    }
 }
