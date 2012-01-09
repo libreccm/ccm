@@ -46,7 +46,7 @@ import org.apache.log4j.Logger;
  * parameters.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: Loader.java 2261 2012-01-08 17:17:10Z pboy $
  */
 public class Loader extends PackageLoader {
 

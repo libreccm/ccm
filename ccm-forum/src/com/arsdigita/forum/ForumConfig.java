@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Chris Gilbert Westsussex Council / Westsussex Learning Grid
- * @version $Id: ForumConfig.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: ForumConfig.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class ForumConfig extends AbstractConfig {
 

@@ -53,7 +53,7 @@ import com.arsdigita.xml.XML;
  * The forum initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Initializer.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: Initializer.java 2190 2011-06-20 22:26:12Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

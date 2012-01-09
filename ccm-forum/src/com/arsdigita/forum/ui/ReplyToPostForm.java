@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  * @author Jon Orris (jorris@arsdigita.com)
  * @author rewritten by Chris Gilbert
  * @version $Revision #1 $DateTime: 2004/08/17 23:26:27 $
- * @version $Id: ReplyToPostForm.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: ReplyToPostForm.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class ReplyToPostForm extends PostForm  {
 

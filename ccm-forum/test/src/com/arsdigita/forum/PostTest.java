@@ -33,11 +33,11 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author Ron Henderson (ron@arsdigita.com)
+ * @version $Id: PostTest.java 1844 2009-03-05 13:25:28Z terry $
  */
 
 public class PostTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: PostTest.java 1844 2009-03-05 13:25:28Z terry $ by $Author: terry $, $DateTime: 2004/08/17 23:26:27 $";
 
     protected static final String SUBJECT = "This is the subject";
     protected static final String BODY    = "<p>This is the <b>body</b></p>";

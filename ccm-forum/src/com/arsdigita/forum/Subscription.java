@@ -40,7 +40,7 @@ import com.arsdigita.web.URL;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author chrisg23
- * @version $Id: Subscription.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: Subscription.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public abstract class Subscription extends BaseSubscription {
 

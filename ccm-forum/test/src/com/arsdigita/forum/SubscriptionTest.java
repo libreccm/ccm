@@ -33,12 +33,11 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  *
  * @author <a href="mailto:manu.nath@devlogics.com">Manu R Nath</a>
  * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @version $Id: SubscriptionTest.java 287 2005-02-22 00:29:02Z sskracic $
  * @since ACS 4.6.5
  */
 
 public class SubscriptionTest extends BaseTestCase {
-
-    public static final String versionId = "$Id: SubscriptionTest.java 287 2005-02-22 00:29:02Z sskracic $ by $author$ by $DateTime: 2004/08/17 23:26:27 $";
 
     private ForumSubscription m_subscription;
     private Forum m_bboard;

@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
  * @author Chris Gilbert (chris.gilbert@westsussex.gov.uk) updated to make use of
  *                       PageFactory and to enable disablement of client/middleware
  *                       caching
- * @version $Id: ForumServlet.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: ForumServlet.java 2213 2011-06-22 20:19:06Z pboy $
  */
 public class ForumServlet extends BebopApplicationServlet
         implements Constants {

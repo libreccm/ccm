@@ -65,7 +65,7 @@ import com.arsdigita.web.Application;
  * @author chrisg23
  * @author Jens Pelzetter (jensp)
  * @version $Revision:  1.7 $ 
- * @version $Id: Forum.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: Forum.java 2261 2012-01-08 17:17:10Z pboy $
  */
 public class Forum extends Application {
 

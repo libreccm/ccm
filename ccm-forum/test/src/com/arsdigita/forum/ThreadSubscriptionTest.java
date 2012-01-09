@@ -25,9 +25,11 @@ import com.arsdigita.messaging.MessageThread;
 
 import com.arsdigita.tools.junit.framework.BaseTestCase;
 
+/**
+ *
+ * @version $Id: ThreadSubscriptionTest.java 1844 2009-03-05 13:25:28Z terry $
+ */
 public class ThreadSubscriptionTest extends BaseTestCase {
-
-    public static final String versionId = "$Id: ThreadSubscriptionTest.java 1844 2009-03-05 13:25:28Z terry $ by $Author: terry $, $DateTime: 2004/08/17 23:26:27 $";
 
     private ThreadSubscription m_subscription;
     private MessageThread m_thread;

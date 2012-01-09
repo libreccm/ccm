@@ -37,10 +37,10 @@ import com.arsdigita.portal.apportlet.AppPortlet;
 
 /**
  *
- * @version $Id: RecentPostingsPortlet.java 1628 2007-09-17 08:10:40Z chrisg23 $   
+ * @version $Id: RecentPostingsPortlet.java 2137 2011-01-14 09:16:46Z pboy $   
  */
-  public class RecentPostingsPortlet extends AppPortlet {
- 
+public class RecentPostingsPortlet extends AppPortlet {
+
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.forum.RecentPostingsPortlet";
 

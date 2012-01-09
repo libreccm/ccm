@@ -54,7 +54,7 @@ import com.arsdigita.xml.Element;
  * @author Jon Orris (jorris@arsdigita.com)
  * @author rewritten by Chris Gilbert 
  * @version $Revision #1 $DateTime: 2004/08/17 23:26:27 $
- * @version $Id: PostForm.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: PostForm.java 2137 2011-01-14 09:16:46Z pboy $
  */
 public abstract class PostForm extends Wizard implements Constants {
 

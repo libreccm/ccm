@@ -40,7 +40,7 @@ import java.util.TooManyListenersException;
  * @author ron@arsdigita.com
  * @author sarah@arsdigita.com
  *
- * @version $Id: CategoryWidget.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: CategoryWidget.java 2137 2011-01-14 09:16:46Z pboy $
  */
 public class CategoryWidget extends SingleSelect implements Constants {
 
