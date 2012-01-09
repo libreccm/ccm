@@ -153,26 +153,50 @@ public class PersonalProjects implements ContentGenerator {
         }
 
         if (person.getAlias() != null) {
-            collectProjects(person.getAlias(), projects);
+            collectProjects(person.getAlias(), projects, language);
 
         }
         return projects;
     }
 
     private void collectProjects(final GenericPerson alias,
-                                 final List<SciProject> projects) {
-        final DataCollection collection = (DataCollection) alias.get(
+                                 final List<SciProject> projects,
+                                 final String language) {
+          final DataCollection collection = (DataCollection) alias.get(
                 "organizationalunit");
+        final List<BigDecimal> processed = new ArrayList<BigDecimal>();
+        collection.addFilter(String.format("language = '%s'", language));
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
             if (obj instanceof SciProject) {
+                processed.add(((SciProject) obj).getParent().getID());
                 projects.add((SciProject) obj);
             }
         }
 
+        if (Kernel.getConfig().languageIndependentItems()) {
+            final DataCollection collectionLi = (DataCollection) alias.get(
+                    "organizationalunit");
+            collectionLi.addFilter(
+                    String.format("language  = '%s'",
+                                  GlobalizationHelper.LANG_INDEPENDENT));
+
+            while (collectionLi.next()) {
+                obj =
+                DomainObjectFactory.newInstance(collectionLi.getDataObject());
+                if (obj instanceof SciProject) {
+                    if (!(processed.contains(((SciProject) obj).getParent().
+                          getID()))) {
+                        projects.add((SciProject) obj);
+                    }
+                }
+            }
+        }
+
+
         if (alias.getAlias() != null) {
-            collectProjects(alias.getAlias(), projects);
+            collectProjects(alias.getAlias(), projects, language);
 
         }
     }
