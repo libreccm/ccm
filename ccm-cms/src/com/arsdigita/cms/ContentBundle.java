@@ -408,7 +408,7 @@ public class ContentBundle extends ContentItem {
      * @return A <code>Collection</code> of language 2-letter codes in
      * which this item is available
      */
-    public final Collection getLanguages() {
+    public final Collection<String> getLanguages() {
         // XXX For LIVE bundles, there might be several PENDING
         // instances with the same language. Maybe we should filter
         // these out and return only one?
