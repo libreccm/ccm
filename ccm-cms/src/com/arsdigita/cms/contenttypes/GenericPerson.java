@@ -20,6 +20,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.LanguageInvariantContentItem;
 import com.arsdigita.cms.RelationAttributeInterface;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -38,7 +39,8 @@ import java.util.Date;
  * @author Jens Pelzetter
  */
 public class GenericPerson extends ContentPage implements
-        RelationAttributeInterface {
+        RelationAttributeInterface,
+        LanguageInvariantContentItem {
 
     public static final String PERSON = "person";
     public static final String SURNAME = "surname";
@@ -310,5 +312,9 @@ public class GenericPerson extends ContentPage implements
     @Override
     public String getSearchSummary() {
         return getFullName();
+    }
+    
+    public boolean isLanguageInvariant() {
+        return true;
     }
 }

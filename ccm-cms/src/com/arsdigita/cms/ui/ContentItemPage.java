@@ -36,13 +36,7 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.PageLocations;
-import com.arsdigita.cms.Template;
+import com.arsdigita.cms.*;
 import com.arsdigita.cms.contenttypes.CustomizedPreviewLink;
 import com.arsdigita.cms.dispatcher.CMSDispatcher;
 import com.arsdigita.cms.dispatcher.CMSPage;
@@ -73,6 +67,8 @@ import org.apache.log4j.Logger;
  * @author Michael Pih
  * @author Stanislav Freidin &lt;sfreidin@redhat.com&gt;
  * @author Jack Chung
+ * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * 
  * @version $Id: ContentItemPage.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class ContentItemPage extends CMSPage implements ActionListener {
@@ -336,6 +332,16 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         } else {
             m_tabbedPane.setTabVisible(state, m_templatesPane, !ContentSection.
                     getConfig().getHideTemplatesTab());
+        }
+        
+        // Added by: Sören Bernstein <sbernstein@zes.uni-bremen.de>
+        // If the content item is a language invariant content item, don't show
+        // the language pane
+        if (item instanceof LanguageInvariantContentItem) {
+            LanguageInvariantContentItem li_item = (LanguageInvariantContentItem) item;
+            if(li_item.isLanguageInvariant()) {
+                m_tabbedPane.setTabVisible(state, m_languagesPane, false);
+            }
         }
 
         // Set the current tab based on parameters
