@@ -65,10 +65,10 @@ import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.xml.Element;
 
 /**
- * This class contains the component which displays the information
- * for a particular lifecycle, with the ability to edit and delete.
- * This information also includes the associated phases for this
- * lifecycle, also with the ability to add, edit, and delete.
+ * This class contains the component which displays the information for a
+ * particular lifecycle, with the ability to edit and delete. This information
+ * also includes the associated phases for this lifecycle, also with the ability
+ * to add, edit, and delete.
  *
  * @author Michael Pih
  * @author Jack Chung
@@ -246,6 +246,18 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 if (CMSConfig.getInstance().getThreadedPublishing()) {
                     final Republisher republisher = new Republisher(item);
                     final Thread thread = new Thread(republisher);
+                    thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+                        public void uncaughtException(final Thread thread,
+                                                      final Throwable ex) {
+                            PublishLock.getInstance().setError(item);
+                            s_log.error(String.format(
+                                    "An error occurred while "
+                                    + "publishing the item '%s': ",
+                                    item.getOID().toString()),
+                                        ex);
+                        }
+                    });
 
                     thread.start();
 
@@ -275,11 +287,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
             /**
              * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from 
-             * multiple threads. So we have to create a new instance a the
-             * data object in the run method. To avoid any sort a problems, 
-             * we store the OID as a string and convert it back to an OID in
-             * the run method.
+             * not possible to access to same data object instance from multiple
+             * threads. So we have to create a new instance a the data object in
+             * the run method. To avoid any sort a problems, we store the OID as
+             * a string and convert it back to an OID in the run method.
              */
             private final String itemOid;
 
@@ -316,12 +327,24 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 final ContentItem item = m_item.getContentItem(state);
 
                 /**
-                 * jensp 2011-12-14: Execute is a thread if 
-                 * threaded publishing is active.
+                 * jensp 2011-12-14: Execute is a thread if threaded publishing
+                 * is active.
                  */
                 if (CMSConfig.getInstance().getThreadedPublishing()) {
                     final Republisher republisher = new Republisher(item);
                     final Thread thread = new Thread(republisher);
+                    thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+                        public void uncaughtException(final Thread thread,
+                                                      final Throwable ex) {
+                            PublishLock.getInstance().setError(item);
+                            s_log.error(String.format(
+                                    "An error occurred while "
+                                    + "publishing the item '%s': ",
+                                    item.getOID().toString()),
+                                        ex);
+                        }
+                    });
 
                     thread.start();
 
@@ -351,11 +374,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
             /**
              * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from 
-             * multiple threads. So we have to create a new instance a the
-             * data object in the run method. To avoid any sort a problems, 
-             * we store the OID as a string and convert it back to an OID in
-             * the run method.
+             * not possible to access to same data object instance from multiple
+             * threads. So we have to create a new instance a the data object in
+             * the run method. To avoid any sort a problems, we store the OID as
+             * a string and convert it back to an OID in the run method.
              */
             private final String itemOid;
 
@@ -399,9 +421,9 @@ class ItemLifecycleItemPane extends BaseItemPane {
     }
 
     /**
-     * New style pane. Uses a select box for the action to avoid wrong clicks
-     * on unpublish.
-     * 
+     * New style pane. Uses a select box for the action to avoid wrong clicks on
+     * unpublish.
+     *
      * @author Jens Pelzetter
      */
     private class ActionForm
@@ -474,13 +496,25 @@ class ItemLifecycleItemPane extends BaseItemPane {
             final ContentItem item = m_item.getContentItem(state);
 
             /**
-             * Republish/Republish and Reset are executed in the thread
-             * if threaded publishing is active.
+             * Republish/Republish and Reset are executed in the thread if
+             * threaded publishing is active.
              */
             if (REPUBLISH.equals(selected)) {
                 if (CMSConfig.getInstance().getThreadedPublishing()) {
                     final RepublishRunner runner = new RepublishRunner(item);
                     final Thread thread = new Thread(runner);
+                    thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+                        public void uncaughtException(final Thread thread,
+                                                      final Throwable ex) {
+                            PublishLock.getInstance().setError(item);
+                            s_log.error(String.format(
+                                    "An error occurred while "
+                                    + "publishing the item '%s': ",
+                                    item.getOID().toString()),
+                                        ex);
+                        }
+                    });
 
                     thread.start();
 
@@ -504,6 +538,18 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                                   new RepublishAndResetRunner(
                             item);
                     final Thread thread = new Thread(runner);
+                    thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+                        public void uncaughtException(final Thread thread,
+                                                      final Throwable ex) {
+                            PublishLock.getInstance().setError(item);
+                            s_log.error(String.format(
+                                    "An error occurred while "
+                                    + "publishing the item '%s': ",
+                                    item.getOID().toString()),
+                                        ex);
+                        }
+                    });
 
                     thread.start();
 
@@ -532,11 +578,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
             /**
              * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from 
-             * multiple threads. So we have to create a new instance a the
-             * data object in the run method. To avoid any sort a problems, 
-             * we store the OID as a string and convert it back to an OID in
-             * the run method.
+             * not possible to access to same data object instance from multiple
+             * threads. So we have to create a new instance a the data object in
+             * the run method. To avoid any sort a problems, we store the OID as
+             * a string and convert it back to an OID in the run method.
              */
             private final String itemOid;
 
@@ -563,11 +608,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
             /**
              * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from 
-             * multiple threads. So we have to create a new instance a the
-             * data object in the run method. To avoid any sort a problems, 
-             * we store the OID as a string and convert it back to an OID in
-             * the run method.
+             * not possible to access to same data object instance from multiple
+             * threads. So we have to create a new instance a the data object in
+             * the run method. To avoid any sort a problems, we store the OID as
+             * a string and convert it back to an OID in the run method.
              */
             private final String itemOid;
 

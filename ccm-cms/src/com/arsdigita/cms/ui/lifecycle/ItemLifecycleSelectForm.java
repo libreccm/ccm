@@ -89,7 +89,8 @@ import com.arsdigita.workflow.simple.WorkflowTemplate;
  * @author Xixi D'moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Jens Pelzetter jens@jp-digital.de
- * @version $Id: ItemLifecycleSelectForm.java 1643 2007-09-17 14:19:06Z chrisg23 $
+ * @version $Id: ItemLifecycleSelectForm.java 1643 2007-09-17 14:19:06Z chrisg23
+ * $
  */
 class ItemLifecycleSelectForm extends BaseForm {
 
@@ -365,12 +366,12 @@ class ItemLifecycleSelectForm extends BaseForm {
     }
 
     /**
-     * jensp 2011-12-14: Some larger changes to the behavior of the 
-     * process listener. The real action has been moved to the 
-     * @link{Publisher} class. If threaded publishing is active, the publish 
-     * process runs in a separate thread (the item is locked before using 
-     * {@link PublishLock}. If threaded publishing is not active, nothing 
-     * has changed.
+     * jensp 2011-12-14: Some larger changes to the behavior of the process
+     * listener. The real action has been moved to the
+     * @link{Publisher} class. If threaded publishing is active, the publish
+     * process runs in a separate thread (the item is locked before using
+     * {@link PublishLock}. If threaded publishing is not active, nothing has
+     * changed.
      */
     private class ProcessListener implements FormProcessListener {
 
@@ -390,6 +391,18 @@ class ItemLifecycleSelectForm extends BaseForm {
                     }
                 };
                 final Thread thread = new Thread(threadAction);
+                thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+                    public void uncaughtException(final Thread thread,
+                                                  final Throwable ex) {
+                        PublishLock.getInstance().setError(item);
+                        s_log.error(String.format(
+                                "An error occurred while "
+                                + "publishing the item '%s': ",
+                                item.getOID().toString()),
+                                    ex);
+                    }
+                });
                 thread.start();
             } else {
                 publisher.publish();
@@ -410,171 +423,129 @@ class ItemLifecycleSelectForm extends BaseForm {
                 }
             }
 
-            /*final Integer startHour = (Integer) m_startHour.getValue(state);
-            Integer startMinute = (Integer) m_startMinute.getValue(state);
-            
-            if (startMinute == null) {
-            startMinute = new Integer(0);
+            /*
+             * final Integer startHour = (Integer) m_startHour.getValue(state);
+             * Integer startMinute = (Integer) m_startMinute.getValue(state);
+             *
+             * if (startMinute == null) { startMinute = new Integer(0); }
+             *
+             * final Integer startAmpm = (Integer) m_startAmpm.getValue(state);
+             *
+             * final Integer endHour = (Integer) m_endHour.getValue(state);
+             * Integer endMinute = (Integer) m_endMinute.getValue(state);
+             *
+             * if (endMinute == null) { endMinute = new Integer(0); }
+             *
+             * final Integer endAmpm = (Integer) m_endAmpm.getValue(state);
+             *
+             * // Instantiate the instance of the content type. final
+             * ContentItem item = m_item.getContentItem(state);
+             *
+             * final BigDecimal defID = (BigDecimal)
+             * m_cycleSelect.getValue(state); Assert.exists(defID); final
+             * LifecycleDefinition cycleDef = new LifecycleDefinition(defID);
+             *
+             * java.util.Date startDate = (java.util.Date)
+             * m_startDate.getValue(state);
+             *
+             * final Calendar start = Calendar.getInstance();
+             * start.setTime(startDate); start.set(Calendar.AM_PM,
+             * startAmpm.intValue()); start.set(Calendar.MINUTE,
+             * startMinute.intValue()); start.set(Calendar.AM_PM,
+             * startAmpm.intValue()); if (startHour.intValue() != 12) {
+             * start.set(Calendar.HOUR_OF_DAY, 12 * startAmpm.intValue() +
+             * startHour.intValue()); start.set(Calendar.HOUR,
+             * startHour.intValue()); } else { if (startAmpm.intValue() == 0) {
+             * start.set(Calendar.HOUR_OF_DAY, 0); start.set(Calendar.HOUR, 0);
+             * } else { start.set(Calendar.HOUR_OF_DAY, 12);
+             * start.set(Calendar.HOUR, 0); } } startDate = start.getTime();
+             *
+             * java.util.Date endDate = (java.util.Date)
+             * m_endDate.getValue(state);
+             *
+             * if (endDate != null) { final Calendar end =
+             * Calendar.getInstance();
+             *
+             * end.setTime(endDate); end.set(Calendar.AM_PM,
+             * endAmpm.intValue()); end.set(Calendar.MINUTE,
+             * endMinute.intValue()); end.set(Calendar.AM_PM,
+             * endAmpm.intValue());
+             *
+             * if (endHour.intValue() != 12) { end.set(Calendar.HOUR_OF_DAY, 12
+             * * endAmpm.intValue() + endHour.intValue());
+             * end.set(Calendar.HOUR, endHour.intValue()); } else { if
+             * (endAmpm.intValue() == 0) { end.set(Calendar.HOUR_OF_DAY, 0);
+             * end.set(Calendar.HOUR, 0); } else { end.set(Calendar.HOUR_OF_DAY,
+             * 12); end.set(Calendar.HOUR, 0); } } endDate = end.getTime(); }
+             *
+             * // If the item is already published, remove the current
+             * lifecycle. // Do not touch the live version. if
+             * (item.isPublished()) { item.removeLifecycle(item); item.save(); }
+             *
+             * // Apply the new lifecycle. ContentItem pending =
+             * item.publish(cycleDef, startDate); final Lifecycle lifecycle =
+             * pending.getLifecycle();
+             *
+             * // XXX domlay Whoa. This must be broken for multiphase //
+             * lifecycles.
+             *
+             * if (endDate != null) {
+             *
+             * // update individual phases final PhaseCollection phases =
+             * lifecycle.getPhases();
+             *
+             * while (phases.next()) { final Phase phase = phases.getPhase();
+             * java.util.Date thisEnd = phase.getEndDate(); java.util.Date
+             * thisStart = phase.getStartDate(); if
+             * (thisStart.compareTo(endDate) > 0) { phase.setStartDate(endDate);
+             * phase.save(); }
+             *
+             * if (thisEnd == null || thisEnd.compareTo(endDate) > 0) {
+             * phase.setEndDate(endDate); phase.save(); } } }
+             *
+             * // endOfCycle may be the original date according to lifecycle
+             * phase definitions, or endDate if that was before // natural end
+             * of lifecycle java.util.Date endOfCycle = lifecycle.getEndDate();
+             * if (endOfCycle != null) {
+             *
+             * // if advance notification is requested (!= 0) // add another
+             * phase at the start of which the user is notified Integer
+             * notificationDays = (Integer) m_notificationDays.getValue(state);
+             * Integer notificationHours = (Integer)
+             * m_notificationHours.getValue(state); java.util.Date
+             * notificationDate = null;
+             *
+             * int notificationPeriod = 0; if (notificationDays != null) {
+             * notificationPeriod += notificationDays.intValue() * 24; } if
+             * (notificationHours != null) { notificationPeriod +=
+             * notificationHours.intValue(); }
+             *
+             * if (notificationPeriod > 0) { notificationDate =
+             * computeNotificationDate(endOfCycle, notificationPeriod);
+             * s_log.debug("adding custom phase"); Phase expirationImminentPhase
+             * = lifecycle.addCustomPhase("expirationImminent", new
+             * Long(notificationDate. getTime()), new
+             * Long(endOfCycle.getTime()));
+             * expirationImminentPhase.setListenerClassName(
+             * "com.arsdigita.cms.lifecycle.NotifyLifecycleListener");
+             * expirationImminentPhase.save(); } }
+             *
+             * // Force the lifecycle scheduler to run to avoid any // scheduler
+             * delay for items that should be published // immediately.
+             * pending.getLifecycle().start();
+             *
+             * item.save();
+             *
+             * final Workflow workflow = m_workflow.getWorkflow(state); try {
+             * finish(workflow, item, Web.getContext().getUser()); } catch
+             * (TaskException te) { throw new FormProcessException(te); } //
+             * redirect to /content-center if streamlined creation mode is
+             * active. if
+             * (ContentSection.getConfig().getUseStreamlinedCreation()) { throw
+             * new RedirectSignal(URL.there(state.getRequest(),
+             * Utilities.getWorkspaceURL()), true);
             }
-            
-            final Integer startAmpm = (Integer) m_startAmpm.getValue(state);
-            
-            final Integer endHour = (Integer) m_endHour.getValue(state);
-            Integer endMinute = (Integer) m_endMinute.getValue(state);
-            
-            if (endMinute == null) {
-            endMinute = new Integer(0);
-            }
-            
-            final Integer endAmpm = (Integer) m_endAmpm.getValue(state);
-            
-            // Instantiate the instance of the content type.
-            final ContentItem item = m_item.getContentItem(state);
-            
-            final BigDecimal defID = (BigDecimal) m_cycleSelect.getValue(state);
-            Assert.exists(defID);
-            final LifecycleDefinition cycleDef = new LifecycleDefinition(defID);
-            
-            java.util.Date startDate =
-            (java.util.Date) m_startDate.getValue(state);
-            
-            final Calendar start = Calendar.getInstance();
-            start.setTime(startDate);
-            start.set(Calendar.AM_PM, startAmpm.intValue());
-            start.set(Calendar.MINUTE, startMinute.intValue());
-            start.set(Calendar.AM_PM, startAmpm.intValue());
-            if (startHour.intValue() != 12) {
-            start.set(Calendar.HOUR_OF_DAY,
-            12 * startAmpm.intValue() + startHour.intValue());
-            start.set(Calendar.HOUR, startHour.intValue());
-            } else {
-            if (startAmpm.intValue() == 0) {
-            start.set(Calendar.HOUR_OF_DAY, 0);
-            start.set(Calendar.HOUR, 0);
-            } else {
-            start.set(Calendar.HOUR_OF_DAY, 12);
-            start.set(Calendar.HOUR, 0);
-            }
-            }
-            startDate = start.getTime();
-            
-            java.util.Date endDate =
-            (java.util.Date) m_endDate.getValue(state);
-            
-            if (endDate != null) {
-            final Calendar end = Calendar.getInstance();
-            
-            end.setTime(endDate);
-            end.set(Calendar.AM_PM, endAmpm.intValue());
-            end.set(Calendar.MINUTE, endMinute.intValue());
-            end.set(Calendar.AM_PM, endAmpm.intValue());
-            
-            if (endHour.intValue() != 12) {
-            end.set(Calendar.HOUR_OF_DAY,
-            12 * endAmpm.intValue() + endHour.intValue());
-            end.set(Calendar.HOUR, endHour.intValue());
-            } else {
-            if (endAmpm.intValue() == 0) {
-            end.set(Calendar.HOUR_OF_DAY, 0);
-            end.set(Calendar.HOUR, 0);
-            } else {
-            end.set(Calendar.HOUR_OF_DAY, 12);
-            end.set(Calendar.HOUR, 0);
-            }
-            }
-            endDate = end.getTime();
-            }
-            
-            // If the item is already published, remove the current lifecycle.
-            // Do not touch the live version.
-            if (item.isPublished()) {
-            item.removeLifecycle(item);
-            item.save();
-            }
-            
-            // Apply the new lifecycle.
-            ContentItem pending = item.publish(cycleDef, startDate);
-            final Lifecycle lifecycle = pending.getLifecycle();
-            
-            // XXX domlay Whoa.  This must be broken for multiphase
-            // lifecycles.
-            
-            if (endDate != null) {
-            
-            // update individual phases
-            final PhaseCollection phases = lifecycle.getPhases();
-            
-            while (phases.next()) {
-            final Phase phase = phases.getPhase();
-            java.util.Date thisEnd = phase.getEndDate();
-            java.util.Date thisStart = phase.getStartDate();
-            if (thisStart.compareTo(endDate) > 0) {
-            phase.setStartDate(endDate);
-            phase.save();
-            }
-            
-            if (thisEnd == null || thisEnd.compareTo(endDate) > 0) {
-            phase.setEndDate(endDate);
-            phase.save();
-            }
-            }
-            }
-            
-            // endOfCycle may be the original date according to lifecycle phase definitions, or endDate if that was before
-            // natural end of lifecycle
-            java.util.Date endOfCycle = lifecycle.getEndDate();
-            if (endOfCycle != null) {
-            
-            // if advance notification is requested (!= 0)
-            // add another phase at the start of which the user is notified
-            Integer notificationDays =
-            (Integer) m_notificationDays.getValue(state);
-            Integer notificationHours =
-            (Integer) m_notificationHours.getValue(state);
-            java.util.Date notificationDate = null;
-            
-            int notificationPeriod = 0;
-            if (notificationDays != null) {
-            notificationPeriod += notificationDays.intValue() * 24;
-            }
-            if (notificationHours != null) {
-            notificationPeriod += notificationHours.intValue();
-            }
-            
-            if (notificationPeriod > 0) {
-            notificationDate =
-            computeNotificationDate(endOfCycle, notificationPeriod);
-            s_log.debug("adding custom phase");
-            Phase expirationImminentPhase =
-            lifecycle.addCustomPhase("expirationImminent",
-            new Long(notificationDate.
-            getTime()),
-            new Long(endOfCycle.getTime()));
-            expirationImminentPhase.setListenerClassName(
-            "com.arsdigita.cms.lifecycle.NotifyLifecycleListener");
-            expirationImminentPhase.save();
-            }
-            }
-            
-            // Force the lifecycle scheduler to run to avoid any
-            // scheduler delay for items that should be published
-            // immediately.
-            pending.getLifecycle().start();
-            
-            item.save();
-            
-            final Workflow workflow = m_workflow.getWorkflow(state);
-            try {
-            finish(workflow, item, Web.getContext().getUser());
-            } catch (TaskException te) {
-            throw new FormProcessException(te);
-            }
-            // redirect to /content-center if streamlined creation mode is active.
-            if (ContentSection.getConfig().getUseStreamlinedCreation()) {
-            throw new RedirectSignal(URL.there(state.getRequest(),
-            Utilities.getWorkspaceURL()),
-            true);
-            }*/
+             */
         }
     }
 
@@ -600,8 +571,8 @@ class ItemLifecycleSelectForm extends BaseForm {
 
         /**
          * The constructor collects all necessary data and stores them.
-         * 
-         * @param state 
+         *
+         * @param state
          */
         public Publisher(final PageState state) {
             startHour = (Integer) m_startHour.getValue(state);
@@ -689,8 +660,8 @@ class ItemLifecycleSelectForm extends BaseForm {
         public void publish() {
 
             /**
-             * We have to create a new instance here since it is not possible 
-             * to access the same data object from multiple threads.
+             * We have to create a new instance here since it is not possible to
+             * access the same data object from multiple threads.
              */
             final OID oid = OID.valueOf(oidStr);
             final ContentItem item = (ContentItem) DomainObjectFactory.
@@ -997,12 +968,14 @@ class ItemLifecycleSelectForm extends BaseForm {
     }
 
     /**
-     * Find out at which date a notification (about an item that is about
-     * to expire) should be sent, based on the endDate (== date at which the
-     * item is unpublished) and the notification period.
-     *@param endDate the endDate of the lifecycle, i.e. the date when the item
-     *  is going to be unpublished
-     *@param notification how many hours the users shouls be notified in advance
+     * Find out at which date a notification (about an item that is about to
+     * expire) should be sent, based on the endDate (== date at which the item
+     * is unpublished) and the notification period.
+     *
+     * @param endDate the endDate of the lifecycle, i.e. the date when the item
+     * is going to be unpublished
+     * @param notification how many hours the users shouls be notified in
+     * advance
      */
     private java.util.Date computeNotificationDate(java.util.Date endDate,
                                                    int notificationPeriod) {

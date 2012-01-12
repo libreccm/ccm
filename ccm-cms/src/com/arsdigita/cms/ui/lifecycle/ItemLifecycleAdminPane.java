@@ -53,6 +53,7 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
     private final LayoutPanel m_detailPane;
     private final LayoutPanel m_selectPane;
     private final LayoutPanel m_lockedPane;
+    private final LayoutPanel m_errorPane;
 
     public ItemLifecycleAdminPane(final ContentItemRequestLocal item) {
         m_item = item;
@@ -100,6 +101,12 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
         });
         m_lockedPane.setBottom(lockedUpdateLink);
 
+        m_errorPane = new LayoutPanel();
+        add(m_errorPane);
+
+        final Label errorMsg = new Label(gz("cms.ui.lifecycle.publish.error"));
+        m_errorPane.setBody(errorMsg);
+
         connect(selectForm, m_detailPane);
     }
 
@@ -131,7 +138,12 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
             if (CMSConfig.getInstance().getThreadedPublishing()
                 && PublishLock.getInstance().isLocked(m_item.getContentItem(
                     state))) {
-                push(state, m_lockedPane);
+                if (PublishLock.getInstance().hasError(m_item.getContentItem(
+                        state))) {
+                    push(state, m_errorPane);
+                } else {
+                    push(state, m_lockedPane);
+                }
             } else {
                 if (state.isVisibleOnPage(ItemLifecycleAdminPane.this)) {
                     if (m_lifecycle.getLifecycle(state) == null) {
