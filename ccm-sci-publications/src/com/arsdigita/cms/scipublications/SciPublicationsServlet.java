@@ -26,14 +26,21 @@ import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporters;
 import com.arsdigita.domain.DataObjectNotFoundException;
 
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.persistence.OID;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
 import com.arsdigita.web.Application;
@@ -50,43 +57,28 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * <p>
- * The <code>SciPublicationsServlet</code> processes the 
- * {@link HttpServletRequest} and calls the requested actions. 
- * The available actions are:
- * </p>
- * <dl>
- * <dt><code>export</code></dt>
- * <dd>
- * <p>
- * The <code>export</code> action exports content items of the type
+ * <p> The
+ * <code>SciPublicationsServlet</code> processes the
+ * {@link HttpServletRequest} and calls the requested actions. The available
+ * actions are: </p> <dl> <dt><code>export</code></dt> <dd> <p> The
+ * <code>export</code> action exports content items of the type
  * {@link Publication} in several formats, like <em>BibTeX</em> or <em>RIS</em>.
- * The export action has the following query parameters:
- * </p>
- * <dl>
- * <dt><code>format</code></dt>
- * <dd>Specifies the format which is used to export the publications.</dd>
- * <dt><code>publication</code></dt>
- * <dd>Specifies the publication(s) to export using the ID(s) of the 
- * publications. 
- * This parameter can occur more
- * than one time. In this case, all publications specified by the parameters
- * will be exported as a single file in specified format</dd>
- * <dt><code>category</code></dt>
- * <dd>Specifies a category using the OID of the category. If this
- * parameter is present, all publications in the category and the subcategories
- * of the category will exported as a single file in the specified format.</dd>
- * </dl>
- * <p>
- * The <code>format</code> argument is mandatory. Also their must be either one
- * or more <code>publication</code> parameters or a <code>category</code>
- * parameter. If the URL is not valid, the Servlet will respond with the
- * BAD_REQUEST (400) HTTP status code. If one of the specified publications or
- * the specified category can't be found, the Servlet will respond with the
- * NOT_FOUND (404) HTTP status code.
- * </p>
- * </dd>
- * </dl>
+ * The export action has the following query parameters: </p> <dl> <dt><code>format</code></dt>
+ * <dd>Specifies the format which is used to export the publications.</dd> <dt><code>publication</code></dt>
+ * <dd>Specifies the publication(s) to export using the ID(s) of the
+ * publications. This parameter can occur more than one time. In this case, all
+ * publications specified by the parameters will be exported as a single file in
+ * specified format</dd> <dt><code>category</code></dt> <dd>Specifies a category
+ * using the OID of the category. If this parameter is present, all publications
+ * in the category and the subcategories of the category will exported as a
+ * single file in the specified format.</dd> </dl> <p> The
+ * <code>format</code> argument is mandatory. Also their must be either one or
+ * more
+ * <code>publication</code> parameters or a
+ * <code>category</code> parameter. If the URL is not valid, the Servlet will
+ * respond with the BAD_REQUEST (400) HTTP status code. If one of the specified
+ * publications or the specified category can't be found, the Servlet will
+ * respond with the NOT_FOUND (404) HTTP status code. </p> </dd> </dl>
  *
  * @author Jens Pelzetter
  */
@@ -112,7 +104,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             if ("/".equals(request.getPathInfo())) {
                 path = "";
             } else if (request.getPathInfo().startsWith("/")
-                           && request.getPathInfo().endsWith("/")) {
+                       && request.getPathInfo().endsWith("/")) {
                 path = request.getPathInfo().substring(1, request.getPathInfo().
                         length() - 1);
             } else if (request.getPathInfo().startsWith("/")) {
@@ -149,7 +141,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             page.add(form);
 
             page.lock();
-            
+
             Document document = page.buildDocument(request, response);
             PresentationManager presentationManager = Templating.
                     getPresentationManager();
@@ -185,8 +177,9 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             }
 
             if (parameters.containsKey("category")) {
-                /* If the category parameter is present, retrieve the
-                 * specified category and exports all publications in it.
+                /*
+                 * If the category parameter is present, retrieve the specified
+                 * category and exports all publications in it.
                  */
                 Publication publication;
                 SciPublicationsExporter exporter;
@@ -335,6 +328,134 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 //Export the publictions.
                 exportPublications(format, publicationIds, response);
 
+            } else if (parameters.containsKey("orgaunitId")) {
+
+                final BigDecimal orgaunitId = new BigDecimal(parameters.get(
+                        "orgaunitId")[0]);
+
+                final GenericOrganizationalUnit orgaunit =
+                                                new GenericOrganizationalUnit(
+                        orgaunitId);
+
+                final DataQuery publicationsQuery =
+                                SessionManager.getSession().
+                        retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForOrgaUnitOneRowPerAuthor");
+
+                final List<String> orgaunitIds = new ArrayList<String>();
+
+                if (parameters.containsKey("recursive")
+                    && ("false".equals(parameters.get("recursive")[0]))) {
+                    orgaunitIds.add(orgaunit.getID().toString());
+                } else {
+                    final DataQuery subordinateQuery =
+                                    SessionManager.getSession().retrieveQuery(
+                            "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivly");
+                    subordinateQuery.setParameter("orgaunitId", orgaunitId.
+                            toString());
+
+                    while (subordinateQuery.next()) {
+                        orgaunitIds.add(subordinateQuery.get("orgaunitId").
+                                toString());
+                    }
+                }
+
+                publicationsQuery.setParameter("orgaunitIds", orgaunitIds);
+
+                if (parameters.containsKey("year")) {
+                    publicationsQuery.addFilter(String.format("year = %s",
+                                                              parameters.get(
+                            "year")[0]));
+                }
+                
+                if (Kernel.getConfig().languageIndependentItems()) {
+                    FilterFactory ff = publicationsQuery.getFilterFactory();
+                    Filter filter = ff.or().
+                            addFilter(ff.equals("language", GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage())).
+                            addFilter(ff.and().
+                            addFilter(
+                            ff.equals("language",
+                                      GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(ff.notIn("parent",
+                                               "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                            set("language", GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage())));
+                    publicationsQuery.addFilter(filter);
+
+                } else {
+                    publicationsQuery.addEqualsFilter("language",
+                                                      GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage());
+                }
+
+                final List<BigDecimal> publicationIds =
+                                       new ArrayList<BigDecimal>();
+                while (publicationsQuery.next()) {
+                    publicationIds.add((BigDecimal) publicationsQuery.get(
+                            "publicationId"));
+                }
+
+                exportPublications(format, publicationIds, response);
+
+            } else if (parameters.containsKey("authorId")) {
+                final DataQuery publicationsQuery =
+                                SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contenttypes.getPublicationsForAuthor");
+
+                final BigDecimal authorId = new BigDecimal(parameters.get(
+                        "authorId")[0]);
+                final GenericPerson author = new GenericPerson(authorId);
+                final StringBuilder authorFilterBuilder = new StringBuilder();
+                authorFilterBuilder.append('(');
+                authorFilterBuilder.append(String.format("authorId = %s",
+                                                         authorId.toString()));
+
+                if (author.getAlias() != null) {
+                    addAuthorAliasToFilter(authorFilterBuilder,
+                                           author.getAlias());
+                }
+
+                authorFilterBuilder.append(')');
+
+                publicationsQuery.addFilter(authorFilterBuilder.toString());
+
+                if (parameters.containsKey("year")) {
+                    publicationsQuery.addFilter(String.format("yearOfPublication = %s",
+                                                              parameters.get(
+                            "year")[0]));
+                }
+
+                if (Kernel.getConfig().languageIndependentItems()) {
+                    FilterFactory ff = publicationsQuery.getFilterFactory();
+                    Filter filter = ff.or().
+                            addFilter(ff.equals("language", GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage())).
+                            addFilter(ff.and().
+                            addFilter(
+                            ff.equals("language",
+                                      GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(ff.notIn("parent",
+                                               "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                            set("language", GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage())));
+                    publicationsQuery.addFilter(filter);
+
+                } else {
+                    publicationsQuery.addEqualsFilter("language",
+                                                      GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage());
+                }
+
+                final List<BigDecimal> publicationIds =
+                                       new ArrayList<BigDecimal>();
+                while (publicationsQuery.next()) {
+                    publicationIds.add((BigDecimal) publicationsQuery.get(
+                            "publicationId"));
+                }
+
+                exportPublications(format, publicationIds, response);
+
             } else {
                 logger.warn("Export action needs either a publication id or a "
                             + "term id. Neither was found in the query parameters."
@@ -342,7 +463,6 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                                    "The export action needs either a publication id or "
                                    + "a term id. Neither was found in the query parameters.");
-                return;
             }
 
         } else {
@@ -393,6 +513,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
         Publication publication = null;
         String publicationName = "publication";
+        StringBuilder result = new StringBuilder();
 
         for (BigDecimal publicationId : publicationIds) {
             try {
@@ -401,8 +522,9 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 logger.debug(String.format("OID of publication: %s",
                                            publication.getOID()));
                 //Specialize the publication
-                publication = (Publication) DomainObjectFactory.newInstance(publication.
-                        getOID());
+                publication =
+                (Publication) DomainObjectFactory.newInstance(
+                        publication.getOID());
             } catch (DataObjectNotFoundException ex) {
                 logger.warn(String.format("No publication found for id '%s'.",
                                           publicationId.toPlainString()), ex);
@@ -418,7 +540,8 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                                        publication.getClass().getName()));
 
             //Write the exported publication data to the response.
-            response.getWriter().append(exporter.exportPublication(publication));
+            //response.getWriter().append(exporter.exportPublication(publication));
+            result.append(exporter.exportPublication(publication));
             //response.getWriter().append('\n');
             publicationName = publication.getName();
 
@@ -443,6 +566,18 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                     exporter.getSupportedFormat().
                     getFileExtension()));
 
+        }
+        
+        result.append(result.toString());
+    }
+
+    private void addAuthorAliasToFilter(final StringBuilder builder,
+                                        final GenericPerson alias) {
+        builder.append(String.format("or authorId = %s",
+                                     alias.getID().toString()));
+
+        if (alias.getAlias() != null) {
+            addAuthorAliasToFilter(builder, alias.getAlias());
         }
     }
 }

@@ -26,7 +26,8 @@ import com.arsdigita.cms.contenttypes.Publication;
  * Converts a {@link ArticleInCollectedVolume} to a RIS reference.
  *
  * @author Jens Pelzetter
- * @version $Id$
+ * @version $Id: ArticleInCollectedVolumeConverter.java 740 2011-02-07 18:56:18Z
+ * jensp $
  */
 public class ArticleInCollectedVolumeConverter extends AbstractRisConverter {
 
@@ -63,8 +64,10 @@ public class ArticleInCollectedVolumeConverter extends AbstractRisConverter {
         if (article.getPagesFrom() != null) {
             getRisBuilder().addField(RisFields.SP,
                                      article.getPagesFrom().toString());
-            getRisBuilder().addField(RisFields.EP,
-                                     article.getPagesTo().toString());
+            if (article.getPagesTo() != null) {
+                getRisBuilder().addField(RisFields.EP,
+                                         article.getPagesTo().toString());
+            }
         }
 
         return getRisBuilder().toRis();

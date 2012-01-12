@@ -28,11 +28,12 @@ import com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnsupportedFie
 import org.apache.log4j.Logger;
 
 /**
- * Converts an {@link ArticleInCollectedVolume} to a BibTeX 
+ * Converts an {@link ArticleInCollectedVolume} to a BibTeX
  * <code>incollection</code> reference.
  *
  * @author Jens Pelzetter
- * @version $Id$
+ * @version $Id: ArticleInCollectedVolumeConverter.java 740 2011-02-07 18:56:18Z
+ * jensp $
  */
 public class ArticleInCollectedVolumeConverter extends AbstractBibTeXConverter {
 
@@ -111,16 +112,22 @@ public class ArticleInCollectedVolumeConverter extends AbstractBibTeXConverter {
             }
 
             if (article.getPagesFrom() != null) {
-                builder.setField(BibTeXField.PAGES,
-                                 String.format("%s - %s",
-                                               article.getPagesFrom(),
-                                               article.getPagesTo()));
+                if (article.getPagesTo() == null) {
+                    builder.setField(BibTeXField.PAGES,
+                                     String.format("%s",
+                                                   article.getPagesFrom()));
+                } else {
+                    builder.setField(BibTeXField.PAGES,
+                                     String.format("%s - %s",
+                                                   article.getPagesFrom(),
+                                                   article.getPagesTo()));
+                }
             }
 
 
         } catch (UnsupportedFieldException ex) {
             logger.warn("Tried to set unsupported BibTeX field while "
-                        + "converting a publication");
+                        + "converting a publication", ex);
         }
 
         return builder.toBibTeX();
