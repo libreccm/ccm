@@ -11,10 +11,10 @@
   <!--
     <table name=""/>
   -->
-    <initializer class="com.arsdigita.london.rss.Initializer"/>
+    <initializer class="com.arsdigita.rssfeed.Initializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-rssfeed"/>
-    <data class="com.arsdigita.london.rss.Loader"/>
+    <data class="com.arsdigita.rssfeed.Loader"/>
   </scripts>
 </load>
