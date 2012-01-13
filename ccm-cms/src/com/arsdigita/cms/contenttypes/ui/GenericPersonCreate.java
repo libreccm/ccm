@@ -78,7 +78,7 @@ public class GenericPersonCreate extends PageCreate {
     public void validate(FormSectionEvent e) throws FormProcessException {
         Folder f = m_parent.getFolder(e.getPageState());
         Assert.exists(f);
-        validateNameUniqueness(f, e, GenericPerson.urlSave(getFullname(e)));
+        validateNameUniqueness(f, e, GenericPerson.urlSave(getItemName(e)));
     }
 
     // Process: save fields to the database
@@ -89,7 +89,7 @@ public class GenericPersonCreate extends PageCreate {
         final ContentSection section = m_parent.getContentSection(state);
         Folder folder = m_parent.getFolder(state);
 
-        String fullName = getFullname(e);
+        String fullName = getItemName(e);
         Assert.exists(section, ContentSection.class);
 
         final ContentPage item = createContentPage(state);
@@ -118,31 +118,11 @@ public class GenericPersonCreate extends PageCreate {
     }
 
     // Generate full name
-    private String getFullname(FormSectionEvent e) {
-        final FormData data = e.getFormData();
-        String titlePre = data.getString(TITLEPRE);
+    private String getItemName(FormSectionEvent e) {
+        final FormData data = e.getFormData();        
         String givenName = data.getString(GIVENNAME);
-        String surname = data.getString(SURNAME);
-        String titlePost = data.getString(TITLEPOST);
+        String surname = data.getString(SURNAME);        
 
-        if (titlePre == null) {
-            titlePre = "";
-        }
-        if (titlePost == null) {
-            titlePost = "";
-        }
-        if (givenName == null) {
-            givenName = "";
-        }
-        if (surname == null) {
-            surname = "";
-        }
-
-        if (titlePost.trim().isEmpty()) {
-            return String.format("%s %s %s", titlePre, givenName, surname).trim();
-        } else {
-            return String.format("%s %s %s, %s", titlePre, givenName, surname,
-                                 titlePost).trim();
-        }
+        return String.format("%s %s", surname, givenName);
     }
 }
