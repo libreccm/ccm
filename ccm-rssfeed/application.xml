@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-ldn-rss"
+  name="ccm-rssfeed"
   prettyName="RSS"
   version="6.6.0"
   release="1"
@@ -16,7 +16,8 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Red Hat Web Application Framework is a platform for writing
-    database-backed web applications in Java.
+    The RSSfeed package provides a rss feeder which may be used to deploy
+    internal content which is selected by categorization as well as external
+    content based on URL.
   </ccm:description>
 </ccm:application>

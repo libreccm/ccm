@@ -84,6 +84,7 @@
 <!--    temporyrily excluded because configuration has to be cleared
         <ccm:application name="ccm-ldn-rss"/>                        
 -->
+        <ccm:application name="ccm-rssfeed"/>                        
 
 
 
