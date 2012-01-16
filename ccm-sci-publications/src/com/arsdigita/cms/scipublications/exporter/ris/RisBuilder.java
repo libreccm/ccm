@@ -19,8 +19,8 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Builds an reference in RIS format.
@@ -37,8 +37,9 @@ public class RisBuilder {
     /**
      * Fields of the reference.
      */
-    private Map<RisFields, String> fields = new EnumMap<RisFields, String>(
-            RisFields.class);
+    private List<RisFieldValue> fields  =new ArrayList<RisFieldValue>();
+    //private Map<RisFields, String> fields = new EnumMap<RisFields, String>(
+    //        RisFields.class);
 
     public RisBuilder() {
     }
@@ -59,7 +60,8 @@ public class RisBuilder {
      * @param value The value of the field.
      */
     public void addField(final RisFields field, final String value) {
-        fields.put(field, value);
+        //fields.put(field, value);
+        fields.add(new RisFieldValue(field, value));
     }
 
     /**
@@ -73,9 +75,14 @@ public class RisBuilder {
         builder = new StringBuilder();
 
         appendField("TY", type.name(), builder);
-        for (Map.Entry<RisFields, String> field : fields.entrySet()) {
+        /*for (Map.Entry<RisFields, String> field : fields.entrySet()) {
             appendField(field.getKey().name(),
                         field.getValue(),
+                        builder);
+        }*/
+        for(RisFieldValue field : fields) {
+            appendField(field.getName().name(), 
+                        field.getValue(), 
                         builder);
         }
         appendField("ER", "", builder);
@@ -102,5 +109,5 @@ public class RisBuilder {
     @Override
     public String toString() {
         return toRis();
-    }
+    }    
 }

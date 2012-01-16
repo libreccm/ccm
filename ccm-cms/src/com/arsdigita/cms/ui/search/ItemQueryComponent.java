@@ -24,6 +24,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.search.CreationDateFilterType;
 import com.arsdigita.cms.search.CreationUserFilterType;
@@ -42,12 +43,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides a basic query form for CMS admin pages
- * that automatically adds components for the maximal set of
- * filters supported by the current search query engine.
+ * This class provides a basic query form for CMS admin pages that automatically
+ * adds components for the maximal set of filters supported by the current
+ * search query engine.
  *
  * @author unknown
  * @author Sören Bernstein (sbernstein@quasiweb.de)
+ * @author Jens Pelzetter (jens@jp-digital.de)
  */
 public class ItemQueryComponent extends BaseQueryComponent {
 
@@ -55,6 +57,12 @@ public class ItemQueryComponent extends BaseQueryComponent {
 
     public ItemQueryComponent(String context,
                               final boolean limitToContentSection) {
+        this(context, limitToContentSection, null);
+    }
+
+    public ItemQueryComponent(String context,
+                              final boolean limitToContentSection,
+                              ContentType type) {
         m_context = context;
 
         if (Search.getConfig().isIntermediaEnabled()) {
@@ -94,18 +102,33 @@ public class ItemQueryComponent extends BaseQueryComponent {
                 }
             });
 
-            add(new ContentTypeFilterWidget() {
+            if (type == null) {
+                add(new ContentTypeFilterWidget() {
 
-                @Override
-                protected ContentSection getContentSection() {
-                    if (limitToContentSection == true && CMS.getContext().
-                            hasContentSection()) {
-                        return CMS.getContext().getContentSection();
-                    } else {
-                        return super.getContentSection();
+                    @Override
+                    protected ContentSection getContentSection() {
+                        if (limitToContentSection == true && CMS.getContext().
+                                hasContentSection()) {
+                            return CMS.getContext().getContentSection();
+                        } else {
+                            return super.getContentSection();
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                add(new ContentTypeFilterWidget(type) {
+
+                    @Override
+                    protected ContentSection getContentSection() {
+                        if (limitToContentSection == true && CMS.getContext().
+                                hasContentSection()) {
+                            return CMS.getContext().getContentSection();
+                        } else {
+                            return super.getContentSection();
+                        }
+                    }
+                });
+            }
 
             add(new VersionFilterComponent(context));
             if (limitToContentSection == true) {

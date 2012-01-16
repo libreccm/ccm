@@ -45,10 +45,10 @@ import com.arsdigita.web.URL;
 import org.apache.log4j.Logger;
 
 /**
- *    A class representing a content item search field in an HTML form.
- * 
- *    @author Scott Seago (sseago@redhat.com)
- *    @version $Id: ItemSearchWidget.java 1166 2006-06-14 11:45:15Z fabrice $
+ * A class representing a content item search field in an HTML form.
+ *
+ * @author Scott Seago (sseago@redhat.com)
+ * @version $Id: ItemSearchWidget.java 1166 2006-06-14 11:45:15Z fabrice $
  */
 public class ItemSearchWidget extends FormSection
         implements BebopConstants, FormSubmissionListener, FormInitListener {
@@ -88,14 +88,15 @@ public class ItemSearchWidget extends FormSection
         public SearchFragment(String name, ItemSearchWidget parent) {
             super(name, "Search");
             this.parent = parent;
-            this.setAttribute("onClick", "return " + parent.m_item.getName().replace('.', '_') + "Popup(this.form)");
+            this.setAttribute("onClick", "return " + parent.m_item.getName().
+                    replace('.', '_') + "Popup(this.form)");
             this.setAttribute("value", "Search");
         }
 
         @Override
         public boolean isVisible(PageState ps) {
             return (!(parent.m_search.isSelected(ps)
-                    || parent.m_searchComponent.hasQuery(ps))
+                      || parent.m_searchComponent.hasQuery(ps))
                     && super.isVisible(ps));
         }
     }
@@ -107,7 +108,8 @@ public class ItemSearchWidget extends FormSection
         public ClearFragment(String name, ItemSearchWidget parent) {
             super(name, "Clear");
             this.parent = parent;
-            this.setAttribute("onClick", "this.form." + parent.m_item.getName() + ".value = \"\"; return false;");
+            this.setAttribute("onClick", "this.form." + parent.m_item.getName()
+                                         + ".value = \"\"; return false;");
             this.setAttribute("value", "Clear");
         }
     }
@@ -116,7 +118,8 @@ public class ItemSearchWidget extends FormSection
 
         private ItemSearchWidget parent;
 
-        public LabelFragment(String name, boolean escaping, ItemSearchWidget parent) {
+        public LabelFragment(String name, boolean escaping,
+                             ItemSearchWidget parent) {
             super(name, escaping);
             this.parent = parent;
         }
@@ -126,15 +129,25 @@ public class ItemSearchWidget extends FormSection
 
         private ItemSearchWidget parent;
 
-        public ItemSearchFragment(String name, String context, ItemSearchWidget parent, boolean limitToContentSection) {
+        public ItemSearchFragment(String name, String context,
+                                  ItemSearchWidget parent,
+                                  boolean limitToContentSection) {
             super(name, context, limitToContentSection);
+            this.parent = parent;
+        }
+
+        public ItemSearchFragment(String name, String context,
+                                  ItemSearchWidget parent,
+                                  boolean limitToContentSection,
+                                  ContentType type) {
+            super(name, context, limitToContentSection, type);
             this.parent = parent;
         }
 
         @Override
         public boolean isVisible(PageState ps) {
             return ((m_search.isSelected(ps)
-                    || hasQuery(ps))
+                     || hasQuery(ps))
                     && super.isVisible(ps));
         }
     }
@@ -148,20 +161,22 @@ public class ItemSearchWidget extends FormSection
         @Override
         public boolean isVisible(PageState ps) {
             return ((m_search.isSelected(ps)
-                    || m_searchComponent.hasQuery(ps))
+                     || m_searchComponent.hasQuery(ps))
                     && super.isVisible(ps));
         }
     }
 
     /**
-     * Construct a new ItemSearchWidget. The model must be an ItemSearchParameter
+     * Construct a new ItemSearchWidget. The model must be an
+     * ItemSearchParameter
      */
     public ItemSearchWidget(ParameterModel model) {
         this(model, null);
     }
 
     /**
-     * Construct a new ItemSearchWidget. The model must be an ItemSearchParameter
+     * Construct a new ItemSearchWidget. The model must be an
+     * ItemSearchParameter
      */
     public ItemSearchWidget(ParameterModel model, ContentType contentType) {
         super(new BoxPanel(BoxPanel.VERTICAL));
@@ -194,11 +209,13 @@ public class ItemSearchWidget extends FormSection
             public void prepare(PrintEvent event) {
                 PageState state = event.getPageState();
                 Label t = (Label) event.getTarget();
-                String formName = ((LabelFragment) t).parent.getSearchButton().getForm().getName();
+                String formName = ((LabelFragment) t).parent.getSearchButton().
+                        getForm().getName();
                 ParameterMap params = new ParameterMap();
                 params.setParameter("section_id",
-                        CMS.getContext().getContentSection().getID());
-                params.setParameter("widget", formName + ".elements['" + m_item.getName() + "']");
+                                    CMS.getContext().getContentSection().getID());
+                params.setParameter("widget", formName + ".elements['" + m_item.
+                        getName() + "']");
                 if (typeURLFrag != null) {
                     params.setParameter("single_type", typeURLFrag);
                 }
@@ -208,34 +225,45 @@ public class ItemSearchWidget extends FormSection
                         ItemSearchPage.class.getName());
                 s_log.debug("Search URL stub is: " + searchURL);
 
-                searchURL = com.arsdigita.cms.dispatcher.Utilities.getWorkspaceURL()
-                        + searchURL;
+                searchURL = com.arsdigita.cms.dispatcher.Utilities.
+                        getWorkspaceURL()
+                            + searchURL;
 
                 // TODO Not sure what to do when you get a null here
 
                 URL url = URL.there(state.getRequest(), searchURL, params);
 
                 t.setLabel(" <script language=javascript> "
-                        + " <!-- \n"
-                        + " function "
-                        + m_item.getName().replace('.', '_')
-                        + "Popup(theForm) { \n"
-                        + " aWindow = window.open(\"" + url
-                        + "\", \"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes,menubar=no\");\n return false;\n"
-                        + " } \n"
-                        + " --> \n"
-                        + " </script> ");
+                           + " <!-- \n"
+                           + " function "
+                           + m_item.getName().replace('.', '_')
+                           + "Popup(theForm) { \n"
+                           + " aWindow = window.open(\"" + url
+                           + "\", \"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes,menubar=no\");\n return false;\n"
+                           + " } \n"
+                           + " --> \n"
+                           + " </script> ");
             }
         });
         m_topHR = new HRLabel();
         add(m_topHR);
-        FormSection searchSection = new FormSection(new BoxPanel(BoxPanel.HORIZONTAL));
+        FormSection searchSection = new FormSection(new BoxPanel(
+                BoxPanel.HORIZONTAL));
         searchSection.add(m_item);
         searchSection.add(m_search);
         searchSection.add(m_clear);
         searchSection.add(m_jsLabel);
         add(searchSection);
-        m_searchComponent = new ItemSearchFragment(m_name, ContentItem.DRAFT, this, LIMIT_TO_CONTENT_SECTION);
+        if (m_contentType == null) {
+            m_searchComponent = new ItemSearchFragment(m_name, ContentItem.DRAFT,
+                                                       this,
+                                                       LIMIT_TO_CONTENT_SECTION);
+        } else {
+            m_searchComponent = new ItemSearchFragment(m_name, ContentItem.DRAFT,
+                                                       this,
+                                                       LIMIT_TO_CONTENT_SECTION,
+                                                       m_contentType);
+        }
         add(m_searchComponent);
         addSubmissionListener(this);
         addInitListener(this);
@@ -257,11 +285,11 @@ public class ItemSearchWidget extends FormSection
     }
 
     public ItemSearchWidget(String name,
-            String objectType)
+                            String objectType)
             throws DataObjectNotFoundException {
         this(name, (objectType == null || objectType.length() == 0
-                ? null
-                : ContentType.findByAssociatedObjectType(objectType)));
+                    ? null
+                    : ContentType.findByAssociatedObjectType(objectType)));
     }
 
     public ItemSearchWidget(String name, ContentType contentType) {
@@ -326,9 +354,11 @@ public class ItemSearchWidget extends FormSection
             }
 
             if (m_contentType != null) {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM), m_contentType.getID());
+                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                           m_contentType.getID());
             } else {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM), null);
+                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                           null);
             }
             throw new FormProcessException("item search FormSection submit");
         } else if (m_search.isSelected(s)) {
@@ -344,9 +374,11 @@ public class ItemSearchWidget extends FormSection
             }
 
             if (m_contentType != null) {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM), m_contentType.getID());
+                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                           m_contentType.getID());
             } else {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM), null);
+                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                           null);
             }
             throw new FormProcessException("item search FormSection submit");
         } else if (m_clear.isSelected(s)) {

@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui;
 
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Container;
@@ -30,6 +29,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ui.search.ItemQueryComponent;
 
 import com.arsdigita.search.ui.ResultsPane;
@@ -38,49 +38,66 @@ import com.arsdigita.search.QuerySpecification;
 
 /**
  * Contains a form for specifying search parameters, as well as a
- * {@link com.arsdigita.search.ui.ResultsPane} which will perform 
- * the search and display the results
+ * {@link com.arsdigita.search.ui.ResultsPane} which will perform the search and
+ * display the results
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Id: ItemSearchSection.java 1940 2009-05-29 07:15:05Z terry $
  */
-public class ItemSearchSection extends FormSection 
-    implements Resettable, QueryGenerator {
+public class ItemSearchSection extends FormSection
+        implements Resettable, QueryGenerator {
 
     private static final org.apache.log4j.Logger s_log =
-            org.apache.log4j.Logger.getLogger(ItemSearchSection.class);
-
+                                                 org.apache.log4j.Logger.
+            getLogger(ItemSearchSection.class);
     public static final String SINGLE_TYPE_PARAM = "single_type";
-
-
     private ItemQueryComponent m_query;
     private Component m_results;
 
     /**
-     * Construct a new <code>ItemSearchSection</code> component
+     * Construct a new
+     * <code>ItemSearchSection</code> component
      *
      * @param context the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
-     * @param limitToContentSection limit the search to the current content section
+     * @param limitToContentSection limit the search to the current content
+     * section
      */
     public ItemSearchSection(String context, boolean limitToContentSection) {
         this(null, context, limitToContentSection);
     }
+
     /**
-     * Construct a new <code>ItemSearchSection</code> component
+     * Construct a new
+     * <code>ItemSearchSection</code> component
      *
      * @param context the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
-     * @param name The name of the search parameter for the particular FormSection
-     * @param limitToContentSection limit the search to the current content section
+     * @param name The name of the search parameter for the particular
+     * FormSection
+     * @param limitToContentSection limit the search to the current content
+     * section
      */
-    public ItemSearchSection(String name, String context, boolean limitToContentSection) {
+    public ItemSearchSection(String name,
+                             String context,
+                             boolean limitToContentSection) {
+        this(name, context, limitToContentSection, null);
+    }
+
+    public ItemSearchSection(String name,
+                             String context,
+                             boolean limitToContentSection,
+                             ContentType type) {
         super(new SimpleContainer());
         String thisName = (name == null ? "itemSearch" : name);
-        
-        m_query = createQueryGenerator(context, limitToContentSection);
+
+        if (type == null) {
+            m_query = createQueryGenerator(context, limitToContentSection);
+        } else {
+            m_query = createQueryGenerator(context, limitToContentSection, type);
+        }
         m_results = createResultsPane(m_query);
-        
+
         addQueryGenerator(this);
         addResultsPane(this);
         addFormListener();
@@ -100,8 +117,15 @@ public class ItemSearchSection extends FormSection
         m_results.setVisible(state, false);
     }
 
-    protected ItemQueryComponent createQueryGenerator(String context, boolean limitToContentSection) {
+    protected ItemQueryComponent createQueryGenerator(String context,
+                                                      boolean limitToContentSection) {
         return new ItemQueryComponent(context, limitToContentSection);
+    }
+    
+    protected ItemQueryComponent createQueryGenerator(String context,
+                                                      boolean limitToContentSection,
+                                                      ContentType type) {
+        return new ItemQueryComponent(context, limitToContentSection, type);
     }
 
     protected Component createResultsPane(QueryGenerator generator) {
@@ -113,7 +137,7 @@ public class ItemSearchSection extends FormSection
     protected void addResultsPane(Container container) {
         container.add(m_results);
     }
-    
+
     protected void addQueryGenerator(Container container) {
         container.add(m_query);
     }
@@ -137,6 +161,7 @@ public class ItemSearchSection extends FormSection
      * Displays the "keywords" and "content types" widgets
      */
     private class SearchFormProcessListener implements FormProcessListener {
+
         public void process(FormSectionEvent e) throws FormProcessException {
             PageState s = e.getPageState();
             processQuery(s);

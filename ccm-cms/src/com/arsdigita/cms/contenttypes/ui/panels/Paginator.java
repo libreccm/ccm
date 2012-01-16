@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * Paginator class for the classes implementing 
+ * Paginator class for the classes implementing
  * {@link com.arsdigita.cms.contenttypes.ui.GenericOrgaUnitTab}.
- * 
- * @author Jens Pelzetter 
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class Paginator {
@@ -45,7 +45,7 @@ public class Paginator {
             logger.debug(String.format("pageNumber = %d", pageNumber));
         }
         this.objectCount = objectCount;
-        
+
         if (request.getParameter(PAGE_SIZE) == null) {
             this.pageSize = pageSize;
         } else {
@@ -95,8 +95,8 @@ public class Paginator {
 
         logger.debug(String.format("Applying limits: %d, %d",
                                    getBegin(),
-                                   getEnd()));        
-        query.setRange(getBegin(), getEnd() + 1);        
+                                   getEnd()));
+        query.setRange(getBegin(), getEnd() + 1);
     }
 
     public int getPageCount() {
@@ -135,9 +135,12 @@ public class Paginator {
     }
 
     private int getEnd() {
-        int paginatorEnd = getBegin() + getCount();
+        int paginatorEnd = getBegin() + getCount() - 1;
         if (paginatorEnd < 0) {
             paginatorEnd = 0;
+        }
+        if (paginatorEnd <= getBegin()) {
+            paginatorEnd = (getBegin() + 1);
         }
         return paginatorEnd;
     }

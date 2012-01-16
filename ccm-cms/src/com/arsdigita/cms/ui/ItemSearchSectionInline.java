@@ -26,6 +26,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.xml.Element;
@@ -59,6 +60,14 @@ public class ItemSearchSectionInline extends ItemSearchSection {
      */
     public ItemSearchSectionInline(String name, String context, boolean limitToContentSection) {
         super(name, context, limitToContentSection);
+        m_name = name;
+        m_item = new OIDParameter(name + "_itemOID");
+    }
+    
+     public ItemSearchSectionInline(String name, String context,
+                                   boolean limitToContentSection,
+                                   ContentType type) {
+        super(name, context, limitToContentSection, type);
         m_name = name;
         m_item = new OIDParameter(name + "_itemOID");
     }

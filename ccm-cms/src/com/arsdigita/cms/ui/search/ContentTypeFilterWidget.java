@@ -18,6 +18,10 @@
  */
 package com.arsdigita.cms.ui.search;
 
+/**
+ * @author Unknown
+ * @author Jens Pelzetter (jens@jp-digital.de)
+ */
 import com.arsdigita.search.ui.FilterWidget;
 import com.arsdigita.search.Search;
 import com.arsdigita.search.FilterSpecification;
@@ -42,7 +46,8 @@ public class ContentTypeFilterWidget extends FilterWidget {
     private ContentType[] m_types = null;
 
     public ContentTypeFilterWidget(ContentTypeCollection types) {
-        super(new ContentTypeFilterType(), new ArrayParameter(new StringParameter(ContentTypeFilterType.KEY)));
+        super(new ContentTypeFilterType(),
+              new ArrayParameter(new StringParameter(ContentTypeFilterType.KEY)));
 
         m_types = new ContentType[(int) types.size()];
 
@@ -55,7 +60,8 @@ public class ContentTypeFilterWidget extends FilterWidget {
         this(section.getContentTypes());
     }
 
-    public ContentTypeFilterWidget(ContentSection section, ContentType parentType) {
+    public ContentTypeFilterWidget(ContentSection section,
+                                   ContentType parentType) {
         this(section.getDescendantsOfContentType(parentType));
         m_section = section;
         m_parentType = parentType;
@@ -79,7 +85,8 @@ public class ContentTypeFilterWidget extends FilterWidget {
         ContentType ct = m_parentType;
 
         BigDecimal singleTypeID =
-                (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+                   (BigDecimal) state.getValue(new BigDecimalParameter(
+                ItemSearch.SINGLE_TYPE_PARAM));
 
         if (singleTypeID != null) {
             try {
@@ -108,7 +115,8 @@ public class ContentTypeFilterWidget extends FilterWidget {
                 if (parentType == null) {
                     typesCollection = section.getContentTypes();
                 } else {
-                    typesCollection = section.getDescendantsOfContentType(parentType);
+                    typesCollection = section.getDescendantsOfContentType(
+                            parentType);
                 }
 
             } else {
@@ -134,7 +142,15 @@ public class ContentTypeFilterWidget extends FilterWidget {
         String[] types = (String[]) getValue(state);
 
         if (types == null) {
-            types = new String[0];
+            if (getParentType(state) == null) {
+                types = new String[0];
+            } else {
+                final ContentType[] widgetTypes = getContentTypes(state);
+                types = new String[widgetTypes.length];
+                for (int i = 0; i < widgetTypes.length; i++) {
+                    types[i] = widgetTypes[i].getAssociatedObjectType();
+                }
+            }
         }
 
         return new ContentTypeFilterSpecification(types);

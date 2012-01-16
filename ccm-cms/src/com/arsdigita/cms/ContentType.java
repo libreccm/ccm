@@ -574,7 +574,7 @@ public class ContentType extends ACSObject {
         CompoundFilter or = ff.or();
 
         // The content type must be either of the requested type
-        or.addFilter(ff.equals(ContentType.ID, ct.ID));
+        or.addFilter(ff.equals(ContentType.ID, ct.getID().toString()));
 
         // Or must be a descendant of the requested type
         try {
