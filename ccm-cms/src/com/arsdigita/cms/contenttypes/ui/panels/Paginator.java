@@ -131,7 +131,7 @@ public class Paginator {
     }
 
     private int getCount() {
-        return Math.min(pageSize, (objectCount - getBegin()));
+        return Math.min(pageSize, (objectCount - getBegin() + 1));
     }
 
     private int getEnd() {
