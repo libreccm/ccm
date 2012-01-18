@@ -384,8 +384,8 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
                     || (parent.getAncestors() != null
                         && ct.getAncestors() != null
                         && parent.getAncestors().length() < ct.getAncestors().
-                        length())
-                    || !(parent.getClassName().equals(ct.getClassName())))) {
+                        length()))) {
+                    //|| !(parent.getClassName().equals(ct.getClassName())))) {
                 //System.out.printf("Setting parent to '%s'...\n",
                                   //ct.getClassName());
                 parent = ct;                
@@ -431,12 +431,12 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
             // Add this to parent descendants
            // //System.out.printf("Adding '%s' to descendants of parent '%s'...\n",
              //                 type.getClassName(), parent.getClassName());
-    //            parent.addDescendants(type.getID());           
-             for(ContentType p: parents) {
+                parent.addDescendants(type.getID());           
+             /*for(ContentType p: parents) {
                  parent.addDescendants(type.getID());
                  //System.out.printf("Adding '%s' to descendants of parent '%s'...\n",
                        //       type.getClassName(), p.getClassName());
-             }
+             }*/
         }
         //System.out.printf("Finished create pedigree for content type '%s'.\n\n",
                          // type.getClassName());
