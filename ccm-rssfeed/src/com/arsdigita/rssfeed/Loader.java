@@ -37,15 +37,22 @@ import com.arsdigita.web.URL;
 import org.apache.log4j.Logger;
 
 /**
- * Loader.
+ * Executes nonrecurring at install time and loads (installs and initializes)
+ * the ccm-rssfeed package persistently into database.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: Loader.java 758 2005-09-02 14:26:56Z sskracic $
  */
 public class Loader extends PackageLoader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+    /**
+     * Run script invoked by com.arsdigita.packing loader script.
+     *
+     * @param ctx
+     */
     public void run(final ScriptContext ctx) {
 
         new KernelExcursion() {
@@ -54,7 +61,7 @@ public class Loader extends PackageLoader {
 
                 // CatgegoryPurpose is deprecated and replaced by terms in
                 // some way. So this step may be ommitted.
-                String catKey = RSS.getConfig().getCategoryKey();
+                String catKey = RSSFeed.getConfig().getCategoryKey();
                 s_log.info("Setting RSS Category Key to " + catKey + ".");
                 if (!CategoryPurpose.purposeExists(catKey)) {
                     (new CategoryPurpose(catKey, "RSS Feed")).save();
@@ -78,38 +85,54 @@ public class Loader extends PackageLoader {
      * (old style) compatible applicaiton.
      */
     public void setupChannelControlCenter() {
-        
-/*        
-        ApplicationSetup setup = new ApplicationSetup(s_log);
 
-        setup.setApplicationObjectType(RSS.BASE_DATA_OBJECT_TYPE);
+        // Old way to setup of a new style legacy compatible application.
+        // Kept until transistion to new style legacy free application is
+        // completed for easy reference and debugging. Delete thereafter!
+/*      ApplicationSetup setup = new ApplicationSetup(s_log);
+
+        setup.setApplicationObjectType(RSSFeed.BASE_DATA_OBJECT_TYPE);
         setup.setKey("rss");
-        setup.setTitle("RSS Channels");
-        setup.setDescription("RSS Channels");
+        setup.setTitle("RSSFeed Channels");
+        setup.setDescription("RSSFeed Channels");
         setup.setSingleton(true);
         setup.setInstantiator(new ACSObjectInstantiator() {
                 @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
-                    return new RSS(dataObject);
+                    return new RSSFeed(dataObject);
                 }
             });
         ApplicationType type = setup.run();
-        type.save();
-*/
-        ApplicationType type = ApplicationType.createApplicationType(
+        type.save();                                                          */
+        
+        // Old way to setup of a new style legacy compatible application.
+        // Kept until transistion to new style legacy free application is
+        // completed for easy reference and debugging. Delete thereafter!
+/*      ApplicationType type = ApplicationType.createApplicationType(
                                               "rss",
                                               "RSS Channels",
-                                              RSS.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("RSS Channels");
+                                              RSSFeed.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("RSS Channels");                                  */
 
-        
-        if (!Application.isInstalled(RSS.BASE_DATA_OBJECT_TYPE,
+        /* Create legacy-free application type                               
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "RSSFeed" will become "rssfeed".                               */
+        ApplicationType type = new ApplicationType( 
+                                       "RSSFeed",
+                                        RSSFeed.BASE_DATA_OBJECT_TYPE );
+        type.setDescription("CCM RSS Feed");
+      
+        if (!Application.isInstalled(RSSFeed.BASE_DATA_OBJECT_TYPE,
                                      "/channels/")) {
-            Application app =
-                Application.createApplication(type,
-                                              "channels",
-                                              "RSS",
-                                              null);
+            Application app = Application
+                              .createApplication(type,
+                                                 "channels",
+                                                 "RSS",
+                                                 null);
             app.save();
         }
     }

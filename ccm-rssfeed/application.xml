@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-rssfeed"
-  prettyName="RSS"
-  version="6.6.0"
+  prettyName="RSS Feed"
+  version="6.6.1"
   release="1"
   webapp="ROOT">
   <ccm:dependencies>

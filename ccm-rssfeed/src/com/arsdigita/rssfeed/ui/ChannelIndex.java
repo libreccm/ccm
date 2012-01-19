@@ -22,14 +22,17 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @version $Revision: #6 $, $Date: 2004/01/21 $
  */
 public class ChannelIndex implements com.arsdigita.dispatcher.Dispatcher {
-    private static Logger s_log =
-        Logger.getLogger(ChannelIndex.class);
+    
+    private static Logger s_log = Logger.getLogger(ChannelIndex.class);
+    
     private BigDecimal m_catId;
+    
     /**
      * Create an index of RSS Channels available for the specified category
      * and its children.
-         */
+     */
     public ChannelIndex() {
+        
     }
 
     /**

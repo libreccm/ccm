@@ -25,39 +25,37 @@ import com.arsdigita.web.Application;
 import org.apache.log4j.Logger;
 
 /**
- * Base class of the RSS application (module).
+ * Base class of the RSSFeed application (module).
  * 
  */
-public class RSS extends Application {
+public class RSSFeed extends Application {
 
-    private static final Logger logger = Logger.getLogger(RSS.class);
+    /** A logger instance to assist debugging.  */
+    private static final Logger logger = Logger.getLogger(RSSFeed.class);
 
+    // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.london.rss.RSS";
+                               = "com.arsdigita.rssfeed.RSSFeed";
     
-    private static final RSSConfig s_config = new RSSConfig();
+   /** Config object containing various parameter    */
+    private static final RSSFeedConfig s_config = RSSFeedConfig.getConfig();
 
-    static {
-        logger.debug("Static initalizer starting...");
-        s_config.load();
-        logger.debug("Static initalizer finished.");
-    }
 
     /**
-     * Gets the configuration record for code in the rss package.
+     * Provides the configuration record for client classes.
      *
-     * @return A <code>RSSConfig</code> configuration record; it
+     * @return A <code>RSSFeedConfig</code> configuration record; it
      * cannot be null
      */
-    public static final RSSConfig getConfig() {
+    public static RSSFeedConfig getConfig() {
         return s_config;
     }
 
-    public RSS(DataObject obj) {
+    public RSSFeed(DataObject obj) {
         super(obj);
     }
 
-    public RSS(OID oid) {
+    public RSSFeed(OID oid) {
         super(oid);
     }
 
@@ -66,7 +64,7 @@ public class RSS extends Application {
 //   * web application context
 //   */
 //  public String getContextPath() {
-//      return "/ccm-ldn-rss";
+//      return "/ccm-rssfeed";
 //  }
 
     /**
@@ -85,14 +83,15 @@ public class RSS extends Application {
      *   <servlet-name>rss-files</servlet-name>
      *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
      *   <init-param>
+     *     <!-- where to find the jsp files -->
      *     <param-name>template-path</param-name>
-     *     <param-value>/templates/ccm-ldn-rss</param-value>
+     *     <param-value>/templates/ccm-rssfeed</param-value>
      *   </init-param>
      * </servlet>
      *
      * <servlet-mapping>
-     *   <servlet-name>rss-files</servlet-name>
-     *   <url-pattern>/ccm-ldn-rss/files/*</url-pattern>
+     *   <servlet-name>rssfeed-files</servlet-name>
+     *   <url-pattern>/ccm-rssfeed/files/*</url-pattern>
      * </servlet-mapping>
      *
      * @return path name to the applications servlet/JSP
@@ -100,6 +99,6 @@ public class RSS extends Application {
     public String getServletPath() {
         // sufficient if execute in its own web context
         // return "/files";
-        return "/ccm-ldn-rss/files";
+        return "/ccm-rssfeed/files";
     }
 }

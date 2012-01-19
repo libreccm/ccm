@@ -27,22 +27,49 @@ import org.apache.log4j.Logger;
 
 /**
  *  The file that contains all configuration information for
- *  the RSS application.
- *  @version $Id: RSSConfig.java 1319 2006-09-15 10:52:49Z apevec $
+ *  the RSSFeed application.
+ *  @version $Id: RSSFeedConfig.java 1319 2006-09-15 10:52:49Z apevec $
  */
-public final class RSSConfig extends AbstractConfig {
+public final class RSSFeedConfig extends AbstractConfig {
 
-    private static final Logger s_log = Logger.getLogger(RSSConfig.class);
+    /** A logger instance to assist debugging.  */
+    private static final Logger s_log = Logger.getLogger(RSSFeedConfig.class);
+
+    /** Singelton config object.  */
+    private static RSSFeedConfig s_conf;
+
+    /**
+     * Gain a RSSFeedConfig object.
+     *
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * use RSSFeedConfig.getConfig(); instead
+     * @return
+     */
+    public static synchronized RSSFeedConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new RSSFeedConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+    // //////////////////////////////////////////////////////////////////////// 
+    // Set of configuration parameters
 
     /**  */
     private final Parameter m_categoryKey= new RSSCategoryKeyParameter
-            ("com.arsdigita.london.rss.categoryKey", Parameter.REQUIRED, "RSS");
+            ("com.arsdigita.rssfeed.categoryKey", Parameter.REQUIRED, "RSS");
     /** */
     private final Parameter m_processingInstruction_xslt= new StringParameter
-            ("com.arsdigita.london.rss.processingInstruction_xslt",
+            ("com.arsdigita.rssfeed.processingInstruction_xslt",
              Parameter.OPTIONAL, null);
 
-    public RSSConfig() {
+    /**
+     * Constructor initializes class.
+     */
+    public RSSFeedConfig() {
 
         register(m_categoryKey);
         register(m_processingInstruction_xslt);
@@ -67,6 +94,7 @@ public final class RSSConfig extends AbstractConfig {
             super(name, multiplicity, defaalt);
         }
 
+        @Override
         public void doValidate(final Object value, final ErrorList errors) {
             if (value != null) {
                 String key = (String)value;

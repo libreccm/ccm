@@ -1,28 +1,31 @@
 //
-// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
 //
-// The contents of this file are subject to the ArsDigita Public 
-// License (the "License"); you may not use this file except in
-// compliance with the License. You may obtain a copy of
-// the License at http://www.arsdigita.com/ADPL.txt
-//
-// Software distributed under the License is distributed on an "AS
-// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
-// implied. See the License for the specific language governing
-// rights and limitations under the License.
-//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-model com.arsdigita.london.rss;
+model com.arsdigita.rssfeed;
 
 import com.arsdigita.kernel.*;
 import com.arsdigita.cms.*;
 
 object type Feed extends ACSObject {
-  String[1..1] title        = rss_feeds.title VARCHAR(50);
-  unique String[1..1] url          = rss_feeds.url VARCHAR(250);
-  String[1..1] description  = rss_feeds.description VARCHAR(500);
-  Boolean[1..1] isProvider  = rss_feeds.is_provider BIT;
+  String[1..1] title        = rssfeed_feeds.title VARCHAR(50);
+  unique String[1..1] url   = rssfeed_feeds.url VARCHAR(250);
+  String[1..1] description  = rssfeed_feeds.description VARCHAR(500);
+  Boolean[1..1] isProvider  = rssfeed_feeds.is_provider BIT;
         
-  reference key( rss_feeds.feed_id );
+  reference key( rssfeed_feeds.feed_id );
 }
 

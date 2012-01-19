@@ -37,7 +37,7 @@ import com.arsdigita.rssfeed.portlet.WorkspaceDirectoryPortlet;
 
 
 /**
- * The RSS initializer.
+ * Initializes the RSSFeed application
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Initializer.java 758 2005-09-02 14:26:56Z sskracic $
@@ -50,10 +50,9 @@ public class Initializer extends CompoundInitializer {
 
         add(new PDLInitializer
             (new ManifestSource
-             ("ccm-ldn-rss.pdl.mf",
+             ("ccm-rssfeed.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-        // add(new LegacyInitializer("com/arsdigita/london/rss/enterprise.init"));
     }
 
     /**
@@ -62,15 +61,14 @@ public class Initializer extends CompoundInitializer {
      */
     @Override
     public void init(DomainInitEvent e) {
-
         super.init(e);
 
-        // Prerequisite to access a RSS channel instance
+        // Prerequisite to access a RSSFeed channel instance
         DomainObjectFactory.registerInstantiator(
-               RSS.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+               RSSFeed.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
                    @Override
                    public DomainObject doNewInstance(DataObject dataObject) {
-                       return new RSS(dataObject);
+                       return new RSSFeed(dataObject);
                    }
                }
         );

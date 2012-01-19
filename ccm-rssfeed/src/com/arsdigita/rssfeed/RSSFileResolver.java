@@ -33,13 +33,22 @@ import org.apache.log4j.Logger;
 
 public class RSSFileResolver extends DefaultApplicationFileResolver {
 
-    private static final Logger s_log = 
-        Logger.getLogger(RSSFileResolver.class);
+    private static final Logger s_log = Logger.getLogger(RSSFileResolver.class);
 
+    /**
+     * 
+     * @param templatePath
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @return 
+     */
+    @Override
     public RequestDispatcher resolve(String templatePath,
                                      HttpServletRequest sreq,
                                      HttpServletResponse sresp,
                                      Application app) {
+        
         String[] webapps = new String[] {
             app.getContextPath(), "ROOT"
         };

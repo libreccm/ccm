@@ -50,6 +50,8 @@ import org.jdom.Namespace;
 import org.jdom.output.XMLOutputter;
 import org.jdom.ProcessingInstruction;
 import com.arsdigita.kernel.User;
+
+
 /**
  * Methods for generating RSS Channels &amp; Items.
  *
@@ -63,18 +65,13 @@ import com.arsdigita.kernel.User;
  * @version $Revision: #17 $, $Date: 2004/03/29 $
  */
 public class RSSService {
+    
     private static org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(RSSService.class);
     
-    private static final RSSConfig s_config = new RSSConfig();
-    
-    static {
-        s_log.debug("Static initalizer starting...");
-        s_config.load();
-        s_log.debug("Static initalizer finished.");
-    }
-    
-    public static RSSConfig getConfig() {
+    private static final RSSFeedConfig s_config = RSSFeedConfig.getConfig();
+        
+    public static RSSFeedConfig getConfig() {
         return s_config;
     }
     

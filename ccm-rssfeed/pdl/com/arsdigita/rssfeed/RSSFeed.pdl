@@ -15,10 +15,13 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-model com.arsdigita.london.rss;
+model com.arsdigita.rssfeed;
 
 import com.arsdigita.web.Application;
 
-object type RSS extends Application {
-    reference key (rss_app.application_id);
+object type RSSFeed extends Application {
+    // nothing to persist yet
+    // there is only one instance of RSSFeed and
+    // no instance specific settings about to be persisted.
+ // reference key (rssfeed_app.application_id);
 }

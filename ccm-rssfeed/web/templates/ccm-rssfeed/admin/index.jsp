@@ -11,9 +11,9 @@
   </jsp:scriptlet>
 
   <define:page name="rssPage" application="rss" 
-    title="RSS Channel Admin" cache="true">
+    title="RSSFeed Channel Admin" cache="true">
 
-    <define:component name="admin" classname="com.arsdigita.london.rss.ui.admin.FeedsPanel"/>
+    <define:component name="admin" classname="com.arsdigita.rssfeed.ui.admin.FeedsPanel"/>
 
     <jsp:scriptlet>
         rssPage.addRequestListener(new ApplicationAuthenticationListener());

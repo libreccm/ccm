@@ -1,16 +1,19 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 
@@ -24,6 +27,10 @@ import com.arsdigita.bebop.Form;
 
 
 
+/**
+ * 
+ * 
+ */
 public class FeedsPanel extends BoxPanel {
     
     private Table m_provider_feeds;
@@ -36,26 +43,30 @@ public class FeedsPanel extends BoxPanel {
     private FeedSelectionModel m_external_model;
 
 
+    /**
+     * 
+     */
     public FeedsPanel() {
-	super(BoxPanel.VERTICAL);
+        super(BoxPanel.VERTICAL);
 
-	m_provider_model = new FeedSelectionModel(new BigDecimalParameter("provider"));
-	m_external_model = new FeedSelectionModel(new BigDecimalParameter("external"));
+        m_provider_model = 
+                new FeedSelectionModel(new BigDecimalParameter("provider"));
+        m_external_model = 
+                new FeedSelectionModel(new BigDecimalParameter("external"));
 
-	m_provider_feeds = new FeedsTable(m_provider_model, true);
-	m_external_feeds = new FeedsTable(m_external_model, false);
+        m_provider_feeds = new FeedsTable(m_provider_model, true);
+        m_external_feeds = new FeedsTable(m_external_model, false);
 
-	m_provider_form = new ProviderFeedForm(m_provider_model);
-	m_external_form = new ExternalFeedForm(m_external_model);
+        m_provider_form = new ProviderFeedForm(m_provider_model);
+        m_external_form = new ExternalFeedForm(m_external_model);
 
-	add(new Label("Feed Providers",
-		      Label.BOLD));
-	add(m_provider_feeds);
-	add(m_provider_form);
-	
-	add(new Label("External Feeds",
-		      Label.BOLD));
-	add(m_external_feeds);
-	add(m_external_form);
+        add(new Label("Feed Providers",Label.BOLD));
+        add(m_provider_feeds);
+        add(m_provider_form);
+
+        add(new Label("External Feeds",Label.BOLD));
+        add(m_external_feeds);
+        add(m_external_form);
     }
+
 }

@@ -2,7 +2,7 @@
           version="1.2">
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
-  <jsp:directive.page import="com.arsdigita.london.rss.ui.FeedGenerator"/>
+  <jsp:directive.page import="com.arsdigita.rssfeed.ui.FeedGenerator"/>
 
   <jsp:scriptlet>
     DispatcherHelper.cacheDisable(response);

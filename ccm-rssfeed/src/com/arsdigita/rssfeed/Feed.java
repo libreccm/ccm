@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+
 package com.arsdigita.rssfeed;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -18,7 +36,7 @@ import com.arsdigita.persistence.DataCollection;
 public class Feed extends ACSObject {
 
     public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.london.rss.Feed";
+                               = "com.arsdigita.rssfeed.Feed";
 
     // Attributes
     public static final String TITLE = "title";
@@ -26,24 +44,44 @@ public class Feed extends ACSObject {
     public static final String DESCRIPTION = "description";
     public static final String IS_PROVIDER = "isProvider";
 
+    /**
+     * Constructor
+     */
     public Feed() {
         super(BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Constructor
+     */
     public Feed(BigDecimal id)
         throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
+    /**
+     * Constructor
+     */
     public Feed(DataObject obj) {
         super(obj);
     }
 
+    /**
+     * Constructor
+     */
     public Feed(OID oid)
         throws DataObjectNotFoundException {
         super(oid);
     }
 
+    /**
+     * 
+     * @param url
+     * @param title
+     * @param desc
+     * @param provider
+     * @return 
+     */
     public static Feed create(String url,
                               String title,
                               String desc,
@@ -58,6 +96,12 @@ public class Feed extends ACSObject {
         return feed;
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     * @throws DataObjectNotFoundException 
+     */
     public static Feed retrieve(BigDecimal id)
         throws DataObjectNotFoundException {
 
@@ -75,8 +119,15 @@ public class Feed extends ACSObject {
         throw new DataObjectNotFoundException("cannot find feed " + id);
     }
 
+    
+    /**
+     * 
+     * @param url
+     * @return
+     * @throws DataObjectNotFoundException 
+     */
     public static Feed retrieve(String url)
-        throws DataObjectNotFoundException {
+           throws DataObjectNotFoundException {
 
         Session session = SessionManager.getSession();
         DataCollection feed = session.retrieve(BASE_DATA_OBJECT_TYPE);
@@ -92,6 +143,11 @@ public class Feed extends ACSObject {
         throw new DataObjectNotFoundException("cannot find feed" + url);
     }
 
+    /**
+     * 
+     * 
+     * @return 
+     */
     public static FeedCollection retrieveAll() {
         Session session = SessionManager.getSession();
         DataCollection feeds = session.retrieve(BASE_DATA_OBJECT_TYPE);
@@ -103,6 +159,7 @@ public class Feed extends ACSObject {
      * Accessor to the base object type.
      * @return The fully qualified name of the supporting data object.
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

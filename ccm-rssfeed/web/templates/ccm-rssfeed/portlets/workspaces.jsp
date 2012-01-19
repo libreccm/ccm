@@ -5,7 +5,7 @@
     version="1.2">
     <!-- This page is used by class in method getChannel(PageState pageState)
          com.arsdigita.portalworkspace.ui.WorkspaceDirectoryComponent
-         Probably part of the ccm-ldn-rss WorkspaceDirectoryPortlet portlet. -->
+         Probably part of the ccm-rssfeed WorkspaceDirectoryPortlet portlet. -->
 
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
 

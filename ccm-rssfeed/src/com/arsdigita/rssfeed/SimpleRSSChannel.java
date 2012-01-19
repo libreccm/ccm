@@ -30,6 +30,14 @@ public class SimpleRSSChannel implements RSSChannel {
     private RSSImage m_image;
     private RSSItemCollection m_items;
     
+    /**
+     * 
+     * @param title
+     * @param link
+     * @param description
+     * @param image
+     * @param items 
+     */
     public SimpleRSSChannel(String title,
                             String link,
                             String description,
@@ -42,22 +50,42 @@ public class SimpleRSSChannel implements RSSChannel {
         m_items = items;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getTitle() {
         return m_title;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getLink() {
         return m_link;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getDescription() {
         return m_description;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public RSSImage getImage() {
         return m_image;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public RSSItemCollection getItems() {
         return m_items;
     }

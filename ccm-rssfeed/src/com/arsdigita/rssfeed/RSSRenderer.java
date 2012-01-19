@@ -28,11 +28,17 @@ import com.arsdigita.util.UncheckedWrapperException;
  * change, possibly beyond all recognition.
  */
 public class RSSRenderer {
+    
     public final static org.jdom.Namespace s_rdfNS = org.jdom.Namespace.getNamespace
         ( "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#" );
     public final static org.jdom.Namespace s_rssNS = org.jdom.Namespace.getNamespace
         ( "http://purl.org/rss/1.0/" );
     
+    /**
+     * 
+     * @param channel
+     * @return 
+     */
     public static org.jdom.Element generateJDOM(RSSChannel channel) {
         // rdf is the root element
         org.jdom.Element rdfEl = new org.jdom.Element( "RDF", "rdf", s_rdfNS.getURI() );
@@ -120,6 +126,11 @@ public class RSSRenderer {
         return rdfEl;
     }
 
+    /**
+     * 
+     * @param channel
+     * @return 
+     */
     public static org.w3c.dom.Element generateDOM(RSSChannel channel) {
         org.jdom.Element jdomContent = RSSRenderer.generateJDOM(channel);
         org.jdom.output.DOMOutputter convertor = new org.jdom.output.DOMOutputter();
@@ -135,16 +146,30 @@ public class RSSRenderer {
         return domContent;
     }
     
+    /**
+     * 
+     * @param channel
+     * @return 
+     */
     public static Element generateXML(RSSChannel channel) {
         org.w3c.dom.Element domContent = generateDOM(channel);
         
         return new WrapperElement(domContent);
     }
 
+    /**
+     * 
+     */
     private static class WrapperElement extends Element {
+        
+        /**
+         * 
+         * @param element 
+         */
         public WrapperElement(org.w3c.dom.Element element) {
             m_element = element;
         }
+        
     }
 
 }
