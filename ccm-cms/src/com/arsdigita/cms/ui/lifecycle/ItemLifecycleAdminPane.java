@@ -34,6 +34,7 @@ import com.arsdigita.cms.ui.item.ContentItemRequestLocal;
 import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
@@ -143,6 +144,7 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
                     push(state, m_errorPane);
                 } else {
                     push(state, m_lockedPane);
+                    state.getResponse().addIntHeader("Refresh", 5);
                 }
             } else {
                 if (state.isVisibleOnPage(ItemLifecycleAdminPane.this)) {
