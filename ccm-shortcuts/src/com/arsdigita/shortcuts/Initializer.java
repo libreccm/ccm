@@ -24,7 +24,7 @@ import com.arsdigita.domain.DomainObject;
 
 import com.arsdigita.kernel.ACSObjectInstantiator;
 
-import com.arsdigita.persistence.pdl.ManifestSource;
+// import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.DataObject;
@@ -59,12 +59,14 @@ public class Initializer extends CompoundInitializer {
      * Implementation of the init(DomainInitEvent) initializer.
      * @param e
      */
+    @Override
     public void init(DomainInitEvent e) {
         super.init(e);
 
         e.getFactory().registerInstantiator(
             Shortcuts.BASE_DATA_OBJECT_TYPE,
             new ACSObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new Shortcuts(dataObject);
                 }

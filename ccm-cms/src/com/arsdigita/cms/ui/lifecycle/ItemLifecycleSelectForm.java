@@ -89,8 +89,7 @@ import com.arsdigita.workflow.simple.WorkflowTemplate;
  * @author Xixi D'moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Jens Pelzetter jens@jp-digital.de
- * @version $Id: ItemLifecycleSelectForm.java 1643 2007-09-17 14:19:06Z chrisg23
- * $
+ * @version $Id: ItemLifecycleSelectForm.java 2267 2012-01-09 16:50:14Z pboy $
  */
 class ItemLifecycleSelectForm extends BaseForm {
 

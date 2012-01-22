@@ -42,6 +42,11 @@ public class Loader extends PackageLoader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+    /**
+     * Run script invoked by com.arsdigita.packing loader script.
+     *
+     * @param ctx
+     */
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
             public void excurse() {

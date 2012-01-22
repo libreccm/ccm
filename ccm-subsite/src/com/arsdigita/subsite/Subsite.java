@@ -107,13 +107,13 @@ public class Subsite extends Application {
      *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
      *   <init-param>
      *     <param-name>template-path</param-name>
-     *     <param-value>/templates/ccm-ldn-subsite</param-value>
+     *     <param-value>/templates/ccm-subsite</param-value>
      *   </init-param>
      * </servlet>
      *
      * <servlet-mapping>
      *   <servlet-name>subsite-files</servlet-name>
-     *   <url-pattern>/ccm-ldn-subsite/files/*</url-pattern>
+     *   <url-pattern>/ccm-subsite/files/*</url-pattern>
      * </servlet-mapping>
      *
      * @return path name to the applications servlet/JSP

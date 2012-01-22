@@ -7,7 +7,7 @@
 
     <!-- module ccm-portalworkspace  -  servlet definitions BEGIN  -->
     <servlet>
-<!--        <servlet-name>files</servlet-name>        -->
+        <!--  <servlet-name>files</servlet-name>        -->
         <servlet-name>portalworkspace-files</servlet-name>
         <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
         <init-param>

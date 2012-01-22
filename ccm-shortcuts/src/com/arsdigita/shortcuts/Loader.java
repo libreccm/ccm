@@ -53,6 +53,8 @@ public class Loader extends PackageLoader {
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+                
+                // setup application
                 setupShortcuts();
             }
         }.run();

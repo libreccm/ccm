@@ -190,10 +190,12 @@ public class Loader extends PackageLoader {
                                        "Portal Workspace",
                                         Workspace.BASE_DATA_OBJECT_TYPE );
         type.setDescription("Portal based collaborative workspaces");
+        
         /* Create an application type specific group in user administration   *
          * which serves as a container for subgroups, each subgroup coupled   *
          * to an application (instances) of this type.                        */
         type.createGroup();
+        
         return type;
 
     }

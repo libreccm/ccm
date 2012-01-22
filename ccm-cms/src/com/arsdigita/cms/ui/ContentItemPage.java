@@ -69,7 +69,7 @@ import org.apache.log4j.Logger;
  * @author Jack Chung
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  * 
- * @version $Id: ContentItemPage.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ContentItemPage.java 2245 2011-11-15 08:03:57Z pboy $
  */
 public class ContentItemPage extends CMSPage implements ActionListener {
 
