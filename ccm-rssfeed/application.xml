@@ -16,7 +16,7 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The RSSfeed package provides a rss feeder which may be used to deploy
+    The RSSfeed package provides a rss feed service which may be used to deploy
     internal content which is selected by categorization as well as external
     content based on URL.
   </ccm:description>

@@ -47,10 +47,16 @@ ALTER TABLE init_requirements
 
 
 update application_types
-   set object_type=replace(object_type,'london.rss', 'rssfeed')
- where   object_type  like  '%london.rss%'  ;
+   set (object_type,title,description)=
+           (replace(object_type,'london.rss.RSS', 'rssfeed.RSSFeed'),
+            'RSS Feed',
+            'Provides RSS feed service') 
+   where   object_type  like  '%london.rss.RSS%'  ;
 
--- table applications doesn't require an update
+-- table applications requires an update
+update applications
+   set (title,description)=('RSS Feeds','RSS feed channels')
+   where   primary_url  like  '%channels%'  ;
 
 -- table apm_package_types doesn't require an update
 
@@ -58,9 +64,28 @@ update application_types
 -- table site_nodes doesn't require an update either
 
 
--- update application type in acs_objects
+-- update acs_objects
+-- (a) update application type
 update acs_objects
-    set (object_type,default_domain_class) =
+    set (object_type,display_name,default_domain_class) =
+            (replace(object_type,'london.rss.RSS', 'rssfeed.RSSFeed') ,
+             'RSS Service',
+             replace(default_domain_class,'london.rss.RSS', 'rssfeed.RSSFeed') )
+    where object_type like '%london.rss.RSS%' ;
+-- (b) update feeds
+update acs_objects
+    set (object_type,display_name,default_domain_class) =
             (replace(object_type,'london.rss', 'rssfeed') ,
+             replace(display_name,'london.rss','rssfeed'),
              replace(default_domain_class,'london.rss', 'rssfeed') )
-    where object_type like '%london.rss%' ;
+    where object_type like '%london.rss.Feed%' ;
+-- (c) remove unused RSS cat purpose
+update acs_objects
+    set display_name = 'RSS cat purpose to delete'
+    where object_id = (select purpose_id from cat_purposes 
+                       where key like '%RSS%'); 
+delete from cat_purposes where key like '%RSS%' ; 
+delete from object_context where object_id = (select object_id from acs_objects
+                                              where display_name like
+                                              'RSS cat purpose to delete') ;
+delete from acs_objects where display_name like 'RSS cat purpose to delete' ;

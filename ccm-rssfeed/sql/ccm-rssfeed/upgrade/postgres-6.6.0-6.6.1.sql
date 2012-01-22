@@ -17,7 +17,7 @@
 --
 -- $DateTime: 2010/11/10 23:15:09 $
 
-\echo Red Hat Enterprise ccm-subsite 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
+\echo Red Hat Enterprise ccm-rssfeed 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
 
 begin;
 
@@ -27,7 +27,7 @@ begin;
 -- rename table containing defined feeds following ccm naming conventions
 \i default/6.6.0-6.6.1/ren_sites_table.sql
 
--- rename application from london.subsite to subsite
+-- rename application from london.rss to rssfeed
 \i default/6.6.0-6.6.1/upd_system_tables.sql
 
 -- remove legacy compatible bits

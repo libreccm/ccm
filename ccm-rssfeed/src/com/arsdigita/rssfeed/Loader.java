@@ -18,19 +18,15 @@
 
 package com.arsdigita.rssfeed;
 
-import com.arsdigita.categorization.CategoryPurpose;
+// import com.arsdigita.categorization.CategoryPurpose;
 import com.arsdigita.domain.DataObjectNotFoundException;
-// import com.arsdigita.domain.DomainObject;
-// import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
-// import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.rssfeed.portlet.WorkspaceDirectoryPortlet;
 import com.arsdigita.web.Application;
-// import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.URL;
 
@@ -59,13 +55,20 @@ public class Loader extends PackageLoader {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
-                // CatgegoryPurpose is deprecated and replaced by terms in
-                // some way. So this step may be ommitted.
+                // CategoryPurpose is deprecated and replaced by terms in
+                // some way. So this step has to be refactored in some way.
+                // Category creation may be omitted and /channels/admin still
+                // works, but /channels rsp. /channels/rss does not wether a
+                // CategoryPurpose ist created or not.
+                // RSS currently depends on an existing category domain in terms
+                // an a domain mapping to this applicaion.
+                /*
                 String catKey = RSSFeed.getConfig().getCategoryKey();
                 s_log.info("Setting RSS Category Key to " + catKey + ".");
                 if (!CategoryPurpose.purposeExists(catKey)) {
                     (new CategoryPurpose(catKey, "RSS Feed")).save();
                 }
+                 */
 
                 // load application type for admin application into database
                 // (i.e. create application type)
@@ -82,37 +85,9 @@ public class Loader extends PackageLoader {
 
     /**
      * Creates the application type for the admin application as an
-     * (old style) compatible applicaiton.
+     * (new style) legacy-free applicaiton.
      */
     public void setupChannelControlCenter() {
-
-        // Old way to setup of a new style legacy compatible application.
-        // Kept until transistion to new style legacy free application is
-        // completed for easy reference and debugging. Delete thereafter!
-/*      ApplicationSetup setup = new ApplicationSetup(s_log);
-
-        setup.setApplicationObjectType(RSSFeed.BASE_DATA_OBJECT_TYPE);
-        setup.setKey("rss");
-        setup.setTitle("RSSFeed Channels");
-        setup.setDescription("RSSFeed Channels");
-        setup.setSingleton(true);
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                public DomainObject doNewInstance(DataObject dataObject) {
-                    return new RSSFeed(dataObject);
-                }
-            });
-        ApplicationType type = setup.run();
-        type.save();                                                          */
-        
-        // Old way to setup of a new style legacy compatible application.
-        // Kept until transistion to new style legacy free application is
-        // completed for easy reference and debugging. Delete thereafter!
-/*      ApplicationType type = ApplicationType.createApplicationType(
-                                              "rss",
-                                              "RSS Channels",
-                                              RSSFeed.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("RSS Channels");                                  */
 
         /* Create legacy-free application type                               
          * NOTE: The wording in the title parameter of ApplicationType
@@ -122,21 +97,25 @@ public class Loader extends PackageLoader {
          * hyphen and converted to lower case.
          * "RSSFeed" will become "rssfeed".                               */
         ApplicationType type = new ApplicationType( 
-                                       "RSSFeed",
+                                       "RSS Feed",
                                         RSSFeed.BASE_DATA_OBJECT_TYPE );
-        type.setDescription("CCM RSS Feed");
+        type.setDescription("Provides RSS feed service");
       
         if (!Application.isInstalled(RSSFeed.BASE_DATA_OBJECT_TYPE,
                                      "/channels/")) {
             Application app = Application
                               .createApplication(type,
                                                  "channels",
-                                                 "RSS",
+                                                 "RSS Service",
                                                  null);
+            app.setDescription("RSS feed channels");
             app.save();
         }
     }
 
+    /**
+     * 
+     */
     public void setupLocalFeeds() {
 
         URL external = URL.there("/channels/rss/external.rss", null);

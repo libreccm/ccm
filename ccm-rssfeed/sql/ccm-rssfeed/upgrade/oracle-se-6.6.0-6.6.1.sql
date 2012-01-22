@@ -18,13 +18,14 @@
 -- $DateTime: 2011/03/27 23:15:09 $
 -- $Id: oracle-se-6.6.0-6.6.1  pboy $
 
--- drop table subsite_app - not needed anyway
+-- drop table rss_app - not needed anyway
 @@ default/6.6.0-6.6.1/drop_app_table.sql
--- rename table containing defined subsites following ccm naming conventions
+
+-- rename table containing defined feeds following ccm naming conventions
 @@ default/6.6.0-6.6.1/ren_sites_table.sql
--- rename application from london.subsite to subsite
+
+-- rename application from london.rss to rssfeed
 @@ default/6.6.0-6.6.1/upd_system_tables.sql
+
 -- remove legacy compatible bits
 @@ default/6.6.0-6.6.1/remove_legacy_entries.sql
--- adjust class name in content_sections table
-@@ default/6.6.0-6.6.1/upd_cms_tables.sql

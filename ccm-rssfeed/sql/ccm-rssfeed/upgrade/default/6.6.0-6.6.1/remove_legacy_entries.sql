@@ -46,7 +46,7 @@ delete from acs_objects
             )
         );   
 
--- delete all entries in site_nodes referring to a subsite instance
+-- delete all entries in site_nodes referring to a RSSFeed instance
 delete from site_nodes
     where object_id in 
         (select package_id from applications where application_type_id =
@@ -81,7 +81,7 @@ delete  from acs_objects
                         like 'com.arsdigita.rssfeed.RSSFeed')
         );   
 
--- delete all entries for subsite instances in apm_packages 
+-- delete all entries for RSSFeed instances in apm_packages 
 -- identified by package_type_id in application_types
 delete from apm_packages
     where package_type_id =
@@ -92,7 +92,7 @@ delete from apm_packages
 -- there seem to be no intries for a apm_packages_types entry (row) in 
 -- acs_objects or object_context!
 
--- delete all entries for subsite in apm_package_types identified by 
+-- delete all entries for RSSFeed in apm_package_types identified by 
 -- package_type_id in application_types
 alter table application_types drop constraint applica_typ_pac_typ_id_f_v80ma ;
 delete from apm_package_types
@@ -102,7 +102,7 @@ delete from apm_package_types
                 like 'com.arsdigita.rssfeed.RSSFeed') ;
 
 
--- set package_id to null for all entries referring to a subsite instance
+-- set package_id to null for all entries referring to a RSSFeed instance
 -- (indicating a new legacy free application) 
 update applications
     set package_id = null
@@ -111,7 +111,7 @@ update applications
             where object_type 
                 like 'com.arsdigita.rssfeed.RSSFeed') ;
 
--- set package_id to null for all entries referring to a subsite instance
+-- set package_id to null for all entries referring to a RSSFeed instance
 -- (indicating a new legacy free application) 
 update application_types
     set package_type_id = null

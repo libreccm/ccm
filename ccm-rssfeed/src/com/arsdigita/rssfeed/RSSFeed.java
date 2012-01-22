@@ -96,9 +96,8 @@ public class RSSFeed extends Application {
      *
      * @return path name to the applications servlet/JSP
      */
+    @Override
     public String getServletPath() {
-        // sufficient if execute in its own web context
-        // return "/files";
         return "/ccm-rssfeed/files";
     }
 }

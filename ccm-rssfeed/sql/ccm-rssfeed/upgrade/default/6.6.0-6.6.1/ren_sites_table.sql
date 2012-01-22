@@ -17,7 +17,7 @@
 --
 -- $Id: ren_sites_table.sql pboy $
 
--- rename table subsite_site to subsite_sites following ccm naming conventions
+-- rename table rss_feeds to rssfeed_feeds following ccm naming conventions
 -- to make maintenance tasks easier
 
 
@@ -25,7 +25,9 @@ alter table rss_feeds drop constraint rss_feeds_feed_id_p_rm_i5 ;
 alter table rss_feeds drop constraint rss_feeds_feed_id_f_2lk3l ; 
 alter table rss_feeds drop constraint rss_feeds_url_u_3ul6f ; 
 
+
 alter table rss_feeds  RENAME TO  rssfeed_feeds ;
+
 
 alter table rssfeed_feeds 
       add constraint rssfeed_feeds_feed_id_p_493us PRIMARY KEY (feed_id) ;
