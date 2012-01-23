@@ -759,7 +759,7 @@ class ItemLifecycleSelectForm extends BaseForm {
 
     static void finish(Workflow workflow, ContentItem item, User user) throws
             TaskException {
-        if (workflow != null) {
+        if ((workflow != null) && (user != null)) {
             final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
             // ;
 

@@ -14,8 +14,11 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Element;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import javax.servlet.ServletException;
 
 /**
  * Generates the extra XML output for a profile for the embedded view.
@@ -40,7 +43,21 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
 
         final PublicPersonalProfile profile = (PublicPersonalProfile) item;
         final String showItem = state.getRequest().getParameter(SHOW_ITEM_PARAM);
-
+                
+        if (!config.getEmbedded() && state.getRequestURI().contains(profile.getName())) {
+            /*try {
+                DispatcherHelper.forwardRequestByPath(getProfileUrl(profile), 
+                                                      state.getRequest(), 
+                                                      state.getResponse());
+                return;
+            } catch (IOException ex) {
+               throw new UncheckedWrapperException(ex);
+            } catch (ServletException ex) {
+                throw new UncheckedWrapperException(ex);
+            }*/
+            throw new RedirectSignal(getProfileUrl(profile), true);
+        }
+        
         if (config.getEmbedded()) {
             final Element navigation = element.newChildElement(
                     "profileNavigation");
@@ -141,5 +158,33 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
 
     public void addGlobalStateParams(final Page p) {
         //Nothing yet
+    }
+    
+    private String getProfileUrl(final PublicPersonalProfile profile) {
+        final GenericPerson owner = profile.getOwner();
+        final GenericPersonContactCollection contacts = owner.getContacts();
+        
+        String homepage = null;
+        while(contacts.next() && (homepage == null)) {
+            homepage = getHomepageContactEntry(contacts.getContact());
+        }
+        
+        contacts.close();
+        return homepage;
+    }
+    
+    private String getHomepageContactEntry(final GenericContact contact) {
+        final GenericContactEntryCollection entries = contact.getContactEntries();
+        
+        String homepage = null;
+        while(entries.next()) {
+            if ("homepage".equals(entries.getKey())) {
+                homepage = entries.getValue();
+                break;
+            }
+        }
+        
+        entries.close();
+        return homepage;
     }
 }

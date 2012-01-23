@@ -45,43 +45,42 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * User task that is associated with an interface for
- * performing some manual operation.
+ * User task that is associated with an interface for performing some manual
+ * operation.
  *
  * @author Karl Goldstein
  * @author Uday Mathur
  * @author Khy Huang
  * @author Stefan Deusch
  * @version $Id: UserTask.java 1564 2007-04-18 16:15:27Z apevec $
- **/
+ *
+ */
 public class UserTask extends Task implements Assignable {
 
-    /** Private logger instance for log4j.                                   */
+    /**
+     * Private logger instance for log4j.
+     */
     private static final Logger s_log = Logger.getLogger(UserTask.class);
-
-    /** Private configuration object, singleton design pattern               */
+    /**
+     * Private configuration object, singleton design pattern
+     */
     private static final WorkflowConfig s_conf = WorkflowConfig.getInstance();
-
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.workflow.simple.UserTask";
-
+                               "com.arsdigita.workflow.simple.UserTask";
     public static final String ASSIGNED_USERS = "assignedUsers";
     public static final String ASSIGNED_GROUPS = "assignedGroups";
     public static final String LOCKING_USER_ID = "lockingUserId";
-    public static final String IS_LOCKED      = "isLocked";
-    public static final String DUE_DATE       = "dueDate";
-    public static final String START_DATE     = "startDate";
+    public static final String IS_LOCKED = "isLocked";
+    public static final String DUE_DATE = "dueDate";
+    public static final String START_DATE = "startDate";
     public static final String DURATION_MINUTES = "durationMinutes";
     public static final String NOTIFICATION_SENDER_ID = "notificationSenderID";
-
     public static final int DEFAULT_DURATION = 1440;
-
-    private User     m_userLock; // Used to lock process
-    private HashSet  m_assignedUsers;
-    private HashSet  m_assignedGroups;
-    private User     m_finished_user;
-    private Party    m_notificationSender; // email alerts are from this sender
-
+    private User m_userLock; // Used to lock process
+    private HashSet m_assignedUsers;
+    private HashSet m_assignedGroups;
+    private User m_finished_user;
+    private Party m_notificationSender; // email alerts are from this sender
     // identify the different operations a Task can undergo
     public static final String ENABLE_OP = "enable";
     public static final String DISABLE_OP = "disable";
@@ -95,61 +94,61 @@ public class UserTask extends Task implements Assignable {
      * @param description the task description
      * @param is_active whether the task is in use
      * @param duration_minutes the projected duration of the task in minutes
-     **/
+     *
+     */
     public UserTask(String label, String description,
                     boolean is_active, int duration_minutes) {
-        this(label,description);
+        this(label, description);
         setDuration(new Duration(0, 0, duration_minutes));
     }
-
 
     /**
      * Constructor for a user task without runtime information.
      *
      * @param label the task definition label
      * @param description the description
-     **/
+     *
+     */
     public UserTask(String label, String description) {
         this(BASE_DATA_OBJECT_TYPE);
         setDuration(new Duration(DEFAULT_DURATION));
-        initAttributes(label,description);
+        initAttributes(label, description);
     }
-
 
     /**
      * Creates a new task definition and sets the properties
-     * <code>label</code> and <code>description</code> to null.
-     * The properties of this
-     * object are not made persistent until the <code>save</code>
-     * method is called.  If save() is called
-     * without setting these properties, an IllegalArgumentException
-     * will be thrown.
+     * <code>label</code> and
+     * <code>description</code> to null. The properties of this object are not
+     * made persistent until the
+     * <code>save</code> method is called. If save() is called without setting
+     * these properties, an IllegalArgumentException will be thrown.
      *
-     **/
+     *
+     */
     public UserTask() {
         this(BASE_DATA_OBJECT_TYPE);
         setDuration(new Duration(0));
     }
 
-
     /**
-     * Constructor for a user task that is
-     * used for setting the object type.
+     * Constructor for a user task that is used for setting the object type.
      *
      * @param type the object type
      *
-     **/
+     *
+     */
     protected UserTask(ObjectType type) {
         super(type);
     }
 
     /**
-     * Constructor for user task that is
-     * used for setting the object type by name.
+     * Constructor for user task that is used for setting the object type by
+     * name.
      *
      * @param typeName the type name
      *
-     **/
+     *
+     */
     protected UserTask(String typeName) {
         super(typeName);
         setDuration(new Duration(0, 0, 0));
@@ -160,7 +159,8 @@ public class UserTask extends Task implements Assignable {
      *
      * @param userTaskObject the data object
      *
-     **/
+     *
+     */
     public UserTask(DataObject userTaskObject) {
         super(userTaskObject);
     }
@@ -170,7 +170,8 @@ public class UserTask extends Task implements Assignable {
      *
      * @param oid the user task OID
      *
-     **/
+     *
+     */
     public UserTask(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -180,7 +181,8 @@ public class UserTask extends Task implements Assignable {
      *
      * @param id the user task ID as BigDecimal
      *
-     **/
+     *
+     */
     public UserTask(BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
@@ -190,25 +192,30 @@ public class UserTask extends Task implements Assignable {
      *
      * @return user task OID.
      * @see com.arsdigita.persistence.OID
-     **/
+     *
+     */
     public OID getUserTaskOID() {
         return new OID(getBaseDataObjectType(), getID());
     }
 
     /**
      * Retrieves the start date of this user task.
+     *
      * @return the start date of this user task.
      *
-     **/
+     *
+     */
     public Date getStartDate() {
         return (Date) get(START_DATE);
     }
 
     /**
      * Retrieves the due date of this user task.
+     *
      * @return the due date of this user task.
      *
-     **/
+     *
+     */
     public Date getDueDate() {
         return (Date) get(DUE_DATE);
     }
@@ -218,18 +225,20 @@ public class UserTask extends Task implements Assignable {
      *
      * @param startDate the date the task is supposed to start
      *
-     **/
+     *
+     */
     public void setStartDate(Date startDate) {
         set(START_DATE, startDate);
     }
 
-
     /**
-     * Sets the duration for this user task.
-     * Updates the start date and due date accordingly.
+     * Sets the duration for this user task. Updates the start date and due date
+     * accordingly.
+     *
      * @param duration the duration for this task
      *
-     **/
+     *
+     */
     private void setDuration(Duration duration) {
         setStartDate(duration.getStartDate());
         setDueDate(duration.getDueDate());
@@ -238,12 +247,14 @@ public class UserTask extends Task implements Assignable {
 
     /**
      * Returns the duration attribute for this user task.
+     *
      * @return the duration for this user task.
-     **/
+     *
+     */
     public Duration getDuration() {
         BigDecimal minutes = (BigDecimal) get(DURATION_MINUTES);
 
-        if ( minutes == null ) {
+        if (minutes == null) {
             minutes = new BigDecimal(0);
         }
 
@@ -255,33 +266,33 @@ public class UserTask extends Task implements Assignable {
      *
      * @param dueDate the imposed due date of the user task
      *
-     **/
+     *
+     */
     public void setDueDate(Date dueDate) {
         set(DUE_DATE, dueDate);
     }
 
     /**
-     * Marks the task as finished. (persistent operation)
-     * <P>This operation is only valid if the
-     * task is enabled.
-     * Only the user who previously locked the task can call this
-     * method.
+     * Marks the task as finished. (persistent operation) <P>This operation is
+     * only valid if the task is enabled. Only the user who previously locked
+     * the task can call this method.
      *
      * @param user the user who checks off the task
      *
-     **/
+     *
+     */
     public void finish(User user) throws TaskException {
 
         if (isLocked()) {
             if (!getLockedUser().equals(user)) {
                 // SF patch [ 1587168 ] Show locking user
-                String currentUserName = (user == null ? "(unknown)" : user
-                        .getName());
+                String currentUserName = (user == null ? "(unknown)" : user.
+                                          getName());
                 String lockedUserName = (getLockedUser() == null ? "(unknown)"
-                        : getLockedUser().getName());
+                                         : getLockedUser().getName());
                 throw new TaskException(currentUserName
-                        + " is not Locking User, task locked by "
-                        + lockedUserName);
+                                        + " is not Locking User, task locked by "
+                                        + lockedUserName);
             }
         }
         m_finished_user = user;
@@ -291,7 +302,8 @@ public class UserTask extends Task implements Assignable {
     /**
      * Set the startDate to the current date, carrying the duration over from
      * the current value.
-     **/
+     *
+     */
     public void enable() {
         // Create a new Duration (whose start date is now)
         // with the specified duration.
@@ -302,7 +314,8 @@ public class UserTask extends Task implements Assignable {
     /**
      * Enables an event action. Sends out notification to assigned users.
      *
-     **/
+     *
+     */
     public void enableEvt() {
         Party sender = getNotificationSender();
 
@@ -313,19 +326,23 @@ public class UserTask extends Task implements Assignable {
         super.enableEvt();
     }
 
-
     /**
-     * Sends email to assignees with information about
-     * who completed the task and when.
+     * Sends email to assignees with information about who completed the task
+     * and when.
      *
-     **/
+     *
+     */
     protected void finishEvt() {
         User current = null;
         Party party = Kernel.getContext().getParty();
 
+        if (party == null) {
+            return;
+        }
+
         try {
             current = User.retrieve(party.getOID());
-        } catch ( DataObjectNotFoundException e ) {
+        } catch (DataObjectNotFoundException e) {
             throw new UncheckedWrapperException(e);
         }
 
@@ -334,21 +351,20 @@ public class UserTask extends Task implements Assignable {
         Party sender = getNotificationSender();
         if (sendAlerts(FINISH_OP) && sender != null) {
             Message msg = generateMessage(FINISH_OP, sender);
-            if ( s_log.isDebugEnabled() ) {
-                s_log.debug("Sending alert message with body " +
-                            msg.getBody() +
-                            " for finishEvt.");
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Sending alert message with body " + msg.getBody()
+                            + " for finishEvt.");
             }
             sendMessageToAssignees(msg);
         }
         super.finishEvt();
     }
 
-
     /**
      * Sends email to subscribed events that this task was rolled back.
      *
-     **/
+     *
+     */
     protected void rollbackEvt() {
         Party sender = getNotificationSender();
         if (sendAlerts(ROLLBACK_OP) && sender != null) {
@@ -358,11 +374,11 @@ public class UserTask extends Task implements Assignable {
         super.rollbackEvt();
     }
 
-
     /**
      * Sends email that this task has been disabled.
      *
-     **/
+     *
+     */
     protected void disableEvt() {
         Party sender = getNotificationSender();
         if (sendAlerts(DISABLE_OP) && sender != null) {
@@ -374,25 +390,33 @@ public class UserTask extends Task implements Assignable {
 
     /**
      * Generate the message to send if for the specified event
-     **/
+     *
+     */
     protected Message generateMessage(String operation, Party sender) {
         String subject = null;
         String body = null;
         if (ENABLE_OP.equals(operation)) {
             subject = getLabel() + "is in ready state.";
-            body    = getLabel() + " moved to ready state from disabled on "+(new Date());
+            body = getLabel() + " moved to ready state from disabled on "
+                   + (new Date());
         } else if (DISABLE_OP.equals(operation)) {
             subject = getLabel() + " moved to disable state.";
-            body    = getLabel() + " was moved to disable state from ready on "+(new Date());
+            body = getLabel() + " was moved to disable state from ready on "
+                   + (new Date());
         } else if (ROLLBACK_OP.equals(operation)) {
             subject = getLabel() + " moved to disable state.";
-            body    = getLabel() + " moved to disable state from finished on "+(new Date());
+            body = getLabel() + " moved to disable state from finished on "
+                   + (new Date());
         } else if (FINISH_OP.equals(operation)) {
             subject = getLabel() + "was finished.";
-            body    = getLabel() + " completed on "+(new Date()) +
-                (m_finished_user != null ? "by: " + m_finished_user.getName() : "");
+            body = getLabel() + " completed on " + (new Date()) + (m_finished_user
+                                                                   != null ? "by: "
+                                                                             + m_finished_user.
+                                                                   getName()
+                                                                   : "");
         } else {
-            throw new IllegalArgumentException("Invalid workflow operation: " + operation);
+            throw new IllegalArgumentException("Invalid workflow operation: "
+                                               + operation);
         }
 
         body += "\nDescription: " + getDescription() + "\n";
@@ -408,30 +432,32 @@ public class UserTask extends Task implements Assignable {
      * @see com.arsdigita.messaging.Message
      */
     protected void sendMessageToAssignees(Message msg) {
-        if ( s_log.isDebugEnabled() ) {
-            s_log.debug("Sending message: " + msg.getBody() +
-                        " to all assignees.");
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Sending message: " + msg.getBody()
+                        + " to all assignees.");
         }
 
         Iterator itr = getAssignedUsers();
         Party tempParty = null;
         Notification notification = null;
         while (itr.hasNext()) {
-            tempParty = (Party)itr.next();
+            tempParty = (Party) itr.next();
             notification = new Notification(tempParty, msg);
 
-            if ( s_log.isDebugEnabled() ) {
-                s_log.debug("Sending message to user " + tempParty.getDisplayName());
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Sending message to user " + tempParty.
+                        getDisplayName());
             }
 
             notification.save();
         }
         itr = getAssignedGroups();
         while (itr.hasNext()) {
-            tempParty = (Party)itr.next();
+            tempParty = (Party) itr.next();
 
-            if ( s_log.isDebugEnabled() ) {
-                s_log.debug("Sending message to group " + tempParty.getDisplayName());
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Sending message to group " + tempParty.
+                        getDisplayName());
             }
 
             notification = new Notification(tempParty, msg);
@@ -439,69 +465,70 @@ public class UserTask extends Task implements Assignable {
         }
     }
 
-
     /**
-     * Marks the task as finished with an additional
-     * comment. (persistent operation)
+     * Marks the task as finished with an additional comment. (persistent
+     * operation)
      *
      * @param user the user checking off the task as finished
      * @param comment a comment
      *
-     **/
-    public void finish(User user, String comment)  throws TaskException {
+     *
+     */
+    public void finish(User user, String comment) throws TaskException {
         finish();
         addComment(user, comment);
     }
 
     /**
-     * Locks the task for finishing by a specified user. (persistent
-     * operation)
+     * Locks the task for finishing by a specified user. (persistent operation)
      *
      * @param user the user who is locking the task
-     **/
+     *
+     */
     public void lock(User user) {
 
         m_userLock = user;
-        set(LOCKING_USER_ID,user.getID());
-        set(IS_LOCKED,"t");
+        set(LOCKING_USER_ID, user.getID());
+        set(IS_LOCKED, "t");
     }
 
-
     /**
-     * Releases the lock on the task if it is currently
-     * locked. (persistent operation)
+     * Releases the lock on the task if it is currently locked. (persistent
+     * operation)
      *
      * @param user the user who is unlocking the task
      *
-     **/
+     *
+     */
     public void unlock(User user) {
         m_userLock = null;
-        set(LOCKING_USER_ID,null);
-        set(IS_LOCKED,"f");
+        set(LOCKING_USER_ID, null);
+        set(IS_LOCKED, "f");
     }
-
 
     /**
      * Checks whether the task is locked by a user.
-     * @return <code>true</code> if the  task is locked
-     * by a user; <code>false</code> otherwise.
-
+     *
+     * @return
+     * <code>true</code> if the task is locked by a user;
+     * <code>false</code> otherwise.
+     *
      *
      */
     public boolean isLocked() {
         return (getLockedUser() != null);
     }
 
-
     /**
      * Retrieves the user who locked the process.
-     * @return  the user who locked the process.
+     *
+     * @return the user who locked the process.
      *
      */
     public User getLockedUser() {
-        if (m_userLock==null) {
+        if (m_userLock == null) {
 
-            BigDecimal userID = (BigDecimal)get(LOCKING_USER_ID);
+            BigDecimal userID = (BigDecimal) get(LOCKING_USER_ID);
             try {
                 if (userID != null) {
                     m_userLock = User.retrieve(userID);
@@ -513,13 +540,13 @@ public class UserTask extends Task implements Assignable {
         return m_userLock;
     }
 
-
     /**
      * Assigns a user to this task. You must use the
      * <code>save</code> method to make it persistant.
      *
      * @param user an active user of the system
-     **/
+     *
+     */
     public void assignUser(User user) {
         Collection users = getInternalAssignedUsers();
         if (!users.contains(user)) {
@@ -529,13 +556,13 @@ public class UserTask extends Task implements Assignable {
         }
     }
 
-
     /**
      * Assigns a group of users to this task. Use the
      * <code>save</code> method to make it persistent.
      *
      * @param group the group to assign
-     **/
+     *
+     */
     public void assignGroup(Group group) {
         add(ASSIGNED_GROUPS, group);
         Collection groups = getInternalAssignedGroups();
@@ -543,30 +570,29 @@ public class UserTask extends Task implements Assignable {
         //group.addToAssociation(getAssignedGroupAssociation());
     }
 
-
     /**
      * Removes a user from the assignment list.
      *
      * @param user the user to be removed
-     **/
+     *
+     */
     public void removeUser(User user) {
         Collection users = getInternalAssignedUsers();
         users.remove(user);
         user.removeFromAssociation(getAssignedUserAssociation());
     }
 
-
     /**
      * Removes a group from assignment list.
      *
      * @param group the group to be removed
-     **/
+     *
+     */
     public void removeGroup(Group group) {
         Collection groups = getInternalAssignedGroups();
         groups.remove(group);
         group.removeFromAssociation(getAssignedGroupAssociation());
     }
-
 
     /**
      * Removes all groups assigned to this task.
@@ -587,29 +613,32 @@ public class UserTask extends Task implements Assignable {
     /**
      * Tests whether any user or group is assigned to this task.
      *
-     * @return <code>true</code> if a user or a group is assigned;
+     * @return
+     * <code>true</code> if a user or a group is assigned;
      * <code>false</code> otherwise.
      *
-     **/
+     *
+     */
     public boolean isAssigned() {
         return ((getAssignedUserCount() > 0) || (getAssignedGroupCount() > 0));
     }
-
 
     /**
      * Tests whether a specificv user is assigned to this task.
      *
      * @param user a system user
-     * @return <code>true</code> if the user is assigned to this task;
+     * @return
+     * <code>true</code> if the user is assigned to this task;
      * <code>false</code> otherwise.
-     **/
+     *
+     */
     public boolean isAssigned(User user) {
         Collection users = getInternalAssignedUsers();
         Iterator userItr = users.iterator();
         User tmpUser = null;
 
         while (userItr.hasNext()) {
-            tmpUser = (User)userItr.next();
+            tmpUser = (User) userItr.next();
             if (tmpUser == null) {
                 return false;
             }
@@ -620,21 +649,22 @@ public class UserTask extends Task implements Assignable {
         return false;
     }
 
-
     /**
      * Tests whether a specific group is assigned to this task.
      *
      * @param group a system group
-     * @return <code>true</code> if the group is actually assigned
-     * to this task; <code>false</code> otherwise.
-     **/
+     * @return
+     * <code>true</code> if the group is actually assigned to this task;
+     * <code>false</code> otherwise.
+     *
+     */
     public boolean isAssigned(Group group) {
         Collection groups = getInternalAssignedGroups();
         Iterator groupItr = groups.iterator();
         Group tmpGroup = null;
 
         while (groupItr.hasNext()) {
-            tmpGroup = (Group)groupItr.next();
+            tmpGroup = (Group) groupItr.next();
             if (tmpGroup == null) {
                 return false;
             }
@@ -645,22 +675,22 @@ public class UserTask extends Task implements Assignable {
         return false;
     }
 
-
     /**
      * Gets the number of assigned users.
      *
      * @return the number of assigned users.
-     **/
+     *
+     */
     public int getAssignedUserCount() {
         return getInternalAssignedUsers().size();
     }
-
 
     /**
      * Gets number of assigned groups.
      *
      * @return the number of assigned groups.
-     **/
+     *
+     */
     public int getAssignedGroupCount() {
         return getInternalAssignedGroups().size();
     }
@@ -669,23 +699,23 @@ public class UserTask extends Task implements Assignable {
      * Returns all assigned users.
      *
      * @return an iterator over all assigned users.
-     **/
+     *
+     */
     public Iterator getAssignedUsers() {
         return getInternalAssignedUsers().iterator();
     }
 
-
     /**
-     * Return the internal Collection of users
-     * assigned to this task.
+     * Return the internal Collection of users assigned to this task.
      *
      * @return a Collection of all assigned users
      * @see java.util.Collection
-     **/
+     *
+     */
     private Collection getInternalAssignedUsers() {
         if (m_assignedUsers == null) {
-            UserCollection uc = new UserCollection
-                (getAssignedUserAssociation().cursor());
+            UserCollection uc = new UserCollection(getAssignedUserAssociation().
+                    cursor());
             m_assignedUsers = new HashSet();
 
             while (uc.next()) {
@@ -695,20 +725,21 @@ public class UserTask extends Task implements Assignable {
         return m_assignedUsers;
     }
 
-
     /**
-     * Return the internal Collection of groups
-     * assigned to this task.
+     * Return the internal Collection of groups assigned to this task.
      *
      * @return a Collection of all assigned groups
      * @see java.util.Collection
-     **/
+     *
+     */
     private Collection getInternalAssignedGroups() {
         if (m_assignedGroups == null) {
             m_assignedGroups = new HashSet();
 
-            GroupCollection gc = new GroupCollection
-                (getAssignedGroupAssociation().cursor()) {};
+            GroupCollection gc =
+                            new GroupCollection(getAssignedGroupAssociation().
+                    cursor()) {
+            };
             while (gc.next()) {
                 m_assignedGroups.add(gc.getDomainObject());
             }
@@ -716,24 +747,24 @@ public class UserTask extends Task implements Assignable {
         return m_assignedGroups;
     }
 
-
     /**
      * Returns the assigned groups.
      *
      * @return an iterator over all assigned groups.
-     **/
+     *
+     */
     public Iterator getAssignedGroups() {
         return getInternalAssignedGroups().iterator();
     }
-
 
     /**
      * Retrieve the assigned users datacollection.
      *
      * @return the assigned user data collection
-     **/
+     *
+     */
     protected DataAssociation getAssignedUserAssociation() {
-        return (DataAssociation)get(ASSIGNED_USERS);
+        return (DataAssociation) get(ASSIGNED_USERS);
     }
 
     public final UserCollection getAssignedUserCollection() {
@@ -744,9 +775,10 @@ public class UserTask extends Task implements Assignable {
      * Retrieve the assigned group data collection.
      *
      * @return the assigned group data collection.
-     **/
+     *
+     */
     protected DataAssociation getAssignedGroupAssociation() {
-        return (DataAssociation)get(ASSIGNED_GROUPS);
+        return (DataAssociation) get(ASSIGNED_GROUPS);
     }
 
     public final GroupCollection getAssignedGroupCollection() {
@@ -756,7 +788,8 @@ public class UserTask extends Task implements Assignable {
     /**
      * Removes all assigned users from this task.
      *
-     **/
+     *
+     */
     private void clearUser() {
         Collection users = getInternalAssignedUsers();
         Collection users2 = new HashSet();
@@ -766,32 +799,32 @@ public class UserTask extends Task implements Assignable {
             users2.add(itr.next());
         }
 
-        itr =  users2.iterator();
+        itr = users2.iterator();
         while (itr.hasNext()) {
-            removeUser((User)itr.next());
+            removeUser((User) itr.next());
         }
     }
 
     /**
      * Removes all assigned groups from this task.
      *
-     **/
+     *
+     */
     private void clearGroup() {
         Collection groups = getInternalAssignedGroups();
         HashSet groups2 = new HashSet();
 
-        Iterator itr =  groups.iterator();
+        Iterator itr = groups.iterator();
         while (itr.hasNext()) {
             groups2.add(itr.next());
         }
 
-        itr =  groups2.iterator();
+        itr = groups2.iterator();
         while (itr.hasNext()) {
-            removeGroup((Group)itr.next());
+            removeGroup((Group) itr.next());
         }
 
     }
-
 
     /**
      * Deletes this user task. (persistent operation).
@@ -806,14 +839,15 @@ public class UserTask extends Task implements Assignable {
         super.delete();
     }
 
-
     /**
      * Tests whether the task is overdue.
      *
-     * @return <code>true</code> if the task is overdue;
+     * @return
+     * <code>true</code> if the task is overdue;
      * <code>false</code> otherwise.
      *
-     **/
+     *
+     */
     public boolean isOverdue() {
         Date now = new Date();
         Date dueDate = getDueDate();
@@ -823,33 +857,34 @@ public class UserTask extends Task implements Assignable {
         return (dueDate.getTime() < now.getTime());
     }
 
-
     /**
      * Specifies who is sending out the notification.
      *
      * @param party the sender in email messages
      * @return the previous sender if one exists otherwise null
      *
-     **/
+     *
+     */
     public Party setNotificationSender(Party party) {
         Party previousSender = getInternalNotificationSender();
         setInternalNotificationSender(party);
         return previousSender;
     }
 
-
     /**
      * Returns the notification sender.
+     *
      * @return the notification sender.
      *
-     **/
+     *
+     */
     public Party getNotificationSender() {
         return getInternalNotificationSender();
     }
 
-
     /**
-     * Method used internally to set the notification sender in the persistence layer.
+     * Method used internally to set the notification sender in the persistence
+     * layer.
      *
      * @param party the party sending the notification
      */
@@ -862,9 +897,9 @@ public class UserTask extends Task implements Assignable {
         }
     }
 
-
     /**
-     * Method used internally to get the notification sender in the persistence layer.
+     * Method used internally to get the notification sender in the persistence
+     * layer.
      *
      * @return party, party sending out the notification.
      *
@@ -872,20 +907,21 @@ public class UserTask extends Task implements Assignable {
     private Party getInternalNotificationSender() {
         if (m_notificationSender == null) {
             final BigDecimal senderID =
-                (BigDecimal) get(NOTIFICATION_SENDER_ID);
+                             (BigDecimal) get(NOTIFICATION_SENDER_ID);
 
             if (senderID == null) {
                 return null;
             }
 
             try {
-                m_notificationSender = (Party) DomainObjectFactory.newInstance
-                    (new OID(Party.BASE_DATA_OBJECT_TYPE,senderID));
+                m_notificationSender =
+                (Party) DomainObjectFactory.newInstance(new OID(
+                        Party.BASE_DATA_OBJECT_TYPE, senderID));
 
-                Assert.exists
-                    (m_notificationSender, "Party m_notificationSender");
+                Assert.exists(m_notificationSender, "Party m_notificationSender");
             } catch (DataObjectNotFoundException e) {
-                throw new UncheckedWrapperException("Error restoring notification sender",
+                throw new UncheckedWrapperException(
+                        "Error restoring notification sender",
                                                     e);
             }
         }
@@ -893,15 +929,15 @@ public class UserTask extends Task implements Assignable {
         return m_notificationSender;
     }
 
-
     /**
-     * Clones a user task. Deep cloning (except the primary
-     * key). Clones class and db-row The cloned copy is saved to
-     * persistent storage before returning.
+     * Clones a user task. Deep cloning (except the primary key). Clones class
+     * and db-row The cloned copy is saved to persistent storage before
+     * returning.
      *
      * @return a clone of the user task definition.
      *
-     **/
+     *
+     */
     public Object clone() {
         UserTask taskClone = new UserTask();
         copyAttributes(taskClone);
@@ -911,20 +947,20 @@ public class UserTask extends Task implements Assignable {
     /**
      * Exports the attributes of this domain object.
      *
-     * @param task the domain object to which this method copies the
-     * attributes of this object
-     * */
+     * @param task the domain object to which this method copies the attributes
+     * of this object
+     *
+     */
     protected void copyAttributes(UserTask task) {
         super.copyAttributes(task);
-        task.setDuration(new Duration
-                         (0,0,getDuration().getDuration()));
+        task.setDuration(new Duration(0, 0, getDuration().getDuration()));
 
         Collection assignedUsers = getInternalAssignedUsers();
         User user;
         Iterator userItr = assignedUsers.iterator();
 
         while (userItr.hasNext()) {
-            user = (User)userItr.next();
+            user = (User) userItr.next();
             task.assignUser(user);
         }
 
@@ -933,7 +969,7 @@ public class UserTask extends Task implements Assignable {
         Iterator groupItr = assignedGroups.iterator();
 
         while (groupItr.hasNext()) {
-            group = (Group)groupItr.next();
+            group = (Group) groupItr.next();
             task.assignGroup(group);
         }
 
@@ -945,7 +981,9 @@ public class UserTask extends Task implements Assignable {
 
     public static Party getAlertsSender() {
         String email = s_conf.getAlertsSender();
-        if (email == null) { return null; }
+        if (email == null) {
+            return null;
+        }
         PartyCollection parties = Party.retrieveAllParties();
         parties.addEqualsFilter("primaryEmail", email.toLowerCase());
         try {
@@ -960,11 +998,11 @@ public class UserTask extends Task implements Assignable {
     }
 
     /**
-     * Whether or not to send alerts.
-     * Subclasses can override this to send alerts based on
-     * different criteria, but they should always check super.sendAlerts()
-     * as well.
-     **/
+     * Whether or not to send alerts. Subclasses can override this to send
+     * alerts based on different criteria, but they should always check
+     * super.sendAlerts() as well.
+     *
+     */
     protected boolean sendAlerts(String operation) {
         return s_conf.isAlertsEnabled();
     }

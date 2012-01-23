@@ -37,13 +37,13 @@
         <xrd:property name="/object/contactentries/name"/>
         <xrd:property name="/object/contactentries/language"/>
         <xrd:property name="/object/contactentries/isDeleted"/>
-        <xrd:property name="/object/contactentries/description"/>
+        <xrd:property name="/object/contactentries/description"/>        
       </xrd:attributes>
       <xrd:associations rule="include">
         <xrd:property name="/object/person"/>
         <xrd:property name="/object/address"/>
         <xrd:property name="/object/contactentries"/>
-        <xrd:property name="/object/organizationalunit"/>
+        <xrd:property name="/object/organizationalunit"/>        
       </xrd:associations>
     </xrd:adapter>
   </xrd:context>
