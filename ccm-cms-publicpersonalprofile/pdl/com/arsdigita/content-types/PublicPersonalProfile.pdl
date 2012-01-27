@@ -7,7 +7,7 @@ object type PublicPersonalProfile extends ContentPage {
 
        String[0..1] profileUrl = ct_public_personal_profiles.profile_url VARCHAR(256);    
 
-       String[0..1] position = ct_public_personal_profile.position VARCHAR(2048);
+       String[0..1] position = ct_public_personal_profiles.position VARCHAR(2048);
        String[0..1] researchInterests = ct_public_personal_profiles.research_interests CLOB;
        String[0..1] misc = ct_public_personal_profiles.misc CLOB;
       

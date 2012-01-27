@@ -2,7 +2,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -13,6 +12,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
+import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
 /**
@@ -20,28 +20,27 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class PublicPersonalProfilePositionEditForm
+public class PublicPersonalProfileMiscEditForm
         extends BasicItemForm
-        implements FormProcessListener, FormInitListener {
-
-    public PublicPersonalProfilePositionEditForm(
-            final ItemSelectionModel itemModel) {
-        super("PublicPersonalProfileEditPosition", itemModel);
+        implements FormInitListener, FormProcessListener {
+            
+    public PublicPersonalProfileMiscEditForm(final ItemSelectionModel itemModel) {
+        super("PublicPersonalProfileEditMisc", itemModel);
     }
-
+    
     @Override
     protected void addWidgets() {
-        add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.position")));
-        final ParameterModel positionParam = new StringParameter(
-                PublicPersonalProfile.POSITION);
-        final TextArea position = new TextArea(positionParam);
-        position.setCols(75);
-        position.setRows(8);
-        add(position);
+          add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.misc")));
+        final ParameterModel miscParam = new StringParameter(
+                PublicPersonalProfile.MISC);
+        final TextArea misc = new CMSDHTMLEditor(miscParam);
+        misc.setCols(75);
+        misc.setRows(8);
+        add(misc);
     }
-
-    @Override
+    
+     @Override
     public void init(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
@@ -49,7 +48,7 @@ public class PublicPersonalProfilePositionEditForm
                                     (PublicPersonalProfile) getItemSelectionModel().
                 getSelectedItem(state);
 
-        data.put(PublicPersonalProfile.POSITION, profile.getPosition());
+        data.put(PublicPersonalProfile.MISC, profile.getMisc());
 
         setVisible(state, true);
     }
@@ -65,12 +64,14 @@ public class PublicPersonalProfilePositionEditForm
 
         if ((profile != null)
             && getSaveCancelSection().getSaveButton().isSelected(state)) {
-            profile.setPosition(
-                    (String) data.get(PublicPersonalProfile.POSITION));
+            profile.setMisc(
+                    (String) data.get(PublicPersonalProfile.MISC));
 
             profile.save();
         }
 
         init(fse);
     }
+    
+    
 }

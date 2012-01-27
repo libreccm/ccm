@@ -4,29 +4,54 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
                     
     <ctd:content-type
-      label="PublicPersonalProfile"
-      description="Item which is used to create a public personal profile."
-      objectType="com.arsdigita.cms.contenttypes.PublicPersonalProfile"
-      classname="com.arsdigita.cms.contenttypes.PublicPersonalProfile">
+        label="PublicPersonalProfile"
+        description="Item which is used to create a public personal profile."
+        objectType="com.arsdigita.cms.contenttypes.PublicPersonalProfile"
+        classname="com.arsdigita.cms.contenttypes.PublicPersonalProfile">
 
       <!--  <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">-->
-      <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileCreate">
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileCreate">
       
             <ctd:authoring-step
-	  labelKey="publicpersonalprofile.ui.profile_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
-	  descriptionKey="publicpersonalprofile.ui.profile_properties.title.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
-	  component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfilePropertiesStep"
-	  ordering="1"/>
+                labelKey="publicpersonalprofile.ui.profile_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                descriptionKey="publicpersonalprofile.ui.profile_properties.title.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfilePropertiesStep"
+                ordering="1"/>
           
             <ctd:authoring-step
-        	  labelKey="publicpersonalprofile.ui.profile_nav.title"
-                  labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
-                  descriptionKey="publicpersonalprofile.ui.profile_nav.description"
-                  descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
-                  component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileNavigationStep"
-                  ordering="2"/>
+                labelKey="publicpersonalprofile.ui.profile_nav.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                descriptionKey="publicpersonalprofile.ui.profile_nav.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileNavigationStep"
+                ordering="2"/>
+                  
+            <ctd:authoring-step
+                labelKey="publicpersonalprofile.ui.profile_position.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                descriptionKey="publicpersonalprofile.ui.profile_position.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfilePositionStep"
+                ordering="3"/>
+                
+                         
+            <ctd:authoring-step
+                labelKey="publicpersonalprofile.ui.research_interests.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                descriptionKey="publicpersonalprofile.ui.research_interests.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResearchInterestsStep"
+                ordering="4"/>
+                
+                <ctd:authoring-step
+                labelKey="publicpersonalprofile.ui.misc.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                descriptionKey="publicpersonalprofile.ui.misc.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources"
+                component="com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileMiscStep"
+                ordering="4"/>
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 
