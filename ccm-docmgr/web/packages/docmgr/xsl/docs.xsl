@@ -16,10 +16,7 @@
   
   <xsl:output method="html" indent="yes"/>
   
-  <xsl:param name="contextPath"/>
-  
-  <xsl:variable name="assets-dir">/packages/portalserver/www/assets</xsl:variable>
-  <xsl:variable name="css-dir">/packages/portalserver/www/css</xsl:variable>
+  <xsl:param name="internal-theme"/>
 
   
   <xsl:template match="bebop:page[@class='DOCS']" 
@@ -39,8 +36,10 @@
           table.topRuleUnderTabs { background: rgb(162,30,30);}
         </style>
         -->
-        <link rel="stylesheet" type="text/css" href="/css/acs-master.css" />
-        <link rel="stylesheet" type="text/css" href="/__ccm__/static/cms/admin/cms-admin.css" />
+        <link rel="stylesheet" type="text/css" 
+              href="{$internal-theme}/css/acs-master.css" />
+        <link rel="stylesheet" type="text/css" 
+              href="{$internal-theme}/packages/cms/xml/admin/cms-admin.css" />
       </head>
 
       <body>
@@ -102,7 +101,7 @@
  </xsl:template>
 
  <xsl:template match="bebop:label[@class='isFile']">
-    <img src="{$contextPath}/assets/file.gif" border="0">
+    <img src="{$internal-theme}/images/file.gif" border="0">
        <xsl:attribute name="alt">
          <xsl:apply-templates/>
        </xsl:attribute>
@@ -111,7 +110,7 @@
  </xsl:template>  
    
  <xsl:template match="bebop:label[@class='isFolder']">
-    <img src="{$contextPath}/assets/folder.gif" border="0">
+    <img src="{$internal-theme}/images/folder.gif" border="0">
        <xsl:attribute name="alt">
          <xsl:apply-templates/>
        </xsl:attribute>
@@ -140,7 +139,7 @@
              <a href="{@href}">
                <img alt="Expand" border="0" height="11" width="11">
                  <xsl:attribute name="src">
-                   <xsl:value-of select="//@assets"/>/assets/plus-box.gif</xsl:attribute>
+                   <xsl:value-of select="//@assets"/>{$internal-theme}/images/plus-box.gif</xsl:attribute>
                </img>
              </a>
            </xsl:when>
@@ -148,7 +147,7 @@
              <a href="{@href}">
                <img alt="Collapse" border="0" height="11" width="11">
                  <xsl:attribute name="src">
-                   <xsl:value-of select="//@assets"/>/assets/minus-box.gif</xsl:attribute>
+                   <xsl:value-of select="//@assets"/>{$internal-theme}/images/minus-box.gif</xsl:attribute>
                </img>
              </a>
            </xsl:when>
@@ -163,7 +162,7 @@
              </input>                        
              <img alt="folder" border="0" height="24" width="24">
                 <xsl:attribute name="src">
-                <xsl:value-of select="//@assets"/>/assets/folder.gif</xsl:attribute>
+                <xsl:value-of select="//@assets"/>{$internal-theme}/images/folder.gif</xsl:attribute>
              </img>
            </xsl:when>
            <xsl:when test="@radioGroup='f'"> 
@@ -171,7 +170,7 @@
              </xsl:text>                  
              <img alt="folder" border="0" height="24" width="24">
                 <xsl:attribute name="src">
-                <xsl:value-of select="//@assets"/>/assets/folder.gif</xsl:attribute>
+                <xsl:value-of select="//@assets"/>{$internal-theme}/images/folder.gif</xsl:attribute>
              </img>
            </xsl:when>
    
@@ -290,7 +289,7 @@
             </td>
             <td class="global-link-icon">
              <a href="{../docs:global/bebop:link[@class = 'signoutLink']/@href}">
-              <img src="/assets/lock.png" height="18" width="14"/>
+              <img src="{$internal-theme}/images/lock.png" height="18" width="14"/>
              </a>
             </td>
             <td class="global-link">
@@ -365,7 +364,11 @@
                   <!-- start inactive tab -->
                   <td>
                     <table cellpadding="0" cellspacing="0" border="0">
-                      <tr height="3"><td><img src="/assets/general/spacer.gif" height="3"/></td></tr>
+                      <tr height="3">
+                        <td>
+                          <img src="{$internal-theme}/images/spacer.gif" height="3"/>
+                        </td>
+                      </tr>
                       <tr height="23">
                          <td class="tabBeginningOff"><xsl:text>&#160;&#160;</xsl:text></td>
                          <td class="inactiveTab" nowrap="nowrap"><xsl:apply-templates select="bebop:link"/></td>
@@ -414,7 +417,11 @@
           </table>
         </td>
       </tr>
-      <tr><td colspan="3" class="inactiveTabColor" height="2"><img src="/assets/general/spacer.gif" height="2"/></td></tr>
+      <tr>
+        <td colspan="3" class="inactiveTabColor" height="2">
+          <img src="{$internal-theme}/images/spacer.gif" height="2"/>
+        </td>
+      </tr>
     </xsl:if>
     <tr>
       <td class="splitPanelLeft">
@@ -422,7 +429,9 @@
           <tr><td><xsl:apply-templates select="bebop:cell[2]"/></td></tr>
         </table>
       </td>
-      <td class="inactiveTabColor" width="2"><img src="/assets/general/spacer.gif" width="2"/></td>
+      <td class="inactiveTabColor" width="2">
+        <img src="{$internal-theme}/images/spacer.gif" width="2"/>
+      </td>
       <td class="splitPanelRight">
         <table width="100%" cellspacing="4" cellpadding="0" border="0">
           <tr><td><xsl:apply-templates select="bebop:cell[3]"/></td></tr>
@@ -513,7 +522,7 @@ we can have a different image -->
        <![CDATA[ <!-- begin script ]]>
 
        <!-- This is ugly, but I need the whole output on one line =p -->
-       <![CDATA[ document.write(']]><a href="{@href}" onclick="{@onclick}"><img src="{$contextPath}/assets/images/action-generic.png" border="0" width="11" height="11"><xsl:attribute name="alt"><xsl:apply-templates mode="javascript-mode"/></xsl:attribute></img><![CDATA[')]]>
+       <![CDATA[ document.write(']]><a href="{@href}" onclick="{@onclick}"><img src="{$internal-theme}/images/action-generic.png" border="0" width="11" height="11"><xsl:attribute name="alt"><xsl:apply-templates mode="javascript-mode"/></xsl:attribute></img><![CDATA[')]]>
        <![CDATA[ document.write(']]></a><![CDATA[')]]>
        <![CDATA[ // end script --> ]]>
        </script>
@@ -526,7 +535,7 @@ we can have a different image -->
        </script>
 
        <a href="{@href_no_javascript}">
-         <img src="{$contextPath}/assets/images/action-generic.png" border="0" width="11" height="11">
+         <img src="{{$internal-theme}/images/action-generic.png" border="0" width="11" height="11">
            <xsl:attribute name="alt">
              <xsl:apply-templates/>
            </xsl:attribute>

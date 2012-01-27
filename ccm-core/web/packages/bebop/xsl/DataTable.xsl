@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+   exclude-result-prefixes="bebop"
+                   version="1.0">
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-        xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-        exclude-result-prefixes="bebop">
+<xsl:import href="TabbedPane.xsl"/>
+<xsl:import href="DimensionalNavbar.xsl"/>
 
-  <xsl:import href="TabbedPane.xsl"/>
-  <xsl:import href="DimensionalNavbar.xsl"/>
+<xsl:param name="internal-theme"/>
+
 
 <xsl:template match="bebop:table[@class='dataTable']">
 <table cellpadding="1" cellspacing="2" border="0">
@@ -26,14 +29,23 @@
   <xsl:param name="direction">asc</xsl:param>
   <tr class="table_header" bgcolor="#ffffff">
     <xsl:for-each select="cell|bebop:cell">
-          <th class="table_header" nowrap="nowrap">
-            <xsl:text>&#160;</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:choose>
-              <xsl:when test="(position()-1)=$orderColumn">
-              <xsl:text>&#160;</xsl:text>   
+      <th class="table_header" nowrap="nowrap">
+        <xsl:text>&#160;</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:choose>
+          <xsl:when test="(position()-1)=$orderColumn">
+            <xsl:text>&#160;</xsl:text>   
               <img border="0">
-                <xsl:attribute name="src"><xsl:choose><xsl:when test="$direction='asc'"><xsl:value-of select="//@assets"/>/assets/gray-triangle-up.gif</xsl:when><xsl:otherwise><xsl:value-of select="//@assets"/>/assets/gray-triangle-down.gif</xsl:otherwise></xsl:choose></xsl:attribute>
+                <xsl:attribute name="src">
+                  <xsl:choose>
+                    <xsl:when test="$direction='asc'">
+                      <xsl:value-of select="//@assets"/>{$internal-theme}/images/gray-triangle-up.gif
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="//@assets"/>{$internal-theme}/images/gray-triangle-down.gif
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:attribute>
               </img>
              </xsl:when> 
              <xsl:otherwise>

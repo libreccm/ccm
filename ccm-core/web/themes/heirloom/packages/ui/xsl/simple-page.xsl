@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:ui="http://www.arsdigita.com/ui/1.0"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
+              xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+               xmlns:ui="http://www.arsdigita.com/ui/1.0"
+            xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
   
   <xsl:import href="../../bebop/xsl/dcp.xsl"/>
   <xsl:output method="html" indent="yes"/>
-  
+
   <xsl:param name="context-prefix"/>
   
   <xsl:template name="ui:simplePage" match="bebop:page[@class='simplePage']" >

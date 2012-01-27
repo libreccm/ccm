@@ -6,6 +6,8 @@
   
  <xsl:output method="html" indent="yes"/>
  
+ <xsl:param name="internal-theme"/>
+ 
  
  <xsl:template name="ui:userBanner" match="ui:userBanner" >
    <xsl:choose>
@@ -16,6 +18,8 @@
        <tr>
         <!-- Shadow man logo by default -->
         <!--<a href="http://www.redhat.com"><td class="globalLogo"></td></a>-->
+         <td id="logo"><img src="{$theme-prefix}/images/aplaws-logo-small.png" 
+                            height="30" width="30"/></td>
          <td><xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text></td>
           <td style="margin: 0; border: 0; padding: 0;">
            <table align="center" style="margin: 0; border: 0; padding: 0;">
@@ -35,8 +39,11 @@
            <table align="right" style="margin: 0; border: 0; padding: 0;">
             <tr>
 <!-- Help going away for now, but retaining code -->
-<!--             <td class="global-link-icon">
-               <a href="/assets/help/toc_main.html"><img src="/assets/lifesaver.png" height="18" width="21"/></a>
+<!--         <td class="global-link-icon">
+               <a href="/assets/help/toc_main.html">
+                 <img src="{$internal-theme}/images/lifesaver.png" 
+                      height="18" width="21"/>
+               </a>
              </td>
              <td class="global-link">
                <a href="/assets/help/toc_main.html">
@@ -49,7 +56,7 @@
                <xsl:attribute name="href">
                 <xsl:value-of select="@workspaceURL"/>
                </xsl:attribute>
-               <img src="/assets/home.png" height="18" width="18"/>
+               <img src="{$internal-theme}/images/home.png" height="18" width="18"/>
               </a>
              </td>
              <td class="global-link">
@@ -66,7 +73,7 @@
                <xsl:attribute name="href">
                  <xsl:value-of select="@logoutURL"/>
                </xsl:attribute>
-               <img src="/assets/lock.png" height="18" width="14"/>
+               <img src="{$internal-theme}/images/lock.png" height="18" width="14"/>
               </a>
             </td>
             <td class="global-link">
@@ -88,11 +95,14 @@
        <tr>
         <!-- Shadow man logo by default -->
         <!--<a href="http://www.redhat.com"><td class="globalLogo"></td></a>-->        
+        <td id="logo"><img src="{$theme-prefix}/images/aplaws-logo-small.png" 
+                           height="30" width="30"/></td>
         <td><xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text></td>
         <td style="margin: 0; border: 0; padding: 0;">
          <table align="center" style="margin: 0; border: 0; padding: 0;">
           <tr>
-           <td style="margin: 0; color: #3f3f3f; border: 0; padding: 0; padding-right: 18px;">
+           <td style="margin: 0; color: #3f3f3f; border: 0; padding: 0; 
+                      padding-right: 18px;">
             You are not currently logged in
            </td>
           </tr>

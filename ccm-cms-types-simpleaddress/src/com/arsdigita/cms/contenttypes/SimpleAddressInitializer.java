@@ -71,13 +71,14 @@ public class SimpleAddressInitializer extends ContentTypeInitializer {
 
     /**
      * Provides location of the stylesheets assoziated with this content type.
-     * (As of 6.6.x it is really used tp locate the content type stylesheet,
-     * in distinction from location of applications stylesheets.)
+     * (As of 6.6.x it is really used to locate the content type stylesheet,
+     * in distinction from locating application stylesheets.)
      * @return
      */
     @Override
     public String[] getStylesheets() {
         return new String[] {
-            "/static/content-types/com/arsdigita/cms/contenttypes/SimpleAddress.xsl" };
+        //  "/static/content-types/com/arsdigita/cms/contenttypes/SimpleAddress.xsl" };
+            "/themes/heirloom/contenttypes/SimpleAddress.xsl" };
     }
 }

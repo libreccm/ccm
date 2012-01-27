@@ -10,6 +10,7 @@
      This file contains templates related
      to generating <head> tags in HTML
   -->
+  <xsl:param name="theme-prefix" />
 
   <xsl:template name="aplaws:pageTitle">
     <xsl:value-of select="/bebop:page/bebop:title"/>
@@ -28,7 +29,7 @@
      ccm-cms/web/__ccm__/static/cms/admin/page/page.css
      may be a copy&paste error                                               -->
   <xsl:template name="aplaws:headerStyleSheets">
-    <link rel="stylesheet" href="/__ccm__/themes/aplaws/lib/page.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{$theme-prefix}/lib/page.css" type="text/css" media="screen"/>
   </xsl:template>
 
 </xsl:stylesheet>

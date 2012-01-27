@@ -144,12 +144,18 @@ public class URL {
     public static final String STATIC_DIR = INTERNAL_DIR + "/static";
     /**
      * The standard location for XSL files.
+     * No longer in use.
      */
-    public static final String XSL_DIR = INTERNAL_DIR + "/xsl";
+    // public static final String XSL_DIR = INTERNAL_DIR + "/xsl";
     /**
      * The standard location for servlets.
      */
     public static final String SERVLET_DIR = INTERNAL_DIR + "/servlet";
+    
+    public static final String THEMES_DIR = "/themes";
+    
+    public static final String INTERNAL_THEME_DIR = THEMES_DIR + "/heirloom";
+    
     private static final ThreadLocal s_empty = new EmptyParameterMap();
     private StringBuffer m_url;
     private ParameterMap m_params;

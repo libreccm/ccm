@@ -12,6 +12,8 @@
 	doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 	indent="yes" />
+ 
+  <xsl:param name="internal-theme"/>
 
   <xsl:template match="ui:debugPanel">
     <hr width="100%"/>
@@ -25,7 +27,8 @@
     <tr>
       <td>
         <a href="{@url}">
-          <img src="/assets/action-{@type}.png" width="14" height="14" border="0" alt="Debug"/>
+          <img src="{$internal-theme}/images/action-{@type}.png" 
+               width="14" height="14" border="0" alt="Debug"/>
         </a>
         <xsl:text>&#160;</xsl:text>
         <a href="{@url}">

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:formbuilder="http://www.arsdigita.com/formbuilder/1.0"
-        xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-        xmlns:cms="http://www.arsdigita.com/cms/1.0">
+              xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+                  version="1.0" >
 
 <!-- This contains option widgets such as checkbox and radio as well
      as select and multi-select -->

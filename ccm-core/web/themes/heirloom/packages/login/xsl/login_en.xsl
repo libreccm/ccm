@@ -15,6 +15,7 @@
   <xsl:import href="../../ui/xsl/ui.xsl"/>
 
   <xsl:param name="dispatcher-prefix"/>
+  <xsl:param name="internal-theme"/>
 
   <!-- new version of login page -->
   <xsl:template match="bebop:page[@application='login']">
@@ -23,7 +24,7 @@
   <head>
     <title>Log in</title>
 
-    <link href="/css/acs-master.css" type="text/css" rel="stylesheet"/>
+    <link href="{$internal-theme}/css/acs-master.css" type="text/css" rel="stylesheet"/>
   </head>
 
   <body link="#000066" vlink="#333399" bgcolor="#FFFFFF">

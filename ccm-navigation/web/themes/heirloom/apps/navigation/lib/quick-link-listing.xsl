@@ -43,11 +43,11 @@
         </tr>
         <tr class="{$class}">
           <td>
-            <a href="{nav:action[@name='edit']/@url}"><img src="/__ccm__/static/cms/admin/action-group/action-generic.png" width="14" height="14" border="0"/></a>
+            <a href="{nav:action[@name='edit']/@url}"><img src="{$internal-theme}/images/action-generic.png" width="14" height="14" border="0"/></a>
             <a href="{nav:action[@name='edit']/@url}">Edit</a>
           </td>
           <td>
-            <a href="{nav:action[@name='delete']/@url}"><img src="/__ccm__/static/cms/admin/action-group/action-delete.png" width="14" height="14" border="0"/></a>
+            <a href="{nav:action[@name='delete']/@url}"><img src="{$internal-theme}/images/action-delete.png" width="14" height="14" border="0"/></a>
             <a href="{nav:action[@name='delete']/@url}">Delete</a>
           </td>
         </tr>

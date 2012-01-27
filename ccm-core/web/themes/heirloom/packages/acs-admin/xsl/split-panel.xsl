@@ -1,5 +1,10 @@
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+              xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                  version="1.0">
+ 
+ <xsl:param name="internal-theme"/>
+ 
 
 <!-- Sidebar Nav Panel -->
 <xsl:template match="*[@class='sidebarNavPanel']">
@@ -114,7 +119,7 @@
         <td class="split_pane_left_item_selected" nowrap="1">
           <xsl:apply-templates/><xsl:text>&#160;</xsl:text><img border="0" height="9" width="5">
             <xsl:attribute name="src">
-              <xsl:value-of select="//@assets"/>/assets/images/arrow-right.gif</xsl:attribute>
+              <xsl:value-of select="//@assets"/>{$internal-theme}/images/arrow-right.gif</xsl:attribute>
             </img>
           </td>
         </tr>

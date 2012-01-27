@@ -21,9 +21,11 @@
 <xsl:output method="html" indent="yes"/>
 
 <xsl:param name="contextPath"/>
+<xsl:param name="internal-theme"/>
 
 <xsl:variable name="assets-dir">/packages/portalserver/www/assets</xsl:variable>
 <xsl:variable name="css-dir">/packages/portalserver/www/css</xsl:variable>
+
 
 <xsl:template match="bebop:page[@class='faq']">
   <html>
@@ -83,12 +85,17 @@
             </td>
 <!-- Removing help link but maintaining code -->
 <!--
-                  <td class="global-link-icon"><a href="/assets/cw/help/toc_main.html"><img src="/assets/lifesaver.png" height="18" width="21"/></a></td>
+                  <td class="global-link-icon"><a href="/assets/cw/help/toc_main.html"><img src="{$internal-theme}/images/lifesaver.png" height="18" width="21"/></a></td>
                   <td class="global-link"><a href="/assets/cw/help/toc_main.html">Help</a></td>
 -->
-                  <td class="global-link-icon"><a href="{../faq:global/bebop:link[@class = 'signoutLink']/@href}"><img src="/assets/lock.png" height="18" width="14"/></a></td>
-                  <td class="global-link"><a href="{../faq:global/bebop:link[@class = 'signoutLink']/@href}">Sign out</a></td>
-
+            <td class="global-link-icon">
+              <a href="{../faq:global/bebop:link[@class = 'signoutLink']/@href}">
+                <img src="{$internal-theme}/images/lock.png" height="18" width="14"/>
+              </a>
+            </td>
+            <td class="global-link">
+              <a href="{../faq:global/bebop:link[@class = 'signoutLink']/@href}">Sign out</a>
+            </td>
 
           </tr>
         </table>

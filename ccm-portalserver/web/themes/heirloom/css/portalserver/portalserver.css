@@ -1,0 +1,734 @@
+/*
+ * Fundamental Styles
+ */
+
+body {
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  margin: 0;
+}
+
+table {
+  border-spacing: 0;
+  empty-cells: show;
+}
+
+td {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  vertical-align: top;
+}
+
+.main   { /* background-color: #ffffff; */ }
+.dark   { /* background-color: #666666; */ }
+.medium { /* background-color: #999999; */ }
+.light  { /* background-color: #cccccc; */ }
+
+.activeTabColor {
+  background: #A2E1E1;
+}
+
+.inactiveTabColor {
+  background: #E1E1E1;
+}
+
+.dialogTitle {
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+.messageOfTheDay {
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 1px;
+  border-color: #cccccc;
+}
+
+/* We would use a div here, but it triggers a rendering bug. */
+
+table.setInside {
+  width: 100%;
+  border-spacing: 0;
+}
+
+table.setInside td.setInside {
+  padding: 6px;
+  padding-bottom: 0;
+}
+
+/* 
+ * Global Header
+ *
+ * This is currently a gray stripe at the top of each portal and
+ * application page.  The left side, a context bar, uses the class
+ * attribute "globalNavigation" and the right uses "globalControl".
+ */
+
+table.globalHeader {
+  background-color: rgb(225,225,225);
+  font-size: 10pt;
+  width: 100%;
+}
+
+table.globalHeader td {
+  padding: 6px;
+  padding-bottom: 7px;
+  vertical-align: middle;
+}
+
+table.globalHeader td.globalLogo {
+  width: 25px;
+  height: 25px;
+  background-image: url(RHCLogoRoundRedSmallest.png);
+  background-repeat: no-repeat;
+}
+
+td.globalNavigation {
+  color: #3F3F3F;
+}
+
+td.globalNavigation a {
+  color: #3F3F3F;
+}
+
+td.global-links {
+  float: right;
+}
+
+td.global-link-icon {
+  padding: 0 4px 0 10px;
+}
+
+td.global-link-icon img {
+  border: 0;
+}
+
+td.global-link a {
+  color: blue;
+  text-decoration: none;
+}
+
+td.globalNavigation span.contextBarSeparator {
+  color: #3F3F3F;
+  font-weight: bold;
+}
+
+td.globalNavigation span.immediateContext {
+  color: 3F3F3F;
+  font-weight: bold;
+}
+
+form.globalSearch {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+td.globalControl {
+  color: 3F3F3F;
+  margin: 0;
+  padding: 0;
+  padding-right: 6px;
+  text-align: right;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+td.globalControl a, 
+td.globalControl img {
+  margin: 0;
+  padding: 0;
+  color: 3F3F3F;
+  vertical-align: middle;
+  border: 0 none;
+  text-decoration: none;
+}
+
+/*
+ * Local Header
+ *
+ * The header elements right under the blue stripe.  These are
+ * elements logically connected to the current application, not to the
+ * system in general.
+ */
+
+table.localHeader {
+  width: 100%;
+}
+
+table.localHeader td.localTitle {
+  text-align: left;
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+table.localHeader td.localControl,
+table.localHeader td.localControl a {
+  text-align: right;
+}
+
+/* 
+ * Split Panel 
+ */
+
+table.splitPanel {
+  width: 100%;
+}
+
+table.splitPanelHeader {
+  /* Nothing here yet. */
+}
+
+td.splitPanelLeft {
+  width: 25%;
+}
+
+td.splitPanelRight {
+  width: 75%;
+}
+
+/* 
+ * Tabs and Header/Body/Footer Separators
+ */
+
+table.topRuleNoTabs {
+  background-color: rgb(162,30,30);
+  width: 100%;
+  margin: 0;
+  margin-bottom: 6px;
+  border-top: 1px solid black;
+  padding: 0;
+}
+
+table.topRuleUnderTabs {
+  background-color: rgb(162,30,30);
+  width: 100%;
+  margin: 0;
+  margin-bottom: 6px;
+  padding: 0;
+}
+
+table.bottomRule {
+  background-color: rgb(162,30,30);
+  width: 100%;
+  margin: 0;
+  margin-top: 6px;
+  border-bottom: 1px solid black;
+  padding: 0;
+}
+
+table.tabs {
+  margin: 0;
+  border-spacing: 0;
+}
+
+table.tabs a {
+  color: black;
+  text-decoration: none;
+  white-space: nowrap;
+}
+                                   
+table.tabs td {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 10pt;
+  color: black;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+table.tabs td.activeTab {
+  vertical-align: middle;
+  background-color: rgb(162,30,30);
+  border-top: 1px solid black;
+  color: #FFFFFF;
+  padding-top: 1px;
+}
+
+table.tabs td.inactiveTab {
+  vertical-align: middle;
+  background-color: rgb(225,225,225);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  color: #DDDDDD;
+  padding-top: 2px;
+}
+
+table.tabs td.trimSpace {
+  border-bottom: 1px solid black;
+}
+
+table.tabs td.tabBeginning {
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  background-color: rgb(162,30,30);
+  width: 6px;
+}
+
+table.tabs td.tabBeginningOff {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: rgb(225,225,225);
+  width: 6px;
+}
+
+table.tabs td.tabEnd {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  background-color: rgb(162,30,30);
+  width: 6px;
+}
+
+table.tabs td.tabEndOff {
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: rgb(225,225,225);
+  width: 6px;
+}
+
+/*
+ * Portals and Portlets
+ * 
+ * "NW" denotes Narrow and Wide columns, in that order.  Other layouts
+ * will require other CSS rules.
+ */
+
+table.portalLayoutNW {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+table.portalLayoutNW td.narrowColumn {
+  width: 25%;
+}
+
+table.portalLayoutNW td.columnSeparator {
+  border: 0;
+  padding: 0;
+}
+
+table.portalLayoutNW td.wideColumn {
+  width: 75%;
+}
+
+table.portalLayoutW {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+table.portalLayoutW td.VeryWideColumn {
+  width:100%;
+}
+
+table.portalLayoutWN {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+table.portalLayoutWN td.narrowColumn {
+  width: 25%;
+}
+
+table.portalLayoutWN td.columnSeparator {
+  border: 0;
+  padding: 0;
+}
+
+table.portalLayoutWN td.wideColumn {
+  width: 75%;
+}
+
+table.portalLayoutNWN {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+table.portalLayoutNWN td.narrowColumnLeft {
+  width: 25%;
+}
+
+table.portalLayoutNWN td.narrowColumnRight {
+  width: 25%;
+}
+
+table.portalLayoutNWN td.columnSeparator {
+  border: 0;
+  padding: 0;
+}
+
+table.portalLayoutNWN td.wideColumn {
+  width: 50%;
+}
+
+table.portalLayoutNNN {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+table.portalLayoutNNN td.narrowColumnLeft {
+  width: 33%;
+}
+
+table.portalLayoutNNN td.narrowColumnRight {
+  width: 33%;
+}
+
+table.portalLayoutNNN td.columnSeparator {
+  border: 0;
+  padding: 0;
+}
+
+table.portalLayoutNNN td.narrowColumnCenter {
+  width: 33%;
+}
+
+table.portlet {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 6px;
+  padding: 0;
+}
+
+table.portlet td.portletHeader {
+  font-weight: bold;
+  background: #dddddd;
+  color: #666666;
+  padding: 4px;
+  padding-left: 6px;  
+  vertical-align: middle;
+}
+
+table.portlet td.portletIcon {
+  background: #dddddd;
+  padding: 4px;
+  text-align: right;
+}
+
+table.portlet td.portletBody {
+  padding: 6px;
+}
+
+/* 
+ * Fancy Tables (for tabular data)
+ */
+
+table.fancy {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid black;
+}
+
+table.fancy th {
+  padding: 4px;
+  border:0 none;
+  font-size: 9pt;
+  text-align: left;
+}
+
+table.fancy td {
+  padding: 4;
+  border: 0 none;
+  font-size: 9pt;
+}
+
+table.fancy thead tr {
+  background-color: #eeeeee;
+}
+
+table.fancy thead tr.subheading {
+  background-color: #93bee2;
+}
+
+table.fancy thead tr.subheading td {
+  text-align: right;
+}
+
+table.fancy tbody td.subDivider {
+  padding: 0;
+  background-color: #93bee2;
+}
+
+table.fancy thead th {
+  font-weight: bold;
+  text-align: left;
+  white-space: nowrap;
+}
+
+table.fancy thead th.numeric {
+  text-align: right;
+}
+
+table.fancy thead th.date {
+  text-align: center;
+}
+
+table.fancy thead th.icon {
+  text-align: center;
+}
+
+table.fancy tbody td {
+  border-top: 1px solid black;
+}
+
+table.fancy tbody td.noborder {
+  border-top: none;
+}
+
+table.fancy tbody td.numeric {
+  text-align: right;
+}
+
+table.fancy tbody td.date {
+  text-align: right;
+  white-space: nowrap;
+}
+
+table.fancy tbody td.icon {
+  text-align: center;
+}
+
+/*
+ *  With is for tables that want to look standard (no lines on the inside) but
+ *  also want to have the really thin line around the outside
+ */
+table.plainWithBorder {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid black;
+}
+
+
+/*
+ * Miscellaneous
+ */
+
+select {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9pt;
+}
+
+tr.rowEven  { background-color: #eeeeff; }
+
+th {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  font-weight: bold;
+  text-align: left;
+  vertical-align: bottom;
+}
+
+td.panelHeader {
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  vertical-align: middle;
+  text-align: left;
+  font-weight: bold;  
+}
+
+/* styles for section headers */
+
+table.sectionHeader {
+  border:0 none;
+}
+
+table.sectionHeader td {
+  font-weight:bold;
+  font-size:12pt;
+  border:0 none;
+  white-space:nowrap;
+}
+
+table.sectionHeader td.add {
+  text-align:right;
+}
+
+table.sectionHeader td.path {
+  text-align:right;
+  font-family:monospace;
+  font-weight:normal;
+  font-size:10pt;
+}
+
+/* styles for colorpicker */
+table.colorband {
+   border:1px solid black;
+} 
+table.colorband td {
+  width:20px;
+  height:20px;
+  border:1px solid black;
+} 
+
+/* styles for controlBar */
+
+table.controlBar {
+  width:100%;
+  font-size:8pt;
+  border:0 none;
+  border-collapse:collapse;
+  border-spacing:0;
+  border:1px solid black;
+}
+
+table.controlBar td {
+  font-size:8pt;
+  border:0 none;
+  white-space:nowrap;
+}
+
+table.controlBar span {
+  font-size:8pt;
+  font-weight:bold;
+  border:0 none;
+  white-space:nowrap;
+}
+
+table.controlBar select {
+  font-size:8pt;
+  vertical-align: middle;
+}
+
+table.controlBar input {
+  font-size:8pt;
+  vertical-align: middle;
+}
+
+table.controlBar img {
+  vertical-align: middle;
+}
+
+tbody.controlBar td {
+  border-top:1px solid black;
+}
+
+tbody.controlBar td.numeric {
+  text-align:right;
+  padding-right:20px;
+}
+
+tbody.controlBar td.date {
+  text-align:right;
+  white-space:nowrap;
+}
+
+tbody.controlBar td.icon {
+  text-align:center;
+}
+
+/**************Admin style*****************/
+
+body {
+  margin: 0;
+}
+div.tabs div, div.tabs table {
+  position: relative;
+}
+
+div.tabs {
+  margin: 0px 0 4px 0;
+}
+
+div.tabs table {
+  margin-left: 6px;
+}
+
+div.tabs table.tab-set {
+  top: 1px;
+  border-collapse: collapse;
+  float: left;
+  margin-left: 6px;
+  margin: 0 0 0 4px;
+  border: 0;
+  padding: 0;
+  border-spacing: 0;
+  font-size: x-small;
+}
+
+div.tabs table td {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+div.tabs table td.end {
+  width: 10px;
+}
+
+div.tabs table td.label {
+  padding: 5px 0 3px 10px;
+}
+
+div.tabs table td.current-tab-end {
+  width: 10px;
+}
+
+div.tabs table td.current-tab-label {
+  padding: 5px 0 3px 10px;
+}
+
+/* When selected */
+
+div.tabs table.selected {
+  z-index: 20;
+  background: rgb(162,30,30) url(tab-selected.png) no-repeat;
+}
+
+div.tabs table.tab-set td.current-tab-label {
+  color: white;
+  background: rgb(162,30,30) url(tab-selected.png) no-repeat;
+}
+div.tabs table.tab-set td.current-tab-end {
+  background: url(tab-selected-end.png) no-repeat;
+}
+
+/* When not selected */
+
+div.tabs table.unselected {
+  background: rgb(225,225,225) url(tab-unselected.png) no-repeat;
+}
+
+div.tabs table.tab-set td.label {
+  color: rgb(63,63,63);
+  background: rgb(225,225,225) url(tab-unselected.png) no-repeat;
+}
+
+div.tabs table.tab-set td.end {
+  background: url(tab-unselected-end.png) no-repeat;
+}
+
+div.tabs table.tab-set td.tab-spacer {
+  width: 4px;
+}
+
+div.tabs a {
+  text-decoration: none;
+}
+
+div.tabs table.rule {
+  width: 100%;
+  clear: left;
+  background: rgb(162,30,30) url(tab-bar.png) repeat-x;
+  height: 11px;
+  margin: 0px;
+  padding: 0px;
+}
+

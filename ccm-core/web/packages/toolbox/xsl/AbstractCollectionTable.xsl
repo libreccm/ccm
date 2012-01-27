@@ -2,6 +2,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:km="http://www.arsdigita.com/km/1.0"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
+ 
+ <xsl:param name="internal-theme"/>
+ 
 
 <xsl:template match="bebop:table[@class='abstractCollectionTable']" xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
 <table class="fancy" cellpadding="1" cellspacing="2" border="0">
@@ -32,7 +35,7 @@
               <xsl:when test="(position()-1)=$orderColumn">
               <xsl:text>&#160;</xsl:text>   
               <img border="0">
-                <xsl:attribute name="src"><xsl:choose><xsl:when test="$direction='asc'"><xsl:value-of select="//@assets"/>/assets/gray-triangle-up.gif</xsl:when><xsl:otherwise><xsl:value-of select="//@assets"/>/assets/gray-triangle-down.gif</xsl:otherwise></xsl:choose></xsl:attribute>
+                <xsl:attribute name="src"><xsl:choose><xsl:when test="$direction='asc'"><xsl:value-of select="//@assets"/>{$internal-theme}/images/gray-triangle-up.gif</xsl:when><xsl:otherwise><xsl:value-of select="//@assets"/>{$internal-theme}/images/gray-triangle-down.gif</xsl:otherwise></xsl:choose></xsl:attribute>
               </img>
              </xsl:when> 
              <xsl:otherwise>

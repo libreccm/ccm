@@ -5,7 +5,7 @@
   version="1.0.0"
   xmlns:ccm="http://ccm.redhat.com/ccm-project"
   webapp="ROOT"
-  release="1">
+  release="2">
 
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.1.0" relation="ge"/>

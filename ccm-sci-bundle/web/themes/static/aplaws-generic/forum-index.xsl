@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:forum="http://www.arsdigita.com/forum/1.0"
 				xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -1303,5 +1304,3 @@
    	</xsl:choose>
 </xsl:template>
 </xsl:stylesheet>
-
-

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:forum="http://www.arsdigita.com/forum/1.0"
 				xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -16,13 +15,14 @@
 	<xsl:import href="lib/header.xsl" />
 	<xsl:import href="lib/lib.xsl" />
 	<xsl:import href="lib/leftNav.xsl" />
-
-  <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
+        <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
 	<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
-  -->
-  <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
-  -->
-    <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
+	-->
+ 	<!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
+	-->
+	<xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
+  
+
 
 
 	<xsl:param name="theme-prefix" />

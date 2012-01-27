@@ -1,6 +1,0 @@
-Used by
-
-[pb@shuttle ROOT]$ grep  -R  acs-admin/xsl/ *
-__ccm__/apps/sitemap/xsl/index.xsl:  <xsl:import href="../../../../packages/acs-admin/xsl/sitemap_en.xsl"/>
-__ccm__/apps/admin/xsl/index.xsl:  <xsl:import href="../../../../packages/acs-admin/xsl/admin_en.xsl"/>
-packages/content-section/xsl/cms-admin.xsl:<xsl:import href="../../acs-admin/xsl/split-panel.xsl"/>

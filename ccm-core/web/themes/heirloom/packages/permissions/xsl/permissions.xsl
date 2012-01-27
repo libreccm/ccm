@@ -9,6 +9,7 @@
 <xsl:import href="../../bebop/xsl/bebop.xsl"/>
 <xsl:import href="../../ui/xsl/ui.xsl"/>
 
+<xsl:param name="internal-theme"/>
 
 <xsl:template match="bebop:dimensionalNavbar[@class='permNavBar']">
     <xsl:comment>bebop:dimensionalNavbar</xsl:comment>
@@ -41,7 +42,7 @@
 
 <xsl:template match="bebop:link[@class='checkBoxChecked']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src="{$contextPath}/assets/checkbox-checked.gif" border="0" width="12" height="12">
+    <img src="{$internal-theme}/images/checkbox-checked.gif" border="0" width="12" height="12">
        <xsl:attribute name="alt">
          <xsl:apply-templates/>
        </xsl:attribute>
@@ -55,7 +56,7 @@
 
 <xsl:template match="bebop:link[@class='checkBoxUnchecked']">
      <a href="{@href}" onclick="{@onclick}">
-    <img src="{$contextPath}/assets/checkbox-unchecked.gif" border="0" width="12" height="12">
+    <img src="{$internal-theme}/images/checkbox-unchecked.gif" border="0" width="12" height="12">
        <xsl:attribute name="alt">
          <xsl:apply-templates/>
        </xsl:attribute>
@@ -68,7 +69,8 @@
 </xsl:template>
 
 <xsl:template match="bebop:label[@class='checkBoxGreyChecked']">
-    <img src="{$contextPath}/assets/checkbox-checked-gray.gif" border="0" width="12" height="12">
+    <img src="{$internal-theme}/images/checkbox-checked-gray.gif" 
+         border="0" width="12" height="12">
        <xsl:attribute name="alt">
          <xsl:apply-templates/>
        </xsl:attribute>
@@ -77,7 +79,8 @@
 </xsl:template>
 
 <xsl:template match="bebop:label[@class='checkBoxGreyUnchecked']">
-    <img src="{$contextPath}/assets/checkbox-unchecked-gray.gif" border="0" width="12" height="12">
+    <img src="{$internal-theme}/images/checkbox-unchecked-gray.gif" 
+         border="0" width="12" height="12">
        <xsl:attribute name="alt">
          <xsl:apply-templates/>
        </xsl:attribute>

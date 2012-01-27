@@ -1,0 +1,82 @@
+body, a, div, td, th {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: small;
+}
+
+/***Admin Styles****/
+table.globalAdminHeader {
+  background-color: rgb(225,225,225);
+  font-size: 10pt;
+  width: 100%;
+}
+
+table.globalAdminHeader td {
+  padding: 6px;
+  padding-bottom: 7px;
+  vertical-align: middle;
+}
+
+td.globalAdminNavigation {
+  color: rgb(63,63,63);
+}
+
+table.globalAdminHeader td.globalLogo {
+  width: 25px;
+  height: 25px;
+  background-image: url(RHCLogoRoundRedSmallest.png);
+  background-repeat: no-repeat;
+}
+
+td.globalAdminNavigation a {
+  color: rgb(63,63,63);
+}
+
+td.globalAdminNavigation span.contextBarSeparator {
+  color: rgb(63,63,63);
+  font-weight: bold;
+}
+
+td.globalAdminControl {
+  color: rgb(63,63,63);
+  margin: 0;
+  padding: 0;
+  padding-right: 6px;
+  text-align: right;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+td.globalAdminControl a,
+td.globalAdminControl img {
+  margin: 0;
+  padding: 0;
+  color: rgb(63,63,63);
+  vertical-align: middle;
+  border: 0 none;
+  text-decoration: none;
+}
+
+td.global-links {
+  float: right;
+}
+
+td.global-link-icon {
+  padding: 0 4px 0 10px;
+}
+
+td.global-link-icon img {
+  border: 0;
+}
+
+td.global-link a {
+  color: blue;
+  text-decoration: none;
+}
+
+div.page-title {
+  font-size: larger;
+  font-weight: bold;
+  margin: 0;
+  padding: 4px 6px 4px 6px;
+}
+

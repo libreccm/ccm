@@ -8,7 +8,7 @@
 	exclude-result-prefixes="xsl admin bebop portal portlet"
 	version="1.0">
 
-  <xsl:param name="context-prefix"/>
+  <xsl:param name="internal-theme"/>
 
 <xsl:template match="portlet:contentSection">
   <div>
@@ -18,7 +18,7 @@
   </div>
   <div>
     <a href="{@url}admin/index.jsp">
-      <img border="0" width="11" height="11" alt="admin" src="{$context-prefix}/assets/images/arrow-box.gif"/>
+      <img border="0" width="11" height="11" alt="admin" src="{$internal-theme}/images/arrow-box.gif"/>
     </a>
     <a href="{@url}admin/index.jsp" class="action_link">admin</a>
   </div>

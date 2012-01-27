@@ -15,7 +15,8 @@
      <xsl:when test="@userID">
       <table class="globalAdminHeader">
        <tr>
-         <td id="logo"><img src="{$theme-prefix}/images/aplaws-logo-small.png" height="30" width="30"/></td>
+         <td id="logo"><img src="{$theme-prefix}/images/aplaws-logo-small.png" 
+                            height="30" width="30"/></td>
          <td><xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text></td>
           <td style="margin: 0; border: 0; padding: 0;">
            <table align="center" style="margin: 0; border: 0; padding: 0;">
@@ -39,7 +40,7 @@
                <xsl:attribute name="href">
                 <xsl:value-of select="@workspaceURL"/>
                </xsl:attribute>
-               <img src="/assets/home.png" height="18" width="18"/>
+               <img src="{$theme-prefix}/images/home.png" height="18" width="18"/>
               </a>
              </td>
              <td class="global-link">
@@ -56,7 +57,7 @@
                <xsl:attribute name="href">
                  <xsl:value-of select="@logoutURL"/>
                </xsl:attribute>
-               <img src="/assets/lock.png" height="18" width="14"/>
+               <img src="{$theme-prefix}/images/lock.png" height="18" width="14"/>
               </a>
             </td>
             <td class="global-link">
@@ -77,7 +78,11 @@
       <table class="globalAdminHeader">
        <tr>
         <!-- Shadow man logo by default -->
+        <!--
         <a href="http://www.redhat.com"><td class="globalLogo"></td></a>
+        -->
+        <td id="logo"><img src="{$theme-prefix}/images/aplaws-logo-small.png" 
+                           height="30" width="30"/></td>
         <td><xsl:text>&#160;&#160;&#160;&#160;&#160;&#160;</xsl:text></td>
         <td style="margin: 0; border: 0; padding: 0;">
          <table align="center" style="margin: 0; border: 0; padding: 0;">

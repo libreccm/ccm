@@ -73,6 +73,8 @@
 
 
 
+
+<!--BREADCRUMB -->
 <xsl:template name="breadcrumb">
 
 <!--BREADCRUMB -->
@@ -101,7 +103,6 @@
 </p>
 <span class="hide">|</span>
 </div>
-
 
 </xsl:template>
 

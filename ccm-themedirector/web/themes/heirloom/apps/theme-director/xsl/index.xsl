@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:theme="http://ccm.redhat.com/themedirector/1.0"
-  version="1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+               xmlns:theme="http://ccm.redhat.com/themedirector/1.0"
+                   version="1.0">
 
   <!-- IMPORT DEFINITIONS ccm-ldn-theme installed as separate web application
   <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
@@ -19,6 +18,9 @@
   <xsl:import href="action-group.xsl"/>
 
   <xsl:output method="html"/>
+ 
+ <xsl:param name="internal-theme"/>
+
   
   <xsl:template name="bebop:pageCSS">
     <xsl:call-template name="bebop:pageCSSMain"/>
@@ -27,7 +29,7 @@
   <xsl:template match="theme:folder|theme:file" name="themeFolder">
       <tr>
       <td align="left">
-      <img src="/assets/pix.gif"><xsl:attribute name="width"><xsl:value-of select="@depth"/></xsl:attribute></img>
+      <img src="{$internal-theme}/images/spacer.gif"><xsl:attribute name="width"><xsl:value-of select="@depth"/></xsl:attribute></img>
       </td>
 
       <xsl:if test="name()='theme:folder'">
@@ -138,5 +140,6 @@
        </blockquote>
     <br/>
   </xsl:template>
+
 
 </xsl:stylesheet>

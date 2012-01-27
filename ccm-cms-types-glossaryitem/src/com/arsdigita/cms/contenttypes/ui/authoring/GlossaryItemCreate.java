@@ -43,6 +43,11 @@ public class GlossaryItemCreate extends PageCreate {
 
     private CreationSelector m_parent;
 
+    /**
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public GlossaryItemCreate(ItemSelectionModel itemModel,
                               CreationSelector parent) {
 
@@ -50,6 +55,10 @@ public class GlossaryItemCreate extends PageCreate {
         m_parent = parent;
     }
 
+    /**
+     * 
+     */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
         
@@ -58,6 +67,12 @@ public class GlossaryItemCreate extends PageCreate {
         add(builder.makeDefinitionArea());
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
+    @Override
     public void process(FormSectionEvent e) throws FormProcessException {
 
         FormData data = e.getFormData();

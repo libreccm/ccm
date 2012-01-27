@@ -9,12 +9,12 @@
   exclude-result-prefixes="xsl bebop aplaws ui cms nav"
   version="1.0">
 
-<xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/index.xsl"/>
+<xsl:import href="../../heirloom/apps/content-section/xsl/index.xsl"/>
 <xsl:import href="lib/header.xsl"/>
 <xsl:import href="lib/lib.xsl"/>
 <xsl:import href="lib/leftNav.xsl"/>
 <xsl:import href="types/ContentTypes.xsl"/>
-<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
+<xsl:import href="../../heirloom/packages/bebop/xsl/dcp.xsl"/>
 
 <xsl:param name="context-prefix"/>
 <xsl:param name="dispatcher-prefix"/>

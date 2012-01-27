@@ -16,9 +16,9 @@
   -->
   <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
   -->
-    <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
-    <xsl:import href="../../../packages/ui/xsl/ui.xsl" />
-    <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
+  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
+  <xsl:import href="../../../packages/ui/xsl/ui.xsl" />
+  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
 
 	<xsl:import href="lib/header.xsl" />
 	<xsl:import href="lib/lib.xsl" />
@@ -29,15 +29,13 @@
   -->
   <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
   -->
-    <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
-
+  <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
 
 	<xsl:param name="theme-prefix" />
 	<xsl:param name="context-prefix" />
 	<xsl:param name="dispatcher-prefix" />
 
-	<xsl:output method="html" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" 
-		        doctype-system="http://www.w3.org/TR/html4/loose.dtd" indent="yes" />
+	<xsl:output method="html" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" doctype-system="http://www.w3.org/TR/html4/loose.dtd" indent="yes" />
 
 <!-- ********************* MAIN PAGE LAYOUT TEMPLATES ********************* -->
 

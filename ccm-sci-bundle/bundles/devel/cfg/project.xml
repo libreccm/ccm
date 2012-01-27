@@ -83,10 +83,10 @@
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
 
 <!--   LDN extension  -->
-<!--    temporyrily excluded because configuration has to be cleared
+<!--    temporarily excluded because configuration issues have to be resolved
         <ccm:application name="ccm-ldn-rss"/>                        
--->
         <ccm:application name="ccm-rssfeed"/>                        
+-->
 
 <!--   SCI extension  -->
 <!--
@@ -108,8 +108,10 @@
 <!--    
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
+-->
         <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-htmlform"/>
+<!--    
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>

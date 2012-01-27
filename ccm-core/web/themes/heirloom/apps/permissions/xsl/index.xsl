@@ -4,6 +4,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   version="1.0">
   
-  <xsl:import href="../../../../packages/permissions/xsl/permissions.xsl"/> 
+  <xsl:import href="../../../packages/permissions/xsl/permissions.xsl"/> 
   
 </xsl:stylesheet>

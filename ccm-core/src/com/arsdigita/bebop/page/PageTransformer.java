@@ -87,6 +87,7 @@ public class PageTransformer implements PresentationManager {
     // load the default xsl parameter generators
     static {
         s_log.debug("Static initalizer starting...");
+        
         registerXSLParameterGenerator("contextPath",
                                       new XSLParameterGenerator() {
 
@@ -111,6 +112,16 @@ public class PageTransformer implements PresentationManager {
             @Override
             public String generateValue(HttpServletRequest request) {
                 return Web.getContext().getRequestURL().getContextPath();
+            }
+        });
+
+        registerXSLParameterGenerator("internal-theme",
+                                      new XSLParameterGenerator() {
+
+            @Override
+            public String generateValue(HttpServletRequest request) {
+                return Web.getContext().getRequestURL().getContextPath()
+                       + com.arsdigita.web.URL.INTERNAL_THEME_DIR;
             }
         });
 

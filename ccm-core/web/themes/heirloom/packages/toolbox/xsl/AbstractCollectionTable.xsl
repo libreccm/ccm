@@ -32,7 +32,7 @@
               <xsl:when test="(position()-1)=$orderColumn">
               <xsl:text>&#160;</xsl:text>   
               <img border="0">
-                <xsl:attribute name="src"><xsl:choose><xsl:when test="$direction='asc'"><xsl:value-of select="//@assets"/>/assets/gray-triangle-up.gif</xsl:when><xsl:otherwise><xsl:value-of select="//@assets"/>/assets/gray-triangle-down.gif</xsl:otherwise></xsl:choose></xsl:attribute>
+                <xsl:attribute name="src"><xsl:choose><xsl:when test="$direction='asc'"><xsl:value-of select="//@assets"/>{$internal-theme}/images/gray-triangle-up.gif</xsl:when><xsl:otherwise><xsl:value-of select="//@assets"/>{$internal-theme}/images/gray-triangle-down.gif</xsl:otherwise></xsl:choose></xsl:attribute>
               </img>
              </xsl:when> 
              <xsl:otherwise>

@@ -416,6 +416,7 @@ public class FolderBrowser extends Table {
             m_key = key;
         }
 
+        @Override
         public Component getComponent(final Table table, final PageState state,
                 Object value,
                 boolean isSelected, Object key,
@@ -435,6 +436,7 @@ public class FolderBrowser extends Table {
 
             ControlLink cl = new ControlLink(headerName) {
 
+                @Override
                 public void setControlEvent(PageState ps) {
                     String sortDirectionAction = null;
                     // by default, everything sorts "up" unless it
@@ -651,6 +653,7 @@ public class FolderBrowser extends Table {
 // Deletes an item
     private class ItemDeleter extends TableActionAdapter {
 
+        @Override
         public void cellSelected(TableActionEvent e) {
             int col = e.getColumn().intValue();
 
@@ -846,6 +849,7 @@ public class FolderBrowser extends Table {
             m_fol = fol;
         }
 
+        @Override
         public void cellSelected(TableActionEvent e) {
             PageState state = e.getPageState();
 

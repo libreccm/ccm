@@ -121,8 +121,8 @@ public class TasksPanel extends CMSContainer {
     private static final String SORT_WORKFLOW = "workflow";
 
     // IMAGES
-    public static final String UP_ARROW_IMAGE = "/assets/gray-triangle-up.gif";
-    public static final String DOWN_ARROW_IMAGE = "/assets/gray-triangle-down.gif";
+    public static final String UP_ARROW_IMAGE = "/themes/heirfloom/images/gray-triangle-up.gif";
+    public static final String DOWN_ARROW_IMAGE = "/themes/heirfloom/images/gray-triangle-down.gif";
 
     // CREATION PANE CONSTANTS
     private Label m_selectorLabel;

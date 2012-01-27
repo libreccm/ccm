@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-	xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  exclude-result-prefixes="bebop">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	          xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+  exclude-result-prefixes="bebop"
+                  version="1.0">
 
   <xsl:output method="html" indent="yes"/>
 

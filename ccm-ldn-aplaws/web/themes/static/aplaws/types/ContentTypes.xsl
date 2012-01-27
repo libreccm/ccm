@@ -3,10 +3,10 @@
 ]>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+              xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
-                exclude-result-prefixes="xsl bebop cms"
-version="1.0">
+  exclude-result-prefixes="xsl bebop cms"
+                  version="1.0">
 
 
 
@@ -15,15 +15,15 @@ version="1.0">
 <xsl:import href="MultiPartArticle.xsl"/>
 <xsl:import href="FileStorageItem.xsl"/>
 <xsl:import href="Event.xsl"/>
-<xsl:import href="Address.xsl"/>
 <xsl:import href="Agenda.xsl"/>
+<xsl:import href="InlineSite.xsl"/>
 <xsl:import href="Job.xsl"/>
 <xsl:import href="LegalNotice.xsl"/>
 <xsl:import href="Minutes.xsl"/>
-<xsl:import href="Service.xsl"/>
-<xsl:import href="PressRelease.xsl"/>
 <xsl:import href="NewsItem.xsl"/>
-<xsl:import href="InlineSite.xsl"/>
+<xsl:import href="PressRelease.xsl"/>
+<xsl:import href="Service.xsl"/>
+<xsl:import href="SimpleAddress.xsl"/>
 <xsl:import href="SiteProxy.xsl"/>
 
 
@@ -39,8 +39,8 @@ version="1.0">
 <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Event' and not(@useContext = 'itemAdminSummary')]">
 <xsl:call-template name="CT_Event_graphics"/>
 </xsl:template>
-<xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Address' and not(@useContext = 'itemAdminSummary')]">
-<xsl:call-template name="CT_Address_graphics"/>
+<xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SimpleAddress' and not(@useContext = 'itemAdminSummary')]">
+<xsl:call-template name="CT_SimpleAddress_graphics"/>
 </xsl:template>
 <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Agenda' and not(@useContext = 'itemAdminSummary')]">
 <xsl:call-template name="CT_Agenda_graphics"/>

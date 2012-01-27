@@ -1,0 +1,271 @@
+@import url(context-bar/context-bar.css);
+@import url(tabbed-pane/tabbed-pane.css);
+
+body {
+  background: white;
+  color: black;
+}
+.main   {background-color: #ffffff;}
+.dark   {background-color: #6699cc;}
+.medium {background-color: #99ccff;}
+.light  {background-color: #ccffff;}
+td.bread_crumbs { 
+  padding-left: 8px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: arial, helvetica;
+  font-size: x-small; 
+}
+td.top_right_links { 
+  padding-right: 8px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: arial, helvetica;
+  font-size: x-small; 
+}
+td.bottom_right_links { 
+  padding-right: 8px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: arial, helvetica;
+  font-size: x-small; 
+}
+td.page_title { 
+  padding-left: 8px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  font-family: arial, helvetica;
+  color: #333333;
+  font-size: medium; 
+}
+
+a.tab_unselected { 
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  font-family: arial, helvetica;
+  font-size: x-small; 
+}
+a.tab_unselected:hover { 
+  text-decoration: underline; 
+}
+a.tab_selected { 
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  font-family: arial, helvetica;
+  font-size: x-small;  
+}
+a.tab_selected:hover { 
+  text-decoration: underline; 
+}
+td.tab_selected { 
+  text-decoration: none; 
+  font-weight: bold;
+   color: white;
+   font-family: arial, helvetica;
+   font-size: x-small;
+   background-color: #878175;
+}
+tr.tab_selected { 
+  text-decoration: none; 
+  font-weight: bold; 
+  color: white; 
+  font-family: arial, helvetica; 
+  font-size: x-small; 
+  background-color: #878175; 
+}
+
+a.action_link { 
+  font-family: tahoma, arial, helvetica; 
+  font-size: x-small; 
+  color: #333333;
+  text-decoration: none; 
+}
+a.action_link:hover { 
+  font-family: tahoma, arial, helvetica; 
+  font-size: x-small; 
+  color: #333333;
+  text-decoration: underline; 
+}
+a.action_link_disabled { 
+  font-family: tahoma, arial, helvetica; 
+  font-size: x-small; 
+  color: #999999;
+  text-decoration: none; 
+}
+a.form_label {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+}
+
+td.form_label {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+}
+td.form_value {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+}
+
+/**********Split Pane*********/
+th.split_pane_header { 
+  font-family: arial, helvetica; 
+  text-align: left; 
+  padding-left: 8px; 
+  font-size: x-small; 
+  background-color: rgb(63,63,63); 
+  color: rgb(222,222,222); 
+}
+td.split_pane_left_background { 
+  background-color: rgb(222,222,222); 
+}
+td.split_pane_left_item { 
+  font-family: tahoma, arial, helvetica; 
+  font-size: x-small; 
+  font-weight: bold; 
+  padding-left: 8px;
+}
+a.split_pane_left_item { 
+  font-family: tahoma, arial, helvetica; 
+  font-size: x-small; 
+  font-weight: bold; 
+  text-decoration: none; 
+}
+a.split_pane_left_item:hover { 
+  font-family: tahoma, arial, helvetica; 
+  font-size: x-small; 
+  font-weight: bold; 
+  text-decoration: underline; 
+}
+td.split_pane_left_item_selected { 
+  font-family: tahoma, arial, helvetica; 
+  font-size: x-small; 
+  font-weight: bold; 
+  background-color: #eae9c6;
+  padding-left: 8px; 
+}
+td.split_pane_right_body { 
+  padding-left: 8px; 
+  font-family: arial, helvetica; 
+  font-size: x-small; 
+}
+
+/*****Misc. Table********/
+th.table_header {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  color: black;
+}
+a.table_header {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+a.table_header:hover {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  text-decoration: underline;
+  color: black;
+}
+tr.table_row_odd {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  background-color: #e1d5b0;
+}
+tr.table_row_even {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  background-color: white;
+}
+td.table_cell {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+}
+p {
+  font-family: georgia, arial, helvetica;
+  font-size: x-small;
+}
+
+th.section_header {
+  font-family: arial, helvetica;
+  text-align: left;
+  padding-left: 8px;
+  font-size: x-small;
+  background-color: #878175;
+  color: white;
+}
+td.section_header {
+  font-family: arial, helvetica;
+  font-size: x-small;
+  background-color: #878175;
+  color: white;
+}
+td.section_body {
+  padding-left: 8px;
+  font-family: arial, helvetica;
+  font-size: x-small;
+}
+h3.section_body {
+  font-family: arial, helvetica;
+  font-size: small;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+h4.section_body {
+  font-family: arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+blockquote.section_body {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 16px;
+  font-family: arial, helvetica;
+  font-size: x-small;
+}
+p.section_body  {
+  font-family: arial, helvetica;
+  font-size: x-small;
+}
+
+td.left_tabs_background {
+  background-color: #DDD7A1;
+}
+td.left_tabs_tab {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  padding-left: 8px;
+}
+a.left_tabs_tab {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  text-decoration: none;
+}
+a.left_tabs_tab:hover {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  text-decoration: underline;
+}
+td.left_tabs_tab_selected {
+  font-family: tahoma, arial, helvetica;
+  font-size: x-small;
+  font-weight: bold;
+  background-color: #eae9c6;
+  padding-left: 8px;
+}
+

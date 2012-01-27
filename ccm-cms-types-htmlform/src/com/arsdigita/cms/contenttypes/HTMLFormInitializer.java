@@ -32,6 +32,7 @@ public class HTMLFormInitializer extends ContentTypeInitializer {
     @Override
     public String[] getStylesheets() {
         return new String[] { 
-            "/static/content-types/com/arsdigita/cms/contenttypes/HTMLForm.xsl" };
+        //  "/static/content-types/com/arsdigita/cms/contenttypes/HTMLForm.xsl" };
+            "/themes/heirloom/contenttypes/HTMLForm.xsl" };
     }
 }

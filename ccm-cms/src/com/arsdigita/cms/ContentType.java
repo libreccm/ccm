@@ -599,8 +599,7 @@ public class ContentType extends ACSObject {
      * @param type the content type
      * @param path the path relative to the server root
      */
-    public static void registerXSLFile(ContentType type,
-            String path) {
+    public static void registerXSLFile(ContentType type, String path) {
         s_xsl.add(new XSLEntry(type, path));
     }
 

@@ -189,7 +189,7 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
      *   file patterns. Not used anymore (pb 2011.01.20)
      *
      *   Correction:
-     *   As of 6.6.x it is really used tp locate the content type stylesheet,
+     *   As of 6.6.x it is really used to locate the content type stylesheet,
      *   in distinction from location of applications stylesheets.
      *
      */

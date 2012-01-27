@@ -38,7 +38,7 @@ public class HTMLForm extends GenericArticle {
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.HTMLForm";
+                               = "com.arsdigita.cms.contenttypes.HTMLForm";
 
     /** Data object type for this domain object (for CMS compatibility) */
     public static final String TYPE
@@ -66,6 +66,7 @@ public class HTMLForm extends GenericArticle {
         super( type );
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         
@@ -81,6 +82,7 @@ public class HTMLForm extends GenericArticle {
     }
 
     public static final int SUMMARY_LENGTH = 200;
+    @Override
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getLead(),
                                                              SUMMARY_LENGTH,

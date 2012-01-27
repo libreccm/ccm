@@ -42,10 +42,12 @@ public class MultiPartArticleInitializer extends ContentTypeInitializer {
     }
 
 
+    @Override
     public String getTraversalXML() {
         return "WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/MultiPartArticle.xml";
     }
 
+    @Override
     public String[] getStylesheets() {
         return new String [] {
             "/static/content-types/com/arsdigita/cms/contenttypes/MultiPartArticle.xsl",
@@ -55,6 +57,7 @@ public class MultiPartArticleInitializer extends ContentTypeInitializer {
 
     // Previously used LegacyInitEvent, allthough no legacy init functionality
     // is used here. Wondering.
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
 

@@ -36,6 +36,7 @@ extends ContentPageMetadataProvider {
     private static final Logger s_log =
         Logger.getLogger(ArticleSectionMetadataProvider.class);
 
+    @Override
     public String getTitle(DomainObject dobj) {
         ArticleSection section = (ArticleSection)dobj;
         StringBuffer title = new StringBuffer();

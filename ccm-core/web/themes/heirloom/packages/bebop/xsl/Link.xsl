@@ -4,6 +4,7 @@
     xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
 
  <xsl:param name="root-context-prefix"/>
+ <xsl:param name="internal-theme"/>
 
  <xsl:output method="html" indent="yes"/>
 
@@ -40,7 +41,8 @@
 
      <xsl:otherwise>
        <a href="{@href_no_javascript}">
-         <img src="{$root-context-prefix}/assets/images/action-generic.png" border="0" width="14" height="14">
+         <img src="{$internal-theme}/images/action-generic.png" 
+              border="0" width="14" height="14">
            <xsl:attribute name="alt">
              <xsl:apply-templates/>
            </xsl:attribute>
@@ -68,7 +70,8 @@
 
      <xsl:otherwise>
        <a href="{@href_no_javascript}">
-         <img src="{$root-context-prefix}/assets/images/action-generic.png" border="0" width="14" height="14">
+         <img src="{$internal-theme}/images/action-generic.png" 
+              border="0" width="14" height="14">
            <xsl:attribute name="alt">
              <xsl:apply-templates/>
            </xsl:attribute>
@@ -135,7 +138,7 @@
        <![CDATA[ <!-- begin script ]]>
 
        <!-- This is ugly, but I need the whole output on one line =p -->
-       <![CDATA[ document.write(']]><a href="{@href}" onclick="{@onclick}"><img src="{$root-context-prefix}/assets/images/action-generic.png" border="0" width="14" height="14"><xsl:attribute name="alt"><xsl:apply-templates mode="javascript-mode"/></xsl:attribute></img><![CDATA[')]]>
+       <![CDATA[ document.write(']]><a href="{@href}" onclick="{@onclick}"><img src="{$internal-theme}/images/action-generic.png" border="0" width="14" height="14"><xsl:attribute name="alt"><xsl:apply-templates mode="javascript-mode"/></xsl:attribute></img><![CDATA[')]]>
        <![CDATA[ document.write(']]></a><![CDATA[')]]>
        <![CDATA[ // end script --> ]]>
        </script>
@@ -148,7 +151,7 @@
        </script>
 
        <a href="{@href_no_javascript}">
-         <img src="{$root-context-prefix}/assets/images/action-generic.png" border="0" width="14" height="14">
+         <img src="{$internal-theme}/images/action-generic.png" border="0" width="14" height="14">
            <xsl:attribute name="alt">
              <xsl:apply-templates/>
            </xsl:attribute>

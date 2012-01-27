@@ -50,9 +50,11 @@ public class GlossaryItemInitializer extends ContentTypeInitializer {
      * methods.
      * @return
      */
+    @Override
      public String[] getStylesheets() {
         return new String[] {
-            "/static/content-types/com/arsdigita/cms/contenttypes/GlossaryItem.xsl"
+        //  "/static/content-types/com/arsdigita/cms/contenttypes/GlossaryItem.xsl"
+            "/themes/heirloom/contenttypes/GlossaryItem.xsl"
         };
      }
 }

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0"
-  xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
-  version="1.0" exclude-result-prefixes="bebop cms ui aplaws xsl">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                  xmlns:ui="http://www.arsdigita.com/ui/1.0"
+              xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
+   exclude-result-prefixes="bebop cms ui aplaws xsl"
+                   version="1.0">
 
-  <xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/admin.xsl"/>
-  <xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
+  <xsl:import href="../../heirloom/apps/content-section/xsl/admin.xsl"/>
+  <xsl:import href="../../heirloom/packages/bebop/xsl/dcp.xsl"/>
 
   <xsl:import href="category-step.xsl"/>
   
   <xsl:param name="theme-prefix" />
+  <xsl:param name="internal-theme" />
 
-  <xsl:variable name="here"><xsl:value-of select="$static-prefix"/>/cms/admin/page</xsl:variable>
+  <xsl:variable name="here"><xsl:value-of select="$internal-theme"/>/packages/cms/xml/admin/page</xsl:variable>
 
   <xsl:template name="cat-widget-cat-name">
     <xsl:value-of select="@name"/>
@@ -29,8 +30,8 @@
     <html xmlns:deditor="http://www.arsdigita.com/deditor/1.0">
       <head>
         <title><xsl:value-of select="bebop:title"/></title>
-        <link rel="stylesheet" type="text/css" href="{$legacy-asset-prefix}/css/acs-master.css"/>
-        <link rel="stylesheet" type="text/css" href="{$static-prefix}/cms/admin/cms-admin.css"/>
+        <link rel="stylesheet" type="text/css" href="{$internal-theme}/css/acs-master.css"/>
+        <link rel="stylesheet" type="text/css" href="{$internal-theme}/packages/cms/xsl/admin/cms-admin.css"/>
       </head>
       <body>
         <xsl:call-template name="bebop:dcpJavascript"/>
@@ -42,10 +43,10 @@
             <td>
               <table id="global-links">
                 <tr>
-                  <td class="global-link-icon"><a href="{cms:globalNavigation/cms:workspace/@href}"><img src="{$here}/home.png" height="18" width="18"/></a></td>
+                  <td class="global-link-icon"><a href="{cms:globalNavigation/cms:workspace/@href}"><img src="{$internal-theme}/images/home.png" height="18" width="18"/></a></td>
                   <td class="global-link"><a href="{cms:globalNavigation/cms:workspace/@href}">Home</a></td>
 
-                  <td class="global-link-icon"><a href="{cms:globalNavigation/cms:signOut/@href}"><img src="{$here}//lock.png" height="18" width="14"/></a></td>
+                  <td class="global-link-icon"><a href="{cms:globalNavigation/cms:signOut/@href}"><img src="{$internal-theme}/images/lock.png" height="18" width="14"/></a></td>
                   <td class="global-link"><a href="{cms:globalNavigation/cms:signOut/@href}">Logout</a></td>
                 </tr>
               </table>

@@ -886,14 +886,6 @@
                         <location>ccm-ldn-util/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-gen-aplaws (Source)</label>
-                        <location>ccm-gen-aplaws/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>ccm-gen-aplaws (Web)</label>
-                        <location>ccm-gen-aplaws/web</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>ccm-sci-bundle (Source)</label>
                         <location>ccm-sci-bundle/src</location>
                     </source-folder>
@@ -1019,8 +1011,6 @@
                 <package-root>ccm-ldn-types-esdservice/src</package-root>
                 <package-root>ccm-ldn-userpreferences/src</package-root>
                 <package-root>ccm-ldn-util/src</package-root>
-                <package-root>ccm-gen-aplaws/src</package-root>
-                <package-root>ccm-gen-aplaws/web</package-root>
                 <package-root>ccm-sci-bundle/src</package-root>
                 <package-root>ccm-sci-personalprojects/src</package-root>
                 <package-root>ccm-sci-personalpublications/src</package-root>

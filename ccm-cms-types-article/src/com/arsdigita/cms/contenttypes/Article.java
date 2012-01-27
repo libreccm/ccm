@@ -67,6 +67,7 @@ public class Article extends GenericArticle {
         super( type );
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         
@@ -82,6 +83,7 @@ public class Article extends GenericArticle {
     }
 
     public static final int SUMMARY_LENGTH = 200;
+    @Override
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getLead(),
                                                              SUMMARY_LENGTH,

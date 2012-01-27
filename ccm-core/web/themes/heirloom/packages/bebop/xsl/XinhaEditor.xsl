@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
-<xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-  exclude-result-prefixes="xsl bebop" 
-  version="1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+   exclude-result-prefixes="xsl bebop" 
+                   version="1.0">
   
   
   <!-- This is a backport from Mandalay v0.9 to support Xinha editor with the -->
