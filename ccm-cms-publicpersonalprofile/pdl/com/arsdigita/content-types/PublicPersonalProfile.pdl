@@ -5,10 +5,12 @@ import com.arsdigita.cms.*;
 
 object type PublicPersonalProfile extends ContentPage {
 
-       String[0..1] profileUrl = ct_public_personal_profiles.profile_url VARCHAR(256);
-       Boolean[0..1] showPublicationList = ct_public_personal_profiles.show_publication_list BIT;
-       Boolean[0..1] showProjectList = ct_public_personal_profiles.show_project_list BIT;
+       String[0..1] profileUrl = ct_public_personal_profiles.profile_url VARCHAR(256);    
 
+       String[0..1] position = ct_public_personal_profile.position VARCHAR(2048);
+       String[0..1] researchInterests = ct_public_personal_profiles.research_interests CLOB;
+       String[0..1] misc = ct_public_personal_profiles.misc CLOB;
+      
        reference key (ct_public_personal_profiles.profile_id);
 }
 

@@ -34,17 +34,17 @@ import com.arsdigita.util.Assert;
 import java.util.List;
 
 /**
- * A content type representing a profile (a personal homepage) of a person.
- * On the start page of the the profile the contact data and a photo (if any)
+ * A content type representing a profile (a personal homepage) of a person. On
+ * the start page of the the profile the contact data and a photo (if any)
  * associated with the owner of the profile are shown. Other content items can
  * be associated with the profile. They are shown in special navigation. Also,
- * there special items for the profile which not backed by a content item. 
- * Instead, they are backed by a Java class which implements the 
- * {@link ContentGenerator} interface. A profile can either be shown as 
- * a standalone page (similar the separate category system) or embedded into
- * the normal site.
- * 
- * @author Jens Pelzetter 
+ * there special items for the profile which not backed by a content item.
+ * Instead, they are backed by a Java class which implements the
+ * {@link ContentGenerator} interface. A profile can either be shown as a
+ * standalone page (similar the separate category system) or embedded into the
+ * normal site.
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class PublicPersonalProfile
@@ -55,8 +55,11 @@ public class PublicPersonalProfile
     public static final String OWNER = "owner";
     public static final String PROFILE_URL = "profileUrl";
     public static final String LINK_LIST_NAME = "publicPersonalProfileNavItems";
+    public static final String POSITION = "position";
+    public static final String RESEARCH_INTERESTS = "researchInterests";
+    public static final String MISC = "misc";
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.PublicPersonalProfile";    
+            "com.arsdigita.cms.contenttypes.PublicPersonalProfile";
 
     public PublicPersonalProfile() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -80,8 +83,8 @@ public class PublicPersonalProfile
         super(type);
     }
 
-    /**     
-     * 
+    /**
+     *
      * @return The owner of the profile.
      */
     public GenericPerson getOwner() {
@@ -102,8 +105,8 @@ public class PublicPersonalProfile
 
     /**
      * Sets the owner of the profile.
-     * 
-     * @param owner 
+     *
+     * @param owner
      */
     public void setOwner(final GenericPerson owner) {
         GenericPerson oldOwner;
@@ -120,10 +123,10 @@ public class PublicPersonalProfile
     }
 
     /**
-     * 
-     * @return The URL fragment of the profile used to build the URL of the 
+     *
+     * @return The URL fragment of the profile used to build the URL of the
      * profile.
-    
+     *
      */
     public String getProfileUrl() {
         return (String) get(PROFILE_URL);
@@ -133,11 +136,35 @@ public class PublicPersonalProfile
         set(PROFILE_URL, profileUrl);
     }
 
+    public String getPosition() {
+        return (String) get(POSITION);
+    }
+    
+    public void setPosition(final String position) {
+        set(POSITION, position);
+    } 
+    
+    public String getResearchInterests() {
+        return (String) get(RESEARCH_INTERESTS);
+    }
+    
+    public void setResearchInterests(final String researchInterests) {
+        set(RESEARCH_INTERESTS, researchInterests);
+    }
+    
+    public String getMisc() {
+        return (String) get(MISC);
+    }
+    
+    public void setMisc(final String misc) {
+        set(MISC, misc);
+    }
+    
     /**
-     * The profile has an extra XML Generator, which is primarily to render
-     * the items and the navigation of the profile for the embedded view.
-     * 
-     * @return 
+     * The profile has an extra XML Generator, which is primarily to render the
+     * items and the navigation of the profile for the embedded view.
+     *
+     * @return
      */
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
@@ -149,10 +176,10 @@ public class PublicPersonalProfile
     }
 
     public String getPreviewUrl(final PageState state) {
-        if(config.getEmbedded()) {
+        if (config.getEmbedded()) {
             return null;
         } else {
-           return String.format("/profiles/preview/%s/", getProfileUrl());
+            return String.format("/profiles/preview/%s/", getProfileUrl());
         }
     }
 }
