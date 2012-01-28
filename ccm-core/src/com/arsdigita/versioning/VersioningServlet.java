@@ -61,7 +61,7 @@ public final class VersioningServlet extends BaseServlet {
     private final static String CMD   = "cmd";
     private final static String OID   = "oid";
     private final static String TITLE = "title";
-    private final static String JSP_DIR = "/packages/versioning/";
+    private final static String JSP_DIR = "themes/heirloom//packages/versioning/";
 
     public void doService(HttpServletRequest req, HttpServletResponse resp) 
         throws ServletException, IOException {

@@ -455,8 +455,6 @@ public class CoreLoader extends PackageLoader {
         packType.setDispatcherClass("com.arsdigita.webdevsupport.Dispatcher");
     }
 
-//     private static final String XSL_ROOT = "/packages/acs-admin/xsl/";
-
     private Application loadAdminApp() {
         ApplicationType adminType = ApplicationType
             .createApplicationType("admin",

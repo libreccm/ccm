@@ -5,7 +5,7 @@
   xmlns:devsup="http://xmlns.redhat.com/waf/webdevsupport/1.0"
   version="1.0">
   
-  <xsl:import href="../../../../packages/login/xsl/login_en.xsl"/> 
+  <xsl:import href="../../../packages/login/xsl/login_en.xsl"/> 
   
   <xsl:template match="devsup:configList">
     <script language="JavaScript1.2">

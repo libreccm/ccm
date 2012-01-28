@@ -24,7 +24,8 @@ import org.apache.log4j.Logger;
  * Initializes the GenericArticle content type.
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
- * (map).
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: ArticleInitializer.java 757 2005-09-02 14:12:21Z sskracic $
@@ -37,9 +38,9 @@ public class ArticleInitializer extends ContentTypeInitializer {
         super("ccm-cms-types-article.pdl.mf", GenericArticle.BASE_DATA_OBJECT_TYPE);
     }
 
-//  deprecated, no longer used.
-//  public String[] getStylesheets() {
-//      return new String[]
-//          { "/static/content-types/com/arsdigita/cms/contenttypes/Article.xsl" };
-//  }
+    @Override
+    public String[] getStylesheets() {
+        return new String[]
+            { "/static/content-types/com/arsdigita/cms/contenttypes/Article.xsl" };
+    }
 }

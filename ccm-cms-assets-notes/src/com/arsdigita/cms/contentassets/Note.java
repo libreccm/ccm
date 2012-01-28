@@ -39,16 +39,19 @@ import org.apache.log4j.Logger;
  * 
  */
 public class Note extends ACSObject {
-    public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.contentassets.Note";
 
     private static final Logger s_log = Logger.getLogger( Note.class );
+    
+    /**  PDL stuff                                                            */
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contentassets.Note";
 
     static {
         s_log.debug("Static initalizer is starting...");
         DomainObjectFactory.registerInstantiator(
             BASE_DATA_OBJECT_TYPE,
             new DomainObjectInstantiator() {
+                @Override
                 public DomainObjectInstantiator resolveInstantiator
                     ( DataObject dataObject ) {
                         return this;
@@ -104,6 +107,7 @@ public class Note extends ACSObject {
 	 *  (non-Javadoc)
 	 * @see com.arsdigita.domain.DomainObject#initialize()
 	 */
+    @Override
 	protected void initialize() {
 		super.initialize();
 
@@ -192,17 +196,20 @@ public class Note extends ACSObject {
         return notes;
     }
 
+    @Override
     protected void beforeDelete() {
         // Put this note at the end so other notes will be correctly reordered
         setRank( Long.MAX_VALUE );
     }
 
+    @Override
     protected void beforeSave() {
         super.beforeSave();
 
         if( isNew() ) m_isNew = true;
     }
 
+    @Override
     protected void afterSave() {
         super.afterSave();
 

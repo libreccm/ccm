@@ -10,9 +10,9 @@
 				version="1.0">
 
         <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
-	<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
-	<xsl:import href="../../../../ROOT/packages/ui/xsl/ui.xsl" />
-	<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
+	<xsl:import href="../../../../ROOT/themes/heirloom/packages/bebop/xsl/bebop.xsl" />
+	<xsl:import href="../../../../ROOT/themes/heirloom/packages/ui/xsl/ui.xsl" />
+	<xsl:import href="../../../../ROOT/themes/heirloom/packages/bebop/xsl/bebop.xsl" />
 	-->
  	<!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
 	-->

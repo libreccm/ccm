@@ -6,13 +6,6 @@
   xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
   version="1.0">
 
-  <!-- IMPORT DEFINITIONS ccm-ldn-atoz installed as separate web application
-  <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
-  <xsl:import href="../../../../../ROOT/__ccm__/static/cms/admin/category-step/category-step.xsl"/>
-  -->
-  <!-- IMPORT DEFINITIONS ccm-ldn-atoz installed into the main CCM webapp
-  -->
   <xsl:import href="../../../packages/bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../../packages/ui/xsl/ui.xsl"/>
   <xsl:import href="../../../packages/cms/xsl/admin/category-step/category-step.xsl"/>

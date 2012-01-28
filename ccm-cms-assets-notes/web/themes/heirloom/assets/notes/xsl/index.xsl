@@ -3,11 +3,11 @@
 <!ENTITY nbsp   "&#160;" ><!-- no-break space = non-breaking space, U+00A0 ISOnum -->
 ]>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  version="1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                   version="1.0">
 
-  <xsl:param name="static-prefix"/>
+  <xsl:param name="internal-theme"/>
 
   <xsl:template match="cms:notesDisplay">
     <xsl:for-each select="object">
@@ -32,11 +32,11 @@
 
   <xsl:template name="notes-action-icon">
     <xsl:choose>
-      <xsl:when test="@action='delete'"><xsl:value-of select="$static-prefix"/>/cms/admin/action-group/action-delete.png</xsl:when>
+      <xsl:when test="@action='delete'"><xsl:value-of select="$internal-theme"/>/images/action-delete.png</xsl:when>
 
-      <xsl:when test="@action='edit'"><xsl:value-of select="$static-prefix"/>/cms/admin/action-group/action-edit.png</xsl:when>
+      <xsl:when test="@action='edit'"><xsl:value-of select="$internal-theme"/>/images/action-edit.png</xsl:when>
 
-      <xsl:otherwise><xsl:value-of select="$static-prefix"/>/cms/admin/action-group/action-generic.png</xsl:otherwise>
+      <xsl:otherwise><xsl:value-of select="$internal-theme"/>/images/action-generic.png</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 

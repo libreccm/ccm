@@ -68,10 +68,11 @@ public class NotesInitializer extends ContentAssetInitializer {
     }
 
     // public void init( LegacyInitEvent ev ) {
+    @Override
     public void init( DomainInitEvent ev ) {
         super.init( ev );
 
-        ContentType.registerXSLFile( null, "/__ccm__/assets/notes/index.xsl" );
+        ContentType.registerXSLFile( null, "/themes/heirloom/assets/notes/xsl/index.xsl" );
         DomainObjectTraversal.registerAdapter( Note.BASE_DATA_OBJECT_TYPE,
                                                new SimpleDomainObjectTraversalAdapter(),
                                                SimpleXMLGenerator.ADAPTER_CONTEXT );

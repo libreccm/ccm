@@ -5,8 +5,8 @@
                    version="1.0">
 
   <!-- IMPORT DEFINITIONS ccm-ldn-theme installed as separate web application
-  <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
+  <xsl:import href="../../../../../ROOT/themes/heirloom/packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../../../../ROOT/themes/heirloom/packages/ui/xsl/ui.xsl"/>
   -->
   <!-- IMPORT DEFINITIONS ccm-themedirector installed into the main CCM webapp
   -->
