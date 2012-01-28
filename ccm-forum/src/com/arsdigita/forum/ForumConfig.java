@@ -46,7 +46,6 @@ import org.apache.log4j.Logger;
 public class ForumConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(ForumConfig.class);
-
     private Parameter m_adminEditPosts;
     private Parameter m_authorEditPosts;
     private Parameter m_authorDeletePosts;
@@ -62,79 +61,86 @@ public class ForumConfig extends AbstractConfig {
     private Parameter m_useWysiwygEditor;
     private Parameter m_rejectionMessage;
     private Parameter m_threadPageSize;
+    private Parameter m_threadOrderField;
+    private Parameter m_threadOrderDir;
     private Parameter m_quickFinish;
     private Parameter m_deleteSentSubscriptionNotifications;
 
     public ForumConfig() {
 
         m_adminEditPosts = new BooleanParameter(
-            "com.arsdigita.forum.admin_can_edit_posts",
-            Parameter.REQUIRED,
-            Boolean.TRUE);
+                "com.arsdigita.forum.admin_can_edit_posts",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
         m_authorEditPosts = new BooleanParameter(
-            "com.arsdigita.forum.author_can_edit_posts",
-            Parameter.REQUIRED,
-            Boolean.TRUE);
+                "com.arsdigita.forum.author_can_edit_posts",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
         m_authorDeletePosts = new BooleanParameter(
-            "com.arsdigita.forum.author_can_delete_posts",
-            Parameter.REQUIRED,
-            Boolean.TRUE);
+                "com.arsdigita.forum.author_can_delete_posts",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
         m_replyHostName = new StringParameter(
-            "com.arsdigita.forum.reply_host_name",
-            Parameter.OPTIONAL,
-            null);
+                "com.arsdigita.forum.reply_host_name",
+                Parameter.OPTIONAL,
+                null);
         m_digestUserEmail = new StringParameter(
-            "com.arsdigita.forum.digest_user_email",
-            Parameter.OPTIONAL,
-            null);
-        m_disablePageCaching = new BooleanParameter (
-        	"com.arsdigita.forum.disable_page_caching",
-        	Parameter.REQUIRED,
-        	Boolean.FALSE);
-        	
-        m_adminOnlyCreateTopics = new BooleanParameter (
-        	"com.arsdigita.forum.admin_only_to_create_topics",
-            Parameter.REQUIRED,
-            Boolean.FALSE);
-	    m_maxImageSize = new IntegerParameter (
-		    "com.arsdigita.forum.maximum_image_size",
-		    Parameter.OPTIONAL, null);
-	    m_maxFileSize = new IntegerParameter (
-		    "com.arsdigita.forum.maximum_file_size",
-    		Parameter.OPTIONAL, null);
-		
-        m_showNewTabs = new BooleanParameter(
-            "com.arsdigita.forum.show_new_tabs",
-            Parameter.OPTIONAL,
-            Boolean.FALSE);
-        m_showAllThreadAlerts = new BooleanParameter(
-            "com.arsdigita.forum.show_all_forum_thread_alerts",
-            Parameter.OPTIONAL,
-            Boolean.TRUE);
-        m_useWysiwygEditor = new BooleanParameter(
-			"com.arsdigita.forum.use_wysiwyg_editor",
-			Parameter.OPTIONAL,
-			Boolean.FALSE);
-        m_rejectionMessage = new StringParameter(
-            "com.arsdigita.forum.rejection_form_message.example",
-            Parameter.OPTIONAL,
-            null);
-        m_threadPageSize = new IntegerParameter (
-			"com.arsdigita.forum.thread_page_size",
-			Parameter.REQUIRED, new Integer(10));
-        m_quickFinish = new BooleanParameter(
-			"com.arsdigita.forum.allow_quick_finish",
-			Parameter.OPTIONAL,
-			Boolean.FALSE);   
-        m_deleteSentSubscriptionNotifications = new BooleanParameter(
-			"com.arsdigita.forum.delete_sent_subscription_notifications",
-			Parameter.OPTIONAL,
-			Boolean.FALSE);   
+                "com.arsdigita.forum.digest_user_email",
+                Parameter.OPTIONAL,
+                null);
+        m_disablePageCaching = new BooleanParameter(
+                "com.arsdigita.forum.disable_page_caching",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
 
-        m_adapters = new ResourceParameter
-            ("com.arsdigita.forum.traversal_adapters",
-             Parameter.REQUIRED,
-             "/WEB-INF/resources/forum-adapters.xml");
+        m_adminOnlyCreateTopics = new BooleanParameter(
+                "com.arsdigita.forum.admin_only_to_create_topics",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
+        m_maxImageSize = new IntegerParameter(
+                "com.arsdigita.forum.maximum_image_size",
+                Parameter.OPTIONAL, null);
+        m_maxFileSize = new IntegerParameter(
+                "com.arsdigita.forum.maximum_file_size",
+                Parameter.OPTIONAL, null);
+
+        m_showNewTabs = new BooleanParameter(
+                "com.arsdigita.forum.show_new_tabs",
+                Parameter.OPTIONAL,
+                Boolean.FALSE);
+        m_showAllThreadAlerts = new BooleanParameter(
+                "com.arsdigita.forum.show_all_forum_thread_alerts",
+                Parameter.OPTIONAL,
+                Boolean.TRUE);
+        m_useWysiwygEditor = new BooleanParameter(
+                "com.arsdigita.forum.use_wysiwyg_editor",
+                Parameter.OPTIONAL,
+                Boolean.FALSE);
+        m_rejectionMessage = new StringParameter(
+                "com.arsdigita.forum.rejection_form_message.example",
+                Parameter.OPTIONAL,
+                null);
+        m_threadPageSize = new IntegerParameter(
+                "com.arsdigita.forum.thread_page_size",
+                Parameter.REQUIRED, new Integer(10));
+        m_threadOrderField = new StringParameter(
+                "com.arsdigita.forum.thread_order_field",
+                Parameter.REQUIRED, new String("lastUpdate"));
+        m_threadOrderDir = new StringParameter(
+                "com.arsdigita.forum.thread_order_dir",
+                Parameter.REQUIRED, new String("desc"));
+        m_quickFinish = new BooleanParameter(
+                "com.arsdigita.forum.allow_quick_finish",
+                Parameter.OPTIONAL,
+                Boolean.FALSE);
+        m_deleteSentSubscriptionNotifications = new BooleanParameter(
+                "com.arsdigita.forum.delete_sent_subscription_notifications",
+                Parameter.OPTIONAL,
+                Boolean.FALSE);
+
+        m_adapters = new ResourceParameter("com.arsdigita.forum.traversal_adapters",
+                Parameter.REQUIRED,
+                "/WEB-INF/resources/forum-adapters.xml");
 
         register(m_digestUserEmail);
         register(m_adminEditPosts);
@@ -151,29 +157,31 @@ public class ForumConfig extends AbstractConfig {
         register(m_useWysiwygEditor);
         register(m_rejectionMessage);
         register(m_threadPageSize);
+        register(m_threadOrderField);
+        register(m_threadOrderDir);
         register(m_quickFinish);
         register(m_deleteSentSubscriptionNotifications);
         loadInfo();
     }
 
     InputStream getTraversalAdapters() {
-        return (InputStream)get(m_adapters);
+        return (InputStream) get(m_adapters);
     }
 
     public boolean canAdminEditPosts() {
-        return ((Boolean)get(m_adminEditPosts)).booleanValue();
+        return ((Boolean) get(m_adminEditPosts)).booleanValue();
     }
 
     public boolean canAuthorEditPosts() {
-        return ((Boolean)get(m_authorEditPosts)).booleanValue();
+        return ((Boolean) get(m_authorEditPosts)).booleanValue();
     }
 
     boolean canAuthorDeletePosts() {
-        return ((Boolean)get(m_authorDeletePosts)).booleanValue();
+        return ((Boolean) get(m_authorDeletePosts)).booleanValue();
     }
-    
+
     public String getDigestUserEmail() {
-        String email = (String)get(m_digestUserEmail);
+        String email = (String) get(m_digestUserEmail);
         if (email == null) {
             email = "forum-robot@" + Web.getConfig().getServer().getName();
         }
@@ -181,7 +189,7 @@ public class ForumConfig extends AbstractConfig {
     }
 
     public String getReplyHostName() {
-        String hostName = (String)get(m_replyHostName);
+        String hostName = (String) get(m_replyHostName);
         if (hostName == null) {
             hostName = Web.getConfig().getServer().getName();
         }
@@ -189,33 +197,34 @@ public class ForumConfig extends AbstractConfig {
     }
 
     /**
-     * Supports prevention of client and middleware caching - 
-     * use in situations where users with different 
-     * permissions share machines
+     * Supports prevention of client and middleware caching - use in situations
+     * where users with different permissions share machines
+     *
      * @return
      */
-    public boolean disableClientPageCaching () {
-    	return ((Boolean)get(m_disablePageCaching)).booleanValue();
-    } 
-    
+    public boolean disableClientPageCaching() {
+        return ((Boolean) get(m_disablePageCaching)).booleanValue();
+    }
+
     /**
-     * if true, disables topic tab for non admin users. Topic
-     * tab does not access control topic creation, so set this 
-     * to true to maintain control of the topics on the forum.
-     * 
-     * 
-     * 
+     * if true, disables topic tab for non admin users. Topic tab does not
+     * access control topic creation, so set this to true to maintain control of
+     * the topics on the forum.
+     *
+     *
+     *
      * @return
      */
-    public boolean topicCreationByAdminOnly () {
-		return ((Boolean)get(m_adminOnlyCreateTopics)).booleanValue();
-	} 
+    public boolean topicCreationByAdminOnly() {
+        return ((Boolean) get(m_adminOnlyCreateTopics)).booleanValue();
+    }
+
     public User getDigestUser() {
         String email = getDigestUserEmail();
 
         UserCollection users = User.retrieveAll();
         users.addEqualsFilter("primaryEmail",
-                              email);
+                email);
 
         if (!users.next()) {
             throw new RuntimeException("cannot find user " + email);
@@ -225,85 +234,102 @@ public class ForumConfig extends AbstractConfig {
         users.close();
         return user;
     }
+
     /**
-     * returns the maximum allowed size (in bytes) of 
-     * image files attached to posts. Any larger
-     * files are rejected by UI validation 
+     * returns the maximum allowed size (in bytes) of image files attached to
+     * posts. Any larger files are rejected by UI validation
+     *
      * @return
      */
     public long getMaxImageSize() {
-    	Integer size = (Integer)get(m_maxImageSize);
-    	long longSize = Long.MAX_VALUE;
-    	if (size != null) {
-    		longSize = size.longValue();
-    	}
-    	return longSize;
+        Integer size = (Integer) get(m_maxImageSize);
+        long longSize = Long.MAX_VALUE;
+        if (size != null) {
+            longSize = size.longValue();
+        }
+        return longSize;
     }
+
     /**
-     * returns the maximum allowed size (in bytes) of 
-     * files attached to posts. Any larger
-     * files are rejected by UI validation 
+     * returns the maximum allowed size (in bytes) of files attached to posts.
+     * Any larger files are rejected by UI validation
+     *
      * @return
      */
     public long getMaxFileSize() {
-	Integer size = (Integer)get(m_maxFileSize);
-	long longSize = Long.MAX_VALUE;
-	if (size != null) {
-	    longSize = size.longValue();
-	}
-	return longSize;
+        Integer size = (Integer) get(m_maxFileSize);
+        long longSize = Long.MAX_VALUE;
+        if (size != null) {
+            longSize = size.longValue();
+        }
+        return longSize;
     }
-		
-		
+
     /**
-     * if true, alerts tab displays thread alerts for this and all other
-     * forums. If false, only display thread subscriptions for current 
-     * forum.
+     * if true, alerts tab displays thread alerts for this and all other forums.
+     * If false, only display thread subscriptions for current forum.
+     *
      * @return
      */
     /*
-     * If true, the thread alert page lists thread alerts from 
-     * all forums - alerts not from the current forum have
-     * links to the thread displayed within the context of 
-     * the current forum. Looks weird and needs to be sorted out
-     * presumably the correct forum needs to be set in the ForumContext 
-     * when a link is selected
-     */	
-    public boolean showThreadAlertsForAllForums () {
-    	return ((Boolean)get(m_showAllThreadAlerts)).booleanValue();
-    }
-    /**
-     * if true, displays setup and permissions tabs
-     * @return
+     * If true, the thread alert page lists thread alerts from all forums -
+     * alerts not from the current forum have links to the thread displayed
+     * within the context of the current forum. Looks weird and needs to be
+     * sorted out presumably the correct forum needs to be set in the
+     * ForumContext when a link is selected
      */
-    public boolean showNewTabs () {
-    	return ((Boolean)get(m_showNewTabs)).booleanValue();
-    } 
-    
-    public boolean useWysiwygEditor () {
-    	return ((Boolean)get(m_useWysiwygEditor)).booleanValue();
-    }
-    
-    /**
-     * message added to the bottom of the moderation reection email. 
-     * May give details about what the poster can do if not happy 
-     * with rejection
-     * @return
-     */
-    public String getRejectionMessage () {
-    	return (String)get(m_rejectionMessage);
-    }
-    
-    public int getThreadPageSize () {
-    	return ((Integer)get(m_threadPageSize)).intValue();
-    }
-    
-    public boolean quickFinishAllowed () {
-    	return ((Boolean)get(m_quickFinish)).booleanValue();
-    }
-    
-    public boolean deleteNotifications () {
-    	return ((Boolean)get(m_deleteSentSubscriptionNotifications)).booleanValue();
+    public boolean showThreadAlertsForAllForums() {
+        return ((Boolean) get(m_showAllThreadAlerts)).booleanValue();
     }
 
+    /**
+     * if true, displays setup and permissions tabs
+     *
+     * @return
+     */
+    public boolean showNewTabs() {
+        return ((Boolean) get(m_showNewTabs)).booleanValue();
+    }
+
+    public boolean useWysiwygEditor() {
+        return ((Boolean) get(m_useWysiwygEditor)).booleanValue();
+    }
+
+    /**
+     * message added to the bottom of the moderation reection email. May give
+     * details about what the poster can do if not happy with rejection
+     *
+     * @return
+     */
+    public String getRejectionMessage() {
+        return (String) get(m_rejectionMessage);
+    }
+
+    public int getThreadPageSize() {
+        return ((Integer) get(m_threadPageSize)).intValue();
+    }
+
+    public String getThreadOrder() {
+        String field = (String) get(m_threadOrderField);
+        String dir = (String) get(m_threadOrderDir);
+
+        // Test for validity
+        if(!field.equals("lastUpdate") && !field.equals("root.sent")) {
+            field = "lastUpdate"; // Default behaviour
+        }
+
+        if(!dir.equals("asc") && !dir.equals("desc")) {
+            dir = "desc"; // Default behaviour
+        }
+
+        return field + " " + dir;
+    }
+
+    public boolean quickFinishAllowed() {
+        return ((Boolean) get(m_quickFinish)).booleanValue();
+    }
+
+    public boolean deleteNotifications() {
+        return ((Boolean) get(m_deleteSentSubscriptionNotifications)).booleanValue();
+    }
 }

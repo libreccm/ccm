@@ -64,7 +64,7 @@ import com.arsdigita.web.Application;
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author chrisg23
  * @author Jens Pelzetter (jensp)
- * @version $Revision:  1.7 $ 
+ * @version $Revision:  1.7 $
  * @version $Id: Forum.java 2261 2012-01-08 17:17:10Z pboy $
  */
 public class Forum extends Application {
@@ -93,15 +93,15 @@ public class Forum extends Application {
     public static final String FORUM_MODERATION_PRIVILEGE = "forum_moderation";
     public static final String CREATE_THREAD_PRIVILEGE = "forum_create_thread";
     public static final String RESPOND_TO_THREAD_PRIVILEGE = "forum_respond";
-    // separate read privilege required because all public users 
+    // separate read privilege required because all public users
     // have READ on homepage, which is parent of forum, hence
     // everyone inherits READ cg
     //
     // note in hindsight, I have stopped homepage being set as
-    // permission context for forum, because site search checks 
+    // permission context for forum, because site search checks
     // for READ privilege anyway, and so search results were being
-    // returned for non public posts. This means there is no longer 
-    // any need for a separate forum_read privilege, though it 
+    // returned for non public posts. This means there is no longer
+    // any need for a separate forum_read privilege, though it
     // does no harm. Now removed
     //
     // pb: Reactivated READ privilege in order to provide forums for different
@@ -162,7 +162,7 @@ public class Forum extends Application {
     /**
      * Retrieves a Forum instance (its contained DataObject) based on its
      * internal id which is used to search for the OID.
-     *  
+     *
      * @param id
      * @throws DataObjectNotFoundException
      */
@@ -172,8 +172,8 @@ public class Forum extends Application {
 
     /**
      * Convenient class for creation of a standard forum. Property "Moderated"
-     * is set to false. 
-     * 
+     * is set to false.
+     *
      * @param urlName of the forum to  be created
      * @param title of forum to be created
      * @param parent object of forum to be created
@@ -201,7 +201,7 @@ public class Forum extends Application {
         s_log.debug("creating forum " + title);
 
         /* Create an aplication instance including a container group in the
-         * user administration (5. parameter true) named according to the 
+         * user administration (5. parameter true) named according to the
          * forum title.                                                      */
         Forum forum = (Forum) Application.createApplication(
                                           BASE_DATA_OBJECT_TYPE, urlName,
@@ -268,7 +268,7 @@ public class Forum extends Application {
     }
 
     /**
-     * 
+     *
      */
     private void createGroups() {
 
@@ -347,8 +347,8 @@ public class Forum extends Application {
         super.beforeSave();
     }
 
-    /** 
-     * 
+    /**
+     *
      */
     @Override
     protected void afterSave() {
@@ -540,7 +540,7 @@ public class Forum extends Application {
      * @return
      */
     public DataAssociation getSuppressedPosts() {
-        // doesn't use getPosts in view of the warning that it 
+        // doesn't use getPosts in view of the warning that it
         // may disappear
         DataAssociation posts = (DataAssociation) get(POSTS);
         posts.addEqualsFilter(Post.STATUS, Post.SUPPRESSED);
@@ -597,7 +597,7 @@ public class Forum extends Application {
             }
         }
 
-        threadsData.addOrder("lastUpdate desc");
+        threadsData.addOrder(getConfig().getThreadOrder());
 
         return new ThreadCollection(threadsData);
     }
@@ -735,7 +735,7 @@ public class Forum extends Application {
      * checks if the user can delete posts in this forum
      */
     public boolean canDelete(Party party) {
-        return ((getConfig().canAdminEditPosts() 
+        return ((getConfig().canAdminEditPosts()
                 || getConfig().canAuthorDeletePosts())
                 && PermissionService.checkPermission(
                 new PermissionDescriptor(PrivilegeDescriptor.DELETE,
