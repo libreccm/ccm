@@ -19,6 +19,7 @@ package com.arsdigita.navigation.cms;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.navigation.DataCollectionRenderer;
@@ -29,10 +30,20 @@ import com.arsdigita.xml.Element;
 
 public class CMSDataCollectionRenderer extends DataCollectionRenderer {
     
+    private boolean useExtraXml = true;
+    
     public CMSDataCollectionRenderer() {
         addAttribute("masterVersion.id");
     }
 
+    public boolean getUseExtraXml() {
+        return useExtraXml;
+    }
+    
+    public void setUseExtraXml(final boolean useExtraXml) {
+        this.useExtraXml = useExtraXml;
+    }
+    
     protected String getStableURL(DataObject dobj,
                                   ACSObject obj) {
         if (obj == null) {
@@ -64,6 +75,15 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
              * using DataCollectionRenderer#setSpecializeObjectsContext(String).
              */          
             renderer.walk(obj, getSpecializeObjectsContext());
+            
+            if ((obj instanceof ContentItem) && useExtraXml) {
+                final ContentItem contentItem = (ContentItem) obj;
+                
+                for(ExtraXMLGenerator generator : contentItem.getExtraListXMLGenerators()) {
+                    generator.generateXML(contentItem, item, null);
+                }
+                 
+            }
         }
     }
 }

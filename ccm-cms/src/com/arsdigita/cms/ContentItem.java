@@ -73,34 +73,34 @@ import java.util.Set;
  *
  * <h4>Publishing Items</h4>
  *
- * The {@link #publish(LifecycleDefinition,java.util.Date)} method can
- * be used to schedule the item for publication. The publication of an
- * item proceeds in two steps:
-
+ * The {@link #publish(LifecycleDefinition,java.util.Date)} method can be used
+ * to schedule the item for publication. The publication of an item proceeds in
+ * two steps:
+ *
  * 1. Pending Version
  *
- * A pending version is immediately created for the item, and each
- * subitem of the item. When the internal
- * <code>createPendingVersion</code> method is called, the content
- * item will attempt to clone itself in order to create the pending
- * version.
+ * A pending version is immediately created for the item, and each subitem of
+ * the item. When the internal
+ * <code>createPendingVersion</code> method is called, the content item will
+ * attempt to clone itself in order to create the pending version.
  *
- * First, the item will clone itself and all of its scalar
- * attributes.Then, the item will clone all of its
- * <strong>composite</strong> relations.  After that, the item will
- * copy all of its non-composite associations "by reference". If a
- * target of any association is a <code>ContentItem</code>, the cloned
- * item will reference the live or pending version of the target item.
+ * First, the item will clone itself and all of its scalar attributes.Then, the
+ * item will clone all of its <strong>composite</strong> relations. After that,
+ * the item will copy all of its non-composite associations "by reference". If a
+ * target of any association is a
+ * <code>ContentItem</code>, the cloned item will reference the live or pending
+ * version of the target item.
  *
- * For example, consider <code>Articles</code> A and B, both of which
- * reference an <code>ImageAsset</code> I:
+ * For example, consider
+ * <code>Articles</code> A and B, both of which reference an
+ * <code>ImageAsset</code> I:
  *
  * <blockquote><pre>
  * A ---&gt; I &lt;--- B
  * </pre></blockquote>
  *
- * When A is published, creating a pending version A', I will be
- * published as well:
+ * When A is published, creating a pending version A', I will be published as
+ * well:
  *
  * <blockquote><pre>
  * A ---&gt; I &lt;--- B
@@ -114,84 +114,71 @@ import java.util.Set;
  * A'---&gt; I'&lt;--- B'
  * </pre></blockquote>
  *
- * In order to work correctly with the automatic publishing code,
- * every subclass of <code>ContentItem</code> (such as "FooItem
- * extends ContentItem") <b>must</b> adhere to the following
- * guidelines:
+ * In order to work correctly with the automatic publishing code, every subclass
+ * of
+ * <code>ContentItem</code> (such as "FooItem extends ContentItem") <b>must</b>
+ * adhere to the following guidelines:
  *
- * <ul>
- *   <li>The subclass must have a constructor of the form
- *     <blockquote><pre>
+ * <ul> <li>The subclass must have a constructor of the form <blockquote><pre>
  * public FooItem(DataObject obj) {
  *     super(obj);
  * }
- *     </pre></blockquote>
- *   </li>
+ * </pre></blockquote> </li>
  *
- *   <li>The subclass must have a constructor of the form
- *     <blockquote><pre>
+ * <li>The subclass must have a constructor of the form <blockquote><pre>
  * public FooItem(String type) {
  *     super(type);
  *
  *     // Do more stuff here.
  * }
- *     </pre></blockquote>
- *   </li>
+ * </pre></blockquote> </li>
  *
- *   <li>If the PDL file for the subclass contains any link
- *   attributes, read-only associations, or in general any
- *   associations that are not standard, the subclass must implement
- *   the {@link #copyProperty(ContentItem, String, ItemCopier)}
- *   method.  For examples on how to implement it, see the methods's
- *   javadoc and the sample implementation in the {@link Article}
- *   class.</li>
- * </ul>
+ * <li>If the PDL file for the subclass contains any link attributes, read-only
+ * associations, or in general any associations that are not standard, the
+ * subclass must implement the {@link #copyProperty(ContentItem, String, ItemCopier)}
+ * method. For examples on how to implement it, see the methods's javadoc and
+ * the sample implementation in the {@link Article} class.</li> </ul>
  *
- * After the pending version is created, the version copier will
- * assign it a new lifecycle, based on the values passed in to {@link
- * #publish(LifecycleDefinition, java.util.Date)}, but <em>only</em>
- * if the new pending version is a regular aggregation (not a
- * composition).  In theory, it should make no difference whether the
- * new pending version is a composition or not; however, some bugs
- * within the publishing code currently prevent this from working
- * correctly. For this reason, it is <em>critically important</em> to
- * pass the right parameter to {@link ItemCopier#copy}
- * the {@link #copyProperty(ContentItem, String,
+ * After the pending version is created, the version copier will assign it a new
+ * lifecycle, based on the values passed in to {@link
+ * #publish(LifecycleDefinition, java.util.Date)}, but <em>only</em> if the new
+ * pending version is a regular aggregation (not a composition). In theory, it
+ * should make no difference whether the new pending version is a composition or
+ * not; however, some bugs within the publishing code currently prevent this
+ * from working correctly. For this reason, it is <em>critically important</em>
+ * to pass the right parameter to {@link ItemCopier#copy} the {@link #copyProperty(ContentItem, String,
  * ItemCopier)} method.
  *
  * 2. Live Version
  *
- * When the lifecycle finally rolls around to the start date specified
- * in the <code>publish</code> method, the pending versions for the
- * item and all the subitems will be promoted to live, and the item
- * will appear on the live site. Another publishing bug currently
- * makes it a <em>requirement</em> to reload the original item from
- * the database after it has been successfully published; I am working
- * on fixing this.
+ * When the lifecycle finally rolls around to the start date specified in the
+ * <code>publish</code> method, the pending versions for the item and all the
+ * subitems will be promoted to live, and the item will appear on the live site.
+ * Another publishing bug currently makes it a <em>requirement</em> to reload
+ * the original item from the database after it has been successfully published;
+ * I am working on fixing this.
  *
  * 3. Unpublishing
  *
- * When the lifecycle for an item expires, its live version is deleted
- * and removed from the live site, along with all its subitems.
+ * When the lifecycle for an item expires, its live version is deleted and
+ * removed from the live site, along with all its subitems.
  *
  * 4. Future work
  *
- * The new data model makes it possible to have multiple pending
- * versions for a content item; it should also be theoretically
- * possible to archive expired live versions, as opposed to deletin g
- * them.  There are no Java APIs for this functionality as of yet,
- * however.
+ * The new data model makes it possible to have multiple pending versions for a
+ * content item; it should also be theoretically possible to archive expired
+ * live versions, as opposed to deletin g them. There are no Java APIs for this
+ * functionality as of yet, however.
  *
  * <h4>Copying Items</h4>
  *
- * The {@link ItemCopier#copy} method may be used to create a
- * nearly identical copy of the item, according to the rules described
- * above. The new item will be a full-fledged, standalone item. Note
- * that the services (such as categories) will not be automatically
- * transferred to the new copy of the item; the {@link
- * #copyServicesFrom(ContentItem)} method must be called on the new
- * item to transfer the services. Calling this method is not a
- * requirement, however.
+ * The {@link ItemCopier#copy} method may be used to create a nearly identical
+ * copy of the item, according to the rules described above. The new item will
+ * be a full-fledged, standalone item. Note that the services (such as
+ * categories) will not be automatically transferred to the new copy of the
+ * item; the {@link
+ * #copyServicesFrom(ContentItem)} method must be called on the new item to
+ * transfer the services. Calling this method is not a requirement, however.
  *
  * @author Uday Mathur
  * @author Jack Chung
@@ -211,8 +198,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                                 MODEL + ".getPendingSortedByLifecycle";
     public static final String BASE_DATA_OBJECT_TYPE = MODEL + ".ContentItem";
     /**
-     * A state marking the draft or master item corresponding to a
-     * live or pending version of that item.
+     * A state marking the draft or master item corresponding to a live or
+     * pending version of that item.
      */
     public static final String DRAFT = "draft";
     /**
@@ -241,7 +228,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     private VersionCache m_live;
     private boolean m_wasNew;
     private Reporter m_reporter;
-    private BasicAuditTrail m_audit_trail;   
+    private BasicAuditTrail m_audit_trail;
 
     /**
      * Default constructor. This creates a new content item.
@@ -253,11 +240,14 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <code>oid</code>.
+     * Constructor. The contained
+     * <code>DataObject</code> is retrieved from the persistent storage
+     * mechanism with an
+     * <code>OID</code> specified by
+     * <code>oid</code>.
      *
-     * @param oid The <code>OID</code> for the retrieved
+     * @param oid The
+     * <code>OID</code> for the retrieved
      * <code>DataObject</code>
      */
     public ContentItem(final OID oid) throws DataObjectNotFoundException {
@@ -265,12 +255,15 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <code>id</code> and
+     * Constructor. The contained
+     * <code>DataObject</code> is retrieved from the persistent storage
+     * mechanism with an
+     * <code>OID</code> specified by
+     * <code>id</code> and
      * <code>ContentItem.BASE_DATA_OBJECT_TYPE</code>.
      *
-     * @param id The <code>id</code> for the retrieved
+     * @param id The
+     * <code>id</code> for the retrieved
      * <code>DataObject</code>
      */
     public ContentItem(final BigDecimal id)
@@ -279,22 +272,22 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Constructor.  Retrieves or creates a content item using the
+     * Constructor. Retrieves or creates a content item using the
      * <code>DataObject</code> argument.
      *
-     * @param obj The <code>DataObject</code> with which to create or
-     * load a content item
+     * @param obj The
+     * <code>DataObject</code> with which to create or load a content item
      */
     public ContentItem(final DataObject obj) {
         super(obj);
     }
 
     /**
-     * Constructor.  Creates a new content item using the given data
-     * object type.  Such items are created as draft versions.
+     * Constructor. Creates a new content item using the given data object type.
+     * Such items are created as draft versions.
      *
-     * @param type The <code>String</code> data object type of the
-     * item to create
+     * @param type The
+     * <code>String</code> data object type of the item to create
      */
     public ContentItem(final String type) {
         super(type);
@@ -320,8 +313,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     };
 
     /**
-     * Called from the base class (<code>DomainObject</code>)
-     * constructors.
+     * Called from the base class (
+     * <code>DomainObject</code>) constructors.
      */
     protected void initialize() {
         super.initialize();
@@ -377,7 +370,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * @return the base PDL object type for this item. Child classes should
-     *  override this method to return the correct value
+     * override this method to return the correct value
      */
     @Override
     public String getBaseDataObjectType() {
@@ -386,8 +379,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Publicized getter method for use by metadata forms.
+     *
      * @param key
-     * @return  
+     * @return
      */
     @Override
     public Object get(final String key) {
@@ -396,8 +390,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Public setter method for use by metadata forms.
+     *
      * @param key
-     * @param value  
+     * @param value
      */
     @Override
     public void set(final String key, final Object value) {
@@ -406,10 +401,10 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Public add for use by metadata forms.
-     * 
+     *
      * @param propertyName
      * @param dobj
-     * @return 
+     * @return
      */
     @Override
     public DataObject add(String propertyName, DomainObject dobj) {
@@ -418,9 +413,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Public remove for use by metadata forms
-     * 
+     *
      * @param propertyName
-     * @param dobj 
+     * @param dobj
      */
     @Override
     public void remove(String propertyName, DomainObject dobj) {
@@ -428,8 +423,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * For new content items, sets the associated content type if it
-     * has not been already set.
+     * For new content items, sets the associated content type if it has not
+     * been already set.
      */
     @Override
     protected void beforeSave() {
@@ -445,27 +440,17 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
     }
 
-    /*  
-    
-    removed cg - object observer sets context based
-    on parent whenever parent is updated
-    
-    protected void afterSave() {
-    super.afterSave();
-    s_log.info("******After Save of object " + getOID());
-    // Set the object's context to its parent object for
-    // permissioning.
-    if (m_wasNew) {
-    final ACSObject parent = getParent();
-    if (parent == null) {
-    s_log.info("parent is null - set context to content section");
-    PermissionService.setContext(this, getContentSection());
-    } else {
-    s_log.info("parent is " + parent.getOID());
-    PermissionService.setContext(this, parent);
-    }
-    }
-    }
+    /*      *
+     * removed cg - object observer sets context based on parent whenever parent
+     * is updated
+     *
+     * protected void afterSave() { super.afterSave(); s_log.info("******After
+     * Save of object " + getOID()); // Set the object's context to its parent
+     * object for // permissioning. if (m_wasNew) { final ACSObject parent =
+     * getParent(); if (parent == null) { s_log.info("parent is null - set
+     * context to content section"); PermissionService.setContext(this,
+     * getContentSection()); } else { s_log.info("parent is " +
+     * parent.getOID()); PermissionService.setContext(this, parent); } } }
      */
     private void setDefaultContentSection() {
         s_log.debug("Setting the default content section");
@@ -491,8 +476,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Fetch the display name of the content item. The display name for
-     * a {@link com.arsdigita.cms.ContentItem} is the name property.
+     * Fetch the display name of the content item. The display name for a {@link com.arsdigita.cms.ContentItem}
+     * is the name property.
      *
      * @return The name of the content item
      */
@@ -533,7 +518,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Set the parent object.
      *
-     * @param object The <code>ACSObject</code> parent
+     * @param object The
+     * <code>ACSObject</code> parent
      */
     public final void setParent(final ACSObject object) {
         setAssociation(PARENT, object);
@@ -543,7 +529,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Fetches all the child items of this item.
      *
-     * @return an <code>ItemCollection</code> of children
+     * @return an
+     * <code>ItemCollection</code> of children
      */
     public final ItemCollection getChildren() {
         final DataAssociationCursor cursor =
@@ -590,16 +577,17 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Returns the content section to which this item belongs.
-     * Fetches the denormalized content section of an item.  If one is
-     * not found, this method returns null.
+     * Returns the content section to which this item belongs. Fetches the
+     * denormalized content section of an item. If one is not found, this method
+     * returns null.
      *
-     * Since <code>cms_items.section_id</code> is a denormalization,
-     * this method may return null even if the item "belongs" to a
-     * content section. For example, calling
+     * Since
+     * <code>cms_items.section_id</code> is a denormalization, this method may
+     * return null even if the item "belongs" to a content section. For example,
+     * calling
      * <code>getContentSection()</code> on an Article's
-     * <code>ImageAsset</code> will return null even though the image
-     * asset should belong to the same section as the article.
+     * <code>ImageAsset</code> will return null even though the image asset
+     * should belong to the same section as the article.
      *
      * @return The content section to which this item belongs
      */
@@ -620,18 +608,20 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Return the path to the item starting at its root. The path is
-     * absolute, of the form <tt>/x/y/z</tt> where <tt>x</tt> and
-     * <tt>y</tt> are the names of the item's grandparent and parent
-     * respectively, and <tt>z</tt> is the name of the item itself.
+     * Return the path to the item starting at its root. The path is absolute,
+     * of the form <tt>/x/y/z</tt> where <tt>x</tt> and <tt>y</tt> are the names
+     * of the item's grandparent and parent respectively, and <tt>z</tt> is the
+     * name of the item itself.
      *
      * The item's root is the ancestor reachable through repeated
      * <code>getParent()</code> calls whose parent is
      * <code>null</code>. This is usually a folder, but may be any
-     * {@see com.arsdigita.kernel.ACSObject}.
+     * {
      *
-     * Note that the name of the root folder of the content section
-     * where the item resides is not included in the path.
+     * @see com.arsdigita.kernel.ACSObject}.
+     *
+     * Note that the name of the root folder of the content section where the
+     * item resides is not included in the path.
      *
      * @see #getPathInfo(boolean)
      * @return the path from the item's root to the item
@@ -668,14 +658,15 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Return a collection of ancestors starting from the item's root to the
-     * item's parent item. For items contained in folders this is similar to
-     * a directory path to the item. The collection starts with the root item
-     * and ends with the item's direct parent.
+     * item's parent item. For items contained in folders this is similar to a
+     * directory path to the item. The collection starts with the root item and
+     * ends with the item's direct parent.
      *
      * <p> The item's root is the ancestor reachable through repeated
-     * <code>getParent()</code> calls whose parent is <code>null</code>. This
-     * is usually a folder, but may be any {@see
-     * com.arsdigita.kernel.ACSObject}.
+     * <code>getParent()</code> calls whose parent is
+     * <code>null</code>. This is usually a folder, but may be any {
+     *
+     * @see com.arsdigita.kernel.ACSObject}.
      *
      * @see #getPathInfo(boolean)
      *
@@ -687,17 +678,21 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Return a collection of ancestors starting from the item's root to the
-     * item's parent item (if <code>includeSelf</code> is <code>false</code>)
-     * or to the item itself otherwise. For items contained in folders this
-     * is similar to a directory path to the item. The collection starts with
-     * the root item and ends with the item's direct parent.
+     * item's parent item (if
+     * <code>includeSelf</code> is
+     * <code>false</code>) or to the item itself otherwise. For items contained
+     * in folders this is similar to a directory path to the item. The
+     * collection starts with the root item and ends with the item's direct
+     * parent.
      *
      * <p> The item's root is the ancestor reachable through repeated
-     * <code>getParent()</code> calls whose parent is <code>null</code>. This
-     * is usually a folder, but may be any {@see
-     * com.arsdigita.kernel.ACSObject}.
+     * <code>getParent()</code> calls whose parent is
+     * <code>null</code>. This is usually a folder, but may be any {
      *
-     * @param includeSelf a <code>boolean</code> value.
+     * @see com.arsdigita.kernel.ACSObject}.
+     *
+     * @param includeSelf a
+     * <code>boolean</code> value.
      * @return the items on the path to the root folder.
      */
     public ItemCollection getPathInfo(boolean includeSelf) {
@@ -752,8 +747,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Sets the version tag.
      *
-     * @param version A version tag, {@link #LIVE} or {@link #DRAFT}
-     * or {@link #PENDING}
+     * @param version A version tag, {@link #LIVE} or {@link #DRAFT} or {@link #PENDING}
      */
     protected void setVersion(final String version) {
         set(VERSION, version);
@@ -762,18 +756,21 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Returns <code>true</code> if this item is a <code>DRAFT</code>
-     * version.
+     * Returns
+     * <code>true</code> if this item is a
+     * <code>DRAFT</code> version.
      *
-     * @return <code>true</code> if this item is a <code>DRAFT</code>
-     * version
+     * @return
+     * <code>true</code> if this item is a
+     * <code>DRAFT</code> version
      */
     public boolean isDraftVersion() {
         return DRAFT.equals(getVersion());
     }
 
     /**
-     * Returns the <code>DRAFT</code> version of this content item.
+     * Returns the
+     * <code>DRAFT</code> version of this content item.
      *
      * @return the draft version
      */
@@ -797,8 +794,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Fetches the draft (aka, "master" or "working") version of this
-     * content item.
+     * Fetches the draft (aka, "master" or "working") version of this content
+     * item.
      *
      * @return the working version representation of the
      * <code>ContentItem</code>, possibly this item
@@ -809,18 +806,21 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Returns <code>true</code> if this item is a
+     * Returns
+     * <code>true</code> if this item is a
      * <code>PENDING</code> version.
      *
-     * @return <code>true</code> if <code>this</code> is one of the
-     * pending versions
+     * @return
+     * <code>true</code> if
+     * <code>this</code> is one of the pending versions
      */
     public boolean isPendingVersion() {
         return PENDING.equals(getVersion());
     }
 
     /**
-     * Returns one <code>PENDING</code> version of this content item.
+     * Returns one
+     * <code>PENDING</code> version of this content item.
      *
      * @return one of the pending versions
      */
@@ -853,7 +853,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * <p>Fetches the pending versions, if any, of this content item.  The
+     * <p>Fetches the pending versions, if any, of this content item. The
      * versions are returned in chronological order, sorted by their respective
      * lifecycle's start date.</p>
      *
@@ -910,22 +910,24 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Returns <code>true</code> if this item is a <code>LIVE</code>
-     * version.
+     * Returns
+     * <code>true</code> if this item is a
+     * <code>LIVE</code> version.
      *
-     * @return <code>true</code> if <code>this</code> is the live
-     * version
+     * @return
+     * <code>true</code> if
+     * <code>this</code> is the live version
      */
     public boolean isLiveVersion() {
         return LIVE.equals(getVersion());
     }
 
     /**
-     * Fetches the live version of this content item.  Returns null if
-     * there is none.
+     * Fetches the live version of this content item. Returns null if there is
+     * none.
      *
-     * @return a <code>ContentItem</code> representing the live
-     * version
+     * @return a
+     * <code>ContentItem</code> representing the live version
      */
     public ContentItem getLiveVersion() {
         if (s_log.isDebugEnabled()) {
@@ -963,7 +965,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Sets the live version.
      *
-     * @param version The <code>ContentItem</code> to set live
+     * @param version The
+     * <code>ContentItem</code> to set live
      */
     protected void setLiveVersion(final ContentItem version) {
         if (s_log.isDebugEnabled()) {
@@ -989,8 +992,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Get the live version for the item. If no live version exists,
-     * return the latest pending version, if any.
+     * Get the live version for the item. If no live version exists, return the
+     * latest pending version, if any.
      *
      * @return the public version for this item, or null if none
      */
@@ -1019,16 +1022,16 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     // Publishing methods
     //
     /**
-     * Method to determine whether this ContentItem should
-     * be automatically published to the file system.
+     * Method to determine whether this ContentItem should be automatically
+     * published to the file system.
      */
     protected boolean canPublishToFS() {
         return true;
     }
 
     /**
-     * Publish this item to the filesystem; can only be called on a
-     * live version.
+     * Publish this item to the filesystem; can only be called on a live
+     * version.
      */
     protected void publishToFS() {
         if (!canPublishToFS()) {
@@ -1059,11 +1062,12 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Returns true if this item has a publicly viewable version.
-     * This item is not necessarily the live version nor is this
-     * method to be confused with isPublished.
+     * Returns true if this item has a publicly viewable version. This item is
+     * not necessarily the live version nor is this method to be confused with
+     * isPublished.
      *
-     * @return <code>true<code> if this content item has a live
+     * @return
+     * <code>true<code> if this content item has a live
      * version, or if it <em>is</em> the live version
      */
     public boolean isLive() {
@@ -1073,8 +1077,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Makes an item live or not live.
      *
-     * @param version the version which should become live, null to
-     * make the item non-live
+     * @param version the version which should become live, null to make the
+     * item non-live
      */
     public void setLive(final ContentItem version) {
         if (s_log.isDebugEnabled()) {
@@ -1180,8 +1184,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * Schedules an item for publication.
      *
      * @param cycleDef The lifecycle definition
-     * @param startDate The time to schedule the start of the
-     * lifecycle.  If null, use the current time as the start date.
+     * @param startDate The time to schedule the start of the lifecycle. If
+     * null, use the current time as the start date.
      *
      * @return the new pending version
      */
@@ -1196,12 +1200,13 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                         + "definition " + cycleDef + " and start date "
                         + startDate);
         }
-        /* amended Chris Gilbert
+        /*
+         * amended Chris Gilbert
          *
          * Some content types may have their own lifecycles with their own
-         * default listeners. Previous implementation just enforced
-         * the listener retrieved from getPublisherClassName. This amendment
-         * looks for a default listener in the cycle definition first
+         * default listeners. Previous implementation just enforced the listener
+         * retrieved from getPublisherClassName. This amendment looks for a
+         * default listener in the cycle definition first
          *
          */
         String listener = cycleDef.getDefaultListener();
@@ -1243,10 +1248,10 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Unpublishes an item.  This method removes the item's lifecycle
-     * and removes all pending versions.  It is intended for use in UI
-     * code, and it should not be used for making items go "unlive".
-     * Instead, use <code>setLive(null)</code>.
+     * Unpublishes an item. This method removes the item's lifecycle and removes
+     * all pending versions. It is intended for use in UI code, and it should
+     * not be used for making items go "unlive". Instead, use
+     * <code>setLive(null)</code>.
      */
     public void unpublish() {
         if (s_log.isDebugEnabled()) {
@@ -1291,9 +1296,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Republish the item
-     * @parameter reset - if true create a new lifecycle, if false use existing
-     * Called from ui.lifecycle.ItemLifecycleItemPane.java
+     * Republish the item @parameter reset - if true create a new lifecycle, if
+     * false use existing Called from ui.lifecycle.ItemLifecycleItemPane.java
      */
     public void republish(boolean reset) {
         if (s_log.isDebugEnabled()) {
@@ -1433,8 +1437,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Returns an iterator over the categories associated with this
-     * content item which is associated with the given use context
+     * Returns an iterator over the categories associated with this content item
+     * which is associated with the given use context
      *
      * @param useContext the category use context
      *
@@ -1468,14 +1472,13 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Sets a category as the default/primary category for this
-     * item. Actual default assignment is performed on the bundle if
-     * one exists.
+     * Sets a category as the default/primary category for this item. Actual
+     * default assignment is performed on the bundle if one exists.
      *
-     * If this category is not already assigned to this item, then
-     * this method also adds the category to the item.
+     * If this category is not already assigned to this item, then this method
+     * also adds the category to the item.
      *
-     *  @param category The category to set as the default.
+     * @param category The category to set as the default.
      *
      */
     public void setDefaultCategory(Category category) {
@@ -1493,7 +1496,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Adds a category to this content item (or its bundle if one exists)
      *
-     *  @param category The category to add this item to
+     * @param category The category to add this item to
      *
      */
     public void addCategory(Category category) {
@@ -1510,7 +1513,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Removes a category from this content item (or its bundle if one exists)
      *
-     *  @param category The category to remove this item from
+     * @param category The category to remove this item from
      *
      */
     public void removeCategory(Category category) {
@@ -1528,19 +1531,16 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     //  Versioning stuff
     //
     /**
-     * Recursively copy this item, creating a clone.
-     * Reassign composite associations from the copy to point
-     * to the copies of original items. This method will not
-     * automatically transfer services (such as categories)
-     * to the copy; the {@link #copyServicesFrom(ContentItem)} method
-     * should be called to accomplish this.
-     * <p>
-     * NOTE: This method will also save the item and all
-     * of its unpublished subitems.
+     * Recursively copy this item, creating a clone. Reassign composite
+     * associations from the copy to point to the copies of original items. This
+     * method will not automatically transfer services (such as categories) to
+     * the copy; the {@link #copyServicesFrom(ContentItem)} method should be
+     * called to accomplish this. <p> NOTE: This method will also save the item
+     * and all of its unpublished subitems.
      *
-     * NOTE: This method should be final with the addition of makeCopy,
-     * but is not just in case there are extensions in some PS code.
-     * The 'non-finalness' of this method should be considered deprecated.
+     * NOTE: This method should be final with the addition of makeCopy, but is
+     * not just in case there are extensions in some PS code. The
+     * 'non-finalness' of this method should be considered deprecated.
      *
      * @return the live version for this item
      * @see #copyServicesFrom(ContentItem)
@@ -1554,12 +1554,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Recursively copy this item, creating a clone.
-     * Reassign composite associations from the copy to point
-     * to the copies of original items.
-     * <p>
-     * NOTE: This method will  save the item and all
-     * of its unpublished subitems.
+     * Recursively copy this item, creating a clone. Reassign composite
+     * associations from the copy to point to the copies of original items. <p>
+     * NOTE: This method will save the item and all of its unpublished subitems.
      *
      * @param newParent The new parent item for this item
      * @param copyServices Copy services if true
@@ -1593,8 +1590,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Performs the actual mechanics of copying a content item.
-     * Non-final so that subtypes can extend copying behavior.
+     * Performs the actual mechanics of copying a content item. Non-final so
+     * that subtypes can extend copying behavior.
      *
      * @return A new copy of the item
      */
@@ -1613,11 +1610,11 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Variant of {@link ACSObject#makeCopy} which allows to pass the (further) 
+     * Variant of {@link ACSObject#makeCopy} which allows to pass the (further)
      * language of the copy.
-     * 
+     *
      * @param language
-     * @return 
+     * @return
      */
     protected ContentItem makeCopy(String language) {
         if (s_log.isDebugEnabled()) {
@@ -1636,17 +1633,15 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Transfer services, such as categories,
-     * from the passed-in item to this item. This method should be
-     * called immediately after {@link ItemCopier#copy}, as follows:
-     * <blockquote><pre><code> Article newArticle = (Article)oldArticle.copyItem();
-     * newArticle.copyServicesFrom(oldArticle);</code></pre></blockquote>
-     * <p>
-     * WARNING: This method will most likely crash if you call it twice
-     * in a row.
+     * Transfer services, such as categories, from the passed-in item to this
+     * item. This method should be called immediately after {@link ItemCopier#copy},
+     * as follows: <blockquote><pre><code> Article newArticle = (Article)oldArticle.copyItem();
+     * newArticle.copyServicesFrom(oldArticle);</code></pre></blockquote> <p>
+     * WARNING: This method will most likely crash if you call it twice in a
+     * row.
      *
-     * @param source the <code>ContentItem</code> whose services will be
-     *   copied
+     * @param source the
+     * <code>ContentItem</code> whose services will be copied
      * @see #copy()
      */
     public void copyServicesFrom(final ContentItem source) {
@@ -1654,12 +1649,12 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Recursively copy this item, creating a pending version.
-     * Reassign composite associations from the pending version to
-     * point to the pending/live versions of other items.
+     * Recursively copy this item, creating a pending version. Reassign
+     * composite associations from the pending version to point to the
+     * pending/live versions of other items.
      *
-     * NOTE: This method will also save the item and all of its
-     * unpublished subitems.
+     * NOTE: This method will also save the item and all of its unpublished
+     * subitems.
      *
      * @param cycle the lifecycle to use. A null cycle implies that a live
      * version should be created.
@@ -1674,8 +1669,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Promote the specified pending version to live. Delete the old
-     * live version, if any.
+     * Promote the specified pending version to live. Delete the old live
+     * version, if any.
      *
      * @param pending The pending item to promote
      */
@@ -1718,9 +1713,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Recursively update the version attribute of the current
-     * content item to the new value. Used by the lifecycle listener
-     * to promote a pending version to live.
+     * Recursively update the version attribute of the current content item to
+     * the new value. Used by the lifecycle listener to promote a pending
+     * version to live.
      *
      * @param version The new Version to set
      */
@@ -1732,9 +1727,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Recursively copy this item, creating a live version.  Reassign
-     * component associations from the live version to point to the
-     * live versions of other items.
+     * Recursively copy this item, creating a live version. Reassign component
+     * associations from the live version to point to the live versions of other
+     * items.
      *
      * @return the live version for this item
      */
@@ -1749,14 +1744,16 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Copy the specified property (attribute or association) from the
-     * specified source item. This method almost completely overrides
-     * the metadata-driven methods in <code>ObjectCopier</code>. ...
+     * Copy the specified property (attribute or association) from the specified
+     * source item. This method almost completely overrides the metadata-driven
+     * methods in
+     * <code>ObjectCopier</code>. ...
      *
-     * ObjectCopier will no longer call it, so existing
-     * implementations need to update to the new signature
+     * ObjectCopier will no longer call it, so existing implementations need to
+     * update to the new signature
      *
-     * @deprecated use {@link #copyProperty(CustomCopy, Property, ItemCopier)} instead
+     * @deprecated use {@link #copyProperty(CustomCopy, Property, ItemCopier)}
+     * instead
      */
     protected final boolean copyProperty(final ContentItem source,
                                          final String attribute,
@@ -1766,35 +1763,35 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Copy the specified property (attribute or association) from the
-     * specified source item. This method almost completely overrides
-     * the metadata-driven methods in <code>ObjectCopier</code>. If
-     * the property in question is an association to
-     * <code>ContentItem</code>(s), this method should <b>only</b>
-     * call <code>FooContentItem newChild = copier.copy(srcItem, this,
-     * riginalChild, property);</code> An attempt to call any other
-     * method in order to copy the child will most likely have
-     * disastrous consequences. In fact, this copier method should
-     * generally be called for any DomainObject copies, later making
-     * custom changes, unless the copying behavior itself is different
-     * from the default (or the item should not be copied at all at
+     * Copy the specified property (attribute or association) from the specified
+     * source item. This method almost completely overrides the metadata-driven
+     * methods in
+     * <code>ObjectCopier</code>. If the property in question is an association
+     * to
+     * <code>ContentItem</code>(s), this method should <b>only</b> call
+     * <code>FooContentItem newChild = copier.copy(srcItem, this,
+     * riginalChild, property);</code> An attempt to call any other method in
+     * order to copy the child will most likely have disastrous consequences. In
+     * fact, this copier method should generally be called for any DomainObject
+     * copies, later making custom changes, unless the copying behavior itself
+     * is different from the default (or the item should not be copied at all at
      * this point).
      *
      *
-     * If a subclass of a class which implements CustomCopy overrides
-     * this method, it should return <code>super.copyProperty</code>
-     * for properties which do not need custom behavior in order to
-     * indicate that it is not interested in handling the property in
-     * any special way.
+     * If a subclass of a class which implements CustomCopy overrides this
+     * method, it should return
+     * <code>super.copyProperty</code> for properties which do not need custom
+     * behavior in order to indicate that it is not interested in handling the
+     * property in any special way.
      *
-     * As a hypothetical example (no longer reflected in Article
-     * itself), the {@link Article} class extends
-     * <code>ContentItem</code>.  It defines an association to 0..n
-     * {@link ImageAsset}. Unfortunately, the association has
-     * "order_n" and "caption" link attributes, which cannot be copied
-     * automatically, since the persistence system doesn't know enough
-     * about them. The following sample code from the {@link Article}
-     * class ensures that images are copied correctly:
+     * As a hypothetical example (no longer reflected in Article itself), the {@link Article}
+     * class extends
+     * <code>ContentItem</code>. It defines an association to 0..n
+     * {@link ImageAsset}. Unfortunately, the association has "order_n" and
+     * "caption" link attributes, which cannot be copied automatically, since
+     * the persistence system doesn't know enough about them. The following
+     * sample code from the {@link Article} class ensures that images are copied
+     * correctly:
      *
      * <blockquote><pre><code>
      * public boolean copyProperty(CustomCopy srcItem, Property property, ItemCopier copier) {
@@ -1831,24 +1828,23 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * </code></pre></blockquote>
      *
      * Note that for top-level item associations,
-     * <code>VersionCopier</code> will return <code>null</code>  since
-     * the actual associatons are only created at "go live" time, so
-     * the ability to override behavior for top-level item
-     * associations is somewhat limited. A common case for needing to
-     * override copyProperty to handle these associations would be to
-     * auto-publish the target of the association but still handle the
-     * association updating normally. In this case, copyProperty would
-     * call publish() separately on the associated object, and then
-     * return <code>false</code> to indicate that the copier should
-     * continue to handle the association normally.
+     * <code>VersionCopier</code> will return
+     * <code>null</code> since the actual associatons are only created at "go
+     * live" time, so the ability to override behavior for top-level item
+     * associations is somewhat limited. A common case for needing to override
+     * copyProperty to handle these associations would be to auto-publish the
+     * target of the association but still handle the association updating
+     * normally. In this case, copyProperty would call publish() separately on
+     * the associated object, and then return
+     * <code>false</code> to indicate that the copier should continue to handle
+     * the association normally.
      *
      * @param source the source CustomCopy item
      * @param property the property to copy
      * @param copier a temporary class that is able to copy a child item
-     *   correctly.
-     * @return true if the property was copied; false to indicate
-     *   that regular metadata-driven methods should be used
-     *   to copy the property.
+     * correctly.
+     * @return true if the property was copied; false to indicate that regular
+     * metadata-driven methods should be used to copy the property.
      */
     public boolean copyProperty(final CustomCopy source,
                                 final Property property,
@@ -1942,18 +1938,16 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Copy services from the source item. This method is the analogue of
-     * the {@link #copyProperty} method above. The object copier will
-     * call this method whenever an item has been successfully published,
-     * in order to transfer services such as categorization or permissions
-     * to the live version.
-     * <p>
-     * This method is requied to return false to signal the object copier
-     * to transfer default services from the source item; or true
-     * in order to abort further processing of services.
+     * Copy services from the source item. This method is the analogue of the {@link #copyProperty}
+     * method above. The object copier will call this method whenever an item
+     * has been successfully published, in order to transfer services such as
+     * categorization or permissions to the live version. <p> This method is
+     * requied to return false to signal the object copier to transfer default
+     * services from the source item; or true in order to abort further
+     * processing of services.
      *
-     * @return true to tell the object copier to stop copying services for
-     * this item, false otherwise
+     * @return true to tell the object copier to stop copying services for this
+     * item, false otherwise
      */
     public boolean copyServices(ContentItem srcItem) {
         return false;
@@ -1985,8 +1979,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Get the locale for this content item.
      *
-     * @return The locale of the item
-     * @post return != null
+     * @return The locale of the item @post return != null
      */
     public com.arsdigita.globalization.Locale getLocale() {
         Locale locale = null;
@@ -2032,6 +2025,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     //
     /**
      * Assert that this item is a top-level master object
+     *
      * @deprecated with no replacement
      */
     public final void assertMaster() {
@@ -2078,9 +2072,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Remove any Links pointing to this item before deletion.
-     * XXX This should go away when one-way association targets can
-     * specify the equivalent of on delete set null
+     * Remove any Links pointing to this item before deletion. XXX This should
+     * go away when one-way association targets can specify the equivalent of on
+     * delete set null
      */
     @Override
     protected void beforeDelete() {
@@ -2112,11 +2106,12 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     *  Overriding the Auditing interface in order to use the denormalized
-     *  information
+     * Overriding the Auditing interface in order to use the denormalized
+     * information
      */
     /**
      * Gets the user who created the object. May be null.
+     *
      * @return the user who created the object.
      */
     @Override
@@ -2126,6 +2121,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Gets the creation date of the object.
+     *
      * @return the creation date.
      */
     @Override
@@ -2134,8 +2130,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Gets the IP address associated with creating an object. May be
-     * null.
+     * Gets the IP address associated with creating an object. May be null.
+     *
      * @return the creation IP address.
      */
     @Override
@@ -2145,6 +2141,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Gets the user who last modified the object. May be null.
+     *
      * @return the last modifying user.
      */
     @Override
@@ -2154,6 +2151,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Gets the last modified date.
+     *
      * @return the last modified date.
      */
     @Override
@@ -2163,35 +2161,48 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * Gets the last modified IP address. May be null.
+     *
      * @return the IP address associated with the last modification.
      */
     @Override
     public String getLastModifiedIP() {
         return m_audit_trail.getLastModifiedIP();
     }
-    
+
     /**
-     * <p>
-     * Override this to explicit that your content items
-     * have extra XML to generate. An overriding implementation should call 
-     * the super method, and append its generators to the list. Example:
-     * </p>
+     * <p> Override this to explicit that your content items have extra XML to
+     * generate. An overriding implementation should call the super method, and
+     * append its generators to the list. Example: </p>
      * <pre>
      * {@code
      * @Override
      * public List<ExtraXMLGenerator> getExtraXMLGenerators() {
-     *   final List<ExtraXMLGenerators> generators = 
+     *   final List<ExtraXMLGenerators> generators =
      *     super.getExtraXMLGenerators();
-     *   
+     *
      *   generators.add(new YourExtraXMLGenerator());
-     * 
+     *
      *   return generators;
      * }
      * }
-     * </pre>     
+     * </pre>
+     *
      * @return A list of all extra XML Generators for this content item.
      */
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        return new ArrayList<ExtraXMLGenerator>();
+    }
+
+    /**
+     * <p> Override this method if your content items have extra XML for list
+     * views. You may return the same XML generators as in
+     * {@link #getExtraXMLGenerators()}. But beware: The page state passed to
+     * generators returned by this method will may be null. </p>
+     *
+     * @return A list of all extra XML Generators for lists views of 
+     * this content item.
+     */
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
         return new ArrayList<ExtraXMLGenerator>();
     }
 }

@@ -22,7 +22,7 @@ public class PublishLock {
     public final static String TIMESTAMP = "timestamp";
     public final static String ACTION = "action";
     public final static String ERROR = "error";
-    private static PublishLock instance = new PublishLock();    
+    private static PublishLock instance = new PublishLock();
 
     private PublishLock() {
     }
@@ -57,7 +57,9 @@ public class PublishLock {
         if (!collection.isEmpty()) {
             collection.next();
             final DataObject lock = collection.getDataObject();
-            lock.delete();
+            if (!(ERROR.equals(lock.get(ACTION)))) {
+                lock.delete();
+            }
         }
         collection.close();
         SessionManager.getSession().getTransactionContext().commitTxn();
@@ -94,7 +96,7 @@ public class PublishLock {
         collection.close();
         SessionManager.getSession().getTransactionContext().commitTxn();
     }
-    
+
     protected synchronized boolean hasError(final ContentItem item) {
         final DataCollection collection = SessionManager.getSession().retrieve(
                 LOCK_OBJECT_TYPE);
@@ -105,7 +107,7 @@ public class PublishLock {
             return false;
         } else {
             collection.next();
-            
+
             final DataObject lock = collection.getDataObject();
             if (ERROR.equals(lock.get(ACTION).toString())) {
                 collection.close();

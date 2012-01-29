@@ -303,7 +303,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                         newInstance(OID.valueOf(itemOid));
                 PublishLock.getInstance().lock(item);
                 republish(item, false);
-                PublishLock.getInstance().unlock(item);
+                PublishLock.getInstance().unlock(item);               
             }
         }
     }

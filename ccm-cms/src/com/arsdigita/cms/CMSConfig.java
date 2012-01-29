@@ -600,7 +600,7 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_threadPublishing = new BooleanParameter(
             "com.arsdigita.cms.lifecycle.threaded_publishing",
             Parameter.REQUIRED,
-            false);
+            true);
 
     // ///////////////////////////////////////////
     // publishToFile package related parameter

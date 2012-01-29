@@ -386,7 +386,7 @@ class ItemLifecycleSelectForm extends BaseForm {
                     public void run() {
                         PublishLock.getInstance().lock(item);
                         publisher.publish();
-                        PublishLock.getInstance().unlock(item);
+                        PublishLock.getInstance().unlock(item);                       
                     }
                 };
                 final Thread thread = new Thread(threadAction);
@@ -529,9 +529,9 @@ class ItemLifecycleSelectForm extends BaseForm {
              * "com.arsdigita.cms.lifecycle.NotifyLifecycleListener");
              * expirationImminentPhase.save(); } }
              *
-             * // Force the lifecycle scheduler to run to avoid any // scheduler
-             * delay for items that should be published // immediately.
-             * pending.getLifecycle().start();
+             * // Force the lifecycle scheduler to run to avoid any //
+             * scheduler delay for items that should be published //
+             * immediately. pending.getLifecycle().start();
              *
              * item.save();
              *
@@ -542,8 +542,7 @@ class ItemLifecycleSelectForm extends BaseForm {
              * active. if
              * (ContentSection.getConfig().getUseStreamlinedCreation()) { throw
              * new RedirectSignal(URL.there(state.getRequest(),
-             * Utilities.getWorkspaceURL()), true);
-            }
+             * Utilities.getWorkspaceURL()), true); }
              */
         }
     }

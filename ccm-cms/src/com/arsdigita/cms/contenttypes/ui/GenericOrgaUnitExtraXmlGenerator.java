@@ -17,23 +17,20 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
- * <p>
- * Base class for {@link ExtraXMLGenerator}s for sub classes of 
- * {@link GenericOrganizationalUnit}. The only method which has to be 
+ * <p> Base class for {@link ExtraXMLGenerator}s for sub classes of
+ * {@link GenericOrganizationalUnit}. The only method which has to be
  * overwritten is {@link #getTabConfig()}. This method will return the tabs
- * (instances of implementations of {@link GenericOrgaUnitTab}). The 
- * {@link #generateXML(com.arsdigita.cms.ContentItem, com.arsdigita.xml.Element, com.arsdigita.bebop.PageState)} 
- * method delegates the XML creation to this objects. 
- * </p>
- * <p>
- * {@link GenericOrganizationalUnit} does not include this generator. 
- * The subclasses of {@link GenericOrganizationalUnit} are responsible for 
- * integrating the subclasses of this class by overwriting the 
- * {@link ContentPage#getExtraXMLGenerators()}.
- * </p>
- * 
- * @author Jens Pelzetter 
- * @version $Id$
+ * (instances of implementations of {@link GenericOrgaUnitTab}). The
+ * {@link #generateXML(com.arsdigita.cms.ContentItem, com.arsdigita.xml.Element, com.arsdigita.bebop.PageState)}
+ * method delegates the XML creation to this objects. </p> <p>
+ * {@link GenericOrganizationalUnit} does not include this generator. The
+ * subclasses of {@link GenericOrganizationalUnit} are responsible for
+ * integrating the subclasses of this class by overwriting the
+ * {@link ContentPage#getExtraXMLGenerators()}. </p>
+ *
+ * @author Jens Pelzetter
+ * @version $Id: GenericOrgaUnitExtraXmlGenerator.java 1186 2011-10-21 18:20:36Z
+ * jensp $
  */
 public abstract class GenericOrgaUnitExtraXmlGenerator
         implements ExtraXMLGenerator {
@@ -62,7 +59,8 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         final GenericOrganizationalUnit orgaunit =
                                         (GenericOrganizationalUnit) item;
         final Map<String, GenericOrgaUnitTab> tabs =
-                                              processTabConfig(getTabConfig());
+                                              processTabConfig(
+                getTabConfig());
         String selected = state.getRequest().getParameter(
                 SELECTED_TAB_PARAM);
         if (showOnly != null && !showOnly.isEmpty()) {
@@ -73,7 +71,8 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         }
         final long availableStart = System.currentTimeMillis();
         if ((showOnly == null) || showOnly.isEmpty()) {
-            for (Map.Entry<String, GenericOrgaUnitTab> entry : tabs.entrySet()) {
+            for (Map.Entry<String, GenericOrgaUnitTab> entry :
+                 tabs.entrySet()) {
                 if (entry.getValue().hasData(orgaunit)) {
                     createAvailableTabElem(availableTabsElem,
                                            entry.getKey(),
@@ -81,19 +80,24 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
                 }
             }
         }
-        logger.debug(String.format("Created available tabs XML for "
-                                   + "GenericOrganizationalUnit '%s' in %d ms.",
-                                   orgaunit.getName(),
-                                   System.currentTimeMillis() - availableStart));
+        logger.debug(String.format(
+                "Created available tabs XML for "
+                + "GenericOrganizationalUnit '%s' in %d ms.",
+                orgaunit.getName(),
+                System.currentTimeMillis()
+                - availableStart));
 
-        if (tabs.containsKey(selected) && tabs.get(selected).hasData(orgaunit)) {
+        if (tabs.containsKey(selected) && tabs.get(selected).hasData(
+                orgaunit)) {
             final GenericOrgaUnitTab selectedTab = tabs.get(selected);
-            final Element selectedTabElem = orgaUnitTabsElem.newChildElement(
+            final Element selectedTabElem =
+                          orgaUnitTabsElem.newChildElement(
                     "selectedTab");
             selectedTab.generateXml(orgaunit, selectedTabElem, state);
         } else {
             orgaUnitTabsElem.newChildElement("selectedTabNotAvailable");
         }
+
 
         logger.debug(String.format("Generated XML for GenericOrganizationalUnit "
                                    + "'%s' in %d ms",
@@ -102,10 +106,10 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
     }
 
     /**
-     * Can be used from a JSP template for Navigation to show only a specific 
-     * tab in category. 
-     * 
-     * @param showOnly 
+     * Can be used from a JSP template for Navigation to show only a specific
+     * tab in category.
+     *
+     * @param showOnly
      */
     public void setShowOnly(final String showOnly) {
         this.showOnly = showOnly;
@@ -124,25 +128,16 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
     }
 
     /**
-     * <p>
-     * This method should return a string containing all tabs to use. The string
-     * must have to following format:
-     * </p>
-     * <p>
+     * <p> This method should return a string containing all tabs to use. The
+     * string must have to following format: </p> <p>
      * <code>
      * tabName:fullyQualifedClassName;...
-     * </code>
-     * </p>
-     * <p>
-     * Example:
-     * </p>
-     * <p>
+     * </code> </p> <p> Example: </p> <p>
      * <code>
      * foo:com.arsdigita.cms.contenttypes.ui.FooTab;bar:com.arsdigita.cms.contenttypes.BarTab;fooBar:com.arsdigita.cms.contenttypes.ui.FooBarTab
-     * </code>
-     * </p>
-     * 
-     * @return 
+     * </code> </p>
+     *
+     * @return
      */
     public abstract String getTabConfig();
 
