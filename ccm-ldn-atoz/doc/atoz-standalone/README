@@ -10,8 +10,8 @@ modifications are necessary:
 2.  move the files in this dir to WEB-INF/
 3.  change src/com/ad/london/atoz/AtoZ.java 
     method getServletContext() as back to "/files"
-4.  edit __ccm__/.../xsl/index.xsl according the comment
-5.  edit in ccm-ldn-aplaws /web/__ccm__/themes/aplaws/atoz.xml
+4.  edit themes/.../xsl/index.xsl according the comment
+5.  edit in ccm-ldn-aplaws /web/themes/static/aplaws/atoz.xml
     according to the comment
 
 

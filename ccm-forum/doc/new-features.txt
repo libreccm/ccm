@@ -59,7 +59,7 @@ information entered up to that point. On our site we live with this small risk
 but mitigate it by restarting servers at unsociable hours where possible. 
 
 I have put examle theme files in
-ccm-ldn-aplaws/web/__ccm__/themes/aplaws/forum-example: forum-index.xsl,
+ccm-ldn-aplaws/web/themes/static/aplaws/forum-example: forum-index.xsl,
 forum-index.css and the contents of images/forum
 
 To have a look at a forum using these files, copy the xsl and css to the top

@@ -10,8 +10,8 @@ modifications are necessary:
 2.  move the files in this dir to WEB-INF/
 3.  change src/com/ad/shortcuts/Shortcuts.java 
     method getServletContext() as back to "/files"
-4.  edit __ccm__/.../xsl/index.xsl according the comment
-5.  edit in ccm-ldn-aplaws /web/__ccm__/themes/aplaws/shortcuts.xml
+4.  edit themes__ccm__/.../xsl/index.xsl according the comment
+5.  edit in ccm-ldn-aplaws /web/themes/static/aplaws/shortcuts.xml
     according to the comment
 6.  Add the filter expression in web.xml-shortcuts.in into the
     main applications web.xml

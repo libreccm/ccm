@@ -30,7 +30,7 @@
 
     <servlet-mapping>
         <servlet-name>portlet-type-xsl</servlet-name>
-        <url-pattern>/__ccm__/servlet/portlet-type/*</url-pattern>
+        <url-pattern>/themes/servlet/portlet-type/*</url-pattern>
     </servlet-mapping>
     <!-- module ccm-portalworkspace  -  servlet mappings END  -->
 

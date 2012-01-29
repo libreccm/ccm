@@ -27,5 +27,5 @@
   <!-- import statement, if forum is installed in the main CCM webapp context
   <xsl:import href="../../../../packages/forum/xsl/recent-postings-portlet.xsl"/>
   -->
-  <xsl:import href="/__ccm__/servlet/portlet-type/index.xsl"/>
+  <xsl:import href="/themes/servlet/portlet-type/index.xsl"/>
 </xsl:stylesheet>

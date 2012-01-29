@@ -59,6 +59,11 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
     private final String m_objectType;
     /** Just a placeholder in abstract method */
     public static final String[] EMPTY_ARRAY = new String[0];
+    /** Directory holding the internal base theme                             */
+    public static final String INTERNAL_THEME_DIR = "/themes/heirloom/";
+    /** Directory holding the internal base theme                             */
+    public static final String INTERNAL_THEME_TYPES_DIR = INTERNAL_THEME_DIR 
+                                                          + "contenttypes/";
 
     /**
      * Constructor, sets specific manifest file and object type.
@@ -177,21 +182,18 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
     }
 
     /**
-     * Retrieves a list of style sheets assoziated with a content type.
+     * Retrieves location of a content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged.
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
      * Has to be overwritten by each specific content types initializer to
      * provide the correct location of its stylesheets.
      * 
      * @return List (array) of fully qualified file names (relative to docuemnt /
      *         context root) to content types style sheets.
-     * //@deprecated without replacement.
-     *   Since a long time {@link com.arsdigita.templating.PatternStylesheetResolver
-     *   PatternStylesheetResolver} is used to locate stylesheets based on a
-     *   file patterns. Not used anymore (pb 2011.01.20)
-     *
-     *   Correction:
-     *   As of 6.6.x it is really used to locate the content type stylesheet,
-     *   in distinction from location of applications stylesheets.
-     *
      */
     public String[] getStylesheets() {
         return EMPTY_ARRAY;

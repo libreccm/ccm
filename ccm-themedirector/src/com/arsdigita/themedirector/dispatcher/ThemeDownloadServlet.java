@@ -199,7 +199,7 @@ public class ThemeDownloadServlet extends BaseServlet implements ThemeDirectorCo
 
             // Special case add the auto-generated XSL fiel for content types
             Iterator paths = ContentType.getXSLFileURLs();
-            out.putNextEntry(new ZipEntry("waf-xsl/__ccm__/servlet/content-type/index.xsl"));
+            out.putNextEntry(new ZipEntry("waf-xsl/themes/servlet/content-type/index.xsl"));
             IO.copy(multiplexXSLFiles(paths),
                     out);
 

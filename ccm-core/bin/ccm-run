@@ -57,9 +57,9 @@ then
     exit 1
 fi
 
-if [ ! -d ${CCM_HOME_DIR}/__ccm__ ]
+if [ ! -d ${CCM_HOME_DIR}/templates ]
 then
-    echo "Error: CCM_HOME_DIR path is invalid \(no __ccm__ directory in CCM_HOME_DIR\)."
+    echo "Error: CCM_HOME_DIR path is invalid \(no templates directory in CCM_HOME_DIR\)."
     exit 1
 fi
 

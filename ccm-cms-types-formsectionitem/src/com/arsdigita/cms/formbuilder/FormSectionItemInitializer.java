@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.cms.formbuilder;
 
 import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
@@ -23,17 +24,20 @@ import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
 import org.apache.log4j.Logger;
 
 /**
- * Initializes the Form Section Item content type.
+ * Executes at each system startup and initializes the Form Section Item 
+ * content type.
  *
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
- * (map).
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/17 $
- **/
+ */
 public class FormSectionItemInitializer extends ContentTypeInitializer {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = 
         Logger.getLogger(FormSectionItemInitializer.class);
 
@@ -46,22 +50,32 @@ public class FormSectionItemInitializer extends ContentTypeInitializer {
     }
 
     /**
-     * Retrieve location of traversal adapter
+     * Retrieves fully qualified traversal adapter file name.
      * @return
      */
+    @Override
     public String getTraversalXML() {
         return "WEB-INF/traversal-adapters/com/arsdigita/" +
             "cms/formbuilder/FormSectionItem.xml";
     }
     
     /**
-     * Retrieve location of this content types stylesheet.
-     * @return
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
      */
+    @Override
     public String[] getStylesheets() {
         return new String[] { 
-            "/static/content-types/com/arsdigita/cms/" + 
-            "contenttypes/FormSectionItem.xsl" 
+            INTERNAL_THEME_TYPES_DIR + "FormSectionItem.xsl" 
         };
     }
 }

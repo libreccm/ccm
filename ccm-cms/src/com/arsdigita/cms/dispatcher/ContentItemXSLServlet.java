@@ -80,7 +80,7 @@ public class ContentItemXSLServlet extends BaseServlet {
         HttpResourceLocator loc = new HttpResourceLocator(
             Web.getConfig().getHost(),
             Web.getConfig().getDispatcherContextPath(),
-            "/__ccm__/servlet/template",
+            "/themes/servlet/template",
             "/index.xsl",
             params);
 

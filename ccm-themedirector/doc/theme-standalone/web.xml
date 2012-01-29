@@ -29,7 +29,7 @@
 
   <servlet-mapping>
     <servlet-name>reg</servlet-name>
-    <url-pattern>/__ccm__/null/reg/*</url-pattern>
+    <url-pattern>/themes/null/reg/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

@@ -8,7 +8,7 @@ If shortcuts should be installed as its own web context again following
 modifications are necessary:
 1.  remove webapp="xxx" from application.xml
 2.  move the files in this dir to WEB-INF/
-3.  edit __ccm__/.../xsl/index.xsl according the comment
+3.  edit themes/.../xsl/index.xsl according the comment
 
 xsl dir hab been moved from root dir (not CCM compliant practice) into
 package/ccm-formbuilder-pdf/xsl/main.xsl

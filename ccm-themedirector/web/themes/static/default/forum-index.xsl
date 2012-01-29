@@ -4,6 +4,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   version="1.0" >
   
-  <xsl:import href="../../../../ccm-forum/__ccm__/apps/forum/xsl/index.xsl"/> 
+  <xsl:import href="../../../../ccm-forum/themes/heirloom/apps/forum/xsl/index.xsl"/> 
 
 </xsl:stylesheet>

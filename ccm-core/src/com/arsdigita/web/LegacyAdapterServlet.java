@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
  *
  * &lt;servlet-mapping&gt;
  *   &lt;servlet-name&gt;legacy-adapter&lt;/servlet-name&gt;
- *   &lt;url-pattern&gt;/__ccm__/servlet/legacy-adapter/*&lt;/url-pattern&gt;
+ *   &lt;url-pattern&gt;/themes/servlet/legacy-adapter/*&lt;/url-pattern&gt;
  * &lt;/servlet-mapping&gt;
  * </pre></blockquote>
  *

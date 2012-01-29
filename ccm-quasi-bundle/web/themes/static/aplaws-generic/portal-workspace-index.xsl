@@ -11,7 +11,7 @@
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search portal"
                   version="1.0">
 
-<!--  <xsl:import href="../../../__ccm__/apps/workspace/xsl/index.xsl"/>  -->
+<!--  <xsl:import href="../../../themes/heirloom/apps/workspace/xsl/index.xsl"/>  -->
 <xsl:import href="../../heirloom/apps/portal-workspace/xsl/index.xsl"/>
 
 <xsl:import href="portal/lib.xsl"/>

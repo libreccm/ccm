@@ -5,7 +5,7 @@
   version="1.0">
 
   <!-- path if installed in its own web context ccm-ldn-shortcuts
-    <xsl:import href="../../../../ccm-ldn-shortcuts/__ccm__/apps/shortcuts/xsl/index.xsl"/>
+    <xsl:import href="../../../../ccm-ldn-shortcuts/themes/heirloom/apps/shortcuts/xsl/index.xsl"/>
   -->
   <!-- path to xsl if installed in the main (common) web context   
   -->

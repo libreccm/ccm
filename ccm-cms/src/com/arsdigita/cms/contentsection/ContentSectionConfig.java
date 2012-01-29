@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  */
 public final class ContentSectionConfig extends AbstractConfig {
 
-    /** Private Logger instance.  */
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log =
                                 Logger.getLogger(ContentSectionConfig.class);
 

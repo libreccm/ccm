@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class CMS {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(CMS.class);
 
     /** The CMS XML namespace. */

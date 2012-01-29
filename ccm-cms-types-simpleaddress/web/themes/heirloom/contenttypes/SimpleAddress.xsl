@@ -72,8 +72,8 @@
     </table>
   </xsl:template>
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Address']" mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_cms_contenttypes_Address">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SimpleAddress']" mode="cms:CT_text"
+    name="cms:CT_text_com_arsdigita_cms_contenttypes_SimpleAddress">
     <h1 class="title"><xsl:value-of select="./title"/></h1>
     <xsl:if test="./address">
       <span class="subtitle">Address</span>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0"
-  xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
-  version="1.0" exclude-result-prefixes="bebop cms ui aplaws xsl">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                  xmlns:ui="http://www.arsdigita.com/ui/1.0"
+              xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
+   exclude-result-prefixes="bebop cms ui aplaws xsl"
+                   version="1.0">
 
-  <xsl:import href="../../../../ROOT/__ccm__/static/cms/admin/category-step/category-step.xsl"/>
+  <xsl:import href="../../heirloom/packages/cms/xsl/admin/category-step/category-step.xsl"/>
   
   <xsl:param name="theme-prefix" />
 

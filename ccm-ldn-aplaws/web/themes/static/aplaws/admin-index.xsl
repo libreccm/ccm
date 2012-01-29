@@ -4,7 +4,7 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
   version="1.0">
 <!--
-  <xsl:import href="../../../../ROOT/__ccm__/apps/admin/xsl/index.xsl"/>
+  <xsl:import href="../../../../ROOT/themes/heirloom/apps/admin/xsl/index.xsl"/>
   -->
   <xsl:import href="../../heirloom/apps/admin/xsl/index.xsl"/>
   <xsl:import href="lib/page.xsl"/>

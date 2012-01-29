@@ -10,7 +10,7 @@ modifications are necessary:
 2.  move the files in this dir to WEB-INF/
 3.  change src/com/ad/auth/http/HTTPAuth.java 
     method getServletContext() as back to "/files"
-4.  edit __ccm__/.../xsl/index.xsl according the comment
+4.  edit themes__ccm__/.../xsl/index.xsl according the comment
 
 
 Running it in its own webapplication context nevertheless is not suggestive.

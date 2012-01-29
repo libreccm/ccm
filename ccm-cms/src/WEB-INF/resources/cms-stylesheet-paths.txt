@@ -4,11 +4,11 @@
 # the full story.
 
 # Grabs custom item xsl for CMS
-http://::host::/__ccm__/servlet/content-item/index.xsl?oid=::item_template_oid::&delegated=::item_delegated_url::
+http://::host::/themes/servlet/content-item/index.xsl?oid=::item_template_oid::&delegated=::item_delegated_url::
 
 
-http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
-http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::-::outputtype::.xsl
+http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
+http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::.xsl
 
-http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::-::locale::.xsl
-http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::.xsl
+http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::.xsl

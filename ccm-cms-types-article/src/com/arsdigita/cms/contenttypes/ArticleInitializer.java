@@ -21,7 +21,8 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * Initializes the GenericArticle content type.
+ * Executes at each system startup and initializes the Article content type.
+ * 
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
  * (map). This is done by runtimeRuntime startup method which runs the init()
@@ -32,15 +33,32 @@ import org.apache.log4j.Logger;
  */
 public class ArticleInitializer extends ContentTypeInitializer {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(ArticleInitializer.class);
 
-    public ArticleInitializer() {
-        super("ccm-cms-types-article.pdl.mf", GenericArticle.BASE_DATA_OBJECT_TYPE);
+   /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
+     public ArticleInitializer() {
+        super("ccm-cms-types-article.pdl.mf", Article.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
+     */
     @Override
     public String[] getStylesheets() {
         return new String[]
-            { "/static/content-types/com/arsdigita/cms/contenttypes/Article.xsl" };
+            { "/themes/heirloom/contenttypes/Article.xsl" };
     }
 }

@@ -10,7 +10,7 @@
 
 
 
-<xsl:import href="/__ccm__/servlet/content-type/index.xsl"/>
+<xsl:import href="/themes/servlet/content-type/index.xsl"/>
 <xsl:import href="Article.xsl"/>
 <xsl:import href="MultiPartArticle.xsl"/>
 <xsl:import href="FileStorageItem.xsl"/>
@@ -40,7 +40,7 @@
 <xsl:call-template name="CT_Event_graphics"/>
 </xsl:template>
 <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SimpleAddress' and not(@useContext = 'itemAdminSummary')]">
-<xsl:call-template name="CT_Address_graphics"/>
+<xsl:call-template name="CT_SimpleAddress_graphics"/>
 </xsl:template>
 <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Agenda' and not(@useContext = 'itemAdminSummary')]">
 <xsl:call-template name="CT_Agenda_graphics"/>

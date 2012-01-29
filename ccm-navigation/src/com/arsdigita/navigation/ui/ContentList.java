@@ -56,7 +56,7 @@ import org.apache.log4j.Logger;
  * <li> add the following to 'web/package/navigation/templates/default.jsp':<br>
  * &lt;define:component name="contentList"
  * classname="com.arsdigita.cms.dispatcher.ContentList" /&gt;
- * <li> add the following to 'web/__ccm__/apps/navigation/xsl/index.xsl':<br>
+ * <li> add the following to 'web/themes/heirloom/apps/navigation/xsl/index.xsl':<br>
  * &lt;xsl:include href="content-lists.xsl" /&gt;
  * </ul>
  * <p>
@@ -65,7 +65,7 @@ import org.apache.log4j.Logger;
  * <li> add the following to 'web/package/content-section/templates/default/item.jsp':<br>
  * &lt;define:component name="contentList"
  * classname="com.arsdigita.cms.dispatcher.ContentList" /&gt;
- * <li> add the following to 'web/__ccm__/apps/content-section/xsl/index.xsl':<br>
+ * <li> add the following to 'web/themes/heirloom/apps/content-section/xsl/index.xsl':<br>
  * &lt;xsl:include href="../../navigation/xsl/content-lists.xsl" /&gt;
  * </ul>
  *

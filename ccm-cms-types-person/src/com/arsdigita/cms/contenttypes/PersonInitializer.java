@@ -17,6 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
@@ -25,25 +26,54 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.DomainInitEvent;
+
 import org.apache.log4j.Logger;
 
 /**
+ * Executes at each system startup and initializes the Person content type.
+ * 
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class PersonInitializer extends ContentTypeInitializer {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(PersonInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public PersonInitializer() {
         super("ccm-cms-types-person.pdl.mf", Person.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
+     */
     @Override
     public String[] getStylesheets() {
-        return new String[]{"/static/content-types/com/arsdigita/cms/contenttypes/Person.xsl"};
+        return new String[]{INTERNAL_THEME_TYPES_DIR + "Person.xsl"};
     }
 
+    /**
+     * Retrieves fully qualified traversal adapter file name.
+     * @return 
+     */
     @Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Person.xml";

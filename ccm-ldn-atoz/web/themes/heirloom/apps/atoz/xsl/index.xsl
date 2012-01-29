@@ -12,6 +12,7 @@
   
   
   <xsl:output method="html"/>
+  <xsl:param name="internal-theme" />
 
   <xsl:template name="bebop:pageCSS">
     <xsl:call-template name="bebop:pageCSSMain"/>
@@ -20,7 +21,7 @@
 
 
   <xsl:template name="atoz:pageCSSMain">
-    <link href="/__ccm__/static/atoz/atoz.css" rel="stylesheet" type="text/css"/>
+    <link href="{$internal-theme}/apps/atoz/lib/atoz.css" rel="stylesheet" type="text/css"/>
   </xsl:template>
 
   <xsl:template match="atoz:atoz">
@@ -231,7 +232,7 @@
   <xsl:template match="cms:categoryWidget" mode="cms:javascript">
     <script type="text/javascript" src="/assets/prototype.js"/>
     <script type="text/javascript" src="/assets/category-step/category-step.js"/>
-    <script type="text/javascript" src="/resource/ccm-ldn-atoz/__ccm__/static/atoz/category-widget.js"/>
+    <script type="text/javascript" src="/resource/themes/heirloom/apps/atoz/lib/category-widget.js"/>
     <div>
       <xsl:apply-templates select="cms:category" mode="cms:javascriptCat">
         <xsl:with-param name="expand" select="'block'"/>

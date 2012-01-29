@@ -9,7 +9,7 @@
   exclude-result-prefixes="xsl bebop aplaws ui cms nav"
   version="1.0">
 
-<xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/index.xsl"/>
+<xsl:import href="../../../../ROOT/themes/heirloom/apps/content-section/xsl/index.xsl"/>
 <xsl:import href="lib/header.xsl"/>
 <xsl:import href="lib/lib.xsl"/>
 <xsl:import href="lib/leftNav.xsl"/>

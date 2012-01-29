@@ -21,25 +21,46 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * Initializes the Bookmark content type.
+ * Executes at each system startup and initializes the Bookmark content type.
+ * 
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
- * (map).
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: BookmarkInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  */
 public class BookmarkInitializer extends ContentTypeInitializer {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(BookmarkInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public BookmarkInitializer() {
         super("ccm-cms-types-bookmark.pdl.mf",
               Bookmark.BASE_DATA_OBJECT_TYPE);
     }
+    
+    /**
+     * Retrieves location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
+     */
+    @Override
     public String[] getStylesheets() {
         return new String[] {
-             "/static/content-types/com/arsdigita/cms/contenttypes/Bookmark.xsl"
+             INTERNAL_THEME_TYPES_DIR + "Bookmark.xsl"
         };
     }
 

@@ -26,7 +26,7 @@
 
 <!-- The file ~/lib/page.css does not exist at least since version 1.0.2
      there exists a file of this name in
-     ccm-cms/web/__ccm__/static/cms/admin/page/page.css
+     ccm-cms/web/themes/packages/cms/admin/page/page.css
      may be a copy&paste error                                               -->
   <xsl:template name="aplaws:headerStyleSheets">
     <link rel="stylesheet" href="{$theme-prefix}/lib/page.css" type="text/css" media="screen"/>

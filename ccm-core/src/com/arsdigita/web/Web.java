@@ -178,13 +178,13 @@ public class Web {
      * to search for the second component 'path'. So, if the 
      * 'resource' is:
      * <pre>
-     *  /myproj,ccm-cms,ROOT/__ccm__/apps/content-section/index.sl
+     *  /myproj,ccm-cms,ROOT/themes/heirloom/apps/content-section/index.sl
      * </pre>
      * then this method will look for resources at
      * <pre>
-     *  /myproj/__ccm__/apps/content-section/index.sl
-     *  /ccm-cms/__ccm__/apps/content-section/index.sl
-     *  /ROOT/__ccm__/apps/content-section/index.sl
+     *  /myproj/themes/heirloom/apps/content-section/index.sl
+     *  /ccm-cms/themes/heirloom/apps/content-section/index.sl
+     *  /ROOT/themes/heirloom/apps/content-section/index.sl
      * </pre>
      * @param resource the resource name
      * @return the URL for the resource, or null
@@ -201,12 +201,12 @@ public class Web {
      * webapp resource. The first argument is a list of
      * webapp paths to search through for the path. So
      * if the webapps param is { 'myproj', 'ccm-cms', 'ROOT' }
-     * and the path parma is '/__ccm__/apps/content-section/index.xsl'
+     * and the path parma is '/themes/heirloom/apps/content-section/index.xsl'
      * then the paths that are searched are:
      * <pre>
-     *  /myproj/__ccm__/apps/content-section/index.sl
-     *  /ccm-cms/__ccm__/apps/content-section/index.sl
-     *  /ROOT/__ccm__/apps/content-section/index.sl
+     *  /myproj/themes/heirloom/apps/content-section/index.sl
+     *  /ccm-cms/themes/heirloom/apps/content-section/index.sl
+     *  /ROOT/themes/heirloom/apps/content-section/index.sl
      * </pre>
      * @param webapps the list of webapps
      * @param path the resource path

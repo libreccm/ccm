@@ -47,9 +47,9 @@ public final class Theme extends ACSObject {
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
     // this holds a reference to the directory holding the files.
-    // This is rooted at /__ccm__/themes/.  Therefore, if you have
+    // This is rooted at /themes/static.  Therefore, if you have
     // a "holiday" theme, the value of this column will be 'holiday'
-    // so the files will be located at /__ccm__/themes/holiday
+    // so the files will be located at /themes/static/holiday
     public static final String URL = "url";
 
     //  Information about when the theme was last published.  This 
@@ -137,9 +137,9 @@ public final class Theme extends ACSObject {
 
     /**
      * The holds a reference to the directory holding the files.
-     * This is rooted at /__ccm__/themes/.  Therefore, if you have
+     * This is rooted at /themes/static/.  Therefore, if you have
      * a "holiday" theme, the value of this parameter will be 'holiday'
-     * so the files will be located at /__ccm__/themes/holiday
+     * so the files will be located at /themes/static/holiday
      */
     public final void setURL(String url) {
         set(URL, url);

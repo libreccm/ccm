@@ -45,6 +45,7 @@ public class ContentTypeXSLServlet extends BaseServlet {
     private static final Logger s_log = 
         Logger.getLogger(ContentTypeXSLServlet.class);
 
+    @Override
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp)
         throws ServletException, IOException {

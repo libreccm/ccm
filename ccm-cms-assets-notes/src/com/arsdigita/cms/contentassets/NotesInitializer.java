@@ -72,10 +72,13 @@ public class NotesInitializer extends ContentAssetInitializer {
     public void init( DomainInitEvent ev ) {
         super.init( ev );
 
-        ContentType.registerXSLFile( null, "/themes/heirloom/assets/notes/xsl/index.xsl" );
-        DomainObjectTraversal.registerAdapter( Note.BASE_DATA_OBJECT_TYPE,
-                                               new SimpleDomainObjectTraversalAdapter(),
-                                               SimpleXMLGenerator.ADAPTER_CONTEXT );
+        ContentType.registerXSLFile( 
+                        null, 
+                        "/themes/heirloom/contentassets/notes/xsl/index.xsl" );
+        DomainObjectTraversal.registerAdapter( 
+                        Note.BASE_DATA_OBJECT_TYPE,
+                        new SimpleDomainObjectTraversalAdapter(),
+                        SimpleXMLGenerator.ADAPTER_CONTEXT );
         SimpleEditStep.addAdditionalDisplayComponent(new NotesSummary());
     }
 }

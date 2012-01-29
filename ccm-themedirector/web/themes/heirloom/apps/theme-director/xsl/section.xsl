@@ -6,7 +6,7 @@
 >
 
 <!-- TODO: this is a copy of the file at 
-           /cms/web/__ccm__/static/cms/admin/layout-panel/layout-panel.xsl
+           /ccm-cms/web/themes/heirloom/packages/cms/xsl/admin/layout-panel/layout-panel.xsl
            and should be deleted when that file is moved in to core. -->
   <xsl:template match="bebop:section">
     <div class="section">

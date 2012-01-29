@@ -94,6 +94,7 @@ import org.apache.log4j.Logger;
  */
 public final class CMSConfig extends AbstractConfig {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(CMSConfig.class);
     /** Private Object to hold one's own instance to return to users. */
     private static CMSConfig s_config;

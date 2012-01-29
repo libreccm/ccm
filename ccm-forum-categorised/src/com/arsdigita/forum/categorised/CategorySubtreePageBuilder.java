@@ -22,8 +22,9 @@ public class CategorySubtreePageBuilder implements PageBuilder {
 		
 		//
 		// the title of the page is important because we use the xsl in ccm-ldn-aplaws
-		// web/__ccm__/themes/aplaws/category-step.xsl that refers to it. This 
-		// matches the page defined in ccm-ldn-aplaws/web/packages/content-section/www/admin/load-cat.jsp
+		// web/themes/static/aplaws/category-step.xsl that refers to it. This 
+		// matches the page defined in 
+        // ccm-ldn-aplaws/web/packages/content-section/www/admin/load-cat.jsp
 		
 		Page page = new EmptyPage();
 		page.setTitle("childCategories");

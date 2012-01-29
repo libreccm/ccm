@@ -7,7 +7,7 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
   version="1.0" exclude-result-prefixes="bebop cms ui aplaws xsl">
 
-  <xsl:import href="../../../../ROOT/__ccm__/apps/content-center/xsl/index.xsl"/>
+  <xsl:import href="../../../../ROOT/themes/heirloom/apps/content-center/xsl/index.xsl"/>
   <xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
 
   <xsl:param name="theme-prefix" />

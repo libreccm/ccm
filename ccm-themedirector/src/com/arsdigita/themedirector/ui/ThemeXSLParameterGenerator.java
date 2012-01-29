@@ -33,7 +33,7 @@ import com.arsdigita.subsite.SubsiteContext;
  *  This looks at the request and is able to determine if it is 
  *  production or preview as well as the theme that is in use.
  *  Then, it returns the appropriate prefix that will be something
- *  similar to /ccm-ldn-theme/__ccm__/themes-[dev|prod]/[theme-name]/
+ *  similar to /themes-[devel|published]-themedir/[theme-name]/
  *
  *  @author Randy Graebner (randyg@redhat.com)
  */

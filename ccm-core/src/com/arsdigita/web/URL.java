@@ -133,13 +133,18 @@ import org.apache.log4j.Logger;
 public class URL {
 
     private static final Logger s_log = Logger.getLogger(URL.class);
+    /**
+     * @deprecated
+     */
     private static final String INTERNAL_DIR = "/__ccm__";
     /**
      * The standard location for JSP files.
+     * @deprecated
      */
     public static final String JSP_DIR = INTERNAL_DIR + "/jsp";
     /**
      * The standard location for static files.
+     * @deprecated
      */
     public static final String STATIC_DIR = INTERNAL_DIR + "/static";
     /**
@@ -147,12 +152,14 @@ public class URL {
      * No longer in use.
      */
     // public static final String XSL_DIR = INTERNAL_DIR + "/xsl";
+
+    
+    public static final String THEMES_DIR = "/themes";
+
     /**
      * The standard location for servlets.
      */
-    public static final String SERVLET_DIR = INTERNAL_DIR + "/servlet";
-    
-    public static final String THEMES_DIR = "/themes";
+    public static final String SERVLET_DIR = THEMES_DIR + "/servlet";
     
     public static final String INTERNAL_THEME_DIR = THEMES_DIR + "/heirloom";
     

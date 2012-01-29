@@ -148,7 +148,7 @@
 
     <servlet-mapping>
         <servlet-name>reg</servlet-name>
-        <url-pattern>/__ccm__/null/reg/*</url-pattern>
+        <url-pattern>/themes/null/reg/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -158,7 +158,7 @@
 
     <servlet-mapping>
         <servlet-name>legacy-adapter</servlet-name>
-        <url-pattern>/__ccm__/servlet/legacy-adapter/*</url-pattern>
+        <url-pattern>/themes/servlet/legacy-adapter/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -195,22 +195,22 @@
 
     <servlet-mapping>
         <servlet-name>content-section</servlet-name>
-        <url-pattern>/__ccm__/servlet/content-section/*</url-pattern>
+        <url-pattern>/themes/servlet/content-section/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>content-item-xsl</servlet-name>
-        <url-pattern>/__ccm__/servlet/content-item/*</url-pattern>
+        <url-pattern>/themes/servlet/content-item/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>content-type-xsl</servlet-name>
-        <url-pattern>/__ccm__/servlet/content-type/*</url-pattern>
+        <url-pattern>/themes/servlet/content-type/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>template-xsl</servlet-name>
-        <url-pattern>/__ccm__/servlet/template/*</url-pattern>
+        <url-pattern>/themes/servlet/template/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

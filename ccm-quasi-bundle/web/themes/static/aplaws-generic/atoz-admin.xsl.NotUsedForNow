@@ -5,11 +5,11 @@
   version="1.0">
 
   <!-- IMPORT DEFINITIONS ccm-ldn-atoz installed as separate web application
-  <xsl:import href="../../../../ccm-ldn-atoz/__ccm__/apps/atoz/xsl/index.xsl"/>
+  <xsl:import href="../../../../ccm-ldn-atoz/themes/heirloom/apps/atoz/xsl/index.xsl"/>
   -->
   <!-- IMPORT DEFINITIONS ccm-ldn-atoz installed into the main CCM webapp
   -->
-  <xsl:import href="../../../__ccm__/apps/atoz/xsl/index.xsl"/>
+  <xsl:import href="../../../themes/heirloom/apps/atoz/xsl/index.xsl"/>
   <xsl:import href="lib/page.xsl"/>
 
   <xsl:param name="theme-prefix"/>

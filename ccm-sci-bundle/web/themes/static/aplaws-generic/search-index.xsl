@@ -16,12 +16,12 @@
 
   <!-- path if installed in its own web context ccm-ldn-shortcuts 
     <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-    <xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/index.xsl"/>
+    <xsl:import href="../../../../ROOT/themes/heirloom/apps/content-section/xsl/index.xsl"/>
   -->
   <!-- path to xsl if installed in the main (common) web context   
   -->
   <xsl:import href="../../../packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../__ccm__/apps/content-section/xsl/index.xsl"/>
+  <xsl:import href="../../../themes/heirloom/apps/content-section/xsl/index.xsl"/>
 
   <xsl:param name="context-prefix"/>
   <xsl:param name="dispatcher-prefix" />

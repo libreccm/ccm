@@ -20,7 +20,7 @@
   
   <xsl:template name="portal:pageCSSMain">
     <!--
-    <link href="/__ccm__/static/forum/table.css" rel="stylesheet" type="text/css"/>
+    <link href="/themes/heirloom/packages/forum/table.css" rel="stylesheet" type="text/css"/>
     -->
   </xsl:template>
   

@@ -85,7 +85,7 @@ be able to directly upload files to the application through a
 mechanism that they choose.  So, systems administrators should open
 up the below directory for write by their favorite program (e.g. FTP
 or SCP).
-<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/
+<root to servlet context>/webapps/[context]/themes/devel-themedir/
 
 In addition, since the threads that synchronize the directories between
 multiple servers use their own timestamps to determine the age of files
@@ -114,8 +114,10 @@ to [0-9,a-z,A-Z,-,_]
 
 When a new "theme" is created, the application creates the directory
 corresponding to the url under the directory
-<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/<new theme url>.  It copies the contents of
-the default themes directory (<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes/default/) to this newly created directory directory.  
+<root to servlet context>/webapps/[context]/themes/devel-themedir/<new theme url>.  
+It copies the contents of the default themes directory 
+(<root to servlet context>/webapps/[context]/themes/devel-themedir/default/) 
+to this newly created directory directory.  
 
 Once the theme is created, designers and upload and download the theme files,
 changing them to meet their goals.  When they are ready to test the new
@@ -136,11 +138,14 @@ that are in the theme as well as links to operate on the theme.
 Changing the URL will cause the system to move the directory on the
 file system.
 
-+ The "Download Development Theme Files" is a tar of the development
-directory (<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/<theme url here>) rooted at the theme url.
++ The "Download Development Theme Files" is a tar of the development directory 
+(<root to servlet context>/webapps/[context]/themes/devel-themedir/<theme url here>) 
+rooted at the theme url.
 
 + If the item has been published, the "Download Published Theme Files"
-will give you a zip of the published files (<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-prod/<theme url here>) rooted at the theme url.
+will give you a zip of the published files 
+(<root to servlet context>/webapps/[context]/themes/published-themedir/<theme url here>) 
+rooted at the theme url.
 
 + The "Validate Theme" allows the system to check all of the xsl stylesheets
 that have been uploaded to ensure that they compile and are able to import
@@ -164,8 +169,10 @@ a page that runs in to an XSL error that was not caught by the validation,
 the page still displays the user friendly error message so that the
 designer can easily fix the error.
 
-+ The "publish theme" link copies the <root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/<theme url here>
-directory to <root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-prod/<theme url here>,
++ The "publish theme" link copies the 
+<root to servlet context>/webapps/[context]/themes/devel-themedir/<theme_url>
+directory to 
+<root to servlet context>/webapps/[context]/themes/published-themedir/<theme_url>,
 inserts all of the files in the database, and places the themes in the
 "Subsite" list (mentioned below).  Placing the files in the database allows
 for simple system backup because no critical files are stored on the

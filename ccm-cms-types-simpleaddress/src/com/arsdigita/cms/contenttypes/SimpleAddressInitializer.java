@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainObject;
@@ -26,7 +27,13 @@ import com.arsdigita.runtime.DomainInitEvent;
 import org.apache.log4j.Logger;
 
 /**
- * Initializes the  SimpleAddress content type.
+ * Executes at each system startup and initializes the SimpleAddress 
+ * content type.
+ * 
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: SimpleAddressInitializer.java 1597 2007-07-10 16:27:26Z p_boy $
@@ -37,7 +44,7 @@ public class SimpleAddressInitializer extends ContentTypeInitializer {
     private static final Logger s_log = Logger.getLogger(SimpleAddressInitializer.class);
 
     /**
-     * Constructor
+     * Constructor, sets the PDL manifest file and object type string.
      */
     public SimpleAddressInitializer() {
         super("ccm-cms-types-simpleaddress.pdl.mf",
@@ -45,7 +52,7 @@ public class SimpleAddressInitializer extends ContentTypeInitializer {
     }
 
     /**
-     * Initializer
+     * Domain Initializer
      * @param evt
      */
     @Override
@@ -70,15 +77,21 @@ public class SimpleAddressInitializer extends ContentTypeInitializer {
     }
 
     /**
-     * Provides location of the stylesheets assoziated with this content type.
-     * (As of 6.6.x it is really used to locate the content type stylesheet,
-     * in distinction from locating application stylesheets.)
-     * @return
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
      */
     @Override
     public String[] getStylesheets() {
         return new String[] {
-        //  "/static/content-types/com/arsdigita/cms/contenttypes/SimpleAddress.xsl" };
-            "/themes/heirloom/contenttypes/SimpleAddress.xsl" };
+            INTERNAL_THEME_TYPES_DIR + "SimpleAddress.xsl" };
     }
 }

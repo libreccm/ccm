@@ -12,10 +12,10 @@
 	version="1.0">
 
   <!-- path if installed in its own web context ccm-ldn-search
-    <xsl:import href="../../../../ccm-ldn-search/__ccm__/apps/search/xsl/index.xsl"/>
+    <xsl:import href="../../../../ccm-ldn-search/themes/heirloom/apps/search/xsl/index.xsl"/>
   -->
   <!-- path to xsl if installed in the main (common) web context   
          -->
-  <xsl:import href="../../../__ccm__/apps/search/xsl/index.xsl"/>
+  <xsl:import href="../../../themes/heirloom/apps/search/xsl/index.xsl"/>
  
 </xsl:stylesheet>

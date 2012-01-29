@@ -1,5 +1,5 @@
 
   <servlet-mapping>
     <servlet-name>content-section</servlet-name>
-    <url-pattern>/__ccm__/servlet/content-section/*</url-pattern>
+    <url-pattern>/themes/servlet/content-section/*</url-pattern>
   </servlet-mapping>

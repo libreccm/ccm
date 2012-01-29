@@ -12,8 +12,8 @@ modifications are necessary:
 2.  move the files in this dir to WEB-INF/
 3.  change src/com/ad/subsite/Subsite.java 
     method getServletContext() as back to "/files"
-4.  edit __ccm__/.../xsl/index.xsl according the comment
-5.  edit in ccm-ldn-aplaws /web/__ccm__/themes/aplaws/subsite.xml
+4.  edit themes/.../xsl/index.xsl according the comment
+5.  edit in ccm-ldn-aplaws /web/themes/static/aplaws/subsite.xml
     according to the comment
 6.  Add the filter expression in web.xml-subsite.in into the
     main applications web.xml

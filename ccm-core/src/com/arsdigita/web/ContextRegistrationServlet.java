@@ -46,7 +46,7 @@ import javax.servlet.ServletException;
  *
  * &lt;servlet-mapping&gt;
  *   &lt;servlet-name&gt;reg&lt;/servlet-name&gt;
- *   &lt;url-pattern&gt;/__ccm__/null/reg/*&lt;/url-pattern&gt;
+ *   &lt;url-pattern&gt;/templates/null/reg/*&lt;/url-pattern&gt;
  * &lt;/servlet-mapping&gt;
  *</pre>
  *<p>

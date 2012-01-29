@@ -21,17 +21,19 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * Initializer class to initialize <code>ContentType FAQ</code>.
+ * Executes at each system startup and initializes the FAQ content type.
  *
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
- * (map).
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: FAQItemInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  */
 public class FAQItemInitializer extends ContentTypeInitializer {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(FAQItemInitializer.class);
 
     /**
@@ -43,12 +45,22 @@ public class FAQItemInitializer extends ContentTypeInitializer {
     }
 
     /**
-     * Retrieve location of the assoziated stylesheet.
-     * @return
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
      */
+    @Override
     public String[] getStylesheets() {
         return new String[] {
-             "/static/content-types/com/arsdigita/cms/contenttypes/FAQItem.xsl"
+             INTERNAL_THEME_TYPES_DIR + "FAQItem.xsl"
         };
     }
 
