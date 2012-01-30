@@ -21,11 +21,7 @@ package com.arsdigita.bebop.form;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.TimeParameter;
-import com.arsdigita.bebop.parameters.NumberInRangeValidationListener;
-import com.arsdigita.bebop.parameters.ParameterData;
-import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.*;
 import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.Assert;
@@ -186,7 +182,7 @@ public class Time extends Widget implements BebopConstants {
     public Time(ParameterModel model, boolean showSeconds) {
         super(model);
 
-        if (!(model instanceof TimeParameter)) {
+        if (!(model instanceof TimeParameter || model instanceof DateTimeParameter)) {
             throw new IllegalArgumentException(
                     "The Time widget " + model.getName()
                     + " must be backed by a TimeParameter parameter model");

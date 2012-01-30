@@ -31,8 +31,7 @@ import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.parameters.IncompleteDateParameter;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.*;
 // This interface contains the XML element name of this class
 // in a constant which is used when generating XML
 import com.arsdigita.bebop.util.BebopConstants;
@@ -169,7 +168,7 @@ public class Date extends Widget implements BebopConstants {
     public Date(ParameterModel model) {
         super(model);
 
-        if (!(model instanceof DateParameter)) {
+        if (!(model instanceof DateParameter || model instanceof DateTimeParameter)) {
             throw new IllegalArgumentException(
                     "The Date widget " + model.getName()
                     + " must be backed by a DateParameter parmeter model");
