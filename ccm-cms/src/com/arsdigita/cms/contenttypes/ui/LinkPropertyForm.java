@@ -58,17 +58,21 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 
 /**
- * Form to edit the basic properties of an Link. This form can be
- * extended to create forms for Link subclasses.
+ * Form to edit the basic properties of an Link. This form can be extended to
+ * create forms for Link subclasses.
+ *
  * @version $Revision: #5 $ $Date: 2004/08/17 $
  * @author Nobuko Asakai (nasakai@redhat.com)
+ * @author Sören Bernstein (sbernstein@zes.uni-bremen.de)
  */
 public class LinkPropertyForm extends FormSection
         implements FormInitListener, FormProcessListener, FormValidationListener,
-                   FormSubmissionListener {
+        FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(LinkPropertyForm.class);
-    /** Name of this form */
+    /**
+     * Name of this form
+     */
     public static final String ID = "link_edit";
     public static final String SSL_PROTOCOL = "https://";
     public static final String HTTP_PROTOCOL = "http://";
@@ -77,29 +81,29 @@ public class LinkPropertyForm extends FormSection
     private TextField m_targetURI;
     private RadioGroup m_linkType;
     private CheckboxGroup m_URIOption;
-    private ItemSelectionModel m_itemModel;
+    protected ItemSelectionModel m_itemModel;
     private LinkSelectionModel m_linkModel;
     private SaveCancelSection m_saveCancelSection;
     private ItemSearchWidget m_itemSearch;
     private TextField m_itemParams;
     private ContentType m_contentType;
-    private final String ITEM_SEARCH = "contentItem";
+    protected final String ITEM_SEARCH = "contentItem";
 
     /**
-     * Creates a new form to edit the Link object specified
-     * by the item selection model passed in.
-     * @param itemModel The ItemSelectionModel to use to obtain the 
-     *    ContentItem to which this link is (or will be) attached
-     * @param link The LinkSelectionModel to use to obtain the 
-     *    Link to work on
+     * Creates a new form to edit the Link object specified by the item
+     * selection model passed in.
+     *
+     * @param itemModel The ItemSelectionModel to use to obtain the ContentItem
+     * to which this link is (or will be) attached
+     * @param link The LinkSelectionModel to use to obtain the Link to work on
      */
     public LinkPropertyForm(ItemSelectionModel itemModel,
-                            LinkSelectionModel link) {
+            LinkSelectionModel link) {
         this(itemModel, link, null);
     }
 
     public LinkPropertyForm(ItemSelectionModel itemModel,
-                            LinkSelectionModel link, ContentType contentType) {
+            LinkSelectionModel link, ContentType contentType) {
         super(new ColumnPanel(2));
         s_log.debug("property form constructor");
         m_linkModel = link;
@@ -166,7 +170,7 @@ public class LinkPropertyForm extends FormSection
                 false));
 
         add(new Label("Choose either a URL or a Content Item", Label.BOLD),
-            ColumnPanel.FULL_WIDTH);
+                ColumnPanel.FULL_WIDTH);
         m_linkType = new RadioGroup("linkType");
         Option m_external = new Option(Link.EXTERNAL_LINK, "URL");
         //m_external.setOnClick("toggle_link_fields(false)");
@@ -177,7 +181,7 @@ public class LinkPropertyForm extends FormSection
         m_internal.setOnClick("enableItemFields()");
 
         Option m_selectWindow = new Option(Link.TARGET_WINDOW,
-                                           "Open URL in new window");
+                "Open URL in new window");
         m_URIOption = new CheckboxGroup("openOption");
         m_URIOption.addOption(m_selectWindow);
 
@@ -224,7 +228,9 @@ public class LinkPropertyForm extends FormSection
                 false));
     }
 
-    /** Adds the saveCancelSection */
+    /**
+     * Adds the saveCancelSection
+     */
     public void addSaveCancelSection() {
         m_saveCancelSection = new SaveCancelSection();
         try {
@@ -258,17 +264,21 @@ public class LinkPropertyForm extends FormSection
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH);
     }
 
-    /** Retrieves the saveCancelSection */
+    /**
+     * Retrieves the saveCancelSection
+     */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
     }
 
-    /** return selection model for Link that we are dealing with. */
+    /**
+     * return selection model for Link that we are dealing with.
+     */
     protected LinkSelectionModel getLinkSelectionModel() {
         return m_linkModel;
     }
 
-    /** 
+    /**
      * Submission listener. Handles cancel events.
      *
      * @param e the FormSectionEvent
@@ -283,8 +293,9 @@ public class LinkPropertyForm extends FormSection
         }
     }
 
-    /** 
-     * Validation listener. Ensures consistency of internal vs. external link data
+    /**
+     * Validation listener. Ensures consistency of internal vs. external link
+     * data
      *
      * @param event the FormSectionEvent
      */
@@ -316,7 +327,7 @@ public class LinkPropertyForm extends FormSection
                     // "http://servername" on the front
 
                     newURL = HTTP_PROTOCOL + Web.getConfig().getHost()
-                             + url;
+                            + url;
                 } else if (!hasProtocol) {
                     // There's no protocol. See if it would be ok if we
                     // put one on the beginning
@@ -325,8 +336,7 @@ public class LinkPropertyForm extends FormSection
                 } else {
                     // No idea, just throw the error
 
-                    throw new FormProcessException("URL is not valid: " + ex.
-                            getMessage());
+                    throw new FormProcessException("URL is not valid: " + ex.getMessage());
                 }
 
                 try {
@@ -366,11 +376,18 @@ public class LinkPropertyForm extends FormSection
                 throw new FormProcessException(
                         "Item selection is required for internal link.");
             }
+            // Quasimodo
+            // The target of the link must not be the same as the owner
+            if(m_itemModel.getSelectedItem(state).getID().equals(
+                    ((ContentItem) data.get(ITEM_SEARCH)).getID())
+                ) {
+                throw new FormProcessException("Link target is the same as this object.");
+            }
         }
     }
 
-    /** 
-     * Get the current ContentItem 
+    /**
+     * Get the current ContentItem
      *
      * @param s the PageState
      * @return the ContentItem
@@ -379,7 +396,7 @@ public class LinkPropertyForm extends FormSection
         return (ContentItem) m_itemModel.getSelectedObject(s);
     }
 
-    /** 
+    /**
      * Take care of basic Link creation steps
      *
      * @param s the PageState
@@ -392,7 +409,7 @@ public class LinkPropertyForm extends FormSection
         return link;
     }
 
-    /** 
+    /**
      * Init listener. For edit actions, fills the form with current data
      *
      * @param fse the FormSectionEvent
@@ -410,14 +427,13 @@ public class LinkPropertyForm extends FormSection
                 m_title.setValue(state, link.getTitle());
                 m_description.setValue(state, link.getDescription());
                 if ((link.getTargetURI() != null)
-                    && link.getTargetURI().startsWith("&")) {
+                        && link.getTargetURI().startsWith("&")) {
                     m_itemParams.setValue(state,
-                                          link.getTargetURI().substring(1));
+                            link.getTargetURI().substring(1));
                 } else {
                     m_targetURI.setValue(state, link.getTargetURI());
                 }
-                if (com.arsdigita.bebop.Link.NEW_FRAME.equals(link.
-                        getTargetWindow())) {
+                if (com.arsdigita.bebop.Link.NEW_FRAME.equals(link.getTargetWindow())) {
                     m_URIOption.setValue(state, Link.TARGET_WINDOW);
                 } else {
                     m_URIOption.setValue(state, null);
@@ -443,7 +459,7 @@ public class LinkPropertyForm extends FormSection
         }
     }
 
-    /** 
+    /**
      * Process listener. Saves/creates the new or modified Link
      *
      * @param fse the FormSectionEvent
@@ -472,7 +488,7 @@ public class LinkPropertyForm extends FormSection
             //call to set various properties of Link.
             setLinkProperties(link, fse);
             s_log.debug("Created Link with ID: " + link.getOID().toString()
-                        + "Title " + link.getTitle());
+                    + "Title " + link.getTitle());
         }
         // XXX Initialize the form
         m_linkModel.clearSelection(state);
@@ -480,8 +496,8 @@ public class LinkPropertyForm extends FormSection
     }
 
     /**
-     * Set various properties of the Link.Child clases can over-ride this
-     * method to add additional properties to Link. 
+     * Set various properties of the Link.Child clases can over-ride this method
+     * to add additional properties to Link.
      */
     protected void setLinkProperties(Link link, FormSectionEvent fse) {
         PageState state = fse.getPageState();
