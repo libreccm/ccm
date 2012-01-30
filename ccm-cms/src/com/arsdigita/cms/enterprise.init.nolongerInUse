@@ -283,6 +283,7 @@ init com.arsdigita.formbuilder.installer.Initializer {
 //     // used anymore, all specifications are relative to webapplication base.
 //     // So the following may have to be changed to "packages/content-section/templates"
 //     // if someone tries to use p2fs
+//     // NEW LOCATION: /templates/ccm-cms/content-section  (since cms 6.6.5)
 //         { "com.arsdigita.cms.Template",
 //   	     // "webapps/ROOT/packages/content-section/templates",
 //   	     "packages/content-section/templates",

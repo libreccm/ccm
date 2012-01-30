@@ -41,15 +41,22 @@ public class Initializer extends ContentTypeInitializer {
     }
 
     /**
-     * Retrieve location of this content types stylesheet. Overwrites parent
-     * method with FormItem specific value for use by the parent class worker
-     * methods.
-     *
-     * @return complete path info string
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
+     * (path-info string)
      */
+    @Override
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/" + 
-                              "arsdigita/cms/contenttypes/XMLFeed.xsl" };
+        return new String[] { INTERNAL_THEME_TYPES_DIR + "XMLFeed.xsl" };
     }
 
 }

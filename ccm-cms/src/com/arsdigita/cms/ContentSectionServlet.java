@@ -135,6 +135,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 Session ssn = SessionManager.getSession();
                 TransactionContext txn = ssn.getTransactionContext();
                 txn.addTransactionListener(new AbstractTransactionListener() {
+                    @Override
                     public void beforeCommit(TransactionContext txn) {
                         Assert.fail("uncommittable transaction");
                     }

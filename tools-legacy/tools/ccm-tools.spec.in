@@ -85,7 +85,7 @@ ln -s ../../..%{ccmdatadir} $RPM_BUILD_ROOT%{ccmhome}/data
 ln -s ../../..%{ccmtmpdir} $RPM_BUILD_ROOT%{ccmhome}/tmp
 
 %{__mkdir_p} $RPM_BUILD_ROOT%{ccmwebappsdir}
-%{__mkdir_p} $RPM_BUILD_ROOT%{ccmwebappsdir}/ROOT/packages/content-section/templates
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmwebappsdir}/ROOT/templates/ccm-cms/content-section
 ln -s ../../..%{ccmwebappsdir} $RPM_BUILD_ROOT%{ccmhome}/webapps
 
 %clean
@@ -171,7 +171,7 @@ fi
 %attr(-,ccmadmin,ccmadmin)  %dir %{ccmwebappsdir}/ROOT
 %attr(-,ccmadmin,ccmadmin)  %dir %{ccmwebappsdir}/ROOT/packages
 %attr(-,ccmadmin,ccmadmin)  %dir %{ccmwebappsdir}/ROOT/packages/content-section
-%attr(0775,servlet,servlet) %{ccmwebappsdir}/ROOT/packages/content-section/templates
+%attr(0775,servlet,servlet) %{ccmwebappsdir}/ROOT/templates/ccm-cms/content-section
 
 %dir %{ccmconfdir}
 %attr(-,ccmadmin,ccmadmin) %dir %{ccmconfdir}/registry

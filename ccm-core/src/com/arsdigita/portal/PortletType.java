@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.portal;
 
 import java.math.BigDecimal;
@@ -66,6 +67,18 @@ public class PortletType extends ResourceType {
 
     public static final String WIDE_PROFILE = "wide";
     public static final String NARROW_PROFILE = "narrow";
+
+    /** Directory holding the internal base theme                             */
+    public static final String INTERNAL_THEME_DIR = "/themes/heirloom/";
+    /** Default Directory holding internal base theme portlet XSL files        
+     *  May be used by portlet initializers while registerin itself in domain  
+     * init step.                                                             */
+    public static final String INTERNAL_THEME_PORTLET_DIR = INTERNAL_THEME_DIR 
+                                                          + "portlets/";
+    /** Default portlet namespace. 
+     * A portlet may define it's ohne namespace though                        */
+    public static final String PORTLET_XML_NS = 
+                               "http://www.uk.arsdigita.com/portlet/1.0";
 
     // ===== Constructors ==================================================== //
 
@@ -385,6 +398,7 @@ public class PortletType extends ResourceType {
             return m_path.equals(e.m_path) && m_type.equals(e.m_type);
         }
 
+        @Override
         public int hashCode() {
             return m_path.hashCode() + m_type.hashCode();
         }

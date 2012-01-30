@@ -1,0 +1,24 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+<!--
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+    <initializer class="com.arsdigita.london.util.Initializer"/>
+-->
+<!-- <initializer class="com.arsdigita.navigation.Initializer"/> -->
+<!-- <initializer class="com.arsdigita.london.rss.Initializer"/>  -->
+  </requires>
+  <provides>
+  <!--
+    <table name=""/>
+  -->
+    <initializer class="com.arsdigita.portlet.PortletCollectionInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-portlet-collection"/>
+    <data class="com.arsdigita.portlet.PortletCollectionLoader"/>
+  </scripts>
+</load>

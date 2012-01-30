@@ -60,7 +60,8 @@ public class CollectedVolumeInitializer extends ContentTypeInitializer {
      */
     @Override
     public String[] getStylesheets() {
-        return new String[]{"INTERNAL_THEME_TYPES_DIR + sci/CollectedVolume.xsl"};
+        return new String[]{ 
+                   INTERNAL_THEME_TYPES_DIR + "sci/CollectedVolume.xsl"};
     }
 
     /**

@@ -1,4 +1,0 @@
-<hr size="1" width="67%" align="center" noshade>
-<p align="right"><%= new java.util.Date() %>
-</body>
-</html>

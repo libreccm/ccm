@@ -52,25 +52,24 @@ import org.apache.log4j.Logger;
  */
 public class ContentItemDispatcher implements Dispatcher {
 
-    private static final Logger s_log =
-        Logger.getLogger(ContentItemDispatcher.class.getName());
+    /** Private Logger instance for debugging purpose.                        */
+    private static final Logger s_log = Logger.getLogger(
+                                         ContentItemDispatcher.class.getName());
 
-    //the cache table for mapping content items to template JSP's
-    private static CacheTable s_cache =
-        new CacheTable("ContentItemDispatcherCache");
-    //cache for the template resolver
-    public static Map s_templateResolverCache =
-        Collections.synchronizedMap(new HashMap());
+    /** the cache table for mapping content items to template JSP's           */
+    private static CacheTable s_cache = new CacheTable(
+                                                "ContentItemDispatcherCache");
+    /** cache for the template resolver                                       */
+    public static Map s_templateResolverCache = Collections
+                                                .synchronizedMap(new HashMap());
 
+    /**                                                                       */
     protected ItemXML m_itemXML;
 
-    //     public static final String TEMPLATE_ROOT =
-    //        "/packages/content-section/templates";
-    //     public static final String DEFAULT_ITEM_TEMPLATE =
-    //        "/default/item.jsp";
-    //     public static final String DEFAULT_FOLDER_TEMPLATE =
-    //        "/default/folder.jsp";
 
+    /**
+     * Constructor
+     */
     public ContentItemDispatcher() {
         m_itemXML = new ItemXML();
     }
@@ -79,12 +78,13 @@ public class ContentItemDispatcher implements Dispatcher {
      * @see com.arsdigita.dispatcher.Dispatcher#dispatch
      *      (HttpServletRequest, HttpServletResponse, RequestContext)
      */
-    public void dispatch
-        (final HttpServletRequest request, final HttpServletResponse response,
-         final RequestContext actx)
-        throws IOException, ServletException {
-        Boolean bXMLMode =
-            (Boolean)request.getAttribute(ContentSectionServlet.XML_MODE);
+    public void dispatch( final HttpServletRequest request, 
+                          final HttpServletResponse response,
+                          final RequestContext actx)
+                throws IOException, ServletException {
+        
+        Boolean bXMLMode = (Boolean)request
+                                    .getAttribute(ContentSectionServlet.XML_MODE);
         if (bXMLMode != null && bXMLMode.booleanValue())  {
             //if this is XML mode, then use itemXML
             m_itemXML.dispatch(request, response, actx);
@@ -267,8 +267,10 @@ public class ContentItemDispatcher implements Dispatcher {
         return (String)s_cache.get(key);
     }
 
-    private String getTemplatePath(ContentItem item, HttpServletRequest req,
+    private String getTemplatePath(ContentItem item, 
+                                   HttpServletRequest req,
                                    RequestContext ctx) {
+
 	//check if the template path is cached
         //BigDecimal id = item.getID();
 	//String sPath = cacheGet(id);
@@ -323,7 +325,8 @@ public class ContentItemDispatcher implements Dispatcher {
      * @param section The content section
      * @return The TemplateResolver associated with the content section
      */
-    public  TemplateResolver getTemplateResolver(ContentSection section) {
+    public TemplateResolver getTemplateResolver(ContentSection section) {
+        
         String name = section.getName();
         TemplateResolver ir =
             (TemplateResolver) s_templateResolverCache.get(name);

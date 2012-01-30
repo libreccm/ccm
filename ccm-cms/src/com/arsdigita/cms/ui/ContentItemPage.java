@@ -73,6 +73,7 @@ import org.apache.log4j.Logger;
  */
 public class ContentItemPage extends CMSPage implements ActionListener {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(ContentItemPage.class);
     /**
      * The URL parameter that must be passed in in order to set
@@ -282,8 +283,8 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         final ContentItem item = m_item.getContentItem(state);
 
         if (item == null) {
-            throw new FormProcessException("The item_id supplied does not reference a valid "
-                                           + "ContentItem.");
+            throw new FormProcessException("The item_id supplied does not "
+                                           + "reference a valid ContentItem.");
         }
     }
 

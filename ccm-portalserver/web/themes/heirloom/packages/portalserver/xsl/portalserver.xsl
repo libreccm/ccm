@@ -18,7 +18,7 @@
 <xsl:import href="../../bebop/xsl/DimensionalNavbar.xsl"/>
 <xsl:import href="../../toolbox/xsl/ControlBar.xsl"/>
 <xsl:import href="../../portlets/xsl/freeform-html-portlet.xsl"/>
-<xsl:import href="../../portlets/xsl/time-of-day-portlet.xsl"/>
+<!--   <xsl:import href="../../portlets/xsl/time-of-day-portlet.xsl"/>     -->
 <xsl:import href="../../portlets/xsl/rss-feed-portlet.xsl"/>
 
 <xsl:output method="html" indent="yes"/>

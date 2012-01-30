@@ -16,10 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.cms.contenttypes;
 
 /**
- * Initializer
+ * Executes at each system startup and initializes the Job content type.
+ * 
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/17 $
@@ -29,16 +35,38 @@ package com.arsdigita.cms.contenttypes;
 public class JobInitializer extends ContentTypeInitializer {
 
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public JobInitializer() {
         super("ccm-cms-types-job.pdl.mf", Job.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieves fully qualified traversal adapter file name.
+     * @return 
+     */
+    @Override
     public String getTraversalXML() {
         return "WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Job.xml";
     }
 
+    /**
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
+     */
+    @Override
     public String[] getStylesheets() {
-        return new String[] {"/static/content-types/com/arsdigita/cms/contenttypes/Job.xsl"};
+        return new String[] {INTERNAL_THEME_TYPES_DIR + "Job.xsl"};
     }
 
 

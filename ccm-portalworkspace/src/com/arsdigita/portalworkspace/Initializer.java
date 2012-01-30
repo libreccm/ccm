@@ -36,7 +36,7 @@ import com.arsdigita.portalworkspace.portlet.FlashPortletInitializer;
 import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
 import com.arsdigita.portalworkspace.portlet.LoginPortlet;
 import com.arsdigita.portalworkspace.portlet.RSSFeedPortlet;
-import com.arsdigita.portalworkspace.portlet.TimeOfDayPortlet;
+// import com.arsdigita.portlet.TimeOfDayPortlet;
 import com.arsdigita.portalworkspace.portlet.MyWorkspacesPortlet;
 import com.arsdigita.portalworkspace.portlet.WorkspaceNavigatorPortlet;
 import com.arsdigita.portalworkspace.portlet.WorkspaceSummaryPortlet;
@@ -62,6 +62,7 @@ import com.arsdigita.xml.XML;
  */
 public class Initializer extends CompoundInitializer {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 
     /**
@@ -168,6 +169,7 @@ public class Initializer extends CompoundInitializer {
                     }
                 });
 
+        /* MOVED to ccm-portlet-collection 
         e.getFactory().registerInstantiator(
                 TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
@@ -175,6 +177,7 @@ public class Initializer extends CompoundInitializer {
                        return new TimeOfDayPortlet(dataObject);
                    }
                 });
+         */
 
 //     WorkspaceDirectoryPortlet,  imports ccm-ldn-rss
 //      e.getFactory().registerInstantiator(

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+                  version="1.0">
 
   <xsl:import href="application-directory-portlet.xsl"/>
   <xsl:import href="content-directory-portlet.xsl"/>
@@ -9,7 +9,9 @@
   <xsl:import href="login-portlet.xsl"/>
   <!-- MyWorkspacesPortlet - xsl file missing   -->
   <xsl:import href="rss-feed-portlet.xsl"/>
-  <xsl:import href="time-of-day-portlet.xsl"/>
+  
+  <!-- time of day in separate portlet collection package -->
+<!--   <xsl:import href="time-of-day-portlet.xsl"/>  -->
   <!-- WorkspaceNavigatorPortlet - xsl file missing   -->
   <!-- WorkspaceSummaryPortlet - xsl file missing   -->
 

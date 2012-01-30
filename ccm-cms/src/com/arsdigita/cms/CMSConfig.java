@@ -154,8 +154,11 @@ public final class CMSConfig extends AbstractConfig {
                             new StringParameter(
             "com.arsdigita.cms.template_root_path",
             Parameter.REQUIRED,
-            "/packages/content-section/templates");
-    // URL resource: protocol handler removal: START
+            "/templates/ccm-cms/content-section");
+    //      up to version 6.6.4
+    //      "/packages/content-section/templates");
+
+            // URL resource: protocol handler removal: START
     // remove:
     // try {
     //   m_itemAdapters = new URLParameter

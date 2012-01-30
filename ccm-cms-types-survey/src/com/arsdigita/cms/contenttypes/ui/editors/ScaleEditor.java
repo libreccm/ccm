@@ -32,7 +32,6 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.formbuilder.PersistentOption;
 import com.arsdigita.formbuilder.ui.PropertiesEditor;
-import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Element;

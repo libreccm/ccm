@@ -122,11 +122,12 @@ public class Initializer extends CompoundInitializer {
 //   *
 //   * @param evt The legacy init event.
 //   */
-//  An empty implementations prevents this initializer from beiong executed.
+//  An empty implementations prevents this initializer from being executed.
 //  A missing implementations causes the super class method to be executed, which
 //  invokes the above added LegacyInitializer.
 //  That initializer starts P2fs background thread and creation of
 //  ~/packages/content-section/templates/content works now.
+//  SEE NEW LOCATION:  ~/templates/ccm-cms/content-section    
 //  public void init(LegacyInitEvent evt) {}
 
     /**

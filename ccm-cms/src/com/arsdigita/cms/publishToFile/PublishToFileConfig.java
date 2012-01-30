@@ -198,7 +198,7 @@ public class PublishToFileConfig extends AbstractConfig {
              "    false,  " +
              "    '/p2fs' }, " +
              "  { 'com.arsdigita.cms.Template',   " +
-             "   'packages/content-section/templates',  " +
+             "   '/templates/ccm-cms/content-section',  " +
              "   false,   " +
              "   '/templates' }  " +
              "} "
@@ -316,7 +316,7 @@ public class PublishToFileConfig extends AbstractConfig {
         s_tmpDestList.add
             ( new ArrayList() {{
                                  add("com.arsdigita.cms.Template");
-                                 add("packages/content-section/templates");
+                                 add("templates/ccm-cms/content-section");
                                  add(new Boolean(false));
                                  add("/templates");
                               }}

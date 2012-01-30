@@ -16,12 +16,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.cms.contenttypes;
 
 import org.apache.log4j.Logger;
 
 /**
- * Initializer
+ * Executes at each system startup and initializes the PressRelease content type.
+ * 
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/17 $
@@ -30,6 +36,7 @@ import org.apache.log4j.Logger;
 
 public class PressReleaseInitializer extends ContentTypeInitializer {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(PressReleaseInitializer.class);
 
     /**
@@ -40,15 +47,22 @@ public class PressReleaseInitializer extends ContentTypeInitializer {
     }
 
     /**
-     * Retrieve location of this content types stylesheet. Overwrites parent
-     * method with FormItem specific value for use by the parent class worker
-     * methods.
-     *
-     * @return complete path info string
+     * Retrieve location of this content type's internal default theme 
+     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
+     * is engaged. 
+     * 
+     * Custom themes usually will provide their own stylesheet(s) and their own
+     * access method, but may not support every content type.
+     * 
+     * Overwrites parent method with AgendaItem specific value for use by the 
+     * parent class worker methods.
+     * 
+     * @return String array of XSL stylesheet files of the internal default theme
      */
+    @Override
     public String[] getStylesheets() {
         return new String[] {
-            "/static/content-types/com/arsdigita/cms/contenttypes/PressRelease.xsl" };
+            INTERNAL_THEME_TYPES_DIR + "PressRelease.xsl" };
     }
 
 }

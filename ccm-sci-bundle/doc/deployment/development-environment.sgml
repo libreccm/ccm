@@ -678,7 +678,8 @@ publish-to-fs-servers = "http://servlet1/", "http://servlet2/"
 publish-to-fs-source = "http://servlet1/"
 publish-to-fs-this-server = "http://servlet1/"
 search-engine = intermedia
-template-root = /packages/content-section/templates
+# old: template-root = /packages/content-section/templates
+template-root = /templates/ccm-cms/content-section
 
 # Portal initialization file
 portal-url = /portal/

@@ -61,8 +61,9 @@ public final class VersioningServlet extends BaseServlet {
     private final static String CMD   = "cmd";
     private final static String OID   = "oid";
     private final static String TITLE = "title";
-    private final static String JSP_DIR = "themes/heirloom//packages/versioning/";
+    private final static String JSP_DIR = "/themes/heirloom/packages/versioning/";
 
+    @Override
     public void doService(HttpServletRequest req, HttpServletResponse resp) 
         throws ServletException, IOException {
 
@@ -73,6 +74,7 @@ public final class VersioningServlet extends BaseServlet {
         TransactionContext txn = SessionManager.getSession().
             getTransactionContext();
         txn.addTransactionListener(new AbstractTransactionListener() {
+                @Override
                 public void beforeCommit(TransactionContext txn) {
                     Assert.fail("uncommittable transaction");
                 }

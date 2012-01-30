@@ -61,10 +61,10 @@ public class ItemDispatcher implements ChainedDispatcher {
 
     public static final String FILE_SUFFIX = ".jsp";
     public static final String INDEX_FILE = "/index";
-    public static final String TEMPLATE_ROOT =
-        "/packages/content-section/templates";
-    public static final String DEFAULT_ITEM_TEMPLATE = "/default/item.jsp";
-    public static final String DEFAULT_FOLDER_TEMPLATE = "/default/folder.jsp";
+//  public static final String TEMPLATE_ROOT =
+//                             "/packages/content-section/templates";
+//  public static final String DEFAULT_ITEM_TEMPLATE = "/default/item.jsp";
+//  public static final String DEFAULT_FOLDER_TEMPLATE = "/default/folder.jsp";
 
     public static final String XML_SUFFIX = ".xml";
     public static final String XML_MODE = "xmlMode";

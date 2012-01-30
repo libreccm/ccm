@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-  xmlns:admin="http://www.arsdigita.com/admin-ui/1.0"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
-  xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:admin="http://www.arsdigita.com/admin-ui/1.0"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+              xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
+             xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
+                   version="1.0">
 
   <xsl:import href="../../bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../ui/xsl/ui.xsl"/>

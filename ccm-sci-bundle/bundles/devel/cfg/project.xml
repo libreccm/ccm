@@ -14,9 +14,9 @@
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
-<ccm:databases>
-	<ccm:database name="postgres"/>
-</ccm:databases>
+  <ccm:databases>
+        <ccm:database name="postgres"/>
+  </ccm:databases>
 
 
   <ccm:build>
@@ -95,6 +95,8 @@
         <ccm:application name="ccm-sci-personalpublications"/>
         <ccm:application name="ccm-sci-publications"/>
 
+        <ccm:application name="ccm-sci-types-department"/>
+        <ccm:application name="ccm-sci-types-institute"/>
         <ccm:application name="ccm-sci-types-member"/>
         <ccm:application name="ccm-sci-types-project"/>
 
@@ -107,11 +109,10 @@
 <!--   Content Types   -->
 <!--    
         <ccm:application name="ccm-cms-types-agenda"/>
-        <ccm:application name="ccm-cms-types-faqitem"/>
 -->
+        <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-htmlform"/>
-<!--    
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
@@ -120,9 +121,20 @@
         <ccm:application name="ccm-cms-types-pressrelease"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-siteproxy"/>
-        <ccm:application name="ccm-cms-types-xmlfeed"/>
+<!--    package survey is currently broken
+        <ccm:application name="ccm-cms-types-survey"/>
 -->
+        <ccm:application name="ccm-cms-types-xmlfeed"/>
 
+<!--   Portlets       -->
+<!--    bookmarks error: no such resource: ccm-wsx-bookmarks-portlet.pdl.mf
+        <ccm:application name="ccm-portlet-bookmarks"/>         -->
+<!--   portlet collection: missing pdl file
+        <ccm:application name="ccm-portlet-collection"/>
+        portlet latestnews depends not just on types news, but rss and
+        several others.
+        <ccm:application name="ccm-portlet-latestnews"/>
+-->
 <!--   Applications   -->
 <!--
         <ccm:application name="ccm-auth-http"/>
@@ -146,16 +158,13 @@
 -->
 
 
-  </ccm:build>
-
-
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    Scientific CMS   list of OBSOLETE modules                            -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->
-<!--    Without known funcionality
-        <ccm:application name="ccm-cms-types-motditem"/>             -->
+<!--    Without known funcionality                                           -->
+        <ccm:application name="ccm-cms-types-motditem"/>            
 
 <!--   Applications   -->
 <!--    currently doesn't work for unknown reason
@@ -169,11 +178,17 @@
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
         <ccm:application name="ccm-ldn-atoz"/>  
-        <ccm:application name="ccm-ldn-dublin"/>                     -->
+        <ccm:application name="ccm-ldn-dublin"/>
+        <ccm:application name="ccm-ldn-types-contact"/>
+        <ccm:application name="ccm-ldn-types-esdservice"/>                     -->
 
 
 <!-- tools will be downloaded from trunk, but does not
      contain java code to be compiled!
         <ccm:application name="tools"/>           -->
+
+
+  </ccm:build>
+
 
 </ccm:project>

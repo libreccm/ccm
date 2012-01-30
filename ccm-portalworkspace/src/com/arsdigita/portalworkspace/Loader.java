@@ -28,7 +28,7 @@ import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
 import com.arsdigita.portalworkspace.portlet.LoginPortlet;
 import com.arsdigita.portalworkspace.portlet.MyWorkspacesPortlet ;
 import com.arsdigita.portalworkspace.portlet.RSSFeedPortlet;
-import com.arsdigita.portalworkspace.portlet.TimeOfDayPortlet;
+// import com.arsdigita.portlet.TimeOfDayPortlet;
 import com.arsdigita.portalworkspace.portlet.WorkspaceNavigatorPortlet;
 import com.arsdigita.portalworkspace.portlet.WorkspaceSummaryPortlet;
 import com.arsdigita.portal.PortletType;
@@ -60,6 +60,7 @@ import org.apache.log4j.Logger;
  */
 public class Loader extends PackageLoader {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     private StringParameter m_url = new StringParameter(
@@ -112,7 +113,7 @@ public class Loader extends PackageLoader {
                 loadLoginPortlet();
                 loadMyWorkspacesPortlet();
                 loadRSSFeedPortlet();
-                loadTimeOfDayPortlet();
+//              loadTimeOfDayPortlet();
                 loadWorkspaceNavigatorPortlet();
                 loadWorkspaceSummaryPortlet();
             }
@@ -264,12 +265,12 @@ public class Loader extends PackageLoader {
     /**
      *
      */
-    private void loadTimeOfDayPortlet() {
-		PortletType type = PortletType.createPortletType("Time of Day",
-				PortletType.WIDE_PROFILE,
-				TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays the current date and time");
-    }
+//  private void loadTimeOfDayPortlet() {
+//PortletType type = PortletType.createPortletType("Time of Day",
+//		PortletType.WIDE_PROFILE,
+//		TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE);
+//      type.setDescription("Displays the current date and time");
+//  }
 
     private void loadWorkspaceNavigatorPortlet() {
 		PortletType type = PortletType.createPortletType(

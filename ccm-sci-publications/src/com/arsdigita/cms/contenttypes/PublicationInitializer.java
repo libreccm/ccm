@@ -44,10 +44,18 @@ public class PublicationInitializer extends ContentTypeInitializer {
     /** Private Logger instance for debugging purpose.                        */
     private final Logger logger = Logger.getLogger(PublicationInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public PublicationInitializer() {
         super("ccm-sci-publications.pdl.mf", Publication.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Initializes the domain coupling machinery
+     * 
+     * @param event 
+     */
     @Override
     public void init(final DomainInitEvent event) {
         super.init(event);
