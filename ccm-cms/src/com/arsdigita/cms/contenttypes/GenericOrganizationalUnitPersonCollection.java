@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -40,8 +41,7 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
     public GenericOrganizationalUnitPersonCollection(
             DataCollection dataCollection) {
         super(dataCollection);
-        dataCollection.addOrder(
-                "surname asc, givenname asc, titlepre asc, titlepost asc");
+        dataCollection.addOrder("name asc");
     }
 
     /**
@@ -69,8 +69,10 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
     }
 
     public GenericPerson getPerson() {
-        return (GenericPerson) DomainObjectFactory.newInstance(m_dataCollection.
-                getDataObject());
+        /*return (GenericPerson) DomainObjectFactory.newInstance(m_dataCollection.
+                getDataObject());*/
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (GenericPerson) bundle.getPrimaryInstance();
     }
 
     public OID getOID() {
@@ -78,42 +80,44 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
     }
     
     public String getSurname() {
-        return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.SURNAME);
+        /*return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.SURNAME);*/
+        return getPerson().getSurname();
     }
 
     public String getGivenName() {
-        return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.GIVENNAME);
+        /*return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.GIVENNAME);*/
+        return getPerson().getGivenName();
     }
 
     public String getTitlePre() {
-        return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.TITLEPRE);
+        /*return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.TITLEPRE);*/
+        return getPerson().getTitlePre();
     }
 
     public String getTitlePost() {
-        return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.TITLEPOST);
+        /*return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.TITLEPOST);*/
+        return getPerson().getTitlePost();
     }
 
     public Date getBirthdate() {
-        return (Date) m_dataCollection.getDataObject().get(
-                GenericPerson.BIRTHDATE);
+        /*return (Date) m_dataCollection.getDataObject().get(
+                GenericPerson.BIRTHDATE);*/
+        return getPerson().getBirthdate();
     }
 
     public String getGender() {
-        return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.GENDER);
+        /*return (String) m_dataCollection.getDataObject().get(
+                GenericPerson.GENDER);*/
+        return getPerson().getGender();
     }
-
-    public DataCollection getContacts() {
-        return (DataCollection) m_dataCollection.getDataObject().get(
-                GenericPerson.CONTACTS);
-    }
-
-    public DataObject getAlias() {
-        return (DataObject) m_dataCollection.getDataObject().get(
-                GenericPerson.ALIAS);
+    
+    public GenericPerson getAlias() {
+        /*return (DataObject) m_dataCollection.getDataObject().get(
+                GenericPerson.ALIAS);*/
+        return getPerson().getAlias();
     }
 }

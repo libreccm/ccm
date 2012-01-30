@@ -19,13 +19,11 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitSubordinateOrgaUnitAddForm;
 import com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitSubordinateOrgaUnitsTable;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -78,6 +76,10 @@ public class GenericOrganizationalUnit extends ContentPage {
     public GenericOrganizationalUnit(final String type) {
         super(type);
     }
+    
+    public GenericOrganizationalUnitBundle getGenericOrganizationalUnitBundle() {
+        return (GenericOrganizationalUnitBundle) getContentBundle();
+    }
 
     public String getAddendum() {
         return (String) get(ADDENDUM);
@@ -117,7 +119,7 @@ public class GenericOrganizationalUnit extends ContentPage {
     }
 
     public GenericOrganizationalUnitPersonCollection getPersons() {
-        DataCollection dataColl = (DataCollection) get(PERSONS);
+        DataCollection dataColl = (DataCollection) getContentBundle().get(PERSONS);
         logger.debug(String.format(
                 "GenericOrganizationalUnitPersonCollection size = %d", dataColl.
                 size()));
@@ -127,12 +129,14 @@ public class GenericOrganizationalUnit extends ContentPage {
     public void addPerson(final GenericPerson person,
                           final String role,
                           final String status) {
-        Assert.exists(person, GenericPerson.class);
+        getGenericOrganizationalUnitBundle().addPerson(person, role, status);
+        
+        //Assert.exists(person, GenericPerson.class);
 
-        GenericPerson personToLink = person;
+        //GenericPerson personToLink = person;
 
-        final ContentBundle bundle = person.getContentBundle();
-        if ((bundle != null) && (bundle.hasInstance(this.getLanguage(), Kernel.
+        //final ContentBundle bundle = person.getContentBundle();
+        /*if ((bundle != null) && (bundle.hasInstance(this.getLanguage(), Kernel.
                                  getConfig().
                                  languageIndependentItems()))) {
             personToLink =
@@ -141,21 +145,25 @@ public class GenericOrganizationalUnit extends ContentPage {
 
         Assert.exists(personToLink, GenericPerson.class);
 
-        final DataObject link = add(PERSONS, personToLink);
+        final DataObject link = add(PERSONS, personToLink);*/
+        
+        //final DataObject link = getContentBundle().add(PERSONS, bundle);
 
-        link.set(GenericOrganizationalUnitPersonCollection.PERSON_ROLE, role);
-        link.set(GenericOrganizationalUnitPersonCollection.STATUS, status);
-        link.save();
+        //link.set(GenericOrganizationalUnitPersonCollection.PERSON_ROLE, role);
+        //link.set(GenericOrganizationalUnitPersonCollection.STATUS, status);
+        //link.save();
     }
 
     public void removePerson(final GenericPerson person) {
         logger.debug("Removing person association...");
-        Assert.exists(person, GenericPerson.class);
-        remove(PERSONS, person);
+        //Assert.exists(person, GenericPerson.class);
+        //remove(PERSONS, person.getContentBundle());
+        getGenericOrganizationalUnitBundle().removePerson(person);
     }
 
     public boolean hasPersons() {
-        return !this.getPersons().isEmpty();
+        //return !this.getPersons().isEmpty();
+        return getGenericOrganizationalUnitBundle().hasPersons();
     }
 
     public GenericOrganizationalUnitSuperiorCollection getSuperiorOrgaUnits() {

@@ -15,6 +15,7 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
@@ -55,7 +56,8 @@ public class PublisherCreate extends PageCreate {
             add(new Label(GlobalizationUtil.globalize(
                     "cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
-            com.arsdigita.bebop.form.Date launchDate = new com.arsdigita.bebop.form.Date(
+            com.arsdigita.bebop.form.Date launchDate =
+                                          new com.arsdigita.bebop.form.Date(
                     launchDateParam);
             if (ContentSection.getConfig().getRequireLaunchDate()) {
                 launchDate.addValidationListener(
@@ -92,7 +94,9 @@ public class PublisherCreate extends PageCreate {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
 
-        final ContentBundle bundle = new ContentBundle(item);
+        final GenericOrganizationalUnitBundle bundle =
+                                              new GenericOrganizationalUnitBundle(
+                item);
         bundle.setParent(folder);
         bundle.setContentSection(section);
         bundle.save();

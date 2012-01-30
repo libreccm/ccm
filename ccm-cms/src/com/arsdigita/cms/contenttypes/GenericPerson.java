@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Sören Bernstein, for the Center of Social Politics of the University of Bremen
+ * Copyright (C) 2010 Sören Bernstein
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -83,6 +83,10 @@ public class GenericPerson extends ContentPage implements
         super(type);
     }
 
+    public GenericPersonBundle getGenericPersonBundle() {
+        return (GenericPersonBundle) getContentBundle();
+    }
+    
     @Override
     public void beforeSave() {
         super.beforeSave();

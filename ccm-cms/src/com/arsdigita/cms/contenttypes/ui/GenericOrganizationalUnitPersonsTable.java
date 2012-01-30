@@ -49,7 +49,7 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * Table for showing the persons associated with an organization.
+ * Table for showing the persons associated with an organisation.
  *
  * @author Jens Pelzetter
  */
@@ -247,9 +247,8 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            person.getLanguage()),
+                     new Link(String.format("%s",
+                                            value.toString()),
                               resolver.generateItemURL(state,
                                                        person,
                                                        section,
@@ -267,7 +266,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                     return new Label(value.toString());
                 }
                 
-                Label label = new Label(String.format("%s (%s)", 
+                Label label = new Label(String.format("%s", 
                                                       value.toString(),
                                                       person.getLanguage()));
                 

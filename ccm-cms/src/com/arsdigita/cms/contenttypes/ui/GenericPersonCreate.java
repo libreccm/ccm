@@ -20,6 +20,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.GenericPersonBundle;
 import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.LanguageWidget;
@@ -100,7 +101,7 @@ public class GenericPersonCreate extends PageCreate {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
 
-        final ContentBundle bundle = new ContentBundle(item);
+        final GenericPersonBundle bundle = new GenericPersonBundle(item);        
         bundle.setParent(folder);
         bundle.setContentSection(m_parent.getContentSection(state));
         bundle.save();

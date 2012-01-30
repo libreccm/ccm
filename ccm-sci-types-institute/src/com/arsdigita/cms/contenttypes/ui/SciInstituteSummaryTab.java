@@ -126,8 +126,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
                 getPersons();
         heads.addFilter(roleFilter.toString());
         heads.addFilter(statusFilter.toString());
-        heads.addOrder("surname");
-        heads.addOrder("givenname");
+        heads.addOrder("name");     
 
         while (heads.next()) {
             generateMemberXml(heads.getPerson(), headsElem, state);

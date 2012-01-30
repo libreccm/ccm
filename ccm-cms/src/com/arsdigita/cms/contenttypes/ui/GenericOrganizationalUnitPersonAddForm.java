@@ -32,6 +32,7 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
@@ -178,8 +179,6 @@ public class GenericOrganizationalUnitPersonAddForm
             if (person == null) {
                 GenericPerson personToAdd =
                               (GenericPerson) data.get(ITEM_SEARCH);
-                personToAdd.getContentBundle().getInstance(orga.getLanguage());
-
                 logger.debug(String.format("Adding person %s",
                                            personToAdd.getFullName()));
 
@@ -246,7 +245,7 @@ public class GenericOrganizationalUnitPersonAddForm
 
             GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
 
-            if (!(person.getContentBundle().hasInstance(orga.getLanguage(),
+            /*if (!(person.getContentBundle().hasInstance(orga.getLanguage(),
                                                         Kernel.getConfig().
                   languageIndependentItems()))) {
                 data.addError(
@@ -254,15 +253,21 @@ public class GenericOrganizationalUnitPersonAddForm
                         "cms.contenttypes.ui.genericorgaunit.person.no_suitable_language_variant"));
 
                 return;
-            }
+            }*/
 
-            person = (GenericPerson) person.getContentBundle().getInstance(orga.
+            final ContentBundle bundle = person.getContentBundle();
+             final GenericOrganizationalUnitPersonCollection persons =
+                                                      orga.getPersons();
+              persons.addFilter(String.format("id = %s",
+                                            bundle.getID().toString()));
+            
+            /*person = (GenericPerson) person.getContentBundle().getInstance(orga.
                     getLanguage());
             GenericOrganizationalUnitPersonCollection persons =
                                                       orga.getPersons();
 
             persons.addFilter(String.format("id = %s",
-                                            person.getID().toString()));
+                                            person.getID().toString()));*/
             if (persons.size() > 0) {
                 data.addError(
                         ContenttypesGlobalizationUtil.globalize(
