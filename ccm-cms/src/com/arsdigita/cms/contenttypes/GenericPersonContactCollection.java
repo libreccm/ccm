@@ -2,6 +2,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import java.math.BigDecimal;
@@ -48,10 +49,10 @@ public class GenericPersonContactCollection extends DomainCollection {
     public void setContactOrder(BigDecimal order) {
         DataObject link = (DataObject) this.get("link");
 
-        link.set(CONTACTS_ORDER, order);
+        link.set("linkOrder", order);
     }
 
-    public void swapWithNext(GenericContact contact) {
+    public void swapWithNext(final GenericContact contact) {
         int currentPos = 0;
         int currentIndex = 0;
         int nextIndex = 0;
@@ -60,7 +61,7 @@ public class GenericPersonContactCollection extends DomainCollection {
         while (this.next()) {
             currentPos = this.getPosition();
             currentIndex = Integer.parseInt(this.getContactOrder());
-            if (this.getContact().equals(contact)) {
+            if (this.getContact().equals(contact)) {                               
                 break;
             }
         }
@@ -93,7 +94,7 @@ public class GenericPersonContactCollection extends DomainCollection {
         this.rewind();
     }
 
-    public void swapWithPrevious(GenericContact contact) {
+    public void swapWithPrevious(final GenericContact contact) {
         int previousPos = 0;
         int previousIndex = 0;
         int currentPos = 0;
@@ -139,9 +140,21 @@ public class GenericPersonContactCollection extends DomainCollection {
     }
 
     public GenericContact getContact() {
-        return new GenericContact(m_dataCollection.getDataObject());
+        final GenericContactBundle bundle =
+                                   (GenericContactBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (GenericContact) bundle.getInstance(GlobalizationHelper.
+                getNegotiatedLocale().getLanguage());
+        //return new GenericContact(m_dataCollection.getDataObject());
     }
-    
+
+    public GenericContact getContact(final String language) {
+        final GenericContactBundle bundle =
+                                   (GenericContactBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (GenericContact) bundle.getInstance(language);
+    }
+
     public GenericPerson getPerson() {
         DataCollection collection;
 
@@ -159,19 +172,28 @@ public class GenericPersonContactCollection extends DomainCollection {
             // Close Collection to prevent an open ResultSet
             collection.close();
 
-            return (GenericPerson) DomainObjectFactory.newInstance(dobj);
+            GenericContactBundle bundle =
+                                 (GenericContactBundle) DomainObjectFactory.
+                    newInstance(dobj);
+            return (GenericPerson) bundle.getPrimaryInstance();
         }
     }
 
     public GenericAddress getAddress() {
-        return (GenericAddress) DomainObjectFactory.newInstance((DataObject) m_dataCollection.
-                getDataObject().get(
+        /*
+         * return (GenericAddress) DomainObjectFactory.newInstance((DataObject)
+         * m_dataCollection. getDataObject().get(
                 GenericContact.ADDRESS));
+         */
+        return getContact().getAddress();
     }
 
     public GenericContactEntryCollection getContactEntries() {
-        return new GenericContactEntryCollection((DataCollection) m_dataCollection.
-                getDataObject().get(
+        /*
+         * return new GenericContactEntryCollection((DataCollection)
+         * m_dataCollection. getDataObject().get(
                 GenericContact.CONTACT_ENTRIES));
+         */
+        return getContact().getContactEntries();
     }
 }

@@ -50,8 +50,8 @@ public class GenericPerson extends ContentPage implements
     public static final String BIRTHDATE = "birthdate";
     public static final String GENDER = "gender";
     public static final String CONTACTS = "contacts";
-    public static final String CONTACTS_KEY = "link_key";
-    public static final String CONTACTS_ORDER = "link_order";
+    public static final String CONTACTS_KEY = "linkKey";
+    public static final String CONTACTS_ORDER = "linkOrder";
     public static final String ALIAS = "alias";
     public static final String DABIN_ID = "dabinId";
     private static final String RELATION_ATTRIBUTES =
@@ -212,24 +212,28 @@ public class GenericPerson extends ContentPage implements
 
     // Get all contacts for this person
     public GenericPersonContactCollection getContacts() {
-        return new GenericPersonContactCollection(
-                (DataCollection) get(CONTACTS));
+        //return new GenericPersonContactCollection(
+          //      (DataCollection) get(CONTACTS));
+        return getGenericPersonBundle().getContacts();
     }
 
     // Add a contact for this person
-    public void addContact(GenericContact contact, String contactType) {
-        Assert.exists(contact, GenericContact.class);
+    public void addContact(final GenericContact contact, 
+                           final String contactType) {
+       /* Assert.exists(contact, GenericContact.class);
 
         DataObject link = add(CONTACTS, contact);
 
         link.set(CONTACTS_KEY, contactType);
-        link.set(CONTACTS_ORDER, BigDecimal.valueOf(getContacts().size()));
+        link.set(CONTACTS_ORDER, BigDecimal.valueOf(getContacts().size()));*/
+        getGenericPersonBundle().addContact(contact, contactType);
     }
 
     // Remove a contact for this person
-    public void removeContact(GenericContact contact) {
-        Assert.exists(contact, GenericContact.class);
-        remove(CONTACTS, contact);
+    public void removeContact(final GenericContact contact) {
+        //Assert.exists(contact, GenericContact.class);
+        //remove(CONTACTS, contact);
+        getGenericPersonBundle().removeContact(contact);
     }
 
     public boolean hasContacts() {

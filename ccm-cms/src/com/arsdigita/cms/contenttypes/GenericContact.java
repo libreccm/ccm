@@ -90,7 +90,7 @@ public class GenericContact extends ContentPage implements
 
         Assert.exists(getContentType(), ContentType.class);
     }
-
+        
     /**
      * Retrieves the current configuration
      */
@@ -98,11 +98,15 @@ public class GenericContact extends ContentPage implements
         return s_config;
     }
 
+    public GenericContactBundle getGenericContactBundle() {
+        return (GenericContactBundle) getContentBundle();
+    }
+    
     ///////////////////////////////////////////////////////////////
     // accessors
     // Get the person for this contact
     public GenericPerson getPerson() {
-        DataCollection collection;
+        /*DataCollection collection;
 
         collection = (DataCollection) get(PERSON);
 
@@ -118,14 +122,15 @@ public class GenericContact extends ContentPage implements
             collection.close();
 
             return (GenericPerson) DomainObjectFactory.newInstance(dobj);
-        }
-        //return (GenericPerson) DomainObjectFactory.newInstance((DataObject)get(PERSON));
+        }*/
+        
+        return getGenericContactBundle().getPerson();
     }
 
     // Set the person for this contact
     public void setPerson(GenericPerson person, String contactType) {
         //set(PERSON, person);
-        if (getPerson() != null) {
+        /*if (getPerson() != null) {
             unsetPerson();
         }
 
@@ -135,7 +140,9 @@ public class GenericContact extends ContentPage implements
             link.set(GenericPerson.CONTACTS_KEY, contactType);
             link.set(GenericPerson.CONTACTS_ORDER, new BigDecimal(person.getContacts().size()));
             link.save();
-        }
+        }*/
+        
+        getGenericContactBundle().setPerson(person, contactType);
     }
 
 //    // Get the type for this contact
@@ -150,11 +157,13 @@ public class GenericContact extends ContentPage implements
     // Unset the address for this contact
     public void unsetPerson() {
         //set(PERSON, null);
-        GenericPerson oldPerson;
+        /*GenericPerson oldPerson;
         oldPerson = getPerson();
         if (oldPerson != null) {
             remove(PERSON, oldPerson);
-        }
+        }*/
+        
+        getGenericContactBundle().unsetPerson();
     }
 
     // Get the address for this contact

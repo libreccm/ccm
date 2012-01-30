@@ -34,6 +34,10 @@ object type GenericContact extends ContentPage {
     reference key ( cms_contacts.contact_id );
 }
 
+object type GenericContactBundle extends ContentBundle {
+    reference key (cms_contact_bundles.bundle_id);
+}
+
 object type GenericContactEntry extends ContentItem {
 
   String[1..1] key         = cms_contactEntries.key VARCHAR(100);
@@ -46,18 +50,18 @@ object type GenericContactEntry extends ContentItem {
 
 association {
 
-    GenericPerson[0..n]  person   = join cms_contacts.contact_id
+    GenericPersonBundle[0..n]  person   = join cms_contact_bundles.bundle_id
                                       to cms_person_contact_map.contact_id,
                                     join cms_person_contact_map.person_id
-                                      to cms_persons.person_id;
+                                      to cms_person_bundles.bundle_id;
 
-    GenericContact[0..n] contacts = join cms_persons.person_id
+    GenericContactBundle[0..n] contacts = join cms_person_bundles.bundle_id
                                       to cms_person_contact_map.person_id,
                                     join cms_person_contact_map.contact_id
-                                      to cms_contacts.contact_id;
+                                      to cms_contact_bundles.bundle_id;
 
     // Link Attribute
-    BigDecimal[0..1] link_order = cms_person_contact_map.link_order INTEGER;
-    String[0..1]     link_key   = cms_person_contact_map.link_key   VARCHAR(100);
+    BigDecimal[0..1] linkOrder = cms_person_contact_map.link_order INTEGER;
+    String[0..1]     linkKey   = cms_person_contact_map.link_key   VARCHAR(100);
 
 }
