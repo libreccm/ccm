@@ -75,6 +75,7 @@ class DestinationStub {
         return m_urlStub;
     }
 
+    @Override
     public String toString() {
         return "Doc Root " + m_documentRoot +
             (isSharedRoot() ? " (shared)" : " (not shared)") +

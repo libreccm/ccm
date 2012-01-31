@@ -50,21 +50,27 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
- * Methods for writing content (as static pages) to the file
- * system when an item is published, and removing the files when the
- * item is unpublished.
+ * PublishToFile system provides two capability:
+ * (1) It writes content as static html pages to the file system when an item is
+ *     published and removes the files when the item is unpublished. It enables
+ *     CCM to store content for delivery directly by a WEB server instead of
+ *     generating pages dynamically every time a page is requested (standard usage).
+ * (2) It delivers (and synchronizes) templates stored in the database to the 
+ *     filesystem of each CCM instance (e.g. in a distributed multi tear 
+ *     environment but also in case of a single instance). User defined templates
+ *     are stored in the database and must be synchronized with the filesystem
+ *     in order to be used.
  *
  * @author Jeff Teeters (teeters@arsdigita.com)
  * @author <a href="mailto:dlutter@redhat.com">David Lutterkort</a>
  * @version $Revision: #32 $ $DateTime: 2004/08/17 23:15:09 $
  */
-
 public class PublishToFile implements PublishToFileListener {
 
-    public static final int DEFAULT_TIMEOUT = 60;
+    /** Private Logger instance for debugging purpose.                        */
+    private static Logger s_log = Logger.getLogger(PublishToFile.class);
 
-    private static Logger s_log =
-        Logger.getLogger(PublishToFile.class);
+    public static final int DEFAULT_TIMEOUT = 60;
 
     // Queue entry timeout
     // TODO: pickup value from configuration file as a single source!

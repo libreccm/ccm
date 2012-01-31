@@ -59,9 +59,19 @@ class BaseDispatcher {
         return s_cache.isCached(path);
     }
 
+    /**
+     * Does all the work! 
+     * 
+     * @param sreq
+     * @param sresp
+     * @return
+     * @throws ServletException
+     * @throws IOException 
+     */
     final boolean dispatch(final HttpServletRequest sreq,
                            final HttpServletResponse sresp)
-            throws ServletException, IOException {
+                  throws ServletException, IOException {
+        
         if (s_log.isDebugEnabled()) {
             s_log.debug("Dispatching request " + sreq.getRequestURI() + " [" +
                         sreq.getContextPath() + "," +
@@ -160,11 +170,12 @@ class BaseDispatcher {
         }
     }
 
-    private final void forward(String contextPath,
-                               final String target,
-                               final HttpServletRequest sreq,
-                               final HttpServletResponse sresp)
-            throws ServletException, IOException {
+    private void forward(String contextPath,
+                         final String target,
+                         final HttpServletRequest sreq,
+                         final HttpServletResponse sresp)
+                 throws ServletException, IOException {
+        
         if (s_log.isDebugEnabled()) {
             s_log.debug("Forwarding by path to target '" + target + "'");
         }
@@ -277,6 +288,7 @@ class BaseDispatcher {
             return target.toString();
         }
 
+        @Override
         public boolean equals(Object obj) {
             if ( obj==null ) { return false; }
 

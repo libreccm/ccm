@@ -9,7 +9,8 @@
     <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
 
         <!-- Content item is the simplest type -->
-        <xrd:adapter objectType="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.ContentItem" 
+                     traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/id"/>
                 <xrd:property name="/object/defaultDomainClass"/>
@@ -33,7 +34,9 @@
         </xrd:adapter>
 
         <!-- Special handling for Link (by Quasimodo)-->
-        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Link" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.LinkTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Link" 
+                     extends="com.arsdigita.cms.ContentItem" 
+                     traversalClass="com.arsdigita.cms.contenttypes.LinkTraversalAdapter">
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/targetItem/id"/>
                 <xrd:property name="/object/targetItem/defaultDomainClass"/>
@@ -50,7 +53,9 @@
             </xrd:associations>
         </xrd:adapter>
 
-        <xrd:adapter objectType="com.arsdigita.cms.ContentPage" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.ContentPage" 
+                        extends="com.arsdigita.cms.ContentItem" 
+                traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
 
 
             <xrd:attributes rule="exclude">
@@ -67,7 +72,9 @@
         </xrd:adapter>
 
         <!-- Adds a text asset -->
-        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle" 
+                        extends="com.arsdigita.cms.ContentPage" 
+                 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/textAsset/id"/>
                 <xrd:property name="/object/textAsset/defaultDomainClass"/>
@@ -129,7 +136,8 @@
     <!-- Next the metadata for search -->
     <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
         <!-- Content item is the simplest type -->
-        <xrd:adapter objectType="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.ContentItem" 
+                 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/id"/>
                 <xrd:property name="/object/defaultDomainClass"/>
@@ -153,7 +161,9 @@
         </xrd:adapter>
 
         <!-- Adds a text asset -->
-        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle" 
+                        extends="com.arsdigita.cms.ContentItem" 
+                 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/textAsset/id"/>
                 <xrd:property name="/object/textAsset/defaultDomainClass"/>
@@ -214,7 +224,8 @@
 
     <!-- Search metadata for file assets -->
     <xrd:context name="com.arsdigita.cms.search.AssetMetadataProvider">
-        <xrd:adapter objectType="com.arsdigita.cms.FileAsset" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.FileAsset" 
+                 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:attributes rule="exclude">
                 <xrd:property name="/object/id"/>
                 <xrd:property name="/object/content"/>
@@ -230,12 +241,15 @@
     <!-- For assets, we want to pull out all HTML, or binary files -->
     <xrd:context name="com.arsdigita.cms.search.AssetExtractor">
         <!-- Content item is the simplest type -->
-        <xrd:adapter objectType="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.ContentItem" 
+                 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:associations rule="include"/>
         </xrd:adapter>
 
         <!-- Adds a text asset -->
-        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle" 
+                        extends="com.arsdigita.cms.ContentItem" 
+                 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:associations rule="include">
                 <xrd:property name="/object/textAsset"/>
             </xrd:associations>

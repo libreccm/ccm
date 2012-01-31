@@ -88,6 +88,9 @@ public class DispatcherServlet extends BaseServlet {
     private String m_fallbackName = null;
     private final BaseDispatcher m_dispatcher;
 
+    /**
+     * 
+     */
     public DispatcherServlet() {
         m_dispatcher = new BaseDispatcher();
     }
@@ -106,16 +109,17 @@ public class DispatcherServlet extends BaseServlet {
     @Override    
     protected void doService(final HttpServletRequest sreq,
                              final HttpServletResponse sresp)
-            throws ServletException, IOException {
-        DeveloperSupport.requestStart
-            (new RequestEvent(sreq, sresp, null, true, false));
-
+              throws ServletException, IOException {
+        
+        DeveloperSupport.requestStart(new RequestEvent(
+                                          sreq, sresp, null, true, false));
         if (s_log.isDebugEnabled()) {
             s_log.debug("Servicing request '" + sreq.getRequestURI() + "'");
         }
-
         DeveloperSupport.startStage("BaseDispatcher.dispatch");
 
+        
+        /* Try to dispatch to an applications servlet (i.e. new style legacy free) */
         boolean dispatched = m_dispatcher.dispatch(sreq, sresp);
 
         DeveloperSupport.endStage("BaseDispatcher.dispatch");

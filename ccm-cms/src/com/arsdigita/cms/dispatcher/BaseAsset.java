@@ -44,8 +44,10 @@ import javax.servlet.ServletException;
 class BaseAsset extends ResourceHandlerImpl {
 
     private static final Logger s_log = Logger.getLogger(BaseAsset.class);
+    
     public final static String ASSET_ID = "asset_id";
     public static final String OID_PARAM = "oid";
+    
     private final static String s_defaultName = "File";
     private static final BigDecimalParameter s_assetId = new BigDecimalParameter(ASSET_ID);
     private static final OIDParameter s_oid = new OIDParameter(OID_PARAM);
@@ -72,7 +74,7 @@ class BaseAsset extends ResourceHandlerImpl {
     }
 
     /**
-     * Sets RFC2183 governed Contnet-Disposition header to supply filename to
+     * Sets RFC2183 governed Content-Disposition header to supply filename to
      * client. See section 19.5.1 of RFC2616 for interpretation of
      * Content-Disposition in HTTP.
      */

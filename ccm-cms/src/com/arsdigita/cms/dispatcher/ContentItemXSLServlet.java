@@ -55,6 +55,7 @@ public class ContentItemXSLServlet extends BaseServlet {
     public static Map s_templateResolverCache =
         Collections.synchronizedMap(new HashMap());
 
+    @Override
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp)
         throws ServletException, IOException {

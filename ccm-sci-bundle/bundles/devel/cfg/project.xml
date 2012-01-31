@@ -108,8 +108,8 @@
 
 <!--   Content Types   -->
 <!--    
-        <ccm:application name="ccm-cms-types-agenda"/>
 -->
+        <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-htmlform"/>

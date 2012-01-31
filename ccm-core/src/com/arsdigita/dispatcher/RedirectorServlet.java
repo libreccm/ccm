@@ -42,6 +42,7 @@ public class RedirectorServlet extends HttpServlet {
 
     public String m_target = null;
 
+    @Override
     public void init() throws ServletException {
         ServletConfig conf = getServletConfig();
         m_target = conf.getInitParameter(PARAM_NAME);
@@ -50,6 +51,7 @@ public class RedirectorServlet extends HttpServlet {
         }
     }
 
+    @Override
     public void service(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
@@ -60,5 +62,6 @@ public class RedirectorServlet extends HttpServlet {
         DispatcherHelper.sendExternalRedirect(resp, m_target);
     }
     
+    @Override
     public void destroy() { }
 }

@@ -79,6 +79,7 @@ public class DefaultTemplateResolver extends    AbstractTemplateResolver
     public String getTemplate(ContentSection section,
                               ContentItem item,
                               HttpServletRequest request) {
+        
         String template = getItemTemplate(section, item, request);
         MimeType mimeType = MimeType.loadMimeType(Template.JSP_MIME_TYPE);
 

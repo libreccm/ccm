@@ -105,7 +105,7 @@ public final class CMSConfig extends AbstractConfig {
      *
      * @return The <code>ContentSectionConfig</code> record; it cannot be null
      */
-    public static final synchronized CMSConfig getInstance() {
+    public static synchronized CMSConfig getInstance() {
         if (s_config == null) {
             s_config = new CMSConfig();
             s_config.load();
@@ -148,7 +148,8 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.REQUIRED,
             "/default/folder.jsp");
     /**
-     * Path for the default template folder. Path is relative to webapp root
+     * Path or the root folter for template folders. 
+     * Path is relative to webapp root.
      */
     private final Parameter m_templateRootPath =
                             new StringParameter(
@@ -696,6 +697,10 @@ public final class CMSConfig extends AbstractConfig {
         loadInfo();
     }
 
+    /**
+     * Retrieve path of the root folter for template folders. 
+     * Path is relative to webapp root.
+     */
     public final String getTemplateRoot() {
         return (String) get(m_templateRootPath);
     }

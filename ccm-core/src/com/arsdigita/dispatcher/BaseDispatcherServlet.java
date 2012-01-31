@@ -614,6 +614,7 @@ public abstract class BaseDispatcherServlet extends HttpServlet
 
         StringBuffer m_buffer = new StringBuffer();
 
+        @Override
         public InputSource resolveEntity(String publicId, String systemId)
                 throws SAXException {
             // we don't want to read the web.xml dtd
@@ -634,12 +635,14 @@ public abstract class BaseDispatcherServlet extends HttpServlet
             }
         }
 
+        @Override
         public void characters(char[] ch, int start, int len) {
             for (int i = 0; i < len; i++) {
                 m_buffer.append(ch[start + i]);
             }
         }
 
+        @Override
         public void endElement(String uri,
                                String localName,
                                String qname) {

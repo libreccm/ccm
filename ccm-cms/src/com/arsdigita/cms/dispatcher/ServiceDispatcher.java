@@ -298,7 +298,7 @@ public class ServiceDispatcher extends LockableImpl implements Dispatcher {
      * &lt;/dispatcher-configuration>
      * </pre>
      */
-    private final void readFromFile(final String file) {
+    private void readFromFile(final String file) {
 
         if ( isLocked() ) {
             s_log.error(

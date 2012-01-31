@@ -65,6 +65,7 @@ public final class WebConfig extends AbstractConfig {
     private final Parameter m_secureSwitchBack;
 
     public WebConfig() {
+        
         m_scheme = new DefaultSchemeParameter
             ("waf.web.default_scheme", Parameter.REQUIRED, "http");
 

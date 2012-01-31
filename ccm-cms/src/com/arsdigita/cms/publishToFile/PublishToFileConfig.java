@@ -18,25 +18,18 @@
  */
 package com.arsdigita.cms.publishToFile;
 
+import com.arsdigita.cms.CMS;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
-// import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.StringParameter;
 
-// import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-
-// STATUS: All parameter and its values copied from the old Initializer class
-// and from enterprise.init file.
-// Temporary solution for m_destinations (destinations for published content
-// items and template), returned as constant list.
 
 
 /**
@@ -47,9 +40,26 @@ import org.apache.log4j.Logger;
  */
 public class PublishToFileConfig extends AbstractConfig {
 
+    /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(PublishToFileConfig.class);
 
+    /** Private static instance of this class - singelton design pattern      */
     private static PublishToFileConfig s_conf;
+
+    
+    /**
+     * Disable publish-to-filesystem for content items (not for templates!).
+     * 
+     * NOTE: Templates are stored in the database and must be synchronized with
+     * the filesystem in order to be used. Therefore publish-to filesystem must
+     * not deactivated at all.
+     */
+    private final Parameter 
+            m_disableItemPfs = new BooleanParameter(
+                             "com.arsdigita.cms.ptf.disable_item_pfs",
+                             Parameter.REQUIRED, 
+                             new Boolean(true));
+
 
     /**
      * Temporary, constant list of publish destinations. It is intended as a
@@ -60,19 +70,7 @@ public class PublishToFileConfig extends AbstractConfig {
     private static ArrayList s_tmpDestList;
 
     /**
-     * Disable publish-to-filesystem for items other than templates.
-     * NOTE: Templates are stored in the database and must be synchronized with
-     * the filesystem in order to be used. Therefore publish-to filesystem must
-     * not deactivated at all.
-     */
-     // Moved from ContentSectionConfig where this parameter was a temporary measure
-     // to allow limited  parameter-based control of p2fs until MapParameter,
-     // which was intended to replace old Initilizer system's parameter
-     // implementation, is fully implemented)
-    private final Parameter m_disableItemPfs;
-
-    /**
-     * List of publish destinations for content types.
+     * List of publish destinations for content items.
      * Each list element is itself a four-element list in the format
      * { "content type", "root directory", "shared storage", "url stub" }.
      *
@@ -81,14 +79,29 @@ public class PublishToFileConfig extends AbstractConfig {
      *                webapp root(!).
      * Shared storage must be true if the root directory is shared NFS storage,
      *                false otherwise.
-     * URL stub       is the path componen3t of the URL from which the live
+     * URL stub       is the path component of the URL from which the live
      *                server will serve from this directory.
      */
      // ToDO: Parameter destination is a list, but we have no ListParameter type
      // for now. We have either to develop a ListParameter class or treat this
      // parameter as a set of StringArrayParameter.
      // Another possibility considered was MapParameter
-    private final Parameter m_destinations;
+     // m_destinations is unfinished work! Not usable!
+     // Parameter is a list, but we have currently no ListParameter type.
+     // Others have considered to develop a MapParameter for it.
+    private final Parameter m_destinations = new StringParameter
+            ("com.arsdigita.cms.ptf.destination", Parameter.REQUIRED,
+             "{ " +
+             "  { 'com.arsdigita.cms.ContentItem',  " +
+             "    'p2fs', " +
+             "    false,  " +
+             "    '/p2fs' }, " +
+             "  { 'com.arsdigita.cms.Template',   " +
+             CMS.getConfig().getTemplateRoot() +
+             "   false,   " +
+             "   '/templates' }  " +
+             "} "
+             );
 
     /**
      * Class implementing PublishToFileListener Interface.
@@ -98,7 +111,14 @@ public class PublishToFileConfig extends AbstractConfig {
      * but custom classes can also be used. That can be used to perform
      * additional actions when publishing or unpublishing to the file system.
      */
-    private final Parameter m_publishToFileListenerClass;
+     // Originally (old initializer system):
+     // publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
+    private final Parameter 
+            m_ListenerClass = new SpecificClassParameter(
+                                 "com.arsdigita.cms.ptf.listener_class",
+                                 Parameter.REQUIRED,
+                                 PublishToFile.class,
+                                 PublishToFileListener.class);
 
     /**
      * Time (in seconds)  after system startup to wait before starting to monitor
@@ -109,7 +129,12 @@ public class PublishToFileConfig extends AbstractConfig {
      * functionality of the system and is not recommended under normal
      * conditions.
      */
-    private final Parameter m_startupDelay;
+    private final Parameter 
+            m_startupDelay = new IntegerParameter(
+                             "com.arsdigita.cms.ptf.startup_delay", 
+                             Parameter.REQUIRED,
+                             new Integer(30) );
+
 
     /**
      * Time (in seconds) between checking whether there are entries in the
@@ -117,22 +142,42 @@ public class PublishToFileConfig extends AbstractConfig {
      *
      * A value <= 0 disables processing the queue on this server.
      */
-    private final Parameter m_pollDelay;
+    private final Parameter
+            m_pollDelay = new IntegerParameter(
+                          "com.arsdigita.cms.ptf.poll_delay", 
+                          Parameter.REQUIRED,
+                          new Integer(5) );
+
 
     /**
      * Time to wait (seconds) before retrying to process a failed entry.
      */
-    private final Parameter m_retryDelay;
+    private final Parameter 
+            m_retryDelay = new IntegerParameter(
+                           "com.arsdigita.cms.ptf.retry_delay", 
+                           Parameter.REQUIRED,
+                           new Integer(120));
+
 
     /**
      * Time to wait (seconds) before aborting item request.
      */
-    private final Parameter m_requestTimeout;
+    private final Parameter 
+            m_requestTimeout = new IntegerParameter(
+                               "com.arsdigita.cms.ptf.request_timeout", 
+                               Parameter.REQUIRED,
+                               new Integer(60) );
+
 
     /**
      * Number of queue entries to process at once.
      */
-    private final Parameter m_blockSize;
+    private final Parameter 
+            m_blockSize = new IntegerParameter(
+                          "com.arsdigita.cms.ptf.block_size", 
+                          Parameter.REQUIRED,
+                          new Integer(40) );
+
     
     /**
      * Method used to select entries for processing.
@@ -142,7 +187,12 @@ public class PublishToFileConfig extends AbstractConfig {
      *                  all elements in a folder can be done only once for the
      *                  folder).
      */
-    private final Parameter m_blockSelectMethod;
+    private final Parameter 
+            m_blockSelectMethod = new StringParameter(
+                            "com.arsdigita.cms.ptf.block_select_method", 
+                            Parameter.REQUIRED,
+                            "GroupByParent");
+
 
     /**
      * Number of times a failed queue entry will be reprocessed.
@@ -151,8 +201,11 @@ public class PublishToFileConfig extends AbstractConfig {
      * will ignore the action.
      * The default value -1 will ignore this parameter.
      */
-    private final Parameter m_maximumFailCount;
-
+    private final Parameter 
+            m_maximumFailCount = new IntegerParameter(
+                            "com.arsdigita.cms.ptf.maximum_fail_count", 
+                            Parameter.REQUIRED,
+                            new Integer(10) );
 
 
     /**
@@ -174,82 +227,16 @@ public class PublishToFileConfig extends AbstractConfig {
     /**
      * Constructor.
      *
-     * Do not use it directly!
+     * Do not use it directly!  Use PublishToFileConfig.getConfig() instead
+     * (singelton design pattern!)
      */
     public PublishToFileConfig() {
-
-        // Initialize field values
-
-        // Notice: Default now TRUE! Had previously be false.
-        // Parameter renamed and relocated, Adaptation of installation bundles
-        // required (version 6.0.2).
-        m_disableItemPfs = new BooleanParameter
-            ("com.arsdigita.cms.publishToFile.disable_item_pfs",
-             Parameter.REQUIRED, new Boolean(true));
-
-        // m_destinations is unfinished work! Not usable!
-        // Parameter is a list, but we have currently no ListParameter type.
-        // Others have considered to develop a MapParameter for it.
-        m_destinations = new StringParameter
-            ("com.arsdigita.cms.publishToFile.destination", Parameter.REQUIRED,
-             "{ " +
-             "  { 'com.arsdigita.cms.ContentItem',  " +
-             "    'p2fs', " +
-             "    false,  " +
-             "    '/p2fs' }, " +
-             "  { 'com.arsdigita.cms.Template',   " +
-             "   '/templates/ccm-cms/content-section',  " +
-             "   false,   " +
-             "   '/templates' }  " +
-             "} "
-             );
-
-        // Originally (old initializer system):
-        // publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
-        m_publishToFileListenerClass = new SpecificClassParameter
-            ("com.arsdigita.cms.publishToFile.publish_to_file_listener_class",
-             Parameter.REQUIRED,
-             PublishToFile.class,
-             PublishToFileListener.class);
-
-
-        // Queue management parameters.
-
-
-        m_startupDelay = new IntegerParameter
-            ("com.arsdigita.cms.publishToFile.startup_delay", Parameter.REQUIRED,
-             new Integer(30));
-
-        m_pollDelay = new IntegerParameter
-            ("com.arsdigita.cms.publishToFile.poll_delay", Parameter.REQUIRED,
-             new Integer(5));
-
-        m_retryDelay = new IntegerParameter
-            ("com.arsdigita.cms.publishToFile.retry_delay", Parameter.REQUIRED,
-             new Integer(120));
-
-        m_requestTimeout = new IntegerParameter
-            ("com.arsdigita.cms.publishToFile.request_timeout", Parameter.REQUIRED,
-             new Integer(60));
-
-        m_blockSize = new IntegerParameter
-            ("com.arsdigita.cms.publishToFile.block_size", Parameter.REQUIRED,
-             new Integer(40));
-
-        m_blockSelectMethod = new StringParameter
-            ("com.arsdigita.cms.publishToFile.block_select_method", Parameter.REQUIRED,
-             "GroupByParent");
-
-       m_maximumFailCount = new IntegerParameter
-            ("com.arsdigita.cms.publishToFile.maximum_fail_count", Parameter.REQUIRED,
-             new Integer(10));
-
 
         // Register parameters
 
         register(m_disableItemPfs);
         // register(m_destinations);   Unfinished; currently not usable
-        register(m_publishToFileListenerClass);
+        register(m_ListenerClass);
         register(m_startupDelay);
         register(m_pollDelay);
         register(m_retryDelay);
@@ -308,15 +295,15 @@ public class PublishToFileConfig extends AbstractConfig {
         s_tmpDestList  =  new ArrayList();
         s_tmpDestList.add
             ( new ArrayList() {{ add("com.arsdigita.cms.ContentItem");
-                                 add("p2fs");
+                                 add("html");
                                  add(new Boolean(false));
-                                 add("/p2fs");
+                                 add("/html");
                               }}
             );
         s_tmpDestList.add
             ( new ArrayList() {{
                                  add("com.arsdigita.cms.Template");
-                                 add("templates/ccm-cms/content-section");
+                                 add( CMS.getConfig().getTemplateRoot() );
                                  add(new Boolean(false));
                                  add("/templates");
                               }}
@@ -333,7 +320,7 @@ public class PublishToFileConfig extends AbstractConfig {
      * @return PublishToFileListener implementation class
      */
     public Class getPublishListenerClass() {
-        return (Class) get(m_publishToFileListenerClass);
+        return (Class) get(m_ListenerClass);
     }
 
     /**

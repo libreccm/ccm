@@ -79,6 +79,7 @@ public class Initializer extends CompoundInitializer {
      * registering object instantiators and observers.
      *
      */
+    @Override
     public void init(DomainInitEvent e) {
         s_log.debug("publishToFile.Initializer.init(DomainInitEvent) invoked");
 
@@ -106,6 +107,7 @@ public class Initializer extends CompoundInitializer {
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new PublishedFile(dataObject);
                  }
+                @Override
                  public DomainObjectInstantiator
                      resolveInstantiator(DataObject obj) {
                      return this;
@@ -117,18 +119,6 @@ public class Initializer extends CompoundInitializer {
 
     }
 
-//  /**
-//   * An empty implementation of {@link Initializer#init(LegacyInitEvent)}.
-//   *
-//   * @param evt The legacy init event.
-//   */
-//  An empty implementations prevents this initializer from being executed.
-//  A missing implementations causes the super class method to be executed, which
-//  invokes the above added LegacyInitializer.
-//  That initializer starts P2fs background thread and creation of
-//  ~/packages/content-section/templates/content works now.
-//  SEE NEW LOCATION:  ~/templates/ccm-cms/content-section    
-//  public void init(LegacyInitEvent evt) {}
 
     /**
      * Implementation of the {@link Initializer#init(ContextInitEvent)} method
@@ -138,6 +128,7 @@ public class Initializer extends CompoundInitializer {
      *
      * @param evt The context init event.
      **/
+    @Override
     public void init(ContextInitEvent evt) {
         s_log.debug("publishToFile.Initializer.init(ContextInitEvent) invoked");
 
@@ -193,6 +184,7 @@ public class Initializer extends CompoundInitializer {
      *
      * @param evt The legacy init event.
      **/
+    @Override
     public void close(ContextCloseEvent evt) {
         s_log.debug("publishToFile.Initializer.destroy() invoked");
 

@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Update from CCM version 6.6.1 to 6.6.2 where loader has been refactored to
- * use (new style) applications in package com.arsdigita.weg instead of old
+ * use (new style) applications in package com.arsdigita.web instead of old
  * style applications using com.arsdigita.kermel.[Package* & SiteNode].
  *
  * Affected are the packages  CMS Workspace and Service. They are now loaded

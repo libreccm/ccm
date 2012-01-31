@@ -200,11 +200,9 @@
 <xsl:choose>
 <!-- CIs -->
 <xsl:when test="cms:contentPanel">
-<xsl:apply-templates select="cms:contentPanel/cms:item"/>
-<xsl:call-template name="fileAttachments" />
-<xsl:call-template name="associatedLinks" />
-<font family="arial">Data Protection and Information Sharing notice. No personal information you have given us will be passed on to third parties for commercial purposes. The Council's policy is that all information will be shared among officers and other agencies where the legal framework allows it, if this will help to improve the service you receive and to develop other services. If you do not wish certain information about you to be exchanged within the Council, you can request that this does not happen.
-</font>
+  <xsl:apply-templates select="cms:contentPanel/cms:item"/>
+  <xsl:call-template name="fileAttachments" />
+  <xsl:call-template name="associatedLinks" />
 </xsl:when>
 <!-- A-Z -->
 <xsl:when test="cms:alphabetNavigation">
