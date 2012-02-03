@@ -20,12 +20,12 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class PublicPersonalProfileResearchInterestsEditStep
+public class PublicPersonalProfileResearchInterestsEditForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener {
 
-    public PublicPersonalProfileResearchInterestsEditStep(
+    public PublicPersonalProfileResearchInterestsEditForm(
             final ItemSelectionModel itemModel) {
         super("PublicPersonalProfileEditResearchInterests",
               itemModel);
@@ -37,7 +37,7 @@ public class PublicPersonalProfileResearchInterestsEditStep
                 "publicpersonalprofile.ui.research_interests")));
         final ParameterModel riParam =
                              new StringParameter(
-                PublicPersonalProfile.RESEARCH_INTERESTS);
+                PublicPersonalProfile.INTERESTS);
         final TextArea researchInterests = new CMSDHTMLEditor(riParam);
         researchInterests.setCols(75);
         researchInterests.setRows(16);
@@ -52,7 +52,7 @@ public class PublicPersonalProfileResearchInterestsEditStep
                                     (PublicPersonalProfile) getItemSelectionModel().
                 getSelectedItem(state);
 
-        data.put(PublicPersonalProfile.RESEARCH_INTERESTS,
+        data.put(PublicPersonalProfile.INTERESTS,
                  profile.getResearchInterests());
 
         setVisible(state, true);
@@ -71,7 +71,7 @@ public class PublicPersonalProfileResearchInterestsEditStep
         if ((profile != null)
             && getSaveCancelSection().getSaveButton().isSelected(state)) {
             profile.setResearchInterests((String) data.get(
-                    PublicPersonalProfile.RESEARCH_INTERESTS));
+                    PublicPersonalProfile.INTERESTS));
 
             profile.save();
         }

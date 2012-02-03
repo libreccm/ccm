@@ -25,7 +25,7 @@ ALTER TABLE ct_public_personal_profiles
     ADD COLUMN position VARCHAR(2048);
 
 ALTER TABLE ct_public_personal_profiles
-    ADD COLUMN research_interests text;
+    ADD COLUMN interests text;
 
 ALTER TABLE ct_public_personal_profiles 
     ADD COLUMN misc text;

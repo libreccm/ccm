@@ -56,7 +56,7 @@ public class PublicPersonalProfile
     public static final String PROFILE_URL = "profileUrl";
     public static final String LINK_LIST_NAME = "publicPersonalProfileNavItems";
     public static final String POSITION = "position";
-    public static final String RESEARCH_INTERESTS = "researchInterests";
+    public static final String INTERESTS = "interests";
     public static final String MISC = "misc";
     public static final String BASE_DATA_OBJECT_TYPE =
             "com.arsdigita.cms.contenttypes.PublicPersonalProfile";
@@ -145,11 +145,11 @@ public class PublicPersonalProfile
     } 
     
     public String getResearchInterests() {
-        return (String) get(RESEARCH_INTERESTS);
+        return (String) get(INTERESTS);
     }
     
     public void setResearchInterests(final String researchInterests) {
-        set(RESEARCH_INTERESTS, researchInterests);
+        set(INTERESTS, researchInterests);
     }
     
     public String getMisc() {

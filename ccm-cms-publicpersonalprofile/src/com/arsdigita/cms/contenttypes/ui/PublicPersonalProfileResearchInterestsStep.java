@@ -35,7 +35,8 @@ public class PublicPersonalProfileResearchInterestsStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
 
         final BasicItemForm editRiForm =
-                            new PublicPersonalProfileMiscEditForm(itemModel);
+                            new PublicPersonalProfileResearchInterestsEditForm
+                (itemModel);
         add(EDIT_RI_SHEET_NAME, (String) PublicPersonalProfileGlobalizationUtil.
                 globalize("publicpersonalprofile.ui.research_interests.edit").
                 localize(),
@@ -52,7 +53,7 @@ public class PublicPersonalProfileResearchInterestsStep extends SimpleEditStep {
 
         sheet.add(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.research_interests"),
-                  PublicPersonalProfile.RESEARCH_INTERESTS);
+                  PublicPersonalProfile.INTERESTS);
 
         return sheet;
     }
