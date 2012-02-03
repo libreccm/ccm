@@ -357,12 +357,12 @@ public class Loader extends PackageLoader {
 //      appType.run();
 //      ////////////////////////////////////////////////////////////////////////
 
-        /* Create new stype legacy compatible application type               * /
+        /* Create new stype legacy compatible application type               */
         ApplicationType type =  ApplicationType
                                 .createApplicationType(ContentSection.PACKAGE_TYPE,
                                                        "CMS Content Section",
                                                        ContentSection.BASE_DATA_OBJECT_TYPE);
-*/
+
         /* Create legacy-free application type                               
          * NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.
@@ -370,9 +370,9 @@ public class Loader extends PackageLoader {
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
          * "Content Section" will become "content-section".                               */
-        ApplicationType type = new ApplicationType( 
-                                       "Content Section",
-                                        ContentSection.BASE_DATA_OBJECT_TYPE );
+//      ApplicationType type = new ApplicationType( 
+//                                     "Content Section",
+//                                      ContentSection.BASE_DATA_OBJECT_TYPE );
         type.setDescription("A CMS Content Section.");
         type.save();
         
