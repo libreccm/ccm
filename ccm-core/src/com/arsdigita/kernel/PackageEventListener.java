@@ -33,6 +33,8 @@ package com.arsdigita.kernel;
  * @since ACS 5.0
  * @version $Revision: #7 $, $Date: 2004/08/16 $
  * @version $Id: PackageEventListener.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated without direct replacement. Refactor to use
+ *             {@link com.arsdigita.web.Application} instead.
  */
 public interface PackageEventListener {
 
@@ -42,6 +44,8 @@ public interface PackageEventListener {
      *
      * @param siteNode the SiteNode where the instance is mounted
      * @param pkg the instance being mounted
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public void onMount(SiteNode siteNode, PackageInstance pkg);
 
@@ -51,6 +55,8 @@ public interface PackageEventListener {
      *
      * @param siteNode the SiteNode where the instance is mounted
      * @param pkg the instance being unmounted
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public void onUnmount(SiteNode siteNode, PackageInstance pkg);
 
@@ -59,6 +65,8 @@ public interface PackageEventListener {
      * Called when a new package instance is created.
      *
      * @param pkg a PackageInstance value
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public void onCreate(PackageInstance pkg);
 
@@ -66,6 +74,8 @@ public interface PackageEventListener {
      * Describe onDelete method here.
      *
      * @param pkg a PackageInstance value
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public void onDelete(PackageInstance pkg);
 

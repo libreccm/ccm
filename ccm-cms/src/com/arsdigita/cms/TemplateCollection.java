@@ -29,12 +29,12 @@ import com.arsdigita.mimetypes.MimeType;
  * Represents a collection of template mappings along with their
  * link attributes.
  *
- * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TemplateCollection.java 2090 2010-04-17 08:04:14Z pboy $
- *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
  * @see com.arsdigita.cms.ItemTemplateCollection
+ *
+ * @author Stanislav Freidin (sfreidin@arsdigita.com)
+ * @version $Id: TemplateCollection.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public abstract class TemplateCollection extends DomainCollection {
 
@@ -55,6 +55,7 @@ public abstract class TemplateCollection extends DomainCollection {
      * before <code>next()</code> is called on this collection.
      *
      */
+    @Override
     public void addOrder(String order) {
         m_dataCollection.addOrder(order);
     }
@@ -90,6 +91,7 @@ public abstract class TemplateCollection extends DomainCollection {
     /**
      * Filter this collection for equality by the specified attribute
      */
+    @Override
     public Filter addEqualsFilter(String attr, Object value)
         throws PersistenceException {
         return m_dataCollection.addEqualsFilter(attr, value);

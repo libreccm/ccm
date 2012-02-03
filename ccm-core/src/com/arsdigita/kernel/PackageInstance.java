@@ -43,6 +43,8 @@ import org.apache.log4j.Logger;
  * @see PackageType
  * @version $Revision: #14 $, $Date: 2004/08/16 $
  * @version $Id: PackageInstance.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated without direct replacement. Refactor to use
+ *             {@link com.arsdigita.web.Application} instead.
  */
 public class PackageInstance extends ACSObject {
 
@@ -87,7 +89,9 @@ public class PackageInstance extends ACSObject {
      * @see com.arsdigita.domain.DomainObject#DomainObject(String)
      * @see PackageType#createInstance
      * @see #PackageInstance(OID)
-     **/
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     protected PackageInstance() {
         super(BASE_DATA_OBJECT_TYPE);
     }
@@ -97,6 +101,8 @@ public class PackageInstance extends ACSObject {
      * data object.
      *
      * @param dataObject a PackageInstance data object
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public PackageInstance(DataObject dataObject) {
         super(dataObject);
@@ -108,6 +114,8 @@ public class PackageInstance extends ACSObject {
      * @param id the primary key of the package instance
      * @exception DataObjectNotFoundException if the id does not
      * correspond to an existing package instance.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public PackageInstance(BigDecimal id) throws DataObjectNotFoundException {
         super(new OID(BASE_DATA_OBJECT_TYPE, id));
@@ -119,6 +127,8 @@ public class PackageInstance extends ACSObject {
      * @param oid the objectID of the package instance
      * @exception DataObjectNotFoundException If the OID does not
      * correspond to an existing package instance.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public PackageInstance(OID oid) throws DataObjectNotFoundException {
         super(oid);
@@ -135,6 +145,10 @@ public class PackageInstance extends ACSObject {
         return m_packageType;
     }
 
+    /**     
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     protected void setType(PackageType type) {
         setAssociation("packageType", type);
         m_packageType = type;
@@ -149,6 +163,9 @@ public class PackageInstance extends ACSObject {
      * if this package instance is not mounted.
      * @return the first site node on which this package instance is mounted,
      * or null if this package instance is not mounted.
+     * 
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      **/
     public SiteNode getDefaultMountPoint() {
         SiteNode defaultMountPoint = null;
@@ -180,6 +197,8 @@ public class PackageInstance extends ACSObject {
     /**
      * Gets the name of this package.
      * @return the package key.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public String getKey() {
         return getType().getKey();
@@ -188,6 +207,8 @@ public class PackageInstance extends ACSObject {
     /**
      * Sets the package key.
      * @param key the key for this package
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public void setKey(String key) {
         set("packageKey", key);
@@ -196,6 +217,8 @@ public class PackageInstance extends ACSObject {
     /**
      * Gets the package name.
      * @return the package's name.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public String getName() {
         return (String)get("prettyName");
@@ -205,7 +228,10 @@ public class PackageInstance extends ACSObject {
      * Returns a display name for this package instance.
      *
      * @see ACSObject#getDisplayName()
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
+    @Override
     public String getDisplayName() {
         return getName();
     }

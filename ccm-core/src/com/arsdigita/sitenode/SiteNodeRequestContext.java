@@ -54,7 +54,8 @@ public class SiteNodeRequestContext extends KernelRequestContext {
 
     /**
      * Copy constructor.
-     **/
+     * @deprecated
+     */
     protected SiteNodeRequestContext(SiteNodeRequestContext that) {
         super(that);
         this.m_sn           = that.m_sn;
@@ -65,7 +66,8 @@ public class SiteNodeRequestContext extends KernelRequestContext {
      * Build a new application context given an original app context,
      * and a destination site node.  Part of the previously-remaining URL
      * is consumed by the site node's URL, and part remains.
-     **/
+     * @deprecated 
+     */
     public SiteNodeRequestContext(HttpServletRequest req,
                                   RequestContext parent,
                                   SiteNode sn,
@@ -178,6 +180,7 @@ public class SiteNodeRequestContext extends KernelRequestContext {
      * JSP-based resources will be found.
      * Returns with a trailing slash, e.g.,
      * "/packages/package-key/www/"
+     * @deprecated 
      */
     public String getPageBase() {
         return "/packages/"
@@ -185,6 +188,11 @@ public class SiteNodeRequestContext extends KernelRequestContext {
             "/www/";
     }
 
+    /**
+     * 
+     * @return 
+     * @deprecated 
+     */
     public PackageInstance getPackageInstance() {
         return getSiteNode().getPackageInstance();
     }

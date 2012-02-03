@@ -97,7 +97,7 @@ public class PublishToFileConfig extends AbstractConfig {
              "    false,  " +
              "    '/p2fs' }, " +
              "  { 'com.arsdigita.cms.Template',   " +
-             CMS.getConfig().getTemplateRoot() +
+             "   '/templates/ccm-cms/content-section',  " +
              "   false,   " +
              "   '/templates' }  " +
              "} "

@@ -64,9 +64,10 @@ public class Web {
 
     private static WebConfig s_config;
 
-    final static void init(final HttpServletRequest sreq,
-                           final ServletContext sc,
-                           final UserContext uc) {
+    static void init(final HttpServletRequest sreq,
+                     final ServletContext sc,
+                     final UserContext uc) {
+
         Assert.exists(sreq, HttpServletRequest.class);
         Assert.exists(sc, ServletContext.class);
         Assert.exists(uc, UserContext.class);
@@ -386,10 +387,12 @@ public class Web {
     }
 
     private static class WebContextLocal extends InternalRequestLocal {
+        @Override
         protected Object initialValue() {
             return Web.s_initialContext.copy();
         }
 
+        @Override
         protected void clearValue() {
             ((WebContext) get()).clear();
         }

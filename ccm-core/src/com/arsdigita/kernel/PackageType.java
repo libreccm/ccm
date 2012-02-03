@@ -45,7 +45,6 @@ import org.apache.log4j.Logger;
  * @since ACS 5.0
  * @version $Revision: #15 $, $Date: 2004/08/16 $
  * @version $Id: PackageType.java 287 2005-02-22 00:29:02Z sskracic $
-
  * @deprecated without direct replacement. Refactor to use
  *             {@link com.arsdigita.web.ApplicationType} instead.
  */

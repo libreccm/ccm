@@ -23,19 +23,46 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 
+/**
+ * Represents a collection of package types.
+ *
+ * @since ACS 5.0
+ * @version $Revision: #15 $, $Date: 2004/08/16 $
+ * @version $Id: PackageTypeCollection.java 287 2005-02-22 00:29:02Z sskracic $
+
+ * @deprecated without direct replacement. Refactor to use
+ *             {@link com.arsdigita.web.ApplicationTypeCollection} instead.
+ */
 public class PackageTypeCollection extends DomainCollection {
 
-    public static final String versionId = "$Id: PackageTypeCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    /**
+     * 
+     * @param dataCollection 
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.ApplicationTypeCollection} instead.
+     */
     protected PackageTypeCollection(DataCollection dataCollection) {
         super(dataCollection);
     }
 
+    /**
+     * 
+     * @return 
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.ApplicationTypeCollection} instead.
+     */
     public DomainObject getDomainObject() {
         DomainObject domainObject = getPackageType();
 
         return domainObject;
     }
 
+    /**
+     * 
+     * @return 
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.ApplicationTypeCollection} instead.
+     */
     public PackageType getPackageType() {
         DataObject dataObject = m_dataCollection.getDataObject();
 

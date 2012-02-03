@@ -61,7 +61,7 @@ import com.arsdigita.mimetypes.MimeType;
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: TemplateManager.java 2090 2010-04-17 08:04:14Z pboy $ 
- **/
+ */
 public interface TemplateManager {
 
     /**

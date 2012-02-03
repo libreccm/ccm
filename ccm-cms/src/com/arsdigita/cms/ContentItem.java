@@ -616,9 +616,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * The item's root is the ancestor reachable through repeated
      * <code>getParent()</code> calls whose parent is
      * <code>null</code>. This is usually a folder, but may be any
-     * {
-     *
-     * @see com.arsdigita.kernel.ACSObject}.
+     * {@see com.arsdigita.kernel.ACSObject}.
      *
      * Note that the name of the root folder of the content section where the
      * item resides is not included in the path.

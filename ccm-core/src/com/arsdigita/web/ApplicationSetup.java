@@ -58,6 +58,14 @@ import org.apache.log4j.Category;
  * @see com.arsdigita.web.ApplicationType
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
  * @version $Id: ApplicationSetup.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated without direct replacement.
+ * Class requires ApplicationSetup.setInstantiator( ...) domain initialization
+ * code which is only useful in old legacy initialization code. Initialization
+ * now differentiates bitween one time loading step and recurring initialization
+ * step. 
+ * Use ApplicationType apptype = new ApplicationType(...)  and 
+ *     Application app Application.createApplication(...)  instead to create
+ * new style legacy free applications.
  */
 public class ApplicationSetup {
 

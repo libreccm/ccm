@@ -35,8 +35,7 @@ import org.apache.log4j.Logger;
 
 /**
  * <p>
- * A simple servlet for dispatching abstract URLs 
- * to concrete JSP files.
+ * A simple servlet for dispatching abstract URLs to concrete JSP files.
  * </p>
  * <p>
  * This is intended to be used in all places where BebopMapServlet would 
@@ -64,6 +63,7 @@ import org.apache.log4j.Logger;
  *   &lt;/servlet-mapping&gt;
  * &lt;/web-app&gt;
  * </pre>
+ * 
  * <p>
  * In the Application class it should define:
  * </p>
@@ -88,7 +88,7 @@ import org.apache.log4j.Logger;
  * gets resolved to 
  * </p>
  * <pre>
- * /templaates/myparentapp/myappinstance/foo.jsp
+ * /templates/myparentapp/myappinstance/foo.jsp
  * /templates/myparentapp/foo.jsp
  * /templates/foo.jsp
  * </pre>
@@ -111,7 +111,8 @@ public class ApplicationFileServlet extends BaseApplicationServlet {
      */
     @Override
     public void init(ServletConfig config)
-        throws ServletException {
+                throws ServletException {
+        
         super.init(config);
         
         // init-param named template-path from ~/WEB-INF/web.xml
@@ -123,6 +124,7 @@ public class ApplicationFileServlet extends BaseApplicationServlet {
                      "template-path must not end with '/'");
 
         
+        // optional init-param named file-resolver from ~/WEB-INF/web.xml
         String resolverName = config.getInitParameter("file-resolver");
         if (resolverName == null) {
             m_resolver = Web.getConfig().getApplicationFileResolver();
@@ -135,10 +137,18 @@ public class ApplicationFileServlet extends BaseApplicationServlet {
         }
     }
 
+    /**
+     * 
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @throws ServletException
+     * @throws IOException 
+     */
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp,
                              Application app)
-        throws ServletException, IOException {
+                   throws ServletException, IOException {
         
         RequestDispatcher rd = m_resolver.resolve(m_templatePath,
                                                   sreq, sresp, app);

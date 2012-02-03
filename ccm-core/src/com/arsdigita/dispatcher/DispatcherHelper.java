@@ -55,12 +55,13 @@ import org.apache.log4j.Logger;
  * Contains various generally useful procedural abstractions.
  *
  * @author Bill Schneider
- * @version ACS 4.5
+ * @since 4.5 
  * @version $Id: DispatcherHelper.java 311 2005-02-28 11:10:00Z mbooth $
- * @since 4.5 */
+ */
 public final class DispatcherHelper implements DispatcherConstants {
 
     private static final Logger s_log = Logger.getLogger(DispatcherHelper.class);
+    
     private static String s_webappCtx;
     private static String s_staticURL;
     private static boolean s_cachingActive;
@@ -85,6 +86,7 @@ public final class DispatcherHelper implements DispatcherConstants {
 
         initialized = true;
     }
+
     /**
      * The current HttpServletRequest.
      */
@@ -841,6 +843,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * Gets the current HttpServletRequest for this thread.
      * @return the current HttpServletRequest for this thread.
      */
+    
     public static HttpServletRequest getRequest() {
         init();
         return (HttpServletRequest) s_request.get();

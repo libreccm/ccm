@@ -47,8 +47,6 @@ import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.Web;
 
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -61,7 +59,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /**
+ * Content Section's application servlet
  * 
  * Repaired ItemURLCache to save multilingual items with automatic
  * language negotiation. The cahce now uses the remaining url part
@@ -74,23 +75,23 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ContentSectionServlet extends BaseApplicationServlet {
 
+    private static final Logger s_log =
+        Logger.getLogger(ContentSectionServlet.class);
+
+    /** Stringarray of file name patterns for index files. Should be made
+        configurable.                                                        */
     private static final String[] WELCOME_FILES = new String[] {
         "index.jsp", "index.html"
     };
 
-    private static final Logger s_log =
-        Logger.getLogger(ContentSectionServlet.class);
-
     private ContentItemDispatcher m_disp = new ContentItemDispatcher();
-    public static Map s_itemResolverCache =
-        Collections.synchronizedMap(new HashMap());
+    public static Map s_itemResolverCache = Collections
+                                            .synchronizedMap(new HashMap());
 
-    //cache the content items
+    /** cache the content items                                              */
     private static Map s_itemURLCacheMap = null;
 
-    /**
-     * The context for previewing items
-     */
+    /** The context for previewing items                                      */
     public static final String PREVIEW = "/preview";
     public static final String FILE_SUFFIX = ".jsp";
     public static final String INDEX_FILE = "/index";
@@ -107,17 +108,20 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     private static final String CACHE_KEY_DELIMITER = "%";
 
     /**
+     * Implements the service method of BaseApplicationServlet
      * @see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)
      */
-    protected void doService
-        (HttpServletRequest sreq, HttpServletResponse sresp, Application app)
-        throws ServletException, IOException {
+    protected void doService( HttpServletRequest sreq, 
+                              HttpServletResponse sresp, 
+                              Application app)
+                   throws ServletException, IOException {
 
         ContentSection section = (ContentSection) app;
 
         RequestContext ctx = DispatcherHelper.getRequestContext();
-        String url = ctx.getRemainingURLPart();
+        
+        String url = ctx.getRemainingURLPart();  // here SiteNodeRequestContext
 
         if (s_log.isInfoEnabled()) {
             s_log.info("Resolving item URL " + url);
@@ -129,6 +133,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         final ContentItem item = getItem(section, url, itemResolver);
 
         if (item != null) {
+            
+            /* We have to serve an item here                                 */
             String param = sreq.getParameter("transID");
 
             if (param != null) {
@@ -148,7 +154,10 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             }
 
             serveItem(sreq, sresp, section, item);
+            
         } else {
+            
+            /* We have to deal with a content-section, folder or an other bit*/
             if (s_log.isInfoEnabled()) {
                 s_log.info("NOT serving content item");
             }
@@ -196,6 +205,15 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         }
     }
 
+    /** 
+     * 
+     * @param sreq
+     * @param sresp
+     * @param section
+     * @param item
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void serveItem(HttpServletRequest sreq,
                            HttpServletResponse sresp,
                            ContentSection section,

@@ -62,6 +62,7 @@ import org.apache.log4j.Logger;
  * @version $Id: SiteNode.java 287 2005-02-22 00:29:02Z sskracic $
  * @since ACS 5.0
  * @deprecated Refactor to use {@link com.arsdigita.web.Application} instead.
+ * The class is due to completly be removed.
  */
 public class SiteNode extends ACSObject {
 
@@ -148,11 +149,22 @@ public class SiteNode extends ACSObject {
      *
      * @param req Servlet request.  This is needed to get the context
      * path, in case the servlet is not mounted at /.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public String getURL(HttpServletRequest req) {
         return getURL(req==null ? (String) null : req.getContextPath());
     }
 
+
+    /**
+     * Gets the URL of the site note.
+     *
+     * @param req Servlet request.  This is needed to get the context
+     * path, in case the servlet is not mounted at /.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public String getUrl(HttpServletRequest req) {
         return getURL(req);
     }
@@ -162,6 +174,8 @@ public class SiteNode extends ACSObject {
      * user!
      *
      * @param ContextPath in case the servlet is not mounted at /
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public String getURL(String contextPath) {
         if (contextPath != null) {
@@ -171,19 +185,35 @@ public class SiteNode extends ACSObject {
         }
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public String getUrl(String contextPath) {
         return getURL(contextPath);
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public String getURL() {
         return getURLNoContext();
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     private void setURL() {
         s_log.debug("Setting url: " + getURLFromParent());
         set("url", getURLFromParent());
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     private String getURLFromParent() {
         SiteNode parent = getParent();
         if (parent != null) {
@@ -196,6 +226,8 @@ public class SiteNode extends ACSObject {
     /**
      * @return the URL of the site node, <em>not</em> the URL
      * requested by the user!
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public String getURLNoContext() {
         String value = (String)get("url");
@@ -206,15 +238,27 @@ public class SiteNode extends ACSObject {
         }
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public BigDecimal getNodeId() {
         return (BigDecimal) get("id");
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public void setName(String name) {
         set("name", name);
         setURL();
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public void setParent(SiteNode siteNode) {
         // Should throw an Exception if parent is not a directory.
 
@@ -229,6 +273,10 @@ public class SiteNode extends ACSObject {
         setURL();
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public String getName() {
         String name = (String) get("name");
 
@@ -243,6 +291,8 @@ public class SiteNode extends ACSObject {
      * Returns a display name for this site node.
      *
      * @see ACSObject#getDisplayName()
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     @Override
     public String getDisplayName() {
@@ -252,6 +302,8 @@ public class SiteNode extends ACSObject {
     /**
      * @return <code>true</code> if this SiteNode can have children;
      * <code>false</code> otherwise.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public boolean isDirectory() {
         return ((Boolean) (get("isDirectory"))).booleanValue();
@@ -266,6 +318,10 @@ public class SiteNode extends ACSObject {
         return ((Boolean)(get("isPattern"))).booleanValue();
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public PackageInstance getPackageInstance() {
         DataObject dataObject = (DataObject)get("mountedObject");
         if (dataObject != null) {
@@ -278,6 +334,10 @@ public class SiteNode extends ACSObject {
         }
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public void mountPackage(PackageInstance pkg) {
         unMountPackage();
 
@@ -291,6 +351,10 @@ public class SiteNode extends ACSObject {
         }
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public void unMountPackage() {
         PackageInstance pkg = getPackageInstance();
 
@@ -306,6 +370,10 @@ public class SiteNode extends ACSObject {
         }
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public SiteNode getParent() {
         DataObject dataObject = (DataObject)get("parent");
 
@@ -316,11 +384,19 @@ public class SiteNode extends ACSObject {
         }
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public SiteNodeCollection getChildren() {
         DataAssociation childAssociation = (DataAssociation) get("children");
         return new SiteNodeCollection(childAssociation);
     }
 
+    /**
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
+     */
     public static SiteNode getRootSiteNode() {
         // cache the site node statically
         // note lack of synchronization.  worst case:
@@ -363,6 +439,8 @@ public class SiteNode extends ACSObject {
      * cached site nodes. Call this method AFTER creating
      * any new site nodes as part of your unit test's
      * setup method
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public static void repopulateCache() {
         s_cache.refresh();
@@ -385,6 +463,8 @@ public class SiteNode extends ACSObject {
      *         with a slash (probably the wrong behavior) or if the
      *         RootSiteNode was requested but couldn't be found (also
      *         probably wrong).
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public static SiteNode getSiteNode(final String path, boolean readOnly)
             throws DataObjectNotFoundException {
@@ -415,6 +495,8 @@ public class SiteNode extends ACSObject {
      *         with a slash (probably the wrong behavior) or if the
      *         RootSiteNode was requested but couldn't be found (also
      *         probably wrong).
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     public static SiteNode getSiteNode(String path)
         throws DataObjectNotFoundException {
@@ -429,6 +511,8 @@ public class SiteNode extends ACSObject {
      * Overrides the default save method.  If we've changed the
      * URL of this site node (either by changing its name or its parent),
      * we need to also update the URL for all descendants of this site node.
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.Application} instead.
      */
     protected void beforeSave() {
         if (isPropertyModified("url") || isNew()) {

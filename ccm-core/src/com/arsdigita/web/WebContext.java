@@ -59,6 +59,11 @@ public final class WebContext extends Record {
         super(WebContext.class, s_log, s_fields);
     }
 
+    /**
+     * Creates a copy of this WebContext
+     * 
+     * @return a new WebContext as a copy of this one 
+     */
     final WebContext copy() {
         WebContext result = new WebContext();
 
@@ -68,6 +73,11 @@ public final class WebContext extends Record {
         return result;
     }
 
+    /**
+     * Initializes this WebContext object and setting its properties.
+     * @param app
+     * @param requestURL 
+     */
     final void init(final Application app, final URL requestURL) {
         setApplication(app);
         setRequestURL(requestURL);
@@ -88,20 +98,36 @@ public final class WebContext extends Record {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public final Application getApplication() {
         return m_application;
     }
 
+    /**
+     * 
+     * @param app 
+     */
     final void setApplication(final Application app) {
         m_application = app;
 
         mutated("Application");
     }
 
+    /**
+     * 
+     * @return 
+     */
     public final URL getRequestURL() {
         return m_requestURL;
     }
 
+    /**
+     * 
+     * @param url 
+     */
     final void setRequestURL(final URL url) {
         Assert.exists(url, "URL url");
 

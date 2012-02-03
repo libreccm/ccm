@@ -32,17 +32,15 @@ import javax.servlet.http.HttpServletResponse;
  * dynamically apply a set of templates to an XML document in a custom
  * way. Typically, this occurs if the template selection
  * depends on the outcome of some application-specific logic.
+ * 
+ * @see com.arsdigita.sitenode.SiteNodePresentationManager
+ * @see com.arsdigita.sitenode.BasePresentationManager
  *
  * @author Bill Schneider
  * @version ACS 4.6
- * @see com.arsdigita.sitenode.SiteNodePresentationManager
- * @see com.arsdigita.sitenode.BasePresentationManager
+ * @version $Id: PresentationManager.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public interface PresentationManager {
-    public static final String versionId =
-        "$Id: PresentationManager.java 738 2005-09-01 12:36:52Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Serves a page whose content is defined by the input XML

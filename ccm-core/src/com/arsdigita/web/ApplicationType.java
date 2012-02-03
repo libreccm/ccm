@@ -179,6 +179,7 @@ public class ApplicationType extends ResourceType {
      * Creates a legacy-compatible application type.  Types created
      * via this constructor use the passed in package type to back the
      * new application type.
+     * @deprecated without direct replacement. Refactor to legacy free app.
      */
     protected ApplicationType(final String dataObjectType,
                               final PackageType packageType,
@@ -196,6 +197,7 @@ public class ApplicationType extends ResourceType {
      * @param title
      * @param applicationObjectType
      * @param createContainerGroup
+     * @deprecated without direct replacement. Refactor to legacy free app.
      */
     protected ApplicationType(final String dataObjectType,
                               final PackageType packageType,
@@ -223,6 +225,7 @@ public class ApplicationType extends ResourceType {
     /**
      * Creates a legacy-compatible application type using the passed
      * in package type using an internal constructor (below).
+     * @deprecated without direct replacement. Refactor to legacy free app.
      */
     public static ApplicationType createApplicationType(PackageType packageType, 
                                                         String title,
@@ -236,6 +239,7 @@ public class ApplicationType extends ResourceType {
      * parameter is used to create a legacy package type to back the
      * new application type.
      * This variant is applicatable if packageType does not already exist!
+     * @deprecated without direct replacement. Refactor to legacy free app.
      */
     protected ApplicationType(String dataObjectType, String key, String title,
                               String applicationObjectType) {
@@ -251,8 +255,9 @@ public class ApplicationType extends ResourceType {
      * @param key of the package to be created
      * @param title of the package to be created
      * @return
+     * @deprecated without direct replacement. Refactor to legacy free app.
      */
-    private static final PackageType makePackageType(String key, String title) {
+    private static PackageType makePackageType(String key, String title) {
         PackageType packageType = new PackageType();
 
         Assert.exists(key, "key");
@@ -269,6 +274,7 @@ public class ApplicationType extends ResourceType {
      * Creates a legacy-compatible application type.  The key
      * parameter is used to create a legacy package type to back the
      * new application type.
+     * @deprecated without direct replacement. Refactor to legacy free app.
      */
     public static ApplicationType createApplicationType(String key, String title,
                                                         String applicationObjectType) {
@@ -282,6 +288,7 @@ public class ApplicationType extends ResourceType {
      * Creates a legacy-compatible application type.  The key
      * parameter is used to create a legacy package type to back the
      * new application type.
+     * @deprecated without direct replacement. Refactor to legacy free app.
      */
     public static ApplicationType createApplicationType(
                                   String key, String title,
@@ -368,7 +375,11 @@ public class ApplicationType extends ResourceType {
     // Association properties (some by proxy)
     //
 
-    // Can return null.
+    /**
+     * Can return null.
+     * @return 
+     * @deprecated without direct replacement. Refactor to legacy free app.
+     */
     public PackageType getPackageType() {
         if (m_legacyFree == true) {
             throw new UnsupportedOperationException
@@ -423,6 +434,7 @@ public class ApplicationType extends ResourceType {
     // Member properties
     //
 
+    @Override
     public String getTitle() {
         String title = (String) get("title");
 
@@ -431,6 +443,7 @@ public class ApplicationType extends ResourceType {
         return title;
     }
 
+    @Override
     public void setTitle(String title) {
         Assert.exists(title, "title");
 
@@ -438,6 +451,7 @@ public class ApplicationType extends ResourceType {
     }
 
     // Can return null.
+    @Override
     public String getDescription() {
         final String description = (String) get("description");
 
@@ -445,6 +459,7 @@ public class ApplicationType extends ResourceType {
     }
 
     // Param description can be null.
+    @Override
     public void setDescription(String description) {
         set("description", description);
     }
@@ -495,6 +510,9 @@ public class ApplicationType extends ResourceType {
         set("hasFullPageView", new Boolean(hasFullPageView));
     }
 
+    /**
+     * @deprecated with no replacement.
+     */
     public boolean hasEmbeddedView() {
         final Boolean result = (Boolean) get("hasEmbeddedView");
 
@@ -537,6 +555,7 @@ public class ApplicationType extends ResourceType {
      *
      * @return A Collection of {@link PrivilegeDescriptor PrivilegeDescriptors}
      */
+    @Override
     public Collection getRelevantPrivileges() {
         LinkedList result = new LinkedList();
 
@@ -556,6 +575,7 @@ public class ApplicationType extends ResourceType {
      * <p>Add an entry to the list of relevant privileges for this
      * ApplicationType.</p>
      */
+    @Override
     public void addRelevantPrivilege(PrivilegeDescriptor privilege) {
         addRelevantPrivilege(privilege.getName());
     }
@@ -564,6 +584,7 @@ public class ApplicationType extends ResourceType {
      * <p>Add an entry to the list of relevant privileges for this
      * ApplicationType.</p>
      */
+    @Override
     public void addRelevantPrivilege(String privilegeName) {
         OID privOID = new OID("com.arsdigita.kernel.permissions.Privilege",
                               privilegeName);
@@ -671,6 +692,7 @@ public class ApplicationType extends ResourceType {
 
     /**
      * Tell whether this ApplicationType is a singleton.
+     * @deprecated with no replacement.
      */
     public boolean isSingleton() {
         final Boolean result = (Boolean) get("isSingleton");
@@ -685,6 +707,7 @@ public class ApplicationType extends ResourceType {
      *
      * @return the value of the ID property.
      */
+    @Override
     public BigDecimal getID() {
         BigDecimal id = (BigDecimal)get("id");
 

@@ -59,7 +59,9 @@ import org.apache.log4j.Logger;
 //
 //  Next Try
 //  Refactor using legacy compatible web/Application and ApplicationSetup  DONE
-
+//  Refactor content-section als legacy free application
+//  Refactor workspace (content-center) as a legacy free application
+//  Refactor cms-service as a legacy free application 
 
 /**
  * <p>Executes nonrecurring at install time and loads (installs and initializes)
@@ -93,10 +95,10 @@ public class Loader extends PackageLoader {
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     /** Loader configuration object, singleton design pattern                  
-     * NOTE: LoaderConfig only supplies unmutable hatrd coded defaults! It is 
-     * not possible to alter any to the contained values by specifiying an
+     * NOTE: LoaderConfig only supplies unmutable hard coded defaults! It is 
+     * not possible to alter any of the contained values by specifiying an
      * configuration parameter during load step. If a configuration value 
-     * has to be configurable at load time, the parameter must be relcated
+     * has to be configurable at load time, the parameter must be relocated
      * into this Loader class!                                                */
     private static final LoaderConfig s_conf = LoaderConfig.getInstance();
 
@@ -116,12 +118,11 @@ public class Loader extends PackageLoader {
                     new String[] {"content"}
                     );
 
-
-
     /** List of classnames of internal base content types (needed in every
      *  section created), generated while loading those content types in 
      *  loadContentTypeDefinitions(files) for later use in register step.     */
     private ArrayList m_content_type_list = new ArrayList();
+
 
     /**
      * Standard constructor.
@@ -192,7 +193,7 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     * Loads and instantiates the Workspace package (content-center) in the
+     * Loads and instantiates the Workspace subpackage (content-center) in the
      * database.
      * It is made public to be able to invoke it from the update script
      * (e.g. 6.6.1-6.6.2).
@@ -323,7 +324,7 @@ public class Loader extends PackageLoader {
      * NOTE: At ccm-cms load time no content type packages are available because
      * any content type depends on ccm-cms. Therefore, the loading step can not
      * process content type package assignment! Instead each content type itself
-     * must assign itself to an apropriate content section at it's load time. 
+     * must assign itself to an appropriate content section at it's load time. 
      * Cf. {@link com.arsdigita.cms.contenttype.AbstractContentTypeLoader}.
      * 
      * But the load step has to process the cms internal content types!
@@ -332,27 +333,49 @@ public class Loader extends PackageLoader {
 
         // Step 1: Create content section application type
         //         prerequisite for concrete content-section instance creation.
-        ApplicationSetup appType = new ApplicationSetup(s_log);
-        appType.setApplicationObjectType(ContentSection.BASE_DATA_OBJECT_TYPE);
-        appType.setKey(ContentSection.PACKAGE_TYPE); // by default: content-section
-        appType.setTitle("CMS Content Section");
-        appType.setDescription("A CMS Content Section");
-        appType.setPortalApplication(false);
+        
+//      //////////////    Deprecated style to create app type    ///////////////
+//      //////////////  Delete when migration process completed  ///////////////
+//      ApplicationSetup appType = new ApplicationSetup(s_log);
+//      appType.setApplicationObjectType(ContentSection.BASE_DATA_OBJECT_TYPE);
+//      appType.setKey(ContentSection.PACKAGE_TYPE); // by default: content-section
+//      appType.setTitle("CMS Content Section");
+//      appType.setDescription("A CMS Content Section");
+//      appType.setPortalApplication(false);
         //setup.setDispatcherClass(ContentItemDispatcher.class.getName());
         // contains the xsl to generate the page
 
         // ApplicationSetup requires an Instantiator which has to be set here
         // Setting it up in Initializer prior to creating the application type
         // doesn't work!
-        appType.setInstantiator(new ACSObjectInstantiator() {
-            @Override
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new ContentSection(dataObject);
-           }
-         });
+//      appType.setInstantiator(new ACSObjectInstantiator() {
+//          @Override
+//          public DomainObject doNewInstance(DataObject dataObject) {
+//              return new ContentSection(dataObject);
+//         }
+//       });
+//      appType.run();
+//      ////////////////////////////////////////////////////////////////////////
 
-        appType.run();
-
+        /* Create new stype legacy compatible application type               * /
+        ApplicationType type =  ApplicationType
+                                .createApplicationType(ContentSection.PACKAGE_TYPE,
+                                                       "CMS Content Section",
+                                                       ContentSection.BASE_DATA_OBJECT_TYPE);
+*/
+        /* Create legacy-free application type                               
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "Content Section" will become "content-section".                               */
+        ApplicationType type = new ApplicationType( 
+                                       "Content Section",
+                                        ContentSection.BASE_DATA_OBJECT_TYPE );
+        type.setDescription("A CMS Content Section.");
+        type.save();
+        
         // Step 2: Load CMS specific privileges into central (core) privilege
         // system.
         createPrivileges();

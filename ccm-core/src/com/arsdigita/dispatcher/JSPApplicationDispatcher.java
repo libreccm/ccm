@@ -62,7 +62,7 @@ import org.apache.log4j.Logger;
  * @version $Id: JSPApplicationDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class JSPApplicationDispatcher extends BaseDispatcherServlet
-        implements Dispatcher  {
+                                      implements Dispatcher  {
 
     private static final Logger s_log = Logger.getLogger
         (JSPApplicationDispatcher.class);
