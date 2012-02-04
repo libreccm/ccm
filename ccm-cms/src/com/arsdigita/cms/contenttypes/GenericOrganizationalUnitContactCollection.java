@@ -18,10 +18,14 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.Globalization;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
@@ -72,9 +76,8 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
      * Swaps the item {@code contact} with the next one in the collection.
      *
      * @param contact The item to swap with the next one.
-     * @throws IllegalArgumentException Thrown if the item provided is
-     * not part of this collection, or if the item is the last one in the
-     * collection.
+     * @throws IllegalArgumentException Thrown if the item provided is not part
+     * of this collection, or if the item is the last one in the collection.
      */
     public void swapWithNext(GenericContact contact) {
         int currentPos = 0;
@@ -127,9 +130,8 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
      * Swaps the item {@code contact} with the previous one in the collection.
      *
      * @param contact The item to swap with the previous one.
-     * @throws IllegalArgumentException Thrown if the item provided is
-     * not part of this collection, or if the item is the first one in the
-     * collection.
+     * @throws IllegalArgumentException Thrown if the item provided is not part
+     * of this collection, or if the item is the first one in the collection.
      */
     public void swapWithPrevious(GenericContact contact) {
         int previousPos = 0;
@@ -186,14 +188,26 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
      * @return The current contact.
      */
     public GenericContact getContact() {
-        return new GenericContact(m_dataCollection.getDataObject());
+        /*
+         * return new GenericContact(m_dataCollection.getDataObject());
+         */
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (GenericContact) bundle.getInstance(GlobalizationHelper.
+                getNegotiatedLocale().getLanguage());
+    }
+
+    public GenericContact getContact(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (GenericContact) bundle.getInstance(language);
     }
 
     public GenericPerson getPerson() {
         DataCollection collection;
 
         collection = (DataCollection) m_dataCollection.getDataObject().get(
-                GenericContact.PERSON);
+                GenericContact.PERSON);        
 
         if (collection.size() == 0) {
             return null;
@@ -206,21 +220,23 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
             // Close Collection to prevent an open ResultSet
             collection.close();
 
-            return (GenericPerson) DomainObjectFactory.newInstance(dobj);
+            //return (GenericPerson) DomainObjectFactory.newInstance(dobj);
+            final GenericPersonBundle bundle = (GenericPersonBundle) DomainObjectFactory.newInstance(dobj);
+            return (GenericPerson) bundle.getPrimaryInstance();
         }
     }
 
     public GenericAddress getAddress() {
-        return (GenericAddress) DomainObjectFactory.newInstance((DataObject) m_dataCollection.
+        /*return (GenericAddress) DomainObjectFactory.newInstance((DataObject) m_dataCollection.
                 getDataObject().get(
-                GenericContact.ADDRESS));
+                GenericContact.ADDRESS));*/
+        return getContact().getAddress();
     }
 
     public GenericContactEntryCollection getContactEntries() {
-        return new GenericContactEntryCollection((DataCollection) m_dataCollection.
+        /*return new GenericContactEntryCollection((DataCollection) m_dataCollection.
                 getDataObject().get(
-                GenericContact.CONTACT_ENTRIES));
+                GenericContact.CONTACT_ENTRIES));*/
+        return getContact().getContactEntries();
     }
-    
-    
 }

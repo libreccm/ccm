@@ -12,7 +12,8 @@ import java.math.BigDecimal;
 /**
  *
  * @author Jens Pelzetter
- * @version $Id$
+ * @version $Id: GenericOrganizationalUnitBundle.java 1480 2012-01-30 13:52:00Z
+ * jensp $
  */
 public class GenericOrganizationalUnitBundle extends ContentBundle {
 
@@ -20,6 +21,7 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
                                "com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle";
     public static final String PERSONS = "persons";
     public static final String ORGAUNITS = "organizationalunits";
+    public final static String CONTACTS = "contacts";
 
     public GenericOrganizationalUnitBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
@@ -62,7 +64,7 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
         Assert.exists(person, GenericPerson.class);
 
         final DataObject link = add(PERSONS, person.getGenericPersonBundle());
-                
+
         link.set(GenericOrganizationalUnitPersonCollection.PERSON_ROLE, role);
         link.set(GenericOrganizationalUnitPersonCollection.STATUS, status);
         link.save();
@@ -76,5 +78,32 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
 
     public boolean hasPersons() {
         return !getPersons().isEmpty();
+    }
+
+    public GenericOrganizationalUnitContactCollection getContacts() {
+        return new GenericOrganizationalUnitContactCollection((DataCollection) get(
+                CONTACTS));
+    }
+
+    public void addContact(final GenericContact contact,
+                           final String contactType) {
+        Assert.exists(contact, GenericContact.class);
+
+        final DataObject link = add(CONTACTS, contact.getContentBundle());
+
+        link.set(GenericOrganizationalUnitContactCollection.CONTACT_TYPE,
+                 contactType);
+        link.set(GenericOrganizationalUnitContactCollection.CONTACT_ORDER,
+                 Integer.valueOf((int) getContacts().size()));
+        link.save();
+    }
+
+    public void removeContact(final GenericContact contact) {
+        Assert.exists(contact, GenericContact.class);
+        remove(CONTACTS, contact.getContentBundle());
+    }
+
+    public boolean hasContacts() {
+        return !this.getContacts().isEmpty();
     }
 }

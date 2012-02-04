@@ -37,15 +37,15 @@ object type GenericOrganizationalUnitBundle extends ContentBundle {
 // Link for contact points.
 association {
 
-    GenericOrganizationalUnit[0..n] organizationalunit = join cms_contacts.contact_id
-                                                           to cms_organizationalunits_contact_map.contact_id,
-                                                         join cms_organizationalunits_contact_map.organizationalunit_id
-                                                           to cms_organizationalunits.organizationalunit_id;
+    GenericOrganizationalUnitBundle[0..n] organizationalunit = join cms_contact_bundles.bundle_id
+                                                                     to cms_organizationalunits_contact_map.contact_id,
+                                                                   join cms_organizationalunits_contact_map.organizationalunit_id
+                                                                     to cms_orgaunit_bundles.bundle_id;
 
-    GenericContact[0..n] contacts = join cms_organizationalunits.organizationalunit_id
-                                      to cms_organizationalunits_contact_map.organizationalunit_id,
-                                    join cms_organizationalunits_contact_map.contact_id
-                                      to cms_contacts.contact_id;
+    GenericContactBundle[0..n] contacts = join cms_orgaunit_bundles.bundle_id
+                                            to cms_organizationalunits_contact_map.organizationalunit_id,
+                                           join cms_organizationalunits_contact_map.contact_id
+                                             to cms_contact_bundles.bundle_id;
 
    // Some link attributes.
    String[0..1] contact_type = cms_organizationalunits_contact_map.contact_type VARCHAR(100);

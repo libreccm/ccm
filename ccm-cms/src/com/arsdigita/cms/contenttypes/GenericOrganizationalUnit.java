@@ -90,13 +90,15 @@ public class GenericOrganizationalUnit extends ContentPage {
     }
 
     public GenericOrganizationalUnitContactCollection getContacts() {
-        return new GenericOrganizationalUnitContactCollection((DataCollection) get(
-                CONTACTS));
+        //return new GenericOrganizationalUnitContactCollection((DataCollection) get(
+        //        CONTACTS));
+        final DataCollection dataColl = (DataCollection) getContentBundle().get(CONTACTS);
+        return new GenericOrganizationalUnitContactCollection(dataColl);
     }
 
     public void addContact(final GenericContact contact,
                            final String contactType) {
-        Assert.exists(contact, GenericContact.class);
+        /*Assert.exists(contact, GenericContact.class);
 
         logger.debug(String.format("Adding contact of type \"%s\"...",
                                    contactType));
@@ -106,20 +108,23 @@ public class GenericOrganizationalUnit extends ContentPage {
                  contactType);
         link.set(GenericOrganizationalUnitContactCollection.CONTACT_ORDER,
                  Integer.valueOf((int) getContacts().size()));
-        link.save();
+        link.save();*/
+        getGenericOrganizationalUnitBundle().addContact(contact, contactType);
     }
 
     public void removeContact(final GenericContact contact) {
-        Assert.exists(contact, GenericContact.class);
-        remove(CONTACTS, contact);
+        //Assert.exists(contact, GenericContact.class);
+        //remove(CONTACTS, contact);
+        getGenericOrganizationalUnitBundle().removeContact(contact);
     }
 
     public boolean hasContacts() {
-        return !this.getContacts().isEmpty();
+        //return !this.getContacts().isEmpty();
+        return getGenericOrganizationalUnitBundle().hasContacts();
     }
 
     public GenericOrganizationalUnitPersonCollection getPersons() {
-        DataCollection dataColl = (DataCollection) getContentBundle().get(PERSONS);
+        final DataCollection dataColl = (DataCollection) getContentBundle().get(PERSONS);
         logger.debug(String.format(
                 "GenericOrganizationalUnitPersonCollection size = %d", dataColl.
                 size()));
