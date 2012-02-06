@@ -470,22 +470,39 @@ public final class CMSConfig extends AbstractConfig {
      * SortKey|Alphabetical is initialized in constructor! See below.
      */
     private final Parameter m_categoryTreeOrdering =
-                            new EnumerationParameter(
-            "com.arsdigita.cms.category_tree_order",
-            Parameter.OPTIONAL,
-            Category.SORT_KEY);
+            new EnumerationParameter(
+                "com.arsdigita.cms.category_tree_order",
+                Parameter.OPTIONAL,
+                Category.SORT_KEY);
+    
     /**
-     * Allow content creation in section listing. Allows you to turn off
-     * the ability to create content in the section listing
+     * Allow content creation in Workspace (content center) section listing. 
+     * Allows you to turn off the ability to create content in the section listing
      */
     private final Parameter m_allowContentCreateInSectionListing =
-                            new BooleanParameter(
-            "com.arsdigita.cms.allow_content_create_in_section_listing",
-            Parameter.REQUIRED,
-            new Boolean(true));
+            new BooleanParameter(
+                "com.arsdigita.cms.allow_content_create_in_section_listing",
+                Parameter.REQUIRED,
+                new Boolean(true));
+    
+    /**
+     * Hide the legacy public site link in Workspace (content center) section
+     * listing. Legacy public site display is replaced by navigation based
+     * presentation (or by portlets) and should be hidden in the admin ui
+     * be default now.
+     */
+    private final Parameter m_hideLegacyPublicSiteLink =
+            new BooleanParameter(
+                "com.arsdigita.cms.hide_legacy_public_site_link",
+                Parameter.REQUIRED,
+                new Boolean(true));
+
+
     // ///////////////////////////////////////////
     // Notification related parameters
     // ///////////////////////////////////////////
+
+
     /**
      * Delete Sent Workflow Notifications. Decide whether successfully sent
      * notifications and messages should be deleted from the system
@@ -670,6 +687,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_hasContactsAuthoringStep);
         register(m_hideTextAssetUploadFile);
         register(m_allowContentCreateInSectionListing);
+        register(m_hideLegacyPublicSiteLink);
 
         // Content Center (Workspace) config related parameters
         register(m_contentCenterMap);
@@ -1077,6 +1095,14 @@ public final class CMSConfig extends AbstractConfig {
     public final boolean getAllowContentCreateInSectionListing() {
         return ((Boolean) get(m_allowContentCreateInSectionListing)).
                 booleanValue();
+    }
+
+    /**
+     * Hide the (no longer used) legacy public site link in Workspace
+     * (content center) section listing, true by default.
+     */
+    public final boolean getHideLegacyPublicSiteLink() {
+        return ((Boolean) get(m_hideLegacyPublicSiteLink)).booleanValue();
     }
 
     public String getItemSearchDefaultTab() {

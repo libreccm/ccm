@@ -24,7 +24,7 @@
        "open" : "closed";
 %>
 
-<tr><td><img src="<%= request.getContextPath() %>/packages/content-section/www/assets/folder-<%=folderGraphic%>.gif" width=17 height=17></td><td colspan="2">&nbsp;<a href="<%=section.getURL()%><%=topFolderPath%>index.jsp"><%=topFolders.get("folderLabel")%></a></td></tr>
+<tr><td><img src="<%= request.getContextPath() %>/templates/ccm-cms/content-section/assets/folder-<%=folderGraphic%>.gif" width=17 height=17></td><td colspan="2">&nbsp;<a href="<%=section.getURL()%><%=topFolderPath%>index.jsp"><%=topFolders.get("folderLabel")%></a></td></tr>
 
 <% if (folderPath.startsWith((String) topFolders.get("folderName"))) { %>
 <!-- Begin subfolder block -->
@@ -42,7 +42,7 @@
        "selected" : "closed";
 %>
 
-<tr><td width=17 height=17 bgcolor="white"><img src="<%= request.getContextPath() %>/packages/content-section/www/assets/blank.gif" width=17 height=17><td><img src="<%= request.getContextPath() %>/packages/content-section/www/assets/folder-<%=subFolderGraphic%>.gif" width=17 height=17><td>&nbsp;<a href="<%=section.getURL()%><%=subFolderPath%>index.jsp"><%=subFolders.get("folderLabel")%></a></td></tr>
+<tr><td width=17 height=17 bgcolor="white"><img src="<%= request.getContextPath() %>/templates/ccm-cms/content-section/assets/blank.gif" width=17 height=17><td><img src="<%= request.getContextPath() %>/templates/ccm-cms/content-section/assets/folder-<%=subFolderGraphic%>.gif" width=17 height=17><td>&nbsp;<a href="<%=section.getURL()%><%=subFolderPath%>index.jsp"><%=subFolders.get("folderLabel")%></a></td></tr>
 
 <% } %>
 <!-- End subfolder loop -->

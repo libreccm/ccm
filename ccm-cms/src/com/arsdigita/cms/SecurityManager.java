@@ -45,8 +45,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * <p>Security class used for checking and granting privileges in
- * CMS.</p>
+ * <p>Security class used for checking and granting privileges in CMS.</p>
  *
  * @author Michael Pih
  * @version $Id: SecurityManager.java 2161 2011-02-02 00:16:13Z pboy $

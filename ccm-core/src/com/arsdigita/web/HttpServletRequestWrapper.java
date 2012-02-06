@@ -24,6 +24,10 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Cookie;
 
+/**
+ * 
+ * @author unknown
+ */
 public class HttpServletRequestWrapper extends ServletRequestWrapper
         implements HttpServletRequest {
     private final HttpServletRequest m_req;

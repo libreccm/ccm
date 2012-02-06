@@ -257,8 +257,9 @@ public class CMSPage extends Page implements ResourceHandler {
      * @pre m_transformer != null
      */
     public void dispatch(final HttpServletRequest request,
-                         final HttpServletResponse response,
-                         RequestContext actx)
+                         final HttpServletResponse response ,
+                         RequestContext actx
+                        )
         throws IOException, ServletException {
 
         DeveloperSupport.startStage("CMSPage.dispatch: serve page");

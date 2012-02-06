@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.ui;
+package com.arsdigita.cms.ui.workspace;
 
 
 import java.math.BigDecimal;
@@ -52,6 +52,8 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.ui.CMSContainer;
+import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.folder.FolderSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -121,8 +123,10 @@ public class TasksPanel extends CMSContainer {
     private static final String SORT_WORKFLOW = "workflow";
 
     // IMAGES
-    public static final String UP_ARROW_IMAGE = "/themes/heirfloom/images/gray-triangle-up.gif";
-    public static final String DOWN_ARROW_IMAGE = "/themes/heirfloom/images/gray-triangle-down.gif";
+    public static final String UP_ARROW_IMAGE = 
+                               "/themes/heirfloom/images/gray-triangle-up.gif";
+    public static final String DOWN_ARROW_IMAGE = 
+                               "/themes/heirfloom/images/gray-triangle-down.gif";
 
     // CREATION PANE CONSTANTS
     private Label m_selectorLabel;
@@ -168,7 +172,8 @@ public class TasksPanel extends CMSContainer {
     /**
      * Adds the components to this tasks panel
      **/
-    protected void addComponents() {
+//  protected void addComponents() {
+    private void addComponents() {
         m_creationPane = new BoxPanel(BoxPanel.VERTICAL);
 	
         // A label that says "Create $content_type in $section"
@@ -181,7 +186,9 @@ public class TasksPanel extends CMSContainer {
                     ContentSection sec =
                         (ContentSection) m_sectionSel.getSelectedObject(s);
 		    
-                    StringBuffer buf = new StringBuffer(GlobalizationUtil.globalize("cms.ui.create").localize() + " ");
+                    StringBuffer buf = new StringBuffer(
+                                           GlobalizationUtil
+                                           .globalize("cms.ui.create").localize() + " ");
                     buf.append(type.getLabel());
                     buf.append(" in ");
                     buf.append(sec.getName());
@@ -217,7 +224,9 @@ public class TasksPanel extends CMSContainer {
                 }
             });
        	
-        m_viewLockLink = new ActionLink(new Label(GlobalizationUtil.globalize("cms.ui.workflow.task.view_locked")));
+        m_viewLockLink = new ActionLink(new 
+                             Label(GlobalizationUtil
+                                   .globalize("cms.ui.workflow.task.view_locked")));
         m_viewLockLink.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     PageState ps = e.getPageState();
@@ -225,7 +234,9 @@ public class TasksPanel extends CMSContainer {
                 }
             });
 
-        m_viewUnlockLink = new ActionLink(new Label(GlobalizationUtil.globalize("cms.ui.workflow.task.view_unlocked")));
+        m_viewUnlockLink = new ActionLink(new 
+                               Label(GlobalizationUtil
+                                     .globalize("cms.ui.workflow.task.view_unlocked")));
         m_viewUnlockLink.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     PageState ps = e.getPageState();
@@ -233,7 +244,9 @@ public class TasksPanel extends CMSContainer {
                 }
             });
 
-        m_viewAllLockLink = new ActionLink(new Label(GlobalizationUtil.globalize("cms.ui.workflow.task.view_all")));
+        m_viewAllLockLink = new ActionLink(new 
+                                Label(GlobalizationUtil
+                                      .globalize("cms.ui.workflow.task.view_all")));
         m_viewAllLockLink.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     PageState ps = e.getPageState();
@@ -241,11 +254,14 @@ public class TasksPanel extends CMSContainer {
                 }
             });
 
-        m_viewLockLabel = new Label(GlobalizationUtil.globalize("cms.ui.workflow.task.view_locked"));
+        m_viewLockLabel = new Label(GlobalizationUtil
+                                   .globalize("cms.ui.workflow.task.view_locked"));
         m_viewLockLabel.setFontWeight(Label.BOLD);
-        m_viewUnlockLabel = new Label(GlobalizationUtil.globalize("cms.ui.workflow.task.view_unlocked"));
+        m_viewUnlockLabel = new Label(GlobalizationUtil
+                                      .globalize("cms.ui.workflow.task.view_unlocked"));
         m_viewUnlockLabel.setFontWeight(Label.BOLD);
-        m_viewAllLockLabel = new Label(GlobalizationUtil.globalize("cms.ui.workflow.task.view_all"));
+        m_viewAllLockLabel = new Label(GlobalizationUtil
+                                       .globalize("cms.ui.workflow.task.view_all"));
         m_viewAllLockLabel.setFontWeight(Label.BOLD);
 
         add(new Label("<br />",false));
@@ -267,6 +283,11 @@ public class TasksPanel extends CMSContainer {
 //        m_actionLabel.setClassAttr("action");
     }
 
+    /**
+     * 
+     * @param p 
+     */
+    @Override
     public void register(Page p) {
         super.register(p);
 
@@ -381,15 +402,18 @@ public class TasksPanel extends CMSContainer {
 	    CompoundFilter authorFilter = ff.and();
 	   //cg query changed to refer to task type id
 	   authorFilter.addFilter(ff.equals("taskType",CMSTaskType.AUTHOR));
-	   authorFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.AUTHOR), party, ff));
+	   authorFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.AUTHOR), 
+                                            party, ff));
 
 	    CompoundFilter approveFilter = ff.and();
 	   approveFilter.addFilter(ff.equals("taskType",CMSTaskType.EDIT));
-	   approveFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.EDIT), party, ff));
+	   approveFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.EDIT), 
+                                             party, ff));
 
 	    CompoundFilter deployFilter = ff.and();
 	   deployFilter.addFilter(ff.equals("taskType",CMSTaskType.DEPLOY));
-	   deployFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.DEPLOY), party, ff));
+	   deployFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.DEPLOY), 
+                                            party, ff));
 
 	    CompoundFilter permissionFilter = ff.or();
 	    permissionFilter.addFilter(authorFilter);
@@ -416,6 +440,7 @@ public class TasksPanel extends CMSContainer {
             m_sectionSel = sectionSel;
         }
 
+        @Override
         protected BigDecimal getRootFolderID(PageState s) {
             ContentSection sec = (ContentSection) m_sectionSel.getSelectedObject(s);
             Assert.exists(sec);
@@ -468,12 +493,14 @@ public class TasksPanel extends CMSContainer {
         }
 
         private RequestLocal m_taskCount = new RequestLocal() {
+            @Override
             public Object initialValue(PageState state) {
                 DataQuery query = makeQuery(state);
                 return new Long(query.size());
             }
         };
 
+        @Override
         public void generateXML(PageState state,
                                 Element parent) {
             Element content = parent.newChildElement("cms:tasksPanel", CMS.CMS_XML_NS);
@@ -540,7 +567,8 @@ public class TasksPanel extends CMSContainer {
                     sections.put(sectionID, sectionPath);
                 }
 
-                Element task = content.newChildElement("cms:tasksPanelTask", CMS.CMS_XML_NS);
+                Element task = content.newChildElement("cms:tasksPanelTask", 
+                                                       CMS.CMS_XML_NS);
 
                 BigDecimal itemID = (BigDecimal)query.get("itemID");
                 String taskType = (String)query.get("taskType");
@@ -590,9 +618,11 @@ public class TasksPanel extends CMSContainer {
                 }
 
                 if ("Deploy".equals(taskType)) {
-                    task.addAttribute("editTabNumber", String.valueOf(ContentItemPage.PUBLISHING_TAB));
+                    task.addAttribute("editTabNumber", 
+                                      String.valueOf(ContentItemPage.PUBLISHING_TAB));
                 } else {
-                    task.addAttribute("editTabNumber", String.valueOf(ContentItemPage.AUTHORING_TAB));
+                    task.addAttribute("editTabNumber", 
+                                      String.valueOf(ContentItemPage.AUTHORING_TAB));
                 }
             }
 
@@ -635,6 +665,7 @@ public class TasksPanel extends CMSContainer {
         }
 
 
+        @Override
         public void respond(PageState state) throws ServletException {
             String key = state.getControlEventName();
             String value = state.getControlEventValue();
@@ -666,7 +697,9 @@ public class TasksPanel extends CMSContainer {
                         }
                     }
 			
-                    String redirectURL = Web.getConfig().getDispatcherServletPath() + sectionPath + "/admin/item.jsp?item_id=" + itemID + "&set_tab=" + tabNumber;
+                    String redirectURL = Web.getConfig().getDispatcherServletPath() 
+                                         + sectionPath + "/admin/item.jsp?item_id=" 
+                                         + itemID + "&set_tab=" + tabNumber;
                     throw new RedirectSignal(redirectURL,true);
                 } catch (DataObjectNotFoundException ex) {
                     throw new ServletException("Unknown content ID" + itemID);
@@ -684,7 +717,8 @@ public class TasksPanel extends CMSContainer {
         }
     }    
 
-    private static Filter getTaskFilter(CMSTaskType taskType, Party party, FilterFactory factory) {
+    private static Filter getTaskFilter(CMSTaskType taskType
+                                        , Party party, FilterFactory factory) {
         PrivilegeDescriptor privilege;
         String queryName;
         String queryType;

@@ -51,6 +51,14 @@ public class ResourceServlet extends BaseServlet {
     private static final Logger s_log = 
         Logger.getLogger(ResourceServlet.class);
 
+    /** 
+     * 
+     * @param sreq
+     * @param sresp
+     * @throws ServletException
+     * @throws IOException 
+     */
+    @Override
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp)
         throws ServletException, IOException {

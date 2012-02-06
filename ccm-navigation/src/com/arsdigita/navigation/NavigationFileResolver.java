@@ -60,6 +60,9 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 	public static final String PATH_COOKIE_NAME = "ad_path";
 	public static final char PATH_COOKIE_SEPARATOR = '|';
 	
+    /**
+     * 
+     */
     @Override
     public RequestDispatcher resolve(String templatePath,
                                      HttpServletRequest sreq,

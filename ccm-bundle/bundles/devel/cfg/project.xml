@@ -81,10 +81,10 @@
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
 
 <!--   LDN extension  -->
-<!--    temporyrily excluded because configuration has to be cleared
+<!--    temporarily excluded because configuration issues have to be resolved
         <ccm:application name="ccm-ldn-rss"/>                        
--->
         <ccm:application name="ccm-rssfeed"/>                        
+-->
 
 
 
@@ -134,16 +134,16 @@
 -->
 
 
-  </ccm:build>
-
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    Libre CMS   list of OBSOLETE modules                                 -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->
-<!--    Without known funcionality
-        <ccm:application name="ccm-cms-types-motditem"/>             -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/> 
+        Current code does not include any xsl templates, conent type does not
+        appear in the list of types in content center. 
+        For the moment no longer supported (2012-02-06)                      -->
 
 <!--   Applications   -->
 <!--    currently doesn't work for unknown reason
@@ -157,11 +157,15 @@
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
         <ccm:application name="ccm-ldn-atoz"/>  
-        <ccm:application name="ccm-ldn-dublin"/>                     -->
+        <ccm:application name="ccm-ldn-dublin"/>
+        <ccm:application name="ccm-ldn-types-contact"/>
+        <ccm:application name="ccm-ldn-types-esdservice"/>                     -->
 
 
 <!-- tools will be downloaded from trunk, but does not
      contain java code to be compiled!
         <ccm:application name="tools"/>           -->
+
+  </ccm:build>
 
 </ccm:project>

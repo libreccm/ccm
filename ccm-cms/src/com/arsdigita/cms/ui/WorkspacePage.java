@@ -33,6 +33,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.dispatcher.CMSPage;
+import com.arsdigita.cms.ui.workspace.TasksPanel;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.User;
@@ -45,7 +46,7 @@ import com.arsdigita.ui.DebugPanel;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: WorkspacePage.java 2090 2010-04-17 08:04:14Z pboy $
+ * @version $Id: CMSPageWorkspacePage.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class WorkspacePage extends CMSPage implements ActionListener {
 
@@ -62,9 +63,9 @@ public class WorkspacePage extends CMSPage implements ActionListener {
     public static final String CONTENT_SECTION = "section_id";
 
     /**
-     * Construct a new WorkspacePage
+     * Construct a new CMSPageWorkspacePage
      */
-    public WorkspacePage() {
+    public WorkspacePage() {                          // Constructor Page
         super(new Label( GlobalizationUtil.globalize
                          ("cms.ui.content_center")),
               new SimpleContainer());
@@ -80,10 +81,12 @@ public class WorkspacePage extends CMSPage implements ActionListener {
             (CONTENT_SECTION);
         addGlobalStateParam(sectionId);
         m_sectionSel = new ACSObjectSelectionModel
-            (ContentSection.class.getName(), ContentSection.BASE_DATA_OBJECT_TYPE, sectionId);
+                               (ContentSection.class.getName(), 
+                                ContentSection.BASE_DATA_OBJECT_TYPE, 
+                                sectionId);
 
-        add(new WorkspaceContextBar());
-        add(new GlobalNavigation());
+        add( new WorkspaceContextBar() );
+        add( new GlobalNavigation()    );
 
         m_tasks = getTasksPane(m_typeSel, m_sectionSel);
         m_search = getSearchPane();
@@ -99,7 +102,8 @@ public class WorkspacePage extends CMSPage implements ActionListener {
      * Creates, and then caches, the Tasks pane. Overriding this
      * method to return null will prevent this tab from appearing.
      **/
-    protected TasksPanel getTasksPane(ACSObjectSelectionModel typeModel, ACSObjectSelectionModel sectionModel) {
+    protected TasksPanel getTasksPane(ACSObjectSelectionModel typeModel, 
+                                      ACSObjectSelectionModel sectionModel) {
         if (m_tasks == null) {
             m_tasks = new TasksPanel(typeModel,sectionModel);
         }

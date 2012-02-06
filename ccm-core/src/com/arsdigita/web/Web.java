@@ -51,11 +51,11 @@ public class Web {
     private static final Logger s_log = Logger.getLogger(Web.class);
 
     private static final ThreadLocal s_request =
-        new InternalRequestLocal();
+                                     new InternalRequestLocal();
     private static final ThreadLocal s_servletContext =
-        new InternalRequestLocal();
+                                     new InternalRequestLocal();
     private static final ThreadLocal s_userContext =
-        new InternalRequestLocal();
+                                     new InternalRequestLocal();
 
     private static final Map s_contexts = new HashMap();
 

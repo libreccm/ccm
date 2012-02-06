@@ -86,8 +86,12 @@
 <!--    <ccm:application name="ccm-forum-categorised"/>        -->
 <!--    <ccm:application name="ccm-cms-types-image"/>          -->
 <!--    <ccm:application name="ccm-cms-assets-notes"/>         -->
-        <!-- Without any useful known function                 -->
-<!--    <ccm:application name="ccm-cms-types-motditem"/>       -->
+
+<!--    <ccm:application name="ccm-cms-types-motditem"/> 
+        Current code does not include any xsl templates, conent type does not
+        appear in the list of types in content center. 
+        For the moment no longer supported (2012-02-06)                      -->
+
 <!--    <ccm:application name="ccm-portalserver"/>             -->
         <!-- Completely untested                               -->
 <!--    <ccm:application name="ccm-portlet"/>                  -->

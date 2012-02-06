@@ -46,6 +46,7 @@ import java.util.Map;
 /**
  * <p>This class provides many utility functions for the Content Management
  * System.</p>
+ * Specifically used by various JSP templates.
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Id: Utilities.java 2140 2011-01-16 12:04:20Z pboy $
@@ -64,6 +65,8 @@ public class Utilities {
     /**
      * Fetch the location of the CMS Workspace package. Caches the result.
      * @return The URL of the CMS Workspace package
+     * @deprecated without direct replacement yet, refactor code to use
+     * legacy free code in com.arsdigita.web
      */
     public static String getWorkspaceURL() {
         String url = (String) m_cache.get(CMS.WORKSPACE_PACKAGE_KEY);
@@ -166,6 +169,7 @@ public class Utilities {
      * Fetches the URL of a mounted instance of a package.
      * @param key The package key
      * @return The URL where the package is mounted
+     * @deprecated without direct replacement yet
      */
     private static String getSingletonPackageURL(String key) {
         PackageType type = null;
@@ -206,6 +210,13 @@ public class Utilities {
         return url.toString();
     }
 
+    /**
+     * 
+     * @param key
+     * @return
+     * @deprecated without replacement (singleton package is not a supported
+     * property for legacy free applications.)
+     */
     private static String getSingletonPackageURLSansContext(String key) {
 	PackageType type = null;
 	type = PackageType.findByKey(key);

@@ -175,8 +175,28 @@ public class Initializer extends CompoundInitializer {
         s_log.debug("CMS.Initializer.init(DomainInitEvent) invoked");
         super.init(e);
 
+        /* Register object instantiator for Workspace (Content Center)        */
+        e.getFactory().registerInstantiator
+            (Workspace.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dobj) {
+                     return new Workspace(dobj);
+                 }
+             } );
+
         LanguageUtil.setSupportedLanguages(
             Kernel.getConfig().getSupportedLanguages());
+
+        /* Register object instantiator for CMS Service         */
+        e.getFactory().registerInstantiator
+            (Service.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dobj) {
+                     return new Service(dobj);
+                 }
+             } );
 
         URLService.registerFinder(ContentPage.BASE_DATA_OBJECT_TYPE,
                                   new ItemURLFinder());

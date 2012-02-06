@@ -30,8 +30,8 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
  *
  * <p>Usage:</p>
  *
- * <pre><code>&lt;acs:master path="path/to/master.jsp" />
- **/
+ * <pre><code>&lt;acs:master path="path/to/master.jsp" /&gt;</code></pre>
+ */
 public class QueryTag extends BodyTagSupport {
 
     private String name = null;
@@ -46,6 +46,7 @@ public class QueryTag extends BodyTagSupport {
         this.name = name;
     }
 
+    @Override
     public int doStartTag() throws JspTagException {
 
         Session session = SessionManager.getSession();

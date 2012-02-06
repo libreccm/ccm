@@ -63,7 +63,7 @@ import com.arsdigita.util.UncheckedWrapperException;
 public class MultipartHttpServletRequest implements HttpServletRequest {
 
     private static final Category s_log = Category.getInstance
-        (MultipartHttpServletRequest.class);
+                                          (MultipartHttpServletRequest.class);
 
     private HttpServletRequest m_request;
     private Map m_parameters = null;
@@ -205,9 +205,17 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
         return m_request.getRequestURI();
     }
 
+//  public StringBuffer getRequestURL() {
+//      throw new UnsupportedOperationException
+//          ("This is a Servlet 2.3 feature that we do not currently support");
+//  }
+
+    /* Obviously there was a problem with this method in early implementations
+     * of Servlet specification 2.3 which was resolved later. So it should be
+     * save to use it now. (2012-02-06)
+     */
     public StringBuffer getRequestURL() {
-        throw new UnsupportedOperationException
-            ("This is a Servlet 2.3 feature that we do not currently support");
+        return m_request.getRequestURL();
     }
 
     public String getServletPath() {

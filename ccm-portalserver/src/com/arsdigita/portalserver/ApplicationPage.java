@@ -49,16 +49,13 @@ import com.arsdigita.util.Assert;
  *
  * @author <a href="mailto:teadams@arsdigita.com">Tracy Adams</a>
  * @version $Revision: #6 $ $Date: 2004/08/17 $
- */
-
-/* XXX Have to control links with permissions and
- *      add access control
+ * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/ApplicationPage.java#6 $
  */
 public class ApplicationPage extends CWPage {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ApplicationPage.java#6 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
+
+    /* XXX Have to control links with permissions and
+     *      add access control
+     */
 
     private static org.apache.log4j.Logger log =
         org.apache.log4j.Logger.getLogger(ApplicationPage.class.getName());
@@ -75,6 +72,7 @@ public class ApplicationPage extends CWPage {
         }
     }
 
+    @Override
     public void lock() {
         buildPage();
 
@@ -108,7 +106,9 @@ public class ApplicationPage extends CWPage {
     }
 
     protected void buildGlobal(Container global) {
-        Link link = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.sign_out")),  "/register/logout");
+        Link link = new Link( new Label(
+                        GlobalizationUtil.globalize("cw.workspace.sign_out")),  
+                       "/register/logout");
 
         link.setClassAttr("signoutLink");
         
@@ -145,7 +145,8 @@ public class ApplicationPage extends CWPage {
             // Assert.assertNotNull(party, "Party party");
             Assert.exists(party, "Party party");
 
-            link.setChild(new Label(GlobalizationUtil.globalize("cw.workspace.personal_workspace")));
+            link.setChild(new Label(GlobalizationUtil
+                                    .globalize("cw.workspace.personal_workspace")));
             link.setTarget("/personal-portal/" + party.getID() + "/");
         }
     }

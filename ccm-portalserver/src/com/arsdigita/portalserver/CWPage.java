@@ -40,18 +40,15 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:elorenzo@arsdigita.com">Eric Lorenzo</a>
  * @version $Revision: #5 $ $Date: 2004/08/17 $
- */
-
-/* XXX Have to control links with permissions and
- *      add access control
+ * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/CWPage.java#5 $
  */
 public class CWPage extends Page {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/CWPage.java#5 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
 
     private static final Logger s_log = Logger.getLogger(CWPage.class);
+
+    /* XXX Have to control links with permissions and
+     *      add access control
+     */
 
     private final Container m_global;
     private final Container m_header;
@@ -133,7 +130,11 @@ public class CWPage extends Page {
         setSelected(ps, null);
     }
 
+    /** 
+     * 
+     */
     private class Panel extends SimpleContainer {
+        @Override
         public void generateXML(PageState ps, Element p) {
             Component selected = getSelected(ps);
             if (selected == null) {

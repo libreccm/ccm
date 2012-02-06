@@ -66,10 +66,8 @@ import org.apache.log4j.Logger;
  * </pre>
  *
  * <p>
- * You may use the
- * <code>com.arsdigita.templating.stylesheet_paths</code> system
- * property to change the file from which the stylesheet patterns are
- * drawn.
+ * You may use the <code>com.arsdigita.templating.stylesheet_paths</code> system
+ * property to change the file from which the stylesheet patterns are drawn.
  * </p>
  *
  * <p>
@@ -118,10 +116,11 @@ public class PatternStylesheetResolver implements StylesheetResolver {
 
     /** Logger instance for debugging.  */
     private static final Logger s_log = Logger.getLogger
-        (PatternStylesheetResolver.class);
+                                        (PatternStylesheetResolver.class);
 
     /** List of registered pattern generators which are queried in turn. */
     private static final HashMap s_generators = new HashMap();
+
 
     /**
      * Registers a new pattern generator for the given key.
@@ -129,8 +128,7 @@ public class PatternStylesheetResolver implements StylesheetResolver {
      * @param key the key as it appears in the pattern string
      * @param gen a pattern generator for producing values to be
      * substituted for <code>key</code>
-     **/
-
+     */
     public static void registerPatternGenerator(String key,
                                                 PatternGenerator gen) {
         s_generators.put(key, gen);
@@ -159,6 +157,10 @@ public class PatternStylesheetResolver implements StylesheetResolver {
     // This is a List of Lists.
     private List m_paths = null;
 
+    /**
+     * 
+     * @param path 
+     */
     private void loadPaths(String path) {
         if (s_log.isInfoEnabled()) {
             s_log.info("Loading paths from " + path);
@@ -200,6 +202,11 @@ public class PatternStylesheetResolver implements StylesheetResolver {
         }
     }
 
+    /**
+     * 
+     * @param request
+     * @return 
+     */
     public URL resolve(HttpServletRequest request) {
         synchronized(this) {
             if (m_paths == null) {
@@ -271,6 +278,13 @@ public class PatternStylesheetResolver implements StylesheetResolver {
             ("no path to XSL stylesheet found; " + "try modifying " + m_path);
     }
 
+    /**
+     * 
+     * @param inBits
+     * @param paths
+     * @param values
+     * @param request 
+     */
     private void expandPlaceholders(String[] inBits,
                                     ArrayList paths,
                                     HashMap values,
@@ -324,6 +338,13 @@ public class PatternStylesheetResolver implements StylesheetResolver {
         }
     }
 
+    /**
+     * 
+     * @param key
+     * @param values
+     * @param request
+     * @return 
+     */
     private String[] getValues(String key,
                                HashMap values,
                                HttpServletRequest request) {

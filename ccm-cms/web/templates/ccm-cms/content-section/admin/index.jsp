@@ -1,14 +1,16 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2">
 
-  <jsp:directive.page import="com.arsdigita.cms.ui.ItemSearchPage"/>
-  <jsp:directive.page import="com.arsdigita.cms.dispatcher.ContentSectionDispatcher"/>
+  <jsp:directive.page import="com.arsdigita.cms.ui.ContentSectionPage"/>
   <jsp:directive.page import="com.arsdigita.cms.ContentSection"/>
+  <jsp:directive.page import="com.arsdigita.cms.ContentSectionServlet"/>
   <jsp:directive.page import="com.arsdigita.cms.dispatcher.Utilities"/>
   <jsp:directive.page import="com.arsdigita.dispatcher.*"/>
+  <jsp:directive.page import="com.arsdigita.web.LoginSignal"/>
+  <jsp:directive.page import="com.arsdigita.web.Web"/>
   <jsp:directive.page import="java.util.Date"/>
 
   <jsp:declaration>
-    private ItemSearchPage sectionPage = new ItemSearchPage();
+    private ContentSectionPage sectionPage = new ContentSectionPage();
   </jsp:declaration>
 
   <jsp:scriptlet>
@@ -17,10 +19,12 @@
     DispatcherHelper.cacheDisable(response);
 
     ContentSection section = 
-      ContentSectionDispatcher.getContentSection(request);
+      ContentSectionServlet.getContentSection(request);
 
-    if (! ContentSectionDispatcher.checkAdminAccess(request, section)) {
-      throw new com.arsdigita.cms.dispatcher.AccessDeniedException();
+    if (Web.getContext().getUser() == null) {
+        throw new LoginSignal(request);
+    } else if (! ContentSectionServlet.checkAdminAccess(request, section)) {
+        throw new com.arsdigita.cms.dispatcher.AccessDeniedException();
     }
 
 

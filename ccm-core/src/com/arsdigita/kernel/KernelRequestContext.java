@@ -24,9 +24,11 @@ import com.arsdigita.dispatcher.InitialRequestContext;
 import com.arsdigita.dispatcher.RequestContext;
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @version $Id: KernelRequestContext.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class KernelRequestContext extends InitialRequestContext {
-
-    public static final String versionId = "$Id: KernelRequestContext.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_cat =
         Logger.getLogger(KernelRequestContext.class.getName());

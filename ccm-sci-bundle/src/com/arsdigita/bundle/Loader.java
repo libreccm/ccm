@@ -49,6 +49,10 @@ import java.util.StringTokenizer;
  *
  * Creates category domains in the terms application according to 
  * configuration files and adds jsp templates to navigation.
+ * 
+ * NOTE: Configuration parameters used at load time MUST be part of Loader 
+ * class and can not delegated to a Config object (derived from AbstractConfig).
+ * They will (and can) not be persisted into an registry object (file).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
@@ -70,9 +74,11 @@ public class Loader extends PackageLoader {
      *    FULL_QUALIFIED_CLASS_NAME : URL : TITLE ,
      *    ....                                    ,
      *    FULL_QUALIFIED_CLASS_NAME : URL : TITLE "
+     * E.G.
+     * "com.arsdigita.navigation.Navigation:local:Local Navigation"
      */
     private Parameter m_customApplicationInstances = new StringArrayParameter(
-                "com.arsdigita.bundle.loader.local_app_instances",
+                "com.arsdigita.bundle.loader.custom_app_instances",
                 Parameter.OPTIONAL, null
                 );
     

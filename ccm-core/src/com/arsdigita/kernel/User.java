@@ -57,8 +57,9 @@ public class User extends Party {
      * object type is either this base type or a subtype of this base type.
      */
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.kernel.User";
+                               "com.arsdigita.kernel.User";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

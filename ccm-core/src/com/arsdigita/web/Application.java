@@ -597,9 +597,14 @@ public class Application extends Resource {
     }
 
     /**
-     * Returns the path to this application through the dispatcher.
+     * Returns the path to this application through the dispatcher. It does not
+     * contain the static prefix (if configured, "ccm" by default), so it can
+     * be used to construct url's for internal links.
+     * 
      * The path does not end in a slash.  This method will not return
      * null.
+     * 
+     * @return Path string including w/o static prefix (if configured)
      */
     public final String getPath() {
         final String path = (String) get(PRIMARY_URL);
@@ -613,7 +618,7 @@ public class Application extends Resource {
         }
     }
 
-    // XXX primary URL doesn't keep in sync with sitenode hierarchY
+    // XXX primary URL doesn't keep in sync with sitenode hierarchy
     // We need to use a trigger-like mechanism to keep the primaryURL
     // denormalization correct.
     /**

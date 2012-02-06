@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation"
-	xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
-  exclude-result-prefixes="xsl bebop aplaws ui nav cms terms"
-	version="1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+              xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
+                  xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                 xmlns:nav="http://ccm.redhat.com/navigation"
+               xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
+   exclude-result-prefixes="xsl bebop aplaws ui nav cms terms"
+                   version="1.0">
 
 <xsl:import href="../types/ContentTypes.xsl"/>
 
@@ -164,7 +163,7 @@
  <a href="/copyright" title="copyright">copyright</a>
     <xsl:text disable-output-escaping="yes">&amp;nbsp;|&amp;nbsp;</xsl:text>
  <a href="/disclaimer" title="disclaimer and privacy statement" accesskey="8">disclaimer and privacy statement</a>
-    <xsl:text disable-output-escaping="yes">&amp;nbsp;|&amp;</xsl:text>
+    <xsl:text disable-output-escaping="yes">&amp;nbsp;|&amp;nbsp;</xsl:text>
  <a href="/contact" title="contact" accesskey="9">contact</a>
     <xsl:text disable-output-escaping="yes">&amp;nbsp;|&amp;nbsp;</xsl:text>
  <a href="/accessibility" title="accessibility statement" accesskey="0">accessibility</a>
@@ -188,13 +187,6 @@
 </xsl:template>
 
 
-
-
-
-
-
-
-
 <xsl:template name="pageContent">
 <a class="intLink" name="top" />
 <xsl:choose>
@@ -203,6 +195,8 @@
   <xsl:apply-templates select="cms:contentPanel/cms:item"/>
   <xsl:call-template name="fileAttachments" />
   <xsl:call-template name="associatedLinks" />
+  <font family="arial">
+  </font>
 </xsl:when>
 <!-- A-Z -->
 <xsl:when test="cms:alphabetNavigation">

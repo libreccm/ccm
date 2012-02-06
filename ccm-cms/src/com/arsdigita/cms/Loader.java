@@ -196,40 +196,24 @@ public class Loader extends PackageLoader {
      * Loads and instantiates the Workspace subpackage (content-center) in the
      * database.
      * It is made public to be able to invoke it from the update script
-     * (e.g. 6.6.1-6.6.2).
+     * (e.g. 6.6.1-6.6.2). We need separate steps for loading and instantiating
+     * because update skript require.
      */
     public static ApplicationType loadWorkspaceApplicationType() {
         s_log.debug("Creating CMS Workspace...");
 
-//      Creating of Workspace package using new style c.ad.web.Application 
-//      in legacy compatible mode. Needs refactoring of the Workspace package.
-//      In a first step these instructions replace c.ad.installer.WorkspaceInstaller
+//      //////////////    Current style to create app type    ///////////////
+        /* Create new stype legacy compatible application type               */
+        ApplicationType type =  ApplicationType
+                                .createApplicationType(Workspace.PACKAGE_KEY,
+                                                       Workspace.INSTANCE_NAME,
+                                                       Workspace.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("The content center workspace for content creators.");
+        type.setDispatcherClass(Workspace.DISPATCHER_CLASS);
+        type.save();
 
-        // create application type
-        ApplicationSetup appsetup = new ApplicationSetup(s_log);
-        // new style properties
-        appsetup.setApplicationObjectType(Workspace.BASE_DATA_OBJECT_TYPE);
-        appsetup.setTitle(Workspace.INSTANCE_NAME);  // same as for instance
-        // there is only one
-        appsetup.setDescription("The content center workspace for content creators.");
-        // old style / legacy compatible properties
-        appsetup.setKey(Workspace.PACKAGE_KEY);
-        appsetup.setDispatcherClass(Workspace.DISPATCHER_CLASS);
-        // should not be needed anymore, stypesheets handled by StylesheetResolver
-        appsetup.setSingleton(true);
-        appsetup.setPortalApplication(false);
-        appsetup.setInstantiator(new ACSObjectInstantiator() {
-            @Override
-            protected DomainObject doNewInstance(DataObject dataObject) {
-                return new Workspace(dataObject);
-            }
-        });
-
-        ApplicationType workspaceType = appsetup.run();
-        workspaceType.save();
         s_log.debug("CMS Workspace type created.");
-
-        return workspaceType;
+        return type;
     }
 
     /**
@@ -242,14 +226,14 @@ public class Loader extends PackageLoader {
         // old-style package key used as url fragment where to install the instance
         s_log.debug("Creating CMS Workspace instance ...");
         Workspace app = (Workspace) Application.createApplication(
-                workspaceType, // type
+                Workspace.BASE_DATA_OBJECT_TYPE, // type
                 Workspace.PACKAGE_KEY, // url fragment
                 Workspace.INSTANCE_NAME,// title
                 null);                  // parent
         app.setDescription("The default CMS workspace instance.");
         app.save();
-        s_log.debug("CMS Workspace instance " + Workspace.PACKAGE_KEY + " created.");
 
+        s_log.debug("CMS Workspace instance " + Workspace.PACKAGE_KEY + " created.");
         s_log.debug("Done loading CMS Workspace.");
     }
 
@@ -269,25 +253,34 @@ public class Loader extends PackageLoader {
 //      In a first step these instructions replace c.ad.installer.ServiceInstaller
 
         // create application type
-        ApplicationSetup appsetup = new ApplicationSetup(s_log);
-        // new style properties
-        appsetup.setApplicationObjectType(Service.BASE_DATA_OBJECT_TYPE);
-        appsetup.setTitle(Service.INSTANCE_NAME);  // same as for instance
+//      ApplicationSetup appsetup = new ApplicationSetup(s_log);
+//      // new style properties
+//      appsetup.setApplicationObjectType(Service.BASE_DATA_OBJECT_TYPE);
+//      appsetup.setTitle(Service.INSTANCE_NAME);  // same as for instance
         // there is only one
-        appsetup.setDescription("Services to store global resources and assets.");
+//      appsetup.setDescription("Services to store global resources and assets.");
         // old style / legacy compatible properties
-        appsetup.setKey(Service.PACKAGE_KEY);
-        appsetup.setDispatcherClass(Service.DISPATCHER_CLASS);
-        appsetup.setSingleton(true);
-        appsetup.setPortalApplication(false);
-        appsetup.setInstantiator(new ACSObjectInstantiator() {
-            @Override
-            protected DomainObject doNewInstance(DataObject dataObject) {
-                return new Service(dataObject);
-            }
-        });
+//      appsetup.setKey(Service.PACKAGE_KEY);
+//      appsetup.setDispatcherClass(Service.DISPATCHER_CLASS);
+//      appsetup.setSingleton(true);
+//      appsetup.setPortalApplication(false);
+//      appsetup.setInstantiator(new ACSObjectInstantiator() {
+//          @Override
+//          protected DomainObject doNewInstance(DataObject dataObject) {
+//              return new Service(dataObject);
+//          }
+//      });
 
-        ApplicationType serviceType = appsetup.run();
+//      ApplicationType serviceType = appsetup.run();
+//      serviceType.save();
+//      //////////////    Current style to create app type    ///////////////
+        /* Create new stype legacy compatible application type               */
+        ApplicationType serviceType =  ApplicationType
+                                .createApplicationType(Service.PACKAGE_KEY,
+                                                       Service.INSTANCE_NAME,
+                                                       Service.BASE_DATA_OBJECT_TYPE);
+        serviceType.setDescription("Services to store global resources and assets.");
+        serviceType.setDispatcherClass(Service.DISPATCHER_CLASS);
         serviceType.save();
 
         return serviceType;
@@ -334,34 +327,12 @@ public class Loader extends PackageLoader {
         // Step 1: Create content section application type
         //         prerequisite for concrete content-section instance creation.
         
-//      //////////////    Deprecated style to create app type    ///////////////
-//      //////////////  Delete when migration process completed  ///////////////
-//      ApplicationSetup appType = new ApplicationSetup(s_log);
-//      appType.setApplicationObjectType(ContentSection.BASE_DATA_OBJECT_TYPE);
-//      appType.setKey(ContentSection.PACKAGE_TYPE); // by default: content-section
-//      appType.setTitle("CMS Content Section");
-//      appType.setDescription("A CMS Content Section");
-//      appType.setPortalApplication(false);
-        //setup.setDispatcherClass(ContentItemDispatcher.class.getName());
-        // contains the xsl to generate the page
 
-        // ApplicationSetup requires an Instantiator which has to be set here
-        // Setting it up in Initializer prior to creating the application type
-        // doesn't work!
-//      appType.setInstantiator(new ACSObjectInstantiator() {
-//          @Override
-//          public DomainObject doNewInstance(DataObject dataObject) {
-//              return new ContentSection(dataObject);
-//         }
-//       });
-//      appType.run();
-//      ////////////////////////////////////////////////////////////////////////
-
-        /* Create new stype legacy compatible application type               */
-        ApplicationType type =  ApplicationType
-                                .createApplicationType(ContentSection.PACKAGE_TYPE,
-                                                       "CMS Content Section",
-                                                       ContentSection.BASE_DATA_OBJECT_TYPE);
+        /* Create new type legacy compatible application type               */
+//      ApplicationType type =  ApplicationType
+//                              .createApplicationType(ContentSection.PACKAGE_TYPE,
+//                                                     "CMS Content Section",
+//                                                     ContentSection.BASE_DATA_OBJECT_TYPE);
 
         /* Create legacy-free application type                               
          * NOTE: The wording in the title parameter of ApplicationType
@@ -370,10 +341,10 @@ public class Loader extends PackageLoader {
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
          * "Content Section" will become "content-section".                               */
-//      ApplicationType type = new ApplicationType( 
-//                                     "Content Section",
-//                                      ContentSection.BASE_DATA_OBJECT_TYPE );
-        type.setDescription("A CMS Content Section.");
+        ApplicationType type = new ApplicationType( 
+                                       "Content Section",
+                                        ContentSection.BASE_DATA_OBJECT_TYPE );
+        type.setDescription("The CMS Content Section application.");
         type.save();
         
         // Step 2: Load CMS specific privileges into central (core) privilege

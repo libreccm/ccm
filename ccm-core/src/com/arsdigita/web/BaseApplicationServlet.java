@@ -30,7 +30,6 @@ import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.sitenode.SiteNodeRequestContext;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.web.Application;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -84,8 +84,8 @@
         <ccm:application name="ccm-portalserver"/>
 
 <!--   LDN extension  -->
-<!--    temporyrily excluded because configuration has to be cleared
-        <ccm:application name="ccm-ldn-rss"/>                        
+<!--    temporarily excluded because configuration issues have to be resolved
+        <ccm:application name="ccm-rssfeed"/>                        
 -->
 
 <!--   SCI extension  -->
@@ -104,7 +104,7 @@
 <!--    Scientific CMS   potential ADD-ONS packages                          -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
-<!--   Content Types   -->
+<!--  CMS Content Types  -->
 <!--    
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
@@ -121,7 +121,7 @@
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 -->
 
-<!--   Applications   -->
+<!--  Applications   -->
 <!--
         <ccm:application name="ccm-auth-http"/>
         <ccm:application name="ccm-bookmarks"/>
@@ -151,8 +151,10 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->
-<!--    Without known funcionality
-        <ccm:application name="ccm-cms-types-motditem"/>             -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/> 
+        Current code does not include any xsl templates, conent type does not
+        appear in the list of types in content center. 
+        For the moment no longer supported (2012-02-06)                      -->
 
 <!--   Applications   -->
 <!--    currently doesn't work for unknown reason

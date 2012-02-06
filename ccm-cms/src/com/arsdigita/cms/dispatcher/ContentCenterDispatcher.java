@@ -76,7 +76,7 @@ public class ContentCenterDispatcher extends LockableImpl
      * The path of the file that maps resources.
      */
     public final static String DEFAULT_MAP_FILE =
-                               "/WEB-INF/resources/content-center-map.xml";
+                               "/WEB-INF/resources/content-center-old-map.xml";
 
     /**
      * Error logging.
@@ -138,7 +138,8 @@ public class ContentCenterDispatcher extends LockableImpl
         }
 
         // Check user access.
-        checkUserAccess(request, response, actx);
+   //   checkUserAccess(request, response, actx);
+        checkUserAccess(request, response);
 
         ResourceHandler page = getResource(url);
         if ( page != null ) {
@@ -171,7 +172,8 @@ public class ContentCenterDispatcher extends LockableImpl
      * creating virtual directories, so that relative URLs and redirects
      * work.
      */
-    public void requireTrailingSlash(String url) {
+    // public void requireTrailingSlash(String url) {
+    private void requireTrailingSlash(String url) {
         m_trailingSlashList.add(url);
     }
 
@@ -266,8 +268,9 @@ public class ContentCenterDispatcher extends LockableImpl
      * @param actx     The request context
      **/
     protected void checkUserAccess(final HttpServletRequest request,
-                                   final HttpServletResponse response,
-                                   final RequestContext actx)
+                                   final HttpServletResponse response  // ,
+                                   // final RequestContext actx
+                                   )
             throws ServletException {
         if (!Web.getUserContext().isLoggedIn()) {
             throw new LoginSignal(request);

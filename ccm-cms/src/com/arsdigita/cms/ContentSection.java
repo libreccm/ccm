@@ -250,47 +250,10 @@ public class ContentSection extends Application {
         set(NAME, name);
     }
 
-//  Left-over from content section as old-style application based on kernel
-//  PackageType and Sitenode instead on new style web.Application.  
-//  Retained for reference purpose until the packages Workspace and Service are
-//  migrated to new style application as well.
-//  /**
-//   * Get the package instance for this content section. Each section is
-//   * associated with exactly one package instance.
-//   *
-//   * @return the package instance associated with this content section.
-//   * @post return != null
-//   */
-//    public PackageInstance getPackageInstance() {
-//        DataObject pkg = (DataObject) get(PACKAGE);
-//        Assert.exists(pkg, "package instance");
-//        return new PackageInstance(pkg);
-//    }
-//
-//  /**
-//   * Set the package instance for this content section.
-//   *
-//   * @param pkg The package instance
-//   * @pre ( pkg != null )
-//   */
-//    protected void setPackageInstance(PackageInstance pkg) {
-//        Assert.exists(pkg, "package instance");
-//        setAssociation(PACKAGE, pkg);
-//    }
-//
-//  /**
-//   * Fetch the site node on which the content section is mounted.
-//   * A content section should be mounted on exactly one site node. If it
-//   * is mounted on more than one site node, only the first site node will
-//   * be returned.
-//   *
-//   * @return The site node
-//   */
-//    public SiteNode getSiteNode() {
-//        return getPackageInstance().getDefaultMountPoint();
-//    }
     /**
-     * Finds the location of the content section.
+     * Finds the location of the content section from the HTTP request. Therefore
+     * it contains the static prefix (if one is configured, "ccm" by default)
+     * and must not be used to construct an url for internal links!
      *
      * @return The URL of the site node on which the content section is mounted.
      *   This URL includes the webapp context path.
@@ -316,7 +279,10 @@ public class ContentSection extends Application {
     }
 
     /**
-     * Gets the full path of the content section.
+     * Gets the full path of the content section from the dispatcher 
+     * 
+     * Currently a guess: It includes the static dispatcher prefix 
+     * (if any is configured, "ccm" by default).
      *
      * @return returns the path of this application including the dispatcher path.
      *         The path does not end in a slash.  Does not return null
@@ -325,16 +291,6 @@ public class ContentSection extends Application {
         return URL.getDispatcherPath() + getPath();
     }
 
-//  Left over, see above
-//    public final String getPath() {
-//        final String path = getSiteNode().getURL();
-//
-//        if (Assert.isEnabled()) {
-//            Assert.isTrue(path.endsWith("/"));
-//        }
-//
-//        return path.substring(0, path.length() - 1);
-//    }
     /**
      * Get the folder in which all draft items are contained, directly or
      * indirectly. This folder will in general contain different kinds of

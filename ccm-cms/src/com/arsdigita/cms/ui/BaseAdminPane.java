@@ -86,11 +86,11 @@ public abstract class BaseAdminPane extends SelectionPanel
         super(title, builder);
     }
 
-    protected final static GlobalizedMessage gz(final String key) {
+    protected static GlobalizedMessage gz(final String key) {
         return GlobalizationUtil.globalize(key);
     }
 
-    protected final static String lz(final String key) {
+    protected static String lz(final String key) {
         return (String) gz(key).localize();
     }
 }

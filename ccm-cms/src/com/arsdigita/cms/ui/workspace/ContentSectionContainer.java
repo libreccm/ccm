@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.ui;
+package com.arsdigita.cms.ui.workspace;
 
 
 import java.math.BigDecimal;
@@ -44,12 +44,11 @@ import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.PageLocations;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.ui.CMSContainer;
 import com.arsdigita.cms.ui.authoring.NewItemForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -59,12 +58,11 @@ import com.arsdigita.web.Web;
 
 /**
  * Displays all the content sections in table, with links to the admin
- * and public pages. Also displays a form for each content section to
- * create an object of a given type. The list of available types is
- * retrieved for each content section.
+ * (and in legacy mode to legacy public pages as well). Also displays a form for 
+ * each content section to create an object of a given type. The list of 
+ * available types retrieved for each content section.
  *
  * <p>
- *
  * This class is a container for two other components: a form and a
  * table. The form represents the drop down list of the content types
  * available in a particular content section. It is an extension of
@@ -110,11 +108,15 @@ public class ContentSectionContainer extends CMSContainer {
         add(m_table);
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
        	p.setVisibleDefault(m_formContainer, false);
     }
 
+    /**
+     * 
+     */
     private class FormContainer extends CMSContainer {
 
         private StaticNewItemForm m_form;
@@ -145,32 +147,36 @@ public class ContentSectionContainer extends CMSContainer {
                             folder = section.getRootFolder();
                         }
 
-                        if (! sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder)) {
-                            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.insufficient_privileges").localize());
+                        if (! sm.canAccess(state.getRequest(), 
+                                           SecurityManager.NEW_ITEM, folder)) {
+                            throw new FormProcessException( 
+                                  (String) GlobalizationUtil.globalize(
+                                  "cms.ui.insufficient_privileges").localize());
                         }
                     }
                 });
 
             m_form.addProcessListener(new FormProcessListener() {
-                    /**
-                     * Process listener: redirects to the authoring kit to create a new item.
-                     */
-                    public void process(FormSectionEvent e) throws FormProcessException {
-                        StaticNewItemForm form = (StaticNewItemForm) e.getSource();
-                        PageState state = e.getPageState();
+                /**
+                 * Process listener: redirects to the authoring kit to create a new item.
+                 */
+                public void process(FormSectionEvent e) throws FormProcessException {
+                    StaticNewItemForm form = (StaticNewItemForm) e.getSource();
+                    PageState state = e.getPageState();
 
-                        BigDecimal typeId = form.getTypeID(state);
-                        if( typeId != null ) {
-                            BigDecimal sectionId = form.getContentSectionID(state);
-                            m_sectionSel.setSelectedKey(state, sectionId);
-                            m_typeSel.setSelectedKey(state, typeId);
-                        }
+                    BigDecimal typeId = form.getTypeID(state);
+                    if( typeId != null ) {
+                        BigDecimal sectionId = form.getContentSectionID(state);
+                        m_sectionSel.setSelectedKey(state, sectionId);
+                        m_typeSel.setSelectedKey(state, typeId);
                     }
-                });
+                }
+            });
 
             add(m_form);
         }
 
+        @Override
         public void register(Page p) {
             super.register(p);
             p.addComponentStateParam(this, m_sectionIdParam);
@@ -272,6 +278,8 @@ public class ContentSectionContainer extends CMSContainer {
          **/
         private ContentSectionTable() {
             super();
+            
+            Integer colNo = 0;
 
             Label emptyView = new Label
                 ("There are currently no content sections installed.");
@@ -282,16 +290,20 @@ public class ContentSectionContainer extends CMSContainer {
 
             // add columns to the table
             TableColumnModel columnModel = getColumnModel();
-            TableColumn contentSectionColumn = new TableColumn(0, COLUMN_SECTION);
-            TableColumn locationColumn = new TableColumn(1, COLUMN_LOCATION);
-            TableColumn actionColumn = new TableColumn(2, COLUMN_ACTION);
-
+            
+            TableColumn contentSectionColumn = new TableColumn(colNo, COLUMN_SECTION);
             contentSectionColumn.setCellRenderer(new AdminURLTableCellRenderer());
-            locationColumn.setCellRenderer(new URLTableCellRenderer());
-            actionColumn.setCellRenderer(new ActionTableCellRenderer());
-
             columnModel.add(contentSectionColumn);
-            columnModel.add(locationColumn);
+
+            if( !ContentSection.getConfig().getHideLegacyPublicSiteLink() )  {
+                TableColumn locationColumn = new TableColumn(colNo ++, 
+                                                             COLUMN_LOCATION);
+                locationColumn.setCellRenderer(new URLTableCellRenderer());
+                columnModel.add(locationColumn);
+            }
+
+            TableColumn actionColumn = new TableColumn(colNo ++, COLUMN_ACTION);
+            actionColumn.setCellRenderer(new ActionTableCellRenderer());
             columnModel.add(actionColumn);
 
             setModelBuilder(new ContentSectionTableModelBuilder());
@@ -346,7 +358,7 @@ public class ContentSectionContainer extends CMSContainer {
              * table. This implementation orders the content sections by
              * <code>lower(label)</code>.
              **/
-            protected ContentSectionCollection getContentSectionCollection() {
+            private ContentSectionCollection getContentSectionCollection() {
                 ContentSectionCollection sections = ContentSection.getAllSections();
                 sections.addOrder("lower(label)");
                 return sections;
@@ -433,8 +445,14 @@ public class ContentSectionContainer extends CMSContainer {
                 SecurityManager sm = new SecurityManager(section);
 
                 if (! sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder) 
-                		|| !ContentSection.getConfig().getAllowContentCreateInSectionListing()) {
-                    return new Label("&nbsp;", false);
+                    || !ContentSection.getConfig().getAllowContentCreateInSectionListing()
+                   ) {
+                    return new Label("&nbsp;&nbsp;&nbsp;-&nbsp;-&nbsp;&nbsp;&nbsp;"+
+                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ 
+                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ 
+                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ 
+                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", 
+                                     false);
                 } else {
                     // set the value of the sectionIdParameter in the form
                     // to this section
@@ -454,70 +472,43 @@ public class ContentSectionContainer extends CMSContainer {
      **/
     public static class URLTableCellRenderer implements TableCellRenderer {
 
-        private static final String URL_STUB = "/";
-
         /**
          * The object passed in is the current content section. This
          * returns a Link whose name and target are the url to the
          * public pages.
-         **/
-        public Component getComponent(Table table, PageState state, Object value,
-                                      boolean isSelected, Object key,
-                                      int row, int column) {
+         * 
+         * @return Link whose name and target are the url to the public pages
+         *         of the current (passed in) content section
+         *         or a Label if current use does not habe acces priviledge
+         *         for the content section
+         */
+        public Component getComponent(Table table, 
+                                      PageState state, 
+                                      Object value,
+                                      boolean isSelected, 
+                                      Object key,
+                                      int row, 
+                                      int column) {
+
+            /* cast to ContentSection for further processing                  */
             ContentSection section = (ContentSection) value;
-            String baseUrl = getBaseURL();
             String name = section.getName();
+            String path = section.getPath() ; // from Application
+            
 
             // If the user has no access, return a Label instead of a Link
             SecurityManager sm = new SecurityManager(section);
 
-            if (sm.canAccess(state.getRequest(), SecurityManager.PUBLIC_PAGES)) {
-                return new Link(baseUrl + name + "/", baseUrl + generateURL(name));
+            if (sm.canAccess(state.getRequest(), SecurityManager.PUBLIC_PAGES)
+                && !ContentSection.getConfig().getHideLegacyPublicSiteLink() 
+               ) {
+                
+                return new Link("/"+name+"/", path+"/");
             } else {
-                return new Label(baseUrl + name + "/", false);
+                return new Label("/"+name+"/", false);
             }
         }
 
-        /**
-         * Trims leading slashes, if any, on the specified string.
-         *
-         * @param string The string for which we want to remove
-         * leading slashes
-         **/
-        protected String trimSlashes(String string) {
-            while (string != null && string.length() > 0 &&
-                   string.charAt(0) == '/') {
-                string = string.substring(1);
-            }
-            return string;
-        }
-
-        /**
-         * Generates the url for the specified prefix. Always returns
-         * something that does not start with a forward slash.
-         *
-         * @param prefix The prefix of the URL
-         **/
-        protected String generateURL(String prefix) {
-            return trimSlashes(prefix) + URL_STUB;
-        }
-
-        /**
-         * Returns the current url stub from the webapp context and
-         * the requested site node. Always returns something that ends
-         * with a forward slash.
-         **/
-        protected String getBaseURL() {
-            // Generate the base URL stub.
-            StringBuffer buf = new StringBuffer(15);
-            buf.append(Utilities.getWebappContext())
-                .append(SiteNode.getRootSiteNode().getURL());
-            String url = buf.toString();
-            if (url.endsWith("/")) {
-                return url;
-            }
-            return url + "/";
-        }
     }
 
 
@@ -532,6 +523,7 @@ public class ContentSectionContainer extends CMSContainer {
         /**
          * The object passed in is the current content section
          **/
+        @Override
         public Component getComponent(Table table, PageState state, Object value,
                                       boolean isSelected, Object key,
                                       int row, int column) {

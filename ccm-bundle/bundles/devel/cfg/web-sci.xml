@@ -220,20 +220,20 @@
     <servlet-class>com.arsdigita.dispatcher.PortletTypeXSLServlet</servlet-class>
   </servlet>
  
-  <!-- module ccm-ldn-rss  -  servlet declaration BEGIN   -->
+  <!-- module ccm-rssfeed  -  servlet declaration BEGIN   -->
   <servlet>
-    <servlet-name>rss-files</servlet-name>
+    <servlet-name>rssfeed-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-rss</param-value>
+      <param-value>/templates/ccm-rssfeed</param-value>
     </init-param>
     <init-param>
       <param-name>file-resolver</param-name>
-      <param-value>com.arsdigita.london.rss.RSSFileResolver</param-value>
+      <param-value>com.arsdigita.rssfeed.RSSFileResolver</param-value>
     </init-param>
   </servlet>
-  <!-- module ccm-ldn-rss  -  servlet declaration END   -->
+  <!-- module ccm-rssfeed  -  servlet declaration END   -->
 
   <!-- module ccm-ldn-search  -  servlet declarations BEGIN   -->
   <servlet>
@@ -347,11 +347,12 @@
     <url-pattern>/ccm-navigation/files/*</url-pattern>
   </servlet-mapping>
 
-  <!-- module ccm-ldn-rss  -  servlet mappings   -->
+  <!-- module ccm-rssfeed  -  servlet mappings  BEGIN   -->
   <servlet-mapping>
-    <servlet-name>rss-files</servlet-name>
-    <url-pattern>/ccm-ldn-rss/files/*</url-pattern>
+    <servlet-name>rssfeed-files</servlet-name>
+    <url-pattern>/ccm-rssfeed/files/*</url-pattern>
   </servlet-mapping>
+  <!-- module ccm-rssfeed  -  servlet mappings  END   -->
 
   <!-- module ccm-ldn-search  -  servlet mappings BEGIN  -->
   <servlet-mapping>
@@ -420,7 +421,7 @@
 
   <servlet-mapping>
     <servlet-name>legacy-adapter</servlet-name>
-    <url-pattern>/themes/servlet/legacy-adapter/*</url-pattern>
+    <url-pattern>/templates/servlet/legacy-adapter/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -460,7 +461,7 @@
 
   <servlet-mapping>
     <servlet-name>content-item-xsl</servlet-name>
-    <url-pattern>/themes/servlet/content-item/*</url-pattern>
+    <url-pattern>/templates/servlet/content-item/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

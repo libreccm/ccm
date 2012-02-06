@@ -1,5 +1,4 @@
 <%@ taglib uri="/WEB-INF/jsp-template.tld" prefix="acs" %>
-
 <!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>

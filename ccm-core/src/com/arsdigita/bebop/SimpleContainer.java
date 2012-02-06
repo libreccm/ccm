@@ -161,6 +161,7 @@ public class SimpleContainer extends BlockStylable implements Container {
      * Returns all the components of this container.
      * @return all the components of this container.
      */
+    @Override
     public Iterator children() {
         return m_components.iterator();
     }

@@ -421,7 +421,7 @@
 
   <servlet-mapping>
     <servlet-name>legacy-adapter</servlet-name>
-    <url-pattern>/themes/servlet/legacy-adapter/*</url-pattern>
+    <url-pattern>/templates/servlet/legacy-adapter/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -461,7 +461,7 @@
 
   <servlet-mapping>
     <servlet-name>content-item-xsl</servlet-name>
-    <url-pattern>/themes/servlet/content-item/*</url-pattern>
+    <url-pattern>/templates/servlet/content-item/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

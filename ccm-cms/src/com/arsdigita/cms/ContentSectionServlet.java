@@ -33,6 +33,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObjectCache;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelContext;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.AbstractTransactionListener;
@@ -41,8 +42,10 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.Classes;
 import com.arsdigita.versioning.Versions;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationFileResolver;
 import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.Web;
@@ -55,62 +58,129 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-/**
- * Content Section's application servlet
- * 
+/*
+ * NOTE:
  * Repaired ItemURLCache to save multilingual items with automatic
- * language negotiation. The cahce now uses the remaining url part
+ * language negotiation. The cache now uses the remaining url part
  * and the language concatinated as a hash table key. The delimiter
  * is CACHE_KEY_DELIMITER.
+ */
+
+/*
+ * NOTE 2:
+ * In a process of refactoring from legacy compatible to legacy free applications.
+ * TODO:
+ * - replace url check using RequestContext which resolves to SiteNodeRequest
+ *   implementation
+ * - Refactor content item UI bebop ApplicationPage or PageFactory instead of
+ *   legacy infected sitenode / package dispatchers.
+ */
+
+/**
+ * Content Section's Application Servlet according CCM core web application
+ * structure {@see com.arsdigita.web.Application}  implements the content
+ * section UI.
+ * 
+ * It handles the UI for content items and delegates the UI for sections and
+ * folders to jsp templates.
  * 
  * @author unknown
  * @author Sören Bernstein <sbernstein@quasiweb.de>
+ * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  */
 
 public class ContentSectionServlet extends BaseApplicationServlet {
 
+    /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log =
-        Logger.getLogger(ContentSectionServlet.class);
+                                Logger.getLogger(ContentSectionServlet.class);
 
-    /** Stringarray of file name patterns for index files. Should be made
-        configurable.                                                        */
+    /** Stringarray of file name patterns for index files.                   */
     private static final String[] WELCOME_FILES = new String[] {
         "index.jsp", "index.html"
     };
-
-    private ContentItemDispatcher m_disp = new ContentItemDispatcher();
-    public static Map s_itemResolverCache = Collections
-                                            .synchronizedMap(new HashMap());
-
-    /** cache the content items                                              */
-    private static Map s_itemURLCacheMap = null;
-
-    /** The context for previewing items                                      */
+    /** The context (in url) for previewing items                            */
     public static final String PREVIEW = "/preview";
+    /** Template files                                                       */
     public static final String FILE_SUFFIX = ".jsp";
     public static final String INDEX_FILE = "/index";
     public static final String CONTENT_ITEM =
-        "com.arsdigita.cms.dispatcher.item";
+                               "com.arsdigita.cms.dispatcher.item";
     public static final String CONTENT_SECTION =
-        "com.arsdigita.cms.dispatcher.section";
+                               "com.arsdigita.cms.dispatcher.section";
     public static final String XML_SUFFIX = ".xml";
     public static final String XML_MODE = "xmlMode";
     public static final String MEDIA_TYPE = "templateContext";
-
-    private static boolean s_cacheItems = true;
     
     private static final String CACHE_KEY_DELIMITER = "%";
 
+
+    private ContentItemDispatcher m_disp = new ContentItemDispatcher();
+
+    public static Map s_itemResolverCache = Collections
+                                            .synchronizedMap(new HashMap());
+    /** cache the content items                                              */
+    private static Map s_itemURLCacheMap = null;
+    private static boolean s_cacheItems = true;
+
+    /** Path to directory containg ccm-cms template files                    */
+    private String m_templatePath;
+    /** Resolvers to find templages (JSP) and other stuff stored in file system.*/
+    private ApplicationFileResolver m_resolver;
+
     /**
-     * Implements the service method of BaseApplicationServlet
-     * @see com.arsdigita.web.BaseApplicationServlet#doService
-     *      (HttpServletRequest, HttpServletResponse, Application)
+     * Init method overwrites parents init to pass in optional parameters
+     * {@link com.arsdigita.web.BaseServlet}.
+     * If not specified system wide defaults are used.
+     */
+    @Override
+    public void init(ServletConfig config)  throws ServletException {
+
+        super.init(config);
+
+
+        // optional init-param named template-path from ~/WEB-INF/web.xml
+        String templatePath = config.getInitParameter("template-path");
+        if (templatePath == null) {
+            m_templatePath = ContentSection.getConfig().getTemplateRoot();
+        } else {
+            m_templatePath = config.getInitParameter("template-path");
+        }
+
+        Assert.exists(m_templatePath, String.class);
+        Assert.isTrue(m_templatePath.startsWith("/"),
+                     "template-path must start with '/'");
+        Assert.isTrue(!m_templatePath.endsWith("/"),
+                     "template-path must not end with '/'");
+
+        
+        // optional init-param named file-resolver from ~/WEB-INF/web.xml
+        String resolverName = config.getInitParameter("file-resolver");
+        if (resolverName == null) {
+            m_resolver = Web.getConfig().getApplicationFileResolver();
+        } else {
+            m_resolver = (ApplicationFileResolver)Classes.newInstance(resolverName);
+        }
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Template path is " + m_templatePath +
+                        " with resolver " + m_resolver.getClass().getName());
+        }
+    }
+
+    /**
+     * Implementation of parent's (abstract) doService method checks HTTP request
+     * to determine whether to handle a content item or other stuff which is
+     * delegated to jsp templates.
+     * 
+     * {@see com.arsdigita.web.BaseApplicationServlet#doService
+     *      (HttpServletRequest, HttpServletResponse, Application)}
      */
     protected void doService( HttpServletRequest sreq, 
                               HttpServletResponse sresp, 
@@ -118,9 +188,13 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                    throws ServletException, IOException {
 
         ContentSection section = (ContentSection) app;
-
-        RequestContext ctx = DispatcherHelper.getRequestContext();
         
+        String requestUri = sreq.getRequestURI();
+        /*
+         * NOTE:
+         * Resolves currently to SiteNodeRequestContext which will be removed.
+         */
+        RequestContext ctx = DispatcherHelper.getRequestContext();        
         String url = ctx.getRemainingURLPart();  // here SiteNodeRequestContext
 
         if (s_log.isInfoEnabled()) {
@@ -161,38 +235,13 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             if (s_log.isInfoEnabled()) {
                 s_log.info("NOT serving content item");
             }
+            
+            /* Store content section in http request to make it available
+             * or admin index,jsp                                             */
             sreq.setAttribute(CONTENT_SECTION, section);
 
-            String packageURL = ctx.getPageBase() + 
-                ctx.getRemainingURLPart();
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Forwarding onto file " + packageURL);
-            }
-            if (packageURL.endsWith("/")) {
-                for (int i = 0 ; i < WELCOME_FILES.length ; i++) {
-                    if (s_log.isDebugEnabled()) {
-                        s_log.debug("Trying welcome resource " + 
-                                    packageURL + WELCOME_FILES[i]);
-                    }
-
-                    RequestDispatcher rd = 
-                        DispatcherHelper.getRequestContext(sreq).
-                        getServletContext().getRequestDispatcher(packageURL + WELCOME_FILES[i]);
-                    if (rd != null && 
-                        DispatcherHelper.getRequestContext(sreq).
-                        getServletContext().getResource(packageURL + WELCOME_FILES[i]) != null) {
-                        if (s_log.isDebugEnabled()) {
-                            s_log.debug("Got dispatcher " + rd);
-                        }
-                        sreq = DispatcherHelper.restoreOriginalRequest(sreq);
-                        rd.forward(sreq,sresp);
-                        return;
-                    }
-                }
-            } 
-            RequestDispatcher rd = 
-                DispatcherHelper.getRequestContext(sreq).
-                getServletContext().getRequestDispatcher(packageURL);
+            RequestDispatcher rd = m_resolver.resolve(m_templatePath,
+                                                      sreq, sresp, app);
             if (rd != null) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Got dispatcher " + rd);
@@ -200,7 +249,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 sreq = DispatcherHelper.restoreOriginalRequest(sreq);
                 rd.forward(sreq,sresp);
             } else {
-                sresp.sendError(404, packageURL + " not found on this server.");
+            //  sresp.sendError(404, packageURL + " not found on this server.");
+                sresp.sendError(404, requestUri + " not found on this server.");
             }
         }
     }
@@ -284,6 +334,17 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         //use ContentItemDispatcher
         m_disp.dispatch(sreq,sresp,ctx);
     }
+    
+    /**
+     * Fetches the content section from the request attributes.
+     *
+     * @param request The HTTP request
+     * @return The content section
+     * @pre ( request != null )
+     */
+    public static ContentSection getContentSection(HttpServletRequest request) {
+        return (ContentSection) request.getAttribute(CONTENT_SECTION);
+    }
 
     /**
      * Fetches the ItemResolver for a content section. Checks cache first.
@@ -308,6 +369,9 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         return ir;
     }
 
+    /**
+     * 
+     */
     public ContentItem getItem(ContentSection section, String url,
                                ItemResolver itemResolver) {
 
@@ -540,4 +604,25 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             
         }
     }
+
+    /**
+     * Checks that the current user has permission to access the admin pages.
+     **/
+    public static boolean checkAdminAccess(HttpServletRequest request,
+                                           ContentSection section) {
+
+        User user ;
+        KernelContext kernelContext = Kernel.getContext();
+        if ( kernelContext.getParty() instanceof User ) {
+            user = (User) kernelContext.getParty();
+        } else {
+            // Should not happen, at this stage the user has to be logged in.
+            return false;
+        }
+        
+        SecurityManager sm = new SecurityManager(section);
+
+        return sm.canAccess(user, SecurityManager.ADMIN_PAGES);
+    }
+
 }

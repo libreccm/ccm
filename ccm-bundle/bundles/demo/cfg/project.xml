@@ -141,8 +141,10 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->
-<!--    Without known funcionality
-        <ccm:application name="ccm-cms-types-motditem"/>             -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/> 
+        Current code does not include any xsl templates, conent type does not
+        appear in the list of types in content center. 
+        For the moment no longer supported (2012-02-06)                      -->
 
 <!--   Applications   -->
 <!--    currently doesn't work for unknown reason

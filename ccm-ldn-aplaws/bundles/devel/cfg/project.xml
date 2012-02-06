@@ -50,7 +50,10 @@
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
         <ccm:application name="ccm-cms-types-minutes"/>
-        <!-- Currently no known function                     -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/> 
+        Current code does not include any xsl templates, conent type does not
+        appear in the list of types in content center. 
+        For the moment no longer supported (2012-02-06)                      -->
         <ccm:application name="ccm-cms-types-motditem"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>

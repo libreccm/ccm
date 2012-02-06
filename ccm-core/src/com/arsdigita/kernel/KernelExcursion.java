@@ -39,12 +39,9 @@ import java.util.Locale;
  *
  *      rootExcursion.run();
  * </code>
+ * @version $Id: KernelExcursion.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class KernelExcursion implements Runnable {
-    public static final String versionId =
-        "$Id: KernelExcursion.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (KernelExcursion.class);

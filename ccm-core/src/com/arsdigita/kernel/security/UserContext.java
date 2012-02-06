@@ -482,14 +482,14 @@ public class UserContext {
      * parameter values are doubly-encoded so that they are decoded
      * appropriately.
      *
-     * @deprecated This should be moved to a more appropriate class.
      *
      * @param req the request to encode
      *
      * @return the URL-encoded parameter
+     * @deprecated This should be moved to a more appropriate class.
      */
     public static String encodeReturnURL(HttpServletRequest req) {
-        StringBuffer returnURL = new StringBuffer(100);
+        StringBuilder returnURL = new StringBuilder(100);
         returnURL.append(Web.getContext().getRequestURL().getRequestURI());
         returnURL.append('?');
 

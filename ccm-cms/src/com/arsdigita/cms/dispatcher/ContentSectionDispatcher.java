@@ -25,6 +25,8 @@ import com.arsdigita.dispatcher.Dispatcher;
 import com.arsdigita.dispatcher.DispatcherChain;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelContext;
 import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.User;
 import com.arsdigita.sitenode.SiteNodeRequestContext;
@@ -41,7 +43,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Karl Goldstein (karlg@arsdigita.com)
  * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: ContentSectionDispatcher.java 2090 2010-04-17 08:04:14Z pboy $ 
- **/
+ */
 public class ContentSectionDispatcher implements Dispatcher {
 
     public static final String CONTENT_ITEM = "com.arsdigita.cms.dispatcher.item";
@@ -121,8 +123,15 @@ public class ContentSectionDispatcher implements Dispatcher {
     public static boolean checkAdminAccess(HttpServletRequest request,
                                            ContentSection section) {
 
-        User user = Utilities.getCurrentUser(request);
-
+        User user ;
+        KernelContext kernelContext = Kernel.getContext();
+        if ( kernelContext.getParty() instanceof User ) {
+            user = (User) kernelContext.getParty();
+        } else {
+            // Should not happen, at this stage the user has to be logged in.
+            return false;
+        }
+        
         SecurityManager sm = new SecurityManager(section);
 
         return sm.canAccess(user, SecurityManager.ADMIN_PAGES);

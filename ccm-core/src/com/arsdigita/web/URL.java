@@ -916,7 +916,11 @@ public class URL {
         }
     }
 
-    public static final String getDispatcherPath() {
+    /**
+     * 
+     * @return 
+     */
+    public static String getDispatcherPath() {
         final WebConfig config = Web.getConfig();
         final HttpServletRequest req = Web.getRequest();
 

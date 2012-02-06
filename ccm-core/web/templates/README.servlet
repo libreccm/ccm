@@ -1,0 +1,9 @@
+The address
+   /templates/servlet/*
+is used by some servlets to create a virtual temporary location to pass
+in dynamic information at runtime.
+
+Example:
+Servlet content-sectionr uses
+   /templates/servlet/content-item/* 
+to pass in runtime information.  

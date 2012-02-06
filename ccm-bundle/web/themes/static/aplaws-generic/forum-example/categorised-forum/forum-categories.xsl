@@ -9,8 +9,8 @@
 				version="1.0">
 
   <!-- IMPORT DEFINITIONS ccm-forum installed as separate web application
-	<xsl:import href="../../../../ROOT/themes/aplaws/category-step.xsl"/>
-  	<xsl:import href="../../../../ROOT/themes/heirloom/cms/admin/category-step/category-step.xsl"/>	
+	<xsl:import href="../../../../ROOT/themes/static/aplaws/category-step.xsl"/>
+  	<xsl:import href="../../../../ROOT/themes/heirloom/packages/cms/admin/category-step/category-step.xsl"/>	
   -->
   <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
   -->

@@ -7,7 +7,7 @@
    exclude-result-prefixes="bebop cms ui aplaws xsl"
                    version="1.0">
 
-  <xsl:import href="../../heirloom/apps/content-section/xsl/admin.xsl"/>
+  <xsl:import href="../../heirloom/apps/content-section/xsl/content-admin.xsl"/>
   <xsl:import href="../../heirloom/packages/bebop/xsl/dcp.xsl"/>
 
   <xsl:import href="category-step.xsl"/>

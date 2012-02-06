@@ -20,5 +20,13 @@
   </ccm:contacts>
   <ccm:description>
     The Message of the Day Item Content Type for the Red Hat CCM CMS.
+    
+    It is supposed to provide an entry field for a message of the day test and
+    an associated file, presumably downloadable. Presentation logic unkown.
+    
+    Status Note:
+    The current code lacks any xsl template. The content type does not appear
+    in the list of content types in content center. So it is currently
+    unsupported.
   </ccm:description>
 </ccm:application>

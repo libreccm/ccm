@@ -60,6 +60,7 @@ public class FormProcessException extends ServletException {
      * printed twice, which is not that big of a deal in the grand scheme of
      * things.
      */
+    @Override
     public void printStackTrace() {
         super.printStackTrace();
         if (getRootCause() != null) {
@@ -71,6 +72,7 @@ public class FormProcessException extends ServletException {
     /**
      * @see #printStackTrace()
      */
+    @Override
     public void printStackTrace(java.io.PrintStream s) {
         super.printStackTrace(s);
         if (getRootCause() != null) {
@@ -82,6 +84,7 @@ public class FormProcessException extends ServletException {
     /**
      * @see #printStackTrace()       
      */
+    @Override
     public void printStackTrace(java.io.PrintWriter s) {
         super.printStackTrace(s);
         if (getRootCause() != null) {
@@ -95,7 +98,7 @@ public class FormProcessException extends ServletException {
      * #getRootCause()}.<code>getMessage()</code>.</p>
      **/
     public String getMessages() {
-        StringBuffer result = new StringBuffer(getMessage());
+        StringBuilder result = new StringBuilder(getMessage());
         if ( getRootCause() != null ) {
             result.append(" (root cause: ")
                 .append(getRootCause().getMessage())

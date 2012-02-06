@@ -1,0 +1,11 @@
+The address
+   /themes/servlet/*
+is used by some servlets to create a virtual temporary location to pass
+in dynamic information for theme files (*.css / *.xsl) which need to be
+collected at runtime.
+
+Example:
+Servlet portlet-type-xsl used
+   /themes/servlet/portlet-type/* 
+to pass in at runtime a list of actually installed portlet's default xsl
+templates to use as fallback.  
