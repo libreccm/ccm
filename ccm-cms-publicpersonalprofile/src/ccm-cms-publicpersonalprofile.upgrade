@@ -1,5 +1,8 @@
 <upgrade>
     <version from="6.6.1" to="6.6.2">
-        <script sql="ccm-cms-publicpersonalprofile/upgrade/::database::-6.6.1-6.6.2.sql"/>
+        <script sql="ccm-cms-publicpersonalprofile/upgrade/::database::-6.6.1-6.6.2.sql"/>        
+    </version>
+    <version from="6.6.2" to="6.6.3">
+        <script class="com.arsdigita.cms.contenttypes.PublicPersonalProfileOwnerAssocUpgrade"/>
     </version>
 </upgrade>

@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
 
@@ -22,11 +21,7 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public class GenericContactPersonAssocUpgrade extends Program {
-
-    private static final Logger logger =
-                                Logger.getLogger(
-            GenericContactPersonAssocUpgrade.class);
-
+  
     public GenericContactPersonAssocUpgrade() {
         super("GenericContactPersonAssocUpgrade", "1.0.0", "");
     }
@@ -50,15 +45,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
             printStackTrace(ex);
             close(conn);
             return;
-        }
-                        
-        /*try {
-             final Statement stmt = conn.createStatement();
-             stmt.execute("SELECT * FROM cms_items");
-        } catch(SQLException ex) {
-            System.err.printlnor("Connection is not usable.", ex);
-            return;
-        }*/
+        }                            
 
         System.out.println("Retrieving old data...");
         try {
@@ -94,6 +81,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
         try {
             System.out.println("Creating new tables...");
             final Statement stmt = conn.createStatement();
+            
             stmt.addBatch("CREATE TABLE cms_person_bundles ( "
                           + "bundle_id integer NOT NULL)");
 
@@ -179,7 +167,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
                                             contactsRs.getInt(1)));
             }
 
-            List<String> processedEntries =
+            final List<String> processedEntries =
                          new ArrayList<String>();
             for (OldAssocEntry entry : oldData) {
                 BigDecimal personBundleId;
@@ -196,13 +184,14 @@ public class GenericContactPersonAssocUpgrade extends Program {
                 }
 
                 stmt.addBatch(String.format(
-                        "INSERT INTO cms_person_contact_map (person_id, "
+                        "INSERT INTO cms_person_contact_map ("
+                        + "person_id, "
                         + "contact_id, "
                         + "link_order, "
                         + "link_key) "
                         + "VALUES (%s, %s, %d, '%s')",
-                        personBundleId,
-                        contactBundleId,
+                        personBundleId.toString(),
+                        contactBundleId.toString(),
                         entry.getLinkOrder(),
                         entry.getLinkKey()));
 
@@ -305,7 +294,6 @@ public class GenericContactPersonAssocUpgrade extends Program {
         ex.printStackTrace(System.err);
         if (ex.getNextException() != null) {
             printStackTrace(ex.getNextException());
-        }
-        
+        }        
     }
 }
