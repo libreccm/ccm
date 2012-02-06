@@ -7,6 +7,7 @@ import com.arsdigita.bebop.SegmentedPanel;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
+import com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -67,7 +68,7 @@ public class PublicPersonalProfilePropertiesStep extends SimpleEditStep {
 
         sheet.add(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.owner"),
-                  PublicPersonalProfile.OWNER, new OwnerFormatter());
+                  PublicPersonalProfileBundle.OWNER, new OwnerFormatter());
 
         sheet.add(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.profile_url"),

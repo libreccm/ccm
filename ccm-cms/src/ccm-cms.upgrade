@@ -50,4 +50,7 @@
  <version from="6.6.3" to="6.6.4">
     <script sql="ccm-cms/upgrade/::database::-6.6.3-6.6.4.sql"/>
   </version>
+  <version from="6.6.4" to="6.6.5">
+    <script class="com.arsdigita.cms.contenttypes.GenericContactPersonAssocUpgrade"/>
+  </version>
 </upgrade>
