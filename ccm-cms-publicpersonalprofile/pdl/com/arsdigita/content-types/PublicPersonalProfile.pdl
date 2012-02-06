@@ -14,17 +14,22 @@ object type PublicPersonalProfile extends ContentPage {
        reference key (ct_public_personal_profiles.profile_id);
 }
 
+object type PublicPersonalProfileBundle extends ContentBundle {
+    
+    reference key (ct_public_personal_profile_bundles.bundle_id);
+}
+
 association {
 	    
-	    PublicPersonalProfile[0..n] profile = join cms_persons.person_id
-	    				            to ct_public_personal_profile_owner_map.owner_id,
-					          join ct_public_personal_profile_owner_map.profile_id
-					            to ct_public_personal_profiles.profile_id;
+	    PublicPersonalProfileBundle[0..n] profile = join cms_person_bundles.bundle_id
+	    				                  to ct_public_personal_profile_owner_map.owner_id,
+					                join ct_public_personal_profile_owner_map.profile_id
+					                  to ct_public_personal_profile_bundles.bundle_id;
 
-           GenericPerson[0..n] owner = join ct_public_personal_profiles.profile_id
-	   		                 to ct_public_personal_profile_owner_map.profile_id,
-				       join ct_public_personal_profile_owner_map.owner_id
-				         to cms_persons.person_id;
+           GenericPersonBundle[0..n] owner = join ct_public_personal_profile_bundles.bundle_id
+	   		                       to ct_public_personal_profile_owner_map.profile_id,
+				             join ct_public_personal_profile_owner_map.owner_id
+				               to cms_person_bundles.bundle_id;
 
            Integer[0..1] ownerOrder = ct_public_personal_profile_owner_map.owner_order INTEGER;                                         
 }

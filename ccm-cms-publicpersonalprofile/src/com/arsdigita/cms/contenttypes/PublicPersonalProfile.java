@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.publicpersonalprofile.ContentGenerator;
@@ -51,15 +52,16 @@ public class PublicPersonalProfile
         extends ContentPage
         implements CustomizedPreviewLink {
 
-    private static final PublicPersonalProfileConfig config = PublicPersonalProfiles.getConfig();
-    public static final String OWNER = "owner";
+    private static final PublicPersonalProfileConfig config =
+                                                     PublicPersonalProfiles.
+            getConfig();
     public static final String PROFILE_URL = "profileUrl";
     public static final String LINK_LIST_NAME = "publicPersonalProfileNavItems";
     public static final String POSITION = "position";
     public static final String INTERESTS = "interests";
     public static final String MISC = "misc";
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.PublicPersonalProfile";
+                               "com.arsdigita.cms.contenttypes.PublicPersonalProfile";
 
     public PublicPersonalProfile() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -83,24 +85,33 @@ public class PublicPersonalProfile
         super(type);
     }
 
+    public PublicPersonalProfileBundle getPublicPersonalProfileBundle() {
+        return (PublicPersonalProfileBundle) getContentBundle();
+    }
+
     /**
      *
      * @return The owner of the profile.
      */
     public GenericPerson getOwner() {
-        final DataCollection collection = (DataCollection) get(OWNER);
-
-        if (0 == collection.size()) {
-            return null;
-        } else {
-            DataObject dobj;
-
-            collection.next();
-            dobj = collection.getDataObject();
-            collection.close();
-
-            return (GenericPerson) DomainObjectFactory.newInstance(dobj);
+        /*
+         * final DataCollection collection = (DataCollection)
+         * getContentBundle(). get(OWNER);
+         *
+         * if (0 == collection.size()) { return null; } else { DataObject dobj;
+         *
+         * collection.next(); dobj = collection.getDataObject();
+         * collection.close();
+         *
+         * final GenericPersonBundle bundle = (GenericPersonBundle)
+         * DomainObjectFactory. newInstance(dobj);
+         *
+         *
+         * return (GenericPerson) DomainObjectFactory.newInstance(dobj);
         }
+         */
+        return (GenericPerson) getPublicPersonalProfileBundle().getOwner().
+                getPrimaryInstance();
     }
 
     /**
@@ -109,17 +120,17 @@ public class PublicPersonalProfile
      * @param owner
      */
     public void setOwner(final GenericPerson owner) {
-        GenericPerson oldOwner;
-
-        oldOwner = getOwner();
-        if (oldOwner != null) {
-            remove(OWNER, oldOwner);
+        /*
+         * final ContentBundle bundle = getContentBundle(); final
+         * GenericPersonBundle oldOwner = (GenericPersonBundle) getOwner().
+         * getContentBundle(); if (oldOwner != null) { bundle.remove(OWNER,
+         * oldOwner); }
+         *
+         * if (null != owner) { Assert.exists(owner, GenericPerson.class);
+         * bundle.add(OWNER, owner.getContentBundle());
         }
-
-        if (null != owner) {
-            Assert.exists(owner, GenericPerson.class);
-            add(OWNER, owner);
-        }
+         */
+        getPublicPersonalProfileBundle().setOwner(owner);
     }
 
     /**
@@ -139,27 +150,27 @@ public class PublicPersonalProfile
     public String getPosition() {
         return (String) get(POSITION);
     }
-    
+
     public void setPosition(final String position) {
         set(POSITION, position);
-    } 
-    
+    }
+
     public String getResearchInterests() {
         return (String) get(INTERESTS);
     }
-    
+
     public void setResearchInterests(final String researchInterests) {
         set(INTERESTS, researchInterests);
     }
-    
+
     public String getMisc() {
         return (String) get(MISC);
     }
-    
+
     public void setMisc(final String misc) {
         set(MISC, misc);
     }
-    
+
     /**
      * The profile has an extra XML Generator, which is primarily to render the
      * items and the navigation of the profile for the embedded view.

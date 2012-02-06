@@ -5,16 +5,15 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
@@ -24,6 +23,7 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
+import com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
 import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
@@ -76,7 +76,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
         add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.create.select_person")));
         ParameterModel ownerModel =
-                       new StringParameter(PublicPersonalProfile.OWNER);
+                       new StringParameter(PublicPersonalProfileBundle.OWNER);
         SingleSelect ownerSelect = new SingleSelect(ownerModel);
         ownerSelect.addValidationListener(new NotNullValidationListener());
 
@@ -104,7 +104,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
                     DataCollection persons = SessionManager.getSession().
                             retrieve(
                             personType);
-                    persons.addFilter("profile is null");
+                    //persons.addFilter("profile is null");
                     persons.addFilter(String.format("version = '%s'",
                                                     ContentItem.DRAFT));
                     persons.addOrder("surname asc");
@@ -122,12 +122,17 @@ public class PublicPersonalProfileCreate extends PageCreate {
                         if (processed.contains(person.getParent().getID())) {
                             continue;
                         } else {
-                            ownerSelect.addOption(new Option(
-                                    person.getID().toString(),
-                                    String.format("%s (%s)",
-                                                  person.getFullName(),
-                                                  person.getLanguage())));
-                            processed.add(person.getParent().getID());
+                            if (person.getGenericPersonBundle().get("profile")
+                                == null) {
+                                continue;
+                            } else {
+                                ownerSelect.addOption(new Option(
+                                        person.getID().toString(),
+                                        String.format("%s (%s)",
+                                                      person.getFullName(),
+                                                      person.getLanguage())));
+                                processed.add(person.getParent().getID());
+                            }
                         }
                     }
                 }
@@ -160,7 +165,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
         Folder folder = m_parent.getFolder(fse.getPageState());
         Assert.exists(folder);
         String id = (String) fse.getFormData().get(
-                PublicPersonalProfile.OWNER);
+                PublicPersonalProfileBundle.OWNER);
 
         if ((id == null) || id.trim().isEmpty()) {
             fse.getFormData().addError(PublicPersonalProfileGlobalizationUtil.
@@ -187,7 +192,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
         Assert.exists(section, ContentSection.class);
 
         String id = (String) fse.getFormData().get(
-                PublicPersonalProfile.OWNER);
+                PublicPersonalProfileBundle.OWNER);
 
         GenericPerson owner = new GenericPerson(new BigDecimal(id));
         String name = String.format("%s-profile",
@@ -202,7 +207,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
 
-        final ContentBundle bundle = new ContentBundle(item);
+        final PublicPersonalProfileBundle bundle = new PublicPersonalProfileBundle(item);
         bundle.setParent(folder);
         bundle.setContentSection(m_parent.getContentSection(state));
         bundle.save();

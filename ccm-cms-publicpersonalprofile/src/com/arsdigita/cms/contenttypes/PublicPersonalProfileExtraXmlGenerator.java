@@ -22,9 +22,10 @@ import javax.servlet.ServletException;
 
 /**
  * Generates the extra XML output for a profile for the embedded view.
- * 
- * @author Jens Pelzetter 
- * @version $Id$
+ *
+ * @author Jens Pelzetter
+ * @version $Id: PublicPersonalProfileExtraXmlGenerator.java 1466 2012-01-23
+ * 12:59:16Z jensp $
  */
 public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator {
 
@@ -43,21 +44,20 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
 
         final PublicPersonalProfile profile = (PublicPersonalProfile) item;
         final String showItem = state.getRequest().getParameter(SHOW_ITEM_PARAM);
-                
-        if (!config.getEmbedded() && state.getRequestURI().contains(profile.getName())) {
-            /*try {
-                DispatcherHelper.forwardRequestByPath(getProfileUrl(profile), 
-                                                      state.getRequest(), 
-                                                      state.getResponse());
-                return;
-            } catch (IOException ex) {
-               throw new UncheckedWrapperException(ex);
-            } catch (ServletException ex) {
-                throw new UncheckedWrapperException(ex);
-            }*/
+
+        if (!config.getEmbedded() && state.getRequestURI().contains(profile.
+                getName())) {
+            /*
+             * try {
+             * DispatcherHelper.forwardRequestByPath(getProfileUrl(profile),
+             * state.getRequest(), state.getResponse()); return; } catch
+             * (IOException ex) { throw new UncheckedWrapperException(ex); }
+             * catch (ServletException ex) { throw new
+             * UncheckedWrapperException(ex); }
+             */
             throw new RedirectSignal(getProfileUrl(profile), true);
         }
-        
+
         if (config.getEmbedded()) {
             final Element navigation = element.newChildElement(
                     "profileNavigation");
@@ -72,7 +72,29 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
                                   false);
         }
 
-        if ((showItem != null) && !showItem.trim().isEmpty()) {
+        if ((showItem == null) || showItem.trim().isEmpty()) {
+            final Element profileOwner = element.newChildElement("profileOwner");
+
+            final GenericPerson owner = profile.getOwner();
+
+            final PublicPersonalProfileXmlGenerator generator =
+                                                    new PublicPersonalProfileXmlGenerator(
+                    owner);
+            generator.setItemElemName("owner", "");
+            generator.generateXML(state, profileOwner, "");
+
+            final Element contactsElem =
+                          profileOwner.newChildElement("contacts");
+            final GenericPersonContactCollection contacts = owner.getContacts();
+            while (contacts.next()) {
+                PublicPersonalProfileXmlGenerator cGenerator =
+                                                  new PublicPersonalProfileXmlGenerator(
+                        contacts.getContact());
+                cGenerator.setItemElemName("contact", "");
+                cGenerator.generateXML(state, contactsElem, "");
+            }
+
+        } else {
             final Element profileContent = element.newChildElement(
                     "profileContent");
 
@@ -88,7 +110,8 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
             } else {
                 PublicPersonalProfileNavItemCollection navItems =
                                                        new PublicPersonalProfileNavItemCollection();
-                navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+                navItems.addLanguageFilter(GlobalizationHelper.
+                        getNegotiatedLocale().
                         getLanguage());
                 navItems.addKeyFilter(showItem);
                 navItems.next();
@@ -159,31 +182,32 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
     public void addGlobalStateParams(final Page p) {
         //Nothing yet
     }
-    
+
     private String getProfileUrl(final PublicPersonalProfile profile) {
         final GenericPerson owner = profile.getOwner();
         final GenericPersonContactCollection contacts = owner.getContacts();
-        
+
         String homepage = null;
-        while(contacts.next() && (homepage == null)) {
+        while (contacts.next() && (homepage == null)) {
             homepage = getHomepageContactEntry(contacts.getContact());
         }
-        
+
         contacts.close();
         return homepage;
     }
-    
+
     private String getHomepageContactEntry(final GenericContact contact) {
-        final GenericContactEntryCollection entries = contact.getContactEntries();
-        
+        final GenericContactEntryCollection entries =
+                                            contact.getContactEntries();
+
         String homepage = null;
-        while(entries.next()) {
+        while (entries.next()) {
             if ("homepage".equals(entries.getKey())) {
                 homepage = entries.getValue();
                 break;
             }
         }
-        
+
         entries.close();
         return homepage;
     }
