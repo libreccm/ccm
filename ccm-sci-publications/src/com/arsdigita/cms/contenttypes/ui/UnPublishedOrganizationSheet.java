@@ -23,6 +23,7 @@ import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 
@@ -181,7 +182,7 @@ public class UnPublishedOrganizationSheet
             } else {
                 GenericOrganizationalUnit organization;
                 try {
-                    organization = new Publisher(
+                    organization = new GenericOrganizationalUnit(
                             (BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
