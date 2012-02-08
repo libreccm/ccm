@@ -18,10 +18,12 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -51,6 +53,13 @@ public class SciMember extends GenericPerson {
 
     public SciMember(final String type) {
         super(type);
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        generators.add(new SciMemberExtraXmlGenerator());
+        return generators;
     }
     
 }
