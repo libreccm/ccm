@@ -25,22 +25,17 @@ import com.arsdigita.cms.portlet.ContentDirectoryPortlet;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
 import com.arsdigita.cms.portlet.ContentSectionsPortlet;
 import com.arsdigita.cms.portlet.TaskPortlet;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.formbuilder.util.FormbuilderSetup;
-import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.loader.PackageLoader;
-import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
-// import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.xml.XML;
 
@@ -58,8 +53,8 @@ import org.apache.log4j.Logger;
 //  ccm/admin/sitemap lists them appropriately.
 //
 //  Next Try
-//  Refactor using legacy compatible web/Application and ApplicationSetup  DONE
-//  Refactor content-section als legacy free application
+//  Refactor using legacy compatible web/Application and ApplicationSetup  *DONE*
+//  Refactor content-section als legacy free application                   *DONE*
 //  Refactor workspace (content-center) as a legacy free application
 //  Refactor cms-service as a legacy free application 
 
@@ -193,16 +188,15 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     * Loads and instantiates the Workspace subpackage (content-center) in the
-     * database.
+     * Loads the Workspace subpackage (content-center) into the database.
+     *
      * It is made public to be able to invoke it from the update script
      * (e.g. 6.6.1-6.6.2). We need separate steps for loading and instantiating
-     * because update skript require.
+     * because update skript requires.
      */
     public static ApplicationType loadWorkspaceApplicationType() {
         s_log.debug("Creating CMS Workspace...");
 
-//      //////////////    Current style to create app type    ///////////////
         /* Create new stype legacy compatible application type               */
         ApplicationType type =  ApplicationType
                                 .createApplicationType(Workspace.PACKAGE_KEY,
@@ -217,19 +211,28 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     * 
+     * Instantiates the Workspace subpackage (content-center) (in the database).
+     *
+     * It is made public to be able to invoke it from the update script
+     * (e.g. 6.6.1-6.6.2). We need separate steps for loading and instantiating
+     * because update skript requires.
+     *
      * @param workspaceType
      */
     public static void setupDefaultWorkspaceApplicationInstance(
                                                 ApplicationType workspaceType) {
-        // create legacy compatible  application instance,
+
+        // create application instance 
+        // Whether a legacy compatible or a legacy free application is
+        // created depends on the type of ApplicationType above. No need to
+        // modify anything here in the migration process
         // old-style package key used as url fragment where to install the instance
         s_log.debug("Creating CMS Workspace instance ...");
         Workspace app = (Workspace) Application.createApplication(
-                Workspace.BASE_DATA_OBJECT_TYPE, // type
-                Workspace.PACKAGE_KEY, // url fragment
-                Workspace.INSTANCE_NAME,// title
-                null);                  // parent
+                                    Workspace.BASE_DATA_OBJECT_TYPE, // type
+                                    Workspace.PACKAGE_KEY,      // url fragment
+                                    Workspace.INSTANCE_NAME,    // title
+                                    null);                      // parent
         app.setDescription("The default CMS workspace instance.");
         app.save();
 
@@ -340,7 +343,7 @@ public class Loader extends PackageLoader {
          * It gets "urlized", i.e. trimming leading and trailing blanks and
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
-         * "Content Section" will become "content-section".                               */
+         * "Content Section" will become "content-section".                   */
         ApplicationType type = new ApplicationType( 
                                        "Content Section",
                                         ContentSection.BASE_DATA_OBJECT_TYPE );

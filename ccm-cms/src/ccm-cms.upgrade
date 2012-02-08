@@ -53,4 +53,8 @@
   <version from="6.6.4" to="6.6.5">
     <script class="com.arsdigita.cms.contenttypes.GenericContactPersonAssocUpgrade"/>
   </version>
+ <version from="6.6.5" to="6.6.6">
+    <!--  ContentSection now loaded as legacy free application             -->
+    <script sql="ccm-cms/upgrade/::database::-6.6.5-6.6.6.sql"/>
+  </version>
 </upgrade>
