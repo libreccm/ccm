@@ -17,7 +17,14 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 
-PROMPT OpenCCM ccm-forum 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
+-- Update: Forum now loaded as legacy free application
+\echo OpenCCM ccm-forum 6.6.1 -> 6.6.2 Upgrade Script (PostgreSQL)
  
+begin;
 
-@@ default/6.6.0-6.6.1/add_ispublic.sql
+\i default/6.6.1-6.6.2/remove_legacy_entries.sql
+
+commit;
+
+
+

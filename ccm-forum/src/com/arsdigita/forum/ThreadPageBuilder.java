@@ -57,21 +57,22 @@ public class ThreadPageBuilder implements PageBuilder, Constants {
         //Output the title in an easy to find place
         threadPage.add(new SimpleComponent(){
 
-                public void generateXML(PageState state, Element parent) {
-                    Element nameElement = parent.newChildElement(
-                                           Constants.FORUM_XML_PREFIX + ":name",
-                                           Constants.FORUM_XML_NS);
-                    nameElement.setText(ForumContext.getContext(state)
-                                                    .getForum().getTitle());
+            @Override
+            public void generateXML(PageState state, Element parent) {
+                Element nameElement = parent.newChildElement(
+                                       Constants.FORUM_XML_PREFIX + ":name",
+                                       Constants.FORUM_XML_NS);
+                nameElement.setText(ForumContext.getContext(state)
+                                                .getForum().getTitle());
 
-                    Element introductionElement = parent.newChildElement(
-                                                     Constants.FORUM_XML_PREFIX +
-                                                     ":introduction",
-                                                     Constants.FORUM_XML_NS);
-                    introductionElement.setText(ForumContext.getContext(state).
+                Element introductionElement = parent.newChildElement(
+                                                 Constants.FORUM_XML_PREFIX +
+                                                 ":introduction",
+                                                 Constants.FORUM_XML_NS);
+                introductionElement.setText(ForumContext.getContext(state).
                                                          getForum().
                                                          getIntroduction());
-                }
+            }
         });
         // 
         threadPage.add(new DiscussionThreadSimpleView());

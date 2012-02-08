@@ -56,7 +56,7 @@ import org.apache.log4j.Logger;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @version $Revision: 1.8 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
- * @version $Id:
+ * @version $Id: $
  */
 public class ThreadsPanel extends SimpleContainer
                           implements Constants {
@@ -104,6 +104,7 @@ public class ThreadsPanel extends SimpleContainer
      * 
      * @param p
      */
+    @Override
     public void register(Page p) {
 
         super.register(p);

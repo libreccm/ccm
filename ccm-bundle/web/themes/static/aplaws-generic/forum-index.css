@@ -366,24 +366,24 @@ div.tabbed-pane table.tab-set td.tab-label {
   margin-left: 4px;
   padding: 5px 0 3px 10px;
  
-  background: rgb(225,225,225) url(/css/tabbed-pane/tab-unselected.png) no-repeat;
+  background: rgb(225,225,225) url(/themes/heirloom/css/tabbed-pane/tab-unselected.png) no-repeat;
 }
 
 div.tabbed-pane table.tab-set td.tab-end {
   width: 10px;
-  background: url(/css/tabbed-pane/tab-unselected-end.png) no-repeat;
+  background: url(/themes/heirloom/css/tabbed-pane/tab-unselected-end.png) no-repeat;
 }
 
 div.tabbed-pane table.tab-set td.current-tab-label {
   margin-left: 4px;
   padding: 5px 0 3px 10px;
-  background: rgb(162,30,30) url(/css/tabbed-pane/tab-selected.png) no-repeat;
+  background: rgb(162,30,30) url(/themes/heirloom/css/tabbed-pane/tab-selected.png) no-repeat;
   color: white;
 }
 
 div.tabbed-pane table.tab-set td.current-tab-end {
   width: 10px;
-  background: url(/css/tabbed-pane/tab-selected-end.png) no-repeat;
+  background: url(/themes/heirloom/css/tabbed-pane/tab-selected-end.png) no-repeat;
 }
 
 div.tabbed-pane table.tab-set td.tab-spacer {
@@ -393,7 +393,7 @@ div.tabbed-pane table.tab-set td.tab-spacer {
 div.tabbed-pane table.rule {
   margin-left: 10px; 
   width: 100%;
-  background: rgb(162,30,30) url(/css/tabbed-pane/tab-bar.png) repeat-x;
+  background: rgb(162,30,30) url(/themes/heirloom/css/tabbed-pane/tab-bar.png) repeat-x;
   height: 10px;
 }
 

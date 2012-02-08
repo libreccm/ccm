@@ -126,6 +126,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
      * 
      * @param p
      */
+    @Override
     public void register(Page p) {
 
         super.register(p);
@@ -137,6 +138,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
      * @param state
      * @throws ServletException
      */
+    @Override
     public void respond(PageState state) throws ServletException {
 
         super.respond(state);
@@ -281,13 +283,18 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
 
         // admin section
         if (PermissionService.checkPermission(adminPermission)) {
-            generateModeXML(state, content, MODE_MODERATION,
-                            Text.gz("forum.ui.modeAlerts"));
+//          generateModeXML(state, content, MODE_MODERATION,
+//                          Text.gz("forum.ui.modeAlerts"));
             if (Forum.getConfig().showNewTabs()) {
                 generateModeXML(state, content, MODE_SETUP,
                                 Text.gz("forum.ui.modeSetup"));
                 generateModeXML(state, content, MODE_PERMISSIONS,
                                 Text.gz("forum.ui.modePermissions"));
+            } else {
+                // Generate old moderation panel instead of setup
+                generateModeXML(state, content, MODE_MODERATION,
+                                Text.gz("forum.ui.modeAlerts"));
+                
             }
             // In case topic creation is bound to admin (and therefore not
             // created above) we must create xml here.

@@ -361,10 +361,10 @@ public class Forum extends Application {
                         PrivilegeDescriptor.ADMIN,
                         this,
                         getAdminGroup()));
-                s_log.debug("Current user : "
-                            + Kernel.getContext().getParty().getPrimaryEmail()
-                            + " class is "
-                            + Kernel.getContext().getParty().getClass());
+         //     s_log.debug("Current user : "
+         //                 + Kernel.getContext().getParty().getPrimaryEmail()
+         //                 + " class is "
+         //                 + Kernel.getContext().getParty().getClass());
 
                 //
                 // chris.gilbert@westsussex.gov.uk Original plan was that

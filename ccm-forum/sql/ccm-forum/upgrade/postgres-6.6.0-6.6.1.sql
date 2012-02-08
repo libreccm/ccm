@@ -17,7 +17,7 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 
-\echo APLAWS ccm-forum 6.5.0 -> 6.5.1 Upgrade Script (PostgreSQL)
+\echo APLAWS ccm-forum 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
  
 begin;
 

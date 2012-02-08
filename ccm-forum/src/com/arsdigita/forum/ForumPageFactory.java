@@ -37,16 +37,23 @@ import org.apache.log4j.Logger;
 public class ForumPageFactory {
 
     private static final Logger logger = Logger.getLogger(ForumPageFactory.class);
+
     public static final String THREAD_PAGE = "thread";
     public static final String FORUM_PAGE = "forum";
+
     private static Map pageBuilders = new HashMap();
 
-    static {
-        logger.debug("Static initalizer starting...");
+    /**
+     * Constructor
+     */
+    public ForumPageFactory() {
+        logger.debug("Constructor starting...");
+
         // default pageBuilders are those provided with this project
         pageBuilders.put(THREAD_PAGE, new ThreadPageBuilder());
         pageBuilders.put(FORUM_PAGE, new ForumPageBuilder());
-        logger.debug("Static initalizer finished.");
+        
+        logger.debug("Constructor finished.");
     }
 
     public static Page getPage(String pageType) {

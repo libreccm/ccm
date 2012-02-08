@@ -57,6 +57,7 @@ public class ForumPageBuilder implements PageBuilder, Constants {
 
         //Output the title in an easy to find place
         page.add(new SimpleComponent(){
+            @Override
             public void generateXML(PageState state, Element parent) {
                 Element nameElement = parent.newChildElement(
                                           Constants.FORUM_XML_PREFIX +

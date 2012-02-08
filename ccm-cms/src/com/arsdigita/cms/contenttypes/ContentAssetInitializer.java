@@ -22,13 +22,13 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-// import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.xml.XML;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+
 import org.apache.log4j.Logger;
 
 
@@ -71,7 +71,8 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
      */
     @Override
     public void init(DomainInitEvent evt) {
-        System.err.println("ContentAssetInitializer init running...");
+        s_log.info("ContentAssetInitializer init running...");
+        // System.err.println("ContentAssetInitializer init running...");
         
         super.init(evt);
 
@@ -88,30 +89,6 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
             getAuthoringStepSortKey()
         );
     }
-
-    // Up to version 6.5 ContentAssetInitilizer used init(LegacyInitEvent) for
-    // initialization, even though it actually initializes the domain coupling
-    // machinery which is the domain of init(DomainInitEvent). It even didn't
-    // use any of the legacy initialization features (enterprise.init file).
-    // Switched to domain init because legacy init is deprecated and we will get
-    // rid of it. Retained here commented out for documentation purpose during
-    // transition of contributed content types.
-/*  public void init(LegacyInitEvent evt) {
-        super.init(evt);
-
-        final String traversal = getTraversalXML();
-        XML.parseResource
-            (traversal,
-             new ContentAssetTraversalHandler(getProperty()));
-        
-        AuthoringKitWizard.registerAssetStep(
-            getBaseType(),
-            getAuthoringStep(),
-            getAuthoringStepLabel(),
-            getAuthoringStepDescription(),
-            getAuthoringStepSortKey()
-        );
-    }  */
 
     
     /**

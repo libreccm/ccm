@@ -18,23 +18,14 @@
 
 package com.arsdigita.cms.contentassets;
 
-import com.arsdigita.cms.AuthoringKit;
-import com.arsdigita.cms.AuthoringKitStepAssociation;
-import com.arsdigita.cms.AuthoringStep;
 import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
-// import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.contentassets.ui.ImageStep;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.PersistenceException;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.runtime.DomainInitEvent;
 
 /**

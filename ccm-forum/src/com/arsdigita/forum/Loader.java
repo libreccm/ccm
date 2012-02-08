@@ -18,13 +18,12 @@
  */
 package com.arsdigita.forum;
 
+import com.arsdigita.cms.util.Util;
 import com.arsdigita.forum.portlet.MyForumsPortlet;
 import com.arsdigita.forum.portlet.RecentPostingsPortlet;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-// unused?
-// import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -33,6 +32,8 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.portal.apportlet.AppPortletType;
 import com.arsdigita.runtime.ScriptContext;
+import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.web.ApplicationType;
 
 import org.apache.log4j.Logger;
@@ -50,9 +51,54 @@ import org.apache.log4j.Logger;
  */
 public class Loader extends PackageLoader {
 
+    //  ///////////////////////////////////////////////////////////////////
+    //  Configurable parameters during load step.
+    //  ///////////////////////////////////////////////////////////////////
+    
+    /**
+     * Intentionally we don't create forum instance(s) by default during load
+     * step.  Forum instances are created on demand using the admin ui.
+     * 
+     * By specifying forum urls during load step you may install one or more
+     * forum instances, which are installed as root applications (i.e. without
+     * a parent application).
+     * 
+     * Example:
+     *   com.arsdigita.forum.forum_names=general-discussions,specific-discussion
+     * will create 2 forum instances accessible at
+     *   [host]:/ccm/general-discussions
+     *   [host]:/ccm/specific-discussions
+     * 
+     * Additional forum instances can be created using the sitmap.jsp ui 
+     * choosing either /navigation (i.e. an Navigation instance), /content (i.
+     * e. a ContentSection instance) or one of the created instances as
+     * parent applicaation.
+     */
+    private final Parameter m_forumInstances = new StringArrayParameter(
+                    "com.arsdigita.forum.forum_names",
+                    Parameter.OPTIONAL,
+                    new String[] { }
+                    );
+
     /** Private logger instance for debugging purpose. */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+
+    /**
+     * Standard constructor.
+     */
+    public Loader() {
+        s_log.debug("forum.Loader (Constructor) invoked");
+
+        register(m_forumInstances);
+        
+        s_log.debug("forum.Loader (Constructor) completed");
+    }
+
+    /**
+     * 
+     * @param ctx 
+     */
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
 
@@ -60,11 +106,14 @@ public class Loader extends PackageLoader {
                 setEffectiveParty(Kernel.getSystemParty());
 
                 setupPrivileges();
-                setupForumAppType();
+                setupDigestUser();
+
+                setupForumAppType( (String[]) get(m_forumInstances) );
                 //setupInboxAppType(); //TODO: why it is commented out?
                 setupRecentPostingsPortletType();
                 setupMyForumsPortletType();
-                setupDigestUser();
+                //  moved upwards
+                //  setupDigestUser();
 
                 SessionManager.getSession().flushAll();
             }
@@ -72,16 +121,39 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     * Creates Forum as a legacy-compatible application type.
+     * Creates Forum as a legacy-free application type.
+     * 
+     * We just create the application type, intentionally not an application
+     * instance (see above).
+     * 
      * @return
      */
-    private static ApplicationType setupForumAppType() {
-        ApplicationType type =  ApplicationType
-                                .createApplicationType(Forum.PACKAGE_TYPE,
-                                                       "Discussion Forum Application",
-                                                       Forum.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("An electronic bulletin board system.");
-        return type;
+    private static void setupForumAppType(String[] forumNames) {
+
+        /* Create legacy-free application type                               
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "Forum" will become "forum".                                       */
+        ApplicationType type = new ApplicationType("Forum",
+                                                   Forum.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription("An electronic bulletin board system (disussion forum).");
+        type.save();
+
+        for (int i = 0 ; i < forumNames.length ; i++) {
+
+            final String forumName = forumNames[i];
+            Util.validateURLParameter("name", forumName);
+            s_log.info("Creating forum instance on /" + forumName);
+            
+            Forum.create(forumName,forumName,null);
+
+        }
+        s_log.info("Forum setup completed");
+        return ;
     }
 
     /**
@@ -90,10 +162,10 @@ public class Loader extends PackageLoader {
      * @return
      */
     private static ApplicationType setupInboxAppType() {
-        ApplicationType type =
-                        ApplicationType.createApplicationType(Forum.PACKAGE_TYPE,
-                                                              "Inbox",
-                                                              "com.arsdigita.forum.Inbox");
+        ApplicationType type = ApplicationType
+                               .createApplicationType(Forum.PACKAGE_TYPE,
+                                                      "Inbox",
+                                                      "com.arsdigita.forum.Inbox");
         type.setDescription("Inbox");
         return type;
     }
@@ -105,9 +177,9 @@ public class Loader extends PackageLoader {
     public static AppPortletType setupRecentPostingsPortletType() {
         AppPortletType type =
                        AppPortletType.createAppPortletType(
-                "Recent Forum Postings",
-                PortletType.WIDE_PROFILE,
-                RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE);
+                                   "Recent Forum Postings",
+                                    PortletType.WIDE_PROFILE,
+                                    RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE);
         type.setProviderApplicationType(Forum.BASE_DATA_OBJECT_TYPE);
         type.setPortalApplication(true);
         type.setDescription("Displays the most recent postings "
@@ -158,18 +230,26 @@ public class Loader extends PackageLoader {
      */
     public static void setupPrivileges() {
 
-        PrivilegeDescriptor.createPrivilege(Forum.FORUM_READ_PRIVILEGE);
-        PrivilegeDescriptor.createPrivilege(Forum.FORUM_MODERATION_PRIVILEGE);
-        PrivilegeDescriptor.createPrivilege(Forum.CREATE_THREAD_PRIVILEGE);
-        PrivilegeDescriptor.createPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(
+                 Forum.FORUM_READ_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(
+                 Forum.FORUM_MODERATION_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(
+                 Forum.CREATE_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(
+                 Forum.RESPOND_TO_THREAD_PRIVILEGE);
         // Establich privilege hierarchie, eg. moderation includes createThread
-        PrivilegeDescriptor.addChildPrivilege(Forum.FORUM_MODERATION_PRIVILEGE,
-                                              Forum.CREATE_THREAD_PRIVILEGE);
-        PrivilegeDescriptor.addChildPrivilege(Forum.CREATE_THREAD_PRIVILEGE,
-                                              Forum.RESPOND_TO_THREAD_PRIVILEGE);
-        PrivilegeDescriptor.addChildPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE,
-                                              PrivilegeDescriptor.READ.getName());  // general read privilege
-        PrivilegeDescriptor.addChildPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE,
-                                              Forum.FORUM_READ_PRIVILEGE);
+        PrivilegeDescriptor.addChildPrivilege(
+                 Forum.FORUM_MODERATION_PRIVILEGE,
+                 Forum.CREATE_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.addChildPrivilege(
+                 Forum.CREATE_THREAD_PRIVILEGE,
+                 Forum.RESPOND_TO_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.addChildPrivilege(
+                 Forum.RESPOND_TO_THREAD_PRIVILEGE,
+                 PrivilegeDescriptor.READ.getName()); // general read privilege
+        PrivilegeDescriptor.addChildPrivilege(
+                 Forum.RESPOND_TO_THREAD_PRIVILEGE,
+                 Forum.FORUM_READ_PRIVILEGE);
     }
 }
