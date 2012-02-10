@@ -156,7 +156,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
             }
 
             final ResultSet contactsRs = queryContactsStmt.executeQuery(
-                    "SELECT parent_id "
+                    "SELECT DISTINCT parent_id "
                     + "FROM cms_items "
                     + "JOIN cms_contacts "
                     + "ON cms_items.item_id = cms_contacts.contact_id");

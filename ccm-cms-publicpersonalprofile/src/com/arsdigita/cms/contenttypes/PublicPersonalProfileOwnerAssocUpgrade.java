@@ -110,7 +110,7 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
                     "ALTER TABLE ONLY ct_public_personal_profile_owner_map "
                     + "ADD CONSTRAINT ct_pub_per_pro_own_map_f_ugs15 "
                     + "FOREIGN KEY (profile_id) "
-                    + "REFERENCES ct_public_personal_profile_bundles(bundle_id)t");
+                    + "REFERENCES ct_public_personal_profile_bundles(bundle_id)");
             stmt.executeBatch();
 
         } catch (SQLException ex) {
