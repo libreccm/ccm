@@ -40,7 +40,7 @@ import java.util.StringTokenizer;
  * @author Ron Henderson (ron@arsdigita.com)
  * @version $Id: Folder.java  pboy $
  */
-public class Folder extends ResourceImpl implements Constants {
+public class Folder extends ResourceImpl {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.docrepo.Folder";
@@ -135,7 +135,7 @@ public class Folder extends ResourceImpl implements Constants {
         if (s_log.isDebugEnabled()) {
             s_log.debug("folder before save");
         }
-        set(IS_FOLDER, Boolean.TRUE);
+        set(Repository.IS_FOLDER, Boolean.TRUE);
         super.beforeSave();
     }
 
@@ -200,7 +200,7 @@ public class Folder extends ResourceImpl implements Constants {
     public boolean hasResource(String name) {
         DataAssociation da = (DataAssociation) get("immediateChildren");
         DomainCollection resources = new DomainCollection(da);
-        resources.addEqualsFilter(NAME, name);
+        resources.addEqualsFilter(Repository.NAME, name);
         try {
             return resources.next();
         } finally {
@@ -247,7 +247,7 @@ public class Folder extends ResourceImpl implements Constants {
 
         String subPath[] = new String[pathElementCount];
         for (int i = 0; i < pathElementCount; i++) {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             for (int j = 0; j <= i; j++) {
                 buf.append(SEPARATOR);
                 buf.append(name[j]);
@@ -314,6 +314,7 @@ public class Folder extends ResourceImpl implements Constants {
      * Returns the display name for a folder, which is equivalent to
      * calling getName().
      */
+    @Override
     public String getDisplayName() {
         return getName();
     }

@@ -69,7 +69,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version $Id: ResourceImpl.java  pboy $
  */
 public abstract class ResourceImpl extends VersionedACSObject
-                                   implements Resource, Constants {
+                                   implements Resource {
 
     /** Logger instance for debugging support.  */
     protected static Logger s_log = Logger.getLogger(ResourceImpl.class);
@@ -200,8 +200,8 @@ public abstract class ResourceImpl extends VersionedACSObject
          * sufficient to update the path only when the name changes, but
          * the current implementation is conservative about path updates.
          */
-        final boolean pathChanged =
-            isPropertyModified(PARENT) || isPropertyModified(NAME);
+        final boolean pathChanged = isPropertyModified(Repository.PARENT) 
+                                    || isPropertyModified(Repository.NAME);
 
         if (pathChanged) {
             String oldPath = null;
@@ -332,19 +332,19 @@ public abstract class ResourceImpl extends VersionedACSObject
 
 
     public String getName() {
-        return (String) get(NAME);
+        return (String) get(Repository.NAME);
     }
 
     public void setName(String name) {
-        set(NAME, name);
+        set(Repository.NAME, name);
     }
 
     public String getDescription() {
-        return (String) get(DESCRIPTION);
+        return (String) get(Repository.DESCRIPTION);
     }
 
     public void setDescription(String description) {
-        set(DESCRIPTION, description);
+        set(Repository.DESCRIPTION, description);
     }
 
     public Resource getParent() {
@@ -380,12 +380,12 @@ public abstract class ResourceImpl extends VersionedACSObject
     }
 
     public String getPath() {
-        String path = (String) get(PATH);
+        String path = (String) get(Repository.PATH);
         return path;
     }
 
     private void setPath(String path) {
-        set(PATH, path);
+        set(Repository.PATH, path);
     }
 
     public abstract boolean isFolder();
@@ -406,7 +406,7 @@ public abstract class ResourceImpl extends VersionedACSObject
 
         String ids = null;
         if (collection.next()) {
-            ids = (String)collection.get(PATH);
+            ids = (String)collection.get(Repository.PATH);
             collection.close();
         } else {
             // this means that the id is not valid so there is no path
@@ -421,16 +421,16 @@ public abstract class ResourceImpl extends VersionedACSObject
 
         collection = SessionManager.getSession().retrieve
             (BASE_DATA_OBJECT_TYPE);
-        Filter filter = collection.addFilter(PATH + " <= :ancestors");
+        Filter filter = collection.addFilter(Repository.PATH + " <= :ancestors");
         filter.set("ancestors", ids);
         filter = collection.addFilter
-            (PATH + " = substr(:path, 1, length(" + PATH +"))");
+            (Repository.PATH + " = substr(:path, 1, length(" + Repository.PATH +"))");
         filter.set("path", ids);
 
-        collection.addOrder(PATH);
+        collection.addOrder(Repository.PATH);
 
         while (collection.next()) {
-            ancestors.append(SEPARATOR + collection.get(NAME));
+            ancestors.append(SEPARATOR + collection.get(Repository.NAME));
         }
 
         return ancestors.toString();
@@ -604,12 +604,13 @@ public abstract class ResourceImpl extends VersionedACSObject
      */
     protected Vector getPropertyNames() {
         Vector names = new Vector();
-        names.addElement(NAME);
-        names.addElement(DESCRIPTION);
-        names.addElement(IS_FOLDER);
+        names.addElement(Repository.NAME);
+        names.addElement(Repository.DESCRIPTION);
+        names.addElement(Repository.IS_FOLDER);
         return names;
     }
 
+    @Override
     public java.util.Date  getLastModifiedDate() {
        java.util.Date date =  (java.util.Date)get("lastModifiedDate");
        return date;
@@ -619,6 +620,7 @@ public abstract class ResourceImpl extends VersionedACSObject
        set("lastModifiedDate",date);
     }
 
+    @Override
     public java.util.Date  getCreationDate() {
        java.util.Date date =  (java.util.Date)get("creationDate");
        return date;
@@ -628,6 +630,7 @@ public abstract class ResourceImpl extends VersionedACSObject
        set("creationDate",date);
     }
 
+    @Override
     public User getCreationUser() {
        DataObject dobj = (DataObject)get("creationUser");
        if(dobj == null) {
@@ -641,6 +644,7 @@ public abstract class ResourceImpl extends VersionedACSObject
        set("creationUser", user);
     }
 
+    @Override
     public User getLastModifiedUser() {
        DataObject dobj = (DataObject)get("lastModifiedUser");
        if(dobj == null) {
@@ -654,6 +658,7 @@ public abstract class ResourceImpl extends VersionedACSObject
        set("lastModifiedUser", user);
     }
 
+    @Override
     public String getCreationIP() {
         String ip = (String)get("creationIP");
         return ip;
@@ -669,6 +674,7 @@ public abstract class ResourceImpl extends VersionedACSObject
         set("creationIP",ip);
     }
 
+    @Override
     public String getLastModifiedIP() {
         String ip = (String)get("lastModifiedIP");
         return ip;

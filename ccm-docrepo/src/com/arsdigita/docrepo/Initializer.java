@@ -72,7 +72,7 @@ public class Initializer extends CompoundInitializer {
              new ACSObjectInstantiator() {
             @Override
                  public DomainObject doNewInstance(DataObject obj) {
-                     Boolean isFolder = (Boolean) obj.get(Constants.IS_FOLDER);
+                     Boolean isFolder = (Boolean) obj.get(Repository.IS_FOLDER);
                      if (isFolder != null && isFolder.booleanValue()) {
                          return new Folder(obj);
                      } else {

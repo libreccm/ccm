@@ -18,7 +18,6 @@
  */
 package com.arsdigita.docrepo;
 
-
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
@@ -26,7 +25,6 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
-import org.apache.oro.text.perl.Perl5Util;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -39,6 +37,9 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+import org.apache.oro.text.perl.Perl5Util;
+
 /**
  * Represents a File in the document manager application.
  *
@@ -46,11 +47,10 @@ import java.util.Vector;
  * @author Ron Henderson (ron@arsdigita.com)
  * @version $Id: File.java  pboy $
  */
-public class File extends ResourceImpl implements Constants {
+public class File extends ResourceImpl  {
 
     /** Logger instance for debugging support. */
-    protected static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(File.class);
+    protected static Logger s_log = Logger.getLogger(File.class);
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.docrepo.File";
@@ -152,7 +152,7 @@ public class File extends ResourceImpl implements Constants {
      */
     @Override
     protected void beforeSave() {
-        set(IS_FOLDER, Boolean.FALSE);
+        set(Repository.IS_FOLDER, Boolean.FALSE);
         super.beforeSave();
     }
 
@@ -169,7 +169,7 @@ public class File extends ResourceImpl implements Constants {
      * content type cannot be determined.
      */
     public String getContentType() {
-        return  (String) get(TYPE);
+        return  (String) get(Repository.TYPE);
     }
 
     /**
@@ -198,7 +198,7 @@ public class File extends ResourceImpl implements Constants {
      */
     private void setContentType(String type) {
         if (isNew()) {
-            set(TYPE, type);
+            set(Repository.TYPE, type);
         } else {
             if (!type.equals(getContentType())) {
                 throw new TypeChangeException(getContentType(), type);
@@ -258,9 +258,9 @@ public class File extends ResourceImpl implements Constants {
         final byte[] content = text.getBytes();
         DocBlobject dblob = new DocBlobject();
         dblob.setContent(content);
-        set(CONTENT, dblob);
-        set(SIZE, BigDecimal.valueOf(content.length));
-        setContentType(TEXT_PLAIN);
+        set(Repository.CONTENT, dblob);
+        set(Repository.SIZE, BigDecimal.valueOf(content.length));
+        setContentType(Repository.TEXT_PLAIN);
     }
 
     /**
@@ -318,8 +318,8 @@ public class File extends ResourceImpl implements Constants {
             byte[] content = os.toByteArray();
             DocBlobject dblob = new DocBlobject();
             dblob.setContent(content);
-            set(CONTENT, dblob);
-            set(SIZE,    BigDecimal.valueOf(content.length));
+            set(Repository.CONTENT, dblob);
+            set(Repository.SIZE,    BigDecimal.valueOf(content.length));
 
         } catch (IOException e) {
             throw new ResourceException("error reading content: " + e.getMessage());
@@ -333,7 +333,7 @@ public class File extends ResourceImpl implements Constants {
      * cannot be computed.
      */
     public BigDecimal getSize() {
-        BigDecimal size = (BigDecimal) get(SIZE);
+        BigDecimal size = (BigDecimal) get(Repository.SIZE);
         if (size != null) {
             return size;
         } else {
@@ -358,8 +358,8 @@ public class File extends ResourceImpl implements Constants {
         byte[] content = getRawContent();
         DocBlobject dblob = new DocBlobject();
         dblob.setContent(content);
-        dest.set(CONTENT,dblob);
-        dest.set(SIZE, BigDecimal.valueOf(content.length));
+        dest.set(Repository.CONTENT,dblob);
+        dest.set(Repository.SIZE, BigDecimal.valueOf(content.length));
         dest.save();
         return dest;
     }

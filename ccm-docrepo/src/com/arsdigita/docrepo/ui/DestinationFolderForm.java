@@ -269,16 +269,16 @@ class DestinationFolderForm extends Form
                     int item = 0;
                     while (collection.next()) {
                         Filter filter = query.addFilter
-                            (" not " + ResourceImpl.PATH + " like " +
+                            (" not " + Repository.PATH + " like " +
                              ":item" + item);
                         filter.set("item" + item,
-                                   collection.get(ResourceImpl.PATH));
+                                   collection.get(Repository.PATH));
                     }
                 }
             }
 
-            query.addOrder(ResourceImpl.PATH);
-            query.addOrder(ResourceImpl.NAME);
+            query.addOrder(Repository.PATH);
+            query.addOrder(Repository.NAME);
 
             while (query.next()) {
                 BigDecimal parentID = (BigDecimal) query.get("parentID");

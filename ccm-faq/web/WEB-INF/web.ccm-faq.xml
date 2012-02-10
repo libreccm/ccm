@@ -7,12 +7,12 @@
         <!-- Servlets for the faq applications -->
 
     <servlet>
-        <servlet-name>FAQ</servlet-name>
+        <servlet-name>faq-main</servlet-name>
         <servlet-class>com.arsdigita.faq.FaqServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>FAQ</servlet-name>
+        <servlet-name>faq-main</servlet-name>
         <url-pattern>/faq/*</url-pattern>
     </servlet-mapping>
 

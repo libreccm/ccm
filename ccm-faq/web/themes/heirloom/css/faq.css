@@ -1,5 +1,6 @@
 /*
  * Fundamental Styles
+ * Copied from portalserver
  */
 
 body {
@@ -86,7 +87,7 @@ table.globalHeader td {
 table.globalHeader td.globalLogo {
   width: 25px;
   height: 25px;
-  background-image: url(RHCLogoRoundRedSmallest.png);
+  background-image: url(../logo.png);
   background-repeat: no-repeat;
 }
 
@@ -121,7 +122,7 @@ td.globalNavigation span.contextBarSeparator {
 }
 
 td.globalNavigation span.immediateContext {
-  color: 3F3F3F;
+  color: #3F3F3F;
   font-weight: bold;
 }
 
@@ -132,7 +133,7 @@ form.globalSearch {
 }
 
 td.globalControl {
-  color: 3F3F3F;
+  color: #3F3F3F;
   margin: 0;
   padding: 0;
   padding-right: 6px;
@@ -145,7 +146,7 @@ td.globalControl a,
 td.globalControl img {
   margin: 0;
   padding: 0;
-  color: 3F3F3F;
+  color: #3F3F3F;
   vertical-align: middle;
   border: 0 none;
   text-decoration: none;
@@ -689,30 +690,30 @@ div.tabs table td.current-tab-label {
 
 div.tabs table.selected {
   z-index: 20;
-  background: rgb(162,30,30) url(tab-selected.png) no-repeat;
+  background: rgb(162,30,30) url(../images/tabbed-pane/tab-selected.png) no-repeat;
 }
 
 div.tabs table.tab-set td.current-tab-label {
   color: white;
-  background: rgb(162,30,30) url(tab-selected.png) no-repeat;
+  background: rgb(162,30,30) url(../images/tabbed-pane/tab-selected.png) no-repeat;
 }
 div.tabs table.tab-set td.current-tab-end {
-  background: url(tab-selected-end.png) no-repeat;
+  background: url(../images/tabbed-pane/tab-selected-end.png) no-repeat;
 }
 
 /* When not selected */
 
 div.tabs table.unselected {
-  background: rgb(225,225,225) url(tab-unselected.png) no-repeat;
+  background: rgb(225,225,225) url(../images/tabbed-pane/tab-unselected.png) no-repeat;
 }
 
 div.tabs table.tab-set td.label {
   color: rgb(63,63,63);
-  background: rgb(225,225,225) url(tab-unselected.png) no-repeat;
+  background: rgb(225,225,225) url(../images/tabbed-pane/tab-unselected.png) no-repeat;
 }
 
 div.tabs table.tab-set td.end {
-  background: url(tab-unselected-end.png) no-repeat;
+  background: url(../images/tabbed-pane/tab-unselected-end.png) no-repeat;
 }
 
 div.tabs table.tab-set td.tab-spacer {
@@ -726,7 +727,7 @@ div.tabs a {
 div.tabs table.rule {
   width: 100%;
   clear: left;
-  background: rgb(162,30,30) url(tab-bar.png) repeat-x;
+  background: rgb(162,30,30) url(../images/tabbed-pane/tab-bar.png) repeat-x;
   height: 11px;
   margin: 0px;
   padding: 0px;

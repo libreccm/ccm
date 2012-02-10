@@ -20,18 +20,14 @@
 
 <xsl:output method="html" indent="yes"/>
 
-<xsl:param name="contextPath"/>
 <xsl:param name="internal-theme"/>
-
-<xsl:variable name="assets-dir">/packages/portalserver/www/assets</xsl:variable>
-<xsl:variable name="css-dir">/packages/portalserver/www/css</xsl:variable>
 
 
 <xsl:template match="bebop:page[@class='faq']">
   <html>
     <head>
       <title><xsl:value-of select="bebop:title"/></title>
-      <link href="{$css-dir}/portalserver.css" rel="stylesheet" type="text/css"/>
+      <link href="{$internal-theme}/css/faq.css" rel="stylesheet" type="text/css"/>
        <style type="text/css">
          BODY { background: white; color: black}
          .main   {background-color: #ffffff;}
@@ -163,7 +159,7 @@
                   <!-- start inactive tab -->
                   <td>
                     <table cellpadding="0" cellspacing="0" border="0">
-                      <tr height="3"><td><img src="/assets/general/spacer.gif" height="3"/></td></tr>
+                      <tr height="3"><td><img src="{$internal-theme}/images/spacer.gif" height="3"/></td></tr>
                       <tr height="23">
                          <td class="tabBeginningOff"><xsl:text>&#160;&#160;</xsl:text></td>
                          <td class="inactiveTab" nowrap="nowrap"><xsl:apply-templates select="bebop:link"/></td>
@@ -245,7 +241,7 @@
           </table>
         </td>
       </tr>
-      <tr><td colspan="3" class="inactiveTabColor" height="2"><img src="/assets/general/spacer.gif" height="2"/></td></tr>
+      <tr><td colspan="3" class="inactiveTabColor" height="2"><img src="{$internal-theme}/images/spacer.gif" height="2"/></td></tr>
     </xsl:if>
     <tr>
       <td class="splitPanelLeft">
@@ -253,7 +249,7 @@
           <tr><td><xsl:apply-templates select="bebop:cell[2]"/></td></tr>
         </table>
       </td>
-      <td class="inactiveTabColor" width="2"><img src="/assets/general/spacer.gif" width="2"/></td>
+      <td class="inactiveTabColor" width="2"><img src="{$internal-theme}/images/spacer.gif" width="2"/></td>
       <td class="splitPanelRight">
         <table width="100%" cellspacing="4" cellpadding="0" border="0">
           <tr><td><xsl:apply-templates select="bebop:cell[3]"/></td></tr>

@@ -26,10 +26,11 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.TypedText;
-
 import com.arsdigita.web.Application;
 
 import java.math.BigDecimal;
+
+import org.apache.log4j.Logger;
 
 /**
  * Faq class.
@@ -39,24 +40,45 @@ import java.math.BigDecimal;
 
 public class Faq extends Application {
 
+    /** Private logger instance for debugging purpose                        */
+    private static final Logger log = Logger.getLogger(Faq.class);
+
+    // PDL stuff
+    
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.faq.Faq";
+                               "com.arsdigita.faq.Faq";
 
-    private static final org.apache.log4j.Logger log =
-        org.apache.log4j.Logger.getLogger(Faq.class);
-
+    /**
+     * 
+     * @param oid
+     * @throws DataObjectNotFoundException 
+     */
     public Faq(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
+    /**
+     * 
+     * @param key
+     * @throws DataObjectNotFoundException 
+     */
     public Faq(BigDecimal key)  throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
 
+    /**
+     * 
+     * @param dataObject 
+     */
     public Faq(DataObject dataObject) {
         super(dataObject);
     }
 
+    /**
+     * 
+     * @return 
+     */
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -65,10 +87,13 @@ public class Faq extends Application {
     /**
      * Use this instead of the constructor to create new Faq objects
      */
-    public static Faq create(String urlName, String title,
+    public static Faq create(String urlName, 
+                             String title,
                              Application parent) {
-        return (Faq) Application.createApplication
-            (BASE_DATA_OBJECT_TYPE, urlName, title, parent);
+        return (Faq) Application.createApplication(BASE_DATA_OBJECT_TYPE, 
+                                                   urlName, 
+                                                   title, 
+                                                   parent);
     }
 
     /**
@@ -160,7 +185,7 @@ public class Faq extends Application {
 
     @Override
     public String getServletPath() {
-        return "faq";
+        return "/faq";
     }
 
 }

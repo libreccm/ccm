@@ -71,6 +71,7 @@ public class Forum extends Application {
 
     /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(Forum.class);
+
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.forum.Forum";
     public static final String PACKAGE_TYPE = "forum";
@@ -995,6 +996,7 @@ public class Forum extends Application {
         set(ANONYMOUS_POSTS, new Boolean(allow));
     }
 
+    @Override
     public void setTitle(String title) {
         String oldTitle = getTitle();
         super.setTitle(title);

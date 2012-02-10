@@ -57,7 +57,7 @@ import org.apache.log4j.Logger;
  * @author Ron Henderson (ron@arsdigita.com)
  */
 
-public class Repository extends Application implements Constants {
+public class Repository extends Application {
 
     /** Logger instance for debugging purpose.  */
     private static Logger s_log = Logger.getLogger(Repository.class);
@@ -65,19 +65,43 @@ public class Repository extends Application implements Constants {
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.docrepo.Repository";
 
+    // pdl constants
+    private static final String ACTION      = "action";
+    public  static final String CONTENT     = "content";
+    public  static final String DESCRIPTION = "description";
+    private static final String DURATION    = "duration";
+    private static final String FOLDER_ID   = "folderID";
+    public  static final String IS_FOLDER   = "isFolder";
+    private static final String LAST_MODIFIED_DATE = "lastModifiedDate";
+    private static final String MIME_TYPE_LABEL = "mimeTypeDescription";
+    public  static final String NAME        = "name";
+    private static final String OBJECT_ID   = "objectID";
+    public  static final String PARENT      = "parent";
+    private static final String PARTY_ID    = "partyID";
+    public  static final String PATH        = "path";
+    public  static final String SIZE        = "size";
+    public  static final String TYPE        = "mimeType";
+    private static final String USER_ID     = "userID";
+    private static final String OWNER = "ownerID";
+    private static final String ROOT  = "rootID";
+
+    String REPOSITORIES_MOUNTED = "subscribedRepositories";
+
+    // MIME type constants
+
+    public  static final String TEXT_PLAIN  = com.arsdigita.mail.Mail.TEXT_PLAIN;
+    public  static final String TEXT_HTML   = com.arsdigita.mail.Mail.TEXT_HTML;
+
+    private Folder m_root = null;
+
     /**
      * 
      * @return
      */
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
-
-    // pdl constants
-    private static final String OWNER = "ownerID";
-    private static final String ROOT  = "rootID";
-
-    private Folder m_root = null;
 
     /**
      * Retreives a repository from the database usings its OID.
@@ -137,6 +161,7 @@ public class Repository extends Application implements Constants {
     /**
      * Grant write permission to the Portal participants.
      */
+    @Override
     protected void afterSave() {
         super.afterSave();
 

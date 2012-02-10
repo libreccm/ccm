@@ -112,6 +112,7 @@ public class Loader extends PackageLoader {
                 //setupInboxAppType(); //TODO: why it is commented out?
                 setupRecentPostingsPortletType();
                 setupMyForumsPortletType();
+
                 //  moved upwards
                 //  setupDigestUser();
 
@@ -187,6 +188,9 @@ public class Loader extends PackageLoader {
         return type;
     }
 
+    /**
+     * 
+     */
     public static PortletType setupMyForumsPortletType() {
 
         PortletType type = PortletType.createPortletType(

@@ -38,8 +38,10 @@ public class FaqServlet  extends BebopApplicationServlet {
     private static final Logger s_log = Logger.getLogger(FaqServlet.class);
 
 
+    @Override
     public void init() throws ServletException {
         super.init();
+        s_log.debug("creating FAQ page");
 
         Page index = buildIndexPage();
         Page admin = buildAdminIndexPage();
@@ -48,8 +50,8 @@ public class FaqServlet  extends BebopApplicationServlet {
         put("/index.jsp", index);
         put("/one.jsp", index);
 
-        put("admin/", admin);
-        put("admin/index.jsp", admin);
+  //    put("admin", admin);
+  //    put("admin/index.jsp", admin);
 
     }
 
