@@ -11,17 +11,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
-import org.apache.log4j.Logger;
 
 /**
  * Upgrade for association between GenericContact and GenericPerson (6.6.4 to
  * 6.6.5)
  *
  * @author Jens Pelzetter
- * @version $Id$
+ * @version $Id: GenericContactPersonAssocUpgrade.java 1501 2012-02-10 16:49:14Z
+ * jensp $
  */
 public class GenericContactPersonAssocUpgrade extends Program {
-  
+
     public GenericContactPersonAssocUpgrade() {
         super("GenericContactPersonAssocUpgrade", "1.0.0", "");
     }
@@ -45,7 +45,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
             printStackTrace(ex);
             close(conn);
             return;
-        }                            
+        }
 
         System.out.println("Retrieving old data...");
         try {
@@ -81,7 +81,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
         try {
             System.out.println("Creating new tables...");
             final Statement stmt = conn.createStatement();
-            
+
             stmt.addBatch("CREATE TABLE cms_person_bundles ( "
                           + "bundle_id integer NOT NULL)");
 
@@ -153,6 +153,11 @@ public class GenericContactPersonAssocUpgrade extends Program {
                 stmt.addBatch(String.format("INSERT INTO cms_person_bundles (bundle_id) "
                                             + "VALUES (%d)",
                                             personsRs.getInt(1)));
+                stmt.addBatch(String.format(
+                        "UPDATE acs_objects "
+                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.GenericPersonBundle' "
+                        + "WHERE object_id = %d",
+                        personsRs.getInt(1)));
             }
 
             final ResultSet contactsRs = queryContactsStmt.executeQuery(
@@ -165,10 +170,15 @@ public class GenericContactPersonAssocUpgrade extends Program {
                 stmt.addBatch(String.format("INSERT INTO cms_contact_bundles (bundle_id) "
                                             + "VALUES (%s)",
                                             contactsRs.getInt(1)));
+                stmt.addBatch(String.format(
+                        "UPDATE acs_objects "
+                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.GenericContactBundle' "
+                        + "WHERE object_id = %d",
+                        contactsRs.getInt(1)));
             }
 
             final List<String> processedEntries =
-                         new ArrayList<String>();
+                               new ArrayList<String>();
             for (OldAssocEntry entry : oldData) {
                 BigDecimal personBundleId;
                 BigDecimal contactBundleId;
@@ -289,11 +299,11 @@ public class GenericContactPersonAssocUpgrade extends Program {
             printStackTrace(ex);
         }
     }
-    
+
     private void printStackTrace(final SQLException ex) {
         ex.printStackTrace(System.err);
         if (ex.getNextException() != null) {
             printStackTrace(ex.getNextException());
-        }        
+        }
     }
 }

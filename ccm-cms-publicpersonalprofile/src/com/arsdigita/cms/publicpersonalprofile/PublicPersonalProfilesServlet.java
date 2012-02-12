@@ -1148,7 +1148,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 }*/
                 if (contentPage.getContentBundle().hasInstance(profile.
                         getLanguage(), false)) {
-                    contentPage = (ContentPage) contentPage.getContentBundle().
+                    item = (ContentPage) contentPage.getContentBundle().
                             getInstance(profile.getLanguage());
                 } else {
                     response.sendError(

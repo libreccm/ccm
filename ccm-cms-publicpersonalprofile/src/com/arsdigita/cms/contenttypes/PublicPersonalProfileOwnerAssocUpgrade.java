@@ -17,7 +17,8 @@ import org.apache.commons.cli.CommandLine;
  * ccm-cms from 6.6.4 to 6.6.5 has be executed before this update.
  *
  * @author Jens Pelzetter
- * @version $Id$
+ * @version $Id: PublicPersonalProfileOwnerAssocUpgrade.java 1501 2012-02-10
+ * 16:49:14Z jensp $
  */
 public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
 
@@ -137,6 +138,11 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
                 stmt.addBatch(String.format(
                         "INSERT INTO ct_public_personal_profile_bundles (bundle_id) "
                         + "VALUES (%d)",
+                        profilesRs.getInt(1)));
+                stmt.addBatch(String.format(
+                        "UPDATE acs_objects "
+                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle' "
+                        + "WHERE object_id = %d",
                         profilesRs.getInt(1)));
             }
 
