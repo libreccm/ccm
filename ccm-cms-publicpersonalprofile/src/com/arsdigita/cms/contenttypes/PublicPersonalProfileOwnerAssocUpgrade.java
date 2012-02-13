@@ -141,7 +141,8 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
                         profilesRs.getInt(1)));
                 stmt.addBatch(String.format(
                         "UPDATE acs_objects "
-                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle' "
+                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle', "
+                        + "object_type = 'com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle' "
                         + "WHERE object_id = %d",
                         profilesRs.getInt(1)));
             }

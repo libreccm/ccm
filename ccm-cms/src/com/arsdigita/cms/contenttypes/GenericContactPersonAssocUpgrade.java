@@ -155,7 +155,8 @@ public class GenericContactPersonAssocUpgrade extends Program {
                                             personsRs.getInt(1)));
                 stmt.addBatch(String.format(
                         "UPDATE acs_objects "
-                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.GenericPersonBundle' "
+                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.GenericPersonBundle',"
+                        + "object_type = 'com.arsdigita.cms.contenttypes.GenericPersonBundle' "
                         + "WHERE object_id = %d",
                         personsRs.getInt(1)));
             }
@@ -172,7 +173,8 @@ public class GenericContactPersonAssocUpgrade extends Program {
                                             contactsRs.getInt(1)));
                 stmt.addBatch(String.format(
                         "UPDATE acs_objects "
-                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.GenericContactBundle' "
+                        + "SET default_domain_class = 'com.arsdigita.cms.contenttypes.GenericContactBundle', "
+                        + "object_type = 'com.arsdigita.cms.contenttypes.GenericContactBundle'  "
                         + "WHERE object_id = %d",
                         contactsRs.getInt(1)));
             }

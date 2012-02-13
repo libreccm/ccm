@@ -64,11 +64,7 @@ public class PublicPersonalProfileBundle extends ContentBundle {
             collection.next();
             dobj = collection.getDataObject();
             collection.close();
-
-            final GenericPersonBundle bundle =
-                                      (GenericPersonBundle) DomainObjectFactory.
-                    newInstance(dobj);
-
+           
             return (GenericPersonBundle) DomainObjectFactory.newInstance(dobj);
         }
     }
