@@ -25,7 +25,8 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 
 /**
- * Loader.
+ * Terms Loader executes nonrecurring at install time and loads (installs and 
+ * initializes) the ccm-ldn-terms module into database.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 1878 2009-04-21 13:56:23Z terry $
@@ -40,11 +41,18 @@ public class Loader extends PackageLoader {
         }.run();
     }
 
+    /**
+     * Creates a legacy free application type and a admin application instance.
+     */
     public static void setupApplication() {
-        ApplicationType type = ApplicationType
-            .createApplicationType("terms",
-                                   "CCM Terms Admin",
-                                   Terms.BASE_DATA_OBJECT_TYPE);
+
+        // NOTE: The title "Navigation" is used to retrieve the application's
+        // name to determine the location of xsl files (by url-izing it). So
+        // DON'T modify it without synchronizing web directory tree accordingly!
+        ApplicationType type =
+                new ApplicationType( "Terms",
+                                     Terms.BASE_DATA_OBJECT_TYPE );
+
         type.setDescription("CCM Terms administration");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");

@@ -15,15 +15,9 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2010/11/10 23:15:09 $
+-- $Id: oracle-se-6.6.1-6.6.2.sql 293 2012-02-07 15:10:39Z pboy $
 
-\echo Red Hat Enterprise TERMS 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
+PROMPT Red Hat Enterprise TERMS 6.6.1 -> 6.6.2 Upgrade Script (Oracle)
 
-begin;
-
--- Under unknown circumstances a constraint may get lost during updating.
--- Only needed under special conditions or when a missing constraint causes
--- errors.
-\i ../default/upgrade/6.6.0-6.6.1/upd_constraints.sql
-
-commit;
+-- Terms now initialized legacy free
+@@ ../default/upgrade/6.6.1-6.6.2/remove_legacy_entries.sql
