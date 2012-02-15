@@ -26,14 +26,14 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
         super("PublicPersonalProfileOwnerAssocUpgrade", "1.0.0", "");
     }
 
-    public static final void main(final String[] args) {
+    public static void main(final String[] args) {
         new PublicPersonalProfileOwnerAssocUpgrade().run(args);
     }
 
     public void doRun(final CommandLine cmdLine) {
         System.out.println("Starting upgrade...");
 
-        List<OldAssocEntry> oldData = new ArrayList<OldAssocEntry>();
+        List<AssocEntry> oldData = new ArrayList<AssocEntry>();
 
         final Connection conn = Connections.acquire(RuntimeConfig.getConfig().
                 getJDBCURL());
@@ -52,12 +52,32 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
             final Statement stmt = conn.createStatement();
             final ResultSet oldAssocResult = stmt.executeQuery(
                     "SELECT profile_id, owner_id, owner_order "
-                    + "FROM ct_public_personal_profile_owner_map");
+                    + "FROM ct_public_personal_profile_owner_map "
+                    + "JOIN cms_items on profile_id = item_id "
+                    + "WHERE version = 'draft'");
 
             while (oldAssocResult.next()) {
-                oldData.add(new OldAssocEntry(oldAssocResult.getBigDecimal(1),
-                                              oldAssocResult.getBigDecimal(2),
-                                              oldAssocResult.getInt(3)));
+                AssocEntry entry = new AssocEntry();
+
+                entry.setProfileDraftId(oldAssocResult.getBigDecimal(1));
+                entry.setProfileBundleDraftId(getParentIdFor(
+                        entry.getProfileDraftId(), conn));
+                entry.setOwnerDraftId(oldAssocResult.getBigDecimal(2));
+                entry.setOwnerBundleDraftId(getParentIdFor(
+                        entry.getOwnerDraftId(), conn));
+
+                entry.setProfilePublicId(getPublicIdFor(
+                        entry.getProfileDraftId(), conn));
+                entry.setProfileBundlePublicId(getPublicIdFor(
+                        entry.getProfileBundleDraftId(), conn));
+                entry.setOwnerPublicId(getParentIdFor(
+                        entry.getOwnerDraftId(), conn));
+                entry.setOwnerBundlePublicId(getParentIdFor(
+                        entry.getOwnerBundleDraftId(), conn));
+
+                entry.setOwnerOrder(oldAssocResult.getInt(3));
+
+                oldData.add(entry);
             }
         } catch (SQLException ex) {
             System.err.println("Failed to retrieve old data.");
@@ -148,17 +168,12 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
             }
 
             final List<String> processedEntries = new ArrayList<String>();
-            for (OldAssocEntry entry : oldData) {
-                BigDecimal profileBundleId;
-                BigDecimal ownerBundleId;
-
-                profileBundleId = getParentIdFor(entry.getProfileId(), conn);
-                ownerBundleId = getParentIdFor(entry.ownerId, conn);
+            for (AssocEntry entry : oldData) {
 
                 if (processedEntries.contains(
                         String.format("%s-%s",
-                                      profileBundleId.toString(),
-                                      ownerBundleId.toString()))) {
+                                      entry.getProfileBundleDraftId().toString(),
+                                      entry.getOwnerBundleDraftId().toString()))) {
                     continue;
                 }
 
@@ -168,14 +183,57 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
                         + "owner_id, "
                         + "owner_order) "
                         + "VALUES (%s, %s, %d)",
-                        profileBundleId.toString(),
-                        ownerBundleId.toString(),
+                        entry.getProfileBundleDraftId().toString(),
+                        entry.getOwnerBundleDraftId().toString(),
                         entry.getOwnerOrder()));
+                if ((entry.getProfileBundlePublicId() != null)
+                    && (entry.getOwnerBundlePublicId() != null)) {
+                    stmt.addBatch(String.format(
+                            "INSERT INTO ct_public_personal_profile_owner_map ("
+                            + "profile_id, "
+                            + "owner_id, "
+                            + "owner_order) "
+                            + "VALUES (%s, %s, %d)",
+                            entry.getProfileBundlePublicId().toString(),
+                            entry.getOwnerBundlePublicId().toString(),
+                            entry.getOwnerOrder()));
+                }
+
+                if (entry.getProfileBundlePublicId() != null) {
+                    stmt.addBatch(String.format(
+                            "UPDATE cms_published_links "
+                            + "SET pending = %s, "
+                            + "pending_source = %s, "
+                            + "draft_target = %s "
+                            + "WHERE pending = %s "
+                            + "AND draft_target = %s",
+                            entry.getProfileBundlePublicId(),
+                            entry.getProfileBundlePublicId(),
+                            entry.getOwnerBundleDraftId(),
+                            entry.getProfilePublicId(),
+                            entry.getOwnerDraftId()));
+                }
+                
+                if (entry.getOwnerBundlePublicId() != null) {
+                    stmt.addBatch(String.format(
+                            "UPDATE cms_published_links "
+                            + "SET pending = %s, "
+                            + "pending_source = %s, "
+                            + "draft_target = %s "
+                            + "WHERE pending = %s "
+                            + "AND draft_target = %s",
+                            entry.getOwnerBundlePublicId(),
+                            entry.getOwnerBundlePublicId(),
+                            entry.getProfileBundleDraftId(),
+                            entry.getOwnerPublicId(),
+                            entry.getProfileDraftId()));
+                }
+
 
                 processedEntries.add(String.format(
                         "%s-%s",
-                        profileBundleId.toString(),
-                        ownerBundleId.toString()));
+                        entry.getProfileBundleDraftId().toString(),
+                        entry.getOwnerBundleDraftId().toString()));
             }
 
             stmt.executeBatch();
@@ -200,26 +258,43 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
         close(conn);
     }
 
-    private class OldAssocEntry {
+    private class AssocEntry {
 
-        private BigDecimal profileId;
-        private BigDecimal ownerId;
+        private BigDecimal profileDraftId;
+        private BigDecimal ownerDraftId;
+        private BigDecimal profilePublicId;
+        private BigDecimal ownerPublicId;
+        private BigDecimal profileBundleDraftId;
+        private BigDecimal ownerBundleDraftId;
+        private BigDecimal profileBundlePublicId;
+        private BigDecimal ownerBundlePublicId;
         private Integer ownerOrder;
 
-        public OldAssocEntry(final BigDecimal profileId,
-                             final BigDecimal ownerId,
-                             final Integer ownerOrder) {
-            this.profileId = profileId;
-            this.ownerId = ownerId;
-            this.ownerOrder = ownerOrder;
+        public AssocEntry() {
         }
 
-        public BigDecimal getOwnerId() {
-            return ownerId;
+        public BigDecimal getOwnerBundleDraftId() {
+            return ownerBundleDraftId;
         }
 
-        public void setOwnerId(BigDecimal ownerId) {
-            this.ownerId = ownerId;
+        public void setOwnerBundleDraftId(BigDecimal ownerBundleDraftId) {
+            this.ownerBundleDraftId = ownerBundleDraftId;
+        }
+
+        public BigDecimal getOwnerBundlePublicId() {
+            return ownerBundlePublicId;
+        }
+
+        public void setOwnerBundlePublicId(BigDecimal ownerBundlePublicId) {
+            this.ownerBundlePublicId = ownerBundlePublicId;
+        }
+
+        public BigDecimal getOwnerDraftId() {
+            return ownerDraftId;
+        }
+
+        public void setOwnerDraftId(BigDecimal ownerDraftId) {
+            this.ownerDraftId = ownerDraftId;
         }
 
         public Integer getOwnerOrder() {
@@ -230,12 +305,44 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
             this.ownerOrder = ownerOrder;
         }
 
-        public BigDecimal getProfileId() {
-            return profileId;
+        public BigDecimal getOwnerPublicId() {
+            return ownerPublicId;
         }
 
-        public void setProfileId(BigDecimal profileId) {
-            this.profileId = profileId;
+        public void setOwnerPublicId(BigDecimal ownerPublicId) {
+            this.ownerPublicId = ownerPublicId;
+        }
+
+        public BigDecimal getProfileBundleDraftId() {
+            return profileBundleDraftId;
+        }
+
+        public void setProfileBundleDraftId(BigDecimal profileBundleDraftId) {
+            this.profileBundleDraftId = profileBundleDraftId;
+        }
+
+        public BigDecimal getProfileBundlePublicId() {
+            return profileBundlePublicId;
+        }
+
+        public void setProfileBundlePublicId(BigDecimal profileBundlePublicId) {
+            this.profileBundlePublicId = profileBundlePublicId;
+        }
+
+        public BigDecimal getProfileDraftId() {
+            return profileDraftId;
+        }
+
+        public void setProfileDraftId(BigDecimal profileDraftId) {
+            this.profileDraftId = profileDraftId;
+        }
+
+        public BigDecimal getProfilePublicId() {
+            return profilePublicId;
+        }
+
+        public void setProfilePublicId(BigDecimal profilePublicId) {
+            this.profilePublicId = profilePublicId;
         }
     }
 
@@ -243,7 +350,8 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
         try {
             conn.rollback();
         } catch (SQLException ex1) {
-            System.out.println("Rollback failed.");
+            System.err.println("Rollback failed.");
+            ex1.printStackTrace(System.err);
         }
     }
 
@@ -263,13 +371,29 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends Program {
         }
     }
 
+    private BigDecimal getPublicIdFor(final BigDecimal id,
+                                      final Connection conn)
+            throws SQLException {
+        final Statement stmt = conn.createStatement();
+
+        final ResultSet rs = stmt.executeQuery(String.format(
+                "SELECT item_id FROM cms_items WHERE master_id = %s",
+                id.toString()));
+
+        while (rs.next()) {
+            return rs.getBigDecimal(1);
+        }
+
+        return null;
+    }
+
     private BigDecimal getParentIdFor(final BigDecimal id,
                                       final Connection conn)
             throws SQLException {
         final Statement stmt = conn.createStatement();
 
         final ResultSet rs = stmt.executeQuery(String.format(
-                "SELECT parent_id FROM cms_items where item_id = %s",
+                "SELECT parent_id FROM cms_items WHERE item_id = %s",
                 id.toString()));
 
         while (rs.next()) {

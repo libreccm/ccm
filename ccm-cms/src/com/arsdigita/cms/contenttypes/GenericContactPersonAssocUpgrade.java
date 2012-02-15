@@ -26,13 +26,13 @@ public class GenericContactPersonAssocUpgrade extends Program {
         super("GenericContactPersonAssocUpgrade", "1.0.0", "");
     }
 
-    public static final void main(final String[] args) {
+    public static void main(final String[] args) {
         new GenericContactPersonAssocUpgrade().run(args);
     }
 
     public void doRun(final CommandLine cmdLine) {
         System.out.println("Starting upgrade...");
-        List<OldAssocEntry> oldData = new ArrayList<OldAssocEntry>();
+        List<AssocEntry> oldData = new ArrayList<AssocEntry>();
 
         System.out.println("Trying to get JDBC connection...");
 
@@ -52,13 +52,33 @@ public class GenericContactPersonAssocUpgrade extends Program {
             final Statement stmt = conn.createStatement();
             final ResultSet oldAssocResult = stmt.executeQuery(
                     "SELECT person_id, contact_id, link_order, link_key "
-                    + "FROM cms_person_contact_map");
+                    + "FROM cms_person_contact_map "
+                    + "JOIN cms_items on person_id = item_id "
+                    + "WHERE version = 'draft' ");
 
             while (oldAssocResult.next()) {
-                oldData.add(new OldAssocEntry(oldAssocResult.getBigDecimal(1),
-                                              oldAssocResult.getBigDecimal(2),
-                                              oldAssocResult.getInt(3),
-                                              oldAssocResult.getString(4)));
+                AssocEntry entry = new AssocEntry();
+
+                entry.setPersonDraftId(oldAssocResult.getBigDecimal(1));
+                entry.setPersonDraftBundleId(getParentIdFor(
+                        entry.getPersonDraftId(), conn));
+                entry.setContactDraftId(oldAssocResult.getBigDecimal(2));
+                entry.setContactDraftBundleId(getParentIdFor(
+                        entry.getContactDraftId(), conn));
+
+                entry.setPersonPublicId(getPublicIdFor(
+                        entry.getPersonDraftId(), conn));
+                entry.setPersonPublicBundleId(getPublicIdFor(
+                        entry.getPersonDraftBundleId(), conn));
+                entry.setContactPublicId(getPublicIdFor(
+                        entry.getContactDraftId(), conn));
+                entry.setContactPublicBundleId(getPublicIdFor(
+                        entry.getContactDraftBundleId(), conn));
+
+                entry.setLinkOrder(oldAssocResult.getInt(3));
+                entry.setLinkKey(oldAssocResult.getString(4));
+
+                oldData.add(entry);
             }
         } catch (SQLException ex) {
             System.err.println("Failed to retrieve old data.");
@@ -181,17 +201,11 @@ public class GenericContactPersonAssocUpgrade extends Program {
 
             final List<String> processedEntries =
                                new ArrayList<String>();
-            for (OldAssocEntry entry : oldData) {
-                BigDecimal personBundleId;
-                BigDecimal contactBundleId;
-
-                personBundleId = getParentIdFor(entry.getPersonId(), conn);
-                contactBundleId = getParentIdFor(entry.getContactId(), conn);
-
+            for (AssocEntry entry : oldData) {
                 if (processedEntries.contains(
                         String.format("%s-%s",
-                                      personBundleId.toString(),
-                                      contactBundleId.toString()))) {
+                                      entry.getPersonDraftBundleId().toString(),
+                                      entry.getContactDraftBundleId().toString()))) {
                     continue;
                 }
 
@@ -202,14 +216,61 @@ public class GenericContactPersonAssocUpgrade extends Program {
                         + "link_order, "
                         + "link_key) "
                         + "VALUES (%s, %s, %d, '%s')",
-                        personBundleId.toString(),
-                        contactBundleId.toString(),
+                        entry.getPersonDraftBundleId().toString(),
+                        entry.getContactDraftBundleId().toString(),
                         entry.getLinkOrder(),
                         entry.getLinkKey()));
 
-                processedEntries.add(String.format("%s-%s",
-                                                   personBundleId.toString(),
-                                                   contactBundleId.toString()));
+                if ((entry.getPersonPublicBundleId() != null)
+                    && (entry.getContactPublicBundleId() != null)) {
+                    stmt.addBatch(String.format(
+                            "INSERT INTO cms_person_contact_map ("
+                            + "person_id, "
+                            + "contact_id, "
+                            + "link_order, "
+                            + "link_key) "
+                            + "VALUES (%s, %s, %d, '%s')",
+                            entry.getPersonPublicBundleId().toString(),
+                            entry.getContactPublicBundleId().toString(),
+                            entry.getLinkOrder(),
+                            entry.getLinkKey()));
+                }
+
+                if (entry.getPersonPublicBundleId() != null) {
+                    stmt.addBatch(String.format(
+                            "UPDATE cms_published_links "
+                            + "SET pending = %s, "
+                            + "pending_source = %s, "
+                            + "draft_target = %s "
+                            + "WHERE pending = %s "
+                            + "AND draft_target = %s",
+                            entry.getPersonPublicBundleId().toString(),
+                            entry.getPersonPublicBundleId().toString(),
+                            entry.getContactDraftBundleId(),
+                            entry.getPersonPublicId(),
+                            entry.getContactDraftId()));
+                }
+
+                if (entry.getContactPublicBundleId() != null) {
+                    stmt.addBatch(String.format(
+                            "UPDATE cms_published_links "
+                            + "SET pending = %s, "
+                            + "pending_source = %s, "
+                            + "draft_target = %s "
+                            + "WHERE pending = %s "
+                            + "AND draft_target = %s",
+                            entry.getContactPublicBundleId().toString(),
+                            entry.getContactPublicBundleId().toString(),
+                            entry.getPersonDraftBundleId(),
+                            entry.getContactPublicId(),
+                            entry.getPersonDraftId()));
+                }
+
+                processedEntries.add(String.format(
+                        "%s-%s",
+                        entry.getPersonDraftBundleId().
+                        toString(),
+                        entry.getContactDraftBundleId().toString()));
             }
 
             stmt.executeBatch();
@@ -235,38 +296,117 @@ public class GenericContactPersonAssocUpgrade extends Program {
         close(conn);
     }
 
-    private class OldAssocEntry {
+    private class AssocEntry {
 
-        private BigDecimal personId;
-        private BigDecimal contactId;
+        private BigDecimal personDraftId;
+        private BigDecimal contactDraftId;
+        private BigDecimal personPublicId;
+        private BigDecimal contactPublicId;
+        private BigDecimal personDraftBundleId;
+        private BigDecimal contactDraftBundleId;
+        private BigDecimal personPublicBundleId;
+        private BigDecimal contactPublicBundleId;
         private Integer linkOrder;
         private String linkKey;
 
-        public OldAssocEntry(final BigDecimal personId,
-                             final BigDecimal contactId,
-                             final Integer linkOrder,
-                             final String linkKey) {
-            this.personId = personId;
-            this.contactId = contactId;
-            this.linkOrder = linkOrder;
-            this.linkKey = linkKey;
+        public AssocEntry() {
         }
 
-        public BigDecimal getContactId() {
-            return contactId;
+        public BigDecimal getContactDraftBundleId() {
+            return contactDraftBundleId;
+        }
+
+        public void setContactDraftBundleId(BigDecimal contactDraftBundleId) {
+            this.contactDraftBundleId = contactDraftBundleId;
+        }
+
+        public BigDecimal getContactDraftId() {
+            return contactDraftId;
+        }
+
+        public void setContactDraftId(BigDecimal contactDraftId) {
+            this.contactDraftId = contactDraftId;
+        }
+
+        public BigDecimal getContactPublicBundleId() {
+            return contactPublicBundleId;
+        }
+
+        public void setContactPublicBundleId(BigDecimal contactPublicBundleId) {
+            this.contactPublicBundleId = contactPublicBundleId;
+        }
+
+        public BigDecimal getContactPublicId() {
+            return contactPublicId;
+        }
+
+        public void setContactPublicId(BigDecimal contactPublicId) {
+            this.contactPublicId = contactPublicId;
         }
 
         public String getLinkKey() {
             return linkKey;
         }
 
+        public void setLinkKey(String linkKey) {
+            this.linkKey = linkKey;
+        }
+
         public Integer getLinkOrder() {
             return linkOrder;
         }
 
-        public BigDecimal getPersonId() {
-            return personId;
+        public void setLinkOrder(Integer linkOrder) {
+            this.linkOrder = linkOrder;
         }
+
+        public BigDecimal getPersonDraftBundleId() {
+            return personDraftBundleId;
+        }
+
+        public void setPersonDraftBundleId(BigDecimal personDraftBundleId) {
+            this.personDraftBundleId = personDraftBundleId;
+        }
+
+        public BigDecimal getPersonDraftId() {
+            return personDraftId;
+        }
+
+        public void setPersonDraftId(BigDecimal personDraftId) {
+            this.personDraftId = personDraftId;
+        }
+
+        public BigDecimal getPersonPublicBundleId() {
+            return personPublicBundleId;
+        }
+
+        public void setPersonPublicBundleId(BigDecimal personPublicBundleId) {
+            this.personPublicBundleId = personPublicBundleId;
+        }
+
+        public BigDecimal getPersonPublicId() {
+            return personPublicId;
+        }
+
+        public void setPersonPublicId(BigDecimal personPublicId) {
+            this.personPublicId = personPublicId;
+        }
+    }
+
+    private BigDecimal getPublicIdFor(final BigDecimal id,
+                                      final Connection conn)
+            throws SQLException {
+        final Statement stmt = conn.createStatement();
+
+        final ResultSet rs = stmt.executeQuery(String.format(
+                "SELECT item_id FROM cms_items WHERE master_id = %s",
+                id.toString()));
+
+        while (rs.next()) {
+            return rs.getBigDecimal(1);
+        }
+
+        return null;
     }
 
     private BigDecimal getParentIdFor(final BigDecimal id,
@@ -275,7 +415,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
         final Statement stmt = conn.createStatement();
 
         final ResultSet rs = stmt.executeQuery(String.format(
-                "SELECT parent_id FROM cms_items where item_id = %s",
+                "SELECT parent_id FROM cms_items WHERE item_id = %s",
                 id.toString()));
 
         while (rs.next()) {
