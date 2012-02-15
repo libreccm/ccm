@@ -19,23 +19,11 @@
 package com.arsdigita.docrepo;
 
 
-//import com.arsdigita.web.Web;
 import com.arsdigita.domain.DataObjectNotFoundException;
-//import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObject;
-//import com.arsdigita.kernel.Kernel;
 import com.arsdigita.db.Sequences;
-//import com.arsdigita.kernel.KernelExcursion;
-//import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-//import com.arsdigita.persistence.DataOperation;
-//import com.arsdigita.persistence.DataQuery;
-//import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
-//import com.arsdigita.persistence.PersistenceException;
-//import com.arsdigita.persistence.Session;
-//import com.arsdigita.persistence.SessionManager;
-//import com.arsdigita.persistence.metadata.ObjectType;
 
 import java.math.BigDecimal;
 

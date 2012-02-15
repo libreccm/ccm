@@ -261,7 +261,7 @@ class QueryPlanComponent extends com.arsdigita.bebop.SimpleContainer {
         Integer request_id = (Integer) s.getValue(m_request_id);
         Integer query_id = (Integer) s.getValue(m_query_id);
 
-        RequestInfo ri = WebDevSupport.getInstance().getRequest(
+        RequestInfo ri = WebDevSupportListener.getInstance().getRequest(
                                                                 request_id.intValue()
                                                                 );
         if (ri != null) {
@@ -277,7 +277,7 @@ class QueryPlanComponent extends com.arsdigita.bebop.SimpleContainer {
 
         Integer request_id = (Integer) s.getValue(m_request_id);
         Integer query_id = (Integer) s.getValue(m_query_id);
-        RequestInfo ri = WebDevSupport.getInstance().getRequest(
+        RequestInfo ri = WebDevSupportListener.getInstance().getRequest(
                                                                 request_id.intValue()
                                                                 );
         if (ri != null) {
@@ -294,7 +294,7 @@ class QueryPlanComponent extends com.arsdigita.bebop.SimpleContainer {
 		Integer request_id = (Integer) s.getValue(m_request_id);
 		Integer query_id = (Integer) s.getValue(m_query_id);
 		RequestInfo ri =
-			WebDevSupport.getInstance().getRequest(request_id.intValue());
+			WebDevSupportListener.getInstance().getRequest(request_id.intValue());
 		if (ri != null) {
 			QueryInfo qi = ri.getQuery(query_id.intValue());
 			if (qi != null) {

@@ -58,6 +58,7 @@ import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.Web;
 
+import com.arsdigita.webdevsupport.WebDevSupport;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,6 +77,8 @@ import java.util.Map;
 import javax.mail.internet.InternetAddress;
 
 import org.apache.log4j.Logger;
+
+
 /**
  * CoreLoader
  *
@@ -260,12 +263,14 @@ public class CoreLoader extends PackageLoader {
 
                 s_log.debug("CoreLoader: Going to init KeyStorage.");
                 KeyStorage.KERNEL_KEY_STORE.init();
+
                 s_log.debug("CoreLoader: Going to execute loadHost().");
                 loadHost();
+
                 s_log.debug("CoreLoader: Going to execute loadSubsite().");
                 loadSubsite(loadKernel());
-                s_log.debug("CoreLoader: Going to execute loadBebop().");
-                loadBebop();
+    //  !!      s_log.debug("CoreLoader: Going to execute loadBebop().");
+    //  !!      loadBebop();
                 s_log.debug("CoreLoader: Going to execute loadWebDev().");
                 loadWebDev();
                 s_log.debug("CoreLoader: Going to execute loadSiteMapAdminApp().");
@@ -278,6 +283,7 @@ public class CoreLoader extends PackageLoader {
                 loadMimeTypes();
                 s_log.debug("CoreLoader: Going to execute loadGlobalization().");
                 loadGlobalization();
+
             }
         }.run();
         s_log.debug("CoreLoader run method completed.");
@@ -314,8 +320,33 @@ public class CoreLoader extends PackageLoader {
         //--com.arsdigita.search.lucene.LegacyInitializer.LOADER.load();
     }
 
+    private void loadSubsite(SiteNode rootNode) {
+        s_log.debug("CoreLoader: Going to execute method loadSubsite().");
+        String sDispatcher = "";
+
+        PackageInstance packageInstance = rootNode.getPackageInstance();
+        if (packageInstance == null) {
+            throw new IllegalStateException
+                ("No package instance mounted at the root node");
+        }
+        PackageType subsite = packageInstance.getType();
+
+        // getType() returns a disconnected object.  To get a connected object
+        // we do a findByKey(key).
+        String packageKey = subsite.getKey();
+        try {
+            subsite = PackageType.findByKey(packageKey);
+        } catch (DataObjectNotFoundException e) {
+            throw new IllegalStateException
+                ("Package Type with key \"" + packageKey + "\" was not found.\n");
+        }
+
+        // Set subsite dispatcher class.
+        subsite.setDispatcherClass(getDispatcher());
+    }
+
     /**
-     * Create Root Site Node
+     * Create Root Site Node for loadSubsite()
      * @return root node
      */
     private SiteNode loadKernel() {
@@ -341,9 +372,12 @@ public class CoreLoader extends PackageLoader {
         return rootNode;
     }
 
-    // Ensure that at least one User with universal "admin" permission
-    // exists after installation.
 
+
+    /**
+     * Ensure that at least one User with universal "admin" permission exists 
+     * after installation.
+     */
     private void createSystemAdministrator() {
         s_log.debug("CoreLoader: execution of method createSystemAdministrator().");
         final String DO_NOT_CREATE = "*do not create*";
@@ -405,31 +439,8 @@ public class CoreLoader extends PackageLoader {
 
     }
 
-    private void loadSubsite(SiteNode rootNode) {
-        s_log.debug("CoreLoader: Going to execute method loadSubsite().");
-        String sDispatcher = "";
-
-        PackageInstance packageInstance = rootNode.getPackageInstance();
-        if (packageInstance == null) {
-            throw new IllegalStateException
-                ("No package instance mounted at the root node");
-        }
-        PackageType subsite = packageInstance.getType();
-
-        // getType() returns a disconnected object.  To get a connected object
-        // we do a findByKey(key).
-        String packageKey = subsite.getKey();
-        try {
-            subsite = PackageType.findByKey(packageKey);
-        } catch (DataObjectNotFoundException e) {
-            throw new IllegalStateException
-                ("Package Type with key \"" + packageKey + "\" was not found.\n");
-        }
-
-        // Set subsite dispatcher class.
-        subsite.setDispatcherClass(getDispatcher());
-    }
-
+//  Not really used. Commented out in run() method
+/*
     private void loadBebop() {
         // Create Package Types and Instances
 
@@ -439,9 +450,11 @@ public class CoreLoader extends PackageLoader {
         bebop.createInstance("Bebop Service");
 
     }
+*/
 
     private void loadWebDev() {
         // Add the package type to the database
+/*
         PackageType packType = PackageType.create
             ("webdev-support", "WebDeveloper Support", "WebDeveloper Supports",
              "http://arsdigita.com/webdev-support");
@@ -453,6 +466,25 @@ public class CoreLoader extends PackageLoader {
 
         // Map the package type to a dispatcher class
         packType.setDispatcherClass("com.arsdigita.webdevsupport.Dispatcher");
+*/
+        ApplicationType webDevType = ApplicationType
+            .createApplicationType("webdev-support",
+                                   "WebDeveloper Support", 
+                                   WebDevSupport.BASE_DATA_OBJECT_TYPE);
+        webDevType.setDispatcherClass("com.arsdigita.webdevsupport.Dispatcher");
+        webDevType.setDescription("WebDeveloper Support application");
+        webDevType.save();
+        
+        Application webDev = Application.createApplication(webDevType,
+                                                           "ds",
+                                                           "WebDeveloper Support",
+                                                           null);
+        webDev.setDescription("The default WEB developer service instance.");
+        webDev.save();
+    
+    
+
+
     }
 
     private Application loadAdminApp() {
@@ -511,11 +543,6 @@ public class CoreLoader extends PackageLoader {
      * Load core's basic portal infrastructure. 
      */
     private void loadPortal() {
-/*  Portal now legacy free. To be deleted when transistion is completed.
-        s_log.info("Adding package type: portal");
-        PackageType packageType = PackageType.create
-            ("portal", "Portal", "Portals", "http://arsdigita.com/portal");
-*/
         s_log.info("Adding resource type: portal");
         // ResourceType manages the entries in table application_types and
         // therefore actually creates a sort of new style legacy free

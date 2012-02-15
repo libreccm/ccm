@@ -96,7 +96,7 @@ public class ServiceDispatcher extends LockableImpl implements Dispatcher {
     public ServiceDispatcher() {
         super();
 
-        m_trailingSlashList = new ArrayList();
+        // m_trailingSlashList = new ArrayList();
         requireTrailingSlash("");
 
         setNotFoundDispatcher(JSPApplicationDispatcher.getInstance());
@@ -130,7 +130,8 @@ public class ServiceDispatcher extends LockableImpl implements Dispatcher {
         }
 
         // Check user access.
-        checkUserAccess(request, response, actx);
+        // Deprecated and here implemented as a No-OP method!
+        /* heckUserAccess(request, response, actx);     */
 
         ResourceHandler page = getResource(url);
         if ( page != null ) {
@@ -267,7 +268,7 @@ public class ServiceDispatcher extends LockableImpl implements Dispatcher {
      *
      * @exception ServletException If there is an exception thrown while
      * trying to redirect, wrap that exception in a ServletException
-     **/
+     */
     protected void redirectToLoginPage(HttpServletRequest req,
                                        HttpServletResponse resp)
         throws ServletException {

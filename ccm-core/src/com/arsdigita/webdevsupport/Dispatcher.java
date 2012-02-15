@@ -155,13 +155,13 @@ public class Dispatcher extends BebopMapDispatcher {
 
         ActionLink enable = new ActionLink("Enable request logging") {
                 public boolean isVisible(PageState state) {
-                    return !DeveloperSupport.containsListener(WebDevSupport.getInstance())
+                    return !DeveloperSupport.containsListener(WebDevSupportListener.getInstance())
                         && super.isVisible(state);
                 }
             };
         enable.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    DeveloperSupport.addListener(WebDevSupport.getInstance());
+                    DeveloperSupport.addListener(WebDevSupportListener.getInstance());
                     throw new RedirectSignal(URL.request(e.getPageState().getRequest(),
                                                          null), true);
                 }
@@ -172,14 +172,14 @@ public class Dispatcher extends BebopMapDispatcher {
 
         ActionLink disable = new ActionLink("Disable request logging") {
                 public boolean isVisible(PageState state) {
-                    return DeveloperSupport.containsListener(WebDevSupport.getInstance())
+                    return DeveloperSupport.containsListener(WebDevSupportListener.getInstance())
                         && super.isVisible(state);
                 }
             };
         disable.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    DeveloperSupport.removeListener(WebDevSupport.getInstance());
-                    WebDevSupport.getInstance().clearRequestHistory();
+                    DeveloperSupport.removeListener(WebDevSupportListener.getInstance());
+                    WebDevSupportListener.getInstance().clearRequestHistory();
                     throw new RedirectSignal(URL.request(e.getPageState().getRequest(),
                                                          null), true);
                 }
@@ -188,7 +188,7 @@ public class Dispatcher extends BebopMapDispatcher {
 
         BoxPanel logs = new BoxPanel(BoxPanel.VERTICAL) {
                 public boolean isVisible(PageState state) {
-                    return DeveloperSupport.containsListener(WebDevSupport.getInstance())
+                    return DeveloperSupport.containsListener(WebDevSupportListener.getInstance())
                         && super.isVisible(state);
                 }
             };
@@ -196,7 +196,7 @@ public class Dispatcher extends BebopMapDispatcher {
         logs.add(new Label("") {
                 public String getLabel(PageState ps) {
                     return "Currently storing the last " +
-                        WebDevSupport.getInstance().getMaxRequests() + " requests";
+                        WebDevSupportListener.getInstance().getMaxRequests() + " requests";
                 }
             });
         Label toggle = new Label("") {
@@ -298,7 +298,7 @@ public class Dispatcher extends BebopMapDispatcher {
                 public TableModel makeModel(Table t, final PageState s) {
                     Integer request_id = (Integer)s.getValue(m_request_id);
                     RequestInfo ri =
-                        WebDevSupport.getInstance().getRequest(request_id.intValue());
+                        WebDevSupportListener.getInstance().getRequest(request_id.intValue());
                     final Iterator iter = (ri == null) ? new ArrayList().iterator() :
                         ri.getQueries();
 
@@ -483,7 +483,7 @@ public class Dispatcher extends BebopMapDispatcher {
                 public TableModel makeModel(Table t, PageState s) {
                     return new TableModel() {
                             ListIterator iter =
-                                WebDevSupport.getInstance().getRequestsReverse();
+                                WebDevSupportListener.getInstance().getRequestsReverse();
                             private RequestInfo current = null;
 
                             public int getColumnCount() {
@@ -568,7 +568,7 @@ public class Dispatcher extends BebopMapDispatcher {
         public void generateXML(PageState state, Element parent) {
             Integer request_id = (Integer)state.getValue(m_request_id);
             RequestInfo ri =
-                WebDevSupport.getInstance().getRequest(request_id.intValue());
+                WebDevSupportListener.getInstance().getRequest(request_id.intValue());
             if (ri != null) {
                 Container param_list;
                 Container form_list;
@@ -679,7 +679,7 @@ public class Dispatcher extends BebopMapDispatcher {
             Integer request_id = (Integer)state.getValue(m_query_request_id);
             Integer query_id = (Integer)state.getValue(m_query_id);
             RequestInfo ri =
-                WebDevSupport.getInstance().getRequest(request_id.intValue());
+                WebDevSupportListener.getInstance().getRequest(request_id.intValue());
             if (ri != null) {
                 QueryInfo qi = ri.getQuery(query_id.intValue());
                 if (qi != null) {

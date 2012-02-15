@@ -69,7 +69,7 @@ public class QueryLog implements com.arsdigita.dispatcher.Dispatcher {
         Integer request_id = (Integer)m_request_id.transformValue(req);
         Integer query_id = (Integer)m_query_id.transformValue(req);
         RequestInfo ri =
-            WebDevSupport.getInstance().getRequest(request_id.intValue());
+            WebDevSupportListener.getInstance().getRequest(request_id.intValue());
         final Iterator iter = (ri == null) ? new ArrayList().iterator() :
             ri.getQueries();
         

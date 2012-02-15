@@ -27,7 +27,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.GenericInitializer;
-import com.arsdigita.webdevsupport.WebDevSupport;
+import com.arsdigita.webdevsupport.WebDevSupportListener;
 
 import java.math.BigDecimal;
 
@@ -170,7 +170,7 @@ public class Initializer extends GenericInitializer {
         Boolean active = KernelConfig.getConfig().isWebdevSupportActive();
         if (Boolean.TRUE.equals(active)) {
             s_log.debug("Registering webdev listener");
-            DeveloperSupport.addListener(WebDevSupport.getInstance());
+            DeveloperSupport.addListener(WebDevSupportListener.getInstance());
         }
 
         s_log.debug("kernel context init completed");

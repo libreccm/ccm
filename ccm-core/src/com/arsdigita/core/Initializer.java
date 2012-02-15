@@ -52,6 +52,7 @@ import com.arsdigita.search.converter.OOConverter;
 import com.arsdigita.search.converter.WordConverter;
 import com.arsdigita.search.converter.TextConverter;
 
+import com.arsdigita.webdevsupport.WebDevSupport;
 import org.apache.log4j.Logger;
 
 
@@ -135,6 +136,17 @@ public class Initializer extends CompoundInitializer {
              new DomainObjectInstantiator() {
                  public DomainObject doNewInstance(final DataObject data) {
                      return new TaskComment(data);
+                 }
+             });
+
+        /* domain.ReflectionInstantiator instantiator for 
+         * dataObject com.arsdigita.webdevsupport.WebDevSupport              */
+        e.getFactory().registerInstantiator
+            (WebDevSupport.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(final DataObject data) {
+                     return new WebDevSupport(data);
                  }
              });
 

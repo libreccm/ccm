@@ -54,6 +54,7 @@ public class PermissionsDispatcher extends BebopMapDispatcher
         Page index = buildIndexPage();
         Page single = buildItemPage();
         
+        // BebopMapDispatcher manages url - pages mapping
         addPage("", index);
         addPage("index", index);
         addPage("one", single);
@@ -61,6 +62,7 @@ public class PermissionsDispatcher extends BebopMapDispatcher
         addPage("denied", buildDeniedPage());
     }
 
+    @Override
     protected void preprocessRequest(HttpServletRequest req,
                                      HttpServletResponse resp,
                                      RequestContext ctx,

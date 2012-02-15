@@ -94,7 +94,7 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         
         DeveloperSupport.endStage("ContentCenterServlet.doService");
         if (s_log.isDebugEnabled()) {
-            s_log.info("doService method competed");
+            s_log.info("doService method completed");
         }
     }
 

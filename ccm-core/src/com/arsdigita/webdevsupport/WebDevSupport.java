@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2010 Peter Boy <pb@zes.uni-bremen.de> All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,224 +16,55 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.webdevsupport;
 
-import com.arsdigita.developersupport.DeveloperSupportListener;
-import com.arsdigita.dispatcher.RequestEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ListIterator;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.web.Application;
 import org.apache.log4j.Logger;
 
-
-
 /**
- * WebDevSupport
- *   DeveloperSupportListener for Web Development Support package.
- *  <p>
- *    
- *  </p>
- * @author Joseph A. Bank (jbank@alum.mit.edu)
- * @version 1.0
- **/
-public class WebDevSupport extends DeveloperSupportListener {
-    public static final String versionId = "$Id: WebDevSupport.java 1460 2007-03-02 14:36:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+ * Site wide Web Developer Support application domain base class simply provides
+ * the infrastructure to load the application type and application instance.
+ * 
+ * Currently a trivial subclass of com.arsdigita.web.Application
+ * @see com.arsdigita.web.Application
+ *
+ * @author pb
+ * @version $Id: WebDevSupport.java   $
+ */
+public class WebDevSupport extends Application {
 
-    private static final Logger s_log =
-        Logger.getLogger( WebDevSupport.class );
+    /** Private logger instance to faciliate debugging procedures         */
+    private static final Logger s_log = Logger.getLogger(WebDevSupport.class);
 
-    private static WebDevSupport s_instance;
-    public static synchronized WebDevSupport getInstance() {
-        if (s_instance == null) {
-            s_instance = new WebDevSupport();
-        }
-        return s_instance;
+
+    // pdl stuff (constants)
+    /**                                                                       */
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.webdevsupport.WebDevSupport";
+
+    public WebDevSupport(DataObject obj) {
+        super(obj);
     }
 
-    private WebDevSupport() {
-        //empty for now
-    }
+    public WebDevSupport(OID oid)
+        throws DataObjectNotFoundException {
 
-    private static int s_max_requests = 100;
-    public void setMaxRequests(int max_requests) {
-        s_max_requests = max_requests;
-    }
-
-    public int getMaxRequests() {
-        return s_max_requests;
-    }
-
-    //We store a HashTable that maps Threads to their most recent
-    //request object.  This gets cleaned up when requests end
-    private HashMap m_threadRequestMap = new HashMap();
-    private ArrayList m_requests = new ArrayList();
-
-    private synchronized void registerNewRequest(RequestInfo ri) {
-        m_threadRequestMap.put(Thread.currentThread(), ri);
-        m_requests.add(ri);
-        if (s_max_requests != -1) {
-            int to_remove = m_requests.size() - s_max_requests;
-            //this is kindof expensive, but usually just one at a time
-            for (int i = 0; i<to_remove; i++) {
-                m_requests.remove(0);
-            }
-        }
-    }
-
-    synchronized void clearRequestHistory() {
-        m_requests.clear();
-    }
-
-    private RequestInfo getCurrentRequest() {
-        return (RequestInfo)m_threadRequestMap.get(Thread.currentThread());
-    }
-
-    private synchronized void unRegisterRequest() {
-        m_threadRequestMap.remove(Thread.currentThread());
-    }
-
-    public ListIterator getRequestsReverse() {
-        //need to copy the requests to allow the iterator
-        //to work in spite of concurrent modifications
-        ArrayList lst = (ArrayList)m_requests.clone();
-        return lst.listIterator(lst.size());
-    }
-
-    public ListIterator getRequests() {
-        //need to copy the requests to allow the iterator
-        //to work in spite of concurrent modifications
-        ArrayList lst = (ArrayList)m_requests.clone();
-        return lst.listIterator();
-    }
-
-    public RequestInfo getRequest(int id) {
-        Iterator iter = m_requests.iterator();
-        while (iter.hasNext()) {
-            RequestInfo ri = (RequestInfo)iter.next();
-            if (ri.getID() == id) {
-                return ri;
-            }
-        }
-        return null;
-    }
-
-
-    /**
-     * requestStart
-     * Callback indicating a new request has started.
-     * Request is an opaque pointer for now for linkage purposes (don't want
-     * to have dependencies on the dispatcher here) and for making this
-     * infrastructure more general.
-     */
-    public void requestStart(Object request) {
-        if (request instanceof RequestEvent && getCurrentRequest() == null) {
-            registerNewRequest(new RequestInfo((RequestEvent)request));
-        }
+        super(oid);
     }
 
     /**
-     * requestAddProperty
-     * Add a new property about this request.
+     * Getter to retrieve the base database object type name
+     *
+     * @return base data aoject type as String
      */
-    public void requestAddProperty(Object request, String property, Object value) {
-        RequestInfo ri = getCurrentRequest();
-        if (ri != null) {
-            ri.addProperty(property, value);
-        }
+    @Override
+    protected String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
     }
 
-    /**
-     * requestEnd
-     * Callback indicating the request ended
-     */
-    public void requestEnd(Object request) {
-        RequestInfo ri = getCurrentRequest();
-        if (ri != null) {
-            ri.finish();
-        }
-        unRegisterRequest();
-    }
-
-    /**
-     * logQuery
-     * Callback logging a database query
-     */
-    public void logQuery(String connection_id,
-                         String type,
-                         String query,
-                         HashMap bindvars,
-                         long time,
-                         java.sql.SQLException sqle) {
-        RequestInfo ri = getCurrentRequest();
-        if (ri != null) {
-            ri.logQuery(new QueryInfo(ri.numQueries()+1,
-                                      connection_id,
-                                      type,
-                                      query,
-                                      bindvars,
-                                      time,
-                                      sqle));
-        }
-    }
-
-    /**
-     * logQuery
-     * Callback logging a database query
-     */
-    public void logQueryCompletion(String connection_id,
-                         String type,
-                         String query,
-                         HashMap bindvars,
-                         long time,
-                         long totaltime,
-                         java.sql.SQLException sqle) {
-        RequestInfo ri = getCurrentRequest();
-        if (ri != null) {
-            QueryInfo qi = ri.findQuery(connection_id, type, query, bindvars, time);
-            if (qi == null) {
-                s_log.warn("Could not find query: " + query + "\nBinds: " + bindvars);
-            } else {
-                qi.setCompletion(totaltime, sqle);
-            }
-        }
-    }
-
-    /**
-     * logComment
-     * Log a generic comment
-     */
-    public void logComment(String comment) {
-        RequestInfo ri = getCurrentRequest();
-        if (ri != null) {
-            ri.logComment(comment);
-        }
-    }
-
-    /**
-     * startStage
-     * Callback indicating a new stage has started.
-     * Stages can be used to log help mark the time
-     * taken to perform various parts of requests.
-     */
-    public void startStage(String stagename) {
-        RequestInfo ri = getCurrentRequest();
-        if (ri != null) {
-            ri.startStage(stagename);
-        }
-    }
-
-    /**
-     * endStage
-     * Callback indicating a stage has ended.
-     * Stages can be used to log help mark the time
-     * taken to perform various parts of requests.
-     */
-    public void endStage(String stagename) {
-        RequestInfo ri = getCurrentRequest();
-        if (ri != null) {
-            ri.endStage(stagename);
-        }
-    }
-
+    
 }

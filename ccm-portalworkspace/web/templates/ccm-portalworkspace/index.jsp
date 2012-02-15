@@ -21,14 +21,14 @@
              viewWorkspace.addRequestListener(
                  new ApplicationAuthenticationListener(PrivilegeDescriptor.READ));
          }
-      </jsp:scriptlet>
+    </jsp:scriptlet>
 
-      <define:component name="view"
+    <define:component name="view"
                    classname="com.arsdigita.portalworkspace.ui.WorkspaceViewer" />
-      <jsp:scriptlet>
+    <jsp:scriptlet>
       ((AbstractWorkspaceComponent) view).setWorkspaceModel(
                                           new DefaultWorkspaceSelectionModel());
-      </jsp:scriptlet>
+    </jsp:scriptlet>
   </define:page>
 
   <show:all/>

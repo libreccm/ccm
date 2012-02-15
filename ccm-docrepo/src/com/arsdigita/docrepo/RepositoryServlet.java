@@ -19,8 +19,34 @@
 
 package com.arsdigita.docrepo;
 
+import com.arsdigita.bebop.ActionLink;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.TabbedPane;
+import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.page.BebopApplicationServlet;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
+import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
+import com.arsdigita.dispatcher.RequestContext;
+import com.arsdigita.docrepo.File;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.web.Web;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.util.UncheckedWrapperException;
+import org.apache.log4j.Category;
 
+import java.io.*;
+import java.math.BigDecimal;
+
+import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,5 +57,31 @@ public class RepositoryServlet  extends BebopApplicationServlet {
 
     /** Private logger instance to faciliate debugging procedures         */
     private static final Logger s_log = Logger.getLogger(RepositoryServlet.class);
+
+
+    /**
+     * Servlet Initialisation, builds the UI elements (various panes)
+     * @throws ServletException 
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        s_log.debug("creating DocRepo page");
+
+
+//      Page index = buildIndexPage();
+//      Page admin = buildAdminIndexPage();
+
+//      put("/", index);
+//      put("/index.jsp", index);
+//      put("/one.jsp", index);
+
+  //    put("admin", admin);
+  //    put("admin/index.jsp", admin);
+
+    }
+
+    
+
 
 }

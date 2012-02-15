@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
  */
 public class Service extends Application {
 
-    private static final Logger s_log = Logger.getLogger(ContentSection.class);
+    private static final Logger s_log = Logger.getLogger(Service.class);
 
     // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE =
