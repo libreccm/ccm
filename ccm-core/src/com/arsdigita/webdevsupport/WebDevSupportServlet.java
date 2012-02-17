@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2012 Peter Boy <pb@zes.uni-bremen.de> All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,10 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.webdevsupport;
 
 import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
@@ -32,7 +32,6 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
-import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
@@ -42,27 +41,29 @@ import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.table.AbstractTableModelBuilder;
 import com.arsdigita.bebop.table.DefaultTableCellRenderer;
-import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
-import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.sitenode.SiteNodeRequestContext;
+import com.arsdigita.templating.PresentationManager;
+import com.arsdigita.templating.Templating;
+import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
-import com.arsdigita.webdevsupport.log4j.CategoryPanel;
 import com.arsdigita.webdevsupport.config.ConfigList;
+import com.arsdigita.webdevsupport.log4j.CategoryPanel; 
+import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 
 import java.io.IOException;
@@ -73,22 +74,23 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 
 /**
- * Dispatcher for Web Developer Support
- *  <p>
- *
- *  </p>
- *
- * @author Joseph A. Bank (jbank@alum.mit.edu)
- * @version 1.0
- * @version $Id: Dispatcher.java 1460 2007-03-02 14:36:38Z sskracic $
+ * Web Developer Support Application Servlet class, central entry point  to 
+ * create and process the applications UI.
+ * 
+ * We should have subclassed BebopApplicationServlet but couldn't overwrite
+ * doService() method to add permission checking. So we use our own page
+ * mapping. The general logic is the same as for BebopApplicationServlet.
+ * {@see com.arsdigita.bebop.page.BebopApplicationServlet}
+ * 
+ * @author pb
  */
-public class Dispatcher extends BebopMapDispatcher {
+public class WebDevSupportServlet extends BaseApplicationServlet {
 
     private static final Logger s_log =
                                 Logger.getLogger(Dispatcher.class.getName());
@@ -96,85 +98,126 @@ public class Dispatcher extends BebopMapDispatcher {
     public static final String APP_NAME = "ds";
 
     private static boolean s_showDSPages = false;
+    /** URL (pathinfo) -> Page object mapping. Based on it (and the http
+     * request url) the doService method to selects a page to display        */
+    private final Map m_pages = new HashMap();
 
-    private final static String CACHE_TABLE_URL = "cache-table";
-
-    /**
-     * Constructor builds the various Developer Support Pages and creates the
-     * corresponding URL - Page mapping.
-     */
-    public Dispatcher() {
-        super();
-        Map m = new HashMap();
-
-        /** The URLs the package will support.
-         */
-        m.put("", buildIndexPage());
-        m.put("index",  buildIndexPage());
-        m.put("request-info",  buildInfoPage());
-        m.put("query-log",  new QueryLog());
-        m.put("query-info",  buildQueryInfoPage());
-        m.put("query-plan",  buildQueryPlanPage());
-        m.put("log4j", buildLog4jPage());
-        m.put("config", buildConfigPage());
-        m.put(CACHE_TABLE_URL, buildCacheTablePage());
-
-        /* The rest of the URLs go here with more
-         *  m_put statements.
-         */
-        
-        /* Make the created map operational                                  */
-        setMap(m);
-    }
 
     /**
-     * Overwrites parent's dispatch method to add permission checking. If
-     * required permissions are granted dispatching is delegatged to parent.
-     * @param req
-     * @param resp
-     * @param ctx
-     * @throws IOException
+     * User extension point, overwrite this method to setup a URL - page mapping
+     * 
      * @throws ServletException 
      */
     @Override
-    public void dispatch(HttpServletRequest req,
-                         HttpServletResponse resp,
-                         RequestContext ctx)
-                throws IOException, ServletException {
+    public void doInit() throws ServletException {
 
-        /* Determine access priviledge, only logged in users may access DS   */
-        Party party = Kernel.getContext().getParty();
-        if (party == null) {
-            throw new LoginSignal(req);
-        }
+        addPage("/", buildIndexPage());      // index page at address ~/ds
+    //  addPage("/index.jsp", buildIndexPage()); // index page at address ~/ds
 
-        SiteNode node = ((SiteNodeRequestContext)ctx).getSiteNode();
-        PermissionDescriptor admin = new PermissionDescriptor
-            (PrivilegeDescriptor.ADMIN, node, party);
-        if (!PermissionService.checkPermission(admin)) {
-            throw new AccessDeniedException("user not an administrator");
-        }
+        addPage("/log4j", buildLog4jPage());   // Logger Adjuster at addr. ~/ds/log4j
+        addPage("/config", buildConfigPage()); // config browser @ ~/ds/config
+        // cache table browser @ ~/ds/cache-table
+        addPage("/cache-table", buildCacheTablePage());
 
-        // Want ds to always show the latest stuff...
-        DispatcherHelper.cacheDisable(resp);
+// XXXX!!
+// QueryLog is a class of its own in webdevsupport, based upon dispatcher.Disp
+// and prints out all queries in a request
+//         put("query-log",  new QueryLog());
 
-        DeveloperSupport.requestAddProperty(null, "IS_DS", new Boolean(true));
-        super.dispatch(req, resp, ctx);
+        addPage("/request-info",  buildInfoPage());
+        addPage("/query-info",  buildQueryInfoPage());
+        addPage("/query-plan",  buildQueryPlanPage());
+
     }
 
+
+    /**
+     * Central service method, checks for required permission, determines the
+     * requested page and passes the page object to PresentationManager.
+     */
+    public final void doService(HttpServletRequest sreq,
+                                HttpServletResponse sresp,
+                                Application app)
+                      throws ServletException, IOException {
+
+        // /////// Some preparational steps                     ///////////////
+
+        /* Determine access privilege: only logged in users may access DS   */
+        Party party = Kernel.getContext().getParty();
+        if (party == null) {
+            throw new LoginSignal(sreq);
+        }
+        /* Determine access privilege: Admin privileges must be granted     */
+        PermissionDescriptor admin = new PermissionDescriptor
+            (PrivilegeDescriptor.ADMIN, app, party);
+        if (!PermissionService.checkPermission(admin)) {
+            throw new AccessDeniedException("User is not an administrator");
+        }
+        /* Want ds to always show the latest stuff...                       */
+        DispatcherHelper.cacheDisable(sresp);
+
+
+        // /////// Everything OK here - DO IT                   ///////////////
+
+        String pathInfo = sreq.getPathInfo();
+        Assert.exists(pathInfo, "String pathInfo");
+        if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
+            /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
+             * start with a '/' character. It currently carries a 
+             * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
+             * result of a servlet mapping. But Application requires url 
+             * NOT to end with a trailing '/' for legacy free applications.  */
+            pathInfo = pathInfo.substring(0, pathInfo.length()-1);
+        }
+
+        final Page page = (Page) m_pages.get(pathInfo);
+
+        if (page != null) {
+
+            final Document doc = page.buildDocument(sreq, sresp);
+
+            PresentationManager pm = Templating.getPresentationManager();
+            pm.servePage(doc, sreq, sresp);
+
+        } else {
+            sresp.sendError(404, "No such page for path " + pathInfo);
+            // throw new IllegalStateException("No such page for path " + pathInfo);
+        }
+        
+    }
+
+
+    /**
+     * Adds one Url-Page mapping to the internal mapping table.
+     * 
+     * @param pathInfo url stub for a page to display
+     * @param page Page object to display
+     */
+    private void addPage(final String pathInfo, final Page page) {
+
+        Assert.exists(pathInfo, String.class);
+        Assert.exists(page, Page.class);
+        // Current Implementation requires pathInfo to start with a leading '/'
+        // SUN Servlet API specifies: "PathInfo *may be empty* or will start
+        // with a '/' character."
+        Assert.isTrue(pathInfo.startsWith("/"), "path starts not with '/'");
+
+        m_pages.put(pathInfo, page);
+    }
 
     /**
      * 
      * @return index Page object
      */
     private Page buildIndexPage() {
+
         Page p = PageFactory.buildPage(APP_NAME, "Web Developer Support");
 
         BoxPanel links = new BoxPanel(BoxPanel.VERTICAL);
 
-        links.add(new Link("Log4j Logger Adjuster", "log4j"));
-        links.add(new Link("Config Browser", "config"));
-        links.add(new Link("Cache Table Browser", CACHE_TABLE_URL));
+        links.add(new Link("Log4j Logger Adjuster", "/ds/log4j"));
+        links.add(new Link("Config Browser", "/ds/config"));
+        links.add(new Link("Cache Table Browser", "/ds/cache-table"));
 
         ActionLink enable = new ActionLink("Enable request logging") {
             @Override
@@ -194,7 +237,6 @@ public class Dispatcher extends BebopMapDispatcher {
             });
         links.add(enable);
 
-
         ActionLink disable = new ActionLink("Disable request logging") {
             @Override
             public boolean isVisible(PageState state) {
@@ -205,42 +247,50 @@ public class Dispatcher extends BebopMapDispatcher {
         };
 
         disable.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    DeveloperSupport.removeListener(WebDevSupportListener.getInstance());
-                    WebDevSupportListener.getInstance().clearRequestHistory();
-                    throw new RedirectSignal(URL.request(e.getPageState().getRequest(),
-                                                         null), true);
+            public void actionPerformed(ActionEvent e) {
+                DeveloperSupport.removeListener(WebDevSupportListener.getInstance());
+                WebDevSupportListener.getInstance().clearRequestHistory();
+                throw new RedirectSignal(URL.request(e.getPageState().getRequest(),
+                                                     null), true);
                 }
             });
         links.add(disable);
 
         BoxPanel logs = new BoxPanel(BoxPanel.VERTICAL) {
-                public boolean isVisible(PageState state) {
-                    return DeveloperSupport.containsListener(WebDevSupportListener.getInstance())
+            @Override
+            public boolean isVisible(PageState state) {
+                return DeveloperSupport
+                        .containsListener(WebDevSupportListener.getInstance())
                         && super.isVisible(state);
                 }
             };
 
         logs.add(new Label("") {
-                public String getLabel(PageState ps) {
-                    return "Currently storing the last " +
-                        WebDevSupportListener.getInstance().getMaxRequests() + " requests";
+            @Override
+            public String getLabel(PageState ps) {
+                return "Currently storing the last " +
+                        WebDevSupportListener.getInstance().getMaxRequests() + 
+                        " requests";
                 }
             });
+
         Label toggle = new Label("") {
-                public String getLabel(PageState ps) {
-                    return s_showDSPages ? "Hide hits to developer support" :
-                        "Show hits to developer support";
-                }
-            };
+            @Override
+            public String getLabel(PageState ps) {
+                return s_showDSPages ? "Hide hits to developer support" :
+                       "Show hits to developer support";
+            }
+        };
         ControlLink cl = new ControlLink(toggle) {
-                public void respond(PageState s) {
-                    s_showDSPages = !s_showDSPages;
-                }
-                public void setControlEvent(PageState s) {
-                    s.setControlEvent(this);
-                }
-            };
+            @Override
+            public void respond(PageState s) {
+                s_showDSPages = !s_showDSPages;
+            }
+            @Override
+            public void setControlEvent(PageState s) {
+                s.setControlEvent(this);
+            }
+        };
 
 
         logs.add(cl);
@@ -252,6 +302,7 @@ public class Dispatcher extends BebopMapDispatcher {
         p.lock();
         return p;
     }
+
 
     /**
      * 
@@ -282,6 +333,7 @@ public class Dispatcher extends BebopMapDispatcher {
         return p;
     }
 
+
     private ParameterModel m_request_id = new IntegerParameter("request_id");
 
     /**
@@ -291,7 +343,7 @@ public class Dispatcher extends BebopMapDispatcher {
     private Page buildInfoPage() {
         Page p = PageFactory.buildPage(APP_NAME, "Request Information");
         p.addGlobalStateParam(m_request_id);
-        p.add(new RequestInfoComponent());
+    //  p.add(new RequestInfoComponent());
         p.add(makeDatabaseRequestComponent());
         p.lock();
         return p;
@@ -313,6 +365,7 @@ public class Dispatcher extends BebopMapDispatcher {
         p.lock();
         return p;
     }
+
 
     private RequestLocal m_scoreboard = new RequestLocal() {
         @Override
@@ -337,6 +390,7 @@ public class Dispatcher extends BebopMapDispatcher {
 
         row[index] = new Integer(row[index].intValue() + 1);
     }
+
 
     private Component makeDatabaseRequestComponent() {
         final String[] headers =
@@ -444,24 +498,25 @@ public class Dispatcher extends BebopMapDispatcher {
         table.getColumn(0).setCellRenderer(new
                                            DefaultTableCellRenderer(true));
         table.addTableActionListener(new TableActionAdapter() {
-                public void cellSelected(TableActionEvent e) {
-                    PageState s = e.getPageState();
-                    Integer request_id = (Integer) s.getValue(m_query_request_id);
+            @Override
+            public void cellSelected(TableActionEvent e) {
+                PageState s = e.getPageState();
+                Integer request_id = (Integer) s.getValue(m_query_request_id);
 
-                    final ParameterMap params = new ParameterMap();
+                final ParameterMap params = new ParameterMap();
 
-                    params.setParameter("request_id", request_id);
-                    params.setParameter("query_id", e.getRowKey());
+                params.setParameter("request_id", request_id);
+                params.setParameter("query_id", e.getRowKey());
 
-                    if (e.getColumn().intValue() == 0) {
-                        throw new RedirectSignal(URL.getDispatcherPath() +
-                                                 "/ds/query-info" + params, true);
-                    } else {
-                        throw new RedirectSignal(URL.getDispatcherPath() +
+                if (e.getColumn().intValue() == 0) {
+                   throw new RedirectSignal(URL.getDispatcherPath() +
+                                            "/ds/query-info" + params, true);
+                } else {
+                    throw new RedirectSignal(URL.getDispatcherPath() +
                                                  "/ds/query-log" + params, true);
-                    }
                 }
-            });
+            }
+        });
 
         Label l = new Label("None");
         l.setFontWeight(Label.ITALIC);
@@ -522,7 +577,7 @@ public class Dispatcher extends BebopMapDispatcher {
         return panel;
     }
 
-
+    
     private Table makeRequestTable() {
         final String[] headers = { "Time", "Duration", "Queries", "IP",
                                    "Request", "Extra" };
@@ -582,6 +637,7 @@ public class Dispatcher extends BebopMapDispatcher {
         result.getColumn(5).setCellRenderer(new
                                             DefaultTableCellRenderer(true));
         result.addTableActionListener(new TableActionAdapter() {
+            @Override
                 public void cellSelected(TableActionEvent e) {
                     final ParameterMap params = new ParameterMap();
                     params.setParameter("request_id", e.getRowKey());
@@ -604,9 +660,24 @@ public class Dispatcher extends BebopMapDispatcher {
     }
 
     String dashes(int depth) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (depth-- > 0) sb.append("--");
         return sb.toString();
+    }
+
+
+
+    private ParameterModel m_query_p_id = new IntegerParameter("query_id");
+    private ParameterModel m_query_p_request_id =
+        new IntegerParameter("request_id");
+
+    private Page buildQueryPlanPage() {
+        Page p = PageFactory.buildPage(APP_NAME, "Query Execution Plan");
+        p.addGlobalStateParam(m_query_p_request_id);
+        p.addGlobalStateParam(m_query_p_id);
+        p.add(new QueryPlanComponent());
+        p.lock();
+        return p;
     }
 
     /**
@@ -796,41 +867,10 @@ public class Dispatcher extends BebopMapDispatcher {
         }
     }
 
-    private ParameterModel m_query_p_id = new IntegerParameter("query_id");
-    private ParameterModel m_query_p_request_id =
-        new IntegerParameter("request_id");
 
-    private Page buildQueryPlanPage() {
-        Page p = PageFactory.buildPage(APP_NAME, "Query Execution Plan");
-        p.addGlobalStateParam(m_query_p_request_id);
-        p.addGlobalStateParam(m_query_p_id);
-        p.add(new QueryPlanComponent());
-        p.lock();
-        return p;
-    }
+// We need NonEscapedTableCellRenderer
+// Currently part of (thisPackage) Dispatcher.java
+// When the class will we deleted we must copy first!
 
-}
 
-class NonEscapedTableCellRenderer implements TableCellRenderer {
-    private boolean m_controlLink;
-    public NonEscapedTableCellRenderer(boolean controlLink) {
-        super();
-        m_controlLink = controlLink;
-    }
-    public NonEscapedTableCellRenderer() {
-        this(true);
-    }
-
-    public Component getComponent(Table table, PageState state, Object value,
-                                  boolean isSelected, Object key,
-                                  int row, int column) {
-        SimpleContainer c = new SimpleContainer();
-        Label l = new Label((String)value);
-        l.setOutputEscaping(false);
-        c.add(l);
-        if (m_controlLink) {
-            c.add(new ControlLink("download"));
-        }
-        return c;
-    }
 }

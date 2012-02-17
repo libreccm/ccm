@@ -24,9 +24,10 @@ import com.arsdigita.util.Lockable;
 import com.arsdigita.xml.Element;
 
 /**
- * The common interface implemented by all Bebop
- * components. During its lifetime, a component receives the following
- * calls from the containing page.
+ * The common interface implemented by all Bebop components. 
+ * 
+ * During its lifetime, a component receives the following calls 
+ * from the containing page.
  *
  * <ul>
  *   <li> During initialization/creation of the containing page:

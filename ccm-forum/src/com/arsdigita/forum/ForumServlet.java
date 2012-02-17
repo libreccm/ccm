@@ -53,9 +53,10 @@ public class ForumServlet extends BebopApplicationServlet
     @Override
     public void init() throws ServletException {
         super.init();
-        s_log.debug("creating forum page");
 
+        s_log.debug("creating forum page");
         final Page forum = ForumPageFactory.getPage(ForumPageFactory.FORUM_PAGE);
+
         s_log.debug("creating thread page");
         final Page thread = ForumPageFactory.getPage(ForumPageFactory.THREAD_PAGE);
 

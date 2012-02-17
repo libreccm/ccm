@@ -31,7 +31,13 @@ import org.apache.log4j.Logger;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Common base class for a generic URL-to-Bebop-Page dispatching pattern.
+ * Common base class for a generic URL-to-Bebop-Page dispatching pattern. This
+ * class provides methods to setup a url - page map. URL is used as a key to a
+ * dispatcher type class whose dispatch() method will provide the Page handling.
+ * 
+ * Dispatching is done by the parent class on a general url - dispatcher class 
+ * mapping.
+ * 
  * This class may be used directly by applications, or it may be subclassed
  * to be coded with a specific map or to override the map lookup for certain
  * sets of URLs.
@@ -53,8 +59,8 @@ public class BebopMapDispatcher extends MapDispatcher {
     public BebopMapDispatcher() {
         super();
 
-        //mount the confirmation page
         Map m = new HashMap();
+        //mount the confirmation page
         m.put(ConfirmPage.CONFIRM_URL, new ConfirmPage());
         setMap(m);
     }

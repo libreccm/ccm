@@ -63,13 +63,17 @@ public abstract class BaseServlet extends HttpServlet {
 
     private static Logger s_log = Logger.getLogger(BaseServlet.class);
 
-    /**
-     * The name of the request attribute used to store the originally
-     * requested URL.
-     */
+    /** The name of the request attribute used to store the originally
+     * requested URL.                                                         */
     public static final String REQUEST_URL_ATTRIBUTE =
-        BaseServlet.class.getName() + ".request_url";
+                               BaseServlet.class.getName() + ".request_url";
 
+    /**
+     * Initializer uses parent class's initializer to setup the servlet request /
+     * response and application context. Usually a user of this class will not
+     * overwrite this method but the user extension point doInit to perform
+     * local initialization tasks.
+     */
     @Override
     public void init(final ServletConfig sconfig) throws ServletException {
         if (s_log.isInfoEnabled()) {

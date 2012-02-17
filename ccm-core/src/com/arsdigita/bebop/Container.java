@@ -20,10 +20,10 @@ package com.arsdigita.bebop;
 
 
 /**
- * The common interface that is implemented by all
- * Bebop containers. The Container interface extends the Component
- * interface.  A container is simply a component that contains other
- * components.
+ * The common interface that is implemented by all Bebop containers. 
+ * 
+ * The Container interface extends the Component interface.  A container is 
+ * simply a component that contains other components.
  *
  * @author David Lutterkort 
  * @author Uday Mathur 

@@ -34,16 +34,14 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- *  Base class for
- * a generic URL-to-Dispatcher mapping dispatch.  This class may
- * be used directly by applications, or it may be subclassed to
- * be coded with a specific
- * map or override the map lookup for certain sets of URLs.
+ * Base class for a generic URL-to-Dispatcher mapping dispatch.  This class may
+ * be used directly by applications, or it may be subclassed to be coded with 
+ * a specific map or override the map lookup for certain sets of URLs.
  * <p>
  * URLs are mapped to Dispatcher objects.  When the dispatch method is called,
- * this first looks up the remainingURL (from the request context) in the map and
- * dispatches to the target object.  Then we call
- * the dispatch method on the target.
+ * this first looks up the remainingURL (from the request context) in the map 
+ * and dispatches to the target object. Then we call the dispatch method on 
+ * the target.
  *
  * <p>A configurable "not found" dispatcher is available to handle the case
  * where no target is mapped for a URL.  By default, this is set to
@@ -55,9 +53,9 @@ import org.xml.sax.helpers.DefaultHandler;
  * exact mapping. If a not-found handler is specified, it is up to this
  * specified dispatcher to set the status code appropriately.
  *
- * <p>Note that any URLs that do not have a file extension will
- * automatically be required to have a trailing slash.  Your relative
- * links must compensate for this.
+ * <p>Note that any URLs that do not have a file extension will automatically 
+ * be required to have a trailing slash.  Your relative links MUST COMPENSATE 
+ * for this.
  *
  * <p>Example: Assume we set up a map dispatcher as follows:
  * <pre>
@@ -100,8 +98,9 @@ public class MapDispatcher implements Dispatcher {
     private static final Logger s_log =
         Logger.getLogger(MapDispatcher.class.getName());
 
-    /* Creates MapDispatcher with empty URL mapped to "/".
-    **/
+    /**
+     * Constructor creates MapDispatcher with empty URL mapped to "/".
+     */
     public MapDispatcher() {
         m_notFoundHandler = JSPApplicationDispatcher.getInstance();
     }

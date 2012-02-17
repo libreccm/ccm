@@ -46,7 +46,7 @@ public class WebDevSupport extends Application {
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.webdevsupport.WebDevSupport";
 
-    public WebDevSupport(DataObject obj) {
+    public WebDevSupport(final DataObject obj) {
         super(obj);
     }
 
@@ -64,6 +64,11 @@ public class WebDevSupport extends Application {
     @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
+    }
+
+    @Override
+    public String getServletPath() {
+        return "/webdevsupport";
     }
 
     

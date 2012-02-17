@@ -54,8 +54,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 
 /**
- * <P>The top-level container for all Bebop components and
- * containers. </P>
+ * <p>The top-level container for all Bebop components and containers. </p>
+ * 
  * <UL>
  * <LI>Holds references to the components of a page.</LI>
  * <LI>Provides methods for servicing requests and for notifying
@@ -249,6 +249,7 @@ public class Page extends BlockStylable implements Container {
         // request will be kept
         m_currentTitle = new RequestLocal() {
 
+            @Override
             protected Object initialValue(PageState state) {
                 return m_title.firePrintEvent(state);
             }
@@ -400,6 +401,7 @@ public class Page extends BlockStylable implements Container {
         return m_panel.size();
     }
 
+    @Override
     public Iterator children() {
         return Collections.singletonList(m_panel).iterator();
     }
@@ -498,29 +500,6 @@ public class Page extends BlockStylable implements Container {
         return m_errorDisplay;
     }
 
-//  /**
-//   * Sets a stylesheet that should be used in HTML output. To use
-//   * a CSS stylesheet, call something like
-//   * <code>setStyleSheet("style.css", "text/css")</code>.
-//   * <p>
-//   * These values will ultimately wind up in a <tt>&lt;link&gt;</tt> tag in
-//   * the head of the HTML page.
-//   * <p>
-//   * Note that the stylesheet set with this call has nothing to do with the
-//   * XSLT stylesheet (transformer) that is applied to the XML generated
-//   * from this page.
-//   *
-//   * @param styleSheetURI the location of the stylesheet
-//   * @param styleSheetType the MIME type of the stylesheet, usually
-//   *                       <tt>text/css</tt>
-//   * @pre ! isLocked()
-//   * @deprecated Use {@link #addClientStylesheet addClientStylesheet}
-//   * instead. Will be removed on 2001-05-31.
-//   */
-//  public void setStyleSheet(String styleSheetURI, String styleSheetType) {
-//      Assert.isUnlocked(this);
-//      addClientStylesheet(styleSheetURI, styleSheetType);
-//  }
     /**
      * Adds a client-side stylesheet that should be used in HTML
      * output. Arbitrarily many client-side stylesheets can be added with
@@ -532,7 +511,7 @@ public class Page extends BlockStylable implements Container {
      *
      * <p> Note that the stylesheet set with this call has nothing to do with
      * the XSLT stylesheet (transformer) that is applied to the XML generated
-     * from this page.
+     * from this page!
      *
      * @param styleSheetURI the location of the stylesheet
      * @param mimeType the MIME type of the stylesheet, usually

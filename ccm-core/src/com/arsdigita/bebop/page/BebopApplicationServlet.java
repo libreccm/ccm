@@ -42,6 +42,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
+ * A common servlet to provide a generic URL-to-Bebop-Page map based dispatch 
+ * pattern.
+ * It provides methods to setup a url - page map. The doService method uses
+ * the request's URL to determine the page to display and forwards to the 
+ * presentation manager for the Page handling.
+ * 
+ * This class is a servlet based version of BebopMapDispatcher and associated
+ * classes and is generally used in the same way by legacy free applications.
+ * 
+ * Subclasses usually overwrite the doService method to create Page objects
+ * and use this.put method to construct the mapping.
+ * 
+ * Subclasses may overwrite the doService method to add additional functionality,
+ * e.g. permission checking.
  * 
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author chris gilbert - allow BebopApplicationServlet pages to disable
@@ -53,12 +67,18 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
     private static final Logger s_log = Logger.getLogger
         (BebopApplicationServlet.class);
 
-    // String pathInfo => Page page
+    /** URL (pathinfo) -> Page object mapping. Based on it (and the http
+     * request url) the doService method to selects a page to display        */
     private final Map m_pages = new HashMap();
     // Set of pathinfo
     private final Set m_clientCacheDisabledPages = new HashSet();
 
     /**
+     * Initializer uses parent class's initializer to setup the servlet request /
+     * response and application context. Usually a user of this class will NOT
+     * overwrite this method but the user extension point doInit() to perform
+     * local initialization tasks, in case of this servlet typically to setup 
+     * the page-url mapping using the provided mapping methods of this class.
      * 
      * @throws ServletException
      */
@@ -68,15 +88,29 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
     }
 
     /**
+     * User extension point, overwrite this method to setup a URL - page mapping
      * 
-     * @param pathInfo
-     * @param page
+     * @throws ServletException 
+     */
+    @Override
+    public void doInit() throws ServletException {
+        // nothing here
+    }
+
+    /**
+     * Adds one Url-Page mapping to the internal mapping table.
+     * 
+     * @param pathInfo url stub for a page to display
+     * @param page Page object to display
      */
     protected final void put(final String pathInfo,
                              final Page page) {
         Assert.exists(pathInfo, String.class);
         Assert.exists(page, Page.class);
-        Assert.isTrue(pathInfo.startsWith("/"), "path starts with '/'");
+        // Current Implementation requires pathInfo to start with a leading '/'
+        // SUN Servlet API specifies: "PathInfo *may be empty* or will start
+        // with a '/' character."
+        Assert.isTrue(pathInfo.startsWith("/"), "path starts not with '/'");
 
         m_pages.put(pathInfo, page);
     }
@@ -88,12 +122,15 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
      */
     protected final void disableClientCaching(String pathInfo) {
         Assert.exists(pathInfo, String.class);
-	Assert.isTrue(m_pages.containsKey(pathInfo), 
+        Assert.isTrue(m_pages.containsKey(pathInfo), 
                       "Page " + pathInfo + " has not been put in servlet");
-   	m_clientCacheDisabledPages.add(pathInfo);
+   	    m_clientCacheDisabledPages.add(pathInfo);
     }
 
     /**
+     * Main processing unit searches in the page map for the request's url
+     * and forwards the page to display to the appropriate presentation
+     * manager to serve the page.
      * 
      * @param sreq
      * @param sresp

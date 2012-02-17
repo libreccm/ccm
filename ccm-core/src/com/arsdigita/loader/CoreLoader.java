@@ -454,36 +454,35 @@ public class CoreLoader extends PackageLoader {
 
     private void loadWebDev() {
         // Add the package type to the database
-/*
-        PackageType packType = PackageType.create
-            ("webdev-support", "WebDeveloper Support", "WebDeveloper Supports",
-             "http://arsdigita.com/webdev-support");
 
-        // Add the node and the package instance on that node.
-        SiteNode node = SiteNode.createSiteNode("ds");
-        // Specify the URL stub for this package instance.
-        node.mountPackage(packType.createInstance("webdev-support"));
-
-        // Map the package type to a dispatcher class
-        packType.setDispatcherClass("com.arsdigita.webdevsupport.Dispatcher");
-*/
+        /* LEGACY COMPATIBLE application type                                */
         ApplicationType webDevType = ApplicationType
             .createApplicationType("webdev-support",
                                    "WebDeveloper Support", 
                                    WebDevSupport.BASE_DATA_OBJECT_TYPE);
         webDevType.setDispatcherClass("com.arsdigita.webdevsupport.Dispatcher");
+
+        /* LEGACY FREE application type                                      */
+//      ApplicationType webDevType =
+//              new ApplicationType("WebDev Support",
+//                                  WebDevSupport.BASE_DATA_OBJECT_TYPE );
+
+        
+        /* Legacy free / compatible INDEPENDENT  application properties      */
         webDevType.setDescription("WebDeveloper Support application");
         webDevType.save();
         
+
+        // create application instance as a legacy free or legacy comp. app.
+        // Whether a legacy compatible or a legacy free application is
+        // created depends on the type of ApplicationType above. No need to
+        // modify anything here
         Application webDev = Application.createApplication(webDevType,
                                                            "ds",
                                                            "WebDeveloper Support",
                                                            null);
         webDev.setDescription("The default WEB developer service instance.");
         webDev.save();
-    
-    
-
 
     }
 

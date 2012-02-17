@@ -84,6 +84,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>webdevsupport</servlet-name>
+        <servlet-class>com.arsdigita.webdevsupport.WebDevSupportServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>oid-redirect</servlet-name>
         <servlet-class>com.arsdigita.web.OIDRedirectServlet</servlet-class>
     </servlet>
@@ -174,6 +179,11 @@
     <servlet-mapping>
         <servlet-name>versioning-log</servlet-name>
         <url-pattern>/versioning/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>webdevsupport</servlet-name>
+        <url-pattern>/webdevsupport/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

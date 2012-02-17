@@ -53,7 +53,7 @@ import com.arsdigita.bebop.parameters.IntegerParameter;
  *
  * @author Daniel Berrange (berrange@redhat.com)
  * @version 1.0
- **/
+ */
 public class QueryLog implements com.arsdigita.dispatcher.Dispatcher {
     private static final Logger s_log =
         Logger.getLogger(QueryLog.class.getName());

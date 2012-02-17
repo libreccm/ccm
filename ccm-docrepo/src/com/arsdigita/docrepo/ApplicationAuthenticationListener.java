@@ -83,9 +83,9 @@ public class ApplicationAuthenticationListener
             PrivilegeDescriptor.get(m_privilegeName);
 
         PermissionDescriptor permDescriptor = new PermissionDescriptor
-            (privDescriptor,
-                    Web.getContext().getApplication(),
-             Kernel.getContext().getParty());
+                                              (privDescriptor,
+                                               Web.getContext().getApplication(),
+                                               Kernel.getContext().getParty());
 
         if (!PermissionService.checkPermission(permDescriptor)) {
             denyRequest(state);
