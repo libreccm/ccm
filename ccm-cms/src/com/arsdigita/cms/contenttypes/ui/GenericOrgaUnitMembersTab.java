@@ -7,7 +7,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.persistence.DataQuery;
-import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.util.List;
@@ -53,7 +52,10 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
         }
         
         while (persons.next()) {
-            generatePersonXml((BigDecimal) persons.get("memberId"),
+            /*generatePersonXml((BigDecimal) persons.get("memberId"),
+                              parent,
+                              state);*/
+            generatePersonXml(((GenericOrganizationalUnitPersonCollection) persons).getPerson().getID(),
                               parent,
                               state);
         }
@@ -90,7 +92,9 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
     }
     
     protected DataQuery getData(final GenericOrganizationalUnit orgaunit) {
-        final long start = System.currentTimeMillis();
+        return orgaunit.getPersons();
+        
+        /*final long start = System.currentTimeMillis();
         
         final DataQuery personsQuery = SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
@@ -159,7 +163,7 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
                 orgaunit.getName(),
                 System.currentTimeMillis() - start,
                 isMergingMembers()));
-        return personsQuery;
+        return personsQuery;*/
     }
 
     /**

@@ -26,11 +26,11 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
- * Summary tab for projects, displays lifespan of the project, the short 
- * description, the project team (aka members), a contact, the involved 
+ * Summary tab for projects, displays lifespan of the project, the short
+ * description, the project team (aka members), a contact, the involved
  * organizations and the information about the funding of the project.
- * 
- * @author Jens Pelzetter 
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciProjectSummaryTab implements GenericOrgaUnitTab {
@@ -94,8 +94,9 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
     /**
      * Generates the XML for the basic data (addendum, begin, end, shortDesc)
+     *
      * @param project
-     * @param parent  
+     * @param parent
      */
     protected void generateBasicDataXml(final SciProject project,
                                         final Element parent) {
@@ -194,56 +195,49 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
         final Element membersElem = parent.newChildElement("members");
 
-        if (config.isMergingMembers()) {
-            final DataQuery subProjectsQuery =
-                            SessionManager.getSession().retrieveQuery(
-                    "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
-            subProjectsQuery.setParameter("orgaunitId",
-                                          project.getID().toString());
-            subProjectsQuery.setParameter("assocType",
-                                          SciProjectSubProjectsStep.ASSOC_TYPE);
-
-            final DataQuery personsQuery = SessionManager.getSession().
-                    retrieveQuery(
-                    "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
-
-            //final StringBuffer personsFilter = new StringBuffer();
-            final List<String> projectIds = new ArrayList<String>();
-            while (subProjectsQuery.next()) {
-                /*if (personsFilter.length() > 0) {
-                personsFilter.append(" or ");
-                }
-                personsFilter.append(String.format("orgaunitId = %s",
-                subProjectsQuery.get(
-                "orgaunitId").toString()));*/
-                projectIds.add(subProjectsQuery.get("orgaunitId").toString());
-            }
-            //personsQuery.addFilter(personsFilter.toString());
-            personsQuery.setParameter("orgaunitIds", projectIds);
-
-            personsQuery.addOrder(GenericPerson.SURNAME);
-            personsQuery.addOrder(GenericPerson.GIVENNAME);
-
-            while (personsQuery.next()) {
-                generateMemberXml((BigDecimal) personsQuery.get("memberId"),
-                                  membersElem,
-                                  (String) personsQuery.get("roleName"),
-                                  state);
-            }
-        } else {
-            final GenericOrganizationalUnitPersonCollection members = project.
-                    getPersons();
-
-            members.addOrder("surname");
-            members.addOrder("givenname");
-
-            while (members.next()) {
-                generateMemberXml(members.getPerson(),
-                                  membersElem,
-                                  members.getRoleName(),
-                                  state);
-            }
+        final GenericOrganizationalUnitPersonCollection members = project.
+                getPersons();
+        
+        while (members.next()) {
+            generateMemberXml(members.getPerson(),
+                              membersElem,
+                              members.getRoleName(),
+                              state);
         }
+
+        /*
+         * if (config.isMergingMembers()) { final DataQuery subProjectsQuery =
+         * SessionManager.getSession().retrieveQuery(
+         * "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
+         * subProjectsQuery.setParameter("orgaunitId",
+         * project.getID().toString());
+         * subProjectsQuery.setParameter("assocType",
+         * SciProjectSubProjectsStep.ASSOC_TYPE);
+         *
+         * final DataQuery personsQuery = SessionManager.getSession().
+         * retrieveQuery(
+         * "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
+         *
+         * final List<String> projectIds = new ArrayList<String>(); while
+         * (subProjectsQuery.next()) {
+         * projectIds.add(subProjectsQuery.get("orgaunitId").toString()); }
+         * personsQuery.setParameter("orgaunitIds", projectIds);
+         *
+         * personsQuery.addOrder(GenericPerson.SURNAME);
+         * personsQuery.addOrder(GenericPerson.GIVENNAME);
+         *
+         * while (personsQuery.next()) { generateMemberXml((BigDecimal)
+         * personsQuery.get("memberId"), membersElem, (String)
+         * personsQuery.get("roleName"), state); } } else { final
+         * GenericOrganizationalUnitPersonCollection members = project.
+         * getPersons();
+         *
+         * members.addOrder("surname"); members.addOrder("givenname");
+         *
+         * while (members.next()) { generateMemberXml(members.getPerson(),
+         * membersElem, members.getRoleName(), state); }
+        }
+         */
 
         logger.debug(String.format("Generated members XML for project '%s'"
                                    + "in '%d ms'. MergeMembers is set to '%b'.",
@@ -428,9 +422,12 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final XmlGenerator generator = new XmlGenerator(subProject);
         generator.setUseExtraXml(false);
         generator.generateXML(state, parent, "");
-        /*final Element subProjectElem = parent.newChildElement("subProject");
-        final Element subProjectTitle = subProjectElem.newChildElement("title");
-        subProjectTitle.setText(subProject.getTitle());*/
+        /*
+         * final Element subProjectElem = parent.newChildElement("subProject");
+         * final Element subProjectTitle =
+         * subProjectElem.newChildElement("title");
+        subProjectTitle.setText(subProject.getTitle());
+         */
         logger.debug(String.format("Generated XML for subproject '%s' in"
                                    + "%d ms",
                                    subProject.getName(),
