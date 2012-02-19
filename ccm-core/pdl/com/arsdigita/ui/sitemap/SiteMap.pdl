@@ -22,5 +22,6 @@ model com.arsdigita.ui.sitemap;
 import com.arsdigita.web.Application;
 
 object type SiteMap extends Application {
-    reference key (sitemap_app.application_id);
+    // Nothing to store yet
+    // reference key (sitemap_app.application_id);
 }

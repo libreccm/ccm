@@ -81,6 +81,11 @@ class GroupAdministrationTab extends BoxPanel
 
     private RequestLocal m_group;
 
+    /**
+     * 
+     * @param p 
+     */
+    @Override
     public void register(Page p) {
         for (int i = 0; i < m_panelList.size(); i++) {
             p.setVisibleDefault((Component) m_panelList.get(i), false);
@@ -89,6 +94,11 @@ class GroupAdministrationTab extends BoxPanel
         p.setVisibleDefault(m_groupAddPanel, true);
     }
 
+    /**
+     * 
+     * @param ps
+     * @return 
+     */
     public Group getGroup(PageState ps) {
         return (Group) m_group.get(ps);
     }
@@ -115,29 +125,33 @@ class GroupAdministrationTab extends BoxPanel
         }
     }
 
+    /**
+     * Constructor
+     */
     public GroupAdministrationTab() {
         setClassAttr("sidebarNavPanel");
         setAttribute("navbar-title", "Groups");
 
         m_group = new RequestLocal() {
-                protected Object initialValue(PageState ps) {
-                    String key = (String) m_tree.getSelectedKey(ps);
+            @Override
+            protected Object initialValue(PageState ps) {
+                String key = (String) m_tree.getSelectedKey(ps);
 
-                    Group group = null;
+                Group group = null;
 
-                    if (key != null) {
-                        BigDecimal id = new BigDecimal(key);
+                if (key != null) {
+                    BigDecimal id = new BigDecimal(key);
 
-                        try {
-                            group = new Group(id);
-                        } catch(DataObjectNotFoundException exc) {
-                            // Silently ignore if group does not
-                            // exist.
-                        }
+                    try {
+                        group = new Group(id);
+                    } catch(DataObjectNotFoundException exc) {
+                        // Silently ignore if group does not
+                        // exist.
                     }
-                    return group;
                 }
-            };
+                return group;
+            }
+        };
 
         BoxPanel c = new BoxPanel();
         c.setClassAttr("navbar");
@@ -163,8 +177,8 @@ class GroupAdministrationTab extends BoxPanel
         m_groupAddPanel = buildGroupAddPanel(rightSide);
         m_panelList.add(m_groupAddPanel);
 	
-	m_existingGroupAddPanel = buildExistingGroupAddPanel(rightSide);
-	m_panelList.add(m_existingGroupAddPanel);
+        m_existingGroupAddPanel = buildExistingGroupAddPanel(rightSide);
+        m_panelList.add(m_existingGroupAddPanel);
 
         m_subMemberPanel = buildMemberListPanel(rightSide);
         m_panelList.add(m_subMemberPanel);
@@ -206,12 +220,17 @@ class GroupAdministrationTab extends BoxPanel
         m_groupDeleteFailedPanel.setVisible(ps, true);
     }
 
+    /** 
+     * 
+     * @param e 
+     */
     public void stateChanged(ChangeEvent e) {
 
         PageState ps = e.getPageState();
         String key = (String) m_tree.getSelectedKey(ps);
-	// added cg - reset existing group add panel to the search screen when a new group is selected from the tree
-	m_existingGroupAdd.showSearch(ps);
+        // added cg - reset existing group add panel to the search screen 
+        // when a new group is selected from the tree
+        m_existingGroupAdd.showSearch(ps);
         if (key == null || key.equals("-1")) {
             /**
              * If root node is selected then display add
@@ -291,22 +310,22 @@ class GroupAdministrationTab extends BoxPanel
 
         List subGroupList = new List(new SubGroupListModelBuilder(this));
         subGroupList.setCellRenderer(new ListCellRenderer() {
-	    public Component getComponent(
-		List list,
-		PageState state,
-		Object value,
-		String key,
-		int index,
-		boolean isSelected) {
-		BoxPanel b = new BoxPanel(BoxPanel.HORIZONTAL);
-		b.add(new Label(((Group) value).getName()));
-		ControlLink removeLink = new ControlLink(REMOVE_SUBGROUP_LABEL);
-		removeLink.setClassAttr("actionLink");
-		b.add(removeLink);
-		return b;
-	    }
-	});
-	subGroupList.addActionListener(new ActionListener() {
+            public Component getComponent(List list,
+                                          PageState state,
+                                          Object value,
+                                          String key,
+                                          int index,
+                                          boolean isSelected) {
+                BoxPanel b = new BoxPanel(BoxPanel.HORIZONTAL);
+                b.add(new Label(((Group) value).getName()));
+                ControlLink removeLink = new ControlLink(REMOVE_SUBGROUP_LABEL);
+                removeLink.setClassAttr("actionLink");
+                b.add(removeLink);
+                return b;
+            }
+        });
+
+        subGroupList.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		PageState ps = e.getPageState();
 		String key = (String) ((List) e.getSource()).getSelectedKey(ps);
@@ -528,22 +547,43 @@ class SubGroupListModelBuilder extends LockableImpl
     }
 }
 
+/**
+ * CLASS
+ * 
+ */
 class SubGroupListModel implements ListModel {
+
     private GroupCollection m_coll;
 
+    /**
+     * 
+     * @param coll 
+     */
     public SubGroupListModel(GroupCollection coll) {
         m_coll = coll;
         m_coll.addOrder("lower(" + Group.DISPLAY_NAME + ") asc");
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Object getElement() {
         return m_coll.getGroup();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getKey() {
         return m_coll.getID().toString();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public boolean next() {
         if (m_coll != null) {
             return m_coll.next();

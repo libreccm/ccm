@@ -36,6 +36,7 @@ public class BigDecimalParameter extends ParameterModel {
         return transformSingleValue(request);
     }
 
+    @Override
     public Object unmarshal(String encoded)
         throws IllegalArgumentException {
 
@@ -51,6 +52,7 @@ public class BigDecimalParameter extends ParameterModel {
         }
     }
 
+    @Override
     public Class getValueClass() {
         return BigDecimal.class;
     }

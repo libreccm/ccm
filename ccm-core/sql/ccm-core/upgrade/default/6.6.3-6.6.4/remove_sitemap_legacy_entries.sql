@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2011 Peter Boy. All Rights Reserved.
+-- Copyright (C) 2012 Peter Boy. All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,10 +15,11 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: remove_legacy_entries.sql  $
+-- $Id: remove_sitemap_legacy_entries.sql  $
 
--- RSFeed is now initialized as a legacy free type of application so
+-- Core's sitemap is now initialized as a legacy free type of application so
 -- entries in tables apm_package_types are no longer needed.
+-- (it used to be initialized as a new, legacy compatible application)
 
 
 -- in case there may be several application instances!
@@ -30,7 +31,7 @@ delete from object_context
             ( select package_id from applications where application_type_id =
                 (select application_type_id from application_types 
                     where object_type 
-                        like '%rssfeed.RSSFeed%')
+                        like '%sitemap.SiteMap%')
             )
         );   
 
@@ -42,17 +43,17 @@ delete from acs_objects
             ( select package_id from applications where application_type_id =
                 (select application_type_id from application_types 
                     where object_type 
-                        like '%rssfeed.RSSFeed%')
+                        like '%sitemap.SiteMap%')
             )
         );   
 
--- delete all entries in site_nodes referring to a RSSFeed instance
+-- delete all entries in site_nodes referring to an admin instance
 delete from site_nodes
     where object_id in 
         (select package_id from applications where application_type_id =
             (select application_type_id from application_types 
                 where object_type 
-                    like '%rssfeed.RSSFeed%') 
+                    like '%sitemap.SiteMap%') 
         );   
 alter table site_nodes  add  constraint site_nodes_node_id_f_n1m2y
                              FOREIGN KEY (node_id)
@@ -67,7 +68,7 @@ delete from object_context
         (select package_id from apm_packages where package_type_id =
                 (select package_type_id from application_types 
                     where object_type 
-                        like 'com.arsdigita.rssfeed.RSSFeed')
+                        like '%sitemap.SiteMap%')
         );   
 
 -- delete from acs_objects all entries referring to package_id in apm_packages
@@ -78,44 +79,44 @@ delete  from acs_objects
        (select package_id from apm_packages where package_type_id =
                 (select package_type_id from application_types 
                     where object_type 
-                        like 'com.arsdigita.rssfeed.RSSFeed')
+                        like '%sitemap.SiteMap%')
         );   
 
--- delete all entries for RSSFeed instances in apm_packages 
+-- delete all entries for subsite instances in apm_packages 
 -- identified by package_type_id in application_types
 delete from apm_packages
     where package_type_id =
         (select package_type_id from application_types 
             where object_type 
-                like 'com.arsdigita.rssfeed.RSSFeed') ;
+                like '%sitemap.SiteMap%') ;
 
 -- there seem to be no intries for a apm_packages_types entry (row) in 
 -- acs_objects or object_context!
 
--- delete all entries for RSSFeed in apm_package_types identified by 
+-- delete all entries for subsite in apm_package_types identified by 
 -- package_type_id in application_types
 alter table application_types drop constraint applica_typ_pac_typ_id_f_v80ma ;
 delete from apm_package_types
     where package_type_id =
         (select package_type_id from application_types 
             where object_type 
-                like 'com.arsdigita.rssfeed.RSSFeed') ;
+                like '%sitemap.SiteMap%') ;
 
 
--- set package_id to null for all entries referring to a RSSFeed instance
+-- set package_id to null for all entries referring to a subsite instance
 -- (indicating a new legacy free application) 
 update applications
     set package_id = null
     where application_type_id = 
         (select application_type_id from application_types 
             where object_type 
-                like 'com.arsdigita.rssfeed.RSSFeed') ;
+                like '%sitemap.SiteMap%') ;
 
--- set package_id to null for all entries referring to a RSSFeed instance
+-- set package_id to null for all entries referring to a subsite instance
 -- (indicating a new legacy free application) 
 update application_types
     set package_type_id = null
-    where object_type like 'com.arsdigita.rssfeed.RSSFeed' ;
+    where object_type like '%sitemap.SiteMap%' ;
 
 alter table application_types  add  constraint applica_typ_pac_typ_id_f_v80ma
                             FOREIGN KEY (package_type_id)
@@ -129,3 +130,8 @@ alter table apm_packages  add  constraint apm_package_package_id_f_46may
                             FOREIGN KEY (package_id)
                             REFERENCES acs_objects (object_id) MATCH SIMPLE
                             ON UPDATE NO ACTION ON DELETE NO ACTION ;
+
+-- Additionally the Application table admin_app does not provide any
+-- functionality and is removed.
+-- New, legacy free application works without a (dummy) Application table
+drop table sitemap_app ;

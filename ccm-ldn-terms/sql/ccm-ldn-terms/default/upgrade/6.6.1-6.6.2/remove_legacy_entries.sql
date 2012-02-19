@@ -26,7 +26,7 @@
 -- delete from object_context all entries referring to node_id in site_nodes
 delete from object_context
     where object_id in 
-        (select node_id from site_nodes object_id where object_id in
+        (select node_id from site_nodes where object_id in
             ( select package_id from applications where application_type_id =
                 (select application_type_id from application_types 
                     where object_type 

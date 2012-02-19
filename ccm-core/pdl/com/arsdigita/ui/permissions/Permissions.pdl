@@ -17,7 +17,15 @@
 //
 // $Id: Permissions.pdl 287 2005-02-22 00:29:02Z sskracic $
 // $DateTime: 2004/08/16 18:10:38 $
+
 model com.arsdigita.ui.permissions;
+
+import com.arsdigita.web.Application;
+
+object type Permissions extends Application {
+    // Nothing to store yet
+    // reference key (permissions_app.application_id);
+}
 
 query PermissionObjects {
     BigDecimal objectID;

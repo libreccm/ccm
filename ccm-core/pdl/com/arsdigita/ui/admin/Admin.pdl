@@ -22,7 +22,8 @@ model com.arsdigita.ui.admin;
 import com.arsdigita.web.Application;
 
 object type Admin extends Application {
-    reference key (admin_app.application_id);
+    // Nothing to store yet
+    // reference key (admin_app.application_id);
 }
 
 

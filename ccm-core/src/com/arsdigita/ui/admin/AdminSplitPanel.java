@@ -108,6 +108,7 @@ class AdminSplitPanel extends BoxPanel implements ChangeListener {
         }
     }
 
+    @Override
     public void generateXML(PageState ps, Element parent) {
         super.generateXML(ps, parent);
 

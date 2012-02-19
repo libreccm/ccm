@@ -43,4 +43,11 @@
   <version from="6.6.2" to="6.6.3">
     <script sql="ccm-core/upgrade/::database::-6.6.2-6.6.3.sql"/>
   </version>
+  <version from="6.6.3" to="6.6.4">
+    <!-- Refactor DS from package based loading to appl. style  -->
+    <!-- First: remove all legacy type entries                  -->
+    <script sql="ccm-core/upgrade/::database::-6.6.3-6.6.4.sql"/>
+    <!-- Second:reinstall WebDS as a new style legacy free app  -->
+    <script class="com.arsdigita.core.upgrade.Upgrade664"/>
+  </version>
 </upgrade>

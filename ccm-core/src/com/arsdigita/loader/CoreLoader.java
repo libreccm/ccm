@@ -28,7 +28,6 @@ import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.kernel.SiteNode;
-// import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -43,6 +42,7 @@ import com.arsdigita.portal.Portal;
 import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.ui.admin.Admin;
+import com.arsdigita.ui.permissions.Permissions;
 import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
@@ -269,18 +269,28 @@ public class CoreLoader extends PackageLoader {
 
                 s_log.debug("CoreLoader: Going to execute loadSubsite().");
                 loadSubsite(loadKernel());
-    //  !!      s_log.debug("CoreLoader: Going to execute loadBebop().");
+
+                //  !!      s_log.debug("CoreLoader: Going to execute loadBebop().");
     //  !!      loadBebop();
+
                 s_log.debug("CoreLoader: Going to execute loadWebDev().");
-                loadWebDev();
+                loadWebDev();            // new style legacy free
+
+                s_log.debug("CoreLoader: Going to execute loadAdminApp().");
+                loadAdminApp();
+
                 s_log.debug("CoreLoader: Going to execute loadSiteMapAdminApp().");
-                loadSiteMapAdminApp(loadAdminApp());
-                s_log.debug("CoreLoader: Going to execute loadPermissionsSiteNode().");
-                loadPermissionsSiteNode();
+                loadSiteMapAdminApp(null);
+
+                s_log.debug("CoreLoader: Going to execute loadPermissionsApp().");
+                loadPermissionsApp();            // new style legacy free
+
                 s_log.debug("CoreLoader: Going to execute loadPortal().");
                 loadPortal();
+
                 s_log.debug("CoreLoader: Going to execute loadMimeTypes().");
                 loadMimeTypes();
+
                 s_log.debug("CoreLoader: Going to execute loadGlobalization().");
                 loadGlobalization();
 
@@ -440,6 +450,9 @@ public class CoreLoader extends PackageLoader {
     }
 
 //  Not really used. Commented out in run() method
+// NOTE: There is no dispatcher class assoziated and no mount (i.e. no
+// site_nodes entry creeated). 
+// Update script 6.6.3 - 6.6.4 removes entries.
 /*
     private void loadBebop() {
         // Create Package Types and Instances
@@ -452,90 +465,123 @@ public class CoreLoader extends PackageLoader {
     }
 */
 
-    private void loadWebDev() {
-        // Add the package type to the database
 
-        /* LEGACY COMPATIBLE application type                                */
-        ApplicationType webDevType = ApplicationType
-            .createApplicationType("webdev-support",
-                                   "WebDeveloper Support", 
-                                   WebDevSupport.BASE_DATA_OBJECT_TYPE);
-        webDevType.setDispatcherClass("com.arsdigita.webdevsupport.Dispatcher");
+    /**
+     * Loads WebDeveloperSupport as a new style, legacy free application into
+     * database and instantiate the (only) application instance.
+     *
+     * Public static access needed by upgrade script Upgrade664
+     * @return webDevType ApplicationType 
+     */
+    public static void loadWebDev() {
 
-        /* LEGACY FREE application type                                      */
-//      ApplicationType webDevType =
-//              new ApplicationType("WebDev Support",
-//                                  WebDevSupport.BASE_DATA_OBJECT_TYPE );
-
-        
-        /* Legacy free / compatible INDEPENDENT  application properties      */
+        ApplicationType webDevType =
+                new ApplicationType("WebDev Support",
+                                    WebDevSupport.BASE_DATA_OBJECT_TYPE );
         webDevType.setDescription("WebDeveloper Support application");
         webDevType.save();
-        
 
-        // create application instance as a legacy free or legacy comp. app.
-        // Whether a legacy compatible or a legacy free application is
-        // created depends on the type of ApplicationType above. No need to
-        // modify anything here
         Application webDev = Application.createApplication(webDevType,
                                                            "ds",
                                                            "WebDeveloper Support",
                                                            null);
         webDev.setDescription("The default WEB developer service instance.");
         webDev.save();
-
+        
+        return;
     }
+        
 
+
+    /**
+     * 
+     * @return 
+     */
     private Application loadAdminApp() {
-        ApplicationType adminType = ApplicationType
-            .createApplicationType("admin",
-                                   "CCM Admin Application", 
-                                   Admin.BASE_DATA_OBJECT_TYPE);
-        adminType.setDispatcherClass("com.arsdigita.ui.admin.AdminDispatcher");
+    //  ApplicationType adminType = ApplicationType
+    //      .createApplicationType("admin",
+    //                             "CCM Admin Application", 
+    //                             Admin.BASE_DATA_OBJECT_TYPE);
+    //  adminType.setDispatcherClass("com.arsdigita.ui.admin.AdminDispatcher");
+ 
+        ApplicationType adminType =
+                new ApplicationType("admin",
+                                    Admin.BASE_DATA_OBJECT_TYPE );
         adminType.setDescription("CCM user and group administration");
+        adminType.save();
+        
+        
+        
         
         Application admin = Application.createApplication(adminType,
                                                           "admin",
                                                           "CCM Admin",
                                                           null);
+        admin.setDescription("CCM user and group administration instance");
 
         return admin;
     }
 
+    /**
+     * 
+     * @param parent 
+     */
     private void loadSiteMapAdminApp(Application parent) {
-        ApplicationType sitemapType = ApplicationType
-            .createApplicationType("sitemap",
-                                   "SiteMap Admin Application",
-                                   SiteMap.BASE_DATA_OBJECT_TYPE);
-        sitemapType.setDispatcherClass("com.arsdigita.ui.sitemap.SiteMapDispatcher");
-        sitemapType.setDescription("CCM sitemap administration");
 
+    //  ApplicationType sitemapType = ApplicationType
+    //      .createApplicationType("sitemap",
+    //                             "SiteMap Admin Application",
+    //                             SiteMap.BASE_DATA_OBJECT_TYPE);
+    //  sitemapType.setDispatcherClass("com.arsdigita.ui.sitemap.SiteMapDispatcher");
+
+        /* NOTE: 
+         * The wording in the title parameter of ApplicationType determines
+         * the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and 
+         * replacing blanks between words and illegal characters with an hyphen 
+         * and converted to lower case.
+         * Example: "Sitemap" will become "sitemap".
+         */
+        ApplicationType sitemapType =
+                new ApplicationType("Sitemap",
+                                    SiteMap.BASE_DATA_OBJECT_TYPE );
+        
+        sitemapType.setDescription("CCM sitemap administration");
 
         Application sitemap = Application.createApplication(sitemapType,
                                                             "sitemap",
                                                             "CCM Admin Sitemap",
                                                             parent);
+        sitemap.setDescription("CCM sitemap administration instance");
     }
 
-    private void loadPermissionsSiteNode() {
-        SiteNode permissionsNode = SiteNode.createSiteNode("permissions");
+    /**
+     * 
+     */
+    public static void loadPermissionsApp() {
 
-        PackageType permissionsType;
-        try {
-            permissionsType = PackageType.findByKey("acs-permissions");
-        } catch (DataObjectNotFoundException e) {
-            permissionsType = PackageType.create
-            ("acs-permissions", "ACS Permissions Package",
-             "ACS Permissions Packages", "http://arsdigita.com/acs-permissions");
-        }
+        /* NOTE: 
+         * The wording in the title parameter of ApplicationType determines
+         * the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and 
+         * replacing blanks between words and illegal characters with an hyphen 
+         * and converted to lower case.
+         * Example: "Permissions" will become "permissions".
+         */
+        ApplicationType type =
+                new ApplicationType("Permissions",
+                                    Permissions.BASE_DATA_OBJECT_TYPE );
+        type.setDescription("CCM permissions administration");
+        type.save();
+        
+        Application app = Application.createApplication(type,
+                                                        "permissions",
+                                                        "CCM Permissions",
+                                                        null);
+        app.setDescription("CCM permissions administration instance");
+        app.save();
 
-        permissionsType.setDispatcherClass
-            ("com.arsdigita.ui.permissions.PermissionsDispatcher");
-
-        // Mount instances.
-        PackageInstance permissionsInstance =
-            permissionsType.createInstance("ACS Permissions");
-        permissionsNode.mountPackage(permissionsInstance);
+        return;
     }
 
     /**
@@ -547,7 +593,7 @@ public class CoreLoader extends PackageLoader {
         // therefore actually creates a sort of new style legacy free
         // application type
         ResourceType type = ResourceType.createResourceType
-            ("Portal", Portal.BASE_DATA_OBJECT_TYPE);
+                                         ("Portal", Portal.BASE_DATA_OBJECT_TYPE);
         type.setDescription("A Portal!");
     }
 

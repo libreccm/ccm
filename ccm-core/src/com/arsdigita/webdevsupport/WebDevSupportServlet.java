@@ -32,6 +32,7 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
@@ -41,11 +42,13 @@ import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.table.AbstractTableModelBuilder;
 import com.arsdigita.bebop.table.DefaultTableCellRenderer;
+import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -61,8 +64,8 @@ import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
-import com.arsdigita.webdevsupport.config.ConfigList;
-import com.arsdigita.webdevsupport.log4j.CategoryPanel; 
+import com.arsdigita.webdevsupport.ui.ConfigParameterList;
+import com.arsdigita.webdevsupport.ui.CategoryPanel; 
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 
@@ -74,9 +77,9 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -92,8 +95,8 @@ import org.apache.log4j.Logger;
  */
 public class WebDevSupportServlet extends BaseApplicationServlet {
 
-    private static final Logger s_log =
-                                Logger.getLogger(Dispatcher.class.getName());
+    private static final Logger s_log = Logger.getLogger(
+                                        WebDevSupportServlet.class.getName());
 
     public static final String APP_NAME = "ds";
 
@@ -119,12 +122,12 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
         // cache table browser @ ~/ds/cache-table
         addPage("/cache-table", buildCacheTablePage());
 
-// XXXX!!
-// QueryLog is a class of its own in webdevsupport, based upon dispatcher.Disp
-// and prints out all queries in a request
-//         put("query-log",  new QueryLog());
+        // XXXX!!
+        // QueryLog is a class of its own in webdevsupport, based upon
+        // dispatcher.Disp and prints out all queries in a request
+        //  put("query-log",  new QueryLog());
 
-        addPage("/request-info",  buildInfoPage());
+        addPage("/request-info",  buildRequestInfoPage());
         addPage("/query-info",  buildQueryInfoPage());
         addPage("/query-plan",  buildQueryPlanPage());
 
@@ -180,8 +183,19 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
             pm.servePage(doc, sreq, sresp);
 
         } else {
-            sresp.sendError(404, "No such page for path " + pathInfo);
-            // throw new IllegalStateException("No such page for path " + pathInfo);
+            if (pathInfo.equals("/query-log")) {
+ 
+                // special solution for query log to continue to use the
+                // dispatcher based creation of a new page.
+                // Should be refactored asap to use a PageFactory instead!
+                RequestContext ctx = DispatcherHelper.getRequestContext(sreq);
+                new QueryLog().dispatch(sreq, sresp, ctx);
+
+            } else {
+
+                sresp.sendError(404, "No such page for path " + pathInfo);
+
+            }
         }
         
     }
@@ -213,12 +227,21 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
 
         Page p = PageFactory.buildPage(APP_NAME, "Web Developer Support");
 
+
+        // Create a group of 4 permanent links, the first 3 to additional pages
+        // which handle status of logger instances, config properties and cache 
+        // tables 1 or 2 to add additional information about requests to this
+        // page.
         BoxPanel links = new BoxPanel(BoxPanel.VERTICAL);
 
         links.add(new Link("Log4j Logger Adjuster", "/ds/log4j"));
         links.add(new Link("Config Browser", "/ds/config"));
         links.add(new Link("Cache Table Browser", "/ds/cache-table"));
 
+
+        // Creates an (page internal) action link to toggle reqest logging
+        // on/off. If ON additional page content is generated: a list of
+        // available requests (table view)
         ActionLink enable = new ActionLink("Enable request logging") {
             @Override
             public boolean isVisible(PageState state) {
@@ -235,7 +258,7 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
                 }
 
             });
-        links.add(enable);
+        links.add(enable);   // add ActionLink to the link group 
 
         ActionLink disable = new ActionLink("Disable request logging") {
             @Override
@@ -245,7 +268,6 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
                        && super.isVisible(state);
             }
         };
-
         disable.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 DeveloperSupport.removeListener(WebDevSupportListener.getInstance());
@@ -254,8 +276,14 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
                                                      null), true);
                 }
             });
-        links.add(disable);
+        links.add(disable);   // add ActionLink to the link group, only visible
+                              // if link enable is toggled ON and no longer visible!
 
+
+
+        // Create a box panel to show additional information about requests
+        // on a on demand base (must ge toggled ON by a link on the link panel)
+        // Visibility depends on the toggle
         BoxPanel logs = new BoxPanel(BoxPanel.VERTICAL) {
             @Override
             public boolean isVisible(PageState state) {
@@ -265,6 +293,7 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
                 }
             };
 
+        // Adding info line about number of requests to store and show
         logs.add(new Label("") {
             @Override
             public String getLabel(PageState ps) {
@@ -274,6 +303,7 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
                 }
             });
 
+        // Add aditional toggle whether or not to include hits to ds 
         Label toggle = new Label("") {
             @Override
             public String getLabel(PageState ps) {
@@ -292,45 +322,153 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
             }
         };
 
-
+        // Add created widgets / controls to the log pannel
         logs.add(cl);
         logs.add(new Label("<h3>Available Request Information</h3>", false));
         logs.add(makeRequestTable());
 
+        // Add all panels to the page and lock
         p.add(links);
         p.add(logs);
         p.lock();
-        return p;
+
+        return p;    // page ready to display
     }
 
 
     /**
+     * Create a separate page to show logger instances and its state.
+     * Controlled by the 1. Link on the web developer support index page.
      * 
      * @return log4j Page object 
      */
     private Page buildLog4jPage() {
+
         Page p = PageFactory.buildPage(APP_NAME, "Log4j Logger Adjuster");
+
         p.add(new CategoryPanel());
         p.lock();
+
         return p;
     }
 
     /**
+     * Create a separate page to show the status of configuration parameters
+     * for every installed package (module).
+     * Controlled by the 2. Link on the web developer support index page.
      * 
      * @return config Page object 
      */
     private Page buildConfigPage() {
+
         Page p = PageFactory.buildPage(APP_NAME, "Registry Config");
-        p.add(new ConfigList());
+
+        p.add(new ConfigParameterList());
         p.lock();
+
         return p;
     }
 
+    /**
+     * Create a separate page to show all cache tables in use. 
+     * Controlled by the 3. Link on the web developer support page.
+     * @return 
+     */
     private Page buildCacheTablePage() {
+
         Page p = PageFactory.buildPage(APP_NAME, "Cache Table Browser");
+
         p.add(new CacheTableBrowser());
         p.lock();
+
         return p;
+    }
+    
+    /**
+     * Create an additional component for the web developer support index page.
+     * Controlled by the 4. link (a toggle) to show request information.
+     * 
+     * @return 
+     */
+    private Table makeRequestTable() {
+        final String[] headers = { "Time", "Duration", "Queries", "IP",
+                                   "Request", "Extra" };
+
+        TableModelBuilder b = new AbstractTableModelBuilder() {
+                public TableModel makeModel(Table t, PageState s) {
+                    return new TableModel() {
+                            ListIterator iter =
+                                WebDevSupportListener.getInstance().getRequestsReverse();
+                            private RequestInfo current = null;
+
+                            public int getColumnCount() {
+                                return 6;
+                            }
+
+                            public boolean nextRow() {
+                                while (iter.hasPrevious()) {
+                                    current = (RequestInfo) iter.previous();
+                                    boolean isdevsupp = current.isDevSupportRequest();
+                                    if (s_showDSPages || !isdevsupp) {
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            }
+                            static final int MAXSTR = 35;
+                            public Object getElementAt(int columnIndex) {
+                                switch (columnIndex) {
+                                case 0: return current.getTime();
+                                case 1: return current.getDuration();
+                                case 2: return current.getNumQueries()+"";
+                                case 3: return current.getIP();
+                                case 4: {
+                                    String req = current.getRequest();
+                                    if (req.length() > MAXSTR) {
+                                        return req.substring(0, MAXSTR)+"...";
+                                    } else {
+                                        return req;
+                                    }
+                                }
+                                case 5:
+                                    return "[query log]";
+                                default: return null;
+                                }
+                            }
+
+                            public Object getKeyAt(int columnIndex) {
+                                return new Integer(current.getID());
+                            }
+                        };
+                }
+            };
+
+        Table result = new Table(b, headers);
+        result.getColumn(4).setCellRenderer(new
+                                            DefaultTableCellRenderer(true));
+        result.getColumn(5).setCellRenderer(new
+                                            DefaultTableCellRenderer(true));
+        result.addTableActionListener(new TableActionAdapter() {
+            @Override
+                public void cellSelected(TableActionEvent e) {
+                    final ParameterMap params = new ParameterMap();
+                    params.setParameter("request_id", e.getRowKey());
+
+                    if (e.getColumn().intValue() == 4) {
+                            throw new RedirectSignal(URL.getDispatcherPath() +
+                                               "/ds/request-info" + params, true);
+                    } else if (e.getColumn().intValue() == 5) {
+                        throw new RedirectSignal(URL.getDispatcherPath() +
+                                               "/ds/query-log" + params, true);
+                    }
+                }
+            });
+        Label l = new Label("None");
+        l.setFontWeight(Label.ITALIC);
+        l.setStyleAttr("padding-left: 3em");
+        result.setEmptyView(l);
+        result.setWidth("100%");
+        return result;
     }
 
 
@@ -340,12 +478,15 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
      * 
      * @return info Page object 
      */
-    private Page buildInfoPage() {
+    private Page buildRequestInfoPage() {
+
         Page p = PageFactory.buildPage(APP_NAME, "Request Information");
+
         p.addGlobalStateParam(m_request_id);
-    //  p.add(new RequestInfoComponent());
+        p.add(new RequestInfoOverviewHeaderComponent());
         p.add(makeDatabaseRequestComponent());
         p.lock();
+
         return p;
     }
 
@@ -577,88 +718,6 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
         return panel;
     }
 
-    
-    private Table makeRequestTable() {
-        final String[] headers = { "Time", "Duration", "Queries", "IP",
-                                   "Request", "Extra" };
-
-        TableModelBuilder b = new AbstractTableModelBuilder() {
-                public TableModel makeModel(Table t, PageState s) {
-                    return new TableModel() {
-                            ListIterator iter =
-                                WebDevSupportListener.getInstance().getRequestsReverse();
-                            private RequestInfo current = null;
-
-                            public int getColumnCount() {
-                                return 6;
-                            }
-
-                            public boolean nextRow() {
-                                while (iter.hasPrevious()) {
-                                    current = (RequestInfo) iter.previous();
-                                    boolean isdevsupp = current.isDevSupportRequest();
-                                    if (s_showDSPages || !isdevsupp) {
-                                        return true;
-                                    }
-                                }
-                                return false;
-                            }
-                            static final int MAXSTR = 35;
-                            public Object getElementAt(int columnIndex) {
-                                switch (columnIndex) {
-                                case 0: return current.getTime();
-                                case 1: return current.getDuration();
-                                case 2: return current.getNumQueries()+"";
-                                case 3: return current.getIP();
-                                case 4: {
-                                    String req = current.getRequest();
-                                    if (req.length() > MAXSTR) {
-                                        return req.substring(0, MAXSTR)+"...";
-                                    } else {
-                                        return req;
-                                    }
-                                }
-                                case 5:
-                                    return "[query log]";
-                                default: return null;
-                                }
-                            }
-
-                            public Object getKeyAt(int columnIndex) {
-                                return new Integer(current.getID());
-                            }
-                        };
-                }
-            };
-
-        Table result = new Table(b, headers);
-        result.getColumn(4).setCellRenderer(new
-                                            DefaultTableCellRenderer(true));
-        result.getColumn(5).setCellRenderer(new
-                                            DefaultTableCellRenderer(true));
-        result.addTableActionListener(new TableActionAdapter() {
-            @Override
-                public void cellSelected(TableActionEvent e) {
-                    final ParameterMap params = new ParameterMap();
-                    params.setParameter("request_id", e.getRowKey());
-
-                    if (e.getColumn().intValue() == 4) {
-                            throw new RedirectSignal(URL.getDispatcherPath() +
-                                               "/ds/request-info" + params, true);
-                    } else if (e.getColumn().intValue() == 5) {
-                        throw new RedirectSignal(URL.getDispatcherPath() +
-                                               "/ds/query-log" + params, true);
-                    }
-                }
-            });
-        Label l = new Label("None");
-        l.setFontWeight(Label.ITALIC);
-        l.setStyleAttr("padding-left: 3em");
-        result.setEmptyView(l);
-        result.setWidth("100%");
-        return result;
-    }
-
     String dashes(int depth) {
         StringBuilder sb = new StringBuilder();
         while (depth-- > 0) sb.append("--");
@@ -681,14 +740,17 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
     }
 
     /**
-     * 
+     * Internal class to create a page component to display summerized
+     * information about a request. It is displayed as a header / summary
+     * paragraph in the top part of the "request Information" page, build by
+     * buildRequestInfoPage method.
      */
-    class RequestInfoComponent extends com.arsdigita.bebop.SimpleComponent {
+    class RequestInfoOverviewHeaderComponent extends com.arsdigita.bebop.SimpleComponent {
 
         /**
          * Constructor 
          */
-        public RequestInfoComponent() {
+        public RequestInfoOverviewHeaderComponent() {
             super();
         }
 
@@ -868,9 +930,36 @@ public class WebDevSupportServlet extends BaseApplicationServlet {
     }
 
 
+}
+
 // We need NonEscapedTableCellRenderer
 // Currently part of (thisPackage) Dispatcher.java
 // When the class will we deleted we must copy first!
 
+/**
+ * Public class 
+ * 
+ */
+class NonEscapedTableCellRenderer implements TableCellRenderer {
+    private boolean m_controlLink;
+    public NonEscapedTableCellRenderer(boolean controlLink) {
+        super();
+        m_controlLink = controlLink;
+    }
+    public NonEscapedTableCellRenderer() {
+        this(true);
+    }
 
+    public Component getComponent(Table table, PageState state, Object value,
+                                  boolean isSelected, Object key,
+                                  int row, int column) {
+        SimpleContainer c = new SimpleContainer();
+        Label l = new Label((String)value);
+        l.setOutputEscaping(false);
+        c.add(l);
+        if (m_controlLink) {
+            c.add(new ControlLink("download"));
+        }
+        return c;
+    }
 }

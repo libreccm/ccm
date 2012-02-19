@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.webdevsupport.log4j;
+package com.arsdigita.webdevsupport.ui;
 
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Option;

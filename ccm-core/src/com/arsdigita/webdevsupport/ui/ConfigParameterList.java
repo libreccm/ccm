@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.webdevsupport.config;
+package com.arsdigita.webdevsupport.ui;
 
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.PageState;
@@ -40,14 +40,18 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 
-public class ConfigList extends SimpleContainer {
+/**
+ * 
+ *
+ */
+public class ConfigParameterList extends SimpleContainer {
 
-    private static final Logger s_log = Logger.getLogger(ConfigList.class);
+    private static final Logger s_log = Logger.getLogger(ConfigParameterList.class);
 
     
     public static final String XML_NS = "http://xmlns.redhat.com/waf/webdevsupport/1.0";
 
-    public ConfigList() {
+    public ConfigParameterList() {
         super("devsup:configList",
               XML_NS);
     }

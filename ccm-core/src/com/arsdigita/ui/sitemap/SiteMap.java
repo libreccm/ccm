@@ -35,7 +35,7 @@ public class SiteMap extends Application {
     private static final Logger s_log = Logger.getLogger(SiteMap.class);
 
     public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.ui.sitemap.SiteMap";
+                               = "com.arsdigita.ui.sitemap.SiteMap";
 
     public SiteMap(DataObject obj) {
         super(obj);
@@ -46,4 +46,20 @@ public class SiteMap extends Application {
 
         super(oid);
     }    
+
+    /**
+     * Getter to retrieve the base database object type name
+     *
+     * @return base data aoject type as String
+     */
+    @Override
+    protected String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
+    }
+
+    @Override
+    public String getServletPath() {
+        return "/admin-sitemap";
+    }
+
 }

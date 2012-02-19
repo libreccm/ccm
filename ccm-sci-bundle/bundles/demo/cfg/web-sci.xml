@@ -123,6 +123,26 @@
   </servlet>
 
   <servlet>
+    <servlet-name>webdevsupport</servlet-name>
+    <servlet-class>com.arsdigita.webdevsupport.WebDevSupportServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>webadmin</servlet-name>
+    <servlet-class>com.arsdigita.ui.admin.AdminServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>webadmin-sitemap</servlet-name>
+    <servlet-class>com.arsdigita.ui.sitemap.SiteMapServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>webadmin-permissions</servlet-name>
+    <servlet-class>com.arsdigita.ui.permissions.PermissionsServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>oid-redirect</servlet-name>
     <servlet-class>com.arsdigita.web.OIDRedirectServlet</servlet-class>
   </servlet>
@@ -437,6 +457,26 @@
   <servlet-mapping>
     <servlet-name>versioning-log</servlet-name>
     <url-pattern>/versioning/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webdevsupport</servlet-name>
+    <url-pattern>/webdevsupport/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webadmin</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webadmin-sitemap</servlet-name>
+    <url-pattern>/admin-sitemap/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webadmin-permissions</servlet-name>
+    <url-pattern>/admin-permissions/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

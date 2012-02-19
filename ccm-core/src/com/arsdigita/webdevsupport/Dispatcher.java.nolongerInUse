@@ -61,8 +61,8 @@ import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
-import com.arsdigita.webdevsupport.log4j.CategoryPanel;
-import com.arsdigita.webdevsupport.config.ConfigList;
+import com.arsdigita.webdevsupport.ui.CategoryPanel;
+import com.arsdigita.webdevsupport.ui.ConfigParameterList;
 import com.arsdigita.xml.Element;
 
 import java.io.IOException;
@@ -270,7 +270,7 @@ public class Dispatcher extends BebopMapDispatcher {
      */
     private Page buildConfigPage() {
         Page p = PageFactory.buildPage(APP_NAME, "Registry Config");
-        p.add(new ConfigList());
+        p.add(new ConfigParameterList());
         p.lock();
         return p;
     }
@@ -809,28 +809,4 @@ public class Dispatcher extends BebopMapDispatcher {
         return p;
     }
 
-}
-
-class NonEscapedTableCellRenderer implements TableCellRenderer {
-    private boolean m_controlLink;
-    public NonEscapedTableCellRenderer(boolean controlLink) {
-        super();
-        m_controlLink = controlLink;
-    }
-    public NonEscapedTableCellRenderer() {
-        this(true);
-    }
-
-    public Component getComponent(Table table, PageState state, Object value,
-                                  boolean isSelected, Object key,
-                                  int row, int column) {
-        SimpleContainer c = new SimpleContainer();
-        Label l = new Label((String)value);
-        l.setOutputEscaping(false);
-        c.add(l);
-        if (m_controlLink) {
-            c.add(new ControlLink("download"));
-        }
-        return c;
-    }
 }

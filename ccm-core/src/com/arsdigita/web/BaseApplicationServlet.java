@@ -65,8 +65,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class BaseApplicationServlet extends BaseServlet {
 
-    private static Logger s_log = Logger.getLogger
-        (BaseApplicationServlet.class);
+    private static Logger s_log = Logger.getLogger(BaseApplicationServlet.class);
 
     /**
      * <p>The ID of the application whose service is requested.  This

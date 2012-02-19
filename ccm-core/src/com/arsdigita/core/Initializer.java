@@ -52,6 +52,7 @@ import com.arsdigita.search.converter.OOConverter;
 import com.arsdigita.search.converter.WordConverter;
 import com.arsdigita.search.converter.TextConverter;
 
+import com.arsdigita.ui.permissions.Permissions;
 import com.arsdigita.webdevsupport.WebDevSupport;
 import org.apache.log4j.Logger;
 
@@ -165,6 +166,15 @@ public class Initializer extends CompoundInitializer {
                  @Override
                  public DomainObject doNewInstance(final DataObject data) {
                      return new SiteMap(data);
+                 }
+             });
+
+        e.getFactory().registerInstantiator
+            (Permissions.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(final DataObject data) {
+                     return new Permissions(data);
                  }
              });
 
