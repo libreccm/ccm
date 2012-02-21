@@ -124,6 +124,26 @@
   </servlet>
 
   <servlet>
+    <servlet-name>webdevsupport</servlet-name>
+    <servlet-class>com.arsdigita.webdevsupport.WebDevSupportServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>webadmin</servlet-name>
+    <servlet-class>com.arsdigita.ui.admin.AdminServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>webadmin-sitemap</servlet-name>
+    <servlet-class>com.arsdigita.ui.sitemap.SiteMapServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>webadmin-permissions</servlet-name>
+    <servlet-class>com.arsdigita.ui.permissions.PermissionsServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>oid-redirect</servlet-name>
     <servlet-class>com.arsdigita.web.OIDRedirectServlet</servlet-class>
   </servlet>
@@ -205,11 +225,11 @@
   <!-- module ccm-forum  -  servlet declarations END    -->  
 
   <servlet>
-    <servlet-name>portal-files</servlet-name>
+    <servlet-name>portalworkspace-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-portal</param-value>
+      <param-value>/templates/ccm-portalworkspace</param-value>
     </init-param>
   </servlet>
 
@@ -231,20 +251,20 @@
     <servlet-class>com.arsdigita.dispatcher.PortletTypeXSLServlet</servlet-class>
   </servlet>
  
-  <!-- module ccm-ldn-rss  -  servlet declaration BEGIN   -->
+  <!-- module ccm-rssfeed  -  servlet declaration BEGIN   -->
   <servlet>
-    <servlet-name>rss-files</servlet-name>
+    <servlet-name>rssfeed-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-rss</param-value>
+      <param-value>/templates/ccm-rssfeed</param-value>
     </init-param>
     <init-param>
       <param-name>file-resolver</param-name>
-      <param-value>com.arsdigita.london.rss.RSSFileResolver</param-value>
+      <param-value>com.arsdigita.rssfeed.RSSFileResolver</param-value>
     </init-param>
   </servlet>
-  <!-- module ccm-ldn-rss  -  servlet declaration END   -->
+  <!-- module ccm-rssfeed  -  servlet declaration END   -->
 
   <!-- module ccm-ldn-search  -  servlet declarations BEGIN   -->
   <servlet>
@@ -355,8 +375,8 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>portal-files</servlet-name>
-    <url-pattern>/ccm-ldn-portal/files/*</url-pattern>
+    <servlet-name>portalworkspace-files</servlet-name>
+    <url-pattern>/ccm-portalworkspace/files/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -364,11 +384,12 @@
     <url-pattern>/ccm-navigation/files/*</url-pattern>
   </servlet-mapping>
 
-  <!-- module ccm-ldn-rss  -  servlet mappings   -->
+  <!-- module ccm-rssfeed  -  servlet mappings  BEGIN   -->
   <servlet-mapping>
-    <servlet-name>rss-files</servlet-name>
-    <url-pattern>/ccm-ldn-rss/files/*</url-pattern>
+    <servlet-name>rssfeed-files</servlet-name>
+    <url-pattern>/ccm-rssfeed/files/*</url-pattern>
   </servlet-mapping>
+  <!-- module ccm-rssfeed  -  servlet mappings  END   -->
 
   <!-- module ccm-ldn-search  -  servlet mappings BEGIN  -->
   <servlet-mapping>
@@ -437,7 +458,7 @@
 
   <servlet-mapping>
     <servlet-name>legacy-adapter</servlet-name>
-    <url-pattern>/themes/servlet/legacy-adapter/*</url-pattern>
+    <url-pattern>/templates/servlet/legacy-adapter/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -453,6 +474,26 @@
   <servlet-mapping>
     <servlet-name>versioning-log</servlet-name>
     <url-pattern>/versioning/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webdevsupport</servlet-name>
+    <url-pattern>/webdevsupport/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webadmin</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webadmin-sitemap</servlet-name>
+    <url-pattern>/admin-sitemap/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webadmin-permissions</servlet-name>
+    <url-pattern>/admin-permissions/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -477,7 +518,7 @@
 
   <servlet-mapping>
     <servlet-name>content-item-xsl</servlet-name>
-    <url-pattern>/themes/servlet/content-item/*</url-pattern>
+    <url-pattern>/templates/servlet/content-item/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

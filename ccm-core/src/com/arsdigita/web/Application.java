@@ -385,7 +385,13 @@ public class Application extends Resource {
         return (Application) result;
     }
 
-    // Can return null.
+    /**
+     * 
+     * Can return null.
+     * @param siteNode
+     * @return
+     * @deprecated 
+     */
     public static Application retrieveApplicationForSiteNode
         (SiteNode siteNode) {
         DataQuery query = SessionManager.getSession().retrieveQuery
@@ -737,18 +743,20 @@ public class Application extends Resource {
     /**
      * Returns a canonical application URL.  This is a utility method
      * that constructs a URL fragment (just the path relative to the
-     * protocol and server) by trimming the with both leading and
-     * trailing slashes.
+     * protocol and server) by trimming white spaces and the ensuring both
+     * leading and trailing slashes.
      *
      */
     public static String getCanonicalURL(String url) {
-        // Remove whitespace
-        url = url.trim();
+        
+        String canonicalURL;
+        url = url.trim();  // Remove whitespace
 
         // Verify leading and trailing characters
-        String canonicalURL = url.startsWith(SLASH) ? url : (SLASH + url);
+        canonicalURL = url.startsWith(SLASH) ? url : (SLASH + url);
+        canonicalURL = url.endsWith(SLASH) ? canonicalURL : (canonicalURL + SLASH);
 
-        return url.endsWith(SLASH) ? canonicalURL : (canonicalURL + SLASH);
+        return canonicalURL ;
     }
 
     public String getContextPath() {
@@ -782,6 +790,11 @@ public class Application extends Resource {
      *   <url-pattern>/ccm-applicationName/files/*</url-pattern>
      * </servlet-mapping>
      *
+     * NOTE: According to Servlet API the path always starts with a leading '/'
+     * and includes either the servlet name or a path to the servlet, but does 
+     * not include any extra path information or a query string. Returns an
+     * empry string ("") is the servlet used was matched using the "/*" pattern.
+     * 
      * @return path name to the applications servlet/JSP
      */
     public String getServletPath() {

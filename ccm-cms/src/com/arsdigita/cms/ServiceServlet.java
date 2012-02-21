@@ -52,7 +52,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * into a cache of services on a request by request basis (lazy loading).
  * 
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
- * @version $Id: WorkspaceServlet.java 2161 2011-02-02 00:16:13Z pboy $
+ * @version $Id: ServiceServlet.java 2161 2011-02-02 00:16:13Z pboy $
  */
 public class ServiceServlet extends BaseApplicationServlet {
 
@@ -113,7 +113,7 @@ public class ServiceServlet extends BaseApplicationServlet {
         
     /**
      * Implements the (abstract) doService method of BaseApplicationServlet to
-     * create the Worspace page.
+     * create the perform the services.
      * 
      * @see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)

@@ -58,6 +58,10 @@ public final class MailConfig extends AbstractConfig {
     ("waf.mail.send_html_mail", Parameter.OPTIONAL, Boolean.FALSE);
 
     
+    /**
+     * Constructor registers the parameter ands loads values from config file.
+     * 
+     */
     public MailConfig() {
         register(m_javamail);
         register(m_debug);
@@ -88,6 +92,10 @@ public final class MailConfig extends AbstractConfig {
         return m_props;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getDefaultFrom() {
         String from  = (String) get(m_defaultFrom);
         if (null == from) 
@@ -96,15 +104,35 @@ public final class MailConfig extends AbstractConfig {
         return from;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public boolean isDebug() {
         return get(m_debug).equals(Boolean.TRUE);
     }
 
+    /**
+     * determine whether messages with mime type text/html
+     * should be sent as html emails (with plain text alternative) or
+     * just sent as translated plain text
+     * @return
+     */
+    public boolean sendHTMLMessageAsHTMLEmail () {
+    	return ((Boolean)get(m_sendHTML)).booleanValue();
+    }
+
+
+
+    /**
+     * 
+     */
     private static class PropertyFileParameter extends URLParameter {
         PropertyFileParameter(String name, int multiplicity, Object defaalt) {
             super(name, multiplicity, defaalt);
         }
 
+        @Override
         protected void doValidate(Object value, ErrorList errors) {
             super.doValidate(value, errors);
 
@@ -124,16 +152,6 @@ public final class MailConfig extends AbstractConfig {
             props.load(url.openStream());
             return props;
         }
-    }
-
-    /**
-     * determine whether messages with mime type text/html
-     * should be sent as html emails (with plain text alternative) or
-     * just sent as translated plain text
-     * @return
-     */
-    public boolean sendHTMLMessageAsHTMLEmail () {
-    	return ((Boolean)get(m_sendHTML)).booleanValue();
     }
 
 }

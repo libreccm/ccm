@@ -176,6 +176,18 @@ public class RelatedLink extends Link {
     }
 
     /**
+     * Convenient (compatiblility) method to retrieve related links for a 
+     * given content item without a specific name for the link list).
+     *
+     * @param item The item to return links for
+     * @param name Name of the link list
+     * @return 
+     */
+    public static DataCollection getRelatedLinks(ContentItem item) {
+        return getRelatedLinks(item,"NONE");
+    }
+
+    /**
      * Retrieves related links for a given content item
      *
      * @param item The item to return links for
