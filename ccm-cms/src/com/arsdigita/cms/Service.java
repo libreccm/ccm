@@ -18,12 +18,15 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.dispatcher.StreamAsset;
+import com.arsdigita.cms.dispatcher.StreamImage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 // import com.arsdigita.persistence.DataAssociation;
 // import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.URL;
 
 import java.math.BigDecimal;
 
@@ -97,12 +100,66 @@ public class Service extends Application {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+
+    public static String getURL() {
+        return "/" + PACKAGE_KEY + "/";
+    }
+
+    
+    /**
+     * Constuct a URL which serves a binary asset.
+     *
+     * @param asset  The binary asset
+     * @return the URL which will serve the specified binary asset
+     */
+    public static String getAssetURL(BinaryAsset asset) {
+        return getAssetURL(asset.getID());
+    }
+
+    /**
+     * Constuct a URL which serves a binary asset.
+     *
+     * @param assetId  The asset ID
+     * @return the URL which will serve the specified binary asset
+     */
+    public static String getAssetURL(BigDecimal assetId) {
+        StringBuilder buf = new StringBuilder(Service.getURL() );
+        buf.append("stream/asset?");
+        buf.append(StreamAsset.ASSET_ID).append("=").append(assetId);
+        return buf.toString();
+    }
+
+
+
+    /**
+     * Constuct a URL which serves an image.
+     *
+     * @param asset  The image asset whose image is to be served
+     * @return the URL which will serve the specified image asset
+     */
+    public static String getImageURL(ImageAsset asset) {
+        StringBuilder buf = new StringBuilder(Service.getURL() );
+        buf.append("stream/image/?");
+        buf.append(StreamImage.IMAGE_ID).append("=").append(asset.getID());
+        return buf.toString();
+    }
+
+    /**
+     * The URL to log out.
+     * @return The logout URL
+     */
+    public static String getLogoutURL() {
+        StringBuilder buf = new StringBuilder(Service.getURL() );
+        buf.append("logout");
+        return buf.toString();
+    }
+
     /**
      * This is called when the application is created.
      */
     public static Service create(String urlName,
-                                   String title,
-                                   Application parent) {
+                                 String title,
+                                 Application parent) {
 
         Service app = (Service) Application.createApplication
                                 (BASE_DATA_OBJECT_TYPE, urlName, title, parent);
@@ -110,6 +167,12 @@ public class Service extends Application {
         app.save();
 
         return app;
+    }
+
+    @Override
+    public String getServletPath() {
+      //return URL.SERVLET_DIR + "/cms-service";
+        return "/templates/servlet/cms-service";
     }
 
 

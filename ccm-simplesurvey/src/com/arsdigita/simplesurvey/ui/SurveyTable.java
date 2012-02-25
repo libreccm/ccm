@@ -28,7 +28,6 @@ import java.util.Date;
 
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.bebop.table.TableModel;
@@ -36,8 +35,6 @@ import com.arsdigita.bebop.table.TableCellRenderer;
 
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.formbuilder.PersistentForm;
-
-import com.arsdigita.simplesurvey.SimpleSurveyUtil;
 
 import com.arsdigita.bebop.Component;
 
@@ -74,28 +71,27 @@ public class SurveyTable extends Table {
     private static class SurveyTableModelBuilder extends LockableImpl 
 	implements TableModelBuilder {
 
-	private Class m_surveyClass;
+        private Class m_surveyClass;
 
-	public SurveyTableModelBuilder(Class surveyClass) {
-	    m_surveyClass = surveyClass;
-	}
+        public SurveyTableModelBuilder(Class surveyClass) {
+            m_surveyClass = surveyClass;
+        }
 	
-	public TableModel makeModel(Table l, PageState pageState) {
-	    PackageInstance pack = SimpleSurveyUtil.getPackageInstance(pageState);
-	    SurveyCollection surveys = 
-		Survey.retrieveByPackage(pack);
-	    
-	    surveys.addEqualsFilter(ACSObject.DEFAULT_DOMAIN_CLASS, 
-				    m_surveyClass.getName());
-	    
-	    Date currentDate = new Date();
-	    Filter startFilter = surveys.addFilter("startDate < :startDate");
-	    startFilter.set("startDate", currentDate);
-	    Filter endFilter = surveys.addFilter("endDate > :endDate");
-	    endFilter.set("endDate", currentDate);
-	    
-	    return new AdminSurveyTableModel(surveys);
-	}
+        public TableModel makeModel(Table l, PageState pageState) {
+
+            SurveyCollection surveys = Survey.retrieveAll();
+
+            surveys.addEqualsFilter(ACSObject.DEFAULT_DOMAIN_CLASS, 
+                                    m_surveyClass.getName());
+
+            Date currentDate = new Date();
+            Filter startFilter = surveys.addFilter("startDate < :startDate");
+            startFilter.set("startDate", currentDate);
+            Filter endFilter = surveys.addFilter("endDate > :endDate");
+            endFilter.set("endDate", currentDate);
+
+            return new AdminSurveyTableModel(surveys);
+	    }
     }
 
     private class SurveyCellRenderer implements TableCellRenderer {

@@ -53,6 +53,7 @@ public class ContentItemRenderer extends DomainObjectRenderer {
      * Generate XML for the domain object supplied by the
      * selection model.
      */
+    @Override
     public void generateXML(PageState state, Element parent) {
         ContentItem item = ContentSectionDispatcher.getContentItem(state.getRequest());
         Element e = generateXMLElement(item);

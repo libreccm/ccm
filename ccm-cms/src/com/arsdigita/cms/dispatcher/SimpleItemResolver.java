@@ -24,6 +24,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.DispatcherHelper;
@@ -63,7 +64,7 @@ public class SimpleItemResolver extends AbstractItemResolver implements ItemReso
         Logger.getLogger(SimpleItemResolver.class.getName());
 
     private static final String ADMIN_PREFIX = "admin";
-    private static final String WORKSPACE_PREFIX = Utilities.getWorkspaceURL();    
+    private static final String WORKSPACE_PREFIX = Workspace.getURL();    
 
     private static MasterPage s_masterP = null;
 

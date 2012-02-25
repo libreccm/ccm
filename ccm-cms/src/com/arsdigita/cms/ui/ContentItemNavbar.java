@@ -25,7 +25,7 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.PageLocations;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 
@@ -49,6 +49,12 @@ public class ContentItemNavbar extends CMSContainer {
         setClassAttr("item");
     }
 
+    /**
+     * 
+     * @param state
+     * @param parent 
+     */
+    @Override
     public void generateXML(PageState state, Element parent) {
         Element element = new Element("cms:breadCrumbTrail", CMS.CMS_XML_NS);
 
@@ -57,7 +63,7 @@ public class ContentItemNavbar extends CMSContainer {
         ContentType type = item.getContentType();
 
         final String url = URL.there(state.getRequest(),
-                                     Utilities.getWorkspaceURL()).toString();
+                                     Workspace.getURL()).toString();
 
         element.addAttribute("workspaceURL", url);
         element.addAttribute("sectionName", section.getName());

@@ -51,6 +51,15 @@ import org.xml.sax.helpers.DefaultHandler;
  * URLs of the available services are stored in a XML file which is processed
  * into a cache of services on a request by request basis (lazy loading).
  * 
+ * ServiceServlet is called by BaseApplicationServlet which has determined that
+ * ServiceServlet is associated with a request URL.
+ * 
+ * The CMS Service determines whether a <tt>Page</tt> has been registered to
+ * the URL and if so passes the request to that page.
+ *
+ * If no <tt>Page</tt> is registered to the URL, then the CMS Service hands 
+ * the request to the TemplateResolver to find an appropriate JSP file.
+ * 
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  * @version $Id: ServiceServlet.java 2161 2011-02-02 00:16:13Z pboy $
  */
@@ -68,9 +77,7 @@ public class ServiceServlet extends BaseApplicationServlet {
     /** Mapping between a relative URL and the class name of a ResourceHandler.*/
     private static HashMap s_pageClasses = new HashMap();
 
-    /**
-     * Instantiated ResourceHandler cache. This allows for lazy loading.
-     */
+    /** Instantiated ResourceHandler cache. This allows for lazy loading.    */
     private static SimpleCache s_pages = new SimpleCache();
 
     /** List of URLs which require a trailing slash. These are required for
@@ -80,6 +87,7 @@ public class ServiceServlet extends BaseApplicationServlet {
 
     /** Path to directory containg ccm-cms template files                    */
     private String m_templatePath;
+
     /** Resolvers to find templages (JSP) and other stuff stored in file system.*/
     private ApplicationFileResolver m_resolver;
 
@@ -101,20 +109,21 @@ public class ServiceServlet extends BaseApplicationServlet {
         /* Process mapping file.                                              */
         readFromFile(MAP_FILE);
 
+        /** Set Template base path for JSP's                                  */
         m_templatePath = ContentSection.getConfig().getTemplateRoot();
         Assert.exists(m_templatePath, String.class);
         Assert.isTrue(m_templatePath.startsWith("/"),
                      "template-path must start with '/'");
         Assert.isTrue(!m_templatePath.endsWith("/"),
                      "template-path must not end with '/'");
+        /** Set TemplateResolver class                                        */
         m_resolver = Web.getConfig().getApplicationFileResolver();
 
     }
         
     /**
      * Implements the (abstract) doService method of BaseApplicationServlet to
-     * create the perform the services.
-     * 
+     * perform the services.
      * @see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)
      */
@@ -152,15 +161,10 @@ public class ServiceServlet extends BaseApplicationServlet {
             page.dispatch(sreq, sresp, ctx);
         } else {
             // Fall back on the JSP application dispatcher.
-        //  m_notFoundHandler.dispatch(request, response, actx);
             if (s_log.isInfoEnabled()) {
-                s_log.info("NOT serving content item");
+                s_log.info("NO page registered to serve the requst url.");
             }
             
-            /* Store content section in http request to make it available
-             * or admin index,jsp                                             */
-            // sreq.setAttribute(CONTENT_SECTION, section);
-
             RequestDispatcher rd = m_resolver.resolve(m_templatePath,
                                                       sreq, sresp, app);
             if (rd != null) {
@@ -170,7 +174,6 @@ public class ServiceServlet extends BaseApplicationServlet {
                 sreq = DispatcherHelper.restoreOriginalRequest(sreq);
                 rd.forward(sreq,sresp);
             } else {
-            //  sresp.sendError(404, packageURL + " not found on this server.");
                 sresp.sendError(404, requestUri + " not found on this server.");
             }
 

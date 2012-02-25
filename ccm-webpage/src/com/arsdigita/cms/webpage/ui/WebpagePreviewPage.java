@@ -9,9 +9,9 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionServlet;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.ContentItemDispatcher;
-import com.arsdigita.cms.dispatcher.ContentSectionDispatcher;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
 //import com.arsdigita.cms.ui.ContentSectionComponent;
 import com.arsdigita.cms.webpage.Webpage;
@@ -49,13 +49,14 @@ public class WebpagePreviewPage extends CMSPage {
 	
 	protected XMLGenerator getXMLGenerator(PageState ps) {
 		HttpServletRequest request = ps.getRequest();
-		ContentSection section = ContentSectionDispatcher.getContentSection(request);
+     // ContentSection section = ContentSectionDispatcher.getContentSection(request);
+        ContentSection section = ContentSectionServlet.getContentSection(request);
 		Assert.exists(section, ContentSection.class);
 		return section.getXMLGenerator();
 	}
 	
 	public ContentItem getContentItem(HttpServletRequest request) {
-		ContentSection section = ContentSectionDispatcher.getContentSection(request);
+		ContentSection section = ContentSectionServlet.getContentSection(request);
 		
 		Webpage webpage = null;
 		ContentItem item = ContentItemDispatcher.getContentItem(request);

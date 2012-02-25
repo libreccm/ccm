@@ -30,7 +30,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.workflow.CMSEngine;
 import com.arsdigita.cms.workflow.CMSTask;
@@ -39,7 +39,6 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
-import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
@@ -206,7 +205,7 @@ public final class TaskFinishForm extends CommentAddForm {
                 if (ContentSection.getConfig().getUseStreamlinedCreation()) {
                         throw new RedirectSignal
                             (URL.there(state.getRequest(), 
-                                       Utilities.getWorkspaceURL()),
+                                       Workspace.getURL()),
                              true);
                 }
                 

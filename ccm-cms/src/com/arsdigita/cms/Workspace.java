@@ -25,6 +25,8 @@ import com.arsdigita.persistence.OID;
 // import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.web.Application;
 
+import com.arsdigita.web.ApplicationCollection;
+import com.arsdigita.web.ApplicationType;
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
@@ -105,6 +107,41 @@ public class Workspace extends Application {
         app.save();
 
         return app;
+    }
+
+    /**
+     * Returns an instance of the Workspace application. There must not more
+     * than one instance exist. May return null.
+     */
+    public static Application getInstance() {
+        ApplicationType workspaceType = ApplicationType.
+            retrieveApplicationTypeForApplication(BASE_DATA_OBJECT_TYPE);
+        if ( workspaceType == null ) { return null; }
+
+        ApplicationCollection apps = Application.retrieveAllApplications();
+        apps.addEqualsFilter("resourceType.id", workspaceType.getID());
+        if ( !apps.next() ) { return null; }
+
+        Application result = apps.getApplication();
+        apps.close();
+        return result;
+    }
+
+    /**
+     * Fetch the location (URL) of the CMS Workspace. There must not more than
+     * one instance exist. 
+     * 
+     * @return The URL of the CMS Workspace (currently including trailing slash)
+     */
+    public static String getURL() {
+        
+        Application app = Workspace.getInstance(); 
+        if (app == null) {
+            return null;
+        } else {
+            String url = (String) app.getPrimaryURL();
+            return url;
+        }
     }
 
 }

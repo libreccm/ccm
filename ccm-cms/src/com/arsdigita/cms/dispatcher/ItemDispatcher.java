@@ -21,6 +21,7 @@ package com.arsdigita.cms.dispatcher;
 import com.arsdigita.cms.CMSExcursion;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionServlet;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.dispatcher.ChainedDispatcher;
@@ -32,14 +33,17 @@ import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.versioning.Transaction;
 import com.arsdigita.web.LoginSignal;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -129,7 +133,8 @@ public class ItemDispatcher implements ChainedDispatcher {
         }
 
         final ContentSection section =
-            ContentSectionDispatcher.getContentSection(request);
+            ContentSectionServlet.getContentSection(request);
+         // ContentSectionDispatcher.getContentSection(request);
 
         final ContentItem item = getItem(section, url);
         if (item == null) {

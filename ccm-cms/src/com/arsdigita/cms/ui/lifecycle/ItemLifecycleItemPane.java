@@ -46,6 +46,7 @@ import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.ui.BaseItemPane;
@@ -274,7 +275,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                     if (ContentSection.getConfig().getUseStreamlinedCreation()) {
                         throw new RedirectSignal(
                                 URL.there(state.getRequest(),
-                                          Utilities.getWorkspaceURL()), true);
+                                          Workspace.getURL()), true);
                     }
                 }
             }
@@ -361,7 +362,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                     if (ContentSection.getConfig().getUseStreamlinedCreation()) {
                         throw new RedirectSignal(
                                 URL.there(state.getRequest(),
-                                          Utilities.getWorkspaceURL()), true);
+                                          Workspace.getURL()), true);
                     }
                 }
             }
@@ -529,7 +530,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                     if (ContentSection.getConfig().getUseStreamlinedCreation()) {
                         throw new RedirectSignal(
                                 URL.there(state.getRequest(),
-                                          Utilities.getWorkspaceURL()), true);
+                                          Workspace.getURL()), true);
                     }
                 }
             } else if (REPUBLISH_AND_RESET.equals(selected)) {
@@ -564,7 +565,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                     if (ContentSection.getConfig().getUseStreamlinedCreation()) {
                         throw new RedirectSignal(
                                 URL.there(state.getRequest(),
-                                          Utilities.getWorkspaceURL()), true);
+                                          Workspace.getURL()), true);
                     }
                 }
             } else if (UNPUBLISH.equals(selected)) {

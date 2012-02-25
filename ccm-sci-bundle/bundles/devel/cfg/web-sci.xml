@@ -164,6 +164,11 @@
   </servlet>
 
   <servlet>
+    <servlet-name>cms-service</servlet-name>
+    <servlet-class>com.arsdigita.cms.ServiceServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>content-type-xsl</servlet-name>
     <servlet-class>com.arsdigita.cms.dispatcher.ContentTypeXSLServlet</servlet-class>
   </servlet>
@@ -177,7 +182,6 @@
     <servlet-name>template-xsl</servlet-name>
     <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
   </servlet>
-
 
  <servlet>
    <servlet-name>TextOnlyServlet</servlet-name>
@@ -499,6 +503,11 @@
   <servlet-mapping>
     <servlet-name>content-section</servlet-name>
     <url-pattern>/themes/servlet/content-section/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>cms-service</servlet-name>
+    <url-pattern>/templates/servlet/cms-service/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

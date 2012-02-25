@@ -19,7 +19,7 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.toolbox.ui.ContextBar;
 import com.arsdigita.web.URL;
 import org.apache.log4j.Logger;
@@ -37,11 +37,12 @@ class WorkspaceContextBar extends ContextBar {
     private static final Logger s_log = Logger.getLogger
         (WorkspaceContextBar.class);
 
+    @Override
     protected List entries(final PageState state) {
         final List entries = super.entries(state);
 
         final String centerTitle = lz("cms.ui.content_center");
-        final String centerPath = Utilities.getWorkspaceURL();
+        final String centerPath = Workspace.getURL();
         final URL url = URL.there(state.getRequest(), centerPath);
 
         entries.add(new Entry(centerTitle, url));

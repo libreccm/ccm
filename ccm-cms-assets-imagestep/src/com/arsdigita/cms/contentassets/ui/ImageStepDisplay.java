@@ -140,6 +140,7 @@ public class ImageStepDisplay extends SimpleContainer {
             container.setBorder( 1 );
 
             container.add( new ImageDisplay(null) {
+                @Override
                 protected void generateImagePropertiesXML( ImageAsset image,
                                                            PageState state,
                                                            Element element ) {

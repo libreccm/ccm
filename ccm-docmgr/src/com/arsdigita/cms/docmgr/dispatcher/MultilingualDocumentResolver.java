@@ -32,12 +32,12 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.dispatcher.AbstractItemResolver;
 import com.arsdigita.cms.dispatcher.CMSDispatcher;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.MasterPage;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -58,16 +58,17 @@ import com.arsdigita.web.Web;
  * Created Mon Jan 20 14:30:03 2003.
  *
  * @author <a href="mailto:mhanisch@redhat.com">Michael Hanisch</a>
- * @version $Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/dispatcher/MultilingualDocumentResolver.java#1 $
+ * @version $Id: MultilingualDocumentResolver.java#1 $
  */
-public class MultilingualDocumentResolver extends AbstractItemResolver implements ItemResolver {
+public class MultilingualDocumentResolver extends AbstractItemResolver 
+                                       implements ItemResolver {
 
     private static final Logger s_log = Logger.getLogger
         (MultilingualDocumentResolver.class);
 
     private static MasterPage s_masterP = null;
     private static final String ADMIN_PREFIX = "admin";
-    private static final String WORKSPACE_PREFIX = Utilities.getWorkspaceURL();
+    private static final String WORKSPACE_PREFIX = Workspace.getURL();
 
     /**
      * The string identifying an item's ID in the query string of a
@@ -727,7 +728,8 @@ public class MultilingualDocumentResolver extends AbstractItemResolver implement
             // will have deal with 'foo' folder.
 
             String name = index > 0 ? url.substring(0, index) : "";
-            parentFolder = name != "" ? (Folder) parentFolder.getItem(name, true) : parentFolder;
+            parentFolder = name != "" ? (Folder) parentFolder.getItem(name, true) 
+                                      : parentFolder;
             url = index + 1 < len ? url.substring(index + 1) : "";
 
             return getItemFromLiveURL(url, parentFolder);

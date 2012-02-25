@@ -48,6 +48,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SectionLocaleCollection;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -181,7 +182,7 @@ public class SectionConfigurationPage extends CMSPage implements Resettable {
 
         DimensionalNavbar dn = new DimensionalNavbar();
         dn.setDelimiter(" - ");
-        dn.add(new Link( new Label(GlobalizationUtil.globalize("cms.ui.my_workspace")),  Utilities.getWorkspaceURL()));
+        dn.add(new Link( new Label(GlobalizationUtil.globalize("cms.ui.my_workspace")),  Workspace.getURL()));
         dn.add(new Link( new Label(GlobalizationUtil.globalize("cms.ui.sign_out")),  Utilities.getLogoutURL()));
         // FIXME: Write online help, for the time being, do not offer a link
         // dn.add(new Link( new Label(GlobalizationUtil.globalize("cms.ui.help")),  "help"));

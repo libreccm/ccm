@@ -21,7 +21,7 @@ package com.arsdigita.cms.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.ui.UI;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
@@ -46,7 +46,7 @@ class GlobalNavigation extends SimpleComponent {
     private final String m_helpPath;
 
     GlobalNavigation() {
-        m_centerPath = Utilities.getWorkspaceURL();
+        m_centerPath = Workspace.getURL();
         m_wspcPath = UI.getWorkspaceURL();
         m_signOutPath = UI.getLogoutPageURL();
         m_helpPath = "/nowhere"; // We don't have this yet XXX.

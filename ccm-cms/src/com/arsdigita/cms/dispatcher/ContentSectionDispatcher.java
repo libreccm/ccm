@@ -27,7 +27,6 @@ import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelContext;
-import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.User;
 import com.arsdigita.sitenode.SiteNodeRequestContext;
 import com.arsdigita.util.Assert;
@@ -104,9 +103,8 @@ public class ContentSectionDispatcher implements Dispatcher {
 
         try {
 
-            // Fetch the current site node from the request context;
-            SiteNode sn = actx.getSiteNode();
-            ContentSection section = ContentSection.getSectionFromNode(sn);
+            ContentSection section = (ContentSection) ContentSection
+                                                      .getCurrentApplication(request);
             Assert.exists(section);
 
             request.setAttribute(CONTENT_SECTION, section);

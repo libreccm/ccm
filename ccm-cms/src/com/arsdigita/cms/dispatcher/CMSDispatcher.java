@@ -32,7 +32,6 @@ import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.ACSObjectCache;
 import com.arsdigita.kernel.KernelHelper;
-import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.User;
 import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.URL;
@@ -451,8 +450,7 @@ public class CMSDispatcher implements Dispatcher, ChainedDispatcher {
         }
 
         // Fetch the current site node from the URL.
-        SiteNode sn = SiteNode.getSiteNode(url);
-        ContentSection section = ContentSection.getSectionFromNode(sn);
+        ContentSection section = ContentSection.getSectionForPath(url);
         return section;
     }
 

@@ -37,9 +37,9 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionServlet;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.CMSPage;
-import com.arsdigita.cms.dispatcher.ContentSectionDispatcher;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
@@ -233,7 +233,8 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
 			s_log.debug("init");
 			PageState state = e.getPageState();
 			HttpServletRequest request = state.getRequest();
-			ContentSection section = ContentSectionDispatcher.getContentSection(request);
+        //  ContentSection section = ContentSectionDispatcher.getContentSection(request);
+            ContentSection section = ContentSectionServlet.getContentSection(request);
 			
 			Webpage webpage = null;
 			try {
@@ -344,7 +345,8 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
 			s_log.debug("process");
 			PageState state = e.getPageState();
 			HttpServletRequest request = state.getRequest();
-			ContentSection section = ContentSectionDispatcher.getContentSection(request);
+         // ContentSection section = ContentSectionDispatcher.getContentSection(request);
+            ContentSection section = ContentSectionServlet.getContentSection(request);
 			
 			if (m_save.isSelected(state)) {
 				Webpage webpage = null;

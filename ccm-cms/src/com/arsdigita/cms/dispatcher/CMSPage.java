@@ -27,6 +27,7 @@ import com.arsdigita.bebop.page.PageTransformer;
 import com.arsdigita.cms.CMSExcursion;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionServlet;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.dispatcher.RequestContext;
@@ -194,7 +195,8 @@ public class CMSPage extends Page implements ResourceHandler {
      */
    public ContentSection getContentSection(HttpServletRequest request) {
         // Resets all content sections associations.
-        return ContentSectionDispatcher.getContentSection(request);
+     // return ContentSectionDispatcher.getContentSection(request);
+        return ContentSectionServlet.getContentSection(request);
     }
 
     /**

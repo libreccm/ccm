@@ -23,7 +23,8 @@ import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Service;
+// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.URL;
@@ -64,6 +65,7 @@ public class ImageDisplay extends SimpleComponent {
         return m_item;
     }
 
+    @Override
     public void generateXML(PageState state, Element parent) {
         if ( isVisible(state) ) {
 
@@ -89,7 +91,8 @@ public class ImageDisplay extends SimpleComponent {
                                               Element element) {
         element.addAttribute("name", image.getName());
         element.addAttribute("src", URL.getDispatcherPath() + 
-                             Utilities.getImageURL(image));
+                             Service.getImageURL(image));
+                    //       Utilities.getImageURL(image));
 
         BigDecimal width = image.getWidth();
         if ( width != null ) {

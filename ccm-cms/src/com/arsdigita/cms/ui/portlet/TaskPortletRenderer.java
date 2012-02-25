@@ -23,7 +23,7 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.portlet.TaskPortlet;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -63,7 +63,7 @@ public class TaskPortletRenderer extends AbstractPortletRenderer {
     protected void generateBodyXML(PageState pageState, Element parentElement) {
 
 
-        final String contentCenter = Utilities.getWorkspaceURL();
+        final String contentCenter = Workspace.getURL();
 
 
         Link link = new Link("Content Center", contentCenter);

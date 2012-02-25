@@ -24,16 +24,12 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.Service;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelContext;
-import com.arsdigita.kernel.PackageInstance;
-import com.arsdigita.kernel.PackageInstanceCollection;
-import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.SiteNode;
-import com.arsdigita.kernel.SiteNodeCollection;
 import com.arsdigita.kernel.User;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +38,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 /**
  * <p>This class provides many utility functions for the Content Management
@@ -63,23 +61,20 @@ public class Utilities {
     public static final Logger LOG = Logger.getLogger(Utilities.class);
 
     /**
-     * Fetch the location of the CMS Workspace package. Caches the result.
+     * Fetch the location of the CMS Workspace package.
      * @return The URL of the CMS Workspace package
-     * @deprecated without direct replacement yet, refactor code to use
-     * legacy free code in com.arsdigita.web
+     * @deprecated use Workspace.getURL() instead
      */
     public static String getWorkspaceURL() {
-        String url = (String) m_cache.get(CMS.WORKSPACE_PACKAGE_KEY);
-        if ( url == null ) {
-            url = getSingletonPackageURL(CMS.WORKSPACE_PACKAGE_KEY);
-            m_cache.put(CMS.WORKSPACE_PACKAGE_KEY, url);
-        }
-        return url;
+        
+            return Workspace.getURL();
+
     }
 
     /**
-     * Fetch the location of the CMS Services package. Caches the result.
+     * Fetch the location (URL) of the CMS Services package. Caches the result.
      * @return The URL of the CMS Services package
+     * @deprecated Use Service.getURL(  instead
      */
     public static String getServiceURL() {
         String url = (String) m_cache.get(CMS.SERVICE_PACKAGE_KEY);
@@ -90,7 +85,8 @@ public class Utilities {
             // file that is maintained by a non cms application eg 
             // forum, then I can end up with a url that doesn't work
             // and so breaks file links everywhere
-            url = getSingletonPackageURLSansContext(CMS.SERVICE_PACKAGE_KEY);
+        //  url = getSingletonPackageURLSansContext(CMS.SERVICE_PACKAGE_KEY);
+            url = Service.getURL();
             m_cache.put(CMS.SERVICE_PACKAGE_KEY, url);
         }
 
@@ -102,7 +98,8 @@ public class Utilities {
      * @return The logout URL
      */
     public static String getLogoutURL() {
-        StringBuffer buf = new StringBuffer(getServiceURL());
+      //StringBuffer buf = new StringBuffer(getServiceURL());
+        StringBuilder buf = new StringBuilder(Service.getURL() );
         buf.append("logout");
         return buf.toString();
     }
@@ -112,6 +109,7 @@ public class Utilities {
      *
      * @param asset  The binary asset
      * @return the URL which will serve the specified binary asset
+     * @deprecated Use Service.getAssetURL(BinaryAsset asset) instead
      */
     public static String getAssetURL(BinaryAsset asset) {
         return getAssetURL(asset.getID());
@@ -122,9 +120,11 @@ public class Utilities {
      *
      * @param assetId  The asset ID
      * @return the URL which will serve the specified binary asset
+     * @deprecated Use Service.getAssetURL(BigDecimal assetId) instead
      */
     public static String getAssetURL(BigDecimal assetId) {
-        StringBuffer buf = new StringBuffer(getServiceURL());
+     // StringBuffer buf = new StringBuffer(getServiceURL());
+        StringBuilder buf = new StringBuilder(Service.getURL() );
         buf.append("stream/asset?");
         buf.append(StreamAsset.ASSET_ID).append("=").append(assetId);
         return buf.toString();
@@ -137,9 +137,11 @@ public class Utilities {
      *
      * @param asset  The image asset whose image is to be served
      * @return the URL which will serve the specified image asset
+     * @deprecated Use Service.getImageURL(ImageAsset) instead!
      */
     public static String getImageURL(ImageAsset asset) {
-        StringBuffer buf = new StringBuffer(getServiceURL());
+    //  StringBuffer buf = new StringBuffer(getServiceURL());
+        StringBuilder buf = new StringBuilder(Service.getURL() );
         buf.append("stream/image/?");
         buf.append(StreamImage.IMAGE_ID).append("=").append(asset.getID());
         return buf.toString();
@@ -166,58 +168,13 @@ public class Utilities {
 
 
     /**
-     * Fetches the URL of a mounted instance of a package.
-     * @param key The package key
-     * @return The URL where the package is mounted
-     * @deprecated without direct replacement yet
-     */
-    private static String getSingletonPackageURL(String key) {
-        PackageType type = null;
-        type = PackageType.findByKey(key);
-
-        PackageInstanceCollection instances = type.getInstances();
-        PackageInstance instance = null;
-        if ( !instances.next() ) {
-            instances.close();
-            throw new RuntimeException(
-                  "Failed to locate an instance of the singleton package: " + key);
-        } else {
-            instance = instances.getPackageInstance();
-            instances.close();
-        }
-
-        SiteNodeCollection nodes = instance.getMountPoints();
-        SiteNode node = null;
-        if ( !nodes.next() ) {
-            nodes.close();
-            throw new RuntimeException(
-                  "Failed to locate a mountpoint for the singleton package: " + key);
-        } else {
-            node = nodes.getSiteNode();
-            nodes.close();
-        }
-
-        StringBuffer url = new StringBuffer();
-        String context = getWebappContext();
-        if (context != null) {
-            url.append(context);
-        }
-        url.append(SiteNode.getRootSiteNode().getURL())
-            .append(node.getURL().substring(1));
-
-        LOG.debug("Single package url for " + key + " is " + url);
-
-        return url.toString();
-    }
-
-    /**
      * 
      * @param key
      * @return
-     * @deprecated without replacement (singleton package is not a supported
+     * // @deprecated without replacement (singleton package is not a supported
      * property for legacy free applications.)
      */
-    private static String getSingletonPackageURLSansContext(String key) {
+/*    private static String getSingletonPackageURLSansContext(String key) {
 	PackageType type = null;
 	type = PackageType.findByKey(key);
 	PackageInstanceCollection instances = type.getInstances();
@@ -251,7 +208,7 @@ public class Utilities {
 
 	return url.toString();
     }
-
+*/
 
     /**
      * Fetch the context path of the request. This is typically "/".
@@ -377,6 +334,7 @@ public class Utilities {
      *
      * @param state The page state
      * @return The SecurityManager for the content section
+     * @deprecated  Use CMS.getSecurityManager(PageState state) instead.
      */
     public static SecurityManager getSecurityManager(PageState state) {
         ContentSection section = CMS.getContext().getContentSection();

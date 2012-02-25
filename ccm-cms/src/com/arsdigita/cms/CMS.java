@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.bebop.PageState;
 import org.apache.log4j.Logger;
 
 /**
@@ -87,4 +88,16 @@ public abstract class CMS {
     static final void setContext(CMSContext context) {
         s_context.set(context);
     }
+
+    /**
+     * Fetch the security manager.
+     *
+     * @param state The page state
+     * @return The SecurityManager for the content section
+     */
+    public static SecurityManager getSecurityManager(PageState state) {
+        ContentSection section = CMS.getContext().getContentSection();
+        return new SecurityManager(section);
+    }
+
 }

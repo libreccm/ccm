@@ -138,38 +138,22 @@ public class Loader extends PackageLoader {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
-                // 2 - step 1b) Setup the Workspace package.
-                // loadWorkspacePackage();  // using old stype
-                // new style:
+                // Step 1) Setup the CMS Workspace
                 ApplicationType appType = loadWorkspaceApplicationType();
                 setupDefaultWorkspaceApplicationInstance(appType);
 
-                // 3 - step 1c) Setup the CMS global services package.
-                // loadServicePackage();   // using olde style
-                // new style:
+                // Step 2) Setup the CMS global services
                 appType = loadServiceApplicationType();
                 setupDefaultServiceApplicationInstance(appType);
 
-                // 4 - step 1d) Load the content-center page mappings
-                // Wrong! Is Initializer task, must be done each startup, in
-                // any way not a Loader task. It is here for reference
-                // purpose during migration of the whole CMS to new style.
-                // loadContentCenterMapping(s_conf.getContentCenterMap() );
-
-                // 5) load (cms internal) content type definition(s)
-                // Used to be step 2 in former enterprise.init file
+                // Step 3) load (cms internal) content type definition(s)
                 loadContentTypeDefinitions(s_conf.getCTDefFiles());
 
-                // 6) Load CMS (content section) package application instance
-                // Used to be step 4 in former enterprise.init file
-                // (step 3 being initialize publishToFile, not to handle in Loader)
-                // Implemented by
-                // com.arsdigita.cms.installer.SectionInitializer
+                // Step 4) Load CMS content section 
                 // Loads content section application type and instance in one step
                 loadContentSection( (String[]) get(m_contentSectionNames) );
 
-                // Loading CMS portlets
-                // Used to be step 7 (last step) in former enterprise.init
+                // Step 5) Loading CMS portlets
                 s_log.debug("CMS.loader going to load portlets");
                 ContentDirectoryPortlet.loadPortletType();
                 ContentItemPortlet.loadPortletType();
@@ -277,16 +261,28 @@ public class Loader extends PackageLoader {
 //      ApplicationType serviceType = appsetup.run();
 //      serviceType.save();
 //      //////////////    Current style to create app type    ///////////////
-        /* Create new stype legacy compatible application type               */
-        ApplicationType serviceType =  ApplicationType
-                                .createApplicationType(Service.PACKAGE_KEY,
-                                                       Service.INSTANCE_NAME,
-                                                       Service.BASE_DATA_OBJECT_TYPE);
-        serviceType.setDescription("Services to store global resources and assets.");
-        serviceType.setDispatcherClass(Service.DISPATCHER_CLASS);
-        serviceType.save();
+        /* Create new type legacy compatible application type               */
+  //    ApplicationType type =  ApplicationType
+  //                            .createApplicationType(Service.PACKAGE_KEY,
+  //                                                   Service.INSTANCE_NAME,
+  //                                                   Service.BASE_DATA_OBJECT_TYPE);
+  //    type.setDispatcherClass(Service.DISPATCHER_CLASS);
 
-        return serviceType;
+        /* Create new type legacy free application type                 
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "Content Section" will become "content-section".                   */
+        ApplicationType type = new ApplicationType( 
+                                                Service.INSTANCE_NAME,
+                                                Service.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription("Services to store global resources and assets.");
+        type.save();
+
+        return type;
     }
 
 
@@ -299,10 +295,10 @@ public class Loader extends PackageLoader {
         // create legacy compatible  application instance,
         // old-style package key used as url fragment where to install the instance
         Service app = (Service) Application.createApplication(
-                serviceType, // type
-                Service.PACKAGE_KEY, // url fragment
-                Service.INSTANCE_NAME,// title
-                null);                // parent
+                serviceType,                      // type
+                Service.PACKAGE_KEY,              // url fragment
+                "CMS Service Instance",           // title
+                null);                            // parent
         app.setDescription("The default CMS service instance.");
         app.save();
 

@@ -23,7 +23,7 @@ import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.dispatcher.Utilities;
+// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -33,6 +33,7 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.ImageAsset;
 
+import com.arsdigita.cms.Service;
 import java.math.BigDecimal;
 
 
@@ -110,9 +111,13 @@ public class OrganizationImageStep
                 heightStr = " height=\"" + height.toString() + "\" ";
             }
 
+      //    String labelStr = "<img src=\"" +
+      //        Utilities.getImageURL(image) +
+      //        "\" " + widthStr + heightStr + "/>";
             String labelStr = "<img src=\"" +
-                Utilities.getImageURL(image) +
-                "\" " + widthStr + heightStr + "/>";
+                              Service.getImageURL(image) +
+                              "\" " + widthStr + heightStr + "/>";
+
             return labelStr;
         }
     }

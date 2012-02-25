@@ -51,6 +51,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CategoryTemplateMapping;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionServlet;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.SectionTemplateMapping;
@@ -59,7 +60,6 @@ import com.arsdigita.cms.Template;
 import com.arsdigita.cms.TemplateCollection;
 import com.arsdigita.cms.TemplateManager;
 import com.arsdigita.cms.TemplateManagerFactory;
-import com.arsdigita.cms.dispatcher.ContentSectionDispatcher;
 import com.arsdigita.cms.ui.CMSContainer;
 import com.arsdigita.cms.ui.FormSecurityListener;
 import com.arsdigita.cms.ui.category.CategoryComponentAccess;
@@ -157,6 +157,7 @@ public class CategoryTemplates extends CMSContainer {
         add(m_assign);
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
 
@@ -183,6 +184,7 @@ public class CategoryTemplates extends CMSContainer {
                                       String useContext) {
         }
 
+        @Override
         public void register(Page p) {
             super.register(p);
 
@@ -232,6 +234,7 @@ public class CategoryTemplates extends CMSContainer {
                                     new AssignCellRenderer());
             
             addTableActionListener(new TableActionAdapter() {
+                    @Override
                     public void cellSelected(TableActionEvent e) {
                         PageState s = e.getPageState();
                         TemplatesListing l = (TemplatesListing)e.getSource();
@@ -242,7 +245,8 @@ public class CategoryTemplates extends CMSContainer {
                         // created statically
                         if(c == m_assignCol) {
                             SectionTemplateMapping m =
-                                (SectionTemplateMapping)getMappingModel().getSelectedObject(s);
+                                (SectionTemplateMapping)getMappingModel()
+                                                        .getSelectedObject(s);
                             assignTemplate(s, m.getTemplate());
                         }
                     }
@@ -253,7 +257,7 @@ public class CategoryTemplates extends CMSContainer {
          * Get all the templates for the given type in the current section
          */
         protected TemplateCollection getTemplateCollection(PageState s) {
-            ContentSection sec = ContentSectionDispatcher.getContentSection(s.getRequest());
+            ContentSection sec = ContentSectionServlet.getContentSection(s.getRequest());
             Assert.exists(sec, "content section");
 
             /*
@@ -298,7 +302,8 @@ public class CategoryTemplates extends CMSContainer {
                 map.setUseContext(useContext);
                 map.setTemplate(t);
             }
-            map.setContentSection(ContentSectionDispatcher.getContentSection(s.getRequest()));
+            map.setContentSection(ContentSectionServlet
+                                  .getContentSection(s.getRequest()));
             map.save();
 
             m_display.setVisible(s, true);
@@ -317,7 +322,8 @@ public class CategoryTemplates extends CMSContainer {
                 m_link.setClassAttr("assignTemplateLink");
             }
 
-            public Component getComponent(Table table, PageState state, Object value,
+            public Component getComponent(Table table, PageState state, 
+                                          Object value,
                                           boolean isSelected, Object key,
                                           int row, int column) {
                 return m_link;
@@ -326,6 +332,9 @@ public class CategoryTemplates extends CMSContainer {
 
     }
 
+    /**
+     * 
+     */
     private class AssignForm extends Form {
 
         SingleSelect m_type;
@@ -345,22 +354,24 @@ public class CategoryTemplates extends CMSContainer {
             m_type = new SingleSelect(type.getStateParameter());
             try {
                 m_type.addPrintListener(new PrintListener() {
-                        public void prepare(PrintEvent e) {
-                            PageState state = e.getPageState();
-                            ContentSection section = ContentSectionDispatcher.getContentSection(state.getRequest());
+                    public void prepare(PrintEvent e) {
+                        PageState state = e.getPageState();
+                        ContentSection section = ContentSectionServlet
+                                                 .getContentSection(state
+                                                                    .getRequest());
 
-                            SingleSelect target = (SingleSelect)e.getTarget();
+                        SingleSelect target = (SingleSelect)e.getTarget();
 
-                            ContentTypeCollection types = section.getContentTypes();
-                            types.addOrder(ContentType.LABEL);
+                        ContentTypeCollection types = section.getContentTypes();
+                        types.addOrder(ContentType.LABEL);
 
-                            while (types.next()) {
-                                ContentType type = types.getContentType();
-                                target.addOption(new Option(type.getID().toString(),
-                                                            type.getLabel()));
-                            }
+                        while (types.next()) {
+                            ContentType type = types.getContentType();
+                            target.addOption(new Option(type.getID().toString(),
+                                                        type.getLabel()));
                         }
-                    });
+                    }
+                });
             } catch (TooManyListenersException ex) {
                 throw new UncheckedWrapperException("This can never happen", ex);
             }
@@ -369,30 +380,7 @@ public class CategoryTemplates extends CMSContainer {
             // XXX no need for selecting template contexts currently
             m_context = new Hidden(context.getStateParameter());
             m_context.setDefaultValue(TemplateManager.PUBLIC_CONTEXT);
-            /*
-              m_context = new SingleSelect(context.getStateParameter());
-              try {
-              m_context.addPrintListener(new PrintListener() {
-              public void prepare(PrintEvent e) {
-              PageState state = e.getPageState();
 
-              SingleSelect target = (SingleSelect)e.getTarget();
-
-              TemplateContextCollection contexts = TemplateContext.retrieveAll();
-              contexts.addOrder(TemplateContext.LABEL);
-
-              while (contexts.next()) {
-              TemplateContext type = contexts.getTemplateContext();
-              target.addOption(new Option(type.getContext(),
-              type.getLabel()));
-              }
-              context.setSelectedKey(state, TemplateManager.PUBLIC_CONTEXT);
-              }
-              });
-              } catch (TooManyListenersException ex) {
-              throw new UncheckedWrapperException("This can never happen", ex);
-              }
-            */
             add(m_context);
 
             add(new Submit("Assign template"));

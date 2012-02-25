@@ -24,7 +24,7 @@ import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.ui.UI;
 import com.arsdigita.xml.Element;
@@ -45,7 +45,7 @@ public class ContentSectionNavbar extends CMSContainer {
         setClassAttr("section");
 
         String wsUrl = UI.getWorkspaceURL();
-        String csUrl = Utilities.getWorkspaceURL();
+        String csUrl = Workspace.getURL();
 
         m_navbar = new DimensionalNavbar();
         m_navbar.setAlign(DimensionalNavbar.LEFT);

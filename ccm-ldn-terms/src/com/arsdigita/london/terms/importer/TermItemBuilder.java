@@ -25,8 +25,6 @@ import org.apache.log4j.Logger;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.util.Assert;
@@ -53,22 +51,12 @@ public class TermItemBuilder {
         Assert.exists(path, String.class);
 
         Term term = m_domain.getTerm(id);
-
-        SiteNode node = null;
-        try {
-            s_log.debug(String.format("Trying to get SiteNode for path '%s",
-                    path));
-            node = SiteNode.getSiteNode(path);
-        } catch (DataObjectNotFoundException ex) {
-            s_log.error("Couldn't fetch sitenode for " + path);
-            return;
-        }
         
         ContentSection section = null;
-        section = ContentSection.getSectionFromNode(node);        
+        section = ContentSection.getSectionForPath(path);        
 
         String[] bits = StringUtils.split(
-            path.substring(node.getURL().length(), 
+            path.substring(section.getURL().length(), 
                            path.length()),
             '/');
 

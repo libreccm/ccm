@@ -67,7 +67,11 @@ public class ApplicationPatternGenerator implements PatternGenerator {
         // legacy-compatible applications but package-type apps. content-center
         // and cms-service are 2 examples. Code can be eliminated when all apps
         // will use web.Application for loading and instantiation.
-        s_log.warn("ApplicationType for >>" +key +
+        // UPDATE
+        // CMS had been migrated. It is only necessary for the root package,
+        // which is "Main Site" = acs-subsite which is used by some login
+        // redirects.
+        s_log.debug("ApplicationType for >>" +key +
                     "<< not found. Trying SiteNodes instead.");
         
         

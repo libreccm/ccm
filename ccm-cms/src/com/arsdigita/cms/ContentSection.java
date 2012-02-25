@@ -33,7 +33,6 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.Locale;
 import com.arsdigita.kernel.Group;
-import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.DataAssociation;
@@ -51,12 +50,13 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.workflow.simple.TaskCollection;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
+
 import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * <p>A content section represents a collection of content that is
@@ -919,68 +919,30 @@ public class ContentSection extends Application {
     //
     // Finding a content section.
     //
+
     /**
      * Looks up the section given the SiteNode.
      *
-     * @param node The site node
+     * @param path
      * @return The content section
-     * @pre ( node != null )
+     * @pre ( path != null )
      * @post ( return != null )
      */
-    public static ContentSection getSectionFromNode(SiteNode node)
+    public static ContentSection getSectionForPath(String path)
             throws DataObjectNotFoundException {
 
-        return (ContentSection) retrieveApplicationForSiteNode(node);
-
-//        BigDecimal sectionId = null;
-//
-//        PackageInstance pkg = node.getPackageInstance();
-//        if ( pkg == null ) {
-//            throw new DataObjectNotFoundException(
-//                  "No package instance for node_id=" + node.getID().toString());
-//        }
-//
-//        return getSectionFromPackage(pkg);
+        return (ContentSection) retrieveApplicationForPath(path);
     }
 
-//  /**
-//   * Looks up the section given the PackageInstance.
-//   *
-//   * @param pkg The package instance
-//   * @return The content section ID
-//   * @pre ( pkg != null )
-//   * @post ( return != null )
-//   */
-//    public static ContentSection getSectionFromPackage(PackageInstance pkg)
-//        throws DataObjectNotFoundException {
-//
-//        ContentSection section = null;
-//
-//        final String query = "com.arsdigita.cms.getSectionFromPackage";
-//        DataQuery dq = SessionManager.getSession().retrieveQuery(query);
-//        dq.setParameter("packageId", pkg.getID());
-//        if ( dq.next() ) {
-//            DataObject dobj = (DataObject) dq.get("section");
-//            if ( dobj != null ) {
-//                section = (ContentSection) DomainObjectFactory.newInstance(dobj);
-//            }
-//            dq.close();
-//        } else {
-//            throw new DataObjectNotFoundException(
-//                      "Failed to fetch a content section for the current package " +
-//                      "instance. [package_id =" + pkg.getID().toString() + "]");
-//        }
-//        return section;
-//    }
     /**
      * Get the content section for an item.
-     *
-     * @deprecated use {@link ContentItem#getContentSection} instead
      *
      * @pre item != null
      * @post return != null
      * @param item A content item
      * @return The content section of an item
+     *
+     * @deprecated use {@link ContentItem#getContentSection} instead
      */
     public static ContentSection getContentSection(ContentItem item)
             throws DataObjectNotFoundException {
@@ -991,11 +953,11 @@ public class ContentSection extends Application {
     /**
      * Get the content section for a folder.
      *
-     * @deprecated use {@link ContentItem#getContentSection} instead
      * @pre item != null
      * @post return != null
      * @param folder A content folder
      * @return The content section of the folder
+     * @deprecated use {@link ContentItem#getContentSection} instead
      */
     public static ContentSection getContentSection(Folder folder)
             throws DataObjectNotFoundException {

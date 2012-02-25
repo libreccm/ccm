@@ -30,9 +30,11 @@ import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.Service;
+// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
@@ -163,7 +165,8 @@ public class ImageBrowser extends Table {
                 boolean isSelected, Object key,
                 int row, int column) {
             ImageAsset a = (ImageAsset) value;
-            String url = Utilities.getImageURL(a);
+            // String url = Utilities.getImageURL(a);
+            String url = Service.getImageURL(a);
 
             Image img = new Image(URL.getDispatcherPath() + url);
             img.setBorder("0");
@@ -202,7 +205,8 @@ public class ImageBrowser extends Table {
                 boolean isSelected, Object key,
                 int row, int column) {
             boolean canDelete = false;
-            SecurityManager sm = Utilities.getSecurityManager(state);
+         // SecurityManager sm = Utilities.getSecurityManager(state);
+            SecurityManager sm = CMS.getSecurityManager(state);
             if (sm.canAccess(state.getRequest(), SecurityManager.DELETE_IMAGES)) {
                 try {
                     ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance(new OID(ImageAsset.BASE_DATA_OBJECT_TYPE, (BigDecimal) key));

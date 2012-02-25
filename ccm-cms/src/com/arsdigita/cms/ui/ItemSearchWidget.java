@@ -38,6 +38,7 @@ import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.dispatcher.ContentCenterDispatcher;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.web.ParameterMap;
@@ -225,9 +226,7 @@ public class ItemSearchWidget extends FormSection
                         ItemSearchPage.class.getName());
                 s_log.debug("Search URL stub is: " + searchURL);
 
-                searchURL = com.arsdigita.cms.dispatcher.Utilities.
-                        getWorkspaceURL()
-                            + searchURL;
+                searchURL = Workspace.getURL() + searchURL;
 
                 // TODO Not sure what to do when you get a null here
 

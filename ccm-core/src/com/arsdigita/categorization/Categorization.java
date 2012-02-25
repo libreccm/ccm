@@ -19,7 +19,7 @@
 package com.arsdigita.categorization;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.kernel.SiteNode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,21 +34,25 @@ public class Categorization {
     
     private static List s_categoryListeners = new ArrayList();
 
+/*  No longer used. Client methods are removed.
     public static final String CONTEXT_NAVIGATION = "navigation";
-
+*/
     /**
      * A wrapper for {@link Categorization#getGlobalRootCategory(String)
      * getGlobalRootCategory(Categorization.CONTEXT_NAVIGATION)}.
      * @see #getGlobalRootCategory()
      **/
-    public static Category getGlobalRootCategory() {
+/*   No longer used. Removed because we no longer support old type applications
+     and SiteNode
+     public static Category getGlobalRootCategory() {
         return getGlobalRootCategory(CONTEXT_NAVIGATION);
     }
-
+*/
     /**
      * @see Category#getRootForObject(com.arsdigita.kernel.ACSObject)
      **/
-    public static Category getGlobalRootCategory(String context) {
+/*  Not use anymore. We no longer support old type applications and SiteNode
+    private static Category getGlobalRootCategory(String context) {
         // XXX change this impl.
         // XXX support context
         Category root = Category.getRootForObject(
@@ -56,7 +60,7 @@ public class Categorization {
         );
         return root;
     }
-
+*/
     public static void addCategoryListener(CategoryListener cl) {
         s_categoryListeners.add(cl);
     }

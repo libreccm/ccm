@@ -92,7 +92,7 @@ public class AdminSurveyTable extends Table {
 	public TableModel makeModel(Table l, PageState pageState) {
 	    PackageInstance pack = SimpleSurveyUtil.getPackageInstance(pageState);
 	    SurveyCollection surveys = 
-		Survey.retrieveByPackage(pack);
+		Survey.retrieveAll();
 	    
 	    surveys.addEqualsFilter(ACSObject.DEFAULT_DOMAIN_CLASS, 
 				    m_surveyClass.getName());

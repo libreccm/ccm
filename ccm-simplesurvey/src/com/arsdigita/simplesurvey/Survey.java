@@ -101,21 +101,31 @@ public class Survey extends ACSObject {
         return survey;
     }
     
-    public static SurveyCollection retrieveByPackage(PackageInstance pack) {
-	DataCollection surveys = 
-            SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+    /**
+     * Retrieves a SurveyCollection of all Surveys ever created, sorted by
+     * its start date.
+     * 
+     * @return 
+     */
+    public static SurveyCollection retrieveAll() {
+
+        DataCollection surveys = SessionManager.getSession()
+                                               .retrieve(BASE_DATA_OBJECT_TYPE);
 	
-	/*
+    /*
         surveys.addEqualsFilter(PACKAGE_INSTANCE + "." + ACSObject.ID, 
-				pack.getID());
+                                pack.getID());
 	*/
         surveys.addOrder(START_DATE);
-	
-	return new SurveyCollection(surveys);
+        return new SurveyCollection(surveys);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ResponseCollection getResponses() {
-	return Response.retrieveBySurvey(this);
+        return Response.retrieveBySurvey(this);
     }
 
     public ResponseCollection getUserResponses(User user) {

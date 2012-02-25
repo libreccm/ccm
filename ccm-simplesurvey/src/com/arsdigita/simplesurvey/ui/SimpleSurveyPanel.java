@@ -29,10 +29,12 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.ui.UI;
 import com.arsdigita.ui.login.UserAuthenticationListener;
 
+import com.arsdigita.web.Application;
+import com.arsdigita.web.Web;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -109,16 +111,24 @@ public abstract class SimpleSurveyPanel extends SimpleContainer {
 
     public abstract String getRelativeURL();
 
+    /** 
+     * 
+     * @param request
+     * @return 
+     */
     public static String getSubsiteURL(HttpServletRequest request) {
 
-	// Get the SiteNode from the request URI
-	SiteNode siteNode;
-	try {		
-	    siteNode = SiteNode.getSiteNode(request.getRequestURI(), true);
-	} catch (com.arsdigita.domain.DataObjectNotFoundException e) {
-	    throw new com.arsdigita.util.UncheckedWrapperException(e);
-	}
+        // Get the SiteNode from the request URI
+    //  SiteNode siteNode;
+    //  try {		
+    //      siteNode = SiteNode.getSiteNode(request.getRequestURI(), true);
+    //  } catch (com.arsdigita.domain.DataObjectNotFoundException e) {
+    //      throw new com.arsdigita.util.UncheckedWrapperException(e);
+    //  }
+    //  return siteNode.getURL();
 
-	return siteNode.getURL();
+        // Application app = Web.getContext().getApplication();
+        Application thisApp = Application.getCurrentApplication(request);
+        return thisApp.getPrimaryURL();
     }
 }

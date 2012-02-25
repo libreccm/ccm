@@ -20,9 +20,10 @@ import com.arsdigita.bebop.table.AbstractTableModelBuilder;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.Service;
 import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.dispatcher.StreamAsset;
-import com.arsdigita.cms.dispatcher.Utilities;
+// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.web.ParameterMap;
@@ -120,8 +121,11 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
             		// TODO provide API for asset URL
             		ParameterMap params = new ParameterMap();
             		params.setParameter(StreamAsset.ASSET_ID, _file.getID());
-            		return URL.there( Utilities.getServiceURL()+"download/asset",
-                                  params ).getURL();
+            	//  return URL.there( Utilities.getServiceURL()+"download/asset",
+                //                params ).getURL();
+            		return URL
+                            .there(Service.getURL()+"/download/asset", params )
+                            .getURL();
             	}else{
             		return _file.getDescription();
             	}
