@@ -23,6 +23,8 @@ import com.arsdigita.web.Web;
 import com.arsdigita.util.StringUtils;
 
 import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.kernel.SiteNode;
+import com.arsdigita.sitenode.SiteNodeRequestContext;
 import com.arsdigita.util.Assert;
 
 import com.arsdigita.web.Application;
@@ -32,10 +34,9 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Generates a set of pattern values based on the URL path info
- * for the current request. Slashes in the request are
- * translated into hyphens; the file extension is stripped;
- * the any 'index' is removed, except for the top level.
+ * Generates a set of pattern values based on the URL path info for the current
+ * request. Slashes in the request are translated into hyphens; the file
+ * extension is stripped; any 'index' is removed, except for the top level.
  *
  * So some examples:
  * 
@@ -52,6 +53,12 @@ public class URLPatternGenerator implements PatternGenerator {
 
     private static final String DEFAULT_URL_MATCH = "index";
 
+    /**
+     * 
+     * @param key
+     * @param req
+     * @return 
+     */
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
         String path = getPath();
@@ -141,25 +148,30 @@ public class URLPatternGenerator implements PatternGenerator {
     
     /**
      * Provides the base URL of the application in the current Web request
-     * (i.e. application's PrimaryURL)
+     * (i.e. application's PrimaryURL). If no application can be found or
+     * no PrimaryURL can be determined ROOT ("/") is returned. 
      * 
      * XXX fix me, why can't we get this from Web.getConfig.getRequestURL
      * 
-     * @return primary url of an application 
+     * @return primary url of an application or ROOT
      */
     private String getBasePath() {
 
 //      OLD code using kernel.SiteNode etc which is deprecatged and no longer
 //      available
-//      SiteNodeRequestContext ctx = (SiteNodeRequestContext)
-//          DispatcherHelper.getRequestContext(Web.getRequest());        
-//      SiteNode node = ctx.getSiteNode();
-//      Assert.exists(node, SiteNode.class);
-//      return node.getURL();
+    //  SiteNodeRequestContext ctx = (SiteNodeRequestContext)
+    //      DispatcherHelper.getRequestContext(Web.getRequest());        
+    //  SiteNode node = ctx.getSiteNode();
+    //  Assert.exists(node, SiteNode.class);
+    //  return node.getURL();
         
         // retrieve the application of the request
         Application app = Web.getContext().getApplication();
-        return app.getPrimaryURL();
+        if (app == null) {
+            return "/";
+        } else {
+            return app.getPrimaryURL();
+        }
     }
 
 }

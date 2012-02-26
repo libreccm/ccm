@@ -181,7 +181,7 @@ public class Loader extends PackageLoader {
     public static ApplicationType loadWorkspaceApplicationType() {
         s_log.debug("Creating CMS Workspace...");
 
-        /* Create new stype legacy compatible application type               */
+        /* Create new type legacy compatible application type               */
         ApplicationType type =  ApplicationType
                                 .createApplicationType(Workspace.PACKAGE_KEY,
                                                        Workspace.INSTANCE_NAME,
