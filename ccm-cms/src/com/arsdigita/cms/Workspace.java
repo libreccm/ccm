@@ -52,8 +52,6 @@ public class Workspace extends Application {
     public static final String INSTANCE_NAME = "Content Center";
     public static final String DISPATCHER_CLASS =
                                "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
-    public final static String STYLESHEET = 
-                               "/packages/content-section/xsl/content-center.xsl";
 
     /**
      * Constructor retrieving a workspace from the database usings its OID.

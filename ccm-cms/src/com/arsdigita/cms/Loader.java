@@ -56,7 +56,7 @@ import org.apache.log4j.Logger;
 //  Refactor using legacy compatible web/Application and ApplicationSetup  *DONE*
 //  Refactor content-section als legacy free application                   *DONE*
 //  Refactor workspace (content-center) as a legacy free application
-//  Refactor cms-service as a legacy free application 
+//  Refactor cms-service as a legacy free application                      *DONE*
 
 /**
  * <p>Executes nonrecurring at install time and loads (installs and initializes)
@@ -130,6 +130,9 @@ public class Loader extends PackageLoader {
         s_log.debug("CMS.loader (Constructor) completed");
     }
 
+    /**
+     * 
+     */
     public void run(final ScriptContext ctx) {
         s_log.debug("CMS.loader.run() invoked");
 
@@ -186,8 +189,20 @@ public class Loader extends PackageLoader {
                                 .createApplicationType(Workspace.PACKAGE_KEY,
                                                        Workspace.INSTANCE_NAME,
                                                        Workspace.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("The content center workspace for content creators.");
         type.setDispatcherClass(Workspace.DISPATCHER_CLASS);
+
+        /* Create new type legacy free application type                 
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "Content Center" will become "content-center".                   */
+    //  ApplicationType type = new 
+    //                         ApplicationType(Workspace.INSTANCE_NAME,
+    //                                         Workspace.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription("The content center workspace for content creators.");
         type.save();
 
         s_log.debug("CMS Workspace type created.");

@@ -19,12 +19,17 @@
 
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.dispatcher.ResourceHandler;
 import com.arsdigita.cms.dispatcher.SimpleCache;
 import com.arsdigita.developersupport.DeveloperSupport;
+import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.kernel.security.Util;
 import com.arsdigita.ui.login.LoginHelper;
+import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationFileResolver;
 import com.arsdigita.web.BaseApplicationServlet;
 
 import com.arsdigita.web.LoginSignal;
@@ -33,6 +38,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +61,7 @@ public class WorkspaceServlet extends BaseApplicationServlet {
 
     /** The path of the file that maps resources.     */
     public final static String DEFAULT_MAP_FILE =
-                               "/WEB-INF/resources/content-center-map.xml";
+                               "/WEB-INF/resources/content-center-old-map.xml";
 
     /** Mapping between a relative URL and the class name of a ResourceHandler.*/
     private static HashMap s_pageClasses = WorkspaceSetup.getURLToClassMap();
@@ -69,11 +75,40 @@ public class WorkspaceServlet extends BaseApplicationServlet {
 //     private Dispatcher m_notFoundHandler;
     private ArrayList m_trailingSlashList = new ArrayList();
 
+    /** Path to directory containg ccm-cms template files                    */
+    private String m_templatePath;
+
+    /** Resolvers to find templages (JSP) and other stuff stored in file system.*/
+    private ApplicationFileResolver m_resolver;
+
+
+    /**
+     * Use parent's class initialization extension point to perform additional
+     * initialisation tasks.
+     */
+    @Override
+    protected void doInit() {
+        if (s_log.isDebugEnabled()) {
+            s_log.info("starting doInit method");
+        }
+        m_trailingSlashList = new ArrayList();
+        requireTrailingSlash("");
+
+        /** Set Template base path for JSP's                                  */
+        m_templatePath = ContentSection.getConfig().getTemplateRoot();
+        Assert.exists(m_templatePath, String.class);
+        Assert.isTrue(m_templatePath.startsWith("/"),
+                     "template-path must start with '/'");
+        Assert.isTrue(!m_templatePath.endsWith("/"),
+                     "template-path must not end with '/'");
+        /** Set TemplateResolver class                                        */
+        m_resolver = Web.getConfig().getApplicationFileResolver();
+    }
 
 
     /**
      * Implements the (abstract) doService method of BaseApplicationServlet to
-     * create the Worspace page.
+     * create the Workspace page.
      * 
      * @see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)
@@ -88,8 +123,47 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         }
         DeveloperSupport.startStage("ContentCenterServlet.doService");
 
+        Workspace workspace = (Workspace) app;
+
+        RequestContext ctx = DispatcherHelper.getRequestContext();        
+        String url = ctx.getRemainingURLPart();  // here SiteNodeRequestContext
+        String originalUrl = ctx.getOriginalURL();
+        String requestUri = sreq.getRequestURI();
+
+        // An empty remaining URL or a URL which doesn't end in trailing slash:
+        // probably want to redirect.
+        if ( m_trailingSlashList.contains(url) && !originalUrl.endsWith("/") ) {
+            DispatcherHelper.sendRedirect(sresp, originalUrl + "/");
+            return;
+        }
+
         // Check user access.
         checkUserAccess(sreq, sresp);
+
+        ResourceHandler page = getResource(url);
+        if ( page != null ) {
+            // Serve the page.
+            page.init();
+            page.dispatch(sreq, sresp, ctx);
+        } else {
+            // Fall back on the JSP application dispatcher.
+            if (s_log.isInfoEnabled()) {
+                s_log.info("NO page registered to serve the requst url.");
+            }
+            
+            RequestDispatcher rd = m_resolver.resolve(m_templatePath,
+                                                      sreq, sresp, app);
+            if (rd != null) {
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("Got dispatcher " + rd);
+                }
+                sreq = DispatcherHelper.restoreOriginalRequest(sreq);
+                rd.forward(sreq,sresp);
+            } else {
+                sresp.sendError(404, requestUri + " not found on this server.");
+            }
+
+        }
 
         
         DeveloperSupport.endStage("ContentCenterServlet.doService");
@@ -98,9 +172,49 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         }
     }
 
-    
-    
-    
+    /**
+     * Fetch a page based on the URL stub.
+     *
+     * @param url The URL stub following the site-node URL
+     * @return A ResourceHandler or null if none exists.
+     * @pre (url != null)
+     */
+    protected ResourceHandler getResource(String url) throws ServletException {
+
+        // First check the pages cache for existing pages.
+        ResourceHandler page = (ResourceHandler) s_pages.get(url);
+        if ( page == null ) {
+
+            // Next check if the URL maps to a page class.
+            String pageClassName = (String) s_pageClasses.get(url);
+            if ( pageClassName != null ) {
+
+                Class pageClass;
+                try {
+                    pageClass = Class.forName(pageClassName);
+                } catch (ClassNotFoundException e) {
+                    s_log.error("error fetching class for ResourceHandler", e);
+                    throw new ServletException(e);
+                }
+
+                // Try and instantiate the page.
+                try {
+                    page = (ResourceHandler) pageClass.newInstance();
+                } catch (InstantiationException e) {
+                    s_log.error("error instantiating a ResourceHandler", e);
+                    throw new ServletException(e);
+                } catch (IllegalAccessException e) {
+                    s_log.error("error instantiating a ResourceHandler", e);
+                    throw new ServletException(e);
+                }
+
+                page.init();
+                s_pages.put(url, page);
+            }
+        }
+        return page;
+    }
+
     
     /**
      * Verify that the user is logged in and is able to view the
@@ -143,6 +257,19 @@ public class WorkspaceServlet extends BaseApplicationServlet {
             s_log.error("IO Exception", e);
             throw new ServletException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Adds a URL to the list of URLs that are required to have trailing
+     * slashes.  A request for url will be redirected to url + "/"
+     * if the original URL request (what you see in your browser)
+     * doesn't include a trailing slash.  This is required for
+     * creating virtual directories, so that relative URLs and redirects
+     * work.
+     */
+    // public void requireTrailingSlash(String url) {
+    private void requireTrailingSlash(String url) {
+        m_trailingSlashList.add(url);
     }
 
 }

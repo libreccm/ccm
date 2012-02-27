@@ -152,7 +152,7 @@ public class ServiceServlet extends BaseApplicationServlet {
 
         // Check user access.
         // Deprecated and here implemented as a No-OP method!
-        /* heckUserAccess(request, response, actx);     */
+        /* checkUserAccess(request, response, actx);     */
 
         ResourceHandler page = getResource(url);
         if ( page != null ) {
