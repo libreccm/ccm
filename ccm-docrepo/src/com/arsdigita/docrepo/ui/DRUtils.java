@@ -48,7 +48,7 @@ import java.util.Locale;
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
  * @version $Id: DRUtils.java  pboy $
  */
-public class DRUtils implements DRConstants {
+class DRUtils implements DRConstants {
 
     private static final Logger s_log = Logger.getLogger(DRUtils.class);
 

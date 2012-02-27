@@ -56,10 +56,9 @@ import java.util.Vector;
 
 class RepositoriesTable implements DRConstants {
 
-    private static String REPOSITORIES_IDS
-        = "repositories-ids";
+    private static String REPOSITORIES_IDS = "repositories-ids";
     private static String REPOSITORIES_SUBSCRIBED_IDS =
-        "repositories-subscribed-ids";
+                                             "repositories-subscribed-ids";
 
     static String[] s_tableHeaders = {
         "",
@@ -87,6 +86,7 @@ class RepositoriesTable implements DRConstants {
 
         // store query result once
         m_query = new RequestLocal() {
+                @Override
                 protected Object initialValue(PageState s) {
                     User viewer = DRUtils.getUser(s);
                     Session session = SessionManager.getSession();

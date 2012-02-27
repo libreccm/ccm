@@ -1,4 +1,11 @@
+February 27, 2012
+=================
+
+Package ccm-docrepo is now initialized as a new style, legacy free application.
+An update is not necessary because has not been part of distribution yet.
+
 April 14, 2011
+==============
 
 Package ccm-docmgr from Byline repository copied and integrated in ccm/aplaws
 as an test environment.

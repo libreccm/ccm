@@ -29,7 +29,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
  */
 
-public interface DRConstants {
+interface DRConstants {
 
     // PDL vars
     String FOLDER_ID = "folderID";

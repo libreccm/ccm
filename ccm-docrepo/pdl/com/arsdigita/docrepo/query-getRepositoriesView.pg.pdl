@@ -26,7 +26,7 @@ query getRepositoriesView {
            select distinct 
                 dr_repositories.repository_id,
                 coalesce(dm.repository_id, null, 0, 1) as mounted, 
-                dr_repository_num_files(docs_repositories.root_id) as num_files
+                dr_repository_num_files(dr_repositories.root_id) as num_files
           from  dr_repositories
                 left join (select repository_id from docs_mounted 
                            where party_id = :userID) dm 

@@ -209,7 +209,7 @@ public class DRDispatcher extends BebopMapDispatcher implements DRConstants {
     public void dispatch(javax.servlet.http.HttpServletRequest req,
                          javax.servlet.http.HttpServletResponse resp,
                          RequestContext ctx)
-            throws IOException, javax.servlet.ServletException {
+                throws IOException, javax.servlet.ServletException {
 
         String url = req.getRequestURI();
         int index = url.lastIndexOf("/download/");

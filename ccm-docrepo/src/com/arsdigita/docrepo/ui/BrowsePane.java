@@ -65,7 +65,7 @@ import java.util.ArrayList;
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
  */
 class BrowsePane extends ModalContainer
-    implements DRConstants, ChangeListener, RequestListener {
+                 implements DRConstants, ChangeListener, RequestListener {
 
     private Component m_folderContent;
     private Component m_destinationFolderPanel;
@@ -76,7 +76,7 @@ class BrowsePane extends ModalContainer
     private ErrorMessageLabel m_errorMsgLabel;
     private Container m_mainBrowseContainer;
 
-    private TabbedPane m_mainTabPane;
+//  private TabbedPane m_mainTabPane;
 
     private Tree m_tree;
 
@@ -92,11 +92,11 @@ class BrowsePane extends ModalContainer
 
     public BrowsePane() {
 
-        m_mainTabPane = new TabbedPane();
+    //  m_mainTabPane = new TabbedPane();
 
         m_mainBrowseContainer = new BoxPanel();
-        m_mainTabPane.addTab(WS_BROWSE_TITLE,
-                             m_mainBrowseContainer);
+    //  m_mainTabPane.addTab(WS_BROWSE_TITLE,
+    //                       m_mainBrowseContainer);
 
         m_mainBrowseContainer.setClassAttr("sidebarNavPanel");
         //m_mainBrowseContainer.setAttribute("navbar-title", "Folders");
@@ -120,7 +120,8 @@ class BrowsePane extends ModalContainer
 
         m_mainBrowseContainer.add(rightSide);
 
-        add(m_mainTabPane);
+  //    add(m_mainTabPane);
+        add(m_mainBrowseContainer);
 
         m_newFileForm = makeFileUploadForm();
         add(m_newFileForm);
@@ -344,7 +345,8 @@ class BrowsePane extends ModalContainer
     }
 
     public void displayFolderContentPanel(PageState state) {
-        setVisibleComponent(state, m_mainTabPane);
+ //     setVisibleComponent(state, m_mainTabPane); 
+        setVisibleComponent(state, m_mainBrowseContainer); 
     }
 
     public void displayDestinationFolderPanel(PageState state,

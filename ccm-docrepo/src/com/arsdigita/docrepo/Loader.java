@@ -86,17 +86,31 @@ public class Loader extends PackageLoader {
      */
     private void loadDocRepositoryApplicationType() {
 
-        ApplicationType type = ApplicationType.createApplicationType(
-                                              "docrepo",
-                                              "Document Repository",
-                                              Repository.BASE_DATA_OBJECT_TYPE);
-        type.setDescription
-            ("The document repository empowers users to share documents.");
+        /* Legacy compatible initialization                                  */
+    //  ApplicationType type = ApplicationType.createApplicationType(
+    //                                        "docrepo",
+    //                                        "Document Repository",
+    //                                        Repository.BASE_DATA_OBJECT_TYPE);
         // Current code requires an apps specific dispatcher class. Has to be
         // modified to be able to create a legacy free app type.
-        type.setDispatcherClass
-                ("com.arsdigita.docrepo.ui.DRDispatcher");
+    //  type.setDispatcherClass
+    //          ("com.arsdigita.docrepo.ui.DRDispatcher");
 
+        /* Legacy free initialization                                  
+     * NOTE: The wording in the title parameter of ApplicationType determines
+     * the name of the subdirectory for the XSL stylesheets.
+     * It gets "urlized", i.e. trimming leading and trailing blanks and replacing
+     * blanks between words and illegal characters with an hyphen and converted
+     * to lower case.
+     * Example: "DocRepo" will become "docrepo".
+         */
+        ApplicationType type =  new
+                                ApplicationType("DocRepo",
+                                                Repository.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription
+            ("The document repository empowers users to share documents.");
+        
     }
 
 

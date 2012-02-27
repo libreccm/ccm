@@ -3,7 +3,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-docrepo"
   prettyName="Red Hat Document Repository Application"
-  version="6.6.0"
+  version="6.6.1"
   release="1">
 
   <ccm:dependencies>
@@ -16,6 +16,9 @@
   </ccm:contacts>
 
   <ccm:description>
+      The document repository is an online file storage system for 
+      collaborative file sharing within groups.  
+
   </ccm:description>
 
 </ccm:application>

@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:jparsons@arsdigita.com">Jim Parsons</a>
  */
 
-public class DocrepoBasePage extends Page {
+class DocrepoBasePage extends Page {
 
     private final Container m_global;
     private final Container m_header;
@@ -131,7 +131,11 @@ public class DocrepoBasePage extends Page {
     // <em>override</em> this method.
     protected final void buildPage() {
         buildTitle();
-        buildContextBar();
+        // Context Byr temporarily deactivated until the functionality to
+        // to create multiple repositories (table docs_mounted) is restored.
+        // Because currently there is only one repository mounted there is
+        // no relevant context
+        /* buildContextBar();     */
         buildGlobal(getGlobal());
         buildHeader(getHeader());
         buildBody(getBody());
