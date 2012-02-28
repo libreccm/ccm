@@ -26,6 +26,7 @@ import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.Service;
 import com.arsdigita.cms.Workspace;
+import com.arsdigita.cms.WorkspaceServlet;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelContext;
@@ -270,8 +271,8 @@ public class Utilities {
         // OLD APPROACH: used in conjunction with CMSDispatcher.  This
         // shouldn't do any harm even if CMSDispatcher is not being used.
         CMSDispatcher.releaseResource(section, "admin/item");
-        ContentCenterDispatcher.releaseResource("");
-        ContentCenterDispatcher.releaseResource("index");
+        WorkspaceServlet.releaseResource("");
+        WorkspaceServlet.releaseResource("index");
         refreshAdminUI(state);
 
         // NEW APPROACH: used in conjunction with
@@ -295,8 +296,8 @@ public class Utilities {
         CMSDispatcher.releaseResource(section, "admin");
         CMSDispatcher.releaseResource(section, "admin/index");
         CMSDispatcher.releaseResource(section, "");
-        ContentCenterDispatcher.releaseResource("");
-        ContentCenterDispatcher.releaseResource("index");
+        WorkspaceServlet.releaseResource("");
+        WorkspaceServlet.releaseResource("index");
     }
 
     /**

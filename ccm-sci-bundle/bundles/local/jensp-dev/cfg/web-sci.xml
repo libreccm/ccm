@@ -32,7 +32,7 @@
 
   <filter>
     <filter-name>shortcuts</filter-name>
-    <filter-class>com.arsdigita.london.shortcuts.ShortcutFilter</filter-class>
+    <filter-class>com.arsdigita.shortcuts.ShortcutFilter</filter-class>
   </filter>
 
   <filter>
@@ -51,6 +51,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 -->
+
 
   <filter-mapping>
     <filter-name>subsite</filter-name>
@@ -158,8 +159,18 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet>
+    <servlet-name>content-center</servlet-name>
+    <servlet-class>com.arsdigita.cms.WorkspaceServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>content-section</servlet-name>
     <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>cms-service</servlet-name>
+    <servlet-class>com.arsdigita.cms.ServiceServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -280,17 +291,17 @@
   </servlet>
   <!-- module ccm-ldn-search  -  servlet declarations END  -->
 
-  <!-- module ccm-ldn-shortcuts  -  servlet definitions   -->
+  <!-- module ccm-shortcuts  -  servlet definitions   -->
   <servlet>
     <servlet-name>shortcuts-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-shortcuts</param-value>
+      <param-value>/templates/ccm-shortcuts</param-value>
     </init-param>
   </servlet>
 
-  <!-- module ccm-ldn-subsite  -  servlet declarations BEGIN  -->
+  <!-- module ccm-subsite  -  servlet declarations BEGIN  -->
   <servlet>
     <servlet-name>subsite-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
@@ -299,7 +310,7 @@
       <param-value>/templates/ccm-subsite</param-value>
     </init-param>
   </servlet>
-  <!-- module ccm-ldn-subsite  -  servlet declarations END  -->
+  <!-- module ccm-subsite  -  servlet declarations END  -->
 
   <!-- module ccm-ldn-terms  -  servlet declarations BEGIN   -->
   <servlet>
@@ -386,18 +397,18 @@
   </servlet-mapping>
   <!-- module ccm-ldn-search  -  servlet mappings END  -->
 
-  <!-- module ccm-ldn-shortcuts  -  servlet mappings   -->
+  <!-- module ccm-shortcuts  -  servlet mappings   -->
   <servlet-mapping>
     <servlet-name>shortcuts-files</servlet-name>
-    <url-pattern>/ccm-ldn-shortcuts/files/*</url-pattern>
+    <url-pattern>/ccm-shortcuts/files/*</url-pattern>
   </servlet-mapping>
 
-  <!-- module ccm-ldn-subsite  -  servlet mappings BEGIN  -->
+  <!-- module ccm-subsite  -  servlet mappings BEGIN  -->
   <servlet-mapping>
     <servlet-name>subsite-files</servlet-name>
     <url-pattern>/ccm-subsite/files/*</url-pattern>
   </servlet-mapping>
-  <!-- module ccm-ldn-subsite  -  servlet mappings END  -->
+  <!-- module ccm-subsite  -  servlet mappings END  -->
 
   <!-- module ccm-ldn-terms  -  servlet mappings BEGIN  -->
   <servlet-mapping>
@@ -495,8 +506,18 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet-mapping>
+    <servlet-name>content-center</servlet-name>
+    <url-pattern>/templates/servlet/content-center/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
     <servlet-name>content-section</servlet-name>
-    <url-pattern>/themes/servlet/content-section/*</url-pattern>
+    <url-pattern>/templates/servlet/content-section/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>cms-service</servlet-name>
+    <url-pattern>/templates/servlet/cms-service/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

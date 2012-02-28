@@ -55,7 +55,7 @@ import org.apache.log4j.Logger;
 //  Next Try
 //  Refactor using legacy compatible web/Application and ApplicationSetup  *DONE*
 //  Refactor content-section als legacy free application                   *DONE*
-//  Refactor workspace (content-center) as a legacy free application
+//  Refactor workspace (content-center) as a legacy free application       *DONE*
 //  Refactor cms-service as a legacy free application                      *DONE*
 
 /**
@@ -185,11 +185,11 @@ public class Loader extends PackageLoader {
         s_log.debug("Creating CMS Workspace...");
 
         /* Create new type legacy compatible application type               */
-        ApplicationType type =  ApplicationType
-                                .createApplicationType(Workspace.PACKAGE_KEY,
-                                                       Workspace.INSTANCE_NAME,
-                                                       Workspace.BASE_DATA_OBJECT_TYPE);
-        type.setDispatcherClass(Workspace.DISPATCHER_CLASS);
+    //  ApplicationType type =  ApplicationType
+    //                          .createApplicationType(Workspace.PACKAGE_KEY,
+    //                                                 Workspace.INSTANCE_NAME,
+    //                                                 Workspace.BASE_DATA_OBJECT_TYPE);
+    //  type.setDispatcherClass(Workspace.DISPATCHER_CLASS);
 
         /* Create new type legacy free application type                 
          * NOTE: The wording in the title parameter of ApplicationType
@@ -198,9 +198,9 @@ public class Loader extends PackageLoader {
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
          * "Content Center" will become "content-center".                   */
-    //  ApplicationType type = new 
-    //                         ApplicationType(Workspace.INSTANCE_NAME,
-    //                                         Workspace.BASE_DATA_OBJECT_TYPE );
+        ApplicationType type = new 
+                               ApplicationType(Workspace.INSTANCE_NAME,
+                                               Workspace.BASE_DATA_OBJECT_TYPE );
 
         type.setDescription("The content center workspace for content creators.");
         type.save();
@@ -262,7 +262,7 @@ public class Loader extends PackageLoader {
         // there is only one
 //      appsetup.setDescription("Services to store global resources and assets.");
         // old style / legacy compatible properties
-//      appsetup.setKey(Service.PACKAGE_KEY);
+//      appsetup.setKey(Service.PRIMARY_URL_STUB);
 //      appsetup.setDispatcherClass(Service.DISPATCHER_CLASS);
 //      appsetup.setSingleton(true);
 //      appsetup.setPortalApplication(false);
@@ -278,7 +278,7 @@ public class Loader extends PackageLoader {
 //      //////////////    Current style to create app type    ///////////////
         /* Create new type legacy compatible application type               */
   //    ApplicationType type =  ApplicationType
-  //                            .createApplicationType(Service.PACKAGE_KEY,
+  //                            .createApplicationType(Service.PRIMARY_URL_STUB,
   //                                                   Service.INSTANCE_NAME,
   //                                                   Service.BASE_DATA_OBJECT_TYPE);
   //    type.setDispatcherClass(Service.DISPATCHER_CLASS);
@@ -289,10 +289,9 @@ public class Loader extends PackageLoader {
          * It gets "urlized", i.e. trimming leading and trailing blanks and
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
-         * "Content Section" will become "content-section".                   */
-        ApplicationType type = new ApplicationType( 
-                                                Service.INSTANCE_NAME,
-                                                Service.BASE_DATA_OBJECT_TYPE );
+         * "CMS Service" will become "cms-service".                   */
+        ApplicationType type = new ApplicationType("CMS Service", 
+                                                   Service.BASE_DATA_OBJECT_TYPE );
 
         type.setDescription("Services to store global resources and assets.");
         type.save();
@@ -311,7 +310,7 @@ public class Loader extends PackageLoader {
         // old-style package key used as url fragment where to install the instance
         Service app = (Service) Application.createApplication(
                 serviceType,                      // type
-                Service.PACKAGE_KEY,              // url fragment
+                Service.PRIMARY_URL_STUB,         // url fragment
                 "CMS Service Instance",           // title
                 null);                            // parent
         app.setDescription("The default CMS service instance.");

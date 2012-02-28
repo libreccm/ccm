@@ -21,17 +21,15 @@ package com.arsdigita.cms;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-// import com.arsdigita.persistence.DataAssociation;
-// import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.web.Application;
-
 import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.web.ApplicationType;
+import com.arsdigita.web.URL;
+
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
-//  WORK IN PROGRESS !!
 
 /**
  * Application domain class for the CMS module user entry page (content-center)
@@ -50,8 +48,8 @@ public class Workspace extends Application {
     // general constants
     public static final String PACKAGE_KEY = "content-center";
     public static final String INSTANCE_NAME = "Content Center";
-    public static final String DISPATCHER_CLASS =
-                               "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
+//  public static final String DISPATCHER_CLASS =
+//                             "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
 
     /**
      * Constructor retrieving a workspace from the database usings its OID.
@@ -140,6 +138,41 @@ public class Workspace extends Application {
             String url = (String) app.getPrimaryURL();
             return url;
         }
+    }
+
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * Application implementations should overwrite this method to provide an
+     * application specific location, especially if an application (module) is
+     * to be installed along with others in one context.
+     *
+     * If you install the module into its own context you may use a standard
+     * location. In most cases though all modules (applications) of an
+     * webapplication should be installed into one context.
+     *
+     * Frequently it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>content-center</servlet-name>
+     *   <servlet-class>com.arsdigita.cms.WorkspaceServlet</servlet-class>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>content-center</servlet-name>
+     *   <url-pattern>/ccm-applicationName/content-center/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * NOTE: According to Servlet API the path always starts with a leading '/'
+     * and includes either the servlet name or a path to the servlet, but does 
+     * not include any extra path information or a query string. Returns an
+     * empry string ("") is the servlet used was matched using the "/*" pattern.
+     * 
+     * @return path name to the applications servlet/JSP
+     */
+    @Override
+    public String getServletPath() {
+        return URL.SERVLET_DIR + "/content-center";
     }
 
 }

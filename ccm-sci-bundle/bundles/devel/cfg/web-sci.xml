@@ -159,6 +159,11 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet>
+    <servlet-name>content-center</servlet-name>
+    <servlet-class>com.arsdigita.cms.WorkspaceServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>content-section</servlet-name>
     <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
   </servlet>
@@ -501,8 +506,13 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet-mapping>
+    <servlet-name>content-center</servlet-name>
+    <url-pattern>/templates/servlet/content-center/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
     <servlet-name>content-section</servlet-name>
-    <url-pattern>/themes/servlet/content-section/*</url-pattern>
+    <url-pattern>/templates/servlet/content-section/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

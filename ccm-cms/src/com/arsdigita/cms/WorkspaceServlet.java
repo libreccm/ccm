@@ -38,6 +38,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
@@ -173,6 +174,22 @@ public class WorkspaceServlet extends BaseApplicationServlet {
     }
 
     /**
+     * Service Method returns the URL stub for the class name,
+     * can return null if not mapped
+     */
+    public static String getURLStubForClass(String classname) {
+        s_log.debug("Getting URL Stub for : " + classname);
+        Iterator itr = s_pageURLs.keySet().iterator();
+        while (itr.hasNext()) {
+            String classname2 = (String)itr.next();
+            s_log.debug("key: " + classname + " value: " +
+                        (String)s_pageURLs.get(classname2));
+        }
+        String url = (String)s_pageURLs.get(classname);
+        return url;
+    }
+
+    /**
      * Fetch a page based on the URL stub.
      *
      * @param url The URL stub following the site-node URL
@@ -213,6 +230,28 @@ public class WorkspaceServlet extends BaseApplicationServlet {
             }
         }
         return page;
+    }
+
+    /**
+     * Map a page to a URL.
+     *
+     * @param url The URL
+     * @param className The name of the ResourceHandler class
+     * @pre (url != null && className != null)
+     */
+    protected void addResource(String url, String className) {
+        s_pageClasses.put(url, className);
+        s_pageURLs.put(className, url);
+    }
+
+    /**
+     * Release the page at the specified URL.
+     *
+     * @param url The URL
+     * @pre (url != null)
+     */
+    public static void releaseResource(String url) {
+        s_pages.remove(url);
     }
 
     

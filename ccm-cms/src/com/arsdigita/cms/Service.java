@@ -23,11 +23,9 @@ import com.arsdigita.cms.dispatcher.StreamImage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-// import com.arsdigita.persistence.DataAssociation;
-// import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.URL;
 
+import com.arsdigita.web.URL;
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
@@ -54,10 +52,9 @@ public class Service extends Application {
                                "com.arsdigita.cms.Service";
 
     // general constants
-    public static final String PACKAGE_KEY = "cms-service";
-    public static final String INSTANCE_NAME = "CMS Service";
-    public static final String DISPATCHER_CLASS =
-                               "com.arsdigita.cms.dispatcher.ServiceDispatcher";
+    public static final String PRIMARY_URL_STUB = "cms-service";
+ // public static final String DISPATCHER_CLASS =
+ //                            "com.arsdigita.cms.dispatcher.ServiceDispatcher";
     // Service has no direct user interface, therefore no styesheet
     // public final static String STYLESHEET =
     //                         "/packages/content-section/xsl/content-center.xsl";
@@ -102,7 +99,7 @@ public class Service extends Application {
 
 
     public static String getURL() {
-        return "/" + PACKAGE_KEY + "/";
+        return "/" + PRIMARY_URL_STUB + "/";
     }
 
     
@@ -171,8 +168,7 @@ public class Service extends Application {
 
     @Override
     public String getServletPath() {
-      //return URL.SERVLET_DIR + "/cms-service";
-        return "/templates/servlet/cms-service";
+        return URL.SERVLET_DIR + "/cms-service";
     }
 
 

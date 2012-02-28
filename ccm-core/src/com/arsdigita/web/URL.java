@@ -159,7 +159,7 @@ public class URL {
     /**
      * The standard location for servlets.
      */
-    public static final String SERVLET_DIR = THEMES_DIR + "/servlet";
+    public static final String SERVLET_DIR = "/templates/servlet";
     
     public static final String INTERNAL_THEME_DIR = THEMES_DIR + "/heirloom";
     

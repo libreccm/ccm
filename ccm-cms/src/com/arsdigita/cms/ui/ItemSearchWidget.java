@@ -39,7 +39,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Workspace;
-import com.arsdigita.cms.dispatcher.ContentCenterDispatcher;
+import com.arsdigita.cms.WorkspaceServlet;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
@@ -222,7 +222,7 @@ public class ItemSearchWidget extends FormSection
                 }
 
 
-                String searchURL = ContentCenterDispatcher.getURLStubForClass(
+                String searchURL = WorkspaceServlet.getURLStubForClass(
                         ItemSearchPage.class.getName());
                 s_log.debug("Search URL stub is: " + searchURL);
 
