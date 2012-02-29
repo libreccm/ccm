@@ -102,7 +102,7 @@ class UserBrowsePane extends SegmentedPanel
     private Component m_extremeActionPanel;
     private Component m_userDeleteFailedPanel;
     private GroupAdministrationTab m_groupAdministrationTab;
-    private SitemapAdministrationTab m_sitemapAdministrationTab;
+    private ApplicationsAdministrationTab m_sitemapAdministrationTab;
     private TabbedPane m_tabbedPane;
 
     private List m_groupList = null;
@@ -556,7 +556,7 @@ class UserBrowsePane extends SegmentedPanel
         m_groupAdministrationTab = groupAdministrationTab;
     }
 
-    public void setSitemapAdministrationTab(SitemapAdministrationTab
+    public void setSitemapAdministrationTab(ApplicationsAdministrationTab
                                             sitemapAdministrationTab) {
         m_sitemapAdministrationTab = sitemapAdministrationTab;
     }

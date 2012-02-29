@@ -146,8 +146,8 @@
         <ccm:application name="ccm-faq"/>  
         <ccm:application name="ccm-forum"/>  
         <ccm:application name="ccm-forum-categorised"/>
-<!--
         <ccm:application name="ccm-portalserver"/>
+<!--
         <ccm:application name="ccm-weblog"/>
         <ccm:application name="ccm-webpage"/>
 -->

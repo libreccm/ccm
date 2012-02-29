@@ -20,7 +20,7 @@ import java.math.BigDecimal;
  *
  * @author pb
  */
-public class SitemapAdministrationTab extends BoxPanel
+public class ApplicationsAdministrationTab extends BoxPanel
                                    implements AdminConstants, ChangeListener {
 
     private GlobalizedMessage m_title;
@@ -29,7 +29,7 @@ public class SitemapAdministrationTab extends BoxPanel
     /**
      * Constructor
      */
-    public SitemapAdministrationTab() {
+    public ApplicationsAdministrationTab() {
 
         // m_title = "TEST für ein neues Pannel";
         setClassAttr("sidebarNavPanel");

@@ -45,6 +45,7 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.web.ApplicationType;
 
+import com.arsdigita.web.URL;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -104,6 +105,10 @@ public class PortalSite extends Application {
         super(dataObject);
     }
 
+    /**
+     * 
+     * Do we really need this when PortalSite is a new style application?
+     */
     @Override
     protected void initialize() {
         super.initialize();
@@ -122,6 +127,14 @@ public class PortalSite extends Application {
         }
     }
 
+    /**
+     * 
+     * @param urlName
+     * @param title
+     * @param parent
+     * @param inheritPermissions
+     * @return 
+     */
     public static PortalSite createPortalSite
         (String urlName, String title, PortalSite parent,
          boolean inheritPermissions) {
@@ -147,7 +160,10 @@ public class PortalSite extends Application {
 
 
     /**
-     * Creates an Instance ot ApplicationType PortalSite as a legacy free
+     * Creates an Instance ot ApplicationType PortalSite 
+     * Whether is is a legacy free or a legacy compatible application depends
+     * on the property of its application type. Nothing to adjust here for that.
+     * 
      * application.
      * @param urlName
      * @param title
@@ -158,19 +174,18 @@ public class PortalSite extends Application {
                                               String title,
                                               PortalSite parent) {
 
-        ApplicationType type =
-            ApplicationType.retrieveApplicationTypeForApplication
-            (BASE_DATA_OBJECT_TYPE);
+        ApplicationType type = ApplicationType
+                               .retrieveApplicationTypeForApplication
+                                (BASE_DATA_OBJECT_TYPE);
 
+        /* Uses class Application's create method. Type of created application
+         * depends on the type of ApplicationType                             */
         PortalSite ps = (PortalSite) Application.createApplication
-            (type, urlName, title, parent);
+                                     (type, urlName, title, parent);
 
         ps.setUnarchived();
-
         ps.setDraft(false);
-
         ps.setCreationDate();
-
         ps.setPersonalizable(false);
 
         return ps;
@@ -217,30 +232,6 @@ public class PortalSite extends Application {
         return portalsiteCollection;
     }
 
-    /**
-     * 
-     * @param siteNode
-     * @return Can return null.
-     */
-/*  OBVIOUSLY NO LONGER USED
-    public static PortalSite retrievePortalSiteForSiteNode(SiteNode siteNode) {
-        DataQuery query = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.workspace.workspaceForSiteNodeID");
-
-        query.setParameter("siteNodeID", siteNode.getID());
-
-        PortalSite portalsite = null;
-
-        if (query.next()) {
-            DataObject dataObject = (DataObject) query.get("workspace");
-            portalsite = PortalSite.retrievePortalSite(dataObject);
-        }
-
-        query.close();
-
-        return portalsite;
-    }
-*/
     // Can return null.
     public static PortalSite retrievePortalSite(BigDecimal id) {
         return (PortalSite) Application.retrieveApplication(id);
@@ -445,15 +436,19 @@ public class PortalSite extends Application {
         return currentPortalSite;
     }
 
-    private static PortalSite 
-        doGetCurrentPortalSite(HttpServletRequest request) {
+    /**
+     * 
+     * @param request
+     * @return 
+     */
+    private static PortalSite doGetCurrentPortalSite(HttpServletRequest req) {
         // First, assume that the user is at a PortalSite already,
         // since we can save a query if we're right.  This logic will
         // not make sense if we find that this method is called mostly
         // from sub applications of a portal site, since it incurs an
         // extra query in that case.
 
-        Application application = Application.getCurrentApplication(request);
+        Application application = Application.getCurrentApplication(req);
 
         if (application instanceof PortalSite) {
             return (PortalSite) application;
@@ -472,6 +467,10 @@ public class PortalSite extends Application {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public static PortalSiteCollection getRootPortalSites() {
         DataQuery query = SessionManager.getSession().retrieveQuery
             ("com.arsdigita.workspace.rootWorkspaces");
@@ -488,6 +487,10 @@ public class PortalSite extends Application {
         return psc;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public static PortalSiteCollection getAllRootPortalSites() {
         DataQuery query = SessionManager.getSession().retrieveQuery
             ("com.arsdigita.workspace.rootWorkspaces");
@@ -505,10 +508,18 @@ public class PortalSite extends Application {
         return new PortalSiteCollection(collection);
     }
 
+    /**
+     * 
+     * @param portalsite 
+     */
     public void addRelatedPortalSite(PortalSite portalsite) {
         add("relatedWorkspace", portalsite);
     }
 
+    /**
+     * 
+     * @param portalsite 
+     */
     public void removeRelatedPortalSite(PortalSite portalsite) {
         remove("relatedWorkspace", portalsite);
     }
@@ -636,6 +647,10 @@ public class PortalSite extends Application {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public PartyCollection getParticipants() {
         return new PartyCollection(
                                    ((DataAssociation) get("participants")).cursor());
@@ -768,7 +783,11 @@ public class PortalSite extends Application {
         remove("workspaceTab",ptab);
     }
 
-    // Can return null.
+    /**
+     * 
+     * 
+     * @return     (Can return null.)
+     */
     public PortalTabCollection getTabsForPortalSite() {
         DataAssociation association = (DataAssociation)get("workspaceTab");
 
@@ -918,6 +937,9 @@ public class PortalSite extends Application {
       return (Date)get("archiveDate");
    }
 
+   /**
+    * 
+    */
    public void archive() {
       Party p;
   
@@ -1022,6 +1044,12 @@ public class PortalSite extends Application {
         return result.listIterator();
     }
 
+    /**
+     * 
+     * @param ps
+     * @param user
+     * @return 
+     */
     public static PortalSite createSubPortal(PortalSite ps, User user) {
         String urlfrag = "U-" + user.getID().toString();
         PortalSite psite = createPortalSite(urlfrag,ps.getDisplayName(),ps);
@@ -1079,6 +1107,45 @@ public class PortalSite extends Application {
         psite.save();
 
         return psite;
+    }
+
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * Application implementations may overwrite this method to provide an
+     * application specific location, especially if an application (module) is
+     * to be installed along with others in one context.
+     *
+     * If you install the module into its own context you may use a standard
+     * location. In most cases though all modules (applications) of an
+     * webapplication should be installed into one context.
+     *
+     * Frequently it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>applicationName-files</servlet-name>
+     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     *   <init-param>
+     *     <param-name>template-path</param-name>
+     *     <param-value>/templates/ccm-applicationName</param-value>
+     *   </init-param>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>applicationName-files</servlet-name>
+     *   <url-pattern>/ccm-applicationName/files/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * NOTE: According to Servlet API the path always starts with a leading '/'
+     * and includes either the servlet name or a path to the servlet, but does 
+     * not include any extra path information or a query string. Returns an
+     * empry string ("") is the servlet used was matched using the "/*" pattern.
+     * 
+     * @return path name to the applications servlet/JSP
+     */
+    @Override
+    public String getServletPath() {
+        return URL.SERVLET_DIR + "/portalsite";
     }
 
 }

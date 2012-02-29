@@ -38,6 +38,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+
+// ////////////////////////////////////////////////////////////////////////////
+//
+// UNKNOWN whether this is unfinished work in progress or really used in some
+// way.
+//
+// Might be a first shot to replace ui.PortalDispatcher by a new legacy free
+// servlet because it uses the same pages (PortalHomePage, PortalParticipants
+// but additionally a PortalAdminPage (from package c.ad.ps.ui.admin)
+// On the other hand this is the same as m_portalsiteAdminDispatcher of
+// PortalDispatcher
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+
 /**
  *
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
@@ -56,12 +71,12 @@ public class PortalServlet extends BaseApplicationServlet {
     private static Page s_adminPage = null;
 
     static {
-        TransactionContext ctx = SessionManager.getSession().getTransactionContext();
-        ctx.beginTxn();
+    //  TransactionContext ctx = SessionManager.getSession().getTransactionContext();
+    //  ctx.beginTxn();
 
         s_adminPage = new PortalAdminPage();
 
-        ctx.commitTxn();
+    //  ctx.commitTxn();
     }
 
     public void doService(HttpServletRequest sreq,

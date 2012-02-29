@@ -85,20 +85,6 @@ public class AdminServlet extends BaseApplicationServlet
         addPage("/", buildAdminIndexPage());     // index page at address ~/ds
     //  addPage("/index.jsp", buildIndexPage()); // index page at address ~/ds
 
-    //  addPage("/log4j", buildLog4jPage());   // Logger Adjuster at addr. ~/ds/log4j
-    //  addPage("/config", buildConfigPage()); // config browser @ ~/ds/config
-        // cache table browser @ ~/ds/cache-table
-    //  addPage("/cache-table", buildCacheTablePage());
-
-        // XXXX!!
-        // QueryLog is a class of its own in webdevsupport, based upon
-        // dispatcher.Disp and prints out all queries in a request
-        //  put("query-log",  new QueryLog());
-
-  //    addPage("/request-info",  buildRequestInfoPage());
-  //    addPage("/query-info",  buildQueryInfoPage());
-  //    addPage("/query-plan",  buildQueryPlanPage());
-
     }
 
 
@@ -188,7 +174,7 @@ public class AdminServlet extends BaseApplicationServlet
 
         p.addGlobalStateParam(USER_ID_PARAM);
         p.addGlobalStateParam(GROUP_ID_PARAM);
-   //   p.addGlobalStateParam(SITEMAP_ID_PARAM);
+   //   p.addGlobalStateParam(APPLICATIONS_ID_PARAM);
 
         /**
          * Create User split panel.
@@ -217,8 +203,8 @@ public class AdminServlet extends BaseApplicationServlet
         /*
          * Create group administration panel
          */
-  //    SitemapAdministrationTab sitemapAdministrationTab = 
-  //                             new SitemapAdministrationTab();
+  //    ApplicationsAdministrationTab appsAdministrationTab = 
+  //                             new ApplicationsAdministrationTab();
 
         // Create the Admin's page tab bar, currently 2 elements: user & groups
         TabbedPane tb = new TabbedPane();
@@ -226,11 +212,11 @@ public class AdminServlet extends BaseApplicationServlet
 
         tb.addTab(USER_TAB_TITLE, userSplitPanel);
         tb.addTab(GROUP_TAB_TITLE, groupAdministrationTab);
-   //   tb.addTab(SITEMAP_TAB_TITLE, sitemapAdministrationTab);
+   //   tb.addTab(APPLICATIONS_TAB_TITLE, appsAdministrationTab);
 
         browsePane.setTabbedPane(tb);
         browsePane.setGroupAdministrationTab(groupAdministrationTab);
-   //   browsePane.setSitemapAdministrationTab(sitemapAdministrationTab);
+   //   browsePane.setAppsAdministrationTab(appsAdministrationTab);
 
         p.add(tb);
         p.lock();

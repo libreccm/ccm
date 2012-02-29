@@ -43,7 +43,6 @@ import com.arsdigita.portalserver.ui.admin.PortalSiteMap;
 
 import com.arsdigita.runtime.*;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 
 //  USED BY loadSubsite() which es meant to replace the applications mounted
@@ -138,81 +137,27 @@ public class Loader extends PackageLoader {
      */
     private void loadPortalSiteApplicationType() {
 
-        // Step 1: Create an application type for portalserver
-        // Try: new style legacy free application
-    //  ApplicationType type = 
-    //      new ApplicationType("Portal Site",  // creates portalsite as
-    //                                          // module name for XSL
-    //                          PortalSite.BASE_DATA_OBJECT_TYPE );
-    //  type.setDescription
-    //      ("A Portal Site is a center for content aggregation.  It usually" +
-    //       "has its own set of applications, such as a discussion forum" +
-    //       "and content items, as well as a list of participants.");
-
-/*          s_log.info("PackageType 'portalsite' is not installed.  " +
-                       "Installing now...");
-
-        //  Stylesheet stylesheet = Stylesheet.createStylesheet
-        //      ("/packages/portalserver/xsl/portalserver.xsl");
-
-            PackageType packageType = PackageType.create
-                ("portalsite", "PortalSite", "PortalSites",
-                 "http://arsdigita.com/portalsite");
-        //  packageType.addStylesheet(stylesheet);
-            packageType.setDispatcherClass
-                ("com.arsdigita.portalserver.ui.PortalDispatcher");
-            packageType.save();
-*/
-        //Step 2: Create themes
-        //  buildDefaultThemes();
-
-        // Step 3: Create legacy compatible ApplicationType
-        ApplicationType type = ApplicationType.createApplicationType(
+        /* First try: create a new style, legacy compatible application      */
+/*      ApplicationType type = ApplicationType.createApplicationType(
                                               "portalsite",
                                               "Portal Site",
                                               PortalSite.BASE_DATA_OBJECT_TYPE);
-        type.setDescription
-            ("A Portal Site is a center for content aggregation. It usually" +
-             "has its own set of applications, such as a discussion forum " +
-             "and content items, as well as a list of participants.");
         // Current code requires an apps specific dispatcher class. Has to be
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.ui.PortalDispatcher");
-
-/*
-        ApplicationSetup setup = new ApplicationSetup(s_log);
-
-        setup.setApplicationObjectType(PortalSite.BASE_DATA_OBJECT_TYPE);
-   //   setup.setPackageType(packageType);
-        setup.setKey("portalsite");
-        setup.setTitle("Portal Site");
-        setup.setDescription
-            ("A Portal Site is a center for content aggregation.  It usually" +
-             "has its own set of applications, such as a discussion forum" +
-             "and content items, as well as a list of participants.");
-        setup.setDispatcherClass
-                ("com.arsdigita.portalserver.ui.PortalDispatcher");
-        setup.setPortalApplication(false);
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new PortalSite(dataObject);
-                }
-            });
-        setup.run();
 */
-       /*  Should not be requiered here
-        DomainObjectFactory.registerInstantiator(
-               Role.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
-                    public DomainObject doNewInstance(DataObject dataObject) {
-                         return new Role(dataObject);
-                    }
-               }
-        );
-        *
-        */
+        
+        // Try: new style legacy free application
+        ApplicationType type = new 
+                               ApplicationType("Portal Site",  // title
+                                               PortalSite.BASE_DATA_OBJECT_TYPE );
 
+        type.setDescription
+            ("A Portal Site is a center for content aggregation. It usually" +
+             "has its own set of applications, such as a discussion forum " +
+             "and content items, as well as a list of participants.");
+        type.save();
     }
     
     /**
@@ -294,27 +239,6 @@ public class Loader extends PackageLoader {
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.admin.ui.Dispatcher");
-/*
-        ApplicationSetup setup = new ApplicationSetup(s_log);
-
-        setup.setApplicationObjectType(PSAdmin.BASE_DATA_OBJECT_TYPE);
-        setup.setTitle("Portal Server Site Administration");
-        setup.setDescription("Displays common administration tasks.");
-        setup.setPortalApplication(false);
-        setup.setKey("portal-admin");
-        // db based stylesheets no longer used.
-        // setup.setStylesheet("/packages/portalserver/xsl/portalserver.xsl");
-        setup.setDispatcherClass("com.arsdigita.portalserver.admin.ui.Dispatcher");
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new PSAdmin(dataObject);
-                }
-            });
-        // setupAdminInstance(setup.run());
-        setup.run();
-        // setupPortalSiteAdminInstance(setup.run())
- */
     }
 
 
@@ -336,26 +260,6 @@ public class Loader extends PackageLoader {
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.ui.admin.PortalCreateDispatcher");
-/*
-        ApplicationSetup setup = new ApplicationSetup(s_log);
-        setup.setApplicationObjectType(PortalCreator.BASE_DATA_OBJECT_TYPE);
-        setup.setTitle("Portal Creator");
-        setup.setDescription("Creates portals.");
-        setup.setWorkspaceApplication(false);
-        setup.setKey("portal-create");
-//      setup.setStylesheet("/packages/portalserver/xsl/portalserver.xsl");
-        setup.setDispatcherClass(
-                  "com.arsdigita.portalserver.ui.admin.PortalCreateDispatcher");
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new PortalCreator(dataObject);
-                }
-            });
-
-        setup.run();
-        // return setup.run();
-*/
     }
 
 
@@ -492,26 +396,21 @@ public class Loader extends PackageLoader {
     //        S e t u p    o f   P O R T A L   a p p l i c a t i o n s
     //
     // ////////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * Instantiate an application of type PortalSite with site wide administration
+     * tools.
+     */
     private void setupAdminPortal() {
 
-        // First check, whether an instance of /administration / is already
-        // installed.
-        // Running in a Loader, this is just impossible. So we can create
-        // /administration/ immediately
-    //  try {
-    //      SiteNode sn = SiteNode.getSiteNode("/administration", false);
-    //      if (!"administration".equals(sn.getName())) {
-                PortalSite ps = PortalSite.createPortalSite(
-                        "administration", "Administration", null);
-                ps.setMission("Administration Portal");
-                ps.save();
-    //      }
-    //  } catch (DataObjectNotFoundException e) {
-    //      Assert.fail(e.getMessage());
-    //  }
-    }
+        PortalSite ps = PortalSite.createPortalSite("administration", 
+                                                    "Administration", 
+                                                    null);
+        ps.setMission("Administration Portal");
+        ps.save();
 
-    /*    FORMERLY        admin.Initializer                                 */
+    }
 
     /**
      * Setup an PortalServer Administration Instance as legacy compatible

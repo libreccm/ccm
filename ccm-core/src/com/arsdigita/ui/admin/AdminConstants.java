@@ -63,8 +63,8 @@ interface AdminConstants {
         (new GlobalizedMessage("ui.admin.tab.group.title",
                                BUNDLE_NAME));
 
-    Label SITEMAP_TAB_TITLE = new Label
-        (new GlobalizedMessage("ui.admin.tab.sitemap.title",
+    Label APPLICATIONS_TAB_TITLE = new Label
+        (new GlobalizedMessage("ui.admin.tab.applications.title",
                                BUNDLE_NAME));
 
     GlobalizedMessage USER_NAVBAR_TITLE =
@@ -104,8 +104,8 @@ interface AdminConstants {
     BigDecimalParameter GROUP_ID_PARAM =
         new BigDecimalParameter("group_id");
 
-    BigDecimalParameter SITEMAP_ID_PARAM =
-        new BigDecimalParameter("sitemap_id");
+    BigDecimalParameter APPLICATIONS_ID_PARAM =
+        new BigDecimalParameter("application_id");
 
     BigDecimalParameter USER_ID_PARAM =
         new BigDecimalParameter("user_id");

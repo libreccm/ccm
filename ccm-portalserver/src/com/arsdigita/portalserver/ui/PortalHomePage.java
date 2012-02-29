@@ -61,18 +61,13 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:justin@arsdigita.com">Justin Ross</a>
  * @author <a href="mailto:jparsons@arsdigita.com">Jim Parsons</a>
- * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/PortalHomePage.java#7 $
+ * @version $Id: PortalHomePage.java#7 $  $DateTime: 2004/08/17 23:19:25 $
  */
 public class PortalHomePage extends PortalPage {
+
+    private static final Logger s_log = Logger.getLogger(PortalHomePage.class);
+
     private static final Cookie[] EMPTY_COOKIES = {};
-
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/PortalHomePage.java#7 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
-
-    private static final Logger s_log = Logger.getLogger
-        (PortalHomePage.class);
 
     public static final String PORTAL_XML_NS =
         "http://www.arsdigita.com/portalserver/1.0";
@@ -91,23 +86,38 @@ public class PortalHomePage extends PortalPage {
             }
         };
 
+    /**
+     * Constructor 
+     */
     public PortalHomePage() {
         super();
 
         addRequestListener(new PortalRequestListener());
-
         lock();
     }
 
+    /**
+     * 
+     * @param ps
+     * @return 
+     */
     private boolean hasAdmin(PageState ps) {
         return m_hasAdmin.get(ps).equals(Boolean.TRUE);
     }
 
-    // Can return null.
+    /**
+     * 
+     * @param pageState
+     * @return     (Can return null.)
+     */
     protected PortalSite getPortalSite(PageState pageState) {
         return PortalSite.getCurrentPortalSite(pageState.getRequest());
     }
 
+    /**
+     * 
+     */
+    @Override
     protected void buildContextBar() {
         DimensionalNavbar navbar = new DimensionalNavbar();
 
@@ -119,8 +129,14 @@ public class PortalHomePage extends PortalPage {
         getHeader().add(navbar);
     }
 
+    /**
+     * 
+     * @param header 
+     */
+    @Override
     protected void buildHeader(Container header) {
         Link adminLink = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.ui.configure_workspace")),  "./admin") {
+            @Override
                 public boolean isVisible(PageState ps) {
                     return hasAdmin(ps);
                 }
@@ -164,6 +180,11 @@ public class PortalHomePage extends PortalPage {
         header.add(new SearchComponent());
     }
 
+    /**
+     * 
+     * @param body 
+     */
+    @Override
     protected void buildBody(Container body) {
         ListModelBuilder lmb = new ListModelBuilder() {
                 boolean m_isLocked;
