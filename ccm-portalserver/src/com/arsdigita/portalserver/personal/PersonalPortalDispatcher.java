@@ -74,7 +74,9 @@ public class PersonalPortalDispatcher extends PortalDispatcher {
 
         if (remainingURLPart.startsWith(PORTAL_ADMIN_PAGE)) {
             if (m_portalAdminDispatcher == null) {
+ 
                 PortalAdminPage page = new PortalAdminPage() {
+                    @Override
                         protected void buildContextBar() {
                             DimensionalNavbar navbar = new DimensionalNavbar();
 

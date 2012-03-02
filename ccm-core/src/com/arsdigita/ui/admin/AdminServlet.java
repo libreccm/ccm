@@ -48,10 +48,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 
-// We need NonEscapedTableCellRenderer
-// Currently part of (thisPackage) Dispatcher.java
-// When the class will we deleted we must copy first!
-
 /**
  * Web Developer Support Application Servlet class, central entry point  to 
  * create and process the applications UI.

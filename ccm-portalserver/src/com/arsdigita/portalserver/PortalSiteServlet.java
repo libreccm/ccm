@@ -19,13 +19,12 @@
 package com.arsdigita.portalserver;
 
 import com.arsdigita.bebop.Page;
-import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.portalserver.ui.PortalHomePage;
 import com.arsdigita.portalserver.ui.PortalParticipants;
 import com.arsdigita.portalserver.ui.admin.PortalAdminPage;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
+import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.xml.Document;
@@ -39,46 +38,33 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 
-// ////////////////////////////////////////////////////////////////////////////
-//
-// UNKNOWN whether this is unfinished work in progress or really used in some
-// way.
-//
-// Might be a first shot to replace ui.PortalDispatcher by a new legacy free
-// servlet because it uses the same pages (PortalHomePage, PortalParticipants
-// but additionally a PortalAdminPage (from package c.ad.ps.ui.admin)
-// On the other hand this is the same as m_portalsiteAdminDispatcher of
-// PortalDispatcher
-//
-// ////////////////////////////////////////////////////////////////////////////
-
-
 /**
- *
+ * Portal Site Application Servlet class, central entry point to create and 
+ * process the applications UI.
+ * 
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
- * @version $Id: PortalServlet.java  pboy $
+ * @author Peter Boy <a href="mailto:pboy@zes.uni-bremen.de">
+ * @version $Id: PortalSiteServlet.java  pboy $
  */
-public class PortalServlet extends BaseApplicationServlet {
+public class PortalSiteServlet extends BaseApplicationServlet {
 
-    private static final Logger s_log = Logger.getLogger
-        (PortalServlet.class);
+    private static final Logger s_log = Logger.getLogger(PortalSiteServlet.class);
 
     private static final PresentationManager s_presManager =
-        Templating.getPresentationManager();
+                                             Templating.getPresentationManager();
 
     private static Page s_homePage = new PortalHomePage();
     private static Page s_particPage = PortalParticipants.createPage();
-    private static Page s_adminPage = null;
+    private static Page s_adminPage = s_adminPage = new PortalAdminPage();
 
-    static {
-    //  TransactionContext ctx = SessionManager.getSession().getTransactionContext();
-    //  ctx.beginTxn();
-
-        s_adminPage = new PortalAdminPage();
-
-    //  ctx.commitTxn();
-    }
-
+    /**
+     * 
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @throws ServletException
+     * @throws IOException 
+     */
     public void doService(HttpServletRequest sreq,
                           HttpServletResponse sresp,
                           Application app)
@@ -86,12 +72,21 @@ public class PortalServlet extends BaseApplicationServlet {
         s_log.debug("PortalServlet.doService called for request '" +
                     sreq.getRequestURI() + "'");
 
-        String path = sreq.getServletPath();
+        String pathInfo = sreq.getPathInfo();
+        Assert.exists(pathInfo, "String pathInfo");
+        if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
+            /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
+             * start with a '/' character. It currently carries a 
+             * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
+             * result of a servlet mapping. But Application requires url 
+             * NOT to end with a trailing '/' for legacy free applications.  */
+            pathInfo = pathInfo.substring(0, pathInfo.length()-1);
+        }
         Document doc = null;
 
-        if (path.endsWith("participants")) {
+        if (pathInfo.endsWith("participants")) {
             doc = s_particPage.buildDocument(sreq, sresp);
-        } else if (path.endsWith("admin")) {
+        } else if (pathInfo.endsWith("admin")) {
             doc = s_adminPage.buildDocument(sreq, sresp);
         } else {
             doc = s_homePage.buildDocument(sreq, sresp);

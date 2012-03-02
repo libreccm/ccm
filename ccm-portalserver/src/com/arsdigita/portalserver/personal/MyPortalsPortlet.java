@@ -36,56 +36,86 @@ import com.arsdigita.kernel.Party;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 
+/**
+ * 
+ * 
+ */
 public class MyPortalsPortlet extends AppPortlet {
-    public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.workspace.personal.MyWorkspacesPortlet";
 
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.workspace.personal.MyWorkspacesPortlet";
+
+    /**
+     * 
+     * @return 
+     */
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    /**
+     * 
+     * @param dataObject 
+     */
     public MyPortalsPortlet(DataObject dataObject) {
         super(dataObject);
     }
 
+    @Override
     protected AbstractPortletRenderer doGetPortletRenderer() {
         return new MyPortalsPortletRenderer(this);
     }
 
+    /**
+     * 
+     * @param party
+     * @return 
+     */
     protected DataQuery getMyPortalsDataQuery(Party party) {
-     // Assert.assertTrue
+
         Assert.isTrue
             (!isNew(),
              "You must save this portlet before you call " +
              "getMyPortalsDataQuery(User) on it.");
 
         DataQuery query = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.workspace.personal.MyWorkspaces");
+                              ("com.arsdigita.workspace.personal.MyWorkspaces");
 
-     // Assert.assertNotNull(query, "query");
         Assert.exists(query, "query");
-
         query.setParameter("userID", party.getID());
 
         Application parent = getParentApplication();
-
-     // Assert.assertNotNull(parent, "parent");
         Assert.exists(parent, "parent");
 
-        query.setParameter
-            ("personalWorkspaceID", getParentApplication().getID());
+        query.setParameter("personalWorkspaceID", getParentApplication().getID());
 
         return query;
+
     }
 }
 
+/**
+ * 
+ * 
+ */
 class MyPortalsPortletRenderer extends AbstractPortletRenderer {
+
     private MyPortalsPortlet m_portlet;
 
+    /**
+     * Constructor 
+     * @param portlet 
+     */
     public MyPortalsPortletRenderer(MyPortalsPortlet portlet) {
         m_portlet = portlet;
     }
 
+    /**
+     * 
+     * @param pageState
+     * @param parent 
+     */
     protected void generateBodyXML(PageState pageState, Element parent) {
         Party party = Kernel.getContext().getParty();
 
@@ -107,8 +137,6 @@ class MyPortalsPortletRenderer extends AbstractPortletRenderer {
             title = (String) query.get("title");
             primaryURL = (String) query.get("primaryURL");
 
-        //  Assert.assertNotNull(title, "title");
-        //  Assert.assertNotNull(primaryURL, "primaryURL");
             Assert.exists(title, "title");
             Assert.exists(primaryURL, "primaryURL");
 

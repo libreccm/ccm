@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
-<xsl:stylesheet
-    version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-    xmlns:portalserver="http://www.redhat.com/portalserver/1.0"
-    xmlns:portlet="http://www.arsdigita.com/portlet/1.0"
-    xmlns:km="http://www.arsdigita.com/km/1.0"
-    xmlns:deditor="http://www.arsdigita.com/deditor/1.0"
-    xmlns:admin="http://www.arsdigita.com/admin-ui/1.0"
-    xmlns:cms="http://www.arsdigita.com/cms/1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+        xmlns:portalserver="http://www.redhat.com/portalserver/1.0"
+             xmlns:portlet="http://www.arsdigita.com/portlet/1.0"
+                  xmlns:km="http://www.arsdigita.com/km/1.0"
+             xmlns:deditor="http://www.arsdigita.com/deditor/1.0"
+               xmlns:admin="http://www.arsdigita.com/admin-ui/1.0"
+                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                   version="1.0">
 
 <!-- The order of imports below is important. Please don't change
      them without appropriate testing. -->
@@ -17,23 +16,31 @@
 <xsl:import href="../../categorization/xsl/categorization.xsl"/>
 <xsl:import href="../../bebop/xsl/DimensionalNavbar.xsl"/>
 <xsl:import href="../../toolbox/xsl/ControlBar.xsl"/>
+<!--   
 <xsl:import href="../../portlets/xsl/freeform-html-portlet.xsl"/>
-<!--   <xsl:import href="../../portlets/xsl/time-of-day-portlet.xsl"/>     -->
+<xsl:import href="../../portlets/xsl/time-of-day-portlet.xsl"/>     
 <xsl:import href="../../portlets/xsl/rss-feed-portlet.xsl"/>
+-->
 
 <xsl:output method="html" indent="yes"/>
 
 <xsl:param name="internal-theme"/>
+<!-- Currently not used here
 <xsl:param name="contextPath"/>
+-->
 
+<!--
 <xsl:variable name="image-dir">{$internal-theme}/images/portalserver</xsl:variable>
-<xsl:variable name="css-dir">{$internal-theme}/css/portalserver</xsl:variable>
+<xsl:variable name="image-dir">/themes/heirloom/images/portalserver</xsl:variable>
+-->
+
 
 <xsl:template match="bebop:page[@class='portalserver']">
   <html>
     <head>
       <title><xsl:value-of select="bebop:title"/></title>
-      <link href="{$css-dir}/portalserver.css" rel="stylesheet" type="text/css"/>
+      <link href="{$internal-theme}/css/portalserver/portalserver.css" 
+             rel="stylesheet" type="text/css"/>
         <xsl:for-each select="bebop:stylesheet">
           <link href="{@href}" rel="stylesheet" type="{@type}"/>
         </xsl:for-each>
@@ -62,7 +69,8 @@
   <html>
     <head>
       <title><xsl:value-of select="bebop:title"/></title>
-      <link href="{$css-dir}/portalserver.css" rel="stylesheet" type="text/css"/>
+      <link href="{$internal-theme}/css/portalserver/portalserver.css" 
+             rel="stylesheet" type="text/css"/>
         <xsl:for-each select="bebop:stylesheet">
           <link href="{@href}" rel="stylesheet" type="{@type}"/>
         </xsl:for-each>
@@ -275,7 +283,8 @@
 
 <xsl:template match="bebop:link[@class = 'W']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/W_off.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/W_off.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -285,7 +294,8 @@
 
 <xsl:template match="bebop:link[@class = 'NW']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/NW_off.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/NW_off.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -295,7 +305,8 @@
 
 <xsl:template match="bebop:link[@class = 'WN']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/WN_off.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/WN_off.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -305,7 +316,8 @@
 
 <xsl:template match="bebop:link[@class = 'NWN']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/NWN_off.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/NWN_off.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -315,7 +327,8 @@
 
 <xsl:template match="bebop:link[@class = 'NNN']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/NNN_off.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/NNN_off.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -325,7 +338,8 @@
 
 <xsl:template match="bebop:label[@class = 'W']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/W_on.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/W_on.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -335,7 +349,8 @@
 
 <xsl:template match="bebop:label[@class = 'NW']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/NW_on.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/NW_on.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -345,7 +360,8 @@
 
 <xsl:template match="bebop:label[@class = 'WN']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/WN_on.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/WN_on.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -355,7 +371,8 @@
 
 <xsl:template match="bebop:label[@class = 'NWN']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/NWN_on.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/NWN_on.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -365,7 +382,8 @@
 
 <xsl:template match="bebop:label[@class = 'NNN']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/cw/NNN_on.png" border="0" width="70" height ="30">
+    <img src ="{$internal-theme}/images/portalserver/cw/NNN_on.png" border="0" 
+        width="70" height ="30">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -391,7 +409,8 @@
           <tr><td><xsl:apply-templates select="bebop:cell[2]"/></td></tr>
         </table>
       </td>
-      <td class="inactiveTabColor" width="2"><img src="{$internal-theme}/images/spacer.gif" width="2"/></td>
+      <td class="inactiveTabColor" width="2">
+          <img src="{$internal-theme}/images/spacer.gif" width="2"/></td>
       <td class="splitPanelRight">
         <table width="100%" cellspacing="4" cellpadding="0" border="0">
           <tr><td><xsl:apply-templates select="bebop:cell[3]"/></td></tr>
@@ -411,7 +430,9 @@
           </table>
         </td>
       </tr>
-      <tr><td colspan="3" class="inactiveTabColor" height="2"><img src="{$internal-theme}/images/spacer.gif" height="2"/></td></tr>
+      <tr><td colspan="3" class="inactiveTabColor" height="2">
+          <img src="{$internal-theme}/images/spacer.gif" height="2"/></td>
+      </tr>
     </xsl:if>
     <tr>
       <td width="35%">
@@ -419,7 +440,8 @@
           <tr><td><xsl:apply-templates select="bebop:cell[2]"/></td></tr>
         </table>
       </td>
-      <td class="inactiveTabColor" width="2"><img src="{$internal-theme}/images/spacer.gif" width="2"/></td>
+      <td class="inactiveTabColor" width="2">
+          <img src="{$internal-theme}/images/spacer.gif" width="2"/></td>
       <td width="65%">
         <table width="100%" cellspacing="4" cellpadding="0" border="0">
           <tr><td><xsl:apply-templates select="bebop:cell[3]"/></td></tr>
@@ -452,7 +474,8 @@
                 <tr height="3"><td></td></tr>
                 <tr height="23">
                   <td class="tabBeginningOff"><xsl:text>&#160;&#160;</xsl:text></td>
-                  <td class="inactiveTab" nowrap="nowrap"><a href="{@href}"><xsl:apply-templates select="bebop:label"/></a>
+                  <td class="inactiveTab" nowrap="nowrap">
+                      <a href="{@href}"><xsl:apply-templates select="bebop:label"/></a>
                   </td>
                   <td class="tabEndOff"><xsl:text>&#160;&#160;</xsl:text></td>
                 </tr>
@@ -511,7 +534,8 @@
               <xsl:apply-templates select="."/>
             </xsl:for-each>
           </td>
-          <td class="columnSeparator"><img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
+          <td class="columnSeparator">
+              <img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
           <td class="wideColumn">
             <xsl:for-each select="bebop:portlet[@cellNumber = '2']">
               <xsl:apply-templates select="."/>
@@ -553,7 +577,8 @@
               <xsl:apply-templates select="."/>
             </xsl:for-each>
           </td>
-          <td class="columnSeparator"><img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
+          <td class="columnSeparator">
+              <img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
           <td class="wideColumn">
             <xsl:for-each select="bebop:portlet[@cellNumber = '2']">
               <xsl:apply-templates select="."/>
@@ -578,7 +603,8 @@
               <xsl:apply-templates select="."/>
             </xsl:for-each>
           </td>
-          <td class="columnSeparator"><img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
+          <td class="columnSeparator">
+              <img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
           <td class="narrowColumn">
             <xsl:for-each select="bebop:portlet[@cellNumber = '2']">
               <xsl:apply-templates select="."/>
@@ -603,13 +629,15 @@
               <xsl:apply-templates select="."/>
             </xsl:for-each>
           </td>
-          <td class="columnSeparator"><img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
+          <td class="columnSeparator">
+              <img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
           <td class="wideColumn">
             <xsl:for-each select="bebop:portlet[@cellNumber = '2']">
               <xsl:apply-templates select="."/>
             </xsl:for-each>
           </td>
-          <td class="columnSeparator"><img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
+          <td class="columnSeparator">
+              <img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
           <td class="narrowColumnRight">
             <xsl:for-each select="bebop:portlet[@cellNumber = '3']">
               <xsl:apply-templates select="."/>
@@ -634,13 +662,15 @@
               <xsl:apply-templates select="."/>
             </xsl:for-each>
           </td>
-          <td class="columnSeparator"><img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
+          <td class="columnSeparator">
+              <img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
           <td class="narrowColumnCenter">
             <xsl:for-each select="bebop:portlet[@cellNumber = '2']">
               <xsl:apply-templates select="."/>
             </xsl:for-each>
           </td>
-          <td class="columnSeparator"><img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
+          <td class="columnSeparator">
+              <img src="{$internal-theme}/images/spacer.gif" width="5"/></td>
           <td class="narrowColumnRight">
             <xsl:for-each select="bebop:portlet[@cellNumber = '3']">
               <xsl:apply-templates select="."/>
@@ -653,44 +683,69 @@
 </xsl:template>
 
 <xsl:template match="bebop:portlet">
-  <table class="portlet" cellspacing="0">  <!-- IE5.5 ignores border-spacing CSS prop, so cellspacing attr is necesssary -->
+  <table class="portlet" cellspacing="0">  
+  <!-- IE5.5 ignores border-spacing CSS prop, so cellspacing attr is necesssary -->
     <tr>
       <td class="portletHeader"><xsl:value-of select="@title"/></td>
       <td class="portletIcon">
         <xsl:choose>
           <xsl:when test="@configure">
             <xsl:if test="@leftURL">
-              <a href="{@leftURL}"><img src="{$image-dir}/Left16.gif" width="16" height="16" alt="Move Portlet left" align="bottom" border="0"/></a>
+              <a href="{@leftURL}">
+                  <img src="{$internal-theme}/images/portalserver/Left16.gif" 
+                     width="16" height="16" alt="Move Portlet left" align="bottom" 
+                    border="0"/>
+              </a>
             </xsl:if>
 
             <xsl:if test="@prevURL">
-              <a href="{@prevURL}"><img src="{$image-dir}/Up16.gif" width="16" height="16" alt="Move Portlet Up" align="bottom" border="0"/></a>
+              <a href="{@prevURL}">
+                  <img src="{$internal-theme}/images/portalserver/Up16.gif" 
+                     width="16" height="16" alt="Move Portlet Up" 
+                     align="bottom" border="0"/></a>
             </xsl:if>
 
             <xsl:if test="@nextURL">
-              <a href="{@nextURL}"><img src="{$image-dir}/Down16.gif" width="16" height="16" alt="Move Portlet Down" align="bottom" border="0"/></a>
+              <a href="{@nextURL}">
+                  <img src="{$internal-theme}/images/portalserver/Down16.gif" 
+                     width="16" height="16" alt="Move Portlet Down" 
+                     align="bottom" border="0"/></a>
             </xsl:if>
 
             <xsl:if test="@rightURL">
-              <a href="{@rightURL}"><img src="{$image-dir}/Right16.gif" width="16" height="16" alt="Move Portlet right" align="bottom" border="0"/></a>
+              <a href="{@rightURL}">
+                  <img src="{$internal-theme}/images/portalserver/Right16.gif" 
+                     width="16" height="16" alt="Move Portlet right" 
+                     align="bottom" border="0"/></a>
             </xsl:if>
 
             <xsl:if test="@cfgURL">
-              <a href="{@cfgURL}"><img src="{$image-dir}/Edit16.gif" width="16" height="16" alt="Customize Portlet" align="bottom" border="0"/></a>
+              <a href="{@cfgURL}">
+                  <img src="{$internal-theme}/images/portalserver/Edit16.gif" 
+                     width="16" height="16" alt="Customize Portlet" 
+                     align="bottom" border="0"/></a>
             </xsl:if>
 
-            <a href="{@delURL}" onclick="return confirm('Are you sure you want to delete this portlet?')"><img src="{$image-dir}/Delete16.gif" width="16" height="16" alt="Remove Portlet" align="bottom" border="0"/></a>
+            <a href="{@delURL}" 
+               onclick="return confirm('Are you sure you want to delete this portlet?')">
+                <img src="{$internal-theme}/images/portalserver/Delete16.gif" 
+                   width="16" height="16" alt="Remove Portlet" 
+                   align="bottom" border="0"/></a>
           </xsl:when>
 
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="@applicationlink">
-                <a href="{@applicationlink}"><img src="{$image-dir}/ZoomIn16.gif" width="16" height="16" alt="Zoom In" align="bottom" border="0"/></a>
+                <a href="{@applicationlink}">
+                    <img src="{$internal-theme}/images/portalserver/ZoomIn16.gif" 
+                       width="16" height="16" alt="Zoom In" 
+                       align="bottom" border="0"/></a>
               </xsl:when>
 
               <xsl:otherwise>
                 <!-- replace with grayed out button -->
-                <img src="{$internal-theme}/images/spacer.gif" width="16" height="16" align="bottom" border="0"/>
+                <img src="{$internal-theme}/images/spacer.gif" 
+                   width="16" height="16" align="bottom" border="0"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
@@ -760,7 +815,8 @@
           </td></tr>
         </xsl:if>
         <tr>
-          <xsl:variable name="portletCount" select="count(portalserver:appsDisplayAppPortlet)"/>
+          <xsl:variable name="portletCount" 
+                      select="count(portalserver:appsDisplayAppPortlet)"/>
           <td rowspan="{$portletCount}">
             <xsl:apply-templates select="bebop:link[1]"/>
           </td>
@@ -778,7 +834,10 @@
             <xsl:when test="$portletCount > 0">
               <td class="numeric">1.</td>
               <td><xsl:value-of select="portalserver:appsDisplayAppPortlet[1]/@name"/></td>
-              <td class="icon"><xsl:apply-templates select="portalserver:appsDisplayAppPortlet[1]/bebop:link"/></td>
+              <td class="icon">
+                  <xsl:apply-templates 
+                   select="portalserver:appsDisplayAppPortlet[1]/bebop:link"/>
+              </td>
             </xsl:when>
             <xsl:otherwise>
               <td class="numeric"><xsl:text>&#160;</xsl:text></td>
@@ -840,7 +899,8 @@
 
 <xsl:template match="bebop:link[@class = 'shiftleft']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/Up16.gif" border="0" width="16" height ="16">
+    <img src ="{$internal-theme}/images/portalserver/Up16.gif" border="0" 
+        width="16" height ="16">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>
@@ -850,7 +910,8 @@
 
 <xsl:template match="bebop:link[@class = 'shiftright']">
   <a href="{@href}" onclick="{@onclick}">
-    <img src ="{$image-dir}/Down16.gif" border="0" width="16" height ="16">
+    <img src ="{$internal-theme}/images/portalserver/Down16.gif" border="0" 
+        width="16" height ="16">
       <xsl:attribute name="alt">
         <xsl:apply-templates/>
       </xsl:attribute>

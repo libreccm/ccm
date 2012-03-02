@@ -28,9 +28,11 @@ import com.arsdigita.persistence.DataObject;
  * @version $Revision #1 $DateTime: 2004/08/17 23:19:25 $
  */
 public class MyItemsApplication extends Application {
+
     public static final String BASE_DATA_OBJECT_TYPE =
                         "com.arsdigita.workspace.personal.MyItemsApplication";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

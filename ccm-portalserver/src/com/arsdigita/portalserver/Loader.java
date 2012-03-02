@@ -20,7 +20,6 @@
 package com.arsdigita.portalserver;
 
 
-// import com.arsdigita.db.*;
 import com.arsdigita.domain.*;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
@@ -138,7 +137,8 @@ public class Loader extends PackageLoader {
     private void loadPortalSiteApplicationType() {
 
         /* First try: create a new style, legacy compatible application      */
-/*      ApplicationType type = ApplicationType.createApplicationType(
+/*
+        ApplicationType type = ApplicationType.createApplicationType(
                                               "portalsite",
                                               "Portal Site",
                                               PortalSite.BASE_DATA_OBJECT_TYPE);
@@ -146,8 +146,9 @@ public class Loader extends PackageLoader {
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.ui.PortalDispatcher");
-*/
         
+*/
+
         // Try: new style legacy free application
         ApplicationType type = new 
                                ApplicationType("Portal Site",  // title
@@ -229,16 +230,23 @@ public class Loader extends PackageLoader {
         // in applications mit primary_url=/portal-admin/
         // in acs_object mit default_domain_class=c.ad.ps.admin.PSAdmin und
         // object_type=c.ad.admin.CWAdmin, ebenfalls wg. BASE_DATA_OBJ_TYPE
-
+/*
         ApplicationType type = ApplicationType.createApplicationType(
                                               "portal-admin",
                                               "Portal Server Site Administration",
                                               PSAdmin.BASE_DATA_OBJECT_TYPE);
-        type.setDescription ("Displays common administration tasks.");
         // Current code requires an apps specific dispatcher class. Has to be
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.admin.ui.Dispatcher");
+*/
+        // Try: new style legacy free application
+        ApplicationType type = new 
+                               ApplicationType("Portal Admin",  // title
+                                               PSAdmin.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription ("Displays common administration tasks.");
+        type.save();
     }
 
 
@@ -251,6 +259,7 @@ public class Loader extends PackageLoader {
     private void loadPortalCreatorApplicationType() {
     // formerly private ApplicationType setupPortalCreator() { in ui.admin.Initializer
 
+/*
         ApplicationType type = ApplicationType.createApplicationType(
                                               "portal-create",
                                               "Portal Creator",
@@ -260,6 +269,16 @@ public class Loader extends PackageLoader {
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.ui.admin.PortalCreateDispatcher");
+*/
+
+        // Try: new style legacy free application
+        ApplicationType type = new 
+                               ApplicationType("Portal Creator",  // title
+                                               PortalCreator.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription ("Creates portals.");
+        type.save();
+
     }
 
 
@@ -270,16 +289,17 @@ public class Loader extends PackageLoader {
    private void loadPortalSitemapApplicationType() {
    // formerly private ApplicationType setupPortalSitemapper() {
 
+/*
         ApplicationType type = ApplicationType.createApplicationType(
                                               "portal-sitemap",
                                               "Portal Site Map",
                                               PortalSiteMap.BASE_DATA_OBJECT_TYPE);
-        type.setDescription ("Displays and manages Portals.");
         // Current code requires an apps specific dispatcher class. Has to be
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.ui.admin.PortalSiteMapDispatcher");
 
+*/
 /*        ApplicationSetup setup = new ApplicationSetup(s_log);
         setup.setApplicationObjectType(PortalSiteMap.BASE_DATA_OBJECT_TYPE);
         setup.setTitle("Portal Site Map");
@@ -298,7 +318,16 @@ public class Loader extends PackageLoader {
 
         setup.run();   */
         // return setup.run();
-    }
+
+        // Try: new style legacy free application
+        ApplicationType type = new 
+                               ApplicationType("Portal SiteMap",  // title
+                                               PortalSiteMap.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription ("Displays and manages Portals.");
+        type.save();
+
+   }
 
 
     /*    FORMERLY        personal.Initializer                                 */
@@ -311,7 +340,7 @@ public class Loader extends PackageLoader {
     private void loadPersonalPortalCreatorApplicationType() {
  // private ApplicationType loadPersonalPortalCreatorApplicationType() {
     // formerly private ApplicationType setupPersonalPortalCreatorApplication() {
-
+/*
         ApplicationType type = ApplicationType.createApplicationType(
                                               "personal-portal-creator",
                                               "Personal Portal Creator",
@@ -321,67 +350,41 @@ public class Loader extends PackageLoader {
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.personal.PersonalPortalCreatorDispatcher");
+*/
 
-  //    return type;
+        // Try: new style legacy free application
+        ApplicationType type = new 
+                               ApplicationType("Personal Portal Creator",  // title
+                                               PersonalPortalCreator.BASE_DATA_OBJECT_TYPE );
 
-/*        ApplicationSetup setup = new ApplicationSetup(s_log);
+        type.setDescription ("Displays and manages Portals.");
+        type.save();
 
-        setup.setApplicationObjectType
-            (PersonalPortalCreator.BASE_DATA_OBJECT_TYPE);
-        setup.setKey("personal-portal-creator");
-        setup.setTitle("Personal Portal Creator");
-        setup.setDescription("Responsible for creating personal portals.");
-        // db based stylesheets nolonger used
-        // setup.setStylesheet("/packages/portalserver/xsl/portalserver.xsl");
-        setup.setDispatcherClass
-            ("com.arsdigita.portalserver.personal.PersonalPortalCreatorDispatcher");
-        setup.setPortalApplication(false);
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new PersonalPortalCreator(dataObject);
-                }
-            });
-
-        return setup.run();  */
-    }
+     }
 
 
     private void loadPersonalPortalApplicationType() {
  // private ApplicationType loadPersonalPortalApplicationType() {
     // formerly private ApplicationType setupPersonalPortalApplication() {
-
+/*
         ApplicationType type = ApplicationType.createApplicationType(
                                               "personal-portal",
                                               "Personal Portal",
                                               PersonalPortal.BASE_DATA_OBJECT_TYPE);
-        type.setDescription ("A portal for an individual.");
         // Current code requires an apps specific dispatcher class. Has to be
         // modified to be able to create a legacy free app type.
         type.setDispatcherClass
                 ("com.arsdigita.portalserver.personal.PersonalPortalDispatcher");
+*/
+        // Try: new style legacy free application
+        ApplicationType type = new 
+                               ApplicationType("Personal Portal",  // title
+                                               PersonalPortal.BASE_DATA_OBJECT_TYPE );
 
+        type.setDescription ("A portal for an individual.");
+        type.save();
 
-/*      ApplicationSetup setup = new ApplicationSetup(s_log);
-
-        setup.setApplicationObjectType(PersonalPortal.BASE_DATA_OBJECT_TYPE);
-        setup.setKey("personal-portal");
-        setup.setTitle("Personal Portal");
-        setup.setDescription("A portal for an individual.");
-        // setup.setStylesheet("/packages/portalserver/xsl/portalserver.xsl");
-        setup.setDispatcherClass
-            ("com.arsdigita.portalserver.personal.PersonalPortalDispatcher");
-        setup.setPortalApplication(false);
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new PersonalPortal(dataObject);
-                }
-            });
-
-        ApplicationType type = setup.run();
-
-        // XXX This must go after setup.run().  Need more elegant approach.
+/*      // XXX This must go after setup.run().  Need more elegant approach.
         // pboy: uses ResourceType.registerResourceTypeConfig() which registers
         // in a hash map. Therefore: not suitable for a loader, may have to be
         // moved into initializer!

@@ -97,12 +97,6 @@ public class Initializer extends CompoundInitializer {
 				"WebLogs", "http://www.undp.org/weblog");
 		s_log.debug("Just added package type WebLog ");
 
-		// Old style StylesheetResolver where location of stylesheets are stored
-        // in db and as well as mappings to applications.
-        // New style is pattern based, see cpom.arsdigita.templating
-  //    Stylesheet entitySheet = Stylesheet
-  //                             .createStylesheet("/packages/weblog/xsl/weblog.xsl");
-  //	entityType.addStylesheet(entitySheet);
 
 		entityType.setDispatcherClass(WebLogDispatcher.class.getName());
 

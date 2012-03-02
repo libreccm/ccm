@@ -128,11 +128,11 @@ public class PersonalPortalCreatorDispatcher implements Dispatcher {
         return page;
     }
 
-    public void dispatch
-        (HttpServletRequest request, HttpServletResponse response,
-         RequestContext context)
-        throws IOException, ServletException {
-    //  Assert.assertTrue(context instanceof SiteNodeRequestContext);
+    public void dispatch(HttpServletRequest request, 
+                         HttpServletResponse response,
+                         RequestContext context)
+                throws IOException, ServletException {
+
         Assert.isTrue(context instanceof SiteNodeRequestContext);
 
         // XXX has to be replaced by a way NOT built upon SiteNode*
@@ -183,12 +183,14 @@ public class PersonalPortalCreatorDispatcher implements Dispatcher {
             if (m_introDispatcher == null) {
                 m_introDispatcher = new PageDispatcher(buildIntroPage());
             }
-
-      //    Assert.assertNotNull(m_introDispatcher, "m_introDispatcher");
             Assert.exists(m_introDispatcher, "m_introDispatcher");
 
-            DispatcherHelper.sendRedirect
-                (request, response, snrc.getOriginalURL());
+            // Don't understand: Above we create a new PageDisüpatcher but don't
+            // call it's dispatch() method.
+            // What does the sendRedirect here?
+            DispatcherHelper.sendRedirect(request, 
+                                          response, 
+                                          snrc.getOriginalURL());
 
             // The following does not work because I need to be able to
             // reset the RequestContext before I invoke it.  Otherwise,

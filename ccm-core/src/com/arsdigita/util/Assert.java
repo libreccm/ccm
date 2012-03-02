@@ -226,8 +226,8 @@ public class Assert {
      * <code>object</code>
      * @throws AssertionError if the object is null
      */
-    public static final void exists(final Object object,
-                                    final Class clacc) {
+    public static void exists(final Object object,
+                              final Class clacc) {
         if (object == null) {
             final String message = clacc.getName() + " is null";
 
@@ -245,8 +245,8 @@ public class Assert {
      *
      * @throws AssertionError if the object is null
      */
-    public static final void exists(final Object object,
-                                    final String label) {
+    public static void exists(final Object object,
+                              final String label) {
         if (object == null) {
             final String message =
                     label != null && label.trim().length() > 0

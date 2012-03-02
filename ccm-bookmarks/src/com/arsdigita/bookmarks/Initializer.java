@@ -26,7 +26,6 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.web.*;
 import com.arsdigita.kernel.*;
 // unused import com.arsdigita.sitenode.*;
-import com.arsdigita.bookmarks.*;
 import com.arsdigita.bookmarks.ui.*;
 // unused  import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObject;

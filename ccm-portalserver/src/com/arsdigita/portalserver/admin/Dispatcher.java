@@ -16,9 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.portalserver.admin.ui;
+package com.arsdigita.portalserver.admin;
 
 // import com.arsdigita.bebop.*;
+import com.arsdigita.portalserver.admin.PSAdminPage;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.page.BebopMapDispatcher;
 import java.util.*;
@@ -36,7 +37,7 @@ public class Dispatcher extends BebopMapDispatcher {
 
     public Dispatcher() {
         Map m = new HashMap();
-        Page index = new AdminPage();
+        Page index = new PSAdminPage();
         index.lock();
         m.put("", index);
         m.put("index.jsp", index);

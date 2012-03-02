@@ -47,7 +47,7 @@ public class PersonalPortalConfig extends ResourceTypeConfig {
     }
 
     public void configureApplication(Application application) {
-     // Assert.assertTrue(application instanceof PersonalPortal);
+
         Assert.isTrue(application instanceof PersonalPortal);
 
         PersonalPortal portal = (PersonalPortal) application;
@@ -61,22 +61,23 @@ public class PersonalPortalConfig extends ResourceTypeConfig {
 
         Portlet portlet = null;
 
-        portlet = Portlet.createPortlet
-            (MyPortalsPortlet.BASE_DATA_OBJECT_TYPE, portal);
+        portlet = Portlet.createPortlet(MyPortalsPortlet.BASE_DATA_OBJECT_TYPE, 
+                                        portal);
         tab.addPortlet(portlet, 1);
-
         tab.setPortalSite(portal);
         tab.save();
 
         portal.addPortalTab(tab);
         portal.addMember(portal.getOwningUser());
-
         portal.save();
 
         // Permissions
 
         PermissionDescriptor perm = new PermissionDescriptor
-            (PrivilegeDescriptor.ADMIN, portal, portal.getOwningUser());
+                                            (PrivilegeDescriptor.ADMIN, 
+                                             portal, 
+                                             portal.getOwningUser());
         PermissionService.grantPermission(perm);
+
     }
 }

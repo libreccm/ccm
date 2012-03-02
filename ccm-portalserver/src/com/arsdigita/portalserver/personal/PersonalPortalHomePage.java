@@ -42,15 +42,19 @@ import com.arsdigita.bebop.Container;
  * <p><strong>Experimental</strong></p>
  *
  * @author <a href="mailto:justin@arsdigita.com">Justin Ross</a>
- * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/personal/PersonalPortalHomePage.java#8 $
+ * @version $Id: PersonalPortalHomePage.java#8 $
  */
 public class PersonalPortalHomePage extends PortalHomePage {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/personal/PersonalPortalHomePage.java#8 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
+
+    /**
+     * Constructor
+     */
+    public PersonalPortalHomePage() {
+        super();
+    }
 
     private final RequestLocal m_adminPermission = new RequestLocal() {
+            @Override
             protected Object initialValue(PageState state) {
                 UniversalPermissionDescriptor descriptor =
                     new UniversalPermissionDescriptor
@@ -65,10 +69,7 @@ public class PersonalPortalHomePage extends PortalHomePage {
             }
         };
 
-    public PersonalPortalHomePage() {
-        super();
-    }
-
+    @Override
     protected void buildHeader(Container header) {
         // Add a link to edit profile.
         Link profileLink = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.personal.edit_your_profile")),  "/register/edit-profile");
@@ -84,6 +85,7 @@ public class PersonalPortalHomePage extends PortalHomePage {
         // the Portal admin page.
 
         Link adminLink = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.personal.site_administration")),  "/portal-admin/") {
+                @Override
                 public boolean isVisible(PageState state) {
                     Boolean bool = (Boolean) m_adminPermission.get(state);
                     return bool.booleanValue();
@@ -96,6 +98,7 @@ public class PersonalPortalHomePage extends PortalHomePage {
         super.buildHeader(header);
     }
 
+    @Override
     protected void buildTitle() {
         class TitlePrintListener implements PrintListener {
             public void prepare(PrintEvent e) {
@@ -128,6 +131,7 @@ public class PersonalPortalHomePage extends PortalHomePage {
         setTitle(new Label(new TitlePrintListener()));
     }
 
+    @Override
     protected void buildContextBar() {
         DimensionalNavbar navbar = new DimensionalNavbar();
 

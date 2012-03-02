@@ -33,6 +33,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 /**
+ * Dispatcher for the PortalSite ApplicationType
  * <p><strong>Experimental</strong></p>
  *
  * @author <a href="mailto:justin@arsdigita.com">Justin Ross</a>

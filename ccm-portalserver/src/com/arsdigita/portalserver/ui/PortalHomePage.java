@@ -21,7 +21,6 @@ package com.arsdigita.portalserver.ui;
 
 import com.arsdigita.portalserver.util.GlobalizationUtil; 
 
-import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.portalserver.PortalSite;
 import com.arsdigita.portalserver.LoggedInLinkWrapper;
 import com.arsdigita.portalserver.PortalPage;
@@ -45,7 +44,6 @@ import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.event.RequestEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.event.ChangeEvent;
-import com.arsdigita.bebop.portal.Portal;
 import com.arsdigita.bebop.portal.PortalModel;
 import com.arsdigita.bebop.portal.PortalModelBuilder;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -75,6 +73,7 @@ public class PortalHomePage extends PortalPage {
     List m_tabs;
 
     private RequestLocal m_hasAdmin = new RequestLocal() {
+           @Override
             public Object initialValue(PageState ps) {
                 PortalSite psite = 
                             PortalSite.getCurrentPortalSite(ps.getRequest());
@@ -146,6 +145,7 @@ public class PortalHomePage extends PortalPage {
         header.add(adminLink);
 
         class SearchComponent extends SimpleContainer {
+            @Override
             public void generateXML(PageState state, Element parent) {
 /*XXXjbp - *************************************************
  ****This needs to be modified to use core search***********
@@ -392,10 +392,10 @@ public class PortalHomePage extends PortalPage {
 
     private class CookieChangeListener implements ChangeListener {
         public void stateChanged(ChangeEvent e) {
-            PageState ps = e.getPageState();
-            PortalSite psite = getPortalSite(ps);
 
-         // Assert.assertNotNull(psite, "workspace");
+            PageState ps = e.getPageState();
+
+            PortalSite psite = getPortalSite(ps);
             Assert.exists(psite, "workspace");
 
             HttpServletResponse response = ps.getResponse();
@@ -403,10 +403,8 @@ public class PortalHomePage extends PortalPage {
             String tabName = (String)m_tabs.getSelectedKey(ps);
             Cookie cookie = new Cookie(cookieNameString,tabName);
             cookie.setMaxAge(36000);
-            cookie.setComment(
-                              "This cookie returns you to the tab you " +
-                              "had open when you last visited this portal."
-                              );
+            cookie.setComment("This cookie returns you to the tab you " +
+                              "had open when you last visited this portal.");
             response.addCookie(cookie);
         }
     }

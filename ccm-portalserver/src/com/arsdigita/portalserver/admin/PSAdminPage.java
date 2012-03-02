@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.portalserver.admin.ui;
+package com.arsdigita.portalserver.admin;
 
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
@@ -32,14 +32,14 @@ import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 
 /**
- * AdminPage 
+ * PSAdminPage 
  * -
  * This class is the UI component for Portal-admin.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #8 $ $Date: 2004/08/17 $
  */
-class AdminPage extends PortalPage {
+class PSAdminPage extends PortalPage {
     public static final String versionId =
         "$Id: //portalserver/dev/src/com/arsdigita/portalserver/admin/ui/AdminPage.java#8 $" +
         "$Author: dennis $" +
@@ -48,7 +48,7 @@ class AdminPage extends PortalPage {
     BoxPanel m_bpanel;
 
     private static Logger s_log = Logger.getLogger
-        (AdminPage.class.getName());
+        (PSAdminPage.class.getName());
 
     private RequestLocal m_children = new RequestLocal() {
             public Object initialValue(PageState ps) {
@@ -58,7 +58,7 @@ class AdminPage extends PortalPage {
             }
         };
 
-    public AdminPage() {
+    public PSAdminPage() {
        getHeader().setIdAttr("admin"); 
     }
 

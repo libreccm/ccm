@@ -472,16 +472,15 @@ public class PortalSite extends Application {
      * @return 
      */
     public static PortalSiteCollection getRootPortalSites() {
+
         DataQuery query = SessionManager.getSession().retrieveQuery
             ("com.arsdigita.workspace.rootWorkspaces");
 
         DataCollection collection =
             new DataQueryDataCollectionAdapter(query, "workspace");
-
         query.close();
 
         PortalSiteCollection psc = new PortalSiteCollection(collection);
-      
         psc.filterForUnarchived();
 
         return psc;
