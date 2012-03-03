@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
                version="2.4">
 
-    <!-- Servlets for the portalserver applications -->
+    <!-- module ccm-portalserver  -  servlet declarations BEGIN   -->
     <servlet>
         <servlet-name>portalsite</servlet-name>
         <servlet-class>com.arsdigita.portalserver.PortalSiteServlet</servlet-class>
@@ -34,8 +34,10 @@
         <servlet-name>portal-personalportal</servlet-name>
         <servlet-class>com.arsdigita.portalserver.personal.PersonalPortalCreatorServlet</servlet-class>
     </servlet>
+    <!-- module ccm-portalserver  -  servlet declarations END  -->
 
 
+    <!-- module ccm-portalserver  -  servlet mappings BEGIN  -->
     <servlet-mapping>
         <servlet-name>portalsite</servlet-name>
         <url-pattern>/templates/servlet/portalsite/*</url-pattern>
@@ -65,5 +67,6 @@
         <servlet-name>portal-personalportal</servlet-name>
         <url-pattern>/templates/servlet/personal-portal-creator/*</url-pattern>
     </servlet-mapping>
+    <!-- module ccm-portalserver  -  servlet mappings END  -->
 
 </web-app>

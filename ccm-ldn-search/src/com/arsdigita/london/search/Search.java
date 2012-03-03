@@ -25,31 +25,40 @@ import com.arsdigita.web.Application;
 import org.apache.log4j.Logger;
 
 /**
- * Base class for the search application (module)
- *
+ * Base Domain Class for the search application (module).
+ * 
+ * Currently there is nothing specific to persist in permanent storage, so the
+ * corresponding pdl is empty an no class specific table created.
  */
 public class Search extends Application {
 
+    /** Logger instance for debugging  */
     private static final Logger logger = Logger.getLogger(Search.class);
-    public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.london.search.Search";
+
+    /** PDL refernce                                                          */
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.london.search.Search";
     
-    private static SearchConfig s_config = new SearchConfig();
+   /** Config object containing various parameter    */
+    private static SearchConfig s_config = SearchConfig.getConfig();
 
-    static {
-        logger.debug("Static initalizer starting...");
-        s_config.load();
-        logger.debug("Static initalizer finished.");
-    }
-
+    /** Provide client classes with access to configuration data              */
     public static SearchConfig getConfig() {
         return s_config;
     }
 
+    /**
+     * Constructor based on DataObject information
+     * @param obj 
+     */
     public Search(DataObject obj) {
         super(obj);
     }
 
+    /**
+     * Constructor retrieves Search application object based on OID
+     * @param oid 
+     */
     public Search(OID oid) {
         super(oid);
     }
@@ -89,6 +98,7 @@ public class Search extends Application {
      *
      * @return path name to the applications servlet/JSP
      */
+    @Override
     public String getServletPath() {
         //return "/files";
         return "/ccm-ldn-search/files";

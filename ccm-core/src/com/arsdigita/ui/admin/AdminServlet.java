@@ -62,6 +62,7 @@ import org.apache.log4j.Logger;
 public class AdminServlet extends BaseApplicationServlet 
                        implements AdminConstants{
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(
                                         AdminServlet.class.getName());
 

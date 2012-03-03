@@ -21,9 +21,14 @@ package com.arsdigita.london.search;
 import com.arsdigita.cms.search.VersionFilterType;
 import com.arsdigita.cms.search.LuceneQueryEngine;
 import com.arsdigita.db.DbHelper;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.ACSObjectInstantiator;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
+import com.arsdigita.runtime.ContextCloseEvent;
+import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
@@ -32,6 +37,8 @@ import com.arsdigita.search.FilterType;
 import com.arsdigita.search.QueryEngineRegistry;
 import com.arsdigita.search.filters.ObjectTypeFilterType;
 
+import org.apache.log4j.Logger;
+
 /**
  * The Search initializer.
  *
@@ -39,6 +46,10 @@ import com.arsdigita.search.filters.ObjectTypeFilterType;
  * @version $Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
+
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
+
+    private Thread[] m_workers;
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -62,6 +73,16 @@ public class Initializer extends CompoundInitializer {
     public void init(DomainInitEvent e) {
         super.init(e);
 
+        /* Register object instantiator for Search                            */
+        e.getFactory().registerInstantiator(
+            Search.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
+                @Override
+                public DomainObject doNewInstance(DataObject dataObject) {
+                    return new Search(dataObject);
+                }
+            });
+
         SearchGroup.setSearchTimeout
             (Search.getConfig().getSearchTimeout().intValue());
 
@@ -69,12 +90,53 @@ public class Initializer extends CompoundInitializer {
         registerRemoteSearch();
     }
 
+    /**
+     * 
+     * @param evt 
+     */
+    @Override
+    public void init(ContextInitEvent evt) {
+
+        int nWorkers = Search.getConfig().getNumberOfThreads().intValue();
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Starting " + nWorkers + " worker threads");
+        }
+
+        m_workers = new Thread[nWorkers];
+        for (int i = 0 ; i < nWorkers ; i++) {
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Starting thread " + i);
+            }
+            m_workers[i] = new RemoteSearcher(SearchJobQueue.getInstance());
+            m_workers[i].start();
+        }
+         
+    }
+
+    /**
+     * 
+     */
+    @Override
+    public void close(ContextCloseEvent evt) {
+
+        int nWorkers = m_workers.length;
+        for (int i = 0 ; i < nWorkers ; i++) {
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Starting thread " + i);
+            }
+            m_workers[i].stop();
+        }
+
+    }
+
+
     private void registerRemoteSearch() {
         QueryEngineRegistry.registerEngine
             ("remote", new FilterType[] {
                 new HostFilterType()
             }, new RemoteQueryEngine());
     }
+
 
     private void registerLimitedSimpleSearch() {
         QueryEngineRegistry.registerEngine

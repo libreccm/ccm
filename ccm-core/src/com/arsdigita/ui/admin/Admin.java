@@ -34,6 +34,7 @@ import org.apache.log4j.Logger;
  */
 public class Admin extends Application {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Admin.class);
 
     public static final String BASE_DATA_OBJECT_TYPE

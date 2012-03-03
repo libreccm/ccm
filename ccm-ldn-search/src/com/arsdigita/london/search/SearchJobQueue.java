@@ -18,17 +18,33 @@ package com.arsdigita.london.search;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+/**
+ * 
+ * 
+ */
 public class SearchJobQueue extends LinkedList {
 
     private static SearchJobQueue s_jobQueue = new SearchJobQueue();
 
+    /**
+     * 
+     * @return 
+     */
     public static SearchJobQueue getInstance() {
         return s_jobQueue;
     }
         
+    /**
+     * 
+     */
     private SearchJobQueue() {}
     
+    /**
+     * 
+     * @return 
+     */
     public synchronized SearchJob getSearchJob() {
+
         SearchJob job = null;
         while (job == null) {
             try {
@@ -45,6 +61,10 @@ public class SearchJobQueue extends LinkedList {
         return job;
     }
     
+    /**
+     * 
+     * @param job 
+     */
     public synchronized void addSearchJob( SearchJob job ) {
         addLast( job );
         

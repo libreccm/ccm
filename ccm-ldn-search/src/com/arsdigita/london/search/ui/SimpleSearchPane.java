@@ -20,9 +20,17 @@ package com.arsdigita.london.search.ui;
 
 import com.arsdigita.cms.ContentItem;
 
+/**
+ * Used by the UI JSP to create a main (simple) search pane (index.jsp).
+ * 
+ */
 public class SimpleSearchPane extends SearchComponent {
     
+    /**
+     * 
+     */
     public SimpleSearchPane() {
         super(new SimpleQueryComponent(ContentItem.LIVE));
     }
+
 }

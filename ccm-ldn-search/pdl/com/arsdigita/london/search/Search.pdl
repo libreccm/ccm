@@ -20,5 +20,6 @@ model com.arsdigita.london.search;
 import com.arsdigita.web.Application;
 
 object type Search extends Application {
-    reference key (search_app.application_id);
+    // reference key (search_app.application_id);
+    // nothing really to store here
 }

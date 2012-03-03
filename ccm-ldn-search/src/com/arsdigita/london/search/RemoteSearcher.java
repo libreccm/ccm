@@ -18,6 +18,8 @@
 
 package com.arsdigita.london.search;
 
+import com.arsdigita.util.UncheckedWrapperException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -33,13 +35,16 @@ import org.apache.axis.client.Service;
 import org.apache.axis.encoding.ser.BeanSerializerFactory;
 import org.apache.axis.encoding.ser.BeanDeserializerFactory;
 
-import com.arsdigita.util.UncheckedWrapperException;
-
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * 
+ */
 public class RemoteSearcher extends Thread {
-    private static final Logger s_log =
-        Logger.getLogger( RemoteSearcher.class );
+
+    /** Logger instance for debugging  */
+    private static final Logger s_log = Logger.getLogger( RemoteSearcher.class );
 
     private SearchJobQueue m_queue;
     private boolean m_stop = false;
@@ -53,6 +58,10 @@ public class RemoteSearcher extends Thread {
         m_queue = queue;
     }
 
+    /**
+     * 
+     */
+    @Override
     public void run() {
         // Initialize the SOAP call
         Service service;

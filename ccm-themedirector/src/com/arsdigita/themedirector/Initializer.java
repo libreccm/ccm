@@ -66,6 +66,7 @@ public class Initializer extends CompoundInitializer {
 
     @Override
     public void init(DomainInitEvent evt) {
+
         PatternStylesheetResolver.registerPatternGenerator(
             "theme",
             new ThemePatternGenerator()
@@ -101,7 +102,6 @@ public class Initializer extends CompoundInitializer {
     }
 
     @Override
-    // public void init(LegacyInitEvent evt) {
     public void init(ContextInitEvent evt) {
         // This sets up the subsite for so that the form will include
         // all of the themes already in the database

@@ -37,36 +37,78 @@ import org.apache.log4j.Logger;
  */
 public final class SearchConfig extends AbstractConfig {
 
+    /** A logger instance to assist debugging.  */
     private static final Logger s_log = Logger.getLogger(SearchConfig.class);
 
-    private final Parameter m_numThreads;
-    private final Parameter m_searchTimeout;
-    private final Parameter m_showSponsoredLinks;
-    private final Parameter m_maxRemoteResults;
-    private final Parameter m_remoteSearchContentSections;
+    /** Singelton config object.  */
+    private static SearchConfig s_conf;
 
-    private final Parameter m_simpleRestrictTo;
+    /**
+     * Gain a SearchConfig object.
+     *
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized SearchConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new SearchConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+
+    // //////////////////////////////////////////////////////////////////////// 
+    // Set of configuration parameters
+
+    /** 
+     * Sets the number of threads that can respond to remote search queries
+     */
+    private final Parameter m_numThreads = new 
+            IntegerParameter("com.arsdigita.london.search.num_threads", 
+                             Parameter.REQUIRED, new Integer(10));
+    /**
+     * Sets the number of milleseconds to wait for the search to return results 
+     * before timing out
+     */
+    private final Parameter m_searchTimeout = new 
+            IntegerParameter("com.arsdigita.london.search.timeout", 
+                             Parameter.REQUIRED, new Integer(4000));
+    /**
+     * Whether or not to display Sponsored Links in addition to search results
+     */
+    private final Parameter m_showSponsoredLinks = new 
+            BooleanParameter("com.arsdigita.london.search.show_sponsored_links",
+                             Parameter.REQUIRED, Boolean.FALSE);
+    /**
+     * What is the maximum number of remote search results this server should return
+     */
+    private final Parameter m_maxRemoteResults = new 
+            IntegerParameter("com.arsdigita.london.search.max_remote_results",
+                             Parameter.REQUIRED, new Integer(50));
+    /**
+     * When this host is a target for remote search, filter results to 
+     * specified content sections
+     */
+    private final Parameter m_remoteSearchContentSections = new 
+            StringArrayParameter("com.arsdigita.london.search.remote_search_content_sections",
+                                 Parameter.OPTIONAL, null);
+    /**
+     * 
+     */
+    private final Parameter m_simpleRestrictTo = new 
+            StringParameter("com.arsdigita.london.search.simple_restrict_to",
+                            Parameter.OPTIONAL, "");
+    
     private String[] simpleRestrictToArray;
 
+    /**
+     * Constructor registers the configuration parameters and reads values from
+     * registry file.
+     */
     public SearchConfig() {
-        m_numThreads = new IntegerParameter
-            ("com.arsdigita.london.search.num_threads", 
-             Parameter.REQUIRED, new Integer(10));
-        m_searchTimeout = new IntegerParameter
-            ("com.arsdigita.london.search.timeout", 
-             Parameter.REQUIRED, new Integer(4000));
-        m_showSponsoredLinks = new BooleanParameter
-            ("com.arsdigita.london.search.show_sponsored_links",
-             Parameter.REQUIRED, Boolean.FALSE);
-        m_maxRemoteResults = new IntegerParameter
-            ("com.arsdigita.london.search.max_remote_results",
-             Parameter.REQUIRED, new Integer(50));
-        m_remoteSearchContentSections = new StringArrayParameter
-            ("com.arsdigita.london.search.remote_search_content_sections",
-              Parameter.OPTIONAL, null);
-        m_simpleRestrictTo = new StringParameter
-            ("com.arsdigita.london.search.simple_restrict_to",
-             Parameter.OPTIONAL, "");
 
         register(m_numThreads);
         register(m_searchTimeout);
@@ -74,29 +116,44 @@ public final class SearchConfig extends AbstractConfig {
         register(m_maxRemoteResults);
         register(m_remoteSearchContentSections);
         register(m_simpleRestrictTo);
+
         loadInfo();
+
     }
 
 
+    /**
+     * Get the number of threads that can respond to remote search queries
+     * @return Number of threads to start
+     */
     public final Integer getNumberOfThreads() {
         return (Integer) get(m_numThreads);
     }
 
 
+    /**
+     * Get the number of milleseconds to wait for the search to return results 
+     * before timing out
+     * @return Milliseconds to wait
+     */
     public final Integer getSearchTimeout() {
         return (Integer) get(m_searchTimeout);
     }
 
+    /**
+     * Whether or not to display Sponsored Links in addition to search results
+     * @return 
+     */
     public final Boolean getShowSponsoredLinks() {
         return (Boolean) get(m_showSponsoredLinks);
     }
 
+    /**
+     * Get the maximum number of remote search results this server should return
+     * @return No of search results to show 
+     */
     public final Integer getMaxRemoteResults() {
         return (Integer) get(m_maxRemoteResults);
-    }
-
-    public final String getSimpleRestrictTo() {
-        return (String) get(m_simpleRestrictTo);
     }
 
     /**
@@ -110,6 +167,10 @@ public final class SearchConfig extends AbstractConfig {
      */
     public final String[] getRemoteSearchContentSections() {
         return (String[])get(m_remoteSearchContentSections);
+    }
+
+    public final String getSimpleRestrictTo() {
+        return (String) get(m_simpleRestrictTo);
     }
 
     public final String[] getSimpleRestrictToArray() {

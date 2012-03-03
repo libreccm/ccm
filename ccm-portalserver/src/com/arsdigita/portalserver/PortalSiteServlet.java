@@ -48,6 +48,7 @@ import org.apache.log4j.Logger;
  */
 public class PortalSiteServlet extends BaseApplicationServlet {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(PortalSiteServlet.class);
 
     private static final PresentationManager s_presManager =

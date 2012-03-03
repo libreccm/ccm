@@ -31,15 +31,21 @@ import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 
 /**
- * Loader (initial setup executed once at installation time).
+ * <p>Executes nonrecurring at install time and loads (installs and initializes)
+ * the Remote Search module persistently into database.</p>
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 758 2005-09-02 14:26:56Z sskracic $
  */
 public class Loader extends PackageLoader {
 
+    /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+    /**
+     * 
+     * @param ctx 
+     */
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
             public void excurse() {
@@ -50,7 +56,12 @@ public class Loader extends PackageLoader {
     }
 
 
+    /**
+     * Create the Search application type and setup the default application
+     * instance.
+     */
     private void setupSearch() {
+/*
         ApplicationSetup setup = new ApplicationSetup(s_log);
 
         setup.setApplicationObjectType(Search.BASE_DATA_OBJECT_TYPE);
@@ -65,14 +76,22 @@ public class Loader extends PackageLoader {
             });
         ApplicationType type = setup.run();
         type.save();
+*/
 
+        /* Try: legacy free */
+        ApplicationType type = new  ApplicationType("Search",
+                                                    Search.BASE_DATA_OBJECT_TYPE );
+
+        type.setDescription("Public search");
+        type.save();
+        
+        
         if (!Application.isInstalled(Search.BASE_DATA_OBJECT_TYPE,
                                      "/search/")) {
-            Application app =
-                Application.createApplication(type,
-                                              "search",
-                                              "Search",
-                                              null);
+            Application app = Application.createApplication(type,
+                                                            "search",
+                                                            "Search",
+                                                            null);
             app.save();
         }
     }

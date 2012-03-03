@@ -34,23 +34,34 @@ import com.arsdigita.search.ui.filters.ObjectTypeFilterComponent;
 import com.arsdigita.search.FilterSpecification;
 import com.arsdigita.search.filters.ContentSectionFilterSpecification;
 
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
+
+/**
+ * 
+ * 
+ */
 public class SimpleQueryComponent extends BaseQueryComponent {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(SimpleQueryComponent.class);
-    private StringParameter m_hiddenAllowedContentSectionsList = new StringParameter("restrictToContentSections");
+
+    private StringParameter m_hiddenAllowedContentSectionsList = new 
+                            StringParameter("restrictToContentSections");
     private String m_paramValue;
     private String[] contentSectionTitles;
     private boolean is_restricted;
     private Form m_form;
 
+    /**
+     * 
+     * @param context 
+     */
     public SimpleQueryComponent(String context) {
 
         if (Search.getConfig().isIntermediaEnabled() ||
@@ -69,8 +80,15 @@ public class SimpleQueryComponent extends BaseQueryComponent {
     }
 
 
+    /**
+     * 
+     * @param form
+     * @param model 
+     */
+    @Override
     public void register(Form form, FormModel model) {
-      s_log.debug("Adding " + m_hiddenAllowedContentSectionsList.getName() + " to form model");
+      s_log.debug("Adding " + m_hiddenAllowedContentSectionsList.getName() 
+                            + " to form model");
       m_hiddenAllowedContentSectionsList.setPassIn(true);
       model.addFormParam(m_hiddenAllowedContentSectionsList);
       super.register(form, model);
@@ -79,13 +97,15 @@ public class SimpleQueryComponent extends BaseQueryComponent {
 
     /**
      * Gets the hidden restrictToContentSections param.
-     * The param is in the form of a comma seperated list of content section names.
-     * If present the search will only return content items from these content sections.
-     **/
+     * The param is in the form of a comma seperated list of content section 
+     * names. If present the search will only return content items from these 
+     * content sections.
+     */
     protected String getContentSections(PageState state) {
       FormData formData = m_form.getFormData(state);
       if (formData != null) {
-          ParameterData contentSectionListParam = formData.getParameter(m_hiddenAllowedContentSectionsList.getName());
+          ParameterData contentSectionListParam = 
+                  formData.getParameter(m_hiddenAllowedContentSectionsList.getName());
           String paramValue = (String)contentSectionListParam.getValue();
           m_paramValue = paramValue;
           s_log.debug("content sections list is " + paramValue);
@@ -115,18 +135,21 @@ public class SimpleQueryComponent extends BaseQueryComponent {
     /**
      * Adds the content section filter to any existing filters.
      **/
+    @Override
     protected FilterSpecification[] getFilters(PageState state) {
        FilterSpecification[] existingfilters = super.getFilters(state);
       List n = new ArrayList();
       try {
-          List filters = Arrays.asList(existingfilters); // this will throw a NullPointerException if there are no existing filters
+          // this will throw a NullPointerException if there are no existing filters!
+          List filters = Arrays.asList(existingfilters); 
           n.addAll(filters);
       } catch (NullPointerException e) {
           // do we need to catch it if we're doing nothing with it?
       }
       String[] contentSections = getContentSectionsArray(state);
       if (contentSections == null) { return existingfilters; }
-      ContentSectionFilterSpecification csfs = new ContentSectionFilterSpecification(contentSections);
+      ContentSectionFilterSpecification csfs = new 
+                          ContentSectionFilterSpecification(contentSections);
       n.add(csfs);
       FilterSpecification[] newFilters = new FilterSpecification[n.size()];
       Iterator i = n.iterator();

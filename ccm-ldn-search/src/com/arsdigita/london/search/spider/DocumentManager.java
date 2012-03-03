@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+
 package com.arsdigita.london.search.spider;
 
 import com.arsdigita.persistence.PersistenceException;
@@ -16,18 +34,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+
+
 /**
  * Implementation of JoBo's HttpDocManager interface, the interface
  * that is responsible for processing the content retrieved from
  * the spider.
  * This implementation stores the content as {@link SpideredContent}
- *  domain objects.
+ * domain objects.
+ * @see SpideredContent
  *
+ * 
  *@author <a href="mailto:mhanisch@redhat.com">Michael Hanisch</a>
  *@version $Id: DocumentManager.java 287 2005-02-22 00:29:02Z sskracic $
- *@see SpideredContent
  */
 public class DocumentManager implements HttpDocManager {
+
+    /** A logger instance to assist debugging.  */
+    private static final Logger s_log = Logger.getLogger(DocumentManager.class);
 
     // HTTP headers
     private static final String LAST_MODIFIED_HEADER = "Last-Modified";
@@ -47,9 +72,10 @@ public class DocumentManager implements HttpDocManager {
     public static final SimpleDateFormat rfc1123_formatter =
                         new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
 
-    private static final org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(DocumentManager.class);
-
+    /**
+     * 
+     * @param doc 
+     */
     public void processDocument(HttpDoc doc) {
         /* TO DO: Create SpideredContent domain object,
          * set the properties and save() it

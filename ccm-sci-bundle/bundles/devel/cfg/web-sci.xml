@@ -267,12 +267,13 @@
   <!-- module ccm-rssfeed  -  servlet declaration END   -->
 
   <!-- module ccm-ldn-search  -  servlet declarations BEGIN   -->
+<!--
   <servlet>
     <servlet-name>worker</servlet-name>
     <servlet-class>com.arsdigita.london.search.SearchWorkerServlet</servlet-class>
     <load-on-startup>4</load-on-startup>
   </servlet>
-  
+-->  
   <servlet>
     <servlet-name>search-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>

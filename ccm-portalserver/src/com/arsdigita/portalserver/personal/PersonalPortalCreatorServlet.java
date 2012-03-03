@@ -20,7 +20,6 @@
 package com.arsdigita.portalserver.personal;
 
 import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
@@ -31,7 +30,6 @@ import com.arsdigita.kernel.ResourceTypeConfig;
 import com.arsdigita.kernel.User;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
-import com.arsdigita.ui.login.UserAuthenticationListener;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;

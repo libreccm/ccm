@@ -57,7 +57,6 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
-// import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
@@ -80,10 +79,8 @@ import com.arsdigita.templating.PatternStylesheetResolver;
 import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.kernel.Kernel;
 
-// For Id.
-// import java.math.BigDecimal;
-
 import org.apache.log4j.Logger;
+
 
 /**
  * The main CMS initializer, executed recurringly at each system startup.

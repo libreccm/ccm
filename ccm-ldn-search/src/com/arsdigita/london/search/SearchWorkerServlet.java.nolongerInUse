@@ -24,11 +24,26 @@ import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
 
+
+// Deactivated!
+// Moved into Initializer.
+
+
+
 /**
  * This isn't really used as a servlet - its just there
  * isn't any other way to ensure that the threads are
  * only started with a servlet container - ie not when
  * using ccm-run.
+ * 
+ * Must be activated by including following lines into web.xml
+ *   <servlet>
+ *       <servlet-name>worker</servlet-name>
+ *       <servlet-class>com.arsdigita.london.search.SearchWorkerServlet</servlet-class>
+ *       <load-on-startup>4</load-on-startup>
+ *   </servlet>
+ *
+ *
  */
 public class SearchWorkerServlet extends HttpServlet {
 
@@ -36,9 +51,15 @@ public class SearchWorkerServlet extends HttpServlet {
 
     private Thread[] m_workers;
 
+    /**
+     * 
+     * @param config
+     * @throws ServletException 
+     */
+    @Override
     public void init(ServletConfig config) 
         throws ServletException {
-
+/*
         int nWorkers = Search.getConfig().getNumberOfThreads().intValue();
         if (s_log.isDebugEnabled()) {
             s_log.debug("Starting " + nWorkers + " worker threads");
@@ -51,6 +72,8 @@ public class SearchWorkerServlet extends HttpServlet {
             m_workers[i] = new RemoteSearcher(SearchJobQueue.getInstance());
             m_workers[i].start();
         }
+*/
+
     }
     
 }

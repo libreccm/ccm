@@ -50,6 +50,7 @@ import org.apache.log4j.Logger;
  */
 public class PersonalPortalServlet extends BaseApplicationServlet {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(PersonalPortalServlet.class);
 
     private static final PresentationManager s_presManager =
