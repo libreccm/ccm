@@ -117,10 +117,12 @@ public class BookmarkBasePage extends Page {
     }
 
 
+    @Override
     public void lock() {
-        buildPage();
 
+        buildPage();
         super.lock();
+
     }
 
     // Only the PortalPage.lock() should invoke this
@@ -342,8 +344,10 @@ public class BookmarkBasePage extends Page {
 
             Application parent = app.getParentApplication();
 
-            link.setChild(new Label(parent.getTitle()));
-            link.setTarget(parent.getPath());
+            if (parent != null) {
+                link.setChild(new Label(parent.getTitle()));
+                link.setTarget(parent.getPath());
+            }
         }
     }
 

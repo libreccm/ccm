@@ -109,19 +109,7 @@ public class PortletType extends ResourceType {
         Assert.exists(title, "title");
         Assert.exists(profile, "profile");
         Assert.exists(portletObjectType, "portletObjectType");
-/*  Portal now legacy free. To be deleted when transistion is completed.
-        PackageType packageType = null;
-        // is com.arsdigita.portal.Portal initialized
-        try {
-            packageType = PackageType.findByKey("portal");
-        } catch (DataObjectNotFoundException nfe) {
-            String message =
-                "The PackageType 'portal' is not installed.  It must be " +
-                "installed in order to create a new PortletType.";
-            s_cat.error(message);
-            throw new IllegalStateException(message);
-        }
-*/
+
         // is com.arsdigita.portal.Portal initialized?
         if ( !ResourceType.isInstalled(Portal.BASE_DATA_OBJECT_TYPE) ) {
             String message =

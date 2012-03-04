@@ -18,7 +18,7 @@ package com.arsdigita.bookmarks.ui;
 
 import com.arsdigita.bookmarks.util.GlobalizationUtil; 
 import com.arsdigita.bookmarks.BookmarkCollection; 
-import com.arsdigita.bookmarks.BookmarkApplication; 
+import com.arsdigita.bookmarks.Bookmarks; 
 import com.arsdigita.bookmarks.Bookmark; 
 
 import com.arsdigita.web.Application;
@@ -89,7 +89,7 @@ public class BookmarkEditPane extends DynamicListWizard {
         BookmarkCollection m_bmrks;
         Bookmark m_bmrk;
         public BmrkListModel(PageState s) {
-            BookmarkApplication bmrkapp = (BookmarkApplication)Application.getCurrentApplication(s.getRequest());
+            Bookmarks bmrkapp = (Bookmarks)Application.getCurrentApplication(s.getRequest());
             m_bmrks = bmrkapp.getBookmarks();
         }
         public boolean next() {
@@ -129,7 +129,7 @@ public class BookmarkEditPane extends DynamicListWizard {
 
         m_prtlRL = new RequestLocal() {
             protected Object initialValue(PageState ps) {
-                return (BookmarkApplication)Application.getCurrentApplication(
+                return (Bookmarks)Application.getCurrentApplication(
                                                         ps.getRequest());
             }
         };
@@ -181,7 +181,7 @@ public class BookmarkEditPane extends DynamicListWizard {
         	public void validate(FormSectionEvent ev) {
         		// check that the user has permission to create bookmarks.
         		PageState ps = ev.getPageState();
-        		BookmarkApplication ba = (BookmarkApplication)m_prtlRL.get(ps);
+        		Bookmarks ba = (Bookmarks)m_prtlRL.get(ps);
         		ba.assertPrivilege(PrivilegeDescriptor.CREATE);
         	}
         });
@@ -190,7 +190,7 @@ public class BookmarkEditPane extends DynamicListWizard {
         addForm.addProcessListener(new FormProcessListener() {
                 public void process(FormSectionEvent ev) {
                     PageState ps = ev.getPageState();
-                    final BookmarkApplication ba = (BookmarkApplication)m_prtlRL.get(ps);
+                    final Bookmarks ba = (Bookmarks)m_prtlRL.get(ps);
                     final Bookmark newBmrk =
                         new Bookmark(newBmrkName.getValue(ps).toString(),
                                      newBmrkURL.getValue(ps).toString());
@@ -252,7 +252,7 @@ public class BookmarkEditPane extends DynamicListWizard {
             public Component getComponent(List list, PageState state,
                     Object value, String key, int index, boolean isSelected) {
 
-                BookmarkApplication app = (BookmarkApplication) Web.getContext()
+                Bookmarks app = (Bookmarks) Web.getContext()
                                                                 .getApplication();
                 BookmarkCollection bColl = app.getBookmarks();
                 final long size = bColl.size();
@@ -303,13 +303,13 @@ public class BookmarkEditPane extends DynamicListWizard {
         if (EVENT_SWAP_UP.equals(name)) {
             BigDecimal bID = new BigDecimal(bIDstr);
             Bookmark b = Bookmark.retrieveBookmark(bID);
-            BookmarkApplication bApp = b.getBookmarkApplication();
+            Bookmarks bApp = b.getBookmarkApplication();
             bApp.swapBookmarkWithPrevious(b);
         }
         else if (EVENT_SWAP_DOWN.equals(name)) {
             BigDecimal bID = new BigDecimal(bIDstr);
             Bookmark b = Bookmark.retrieveBookmark(bID);
-            BookmarkApplication bApp = b.getBookmarkApplication();
+            Bookmarks bApp = b.getBookmarkApplication();
             bApp.swapBookmarkWithNext(b);
         }
         else {
@@ -536,7 +536,7 @@ public class BookmarkEditPane extends DynamicListWizard {
             BigDecimal bd =
                 new BigDecimal((String) getSelectionModel().getSelectedKey(s));
             Bookmark bmrk = Bookmark.retrieveBookmark(bd);
-            BookmarkApplication ba = (BookmarkApplication)Application.getCurrentApplication(s.getRequest());
+            Bookmarks ba = (Bookmarks)Application.getCurrentApplication(s.getRequest());
             bmrk.setName(bookmarkName.getValue(s).toString());
             bmrk.setURL(bookmarkURL.getValue(s).toString());
             bmrk.setDescription(bookmarkDescription.getValue(s).toString());
@@ -592,7 +592,7 @@ public class BookmarkEditPane extends DynamicListWizard {
             if(button.isSelected(s)) {
                 BigDecimal bmrkID = new BigDecimal((String)getSelectionModel().getSelectedKey(s));
                 Bookmark bmrk = Bookmark.retrieveBookmark(bmrkID);
-                BookmarkApplication bmrkapp = (BookmarkApplication)Application.getCurrentApplication(s.getRequest());
+                Bookmarks bmrkapp = (Bookmarks)Application.getCurrentApplication(s.getRequest());
                 bmrkapp.removeBookmark(bmrk);
                 getSelectionModel().clearSelection(s);
                 reset(s);

@@ -82,6 +82,7 @@ public class AppPortlet extends Portlet {
 	}
     }
 
+    @Override
     public PortletRenderer getPortletRenderer() {
         AbstractPortletRenderer portletRenderer = doGetPortletRenderer();
 

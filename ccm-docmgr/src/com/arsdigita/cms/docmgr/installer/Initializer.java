@@ -78,6 +78,7 @@ public class Initializer extends CompoundInitializer {
 //      return m_conf;
 //  }
 
+    @Override
     public void init(DomainInitEvent e) {
         s_log.debug("Document (CCM) Manager is initializing using .init(DomainInitEvent e)");
         startup();
@@ -92,7 +93,7 @@ public class Initializer extends CompoundInitializer {
         setupDomainFactory();
 
         TransactionContext txn = SessionManager.getSession()
-            .getTransactionContext();
+                                               .getTransactionContext();
         txn.beginTxn();
 
         ApplicationType docsAppType = setupDocs();
@@ -127,9 +128,6 @@ public class Initializer extends CompoundInitializer {
         setup.setDescription
             ("The document manager empowers users to share documents.");
         setup.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DMDispatcher");
-        // Class Stylesheet and database backed stylesheet locations are
-        // deprecated and removed. New StylesheetResolver is pattern based.
-        // setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
         setup.setInstantiator(new ACSObjectInstantiator() {
                 @Override
                 public DomainObject doNewInstance(DataObject dataObject) {

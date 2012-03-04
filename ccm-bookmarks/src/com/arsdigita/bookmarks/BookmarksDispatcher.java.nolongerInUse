@@ -31,13 +31,13 @@ import org.apache.log4j.Logger;
  * @author Jim Parsons
  */
 
-public class BookmarkDispatcher extends BebopMapDispatcher {
+public class BookmarksDispatcher extends BebopMapDispatcher {
 
 
     private static final Logger s_log =
-        Logger.getLogger(BookmarkDispatcher.class);
+        Logger.getLogger(BookmarksDispatcher.class);
 
-    public BookmarkDispatcher() {
+    public BookmarksDispatcher() {
         super();
 
         Map m = new HashMap();

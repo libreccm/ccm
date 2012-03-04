@@ -25,33 +25,34 @@ import com.arsdigita.web.Application;
 import java.math.BigDecimal;
 
 /**
- * BookmarkApplication class.
- *
+ * Bookmarks application domain class.
+ * Central entry point into the bookmarks application.
  * @author dennis
- * @version $Id: BookmarkApplication.java#3  2003/07/10 14:47:30 $
+ * @version $Id: Bookmarks.java#3  2003/07/10 14:47:30 $
  */
-public class BookmarkApplication extends Application {
+public class Bookmarks extends Application {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.workspace.BookmarkApplication";
+                               "com.arsdigita.workspace.BookmarkApplication";
 
     private static final int SORT_KEY_JUMP = 10;
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
     private static final org.apache.log4j.Logger log =
-        org.apache.log4j.Logger.getLogger(BookmarkApplication.class);
+        org.apache.log4j.Logger.getLogger(Bookmarks.class);
 
-    public BookmarkApplication(OID oid) throws DataObjectNotFoundException {
+    public Bookmarks(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
-    public BookmarkApplication(BigDecimal key)  throws DataObjectNotFoundException {
+    public Bookmarks(BigDecimal key)  throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
 
-    public BookmarkApplication(DataObject dataObject) {
+    public Bookmarks(DataObject dataObject) {
         super(dataObject);
     }
 
@@ -59,9 +60,9 @@ public class BookmarkApplication extends Application {
      * Use this instead of the constructor to create new Bookmark
      * Application objects
      */
-    public static BookmarkApplication create(String urlName, String title,
+    public static Bookmarks create(String urlName, String title,
                                              Application parent) {
-        return (BookmarkApplication) Application.createApplication
+        return (Bookmarks) Application.createApplication
             (BASE_DATA_OBJECT_TYPE, urlName, title, parent);
     }
 
@@ -113,4 +114,33 @@ public class BookmarkApplication extends Application {
             b.save();
         }
    }
+    /**
+     * Returns the servletPath part of the URL to the application servlet.
+     * (see Servlet API specification or web.URL for more information)
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>bookmarks</servlet-name>
+     *   <servlet-class>com.arsdigita.bookmarks.BookmarksServlet</servlet-class>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>bookmarks</servlet-name>
+     *   <url-pattern>/bookmarks/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return ServelPath of the applications servlet
+     */
+    @Override
+    public String getServletPath() {
+        return "/bookmarks/";
+    }
+
 }

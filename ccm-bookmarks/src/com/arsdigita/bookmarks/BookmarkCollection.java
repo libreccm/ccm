@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 
 
 /**
- *
+ * Represents a collection of single bookmarks
  *
  */
 public class BookmarkCollection extends DomainCollection {

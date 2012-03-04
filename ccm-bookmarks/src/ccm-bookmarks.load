@@ -9,5 +9,6 @@
   </provides>
   <scripts>
     <schema directory="ccm-bookmarks"/>
+    <data class="com.arsdigita.bookmarks.Loader"/>
   </scripts>
 </load>

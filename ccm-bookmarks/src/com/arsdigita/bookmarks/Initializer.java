@@ -18,46 +18,34 @@
 
 package com.arsdigita.bookmarks;
 
+import com.arsdigita.bookmarks.ui.BookmarkPortlet;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.persistence.SessionManager;
-// unused import com.arsdigita.persistence.OID;
-import com.arsdigita.web.*;
 import com.arsdigita.kernel.*;
-// unused import com.arsdigita.sitenode.*;
-import com.arsdigita.bookmarks.ui.*;
-// unused  import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObject;
-// import com.arsdigita.initializer.Configuration;
-// unused import com.arsdigita.initializer.InitializationException;
-// unused import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
-import com.arsdigita.portal.PortletType;
-import com.arsdigita.portal.apportlet.AppPortletSetup;
 import com.arsdigita.runtime.CompoundInitializer;
-// unused import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
-// unusd import com.arsdigita.util.Assert;
+
 import org.apache.log4j.Logger;
 
 
 /**
- * <p><strong>Experimental</strong></p>
  *
  * @author <a href="mailto:jparsons@redhat.com">Jim Parsons</a>
  */
 public class Initializer extends CompoundInitializer {
 
+    /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger.getLogger
         (Initializer.class);
 
-    //  required by Old Initializer.
-    //  private Configuration m_conf = new Configuration();
-
+    /**
+     * 
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -69,70 +57,34 @@ public class Initializer extends CompoundInitializer {
     }
 
 
+    /**
+     * 
+     * @param e 
+     */
     @Override
     public void init(DomainInitEvent e) {
 	    s_log.info("Bookmarks app is initializing using .init(DomainInitEvent e)");
-        // 	setupDomainFactory();
+        super.init(e);
 
-        TransactionContext txn = SessionManager.getSession()
-                                               .getTransactionContext();
-        txn.beginTxn();
-	    setupBookmarks();
-        txn.commitTxn();
-        s_log.info("Bookamrks Initializer completed.");
-    }
-
-
-
-//     public final void doStartup() {
-//         s_log.warn("Initializing Bookmarks...");
-
-//         TransactionContext txn =
-//             SessionManager.getSession().getTransactionContext();
-
-//         txn.beginTxn();
-
-//             setupBookmarks();
-
-//         txn.commitTxn();
-
-//     }
-
-    private void setupBookmarks() {
-
-        ApplicationSetup appsetup = new ApplicationSetup(s_log);
-        appsetup.setApplicationObjectType( BookmarkApplication.BASE_DATA_OBJECT_TYPE);
-        appsetup.setKey("bookmarks");
-        appsetup.setTitle("Bookmarks Application");
-        appsetup.setDescription("Bookmarks for a Portal");
-        appsetup.setDispatcherClass("com.arsdigita.bookmarks.BookmarkDispatcher");
-        appsetup.setPortalApplication(true);
-        appsetup.setInstantiator(new ACSObjectInstantiator() {
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new BookmarkApplication(dataObject);
-                }
-            });
-
-        ApplicationType bmrkAppType = appsetup.run();
-
-
-        AppPortletSetup setup = new AppPortletSetup(s_log);
-
-        setup.setPortletObjectType
-            (BookmarkPortlet.BASE_DATA_OBJECT_TYPE);
-        setup.setTitle("Portal Bookmarks");
-        setup.setDescription("Displays bookmarks for this portal.");
-        setup.setProfile(PortletType.NARROW_PROFILE);
-        setup.setPortalApplication(false);
-        setup.setProviderApplicationType(bmrkAppType);
-        setup.setInstantiator(new ACSObjectInstantiator() {
+        /* Register object instantiator for Bookmarks Application   */
+        e.getFactory().registerInstantiator(
+            Bookmarks.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
-                    return new BookmarkPortlet(dataObject);
+                    return new Bookmarks(dataObject);
                 }
             });
-        setup.run();
+
+        /* Register object instantiator for Bookmarks Portlet   */
+        e.getFactory().registerInstantiator(
+                BookmarkPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new BookmarkPortlet(dataObject);
+                    }
+                });
+
     }
 
-
-//     public final void doShutdown() {}
 }

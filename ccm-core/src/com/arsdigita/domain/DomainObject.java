@@ -341,17 +341,16 @@ public abstract class DomainObject {
     }
 
     /**
-     * Set an association DomainObjects DataObject.
-     * This should only be used inside of a setXXX
-     * method.
+     * Set an association DomainObjects DataObject. This should only be used
+     * inside of a setXXX method.
      * <p>
-     * Specificall, this method should only be used to set
-     * associations whose multiplicity is 0..1 or 1..1.
-     * If the upper bound of the multiplicity is greater than 1
-     * then the {@link #add(String, DataObject)} method should be used.
+     * Specifically, this method should only be used to set associations
+     * whose multiplicity is 0..1 or 1..1.
+     * If the upper bound of the multiplicity is greater than 1 then the
+     * {@link #add(String, DataObject)} method should be used.
      *
      * @see com.arsdigita.persistence.DataObject#set(String, Object)
-     **/
+     */
     protected void setAssociation(String attr, DomainObject dobj) {
         set(attr, dobj == null ? null : dobj.m_dataObject);
     }
@@ -515,8 +514,9 @@ public abstract class DomainObject {
      * whether the object is new, modified, deleted, or unknown. Unknown is for
      * objects that have been invalidated.
      */
+    @Override
     public String toString() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         OID oid = getOID();
         if ( oid != null ) {
             result.append(oid.toString());
@@ -586,37 +586,47 @@ public abstract class DomainObject {
 
         private DomainObject getDomainObject() { return DomainObject.this; }
 
+        @Override
         public void set(DataObject object, String property, Object previous,
                         Object value) { }
 
+        @Override
         public void add(DataObject object, String property,
                         DataObject value) { }
 
+        @Override
         public void remove(DataObject object, String property,
                            DataObject value) { }
 
+        @Override
         public void clear(DataObject object, String property) { }
 
+        @Override
         public void beforeSave(DataObject object) {
             getDomainObject().beforeSave();
         }
 
+        @Override
         public void afterSave(DataObject object) {
             getDomainObject().afterSave();
         }
 
+        @Override
         public void beforeDelete(DataObject object) {
             getDomainObject().beforeDelete();
         }
 
+        @Override
         public void afterDelete(DataObject object) {
             getDomainObject().afterDelete();
         }
 
+        @Override
         public int hashCode() {
             return getDomainObject().hashCode();
         }
 
+        @Override
         public boolean equals(Object other) {
             if (other instanceof SaveObserver) {
                 return getDomainObject().equals(
@@ -639,6 +649,7 @@ public abstract class DomainObject {
             return false;
         }
 
+        @Override
         public String toString() {
             return "Save observer for: " + getDomainObject().getOID() + " (" +
                 super.toString() + ")";

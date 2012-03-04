@@ -35,19 +35,20 @@ import java.math.BigDecimal;
 public final class AppPortletType extends PortletType {
 
     private static final Logger s_cat =
-        Logger.getLogger(AppPortletType.class.getName());
+                                Logger.getLogger(AppPortletType.class.getName());
 
-    private final static String IS_PORTAL_APPLICATION =
-        "isWorkspaceApplication";
+    private final static String IS_PORTAL_APPLICATION = "isWorkspaceApplication";
 
     protected AppPortletType(DataObject dataObject) {
         super(dataObject);
     }
 
     // Create from packageType.
-    protected AppPortletType
-        (String dataObjectType, String title, String profile,
-         String portletObjectType) {
+    protected AppPortletType(String dataObjectType, 
+                             String title, 
+                             String profile,
+                             String portletObjectType) {
+
         super(dataObjectType,title,profile,portletObjectType);
 
     }

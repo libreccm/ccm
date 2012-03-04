@@ -51,6 +51,9 @@ public class Initializer extends CompoundInitializer {
 
     private Thread[] m_workers;
 
+    /**
+     * 
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);

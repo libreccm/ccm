@@ -28,16 +28,15 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
- * A bookmark.
+ * Represents a single bookmark.
  *
  * @author Jim Parsons
- *
  */
 public class Bookmark extends ACSObject {
 
     private static final int SORT_KEY_JUMP = 10;
 
-    private BookmarkApplication m_bmrkapp = null;
+    private Bookmarks m_bmrkapp = null;
 
     /**
      * The type of the {@link com.arsdigita.persistence.DataObject}
@@ -45,7 +44,7 @@ public class Bookmark extends ACSObject {
      * com.arsdigita.domain.DomainObject}.
      */
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.workspace.Bookmark";
+                               "com.arsdigita.workspace.Bookmark";
 
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -105,17 +104,17 @@ public class Bookmark extends ACSObject {
         return Bookmark.retrieveBookmark(dataObject);
     }
 
-    public BookmarkApplication getBookmarkApplication() {
+    public Bookmarks getBookmarkApplication() {
         if(m_bmrkapp == null) {
            DataObject bmrkdata = (DataObject)get("bookmarkapp");
            if(bmrkdata != null) {
-              m_bmrkapp = new BookmarkApplication(bmrkdata);
+              m_bmrkapp = new Bookmarks(bmrkdata);
            }
         }
         return m_bmrkapp;
     }
 
-    public void setBookmarkApplication(BookmarkApplication bmrkapp) {
+    public void setBookmarkApplication(Bookmarks bmrkapp) {
         m_bmrkapp = bmrkapp;
         setAssociation("bookmarkapp",bmrkapp);
     }

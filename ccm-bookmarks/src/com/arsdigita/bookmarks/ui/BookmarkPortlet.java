@@ -23,7 +23,7 @@ import com.arsdigita.bebop.GridPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
-import com.arsdigita.bookmarks.BookmarkApplication;
+import com.arsdigita.bookmarks.Bookmarks;
 import com.arsdigita.bookmarks.BookmarkCollection;
 import com.arsdigita.bookmarks.util.GlobalizationUtil;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -44,44 +44,82 @@ import com.arsdigita.xml.Element;
  */
 public class BookmarkPortlet extends AppPortlet {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(BookmarkPortlet.class);
 
+    /**  PDL stuff - Data Object                                              */
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.workspace.BookmarkPortlet";
+                               "com.arsdigita.workspace.BookmarkPortlet";
 
+    /**
+     * Provide the Data Object Type.
+     * @return DataObjectType as String 
+     */
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param dataObject 
+     */
     public BookmarkPortlet(DataObject dataObject) {
         super(dataObject);
     }
 
+    /**
+     * 
+     * @return 
+     */
+    @Override
     public String getZoomURL() {
         Application app = getParentApplication();
         if (!PermissionService.checkPermission(
-                new PermissionDescriptor(PrivilegeDescriptor.READ, app, Web.getContext().getUser()))) {
+                new PermissionDescriptor(PrivilegeDescriptor.READ, 
+                                         app, 
+                                         Web.getContext().getUser()))) {
             return null;
         }
         return (URL.getDispatcherPath() + app.getPrimaryURL());
     }
 
+    /**
+     * 
+     * @return 
+     */
+    @Override
     protected AbstractPortletRenderer doGetPortletRenderer() {
         return new BookmarkPortletRenderer(this);
     }
 }
 
+/**
+ * 
+ * 
+ */
 class BookmarkPortletRenderer extends AbstractPortletRenderer {
+
     private BookmarkPortlet m_portlet;
 
+    /**
+     * 
+     * @param portlet 
+     */
     public BookmarkPortletRenderer
         (BookmarkPortlet portlet) {
         m_portlet = portlet;
     }
 
+    /**
+     * 
+     * @param pageState
+     * @param parentElement 
+     */
     protected void generateBodyXML(PageState pageState, Element parentElement) {
-        BookmarkApplication bmrkapp = 
-                 (BookmarkApplication)m_portlet.getParentApplication();
+        Bookmarks bmrkapp = 
+                 (Bookmarks)m_portlet.getParentApplication();
 
         // Variables used cursorwise.
         int counter;

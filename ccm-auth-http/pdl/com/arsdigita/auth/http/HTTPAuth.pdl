@@ -20,5 +20,6 @@ model com.arsdigita.auth.http;
 import com.arsdigita.web.Application;
 
 object type HTTPAuth extends Application {
-    reference key (auth_http.application_id);
+    // reference key (auth_http.application_id);
+    // nothing to store here
 }
