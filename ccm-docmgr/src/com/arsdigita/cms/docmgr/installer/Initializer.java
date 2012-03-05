@@ -80,7 +80,9 @@ public class Initializer extends CompoundInitializer {
 
     @Override
     public void init(DomainInitEvent e) {
-        s_log.debug("Document (CCM) Manager is initializing using .init(DomainInitEvent e)");
+        s_log.debug("Document (CCM) Manager is Domain initializing ... ");
+
+        setupDomainFactory();
         startup();
     }
 
@@ -90,7 +92,7 @@ public class Initializer extends CompoundInitializer {
     public void startup() {
         s_log.warn("Document Manager is initializing.");
 
-        setupDomainFactory();
+    //  setupDomainFactory();
 
         TransactionContext txn = SessionManager.getSession()
                                                .getTransactionContext();
@@ -133,7 +135,7 @@ public class Initializer extends CompoundInitializer {
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new Repository(dataObject);
                 }
-            });
+        });
 
         return setup.run();
     }
@@ -148,6 +150,7 @@ public class Initializer extends CompoundInitializer {
         setup.setProfile(PortletType.WIDE_PROFILE);
         setup.setProviderApplicationType(provider);
         setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
                 protected DomainObject doNewInstance(DataObject dataObject) {
                     return new RecentUpdatedDocsPortlet(dataObject);
                 }
@@ -169,6 +172,7 @@ public class Initializer extends CompoundInitializer {
         // deprecated and removed. New StylesheetResolver is pattern based.
         //setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
         setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new DocumentCategoryBrowserApplication(dataObject);
                 }
@@ -189,6 +193,7 @@ public class Initializer extends CompoundInitializer {
         // deprecated and removed. New StylesheetResolver is pattern based.
         //setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
         setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new LegacyCategoryBrowserApplication(dataObject);
                 }
@@ -207,6 +212,7 @@ public class Initializer extends CompoundInitializer {
         setup.setProfile(PortletType.WIDE_PROFILE);
         setup.setProviderApplicationType(provider);
         setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
                 protected DomainObject doNewInstance(DataObject dataObject) {
                     return new CategoryDocsNavigatorPortlet(dataObject);
                 }
@@ -225,6 +231,7 @@ public class Initializer extends CompoundInitializer {
         setup.setProfile(PortletType.WIDE_PROFILE);
         setup.setProviderApplicationType(provider);
         setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
                 protected DomainObject doNewInstance(DataObject dataObject) {
                     return new LegacyCategoryDocsNavigatorPortlet(dataObject);
                 }
@@ -240,6 +247,7 @@ public class Initializer extends CompoundInitializer {
     private void setupDomainFactory() {
         DomainObjectFactory.registerInstantiator(
              Document.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+            @Override
                   public DomainObject doNewInstance(DataObject dataObject) {
                         return new Document(dataObject);
                         }
@@ -247,6 +255,7 @@ public class Initializer extends CompoundInitializer {
         );
         DomainObjectFactory.registerInstantiator(
              DocFolder.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+            @Override
                   public DomainObject doNewInstance(DataObject dataObject) {
                         return new DocFolder(dataObject);
                         }

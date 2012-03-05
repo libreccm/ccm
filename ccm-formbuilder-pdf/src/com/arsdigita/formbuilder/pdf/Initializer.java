@@ -27,13 +27,9 @@ import com.arsdigita.runtime.CompoundInitializer;
 
 /**
  * Initializes the formbuilder pdf generator
- * @version $Id: //ps/apps/london/atoz/dev/src/com/arsdigita/london/atoz/Initializer.java#6 $
+ * @version $Id: Initializer.java#6 $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: //ps/apps/london/atoz/dev/src/com/arsdigita/london/atoz/Initializer.java#6 $" +
-        "$Author: mbooth $" +
-        "$DateTime: 2004/04/23 13:04:49 $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();

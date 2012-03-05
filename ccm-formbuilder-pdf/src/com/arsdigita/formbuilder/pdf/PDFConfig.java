@@ -21,7 +21,6 @@ package com.arsdigita.formbuilder.pdf;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
-import org.apache.log4j.Logger;
 
 import org.apache.log4j.Logger;
 
@@ -29,20 +28,16 @@ import org.apache.log4j.Logger;
  * A set of configuration parameters for the formbuilder PDF action.
  *
  * @author Matthew Booth <mbooth@redhat.com>
- * @version $Id: ForumConfig.java 285 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: PDFConfig.java 285 2005-02-22 00:29:02Z sskracic $
  */
 
 public class PDFConfig extends AbstractConfig {
-    public final static String versionId =
-        "$Id: ForumConfig.java 285 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
-    
-    private Parameter m_xslFile;
 
     private static final Logger s_log = Logger.getLogger(PDFConfig.class);
 
     private static final PDFConfig s_config = new PDFConfig();
+    
+    private Parameter m_xslFile;
 
     static {
         s_log.debug("Static initalizer starting...");

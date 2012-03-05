@@ -15,5 +15,6 @@
     <data class="com.arsdigita.cms.docmgr.DocumentLoader"/>
     <data class="com.arsdigita.cms.docmgr.DocLinkLoader"/>
     <data class="com.arsdigita.cms.docmgr.DocFolderLoader"/>
+    <data class="com.arsdigita.cms.docmgr.Loader"/>
   </scripts>
 </load>

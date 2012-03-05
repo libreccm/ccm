@@ -30,7 +30,7 @@ import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
-import com.arsdigita.bebop.parameters.StringParameter;
+// import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -369,9 +369,13 @@ public class DocmgrBasePage extends Page implements DMConstants {
             Assert.exists(app, Application.class);
 
             Application parent = app.getParentApplication();
-
-            link.setChild(new Label(parent.getTitle()));
-            link.setTarget(parent.getPath());
+            if (parent != null ) {  // it's me
+                link.setChild(new Label(parent.getTitle()));
+                link.setTarget(parent.getPath());
+            } else {     // it's me (the following 4 lines
+                link.setChild(new Label("/"));
+                link.setTarget(com.arsdigita.web.URL.root().toString());            
+            }
         }
     }
 

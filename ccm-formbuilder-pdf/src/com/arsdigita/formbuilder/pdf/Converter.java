@@ -68,12 +68,14 @@ public class Converter extends HttpServlet
     
     public Converter() { }
 
+    @Override
     public void init() throws ServletException
     {
         transformerFactory = TransformerFactory.newInstance();
     }
 
     //Setup FOP
+    @Override
     public void  doGet(HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException
     {

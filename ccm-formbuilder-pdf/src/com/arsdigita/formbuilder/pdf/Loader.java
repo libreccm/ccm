@@ -31,13 +31,9 @@ import org.apache.log4j.Logger;
  * Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: //apps/forum/dev/src/com/arsdigita/forum/Loader.java#7 $
+ * @version $Id: Loader.java#7 $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: //apps/forum/dev/src/com/arsdigita/forum/Loader.java#7 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 

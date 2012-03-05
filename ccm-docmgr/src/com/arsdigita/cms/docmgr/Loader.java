@@ -18,13 +18,15 @@
  */
 package com.arsdigita.cms.docmgr;
 
-import com.arsdigita.docrepo.ui.RecentUpdatedDocsPortlet;
-// import com.arsdigita.mimetypes.*;
+import com.arsdigita.cms.docmgr.ui.CategoryDocsNavigatorPortlet;
+import com.arsdigita.cms.docmgr.ui.LegacyCategoryDocsNavigatorPortlet;
+import com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
+// import com.arsdigita.mimetypes.*;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.portal.apportlet.AppPortletSetup;
@@ -33,6 +35,33 @@ import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 
 import org.apache.log4j.Logger;
+
+
+//  ///////////////////////////////////////////////////////////////////////////
+//  Project: Migrate to new style legacy free type of application.
+//
+//  Step 1: Copy from Initializer all data base / applicationtype
+//          related code to LOADER and use Loader for data loading.
+//
+//  Step 2: Remove usage of ApplicationSetup and switch to legacy
+//          compativle AppType xxx = new AppType.create(......)
+//          Move setInstantiator back to Initializer as required.
+//
+//  Step 3: Move to legacy free app type
+//          (a) modify new App.Tpye.....
+//          (b) create AppServlet from Dispatcher
+//
+//
+//  TESTS:
+//  (a) Try to instantiate an instance of each type and check the UI
+//      produced by the dispatcher / servlet
+//  (b) Instantiate the porlets and try to reproduce the behaviour
+//      (probably reproduce the error showing up originally)
+//
+//
+//  ///////////////////////////////////////////////////////////////////////////
+
+
 
 /**
  * CMS Document Manager (DocMgr) Loader
@@ -61,7 +90,18 @@ public class Loader extends PackageLoader {
                 loadDocRepositoryApplicationType();  //former setupDocs
                 setupDocRepositoryPortlet(null);     //former setupDocManagerPortlet
 
-                setupDefaultDocRepository();
+                ApplicationType categoryBrowseDocsAppType = setupCategoryBrowsing();
+                setupCategoryDocsPortlet(categoryBrowseDocsAppType);
+
+                ApplicationType legacyCategoryBrowseDocsAppType = 
+                                                  setupLegacyCategoryBrowsing();
+                setupLegacyCategoryDocsPortlet(legacyCategoryBrowseDocsAppType);
+
+                // de-activate search for now
+                //SearchUtils.setSearcher
+                //    (new com.arsdigita.cms.docmgr.search.IntermediaSearcher());
+
+                setupDefaultDocRepository();  //new here!
 
             }
         }.run();
@@ -76,6 +116,7 @@ public class Loader extends PackageLoader {
     // ////////////////////////////////////////////////////////////////////////
 
     /**
+     * COPY & PASTE, has to be adopted !!
      * Creates a document repository application type, the domain class of the
      * document repository (docrepo) package, as a legacy-compatible type of
      * application.
@@ -85,6 +126,7 @@ public class Loader extends PackageLoader {
      *
      * TODO: migrate to a new style, legacy free application type.
      */
+    // formerly setupDocs()
     private ApplicationType loadDocRepositoryApplicationType() {
 
         ApplicationSetup setup = new ApplicationSetup(s_log);
@@ -124,7 +166,8 @@ public class Loader extends PackageLoader {
 
     private ApplicationType setupCategoryBrowsing() {
         ApplicationSetup setup = new ApplicationSetup(s_log);
-        setup.setApplicationObjectType(DocumentCategoryBrowserApplication.BASE_DATA_OBJECT_TYPE);
+        setup.setApplicationObjectType(DocumentCategoryBrowserApplication
+                                       .BASE_DATA_OBJECT_TYPE);
         setup.setKey("cmsdocs-categories");
         setup.setTitle("Browse Documents Application");
         setup.setSingleton(true);
@@ -142,7 +185,8 @@ public class Loader extends PackageLoader {
     }
     private ApplicationType setupLegacyCategoryBrowsing() {
         ApplicationSetup setup = new ApplicationSetup(s_log);
-        setup.setApplicationObjectType(LegacyCategoryBrowserApplication.BASE_DATA_OBJECT_TYPE);
+        setup.setApplicationObjectType(LegacyCategoryBrowserApplication
+                                       .BASE_DATA_OBJECT_TYPE);
         setup.setKey("cmsdocs-categories-legacy");
         setup.setTitle("Taxonomy Browser");
         setup.setSingleton(true);
@@ -171,13 +215,16 @@ public class Loader extends PackageLoader {
     //  try {
     //      SiteNode sn = SiteNode.getSiteNode("/administration", false);
     //      if (!"administration".equals(sn.getName())) {
-                Repository repo = Repository.create(
-                        "repository", "Default Document Repository", null);
+                Repository repo = Repository
+                                  .create( "docrepo", 
+                                           "Default DocumentMgr Repository", 
+                                           null);
                 repo.save();
     //      }
     //  } catch (DataObjectNotFoundException e) {
     //      Assert.fail(e.getMessage());
     //  }
+
     }
 
 
@@ -195,6 +242,7 @@ public class Loader extends PackageLoader {
      * Instances (Portlets) are created by user interface or programmatically
      * by configuration.
      */
+    //former setupDocManagerPortlet
     private void setupDocRepositoryPortlet(ApplicationType provider) {
 
         // Create the document repository portlet
@@ -211,6 +259,50 @@ public class Loader extends PackageLoader {
                 @Override
                 protected DomainObject doNewInstance(DataObject dataObject) {
                     return new RecentUpdatedDocsPortlet(dataObject);
+                }
+            });
+
+        setup.run();
+
+    }
+
+    private void setupCategoryDocsPortlet(ApplicationType provider) {
+
+        // Create the document manager portlet
+        AppPortletSetup setup = new AppPortletSetup(s_log);
+
+        setup.setPortletObjectType(CategoryDocsNavigatorPortlet
+                                   .BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Document Category Navigator");
+        setup.setDescription("Browse documents by category.");
+        setup.setProfile(PortletType.WIDE_PROFILE);
+        setup.setProviderApplicationType(provider);
+        setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
+                protected DomainObject doNewInstance(DataObject dataObject) {
+                    return new CategoryDocsNavigatorPortlet(dataObject);
+                }
+            });
+
+        setup.run();
+
+    }
+
+    private void setupLegacyCategoryDocsPortlet(ApplicationType provider) {
+
+        // Create the document manager portlet
+        AppPortletSetup setup = new AppPortletSetup(s_log);
+
+        setup.setPortletObjectType(LegacyCategoryDocsNavigatorPortlet
+                                   .BASE_DATA_OBJECT_TYPE);
+        setup.setTitle("Taxonomy Browser");
+        setup.setDescription("Browse documents by category.");
+        setup.setProfile(PortletType.WIDE_PROFILE);
+        setup.setProviderApplicationType(provider);
+        setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
+                protected DomainObject doNewInstance(DataObject dataObject) {
+                    return new LegacyCategoryDocsNavigatorPortlet(dataObject);
                 }
             });
 

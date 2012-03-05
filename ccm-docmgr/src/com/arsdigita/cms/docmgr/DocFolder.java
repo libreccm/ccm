@@ -37,7 +37,7 @@ public class DocFolder extends Folder implements Resource {
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.docmgr.DocFolder";
+                               = "com.arsdigita.cms.docmgr.DocFolder";
     /** Data object type for this domain object (for CMS compatibility) */
     public static final String TYPE = BASE_DATA_OBJECT_TYPE;
 

@@ -359,6 +359,7 @@ class DocrepoBasePage extends Page {
     }
 
     protected class CurrentApplicationLabelPrinter implements PrintListener {
+
         public CurrentApplicationLabelPrinter() {
             // Empty
         }
