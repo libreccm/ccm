@@ -21,7 +21,7 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.TextAsset;
-import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.cms.ReusableImageAsset;
 
 // object type to hold sections for multi-part article content type
 
@@ -32,8 +32,8 @@ object type ArticleSection extends ContentPage {
     component TextAsset[0..1] text = join ct_mp_sections.text
                                        to cms_text.text_id;
 
-    component ImageAsset[0..1] image = join ct_mp_sections.image
-                                         to cms_images.image_id;
+    component ReusableImageAsset[0..1] image = join ct_mp_sections.image
+                                                 to cms_images.image_id;
 
     reference key (ct_mp_sections.section_id);
 }

@@ -37,7 +37,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
-import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.TextAsset;
 import com.arsdigita.cms.contenttypes.ArticleSection;
@@ -109,8 +109,8 @@ public class SectionEditForm extends Form {
         m_container = container;
 
         m_imageParam = new BigDecimalParameter(IMAGE_PARAM);
-        m_selImage = new ItemSelectionModel(ImageAsset.class.getName(),
-                                            ImageAsset.BASE_DATA_OBJECT_TYPE,
+        m_selImage = new ItemSelectionModel(ReusableImageAsset.class.getName(),
+                                            ReusableImageAsset.BASE_DATA_OBJECT_TYPE,
                                             m_imageParam);
 
         m_textParam = new BigDecimalParameter(TEXT_PARAM);
@@ -168,7 +168,7 @@ public class SectionEditForm extends Form {
         add(new Label(MPArticleGlobalizationUtil
                       .globalize("cms.contenttypes.ui.mparticle.body_text")),
             ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
-        CMSDHTMLEditor textWidget = 
+        CMSDHTMLEditor textWidget =
             new CMSDHTMLEditor(new TrimmedStringParameter(TEXT));
         textWidget.setRows(40);
         textWidget.setCols(70);
@@ -177,7 +177,7 @@ public class SectionEditForm extends Form {
             ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
 
         add(new Label(MPArticleGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.mparticle.image")), 
+                      .globalize("cms.contenttypes.ui.mparticle.image")),
             ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
         m_imageUpload = new ImageUploadSection("image", m_selImage);
@@ -195,43 +195,43 @@ public class SectionEditForm extends Form {
      * into the form fields.
      */
     private class SectionInitListener implements FormInitListener {
-        public void init( FormSectionEvent event ) 
+        public void init( FormSectionEvent event )
             throws FormProcessException {
             PageState state = event.getPageState();
             FormData data = event.getFormData();
             m_selImage.setSelectedObject(state, null);
             m_selText.setSelectedObject(state,null);
-            
-            
+
+
             if ( m_selSection.getSelectedKey(state) != null ) {
                 BigDecimal id = new BigDecimal(m_selSection
                                                .getSelectedKey(state).toString());
                 try {
                     // retrieve the selected Section from the persistence layer
                     ArticleSection section = new ArticleSection(id);
-                    
+
                     data.put(TITLE, section.getTitle());
-                    
+
                     TextAsset t = section.getText();
                     if ( t != null ) {
                         m_selText.setSelectedObject(state, t);
                         data.put(TEXT, t.getText());
                     }
-                    
-                    ImageAsset img = section.getImage();
+
+                    ReusableImageAsset img = section.getImage();
                     if (img != null) {
                         m_selImage.setSelectedObject(state, img);
                     }
-                    
+
                     if (section.isPageBreak()) {
                         data.put(PAGE_BREAK, new Object[] { "true" });
                     }
-                    
+
                 } catch ( DataObjectNotFoundException ex ) {
                     log.error("Section(" + id + ") could not be found");
                 }
             }
-            
+
             // Wait until the image selection model is updated before
             // initializing the image section
             m_imageUpload.initImageUpload(event);
@@ -244,10 +244,10 @@ public class SectionEditForm extends Form {
      * cancel button.  If they did, don't continue with the form.
      */
     private class SectionSubmissionListener implements FormSubmissionListener {
-        public void submitted( FormSectionEvent event ) 
+        public void submitted( FormSectionEvent event )
             throws FormProcessException {
             PageState state = event.getPageState();
-            
+
             if ( m_saveCancelSection.getCancelButton()
                  .isSelected(state) && m_container != null) {
                 m_container.onlyShowComponent(
@@ -267,7 +267,7 @@ public class SectionEditForm extends Form {
                 } catch ( DataObjectNotFoundException ex ) {
                     log.error("Section(" + id + ") could not be found");
                 }
-            	
+
             }
         }
     }
@@ -277,52 +277,52 @@ public class SectionEditForm extends Form {
      * assign it to the current MultiPartArticle.
      */
     private class SectionProcessListener implements FormProcessListener {
-        public void process( FormSectionEvent event ) 
+        public void process( FormSectionEvent event )
             throws FormProcessException {
             PageState state = event.getPageState();
             FormData data = event.getFormData();
-            
+
             // retrieve the current MultiPartArticle
             BigDecimal id = new BigDecimal(
                 m_selArticle.getSelectedKey(state).toString());
             MultiPartArticle article = null;
-            
+
             try {
                 article = new MultiPartArticle(id);
             } catch ( DataObjectNotFoundException ex ) {
                 throw new UncheckedWrapperException(ex);
             }
-            
-            
+
+
             // get the selected section to update or create a new one
             ArticleSection section = (ArticleSection)
                 m_selSection.getSelectedObject(state);
             if ( section == null ) {
-                section = createSection(event, article);                
+                section = createSection(event, article);
                 article.addSection(section);
             }
-            
+
             section.setTitle((String)data.get(TITLE));
-            
+
             Object[] pageBreakVal = (Object[])data.get(PAGE_BREAK);
             boolean pageBreak;
-            if (pageBreakVal == null || 
-                pageBreakVal.length == 0 || 
+            if (pageBreakVal == null ||
+                pageBreakVal.length == 0 ||
                 !"true".equals(pageBreakVal[0])) {
                 pageBreak = false;
             } else {
                 pageBreak = true;
             }
             section.setPageBreak(pageBreak);
-            
+
             // get the image asset
-            ImageAsset imageAsset = m_imageUpload.processImageUpload(event);
-            if ( imageAsset != null ) {
-                section.setImage(imageAsset);
-                m_selImage.setSelectedObject(state, imageAsset);
+            ReusableImageAsset reusableImageAsset = m_imageUpload.processImageUpload(event);
+            if ( reusableImageAsset != null ) {
+                section.setImage(reusableImageAsset);
+                m_selImage.setSelectedObject(state, reusableImageAsset);
             }
-            
-            
+
+
             // get the text asset
             TextAsset textAsset = (TextAsset)m_selText.getSelectedObject(state);
             if ( textAsset == null ) {
@@ -331,27 +331,27 @@ public class SectionEditForm extends Form {
                 m_selText.setSelectedObject(state, textAsset);
                 section.setText(textAsset);
             }
-            
+
             String text = (String)data.get(TEXT);
             if ( text == null ) {
                 text = "";
             }
-            
+
             textAsset.setText(text);
             if ( m_container != null) {
                 m_container.onlyShowComponent(
-                    state, 
+                    state,
                     MultiPartArticleViewSections.SECTION_TABLE+
                     m_container.getTypeIDStr());
             }
         }
     }
-    
-    
+
+
     /**
      * Utility method to create a Section from the form data supplied.
      */
-    protected ArticleSection createSection(FormSectionEvent event, 
+    protected ArticleSection createSection(FormSectionEvent event,
                                            MultiPartArticle article) {
 
         PageState state = event.getPageState();

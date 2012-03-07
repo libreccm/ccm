@@ -18,21 +18,15 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ImageAsset;
-import com.arsdigita.cms.TextAsset;
-import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-
-import org.apache.log4j.Logger;
-
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  * Represents a section within a MultiPartArticle
@@ -63,7 +57,7 @@ public class ArticleSection extends ContentPage {
      *
      * @param id the id of the object to retrieve
      */
-    public ArticleSection(BigDecimal id) 
+    public ArticleSection(BigDecimal id)
         throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
@@ -73,7 +67,7 @@ public class ArticleSection extends ContentPage {
      *
      * @param id the id of the object to retrieve
      */
-    public ArticleSection(OID id) 
+    public ArticleSection(OID id)
         throws DataObjectNotFoundException {
         super(id);
     }
@@ -100,7 +94,7 @@ public class ArticleSection extends ContentPage {
     }
 
     /** Accessor. Get this item's rank in the set of ArticleSections */
-        
+
     public Integer getRank() {
         return (Integer)get(RANK);
     }
@@ -109,7 +103,7 @@ public class ArticleSection extends ContentPage {
 
     public void setRank(Integer rank) {
         set(RANK, rank);
-    } 
+    }
 
     public MultiPartArticle getMPArticle() {
         DataObject obj = (DataObject) get( MP_ARTICLE );
@@ -130,21 +124,21 @@ public class ArticleSection extends ContentPage {
     }
 
     /** Accessor. Get the image associated with this item. */
-    public ImageAsset getImage() {
+    public ReusableImageAsset getImage() {
         if ( get(IMAGE) == null ) {
             return null;
         }
-        return new ImageAsset((DataObject)get(IMAGE));
+        return new ReusableImageAsset((DataObject)get(IMAGE));
     }
 
     /** Mutator. Set the image associated with this item. */
-    public void setImage(ImageAsset image) {
+    public void setImage(ReusableImageAsset image) {
         setAssociation(IMAGE, image);
     }
 
     public void initialize() {
         super.initialize();
-                                                                                
+
         if (isNew()) {
             set(PAGE_BREAK, Boolean.FALSE);
         }
@@ -160,30 +154,30 @@ public class ArticleSection extends ContentPage {
 
     /**
      * Depending on config parameter, either return the title
-     * of the section 
-     * 
+     * of the section
+     *
      * OR
-     * 
-     * return the title of the section at the top of the 
+     *
+     * return the title of the section at the top of the
      * page on which the current section appears unless
-     * the whole multipart article appears on one page, 
+     * the whole multipart article appears on one page,
      * in which case null is returned.
      */
     public String getPageTitle() {
-        
+
         if (MultiPartArticle.getConfig().useSectionTitle()) {
         	return getTitle();
         }
-        
+
         s_log.debug("retrieve pageTitle for section " + getTitle() + " ranked " + getRank());
         MultiPartArticle parent = getMPArticle();
-        
-        // is this a single page article? either page break on last section, 
+
+        // is this a single page article? either page break on last section,
         // or no page breaks
-        
-        
+
+
         // boolean argument means order by rank ascending - no argument
-	// currently means ascending, but specify here in case that 
+	// currently means ascending, but specify here in case that
 	// changes
         ArticleSectionCollection sections = parent.getSections(true);
         sections.addEqualsFilter(PAGE_BREAK, Boolean.TRUE);
@@ -195,36 +189,36 @@ public class ArticleSection extends ContentPage {
         sections.close();
         int lastSection = parent.getMaxRank();
         s_log.debug("last section of article is ranked " + lastSection);
-        
+
         if (firstPageBreak == null || firstPageBreak.intValue() == lastSection) {
             s_log.debug("this is a single page article");
             return null;
         } else {
             s_log.debug("this article has more than one page");
         }
-        
+
         // okay - this article has more than one page - lets find the page break
         // before this section and then the section following that page break
         // boolean argument means order by rank descending
-        
+
         sections = parent.getSections(false);
         sections.addEqualsFilter(PAGE_BREAK, Boolean.TRUE);
         sections.addFilter(
         sections.getFilterFactory().lessThan(RANK, getRank(), true));
-            
+
         Integer topOfPageRank = new Integer(1);
         if (sections.next()) {
             topOfPageRank = new Integer(sections.getArticleSection().getRank().intValue() + 1);
-            s_log.debug("Found top of page rank: " 
+            s_log.debug("Found top of page rank: "
                 + topOfPageRank.intValue());
         } else {
-            // If no page breaks before this section then we must be on 
+            // If no page breaks before this section then we must be on
             // page one.
             s_log.debug("This section is on first page.");
         }
         sections.close();
-        
-        // Get 'clean' 
+
+        // Get 'clean'
         sections = parent.getSections(false);
         sections.addEqualsFilter(RANK, topOfPageRank);
        	String sectionTitle= null;
@@ -232,10 +226,10 @@ public class ArticleSection extends ContentPage {
             sectionTitle =  sections.getArticleSection().getTitle();
             s_log.debug("Found page/section title: " + sectionTitle);
         }
-        
+
         return sectionTitle;
     }
-    
+
     /**
     * As sections don't have their own summary, return the parent's search
     * summary.
@@ -269,7 +263,7 @@ public class ArticleSection extends ContentPage {
     /**
      * This overrides the method on ContentItem, the API of which
      * says that this method can return a null eg. if the method is
-     * called on an Article's ImageAsset.
+     * called on an Article's ReusableImageAsset.
      *
      * However there seems to be a problem with ArticleSections returning
      * null when they shouldn't. If that happens we are going to look up the

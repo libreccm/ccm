@@ -29,8 +29,8 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.FileUpload;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.ui.ImageDisplay;
 import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
 import com.arsdigita.dispatcher.MultipartHttpServletRequest;
@@ -61,7 +61,7 @@ public class ImageUploadSection extends FormSection
      *
      * @param panel the panel used to lay out the components
      */
-    public ImageUploadSection(String name, 
+    public ImageUploadSection(String name,
                               ItemSelectionModel selImage,
                               Container panel) {
         super(panel);
@@ -76,7 +76,7 @@ public class ImageUploadSection extends FormSection
         add(m_currentImage);
         add(m_imageDisplay);
         m_spacer = new Label("");
-	add(m_spacer);		
+	add(m_spacer);
         m_deleteImage = new Submit("Delete Image");
         add(m_deleteImage);
         add(new Label(
@@ -113,7 +113,7 @@ public class ImageUploadSection extends FormSection
         FormData data = event.getFormData();
         PageState state = event.getPageState();
 
-        ImageAsset image = (ImageAsset)m_selImage.getSelectedObject(state);
+        ReusableImageAsset image = (ReusableImageAsset)m_selImage.getSelectedObject(state);
 
         m_currentImage.setVisible(state, false);
         m_imageDisplay.setVisible(state, false);
@@ -162,16 +162,16 @@ public class ImageUploadSection extends FormSection
      * Process the image upload.  Should be called form the form
      * process listener.
      */
-    public ImageAsset processImageUpload(FormSectionEvent event) {
-        ImageAsset a = null;
+    public ReusableImageAsset processImageUpload(FormSectionEvent event) {
+        ReusableImageAsset a = null;
         FormData data = event.getFormData();
 
         File image = getImage(event);
 
         if ( image != null ) {
             try {
-                a = new ImageAsset();
-                a.loadFromFile(getImageFilename(event), image, ImageAsset.MIME_JPEG);
+                a = new ReusableImageAsset();
+                a.loadFromFile(getImageFilename(event), image, ReusableImageAsset.MIME_JPEG);
                 a.setDescription((String)data.get(m_name + CAPTION));
             } catch ( Exception ex ) {
                 log.error("Could not load " + getImageFilename(event));
