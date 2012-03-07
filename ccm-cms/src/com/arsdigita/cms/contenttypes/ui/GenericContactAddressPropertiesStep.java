@@ -69,11 +69,11 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
                 localize(), new EditAddressWorkflowLockedComponentAccess(
                 reattachAddressSheet, itemModel), reattachAddressSheet.
                 getSaveCancelSection().getCancelButton());
-        add(EDIT_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.
+        /*add(EDIT_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.
                 globalize("cms.contenttypes.ui.contact.edit_address").localize(),
             new EditAddressWorkflowLockedComponentAccess(editAddressSheet,
                                                          itemModel),
-            editAddressSheet.getSaveCancelSection().getCancelButton());
+            editAddressSheet.getSaveCancelSection().getCancelButton());*/
         add(DELETE_ADDRESS_SHEET_NAME,
             (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.contact.delete_address").localize(),
