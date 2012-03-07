@@ -44,6 +44,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.Workspace;
@@ -304,7 +305,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                         newInstance(OID.valueOf(itemOid));
                 PublishLock.getInstance().lock(item);
                 republish(item, false);
-                PublishLock.getInstance().unlock(item);               
+                PublishLock.getInstance().unlock(item);
             }
         }
     }
@@ -593,7 +594,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
             private void doRepublish() {
                 final ContentItem item = (ContentItem) DomainObjectFactory.
                         newInstance(OID.valueOf(itemOid));
-                republish(item, false);
+                republish(item, false);                
             }
 
             public void run() {
@@ -623,7 +624,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
             private void doRepublishAndReset() {
                 final ContentItem item = (ContentItem) DomainObjectFactory.
                         newInstance(OID.valueOf(itemOid));
-                republish(item, true);
+                republish(item, true);                
             }
 
             public void run() {

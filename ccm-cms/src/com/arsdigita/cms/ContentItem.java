@@ -184,6 +184,7 @@ import java.util.Set;
  * @author Jack Chung
  * @author Michael Pih
  * @author Stanislav Freidin &lt;sfreidin@redhat.com&gt;
+ * @author Jens Pelzetter
  *
  * @version $Id: ContentItem.java 2218 2011-06-22 23:55:36Z pboy $
  */
@@ -440,7 +441,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
     }
 
-    /*      *
+    /*
+     * *
      * removed cg - object observer sets context based on parent whenever parent
      * is updated
      *
@@ -616,7 +618,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * The item's root is the ancestor reachable through repeated
      * <code>getParent()</code> calls whose parent is
      * <code>null</code>. This is usually a folder, but may be any
-     * {@see com.arsdigita.kernel.ACSObject}.
+     * {
+     *
+     * @see com.arsdigita.kernel.ACSObject}.
      *
      * Note that the name of the root folder of the content section where the
      * item resides is not included in the path.
@@ -1881,9 +1885,13 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                     ContentBundle bundle = (ContentBundle) parent;
                     ContentBundle liveBundle = (ContentBundle) bundle.
                             getPublicVersion();
+                    //jensp 2012-03-07 Changes to the ContentBundle were not
+                    //published because the ContentBundle was not republished.
+                    //Moved the next lines out of the if below to enable 
+                    //republishing of the ContentBundle
+                    liveBundle =
+                    (ContentBundle) bundle.createPendingVersion(null);
                     if (liveBundle == null) {
-                        liveBundle =
-                        (ContentBundle) bundle.createPendingVersion(null);
                     } else {
                         Set liveCatSet = new HashSet();
                         Set draftCatSet = new HashSet();
@@ -2197,8 +2205,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * {@link #getExtraXMLGenerators()}. But beware: The page state passed to
      * generators returned by this method will may be null. </p>
      *
-     * @return A list of all extra XML Generators for lists views of 
-     * this content item.
+     * @return A list of all extra XML Generators for lists views of this
+     * content item.
      */
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
         return new ArrayList<ExtraXMLGenerator>();
