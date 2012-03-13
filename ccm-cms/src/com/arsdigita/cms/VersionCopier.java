@@ -30,9 +30,10 @@ import org.apache.log4j.Logger;
 import java.util.HashSet;
 
 /**
- * Extends <code>ObjectCopier</code> to create a live version for an
- * item. Clones the item, making sure that live versions of all subitems
- * point only to other live versions.
+ * Extends
+ * <code>ObjectCopier</code> to create a live version for an item. Clones the
+ * item, making sure that live versions of all subitems point only to other live
+ * versions.
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
  * @version $Id: VersionCopier.java 2140 2011-01-16 12:04:20Z pboy $
@@ -47,7 +48,8 @@ class VersionCopier extends ObjectCopier {
     private OID m_topLevelSourceOID = null;
 
     /**
-     * Creates a new <code>VersionCopier</code> with a given Lifecycle
+     * Creates a new
+     * <code>VersionCopier</code> with a given Lifecycle
      *
      * @param lifecycle The Lifecycle
      */
@@ -57,7 +59,8 @@ class VersionCopier extends ObjectCopier {
     }
 
     /**
-     * Creates a new <code>VersionCopier</code> with no Lifecycle
+     * Creates a new
+     * <code>VersionCopier</code> with no Lifecycle
      */
     VersionCopier() {
         m_traversedComponents = new HashSet();
@@ -65,12 +68,10 @@ class VersionCopier extends ObjectCopier {
     }
 
     /**
-     * Copy a {@link ContentItem}, along with all of its component
-     * sub-objects, and return the copy. Note that the categories to
-     * which the source item belongs are not automatically transferred
-     * to the copy; the user must call {@link #copyServices(ContentItem,
-     * ContentItem)} in order to transfer the categories and other
-     * services.
+     * Copy a {@link ContentItem}, along with all of its component sub-objects,
+     * and return the copy. Note that the categories to which the source item
+     * belongs are not automatically transferred to the copy; the user must call {@link #copyServices(ContentItem,
+     * ContentItem)} in order to transfer the categories and other services.
      *
      * @param item the item to be copied
      * @return a copy of the item
@@ -126,11 +127,12 @@ class VersionCopier extends ObjectCopier {
     }
 
     /**
-     * Kicks off the copying process.  Creates a copy by value of
-     * <code>source</code> and then traverses its associations and
-     * repeats the process.
+     * Kicks off the copying process. Creates a copy by value of
+     * <code>source</code> and then traverses its associations and repeats the
+     * process.
      *
-     * @param source the <code>DomainObject</code> from which to copy
+     * @param source the
+     * <code>DomainObject</code> from which to copy
      */
     @Override
     public DomainObject copy(final DomainObject object) {
@@ -141,36 +143,33 @@ class VersionCopier extends ObjectCopier {
     }
 
     /**
-     * Copies properties.  This method is called from {@link
-     * #copy(DomainObject)} for each property of the object being
-     * copied.
+     * Copies properties. This method is called from {@link
+     * #copy(DomainObject)} for each property of the object being copied.
      *
-     * Copying behavior depends on the following:
-     * <dl>
-     *  <dt> <code>object instanceof ContentItem && prop.isComponent()</code></dt>
-     *  <dd> Copy ContentItem recursively, setting the version attribute, etc.</dd>
-     *  <dt> <code>object instanceof ContentItem &&
+     * Copying behavior depends on the following: <dl> <dt>
+     * <code>object instanceof ContentItem && prop.isComponent()</code></dt>
+     * <dd> Copy ContentItem recursively, setting the version attribute,
+     * etc.</dd> <dt>
+     * <code>object instanceof ContentItem &&
      *       !prop.isComponent() (and target is an already-traversed
-     *       component of the top-level item )</code></dt>
-     *  <dd> Return reference to already-created copy of this item</dd>
-     *  <dt> <code>object instanceof ContentItem &&
+     *       component of the top-level item )</code></dt> <dd> Return reference to
+     * already-created copy of this item</dd> <dt>
+     * <code>object instanceof ContentItem &&
      *       !prop.isComponent() && prop.isRequired (and target is not an already-traversed
-     *       component of the top-level item )</code></dt>
-     *  <dd> Assert failure: required top-level item associations are
-     *       not allowed here.</dd>
-     *  <dt> <code>object instanceof ContentItem &&
+     *       component of the top-level item )</code></dt> <dd> Assert failure:
+     * required top-level item associations are not allowed here.</dd> <dt>
+     * <code>object instanceof ContentItem &&
      *       !prop.isComponent() && !prop.isRequired (and target is not an already-traversed
-     *       component of the top-level item )</code></dt>
-     *  <dd> Create PublishedLink for association; return null</dd>
-     *  <dt> <code>!object instanceof ContentItem </code></dt>
-     *  <dd> object is not a ContentItem, rely on default DomainCopier
-     *       behavior</dd>
-     * </dl>
+     *       component of the top-level item )</code></dt> <dd> Create PublishedLink
+     * for association; return null</dd> <dt>
+     * <code>!object instanceof ContentItem </code></dt> <dd> object is not a
+     * ContentItem, rely on default DomainCopier behavior</dd> </dl>
      *
-     * @param source the <code>DomainObject</code> being copied
+     * @param source the
+     * <code>DomainObject</code> being copied
      * @param target the new copy
-     * @param prop the <code>Property</code> currently under
-     * consideration
+     * @param prop the
+     * <code>Property</code> currently under consideration
      */
     @Override
     protected DomainObject copy(final DomainObject source,
@@ -221,13 +220,19 @@ class VersionCopier extends ObjectCopier {
                             + "PublishedLink for the item");
 
                 if (source instanceof ContentItem) {
-                    PublishedLink.create((ContentItem) getCopy(
-                            m_topLevelSourceOID), target, prop.getName(), item,
-                                         (ContentItem) source);
+                    PublishedLink.create(
+                            (ContentItem) getCopy(m_topLevelSourceOID),
+                            target,
+                            prop.getName(),
+                            item,
+                            (ContentItem) source);
                 } else {
-                    PublishedLink.create((ContentItem) getCopy(
-                            m_topLevelSourceOID), target, prop.getName(), item,
-                                         null);
+                    PublishedLink.create(
+                            (ContentItem) getCopy(m_topLevelSourceOID),
+                            target,
+                            prop.getName(),
+                            item,
+                            null);
                 }
                 m_trace.exit("copy", null);
 

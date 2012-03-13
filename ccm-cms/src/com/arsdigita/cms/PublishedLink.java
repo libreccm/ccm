@@ -48,9 +48,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * This class represents an association between a pending or live
- * ContentItem (or one of its components) and a separate top-level
- * Contenttem.
+ * This class represents an association between a pending or live ContentItem
+ * (or one of its components) and a separate top-level Contenttem.
  *
  */
 class PublishedLink extends DomainObject {
@@ -64,7 +63,7 @@ class PublishedLink extends DomainObject {
     static final String DRAFT_TARGET = "draftTarget";
     static final String LINK_ATTRIBUTES = "linkAttributes";
     static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.PublishedLink";
+                        "com.arsdigita.cms.PublishedLink";
 
     @Override
     protected String getBaseDataObjectType() {
@@ -72,8 +71,9 @@ class PublishedLink extends DomainObject {
     }
 
     /**
-     * Default constructor. The contained <code>DataObject</code> is
-     * initialized with a new <code>DataObject</code> with an
+     * Default constructor. The contained
+     * <code>DataObject</code> is initialized with a new
+     * <code>DataObject</code> with an
      * <code>ObjectType</code> of "PublishedLink".
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(String)
@@ -94,11 +94,13 @@ class PublishedLink extends DomainObject {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>oid</i>.
+     * Constructor. The contained
+     * <code>DataObject</code> is retrieved from the persistent storage
+     * mechanism with an
+     * <code>OID</code> specified by <i>oid</i>.
      *
-     * @param oid The <code>OID</code> for the retrieved
+     * @param oid The
+     * <code>OID</code> for the retrieved
      * <code>DataObject</code>.
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(OID)
@@ -110,37 +112,44 @@ class PublishedLink extends DomainObject {
     }
 
     /**
-     * Creates new PublishedLink unless one already exists for the
-     * specified source, target, and property
+     * Creates new PublishedLink unless one already exists for the specified
+     * source, target, and property
      *
-     * @param sourceMasterItem the top-level pending or live <code>ContentItem</code> which
-     * this <code>PublishedLink</code> is a component of.
+     * @param sourceMasterItem the top-level pending or live
+     * <code>ContentItem</code> which this
+     * <code>PublishedLink</code> is a component of.
      * @param linkSource the immediate source of this
-     * <code>PublishedLink</code>, a component of the sourceMasterItem
-     * (or the item itself)
-     * @param propertyName the Property name for this <code>PublishedLink</code>
-     * @param linkTarget  the top-level draft <code>ContentItem</code> which
-     * is the target of this <code>PublishedLink</code> .
+     * <code>PublishedLink</code>, a component of the sourceMasterItem (or the
+     * item itself)
+     * @param propertyName the Property name for this
+     * <code>PublishedLink</code>
+     * @param linkTarget the top-level draft
+     * <code>ContentItem</code> which is the target of this
+     * <code>PublishedLink</code> .
      *
-     * @return the newly-created PublishedLink, or the existing one if
-     * one already exists for these items.
+     * @return the newly-created PublishedLink, or the existing one if one
+     * already exists for these items.
      */
     static PublishedLink create(ContentItem sourceMasterItem,
-            DomainObject linkSource,
-            String propertyName,
-            ContentItem linkTarget,
-            ContentItem sourceObject) {
+                                DomainObject linkSource,
+                                String propertyName,
+                                ContentItem linkTarget,
+                                ContentItem sourceObject) {
         OID oid = new OID(BASE_DATA_OBJECT_TYPE);
-        oid.set(SOURCE_MASTER_ITEM, DomainServiceInterfaceExposer.getDataObject(sourceMasterItem));
+        oid.set(SOURCE_MASTER_ITEM, DomainServiceInterfaceExposer.getDataObject(
+                sourceMasterItem));
         oid.set(PROPERTY_NAME, propertyName);
-        oid.set(DRAFT_TARGET, DomainServiceInterfaceExposer.getDataObject(linkTarget));
+        oid.set(DRAFT_TARGET, DomainServiceInterfaceExposer.getDataObject(
+                linkTarget));
 
         // this will need to be  refactored if we switch to OID link sourcess
         if (linkSource instanceof ACSObject) {
-            oid.set(PENDING_SOURCE, DomainServiceInterfaceExposer.getDataObject(linkSource));
+            oid.set(PENDING_SOURCE, DomainServiceInterfaceExposer.getDataObject(
+                    linkSource));
         } else {
-            Assert.fail("Cannot set PublishedLink source " + linkSource + "; it is not an "
-                    + "ACSObject");
+            Assert.fail("Cannot set PublishedLink source " + linkSource
+                        + "; it is not an "
+                        + "ACSObject");
         }
 
         PublishedLink link = null;
@@ -150,14 +159,17 @@ class PublishedLink extends DomainObject {
             link = new PublishedLink(SessionManager.getSession().create(oid));
         }
 
-        if ((sourceObject != null) && sourceObject.getObjectType().getProperty(propertyName).isCollection()) {
+        if ((sourceObject != null) && sourceObject.getObjectType().getProperty(
+                propertyName).isCollection()) {
 
-            DataCollection coll = (DataCollection) sourceObject.get(propertyName + "@link");
+            DataCollection coll = (DataCollection) sourceObject.get(propertyName
+                                                                    + "@link");
             while (coll.next()) {
 
                 DataObject linkObj = coll.getDataObject();
 
-                if (linkTarget.getOID().equals(((DataObject) linkObj.getOID().get(propertyName)).getOID())) {
+                if (linkTarget.getOID().equals(((DataObject) linkObj.getOID().
+                                                get(propertyName)).getOID())) {
                     link.saveLinkAttributes(linkObj);
                     coll.close();
                 }
@@ -168,24 +180,28 @@ class PublishedLink extends DomainObject {
     }
 
     /**
-     * Returns the top-level pending or live <code>ContentItem</code> which
-     * this <code>PublishedLink</code> is a component of.
+     * Returns the top-level pending or live
+     * <code>ContentItem</code> which this
+     * <code>PublishedLink</code> is a component of.
      *
-     * @return the top-level pending or live <code>ContentItem</code> which
-     * this <code>PublishedLink</code> is a component of.
+     * @return the top-level pending or live
+     * <code>ContentItem</code> which this
+     * <code>PublishedLink</code> is a component of.
      *
      */
     ContentItem getSourceMasterItem() {
         final DataObject item = (DataObject) get(SOURCE_MASTER_ITEM);
 
         return item == null ? null
-                : (ContentItem) DomainObjectFactory.newInstance((DataObject) item);
+               : (ContentItem) DomainObjectFactory.newInstance((DataObject) item);
     }
 
     /**
-     * Returns the immediate source of this <code>PublishedLink</code>
+     * Returns the immediate source of this
+     * <code>PublishedLink</code>
      *
-     * @return the immediate source of this <code>PublishedLink</code>
+     * @return the immediate source of this
+     * <code>PublishedLink</code>
      *
      */
     DomainObject getLinkSource() {
@@ -193,13 +209,15 @@ class PublishedLink extends DomainObject {
         final DataObject item = (DataObject) get(PENDING_SOURCE);
 
         return item == null ? null
-                : DomainObjectFactory.newInstance((DataObject) item);
+               : DomainObjectFactory.newInstance((DataObject) item);
     }
 
     /**
-     * Returns the Property name for this <code>PublishedLink</code>
+     * Returns the Property name for this
+     * <code>PublishedLink</code>
      *
-     * @return the Property name for this <code>PublishedLink</code>
+     * @return the Property name for this
+     * <code>PublishedLink</code>
      *
      */
     String getPropertyName() {
@@ -207,27 +225,29 @@ class PublishedLink extends DomainObject {
     }
 
     /**
-     * Returns the top-level draft <code>ContentItem</code> which
-     * is the target of this <code>PublishedLink</code> .
+     * Returns the top-level draft
+     * <code>ContentItem</code> which is the target of this
+     * <code>PublishedLink</code> .
      *
-     * @return the top-level draft <code>ContentItem</code> which
-     * is the target of this <code>PublishedLink</code> .
+     * @return the top-level draft
+     * <code>ContentItem</code> which is the target of this
+     * <code>PublishedLink</code> .
      *
      */
     ContentItem getLinkTarget() {
         final DataObject item = (DataObject) get(DRAFT_TARGET);
 
         return item == null ? null
-                : (ContentItem) DomainObjectFactory.newInstance((DataObject) item);
+               : (ContentItem) DomainObjectFactory.newInstance((DataObject) item);
     }
 
     /**
-     * Updates live associations based on PublishedLinks which either
-     * point <em>from</em> or <em>to</em> the given
-     * <code>ContentItem</code>. If both ends of the link are now
-     * live, the live-live association will be updated. In addition,
-     * for links <em>to</em> this new live item, the source of the
-     * link is refreshed via <code>QueueManager.queueRepublish</code>.
+     * Updates live associations based on PublishedLinks which either point
+     * <em>from</em> or <em>to</em> the given
+     * <code>ContentItem</code>. If both ends of the link are now live, the
+     * live-live association will be updated. In addition, for links <em>to</em>
+     * this new live item, the source of the link is refreshed via
+     * <code>QueueManager.queueRepublish</code>.
      *
      * @param item The item which was just published
      */
@@ -238,7 +258,8 @@ class PublishedLink extends DomainObject {
         ContentItem draftItem = item.getDraftVersion();
         DataCollection linksToItem = session.retrieve(BASE_DATA_OBJECT_TYPE);
         linksToItem.addEqualsFilter(DRAFT_TARGET + ".id", draftItem.getID());
-        linksToItem.addEqualsFilter(SOURCE_MASTER_ITEM + "." + ContentItem.VERSION, ContentItem.LIVE);
+        linksToItem.addEqualsFilter(SOURCE_MASTER_ITEM + "."
+                                    + ContentItem.VERSION, ContentItem.LIVE);
         updateLiveLinksFromCollection(linksToItem, itemsToRefresh);
         linksToItem.close();
 
@@ -250,14 +271,16 @@ class PublishedLink extends DomainObject {
         Iterator refreshIterator = itemsToRefresh.iterator();
         while (refreshIterator.hasNext()) {
             OID oid = (OID) refreshIterator.next();
-            ContentItem refreshItem = (ContentItem) DomainObjectFactory.newInstance(oid);
+            ContentItem refreshItem = (ContentItem) DomainObjectFactory.
+                    newInstance(oid);
             if (refreshItem.canPublishToFS()) {
                 QueueManager.queueRepublish(refreshItem);
             }
         }
     }
 
-    private static void updateLiveLinksFromCollection(DataCollection coll, Set itemsToRefresh) {
+    private static void updateLiveLinksFromCollection(DataCollection coll,
+                                                      Set itemsToRefresh) {
         while (coll.next()) {
             // will change w/ OID references
             DataObject master = (DataObject) coll.get(SOURCE_MASTER_ITEM);
@@ -272,7 +295,8 @@ class PublishedLink extends DomainObject {
             DataObject target = null;
             DataObject draftTarget = (DataObject) coll.get(DRAFT_TARGET);
             DataAssociationCursor targetVersions =
-                    ((DataAssociation) draftTarget.get(ContentItem.VERSIONS)).cursor();
+                                  ((DataAssociation) draftTarget.get(
+                                   ContentItem.VERSIONS)).cursor();
             targetVersions.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
             if (targetVersions.next()) {
                 target = targetVersions.getDataObject();
@@ -281,7 +305,8 @@ class PublishedLink extends DomainObject {
             if (target != null) {
                 ObjectType ot = src.getObjectType();
                 Property prop = ot.getProperty(propertyName);
-                Assert.exists(prop, propertyName + " for type " + ot.getQualifiedName() + ", ID: " + src.get("id"));
+                Assert.exists(prop, propertyName + " for type " + ot.
+                        getQualifiedName() + ", ID: " + src.get("id"));
                 if (prop.isCollection()) {
                     DataAssociation da = (DataAssociation) src.get(propertyName);
                     setLinkAttributesForLiveLink(da.add(target), linkAttributes);
@@ -297,8 +322,8 @@ class PublishedLink extends DomainObject {
     }
 
     /**
-     * At unpublish time, for links <em>to</em> this unpublished item,
-     * the source of the link is refreshed via
+     * At unpublish time, for links <em>to</em> this unpublished item, the
+     * source of the link is refreshed via
      * <code>QueueManager.queueRepublish</code>.
      *
      * @param item The item which was just published
@@ -309,7 +334,8 @@ class PublishedLink extends DomainObject {
 
         DataCollection linksToItem = session.retrieve(BASE_DATA_OBJECT_TYPE);
         linksToItem.addEqualsFilter(DRAFT_TARGET + ".id", item.getID());
-        linksToItem.addEqualsFilter(SOURCE_MASTER_ITEM + "." + ContentItem.VERSION, ContentItem.LIVE);
+        linksToItem.addEqualsFilter(SOURCE_MASTER_ITEM + "."
+                                    + ContentItem.VERSION, ContentItem.LIVE);
         while (linksToItem.next()) {
             // will change w/ OID references
             DataObject master = (DataObject) linksToItem.get(SOURCE_MASTER_ITEM);
@@ -320,7 +346,8 @@ class PublishedLink extends DomainObject {
         Iterator refreshIterator = itemsToRefresh.iterator();
         while (refreshIterator.hasNext()) {
             OID oid = (OID) refreshIterator.next();
-            ContentItem refreshItem = (ContentItem) DomainObjectFactory.newInstance(oid);
+            ContentItem refreshItem = (ContentItem) DomainObjectFactory.
+                    newInstance(oid);
             if (refreshItem.canPublishToFS()) {
                 QueueManager.queueRepublish(refreshItem);
             }
@@ -357,7 +384,8 @@ class PublishedLink extends DomainObject {
         }
     }
 
-    private static void setLinkAttributesForLiveLink(DataObject link, byte[] linkAttributes) {
+    private static void setLinkAttributesForLiveLink(DataObject link,
+                                                     byte[] linkAttributes) {
 
         if (linkAttributes != null) {
             ByteArrayInputStream data = null;
@@ -386,7 +414,8 @@ class PublishedLink extends DomainObject {
                     String propertyName = (String) keys.next();
                     Object value = (Object) attributes.get(propertyName);
 
-                    if (link.getObjectType().hasDeclaredProperty(propertyName) && link.getSession() != null) {
+                    if (link.getObjectType().hasDeclaredProperty(propertyName)
+                        && link.getSession() != null) {
                         link.set(propertyName, value);
                     }
                 }
