@@ -45,6 +45,7 @@ import org.apache.log4j.Logger;
  */
 public class Service extends Application {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Service.class);
 
     // pdl stuff (constants)

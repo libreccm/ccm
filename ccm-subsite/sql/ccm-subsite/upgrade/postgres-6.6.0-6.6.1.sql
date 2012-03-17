@@ -36,4 +36,7 @@ begin;
 -- adjust class name in content_sections table
 \i default/6.6.0-6.6.1/upd_cms_tables.sql
 
+-- adjust properties like title in application_types
+\i default/6.6.0-6.6.1/adjust_app_properties.sql
+
 commit;

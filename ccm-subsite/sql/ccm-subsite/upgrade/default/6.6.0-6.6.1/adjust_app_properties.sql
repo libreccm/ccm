@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2011 Peter Boy All Rights Reserved.
+-- Copyright (C) 2012 Peter Boy. All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,18 +15,19 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2011/03/27 23:15:09 $
--- $Id: oracle-se-6.6.0-6.6.1  pboy $
+-- $Id: adjust_app_properties.sql  $
 
--- drop table subsite_app - not needed anyway
-@@ default/6.6.0-6.6.1/drop_app_table.sql
--- rename table containing defined subsites following ccm naming conventions
-@@ default/6.6.0-6.6.1/ren_sites_table.sql
--- rename application from london.subsite to subsite
-@@ default/6.6.0-6.6.1/upd_system_tables.sql
--- remove legacy compatible bits
-@@ default/6.6.0-6.6.1/remove_legacy_entries.sql
--- adjust class name in content_sections table
-@@ default/6.6.0-6.6.1/upd_cms_tables.sql
--- adjust properties like title in application_types
-@@ default/6.6.0-6.6.1/adjust_app_properties.sql
+-- ccm-subsite is now initialized as a legacy free type of application.
+-- Application properties as title have to be adjusted in order to make
+-- XSL style sheets locatable.
+
+
+-- Rename title from CCM Subsite Admin to just Subsite
+update application_types   
+       set title='Subsite'  
+       where title like 'CMS Subsite Admin';
+
+-- Adjust description
+update application_types   
+       set description='The CCM subsite administration application.'  
+       where title like 'Subsite';

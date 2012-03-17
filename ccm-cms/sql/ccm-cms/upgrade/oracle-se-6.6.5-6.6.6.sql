@@ -21,3 +21,4 @@
 PROMPT Red Hat Enterprise CMS 6.6.5 -> 6.6.6 Upgrade Script (Oracle)
 
 @@ ../default/upgrade/6.6.5-6.6.6/remove_legacy_entries.sql
+@@ ../default/upgrade/6.6.5-6.6.6/adjust_app_properties.sql

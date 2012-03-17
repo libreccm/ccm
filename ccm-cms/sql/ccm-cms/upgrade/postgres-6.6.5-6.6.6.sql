@@ -24,5 +24,6 @@
 begin;
 
 \i ../default/upgrade/6.6.5-6.6.6/remove_legacy_entries.sql
+\i ../default/upgrade/6.6.5-6.6.6/adjust_app_properties.sql
 
 commit;
