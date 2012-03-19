@@ -1144,6 +1144,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
                 oldVersion.delete();
                 PublishedLink.refreshOnUnpublish(this);
+                PublishedAssociation.refreshOnUnPublish(this);
             }
 
             if (parent instanceof ContentBundle || parent instanceof Folder) {
@@ -1172,6 +1173,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
             save();
 
             PublishedLink.updateLiveLinks(version);
+            PublishedAssociation.updateLiveAssoications(version);
             save();
 
             // publish item (as template or html pages) to the file

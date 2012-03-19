@@ -1,0 +1,14 @@
+//$Id$
+
+model com.arsdigita.cms;
+
+object type PublishedAssociation {
+    composite ContentItem[1..1] draftA = join cms_published_associations.draft_a to cms_items.item_id;
+    composite ContentItem[1..1] draftB = join cms_published_associations.draft_b to cms_items.item_id;
+    String[1..1] propertyA = cms_published_associations.property_a VARCHAR(100);
+    String[1..1] propertyB = cms_published_associations.property_b VARCHAR(100);
+    //composite ContentItem[1..1] pendingA = join cms_published_associations.pending_a to cms_items.item_id;
+    //composite ContentItem[1..1] pendingB = join cms_published_associations.pending_b to cms_items.item_id;
+    Blob[0..1] associationAttributes = cms_published_associations.association_attributes BLOB;
+    object key (draftA, draftB, propertyA,  propertyB);    
+}

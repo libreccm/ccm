@@ -34,6 +34,7 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -378,6 +379,7 @@ class PublishedLink extends DomainObject {
                 ObjectOutputStream out = new ObjectOutputStream(data);
                 out.writeObject(linkAttributes);
             } catch (IOException ex) {
+                throw new UncheckedWrapperException(ex);
             }
 
             set(LINK_ATTRIBUTES, data.toByteArray());
