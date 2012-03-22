@@ -429,7 +429,8 @@ public class GenericContactPersonAssocUpgrade extends Program {
         try {
             conn.rollback();
         } catch (SQLException ex1) {
-            System.out.println("Rollback failed.");
+            System.err.println("Rollback failed.");
+            ex1.printStackTrace(System.err);
         }
     }
 
@@ -437,7 +438,7 @@ public class GenericContactPersonAssocUpgrade extends Program {
         try {
             conn.close();
         } catch (SQLException ex) {
-            System.err.println("Failed to close JDBC connectio.");
+            System.err.println("Failed to close JDBC connection.");
             printStackTrace(ex);
         }
     }

@@ -617,8 +617,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      *
      * The item's root is the ancestor reachable through repeated
      * <code>getParent()</code> calls whose parent is
-     * <code>null</code>. This is usually a folder, but may be any
-     * {
+     * <code>null</code>. This is usually a folder, but may be any {
      *
      * @see com.arsdigita.kernel.ACSObject}.
      *
@@ -1173,7 +1172,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
             save();
 
             PublishedLink.updateLiveLinks(version);
-            PublishedAssociation.updateLiveAssoications(version);
+            PublishedAssociation.updateLiveAssociations(version);
             save();
 
             // publish item (as template or html pages) to the file
@@ -1884,50 +1883,52 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                                   == ItemCopier.VERSION_COPY) {
                 if (parent instanceof ContentBundle) {
 
-                    ContentBundle bundle = (ContentBundle) parent;
-                    ContentBundle liveBundle = (ContentBundle) bundle.
+                    final ContentBundle bundle = (ContentBundle) parent;
+                    final ContentBundle oldLiveBundle = (ContentBundle) bundle.
                             getPublicVersion();
                     //jensp 2012-03-07 Changes to the ContentBundle were not
                     //published because the ContentBundle was not republished.
                     //Moved the next lines out of the if below to enable 
                     //republishing of the ContentBundle
-                    liveBundle =
-                    (ContentBundle) bundle.createPendingVersion(null);
-                    if (liveBundle == null) {
-                    } else {
-                        Set liveCatSet = new HashSet();
-                        Set draftCatSet = new HashSet();
-
-                        CategoryCollection liveCategories =
-                                           liveBundle.getCategoryCollection();
-                        while (liveCategories.next()) {
-                            liveCatSet.add(liveCategories.getCategory());
+                    final ContentBundle liveBundle =
+                                        (ContentBundle) bundle.
+                            createPendingVersion(null);
+                    /*
+                     * if (liveBundle == null) { } else { Set liveCatSet = new
+                     * HashSet(); Set draftCatSet = new HashSet();
+                     *
+                     * CategoryCollection liveCategories =
+                     * liveBundle.getCategoryCollection(); while
+                     * (liveCategories.next()) {
+                     * liveCatSet.add(liveCategories.getCategory()); }
+                     * liveCategories.close();
+                     *
+                     * CategoryCollection draftCategories =
+                     * bundle.getCategoryCollection(); while
+                     * (draftCategories.next()) {
+                     * draftCatSet.add(draftCategories.getCategory()); }
+                     * draftCategories.close();
+                     *
+                     * Set catsToRemove = new HashSet(liveCatSet);
+                     * catsToRemove.removeAll(draftCatSet); Set catsToAdd = new
+                     * HashSet(draftCatSet); catsToAdd.removeAll(liveCatSet);
+                     *
+                     * Iterator removeIter = catsToRemove.iterator(); while
+                     * (removeIter.hasNext()) { liveBundle.removeCategory(
+                     * (Category) removeIter.next()); } Iterator addIter =
+                     * catsToAdd.iterator(); while (addIter.hasNext()) {
+                     * liveBundle.addCategory((Category) addIter.next()); }
+                     *
+                     * }
+                     */
+                    if (oldLiveBundle != null) {
+                        final ItemCollection instances = oldLiveBundle.
+                                getInstances();
+                        while (instances.next()) {
+                            liveBundle.addInstance(instances.getContentItem());
                         }
-                        liveCategories.close();
-
-                        CategoryCollection draftCategories =
-                                           bundle.getCategoryCollection();
-                        while (draftCategories.next()) {
-                            draftCatSet.add(draftCategories.getCategory());
-                        }
-                        draftCategories.close();
-
-                        Set catsToRemove = new HashSet(liveCatSet);
-                        catsToRemove.removeAll(draftCatSet);
-                        Set catsToAdd = new HashSet(draftCatSet);
-                        catsToAdd.removeAll(liveCatSet);
-
-                        Iterator removeIter = catsToRemove.iterator();
-                        while (removeIter.hasNext()) {
-                            liveBundle.removeCategory(
-                                    (Category) removeIter.next());
-                        }
-                        Iterator addIter = catsToAdd.iterator();
-                        while (addIter.hasNext()) {
-                            liveBundle.addCategory((Category) addIter.next());
-                        }
-
                     }
+
                     setBundle(liveBundle);
                     return true;
                 } else if (parent instanceof Folder) {
