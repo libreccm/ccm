@@ -50,15 +50,16 @@ import org.apache.log4j.Logger;
  */
 
 public class Repository extends Application {
+
+    private static Logger s_log =
+        Logger.getLogger(Repository.class);
+
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.docmgr.Repository";
 
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
-
-    private static Logger s_log =
-        Logger.getLogger(Repository.class);
 
     // pdl constants
     public static final String OWNER = "ownerID";

@@ -48,7 +48,7 @@ query ItemsInFolder {
           cms_items i, 
           cms_folders f
         where 
-          i.item_id = f.folder_id(+)
+          i.item_id = f.folder_id
         and i.parent_id = iif.item_id
         and i.version = :version
         and (exists (select 1 from cms_folders f where f.folder_id = i.item_id)
@@ -57,31 +57,24 @@ query ItemsInFolder {
             )
         and f.folder_id is null
       ) as cnti,
-      nvl2(pi.type_id, (
-                        select nvl(d.description, l.description)
-                        from cms_items i, cms_documents d, cms_doc_links l
-                        where 
-                          i.item_id = pi.item_id
-                          and i.item_id = d.doc_id(+)
-                          and i.item_id = l.link_id(+)
-                       ), 
-				       (select description from cms_doc_folders where doc_id = iif.item_id)
-      ) as description, 
-      (select dbms_lob.getLength(f.content) 
+        
+       (select description from cms_doc_folders where doc_id = iif.item_id)
+        as description, 
+      (select f.length 
        from cms_documents d, cms_files f 
-       where pi.item_id = d.doc_id(+) and f.file_id = d.asset_id) as length, 
+       where pi.item_id = d.doc_id and f.file_id = d.asset_id) as length, 
       (select m.label 
        from cms_documents d, cms_assets a, cms_mime_types m 
-       where pi.item_id = d.doc_id(+) and a.asset_id = d.asset_id and m.mime_type = a.mime_type
+       where pi.item_id = d.doc_id and a.asset_id = d.asset_id and m.mime_type = a.mime_type
       ) as mime_type, 
-      (select d.last_modified_cached from cms_documents d where pi.item_id = d.doc_id(+)) as modified
+      (select d.last_modified_cached from cms_documents d where pi.item_id = d.doc_id) as modified
     from (
       select 
         a.object_type, a.display_name, a.default_domain_class,
         i.master_id, i.item_id, i.parent_id, i.version, i.name,
         case when exists (select 1 from cms_items where master_id = i.item_id)
              then 1 else 0 end as has_live_version,
-        case when 0 = nvl(f.folder_id, 0) then 0 else 1 end as is_folder,
+        case when 0 = COALESCE(f.folder_id, 0) then 0 else 1 end as is_folder,
         f.label
       from 
         cms_items i, 
@@ -90,7 +83,7 @@ query ItemsInFolder {
       where 
         i.item_id = a.object_id
       and 
-        i.item_id = f.folder_id(+)
+        i.item_id = f.folder_id
       and 
         i.parent_id = :parent
       and
@@ -108,11 +101,11 @@ query ItemsInFolder {
          i.parent_id = b.bundle_id 
          and i.language = b.default_language
          and p.item_id = i.item_id
-         and i.item_id = d.doc_id(+)
-         and i.item_id = l.link_id(+)
+         and i.item_id = d.doc_id
+         and i.item_id = l.link_id
       ) pi
     where
-      iif.item_id = pi.bundle_id(+)
+      iif.item_id = pi.bundle_id
   } map {
     item.id = iif.item_id;
     item.objectType = iif.object_type;

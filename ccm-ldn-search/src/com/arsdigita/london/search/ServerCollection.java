@@ -28,7 +28,6 @@ import java.math.BigDecimal;
  * @version $Id: ServerCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ServerCollection extends DomainCollection {
-    public static final String versionId = "$Id: ServerCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2003/10/21 12:37:13 $";
 
     protected ServerCollection(DataCollection dataCollection) {
         super(dataCollection);

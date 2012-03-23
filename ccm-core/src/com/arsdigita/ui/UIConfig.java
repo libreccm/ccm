@@ -20,6 +20,8 @@
 package com.arsdigita.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
+import com.arsdigita.ui.login.Login;
+import com.arsdigita.ui.login.LoginServlet;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
@@ -146,18 +148,6 @@ public class UIConfig extends AbstractConfig {
     private final Parameter m_rootPageURL       = new StringParameter
         ("core.ui.pagemap.root_page_url", Parameter.REQUIRED, "register/");
 
-    /**String containing the URL for the login page, Without leading slash but
-     * with trailing slash in case of a directory.                            */
-    // Old initializer: waf.pagemap.login
-    private final Parameter m_loginURL      = new StringParameter
-        ("core.ui.pagemap.login_url", Parameter.REQUIRED, "register/");
-
-    /** String containing the URL for the logout page, Without leading slash 
-     *  but with trailing slash in case of a directory.                       */
-    // Old initializer: waf.pagemap.logout
-    private final Parameter m_logoutURL     = new StringParameter
-        ("core.ui.pagemap.logout_url", Parameter.REQUIRED, "register/logout");
-
     /** String containing the URL for a page which may perform a user specific
      *  redirect if logged in or to a general public page if not.             */
     // Used to be LOGIN_REDIRECT_PAGE_KEY in old kernel/security/initializer
@@ -185,8 +175,6 @@ public class UIConfig extends AbstractConfig {
         register(m_applicationLayouts);
 
         register(m_rootPageURL);
-        register(m_loginURL);
-        register(m_logoutURL);
         register(m_userRedirectURL);
         register(m_workspaceURL);
 
@@ -250,24 +238,6 @@ public class UIConfig extends AbstractConfig {
      */
     public String getRootPage() {
         return (String)get(m_rootPageURL) ;
-    }
-
-    /**
-     * Retrieve systems login page url.
-     *
-     * @return login page url
-     */
-    public String getLogin() {
-        return (String)get(m_loginURL) ;
-    }
-
-    /**
-     * Retrieve systems logout page url.
-     *
-     * @return logout page url
-     */
-    public String getLogout() {
-        return (String)get(m_logoutURL) ;
     }
 
     /**

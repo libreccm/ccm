@@ -42,6 +42,7 @@ import com.arsdigita.portal.Portal;
 import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.ui.admin.Admin;
+import com.arsdigita.ui.login.Login;
 import com.arsdigita.ui.permissions.Permissions;
 import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.Assert;
@@ -57,8 +58,8 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.Web;
-
 import com.arsdigita.webdevsupport.WebDevSupport;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -127,7 +128,8 @@ public class CoreLoader extends PackageLoader {
 
     private StringParameter m_dispatcher = new StringParameter
         ("waf.login.dispatcher", Parameter.OPTIONAL,
-         "com.arsdigita.ui.login.SubsiteDispatcher");
+         "com.arsdigita.ui.login.DummyDispatcher");
+     //  "com.arsdigita.ui.login.SubsiteDispatcher");
 
     private StringParameter m_resource = new StringParameter
         ("waf.mime.resource", Parameter.OPTIONAL,
@@ -273,8 +275,8 @@ public class CoreLoader extends PackageLoader {
                 //  !!      s_log.debug("CoreLoader: Going to execute loadBebop().");
     //  !!      loadBebop();
 
-                s_log.debug("CoreLoader: Going to execute loadWebDev().");
-                loadWebDev();            // new style legacy free
+                s_log.debug("CoreLoader: Going to execute loadLoginApp().");
+                loadLoginApp();
 
                 s_log.debug("CoreLoader: Going to execute loadAdminApp().");
                 loadAdminApp();
@@ -284,6 +286,9 @@ public class CoreLoader extends PackageLoader {
 
                 s_log.debug("CoreLoader: Going to execute loadPermissionsApp().");
                 loadPermissionsApp();            // new style legacy free
+
+                s_log.debug("CoreLoader: Going to execute loadWebDev().");
+                loadWebDev();            // new style legacy free
 
                 s_log.debug("CoreLoader: Going to execute loadPortal().");
                 loadPortal();
@@ -464,33 +469,29 @@ public class CoreLoader extends PackageLoader {
 
     }
 */
-
+        
 
     /**
-     * Loads WebDeveloperSupport as a new style, legacy free application into
-     * database and instantiate the (only) application instance.
-     *
-     * Public static access needed by upgrade script Upgrade664
-     * @return webDevType ApplicationType 
+     * 
+     * @return 
      */
-    public static void loadWebDev() {
-
-        ApplicationType webDevType =
-                new ApplicationType("WebDev Support",
-                                    WebDevSupport.BASE_DATA_OBJECT_TYPE );
-        webDevType.setDescription("WebDeveloper Support application");
-        webDevType.save();
-
-        Application webDev = Application.createApplication(webDevType,
-                                                           "ds",
-                                                           "WebDeveloper Support",
-                                                           null);
-        webDev.setDescription("The default WEB developer service instance.");
-        webDev.save();
+    private Application loadLoginApp() {
+ 
+        ApplicationType loginType =
+                new ApplicationType("login",
+                                    Login.BASE_DATA_OBJECT_TYPE );
+        loginType.setDescription("CCM user login application");
+        loginType.save();
         
-        return;
+        
+        Application login = Application.createApplication(loginType,
+                                                          "register",
+                                                          "CCM Login",
+                                                          null);
+        login.setDescription("CCM login instance");
+
+        return login;
     }
-        
 
 
     /**
@@ -581,6 +582,31 @@ public class CoreLoader extends PackageLoader {
         app.setDescription("CCM permissions administration instance");
         app.save();
 
+        return;
+    }
+
+    /**
+     * Loads WebDeveloperSupport as a new style, legacy free application into
+     * database and instantiate the (only) application instance.
+     *
+     * Public static access needed by upgrade script Upgrade664
+     * @return webDevType ApplicationType 
+     */
+    public static void loadWebDev() {
+
+        ApplicationType webDevType =
+                new ApplicationType("WebDev Support",
+                                    WebDevSupport.BASE_DATA_OBJECT_TYPE );
+        webDevType.setDescription("WebDeveloper Support application");
+        webDevType.save();
+
+        Application webDev = Application.createApplication(webDevType,
+                                                           "ds",
+                                                           "WebDeveloper Support",
+                                                           null);
+        webDev.setDescription("The default WEB developer service instance.");
+        webDev.save();
+        
         return;
     }
 

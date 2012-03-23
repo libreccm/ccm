@@ -18,6 +18,8 @@
 
 package com.arsdigita.ui;
 
+import com.arsdigita.ui.login.Login;
+import com.arsdigita.ui.login.LoginServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -41,12 +43,7 @@ public abstract class UI {
     /** (Relative) URL for systems public top level page.                     */
     // In old LegacyInitializer ROOT_PAGE_KEY =pagemap.root= register/ | portal/
     private static final String s_rootPageURL = s_config.getRootPage();
-    /** (Relative) URL for systems login page.                                */
-    private static final String s_loginURL = s_config.getLogin();
-    /** (Relative) URL for systems logout page.                               */
-    private static final String s_logoutURL = s_config.getLogout();
-    /**
-     * */
+    /**     */
      private static final String s_userRedirectURL = s_config.getUserRedirect();
     /** (Relative) URL for workspace page.                                    */
     private static final String s_workspaceURL = s_config.getWorkspace();
@@ -96,7 +93,7 @@ public abstract class UI {
      * Since version 5.2 the context part is handled by (new) dispatcher.
      * Therefore the request parameter is not ignored! This variant is retained
      * for backwards compatibility only. 
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
+     * The leading slash is API change! It's impacts have to be checked. (2011-02)
      *
      * @return URL for top-level page as String
      */
@@ -144,37 +141,11 @@ public abstract class UI {
      * It is relative to document root without any constant prefix if there is
      * one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
-     *
      * @return URL for login page as String
+     * @deprecated use Login.getLoginPageURL()() instead
      */
-    // In old LegacyInitializer
-    // LOGIN_PAGE_KEY = page.kernel.login =  register/
     public static String getLoginPageURL() {
-        return s_rootURL + s_loginURL;
-    }
-
-    /**
-     * Provides an absolute URL (leading slash) for a login expired info page.
-     * It is relative to document root without any constant prefix if there is
-     * one configured.
-     *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
-     *
-     * @return url String for new user registration page as String
-     */
-    // In old LegacyInitializer
-    // EXPIRED_PAGE_KEY =page.kernel.expired=register/login-expired/
-    public static String getLoginExpiredPageURL() {
-        return s_rootURL + s_loginURL + "login-expired/";
+        return Login.getLoginPageURL();
     }
 
     /**
@@ -182,18 +153,11 @@ public abstract class UI {
      * It is relative to document root without any constant prefix if there is
      * one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
-     *
      * @return url String for new user registration page as String
+     * @deprecated use LoginServlet.getCookiesExplainPageURL() instead
      */
-    // In old LegacyInitializer
-    //COOKIES_PAGE_KEY =page.kernel.cookies=register/explain-persistent-cookies/
     public static String getCookiesExplainPageURL() {
-        return s_rootURL + s_loginURL + "explain-persistent-cookies/";
+        return LoginServlet.getCookiesExplainPageURL();
     }
 
     /**
@@ -201,18 +165,11 @@ public abstract class UI {
      * It is relative to document root without any constant prefix if there is
      * one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
-     *
      * @return url String for new user registration page as String
+     * @deprecated use LoginServlet.getRecoverPasswordPageURL() instead
      */
-    // In old LegacyInitializer
-    //  RECOVER_PAGE_KEY =page.kernel.recover = register/recover-password/
     public static String getRecoverPasswordPageURL() {
-        return s_rootURL + s_loginURL + "recover-password/";
+        return LoginServlet.getRecoverPasswordPageURL();
     }
 
     /**
@@ -220,56 +177,11 @@ public abstract class UI {
      * It is relative to document root without any constant prefix if there is
      * one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
-     *
      * @return url String for new user registration page as String
+     * @deprecated use LoginServlet.getEditUserProfilePageURL() instead
      */
-    // In old LegacyInitializer
-    // EDIT_PAGE_KEY = page.kernel.edit = register/edit-profile/
     public static String getEditUserProfilePageURL() {
-        return s_rootURL + s_loginURL + "edit-profile/";
-    }
-
-    /**
-     * Provides an absolute URL (leading slash) for an edit (change) password
-     * page. It is relative to document root without any constant prefix if
-     * there is one configured.
-     *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher. The
-     * leading slash it API change! It's impacts have to  be checked. (2011-02)
-     *
-     * @return url String for new user registration page as String
-     */
-    // In old LegacyInitializer
-    // CHANGE_PAGE_KEY = page.kernel.change = register/change-password/
-    public static String getChangePasswordPageURL() {
-        return s_rootURL + s_loginURL + "change-password/";
-    }
-
-    /**
-     * Provides an absolute URL (leading slash) to an optional new user
-     * registration page (accessible only if activated). It is relative to
-     * document root without any constant prefix if there is one configured.
-     *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
-     *
-     * @return url String for new user registration page as String
-     */
-    // In old LegacyInitializer
-    // NEWUSER_PAGE_KEY = page.kernel.newuser = register/new-user/
-    public static String getNewUserPageURL() {
-        return s_rootURL + s_loginURL + "new-user/";
+        return LoginServlet.getEditUserProfilePageURL();
     }
 
     /**
@@ -277,18 +189,11 @@ public abstract class UI {
      * is relative to document root without any constant prefix if there is one
      * configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have tp be checked. (2011-02)
-     *
      * @return URL for logout page as String
+     * @deprecated use LoginServlet.getLogoutPageURL() instead
      */
-    // In old LegacyInitializer
-    // LOGOUT_PAGE_KEY =page.kernel.logout=register/logout/
     public static String getLogoutPageURL() {
-        return s_rootURL + s_logoutURL;
+        return LoginServlet.getLogoutPageURL();
     }
 
     /**

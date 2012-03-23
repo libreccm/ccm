@@ -92,7 +92,7 @@ public class UserInfo extends SimpleContainer {
                 User user = getUser(state);
 
                 Element userElement = new Element("subsite:userInfo", 
-                                                  SubsiteDispatcher.SUBSITE_NS_URI);
+                                                  LoginServlet.SUBSITE_NS_URI);
 
                 // check if Content-Center (CMS Workspace) is installed and
                 // instantiated, if so collect all instantiated workspace apps.
@@ -141,7 +141,7 @@ public class UserInfo extends SimpleContainer {
                     Element workspaceURL;
                     Element contentCenters = userElement.newChildElement
                                              ("subsite:contentCenters", 
-                                              SubsiteDispatcher.SUBSITE_NS_URI);
+                                              LoginServlet.SUBSITE_NS_URI);
 
                     // step through instantiated workspaces (content-centers)
                     Iterator centers = m_contentCenters.iterator();
@@ -154,14 +154,14 @@ public class UserInfo extends SimpleContainer {
                         // Add an Element
                         center = contentCenters.newChildElement
                                                 ("subsite:center", 
-                                                 SubsiteDispatcher.SUBSITE_NS_URI);
+                                                 LoginServlet.SUBSITE_NS_URI);
 
                         // Add attribute name = URL without trailing/leading "/"
                         center.addAttribute("name", workspaceInstance.getTitle());
 
                         workspaceURL = center.newChildElement(
                                               "subsite:url", 
-                                              SubsiteDispatcher.SUBSITE_NS_URI);
+                                              LoginServlet.SUBSITE_NS_URI);
 
                        // get URL of Workspace application (instance)
                        final URL url = URL.there(state.getRequest(), 

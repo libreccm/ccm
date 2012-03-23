@@ -1,4 +1,5 @@
 <load>
+
   <requires>
     <table name="inits"/>
     <table name="acs_objects"/>
@@ -10,13 +11,16 @@
     <initializer class="com.arsdigita.london.search.Initializer"/>
     <initializer class="com.arsdigita.london.terms.Initializer"/>
   </requires>
+
   <provides>
   <!--
     <table name=""/>
   -->
     <initializer class="com.arsdigita.bundle.Initializer"/>
   </provides>
+
   <scripts>
     <data class="com.arsdigita.bundle.Loader"/>
   </scripts>
+
 </load>

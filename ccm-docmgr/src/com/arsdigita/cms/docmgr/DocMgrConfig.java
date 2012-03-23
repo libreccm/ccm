@@ -31,43 +31,59 @@ public final class DocMgrConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(DocMgrConfig.class);
 
-    private Parameter m_contentSection;
-    private Parameter m_legacyFolderName;
-    private Parameter m_internalGroupID;
-    private Parameter m_rowsPerPage;
-    private Parameter m_legacyFolderID;
+    /** Private Object to hold one's own instance to return to users. */
+    private static DocMgrConfig s_config;
 
-    public DocMgrConfig() {
+    /**
+     * Returns the singleton configuration record for DocMgr
+     *
+     * @return The <code>DocMgrConfig</code> record; it cannot be null
+     */
+    public static synchronized DocMgrConfig getInstance() {
+        if (s_config == null) {
+            s_config = new DocMgrConfig();
+            s_config.load();
+        }
 
-        m_contentSection = new StringParameter
+        return s_config;
+    }
+
+    // /////////////////////////////////////////////////////////////////////////
+    //
+    //   Parameter Sektion
+    
+    private Parameter m_contentSection = new StringParameter
             ("com.arsdigita.cms.docmgr.content_section", 
              Parameter.REQUIRED, 
              "content");
-
-        m_legacyFolderName = new StringParameter
+    private Parameter m_legacyFolderName = new StringParameter
             ("com.arsdigita.cms.docmgr.legacy_folder_name", 
              Parameter.REQUIRED, 
              "legacy");
-
-        m_legacyFolderID = new IntegerParameter
+    private Parameter m_legacyFolderID = new IntegerParameter
             ("com.arsdigita.cms.docmgr.legacy_folder_id", 
              Parameter.REQUIRED, 
-             "-200");
-
-
-        m_internalGroupID = new IntegerParameter
+             -200);
+    private Parameter m_internalGroupID = new IntegerParameter
             ("com.arsdigita.cms.docmgr.internal_group_id", 
              Parameter.REQUIRED, 
-             "-200");
-
-        m_rowsPerPage = new IntegerParameter
+             -200);
+    private Parameter m_rowsPerPage = new IntegerParameter
             ("com.arsdigita.cms.docmgr.rows_per_page", 
              Parameter.OPTIONAL, 
-             "20");
+             20);
+
+    /**
+     * Constructor registers Parameters and reads repository file if exist.
+     * 
+     * Do NOT instantiate this class directly using its constructor but use
+     * the provided getDocMgrConfig method above.
+     */
+    public DocMgrConfig() {
 
         register(m_contentSection);
         register(m_legacyFolderName);
-	register(m_legacyFolderID);
+        register(m_legacyFolderID);
         register(m_internalGroupID);
         register(m_rowsPerPage);
 

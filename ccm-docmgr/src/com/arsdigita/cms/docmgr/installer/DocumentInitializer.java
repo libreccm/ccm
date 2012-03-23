@@ -23,6 +23,7 @@ public class DocumentInitializer extends ContentTypeInitializer {
         super("ccm-docmgr.pdl.mf", Document.BASE_DATA_OBJECT_TYPE);
     }
 
+    @Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/docmgr/Document.xml";
     }
@@ -34,8 +35,10 @@ public class DocumentInitializer extends ContentTypeInitializer {
      *
      * @return fully qualified path info string reltive to document (context) root
      */
+    @Override
     public String[] getStylesheets() {
         return new String[] {
-            "/static/content-types/com/arsdigita/cms/docmgr/Document.xsl" };
+            "/themes/heirloom/contenttypes/DMDocument.xsl" };
+        //  "/static/content-types/com/arsdigita/cms/docmgr/Document.xsl" };
     }
 }

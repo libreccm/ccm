@@ -793,7 +793,7 @@ public class Application extends Resource {
      * NOTE: According to Servlet API the path always starts with a leading '/'
      * and includes either the servlet name or a path to the servlet, but does 
      * not include any extra path information or a query string. Returns an
-     * empry string ("") is the servlet used was matched using the "/*" pattern.
+     * empty string ("") is the servlet used was matched using the "/*" pattern.
      * 
      * @return path name to the applications servlet/JSP
      */

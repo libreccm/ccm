@@ -30,6 +30,7 @@ import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.portal.apportlet.AppPortletSetup;
+import com.arsdigita.portal.apportlet.AppPortletType;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
@@ -129,7 +130,7 @@ public class Loader extends PackageLoader {
     // formerly setupDocs()
     private ApplicationType loadDocRepositoryApplicationType() {
 
-        ApplicationSetup setup = new ApplicationSetup(s_log);
+/*      ApplicationSetup setup = new ApplicationSetup(s_log);
         setup.setApplicationObjectType(Repository.BASE_DATA_OBJECT_TYPE);
         setup.setKey("cmsdocs");
         setup.setTitle("Document Manager (CMS) Application");
@@ -145,6 +146,14 @@ public class Loader extends PackageLoader {
             });
 
         return setup.run();
+*/
+        /* Create new type legacy compatible application type               */
+        ApplicationType type =  ApplicationType
+                                .createApplicationType("cmsdocs",
+                                                       "DocRepo",
+                                                       Repository.BASE_DATA_OBJECT_TYPE);
+        type.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DMDispatcher");
+        type.setDescription("The document manager empowers users to share documents.");
 
 
         /* Legacy free initialization                                  
@@ -162,10 +171,11 @@ public class Loader extends PackageLoader {
      // type.setDescription
      //     ("The document repository empowers users to share documents.");
         
+        return type; 
     }
 
     private ApplicationType setupCategoryBrowsing() {
-        ApplicationSetup setup = new ApplicationSetup(s_log);
+/*      ApplicationSetup setup = new ApplicationSetup(s_log);
         setup.setApplicationObjectType(DocumentCategoryBrowserApplication
                                        .BASE_DATA_OBJECT_TYPE);
         setup.setKey("cmsdocs-categories");
@@ -181,10 +191,20 @@ public class Loader extends PackageLoader {
                 }
             });
         return setup.run();
+*/
+        /* Create new type legacy compatible application type               */
+        ApplicationType type =  ApplicationType
+                                .createApplicationType("cmsdocs-categories",
+                                                 "Browse Documents Application",
+                       DocumentCategoryBrowserApplication.BASE_DATA_OBJECT_TYPE);
+        type.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DCNDispatcher");
+        type.setDescription("Browse documents by category.");
+
+        return type; 
 
     }
     private ApplicationType setupLegacyCategoryBrowsing() {
-        ApplicationSetup setup = new ApplicationSetup(s_log);
+/*      ApplicationSetup setup = new ApplicationSetup(s_log);
         setup.setApplicationObjectType(LegacyCategoryBrowserApplication
                                        .BASE_DATA_OBJECT_TYPE);
         setup.setKey("cmsdocs-categories-legacy");
@@ -200,6 +220,16 @@ public class Loader extends PackageLoader {
                 }
             });
         return setup.run();
+*/
+        /* Create new type legacy compatible application type               */
+        ApplicationType type =  ApplicationType
+                                .createApplicationType("cmsdocs-categories-legacy",
+                                                            "Taxonomy Browser",
+                       LegacyCategoryBrowserApplication.BASE_DATA_OBJECT_TYPE);
+        type.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DCNDispatcher");
+        type.setDescription("Browse documents by category.");
+
+        return type; 
 
     }
 
@@ -246,7 +276,7 @@ public class Loader extends PackageLoader {
     private void setupDocRepositoryPortlet(ApplicationType provider) {
 
         // Create the document repository portlet
-        AppPortletSetup setup = new AppPortletSetup(s_log);
+/*      AppPortletSetup setup = new AppPortletSetup(s_log);
 
         setup.setPortletObjectType(RecentUpdatedDocsPortlet.BASE_DATA_OBJECT_TYPE);
         setup.setTitle("Recently Updated Documents");
@@ -263,6 +293,16 @@ public class Loader extends PackageLoader {
             });
 
         setup.run();
+*/
+		AppPortletType type = AppPortletType.createAppPortletType(
+                                       "Portal Bookmarks",
+                                       PortletType.NARROW_PROFILE,
+                                       RecentUpdatedDocsPortlet.BASE_DATA_OBJECT_TYPE);
+        // type.setProviderApplicationType(provider);
+        type.setProviderApplicationType(Repository.BASE_DATA_OBJECT_TYPE);
+        type.setDescription(
+             "Displays the most recent documents in the document repository.");
+        
 
     }
 

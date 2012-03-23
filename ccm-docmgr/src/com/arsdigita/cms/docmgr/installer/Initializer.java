@@ -50,8 +50,10 @@ import com.arsdigita.web.ApplicationType;
  *
  * @version $Revision: #11 $ $Date: 2004/01/14 $
  */
-
 public class Initializer extends CompoundInitializer {
+
+    /** Private Logger instance for debugging purpose.                        */
+    private static Logger s_log = Logger.getLogger(Initializer.class);
 
     // private Configuration m_conf = new Configuration();
 
@@ -65,9 +67,9 @@ public class Initializer extends CompoundInitializer {
     public static final String INTERNAL_GROUP_ID = "internalGroupID";
     public static final String LEGACY_FOLDER_NAME = "legacyFolderName";
 
-    private static Logger s_log =
-        Logger.getLogger(Initializer.class);
-
+    /**
+     * 
+     */
     public Initializer() {
     }
 
@@ -78,11 +80,55 @@ public class Initializer extends CompoundInitializer {
 //      return m_conf;
 //  }
 
+    /**
+     * 
+     * @param e 
+     */
     @Override
     public void init(DomainInitEvent e) {
         s_log.debug("Document (CCM) Manager is Domain initializing ... ");
 
-        setupDomainFactory();
+        /* Register REPOSITORY application type.*/
+        e.getFactory().registerInstantiator(
+            Repository.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
+                @Override
+                public DomainObject doNewInstance(DataObject dataObject) {
+                    return new Repository(dataObject);
+                }
+            });
+
+        /* Register Portlet  DocumentBrowser.                             */
+        e.getFactory().registerInstantiator(
+            RecentUpdatedDocsPortlet.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
+                @Override
+                public DomainObject doNewInstance(DataObject dataObject) {
+                    return new RecentUpdatedDocsPortlet(dataObject);
+                }
+            });
+
+        /* Set up domain object factories for basic document manager
+         * object types.                                                      */
+
+        DomainObjectFactory.registerInstantiator(
+             Document.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+            @Override
+                  public DomainObject doNewInstance(DataObject dataObject) {
+                        return new Document(dataObject);
+                        }
+                  }
+        );
+        DomainObjectFactory.registerInstantiator(
+             DocFolder.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+            @Override
+                  public DomainObject doNewInstance(DataObject dataObject) {
+                        return new DocFolder(dataObject);
+                        }
+                  }
+        );
+
+
         startup();
     }
 
@@ -98,15 +144,15 @@ public class Initializer extends CompoundInitializer {
                                                .getTransactionContext();
         txn.beginTxn();
 
-        ApplicationType docsAppType = setupDocs();
-        setupDocManagerPortlet(docsAppType);
+  //    ApplicationType docsAppType = setupDocs();
+  //    setupDocManagerPortlet(docsAppType);
 
-        ApplicationType categoryBrowseDocsAppType = setupCategoryBrowsing();
-        setupCategoryDocsPortlet(categoryBrowseDocsAppType);
+  //    ApplicationType categoryBrowseDocsAppType = setupCategoryBrowsing();
+  //    setupCategoryDocsPortlet(categoryBrowseDocsAppType);
 
-        ApplicationType legacyCategoryBrowseDocsAppType = 
-            setupLegacyCategoryBrowsing();
-        setupLegacyCategoryDocsPortlet(legacyCategoryBrowseDocsAppType);
+  //    ApplicationType legacyCategoryBrowseDocsAppType = 
+  //        setupLegacyCategoryBrowsing();
+  //    setupLegacyCategoryDocsPortlet(legacyCategoryBrowseDocsAppType);
 
         // de-activate search for now
         //SearchUtils.setSearcher
@@ -240,28 +286,6 @@ public class Initializer extends CompoundInitializer {
         setup.run();
     }
 
-    /**
-     * Set up domain object factories for basic document manager
-     * object types.
-     */
-    private void setupDomainFactory() {
-        DomainObjectFactory.registerInstantiator(
-             Document.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
-            @Override
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                        return new Document(dataObject);
-                        }
-                  }
-        );
-        DomainObjectFactory.registerInstantiator(
-             DocFolder.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
-            @Override
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                        return new DocFolder(dataObject);
-                        }
-                  }
-        );
-    }
 
     /**
      * Shutdown the document manager.

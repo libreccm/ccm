@@ -18,9 +18,10 @@
  */
 package com.arsdigita.portalserver.pslogin;
 
-import com.arsdigita.ui.login.SubsiteDispatcher;
+// import com.arsdigita.ui.login.SubsiteDispatcher;   DELETED!
 import com.arsdigita.kernel.security.Initializer;
 import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import java.util.Map;
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -41,7 +42,8 @@ import java.util.Map;
  * rather than the default system portal
  * @author <a href="mailto:bryanche@arsdigita.com">Bryan Che</a>
  **/
-public class PSSubsiteDispatcher extends SubsiteDispatcher {
+// public class PSSubsiteDispatcher extends SubsiteDispatcher {
+public class PSSubsiteDispatcher extends BebopMapDispatcher {
 
     private static Page s_psPage = new PSPage();
 

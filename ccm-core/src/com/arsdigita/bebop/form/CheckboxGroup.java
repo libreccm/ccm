@@ -56,6 +56,7 @@ public class CheckboxGroup extends OptionGroup implements BebopConstants {
     /** The XML tag.
      *  @return The tag to be used for the top level DOM element
      *  generated for this type of Widget.  */
+    @Override
     protected String getElementTag() {
         return BEBOP_CHECKBOXGROUP;
     }

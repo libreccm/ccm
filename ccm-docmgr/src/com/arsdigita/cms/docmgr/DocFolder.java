@@ -30,6 +30,7 @@ import com.arsdigita.util.UncheckedWrapperException;
 
 public class DocFolder extends Folder implements Resource {
 
+    /** Private Logger instance for debugging purpose.                        */
     private final static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(DocFolder.class);
     

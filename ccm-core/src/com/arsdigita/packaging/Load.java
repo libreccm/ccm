@@ -421,7 +421,8 @@ class Load extends Command {
                 }
 
                 if (!conflicts.isEmpty()) {
-                    System.err.println("conflicting tables: " + conflicts);
+                    System.err.println("conflicting tables (already exist): " + 
+                                       conflicts);
                 }
 
                 if (conflicts.size() > 0 || missing.size() > 0) {

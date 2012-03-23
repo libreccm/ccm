@@ -330,7 +330,7 @@ public class RecoverPasswordPanel extends SimpleContainer
     private static class MailSentPane extends ElementComponent {
         public MailSentPane() {
             super("subsite:recoverPasswordMailSent",
-                  SubsiteDispatcher.SUBSITE_NS_URI);
+                  LoginServlet.SUBSITE_NS_URI);
         }
     }
 
@@ -374,7 +374,7 @@ public class RecoverPasswordPanel extends SimpleContainer
     private static class MailFailedPane extends ElementComponent {
         public MailFailedPane() {
             super("subsite:recoverPasswordMailFailed",
-                  SubsiteDispatcher.SUBSITE_NS_URI);
+                  LoginServlet.SUBSITE_NS_URI);
         }
     }
 }

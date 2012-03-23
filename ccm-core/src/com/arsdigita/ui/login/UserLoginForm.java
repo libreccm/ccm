@@ -65,19 +65,24 @@ import org.apache.log4j.Logger;
 /**
  * A Bebop form that accepts login and password from the user and attempts
  * to authenticate and then log in the user.
+ * 
+ * Depending on security configuration it may generate a link to a NewUser
+ * registration form, where a new user may register itself. LoginServlet has
+ * to ensure that this page is created appropriately and is available.
  *
  * @author Roger Hsueh
  * @author Michael Bryzek
  * @author Sameer Ajmani
  *
- * @version $Id: UserRegistrationForm.java 1230 2006-06-22 11:50:59Z apevec $
+ * @version $Id: UserLoginForm.java 1230 2006-06-22 11:50:59Z apevec $
  */
-public class UserRegistrationForm extends Form
+public class UserLoginForm extends Form
         implements LoginConstants, FormInitListener,
                    FormValidationListener, FormProcessListener {
 
     private static final Logger s_log =
-                                Logger.getLogger(UserRegistrationForm.class);
+                                Logger.getLogger(UserLoginForm.class);
+
     // package friendly static form name makes writing HttpUnitTest easier
     final static String FORM_NAME = "user-login";
     private CheckboxGroup m_isPersistent;
@@ -88,19 +93,29 @@ public class UserRegistrationForm extends Form
     private boolean m_autoRegistrationOn;
     private SecurityConfig securityConfig = SecurityConfig.getConfig();
 
-    public UserRegistrationForm() {
+    /**
+     * Default constructor delegates to a constructor which creates a LoginForm
+     * without a link to a newUserRegistrationForm.
+     */
+    public UserLoginForm() {
         this(true);
     }
 
-    public UserRegistrationForm(Container panel) {
+    public UserLoginForm(Container panel) {
         this(panel, true);
     }
 
-    public UserRegistrationForm(boolean autoRegistrationOn) {
+    public UserLoginForm(boolean autoRegistrationOn) {
         this(new BoxPanel(), autoRegistrationOn);
     }
 
-    public UserRegistrationForm(Container panel, boolean autoRegistrationOn) {
+    /**
+     * Constructor which does the real work, other constructors delegate to it.
+     * 
+     * @param panel
+     * @param autoRegistrationOn 
+     */
+    public UserLoginForm(Container panel, boolean autoRegistrationOn) {
         super(FORM_NAME, panel);
 
         setMethod(Form.POST);
@@ -128,36 +143,35 @@ public class UserRegistrationForm extends Form
         add(m_password);
 
         SimpleContainer cookiePanel = new BoxPanel(BoxPanel.HORIZONTAL);
-        m_isPersistent =
-        new CheckboxGroup(FORM_PERSISTENT_LOGIN_P);
-        Label optLabel =
-              new Label(LoginHelper.getMessage(
-                "login.userRegistrationForm.cookieOption"));
+        m_isPersistent = new CheckboxGroup(FORM_PERSISTENT_LOGIN_P);
+        Label optLabel = new Label(LoginHelper.getMessage(
+                                   "login.userRegistrationForm.cookieOption"));
         Option opt = new Option(FORM_PERSISTENT_LOGIN_P_DEFAULT, optLabel);
         m_isPersistent.addOption(opt);
         if (Kernel.getConfig().isLoginRemembered()) {
             m_isPersistent.setOptionSelected(FORM_PERSISTENT_LOGIN_P_DEFAULT);
-        }
+        } 
         cookiePanel.add(m_isPersistent);
+
         cookiePanel.add(new DynamicLink(
-                "login.userRegistrationForm.explainCookieLink",
-                                        UI.getCookiesExplainPageURL()));
+                                "login.userRegistrationForm.explainCookieLink",
+                                LoginServlet.getCookiesExplainPageURL()));
         add(cookiePanel);
 
         add(new Submit(SUBMIT), ColumnPanel.CENTER | ColumnPanel.FULL_WIDTH);
 
         if (securityConfig.getEnableQuestion()) {
             add(new DynamicLink("login.userRegistrationForm.forgotPasswordLink",
-                                UI.getRecoverPasswordPageURL()));
+                                LoginServlet.getRecoverPasswordPageURL()));
         }
 
         if (m_autoRegistrationOn) {
             add(new DynamicLink("login.userRegistrationForm.newUserRegister",
-                                UI.getNewUserPageURL()));
+                                LoginServlet.getNewUserPageURL()));
         }
 
         add(new ElementComponent("subsite:promptToEnableCookiesMsg",
-                                 SubsiteDispatcher.SUBSITE_NS_URI));
+                                 LoginServlet.SUBSITE_NS_URI));
     }
 
     /**
@@ -166,7 +180,7 @@ public class UserRegistrationForm extends Form
     private void setupLogin() {
         SimpleContainer loginMessage =
                         new SimpleContainer("subsite:loginPromptMsg",
-                                            SubsiteDispatcher.SUBSITE_NS_URI);
+                                            LoginServlet.SUBSITE_NS_URI);
 
 
         if (KernelHelper.emailIsPrimaryIdentifier()) {
@@ -236,10 +250,7 @@ public class UserRegistrationForm extends Form
             } catch (CredentialException e) {
                 s_log.info("Invalid credential");
 
-                //final String path = LegacyInitializer.getFullURL
-                //        (LegacyInitializer.EXPIRED_PAGE_KEY, state.getRequest());
-                final String path = UI.getLoginExpiredPageURL();
-
+                final String path = LoginServlet.getLoginExpiredPageURL();
                 final URL url = com.arsdigita.web.URL.there(state.getRequest(),
                                                             path);
 
@@ -369,7 +380,7 @@ public class UserRegistrationForm extends Form
      **/
     protected void onLoginException(FormSectionEvent event,
                                     LoginException e)
-            throws FormProcessException {
+                   throws FormProcessException {
         // unexpected error happened during login
         s_log.error("Login failed", e);
         throw new FormProcessException(e);
@@ -386,20 +397,42 @@ public class UserRegistrationForm extends Form
      **/
     protected boolean getPersistentLoginValue(PageState state,
                                               boolean defaultValue) {
-        // CheckboxGroup gets you a StringArray
-        String[] values = (String[]) m_isPersistent.getValue(state);
-        if (values == null) {
+        // Problem:
+        // getValue(state) returns an Object of type StringArray, if the
+        // Checkbox is marked.
+        // It returns an object of type String if it is not marked / left empty.
+        // Additionally, in some circumstances it may return null
+        // ODD!!
+        
+        Object persistentLoginValue =  m_isPersistent.getValue(state);
+
+        String[] values;
+        String value;
+        
+        if (persistentLoginValue == null) {
             return defaultValue;
+        } 
+        
+        if (persistentLoginValue instanceof String[]) {
+            values = (String[]) persistentLoginValue;
+            return "1".equals(values[0]);            
+        }
+        
+        if (persistentLoginValue instanceof String) {
+            value = (String) persistentLoginValue;
+            return "1".equals(value);            
         }
 
-        String persistentLoginValue = (String) values[0];
-        return "1".equals(persistentLoginValue);
+        return defaultValue;
     }
 
+    /**
+     * 
+     * @param state 
+     */
     protected void redirectToNewUserPage(PageState state) {
-//        String url = LegacyInitializer.getFullURL
-//            (LegacyInitializer.NEWUSER_PAGE_KEY, state.getRequest());
-        String url = UI.getNewUserPageURL();
+ 
+        String url = LoginServlet.getNewUserPageURL();
 
         ParameterMap map = new ParameterMap();
         map.setParameter(LoginHelper.RETURN_URL_PARAM_NAME,
@@ -409,9 +442,12 @@ public class UserRegistrationForm extends Form
         map.setParameter(FORM_EMAIL,
                          m_loginName.getValue(state));
 
-        final URL dest = com.arsdigita.web.URL.there(
-                state.getRequest(), url, map);
+        final URL dest = com.arsdigita.web.URL.there(state.getRequest(), 
+                                                     url, 
+                                                     map);
 
         throw new RedirectSignal(dest, true);
+
     }
+
 }

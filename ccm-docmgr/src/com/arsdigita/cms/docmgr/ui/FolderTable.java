@@ -109,6 +109,7 @@ class FolderTable extends Table implements TableActionListener, DMConstants {
 		addTableActionListener(this);
 	}
 	
+    @Override
 	public void generateXML(PageState s, Element p) {
 		long start = System.currentTimeMillis();
 		super.generateXML(s, p);
@@ -117,6 +118,7 @@ class FolderTable extends Table implements TableActionListener, DMConstants {
 		}
 	}
 
+    @Override
 	public void register(Page p) {
 		super.register(p);
 		p.addComponentStateParam(this, m_sources);
@@ -305,11 +307,17 @@ class FolderTable extends Table implements TableActionListener, DMConstants {
 //	}
 }
 
+/**
+ * 
+ * 
+ */
 class FolderTableModelBuilder extends LockableImpl implements TableModelBuilder {
 
-	private final static Logger s_log = Logger.getLogger(FolderTableModelBuilder.class);
+	private final static Logger s_log = 
+                                Logger.getLogger(FolderTableModelBuilder.class);
 
-	public static final SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMMMMMMMMM d, yyyy");
+	public static final SimpleDateFormat dateFormatter = new 
+                                         SimpleDateFormat("MMMMMMMMMMM d, yyyy");
 
 	private Tree m_tree;
 	private FolderContentsTableForm m_parent;
@@ -361,7 +369,8 @@ class FolderTableModelBuilder extends LockableImpl implements TableModelBuilder 
 
 			Folder parentFolder = new Folder(folderID);
 
-			m_collection = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.docmgr.ui.ItemsInFolder");
+			m_collection = SessionManager.getSession().retrieveQuery(
+                                  "com.arsdigita.cms.docmgr.ui.ItemsInFolder");
 			m_collection.setParameter(Folder.PARENT, folderID);
 			m_collection.setParameter(Folder.VERSION, parentFolder.getVersion());
 			m_collection.addOrder("isFolder desc");
@@ -375,24 +384,34 @@ class FolderTableModelBuilder extends LockableImpl implements TableModelBuilder 
 				m_parent.hideEmptyLabel(state);
 			}
 			
-			int maxPages = (int) (size / m_rowsPerPage) + (size % m_rowsPerPage > 0 ? 1 : 0);
+			int maxPages = (int) (size / m_rowsPerPage) 
+                                 + (size % m_rowsPerPage > 0 ? 1 : 0);
 			Integer pn = (Integer) state.getValue(m_parent.getPageNoParameter());
 			int pageNo = (pn == null ? 0 : pn.intValue());
 			int firstRowNo = ((int) (pageNo * m_rowsPerPage)) + 1;
 			int lastRowNo = firstRowNo + m_rowsPerPage;
 			if (s_log.isDebugEnabled()) {
-				s_log.debug("items count:" + size + "; items per page:" + m_rowsPerPage + "; max pages:" + maxPages + 
-						"; pageNo:" + pageNo + "; first row no:" + firstRowNo + "; last row no:" + lastRowNo);
+				s_log.debug("items count:" + size + "; items per page:" + 
+                            m_rowsPerPage + "; max pages:" + maxPages + 
+						    "; pageNo:" + pageNo + "; first row no:" + 
+                            firstRowNo + "; last row no:" + lastRowNo);
 			}
 			m_collection.setRange(new Integer(firstRowNo), new Integer(lastRowNo));
 
-			m_typeIdDocument = ContentType.findByAssociatedObjectType(Document.TYPE).getID();
-			m_typeIdDocLink = ContentType.findByAssociatedObjectType(DocLink.TYPE).getID();
-			m_typeIdDocFolder = ContentType.findByAssociatedObjectType(DocFolder.TYPE).getID();
+			m_typeIdDocument = ContentType.findByAssociatedObjectType(
+                                                   Document.TYPE).getID();
+			m_typeIdDocLink = ContentType.findByAssociatedObjectType(
+                                                   DocLink.TYPE).getID();
+			m_typeIdDocFolder = ContentType.findByAssociatedObjectType(
+                                                   DocFolder.TYPE).getID();
 
 			m_user = Web.getContext().getUser();
 			Application app = Web.getContext().getApplication();
-			m_isManager = PermissionService.checkPermission(new PermissionDescriptor(PrivilegeDescriptor.ADMIN, app, m_user));
+            m_isManager = PermissionService.checkPermission(new 
+                             PermissionDescriptor(PrivilegeDescriptor.ADMIN, 
+                                                  app, 
+                                                  m_user)
+                          );
 		}
 
 		public int getColumnCount() {
@@ -439,8 +458,10 @@ class FolderTableModelBuilder extends LockableImpl implements TableModelBuilder 
 					}
 					else if (isLink) {
 						Repository rep = ((Document) resource).getRepository();
-						String path = Web.getConfig().getDispatcherContextPath() + rep.getPath() + "/file?" + FILE_ID_PARAM_NAME + "="
-								+ resource.getID();
+			            String path = Web.getConfig().getDispatcherContextPath() 
+                                      + rep.getPath() + "/file?" 
+                                      + FILE_ID_PARAM_NAME + "="
+								      + resource.getID();
 						Link l = new Link((String) resource.getTitle(), path);
 						link.add(l);
 					}

@@ -11,7 +11,7 @@
 <xsl:import href="../../bebop/xsl/DimensionalNavbar.xsl"/>
 <xsl:import href="CMSContainer.xsl"/>
 <xsl:import href="../../bebop/xsl/DataTable.xsl"/>
-<xsl:import href="../../acs-admin/xsl/split-panel.xsl"/>
+<xsl:import href="../../admin/xsl/split-panel.xsl"/>
 <xsl:import href="admin/cms-admin.xsl"/>
 
 <xsl:param name="context-prefix"/>

@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
  * This class is a servlet based version of BebopMapDispatcher and associated
  * classes and is generally used in the same way by legacy free applications.
  * 
- * Subclasses usually overwrite the doService method to create Page objects
+ * Subclasses usually overwrite the doInit() method to create Page objects
  * and use this.put method to construct the mapping.
  * 
  * Subclasses may overwrite the doService method to add additional functionality,
@@ -116,7 +116,9 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
     }
 
     /**
-     * disable client/middleware caching of specified page (Chris Gilbert).
+     * Adds the provided page as specified by its pathInfo information to an
+     * internal list of pages for which client/middleware caching will be
+     * disabled when serving the page (added by Chris Gilbert).
      *
      * @param pathInfo - the same path used to add the page when put was called
      */
@@ -156,6 +158,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
             if (m_clientCacheDisabledPages.contains(pathInfo)) {
             	DispatcherHelper.cacheDisable(sresp);
             }
+            preprocessRequest(sreq, sresp, app, pathInfo);
             final Document doc = page.buildDocument(sreq, sresp);
             DeveloperSupport.endStage("Dispatcher page.buildDocument");
 
@@ -166,4 +169,18 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
             DeveloperSupport.endStage("Dispatcher presMgr.servePage");
         }
     }
+
+    /**
+     * Provides the opportunity for subclasses to do some preprocessing
+     * of a given url, before it is handed off to main service process.
+     * One typical action is to ensure permissions.
+     */
+    protected void preprocessRequest(HttpServletRequest sreq,
+                                     HttpServletResponse sresp,
+                                     Application app,
+                                     String url)  
+                         throws ServletException, IOException {
+        // Nothing to do by default.
+    }
+
 }

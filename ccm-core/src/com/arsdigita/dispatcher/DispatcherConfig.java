@@ -36,7 +36,16 @@ public final class DispatcherConfig extends AbstractConfig {
     private final Parameter m_staticURLPrefix;
     private final Parameter m_cachingActive;
     private final Parameter m_defaultExpiry;
-    private final Parameter m_defaultPageClass;
+
+    /** Default top-level container for all Bebop components and containersPage.
+     *  to use for dispatching Bebop pages. A custom installation may provide 
+     *  it's own implementation. Use with care because all pages inherit from
+     *  this class! 
+     *  Default is {@see com.arsdigita.bebop.Page}                            */
+    private final Parameter m_defaultPageClass= new 
+            StringParameter("waf.dispatcher.default_page_class",
+                            Parameter.OPTIONAL,
+                            "com.arsdigita.bebop.Page");
 
     public DispatcherConfig() {
         m_staticURLPrefix = new StringParameter
@@ -51,11 +60,6 @@ public final class DispatcherConfig extends AbstractConfig {
         m_defaultExpiry = new IntegerParameter
             ("waf.dispatcher.default_expiry", Parameter.REQUIRED,
              new Integer(259200));
-
-        m_defaultPageClass = new StringParameter
-        	("waf.dispatcher.default_page_class",
-        	 Parameter.OPTIONAL,
-        	 "com.arsdigita.bebop.Page");
 
         register(m_staticURLPrefix);
         register(m_cachingActive);
@@ -90,6 +94,12 @@ public final class DispatcherConfig extends AbstractConfig {
         return (Integer)get(m_defaultExpiry);
     }
     
+    /**
+     * Retrieve the top-level container for all Bebop components and 
+     * containersPage to use by dispatcher.
+     * Most installation should use the provided default implementation in
+     * {@see com.arsdigita.bebop.Page}
+     */ 
     public String getDefaultPageClass() {
     	return (String)get(m_defaultPageClass);
     }

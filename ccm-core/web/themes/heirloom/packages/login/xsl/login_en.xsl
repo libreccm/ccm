@@ -5,11 +5,11 @@
 <!ENTITY copy   "&#169;" >
 ]>
 
-<xsl:stylesheet version="1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:subsite="http://www.arsdigita.com/subsite/1.0"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+             xmlns:subsite="http://www.arsdigita.com/subsite/1.0"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                  xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                   version="1.0">
 
   <xsl:import href="../../bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../ui/xsl/ui.xsl"/>

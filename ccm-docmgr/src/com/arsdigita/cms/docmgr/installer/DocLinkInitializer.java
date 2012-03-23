@@ -30,6 +30,7 @@ public class DocLinkInitializer extends ContentTypeInitializer {
         super("empty.pdl.mf", DocLink.BASE_DATA_OBJECT_TYPE);
     }
 
+    @Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/docmgr/DocLink.xml";
     }
@@ -41,8 +42,10 @@ public class DocLinkInitializer extends ContentTypeInitializer {
      *
      * @return fully qualified path info string relative to document root
      */
+    @Override
     public String[] getStylesheets() {
         return new String[] {
-            "/static/content-types/com/arsdigita/cms/docmgr/DocLink.xsl" };
+            "/themes/heirloom/contenttypes/DMDocLink.xsl" };
+        //  "/static/content-types/com/arsdigita/cms/docmgr/DocLink.xsl" };
     }
 }
