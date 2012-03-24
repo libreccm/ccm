@@ -155,6 +155,10 @@ public class URL {
 
     
     public static final String THEMES_DIR = "/themes";
+    
+    /** Base direcotry for template files provided by packages. Each package
+      * has to place files into a subdirectory with its name                  */
+    public static final String TEMPLATE_DIR = "/templates";
 
     /**
      * The standard location for servlets.

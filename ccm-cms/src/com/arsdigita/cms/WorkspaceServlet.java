@@ -96,7 +96,9 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         requireTrailingSlash("");
 
         /** Set Template base path for JSP's                                  */
-        m_templatePath = ContentSection.getConfig().getTemplateRoot();
+        // ToDo: Make it configurable by an appropriate config registry entry!
+//        m_templatePath = CMS.getConfig().getTemplateRoot();
+        m_templatePath = "/templates/ccm-cms/content-center";
         Assert.exists(m_templatePath, String.class);
         Assert.isTrue(m_templatePath.startsWith("/"),
                      "template-path must start with '/'");
@@ -139,15 +141,20 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         }
 
         // Check user access.
-        checkUserAccess(sreq, sresp);
+   //   checkUserAccess(sreq, sresp);
 
         ResourceHandler page = getResource(url);
         if ( page != null ) {
+
+            // Check user access.
+            checkUserAccess(sreq, sresp);
             // Serve the page.
             page.init();
             page.dispatch(sreq, sresp, ctx);
         } else {
             // Fall back on the JSP application dispatcher.
+            // NOTE: The JSP must ensure the proper authentication and
+            //       authorisation if required!
             if (s_log.isInfoEnabled()) {
                 s_log.info("NO page registered to serve the requst url.");
             }

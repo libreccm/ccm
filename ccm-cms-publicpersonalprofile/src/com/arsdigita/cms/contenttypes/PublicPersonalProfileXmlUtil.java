@@ -86,7 +86,7 @@ public class PublicPersonalProfileXmlUtil {
         /*navList.addAttribute("url", String.format("%s/%s",
         appUrl,
         profile.getProfileUrl()));*/
-        navList.addAttribute("url", String.format("/ccm/%s",
+        navList.addAttribute("url", String.format("/ccm%s",
                                                   UI.getConfig().getRootPage()));
 
 
@@ -142,7 +142,7 @@ public class PublicPersonalProfileXmlUtil {
         //homeElem.addAttribute("url", String.format("%s/%s",
         //                                         appUrl,
         //                                       profile.getProfileUrl()));
-        homeElem.addAttribute("url", String.format("/ccm/%s",
+        homeElem.addAttribute("url", String.format("/ccm%s",
                                                    UI.getConfig().getRootPage()));
 
         final Element profileElem =

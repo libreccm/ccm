@@ -111,12 +111,6 @@ public class LoginServlet extends BebopApplicationServlet {
 
     // define
     final static String s_loginURL = Login.LOGIN_PAGE_URL;
- // final static String s_loginURL = (Login.getLoginPageURL().endsWith("/") ?
- //                                     Login.getLoginPageURL()
- //                                          .substring(0, 
- //                                                     Login.getLoginPageURL()
- //                                                          .length()-1) :
- //                                     Login.getLoginPageURL()               );
 
     /**
      * User extension point used to create the pages to server and setup a 
@@ -126,9 +120,6 @@ public class LoginServlet extends BebopApplicationServlet {
      */
     @Override
     public void doInit() throws ServletException {
-
-     // Should be handled elsewhere, we have to check for it.   
-     // put("/",UI.getRootPageURL());
 
         // Allow world caching for pages without authentication,
         // ie, /register, /register/explain-persistent-cookies,

@@ -152,10 +152,9 @@ public final class CMSConfig extends AbstractConfig {
      * Path is relative to webapp root.
      */
     private final Parameter m_templateRootPath =
-                            new StringParameter(
-            "com.arsdigita.cms.template_root_path",
-            Parameter.REQUIRED,
-            "/templates/ccm-cms/content-section");
+            new StringParameter("com.arsdigita.cms.template_root_path",
+                                Parameter.REQUIRED,
+                                "/templates/ccm-cms/content-section");
     //      up to version 6.6.4
     //      "/packages/content-section/templates");
 
@@ -175,10 +174,9 @@ public final class CMSConfig extends AbstractConfig {
      * specifications. Path is relative to webapp root.
      */
     private final Parameter m_itemAdapters =
-                            new ResourceParameter(
-            "com.arsdigita.cms.item_adapters",
-            Parameter.REQUIRED,
-            "/WEB-INF/resources/cms-item-adapters.xml");
+            new ResourceParameter("com.arsdigita.cms.item_adapters",
+                                  Parameter.REQUIRED,
+                                  "/WEB-INF/resources/cms-item-adapters.xml");
     // URL resource: protocol handler removal: END
     /**
      * Use streamlined content creation: upon item creation,

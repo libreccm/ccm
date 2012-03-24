@@ -38,7 +38,6 @@ import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -123,7 +122,7 @@ public class UserNewForm extends UserForm
         m_confirm.setValue(state, "");
         String loginName = (String)m_loginName.getValue(state);
         if (loginName != null) {
-            if (KernelHelper.emailIsPrimaryIdentifier()) {
+            if (Kernel.getConfig().emailIsPrimaryIdentifier()) {
                 m_email.setValue(state, loginName);
             } else {
                 m_screenName.setValue(state, loginName);
@@ -146,7 +145,7 @@ public class UserNewForm extends UserForm
         final String firstName = (String)m_firstName.getValue(state);
         final String lastName = (String)m_lastName.getValue(state);
         String sn = null;
-        if (!KernelHelper.emailIsPrimaryIdentifier()) {
+        if (!Kernel.getConfig().emailIsPrimaryIdentifier()) {
             sn = (String)m_screenName.getValue(state);
         }
         final String screenName = sn;
@@ -167,7 +166,7 @@ public class UserNewForm extends UserForm
                     user.getPersonName().setGivenName(firstName);
                     user.getPersonName().setFamilyName(lastName);
                     user.setPrimaryEmail(new EmailAddress(email));
-                    if (!KernelHelper.emailIsPrimaryIdentifier()) {
+                    if (!Kernel.getConfig().emailIsPrimaryIdentifier()) {
                         user.setScreenName(screenName);
                     }
                     user.setURI(urlFinal);
@@ -203,7 +202,7 @@ public class UserNewForm extends UserForm
             // finally log the user in (sets the
             // appropriate session or permanent cookie)
             String loginName = email;
-            if (!KernelHelper.emailIsPrimaryIdentifier()) {
+            if (!Kernel.getConfig().emailIsPrimaryIdentifier()) {
                 loginName = screenName;
             }
             Web.getUserContext().login

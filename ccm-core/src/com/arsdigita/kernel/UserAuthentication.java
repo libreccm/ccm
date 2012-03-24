@@ -495,8 +495,8 @@ public class UserAuthentication extends DomainObject {
         }
         set("id", user.getID());
         setAssociation("user", user);
-	set("primaryEmail", user.getPrimaryEmail().getEmailAddress());
-	set("screenName", user.getScreenName());
+        set("primaryEmail", user.getPrimaryEmail().getEmailAddress());
+        set("screenName", user.getScreenName());
         m_user = user;
     }
 
@@ -510,10 +510,10 @@ public class UserAuthentication extends DomainObject {
      * @return The login name used for the user.
      **/
     private static String getLoginNameForUser(User user) {
-	if (KernelHelper.emailIsPrimaryIdentifier()) {
-	    return user.getPrimaryEmail().getEmailAddress();
-	}
-	return user.getScreenName();
+        if (Kernel.getConfig().emailIsPrimaryIdentifier()) {
+            return user.getPrimaryEmail().getEmailAddress();
+        }
+        return user.getScreenName();
     }
 
 }

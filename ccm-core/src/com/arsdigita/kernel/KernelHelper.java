@@ -200,14 +200,6 @@ public class KernelHelper {
     }
 
     /**
-     * @deprecated Use
-     * <code>Kernel.getConfig().getPrimaryUserIdentifier()</code>
-     */
-    public static synchronized boolean emailIsPrimaryIdentifier() {
-        return Kernel.getConfig().getPrimaryUserIdentifier().equals("email");
-    }
-
-    /**
      *
      *
      * Fetches the currently logged in user, or null.  This is a

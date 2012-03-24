@@ -39,7 +39,7 @@ import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.URLParameter;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.PersonName;
 import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.DataQuery;
@@ -356,7 +356,7 @@ public abstract class UserForm extends Form
             // If this query returns with any rows we have a duplicate
             // screen name, email address, or both.  Check the results and
             // produce appropriate error messages.
-            boolean checkPrimaryEmail = KernelHelper.emailIsPrimaryIdentifier();
+            boolean checkPrimaryEmail = Kernel.getConfig().emailIsPrimaryIdentifier();
 
             Filter filter = null;
             if (checkPrimaryEmail) {

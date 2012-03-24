@@ -20,8 +20,6 @@
 package com.arsdigita.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.ui.login.Login;
-import com.arsdigita.ui.login.LoginServlet;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
@@ -140,21 +138,23 @@ public class UIConfig extends AbstractConfig {
                 );
 
     /** String containing the relative URL for the top level page
-     *  (or entry page / home page) of the site, Without leading slash but with
-     *  trailing slash in case of a directory.
-     *  By default it is the login page, but usually the root page of the main
-     *  presentation application, e.g. portal, navigation, forum, etc.        */
-    // Old initializer: waf.pagemap.root
-    private final Parameter m_rootPageURL       = new StringParameter
-        ("core.ui.pagemap.root_page_url", Parameter.REQUIRED, "register/");
+     *  (or entry page / home page) of the site, Without leading slash but
+     *  with trailing slash in case of a directory.
+     *  By default it is the login page, but usually the root page of the
+     *  main presentation application, e.g. portal, navigation, forum, etc.   */
+    private final Parameter m_rootPageURL = 
+            new StringParameter("core.ui.pagemap.root_page_url", 
+                                Parameter.REQUIRED, "/register/");
 
-    /** String containing the URL for a page which may perform a user specific
-     *  redirect if logged in or to a general public page if not.             */
-    // Used to be LOGIN_REDIRECT_PAGE_KEY in old kernel/security/initializer
-    // parameter waf.pagemap.login_redirect = pvt/
-    // XXX  url pvt seems not to exist anymore! (pboy 2011-02-03)
-    private final Parameter m_userRedirectURL  = new StringParameter
-        ("core.ui.pagemap.user_redirect_url", Parameter.REQUIRED, "pvt/");
+    /** String containing the URL of a page, a servlet or a jsp, to which a 
+     *  user after login will be redirected to. 
+     *  In case of a jsp or servlet it may contain user specific logic to
+     *  redirect to a page specific for the user or a group of users. 
+     *  By default it is the /permissions/ page, but usually it is an
+     *  application like personal-portal or content-center.                   */
+    private final Parameter m_userRedirectURL  = 
+            new StringParameter("core.ui.pagemap.user_redirect_url", 
+                                Parameter.REQUIRED, "/permissions/");
     
     /** String containing the URL for the workspace of the site.              */
     // Old initializer: waf.pagemap.workspace
@@ -237,16 +237,27 @@ public class UIConfig extends AbstractConfig {
      * @return root page url
      */
     public String getRootPage() {
-        return (String)get(m_rootPageURL) ;
+        String rootPageURL = (String)get(m_rootPageURL) ;
+        // Previous configurations required NO leading slash. Just in case an
+        // old configuration is in place we have to translate.
+        return ( rootPageURL.startsWith("/") ? 
+                 rootPageURL : "/"+rootPageURL );
     }
 
     /**
-     * Retrieve systems user login redirect page url.
+     * Retrieve systems user login redirect page url, that is the page, a
+     * servlet oder a JSP ti which a user is redirected to after login.
+     * By default it is the /permissions/ page, but usually it is an application
+     * like personal-portal or content-center.
      *
      * @return user login redirect page url
      */
     public String getUserRedirect() {
-        return (String)get(m_userRedirectURL) ;
+        String userRedirectURL = (String)get(m_userRedirectURL);
+        // Previous configurations required NO leading slash. Just in case an
+        // old configuration is in place we have to translate.
+        return ( userRedirectURL.startsWith("/") ? 
+                 userRedirectURL : "/"+userRedirectURL );
     }
 
     /**
@@ -255,7 +266,11 @@ public class UIConfig extends AbstractConfig {
      * @return workspace page url
      */
     public String getWorkspace() {
-        return (String)get(m_workspaceURL) ;
+        String workspaceURL = (String)get(m_workspaceURL);
+        // Previous configurations required NO leading slash. Just in case an
+        // old configuration is in place we have to translate.
+        return ( workspaceURL.startsWith("/") ? 
+                 workspaceURL : "/"+workspaceURL );
     }
 
 }

@@ -255,8 +255,8 @@ public class ContentSection extends Application {
      * it contains the static prefix (if one is configured, "ccm" by default)
      * and must not be used to construct an url for internal links!
      *
-     * @return The URL of the site node on which the content section is mounted.
-     *   This URL includes the webapp context path.
+     * @return The URL where the content section is mounted.
+     *         This URL includes the webapp context path.
      */
     public String getURL() {
         String sURL = null;

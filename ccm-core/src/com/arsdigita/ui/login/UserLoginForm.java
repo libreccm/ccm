@@ -43,11 +43,9 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.URLParameter;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.security.AccountNotFoundException;
 import com.arsdigita.kernel.security.Credential;
 import com.arsdigita.kernel.security.CredentialException;
-// import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.SecurityConfig;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.ui.UI;
@@ -183,7 +181,7 @@ public class UserLoginForm extends Form
                                             LoginServlet.SUBSITE_NS_URI);
 
 
-        if (KernelHelper.emailIsPrimaryIdentifier()) {
+        if (Kernel.getConfig().emailIsPrimaryIdentifier()) {
             loginMessage.setClassAttr("email");
         } else {
             loginMessage.setClassAttr("screenName");
@@ -191,7 +189,7 @@ public class UserLoginForm extends Form
 
         add(loginMessage);
 
-        if (KernelHelper.emailIsPrimaryIdentifier()) {
+        if (Kernel.getConfig().emailIsPrimaryIdentifier()) {
             add(new Label(LoginHelper.getMessage(
                     "login.userRegistrationForm.email")));
             m_loginName = new TextField(new EmailParameter(FORM_LOGIN));
@@ -297,7 +295,7 @@ public class UserLoginForm extends Form
         try {
             UserContext ctx = Web.getUserContext();
             String username = null;
-            if (KernelHelper.emailIsPrimaryIdentifier()) {
+            if (Kernel.getConfig().emailIsPrimaryIdentifier()) {
                 username = ((InternetAddress) m_loginName.getValue(state)).
                         getAddress();
             } else {
@@ -406,24 +404,23 @@ public class UserLoginForm extends Form
         
         Object persistentLoginValue =  m_isPersistent.getValue(state);
 
-        String[] values;
-        String value;
+        String value ;
         
         if (persistentLoginValue == null) {
             return defaultValue;
         } 
         
         if (persistentLoginValue instanceof String[]) {
-            values = (String[]) persistentLoginValue;
-            return "1".equals(values[0]);            
+            value = ((String[])persistentLoginValue)[0];
         }
-        
-        if (persistentLoginValue instanceof String) {
+        else if (persistentLoginValue instanceof String) {
             value = (String) persistentLoginValue;
-            return "1".equals(value);            
+        }
+        else {
+            value = "0";
         }
 
-        return defaultValue;
+        return "1".equals(value);            
     }
 
     /**
