@@ -1,2 +1,2 @@
-@@ ../default/upgrade/add-siteproxy_provider.sql
-@@ ../default/upgrade/add-ct_blacklist.sql
+@@ default/add-siteproxy_provider.sql
+@@ default/add-ct_blacklist.sql

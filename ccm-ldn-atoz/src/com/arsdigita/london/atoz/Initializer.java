@@ -23,6 +23,7 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.xml.TraversalHandler;
+import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.london.atoz.terms.DomainProvider;
 import com.arsdigita.london.atoz.ui.admin.CategoryProviderAdmin;
 import com.arsdigita.london.atoz.ui.admin.CategoryProviderForm;
@@ -51,6 +52,7 @@ import com.arsdigita.xml.XML;
 public class Initializer extends CompoundInitializer {
 
     public Initializer() {
+
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
@@ -58,9 +60,23 @@ public class Initializer extends CompoundInitializer {
                 new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
+    /**
+     * 
+     * @param evt 
+     */
     @Override
 	public void init(DomainInitEvent evt) {
 		super.init(evt);
+
+        /* Register object instantiator for AtoZ domain class                */
+        evt.getFactory().registerInstantiator
+            (AtoZ.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dataObject) {
+                     return new AtoZ(dataObject);
+                 }
+            } );
 
         DomainObjectFactory f = evt.getFactory();
     	f.registerInstantiator(AtoZCategoryAlias.BASE_DATA_OBJECT_TYPE,

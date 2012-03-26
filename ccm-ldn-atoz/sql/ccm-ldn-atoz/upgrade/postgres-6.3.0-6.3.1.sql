@@ -1,4 +1,4 @@
 begin;
-\i ../default/upgrade/add-siteproxy_provider.sql
-\i ../default/upgrade/add-ct_blacklist.sql
+\i default/add-siteproxy_provider.sql
+\i default/add-ct_blacklist.sql
 commit;

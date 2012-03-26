@@ -11,4 +11,8 @@
   <version from="6.5.0" to="6.6.0">
     <script sql="ccm-ldn-atoz/upgrade/::database::-6.5.0-6.6.0.sql"/>
   </version>
+  <version from="6.6.0" to="6.6.1">
+    <!-- AtoZ now initialized as legacy free application          -->
+    <script sql="ccm-ldn-atoz/upgrade/::database::-6.6.0-6.6.1.sql"/>
+  </version>
 </upgrade>

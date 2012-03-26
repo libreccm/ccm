@@ -28,6 +28,7 @@ import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -51,6 +52,8 @@ public class Loader extends PackageLoader {
 
 
     private void setupAtoZ() {
+        s_log.debug("Creating AtoZ application...");
+/*
         ApplicationSetup setup = new ApplicationSetup(s_log);
 
         setup.setApplicationObjectType(AtoZ.BASE_DATA_OBJECT_TYPE);
@@ -65,15 +68,28 @@ public class Loader extends PackageLoader {
             });
         ApplicationType type = setup.run();
         type.save();
+*/
+        /* Create new type legacy free application type                 
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "AtoZ" will become "atoz".                   */
+        ApplicationType type = new ApplicationType("AtoZ",
+                                                   AtoZ.BASE_DATA_OBJECT_TYPE );
+        type.setDescription("A-Z of content.");
+        // type.setSingleton(true);
+        type.save();
 
         if (!Application.isInstalled(AtoZ.BASE_DATA_OBJECT_TYPE,
                                      "/atoz/")) {
-            Application app =
-                Application.createApplication(type,
-                                              "atoz",
-                                              "AtoZ",
-                                              null);
+            Application app = Application.createApplication(type,
+                                                            "atoz",
+                                                            "AtoZ",
+                                                            null);
             app.save();
         }
+        s_log.debug("AtoZ application type created.");
     }
 }
