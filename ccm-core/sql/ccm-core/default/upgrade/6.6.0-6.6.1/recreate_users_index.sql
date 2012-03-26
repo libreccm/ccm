@@ -18,7 +18,7 @@
 -- for some unkown reason for some ccm installations an index for
 -- users tables has been lost. Just in case it is recreated here.
 
--- First: Drop index to avoid an error it it already exists
+-- First: Drop index to avoid an error if it already exists
 drop index if exists users_lower_screen_name_idx ;
 
 create unique index users_lower_screen_name_idx on users

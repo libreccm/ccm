@@ -18,7 +18,7 @@
 -- $Id: remove_bebop_legacy_entries.sql  $
 
 -- CoreLoader used to load a bebop package_type into database, but without
--- mounting any instance or to associate a dispatcher class. Si it never had
+-- mounting any instance or to associate a dispatcher class. So it never had
 -- had a function as application.
 -- entries in tables apm_package_types and apm_packages are no longer needed.
 

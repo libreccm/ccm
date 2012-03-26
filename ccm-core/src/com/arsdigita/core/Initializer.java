@@ -37,7 +37,6 @@ import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.toolbox.CharsetEncodingProvider;
 import com.arsdigita.ui.admin.Admin;
-import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.URLRewriter;
 import com.arsdigita.xml.FactoriesSetup;
 import com.arsdigita.web.Host;
@@ -171,15 +170,6 @@ public class Initializer extends CompoundInitializer {
              });
 
         e.getFactory().registerInstantiator
-            (SiteMap.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(final DataObject data) {
-                     return new SiteMap(data);
-                 }
-             });
-
-        e.getFactory().registerInstantiator
             (Permissions.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
                  @Override
@@ -196,26 +186,6 @@ public class Initializer extends CompoundInitializer {
 	             }
 	         });
 
-/*      MimeType used to have its own initializer in the old initialize system
- *      based on enterprise.ini. This initializer performed a DomainObjectFactgory
- *      instantiation and some handling of INSO filter, an Oracle db related
- *      filter for intermedia textsearch. INSO filter handling is moved to
- *      intermedia search engine so no configuration was left in the domain
- *      instantiation could be moved to the central core initializer
-        From old Initializer system:
-
-        if (DomainObjectFactory.getInstantiator
-                (MimeType.BASE_DATA_OBJECT_TYPE) == null) {
-            DomainObjectInstantiator instMimeType = new DomainObjectInstantiator() {
-                    public DomainObject doNewInstance(DataObject dataObject) {
-                        return new MimeType(dataObject);
-                    }
-                };
-            DomainObjectFactory.registerInstantiator
-                (MimeType.BASE_DATA_OBJECT_TYPE, instMimeType);
-        }
-
-*/
         e.getFactory().registerInstantiator
             (MimeType.BASE_DATA_OBJECT_TYPE,
              new DomainObjectInstantiator() {
@@ -269,23 +239,4 @@ public class Initializer extends CompoundInitializer {
         s_log.info("Core init(DomainInitEvent) done");
     }
 
-    /**
-     * 
-     * @param e
-     */
-//  public final void init(final LegacyInitEvent e) {
-//      super.init(e);
-
-//      s_log.info("Running core init(LegacyInitEvent) ...");
-
-//      Session session = SessionManager.getSession();
-//      TransactionContext txn = session.getTransactionContext();
-//      txn.beginTxn();
-//      CoreLoader.loadHost();
-//      txn.commitTxn();
-
-//      FactoriesSetup.setupFactories();
-
-//      s_log.info("Core init(LegacyInitEvent) done");
-//  }
 }

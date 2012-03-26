@@ -22,11 +22,6 @@ package com.arsdigita.core.upgrade;
 import com.arsdigita.loader.CoreLoader;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.kernel.PackageInstance;
-import com.arsdigita.kernel.PackageInstanceCollection;
-import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.Resource;
-import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.packaging.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
@@ -91,17 +86,45 @@ public class Upgrade664 extends Program {
                 tc.beginTxn();
 
 
+                //  Update core Login application
+                //  Previously login had been managed by a (virtual) root 
+                //  sitenode with login dispatcher associated.
+                //  Login application is newly created, old sitenote deactivated.
+                CoreLoader.loadLoginApp();
+
+
+                //  Update core Admin application
+                //  Old style package type already removed by sql script.
+                //  Create a (new type, legacy free) web.ApplicationType type 
+                //  application
+                CoreLoader.loadAdminApp();
+
+
+                //  Update core permission support
+                //  Old style package type already removed by sql script.
+                //  Create a (new type, legacy free) web.ApplicationType type 
+                //  application
+                CoreLoader.loadPermissionsApp();
+
+
                 //  Update core WebDeveloperSupport
+                //  Old style package type already removed by sql script.
                 //  Create a (new type, legacy free) web.ApplicationType type 
                 //  application
                 CoreLoader.loadWebDev();
 
 
-                //  Update core permission support
-                //  Create a (new type, legacy free) web.ApplicationType type 
-                //  application
-                CoreLoader.loadPermissionsApp();
+                // Note: Old PackageType sitenode removed. It's useless now
+                // because it is based on SiteNode / PackageType which is
+                // empty when all applications are migrated to new style
+                // legacy free applications.
+                // SQL script removes its table entries.
 
+
+                // Note 2: SQL script part of this update removes bebop
+                // PackageType. It had never been used and not instantiated.
+                // So no replacement is needed.
+                // SQL script removes its table entries.
 
                 tc.commitTxn();
             }

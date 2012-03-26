@@ -134,11 +134,6 @@
   </servlet>
 
   <servlet>
-    <servlet-name>webadmin-sitemap</servlet-name>
-    <servlet-class>com.arsdigita.ui.sitemap.SiteMapServlet</servlet-class>
-  </servlet>
-
-  <servlet>
     <servlet-name>webadmin-permissions</servlet-name>
     <servlet-class>com.arsdigita.ui.permissions.PermissionsServlet</servlet-class>
   </servlet>
@@ -477,11 +472,6 @@
   <servlet-mapping>
     <servlet-name>webadmin</servlet-name>
     <url-pattern>/admin/*</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>webadmin-sitemap</servlet-name>
-    <url-pattern>/admin-sitemap/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

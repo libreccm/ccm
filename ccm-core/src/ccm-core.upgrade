@@ -35,12 +35,15 @@
     <script sql="ccm-core/upgrade/::database::-6.5.5-6.5.6.sql"/>
   </version>
   <version from="6.6.0" to="6.6.1">
+    <!-- Drop deprecated and unused stylesheet tables         -->
     <script sql="ccm-core/upgrade/::database::-6.6.0-6.6.1.sql"/>
   </version>
   <version from="6.6.1" to="6.6.2">
+    <!-- unused table web_apps removed                        -->
     <script sql="ccm-core/upgrade/::database::-6.6.1-6.6.2.sql"/>
   </version>
   <version from="6.6.2" to="6.6.3">
+    <!-- core portal legacy free -->
     <script sql="ccm-core/upgrade/::database::-6.6.2-6.6.3.sql"/>
   </version>
   <version from="6.6.3" to="6.6.4">

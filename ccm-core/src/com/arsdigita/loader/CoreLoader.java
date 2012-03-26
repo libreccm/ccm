@@ -44,7 +44,6 @@ import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.login.Login;
 import com.arsdigita.ui.permissions.Permissions;
-import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -272,17 +271,11 @@ public class CoreLoader extends PackageLoader {
                 s_log.debug("CoreLoader: Going to execute loadSubsite().");
                 loadSubsite(loadKernel());
 
-                //  !!      s_log.debug("CoreLoader: Going to execute loadBebop().");
-    //  !!      loadBebop();
-
                 s_log.debug("CoreLoader: Going to execute loadLoginApp().");
                 loadLoginApp();
 
                 s_log.debug("CoreLoader: Going to execute loadAdminApp().");
                 loadAdminApp();
-
-                s_log.debug("CoreLoader: Going to execute loadSiteMapAdminApp().");
-                loadSiteMapAdminApp(null);
 
                 s_log.debug("CoreLoader: Going to execute loadPermissionsApp().");
                 loadPermissionsApp();            // new style legacy free
@@ -308,8 +301,8 @@ public class CoreLoader extends PackageLoader {
      * Subject to change.
      */
     public static void loadHost() {
-        final HttpHost hhost = Web.getConfig().getHost();
 
+        final HttpHost hhost = Web.getConfig().getHost();
         Assert.exists(hhost, HttpHost.class);
 
         final Host host = Host.retrieve(hhost);
@@ -330,11 +323,14 @@ public class CoreLoader extends PackageLoader {
         // c.ad.search.lucene.Initializer (public final static Loader LOADER)
         // doesn't work!
         com.arsdigita.search.lucene.Initializer.LOADER.load();
-        //
-        // As of version 6.6.0 release 2 refactored to the new initializer system
-        //--com.arsdigita.search.lucene.LegacyInitializer.LOADER.load();
+
     }
 
+    /**
+     * 
+     * @param rootNode
+     * @deprecated will be removed without replacement. Naot needed anymore
+     */
     private void loadSubsite(SiteNode rootNode) {
         s_log.debug("CoreLoader: Going to execute method loadSubsite().");
         String sDispatcher = "";
@@ -363,6 +359,7 @@ public class CoreLoader extends PackageLoader {
     /**
      * Create Root Site Node for loadSubsite()
      * @return root node
+     * @deprecated will be removed without replacement. Naot needed anymore
      */
     private SiteNode loadKernel() {
         // Create Root Site Node
@@ -454,28 +451,13 @@ public class CoreLoader extends PackageLoader {
 
     }
 
-//  Not really used. Commented out in run() method
-// NOTE: There is no dispatcher class assoziated and no mount (i.e. no
-// site_nodes entry creeated). 
-// Update script 6.6.3 - 6.6.4 removes entries.
-/*
-    private void loadBebop() {
-        // Create Package Types and Instances
-
-        PackageType bebop = PackageType.create
-            ("bebop", "Bebop", "Bebops",
-             "http://arsdigita.com/bebop/");
-        bebop.createInstance("Bebop Service");
-
-    }
-*/
-        
-
     /**
-     * 
+     * Setup Login application. Loads type into database and instances the
+     * single default instance.
+     * Has to be public access in order to enable  script Upgrade664 to use it.
      * @return 
      */
-    private Application loadLoginApp() {
+    public static void loadLoginApp() {
  
         ApplicationType loginType =
                 new ApplicationType("login",
@@ -490,20 +472,15 @@ public class CoreLoader extends PackageLoader {
                                                           null);
         login.setDescription("CCM login instance");
 
-        return login;
     }
 
 
     /**
-     * 
-     * @return 
+     * Setup core Admin application. Loads type into database and instances the
+     * single default instance.
+     * Has to be public access in order to enable  script Upgrade664 to use it.
      */
-    private Application loadAdminApp() {
-    //  ApplicationType adminType = ApplicationType
-    //      .createApplicationType("admin",
-    //                             "CCM Admin Application", 
-    //                             Admin.BASE_DATA_OBJECT_TYPE);
-    //  adminType.setDispatcherClass("com.arsdigita.ui.admin.AdminDispatcher");
+    public static void loadAdminApp() {
  
         ApplicationType adminType =
                 new ApplicationType("admin",
@@ -512,52 +489,18 @@ public class CoreLoader extends PackageLoader {
         adminType.save();
         
         
-        
-        
         Application admin = Application.createApplication(adminType,
                                                           "admin",
                                                           "CCM Admin",
                                                           null);
         admin.setDescription("CCM user and group administration instance");
 
-        return admin;
     }
 
     /**
-     * 
-     * @param parent 
-     */
-    private void loadSiteMapAdminApp(Application parent) {
-
-    //  ApplicationType sitemapType = ApplicationType
-    //      .createApplicationType("sitemap",
-    //                             "SiteMap Admin Application",
-    //                             SiteMap.BASE_DATA_OBJECT_TYPE);
-    //  sitemapType.setDispatcherClass("com.arsdigita.ui.sitemap.SiteMapDispatcher");
-
-        /* NOTE: 
-         * The wording in the title parameter of ApplicationType determines
-         * the name of the subdirectory for the XSL stylesheets.
-         * It gets "urlized", i.e. trimming leading and trailing blanks and 
-         * replacing blanks between words and illegal characters with an hyphen 
-         * and converted to lower case.
-         * Example: "Sitemap" will become "sitemap".
-         */
-        ApplicationType sitemapType =
-                new ApplicationType("Sitemap",
-                                    SiteMap.BASE_DATA_OBJECT_TYPE );
-        
-        sitemapType.setDescription("CCM sitemap administration");
-
-        Application sitemap = Application.createApplication(sitemapType,
-                                                            "sitemap",
-                                                            "CCM Admin Sitemap",
-                                                            parent);
-        sitemap.setDescription("CCM sitemap administration instance");
-    }
-
-    /**
-     * 
+     * Setup core Admin application. Loads type into database and instances the
+     * single default instance.
+     * Has to be public access in order to enable  script Upgrade664 to use it.
      */
     public static void loadPermissionsApp() {
 
