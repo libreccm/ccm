@@ -1,3 +1,6 @@
+* Mo March 26 29012 Peter Boy <pboy@barkhof.uni-bremen.de>
+- Modified to new deployment structure ov version 2.0.0
+
 * Thu Sep 22 2005 Alan Pevec <apevec@redhat.com>
 - Build all APLAWS+ bundles from the common set of templates.
 

@@ -124,8 +124,8 @@
   </servlet>
 
   <servlet>
-    <servlet-name>webdevsupport</servlet-name>
-    <servlet-class>com.arsdigita.webdevsupport.WebDevSupportServlet</servlet-class>
+    <servlet-name>login</servlet-name>
+    <servlet-class>com.arsdigita.ui.login.LoginServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -141,6 +141,11 @@
   <servlet>
     <servlet-name>webadmin-permissions</servlet-name>
     <servlet-class>com.arsdigita.ui.permissions.PermissionsServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>webdevsupport</servlet-name>
+    <servlet-class>com.arsdigita.webdevsupport.WebDevSupportServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -481,8 +486,8 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>webdevsupport</servlet-name>
-    <url-pattern>/webdevsupport/*</url-pattern>
+    <servlet-name>login</servlet-name>
+    <url-pattern>/login/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -498,6 +503,11 @@
   <servlet-mapping>
     <servlet-name>webadmin-permissions</servlet-name>
     <url-pattern>/admin-permissions/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>webdevsupport</servlet-name>
+    <url-pattern>/webdevsupport/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

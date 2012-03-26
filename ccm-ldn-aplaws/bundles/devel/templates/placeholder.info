@@ -1,0 +1,12 @@
+Subdirectory  <navigation> may optionally contain navigation item templates for
+navigation index pages which either overwrite or ammend those templates
+which are default for ccm-ldn-aplaws and stored in 
+   /web/templates/ccm-navigation/navigation
+
+Templates of the same name in this subdirectory just overwrite the
+default files. Templates of different names are stored in addition
+to the default template files. In the later case a developer must
+provide a customised template.txt file replacing the default file
+   /src/WEB-INF/navigation/templates.txt
+This file must be specified in parameter 
+   com.arsdigita.navigation.templates_file
