@@ -46,18 +46,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 
-//  Migration status
-//
-//  The module in its complete version (i.e. all method invocations in run()
-//  method commented IN(!) does load all packages into database and
-//  ccm/admin/sitemap lists them appropriately.
-//
-//  Next Try
-//  Refactor using legacy compatible web/Application and ApplicationSetup  *DONE*
-//  Refactor content-section als legacy free application                   *DONE*
-//  Refactor workspace (content-center) as a legacy free application       *DONE*
-//  Refactor cms-service as a legacy free application                      *DONE*
-
 /**
  * <p>Executes nonrecurring at install time and loads (installs and initializes)
  * the Content Management System module,including the Content Center, CMS Service
@@ -184,13 +172,6 @@ public class Loader extends PackageLoader {
     public static ApplicationType loadWorkspaceApplicationType() {
         s_log.debug("Creating CMS Workspace...");
 
-        /* Create new type legacy compatible application type               */
-    //  ApplicationType type =  ApplicationType
-    //                          .createApplicationType(Workspace.PACKAGE_KEY,
-    //                                                 Workspace.INSTANCE_NAME,
-    //                                                 Workspace.BASE_DATA_OBJECT_TYPE);
-    //  type.setDispatcherClass(Workspace.DISPATCHER_CLASS);
-
         /* Create new type legacy free application type                 
          * NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.
@@ -249,40 +230,6 @@ public class Loader extends PackageLoader {
     public static ApplicationType loadServiceApplicationType() {
         s_log.debug("Loading CMS Servce Package...");
 
-
-//      Creating Service package using new style c.ad.web.Application
-//      in legacy compatible mode. Needs refactoring of the Service package.
-//      In a first step these instructions replace c.ad.installer.ServiceInstaller
-
-        // create application type
-//      ApplicationSetup appsetup = new ApplicationSetup(s_log);
-//      // new style properties
-//      appsetup.setApplicationObjectType(Service.BASE_DATA_OBJECT_TYPE);
-//      appsetup.setTitle(Service.INSTANCE_NAME);  // same as for instance
-        // there is only one
-//      appsetup.setDescription("Services to store global resources and assets.");
-        // old style / legacy compatible properties
-//      appsetup.setKey(Service.PRIMARY_URL_STUB);
-//      appsetup.setDispatcherClass(Service.DISPATCHER_CLASS);
-//      appsetup.setSingleton(true);
-//      appsetup.setPortalApplication(false);
-//      appsetup.setInstantiator(new ACSObjectInstantiator() {
-//          @Override
-//          protected DomainObject doNewInstance(DataObject dataObject) {
-//              return new Service(dataObject);
-//          }
-//      });
-
-//      ApplicationType serviceType = appsetup.run();
-//      serviceType.save();
-//      //////////////    Current style to create app type    ///////////////
-        /* Create new type legacy compatible application type               */
-  //    ApplicationType type =  ApplicationType
-  //                            .createApplicationType(Service.PRIMARY_URL_STUB,
-  //                                                   Service.INSTANCE_NAME,
-  //                                                   Service.BASE_DATA_OBJECT_TYPE);
-  //    type.setDispatcherClass(Service.DISPATCHER_CLASS);
-
         /* Create new type legacy free application type                 
          * NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.
@@ -292,7 +239,6 @@ public class Loader extends PackageLoader {
          * "CMS Service" will become "cms-service".                   */
         ApplicationType type = new ApplicationType("CMS Service", 
                                                    Service.BASE_DATA_OBJECT_TYPE );
-
         type.setDescription("Services to store global resources and assets.");
         type.save();
 
@@ -340,13 +286,6 @@ public class Loader extends PackageLoader {
         // Step 1: Create content section application type
         //         prerequisite for concrete content-section instance creation.
         
-
-        /* Create new type legacy compatible application type               */
-//      ApplicationType type =  ApplicationType
-//                              .createApplicationType(ContentSection.PACKAGE_TYPE,
-//                                                     "CMS Content Section",
-//                                                     ContentSection.BASE_DATA_OBJECT_TYPE);
-
         /* Create legacy-free application type                               
          * NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.

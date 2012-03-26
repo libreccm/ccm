@@ -118,7 +118,7 @@ public class Loader extends PackageLoader {
      */
     private void setupAdministrator() {
 
-        s_log.warn("Administrator eMail is retrieved as: " + getAdminEmail());
+        s_log.info("Administrator eMail is retrieved as: " + getAdminEmail());
 
         DataCollection coll = SessionManager.getSession()
                                             .retrieve(User.BASE_DATA_OBJECT_TYPE);
@@ -133,7 +133,7 @@ public class Loader extends PackageLoader {
 
         User admin = User.retrieve( coll.getDataObject() );
         coll.close();
-        s_log.warn("Administrator is retrieved as: " + admin);
+        s_log.info("Administrator is retrieved as: " + admin);
         
         UserLogin login = UserLogin.findByUser(admin);
         if (login == null) {

@@ -109,7 +109,7 @@ public class Loader extends PackageLoader {
             }
         }.run();
 
-        s_log.warn("Done");
+        s_log.info("Done");
     }
 
 
@@ -492,7 +492,7 @@ public class Loader extends PackageLoader {
                 return;
             }
 
-            s_log.warn("There is no Portal Site Map application instance " +
+            s_log.info("There is no Portal Site Map application instance " +
                        "on /portal-admin/.  Installing now.");
 
             Application app = Application.createApplication
@@ -503,7 +503,7 @@ public class Loader extends PackageLoader {
 
             app.save();
 
-            s_log.warn("Done installing Portal Site Map on " +
+            s_log.info("Done installing Portal Site Map on " +
                        "/portal-admin/portal-sitemap/.");
         }
     }
@@ -724,11 +724,6 @@ public class Loader extends PackageLoader {
                 ("Package Type with key \"" + packageKey + "\" was not found.\n");
         }
 
-        // Create default stylesheet.
-   //   stylesheetName = "/packages/login/xsl/login_ps_en.xsl";
-
-   //   s_log.warn("Adding stylesheet: " + stylesheetName);
-   //   subsite.addStylesheet(Stylesheet.createStylesheet(stylesheetName));
 
         // Set subsite dispatcher class.
         subsite.setDispatcherClass(

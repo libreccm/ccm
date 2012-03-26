@@ -136,7 +136,7 @@ public class Initializer extends CompoundInitializer {
      * Called on startup.
      */
     public void startup() {
-        s_log.warn("Document Manager is initializing.");
+        s_log.info("Document Manager is initializing.");
 
     //  setupDomainFactory();
 
