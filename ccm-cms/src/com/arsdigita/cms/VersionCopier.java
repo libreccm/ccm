@@ -74,6 +74,7 @@ class VersionCopier extends ObjectCopier {
      * ContentItem)} in order to transfer the categories and other services.
      *
      * @param item the item to be copied
+     *
      * @return a copy of the item
      */
     @Override
@@ -168,7 +169,7 @@ class VersionCopier extends ObjectCopier {
      * @param source the
      * <code>DomainObject</code> being copied
      * @param target the new copy
-     * @param prop the
+     * @param prop   the
      * <code>Property</code> currently under consideration
      */
     @Override
@@ -196,56 +197,49 @@ class VersionCopier extends ObjectCopier {
                 item.assertDraft();
             }
 
-            if ((item instanceof AssociationCopier)
-                && ((AssociationCopier) item).handlesProperty(prop)) {
-                final AssociationCopier assocCopier = (AssociationCopier) item;
-                assocCopier.copy(source, target, target, prop);
-                
+
+
+            if (prop.isComponent()) {
+                s_log.debug("The property is a component; creating a "
+                            + "live or pending version");
+
+                final ContentItem copy = createVersion(item);
+
+                m_trace.exit("copy", copy);
+
+                return copy;
+            } else if (m_traversedComponents.contains(object)) {
+                final DomainObject copy = copy(object);
+
+                m_trace.exit("copy", copy);
+
+                return copy;
+            } else if (prop.isRequired()) {
+                Assert.fail(
+                        "1..1 associations to non-component top-level ContentItems are not allowed");
                 return null;
             } else {
+                s_log.debug("The property is not a component; creating "
+                            + "PublishedLink for the item");
 
-                if (prop.isComponent()) {
-                    s_log.debug("The property is a component; creating a "
-                                + "live or pending version");
-
-                    final ContentItem copy = createVersion(item);
-
-                    m_trace.exit("copy", copy);
-
-                    return copy;
-                } else if (m_traversedComponents.contains(object)) {
-                    final DomainObject copy = copy(object);
-
-                    m_trace.exit("copy", copy);
-
-                    return copy;
-                } else if (prop.isRequired()) {
-                    Assert.fail(
-                            "1..1 associations to non-component top-level ContentItems are not allowed");
-                    return null;
+                if (source instanceof ContentItem) {
+                    PublishedLink.create(
+                            (ContentItem) getCopy(m_topLevelSourceOID),
+                            target,
+                            prop.getName(),
+                            item,
+                            (ContentItem) source);
                 } else {
-                    s_log.debug("The property is not a component; creating "
-                                + "PublishedLink for the item");
-
-                    if (source instanceof ContentItem) {
-                        PublishedLink.create(
-                                (ContentItem) getCopy(m_topLevelSourceOID),
-                                target,
-                                prop.getName(),
-                                item,
-                                (ContentItem) source);
-                    } else {
-                        PublishedLink.create(
-                                (ContentItem) getCopy(m_topLevelSourceOID),
-                                target,
-                                prop.getName(),
-                                item,
-                                null);
-                    }
-                    m_trace.exit("copy", null);
-
-                    return null;
+                    PublishedLink.create(
+                            (ContentItem) getCopy(m_topLevelSourceOID),
+                            target,
+                            prop.getName(),
+                            item,
+                            null);
                 }
+                m_trace.exit("copy", null);
+
+                return null;
             }
         } else {
             s_log.debug("The property is not a content item; using "

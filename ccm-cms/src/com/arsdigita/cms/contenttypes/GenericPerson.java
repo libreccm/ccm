@@ -18,19 +18,18 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.LanguageInvariantContentItem;
 import com.arsdigita.cms.RelationAttributeInterface;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
-import java.util.StringTokenizer;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 /**
  * Basic GenericPerson Contenttype for OpenCCM.
@@ -55,14 +54,18 @@ public class GenericPerson extends ContentPage implements
     public static final String ALIAS = "alias";
     public static final String DABIN_ID = "dabinId";
     private static final String RELATION_ATTRIBUTES =
-                                "contacts.link_key:GenericContactType";    
-    /** Data object type for this domain object */
+                                "contacts.link_key:GenericContactType";
+    /**
+     * Data object type for this domain object
+     */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericPerson";
+   
 
     /**
      * Default constructor. This creates a new (empty) GenericPerson.
-     **/
+     *
+     */
     public GenericPerson() {
         this(BASE_DATA_OBJECT_TYPE);
     }
@@ -72,21 +75,21 @@ public class GenericPerson extends ContentPage implements
     }
 
     public GenericPerson(OID id) throws DataObjectNotFoundException {
-        super(id);
+        super(id);    
     }
 
     public GenericPerson(DataObject obj) {
-        super(obj);
+        super(obj);        
     }
 
     public GenericPerson(String type) {
-        super(type);
+        super(type);        
     }
-
+    
     public GenericPersonBundle getGenericPersonBundle() {
         return (GenericPersonBundle) getContentBundle();
     }
-    
+
     @Override
     public void beforeSave() {
         super.beforeSave();
@@ -94,7 +97,9 @@ public class GenericPerson extends ContentPage implements
         Assert.exists(getContentType(), ContentType.class);
     }
 
-    /* accessors *****************************************************/
+    /*
+     * accessors ****************************************************
+     */
     public String getSurname() {
         return (String) get(SURNAME);
     }
@@ -148,25 +153,26 @@ public class GenericPerson extends ContentPage implements
     }
 
     public GenericPerson getAlias() {
-        return (GenericPerson) DomainObjectFactory.newInstance((DataObject) get(ALIAS));
+        return (GenericPerson) DomainObjectFactory.newInstance((DataObject) get(
+                ALIAS));
     }
-    
+
     public void setAlias(final GenericPerson alias) {
         set(ALIAS, alias);
     }
-    
+
     public void unsetAlias() {
         set(ALIAS, null);
     }
-    
+
     public Integer getDabinId() {
-        return (Integer)get(DABIN_ID);
+        return (Integer) get(DABIN_ID);
     }
-    
+
     public void setDabinId(final Integer dabinId) {
         set(DABIN_ID, dabinId);
     }
-    
+
     /**
      * A convenient method which combines {@code titlePre}, {@code givenName),
      * {@code surname} and {@code titlePost}.
@@ -213,19 +219,21 @@ public class GenericPerson extends ContentPage implements
     // Get all contacts for this person
     public GenericPersonContactCollection getContacts() {
         //return new GenericPersonContactCollection(
-          //      (DataCollection) get(CONTACTS));
+        //      (DataCollection) get(CONTACTS));
         return getGenericPersonBundle().getContacts();
     }
 
     // Add a contact for this person
-    public void addContact(final GenericContact contact, 
+    public void addContact(final GenericContact contact,
                            final String contactType) {
-       /* Assert.exists(contact, GenericContact.class);
-
-        DataObject link = add(CONTACTS, contact);
-
-        link.set(CONTACTS_KEY, contactType);
-        link.set(CONTACTS_ORDER, BigDecimal.valueOf(getContacts().size()));*/
+        /*
+         * Assert.exists(contact, GenericContact.class);
+         *
+         * DataObject link = add(CONTACTS, contact);
+         *
+         * link.set(CONTACTS_KEY, contactType); link.set(CONTACTS_ORDER,
+         * BigDecimal.valueOf(getContacts().size()));
+         */
         getGenericPersonBundle().addContact(contact, contactType);
     }
 
@@ -316,13 +324,13 @@ public class GenericPerson extends ContentPage implements
     public String getRelationAttributeKey(String propertyName) {
         return null;
     }
-    
+
     @Override
     public String getSearchSummary() {
         return getFullName();
     }
-    
+
     public boolean isLanguageInvariant() {
         return true;
-    }
+    }   
 }

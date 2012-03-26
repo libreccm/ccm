@@ -180,20 +180,11 @@ public class GenericPersonContactCollection extends DomainCollection {
     }
 
     public GenericAddress getAddress() {
-        /*
-         * return (GenericAddress) DomainObjectFactory.newInstance((DataObject)
-         * m_dataCollection. getDataObject().get(
-                GenericContact.ADDRESS));
-         */
+      
         return getContact().getAddress();
     }
 
-    public GenericContactEntryCollection getContactEntries() {
-        /*
-         * return new GenericContactEntryCollection((DataCollection)
-         * m_dataCollection. getDataObject().get(
-                GenericContact.CONTACT_ENTRIES));
-         */
+    public GenericContactEntryCollection getContactEntries() {      
         return getContact().getContactEntries();
     }
 }

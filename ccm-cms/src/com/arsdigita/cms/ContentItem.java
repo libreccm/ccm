@@ -371,7 +371,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     /**
      * @return the base PDL object type for this item. Child classes should
-     * override this method to return the correct value
+     *         override this method to return the correct value
      */
     @Override
     public String getBaseDataObjectType() {
@@ -382,6 +382,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * Publicized getter method for use by metadata forms.
      *
      * @param key
+     *
      * @return
      */
     @Override
@@ -392,8 +393,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Public setter method for use by metadata forms.
      *
-     * @param key
-     * @param value
+     * @param key param value
      */
     @Override
     public void set(final String key, final Object value) {
@@ -403,8 +403,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Public add for use by metadata forms.
      *
-     * @param propertyName
-     * @param dobj
+     * @param propertyName param dobj
+     *
      * @return
      */
     @Override
@@ -415,8 +415,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Public remove for use by metadata forms
      *
-     * @param propertyName
-     * @param dobj
+     * @param propertyName param dobj
      */
     @Override
     public void remove(String propertyName, DomainObject dobj) {
@@ -694,6 +693,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      *
      * @param includeSelf a
      * <code>boolean</code> value.
+     *
      * @return the items on the path to the root folder.
      */
     public ItemCollection getPathInfo(boolean includeSelf) {
@@ -761,8 +761,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * <code>true</code> if this item is a
      * <code>DRAFT</code> version.
      *
-     * @return
-     * <code>true</code> if this item is a
+     * @return < code>true</code> if this item is a
      * <code>DRAFT</code> version
      */
     public boolean isDraftVersion() {
@@ -800,6 +799,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      *
      * @return the working version representation of the
      * <code>ContentItem</code>, possibly this item
+     *
      * @deprecated use {@link #getDraftVersion()} instead
      */
     public ContentItem getWorkingVersion() {
@@ -811,8 +811,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * <code>true</code> if this item is a
      * <code>PENDING</code> version.
      *
-     * @return
-     * <code>true</code> if
+     * @return < code>true</code> if
      * <code>this</code> is one of the pending versions
      */
     public boolean isPendingVersion() {
@@ -915,8 +914,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * <code>true</code> if this item is a
      * <code>LIVE</code> version.
      *
-     * @return
-     * <code>true</code> if
+     * @return < code>true</code> if
      * <code>this</code> is the live version
      */
     public boolean isLiveVersion() {
@@ -1067,8 +1065,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * not necessarily the live version nor is this method to be confused with
      * isPublished.
      *
-     * @return
-     * <code>true<code> if this content item has a live
+     * @return < code>true<code> if this content item has a live
      * version, or if it <em>is</em> the live version
      */
     public boolean isLive() {
@@ -1079,7 +1076,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * Makes an item live or not live.
      *
      * @param version the version which should become live, null to make the
-     * item non-live
+     *                item non-live
      */
     public void setLive(final ContentItem version) {
         if (s_log.isDebugEnabled()) {
@@ -1142,8 +1139,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                 s_log.debug("Deleting old live version");
 
                 oldVersion.delete();
-                PublishedLink.refreshOnUnpublish(this);
-                PublishedAssociation.refreshOnUnPublish(this);
+                PublishedLink.refreshOnUnpublish(this);                
             }
 
             if (parent instanceof ContentBundle || parent instanceof Folder) {
@@ -1171,8 +1167,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
             save();
 
-            PublishedLink.updateLiveLinks(version);
-            PublishedAssociation.updateLiveAssociations(version);
+            PublishedLink.updateLiveLinks(version);            
             save();
 
             // publish item (as template or html pages) to the file
@@ -1186,9 +1181,9 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     /**
      * Schedules an item for publication.
      *
-     * @param cycleDef The lifecycle definition
+     * @param cycleDef  The lifecycle definition
      * @param startDate The time to schedule the start of the lifecycle. If
-     * null, use the current time as the start date.
+     *                  null, use the current time as the start date.
      *
      * @return the new pending version
      */
@@ -1546,6 +1541,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * 'non-finalness' of this method should be considered deprecated.
      *
      * @return the live version for this item
+     *
      * @see #copyServicesFrom(ContentItem)
      */
     public ContentItem copy() {
@@ -1561,10 +1557,11 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * associations from the copy to point to the copies of original items. <p>
      * NOTE: This method will save the item and all of its unpublished subitems.
      *
-     * @param newParent The new parent item for this item
+     * @param newParent    The new parent item for this item
      * @param copyServices Copy services if true
      *
      * @return the new copy of the item
+     *
      * @see #copyServicesFrom(ContentItem)
      */
     final public ContentItem copy(final ContentItem newParent,
@@ -1617,6 +1614,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * language of the copy.
      *
      * @param language
+     *
      * @return
      */
     protected ContentItem makeCopy(String language) {
@@ -1645,6 +1643,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      *
      * @param source the
      * <code>ContentItem</code> whose services will be copied
+     *
      * @see #copy()
      */
     public void copyServicesFrom(final ContentItem source) {
@@ -1660,7 +1659,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * subitems.
      *
      * @param cycle the lifecycle to use. A null cycle implies that a live
-     * version should be created.
+     *              version should be created.
+     *
      * @return the new pending version for this item
      */
     protected ContentItem createPendingVersion(final Lifecycle cycle) {
@@ -1705,10 +1705,12 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
 
         setLive(pending);
+
         ContentBundle draftBundle = getBundle();
         ContentBundle liveBundle = pending.getBundle();
-        if (draftBundle != null && liveBundle != null && !liveBundle.
-                isLiveVersion()) {
+        if ((draftBundle != null)
+            && (liveBundle != null)
+            && (!liveBundle.isLiveVersion())) {
             draftBundle.promotePendingVersion(liveBundle);
         }
 
@@ -1842,12 +1844,13 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * <code>false</code> to indicate that the copier should continue to handle
      * the association normally.
      *
-     * @param source the source CustomCopy item
+     * @param source   the source CustomCopy item
      * @param property the property to copy
-     * @param copier a temporary class that is able to copy a child item
-     * correctly.
+     * @param copier   a temporary class that is able to copy a child item
+     *                 correctly.
+     *
      * @return true if the property was copied; false to indicate that regular
-     * metadata-driven methods should be used to copy the property.
+     *         metadata-driven methods should be used to copy the property.
      */
     public boolean copyProperty(final CustomCopy source,
                                 final Property property,
@@ -1884,8 +1887,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                 if (parent instanceof ContentBundle) {
 
                     final ContentBundle bundle = (ContentBundle) parent;
-                    final ContentBundle oldLiveBundle = (ContentBundle) bundle.
-                            getPublicVersion();
+                    final ContentBundle oldLiveBundle =
+                                        (ContentBundle) bundle.getPublicVersion();
                     //jensp 2012-03-07 Changes to the ContentBundle were not
                     //published because the ContentBundle was not republished.
                     //Moved the next lines out of the if below to enable 
@@ -1925,7 +1928,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                         final ItemCollection instances = oldLiveBundle.
                                 getInstances();
                         while (instances.next()) {
-                            liveBundle.addInstance(instances.getContentItem());
+                            liveBundle.addInstance(
+                                    instances.getContentItem());
                         }
                     }
 
@@ -1956,7 +1960,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * processing of services.
      *
      * @return true to tell the object copier to stop copying services for this
-     * item, false otherwise
+     *         item, false otherwise
      */
     public boolean copyServices(ContentItem srcItem) {
         return false;
@@ -2209,7 +2213,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * generators returned by this method will may be null. </p>
      *
      * @return A list of all extra XML Generators for lists views of this
-     * content item.
+     *         content item.
      */
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
         return new ArrayList<ExtraXMLGenerator>();

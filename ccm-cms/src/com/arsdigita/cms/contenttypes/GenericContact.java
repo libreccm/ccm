@@ -39,27 +39,31 @@ public class GenericContact extends ContentPage implements
         RelationAttributeInterface {
 
     private static final Logger logger = Logger.getLogger(GenericContact.class);
-    /** PDL property names */
+    /**
+     * PDL property names
+     */
     public static final String PERSON = "person";
 //    public static final String CONTACT_TYPE = "";
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
-    public static final String CONTACTS_KEY = GenericPersonContactCollection.CONTACTS_KEY;
-
-    private static final String RELATION_ATTRIBUTES = "person.link_key:GenericContactTypes;contactentries.key:GenericContactEntryKeys";
-
+    public static final String CONTACTS_KEY =
+                               GenericPersonContactCollection.CONTACTS_KEY;
+    private static final String RELATION_ATTRIBUTES =
+                                "person.link_key:GenericContactTypes;contactentries.key:GenericContactEntryKeys";
     // Config
     private static final GenericContactConfig s_config =
-            new GenericContactConfig();
+                                              new GenericContactConfig();
 
     static {
         logger.debug("Static initializer is starting...");
         s_config.load();
         logger.debug("Static initializer finished");
     }
-    /** Data object type for this domain object */
+    /**
+     * Data object type for this domain object
+     */
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.GenericContact";
+                               "com.arsdigita.cms.contenttypes.GenericContact";
 
     public GenericContact() {
         super(BASE_DATA_OBJECT_TYPE);
@@ -81,7 +85,7 @@ public class GenericContact extends ContentPage implements
 
     public GenericContact(String type) {
         super(type);
-        //unsetPerson();
+        //unsetPerson();        
     }
 
     @Override
@@ -90,7 +94,7 @@ public class GenericContact extends ContentPage implements
 
         Assert.exists(getContentType(), ContentType.class);
     }
-        
+
     /**
      * Retrieves the current configuration
      */
@@ -101,47 +105,43 @@ public class GenericContact extends ContentPage implements
     public GenericContactBundle getGenericContactBundle() {
         return (GenericContactBundle) getContentBundle();
     }
-    
+
     ///////////////////////////////////////////////////////////////
     // accessors
     // Get the person for this contact
     public GenericPerson getPerson() {
-        /*DataCollection collection;
+        /*
+         * DataCollection collection;
+         *
+         * collection = (DataCollection) get(PERSON);
+         *
+         * if (collection.size() == 0) { return null; } else { DataObject dobj;
+         *
+         * collection.next(); dobj = collection.getDataObject();
+         *
+         * // Close Collection to prevent an open ResultSet collection.close();
+         *
+         * return (GenericPerson) DomainObjectFactory.newInstance(dobj);
+        }
+         */
 
-        collection = (DataCollection) get(PERSON);
-
-        if (collection.size() == 0) {
-            return null;
-        } else {
-            DataObject dobj;
-
-            collection.next();
-            dobj = collection.getDataObject();
-
-            // Close Collection to prevent an open ResultSet
-            collection.close();
-
-            return (GenericPerson) DomainObjectFactory.newInstance(dobj);
-        }*/
-        
         return getGenericContactBundle().getPerson();
     }
 
     // Set the person for this contact
     public void setPerson(GenericPerson person, String contactType) {
         //set(PERSON, person);
-        /*if (getPerson() != null) {
-            unsetPerson();
+        /*
+         * if (getPerson() != null) { unsetPerson(); }
+         *
+         * if (person != null) { Assert.exists(person, GenericPerson.class);
+         * DataObject link = add(PERSON, person);
+         * link.set(GenericPerson.CONTACTS_KEY, contactType);
+         * link.set(GenericPerson.CONTACTS_ORDER, new
+         * BigDecimal(person.getContacts().size())); link.save();
         }
+         */
 
-        if (person != null) {
-            Assert.exists(person, GenericPerson.class);
-            DataObject link = add(PERSON, person);
-            link.set(GenericPerson.CONTACTS_KEY, contactType);
-            link.set(GenericPerson.CONTACTS_ORDER, new BigDecimal(person.getContacts().size()));
-            link.save();
-        }*/
-        
         getGenericContactBundle().setPerson(person, contactType);
     }
 
@@ -157,12 +157,12 @@ public class GenericContact extends ContentPage implements
     // Unset the address for this contact
     public void unsetPerson() {
         //set(PERSON, null);
-        /*GenericPerson oldPerson;
-        oldPerson = getPerson();
-        if (oldPerson != null) {
-            remove(PERSON, oldPerson);
-        }*/
-        
+        /*
+         * GenericPerson oldPerson; oldPerson = getPerson(); if (oldPerson !=
+         * null) { remove(PERSON, oldPerson);
+        }
+         */
+
         getGenericContactBundle().unsetPerson();
     }
 
@@ -204,8 +204,8 @@ public class GenericContact extends ContentPage implements
 
         GenericPerson person = getPerson();
 
-        if(person != null) {
-            GenericPersonContactCollection collection =  person.getContacts();
+        if (person != null) {
+            GenericPersonContactCollection collection = person.getContacts();
             collection.next();
             String contactType = (String) collection.getContactType();
 
@@ -221,8 +221,8 @@ public class GenericContact extends ContentPage implements
     public void setContactType(String contactType) {
 
         GenericPerson person = getPerson();
-        if(person != null) {
-            GenericPersonContactCollection collection =  person.getContacts();
+        if (person != null) {
+            GenericPersonContactCollection collection = person.getContacts();
             collection.next();
             DataObject link = (DataObject) collection.get("link");
             link.set(CONTACTS_KEY, contactType);
@@ -249,9 +249,9 @@ public class GenericContact extends ContentPage implements
     @Override
     public boolean hasRelationAttributeProperty(String propertyName) {
         StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
-        while(strTok.hasMoreTokens()) {
+        while (strTok.hasMoreTokens()) {
             String token = strTok.nextToken();
-            if(token.startsWith(propertyName + ".")) {
+            if (token.startsWith(propertyName + ".")) {
                 return true;
             }
         }
@@ -266,10 +266,11 @@ public class GenericContact extends ContentPage implements
     @Override
     public String getRelationAttributeKeyName(String propertyName) {
         StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
-        while(strTok.hasMoreTokens()) {
+        while (strTok.hasMoreTokens()) {
             String token = strTok.nextToken();
-            if(token.startsWith(propertyName + ".")) {
-                return token.substring(token.indexOf(".") + 1, token.indexOf(":"));
+            if (token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(".") + 1,
+                                       token.indexOf(":"));
             }
         }
         return null;
@@ -278,9 +279,9 @@ public class GenericContact extends ContentPage implements
     @Override
     public String getRelationAttributeName(String propertyName) {
         StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
-        while(strTok.hasMoreTokens()) {
+        while (strTok.hasMoreTokens()) {
             String token = strTok.nextToken();
-            if(token.startsWith(propertyName + ".")) {
+            if (token.startsWith(propertyName + ".")) {
                 return token.substring(token.indexOf(":") + 1);
             }
         }
@@ -291,5 +292,4 @@ public class GenericContact extends ContentPage implements
     public String getRelationAttributeKey(String propertyName) {
         return null;
     }
-
 }

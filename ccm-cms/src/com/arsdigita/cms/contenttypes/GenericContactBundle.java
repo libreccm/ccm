@@ -2,11 +2,14 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.CustomCopy;
+import com.arsdigita.cms.ItemCopier;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
@@ -15,7 +18,8 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class GenericContactBundle extends ContentBundle {
+public class GenericContactBundle
+        extends ContentBundle {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericContactBundle";
@@ -30,25 +34,84 @@ public class GenericContactBundle extends ContentBundle {
         setContentType(primary.getContentType());
         addInstance(primary);
 
-        super.setName(primary.getName());
+        super.setName(primary.getName());        
     }
 
     public GenericContactBundle(final OID oid) throws
             DataObjectNotFoundException {
-        super(oid);
+        super(oid);        
     }
 
     public GenericContactBundle(final BigDecimal id) throws
             DataObjectNotFoundException {
-        super(new OID(BASE_DATA_OBJECT_TYPE, id));
+        super(new OID(BASE_DATA_OBJECT_TYPE, id));        
     }
 
     public GenericContactBundle(final DataObject dobj) {
-        super(dobj);
+        super(dobj);        
     }
 
     public GenericContactBundle(final String type) {
         super(type);
+    }
+   
+    /**
+     * <p> Copy association properties. These are for example the associations
+     * between GenericPerson and GenericContact, or between
+     * GenericOrganizationalUnit and GenericPerson. </p> 
+     *
+     * @param source param property param copier
+     * @param property 
+     * @param copier 
+     *
+     * @return
+     */
+    @Override
+    public boolean copyProperty(final CustomCopy source,
+                                final Property property,
+                                final ItemCopier copier) {
+        final String attribute = property.getName();
+        if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
+            final GenericContactBundle contactBundle =
+                                       (GenericContactBundle) source;
+
+            if (PERSON.equals(attribute)) {
+
+                final DataCollection persons = (DataCollection) contactBundle.
+                        get(PERSON);
+
+                while (persons.next()) {
+                    createPersonAssoc(persons);
+                }
+
+                return true;
+            } else {               
+                return super.copyProperty(source, property, copier);
+            }
+        } else {
+            return super.copyProperty(source, property, copier);
+        }
+    }
+
+    private void createPersonAssoc(final DataCollection persons) {
+        final GenericPersonBundle draftPerson =
+                                  (GenericPersonBundle) DomainObjectFactory.
+                newInstance(
+                persons.getDataObject());
+        final GenericPersonBundle livePerson =
+                                  (GenericPersonBundle) draftPerson.
+                getLiveVersion();
+
+        if (livePerson != null) {
+            final DataObject link = add(PERSON, livePerson);
+
+            link.set(GenericPerson.CONTACTS_KEY,
+                     persons.get(GenericPersonContactCollection.CONTACTS_KEY));
+            link.set(GenericPerson.CONTACTS_ORDER,
+                     persons.get(GenericPersonContactCollection.CONTACTS_ORDER));
+
+            link.save();
+        }
     }
 
     public GenericPerson getPerson() {
@@ -90,7 +153,7 @@ public class GenericContactBundle extends ContentBundle {
         }
     }
 
-    public void unsetPerson() {     
+    public void unsetPerson() {
         GenericPerson oldPerson;
         oldPerson = getPerson();
         if (oldPerson != null) {

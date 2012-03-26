@@ -10,10 +10,11 @@ import com.arsdigita.persistence.metadata.Property;
  */
 public interface AssociationCopier {
     
-    boolean handlesProperty(Property property);
-    void copy(DomainObject source, 
-              DomainObject target, 
-              DomainObject value, 
-              Property property);
+    boolean copyReverseProperty(CustomCopy source, 
+                                DomainObject target,
+                                Property property,                                
+                                DomainObject value,
+                                ItemCopier copier);
+    
     
 }
