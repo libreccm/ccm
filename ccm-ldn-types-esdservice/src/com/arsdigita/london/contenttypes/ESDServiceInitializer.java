@@ -36,9 +36,9 @@ public class ESDServiceInitializer extends ContentTypeInitializer {
     /**
      * Constructor, sets the PDL manifest file and object type string.
      */
-  public ESDServiceInitializer() {
-    super("ccm-cms-types-esdservice.pdl.mf", ESDService.BASE_DATA_OBJECT_TYPE);
-  }
+    public ESDServiceInitializer() {
+        super("ccm-ldn-types-esdservice.pdl.mf", ESDService.BASE_DATA_OBJECT_TYPE);
+    }
 
     /**
      * Retrieve location of this content type's internal default theme 

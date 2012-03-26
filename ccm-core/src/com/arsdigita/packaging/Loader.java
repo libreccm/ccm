@@ -35,6 +35,7 @@ import com.arsdigita.runtime.Startup;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.ParameterReader;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -43,6 +44,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -131,8 +133,6 @@ class Loader {
         }
     }
 
-    // deprecated:
-    // public void loadData(Session ssn, ParameterLoader loader) {
     public void loadData(Session ssn, ParameterReader prd) {
         final List inits = m_info.getProvidedInitializers();
         CompoundInitializer ini = new CompoundInitializer();

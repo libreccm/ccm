@@ -20,15 +20,18 @@ package com.arsdigita.packaging;
 
 import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.util.Files;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -43,7 +46,6 @@ class Unload extends Command {
     private static final Logger logger = Logger.getLogger(Unload.class);
 
     private static final Options OPTIONS = new Options();
-
     static {
         logger.debug("Static initalizer starting...");
         OPTIONS.addOption
@@ -56,7 +58,6 @@ class Unload extends Command {
     }
 
     private static final Set EXCLUDE = new HashSet();
-
     static {
         logger.debug("Static initalizer starting...");
         EXCLUDE.add("resin.conf");

@@ -10,7 +10,7 @@
     <initializer class="com.arsdigita.london.userprefs.Initializer"/>
   </provides>
   <scripts>
-    <schema directory="ccm-user-preferences"/>
+    <schema directory="ccm-ldn-userpreferences"/>
     <!--
     <data class="com.arsdigita.london.userprefs.Loader"/>
     -->

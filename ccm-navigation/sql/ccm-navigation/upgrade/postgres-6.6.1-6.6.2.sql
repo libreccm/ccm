@@ -18,8 +18,6 @@
 -- $Id: postgres-6.6.1-6.6.2.sql  $
 
 -- Navigation is now initialized as a legacy free type of application
--- NavigationDirectoryPortlet) to ccm-ldn-navigation because it depends on
--- navigation and was misplaced there (generating horizontal dependencies).
 
 
 begin;

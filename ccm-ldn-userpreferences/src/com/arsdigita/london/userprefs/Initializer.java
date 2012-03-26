@@ -35,10 +35,11 @@ public class Initializer extends CompoundInitializer {
 
         add(new PDLInitializer
             (new ManifestSource
-             ("ccm-user-preferences.pdl.mf",
+             ("ccm-ldn-userpreferences.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
+    @Override
     public void init( DomainInitEvent evt ) {
         PersistentUserPrefs.domainInit();
         Pref.domainInit();
