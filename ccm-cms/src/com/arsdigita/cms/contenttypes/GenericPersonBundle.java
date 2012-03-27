@@ -37,24 +37,24 @@ public class GenericPersonBundle
         setContentType(primary.getContentType());
         addInstance(primary);
 
-        super.setName(primary.getName());        
+        super.setName(primary.getName());
     }
 
     public GenericPersonBundle(final OID oid) throws DataObjectNotFoundException {
-        super(oid);      
+        super(oid);
     }
 
     public GenericPersonBundle(final BigDecimal id) throws
             DataObjectNotFoundException {
-        super(new OID(BASE_DATA_OBJECT_TYPE, id));        
+        super(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     public GenericPersonBundle(final DataObject dobj) {
-        super(dobj);     
+        super(dobj);
     }
 
     public GenericPersonBundle(final String type) {
-        super(type);        
+        super(type);
     }
 
     public GenericPersonContactCollection getContacts() {
@@ -119,10 +119,10 @@ public class GenericPersonBundle
         if (liveContact != null) {
             final DataObject link = add(CONTACTS, liveContact);
 
-            link.set(GenericPersonContactCollection.CONTACTS_KEY, contacts.get(
-                    CONTACTS_KEY));
-            link.set(GenericPersonContactCollection.CONTACTS_ORDER,
-                     contacts.get(CONTACTS_ORDER));
+            link.set(CONTACTS_KEY,
+                     contacts.get(GenericPersonContactCollection.CONTACTS_KEY));
+            link.set(CONTACTS_ORDER,
+                     contacts.get(GenericPersonContactCollection.CONTACTS_ORDER));
 
             link.save();
         }
