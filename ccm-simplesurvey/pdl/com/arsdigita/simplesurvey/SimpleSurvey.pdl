@@ -22,5 +22,6 @@ model com.arsdigita.simplesurvey;
 import com.arsdigita.web.Application;
 
 object type SimpleSurvey extends Application {
-    reference key (ss_simplesurvey.application_id);
+    // nothing to persist
+    // reference key (ss_simplesurvey.application_id);
 }

@@ -54,7 +54,9 @@ public class Loader extends PackageLoader {
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+
                 setupSimpleSurveyPackage();
+
             }
         }.run();
     }
@@ -97,35 +99,31 @@ public class Loader extends PackageLoader {
                    "com.arsdigita.simplesurvey.ui.widgets.RadioEditor" )
         );
 
-
-        ApplicationSetup setup = new ApplicationSetup(s_log);
-        
-        setup.setApplicationObjectType(SimpleSurvey.BASE_DATA_OBJECT_TYPE);
-        setup.setKey("simplesurvey");
-        setup.setTitle("Simple Survey");
-        // setup.setDescription("Simple Survey");
-        setup.setDescription("A simple survey application.");
-        setup.setInstantiator(new ACSObjectInstantiator() {
-            @Override
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new SimpleSurvey(dataObject);
-            }
-        });
-        ApplicationType type = setup.run();
+        /* Create new type legacy free application type                 
+         * NOTE: The wording in the title parameter of ApplicationType
+         * determines the name of the subdirectory for the XSL stylesheets.
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an
+         * hyphen and converted to lower case.
+         * "Content Center" will become "content-center".                   */
+        ApplicationType type = new 
+                               ApplicationType("Simple Survey",
+                                               SimpleSurvey.BASE_DATA_OBJECT_TYPE );
+        type.setDescription("An application to conduct a simple survey.");
         type.save();
         
         if (!Application.isInstalled(SimpleSurvey.BASE_DATA_OBJECT_TYPE,
                                      "/simplesurvey/")) {
-            Application app =
-                Application.createApplication(type,
-                                              "simplesurvey",
-                                              "Simplesurvey",
-                                              null);
+            Application app = Application.createApplication(type,
+                                                            "simplesurvey",
+                                                            "Simplesurvey",
+                                                            null);
+            app.setDescription("The default Survey application instance.");
             app.save();
         }
 
         // Load the widgets types (i.e. description and class names to be 
-        // instantiated ad runtime) used in survey forms into database.
+        // instantiated at runtime) used in survey forms into database.
         FormbuilderSetup fbs = new FormbuilderSetup();
         fbs.setup(widgetTypes, null, null);
 

@@ -19,12 +19,17 @@
 package com.arsdigita.simplesurvey;
 
 import com.arsdigita.db.DbHelper;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.ACSObjectInstantiator;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
-// import com.arsdigita.runtime.LegacyInitializer;
+import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
+
+import org.apache.log4j.Logger;
 
 /**
  * Initializes ccm-simplesurvey at each system startup.
@@ -33,6 +38,9 @@ import com.arsdigita.runtime.RuntimeConfig;
  * @version $Id: Initializer.java 759 2005-09-02 15:25:32Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
+
+    /** Creates a s_logging category with name = to the full name of class */
+    private static Logger s_log = Logger.getLogger(Initializer.class);
 
     /**
      * Constructor. Delegates to the old initializer system.
@@ -46,6 +54,26 @@ public class Initializer extends CompoundInitializer {
              ("ccm-simplesurvey.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-//      add(new LegacyInitializer("com/arsdigita/simplesurvey/enterprise.init"));
+    }
+
+    /**
+     * Initializes domain-coupling machinery, usually consisting of
+     * registering object instantiators and observers.
+     */
+    @Override
+    public void init(DomainInitEvent e) {
+        s_log.debug("SimpleSurvey Initializer.init(DomainInitEvent) invoked");
+        super.init(e);
+
+        /* Register object instantiator for Workspace (Content Center)        */
+        e.getFactory().registerInstantiator
+            (SimpleSurvey.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dobj) {
+                     return new SimpleSurvey(dobj);
+                 }
+             } );
+
     }
 }
