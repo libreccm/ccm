@@ -9,7 +9,7 @@
   
 
   <xsl:import href="../../content-section/xsl/cms.xsl"/> 
-  <xsl:import href="../../acs-admin/xsl/admin_en.xsl"/>
+  <xsl:import href="../../admin/xsl/admin_en.xsl"/>
   <xsl:import href="../../categorization/xsl/categorization.xsl"/>
   <xsl:import href="../../bebop/xsl/DimensionalNavbar.xsl"/>
   <xsl:import href="../../toolbox/xsl/ControlBar.xsl"/>

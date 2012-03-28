@@ -61,7 +61,7 @@ import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.docmgr.DocFolder;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.cms.docmgr.DocLink;
-import com.arsdigita.cms.docmgr.installer.Initializer;
+import com.arsdigita.cms.docmgr.Initializer;
 import com.arsdigita.cms.docmgr.search.SearchResults;
 import com.arsdigita.cms.docmgr.search.SearchUtils;
 import com.arsdigita.dispatcher.ObjectNotFoundException;

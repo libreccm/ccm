@@ -346,4 +346,34 @@ public class Repository extends Application {
         }
         return null;
     }
+
+    /**
+     * Returns the servletPath part of the URL to the application servlet.
+     * (see Servlet API specification or web.URL for more information)
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>docmgr-repository</servlet-name>
+     *   <servlet-class>com.arsdigita.cms.docmgr.ui.RepositoryServlet</servlet-class>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>docmgr-repository</servlet-name>
+     *   <url-pattern>/docmgr-repo/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return ServelPath of the applications servlet
+     */
+    @Override
+    public String getServletPath() {
+        return "/docmgr-repo";
+    }
+
 }

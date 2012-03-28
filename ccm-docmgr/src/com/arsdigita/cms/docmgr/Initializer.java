@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.cms.docmgr.installer;
+package com.arsdigita.cms.docmgr;
 
 import org.apache.log4j.Logger;
 

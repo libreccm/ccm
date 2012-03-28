@@ -31,15 +31,16 @@ import com.arsdigita.web.Application;
  */
 
 public class LegacyCategoryBrowserApplication extends Application {
+
+    private static Logger s_log =
+        Logger.getLogger(LegacyCategoryBrowserApplication.class);
+
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.docmgr.LegacyCategoryBrowserApplication";
 
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
-
-    private static Logger s_log =
-        Logger.getLogger(LegacyCategoryBrowserApplication.class);
 
     // pdl constants
     private static final String OWNER = "ownerID";
@@ -99,5 +100,33 @@ public class LegacyCategoryBrowserApplication extends Application {
     //    set("name", name);
     //}
 
+    /**
+     * Returns the servletPath part of the URL to the application servlet.
+     * (see Servlet API specification or web.URL for more information)
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>docmgr-categorybrowser</servlet-name>
+     *   <servlet-class>com.arsdigita.cms.docmgr.ui.CategoryBrowserServlet</servlet-class>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>docmgr-categorybrowser</servlet-name>
+     *   <url-pattern>/docmgr-cat/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return ServelPath of the applications servlet
+     */
+    @Override
+    public String getServletPath() {
+        return "/docmgr-cat";
+    }
 
 }

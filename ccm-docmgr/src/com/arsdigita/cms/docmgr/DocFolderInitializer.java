@@ -1,4 +1,4 @@
-package com.arsdigita.cms.docmgr.installer;
+package com.arsdigita.cms.docmgr;
 
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.docmgr.DocFolder;

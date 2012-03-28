@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.cms.docmgr.installer;
+package com.arsdigita.cms.docmgr;
 
 import java.util.HashMap;
 import java.util.Iterator;

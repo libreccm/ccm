@@ -15,14 +15,6 @@
 
 package com.arsdigita.cms.docmgr.ui;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.net.URLDecoder;
-
-import org.apache.log4j.Category;
-
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Label;
@@ -49,6 +41,14 @@ import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.util.Assert;
 import com.arsdigita.versioning.Versions;
 import com.arsdigita.web.Web;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URLDecoder;
+
+import org.apache.log4j.Category;
 
 /**
  * Dispatcher for document manager application.

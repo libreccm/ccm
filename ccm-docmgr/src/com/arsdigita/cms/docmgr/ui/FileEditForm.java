@@ -47,7 +47,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.FileAsset;
-import com.arsdigita.cms.docmgr.installer.Initializer;
+import com.arsdigita.cms.docmgr.Initializer;
 import com.arsdigita.cms.docmgr.DocFolder;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.cms.docmgr.Document;
