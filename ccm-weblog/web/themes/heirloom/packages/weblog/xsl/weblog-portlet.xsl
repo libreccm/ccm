@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:forum="http://www.arsdigita.com/forum/1.0"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
-  xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0" 
-  version="1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:forum="http://www.arsdigita.com/forum/1.0"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+             xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
+              xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
+                  xmlns:ui="http://www.arsdigita.com/ui/1.0" 
+                   version="1.0">
 
   <xsl:output method="html"/>
 

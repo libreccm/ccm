@@ -16,20 +16,36 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.web.Application;
 
 /**
+ * Application domain class for the WebLog application.
+ * 
  * @author Peter Kopunec
+ * @version $Id: WebLogApplication.java $
  */
 public class WebLogApplication extends Application {
 
-	public static final String BASE_DATA_OBJECT_TYPE = WebLogApplication.class
-			.getName();
-
+    /** Logger instance for debugging  */
 	private static final Logger s_log = Logger
 			.getLogger(WebLogApplication.class);
 
-	public WebLogApplication(DataObject data) {
-		super(data);
+    // pdl stuff (constants)
+	public static final String BASE_DATA_OBJECT_TYPE = WebLogApplication.class
+			.getName();
+
+    /**
+     * Constructs a service domain object from the underlying data object.
+     * 
+     * @param obj the DataObject
+     */
+    public WebLogApplication(DataObject obj) {
+		super(obj);
 	}
 
+    /**
+     * Constructor retrieving WebLogApplication from the database usings its OID.
+     *
+     * @param obj 
+     * @throws DataObjectNotFoundException
+     */
 	public WebLogApplication(OID oid) throws DataObjectNotFoundException {
 		super(oid);
 	}
@@ -38,6 +54,12 @@ public class WebLogApplication extends Application {
 		this(new OID(BASE_DATA_OBJECT_TYPE, id));
 	}
 
+    /**
+     * Getter to retrieve the base database object type name
+     *
+     * @return base data aoject type as String
+     */
+    @Override
 	protected String getBaseDataObjectType() {
 		return BASE_DATA_OBJECT_TYPE;
 	}
@@ -60,6 +82,7 @@ public class WebLogApplication extends Application {
 	/**
 	 * Overrides the superclass adding some permissions.
 	 */
+    @Override
 	protected void afterSave() {
 		super.afterSave();
 		Party currentParty = Kernel.getContext().getParty();
@@ -73,4 +96,12 @@ public class WebLogApplication extends Application {
 			}
 		}.run();
 	}
+
+    /**
+     * 
+     */
+    @Override
+    public String getServletPath() {
+        return "/weblog";
+    }
 }

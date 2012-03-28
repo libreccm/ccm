@@ -1,0 +1,90 @@
+<html>
+<!--
+
+README: This HTML page is the overview documentation comment for the
+entire Core; javadoc copies everything inside the &lt;body&gt; into
+the front page of the HTML documentation it produces.
+
+-->
+<body>
+    <h1>Package WebLog</h1>
+    
+    <h2>1. Purpose</h2>
+    <p>
+    Weblog provides a Blogging facility. The package provides a portlet 
+    (“WebLog Portlet”) to display and edit a blog. Each blogging entry 
+    has the structure of an CCM article: Title, lead, and body. A reader 
+    can create comments to each blogging entry.
+    </p>
+
+
+    <h2>2. Status</h2>
+    <p>
+    Under evaluation.
+    </p>
+
+    <p>
+    Application is supported by the default internal theme, not by the 
+    APLAWS standard theme. Currently only English is available for public 
+    site and admin UI.
+    </p>
+    
+    
+    <h2>Recommendations </h2>¶
+    <p>
+    The application requires a portal to display the blog. So the site must 
+    at least use one portal page (e.g. the front page at root).
+    </p>
+    <p>
+    As an alternative the blog can be displayed on its own page, but can not 
+    be integrated into the navigation menue (Navigation application).
+    </p>
+    
+    
+    <h2>Additional Application Details</h2>
+    <p>
+    By default the blogging page shows a list of all blog entries by title 
+    and lead (abstract) and provides a “more” link the a details page which 
+    contains the complete text and all comments. This page enables the reader 
+    to add a comment.
+    </p>
+    <p>
+    Currently no information about permission management!
+    </p>
+
+
+    <h2>Usage</h2>
+    <p>
+    Before a blog can be used, an instance of WebLog must be created using 
+    one of the administration facilities. By default one instance is created 
+    at admin/blog, e.g. http://my.domain/ccm/admin/blog.
+    </p>
+    <p>
+    To display the blog on a portal page, an instance of WebLog portlet must 
+    be installed on a portal page. It's installation UI provides (besides the 
+    standard properties title and description) a drop-down list to select the 
+    list provider, “/admin/blog” in case of the default installation in the 
+    above example.
+    </p>
+    <p>
+    For each additional, separate blog it is necessary to install an additional 
+    WebLog instance. This may be done using the UI at ~/portal/admin/sitemap.jsp 
+    or the administration UI of portalserver's ~/ccm/administration portal page. 
+    It is good practice to install the WebLog UI beyond admin of eventually 
+    the default content section.
+    </p>
+    <p>
+        <b>Guess:</b> An instance may not installed as root application.
+    </p>
+    <p>
+    Additional instances of WebLog portlet have to be installed with (one of) 
+    the additionally installed WebLog application instance(s) selected as 
+    provider.
+    </p>
+
+    <p>
+        Last modified: $Date: 2012/03/28 $
+    </p>
+
+</body>
+</html>

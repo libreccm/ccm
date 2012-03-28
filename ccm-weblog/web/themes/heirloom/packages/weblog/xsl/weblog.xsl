@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
-
-<xsl:stylesheet
-    version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-    xmlns:weblog="http://www.undp.org/weblog/1.0"
-    xmlns:unport="http://www.undp.org/unport/1.0"
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+              xmlns:weblog="http://www.undp.org/weblog/1.0"
+              xmlns:unport="http://www.undp.org/unport/1.0"
+                   version="1.0"
 >
 
 <xsl:import href="../../bebop/xsl/bebop.xsl"/>

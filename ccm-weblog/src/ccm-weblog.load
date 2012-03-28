@@ -9,5 +9,6 @@
   </provides>
   <scripts>
     <schema directory="ccm-weblog"/>
+    <data class="org.undp.weblog.Loader"/>
   </scripts>
 </load>
