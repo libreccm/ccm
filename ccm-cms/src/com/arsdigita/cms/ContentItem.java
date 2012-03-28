@@ -1139,7 +1139,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                 s_log.debug("Deleting old live version");
 
                 oldVersion.delete();
-                PublishedLink.refreshOnUnpublish(this);                
+                PublishedLink.refreshOnUnpublish(this);
             }
 
             if (parent instanceof ContentBundle || parent instanceof Folder) {
@@ -1167,7 +1167,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
             save();
 
-            PublishedLink.updateLiveLinks(version);            
+            PublishedLink.updateLiveLinks(version);
             save();
 
             // publish item (as template or html pages) to the file
@@ -1945,6 +1945,14 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                     return true;
                 }
             }
+        }
+
+        final AssociationCopierLoader assocCopierLoader =
+                                      AssociationCopierLoader.getInstance();
+        final AssociationCopier assocCopier = assocCopierLoader.
+                getAssociationCopierFor(property, source);
+        if (assocCopier != null) {
+            return assocCopier.copyProperty(source, property, copier);
         }
 
         return false;

@@ -620,6 +620,14 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.lifecycle.threaded_publishing",
             Parameter.REQUIRED,
             true);
+    
+    /**
+     * Copiers for associations not known yet. For example for associations
+     * with the generic types defined in this module from another module.
+     */
+    private final Parameter m_assocCopiers = new StringArrayParameter("com.arsdigita.cms.publish.association_copiers",
+                                                                     Parameter.REQUIRED,
+                                                                     new String[]{});
 
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -704,6 +712,7 @@ public final class CMSConfig extends AbstractConfig {
 
         register(m_useOldStyleItemLifecycleItemPane);
         register(m_threadPublishing);
+        register(m_assocCopiers);
 
         // publishToFile package related parameter
         // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
@@ -1121,5 +1130,9 @@ public final class CMSConfig extends AbstractConfig {
 
     public Boolean getThreadedPublishing() {
         return (Boolean) get(m_threadPublishing);
+    }
+    
+    public String[] getAssocCopiers() {
+        return (String[]) get(m_assocCopiers);
     }
 }
