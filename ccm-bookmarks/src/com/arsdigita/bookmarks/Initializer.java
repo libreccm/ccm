@@ -79,6 +79,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator(
                 BookmarkPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
+            @Override
                     public DomainObject doNewInstance(DataObject dataObject) {
                         return new BookmarkPortlet(dataObject);
                     }

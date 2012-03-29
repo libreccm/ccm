@@ -53,7 +53,7 @@ public class BookmarksServlet extends BaseApplicationServlet {
     /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(BookmarksServlet.class);
 
-    private Page adminPage;
+    private Page indexPage;
 
     /**
      * User extension point, overwrite this method to setup a URL - page mapping
@@ -63,7 +63,7 @@ public class BookmarksServlet extends BaseApplicationServlet {
     @Override
     public void doInit() throws ServletException {
 
-        adminPage = buildAdminPage();
+        indexPage = buildIndexPage();
 
     }
 
@@ -77,9 +77,9 @@ public class BookmarksServlet extends BaseApplicationServlet {
                                 Application app)
                       throws ServletException, IOException {
 
-        if (adminPage != null) {
+        if (indexPage != null) {
 
-            final Document doc = adminPage.buildDocument(sreq, sresp);
+            final Document doc = indexPage.buildDocument(sreq, sresp);
 
             PresentationManager pm = Templating.getPresentationManager();
             pm.servePage(doc, sreq, sresp);
@@ -96,7 +96,7 @@ public class BookmarksServlet extends BaseApplicationServlet {
      * 
      * @return 
      */
-    private Page buildAdminPage() {
+    private Page buildIndexPage() {
 
         BookmarkBasePage p = new BookmarkBasePage();
 

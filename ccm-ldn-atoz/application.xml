@@ -21,8 +21,15 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Red Hat Web Application Framework is a platform for writing
-    database-backed web applications in Java.
+    The ccm-ldn-atoz package enables a site to present all it's content in 
+    alphabetical order as an additional service to it's users. Usually the 
+    theme provides a link to the page as part of its static elements. 
+    
+    By default the application presents the A-Z list at ~/ccm/atoz/.
+    
+    An administration interface is provided at ~/ccm/atoz/admin/. Here you 
+    can configure the content to be listed by selecting an appropriate 
+    content provider. 
   </ccm:description>
 
 </ccm:application>

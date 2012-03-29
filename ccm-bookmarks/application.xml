@@ -13,11 +13,21 @@
     <ccm:contact uri="mailto:info@runtime-collective.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    Bookmarks application for CCM. Displays bookmarks for a portal.
-
-
-    CCM is a collaboration and content management system which is based upon
-    the Red Hat Web Application Framework (WAF), which is a platform for writing
-    database-backed web applications in Java.
+    Bookmarks application provides an admin interface to maintain one or more 
+    lists of bookmarks and a portlet to embed on one or more portal pages. 
+    Each portlet instance can be configured to display one of several bookmark 
+    list.
+    
+    By default an administration instance to maintain a list of bookmarks is 
+    installed at ~/ccm/admin/bookmarks. The UI provides the capability to add, 
+    modify and delete bookmarks and to modify their order. 
+    
+    To display this list the Bookmark portlet must be installed on a portal 
+    page. It's installation UI provides (besides the standard properties title 
+    and description) a drop-down list to select the list provider, 
+    “/admin/bookmarks” in case of the default installation.
+    
+    For each additional, separate bookmarks list it is necessary to install an 
+    additional administration instance for each list.
   </ccm:description>
 </ccm:application>

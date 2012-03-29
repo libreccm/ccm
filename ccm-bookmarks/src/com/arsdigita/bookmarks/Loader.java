@@ -68,8 +68,7 @@ public class Loader extends PackageLoader {
      */
     private ApplicationType loadBookmarksApp() {
 
-        /* Create new type legacy free application type                 
-         * NOTE: The wording in the title parameter of ApplicationType
+        /* NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.
          * It gets "urlized", i.e. trimming leading and trailing blanks and
          * replacing blanks between words and illegal characters with an
@@ -101,18 +100,13 @@ public class Loader extends PackageLoader {
      * 
      */
     public static void setupDefaultBookmarkApplicationInstance() {
+        s_log.debug("Creating BookmarkApplication instance ...");
 
         /* Determine a parent application. Bookmarks admin page will be 
          * installed beyond the admin's applications URL.                    */
         Application admin = Application.retrieveApplicationForPath("/admin/");
 
         // create application instance 
-        // Whether a legacy compatible or a legacy free application is
-        // created depends on the type of ApplicationType above. No need to
-        // modify anything here in the migration process
-        // old-style package key used as url fragment where to install the instance
-        s_log.debug("Creating BookmarkApplication instance ...");
-
         Bookmarks app = Bookmarks.create("bookmarks", "Bookmarks", admin); 
 
         s_log.debug("Bookmarks instance " + " created.");
