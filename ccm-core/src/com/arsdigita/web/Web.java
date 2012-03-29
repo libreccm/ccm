@@ -119,7 +119,7 @@ public class Web {
      * @return The current <code>ServletContext</code>; it can be null
      *
      */
-    public static final ServletContext getServletContext() {
+    public static ServletContext getServletContext() {
         return (ServletContext) s_servletContext.get();
     }
 
@@ -134,7 +134,7 @@ public class Web {
      * @param uri the context URI
      * @return the servlet context matching uri, or null
      */
-    public static final ServletContext getServletContext(String uri) {
+    public static ServletContext getServletContext(String uri) {
         Assert.isTrue(uri.startsWith("/"), "uri must start with /");
         Assert.isTrue(uri.endsWith("/"), "uri must end with /");
         return (ServletContext)s_contexts.get(uri);

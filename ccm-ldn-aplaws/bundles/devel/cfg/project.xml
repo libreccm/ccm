@@ -142,7 +142,6 @@
         <!--
         -->
         <ccm:application name="ccm-cms-types-image"/>
-        <ccm:application name="ccm-webpage"/>
 
 
 <!--   ADD-ONs Bundle's Applications   -->
@@ -152,13 +151,26 @@
         <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-faq"/>
         <ccm:application name="ccm-forum-categorised"/>     
-        <ccm:application name="ccm-portalserver"/>
-        <ccm:application name="ccm-weblog"/>
+
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    APLAWS+   packages under evaluation                                  -->
+<!--    These packages will not be made available in any bundle.             -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   Content Types under evaluation   -->
+        <ccm:application name="ccm-webpage"/>
+
+<!--   Applications under evaluation  -->
         <!--  Currently broken.          -->
         <ccm:application name="ccm-docmgr"/> 
+        <!-- some minor program issues  -->
+        <ccm:application name="ccm-portalserver"/>
+        <!-- no documentation    -->
+        <ccm:application name="ccm-weblog"/>
 
-
-<!--   ADD-ONs Bundle's Portlets   -->
+<!--   Portlets under evaluation  -->
         <!--  Currently broken. 
         Missing file: ccm-portlet/postgres-create.sql
         <ccm:application name="ccm-portlet"/>                 -->

@@ -23,13 +23,16 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationCollection;
-import com.arsdigita.web.ApplicationType;
 
 import org.apache.log4j.Logger;
 
 /**
  * Application domain class for the Login application.
+ * 
+ * Serves as the main entry point into Login application. Because there are no
+ * instance specific functions (there is only a single instance to be installed)
+ * it provides mainly required configuration information and service methods
+ * for client classes.
  *
  * @author pb
  * @version $Id: Login.java $
@@ -82,26 +85,42 @@ public class Login extends Application {
     }
 
     /**
-     * Provides an absolute URL (leading slash) into the system login page.
-     * It is relative to document root without any constant prefix if there is
-     * one configured.
+     * Service method provides an (absolute) URL into the system login page as
+     * servletPath() (leading slash) according servlet API. It is relative to
+     * document root without any constant prefix if there is one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash.
-     * In previous configurations String urls began without a slash in order
-     * to be able to provide a full URL which also contains the context part.
-     * Since version 5.2 the context part is handled by (new) dispatcher.
-     * The leading slash it API change! It's impacts have to be checked. (2011-02)
-     *
+     * It is used by other classes to determine the login page.
+     * 
      * @return URL for login page as String
      */
-    // In old LegacyInitializer
-    // LOGIN_PAGE_KEY = page.kernel.login =  register/
     public static String getLoginPageURL() {
         return LOGIN_PAGE_URL;
     }
 
     /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended) you may use a 
+     * standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>login</servlet-name>
+     *   <servlet-class>com.arsdigita.ui.login.LoginServlet</servlet-class>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>login</servlet-name>
+     *   <url-pattern>/login/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * The appended "/*" ensures BaseServlet will find additional JSP's.
      * 
+     * @return path name to the applications servlet/JSP
      */
     @Override
     public String getServletPath() {

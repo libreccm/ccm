@@ -33,23 +33,14 @@ import com.arsdigita.dispatcher.DispatcherConfig;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.ui.UI;
-
 import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.web.URL;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
 
-
-// WORK IN PROGRESS
-//
-// (a) Funktionen von SubsiteDispatcher übertragen
-//     Noch zu machen: preProcess für Handling caching
-// (b) Konfiguration in web.xml etc.                                 *DONE*
-// (c) Einbau in core Load                                           *DONE*
-// (d) Testen
 
 
 /**
@@ -59,6 +50,11 @@ import org.apache.log4j.Logger;
  * It manages user registration page, new user page, user workspace, logout, 
  * and permissions admin pages.
  * 
+ * It just defines a mapping URL <-> various pages and uses the super class
+ * to actually server the pages. Additionally is provides service methods
+ * to expose various properties, especially the URL's of public subpages
+ * (e.g. logout) and initializes the creation of the UI.
+ * 
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  * @version $Id: LoginServlet.java 2161 2012-03-15 00:16:13Z pboy $
  */
@@ -67,8 +63,10 @@ public class LoginServlet extends BebopApplicationServlet {
     /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(LoginServlet.class);
 
-    public static final String APPLICATION_NAME = "login";
 
+    // ////////////////////////////////////////////////////////////////////////
+    // Define various URLs to subpages of Login to manage administrative tasks.
+    // ////////////////////////////////////////////////////////////////////////
 
     /** PathInfo into the Login application to access the (optional) newUser
      *  page. Ends with "/" because it is a servlet/directory
@@ -106,11 +104,16 @@ public class LoginServlet extends BebopApplicationServlet {
      */
     public static final String LOGOUT_PATH_INFO = "/logout/";
 
+
+
+    /** Base URL of the Login application for internal use, fetched from
+     *  Login domain class.                                                   */
+    private final static String s_loginURL = Login.LOGIN_PAGE_URL;
+
     // define namespace URI
     final static String SUBSITE_NS_URI = "http://www.arsdigita.com/subsite/1.0";
 
-    // define
-    final static String s_loginURL = Login.LOGIN_PAGE_URL;
+    public static final String APPLICATION_NAME = "login";
 
     /**
      * User extension point used to create the pages to server and setup a 
@@ -298,7 +301,7 @@ public class LoginServlet extends BebopApplicationServlet {
 
 
     /**
-     * Provides an absolute URL (leading slash) to a user profile editig page.
+     * Provides an (absolute) URL to a user profile editig page.
      * It is relative to document root without any constant prefix if there is
      * one configured.
      *
@@ -310,32 +313,23 @@ public class LoginServlet extends BebopApplicationServlet {
      *
      * @return url to EditUserProfile page as String
      */
-    // In old LegacyInitializer
-    // EDIT_PAGE_KEY = page.kernel.edit = register/edit-profile/
     public static String getEditUserProfilePageURL() {
         return s_loginURL + EDIT_USER_PROFILE_PATH_INFO;            
     }
 
     /**
-     * Provides an absolute URL (leading slash) to an optional new user
-     * registration page (accessible only if activated). It is relative to
-     * document root without any constant prefix if there is one configured.
+     * Provides an (absolute URL) to an optional new user registration page
+     * (accessible only if activated). It is relative to document root
+     * without any constant prefix if there is one configured.
      *
      * XXX This implementation starts with a leading slash and ends with a slash.
      * In previous configurations String urls began without a slash in order
      * to be able to provide a full URL which also contains the context part.
      * Since version 5.2 the context part is handled by (new) dispatcher.
      * The leading slash it API change! It's impacts have to be checked. (2011-02)
-     * 
-     *  XXX In violation of the Servlet API the string does NOT start with a "/"
-     *  because currently the UI.getLoginPageURL() method provides a trailing
-     *  slash because it still follows the old application convention. Should
-     *  be reworked soon.
      *
      * @return url to new user registration page as String
      */
-    // In old LegacyInitializer
-    // NEWUSER_PAGE_KEY = page.kernel.newuser = register/new-user/
     public static String getNewUserPageURL() {
         return s_loginURL + NEW_USER_PATH_INFO;            
     }

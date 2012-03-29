@@ -18,23 +18,24 @@
  */
 package com.arsdigita.sitenode;
 
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.User;
+import com.arsdigita.kernel.PersonName;
 import com.arsdigita.logging.ErrorReport;
 import com.arsdigita.util.Exceptions;
 import com.arsdigita.util.ExceptionUnwrapper;
-import java.util.ArrayList;
-import java.util.TreeSet;
-import java.text.Collator;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.Party;
-import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.PersonName;
+import java.util.ArrayList;
+import java.util.TreeSet;
+import java.text.Collator;
+import java.util.Enumeration;
+
 import org.apache.log4j.Logger;
 
 /**

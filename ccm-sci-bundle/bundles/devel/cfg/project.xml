@@ -8,7 +8,7 @@
               ccmVersion="6.1" 
                     name="ScientificCMS" 
               prettyName="Scientific CMS" 
-                 version="1-1-6" 
+                 version="2-0-0" 
                  release="devel" 
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
@@ -62,6 +62,7 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--   Standard Bundle                                                       -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
 <!--   Standard Bundle's Content Assets                                      -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
         <ccm:application name="ccm-cms-assets-imagestep"/>
@@ -134,6 +135,45 @@
         -->
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 
+<!--  Applications   -->
+<!--
+-->
+        <ccm:application name="ccm-auth-http"/>
+        <ccm:application name="ccm-bookmarks"/>
+        <ccm:application name="ccm-docrepo"/>
+        <ccm:application name="ccm-faq"/>  
+        <ccm:application name="ccm-forum"/>  
+        <ccm:application name="ccm-forum-categorised"/>
+<!--
+-->
+
+<!--   LDN extension  -->
+<!--
+-->
+        <ccm:application name="ccm-ldn-exporter"/>
+        <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-importer"/>
+
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    Scientific CMS   packages under EVALUATION                           -->
+<!--    These packages will not be made available in any bundle.             -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   Content Types under evaluation   -->
+        <ccm:application name="ccm-webpage"/>
+
+<!--   Applications under evaluation  -->
+        <!--  Currently broken.          -->
+        <ccm:application name="ccm-docmgr"/> 
+        <!-- some minor program issues  -->
+        <ccm:application name="ccm-portalserver"/>
+        <!-- currently doesn't work for unknown reason / no documentation  -->
+        <ccm:application name="ccm-simplesurvey"/> 
+        <!-- no documentation    -->
+        <ccm:application name="ccm-weblog"/>
+
 <!--   Portlets       -->
 <!--    bookmarks error: no such resource: ccm-wsx-bookmarks-portlet.pdl.mf
         <ccm:application name="ccm-portlet-bookmarks"/>         -->
@@ -143,29 +183,6 @@
         several others.
         <ccm:application name="ccm-portlet-latestnews"/>
 -->
-
-<!--  Applications   -->
-<!--
--->
-        <ccm:application name="ccm-auth-http"/>
-        <ccm:application name="ccm-bookmarks"/>
-        <ccm:application name="ccm-docmgr"/>
-        <ccm:application name="ccm-docrepo"/>
-        <ccm:application name="ccm-faq"/>  
-        <ccm:application name="ccm-forum"/>  
-        <ccm:application name="ccm-forum-categorised"/>
-        <ccm:application name="ccm-portalserver"/>
-<!--
-        <ccm:application name="ccm-weblog"/>
-        <ccm:application name="ccm-webpage"/>
--->
-
-<!--   LDN extension  -->
-<!--
--->
-        <ccm:application name="ccm-ldn-exporter"/>
-        <ccm:application name="ccm-ldn-freeform"/>
-        <ccm:application name="ccm-ldn-importer"/>
 
 
 
@@ -181,12 +198,6 @@
 
 <!--   OBSOLETE Applications   -->
 
-<!--    currently doesn't work for unknown reason
-        <ccm:application name="ccm-simplesurvey"/>                   -->
-
-<!--    Without known funcionality
-        <ccm:application name="ccm-formbuilder-pdf"/>
-        <ccm:application name="ccm-user-preferences"/>               -->
 
 <!--   OBSOLETE LDN extension  -->
 
@@ -198,6 +209,10 @@
         <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>                     -->
+
+<!--    Without known funcionality
+        <ccm:application name="ccm-formbuilder-pdf"/>
+        <ccm:application name="ccm-ldn-userpreferences"/>            -->
 
 
   </ccm:build>

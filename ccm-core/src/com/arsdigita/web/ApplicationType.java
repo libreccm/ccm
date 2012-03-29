@@ -278,10 +278,10 @@ public class ApplicationType extends ResourceType {
      */
     public static ApplicationType createApplicationType(String key, String title,
                                                         String applicationObjectType) {
-        	
+          	
         return ApplicationType.createApplicationType(
                                       key, title, applicationObjectType, false);
-       
+         
     }
 
     /**

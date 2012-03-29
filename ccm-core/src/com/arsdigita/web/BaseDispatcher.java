@@ -29,6 +29,7 @@ import com.arsdigita.util.StringUtils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -306,10 +307,12 @@ class BaseDispatcher {
             return s1.equals(s2);
         }
 
+        @Override
         public int hashCode() {
             return toString().hashCode();
         }
 
+        @Override
         public String toString() {
             final String sep = ", ";
             StringBuffer sb = new StringBuffer();

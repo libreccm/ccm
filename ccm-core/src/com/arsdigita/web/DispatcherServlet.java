@@ -97,6 +97,7 @@ public class DispatcherServlet extends BaseServlet {
 
     @Override
     public void doInit() throws ServletException {
+/*
         m_fallbackName =
             getServletConfig().getInitParameter(FALLBACK_SERVLET_PARAMETER);
 
@@ -104,12 +105,13 @@ public class DispatcherServlet extends BaseServlet {
 
         Assert.exists(getServletConfig().getServletContext().getNamedDispatcher
                       (m_fallbackName), RequestDispatcher.class);
+*/
     }
 
     @Override    
     protected void doService(final HttpServletRequest sreq,
                              final HttpServletResponse sresp)
-              throws ServletException, IOException {
+                   throws ServletException, IOException {
         
         DeveloperSupport.requestStart(new RequestEvent(
                                           sreq, sresp, null, true, false));
@@ -129,7 +131,7 @@ public class DispatcherServlet extends BaseServlet {
         } else {
             s_log.debug("Could not dispatch this request to an " +
                         "application;  using the fallback servlet");
-
+/*
             sreq.setAttribute(FALLING_BACK_ATTRIBUTE, Boolean.TRUE);
 
             DeveloperSupport.startStage("BaseDispatcher.forward");
@@ -141,6 +143,7 @@ public class DispatcherServlet extends BaseServlet {
             m_dispatcher.forward(fallbackDispatcher, sreq, sresp);
 
             DeveloperSupport.endStage("BaseDispatcher.forward");
+*/   
         }
     }
 
