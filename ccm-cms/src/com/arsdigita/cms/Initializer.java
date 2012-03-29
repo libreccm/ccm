@@ -112,49 +112,10 @@ public class Initializer extends CompoundInitializer {
              ("ccm-cms.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-        // Step 1:
-        // Old type initializer "com.arsdigita.cms.installer.Initializer"
-        // Used to be the first initializer in old enterprise.init
-        //
-        // Replaced by new type initializer com.arsdigita.cms.installer.Initializer()
-        // Simple migration of the old code to the new initializer system with as
-        // less code change as possible.
-        //
-        // Invokes ContentCenterSetup (without any LegacyInitializer)
-        // performs mainly loader tasks and should be migrated to Loader.
-        // add(new com.arsdigita.cms.installer.Initializer());
-
-        // Step 2:
-        // Old type initializer "com.arsdigita.cms.installer.xml.ContentTypeInitializer"
-        // Completely moved into Loader
-
-        // Step 4:
-        // Old type initializer "com.arsdigita.cms.installer.SectionInitializer"
-        // Invoking the Initializer rewritten to a separate enterprise.init in
-        // c.ad.cms.contentsection and modified in c.ad.cms.initializer
-        // Mainly loader tasks, to be moved into c.ad.cms.Loader
-        // 2010-08-16: Moved to Loader, works OK
-//      add(new LegacyInitializer("com/arsdigita/cms/contentsection/enterprise.init"));
-
-        // Step 4a new
-        // Initializer for content section, needed when LegacyInitializer in step 4
-        // has been moved to c.ad.Loader in order to register the application and
-        // optionally to install additional content sections.
         add(new com.arsdigita.cms.contentsection.Initializer());
-
-        // Used to be step 3 in old enterprise.init migrated to loader/new init.
         add(new com.arsdigita.cms.publishToFile.Initializer());
-        // Used to be step 6 in old enterprise.init migrated to loader/new init.
         add(new com.arsdigita.cms.lifecycle.Initializer());
-        // Used to be step 7 in old enterprise.init migrated to loader/new init.
         add(new com.arsdigita.cms.portlet.Initializer());
-
-
-        // Used to be step 5 in old enterprise.init
-        // Old type initializer "com.arsdigita.formbuilder.installer.Initializer"
-        // Used to initialize CMS forms using the forms in ccm-core
-        // Can be replaced in ccm after ccm-core is migrated to new initializer.
- //     add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
 
         s_log.debug("CMS.Initializer.(Constructor) completed");
     }
@@ -163,9 +124,6 @@ public class Initializer extends CompoundInitializer {
     /**
      * Initializes domain-coupling machinery, usually consisting of
      * registering object instantiators and observers.
-     *
-     * This starts up the search threads according to the values in the
-     * properties file
      */
     @Override
     public void init(DomainInitEvent e) {

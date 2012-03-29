@@ -1037,6 +1037,7 @@ public class Forum extends Application {
 //  public String getContextPath() {
 //      return "/ccm-forum";
 //  }
+
     /**
      * Returns the path name of the location of the applications servlet/JSP.
      *

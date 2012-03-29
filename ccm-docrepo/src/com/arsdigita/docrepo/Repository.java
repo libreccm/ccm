@@ -26,22 +26,15 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.Party;
-//import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.User;
-// import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
-//import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-//import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
-//import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.util.UncheckedWrapperException;
-
 import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
-//import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
@@ -324,6 +317,7 @@ public class Repository extends Application {
         }
         return null;
     }
+
     /**
      * Returns the servletPath part of the URL to the application servlet.
      * (see Servlet API specification or web.URL for more information)

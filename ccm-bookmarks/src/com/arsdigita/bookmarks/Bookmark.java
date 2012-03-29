@@ -28,7 +28,10 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
- * Represents a single bookmark.
+ * Main domain class of the Bookmark application.
+ * 
+ * Main entry point into Bookmarks and provides services to save and retrieve
+ * bookmarks.
  *
  * @author Jim Parsons
  */
@@ -46,14 +49,30 @@ public class Bookmark extends ACSObject {
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.workspace.Bookmark";
 
+    /**
+     * Retrieve base DataObject for client classes.
+     * @return 
+     */
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    /**
+     * Constructor
+     * 
+     * @param dataObject 
+     */
     public Bookmark(DataObject dataObject) {
         super(dataObject);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param name
+     * @param URLstring 
+     */
     public Bookmark(String name, String URLstring) {
         super(BASE_DATA_OBJECT_TYPE);
 
@@ -65,9 +84,8 @@ public class Bookmark extends ACSObject {
         setVisits(0);
     }
 
-
     /**
-     * Retrieve an existing Bookmark based on an ID.
+     * Constructor retrieving an existing Bookmark based on an ID.
      *
      */
     public static Bookmark retrieveBookmark(BigDecimal bmrkID) {
@@ -77,7 +95,7 @@ public class Bookmark extends ACSObject {
     }
 
     /**
-     * Retrieve an existing Bookmark based on a data object.
+     * Constructor retrieving an existing Bookmark based on a data object.
      *
      * @param dataObject the data object of the Bookmark to retrieve.
      * @return an existing Bookmark.  Note that the return value may be
@@ -104,6 +122,10 @@ public class Bookmark extends ACSObject {
         return Bookmark.retrieveBookmark(dataObject);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Bookmarks getBookmarkApplication() {
         if(m_bmrkapp == null) {
            DataObject bmrkdata = (DataObject)get("bookmarkapp");
@@ -114,11 +136,19 @@ public class Bookmark extends ACSObject {
         return m_bmrkapp;
     }
 
+    /**
+     * 
+     * @param bmrkapp 
+     */
     public void setBookmarkApplication(Bookmarks bmrkapp) {
         m_bmrkapp = bmrkapp;
         setAssociation("bookmarkapp",bmrkapp);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public static BookmarkCollection retrieveAllBookmarks() {
         DataCollection dataCollection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
@@ -129,9 +159,9 @@ public class Bookmark extends ACSObject {
         return bmrkCollection;
     }
 
-    //
+    // ///////////////////////////////////////////////////////////////////////
     // Accessors
-    //
+    // ///////////////////////////////////////////////////////////////////////
 
     /**
      * Get the title of this Bookmark.
@@ -348,6 +378,7 @@ public class Bookmark extends ACSObject {
         set("sortKey", new Integer(sortKey));
     }
 
+    @Override
     protected void afterSave() {
         super.afterSave();
         PermissionService.setContext(this, getBookmarkApplication());

@@ -33,15 +33,10 @@ import org.apache.log4j.Logger;
 
 /**
  * <p>Executes nonrecurring at install time and loads (installs and initializes)
- * the HTTP Auth application and type persistently into database.</p>
+ * the Bookmarks application and type persistently into database.</p>
  *
  * @author Daniel Berrange
  * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
- */
-
-/**
- *
- * @author pb
  */
 public class Loader extends PackageLoader {
 
@@ -58,7 +53,8 @@ public class Loader extends PackageLoader {
                 setEffectiveParty(Kernel.getSystemParty());
 
                 ApplicationType bmrkAppType = loadBookmarksApp();
-                loadBookmarksPortlet(bmrkAppType);
+                loadBookmarksPortletType(bmrkAppType);
+
                 setupDefaultBookmarkApplicationInstance();
 
             }
@@ -88,7 +84,7 @@ public class Loader extends PackageLoader {
         return type;
     }
 
-    private void loadBookmarksPortlet(ApplicationType bmrkAppType ) {
+    private void loadBookmarksPortletType(ApplicationType bmrkAppType ) {
 
 		AppPortletType type = AppPortletType.createAppPortletType(
                                        "Portal Bookmarks",
@@ -120,7 +116,6 @@ public class Loader extends PackageLoader {
         Bookmarks app = Bookmarks.create("bookmarks", "Bookmarks", admin); 
 
         s_log.debug("Bookmarks instance " + " created.");
-        s_log.debug("Done loading bookmarks.");
     }
 
 }

@@ -83,12 +83,12 @@ public class Loader extends PackageLoader {
      * instantiates a (single) default instance.
      */
     private void setupHTTPAuth() {
-/*
-        ApplicationType type = ApplicationType
-            .createApplicationType("auth-http",
-                                   "CCM HTTP Authentication Admin",
-                                   HTTPAuth.BASE_DATA_OBJECT_TYPE);
-*/
+
+    //  ApplicationType type = ApplicationType
+    //      .createApplicationType("auth-http",
+    //                             "CCM HTTP Authentication Admin",
+    //                             HTTPAuth.BASE_DATA_OBJECT_TYPE);
+
 
         /* Create new type legacy free application type                 
          * NOTE: The wording in the title parameter of ApplicationType

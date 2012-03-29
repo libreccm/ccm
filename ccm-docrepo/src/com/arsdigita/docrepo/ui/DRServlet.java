@@ -31,13 +31,6 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.docrepo.File;
-// import com.arsdigita.docrepo.ui.BrowsePane;
-// import com.arsdigita.docrepo.ui.DocrepoBasePage;
-// import com.arsdigita.docrepo.ui.DRConstants;
-// import com.arsdigita.docrepo.ui.DRUtils;
-// import com.arsdigita.docrepo.ui.FileInfoHistoryPane;
-// import com.arsdigita.docrepo.ui.FileInfoPropertiesPane;
-// import com.arsdigita.docrepo.ui.RepositoryPane;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataQuery;
@@ -49,16 +42,15 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;
+import com.arsdigita.web.Web;
 import com.arsdigita.xml.Document;
 
-import com.arsdigita.web.Web;
 import java.io.*;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,17 +60,16 @@ import org.apache.log4j.Logger;
  * Application servlet for the ccm-docrepo application, serves all request made
  * for the application's UI. 
  * 
- * URLs of the available services are stored in a XML file which is processed
- * into a cache of services on a request by request basis (lazy loading).
+ * DRServlet is called by BaseApplicationServlet which has determined that
+ * DRServlet is associated with a request URL.
  * 
- * ServiceServlet is called by BaseApplicationServlet which has determined that
- * ServiceServlet is associated with a request URL.
+ * The servlet has to be included in servlet container's deployment descriptor,
+ * see {@see com.arsdigita.docrepo.Repository#getServletPath()} for details
+ * about web.xml record. It is NOT directly referenced by any other class.
  * 
- * The CMS Service determines whether a <tt>Page</tt> has been registered to
- * the URL and if so passes the request to that page.
- *
- * If no <tt>Page</tt> is registered to the URL, then the CMS Service hands 
- * the request to the TemplateResolver to find an appropriate JSP file.
+ * It determines whether a <tt>Page</tt> has been registered to the URL and
+ * if so passes the request to that page. Otherwise it hands  the request
+ * to the TemplateResolver to find an appropriate JSP file.
  *
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
@@ -109,6 +100,7 @@ public class DRServlet  extends BaseApplicationServlet
         addPage("/file", buildFileInfoPage());
 
     }
+
     /**
      * Implements the (abstract) doService method of BaseApplicationServlet to
      * perform the services.
@@ -168,31 +160,31 @@ public class DRServlet  extends BaseApplicationServlet
             s_log.debug("show repository page");
             // super.dispatch(req, resp, ctx);
 
-        String pathInfo = sreq.getPathInfo();
-        Assert.exists(pathInfo, "String pathInfo");
-        if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
-            /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
-             * start with a '/' character. It currently carries a 
-             * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
-             * result of a servlet mapping. But Application requires url 
-             * NOT to end with a trailing '/' for legacy free applications.  */
-            pathInfo = pathInfo.substring(0, pathInfo.length()-1);
-        }
+            String pathInfo = sreq.getPathInfo();
+            Assert.exists(pathInfo, "String pathInfo");
+            if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
+                /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
+                 * start with a '/' character. It currently carries a 
+                 * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
+                 * result of a servlet mapping. But Application requires url 
+                 * NOT to end with a trailing '/' for legacy free applications.  */
+                pathInfo = pathInfo.substring(0, pathInfo.length()-1);
+            }
 
-        final Page page = (Page) m_pages.get(pathInfo);
+            final Page page = (Page) m_pages.get(pathInfo);
 
-        if (page != null) {
+            if (page != null) {
 
-            final Document doc = page.buildDocument(sreq, sresp);
+                final Document doc = page.buildDocument(sreq, sresp);
 
-            PresentationManager pm = Templating.getPresentationManager();
-            pm.servePage(doc, sreq, sresp);
+                PresentationManager pm = Templating.getPresentationManager();
+                pm.servePage(doc, sreq, sresp);
 
-        } else {
+            } else {
 
-            sresp.sendError(404, "No such page for path " + pathInfo);
+                sresp.sendError(404, "No such page for path " + pathInfo);
 
-        }
+            }
         
         }
 

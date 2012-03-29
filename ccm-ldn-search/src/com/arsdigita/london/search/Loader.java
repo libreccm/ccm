@@ -18,15 +18,11 @@
 
 package com.arsdigita.london.search;
 
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
-import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 

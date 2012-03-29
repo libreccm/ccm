@@ -33,7 +33,10 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * Faq class.
+ * Application domain class for the Faq application.
+ *
+ * It manages creation of new Faq instances and provides getters and setters
+ * for instance specific items.
  *
  * @version $Id: com/arsdigita/faq/Faq.java#5 $
  */
@@ -44,7 +47,6 @@ public class Faq extends Application {
     private static final Logger log = Logger.getLogger(Faq.class);
 
     // PDL stuff
-    
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.faq.Faq";
 
@@ -106,14 +108,6 @@ public class Faq extends Application {
         return createQuestion(question,
                               new TypedText(answer, TypedText.TEXT_HTML));
     }
-
-//  /**
-//   * @deprecated use createQuestion(String, TypedText) instead
-//   */
-//  public QAPair createQuestion(String question, String answer,
-//                               String answerFormat) {
-//      return createQuestion(question, new TypedText(answer, answerFormat));
-//  }
 
     public QAPair createQuestion(String question, TypedText answer) {
 
@@ -183,6 +177,32 @@ public class Faq extends Application {
 
     }
 
+
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended) you may use a 
+     * standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>faq</servlet-name>
+     *   <servlet-class>com.arsdigita.faq.Faq</servlet-class>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>faq</servlet-name>
+     *   <url-pattern>/faq/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * The appended "/*" ensures BaseServlet will find additional JSP's.
+     * 
+     * @return path name to the applications servlet/JSP
+     */
     @Override
     public String getServletPath() {
         return "/faq";

@@ -40,8 +40,7 @@ import org.apache.log4j.Logger;
 public class Initializer extends CompoundInitializer {
 
     /** Creates a s_logging category with name = full name of class */
-    private static final Logger s_log = Logger.getLogger
-        (Initializer.class);
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
 
     /**
      * 

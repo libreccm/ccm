@@ -137,17 +137,15 @@ public class Loader extends PackageLoader {
     private void loadPortalSiteApplicationType() {
 
         /* First try: create a new style, legacy compatible application      */
-/*
-        ApplicationType type = ApplicationType.createApplicationType(
-                                              "portalsite",
-                                              "Portal Site",
-                                              PortalSite.BASE_DATA_OBJECT_TYPE);
+
+    //  ApplicationType type = ApplicationType.createApplicationType(
+    //                                        "portalsite",
+    //                                        "Portal Site",
+    //                                        PortalSite.BASE_DATA_OBJECT_TYPE);
         // Current code requires an apps specific dispatcher class. Has to be
         // modified to be able to create a legacy free app type.
-        type.setDispatcherClass
-                ("com.arsdigita.portalserver.ui.PortalDispatcher");
-        
-*/
+    //  type.setDispatcherClass
+    //          ("com.arsdigita.portalserver.ui.PortalDispatcher");
 
         // Try: new style legacy free application
         ApplicationType type = new 
@@ -230,16 +228,16 @@ public class Loader extends PackageLoader {
         // in applications mit primary_url=/portal-admin/
         // in acs_object mit default_domain_class=c.ad.ps.admin.PSAdmin und
         // object_type=c.ad.admin.CWAdmin, ebenfalls wg. BASE_DATA_OBJ_TYPE
-/*
-        ApplicationType type = ApplicationType.createApplicationType(
-                                              "portal-admin",
-                                              "Portal Server Site Administration",
-                                              PSAdmin.BASE_DATA_OBJECT_TYPE);
-        // Current code requires an apps specific dispatcher class. Has to be
-        // modified to be able to create a legacy free app type.
-        type.setDispatcherClass
-                ("com.arsdigita.portalserver.admin.ui.Dispatcher");
-*/
+
+    //  ApplicationType type = ApplicationType.createApplicationType(
+    //                                        "portal-admin",
+    //                                        "Portal Server Site Administration",
+    //                                        PSAdmin.BASE_DATA_OBJECT_TYPE);
+    //  // Current code requires an apps specific dispatcher class. Has to be
+    //  // modified to be able to create a legacy free app type.
+    //  type.setDispatcherClass
+    //          ("com.arsdigita.portalserver.admin.ui.Dispatcher");
+
         // Try: new style legacy free application
         ApplicationType type = new 
                                ApplicationType("Portal Admin",  // title
@@ -259,17 +257,17 @@ public class Loader extends PackageLoader {
     private void loadPortalCreatorApplicationType() {
     // formerly private ApplicationType setupPortalCreator() { in ui.admin.Initializer
 
-/*
-        ApplicationType type = ApplicationType.createApplicationType(
-                                              "portal-create",
-                                              "Portal Creator",
-                                              PortalCreator.BASE_DATA_OBJECT_TYPE);
-        type.setDescription ("Creates portals.");
-        // Current code requires an apps specific dispatcher class. Has to be
-        // modified to be able to create a legacy free app type.
-        type.setDispatcherClass
-                ("com.arsdigita.portalserver.ui.admin.PortalCreateDispatcher");
-*/
+
+    //  ApplicationType type = ApplicationType.createApplicationType(
+    //                                        "portal-create",
+    //                                        "Portal Creator",
+    //                                        PortalCreator.BASE_DATA_OBJECT_TYPE);
+    //  type.setDescription ("Creates portals.");
+    //  // Current code requires an apps specific dispatcher class. Has to be
+    //  // modified to be able to create a legacy free app type.
+    //  type.setDispatcherClass
+    //          ("com.arsdigita.portalserver.ui.admin.PortalCreateDispatcher");
+
 
         // Try: new style legacy free application
         ApplicationType type = new 

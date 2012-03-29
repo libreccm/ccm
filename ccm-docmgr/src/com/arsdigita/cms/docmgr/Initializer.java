@@ -17,28 +17,21 @@ package com.arsdigita.cms.docmgr;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.cms.docmgr.DocFolder;
-import com.arsdigita.cms.docmgr.Document;
-import com.arsdigita.cms.docmgr.DocumentCategoryBrowserApplication;
-import com.arsdigita.cms.docmgr.LegacyCategoryBrowserApplication;
-import com.arsdigita.cms.docmgr.Repository;
-// unused: import com.arsdigita.cms.docmgr.search.SearchUtils;
-import com.arsdigita.cms.docmgr.ui.CategoryDocsNavigatorPortlet;
-import com.arsdigita.cms.docmgr.ui.LegacyCategoryDocsNavigatorPortlet;
+// import com.arsdigita.cms.docmgr.ui.CategoryDocsNavigatorPortlet;
+// import com.arsdigita.cms.docmgr.ui.LegacyCategoryDocsNavigatorPortlet;
 import com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
-// import com.arsdigita.initializer.Configuration;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.portal.PortletType;
-import com.arsdigita.portal.apportlet.AppPortletSetup;
+// import com.arsdigita.portal.PortletType;
+// import com.arsdigita.portal.apportlet.AppPortletSetup;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.web.ApplicationSetup;
-import com.arsdigita.web.ApplicationType;
+// import com.arsdigita.web.ApplicationSetup;
+// import com.arsdigita.web.ApplicationType;
 
 
 /**
@@ -167,26 +160,27 @@ public class Initializer extends CompoundInitializer {
      * package exists, and if not it creates it for the first time.
      */
 
-    private ApplicationType setupDocs() {
-        ApplicationSetup setup = new ApplicationSetup(s_log);
-        setup.setApplicationObjectType(Repository.BASE_DATA_OBJECT_TYPE);
-        setup.setKey(PACKAGE_TYPE_NAME);
-        setup.setTitle("Document Manager (CMS) Application");
-        setup.setSingleton(false);
-        setup.setDescription
-            ("The document manager empowers users to share documents.");
-        setup.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DMDispatcher");
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                public DomainObject doNewInstance(DataObject dataObject) {
-                    return new Repository(dataObject);
-                }
-        });
+//  private ApplicationType setupDocs() {
+//      ApplicationSetup setup = new ApplicationSetup(s_log);
+//      setup.setApplicationObjectType(Repository.BASE_DATA_OBJECT_TYPE);
+//      setup.setKey(PACKAGE_TYPE_NAME);
+//      setup.setTitle("Document Manager (CMS) Application");
+//      setup.setSingleton(false);
+//      setup.setDescription
+//          ("The document manager empowers users to share documents.");
+//      setup.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DMDispatcher");
+//      setup.setInstantiator(new ACSObjectInstantiator() {
+//              @Override
+//              public DomainObject doNewInstance(DataObject dataObject) {
+//                  return new Repository(dataObject);
+//              }
+//      });
+//
+//      return setup.run();
+//  }
 
-        return setup.run();
-    }
 
-    private void setupDocManagerPortlet(ApplicationType provider) {
+/*  private void setupDocManagerPortlet(ApplicationType provider) {
         // Create the document manager portlet
         AppPortletSetup setup = new AppPortletSetup(s_log);
 
@@ -203,9 +197,9 @@ public class Initializer extends CompoundInitializer {
             });
 
         setup.run();
-    }
+    }  */
 
-    private ApplicationType setupCategoryBrowsing() {
+/*  private ApplicationType setupCategoryBrowsing() {
         ApplicationSetup setup = new ApplicationSetup(s_log);
         setup.setApplicationObjectType(DocumentCategoryBrowserApplication.BASE_DATA_OBJECT_TYPE);
         setup.setKey(CATEGORY_PACKAGE_TYPE_NAME);
@@ -225,8 +219,9 @@ public class Initializer extends CompoundInitializer {
             });
         return setup.run();
 
-    }
-    private ApplicationType setupLegacyCategoryBrowsing() {
+    }  */
+
+/*  private ApplicationType setupLegacyCategoryBrowsing() {
         ApplicationSetup setup = new ApplicationSetup(s_log);
         setup.setApplicationObjectType(LegacyCategoryBrowserApplication.BASE_DATA_OBJECT_TYPE);
         setup.setKey(LEGACY_PACKAGE_TYPE_NAME);
@@ -246,8 +241,8 @@ public class Initializer extends CompoundInitializer {
             });
         return setup.run();
 
-    }
-
+    }  */
+/*
     private void setupCategoryDocsPortlet(ApplicationType provider) {
         // Create the document manager portlet
         AppPortletSetup setup = new AppPortletSetup(s_log);
@@ -285,7 +280,7 @@ public class Initializer extends CompoundInitializer {
 
         setup.run();
     }
-
+*/
 
     /**
      * Shutdown the document manager.

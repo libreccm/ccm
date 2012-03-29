@@ -6,16 +6,13 @@ import org.apache.log4j.Logger;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
-import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.london.util.Program;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationSetup;
-import com.arsdigita.web.ApplicationType;
-import com.arsdigita.web.ApplicationTypeCollection;
+
 
 public class AddAtoZ extends Program {
 

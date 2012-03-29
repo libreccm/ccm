@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Web Developer Support Application Servlet class, central entry point  to 
+ * Bookmarks Application Servlet class, central entry point  to 
  * create and process the applications UI.
  * 
  * We should have subclassed BebopApplicationServlet but couldn't overwrite
