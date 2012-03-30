@@ -100,6 +100,15 @@ public class GenericPersonBundle
                 }
 
                 return true;
+            } else if ("organizationalunit".equals(attribute)) {
+                final DataCollection orgaunits = (DataCollection) personBundle.
+                        get("organizationalunit");
+
+                while (orgaunits.next()) {
+                    createOrgaUnitAssoc(orgaunits);
+                }
+                
+                return true;
             } else {
                 return super.copyProperty(source, property, copier);
             }
@@ -126,5 +135,26 @@ public class GenericPersonBundle
 
             link.save();
         }
+    }
+
+    private void createOrgaUnitAssoc(final DataCollection orgaunits) {
+        final GenericOrganizationalUnitBundle draftOrga = (GenericOrganizationalUnitBundle) DomainObjectFactory.
+                newInstance(orgaunits.getDataObject());
+        final GenericOrganizationalUnitBundle liveOrga = (GenericOrganizationalUnitBundle) draftOrga.
+                getLiveVersion();
+
+        if (liveOrga != null) {
+            final DataObject link = add("organizatialunit", liveOrga);
+
+            link.set(GenericOrganizationalUnitPersonCollection.PERSON_ROLE,
+                     orgaunits.get(
+                    GenericOrganizationalUnitPersonCollection.LINK_PERSON_ROLE));
+            link.set(GenericOrganizationalUnitPersonCollection.STATUS,
+                     orgaunits.get(
+                    GenericOrganizationalUnitPersonCollection.LINK_STATUS));
+
+            link.save();
+        }
+
     }
 }
