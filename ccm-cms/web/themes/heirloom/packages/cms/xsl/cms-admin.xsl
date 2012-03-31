@@ -15,7 +15,6 @@
 <xsl:import href="admin/cms-admin.xsl"/>
 
 <xsl:param name="context-prefix"/>
-<xsl:param name="static-prefix"/>
 <xsl:param name="internal-theme"/>
 
 <!-- GENERAL CMS ADMIN STYLING -->

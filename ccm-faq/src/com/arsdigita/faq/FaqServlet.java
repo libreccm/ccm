@@ -29,6 +29,9 @@ import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 
 /**
+ * FAQ Application Servlet class, central entry point  to 
+ * create and process the applications UI.
+ * 
  *
  * @author pb
  */
@@ -38,6 +41,10 @@ public class FaqServlet  extends BebopApplicationServlet {
     private static final Logger s_log = Logger.getLogger(FaqServlet.class);
 
 
+    /**
+     * 
+     * @throws ServletException 
+     */
     @Override
     public void init() throws ServletException {
         super.init();
@@ -48,10 +55,9 @@ public class FaqServlet  extends BebopApplicationServlet {
 
         put("/", index);
         put("/index.jsp", index);
-        put("/one.jsp", index);
 
-  //    put("admin", admin);
-  //    put("admin/index.jsp", admin);
+        put("/admin", admin);
+        put("/admin/index.jsp", admin);
 
     }
 
@@ -60,6 +66,7 @@ public class FaqServlet  extends BebopApplicationServlet {
      * @return
      */
     private FaqPage buildIndexPage() {
+
         FaqPage p = new FaqPage();
 
         p.add(new FaqUserView());

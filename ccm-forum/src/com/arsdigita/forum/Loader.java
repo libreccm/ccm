@@ -109,12 +109,8 @@ public class Loader extends PackageLoader {
                 setupDigestUser();
 
                 setupForumAppType( (String[]) get(m_forumInstances) );
-                //setupInboxAppType(); //TODO: why it is commented out?
                 setupRecentPostingsPortletType();
                 setupMyForumsPortletType();
-
-                //  moved upwards
-                //  setupDigestUser();
 
                 SessionManager.getSession().flushAll();
             }
@@ -131,8 +127,7 @@ public class Loader extends PackageLoader {
      */
     private static void setupForumAppType(String[] forumNames) {
 
-        /* Create legacy-free application type                               
-         * NOTE: The wording in the title parameter of ApplicationType
+        /* NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.
          * It gets "urlized", i.e. trimming leading and trailing blanks and
          * replacing blanks between words and illegal characters with an
@@ -155,20 +150,6 @@ public class Loader extends PackageLoader {
         }
         s_log.info("Forum setup completed");
         return ;
-    }
-
-    /**
-     * TODO: What is it for? Execution is currently commented out.
-     * Referenced class com.arsdigita.forum.Inbox does not exist.
-     * @return
-     */
-    private static ApplicationType setupInboxAppType() {
-        ApplicationType type = ApplicationType
-                               .createApplicationType(Forum.PACKAGE_TYPE,
-                                                      "Inbox",
-                                                      "com.arsdigita.forum.Inbox");
-        type.setDescription("Inbox");
-        return type;
     }
 
     /**

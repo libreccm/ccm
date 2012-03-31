@@ -33,8 +33,11 @@ import com.arsdigita.util.LockableImpl;
 
 import java.math.BigDecimal;
 
+/**
+ * 
+ * @version $Id: AdminQuestionTable.java#3  2004/08/17 23:26:27 $
+ */
 class AdminQuestionTable extends Table {
-    public static final String versionId = "$Id: //apps/faq/dev/src/com/arsdigita/faq/ui/AdminQuestionTable.java#3 $ by $Author: dennis $, $DateTime: 2004/08/17 23:26:27 $";
 
     private final static String[] HEADERS = {"#", "Question"};
 

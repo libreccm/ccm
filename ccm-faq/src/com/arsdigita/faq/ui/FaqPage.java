@@ -43,11 +43,10 @@ import java.math.BigDecimal;
  *
  * @author <a href="mailto:teadams@arsdigita.com">Tracy Adams</a>
  * @version $Revision: #4 $ $Date: 2004/08/17 $
+ * @version $Id: FaqPage.java#4 $
  */
 
 public class FaqPage extends FaqBasePage {
-
-    public static final String versionId = "$Id: //apps/faq/dev/src/com/arsdigita/faq/ui/FaqPage.java#4 $ by $Author: dennis $, $DateTime: 2004/08/17 23:26:27 $";
 
     private static final org.apache.log4j.Logger log =
         org.apache.log4j.Logger.getLogger(FaqPage.class);

@@ -126,16 +126,6 @@ public class PageTransformer implements PresentationManager {
             }
         });
 
-        registerXSLParameterGenerator("static-prefix",
-                                      new XSLParameterGenerator() {
-
-            @Override
-            public String generateValue(HttpServletRequest request) {
-                return Web.getContext().getRequestURL().getContextPath()
-                       + com.arsdigita.web.URL.STATIC_DIR;
-            }
-        });
-
         registerXSLParameterGenerator("dispatcher-prefix",
                                       new XSLParameterGenerator() {
 

@@ -3,7 +3,6 @@
                   version="1.0">
                       
   <xsl:param name="context-prefix"/>
-  <xsl:param name="static-prefix"/>
   <xsl:param name="dispatcher-prefix"/>
   <xsl:variable name="legacy-asset-prefix" select="//@assets"/>
 

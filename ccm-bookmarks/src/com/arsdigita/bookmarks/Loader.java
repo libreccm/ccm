@@ -44,6 +44,7 @@ public class Loader extends PackageLoader {
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     /**
+     * Run script invoked by com.arsdigita.packing loader script.
      * 
      * @param ctx 
      */
@@ -104,10 +105,10 @@ public class Loader extends PackageLoader {
 
         /* Determine a parent application. Bookmarks admin page will be 
          * installed beyond the admin's applications URL.                    */
-        Application admin = Application.retrieveApplicationForPath("/admin/");
+        Application parent = Application.retrieveApplicationForPath("/admin/");
 
         // create application instance 
-        Bookmarks app = Bookmarks.create("bookmarks", "Bookmarks", admin); 
+        Bookmarks app = Bookmarks.create("bookmarks", "Bookmarks", parent); 
 
         s_log.debug("Bookmarks instance " + " created.");
     }

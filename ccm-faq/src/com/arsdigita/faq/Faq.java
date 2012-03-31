@@ -183,9 +183,9 @@ public class Faq extends Application {
      *
      * The method overwrites the super class to provide an application specific
      * location for servlets/JSP. This is necessary if you whish to install the
-     * module (application) along with others in one context. If you install the
-     * module into its own context (no longer recommended) you may use a 
-     * standard location.
+     * package (application) along with others in one context. If you install
+     * it into its own context (no longer recommended) you may use a standard
+     * location.
      *
      * Usually it is a symbolic name/path, which will be mapped in the web.xml
      * to the real location in the file system. Example:
@@ -199,7 +199,12 @@ public class Faq extends Application {
      *   <url-pattern>/faq/*</url-pattern>
      * </servlet-mapping>
      *
-     * The appended "/*" ensures BaseServlet will find additional JSP's.
+     * The appended "/*" ensures BaseServlet will find additional JSP's (located
+     * in URL.TEMPLATE_DIR/ccm-faq/*).
+     * 
+     * Ensure the url-pattern does NOT have a real counterpart in the file 
+     * system! For virtual locations you may use URL.SERVLET_DIR as base
+     * directory.
      * 
      * @return path name to the applications servlet/JSP
      */

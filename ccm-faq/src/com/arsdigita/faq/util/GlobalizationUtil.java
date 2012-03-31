@@ -33,7 +33,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 public class GlobalizationUtil implements Globalized {
     
-    private static final String BUNDLE_NAME = "com.arsdigita.faq.ui.FaqResources";
+    private static final String BUNDLE_NAME = "com.arsdigita.faq.FaqResources";
 
     public static GlobalizedMessage globalize(String key) {
 	 return new GlobalizedMessage(key, BUNDLE_NAME);

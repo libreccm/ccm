@@ -24,12 +24,15 @@ import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.portal.apportlet.AppPortletType;
 import com.arsdigita.runtime.ScriptContext;
+import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 
 import org.apache.log4j.Logger;
 
 /**
- * FAQ Application Loader
+ * FAQ Application Loader executes nonrecurring at install time and loads 
+ * (installs and initializes) the FAQ application type, portlet type and
+ * default application instance persistently into database.
  *
  * @author pboy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: Loader.java $
@@ -37,7 +40,7 @@ import org.apache.log4j.Logger;
 public class Loader extends PackageLoader {
 
 
-    /** Logger instance for debugging */
+    /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     /**
@@ -52,9 +55,9 @@ public class Loader extends PackageLoader {
                 setEffectiveParty(Kernel.getSystemParty());
 
                 loadFAQApplicationType();
-                setupFaqQuestionsPortlet(null);
+                loadFaqQuestionsPortletType(null);
 
-                setupDefaultFaq();
+                setupDefaultFaqInstance();
 
             }
         }.run();
@@ -70,23 +73,9 @@ public class Loader extends PackageLoader {
 
     /**
      * Creates a FAQ application type, the domain class of the
-     * FAQ package, as a legacy-compatible type of application.
-     *
-     * Creates an entry in table application_types and a corresponding entry in
-     * apm_package_types
-     *
-     * TODO: migrate to a new style, legacy free application type.
+     * FAQ package.
      */
     private void loadFAQApplicationType() {
-
-    //  /* Setup a new style legacy compatible application type.   */
-    //  ApplicationType type = ApplicationType.createApplicationType(
-    //                                        "faq",
-    //                                        "Frequently Asked Questions",
-    //                                        Faq.BASE_DATA_OBJECT_TYPE);
-    //  /* Current code requires an apps specific dispatcher class.         */
-    //  /* Has to be modified to be able to create a legacy free app type.  */
-    //  type.setDispatcherClass ("com.arsdigita.faq.FaqDispatcher");
 
         /* Setup as new stype legacy free aplcation */
         // NOTE: The title "FAQ" is used to retrieve the application's
@@ -94,9 +83,9 @@ public class Loader extends PackageLoader {
         // DON'T modify it without synchronizing web directory tree accordingly!
         ApplicationType type = new ApplicationType("FAQ",
                                                    Faq.BASE_DATA_OBJECT_TYPE);
-        // set.Description is independent from application type:
         type.setDescription
             ("Frequently Asked Questions empower users to share knowledge.");
+        type.save();
 
     }
 
@@ -112,9 +101,22 @@ public class Loader extends PackageLoader {
      * Creates a default FAQ application instance at address /faq/
      * 
      */
-    private void setupDefaultFaq() {
+    private void setupDefaultFaqInstance() {
+        s_log.debug("About to create FAQ application instance ...");
 
-        Faq faq = Faq.create("faq", "Default FAQ", null);
+        /* Determine a parent application.                                    */
+        Application parent;
+
+        /* For now we install FAQ as an root application. 
+         * If admin needs to install several FAQ instances this decision may
+         * become inappropriate. It may be better to either not install any 
+         * default application and leave it to the admin to install proper 
+         * instances or try to find a more flexible solution which better fits
+         * to many instances.                                                 */
+        // parent = Application.retrieveApplicationForPath("/admin/");
+        parent=null;
+
+        Faq faq = Faq.create("faq", "Default FAQ", parent);
         faq.setDescription("The default ccm-faq instance.");
         faq.save();
     }
@@ -134,28 +136,9 @@ public class Loader extends PackageLoader {
      * Instances (Portlets) are created by user interface or programmatically
      * by configuration.
      */
-    private void setupFaqQuestionsPortlet(ApplicationType provider) {
+    private void loadFaqQuestionsPortletType(ApplicationType provider) {
 
         // Create the FAQ questions portlet
-/*  Copied from docfrepo as an example
-        AppPortletSetup setup = new AppPortletSetup(s_log);
-
-        setup.setPortletObjectType(RecentUpdatedDocsPortlet.BASE_DATA_OBJECT_TYPE);
-        setup.setTitle("Recently Updated Documents");
-        setup.setDescription(
-              "Displays the most recent documents in the document repository.");
-        setup.setProfile(PortletType.WIDE_PROFILE);
-        // setup.setProviderApplicationType(provider);
-        setup.setProviderApplicationType(Repository.BASE_DATA_OBJECT_TYPE);
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                @Override
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new RecentUpdatedDocsPortlet(dataObject);
-                }
-            });
-
-        setup.run();
-*/
         AppPortletType portletType = AppPortletType.createAppPortletType
             ("Faq Questions Portlet", AppPortletType.WIDE_PROFILE,
              FaqQuestionsPortlet.BASE_DATA_OBJECT_TYPE);

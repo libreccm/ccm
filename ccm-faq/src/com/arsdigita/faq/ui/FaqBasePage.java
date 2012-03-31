@@ -34,7 +34,6 @@ import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.web.Application;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.faq.ApplicationAuthenticationListener;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -62,8 +61,7 @@ public class FaqBasePage extends Page {
     public static final String FAQ_HEADER_ELEMENT = "faq:header";
     public static final String FAQ_BODY_ELEMENT = "faq:body";
     public static final String FAQ_FOOTER_ELEMENT = "faq:footer";
-    public static final String FAQ_XML_NS =
-        "http://www.redhat.com/faq/1.0";
+    public static final String FAQ_XML_NS = "http://www.redhat.com/faq/1.0";
 
     private static final Logger s_log = Logger.getLogger(FaqBasePage.class);
 
@@ -78,6 +76,9 @@ public class FaqBasePage extends Page {
 
     private boolean CHECK_PERMISSION = true;
 
+    /**
+     * Default Constructor
+     */
     public FaqBasePage() {
         this(null);
     }
@@ -120,6 +121,7 @@ public class FaqBasePage extends Page {
     }
 
 
+    @Override
     public void lock() {
         buildPage();
 
@@ -176,7 +178,9 @@ public class FaqBasePage extends Page {
     }
 
     protected void buildGlobal(Container global) {
-        Link link = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.sign_out")),  "/register/logout");
+        Link link = new Link( new Label(GlobalizationUtil
+                                        .globalize("cw.workspace.sign_out")),
+                                        "/register/logout");
 
         link.setClassAttr("signoutLink");
 
@@ -186,13 +190,17 @@ public class FaqBasePage extends Page {
     protected void buildHeader(Container header) {
         if (m_view != null) {
             if (m_view.equals("user")) {
-                m_viewLink = new Link
-                    ( new Label(GlobalizationUtil.globalize("cw.faq.ui.admin_view")), "./admin/index.jsp") {
-                        public boolean isVisible(PageState ps) {
-                            return userIsAdmin(ps);
-                        }};
+                m_viewLink = new Link( new Label(GlobalizationUtil
+                                                 .globalize("cw.faq.ui.admin_view")), 
+                                                 "./admin/index.jsp") {
+                    @Override
+                    public boolean isVisible(PageState ps) {
+                        return userIsAdmin(ps);
+                    }};
             } else if (m_view.equals("admin")) {
-                m_viewLink = new Link( new Label(GlobalizationUtil.globalize("cw.faq.ui.user_view")),  "../index.jsp");
+                m_viewLink = new Link( new Label(GlobalizationUtil
+                                                 .globalize("cw.faq.ui.user_view")),  
+                                                 "../index.jsp");
             }
         }
 
@@ -214,6 +222,7 @@ public class FaqBasePage extends Page {
 
 
     private class Panel extends SimpleContainer {
+        @Override
         public void generateXML(PageState ps, Element p) {
             Component selected = getSelected(ps);
             if (selected == null) {
