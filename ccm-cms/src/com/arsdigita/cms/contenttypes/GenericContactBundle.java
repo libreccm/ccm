@@ -34,27 +34,27 @@ public class GenericContactBundle
         setContentType(primary.getContentType());
         addInstance(primary);
 
-        super.setName(primary.getName());        
+        super.setName(primary.getName());
     }
 
     public GenericContactBundle(final OID oid) throws
             DataObjectNotFoundException {
-        super(oid);        
+        super(oid);
     }
 
     public GenericContactBundle(final BigDecimal id) throws
             DataObjectNotFoundException {
-        super(new OID(BASE_DATA_OBJECT_TYPE, id));        
+        super(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     public GenericContactBundle(final DataObject dobj) {
-        super(dobj);        
+        super(dobj);
     }
 
     public GenericContactBundle(final String type) {
         super(type);
     }
-   
+
     /**
      * <p> Copy association properties. These are for example the associations
      * between GenericPerson and GenericContact, or between
@@ -76,7 +76,6 @@ public class GenericContactBundle
                                        (GenericContactBundle) source;
 
             if (PERSON.equals(attribute)) {
-
                 final DataCollection persons = (DataCollection) contactBundle.
                         get(PERSON);
 
@@ -85,7 +84,16 @@ public class GenericContactBundle
                 }
 
                 return true;
-            } else {               
+            } else if ("organizationalunit".equals(attribute)) {
+                final DataCollection orgaunits = (DataCollection) contactBundle.
+                        get("organizationalunit");
+
+                while (orgaunits.next()) {
+                    createOrgaUnitAssoc(orgaunits);
+                }
+
+                return true;
+            } else {
                 return super.copyProperty(source, property, copier);
             }
         } else {
@@ -109,6 +117,28 @@ public class GenericContactBundle
                      persons.get(GenericPersonContactCollection.CONTACTS_KEY));
             link.set(GenericPerson.CONTACTS_ORDER,
                      persons.get(GenericPersonContactCollection.CONTACTS_ORDER));
+
+            link.save();
+        }
+    }
+
+    private void createOrgaUnitAssoc(final DataCollection orgaunits) {
+        final GenericOrganizationalUnitBundle draftOrga =
+                                              (GenericOrganizationalUnitBundle) DomainObjectFactory.
+                newInstance(orgaunits.getDataObject());
+        final GenericOrganizationalUnitBundle liveOrga =
+                                              (GenericOrganizationalUnitBundle) draftOrga.
+                getLiveVersion();
+
+        if (liveOrga != null) {
+            final DataObject link = add("organizationalunit", liveOrga);
+
+            link.set(GenericOrganizationalUnitContactCollection.CONTACT_TYPE,
+                     orgaunits.get(
+                    GenericOrganizationalUnitContactCollection.LINK_CONTACT_TYPE));
+            link.set(GenericOrganizationalUnitContactCollection.CONTACT_ORDER,
+                     orgaunits.get(
+                    GenericOrganizationalUnitContactCollection.LINK_CONTACT_ORDER));
 
             link.save();
         }
