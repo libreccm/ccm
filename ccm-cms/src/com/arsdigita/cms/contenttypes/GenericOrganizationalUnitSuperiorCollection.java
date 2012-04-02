@@ -1,5 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
@@ -83,7 +84,7 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
         next();
         setSuperiorOrder(currentIndex);
         rewind();
-        
+
         normalizeOrder();
     }
 
@@ -126,11 +127,11 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
         next();
         setSuperiorOrder(previousIndex);
         rewind();
-        
+
         normalizeOrder();
     }
-    
-     private void normalizeOrder() {
+
+    private void normalizeOrder() {
         this.rewind();
 
         int i = 1;
@@ -141,9 +142,15 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
         this.rewind();
     }
 
+    public GenericOrganizationalUnitBundle getGenericOrganizationalUnitBundle() {
+        return (GenericOrganizationalUnitBundle) DomainObjectFactory.newInstance(
+                m_dataCollection.getDataObject());
+    }
+
     public GenericOrganizationalUnit getGenericOrganizationalUnit() {
-        return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(m_dataCollection.
-                getDataObject());
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
     }
 
     public OID getOID() {
@@ -155,10 +162,10 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
     }
 
     public String getTitle() {
-        return (String) m_dataCollection.get(ContentPage.TITLE);
+        return getGenericOrganizationalUnit().getTitle();
     }
 
     public String getAddendum() {
-        return (String) m_dataCollection.get(GenericOrganizationalUnit.ADDENDUM);
+        return getGenericOrganizationalUnit().getAddendum();
     }
 }

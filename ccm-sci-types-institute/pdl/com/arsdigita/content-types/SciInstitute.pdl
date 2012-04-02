@@ -10,6 +10,10 @@ object type SciInstitute extends GenericOrganizationalUnit {
     reference key ( ct_sci_institutes.institute_id );
 }
 
+object type SciInstituteBundle extends GenericOrganizationalUnitBundle {
+    reference key (ct_sci_institute_bundles.bundle_id);
+}
+
 query getIdsOfContactsOfSciInstitute {
     BigDecimal contactId;
 

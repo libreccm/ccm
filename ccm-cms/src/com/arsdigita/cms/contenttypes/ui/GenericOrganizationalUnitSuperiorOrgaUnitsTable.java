@@ -17,6 +17,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSuperiorCollection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
@@ -170,11 +171,12 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.
                     getSecurityManager(state);
-            final GenericOrganizationalUnit superiorOrgaUnit =
-                                            (GenericOrganizationalUnit) DomainObjectFactory.
+            final GenericOrganizationalUnitBundle superiorOrgaUnitBundle =
+                                            (GenericOrganizationalUnitBundle) DomainObjectFactory.
                     newInstance((OID) key);
+            final GenericOrganizationalUnit superiorOrgaUnit = (GenericOrganizationalUnit) superiorOrgaUnitBundle.getPrimaryInstance();
 
             final boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
@@ -186,7 +188,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                         getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link = new Link(
-                        String.format("%s (%s)",
+                        String.format("%s",
                                       value.toString(),
                                       superiorOrgaUnit.getLanguage()),
                         resolver.generateItemURL(state,

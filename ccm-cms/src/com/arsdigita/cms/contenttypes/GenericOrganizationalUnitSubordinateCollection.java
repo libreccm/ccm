@@ -1,5 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
@@ -87,7 +88,7 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
         next();
         setSubordinateOrder(currentIndex);
         rewind();
-        
+
         normalizeOrder();
     }
 
@@ -130,7 +131,7 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
         next();
         setSubordinateOrder(previousIndex);
         rewind();
-        
+
         normalizeOrder();
     }
 
@@ -145,9 +146,16 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
         this.rewind();
     }
 
+    public GenericOrganizationalUnitBundle getGenericOrganizationalUnitBundle() {
+        return (GenericOrganizationalUnitBundle) DomainObjectFactory.newInstance(
+                m_dataCollection.getDataObject());
+    }
+    
     public GenericOrganizationalUnit getGenericOrganizationalUnit() {
-        return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(m_dataCollection.
-                getDataObject());
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
     }
 
     public BigDecimal getId() {
@@ -163,10 +171,10 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
     }
 
     public String getTitle() {
-        return (String) m_dataCollection.get(ContentPage.TITLE);
+        return getGenericOrganizationalUnit().getTitle();
     }
 
     public String getAddendum() {
-        return (String) m_dataCollection.get(GenericOrganizationalUnit.ADDENDUM);
+        return getGenericOrganizationalUnit().getAddendum();
     }
 }

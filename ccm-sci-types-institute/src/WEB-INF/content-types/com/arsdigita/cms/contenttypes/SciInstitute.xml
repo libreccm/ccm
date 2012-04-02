@@ -10,7 +10,7 @@
       objectType="com.arsdigita.cms.contenttypes.SciInstitute"
       classname="com.arsdigita.cms.contenttypes.SciInstitute">
           
-        <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitCreate">
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.SciInstituteCreate">
             
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.institute_properties.title"

@@ -26,6 +26,8 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
     public static final String PERSONS = "persons";
     public static final String ORGAUNITS = "organizationalunits";
     public final static String CONTACTS = "contacts";
+    public final static String SUPERIOR_ORGAUNITS = "superiorOrgaunits";
+    public final static String SUBORDINATE_ORGAUNITS = "subordinateOrgaunits";
 
     public GenericOrganizationalUnitBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
@@ -111,13 +113,109 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
         return !this.getContacts().isEmpty();
     }
 
+    public GenericOrganizationalUnitSuperiorCollection getSuperiorOrgaUnits() {
+        return new GenericOrganizationalUnitSuperiorCollection((DataCollection) get(
+                SUPERIOR_ORGAUNITS));
+    }
+
+    public void addSuperiorOrgaUnit(final GenericOrganizationalUnit orgaunit,
+                                    final String assocType) {
+        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+
+        final DataObject link =
+                         add(SUPERIOR_ORGAUNITS,
+                             orgaunit.getGenericOrganizationalUnitBundle());
+        link.set(GenericOrganizationalUnitSuperiorCollection.ASSOCTYPE,
+                 assocType);
+        link.set(
+                GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
+                (int) getSuperiorOrgaUnits().size());
+        link.set(
+                GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
+                (int) getSubordinateOrgaUnits().size() + 1);
+
+        link.save();
+    }
+
+    public void addSuperiorOrgaUnit(final GenericOrganizationalUnit orgaunit) {
+        addSuperiorOrgaUnit(orgaunit, "");
+    }
+
+    public void removeSuperiorOrgaUnit(
+            final GenericOrganizationalUnit orgaunit) {
+        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        remove(SUPERIOR_ORGAUNITS, orgaunit.getGenericOrganizationalUnitBundle());
+    }
+
+    public boolean hasSuperiorOrgaUnits() {
+        return !getSuperiorOrgaUnits().isEmpty();
+    }
+
+    /**
+     * Gets a collection of subordinate organizational units. Note that their
+     * is no authoring step registered for this property. The {@code ccm-cms} 
+     * module provides only a form for adding subordinate organizational units
+     * and a table for showing them. Subtypes of 
+     * {@code GenericOrganizationalUnit}  may add these components to their 
+     * authoring steps via a new authoring step which contains the form
+     * and the table. These authoring steps should be registered by using 
+     * {@link AuthoringKitWizard#registerAssetStep(java.lang.String, java.lang.Class, com.arsdigita.globalization.GlobalizedMessage, com.arsdigita.globalization.GlobalizedMessage, int) }
+     * in the initalizer of the content type. Some aspects of the form and
+     * table, for example the labels, can be configured using implementations
+     * of two interfaces. Please refer to the documentation of 
+     * {@link GenericOrganizationalUnitSubordinateOrgaUnitsTable} and 
+     * {@link GenericOrganizationalUnitSubordinateOrgaUnitAddForm} 
+     * for more information about customizing the table and the form.
+     * 
+     * @return A collection of subordinate organizational units.
+     */
+    public GenericOrganizationalUnitSubordinateCollection getSubordinateOrgaUnits() {
+        final DataCollection dataCollection = (DataCollection) get(
+                SUBORDINATE_ORGAUNITS);
+        return new GenericOrganizationalUnitSubordinateCollection(dataCollection);
+    }
+
+    public void addSubordinateOrgaUnit(final GenericOrganizationalUnit orgaunit,
+                                       final String assocType) {
+        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+
+        final DataObject link =
+                         add(SUBORDINATE_ORGAUNITS,
+                             orgaunit.getGenericOrganizationalUnitBundle());
+        link.set(GenericOrganizationalUnitSubordinateCollection.ASSOCTYPE,
+                 assocType);
+        link.set(
+                GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
+                (int) getSubordinateOrgaUnits().size());
+        link.set(
+                GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
+                ((int) getSuperiorOrgaUnits().size()) + 1);
+        link.save();
+    }
+
+    public void addSubordinateOrgaUnit(final GenericOrganizationalUnit orgaunit) {
+        addSubordinateOrgaUnit(orgaunit, "");
+    }
+
+    public void removeSubordinateOrgaUnit(
+            final GenericOrganizationalUnit orgaunit) {
+        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        remove(SUBORDINATE_ORGAUNITS,
+               orgaunit.getGenericOrganizationalUnitBundle());
+    }
+
+    public boolean hasSubordinateOrgaUnits() {
+        return !getSubordinateOrgaUnits().isEmpty();
+    }
+
     @Override
     public boolean copyProperty(final CustomCopy source,
                                 final Property property,
                                 final ItemCopier copier) {
         final String attribute = property.getName();
         if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
-            final GenericOrganizationalUnitBundle orgaBundle = (GenericOrganizationalUnitBundle) source;
+            final GenericOrganizationalUnitBundle orgaBundle =
+                                                  (GenericOrganizationalUnitBundle) source;
 
             if (CONTACTS.equals(attribute)) {
                 final DataCollection contacts = (DataCollection) orgaBundle.get(
@@ -137,6 +235,25 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
                 }
 
                 return true;
+            } else if (SUPERIOR_ORGAUNITS.equals(attribute)) {
+                final DataCollection superOrgaUnits =
+                                     (DataCollection) orgaBundle.get(
+                        SUPERIOR_ORGAUNITS);
+
+                while (superOrgaUnits.next()) {
+                    createSuperiorAssoc(superOrgaUnits);
+                }
+
+                return true;
+            } else if (SUBORDINATE_ORGAUNITS.equals(attribute)) {
+                final DataCollection subOrgaUnits = (DataCollection) orgaBundle.
+                        get(SUBORDINATE_ORGAUNITS);
+
+                while (subOrgaUnits.next()) {
+                    createSubordinateAssoc(subOrgaUnits);
+                }
+
+                return true;
             } else {
                 return super.copyProperty(source, property, copier);
             }
@@ -146,9 +263,11 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
     }
 
     private void createContactAssoc(final DataCollection contacts) {
-        final GenericContactBundle draftContact = (GenericContactBundle) DomainObjectFactory.
+        final GenericContactBundle draftContact =
+                                   (GenericContactBundle) DomainObjectFactory.
                 newInstance(contacts.getDataObject());
-        final GenericContactBundle liveContact = (GenericContactBundle) draftContact.
+        final GenericContactBundle liveContact =
+                                   (GenericContactBundle) draftContact.
                 getLiveVersion();
 
         if (liveContact != null) {
@@ -166,9 +285,11 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
     }
 
     private void createPersonAssoc(final DataCollection persons) {
-        final GenericPersonBundle draftPerson = (GenericPersonBundle) DomainObjectFactory.
+        final GenericPersonBundle draftPerson =
+                                  (GenericPersonBundle) DomainObjectFactory.
                 newInstance(persons.getDataObject());
-        final GenericPersonBundle livePerson = (GenericPersonBundle) draftPerson.
+        final GenericPersonBundle livePerson =
+                                  (GenericPersonBundle) draftPerson.
                 getLiveVersion();
 
         if (livePerson != null) {
@@ -183,6 +304,60 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
 
             link.save();
         }
+    }
 
+    private void createSuperiorAssoc(final DataCollection superOrgaUnits) {
+        final GenericOrganizationalUnitBundle draftOrga =
+                                              (GenericOrganizationalUnitBundle) DomainObjectFactory.
+                newInstance(superOrgaUnits.getDataObject());
+        final GenericOrganizationalUnitBundle liveOrga =
+                                              (GenericOrganizationalUnitBundle) draftOrga.
+                getLiveVersion();
+
+        if (liveOrga != null) {
+            final DataObject link = add(SUPERIOR_ORGAUNITS, liveOrga);
+
+            link.set(GenericOrganizationalUnitSuperiorCollection.ASSOCTYPE,
+                     superOrgaUnits.get(
+                    GenericOrganizationalUnitSuperiorCollection.LINK_ASSOCTYPE));
+            link.set(
+                    GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
+                    superOrgaUnits.get(
+                    GenericOrganizationalUnitSuperiorCollection.LINK_SUPERIOR_ORGAUNIT_ORDER));
+            link.set(
+                    GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
+                    superOrgaUnits.get(
+                    GenericOrganizationalUnitSubordinateCollection.LINK_SUBORDINATE_ORGAUNIT_ORDER));
+
+            link.save();
+        }
+
+    }
+
+    private void createSubordinateAssoc(final DataCollection subOrgaUnits) {
+        final GenericOrganizationalUnitBundle draftOrga =
+                                              (GenericOrganizationalUnitBundle) DomainObjectFactory.
+                newInstance(subOrgaUnits.getDataObject());
+        final GenericOrganizationalUnitBundle liveOrga =
+                                              (GenericOrganizationalUnitBundle) draftOrga.
+                getLiveVersion();
+
+        if (liveOrga != null) {
+            final DataObject link = add(SUBORDINATE_ORGAUNITS, liveOrga);
+
+            link.set(GenericOrganizationalUnitSubordinateCollection.ASSOCTYPE,
+                     subOrgaUnits.get(
+                    GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE));
+            link.set(
+                    GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
+                    subOrgaUnits.get(
+                    GenericOrganizationalUnitSubordinateCollection.LINK_SUBORDINATE_ORGAUNIT_ORDER));
+            link.set(
+                    GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
+                    subOrgaUnits.get(
+                    GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER));
+
+            link.save();
+        }
     }
 }

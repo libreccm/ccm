@@ -172,14 +172,15 @@ public class GenericOrganizationalUnit extends ContentPage {
     }
 
     public GenericOrganizationalUnitSuperiorCollection getSuperiorOrgaUnits() {
-        final DataCollection dataCollection = (DataCollection) get(
-                SUPERIOR_ORGAUNITS);
-        return new GenericOrganizationalUnitSuperiorCollection(dataCollection);
+        //final DataCollection dataCollection = (DataCollection) get(
+        //        SUPERIOR_ORGAUNITS);
+        //return new GenericOrganizationalUnitSuperiorCollection(dataCollection);
+        return getGenericOrganizationalUnitBundle().getSuperiorOrgaUnits();
     }
 
     public void addSuperiorOrgaUnit(final GenericOrganizationalUnit orgaunit,
                                     final String assocType) {
-        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        /*Assert.exists(orgaunit, GenericOrganizationalUnit.class);
 
         final DataObject link = add(SUPERIOR_ORGAUNITS, orgaunit);
         link.set(GenericOrganizationalUnitSuperiorCollection.ASSOCTYPE,
@@ -190,7 +191,9 @@ public class GenericOrganizationalUnit extends ContentPage {
         link.set(
                 GenericOrganizationalUnitSubordinateCollection.SUBORDINATE_ORGAUNIT_ORDER,
                 ((int) getSubordinateOrgaUnits().size()) + 1);
-        link.save();
+        link.save();*/
+        getGenericOrganizationalUnitBundle().addSuperiorOrgaUnit(orgaunit,
+                                                                 assocType);
     }
 
     public void addSuperiorOrgaUnit(final GenericOrganizationalUnit orgaunit) {
@@ -199,41 +202,26 @@ public class GenericOrganizationalUnit extends ContentPage {
 
     public void removeSuperiorOrgaUnit(
             final GenericOrganizationalUnit orgaunit) {
-        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
-        remove(SUPERIOR_ORGAUNITS, orgaunit);
+        //Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        //remove(SUPERIOR_ORGAUNITS, orgaunit);
+        getGenericOrganizationalUnitBundle().removeSuperiorOrgaUnit(orgaunit);
     }
 
     public boolean hasSuperiorOrgaUnits() {
-        return !getSuperiorOrgaUnits().isEmpty();
+        //return !getSuperiorOrgaUnits().isEmpty();
+        return getGenericOrganizationalUnitBundle().hasSuperiorOrgaUnits();
     }
-
-    /**
-     * Gets a collection of subordinate organizational units. Note that their
-     * is no authoring step registered for this property. The {@code ccm-cms} 
-     * module provides only a form for adding subordinate organizational units
-     * and a table for showing them. Subtypes of 
-     * {@code GenericOrganizationalUnit}  may add these components to their 
-     * authoring steps via a new authoring step which contains the form
-     * and the table. These authoring steps should be registered by using 
-     * {@link AuthoringKitWizard#registerAssetStep(java.lang.String, java.lang.Class, com.arsdigita.globalization.GlobalizedMessage, com.arsdigita.globalization.GlobalizedMessage, int) }
-     * in the initalizer of the content type. Some aspects of the form and
-     * table, for example the labels, can be configured using implementations
-     * of two interfaces. Please refer to the documentation of 
-     * {@link GenericOrganizationalUnitSubordinateOrgaUnitsTable} and 
-     * {@link GenericOrganizationalUnitSubordinateOrgaUnitAddForm} 
-     * for more information about customizing the table and the form.
-     * 
-     * @return A collection of subordinate organizational units.
-     */
+    
     public GenericOrganizationalUnitSubordinateCollection getSubordinateOrgaUnits() {
-        final DataCollection dataCollection = (DataCollection) get(
-                SUBORDINATE_ORGAUNITS);
-        return new GenericOrganizationalUnitSubordinateCollection(dataCollection);
+        //final DataCollection dataCollection = (DataCollection) get(
+        //        SUBORDINATE_ORGAUNITS);
+        //return new GenericOrganizationalUnitSubordinateCollection(dataCollection);
+        return getGenericOrganizationalUnitBundle().getSubordinateOrgaUnits();
     }
 
     public void addSubordinateOrgaUnit(final GenericOrganizationalUnit orgaunit,
                                        final String assocType) {
-        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        /*Assert.exists(orgaunit, GenericOrganizationalUnit.class);
 
         final DataObject link = add(SUBORDINATE_ORGAUNITS, orgaunit);
         link.set(GenericOrganizationalUnitSubordinateCollection.ASSOCTYPE,
@@ -244,7 +232,9 @@ public class GenericOrganizationalUnit extends ContentPage {
         link.set(
                 GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
                  ((int) getSuperiorOrgaUnits().size()) + 1);
-        link.save();
+        link.save();*/
+        getGenericOrganizationalUnitBundle().addSubordinateOrgaUnit(orgaunit,
+                                                                    assocType);
     }
 
     public void addSubordinateOrgaUnit(final GenericOrganizationalUnit orgaunit) {
@@ -253,12 +243,14 @@ public class GenericOrganizationalUnit extends ContentPage {
 
     public void removeSubordinateOrgaUnit(
             final GenericOrganizationalUnit orgaunit) {
-        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
-        remove(SUBORDINATE_ORGAUNITS, orgaunit);
+        //Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        //remove(SUBORDINATE_ORGAUNITS, orgaunit);
+        getGenericOrganizationalUnitBundle().removeSubordinateOrgaUnit(orgaunit);
     }
 
     public boolean hasSubordinateOrgaUnits() {
-        return !getSubordinateOrgaUnits().isEmpty();
+        //return !getSubordinateOrgaUnits().isEmpty();
+        return getGenericOrganizationalUnitBundle().hasSubordinateOrgaUnits();
     }
     
     @Override

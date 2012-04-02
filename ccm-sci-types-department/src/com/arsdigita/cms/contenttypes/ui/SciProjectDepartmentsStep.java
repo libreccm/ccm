@@ -128,7 +128,7 @@ public class SciProjectDepartmentsStep extends SimpleEditStep {
                     }
                     
                     public String getContentType() {
-                        return "com.arsdigita.cms.contenttypes.SciDepartment";
+                        return "com.arsdigita.cms.contenttypes.SciDepartmentBundle";
                     }
                 });
 

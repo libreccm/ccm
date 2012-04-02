@@ -130,7 +130,7 @@ public class SciProjectSubProjectsStep extends SimpleEditStep {
                     }
                     
                     public String getContentType() {
-                        return "com.arsdigita.cms.contenttypes.SciProject";
+                        return "com.arsdigita.cms.contenttypes.SciProjectBundle";
                     }
                 });
 

@@ -17,7 +17,10 @@ object type SciProject extends GenericOrganizationalUnit {
     String[0..1] fundingVolume = ct_sci_projects.funding_volume VARCHAR(2000);
     
     reference key ( ct_sci_projects.project_id );
+}
 
+object type SciProjectBundle extends GenericOrganizationalUnitBundle {
+    reference key (ct_sci_project_bundles.bundle_id);
 }
 
 query getIdsOfProjectsOfOrgaUnit {

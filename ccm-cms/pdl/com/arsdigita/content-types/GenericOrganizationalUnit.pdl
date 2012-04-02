@@ -75,15 +75,15 @@ association {
 //Used build hierarchies of organizational units
 association {
     
-    GenericOrganizationalUnit[0..n] superiorOrgaunits = join cms_organizationalunits.organizationalunit_id
+    GenericOrganizationalUnitBundle[0..n] superiorOrgaunits = join cms_orgaunit_bundles.bundle_id
                                                            to cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id,
                                                          join cms_organizationalunits_hierarchy_map.superior_orgaunit_id
-                                                           to cms_organizationalunits.organizationalunit_id;
+                                                           to cms_orgaunit_bundles.bundle_id;
 
-    GenericOrganizationalUnit[0..n] subordinateOrgaunits = join cms_organizationalunits.organizationalunit_id
+    GenericOrganizationalUnitBundle[0..n] subordinateOrgaunits = join cms_orgaunit_bundles.bundle_id
                                                               to cms_organizationalunits_hierarchy_map.superior_orgaunit_id,
                                                             join cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
-                                                              to cms_organizationalunits.organizationalunit_id;
+                                                              to cms_orgaunit_bundles.bundle_id;
 
     //Additonal attributes for the assoication
     //Optional string for *internal* data

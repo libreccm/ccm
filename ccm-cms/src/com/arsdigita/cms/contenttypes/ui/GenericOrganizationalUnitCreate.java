@@ -4,6 +4,7 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
@@ -40,8 +41,8 @@ public class GenericOrganizationalUnitCreate extends PageCreate {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));            
         }
         
-        final GenericOrganizationalUnitBundle bundle = new GenericOrganizationalUnitBundle(
-                item);
+        final GenericOrganizationalUnitBundle bundle = createBundle(item);
+        //new GenericOrganizationalUnitBundle(item);
         bundle.setParent(folder);
         bundle.setContentSection(section);
         bundle.save();
@@ -49,6 +50,11 @@ public class GenericOrganizationalUnitCreate extends PageCreate {
         m_workflowSection.applyWorkflow(state, item);
         
         m_parent.editItem(state, item);
+    }
+    
+    protected GenericOrganizationalUnitBundle createBundle(
+            final ContentItem primary) {
+        return new GenericOrganizationalUnitBundle(primary);
     }
     
 }
