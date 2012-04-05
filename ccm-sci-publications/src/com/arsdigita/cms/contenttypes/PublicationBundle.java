@@ -84,11 +84,6 @@ public class PublicationBundle extends ContentBundle {
     }
 
     @Override
-    public boolean handlesReverseProperties() {
-        return true;
-    }
-
-    @Override
     public boolean copyReverseProperty(final CustomCopy source,
                                        final ContentItem liveItem,
                                        final Property property,
@@ -110,7 +105,9 @@ public class PublicationBundle extends ContentBundle {
 
                 return true;
             } else {
-                return super.copyReverseProperty(source, liveItem, property,
+                return super.copyReverseProperty(source, 
+                                                 liveItem, 
+                                                 property,
                                                  copier);
             }
         } else {

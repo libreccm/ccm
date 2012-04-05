@@ -1955,17 +1955,28 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
             return assocCopier.copyProperty(source, property, copier);
         }*/
         
-        if (handlesReverseProperties()) {
-            return copyReverseProperty(source, this, property, copier);                    
+        if (source instanceof ContentItem) {
+            final ContentItem sourceItem = (ContentItem) source;
+            final Object value = sourceItem.get(property.getName());
+            if (value instanceof DataCollection) {
+                final DataCollection collection = (DataCollection) value;
+                while(collection.next()) {                    
+                    DomainObject obj = DomainObjectFactory.newInstance(collection.getDataObject());
+                    if (obj instanceof ContentItem) {
+                        final ContentItem item = (ContentItem) obj;
+                        return item.copyReverseProperty(source, 
+                                                        item, 
+                                                        property,
+                                                        
+                                                        copier);
+                    }
+                }
+            }
         }
 
         return false;
     }
-    
-    public boolean handlesReverseProperties() {
-        return false;
-    }
-    
+          
     public boolean copyReverseProperty(final CustomCopy source,
                                        final ContentItem liveItem,
                                        final Property property,
