@@ -70,54 +70,55 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
 
     public GenericPerson getPerson() {
         /*return (GenericPerson) DomainObjectFactory.newInstance(m_dataCollection.
-                getDataObject());*/
-        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+         getDataObject());*/
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
         return (GenericPerson) bundle.getPrimaryInstance();
     }
 
     public OID getOID() {
         return m_dataCollection.getDataObject().getOID();
     }
-    
+
     public String getSurname() {
         /*return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.SURNAME);*/
+         GenericPerson.SURNAME);*/
         return getPerson().getSurname();
     }
 
     public String getGivenName() {
         /*return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.GIVENNAME);*/
+         GenericPerson.GIVENNAME);*/
         return getPerson().getGivenName();
     }
 
     public String getTitlePre() {
         /*return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.TITLEPRE);*/
+         GenericPerson.TITLEPRE);*/
         return getPerson().getTitlePre();
     }
 
     public String getTitlePost() {
         /*return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.TITLEPOST);*/
+         GenericPerson.TITLEPOST);*/
         return getPerson().getTitlePost();
     }
 
     public Date getBirthdate() {
         /*return (Date) m_dataCollection.getDataObject().get(
-                GenericPerson.BIRTHDATE);*/
+         GenericPerson.BIRTHDATE);*/
         return getPerson().getBirthdate();
     }
 
     public String getGender() {
         /*return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.GENDER);*/
+         GenericPerson.GENDER);*/
         return getPerson().getGender();
     }
-    
+
     public GenericPerson getAlias() {
         /*return (DataObject) m_dataCollection.getDataObject().get(
-                GenericPerson.ALIAS);*/
+         GenericPerson.ALIAS);*/
         return getPerson().getAlias();
     }
 }

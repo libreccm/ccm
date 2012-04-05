@@ -18,7 +18,9 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
@@ -172,17 +174,22 @@ public class AuthorshipCollection extends DomainCollection {
         this.rewind();
     }
 
+    public GenericPerson getAuthor() {
+        //return new GenericPerson(m_dataCollection.getDataObject());
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (GenericPerson) bundle.getPrimaryInstance();
+    }
+
     public String getSurname() {
-        return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.SURNAME);
+        //return (String) m_dataCollection.getDataObject().get(
+        //        GenericPerson.SURNAME);
+        return getAuthor().getSurname();
     }
 
     public String getGivenName() {
-        return (String) m_dataCollection.getDataObject().get(
-                GenericPerson.GIVENNAME);
-    }
-
-    public GenericPerson getAuthor() {
-        return new GenericPerson(m_dataCollection.getDataObject());
+        //return (String) m_dataCollection.getDataObject().get(
+        //        GenericPerson.GIVENNAME);
+        return getAuthor().getGivenName();
     }
 }

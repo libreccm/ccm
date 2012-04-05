@@ -20,6 +20,7 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentBundle;
 
 //PDL definition for the basic attributes of publication.
 object type Publication extends ContentPage {
@@ -44,18 +45,23 @@ object type Publication extends ContentPage {
        reference key (ct_publications.publication_id);
 }
 
+object type PublicationBundle extends ContentBundle {
+    
+    reference key (ct_publication_bundles.bundle_id);
+}
+
 //Assoication for the authors
 association {
 	    
-	    Publication[0..n] publication = join cms_persons.person_id
-	    		      		      to ct_publications_authorship.person_id,
-					    join ct_publications_authorship.publication_id
-					      to ct_publications.publication_id;
+	    PublicationBundle[0..n] publication = join cms_person_bundles.bundle_id
+	    		      		            to ct_publications_authorship.person_id,
+					          join ct_publications_authorship.publication_id
+					            to ct_publication_bundles.bundle_id;
 
-            GenericPerson[0..n] authors = join ct_publications.publication_id
-	                                    to ct_publications_authorship.publication_id,
-					  join ct_publications_authorship.person_id
-                                            to cms_persons.person_id;
+            GenericPersonBundle[0..n] authors = join ct_publication_bundles.bundle_id
+	                                          to ct_publications_authorship.publication_id,
+					        join ct_publications_authorship.person_id
+                                                  to cms_person_bundles.bundle_id;
 
             // Additional attributes
 	    Boolean[0..1] editor = ct_publications_authorship.editor BIT;

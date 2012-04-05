@@ -1947,14 +1947,29 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
             }
         }
 
-        final AssociationCopierLoader assocCopierLoader =
+        /*final AssociationCopierLoader assocCopierLoader =
                                       AssociationCopierLoader.getInstance();
         final AssociationCopier assocCopier = assocCopierLoader.
                 getAssociationCopierFor(property, source);
         if (assocCopier != null) {
             return assocCopier.copyProperty(source, property, copier);
+        }*/
+        
+        if (handlesReverseProperties()) {
+            return copyReverseProperty(source, this, property, copier);                    
         }
 
+        return false;
+    }
+    
+    public boolean handlesReverseProperties() {
+        return false;
+    }
+    
+    public boolean copyReverseProperty(final CustomCopy source,
+                                       final ContentItem liveItem,
+                                       final Property property,
+                                       final ItemCopier copier) {
         return false;
     }
 

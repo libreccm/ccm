@@ -69,7 +69,7 @@ public class Publication extends ContentPage {
     public final static String ABSTRACT = "abstract";
     public final static String MISC = "misc";
     public final static String AUTHORS = "authors";
-    private final static String AUTHORS_STR = "authorsStr"; //authorsStr is an interal field only for use in data queries, and is updated automatically
+    protected final static String AUTHORS_STR = "authorsStr"; //authorsStr is an interal field only for use in data queries, and is updated automatically
     public final static String EDITOR = "editor";
     public final static String AUTHOR_ORDER = "authorOrder";
     public final static String SERIES = "series";
@@ -107,6 +107,10 @@ public class Publication extends ContentPage {
 
     public static PublicationsConfig getConfig() {
         return config;
+    }
+    
+    public PublicationBundle getPublicationBundle() {
+        return (PublicationBundle) getContentBundle();
     }
 
     /**
@@ -179,7 +183,8 @@ public class Publication extends ContentPage {
      * @return Collection of the authors of the publication.
      */
     public AuthorshipCollection getAuthors() {
-        return new AuthorshipCollection((DataCollection) get(AUTHORS));
+        //return new AuthorshipCollection((DataCollection) get(AUTHORS));
+        return getPublicationBundle().getAuthors();
     }
 
     /**
@@ -190,14 +195,16 @@ public class Publication extends ContentPage {
      * @param editor Is the author an editor?
      */
     public void addAuthor(final GenericPerson author, final Boolean editor) {
-        Assert.exists(author, GenericPerson.class);
+        //Assert.exists(author, GenericPerson.class);
 
-        DataObject link = add(AUTHORS, author);
+        //DataObject link = add(AUTHORS, author);
 
-        link.set(EDITOR, editor);
-        link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
+        //link.set(EDITOR, editor);
+        //link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
 
-        updateAuthorsStr();
+        //updateAuthorsStr();
+        
+        getPublicationBundle().addAuthor(author, editor);
     }
 
     /**
@@ -206,10 +213,11 @@ public class Publication extends ContentPage {
      * @param author The author to remove.
      */
     public void removeAuthor(final GenericPerson author) {
-        Assert.exists(author, GenericPerson.class);
-        remove(AUTHORS, author);
+        //Assert.exists(author, GenericPerson.class);
+        //remove(AUTHORS, author);
 
-        updateAuthorsStr();
+        //updateAuthorsStr();
+        getPublicationBundle().removeAuthor(author);        
     }
 
     public void swapWithPreviousAuthor(final GenericPerson author) {
