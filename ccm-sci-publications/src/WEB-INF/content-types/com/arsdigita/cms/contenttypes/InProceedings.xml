@@ -10,7 +10,7 @@
       objectType="com.arsdigita.cms.contenttypes.InProceedings"
       classname="com.arsdigita.cms.contenttypes.InProceedings">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicationCreate">
       
       <ctd:authoring-step
 	  labelKey="publications.ui.inProceedings_properties.title"

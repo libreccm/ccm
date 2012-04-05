@@ -10,7 +10,7 @@
       objectType="com.arsdigita.cms.contenttypes.Review"
       classname="com.arsdigita.cms.contenttypes.Review">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicationCreate">
       
       <ctd:authoring-step
 	  labelKey="publications.ui.review_properties.title"

@@ -10,7 +10,7 @@
       objectType="com.arsdigita.cms.contenttypes.GreyLiterature"
       classname="com.arsdigita.cms.contenttypes.GreyLiterature">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicationCreate">
       
       <ctd:authoring-step
 	  labelKey="publications.ui.greyLiterature_properties.title"
