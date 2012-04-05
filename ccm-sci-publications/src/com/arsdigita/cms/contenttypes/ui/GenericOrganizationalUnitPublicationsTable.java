@@ -120,7 +120,7 @@ public class GenericOrganizationalUnitPublicationsTable
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return publications.getTitle();
+                    return publications.getPublication().getTitle();
                 case 1:
                     return PublicationGlobalizationUtil.globalize(
                             "genericorganizationalunit.ui.publications.remove").
@@ -132,7 +132,7 @@ public class GenericOrganizationalUnitPublicationsTable
 
         @Override
         public Object getKeyAt(int columnIndex) {
-            return publications.getID();
+            return publications.getPublication().getID();
         }
     }
 
@@ -147,7 +147,7 @@ public class GenericOrganizationalUnitPublicationsTable
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.
                     getSecurityManager(state);
             final Publication publication = new Publication((BigDecimal) key);
 
@@ -190,7 +190,7 @@ public class GenericOrganizationalUnitPublicationsTable
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.
                     getSecurityManager(state);
             final GenericOrganizationalUnit orgaunit =
                                             (GenericOrganizationalUnit) itemModel.

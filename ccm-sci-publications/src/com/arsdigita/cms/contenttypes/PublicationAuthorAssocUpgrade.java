@@ -15,7 +15,7 @@ import org.apache.commons.cli.CommandLine;
 /**
  
  * Upgrade for association between GenericPublication and GenericPerson 
- * (ccm-sci-publications 6.6.4 to 6.6.5)
+ * (ccm-sci-publications 6.6.2 to 6.6.3)
  * 
  * @author Jens Pelzetter 
  * @version $Id$
@@ -147,8 +147,7 @@ public class PublicationAuthorAssocUpgrade extends Program {
         try {
             System.out.println("Filling new tables with data...");
 
-            final Statement queryPublicationStmt = conn.createStatement();
-            final Statement queryAuthorsStmt = conn.createStatement();
+            final Statement queryPublicationStmt = conn.createStatement();            
             final Statement stmt = conn.createStatement();
 
             final ResultSet publicationRs =
@@ -209,7 +208,7 @@ public class PublicationAuthorAssocUpgrade extends Program {
                 if (entry.getPublicationLiveBundleId() != null) {
                     stmt.addBatch(String.format(
                             "DELETE FROM cms_published_links "
-                            + "WHERE pending = %s"
+                            + "WHERE pending = %s "
                             + "AND draft_target = %s",
                             entry.getPublicationLiveId().toString(),
                             entry.getAuthorDraftId().toString()));
@@ -218,7 +217,7 @@ public class PublicationAuthorAssocUpgrade extends Program {
                 if (entry.getAuthorBundleLiveId() != null) {
                     stmt.addBatch(String.format(
                             "DELETE FROM cms_published_links "
-                            + "WHERE pending = %s"
+                            + "WHERE pending = %s "
                             + "AND draft_target = %s",
                             entry.getAuthorLiveId().toString(),
                             entry.getPublicationDraftId().toString()));

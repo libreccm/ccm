@@ -1,5 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -21,39 +22,48 @@ public class GenericOrganizationalUnitPublicationsCollection
     }
 
     public Publication getPublication() {
-        return (Publication) DomainObjectFactory.newInstance(m_dataCollection.
-                getDataObject());
-    }
-
-    public BigDecimal getID() {
-         return (BigDecimal) m_dataCollection.getDataObject().get(ACSObject.ID);
+        //return (Publication) DomainObjectFactory.newInstance(m_dataCollection.
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (Publication) bundle.getPrimaryInstance();
     }
     
-    public String getTitle() {
-        return (String) m_dataCollection.getDataObject().get(ContentPage.TITLE);
+      public Publication getPublication(final String language) {
+        //return (Publication) DomainObjectFactory.newInstance(m_dataCollection.
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (Publication) bundle.getInstance(language);
     }
 
-    public Integer getYearOfPublication() {
-        return (Integer) m_dataCollection.getDataObject().get(
-                Publication.YEAR_OF_PUBLICATION);
-    }
+    /*public BigDecimal getID() {
+     return (BigDecimal) m_dataCollection.getDataObject().get(ACSObject.ID);
+     }
+    
+     public String getTitle() {
+     return (String) m_dataCollection.getDataObject().get(ContentPage.TITLE);
+     }
 
-    public String getAbstract() {
-        return (String) m_dataCollection.getDataObject().get(
-                Publication.ABSTRACT);
-    }
+     public Integer getYearOfPublication() {
+     return (Integer) m_dataCollection.getDataObject().get(
+     Publication.YEAR_OF_PUBLICATION);
+     }
 
-    public String getMisc() {
-        return (String) m_dataCollection.getDataObject().get(Publication.MISC);
-    }
+     public String getAbstract() {
+     return (String) m_dataCollection.getDataObject().get(
+     Publication.ABSTRACT);
+     }
 
-    public AuthorshipCollection getAuthors() {
-        return new AuthorshipCollection((DataCollection) m_dataCollection.
-                getDataObject().get(Publication.AUTHORS));
-    }
+     public String getMisc() {
+     return (String) m_dataCollection.getDataObject().get(Publication.MISC);
+     }
 
-    public SeriesCollection getSeries() {
-        return new SeriesCollection((DataCollection) m_dataCollection.
-                getDataObject().get(Publication.SERIES));
-    }
+     public AuthorshipCollection getAuthors() {
+     return new AuthorshipCollection((DataCollection) m_dataCollection.
+     getDataObject().get(Publication.AUTHORS));
+     }
+
+     public SeriesCollection getSeries() {
+     return new SeriesCollection((DataCollection) m_dataCollection.
+     getDataObject().get(Publication.SERIES));
+     }*/
 }

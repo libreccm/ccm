@@ -275,21 +275,25 @@ public class Publication extends ContentPage {
     }
 
     public PublicationGenericOrganizationalsUnitCollection getOrganizationalUnits() {
-        return new PublicationGenericOrganizationalsUnitCollection((DataCollection) get(
-                ORGAUNITS));
+        //return new PublicationGenericOrganizationalsUnitCollection((DataCollection) get(
+        //        ORGAUNITS));
+        return getPublicationBundle().getOrganizationalUnits();
     }
 
     public void addOrganizationalUnit(final GenericOrganizationalUnit orgaunit) {
-        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        //Assert.exists(orgaunit, GenericOrganizationalUnit.class);
 
-        add(ORGAUNITS, orgaunit);
+        //add(ORGAUNITS, orgaunit);
+        
+        getPublicationBundle().addOrganizationalUnit(orgaunit);
     }
 
     public void removeOrganizationalUnit(
             final GenericOrganizationalUnit orgaunit) {
-        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+        //Assert.exists(orgaunit, GenericOrganizationalUnit.class);
 
-        remove(ORGAUNITS, orgaunit);
+        //remove(ORGAUNITS, orgaunit);
+        getPublicationBundle().removeOrganizationalUnit(orgaunit);
     }
 
     public boolean hasOrganizationalUnits() {
@@ -298,26 +302,30 @@ public class Publication extends ContentPage {
 
     public static GenericOrganizationalUnitPublicationsCollection getPublications(
             final GenericOrganizationalUnit orgaunit) {
-        final DataCollection dataCollection = (DataCollection) orgaunit.get(
-                ORGAUNIT_PUBLICATIONS);
+        //final DataCollection dataCollection = (DataCollection) orgaunit.get(
+        //        ORGAUNIT_PUBLICATIONS);
 
-        return new GenericOrganizationalUnitPublicationsCollection(
-                dataCollection);
+        //return new GenericOrganizationalUnitPublicationsCollection(
+        //        dataCollection);
+        
+        return PublicationBundle.getPublications(orgaunit);
     }
 
     public static void addPublication(final GenericOrganizationalUnit orgaunit,
                                       final Publication publication) {
-        Assert.exists(publication);
+        //Assert.exists(publication);
 
-        orgaunit.add(ORGAUNIT_PUBLICATIONS, publication);
+        //orgaunit.add(ORGAUNIT_PUBLICATIONS, publication);
+        PublicationBundle.addPublication(orgaunit, publication);
     }
 
     public static void removePublication(
             final GenericOrganizationalUnit orgaunit,
             final Publication publication) {
-        Assert.exists(publication);
+        //Assert.exists(publication);
 
-        orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);
+        //orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);
+        PublicationBundle.removePublication(orgaunit, publication);        
     }
 
     @Override

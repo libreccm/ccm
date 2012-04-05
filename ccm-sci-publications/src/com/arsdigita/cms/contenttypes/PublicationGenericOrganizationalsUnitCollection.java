@@ -1,5 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -23,16 +24,24 @@ public class PublicationGenericOrganizationalsUnitCollection
     }
 
     public GenericOrganizationalUnit getOrganizationalUnit() {
-        return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(
-                m_dataCollection.getDataObject());
+        //return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(
+        //        m_dataCollection.getDataObject());
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
+    }
+    
+    public GenericOrganizationalUnit getOrganizationalUnit(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (GenericOrganizationalUnit) bundle.getInstance(language);
     }
 
     public BigDecimal getID() {
-         return (BigDecimal) m_dataCollection.getDataObject().get(ACSObject.ID);
+         return getOrganizationalUnit().getID();
     }
     
     public String getTitle() {
-        return (String) m_dataCollection.getDataObject().get(ContentPage.TITLE);
+        //return (String) m_dataCollection.getDataObject().get(ContentPage.TITLE);
+        return getOrganizationalUnit().getTitle();
     }
     
     public String getAddendum() {
@@ -40,7 +49,7 @@ public class PublicationGenericOrganizationalsUnitCollection
                 GenericOrganizationalUnit.ADDENDUM);
     }
 
-    public GenericOrganizationalUnitContactCollection getContacts() {
+    /*public GenericOrganizationalUnitContactCollection getContacts() {
         return new GenericOrganizationalUnitContactCollection(
                 (DataCollection) m_dataCollection.get(
                 GenericOrganizationalUnit.CONTACTS));
@@ -62,5 +71,5 @@ public class PublicationGenericOrganizationalsUnitCollection
         return new GenericOrganizationalUnitSubordinateCollection(
                 (DataCollection) m_dataCollection.getDataObject().get(
                 GenericOrganizationalUnit.SUBORDINATE_ORGAUNITS));
-    }
+    }*/
 }

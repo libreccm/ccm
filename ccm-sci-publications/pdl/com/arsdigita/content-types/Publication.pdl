@@ -73,15 +73,15 @@ association {
 //See GenericOrganizationalUnitsPublicationsStep and 
 //PublicationGenericOrganizationalUnitsStep for more information
 association {
-    GenericOrganizationalUnit[0..n] orgaunits = join ct_publications.publication_id
-                                                 to cms_organizationalunits_publications_map.publication_id,
-                                               join cms_organizationalunits_publications_map.orgaunit_id
-                                                 to cms_organizationalunits.organizationalunit_id;
+    GenericOrganizationalUnitBundle[0..n] orgaunits = join ct_publication_bundles.bundle_id
+                                                        to cms_organizationalunits_publications_map.publication_id,
+                                                      join cms_organizationalunits_publications_map.orgaunit_id
+                                                        to cms_orgaunit_bundles.bundle_id;
 
-    Publication[0..n] publications = join cms_organizationalunits.organizationalunit_id
+    Publication[0..n] publications = join cms_orgaunit_bundles.bundle_id
                                        to cms_organizationalunits_publications_map.orgaunit_id,
                                      join cms_organizationalunits_publications_map.publication_id
-                                       to ct_publications.publication_id;
+                                       to ct_publication_bundles.bundle_id;
     Integer[0..1] publicationOrder = cms_organizationalunits_publications_map.publication_order INTEGER;
 }
 

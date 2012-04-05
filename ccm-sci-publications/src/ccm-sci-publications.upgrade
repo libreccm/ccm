@@ -7,5 +7,6 @@
     </version>
     <version from="6.6.2" to="6.6.3">
         <script class="com.arsdigita.cms.contenttypes.PublicationAuthorAssocUpgrade"/>
+        <script class="com.arsdigita.cms.contenttypes.PublicationOrgaunitAssocUpgrade"/>
     </version>
 </upgrade>

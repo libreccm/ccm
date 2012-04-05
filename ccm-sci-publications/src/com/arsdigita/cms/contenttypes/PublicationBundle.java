@@ -27,6 +27,9 @@ public class PublicationBundle extends ContentBundle {
     public static final String AUTHORS = "authors";
     public final static String AUTHOR_ORDER = "authorOrder";
     public final static String EDITOR = "editor";
+    public final static String ORGAUNITS = "orgaunits";
+    public final static String ORGAUNIT_ORDER = "publicationOrder";
+    public final static String ORGAUNIT_PUBLICATIONS = "publications";
 
     public PublicationBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
@@ -74,12 +77,56 @@ public class PublicationBundle extends ContentBundle {
                 }
 
                 return true;
+            } else if (ORGAUNITS.equals(attribute)) {
+                final DataCollection orgaunits = (DataCollection) pubBundle.get(
+                        ORGAUNITS);
+
+                while (orgaunits.next()) {
+                    createOrgaUnitAssoc(orgaunits);
+                }
+
+                return true;
             } else {
                 return super.copyProperty(source, property, copier);
             }
 
         } else {
             return super.copyProperty(source, property, copier);
+        }
+    }
+
+    private void createAuthorAssoc(final DataCollection authors) {
+        final GenericPersonBundle draftAuthor =
+                                  (GenericPersonBundle) DomainObjectFactory.
+                newInstance(authors.getDataObject());
+        final GenericPersonBundle liveAuthor =
+                                  (GenericPersonBundle) draftAuthor.
+                getLiveVersion();
+
+        if (liveAuthor != null) {
+            final DataObject link = add(AUTHORS, liveAuthor);
+
+            link.set(EDITOR, authors.get(AuthorshipCollection.LINKEDITOR));
+            link.set(AUTHOR_ORDER, authors.get(AuthorshipCollection.LINKORDER));
+
+            link.save();
+        }
+    }
+
+    private void createOrgaUnitAssoc(final DataCollection orgaunits) {
+        final GenericOrganizationalUnitBundle orgaunitDraft =
+                                              (GenericOrganizationalUnitBundle) DomainObjectFactory.
+                newInstance(orgaunits.getDataObject());
+        final GenericOrganizationalUnitBundle orgaunitLive =
+                                              (GenericOrganizationalUnitBundle) orgaunitDraft.
+                getLiveVersion();
+
+        if (orgaunitLive != null) {
+            final DataObject link = add(ORGAUNITS, orgaunitLive);
+
+            link.set(ORGAUNIT_ORDER, orgaunits.get("link." + ORGAUNIT_ORDER));
+
+            link.save();
         }
     }
 
@@ -104,32 +151,28 @@ public class PublicationBundle extends ContentBundle {
                 }
 
                 return true;
+            } else if (("publications".equals(attribute))
+                       && (source instanceof GenericOrganizationalUnitBundle)) {
+                final GenericOrganizationalUnitBundle orgaunitBundle =
+                                                      (GenericOrganizationalUnitBundle) source;
+                final DataCollection publications =
+                                     (DataCollection) orgaunitBundle.get(
+                        "publications");
+
+                while (publications.next()) {
+                    createOrgaunitPublicationAssoc(publications,
+                                                   (GenericOrganizationalUnitBundle) liveItem);
+                }
+
+                return true;
             } else {
-                return super.copyReverseProperty(source, 
-                                                 liveItem, 
+                return super.copyReverseProperty(source,
+                                                 liveItem,
                                                  property,
                                                  copier);
             }
         } else {
             return super.copyReverseProperty(source, liveItem, property, copier);
-        }
-    }
-
-    private void createAuthorAssoc(final DataCollection authors) {
-        final GenericPersonBundle draftAuthor =
-                                  (GenericPersonBundle) DomainObjectFactory.
-                newInstance(authors.getDataObject());
-        final GenericPersonBundle liveAuthor =
-                                  (GenericPersonBundle) draftAuthor.
-                getLiveVersion();
-
-        if (liveAuthor != null) {
-            final DataObject link = add(AUTHORS, liveAuthor);
-
-            link.set(EDITOR, authors.get(AuthorshipCollection.LINKEDITOR));
-            link.set(AUTHOR_ORDER, authors.get(AuthorshipCollection.LINKORDER));
-
-            link.save();
         }
     }
 
@@ -144,10 +187,31 @@ public class PublicationBundle extends ContentBundle {
 
         if (livePublication != null) {
             final DataObject link = author.add("publication", livePublication);
-            
+
             link.set(EDITOR, publications.get(AuthorshipCollection.LINKEDITOR));
-            link.set(AUTHOR_ORDER, publications.get(AuthorshipCollection.LINKORDER));
-            
+            link.set(AUTHOR_ORDER, publications.get(
+                    AuthorshipCollection.LINKORDER));
+
+            link.save();
+        }
+    }
+
+    private void createOrgaunitPublicationAssoc(
+            final DataCollection publications,
+            final GenericOrganizationalUnitBundle orgaunit) {
+        final PublicationBundle draftPublication =
+                                (PublicationBundle) DomainObjectFactory.
+                newInstance(publications.getDataObject());
+        final PublicationBundle livePublication =
+                                (PublicationBundle) draftPublication.
+                getLiveVersion();
+
+        if (livePublication != null) {
+            final DataObject link =
+                             orgaunit.add("publications", livePublication);
+
+            link.set(ORGAUNIT_ORDER, publications.get("link." + ORGAUNIT_ORDER));
+
             link.save();
         }
     }
@@ -159,7 +223,7 @@ public class PublicationBundle extends ContentBundle {
     public void addAuthor(final GenericPerson author, final Boolean editor) {
         Assert.exists(author, GenericPerson.class);
 
-        final DataObject link = add(AUTHORS, author);
+        final DataObject link = add(AUTHORS, author.getGenericPersonBundle());
 
         link.set(EDITOR, editor);
         link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
@@ -196,5 +260,62 @@ public class PublicationBundle extends ContentBundle {
             publication = (Publication) instances.getDomainObject();
             publication.set(Publication.AUTHORS_STR, authorsStr);
         }
+    }
+
+    public PublicationGenericOrganizationalsUnitCollection getOrganizationalUnits() {
+        return new PublicationGenericOrganizationalsUnitCollection(
+                (DataCollection) get(ORGAUNITS));
+    }
+
+    public void addOrganizationalUnit(final GenericOrganizationalUnit orgaunit) {
+        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+
+        final DataObject link = add(ORGAUNITS, orgaunit.
+                getGenericOrganizationalUnitBundle());
+
+        link.set(ORGAUNIT_ORDER, Integer.valueOf((int) getOrganizationalUnits().
+                size()));
+
+        link.save();
+    }
+
+    public void removeOrganizationalUnit(
+            final GenericOrganizationalUnit orgaunit) {
+        Assert.exists(orgaunit, GenericOrganizationalUnit.class);
+
+        remove(ORGAUNITS, orgaunit);
+    }
+
+    public static GenericOrganizationalUnitPublicationsCollection getPublications(
+            final GenericOrganizationalUnit orgaunit) {
+        final GenericOrganizationalUnitBundle orgaunitBundle = orgaunit.
+                getGenericOrganizationalUnitBundle();
+
+        final DataCollection collection = (DataCollection) orgaunitBundle.get(
+                ORGAUNIT_PUBLICATIONS);
+
+        return new GenericOrganizationalUnitPublicationsCollection(
+                collection);
+    }
+    
+    public static void addPublication(final GenericOrganizationalUnit orgaunit,
+                                      final Publication publication) {
+        Assert.exists(publication);
+
+         final GenericOrganizationalUnitBundle orgaunitBundle = orgaunit.
+                getGenericOrganizationalUnitBundle();
+        
+        orgaunitBundle.add(ORGAUNIT_PUBLICATIONS, publication);
+    }
+
+    public static void removePublication(
+            final GenericOrganizationalUnit orgaunit,
+            final Publication publication) {
+        Assert.exists(publication);
+        
+        final GenericOrganizationalUnitBundle orgaunitBundle = orgaunit.
+                getGenericOrganizationalUnitBundle();
+
+        orgaunitBundle.remove(ORGAUNIT_PUBLICATIONS, publication);
     }
 }
