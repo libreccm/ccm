@@ -20,27 +20,33 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentBundle;
 
 //PDL definition for a journal
-object type Journal extends Publication {
+object type Journal extends ContentPage {
 
+  Integer[0..1] firstYear = ct_journal.firstyear INTEGER;
   Integer[0..1] lastYear = ct_journal.lastyear INTEGER;
   String[0..1] issn = ct_journal.issn VARCHAR(9);       
 
   reference key (ct_journal.journal_id);
 }
 
+object type JournalBundle extends ContentBundle {
+    reference key (ct_journal_bundles.bundle_id);
+}
+
 association {
 
-  Journal[0..n] journal = join ct_article_in_journal.article_in_journal_id 
-  			    to ct_journal_article_map.article_in_journal_id,
-			  join ct_journal_article_map.journal_id
-			    to ct_journal.journal_id;
+  JournalBundle[0..n] journal = join ct_article_in_journal_bundles.bundle_id 
+  			          to ct_journal_article_map.article_in_journal_id,
+			        join ct_journal_article_map.journal_id
+			          to ct_journal_bundles.bundle_id;
 
-  ArticleInJournal[0..n] articles = join ct_journal.journal_id
+  ArticleInJournalBundle[0..n] articles = join ct_journal_bundles.bundle_id
   			 	      to ct_journal_article_map.journal_id,
 				    join ct_journal_article_map.article_in_journal_id
-				      to ct_article_in_journal.article_in_journal_id;
+				      to ct_article_in_journal_bundles.bundle_id;
 
   Integer[0..1] articleOrder = ct_journal_article_map.article_order INTEGER;
 }

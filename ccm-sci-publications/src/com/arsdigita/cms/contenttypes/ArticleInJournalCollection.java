@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -28,6 +29,7 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class ArticleInJournalCollection extends DomainCollection {
 
@@ -150,7 +152,18 @@ public class ArticleInJournalCollection extends DomainCollection {
     }
 
     public ArticleInJournal getArticle() {
-        return (ArticleInJournal) DomainObjectFactory.newInstance(m_dataCollection.
-                getDataObject());
+        //return (ArticleInJournal) DomainObjectFactory.newInstance(m_dataCollection.
+        //        getDataObject());
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (ArticleInJournal) bundle.getPrimaryInstance();
+    }
+
+    public ArticleInJournal getArticle(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (ArticleInJournal) bundle.getInstance(language);
     }
 }

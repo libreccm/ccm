@@ -86,9 +86,9 @@ public class PublicationXmlHelper {
             generateInternetArticleXml(publicationElem);
         }
 
-        if (publication instanceof Journal) {
+        /*if (publication instanceof Journal) {
             generateJournalXml(publicationElem);
-        }
+        }*/
 
         if (publication instanceof Monograph) {
             generateMonographXml(publicationElem);
@@ -294,15 +294,17 @@ public class PublicationXmlHelper {
     }
 
     private void generateJournalLinkXml(final Element publicationElem,
-                                        ArticleInJournal article) {
-        Journal journal = article.getJournal();
+                                        final ArticleInJournal article) {
+        final Journal journal = article.getJournal();
 
         if (journal != null) {
-            Element journalElem = publicationElem.newChildElement("journal");
-            PublicationXmlHelper xmlHelper = new PublicationXmlHelper(
-                    journalElem,
-                    journal);
-            xmlHelper.generateXml(false);
+            final Element journalElem = publicationElem.newChildElement("journal");
+            //PublicationXmlHelper xmlHelper = new PublicationXmlHelper(
+            //        journalElem,
+            //        journal);            
+            //xmlHelper.generateXml(false);
+            final Element nameElem = journalElem.newChildElement("name");
+            nameElem.setText(journal.getTitle());
         }
     }
 
@@ -371,12 +373,12 @@ public class PublicationXmlHelper {
 
     }
 
-    private void generateJournalXml(final Element publicationElem) {
+    /*private void generateJournalXml(final Element publicationElem) {
         final Journal journal = (Journal) publication;
 
         generateXmlElement(publicationElem, "lastYear", journal.getLastYear());
         generateXmlElement(publicationElem, "issn", journal.getISSN());
-    }
+    }*/
 
     private void generateMonographXml(final Element publicationElem) {
         final Monograph monograph = (Monograph) publication;

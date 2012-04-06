@@ -19,20 +19,21 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
-public class Journal extends Publication {
+public class Journal extends ContentPage {
 
     public static final String ISSN = "issn";
+    public static final String FIRST_YEAR = "firstYear";
     public static final String LAST_YEAR = "lastYear";
     public static final String ARTICLES = "articles";
     public static final String ARTICLE_ORDER = "articleOrder";
@@ -43,53 +44,70 @@ public class Journal extends Publication {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public Journal(BigDecimal id) throws DataObjectNotFoundException {
+    public Journal(final BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public Journal(OID oid) throws DataObjectNotFoundException {
+    public Journal(final OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
-    public Journal(DataObject dobj) {
+    public Journal(final DataObject dobj) {
         super(dobj);
     }
 
-    public Journal(String type) {
+    public Journal(final String type) {
         super(type);
     }
-
+    
+    public JournalBundle getJournalBundle() {
+        return (JournalBundle) getContentBundle();
+    }
+      
     public String getISSN() {
         return (String) get(ISSN);
     }
 
-    public void setISSN(String issn) {
+    public void setISSN(final String issn) {
         set(ISSN, issn);
+    }
+    
+    public Integer getFirstYear() {
+        return (Integer) get(FIRST_YEAR);
+    }
+    
+    public void setFirstYear(final Integer firstYear) {
+        set(FIRST_YEAR, firstYear);
     }
 
     public Integer getLastYear() {
         return (Integer) get(LAST_YEAR);
     }
 
-    public void setLastYear(Integer lastYear)  {
+    public void setLastYear(final Integer lastYear)  {
         set(LAST_YEAR, lastYear);
     }
 
     public ArticleInJournalCollection getArticles() {
-        return new ArticleInJournalCollection((DataCollection) get(ARTICLES));
+        //return new ArticleInJournalCollection((DataCollection) get(ARTICLES));
+        return getJournalBundle().getArticles();
     }
 
-    public void addArticle(ArticleInJournal article) {
-        Assert.exists(article, ArticleInJournal.class);
+    public void addArticle(final ArticleInJournal article) {
+        //Assert.exists(article, ArticleInJournal.class);
 
-        DataObject link = add(ARTICLES, article);
+        //DataObject link = add(ARTICLES, article);
 
-        link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
+        //link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
+        
+        getJournalBundle().addArticle(article);
     }
 
     public void removeArticle(ArticleInJournal article) {
-        Assert.exists(article, ArticleInCollectedVolume.class);
-        remove(ARTICLES, article);
+        //Assert.exists(article, ArticleInCollectedVolume.class);
+        //remove(ARTICLES, article);
+        
+        getJournalBundle().removeArticle(article);        
     }
 
     public boolean hasArticles() {

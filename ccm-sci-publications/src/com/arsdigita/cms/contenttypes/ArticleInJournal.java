@@ -31,9 +31,10 @@ import java.util.Date;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class ArticleInJournal extends Publication {
-    
+
     public static final String VOLUME = "volume";
     public static final String ISSUE = "issue";
     public static final String PAGES_FROM = "pagesFrom";
@@ -63,7 +64,11 @@ public class ArticleInJournal extends Publication {
     public ArticleInJournal(String type) {
         super(type);
     }
-  
+
+    public ArticleInJournalBundle getArticleInJournalBundle() {
+        return (ArticleInJournalBundle) getContentBundle();
+    }
+
     public Integer getVolume() {
         return (Integer) get(VOLUME);
     }
@@ -95,7 +100,7 @@ public class ArticleInJournal extends Publication {
     public void setPagesTo(Integer pagesTo) {
         set(PAGES_TO, pagesTo);
     }
-   
+
     public Date getPublicationDate() {
         return (Date) get(PUBLICATION_DATE);
     }
@@ -104,46 +109,55 @@ public class ArticleInJournal extends Publication {
         set(PUBLICATION_DATE, publicationDate);
     }
 
-   /* public Boolean getReviewed() {
-        return (Boolean) get(REVIEWED);
-    }
+    /* public Boolean getReviewed() {
+     return (Boolean) get(REVIEWED);
+     }
 
-    public void setReviewed(Boolean reviewed) {
-        set(REVIEWED, reviewed);
-    }*/
-
+     public void setReviewed(Boolean reviewed) {
+     set(REVIEWED, reviewed);
+     }*/
     public Journal getJournal() {
-        DataCollection collection;
+//        DataCollection collection;
+//
+//        collection = (DataCollection) get(JOURNAL);
+//
+//        if (collection.size() == 0) {
+//            return null;
+//        } else {
+//            DataObject dobj;
+//
+//            collection.next();
+//            dobj = collection.getDataObject();
+//            collection.close();
+//
+//            return (Journal) DomainObjectFactory.newInstance(dobj);
+//        }
 
-        collection = (DataCollection) get(JOURNAL);
-
-        if (collection.size() == 0) {
-            return null;
-        } else {
-            DataObject dobj;
-
-            collection.next();
-            dobj = collection.getDataObject();
-            collection.close();
-
-            return (Journal) DomainObjectFactory.newInstance(dobj);
-        }
+        return (Journal) getArticleInJournalBundle().getJournal().
+                getPrimaryInstance();
     }
 
-   public void setJournal(Journal journal) {
-       Journal oldJournal;
+    public Journal getJournal(final String language) {
+        return (Journal) getArticleInJournalBundle().getJournal().getInstance(
+                language);
+    }
 
-       oldJournal = getJournal();
-       if (oldJournal != null) {
-           remove(JOURNAL, oldJournal);
-       }
-
-       if (journal != null) {
-           Assert.exists(journal, Journal.class);
-           DataObject link = add(JOURNAL, journal);
-           link.set(Journal.ARTICLE_ORDER,
-                   Integer.valueOf((int) journal.getArticles().size()));
-           link.save();
-       }
-   }
+    public void setJournal(final Journal journal) {
+//        Journal oldJournal;
+//
+//        oldJournal = getJournal();
+//        if (oldJournal != null) {
+//            remove(JOURNAL, oldJournal);
+//        }
+//
+//        if (journal != null) {
+//            Assert.exists(journal, Journal.class);
+//            DataObject link = add(JOURNAL, journal);
+//            link.set(Journal.ARTICLE_ORDER,
+//                     Integer.valueOf((int) journal.getArticles().size()));
+//            link.save();
+//        }
+        
+        getArticleInJournalBundle().setJournal(journal);
+    }        
 }

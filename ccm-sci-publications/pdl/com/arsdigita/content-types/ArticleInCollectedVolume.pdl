@@ -31,5 +31,8 @@ object type ArticleInCollectedVolume extends Publication {
        
        
        reference key (ct_article_in_collected_volume.article_id);
+}
 
+object type ArticleInJournalBundle extends PublicationBundle {
+    reference key (ct_article_in_journal_bundles.bundle_id);
 }
