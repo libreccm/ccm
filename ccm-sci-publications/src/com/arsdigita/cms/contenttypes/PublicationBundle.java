@@ -66,7 +66,7 @@ public class PublicationBundle extends ContentBundle {
                                 final ItemCopier copier) {
         final String attribute = property.getName();
         if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
-            final Publication pubBundle = (Publication) source;
+            final PublicationBundle pubBundle = (PublicationBundle) source;
 
             if (AUTHORS.equals(attribute)) {
                 final DataCollection authors = (DataCollection) pubBundle.get(

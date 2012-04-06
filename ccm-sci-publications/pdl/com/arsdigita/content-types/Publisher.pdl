@@ -32,4 +32,8 @@ object type Publisher extends GenericOrganizationalUnit {
        reference key (ct_publisher.publisher_id);
 }
 
+object type PublisherBundle extends GenericOrganizationalUnitBundle {
+    reference key (ct_publisher_bundles.bundle_id);
+}
+
 

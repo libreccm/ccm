@@ -2,8 +2,8 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.CollectedVolumeBundle;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
+import com.arsdigita.cms.contenttypes.PublicationWithPublisherBundle;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 
 /**
@@ -11,15 +11,15 @@ import com.arsdigita.cms.ui.authoring.CreationSelector;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class CollectedVolumeCreate extends PublicationWithPublisherCreate {
+public class PublicationWithPublisherCreate extends PublicationCreate {
 
-    public CollectedVolumeCreate(final ItemSelectionModel itemModel,
-                                 final CreationSelector parent) {
+    public PublicationWithPublisherCreate(final ItemSelectionModel itemModel,
+                                          final CreationSelector parent) {
         super(itemModel, parent);
     }
 
     @Override
     public PublicationBundle createBundle(final ContentItem primary) {
-        return new CollectedVolumeBundle(primary);
+        return new PublicationWithPublisherBundle(primary);
     }
 }

@@ -10,7 +10,7 @@
       objectType="com.arsdigita.cms.contenttypes.Monograph"
       classname="com.arsdigita.cms.contenttypes.Monograph">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicationCreate">
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicationWithPublisherCreate">
       
       <ctd:authoring-step
 	  labelKey="publications.ui.monograph_properties.title"

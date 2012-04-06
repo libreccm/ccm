@@ -33,16 +33,20 @@ object type PublicationWithPublisher extends Publication {
        reference key (ct_publication_with_publisher.publication_with_publisher_id);
 }
 
-association {
-    PublicationWithPublisher[0..n] publication = join ct_publisher.publisher_id
-                                                   to ct_publication_with_publisher_publisher_map.publisher_id,
-                                                 join ct_publication_with_publisher_publisher_map.publication_id
-                                                   to ct_publication_with_publisher.publication_with_publisher_id;
+object type PublicationWithPublisherBundle extends PublicationBundle {
+    reference key (ct_publication_with_publisher_bundles.bundle_id);
+}
 
-    Publisher[0..n] publisher = join ct_publication_with_publisher.publication_with_publisher_id
+association {
+    PublicationWithPublisherBundle[0..n] publication = join ct_publisher_bundles.bundle_id
+                                                         to ct_publication_with_publisher_publisher_map.publisher_id,
+                                                       join ct_publication_with_publisher_publisher_map.publication_id
+                                                         to ct_publication_with_publisher_bundles.bundle_id;
+
+    PublisherBundle[0..n] publisher = join ct_publication_with_publisher_bundles.bundle_id
                                   to ct_publication_with_publisher_publisher_map.publication_id,
                                 join ct_publication_with_publisher_publisher_map.publisher_id
-                                  to ct_publisher.publisher_id;
+                                  to ct_publisher_bundles.bundle_id;
 
     Integer[0..1] publisherOrder = ct_publication_with_publisher_publisher_map.publisher_order INTEGER;
 }

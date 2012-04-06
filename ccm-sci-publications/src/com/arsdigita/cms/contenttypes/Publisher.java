@@ -58,6 +58,10 @@ public class Publisher extends GenericOrganizationalUnit {
         super(type);
     }
 
+    public PublisherBundle getPublisherBundle() {
+        return (PublisherBundle) getContentBundle();
+    }
+    
     public String getPublisherName() {
         return (String) get(PUBLISHER_NAME);
     }

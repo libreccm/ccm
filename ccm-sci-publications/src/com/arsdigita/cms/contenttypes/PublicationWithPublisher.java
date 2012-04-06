@@ -54,7 +54,7 @@ public class PublicationWithPublisher extends Publication {
     public static final String VOLUME = "volume";
     public static final String NUMBER_OF_VOLUMES = "numberOfVolumes";
     public static final String NUMBER_OF_PAGES = "numberOfPages";
-    public static final String EDITION = "edition"; 
+    public static final String EDITION = "edition";
     public final static String PUBLISHER = "publisher";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.PublicationWithPublisher";
@@ -83,6 +83,10 @@ public class PublicationWithPublisher extends Publication {
         super(type);
     }
 
+    public PublicationWithPublisherBundle getPublicationWithPublisherBundle() {
+        return (PublicationWithPublisherBundle) getContentBundle();
+    }
+
     /**
      * Returns the ISBN of the publication.
      *
@@ -102,7 +106,7 @@ public class PublicationWithPublisher extends Publication {
         set(ISBN, isbn);
     }
 
-      public Integer getVolume() {
+    public Integer getVolume() {
         return (Integer) get(VOLUME);
     }
 
@@ -133,28 +137,36 @@ public class PublicationWithPublisher extends Publication {
     public void setEdition(String edition) {
         set(EDITION, edition);
     }
-    
+
     /**
      * Retrieves the publisher of the publication.
      *
      * @return The publisher of the publication.
      */
     public Publisher getPublisher() {
-        DataCollection collection;
+//        DataCollection collection;
+//
+//        collection = (DataCollection) get(PUBLISHER);
+//
+//        if (0 == collection.size()) {
+//            return null;
+//        } else {
+//            DataObject dobj;
+//
+//            collection.next();
+//            dobj = collection.getDataObject();
+//            collection.close();
+//
+//            return (Publisher) DomainObjectFactory.newInstance(dobj);
+//        }        
 
-        collection = (DataCollection) get(PUBLISHER);
+        return (Publisher) getPublicationWithPublisherBundle().getPublisher().
+                getPrimaryInstance();
+    }
 
-        if (0 == collection.size()) {
-            return null;
-        } else {
-            DataObject dobj;
-
-            collection.next();
-            dobj = collection.getDataObject();
-            collection.close();
-
-            return (Publisher) DomainObjectFactory.newInstance(dobj);
-        }        
+    public Publisher getPublisher(final String language) {
+        return (Publisher) getPublicationWithPublisherBundle().getPublisher().
+                getInstance(language);
     }
 
     /**
@@ -163,18 +175,20 @@ public class PublicationWithPublisher extends Publication {
      * @param publisher The publisher of the publication.
      */
     public void setPublisher(Publisher publisher) {
-        final Publisher oldPublisher;
-
-        oldPublisher = getPublisher();
-        if (oldPublisher != null) {
-            remove(PUBLISHER, oldPublisher);
-        }
-
-        if (null != publisher) {
-            Assert.exists(publisher, Publisher.class);
-            DataObject link = add(PUBLISHER, publisher);
-            link.set("publisherOrder", 1);
-            link.save();
-        }        
+//        final Publisher oldPublisher;
+//
+//        oldPublisher = getPublisher();
+//        if (oldPublisher != null) {
+//            remove(PUBLISHER, oldPublisher);
+//        }
+//
+//        if (null != publisher) {
+//            Assert.exists(publisher, Publisher.class);
+//            DataObject link = add(PUBLISHER, publisher);
+//            link.set("publisherOrder", 1);
+//            link.save();
+//        }
+        
+        getPublicationWithPublisherBundle().setPublisher(publisher);
     }
 }

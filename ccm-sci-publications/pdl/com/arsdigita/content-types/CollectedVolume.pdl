@@ -29,7 +29,7 @@ object type CollectedVolume extends PublicationWithPublisher {
        //Moved to publication Boolean[0..1] reviewed = ct_collected_volume.reviewed BIT;		
 }
 
-object type CollectedVolumeBundle extends PublicationBundle {
+object type CollectedVolumeBundle extends PublicationWithPublisherBundle {
     reference key (ct_collected_volume_bundles.bundle_id);
 }
 

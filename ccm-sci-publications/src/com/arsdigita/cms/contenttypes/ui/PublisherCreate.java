@@ -17,6 +17,7 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle;
 import com.arsdigita.cms.contenttypes.Publisher;
+import com.arsdigita.cms.contenttypes.PublisherBundle;
 import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.LanguageWidget;
@@ -94,9 +95,7 @@ public class PublisherCreate extends PageCreate {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
 
-        final GenericOrganizationalUnitBundle bundle =
-                                              new GenericOrganizationalUnitBundle(
-                item);
+        final PublisherBundle bundle = new PublisherBundle(item);
         bundle.setParent(folder);
         bundle.setContentSection(section);
         bundle.save();
