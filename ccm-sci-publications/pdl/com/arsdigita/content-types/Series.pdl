@@ -20,6 +20,7 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentBundle;
 
 // The contenttype described in this PDL file represents a series of publications.
 object type Series extends ContentPage {
@@ -27,21 +28,24 @@ object type Series extends ContentPage {
        reference key (ct_series.series_id);
 
        String[0..1] abstract = ct_series.abstract VARCHAR(4096);
+}
 
+object type SeriesBundle extends ContentBundle {
+    reference key (ct_series_bundles.bundle_id);
 }
 
 //Assoication for the editship of a series
 association {
 	    
-	    Series[0..n] series = join cms_persons.person_id
-	    		 	    to ct_series_editship.person_id,
-				  join ct_series_editship.series_id
-				    to ct_series.series_id;
+	    SeriesBundle[0..n] series = join cms_person_bundles.bundle_id
+	    		 	          to ct_series_editship.person_id,
+				        join ct_series_editship.series_id
+				          to ct_series_bundles.bundle_id;
 			
-            GenericPerson[0..n] editors = join ct_series.series_id
-	    				    to ct_series_editship.series_id,
-					  join ct_series_editship.person_id
-					    to cms_persons.person_id;
+            GenericPersonBundle[0..n] editors = join ct_series_bundles.bundle_id
+	    				          to ct_series_editship.series_id,
+					        join ct_series_editship.person_id
+					          to cms_person_bundles.bundle_id;
 
             // Additional attributes for the editship
 	    Date[0..1] dateFrom = ct_series_editship.dateFrom DATE;
@@ -55,15 +59,15 @@ association {
 //Assoication for the volumes in the series
 association {
 	    
-	    Series[0..n] series = join ct_publications.publication_id
-	                            to ct_publications_volume_in_series.publication_id,
-				  join ct_publications_volume_in_series.series_id
-				    to ct_series.series_id;
+	    SeriesBundle[0..n] series = join ct_publication_bundles.bundle_id
+	                                  to ct_publications_volume_in_series.publication_id,
+				        join ct_publications_volume_in_series.series_id
+				          to ct_series_bundles.bundle_id;
 
-            Publication[0..n] publications = join ct_series.series_id
-	                                       to ct_publications_volume_in_series.series_id,
-					     join ct_publications_volume_in_series.publication_id
-					       to ct_publications.publication_id;
+            PublicationBundle[0..n] publications = join ct_series_bundles.bundle_id
+	                                             to ct_publications_volume_in_series.series_id,
+					           join ct_publications_volume_in_series.publication_id
+					             to ct_publication_bundles.bundle_id;
             // Additional attributes
 	    Integer[0..1] volumeOfSeries = ct_publications_volume_in_series.volumeOfSeries INTEGER;
 }

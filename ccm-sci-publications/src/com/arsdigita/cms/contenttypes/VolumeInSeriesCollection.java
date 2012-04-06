@@ -20,6 +20,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
@@ -50,16 +51,14 @@ public class VolumeInSeriesCollection extends DomainCollection {
 
         link.set(VOLUME_OF_SERIES, volumeOfSeries);
     }
-
-    /**
-     * This method returns the current data object. Because the class
-     * {@link Publication} is abstract, it is not possible to create the
-     * real object here. The caller must check the type of the data object
-     * and create an real object from the returned data object.
-     *
-     * @return The current data object.
-     */
+  
     public Publication getPublication() {
-        return new Publication(m_dataCollection.getDataObject());
+        final PublicationBundle bundle = (PublicationBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (Publication) bundle.getPrimaryInstance();
+    }
+    
+      public Publication getPublication(final String language) {
+        final PublicationBundle bundle = (PublicationBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (Publication) bundle.getInstance(language);
     }
 }

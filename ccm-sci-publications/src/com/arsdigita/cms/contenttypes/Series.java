@@ -71,22 +71,32 @@ public class Series extends ContentPage {
         set(ABSTRACT, abstractStr);
     }
 
+    public SeriesBundle getSeriesBundle() {
+        return (SeriesBundle) getContentBundle();
+    }
+    
     public EditshipCollection getEditors() {
-        return new EditshipCollection((DataCollection) get(EDITORS));
+        //return new EditshipCollection((DataCollection) get(EDITORS));
+        return getSeriesBundle().getEditors();
     }
 
-    public void addEditor(GenericPerson editor, Date from, Date to) {
-        Assert.exists(editor, GenericPerson.class);
-
-        DataObject link = add(EDITORS, editor);
-        link.set(EDITOR_FROM, from);
-        link.set(EDITOR_TO, to);
-        link.set(EDITOR_ORDER, Integer.valueOf((int)getEditors().size()));
+    public void addEditor(final  GenericPerson editor, 
+                          final Date from, 
+                          final Date to) {
+//        Assert.exists(editor, GenericPerson.class);
+//
+//        DataObject link = add(EDITORS, editor);
+//        link.set(EDITOR_FROM, from);
+//        link.set(EDITOR_TO, to);
+//        link.set(EDITOR_ORDER, Integer.valueOf((int)getEditors().size()));
+        
+        getSeriesBundle().addEditor(editor, from, to);
     }
 
-    public void removeEditor(GenericPerson editor) {
-        Assert.exists(editor, GenericPerson.class);
-        remove(EDITORS, editor);
+    public void removeEditor(final GenericPerson editor) {
+        //Assert.exists(editor, GenericPerson.class);
+        //remove(EDITORS, editor);
+        getSeriesBundle().removeEditor(editor);
     }
 
     public boolean hasEditors() {
@@ -94,20 +104,23 @@ public class Series extends ContentPage {
     }
 
     public VolumeInSeriesCollection getVolumes() {
-        return new VolumeInSeriesCollection((DataCollection) get(PUBLICATIONS));
+        //return new VolumeInSeriesCollection((DataCollection) get(PUBLICATIONS));
+        return getSeriesBundle().getVolumes();
     }
 
-    public void addVolume(Publication publication, Integer volume) {
-        Assert.exists(publication, Publication.class);
-
-        DataObject link = add(PUBLICATIONS, publication);
-
-        link.set(VOLUME_OF_SERIES, volume);
+    public void addVolume(final Publication publication, final Integer volume) {
+//        Assert.exists(publication, Publication.class);
+//
+//        DataObject link = add(PUBLICATIONS, publication);
+//
+//        link.set(VOLUME_OF_SERIES, volume);
+        getSeriesBundle().addVolume(publication, volume);
     }
 
-    public void removeVolume(Publication publication) {
-        Assert.exists(publication, Publication.class);
-        remove(PUBLICATIONS, publication);
+    public void removeVolume(final Publication publication) {
+        //Assert.exists(publication, Publication.class);
+        //remove(PUBLICATIONS, publication);
+        getSeriesBundle().removeVolume(publication);
     }
 
     public boolean hasVolumes() {

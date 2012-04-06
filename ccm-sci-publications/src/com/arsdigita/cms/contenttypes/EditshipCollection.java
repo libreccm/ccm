@@ -20,6 +20,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import java.util.Date;
@@ -200,6 +201,7 @@ public class EditshipCollection extends DomainCollection {
     }
 
     public GenericPerson getEditor() {
-        return new GenericPerson(m_dataCollection.getDataObject());
-    }
+        final GenericPersonBundle bundle = (GenericPersonBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (GenericPerson) bundle.getPrimaryInstance();                
+    }        
 }
