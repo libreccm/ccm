@@ -20,6 +20,7 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentBundle;
 
 // PDL definition for a collected volume
 object type ArticleInCollectedVolume extends Publication {
@@ -33,6 +34,6 @@ object type ArticleInCollectedVolume extends Publication {
        reference key (ct_article_in_collected_volume.article_id);
 }
 
-object type ArticleInJournalBundle extends PublicationBundle {
-    reference key (ct_article_in_journal_bundles.bundle_id);
+object type ArticleInCollectedVolumeBundle extends PublicationBundle {
+    reference key (ct_article_in_collected_volume_bundles.bundle_id);
 }

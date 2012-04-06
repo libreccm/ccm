@@ -20,6 +20,7 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentBundle;
 
 // PDL definition for an article in a journal
 object type ArticleInJournal extends Publication {
@@ -33,4 +34,8 @@ object type ArticleInJournal extends Publication {
 
        reference key (ct_article_in_journal.article_in_journal_id);
 
+}
+
+object type ArticleInJournalBundle extends PublicationBundle {
+    reference key (ct_article_in_journal_bundles.bundle_id);
 }

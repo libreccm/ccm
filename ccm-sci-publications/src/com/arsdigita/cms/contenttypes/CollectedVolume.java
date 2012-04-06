@@ -68,22 +68,30 @@ public class CollectedVolume extends PublicationWithPublisher {
         set(REVIEWED, reviewed);
     }*/
 
+    public CollectedVolumeBundle getCollectedVolumeBundle() {
+        return (CollectedVolumeBundle) getContentBundle();
+    }
+    
     public ArticleInCollectedVolumeCollection getArticles() {
-        return new ArticleInCollectedVolumeCollection(
-                (DataCollection) get(ARTICLES));
+        //return new ArticleInCollectedVolumeCollection(
+//                (DataCollection) get(ARTICLES));
+            return getCollectedVolumeBundle().getArticles();
     }
 
     public void addArticle(ArticleInCollectedVolume article) {
-        Assert.exists(article, ArticleInCollectedVolume.class);
-
-        DataObject link = add(ARTICLES, article);
-
-        link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
+//        Assert.exists(article, ArticleInCollectedVolume.class);
+//
+//        DataObject link = add(ARTICLES, article);
+//
+//        link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
+        
+        getCollectedVolumeBundle().addArticle(article);
     }
 
     public void removeArticle(ArticleInCollectedVolume article) {
-        Assert.exists(article, ArticleInCollectedVolume.class);
-        remove(ARTICLES, article);
+        //Assert.exists(article, ArticleInCollectedVolume.class);
+        //remove(ARTICLES, article);
+        getCollectedVolumeBundle().removeArticle(article);        
     }
 
     public boolean hasArticles() {

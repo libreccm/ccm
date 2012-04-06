@@ -5,7 +5,6 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -19,8 +18,7 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class GenericPersonBundle
-        extends ContentBundle {
+public class GenericPersonBundle extends ContentBundle {
 
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericPersonBundle";
@@ -107,7 +105,7 @@ public class GenericPersonBundle
                 while (orgaunits.next()) {
                     createOrgaUnitAssoc(orgaunits);
                 }
-                
+
                 return true;
             } else {
                 return super.copyProperty(source, property, copier);
@@ -138,9 +136,11 @@ public class GenericPersonBundle
     }
 
     private void createOrgaUnitAssoc(final DataCollection orgaunits) {
-        final GenericOrganizationalUnitBundle draftOrga = (GenericOrganizationalUnitBundle) DomainObjectFactory.
+        final GenericOrganizationalUnitBundle draftOrga =
+                                              (GenericOrganizationalUnitBundle) DomainObjectFactory.
                 newInstance(orgaunits.getDataObject());
-        final GenericOrganizationalUnitBundle liveOrga = (GenericOrganizationalUnitBundle) draftOrga.
+        final GenericOrganizationalUnitBundle liveOrga =
+                                              (GenericOrganizationalUnitBundle) draftOrga.
                 getLiveVersion();
 
         if (liveOrga != null) {

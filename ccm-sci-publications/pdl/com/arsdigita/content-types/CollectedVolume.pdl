@@ -29,17 +29,21 @@ object type CollectedVolume extends PublicationWithPublisher {
        //Moved to publication Boolean[0..1] reviewed = ct_collected_volume.reviewed BIT;		
 }
 
+object type CollectedVolumeBundle extends PublicationBundle {
+    reference key (ct_collected_volume_bundles.bundle_id);
+}
+
 
 association {
 	    
-	    CollectedVolume[0..n] collectedVolume = join ct_article_in_collected_volume.article_id
-	    			  		      to ct_collected_volume_article_map.article_id,
+	    CollectedVolumeBundle[0..n] collectedVolume = join ct_article_in_collected_volume_bundles.bundle_id
+	    			  		            to ct_collected_volume_article_map.article_id,
 						    join ct_collected_volume_article_map.collected_volume_id
-						      to ct_collected_volume.collected_volume_id;
-            ArticleInCollectedVolume[0..n] articles = join ct_collected_volume.collected_volume_id
+						      to ct_collected_volume_bundles.bundle_id;
+            ArticleInCollectedVolumeBundle[0..n] articles = join ct_collected_volume_bundles.bundle_id
                                                         to ct_collected_volume_article_map.collected_volume_id,
 						      join ct_collected_volume_article_map.article_id
-						        to ct_article_in_collected_volume.article_id;
+						        to ct_article_in_collected_volume_bundles.bundle_id;
 
             Integer[0..1] articleOrder = ct_collected_volume_article_map.article_order INTEGER;    
 

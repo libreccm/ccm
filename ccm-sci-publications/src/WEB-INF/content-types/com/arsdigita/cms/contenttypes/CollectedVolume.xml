@@ -10,7 +10,7 @@
       objectType="com.arsdigita.cms.contenttypes.CollectedVolume"
       classname="com.arsdigita.cms.contenttypes.CollectedVolume">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.PublicationCreate">
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.CollectedVolumeCreate">
       
       <ctd:authoring-step
 	  labelKey="publications.ui.collectedVolume_properties.title"

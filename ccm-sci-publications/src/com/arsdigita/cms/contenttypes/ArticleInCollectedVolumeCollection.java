@@ -19,7 +19,10 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
@@ -149,6 +152,18 @@ public class ArticleInCollectedVolumeCollection extends DomainCollection {
     }
 
     public ArticleInCollectedVolume getArticle() {
-        return new ArticleInCollectedVolume(m_dataCollection.getDataObject());
+        //return new ArticleInCollectedVolume(m_dataCollection.getDataObject());
+
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (ArticleInCollectedVolume) bundle.getPrimaryInstance();
+    }
+
+    public ArticleInCollectedVolume getArticle(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (ArticleInCollectedVolume) bundle.getInstance(language);
     }
 }

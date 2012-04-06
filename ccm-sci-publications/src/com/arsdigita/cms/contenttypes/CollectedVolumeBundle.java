@@ -1,10 +1,14 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -16,16 +20,13 @@ import java.math.BigDecimal;
 /**
  *
  * @author Jens Pelzetter 
- * @version $Id$
  */
-public class JournalBundle extends ContentBundle {
+public class CollectedVolumeBundle extends PublicationBundle {
 
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.JournalBundle";
     public static final String ARTICLES = "articles";
     public static final String ARTICLE_ORDER = "articleOrder";
 
-    public JournalBundle(final ContentItem primary) {
+    public CollectedVolumeBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
 
         Assert.exists(primary, ContentItem.class);
@@ -37,20 +38,21 @@ public class JournalBundle extends ContentBundle {
         setName(primary.getName());
     }
 
-    public JournalBundle(final OID oid) throws DataObjectNotFoundException {
+    public CollectedVolumeBundle(final OID oid)
+            throws DataObjectNotFoundException {
         super(oid);
     }
 
-    public JournalBundle(final BigDecimal id)
+    public CollectedVolumeBundle(final BigDecimal id)
             throws DataObjectNotFoundException {
         super(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public JournalBundle(final DataObject dobj) {
+    public CollectedVolumeBundle(final DataObject dobj) {
         super(dobj);
     }
 
-    public JournalBundle(final String type) {
+    public CollectedVolumeBundle(final String type) {
         super(type);
     }
 
@@ -59,14 +61,14 @@ public class JournalBundle extends ContentBundle {
                                 final Property property,
                                 final ItemCopier copier) {
         final String attribute = property.getName();
+        
         if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
-            final JournalBundle journalBundle = (JournalBundle) source;
-
+            final CollectedVolumeBundle collVolBundle = (CollectedVolumeBundle) source;
+            
             if (ARTICLES.equals(attribute)) {
-                final DataCollection articles = (DataCollection) journalBundle.
-                        get(ARTICLES);
-
-                while (articles.next()) {
+                final DataCollection articles = (DataCollection) collVolBundle.get(ARTICLES);
+                
+                while(articles.next()) {
                     createArticleAssoc(articles);
                 }
                 
@@ -78,42 +80,37 @@ public class JournalBundle extends ContentBundle {
             return super.copyProperty(source, property, copier);
         }
     }
-
+    
     private void createArticleAssoc(final DataCollection articles) {
-        final ArticleInJournalBundle draftArticle =
-                                     (ArticleInJournalBundle) DomainObjectFactory.
-                newInstance(articles.getDataObject());
-        final ArticleInJournalBundle liveArticle =
-                                     (ArticleInJournalBundle) draftArticle.
-                getLiveVersion();
-
+        final ArticleInCollectedVolumeBundle draftArticle = (ArticleInCollectedVolumeBundle) DomainObjectFactory.newInstance(articles.getDataObject());
+        final ArticleInCollectedVolumeBundle liveArticle = (ArticleInCollectedVolumeBundle) draftArticle.getLiveVersion();
+        
         if (liveArticle != null) {
             final DataObject link = add(ARTICLES, liveArticle);
-
-            link.set(ARTICLE_ORDER, articles.get(
-                    ArticleInJournalCollection.LINKORDER));
-
+            
+            link.set(ARTICLE_ORDER, 
+                     articles.get(ArticleInCollectedVolumeCollection.LINKORDER));
+            
             link.save();
         }
     }
-
-    public ArticleInJournalCollection getArticles() {
-        return new ArticleInJournalCollection((DataCollection) get(ARTICLES));
+    
+    public ArticleInCollectedVolumeCollection getArticles() {
+        return new ArticleInCollectedVolumeCollection((DataCollection) get(ARTICLES));
     }
-
-    public void addArticle(final ArticleInJournal article) {
-        Assert.exists(article, ArticleInJournal.class);
-
-        final DataObject link = add(ARTICLES,
-                                    article.getArticleInJournalBundle());
-        link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
+    
+    public void addArticle(final ArticleInCollectedVolume article) {
+        Assert.exists(article, ArticleInCollectedVolume.class);
         
-        link.save();
+        final DataObject link = add(ARTICLES,
+                                    article.getArticleInCollectedVolumeBundle());
+        
+        link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
     }
-
-    public void removeArticle(final ArticleInJournal article) {
-        Assert.exists(article, ArticleInJournal.class);
-
-        remove(ARTICLES, article.getArticleInJournalBundle());
+    
+    public void removeArticle(final ArticleInCollectedVolume article) {
+        Assert.exists(article, ArticleInCollectedVolume.class);
+        
+        remove(ARTICLES, article.getArticleInCollectedVolumeBundle());
     }
 }
