@@ -200,14 +200,12 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                 ContentSection section =
                                CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link = new Link(
-                        String.format("%s (%s)",
-                                      value.toString(),
-                                      collectedVolume.getLanguage()),
-                        resolver.generateItemURL(state,
-                                                 collectedVolume,
-                                                 section,
-                                                 collectedVolume.getVersion()));
+                Link link = new Link(value.toString(),
+                                     resolver.generateItemURL(state,
+                                                              collectedVolume,
+                                                              section,
+                                                              collectedVolume.
+                        getVersion()));
                 return link;
             } else {
                 CollectedVolume collectedVolume;
@@ -217,10 +215,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(String.format("%s (%s)",
-                                                      value.toString(),
-                                                      collectedVolume.
-                        getLanguage()));
+                Label label = new Label(value.toString());
                 return label;
             }
         }

@@ -245,9 +245,7 @@ public class PublicationAuthorsTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            author.getLanguage()),
+                     new Link(value.toString(),
                               resolver.generateItemURL(state,
                                                        author,
                                                        section,
@@ -265,9 +263,7 @@ public class PublicationAuthorsTable
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(String.format("%s (%s)",
-                                                      value.toString(),
-                                                      author.getLanguage()));
+                Label label = new Label(value.toString());
                 return label;
             }
         }

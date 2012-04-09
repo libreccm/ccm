@@ -32,30 +32,34 @@ object type Proceedings extends PublicationWithPublisher {
        reference key (ct_proceedings.proceedings_id);
 }
 
+object type ProceedingsBundle extends PublicationWithPublisherBundle {
+    reference key (ct_proceedings_bundles.bundle_id);
+}
+
 association {
-    Proceedings[0..n] proceedingOfConference = join cms_organizationalunits.organizationalunit_id
+    ProceedingsBundle[0..n] proceedingOfConference = join cms_orgaunit_bundles.bundle_id
                                                  to ct_proceedings_organizer_map.organizer_id,
                                                join ct_proceedings_organizer_map.proceeding_id
-                                                 to ct_proceedings.proceedings_id;
+                                                 to ct_proceedings_bundles.bundle_id;
 
-    GenericOrganizationalUnit[0..n] organizerOfConference = join ct_proceedings.proceedings_id
-                                                              to ct_proceedings_organizer_map.proceeding_id,
-                                                            join ct_proceedings_organizer_map.organizer_id
-                                                              to cms_organizationalunits.organizationalunit_id;
+    GenericOrganizationalUnitBundle[0..n] organizerOfConference = join ct_proceedings_bundles.bundle_id
+                                                                    to ct_proceedings_organizer_map.proceeding_id,
+                                                                  join ct_proceedings_organizer_map.organizer_id
+                                                                    to cms_orgaunit_bundles.bundle_id;
 
    Integer[0..1] organizerOrder = ct_proceedings_organizer_map.organizer_order INTEGER;
 }
 
 association {
 
-	    Proceedings[0..n]  proceedings = join ct_inproceedings.inproceedings_id
-	    		       		       to ct_proceedings_papers_map.paper_id,
-					     join ct_proceedings_papers_map.proceedings_id
-					       to ct_proceedings.proceedings_id;
-            InProceedings[0..n] papers = join ct_proceedings.proceedings_id
+	    ProceedingsBundle[0..n]  proceedings = join ct_inproceedings_bundles.bundle_id
+	    		       		             to ct_proceedings_papers_map.paper_id,
+					           join ct_proceedings_papers_map.proceedings_id
+					             to ct_proceedings_bundles.bundle_id;
+            InProceedingsBundle[0..n] papers = join ct_proceedings_bundles.bundle_id
                                            to ct_proceedings_papers_map.proceedings_id,
 					 join ct_proceedings_papers_map.paper_id
-					   to ct_inproceedings.inproceedings_id;
+					   to ct_inproceedings_bundles.bundle_id;
 
  	    Integer[0..1] paperOrder = ct_proceedings_papers_map.paper_order INTEGER;
 }

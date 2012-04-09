@@ -23,13 +23,14 @@ import java.math.BigDecimal;
 public class PublicationBundle extends ContentBundle {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contentttypes.PublicationBundle";
+                               "com.arsdigita.cms.contenttypes.PublicationBundle";
     public static final String AUTHORS = "authors";
     public final static String AUTHOR_ORDER = "authorOrder";
     public final static String EDITOR = "editor";
     public final static String ORGAUNITS = "orgaunits";
     public final static String ORGAUNIT_ORDER = "publicationOrder";
     public final static String ORGAUNIT_PUBLICATIONS = "publications";
+    public final static String SERIES = "series";
 
     public PublicationBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
@@ -317,5 +318,21 @@ public class PublicationBundle extends ContentBundle {
                 getGenericOrganizationalUnitBundle();
 
         orgaunitBundle.remove(ORGAUNIT_PUBLICATIONS, publication);
+    }
+    
+    public SeriesCollection getSeries() {
+        return new SeriesCollection((DataCollection) get(SERIES));
+    }
+    
+    public void addSeries(final Series series) {
+        Assert.exists(series, Series.class);
+        
+        add(SERIES, series.getSeriesBundle());
+    }
+    
+    public void removeSeries(final Series series) {
+        Assert.exists(series, Series.class);
+        
+        remove(SERIES, series.getSeriesBundle());
     }
 }

@@ -30,3 +30,7 @@ object type InProceedings extends Publication {
        reference key (ct_inproceedings.inproceedings_id);
 
 }
+
+object type InProceedingsBundle extends PublicationBundle {
+    reference key (ct_inproceedings_bundles.bundle_id);
+}

@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class PublicationWithPublisherBundle extends PublicationBundle {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contentttypes.PublicationWithPublisherBundle";
+                               "com.arsdigita.cms.contenttypes.PublicationWithPublisherBundle";
     public static final String PUBLISHER = "publisher";
     public static final String PUBLISHER_ORDER = "publisherOrder";
 

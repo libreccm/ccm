@@ -20,7 +20,7 @@ public class PublicationGenericOrganizationalsUnitCollection
             final DataCollection dataCollection) {
         super(dataCollection);
 
-        addOrder("title");
+        addOrder("name");
     }
 
     public GenericOrganizationalUnit getOrganizationalUnit() {
@@ -44,10 +44,10 @@ public class PublicationGenericOrganizationalsUnitCollection
         return getOrganizationalUnit().getTitle();
     }
     
-    public String getAddendum() {
+    /*public String getAddendum() {
         return (String) m_dataCollection.getDataObject().get(
                 GenericOrganizationalUnit.ADDENDUM);
-    }
+    }*/
 
     /*public GenericOrganizationalUnitContactCollection getContacts() {
         return new GenericOrganizationalUnitContactCollection(

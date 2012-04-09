@@ -21,43 +21,94 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Journal;
+import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import java.text.DateFormat;
 
 /**
  *
  * @author Jens Pelzetter
  */
-public class JournalPropertiesStep extends PublicationPropertiesStep {
+public class JournalPropertiesStep extends SimpleEditStep {
+
+    public static final String EDIT_SHEET_NAME = "editJournal";
+    private SegmentedPanel segmentedPanel;
 
     public JournalPropertiesStep(
             ItemSelectionModel itemModel,
             AuthoringKitWizard parent) {
         super(itemModel, parent);
+
+        segmentedPanel = new SegmentedPanel();
+        setDefaultEditKey(EDIT_SHEET_NAME);
+
+        addBasicProperties(itemModel, parent);
+        addSteps(itemModel, parent);
+
+        setDisplayComponent(segmentedPanel);
+
     }
 
     public static Component getJournalPropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
-                getPublicationPropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(
+                itemModel);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.publication.name"),
+                  Publication.NAME);
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.publication.title"),
+                  Publication.TITLE);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.issn"),
                   Journal.ISSN);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.journal.firstYearOfPublication"),
+                  Journal.FIRST_YEAR);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.lastYearOfPublication"),
                   Journal.LAST_YEAR);
+
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(ContenttypesGlobalizationUtil.globalize(
+                    "cms.ui.authoring.page_launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new DomainObjectPropertySheet.AttributeFormatter() {
+
+                public String format(DomainObject item,
+                                     String attribute,
+                                     PageState state) {
+                    ContentPage page = (ContentPage) item;
+                    if (page.getLaunchDate() != null) {
+                        return DateFormat.getDateInstance(DateFormat.LONG).
+                                format(page.getLaunchDate());
+                    } else {
+                        return (String) ContenttypesGlobalizationUtil.globalize(
+                                "cms.ui.unknown").localize();
+                    }
+                }
+            });
+        }
 
         return sheet;
     }
 
-    @Override
     protected void addBasicProperties(ItemSelectionModel itemModel,
                                       AuthoringKitWizard parent) {
         SimpleEditStep basicProperties = new SimpleEditStep(itemModel,
@@ -69,7 +120,7 @@ public class JournalPropertiesStep extends PublicationPropertiesStep {
 
         basicProperties.add(EDIT_SHEET_NAME,
                             (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.edit_basic_sheet").localize(),
+                "publications.ui.journal.edit_basic_sheet").localize(),
                             new WorkflowLockedComponentAccess(editBasicSheet,
                                                               itemModel),
                             editBasicSheet.getSaveCancelSection().
@@ -84,12 +135,20 @@ public class JournalPropertiesStep extends PublicationPropertiesStep {
                 basicProperties);
     }
 
-    @Override
+    protected SegmentedPanel getSegmentedPanel() {
+        return segmentedPanel;
+    }
+
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
-        super.addSteps(itemModel, parent);
-
         addStep(new JournalArticlesStep(itemModel, parent),
                 "publications.ui.journal.articles");
+    }
+
+    protected void addStep(SimpleEditStep step, String labelKey) {
+        segmentedPanel.addSegment(
+                new Label((String) PublicationGlobalizationUtil.globalize(
+                labelKey).localize()),
+                step);
     }
 }

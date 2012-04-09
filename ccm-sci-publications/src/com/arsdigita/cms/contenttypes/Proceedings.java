@@ -20,7 +20,6 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -68,9 +67,13 @@ public class Proceedings extends PublicationWithPublisher {
     public Proceedings(String type) {
         super(type);
     }
+    
+    public ProceedingsBundle getProceedingsBundle() {
+        return (ProceedingsBundle) getContentBundle();
+    }
 
     public GenericOrganizationalUnit getOrganizerOfConference() {
-        DataCollection collection;
+        /*DataCollection collection;
 
         collection = (DataCollection) get(ORGANIZER_OF_CONFERENCE);
 
@@ -85,11 +88,30 @@ public class Proceedings extends PublicationWithPublisher {
 
             return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(
                     dobj);
+        }*/
+        
+        final GenericOrganizationalUnitBundle bundle = getProceedingsBundle().getOrganizerOfConference();
+        
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
+        }
+    }
+    
+    public GenericOrganizationalUnit getOrganizerOfConference(
+            final String language) {
+         final GenericOrganizationalUnitBundle bundle = getProceedingsBundle().getOrganizerOfConference();
+        
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getInstance(language);
         }
     }
 
     public void setOrganizerOfConference(GenericOrganizationalUnit organizer) {
-        GenericOrganizationalUnit oldOrga;
+        /*GenericOrganizationalUnit oldOrga;
 
         oldOrga = getOrganizerOfConference();
         if (oldOrga != null) {
@@ -101,7 +123,9 @@ public class Proceedings extends PublicationWithPublisher {
             DataObject link = add(ORGANIZER_OF_CONFERENCE, organizer);
             link.set("organizerOrder", 1);
             link.save();
-        }      
+        } */
+        
+        getProceedingsBundle().setOrganizerOfConference(organizer);
     }
 
     public String getNameOfConference() {
@@ -137,20 +161,26 @@ public class Proceedings extends PublicationWithPublisher {
     }
 
     public InProceedingsCollection getPapers() {
-        return new InProceedingsCollection((DataCollection) get(PAPERS));
+        //return new InProceedingsCollection((DataCollection) get(PAPERS));
+        
+        return getProceedingsBundle().getPapers();
     }
 
     public void addPaper(InProceedings paper) {
-        Assert.exists(paper, InProceedings.class);
+        /*Assert.exists(paper, InProceedings.class);
 
         DataObject link = add(PAPERS, paper);
 
-        link.set(PAPER_ORDER, Integer.valueOf((int) getPapers().size()));
+        link.set(PAPER_ORDER, Integer.valueOf((int) getPapers().size()));*/
+        
+        getProceedingsBundle().addPaper(paper);
     }
 
     public void removePaper(InProceedings paper) {
-        Assert.exists(paper, InProceedings.class);
-        remove(PAPERS, paper);
+        /*Assert.exists(paper, InProceedings.class);
+        remove(PAPERS, paper);*/
+        
+        getProceedingsBundle().removePaper(paper);
     }
 
     public boolean hasPapers() {

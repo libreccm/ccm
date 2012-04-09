@@ -20,8 +20,8 @@ import java.math.BigDecimal;
  */
 public class ArticleInJournalBundle extends PublicationBundle {
     
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contentttypes.ArticleInJournalBundle";
-    public static final String JOURNAL = "JOURNAL";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.ArticleInJournalBundle";
+    public static final String JOURNAL = "journal";
     
     public ArticleInJournalBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);

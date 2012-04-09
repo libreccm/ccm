@@ -255,19 +255,23 @@ public class Publication extends ContentPage {
     }
 
     public SeriesCollection getSeries() {
-        return new SeriesCollection((DataCollection) get(SERIES));
+        //return new SeriesCollection((DataCollection) get(SERIES));
+        return getPublicationBundle().getSeries();
     }
 
     public void addSeries(final Series series) {
-        Assert.exists(series, Series.class);
+        //Assert.exists(series, Series.class);
 
-        add(SERIES, series);
+        //add(SERIES, series);
+        getPublicationBundle().addSeries(series);
     }
 
     public void removeSeries(final Series series) {
-        Assert.exists(series, Series.class);
+        //Assert.exists(series, Series.class);
 
-        remove(SERIES, series);
+        //remove(SERIES, series);
+        
+        getPublicationBundle().removeSeries(series);
     }
 
     public boolean hasSeries() {

@@ -5,20 +5,20 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
     <ctd:content-type
-      label="SciPublications/Journal"
-      description="Base type for articleInJournals"
-      objectType="com.arsdigita.cms.contenttypes.Journal"
-      classname="com.arsdigita.cms.contenttypes.Journal">
+        label="SciPublications/Journal"
+        description="Base type for journals"
+        objectType="com.arsdigita.cms.contenttypes.Journal"
+        classname="com.arsdigita.cms.contenttypes.Journal">
 
         <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.JournalCreate">
 
             <ctd:authoring-step
-	  labelKey="publications.ui.articleInJournal_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
-	  descriptionKey="publications.ui.articleInJournal.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
-	  component="com.arsdigita.cms.contenttypes.ui.JournalPropertiesStep"
-	  ordering="1"/>
+                labelKey="publications.ui.journal_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
+                descriptionKey="publications.ui.journal.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
+                component="com.arsdigita.cms.contenttypes.ui.JournalPropertiesStep"
+                ordering="1"/>
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 

@@ -78,7 +78,7 @@ association {
                                                       join cms_organizationalunits_publications_map.orgaunit_id
                                                         to cms_orgaunit_bundles.bundle_id;
 
-    Publication[0..n] publications = join cms_orgaunit_bundles.bundle_id
+    PublicationBundle[0..n] publications = join cms_orgaunit_bundles.bundle_id
                                        to cms_organizationalunits_publications_map.orgaunit_id,
                                      join cms_organizationalunits_publications_map.publication_id
                                        to ct_publication_bundles.bundle_id;

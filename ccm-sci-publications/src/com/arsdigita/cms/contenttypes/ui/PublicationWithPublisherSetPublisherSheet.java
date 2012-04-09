@@ -174,9 +174,7 @@ public class PublicationWithPublisherSetPublisherSheet
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            publisher.getLanguage()),
+                     new Link(value.toString(),
                               resolver.generateItemURL(state,
                                                        publisher,
                                                        section,
@@ -192,10 +190,7 @@ public class PublicationWithPublisherSetPublisherSheet
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(
-                        String.format("%s (%s)",
-                                      value.toString(),
-                                      publisher.getLanguage()));
+                Label label = new Label(value.toString());
                 return label;
             }
         }

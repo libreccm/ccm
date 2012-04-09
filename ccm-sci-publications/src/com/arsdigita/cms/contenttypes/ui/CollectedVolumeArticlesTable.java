@@ -216,9 +216,7 @@ public class CollectedVolumeArticlesTable
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            article.getLanguage()),
+                     new Link(value.toString(),
                               resolver.generateItemURL(state,
                                                        article,
                                                        section,
@@ -226,7 +224,7 @@ public class CollectedVolumeArticlesTable
 
                 return link;
             } else {
-                 ArticleInCollectedVolume article;
+                ArticleInCollectedVolume article;
                 try {
                     article = new ArticleInCollectedVolume((BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
@@ -235,10 +233,8 @@ public class CollectedVolumeArticlesTable
                                ex);
                     return new Label(value.toString());
                 }
-                
-                Label label = new Label(String.format("%s (%s)",
-                                                      value.toString(),
-                                                      article.getLanguage()));
+
+                Label label = new Label(value.toString());
                 return label;
             }
         }

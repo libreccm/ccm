@@ -19,7 +19,9 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 
 /**
@@ -33,7 +35,16 @@ public class SeriesCollection extends DomainCollection {
     }
 
     public Series getSeries() {
-        return new Series(m_dataCollection.getDataObject());
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (Series) bundle.getPrimaryInstance();
     }
 
+    public Series getSeries(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (Series) bundle.getInstance(language);
+    }
 }

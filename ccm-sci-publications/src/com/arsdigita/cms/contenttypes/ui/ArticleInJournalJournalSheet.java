@@ -167,8 +167,7 @@ public class ArticleInJournalJournalSheet
                                       Object key,
                                       int row,
                                       int column) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             ArticleInJournal article = (ArticleInJournal) itemModel.
                     getSelectedObject(state);
 
@@ -187,9 +186,7 @@ public class ArticleInJournalJournalSheet
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            journal.getLanguage()),
+                     new Link(journal.getTitle(),
                               resolver.generateItemURL(state,
                                                        journal,
                                                        section,
@@ -204,9 +201,7 @@ public class ArticleInJournalJournalSheet
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(String.format("%s (%s)",
-                                                      value.toString(),
-                                                      journal.getLanguage()));
+                Label label = new Label(journal.getTitle());
                 return label;
             }
         }

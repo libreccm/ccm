@@ -19,7 +19,9 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
@@ -148,6 +150,18 @@ public class InProceedingsCollection extends DomainCollection {
     }
 
     public InProceedings getPaper() {
-        return new InProceedings(m_dataCollection.getDataObject());
+        //return new InProceedings(m_dataCollection.getDataObject());
+
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (InProceedings) bundle.getPrimaryInstance();
+    }
+
+    public InProceedings getPaper(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (InProceedings) bundle.getInstance(language);
     }
 }

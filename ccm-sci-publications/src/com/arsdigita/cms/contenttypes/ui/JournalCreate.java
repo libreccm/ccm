@@ -37,6 +37,7 @@ public class JournalCreate extends PageCreate {
         final ContentPage item = createContentPage(state);
         item.setLanguage((String) data.get(LANGUAGE));
         item.setName((String) data.get(NAME));
+        item.setTitle((String) data.get(TITLE));
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }

@@ -59,6 +59,10 @@ public class InProceedings extends Publication {
         super(type);
     }
 
+    public InProceedingsBundle getInProceedingsBundle() {
+        return (InProceedingsBundle) getContentBundle();
+    }
+    
     public Integer getPagesFrom() {
         return (Integer) get(PAGES_FROM);
     }
@@ -76,7 +80,7 @@ public class InProceedings extends Publication {
     }
 
     public Proceedings getProceedings() {
-        DataCollection collection;
+        /*DataCollection collection;
 
         collection = (DataCollection) get(PROCEEDINGS);
 
@@ -90,11 +94,29 @@ public class InProceedings extends Publication {
             collection.close();
 
             return (Proceedings) DomainObjectFactory.newInstance(dobj);
+        }*/
+        
+        final ProceedingsBundle bundle = getInProceedingsBundle().getProceedings();
+        
+        if (bundle == null) {
+            return null;
+        } else {
+            return (Proceedings) bundle.getPrimaryInstance();
+        }
+    }
+    
+    public Proceedings getProceedings(final String language) {
+        final ProceedingsBundle bundle = getInProceedingsBundle().getProceedings();
+        
+        if (bundle == null) {
+            return null;
+        } else {
+            return (Proceedings) bundle.getInstance(language);
         }
     }
 
-    public void setProceedings(Proceedings proceedings) {
-        Proceedings oldProceedings;
+    public void setProceedings(final Proceedings proceedings) {
+        /*Proceedings oldProceedings;
 
         oldProceedings = getProceedings();
         if (oldProceedings != null) {
@@ -107,6 +129,9 @@ public class InProceedings extends Publication {
             link.set(Proceedings.PAPER_ORDER,
                     Integer.valueOf((int) proceedings.getPapers().size()));
             link.save();
-        }
-    }
+        }*/
+        
+        getInProceedingsBundle().setProceedings(proceedings);
+        
+    }        
 }

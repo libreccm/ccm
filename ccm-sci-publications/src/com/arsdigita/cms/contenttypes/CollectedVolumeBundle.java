@@ -8,7 +8,6 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -21,8 +20,10 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter 
  */
-public class CollectedVolumeBundle extends PublicationBundle {
+public class CollectedVolumeBundle extends PublicationWithPublisherBundle {
 
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contenttypes.CollectedVolumeBundle";
     public static final String ARTICLES = "articles";
     public static final String ARTICLE_ORDER = "articleOrder";
 
@@ -61,17 +62,19 @@ public class CollectedVolumeBundle extends PublicationBundle {
                                 final Property property,
                                 final ItemCopier copier) {
         final String attribute = property.getName();
-        
+
         if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
-            final CollectedVolumeBundle collVolBundle = (CollectedVolumeBundle) source;
-            
+            final CollectedVolumeBundle collVolBundle =
+                                        (CollectedVolumeBundle) source;
+
             if (ARTICLES.equals(attribute)) {
-                final DataCollection articles = (DataCollection) collVolBundle.get(ARTICLES);
-                
-                while(articles.next()) {
+                final DataCollection articles = (DataCollection) collVolBundle.
+                        get(ARTICLES);
+
+                while (articles.next()) {
                     createArticleAssoc(articles);
                 }
-                
+
                 return true;
             } else {
                 return super.copyProperty(source, property, copier);
@@ -80,37 +83,42 @@ public class CollectedVolumeBundle extends PublicationBundle {
             return super.copyProperty(source, property, copier);
         }
     }
-    
+
     private void createArticleAssoc(final DataCollection articles) {
-        final ArticleInCollectedVolumeBundle draftArticle = (ArticleInCollectedVolumeBundle) DomainObjectFactory.newInstance(articles.getDataObject());
-        final ArticleInCollectedVolumeBundle liveArticle = (ArticleInCollectedVolumeBundle) draftArticle.getLiveVersion();
-        
+        final ArticleInCollectedVolumeBundle draftArticle =
+                                             (ArticleInCollectedVolumeBundle) DomainObjectFactory.
+                newInstance(articles.getDataObject());
+        final ArticleInCollectedVolumeBundle liveArticle =
+                                             (ArticleInCollectedVolumeBundle) draftArticle.
+                getLiveVersion();
+
         if (liveArticle != null) {
             final DataObject link = add(ARTICLES, liveArticle);
-            
-            link.set(ARTICLE_ORDER, 
+
+            link.set(ARTICLE_ORDER,
                      articles.get(ArticleInCollectedVolumeCollection.LINKORDER));
-            
+
             link.save();
         }
     }
-    
+
     public ArticleInCollectedVolumeCollection getArticles() {
-        return new ArticleInCollectedVolumeCollection((DataCollection) get(ARTICLES));
+        return new ArticleInCollectedVolumeCollection((DataCollection) get(
+                ARTICLES));
     }
-    
+
     public void addArticle(final ArticleInCollectedVolume article) {
         Assert.exists(article, ArticleInCollectedVolume.class);
-        
+
         final DataObject link = add(ARTICLES,
                                     article.getArticleInCollectedVolumeBundle());
-        
+
         link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
     }
-    
+
     public void removeArticle(final ArticleInCollectedVolume article) {
         Assert.exists(article, ArticleInCollectedVolume.class);
-        
+
         remove(ARTICLES, article.getArticleInCollectedVolumeBundle());
     }
 }

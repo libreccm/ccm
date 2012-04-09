@@ -149,7 +149,7 @@ public class ProceedingsOrganizerSheet
                                       int row,
                                       int column) {
             com.arsdigita.cms.SecurityManager securityManager =
-                                              Utilities.getSecurityManager(state);
+                                              CMS.getSecurityManager(state);
             Proceedings proceedings = (Proceedings) itemModel.getSelectedObject(
                     state);
 
@@ -168,9 +168,7 @@ public class ProceedingsOrganizerSheet
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            organizer.getLanguage()),
+                     new Link(value.toString(),
                               resolver.generateItemURL(state,
                                                        organizer,
                                                        section,
@@ -186,10 +184,7 @@ public class ProceedingsOrganizerSheet
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(
-                        String.format("%s (%s)",
-                                      value.toString(),
-                                      organizer.getLanguage()));
+                Label label = new Label(value.toString());
                 return label;
             }
         }

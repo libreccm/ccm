@@ -133,13 +133,21 @@ public class ArticleInJournal extends Publication {
 //            return (Journal) DomainObjectFactory.newInstance(dobj);
 //        }
 
-        return (Journal) getArticleInJournalBundle().getJournal().
-                getPrimaryInstance();
+        final JournalBundle bundle = getArticleInJournalBundle().getJournal();
+        if (bundle == null) {
+            return null;            
+        } else {
+            return (Journal) bundle.getPrimaryInstance();
+        }                
     }
 
     public Journal getJournal(final String language) {
-        return (Journal) getArticleInJournalBundle().getJournal().getInstance(
-                language);
+        final JournalBundle bundle = getArticleInJournalBundle().getJournal();
+        if (bundle == null) {
+            return null;            
+        } else {
+            return (Journal) bundle.getInstance(language);
+        }                
     }
 
     public void setJournal(final Journal journal) {
