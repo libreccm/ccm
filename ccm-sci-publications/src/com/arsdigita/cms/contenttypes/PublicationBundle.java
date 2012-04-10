@@ -306,7 +306,8 @@ public class PublicationBundle extends ContentBundle {
          final GenericOrganizationalUnitBundle orgaunitBundle = orgaunit.
                 getGenericOrganizationalUnitBundle();
         
-        orgaunitBundle.add(ORGAUNIT_PUBLICATIONS, publication);
+        orgaunitBundle.add(ORGAUNIT_PUBLICATIONS, 
+                           publication.getPublicationBundle());
     }
 
     public static void removePublication(
@@ -317,7 +318,8 @@ public class PublicationBundle extends ContentBundle {
         final GenericOrganizationalUnitBundle orgaunitBundle = orgaunit.
                 getGenericOrganizationalUnitBundle();
 
-        orgaunitBundle.remove(ORGAUNIT_PUBLICATIONS, publication);
+        orgaunitBundle.remove(ORGAUNIT_PUBLICATIONS, 
+                              publication.getPublicationBundle());
     }
     
     public SeriesCollection getSeries() {

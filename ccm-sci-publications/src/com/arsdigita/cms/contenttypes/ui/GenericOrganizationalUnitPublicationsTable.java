@@ -26,8 +26,9 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author Jens Pelzetter 
- * @version $Id$
+ * @author Jens Pelzetter
+ * @version $Id: GenericOrganizationalUnitPublicationsTable.java 1569 2012-04-05
+ * 14:10:12Z jensp $
  */
 public class GenericOrganizationalUnitPublicationsTable
         extends Table {
@@ -49,12 +50,14 @@ public class GenericOrganizationalUnitPublicationsTable
         columnModel.add(new TableColumn(
                 0,
                 PublicationGlobalizationUtil.globalize(
-                "genericorganizationalunit.ui.publications.columns.name").localize(),
+                "genericorganizationalunit.ui.publications.columns.name").
+                localize(),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
                 PublicationGlobalizationUtil.globalize(
-                "genericorganizationalunit.ui.publications.columns.remove").localize(),
+                "genericorganizationalunit.ui.publications.columns.remove").
+                localize(),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -160,20 +163,15 @@ public class GenericOrganizationalUnitPublicationsTable
                 final ContentSection section = CMS.getContext().
                         getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
-                final Link link = new Link(
-                        String.format("%s (%s)",
-                                      value.toString(),
-                                      publication.getLanguage()),
-                        resolver.generateItemURL(state,
-                                                 publication,
-                                                 section,
-                                                 publication.getVersion()));
+                final Link link = new Link(value.toString(),
+                                           resolver.generateItemURL(
+                        state,
+                        publication,
+                        section,
+                        publication.getVersion()));
                 return link;
             } else {
-                final Label label = new Label(String.format("%s (%s)",
-                                                            value.toString(),
-                                                            publication.
-                        getLanguage()));
+                final Label label = new Label(value.toString());
                 return label;
             }
         }

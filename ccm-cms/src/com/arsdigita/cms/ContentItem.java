@@ -1965,9 +1965,8 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                     if (obj instanceof ContentItem) {
                         final ContentItem item = (ContentItem) obj;
                         return item.copyReverseProperty(source, 
-                                                        item, 
-                                                        property,
-                                                        
+                                                        this, 
+                                                        property,                                                       
                                                         copier);
                     }
                 }
