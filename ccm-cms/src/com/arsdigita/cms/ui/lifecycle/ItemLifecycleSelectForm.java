@@ -18,17 +18,6 @@
  */
 package com.arsdigita.cms.ui.lifecycle;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.TimeZone;
-import java.util.TooManyListenersException;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -81,6 +70,14 @@ import com.arsdigita.workflow.simple.Engine;
 import com.arsdigita.workflow.simple.TaskException;
 import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.TimeZone;
+import java.util.TooManyListenersException;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 /**
  * <p>A form to select and apply a lifecycle to a content item.</p>
@@ -393,7 +390,7 @@ class ItemLifecycleSelectForm extends BaseForm {
                 thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 
                     public void uncaughtException(final Thread thread,
-                                                  final Throwable ex) {
+                                                  final Throwable ex) {                                                                      
                         PublishLock.getInstance().setError(item);
                         s_log.error(String.format(
                                 "An error occurred while "

@@ -1,6 +1,5 @@
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.AssociationCopier;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;

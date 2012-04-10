@@ -18,15 +18,14 @@
  */
 package com.arsdigita.cms;
 
-/* May 2009:
- * This file serves as an information for developers how to replace
+/*
+ * May 2009: This file serves as an information for developers how to replace
  * the URL resource: protocol extension (which is a application specific,
- * non-standard extension of the Java URL protocol) by supported,
- * standard compliant API.
+ * non-standard extension of the Java URL protocol) by supported, standard
+ * compliant API.
  *
- * Look for:
- * // URL resource: protocol handler removal: START
- * Will be removed as soon as a stable release 6.6 is created.
+ * Look for: // URL resource: protocol handler removal: START Will be removed as
+ * soon as a stable release 6.6 is created.
  */
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.form.DHTMLEditor;
@@ -40,36 +39,16 @@ import com.arsdigita.cms.publishToFile.PublishToFileConfig;
 import com.arsdigita.cms.ui.authoring.ItemCategoryExtension;
 import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 import com.arsdigita.runtime.AbstractConfig;
-// URL resource: protocol handler removal: START
-// remove
-// import com.arsdigita.util.UncheckedWrapperException;
-// URL resource: protocol handler removal: END
+import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-// import com.arsdigita.util.parameter.ParameterError;
-// URL resource: protocol handler removal: START
-// new: import:
 import com.arsdigita.util.parameter.ResourceParameter;
-// URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-// URL resource: protocol handler removal: START
-// remove:
-// import com.arsdigita.util.parameter.URLParameter;
-// new: import:
-import com.arsdigita.util.StringUtils;
-// URL resource: protocol handler removal: END
-
-// URL resource: protocol handler removal: START
-// remove:
-// import java.io.IOException;
-// import java.net.MalformedURLException;
-// import java.net.URL;
-// URL resource: protocol handler removal: END
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -78,14 +57,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 /**
  * A record containing server-session scoped configuration properties.
  *
- * Accessors of this class may return null.  Developers should take care
- * to trap null return values in their code.
+ * Accessors of this class may return null. Developers should take care to trap
+ * null return values in their code.
  *
  * @see ContentSection#getConfig()
  *
@@ -94,16 +72,21 @@ import org.apache.log4j.Logger;
  */
 public final class CMSConfig extends AbstractConfig {
 
-    /** Private Logger instance for debugging purpose.                        */
+    /**
+     * Private Logger instance for debugging purpose.
+     */
     private static final Logger s_log = Logger.getLogger(CMSConfig.class);
-    /** Private Object to hold one's own instance to return to users. */
+    /**
+     * Private Object to hold one's own instance to return to users.
+     */
     private static CMSConfig s_config;
 
     /**
      * Returns the singleton configuration record for the content section
      * environment.
      *
-     * @return The <code>ContentSectionConfig</code> record; it cannot be null
+     * @return The
+     * <code>ContentSectionConfig</code> record; it cannot be null
      */
     public static synchronized CMSConfig getInstance() {
         if (s_config == null) {
@@ -115,13 +98,13 @@ public final class CMSConfig extends AbstractConfig {
     }
     /**
      * Storage (map) for method getAssetStepsToSkip(ContentType type) to store
-     * mapping of steps that are deemed irrelevant for the passid in type. 
+     * mapping of steps that are deemed irrelevant for the passid in type.
      */
     private static Map s_skipAssetSteps = null;
     /**
-     * Item category add form speciofies Subclass of ItemCategoryForm
-     * to use for the assign categories step.
-     * Used in c.ad.cms.ui.authoring.ItemCategoryStep
+     * Item category add form speciofies Subclass of ItemCategoryForm to use for
+     * the assign categories step. Used in
+     * c.ad.cms.ui.authoring.ItemCategoryStep
      */
     private final Parameter m_categoryAuthoringAddForm =
                             new SpecificClassParameter(
@@ -130,8 +113,8 @@ public final class CMSConfig extends AbstractConfig {
             ItemCategoryForm.class,
             SimpleComponent.class);
     /**
-     * Path for the default item template.  Path is relative to the 
-     * Template Root path.
+     * Path for the default item template. Path is relative to the Template Root
+     * path.
      */
     private final Parameter m_defaultItemTemplatePath =
                             new StringParameter(
@@ -139,8 +122,8 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.REQUIRED,
             "/default/item.jsp");
     /**
-     * Path for the default folder template.  Path is relative to the
-     * Template Root path.
+     * Path for the default folder template. Path is relative to the Template
+     * Root path.
      */
     private final Parameter m_defaultFolderTemplatePath =
                             new StringParameter(
@@ -148,17 +131,17 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.REQUIRED,
             "/default/folder.jsp");
     /**
-     * Path or the root folter for template folders. 
-     * Path is relative to webapp root.
+     * Path or the root folter for template folders. Path is relative to webapp
+     * root.
      */
     private final Parameter m_templateRootPath =
-            new StringParameter("com.arsdigita.cms.template_root_path",
-                                Parameter.REQUIRED,
-                                "/templates/ccm-cms/content-section");
+                            new StringParameter(
+            "com.arsdigita.cms.template_root_path",
+            Parameter.REQUIRED,
+            "/templates/ccm-cms/content-section");
     //      up to version 6.6.4
     //      "/packages/content-section/templates");
-
-            // URL resource: protocol handler removal: START
+    // URL resource: protocol handler removal: START
     // remove:
     // try {
     //   m_itemAdapters = new URLParameter
@@ -174,22 +157,22 @@ public final class CMSConfig extends AbstractConfig {
      * specifications. Path is relative to webapp root.
      */
     private final Parameter m_itemAdapters =
-            new ResourceParameter("com.arsdigita.cms.item_adapters",
-                                  Parameter.REQUIRED,
-                                  "/WEB-INF/resources/cms-item-adapters.xml");
+                            new ResourceParameter(
+            "com.arsdigita.cms.item_adapters",
+            Parameter.REQUIRED,
+            "/WEB-INF/resources/cms-item-adapters.xml");
     // URL resource: protocol handler removal: END
     /**
-     * Use streamlined content creation: upon item creation,
-     * automatically open authoring steps and forward to the next step
+     * Use streamlined content creation: upon item creation, automatically open
+     * authoring steps and forward to the next step
      */
     private final Parameter m_useStreamlinedCreation = new BooleanParameter(
             "com.arsdigita.cms.use_streamlined_creation",
             Parameter.REQUIRED,
-            new Boolean(
-            true));
+            Boolean.TRUE);
     /**
-     * DHTML Editor Configuration for use in CMS module, lists the
-     * config object name and Javascript source location for its definition.
+     * DHTML Editor Configuration for use in CMS module, lists the config object
+     * name and Javascript source location for its definition.
      */
     private final Parameter m_dhtmlEditorConfig =
                             new DHTMLEditorConfigParameter(
@@ -208,16 +191,16 @@ public final class CMSConfig extends AbstractConfig {
     //   be accessable by other modules which use DHTMLeditor.
     //   Would be bad style to configure a cms specific parameter in core.
     /**
-     * Defines which plugins to use, e.g.TableOperations,CSS
-     * Format: [string,string,string]
+     * Defines which plugins to use, e.g.TableOperations,CSS Format:
+     * [string,string,string]
      */
     private final Parameter m_dhtmlEditorPlugins = new StringArrayParameter(
             "com.arsdigita.cms.dhtml_editor_plugins",
             Parameter.OPTIONAL,
             null);
     /**
-     * Prevent undesirable functions from being made available,
-     * eg images should only be added through the cms methods.
+     * Prevent undesirable functions from being made available, eg images should
+     * only be added through the cms methods.
      */
     private final Parameter m_dhtmlEditorHiddenButtons =
                             new StringArrayParameter(
@@ -230,65 +213,57 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_hideAdminTabs = new BooleanParameter(
             "com.arsdigita.cms.hide_admin_tabs",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Hide Folder Index Checkbox from folder view
      */
     private final Parameter m_hideFolderIndexCheckbox = new BooleanParameter(
             "com.arsdigita.cms.hide_folder_index_checkbox",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Hide launch date parameter on all forms and displays where it's used.
      */
     private final Parameter m_hideLaunchDate = new BooleanParameter(
             "com.arsdigita.cms.hide_launch_date",
             Parameter.REQUIRED,
-            new Boolean(
-            true));
+            Boolean.TRUE);
     /**
      * Require the launch date parameter to be set by the content author.
      */
     private final Parameter m_requireLaunchDate = new BooleanParameter(
             "com.arsdigita.cms.require_launch_date",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Hide the templates tab on the item admin page.
      */
     private final Parameter m_hideTemplatesTab = new BooleanParameter(
             "com.arsdigita.cms.hide_templates_tab",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Hide the upload file link in the editing of a text asset.
      */
     private final Parameter m_hideTextAssetUploadFile = new BooleanParameter(
             "com.arsdigita.cms.hide_text_asset_upload_file",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
-     * Hide timezone labels (if, for example, all users will be in the
-     * same timezone and such information would be unnecessary)
+     * Hide timezone labels (if, for example, all users will be in the same
+     * timezone and such information would be unnecessary)
      */
     private final Parameter m_hideTimezone = new BooleanParameter(
             "com.arsdigita.cms.hide_timezone",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Hide User Defined Content Types UI
      */
     private final Parameter m_hideUDCTUI = new BooleanParameter(
             "com.arsdigita.cms.hide_udct_ui",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Specifies the name of the class to use as a PublishLifecycleListener
      */
@@ -298,14 +273,13 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.OPTIONAL,
             PublishLifecycleListener.class.getName());
     /**
-     * Wether the Wysiwyg editor should clear the text of MSWord tags,
-     * everytime the user clicks on 'Save'
+     * Wether the Wysiwyg editor should clear the text of MSWord tags, everytime
+     * the user clicks on 'Save'
      */
     private final Parameter m_saveTextCleansWordTags = new BooleanParameter(
             "com.arsdigita.cms.save_text_cleans_word_tags",
             Parameter.OPTIONAL,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Hide Additional Resource Fields on RelatedLinkPropertyForm
      */
@@ -314,60 +288,55 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.contentassets.ui."
             + "RelatedLinkPropertyForm.hideAdditionalResourceFields",
             Parameter.REQUIRED,
-            new Boolean(false));
+            Boolean.FALSE);
     /**
-     * Get the search indexing not to process FileAssets,
-     * eg to avoid PDF slowdowns
+     * Get the search indexing not to process FileAssets, eg to avoid PDF
+     * slowdowns
      */
     private final Parameter m_disableFileAssetExtraction = new BooleanParameter(
             "com.arsdigita.cms.search.disableFileAssetExtraction",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
-     * Whether an item's workflow should be deleted, once the item
-     * has been (re)published
+     * Whether an item's workflow should be deleted, once the item has been
+     * (re)published
      */
     private final Parameter m_deleteWorkflowAfterPublication =
                             new BooleanParameter(
             "com.arsdigita.cms.delete_workflow_after_publication",
             Parameter.REQUIRED,
-            new Boolean(true));
+            Boolean.TRUE);
     /**
-     * Defines the number of days ahead that are covered in the
-     * 'Soon Expired' tab
+     * Defines the number of days ahead that are covered in the 'Soon Expired'
+     * tab
      */
     private final Parameter m_soonExpiredTimespanDays = new IntegerParameter(
             "com.arsdigita.cms.soon_expired_timespan_days",
             Parameter.REQUIRED,
-            new Integer(
-            14));
+            new Integer(14));
     /**
-     * Defines the number of months ahead that are covered in the
-     * 'Soon Expired' tab
+     * Defines the number of months ahead that are covered in the 'Soon Expired'
+     * tab
      */
     private final Parameter m_soonExpiredTimespanMonths = new IntegerParameter(
             "com.arsdigita.cms.soon_expired_timespan_months",
             Parameter.REQUIRED,
-            new Integer(
-            1));
+            new Integer(1));
     /**
      * Does a redirect to the unpublished item generate not found error?
      */
     private final Parameter m_unpublishedNotFound = new BooleanParameter(
             "com.arsdigita.cms.unpublished_not_found",
             Parameter.REQUIRED,
-            new Boolean(
-            true));
+            Boolean.TRUE);
     /**
-     * Links created through browse interfaces should only be within the
-     * same subsite
+     * Links created through browse interfaces should only be within the same
+     * subsite
      */
     private final Parameter m_linksOnlyInSameSubsite = new BooleanParameter(
             "com.arsdigita.cms.browse_links_in_same_subsite_only",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Item category step extension hook: Subclass of ItemCategoryExtension
      * which adds extension actions for the category authoring step
@@ -385,10 +354,10 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_hideResetLifecycleLink = new BooleanParameter(
             "com.arsdigita.cms.hide_reset_lifecycle_link",
             Parameter.OPTIONAL,
-            new Boolean(
-            true));
+            Boolean.TRUE);
     /**
-     * Whether to include INPATH operators to contains clause in intermedia search
+     * Whether to include INPATH operators to contains clause in intermedia
+     * search
      */
     private final Parameter m_scoreTitleAndKeywords =
                             new BooleanParameter(
@@ -396,8 +365,8 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.OPTIONAL,
             Boolean.FALSE);
     /**
-     * Title Weight, the relative weight given to title element within
-     * cms:item when ranking search results (only used by interMedia)
+     * Title Weight, the relative weight given to title element within cms:item
+     * when ranking search results (only used by interMedia)
      */
     private final Parameter m_titleWeight = new IntegerParameter(
             "com.arsdigita.cms.search.intermedia.title_weight",
@@ -405,8 +374,8 @@ public final class CMSConfig extends AbstractConfig {
             new Integer(1));
     /**
      * Keyword Weight, the relative weight given to the dcKeywords element
-     * within dublinCore element within cms:item element when ranking
-     * search results (only used by interMedia)
+     * within dublinCore element within cms:item element when ranking search
+     * results (only used by interMedia)
      */
     private final Parameter m_keywordWeight =
                             new IntegerParameter(
@@ -423,26 +392,24 @@ public final class CMSConfig extends AbstractConfig {
             Boolean.TRUE);
     /**
      * Asset steps to skip, specify asset steps that are not relevant for
-     * specific content types.
-     * Each entry in the list is a : separated pair. The first string
-     * is the className for the type (refer to classname column in contenttypes
-     * table eg com.arsdigita.cms.contenttypes.MultiPartArticle
-     * Second string is the name of the bebop step component
-     * eg com.arsdigita.cms.contenttypes.ui.ImageStep
+     * specific content types. Each entry in the list is a : separated pair. The
+     * first string is the className for the type (refer to classname column in
+     * contenttypes table eg com.arsdigita.cms.contenttypes.MultiPartArticle
+     * Second string is the name of the bebop step component eg
+     * com.arsdigita.cms.contenttypes.ui.ImageStep
      */
     private final Parameter m_skipAssetSteps = new StringArrayParameter(
             "com.arsdigita.cms.skip_asset_steps",
             Parameter.OPTIONAL,
             null);
     /**
-     * Mandatory Descriptions Content types may refer to this to decide
-     * whether to validate against empty descriptions
+     * Mandatory Descriptions Content types may refer to this to decide whether
+     * to validate against empty descriptions
      */
     private final Parameter m_mandatoryDescriptions = new BooleanParameter(
             "com.arsdigita.cms.mandatory_descriptions",
             Parameter.OPTIONAL,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
      * Delete Finished Lifecycles. Decide whether lifecycles and their phases
      * should be deleted from the system when finished.
@@ -451,56 +418,50 @@ public final class CMSConfig extends AbstractConfig {
                             new BooleanParameter(
             "com.arsdigita.cms.delete_lifecycle_when_complete",
             Parameter.OPTIONAL,
-            new Boolean(false));
+            Boolean.FALSE);
     /**
-     * Contacts for content items. Allows you to add a Contact authoring step
-     * to all items
+     * Contacts for content items. Allows you to add a Contact authoring step to
+     * all items
      */
     private final Parameter m_hasContactsAuthoringStep = new BooleanParameter(
             "com.arsdigita.cms.has_contacts_authoring_step",
             Parameter.REQUIRED,
-            new Boolean(
-            false));
+            Boolean.FALSE);
     /**
-     * Ordering for nodes in assign category tree. Decide whether entries
-     * should be ordered alphabetically or according to sort key
-     * (maintained in category admin tab in content centre)
-     * SortKey|Alphabetical is initialized in constructor! See below.
+     * Ordering for nodes in assign category tree. Decide whether entries should
+     * be ordered alphabetically or according to sort key (maintained in
+     * category admin tab in content centre) SortKey|Alphabetical is initialized
+     * in constructor! See below.
      */
     private final Parameter m_categoryTreeOrdering =
-            new EnumerationParameter(
-                "com.arsdigita.cms.category_tree_order",
-                Parameter.OPTIONAL,
-                Category.SORT_KEY);
-    
+                            new EnumerationParameter(
+            "com.arsdigita.cms.category_tree_order",
+            Parameter.OPTIONAL,
+            Category.SORT_KEY);
     /**
-     * Allow content creation in Workspace (content center) section listing. 
-     * Allows you to turn off the ability to create content in the section listing
+     * Allow content creation in Workspace (content center) section listing.
+     * Allows you to turn off the ability to create content in the section
+     * listing
      */
     private final Parameter m_allowContentCreateInSectionListing =
-            new BooleanParameter(
-                "com.arsdigita.cms.allow_content_create_in_section_listing",
-                Parameter.REQUIRED,
-                new Boolean(true));
-    
+                            new BooleanParameter(
+            "com.arsdigita.cms.allow_content_create_in_section_listing",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
     /**
      * Hide the legacy public site link in Workspace (content center) section
      * listing. Legacy public site display is replaced by navigation based
-     * presentation (or by portlets) and should be hidden in the admin ui
-     * be default now.
+     * presentation (or by portlets) and should be hidden in the admin ui be
+     * default now.
      */
     private final Parameter m_hideLegacyPublicSiteLink =
-            new BooleanParameter(
-                "com.arsdigita.cms.hide_legacy_public_site_link",
-                Parameter.REQUIRED,
-                new Boolean(true));
-
-
+                            new BooleanParameter(
+            "com.arsdigita.cms.hide_legacy_public_site_link",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
     // ///////////////////////////////////////////
     // Notification related parameters
     // ///////////////////////////////////////////
-
-
     /**
      * Delete Sent Workflow Notifications. Decide whether successfully sent
      * notifications and messages should be deleted from the system
@@ -509,34 +470,32 @@ public final class CMSConfig extends AbstractConfig {
                             new BooleanParameter(
             "com.arsdigita.cms.delete_workflow_notification_when_sent",
             Parameter.OPTIONAL,
-            new Boolean(false));
+            Boolean.FALSE);
     /**
-     * Decide whether successfully sent notifications and messages
-     * should be deleted from the system
+     * Decide whether successfully sent notifications and messages should be
+     * deleted from the system
      */
     private final Parameter m_deleteExpiryNotificationsWhenSent =
                             new BooleanParameter(
             "com.arsdigita.cms.delete_expiry_notification_when_sent",
             Parameter.OPTIONAL,
-            new Boolean(false));
+            Boolean.FALSE);
     /**
-     * Amount of time (in hours) before the expiration of a content item
-     * that users in the Alert Recipient role are alerted via email
+     * Amount of time (in hours) before the expiration of a content item that
+     * users in the Alert Recipient role are alerted via email
      */
     private final Parameter m_defaultNotificationTime = new IntegerParameter(
             "com.arsdigita.cms.default_notification_time",
             Parameter.REQUIRED,
-            new Integer(
-            0));
+            new Integer(0));
     /**
-     * Wether a content item's author should be notified
-     * by the item's LifecycleListener; defaults to true
+     * Wether a content item's author should be notified by the item's
+     * LifecycleListener; defaults to true
      */
     private final Parameter m_notifyAuthorOnLifecycle = new BooleanParameter(
             "com.arsdigita.cms.notify_author_on_lifecycle",
             Parameter.OPTIONAL,
-            new Boolean(
-            true));
+            Boolean.TRUE);
     // ////////////////////////////////////////////////////
     // Content Center (Workspace) config related parameters
     // ////////////////////////////////////////////////////
@@ -607,7 +566,6 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.lifecycle.use_old_style_item_lifecycle_item_pane",
             Parameter.REQUIRED,
             false);
-    
     ////////////////////////////////////////////////
     //Actives threaded publishing. If active, the publish process for 
     //content items will run in a separate thread. May useful if you have
@@ -620,14 +578,14 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.lifecycle.threaded_publishing",
             Parameter.REQUIRED,
             true);
-    
-    /**
-     * Copiers for associations not known yet. For example for associations
-     * with the generic types defined in this module from another module.
-     */
-    private final Parameter m_assocCopiers = new StringArrayParameter("com.arsdigita.cms.publish.association_copiers",
-                                                                     Parameter.REQUIRED,
-                                                                     new String[]{});
+    private final Parameter m_publishingFailureSender = new StringParameter(
+            "cms.arsdigita.cms.lifecycle.threaded_publishing.notify_on_error.from",
+            Parameter.REQUIRED,
+            "");
+    private final Parameter m_publishingFailureReceiver = new StringParameter(
+            "cms.arsdigita.cms.lifecycle.threaded_publishing.notify_on_error.to",
+            Parameter.REQUIRED,
+            "");
 
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -639,7 +597,8 @@ public final class CMSConfig extends AbstractConfig {
      * Constructor, but do NOT instantiate this class directly.
      *
      * @see ContentSection#getConfig()
-     **/
+     *
+     */
     public CMSConfig() {
 
         // Initialize m_categoryTreeOrdering parameter here!
@@ -712,7 +671,9 @@ public final class CMSConfig extends AbstractConfig {
 
         register(m_useOldStyleItemLifecycleItemPane);
         register(m_threadPublishing);
-        register(m_assocCopiers);
+        register(m_publishingFailureSender);
+        register(m_publishingFailureReceiver);
+
 
         // publishToFile package related parameter
         // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
@@ -723,8 +684,8 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * Retrieve path of the root folter for template folders. 
-     * Path is relative to webapp root.
+     * Retrieve path of the root folter for template folders. Path is relative
+     * to webapp root.
      */
     public final String getTemplateRoot() {
         return (String) get(m_templateRootPath);
@@ -763,9 +724,9 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * 
-     * @deprecated 
-     * use com.arsdigita.cms.ContentSection.getDefaultSection().getName() instead
+     *
+     * @deprecated use
+     * com.arsdigita.cms.ContentSection.getDefaultSection().getName() instead
      */
     public final String getDefaultContentSection() {
         // return (String) get(m_defaultSection);
@@ -880,8 +841,9 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * Fetch the file name contaning XML Mapping of the content center tabs
-     * to URLs
+     * Fetch the file name contaning XML Mapping of the content center tabs to
+     * URLs
+     *
      * @return String containig file name including path component.
      */
     public String getContentCenterMap() {
@@ -889,17 +851,16 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * Internal class representing a DHTMLEditor configuration parameter. It 
+     * Internal class representing a DHTMLEditor configuration parameter. It
      * creates a new DHMTLEditor Config object (internal class in DHTMLEditor).
-     * 
+     *
      * XXX Method unmarshal is broken and currently does not work correctly. It
-     * does not process default values provided by using 
+     * does not process default values provided by using
      * DHTMLEditor.Config.Standard (see parameter m_dhtmlEditorConfig above).
      * May be a similiar problem as with ResourceParameter and default value,
-     * see patch provided by pbrucha.
-     * Best solution may be to remove this special parameter class and use a
-     * string parameter instead to directly create a DHTMLEditor.Config object.
-     * (pboy, 2010-09-02)
+     * see patch provided by pbrucha. Best solution may be to remove this
+     * special parameter class and use a string parameter instead to directly
+     * create a DHTMLEditor.Config object. (pboy, 2010-09-02)
      */
     private class DHTMLEditorConfigParameter extends StringParameter {
 
@@ -911,6 +872,7 @@ public final class CMSConfig extends AbstractConfig {
 
         /**
          * WARNING: Does not correctly process default values, see above!
+         *
          * @param value
          * @param errors
          * @return
@@ -922,7 +884,9 @@ public final class CMSConfig extends AbstractConfig {
     }
     protected static HashMap extraXMLGenerators = new HashMap();
 
-    /** Add one ExtraXMLGenerator to the list. */
+    /**
+     * Add one ExtraXMLGenerator to the list.
+     */
     public static void registerExtraXMLGenerator(String type,
                                                  ExtraXMLGenerator gen) {
         List gens = (List) extraXMLGenerators.get(type);
@@ -936,7 +900,9 @@ public final class CMSConfig extends AbstractConfig {
         gens.add(gen.getClass()); // XXX assumes default ctor
     }
 
-    /** Get the iterator of ExtraXMLGenerators. */
+    /**
+     * Get the iterator of ExtraXMLGenerators.
+     */
     public static Iterator getExtraXMLGeneratorsIterator() {
         return extraXMLGenerators.entrySet().iterator();
     }
@@ -946,11 +912,11 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * The relative weight given to the dcKeywords element
-     * within dublinCore element within cms:item element
-     * when ranking search results
-     * Only used by the interMedia query engine.
-     **/
+     * The relative weight given to the dcKeywords element within dublinCore
+     * element within cms:item element when ranking search results Only used by
+     * the interMedia query engine.
+     *
+     */
     public Integer getKeywordSearchWeight() {
         return (Integer) get(m_keywordWeight);
     }
@@ -960,18 +926,20 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * The relative weight given to title element
-     * within cms:item element when ranking search results
-     * Only used by the interMedia query engine.
-     **/
+     * The relative weight given to title element within cms:item element when
+     * ranking search results Only used by the interMedia query engine.
+     *
+     */
     public Integer getTitleSearchWeight() {
         return (Integer) get(m_titleWeight);
     }
 
     /**
-     * Whether to include INPATH operators to contains clause in intermedia search
+     * Whether to include INPATH operators to contains clause in intermedia
+     * search
      *
-     * NB - if true, INDEX MUST BE CREATED WITH PATH_SECTION_GROUP - upgrade 6.5.0 - 6.5.1
+     * NB - if true, INDEX MUST BE CREATED WITH PATH_SECTION_GROUP - upgrade
+     * 6.5.0 - 6.5.1
      *
      * @return
      */
@@ -980,14 +948,14 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * for the given content type, returns a collection of 
-     * steps that are deemed irrelevant for the type.
-     * 
+     * for the given content type, returns a collection of steps that are deemed
+     * irrelevant for the type.
+     *
      * If no irrelevant steps, an empty set is returned.
-     * 
-     * Steps are the names of the bebop step components that 
-     * are used by the authoring kit wizard
-     * 
+     *
+     * Steps are the names of the bebop step components that are used by the
+     * authoring kit wizard
+     *
      * @param type
      * @return
      */
@@ -1031,8 +999,8 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * May be used by any content type creation form to decide whether to validate 
-     * description field
+     * May be used by any content type creation form to decide whether to
+     * validate description field
      *
      */
     public boolean mandatoryDescriptions() {
@@ -1040,9 +1008,9 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * Used to decide whether lifecycles (and all asociated phases)
-     * should be deleted from the system when complete
-     * 
+     * Used to decide whether lifecycles (and all asociated phases) should be
+     * deleted from the system when complete
+     *
      * (Deleting lifecycle means that you lose a bit of historical information
      * eg when was this item unpublished)
      */
@@ -1051,26 +1019,24 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * Used to decide whether to delete old notification records
-     * for expiry notifications.
-     * 
-     * If true, notifications and messages are deleted if the 
-     * notification is successfully sent. Any send failures are 
-     * retained
-     * 
+     * Used to decide whether to delete old notification records for expiry
+     * notifications.
+     *
+     * If true, notifications and messages are deleted if the notification is
+     * successfully sent. Any send failures are retained
+     *
      */
     public boolean deleteExpiryNotifications() {
         return ((Boolean) get(m_deleteExpiryNotificationsWhenSent)).booleanValue();
     }
 
     /**
-     * Used to decide whether to delete old notification records
-     * for workflow notifications.
-     * 
-     * If true, notifications and messages are deleted if the 
-     * notification is successfully sent. Any send failures are 
-     * retained
-     * 
+     * Used to decide whether to delete old notification records for workflow
+     * notifications.
+     *
+     * If true, notifications and messages are deleted if the notification is
+     * successfully sent. Any send failures are retained
+     *
      */
     public boolean deleteWorkflowNotifications() {
         return ((Boolean) get(m_deleteWorkflowNotificationsWhenSent)).
@@ -1083,11 +1049,11 @@ public final class CMSConfig extends AbstractConfig {
 
     /**
      * I'am not sure for what this method is. I found it here when I tried
-     * figure out how add multiple parts to an ContentType, like ccm-cms-types-contact
-     * and the Multipart article do. I think this method should not be here because
-     * it is only needed by one specific contenttype. Because of this, I think that
-     * this method and the contact are violating many rules of modern software design.
-     * Jens Pelzetter, 2009-06-02.
+     * figure out how add multiple parts to an ContentType, like
+     * ccm-cms-types-contact and the Multipart article do. I think this method
+     * should not be here because it is only needed by one specific contenttype.
+     * Because of this, I think that this method and the contact are violating
+     * many rules of modern software design. Jens Pelzetter, 2009-06-02.
      *
      * @return
      */
@@ -1105,8 +1071,8 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * Hide the (no longer used) legacy public site link in Workspace
-     * (content center) section listing, true by default.
+     * Hide the (no longer used) legacy public site link in Workspace (content
+     * center) section listing, true by default.
      */
     public final boolean getHideLegacyPublicSiteLink() {
         return ((Boolean) get(m_hideLegacyPublicSiteLink)).booleanValue();
@@ -1131,8 +1097,12 @@ public final class CMSConfig extends AbstractConfig {
     public Boolean getThreadedPublishing() {
         return (Boolean) get(m_threadPublishing);
     }
-    
-    public String[] getAssocCopiers() {
-        return (String[]) get(m_assocCopiers);
+
+    public String getPublicationFailureSender() {
+        return (String) get(m_publishingFailureSender);
+    }
+
+    public String getPublicationFailureReceiver() {
+        return (String) get(m_publishingFailureReceiver);
     }
 }
