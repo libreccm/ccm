@@ -40,7 +40,7 @@
         <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-shortcuts"/>
-        <ccm:application name="ccm-subsite"/>                    
+        <ccm:application name="ccm-subsite"/>
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->
