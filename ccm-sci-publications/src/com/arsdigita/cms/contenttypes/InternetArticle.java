@@ -19,14 +19,14 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.InternetArticleExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -52,22 +52,26 @@ public class InternetArticle extends Publication {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public InternetArticle(BigDecimal id) throws DataObjectNotFoundException {
+    public InternetArticle(final BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public InternetArticle(OID oid) throws DataObjectNotFoundException {
+    public InternetArticle(final OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
-    public InternetArticle(DataObject dataObject) {
+    public InternetArticle(final DataObject dataObject) {
         super(dataObject);
     }
 
-    public InternetArticle(String type) {
+    public InternetArticle(final String type) {
         super(type);
     }
 
+    public InternetArticleBundle getInternetArticleBundle() {
+        return (InternetArticleBundle) getContentBundle();
+    }
+    
     public String getPlace() {
         return (String) get(PLACE);
     }
@@ -77,7 +81,7 @@ public class InternetArticle extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        DataCollection collection;
+        /*DataCollection collection;
 
         collection = (DataCollection) get(ORGANIZATION);
 
@@ -91,11 +95,17 @@ public class InternetArticle extends Publication {
             collection.close();
 
             return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(dobj);
-        }       
+        }*/
+        
+        return (GenericOrganizationalUnit) getInternetArticleBundle().getOrganization().getPrimaryInstance();
+    }
+    
+    public GenericOrganizationalUnit getOrganization(final String language) {
+           return (GenericOrganizationalUnit) getInternetArticleBundle().getOrganization().getInstance(language);
     }
 
-    public void setOrganization(GenericOrganizationalUnit orga) {
-        GenericOrganizationalUnit oldOrga;
+    public void setOrganization(final GenericOrganizationalUnit orga) {
+        /*GenericOrganizationalUnit oldOrga;
 
         oldOrga = getOrganization();
         if(oldOrga != null) {
@@ -107,8 +117,9 @@ public class InternetArticle extends Publication {
             DataObject link = add(ORGANIZATION, orga);
             link.set("orgaOrder", 1);
             link.save();
-        }
-
+        }*/
+        
+        getInternetArticleBundle().setOrganization(orga);
     }
 
     public String getNumber() {
@@ -181,5 +192,19 @@ public class InternetArticle extends Publication {
     
     public void setDoi(final String doi)  {
         set(DOI, doi);
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new InternetArticleExtraXmlGenerator());
+        return generators;
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        generators.add(new InternetArticleExtraXmlGenerator());
+        return generators;
     }
 }

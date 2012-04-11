@@ -19,6 +19,8 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.ProceedingsExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -27,6 +29,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Content type of proceedings. Provides attributes for storing the data
@@ -185,5 +188,19 @@ public class Proceedings extends PublicationWithPublisher {
 
     public boolean hasPapers() {
         return !this.getPapers().isEmpty();
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new ProceedingsExtraXmlGenerator());
+        return generators;
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        generators.add(new ProceedingsExtraXmlGenerator());
+        return generators;
     }
 }

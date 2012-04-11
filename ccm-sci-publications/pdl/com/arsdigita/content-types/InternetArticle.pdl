@@ -20,6 +20,7 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentBundle;
 
 // PDL definition for a InternetArticle publication
 object type InternetArticle extends Publication {
@@ -38,16 +39,20 @@ object type InternetArticle extends Publication {
        reference key (ct_internet_article.internet_article_id);
 }
 
-association {
-    InternetArticle[0..n] internetArticle = join cms_organizationalunits.organizationalunit_id
-                                      to ct_internet_article_organization_map.organization_id,
-                                    join ct_internet_article_organization_map.internet_article_id
-                                      to ct_internet_article.internet_article_id;
+object type InternetArticleBundle extends PublicationBundle {
+    reference key( ct_internet_article_bundles.bundle_id);
+}
 
-    GenericOrganizationalUnit[0..n] organization = join ct_internet_article.internet_article_id
-                                                     to ct_internet_article_organization_map.internet_article_id,
-                                                   join ct_internet_article_organization_map.organization_id
-                                                     to cms_organizationalunits.organizationalunit_id;
+association {
+    InternetArticleBundle[0..n] internetArticle = join cms_orgaunit_bundles.bundle_id
+                                                    to ct_internet_article_organization_map.organization_id,
+                                                  join ct_internet_article_organization_map.internet_article_id
+                                                    to ct_internet_article_bundles.bundle_id;
+
+    GenericOrganizationalUnitBundle[0..n] organization = join ct_internet_article_bundles.bundle_id
+                                                           to ct_internet_article_organization_map.internet_article_id,
+                                                         join ct_internet_article_organization_map.organization_id
+                                                           to cms_orgaunit_bundles.bundle_id;
 
     Integer[0..1] orgaOrder = ct_internet_article_organization_map.orga_order INTEGER;
 }

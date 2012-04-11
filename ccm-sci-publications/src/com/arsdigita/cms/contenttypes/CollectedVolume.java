@@ -19,10 +19,13 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.CollectedVolumeExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * A collected volume which consists of some {@link ArticleInCollectedVolume} 
@@ -94,5 +97,19 @@ public class CollectedVolume extends PublicationWithPublisher {
 
     public boolean hasArticles() {
         return !this.getArticles().isEmpty();
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new CollectedVolumeExtraXmlGenerator());
+        return generators;
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        generators.add(new CollectedVolumeExtraXmlGenerator());
+        return generators;
     }
 }

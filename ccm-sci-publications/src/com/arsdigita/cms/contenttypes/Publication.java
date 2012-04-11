@@ -21,11 +21,10 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.PublicationExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -335,10 +334,17 @@ public class Publication extends ContentPage {
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
-        generators.add(new SciPublicationExtraXmlGenerator());
+        generators.add(new PublicationExtraXmlGenerator());
         return generators;
     }
 
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        generators.add(new PublicationExtraXmlGenerator());
+        return generators;
+    }
+    
     @Override
     public String getSearchSummary() {
         return String.format("%s %s %s", 

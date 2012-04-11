@@ -19,10 +19,13 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.PublicationWithPublisherExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
@@ -197,5 +200,19 @@ public class PublicationWithPublisher extends Publication {
 //        }
 
         getPublicationWithPublisherBundle().setPublisher(publisher);
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new PublicationWithPublisherExtraXmlGenerator());
+        return generators;
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new PublicationWithPublisherExtraXmlGenerator());
+        return generators;
     }
 }

@@ -19,10 +19,13 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.ArticleInCollectedVolumeExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -113,18 +116,20 @@ public class ArticleInCollectedVolume extends Publication {
 //            return (CollectedVolume)DomainObjectFactory.newInstance(dobj);
 //        }
 
-        final CollectedVolumeBundle bundle = getArticleInCollectedVolumeBundle().getCollectedVolume();
-        
+        final CollectedVolumeBundle bundle = getArticleInCollectedVolumeBundle().
+                getCollectedVolume();
+
         if (bundle == null) {
             return null;
         } else {
             return (CollectedVolume) bundle.getPrimaryInstance();
         }
     }
-    
+
     public CollectedVolume getCollectedVolume(final String language) {
-         final CollectedVolumeBundle bundle = getArticleInCollectedVolumeBundle().getCollectedVolume();
-        
+        final CollectedVolumeBundle bundle = getArticleInCollectedVolumeBundle().
+                getCollectedVolume();
+
         if (bundle == null) {
             return null;
         } else {
@@ -147,7 +152,23 @@ public class ArticleInCollectedVolume extends Publication {
 //                     Integer.valueOf((int) collectedVolume.getArticles().size()));
 //            link.save();
 //        }
-        
+
         getArticleInCollectedVolumeBundle().setCollectedVolume(collectedVolume);
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
+        generators.add(new ArticleInCollectedVolumeExtraXmlGenerator());
+        return generators;
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
+        generators.add(new ArticleInCollectedVolumeExtraXmlGenerator());
+        return generators;
     }
 }

@@ -19,14 +19,14 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.ArticleInJournalExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -135,19 +135,19 @@ public class ArticleInJournal extends Publication {
 
         final JournalBundle bundle = getArticleInJournalBundle().getJournal();
         if (bundle == null) {
-            return null;            
+            return null;
         } else {
             return (Journal) bundle.getPrimaryInstance();
-        }                
+        }
     }
 
     public Journal getJournal(final String language) {
         final JournalBundle bundle = getArticleInJournalBundle().getJournal();
         if (bundle == null) {
-            return null;            
+            return null;
         } else {
             return (Journal) bundle.getInstance(language);
-        }                
+        }
     }
 
     public void setJournal(final Journal journal) {
@@ -165,7 +165,23 @@ public class ArticleInJournal extends Publication {
 //                     Integer.valueOf((int) journal.getArticles().size()));
 //            link.save();
 //        }
-        
+
         getArticleInJournalBundle().setJournal(journal);
-    }        
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
+        generators.add(new ArticleInJournalExtraXmlGenerator());
+        return generators;
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
+        generators.add(new ArticleInJournalExtraXmlGenerator());
+        return generators;
+    }
 }

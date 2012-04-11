@@ -20,6 +20,7 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentBundle;
 
 // PDL definition for an expertise
 object type Expertise extends Publication {
@@ -30,30 +31,34 @@ object type Expertise extends Publication {
        reference key (ct_expertise.expertise_id);
 }
 
-association {
-    Expertise[0..n] expertise = join cms_organizationalunits.organizationalunit_id
-                                  to ct_expertise_organization_map.organization_id,
-                                join ct_expertise_organization_map.experise_id
-                                  to ct_expertise.expertise_id;
+object type ExpertiseBundle extends PublicationBundle {
+    reference key(ct_expertise_bundles.bundle_id);
+}
 
-    GenericOrganizationalUnit[0..n] organization = join ct_expertise.expertise_id
-                                                     to ct_expertise_organization_map.experise_id,
-                                                   join ct_expertise_organization_map.organization_id
-                                                     to cms_organizationalunits.organizationalunit_id;
+association {
+    ExpertiseBundle[0..n] expertise = join cms_orgaunit_bundles.bundle_id
+                                        to ct_expertise_organization_map.organization_id,
+                                      join ct_expertise_organization_map.experise_id
+                                        to ct_expertise_bundles.bundle_id;
+
+    GenericOrganizationalUnitBundle[0..n] organization = join ct_expertise_bundles.bundle_id
+                                                           to ct_expertise_organization_map.experise_id,
+                                                         join ct_expertise_organization_map.organization_id
+                                                           to cms_orgaunit_bundles.bundle_id;
 
     Integer[0..1] orgaOrder = ct_expertise_organization_map.orga_order INTEGER;
 }
 
 association {
-    Expertise[0..n] orderedExpertise = join cms_organizationalunits.organizationalunit_id
-                                         to ct_expertise_orderer_map.orderer_id,
-                                       join ct_expertise_orderer_map.experise_id
-                                         to ct_expertise.expertise_id;
+    ExpertiseBundle[0..n] orderedExpertise = join cms_orgaunit_bundles.bundle_id
+                                               to ct_expertise_orderer_map.orderer_id,
+                                             join ct_expertise_orderer_map.experise_id
+                                               to ct_expertise_bundles.bundle_id;
 
-    GenericOrganizationalUnit[0..n] orderer = join ct_expertise.expertise_id
-                                                to ct_expertise_orderer_map.experise_id,
-                                              join ct_expertise_orderer_map.orderer_id
-                                                to cms_organizationalunits.organizationalunit_id;
+    GenericOrganizationalUnitBundle[0..n] orderer = join ct_expertise_bundles.bundle_id
+                                                      to ct_expertise_orderer_map.experise_id,
+                                                    join ct_expertise_orderer_map.orderer_id
+                                                      to cms_orgaunit_bundles.bundle_id;
 
     Integer[0..1] ordererOrder =  ct_expertise_orderer_map.orderer_order INTEGER;
 }

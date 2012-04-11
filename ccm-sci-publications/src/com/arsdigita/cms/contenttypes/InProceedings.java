@@ -19,13 +19,13 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.InProceedingsExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -62,7 +62,7 @@ public class InProceedings extends Publication {
     public InProceedingsBundle getInProceedingsBundle() {
         return (InProceedingsBundle) getContentBundle();
     }
-    
+
     public Integer getPagesFrom() {
         return (Integer) get(PAGES_FROM);
     }
@@ -82,32 +82,34 @@ public class InProceedings extends Publication {
     public Proceedings getProceedings() {
         /*DataCollection collection;
 
-        collection = (DataCollection) get(PROCEEDINGS);
+         collection = (DataCollection) get(PROCEEDINGS);
 
-        if (collection.size() == 0) {
-            return null;
-        } else {
-            DataObject dobj;
+         if (collection.size() == 0) {
+         return null;
+         } else {
+         DataObject dobj;
 
-            collection.next();
-            dobj = collection.getDataObject();
-            collection.close();
+         collection.next();
+         dobj = collection.getDataObject();
+         collection.close();
 
-            return (Proceedings) DomainObjectFactory.newInstance(dobj);
-        }*/
-        
-        final ProceedingsBundle bundle = getInProceedingsBundle().getProceedings();
-        
+         return (Proceedings) DomainObjectFactory.newInstance(dobj);
+         }*/
+
+        final ProceedingsBundle bundle =
+                                getInProceedingsBundle().getProceedings();
+
         if (bundle == null) {
             return null;
         } else {
             return (Proceedings) bundle.getPrimaryInstance();
         }
     }
-    
+
     public Proceedings getProceedings(final String language) {
-        final ProceedingsBundle bundle = getInProceedingsBundle().getProceedings();
-        
+        final ProceedingsBundle bundle =
+                                getInProceedingsBundle().getProceedings();
+
         if (bundle == null) {
             return null;
         } else {
@@ -118,20 +120,34 @@ public class InProceedings extends Publication {
     public void setProceedings(final Proceedings proceedings) {
         /*Proceedings oldProceedings;
 
-        oldProceedings = getProceedings();
-        if (oldProceedings != null) {
-            remove(PROCEEDINGS, oldProceedings);
-        }
+         oldProceedings = getProceedings();
+         if (oldProceedings != null) {
+         remove(PROCEEDINGS, oldProceedings);
+         }
 
-        if (proceedings != null) {
-            Assert.exists(proceedings, Proceedings.class);
-            DataObject link = add(PROCEEDINGS, proceedings);
-            link.set(Proceedings.PAPER_ORDER,
-                    Integer.valueOf((int) proceedings.getPapers().size()));
-            link.save();
-        }*/
-        
+         if (proceedings != null) {
+         Assert.exists(proceedings, Proceedings.class);
+         DataObject link = add(PROCEEDINGS, proceedings);
+         link.set(Proceedings.PAPER_ORDER,
+         Integer.valueOf((int) proceedings.getPapers().size()));
+         link.save();
+         }*/
+
         getInProceedingsBundle().setProceedings(proceedings);
-        
-    }        
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new InProceedingsExtraXmlGenerator());
+        return generators;
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
+        generators.add(new InProceedingsExtraXmlGenerator());
+        return generators;
+    }
 }
