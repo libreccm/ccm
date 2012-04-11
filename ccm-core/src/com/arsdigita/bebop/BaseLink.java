@@ -23,6 +23,7 @@ import java.util.TooManyListenersException;
 
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -30,45 +31,21 @@ import com.arsdigita.util.UncheckedWrapperException;
  * The parent of all Bebop Link classes, this class represents a URL on a page.
  * It may contain a label, an image, or any other component.
  *
- * <p> The following table lists all Bebop Link classes and suggests
- * when they might be used.
- * <p>
- * <table BORDER=3>
- * <tr>
- *  <th>Link Class</th>
- *  <th>Usage</th>
- * </tr>
- * <tr>
- *   <td>{@link BaseLink}</td>
- *   <td>Parent class of Bebop Link classes. Extend this class to
- * build your own Link class.</td>
- * </tr>
- * <tr>
- *   <td>{@link Link}</td>
- *   <td>Link class that manages its own URL variables. Session information
- * is added to the target URL for this type.</td>
- * </tr>
- * <tr>
- *   <td>{@link ExternalLink}</td>
- *   <td>Link that does not encode the URL with any session information.
- * Used for a link to a page outside the site.</td>
- * </tr>
- * <tr>
- *   <td>{@link ControlLink}</td>
- *   <td> Used for references within its own page (often
- *  as fields in a table header for sorting a column).</td>
- * </tr>
- * <tr>
- *    <td>{@link ActionLink}</td>
- *    <td>Sets its own control event and runs its own 
+ * <p> The following table lists all Bebop Link classes and suggests when they
+ * might be used. <p> <table BORDER=3> <tr> <th>Link Class</th> <th>Usage</th>
+ * </tr> <tr> <td>{@link BaseLink}</td> <td>Parent class of Bebop Link classes.
+ * Extend this class to build your own Link class.</td> </tr> <tr> <td>{@link Link}</td>
+ * <td>Link class that manages its own URL variables. Session information is
+ * added to the target URL for this type.</td> </tr> <tr> <td>{@link ExternalLink}</td>
+ * <td>Link that does not encode the URL with any session information. Used for
+ * a link to a page outside the site.</td> </tr> <tr> <td>{@link ControlLink}</td>
+ * <td> Used for references within its own page (often as fields in a table
+ * header for sorting a column).</td> </tr> <tr> <td>{@link ActionLink}</td>
+ * <td>Sets its own control event and runs its own
  * {@link com.arsdigita.bebop.event.ActionListener}s. When the link is clicked,
- * the code in the Listener's <tt>actionPerformed</tt> method runs.</td>
- * </tr>
- * <tr>
- *    <td>{@link ToggleLink}</td>
- *    <td>A link that turns into label when it is selected and
- * turns back into a link when it is unselected.</td>
- * </tr>
+ * the code in the Listener's <tt>actionPerformed</tt> method runs.</td> </tr>
+ * <tr> <td>{@link ToggleLink}</td> <td>A link that turns into label when it is
+ * selected and turns back into a link when it is unselected.</td> </tr>
  * </table>
  *
  * @version $Id: BaseLink.java 998 2005-11-15 22:27:13Z sskracic $
@@ -77,24 +54,22 @@ public abstract class BaseLink extends TextStylable
         implements Cloneable {
 
     /**
-     * The name of the attribute used in XML to indicate which type of link
-     * this link represents.
+     * The name of the attribute used in XML to indicate which type of link this
+     * link represents.
      */
     private final String TYPE_ATTR = "type";
     private final String HREF_NO_JAVASCRIPT = "href_no_javascript";
     private final String HREF = "href";
-
     protected String m_url;
     protected String m_noJavascriptURL = null;
     protected Component m_child;
-
     private PrintListener m_printListener;
-
     private String m_sConfirmMsg = "";
+    private GlobalizedMessage m_confirmMsg;
 
     /**
      * Constructor
-     * 
+     *
      * @param child label component, text, image, etc.
      * @param url
      */
@@ -106,7 +81,7 @@ public abstract class BaseLink extends TextStylable
 
     /**
      * Constructor.
-     * 
+     *
      * @param label as text
      * @param url
      */
@@ -116,7 +91,7 @@ public abstract class BaseLink extends TextStylable
 
     /**
      * Constructor.
-     * 
+     *
      * @param child
      * @param l
      */
@@ -132,7 +107,7 @@ public abstract class BaseLink extends TextStylable
 
     /**
      * Constructor.
-     *  
+     *
      * @param label
      * @param l
      */
@@ -141,14 +116,15 @@ public abstract class BaseLink extends TextStylable
     }
 
     /**
-     * Constructor. 
-     * 
+     * Constructor.
+     *
      * @param l
      */
     public BaseLink(PrintListener l) {
         this("", l);
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         BaseLink result = (BaseLink) super.clone();
         result.m_printListener = null;
@@ -156,67 +132,63 @@ public abstract class BaseLink extends TextStylable
     }
 
     /**
-     * Adds a print listener.
-     * Since the <code>PrintListener</code> is expected to modify the
-     * target of the <code>PrintEvent</code>, only one print listener can be
-     * set for a link.
+     * Adds a print listener. Since the
+     * <code>PrintListener</code> is expected to modify the target of the
+     * <code>PrintEvent</code>, only one print listener can be set for a link.
+     *
      * @param listener the print listener
-     * @throws IllegalArgumentException if <code>listener</code> is null.
+     * @throws IllegalArgumentException if
+     * <code>listener</code> is null.
      * @throws TooManyListenersException if a print listener has previously been
-     *         added.
-     * @pre listener != null */
+     * added. @pre listener != null
+     */
     public void addPrintListener(PrintListener listener)
-            throws IllegalStateException, TooManyListenersException
-    {
-        if ( listener == null ) {
-            throw new IllegalArgumentException
-                    ("Argument listener can not be null");
+            throws IllegalStateException, TooManyListenersException {
+        if (listener == null) {
+            throw new IllegalArgumentException("Argument listener can not be null");
         }
-        if ( m_printListener != null ) {
-            throw new TooManyListenersException
-                    ("Too many listeners. Can only have one");
+        if (m_printListener != null) {
+            throw new TooManyListenersException("Too many listeners. Can only have one");
         }
         m_printListener = listener;
     }
 
     /**
      * Removes a previously added print listener. If the passed in
-     * <code>listener</code> is
-     * not the listener that was added with {@link #addPrintListener
+     * <code>listener</code> is not the listener that was added with {@link #addPrintListener
      * addPrintListener}, an IllegalArgumentException will be thrown.
+     *
      * @param listener the listener that was previously added with
-     *      <code>addPrintListener</code>
-     * @throws IllegalArgumentException if <code>listener</code> is not the
-     *      currently registered print listener or is <code>null</code>.
-     * @pre listener != null
+     * <code>addPrintListener</code>
+     * @throws IllegalArgumentException if
+     * <code>listener</code> is not the currently registered print listener or
+     * is
+     * <code>null</code>. @pre listener != null
      */
     public void removePrintListener(PrintListener listener)
-            throws IllegalArgumentException
-    {
-        if ( listener == null ) {
+            throws IllegalArgumentException {
+        if (listener == null) {
             throw new IllegalArgumentException("listener can not be null");
         }
-        if ( listener != m_printListener ) {
-            throw new IllegalArgumentException
-                    ("listener is not registered with this widget");
+        if (listener != m_printListener) {
+            throw new IllegalArgumentException("listener is not registered with this widget");
         }
         m_printListener = null;
     }
 
     protected BaseLink firePrintEvent(PageState state) {
         BaseLink l = this;
-        if ( m_printListener != null ) {
+        if (m_printListener != null) {
             try {
                 l = (BaseLink) this.clone();
                 m_printListener.prepare(new PrintEvent(this, state, l));
-            } catch ( CloneNotSupportedException e ) {
+            } catch (CloneNotSupportedException e) {
                 l = this;
                 throw new UncheckedWrapperException(e);
             }
         }
         return l;
     }
-
 
     public final Component getChild() {
         return m_child;
@@ -227,7 +199,7 @@ public abstract class BaseLink extends TextStylable
         m_child = child;
     }
 
-    public final String getTarget(){
+    public final String getTarget() {
         return m_url;
     }
 
@@ -247,31 +219,33 @@ public abstract class BaseLink extends TextStylable
         setAttribute(TYPE_ATTR, t);
     }
 
-
     protected abstract void generateURL(PageState state, Element parent);
 
     /**
-     * <p>Generates a DOM fragment:
-     * <p><pre>
+     * <p>Generates a DOM fragment: <p><pre>
      * &lt;bebop:link href="..." type="..." %bebopAttr;/>
-     * </pre>
-     * The <code>href</code> attribute contains the target the link
-     * should point to. The <code>type</code> attribute is used to
-     * give more finegrained control over which kind of link this element
-     * represents. The types are <code>link</code> for a
-     * <code>Link</code>, <code>control</code> for a {@link ControlLink},
-     * and <code>toggle</code> for a {@link ToggleLink}. There may be
-     * additional attributes depending on what type of link this link
-     * represents.
+     * </pre> The
+     * <code>href</code> attribute contains the target the link should point to.
+     * The
+     * <code>type</code> attribute is used to give more finegrained control over
+     * which kind of link this element represents. The types are
+     * <code>link</code> for a
+     * <code>Link</code>,
+     * <code>control</code> for a {@link ControlLink}, and
+     * <code>toggle</code> for a {@link ToggleLink}. There may be additional
+     * attributes depending on what type of link this link represents.
+     *
      * @see ControlLink#generateXML
      * @see ToggleLink#generateXML
      */
+    @Override
     public void generateXML(PageState state, Element parent) {
-        if ( isVisible(state) ) {
+        if (isVisible(state)) {
             BaseLink target = firePrintEvent(state);
-            Element link = parent.newChildElement ("bebop:link", BEBOP_XML_NS);
+            Element link = parent.newChildElement("bebop:link", BEBOP_XML_NS);
             target.generateURL(state, link);
-            target.exportAttributes(link);
+            target.exportConfirmAttributes(state, link);
+//            target.exportAttributes(link);
             //setup the link without javascript
             target.setupNoJavascriptURL(state, link);
             target.exportAttributes(link);
@@ -314,7 +288,9 @@ public abstract class BaseLink extends TextStylable
     protected void setupNoJavascriptURL(PageState ps, Element link) {
         String sURL = null;
 
-        if (m_sConfirmMsg.length() > 0) {
+        if (m_sConfirmMsg.length() > 0
+                || (m_confirmMsg != null && m_confirmMsg.localize().toString().length() > 0)) {
+
             //if we want the confirm link, create the link
             String sOkUrl = getAbsoluteUrl(ps, link.getAttribute(HREF));
             String sCancelUrl = null;
@@ -324,7 +300,11 @@ public abstract class BaseLink extends TextStylable
                 Assert.fail("Could not get current page state as URL");
             }
 
-            sURL = ConfirmPage.getConfirmUrl(m_sConfirmMsg, sOkUrl, sCancelUrl);
+            if (m_sConfirmMsg.length() > 0) {
+                sURL = ConfirmPage.getConfirmUrl(m_sConfirmMsg, sOkUrl, sCancelUrl);
+            } else if (m_confirmMsg != null) {
+                sURL = ConfirmPage.getConfirmUrl(m_confirmMsg.localize().toString(), sOkUrl, sCancelUrl);
+            }
 
         } else {
             //don't want confirm link--just no javascript link
@@ -340,22 +320,24 @@ public abstract class BaseLink extends TextStylable
     }
 
     /**
-     * Adds type-specific XML attributes to the XML element representing
-     * this link. Subclasses should override this method if they introduce
-     * more attributes than the ones {@link #generateXML generateXML}
-     * produces by default.
+     * Adds type-specific XML attributes to the XML element representing this
+     * link. Subclasses should override this method if they introduce more
+     * attributes than the ones {@link #generateXML generateXML} produces by
+     * default.
      *
      * @param state the current request
      * @param link the XML element representing this link
      */
-    protected void generateExtraXMLAttributes(PageState state, Element link) {}
+    protected void generateExtraXMLAttributes(PageState state, Element link) {
+    }
 
     /**
-     * Sets onClick event and <em>disables the javascript-based double-click protection for this link</em>.
-     * Not for confirmation messages; Should call setConfirmation for that.
+     * Sets onClick event and <em>disables the javascript-based double-click
+     * protection for this link</em>. Not for confirmation messages; Should call
+     * setConfirmation for that.
      *
-     * @param value
-     * @pre value.toLowerCase().startsWith("return confirm(") == false
+     * @param value @pre value.toLowerCase().startsWith("return confirm(") ==
+     * false
      *
      * @see #setConfirmation
      */
@@ -364,8 +346,8 @@ public abstract class BaseLink extends TextStylable
         //use setConfirmation() instead, or else the javascript will break
         if (value != null) {
             Assert.isTrue(!value.toLowerCase().startsWith("return confirm("),
-                    "Do not use setOnClick() to set confirmation messages. " +
-                    "Use setCofirmation() instead.");
+                    "Do not use setOnClick() to set confirmation messages. "
+                    + "Use setCofirmation() instead.");
         }
 
         setAttribute(ON_CLICK, value);
@@ -373,20 +355,20 @@ public abstract class BaseLink extends TextStylable
 
     /**
      * Forces the user to click through a confirmation dialog before this link
-     * is followed. The user is prompted with the specified message. If the
-     * user does not does not confirm, the link is not followed. The current
+     * is followed. The user is prompted with the specified message. If the user
+     * does not does not confirm, the link is not followed. The current
      * implementation uses the JavaScript confirm function and the onClick
-     * attribute.
-     * If JavaScript is not enabled in the client browser, this method will
-     * redirect the browser to a Bebop confirmation page rather than use
-     * a JavaScript confirmation.
-     * Subsequent calls to setOnClick will undo the effect of this method.
+     * attribute. If JavaScript is not enabled in the client browser, this
+     * method will redirect the browser to a Bebop confirmation page rather than
+     * use a JavaScript confirmation. Subsequent calls to setOnClick will undo
+     * the effect of this method.
      *
-     * @param message the confirmation message presented to the user.  This
+     * @param message the confirmation message presented to the user. This
      * message cannot have an apostrophe or back slash
      *
      * @pre message.indexOf("'") == -1 && message.indexOf("\\") == -1
-     **/
+     *
+     */
     public void setConfirmation(String message) {
         //make sure that the message doesn't have any apostrophe's
         //or back slashes
@@ -394,7 +376,7 @@ public abstract class BaseLink extends TextStylable
         if (Assert.isEnabled()) {
             final boolean isGoodMessage = message.indexOf("'") == -1 && message.indexOf("\\") == -1;
             Assert.isTrue(isGoodMessage,
-                              "confirmation message cannot contain apostrophe or back slash");
+                    "confirmation message cannot contain apostrophe or back slash");
         }
 
         setAttribute("confirm", "confirm");
@@ -403,6 +385,30 @@ public abstract class BaseLink extends TextStylable
         setAttribute(ON_CLICK, "return confirm(\\'" + message + "\\');");
 
         m_sConfirmMsg = message;
+    }
+
+    public void setConfirmation(GlobalizedMessage msg) {
+        m_confirmMsg = msg;
+    }
+
+    private void exportConfirmAttributes(PageState state, Element link) {
+
+        if (m_sConfirmMsg.length() > 0 || m_confirmMsg != null) {
+            // Set confirm link, if 
+            setAttribute("confirm", "confirm");
+
+            if (m_sConfirmMsg.length() > 0) {
+
+                //set the onclick attribute for the link
+                setAttribute(ON_CLICK, "return confirm(\\'" + m_sConfirmMsg + "\\');");
+
+            } else if (m_confirmMsg != null) {
+
+                //set the onclick attribute for the link
+                setAttribute(ON_CLICK, "return confirm(\\'" + m_confirmMsg.localize() + "\\');");
+
+            }
+        }
     }
 
     public final void setNoJavascriptTarget(String sURL) {
