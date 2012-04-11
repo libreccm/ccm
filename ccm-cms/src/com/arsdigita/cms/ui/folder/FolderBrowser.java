@@ -70,6 +70,7 @@ import javax.servlet.ServletException;
  * item selection model is updated.
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
+ * @author Sören Bernstein <sbernstein@zes.uni-bremen.de>
  * @version $Id: FolderBrowser.java 2017 2009-10-04 09:03:45Z pboy $
  */
 public class FolderBrowser extends Table {
@@ -506,7 +507,7 @@ public class FolderBrowser extends Table {
 
     /**
      * Added by: Sören Bernstein <sbernstein@zes.uni-bremen.de>
-     * 
+     *
      * Produce links to view an item in a specific language and show all
      * existing language version and the live status in the folder browser.
      */
@@ -577,12 +578,12 @@ public class FolderBrowser extends Table {
                         } else {
                             ItemResolver resolver = section.getItemResolver();
                             container.add(
-                                    new Link(langLabel, 
-                                             resolver.generateItemURL(state,
-                                                                      ci.getID(),
-                                                                      name,
-                                                                      section,
-                                                                      coll.getVersion())));
+                                    new Link(langLabel,
+                                    resolver.generateItemURL(state,
+                                    ci.getID(),
+                                    name,
+                                    section,
+                                    coll.getVersion())));
                         }
                         if (languages.hasNext()) {
                             container.add(new Label("&nbsp;", false));
@@ -785,35 +786,37 @@ public class FolderBrowser extends Table {
                 s_log.debug("Checking to see if " + this + " is deletable");
             }
 
-            if (m_itemColl.isLive()) {
-                if (s_log.isDebugEnabled()) {
-                    s_log.debug("The item is live; it cannot be deleted");
-                }
-
-                return false;
-            }
-
             if (m_itemColl.isFolder()) {
+
                 if (!m_itemColl.hasChildren()) {
                     if (s_log.isDebugEnabled()) {
-                        s_log.debug("The item is an empty folder; it may be "
-                                + "deleted");
+                        s_log.debug("The item is an empty folder; it may be deleted");
                     }
                     return true;
+
                 } else {
+
                     if (s_log.isDebugEnabled()) {
-                        s_log.debug("The folder is not empty; it cannot be "
-                                + "deleted");
+                        s_log.debug("The folder is not empty; it cannot be deleted");
+                    }
+                    return false;
+
+                }
+            } else {
+
+                if (m_itemColl.getContentItem().hasLiveInstance()) {
+
+                    if (s_log.isDebugEnabled()) {
+                        s_log.debug("This item has a live instance; it cannot be deleted");
                     }
                     return false;
                 }
-            } else {
-                if (s_log.isDebugEnabled()) {
-                    s_log.debug("The item is not a folder; it may be deleted");
-                }
-
-                return true;
             }
+
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("The item is not a folder and doesn't have a live instance; it may be deleted");
+            }
+            return true;
         }
 
         public Object getKeyAt(int columnIndex) {

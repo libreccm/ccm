@@ -1061,15 +1061,28 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Returns true if this item has a publicly viewable version. This item is
-     * not necessarily the live version nor is this method to be confused with
-     * isPublished.
+     * Returns true if this language version of this item has a publicly viewable
+     * version. This item is not necessarily the live version nor is this
+     * method to be confused with isPublished.
      *
      * @return < code>true<code> if this content item has a live
      * version, or if it <em>is</em> the live version
      */
     public boolean isLive() {
         return getLiveVersion() != null;
+    }
+
+    // Added by: Quasimodo
+    /**
+     * Returns true if this item has a publicly viewable version in any language.
+     * This item is not necessarily the live version nor is this method
+     * to be confused with isPublished.
+     *
+     * @return < code>true<code> if this content bundle item has a live
+     * version
+     */
+    public boolean hasLiveInstance() {
+        return getBundle().getLiveVersion() != null;
     }
 
     /**
