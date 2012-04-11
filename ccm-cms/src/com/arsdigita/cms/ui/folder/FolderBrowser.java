@@ -427,7 +427,7 @@ public class FolderBrowser extends Table {
             final boolean isCurrentKey = sortKey.equals(m_key);
             final String currentSortDirection = (String) state.getValue(
                     m_sortDirection);
-            String imageURLStub = null;
+            String imageURLStub;
 
             if (SORT_ACTION_UP.equals(currentSortDirection)) {
                 imageURLStub = "gray-triangle-up.gif";
@@ -439,7 +439,7 @@ public class FolderBrowser extends Table {
 
                 @Override
                 public void setControlEvent(PageState ps) {
-                    String sortDirectionAction = null;
+                    String sortDirectionAction;
                     // by default, everything sorts "up" unless it
                     // is the current key and it is already pointing up
                     if (SORT_ACTION_UP.equals(currentSortDirection)
@@ -604,8 +604,8 @@ public class FolderBrowser extends Table {
      */
     private static class ActionCellRenderer implements TableCellRenderer {
 
-        private static Label s_noAction;
-        private static ControlLink s_link;
+        private static final Label s_noAction;
+        private static final ControlLink s_link;
         private static final Logger logger = Logger.getLogger(
                 ActionCellRenderer.class);
 
@@ -615,7 +615,7 @@ public class FolderBrowser extends Table {
             s_noAction.lock();
             s_link = new ControlLink(
                     new Label(globalize("cms.ui.folder.delete")));
-            s_link.setConfirmation("Permanently delete this item?"); // XXX G11N ?
+            s_link.setConfirmation(globalize("cms.ui.folder.delete_confirmation"));
             logger.debug("Static initializer finished.");
         }
 
@@ -759,7 +759,7 @@ public class FolderBrowser extends Table {
                     return FormatStandards.formatDate(lastModified);
                 }
                 case DELETABLE:
-                    return new Boolean(isDeletable());
+                    return isDeletable();
                 case IS_INDEX: {
                     if (hideIndexColumn()) {
                         throw new IndexOutOfBoundsException(
@@ -770,9 +770,9 @@ public class FolderBrowser extends Table {
                         return null;
                     }
                     if (m_folIndexID == null) {
-                        return new Boolean(false);
+                        return false;
                     }
-                    return new Boolean(m_folIndexID.compareTo(m_itemColl.getBundleID()) == 0);
+                    return m_folIndexID.compareTo(m_itemColl.getBundleID()) == 0;
                 }
                 default:
                     throw new IndexOutOfBoundsException("Column index "
@@ -828,6 +828,7 @@ public class FolderBrowser extends Table {
 
     private class FolderChanger extends TableActionAdapter {
 
+        @Override
         public void cellSelected(TableActionEvent e) {
             PageState s = e.getPageState();
             int col = e.getColumn().intValue();
