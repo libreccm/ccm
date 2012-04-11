@@ -107,7 +107,7 @@ public class ForumConfig extends AbstractConfig {
         m_showNewTabs = new BooleanParameter(
                 "com.arsdigita.forum.show_new_tabs",
                 Parameter.OPTIONAL,
-                Boolean.FALSE);
+                Boolean.TRUE);
         m_showAllThreadAlerts = new BooleanParameter(
                 "com.arsdigita.forum.show_all_forum_thread_alerts",
                 Parameter.OPTIONAL,
