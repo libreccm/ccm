@@ -1,0 +1,6 @@
+Removed from web directory,
+
+see r1441, r1443: 
+> remove wildcard imports and a potentiall security hole in ccm-cms/web/upload.jsp
+> Note: Actually the whole upload.jsp should be removed, because it doesn't have 
+> any permission checks!

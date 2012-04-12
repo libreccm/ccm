@@ -16,19 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.atoz.terms;
+package com.arsdigita.atoz;
 
-import com.arsdigita.atoz.AbstractAtoZGenerator;
-import com.arsdigita.atoz.AtoZAtomicEntry;
-import com.arsdigita.atoz.AtoZEntry;
-import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.Term;
-
-import com.arsdigita.categorization.Category;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Filter;
+
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
@@ -37,47 +30,42 @@ import com.arsdigita.xml.Element;
 import java.util.List;
 import java.util.ArrayList;
 
-public class DomainGenerator extends AbstractAtoZGenerator {
-    public DomainGenerator(DomainProvider provider) {
+/**
+ * 
+ * @author pb
+ */
+public class AtoZCategoryGenerator extends AbstractAtoZGenerator {
+
+    public AtoZCategoryGenerator(AtoZCategoryProvider provider) {
         super(provider);
     }
 
     public AtoZEntry[] getEntries(String letter) {
-        DomainProvider provider = (DomainProvider) getProvider();
+        AtoZCategoryProvider provider = (AtoZCategoryProvider) getProvider();
 
-        Domain domain = provider.getDomain();
-        DomainCollection terms = domain.getTerms();
-        terms.addPath(Term.MODEL + "." + Category.ID);
-        terms.addPath(Term.MODEL + "." + Category.OBJECT_TYPE);
-        terms.addPath(Term.MODEL + "." + Category.DESCRIPTION);
-        terms.addEqualsFilter(Term.IN_ATOZ, Boolean.TRUE);
-        Filter f = terms.addFilter("lower(" + Term.MODEL + "." + Category.NAME
-                + ") like :key");
-        f.set("key", letter.toLowerCase() + "%");
-        terms.addOrder(Term.MODEL + "." + Category.NAME);
+        DataQuery entries = provider.getAtomicEntries();
+        Filter f = entries.addFilter("sortKey like :sortKey");
+        f.set("sortKey", letter.toLowerCase() + "%");
+        entries.addOrder("sortKey");
 
         List l = new ArrayList();
-        while (terms.next()) {
-            Term term = (Term) terms.getDomainObject();
-            DataObject cat = (DataObject) terms.get(Term.MODEL);
-
-            l
-                    .add(new DomainAtomicEntry(cat.getOID(), (String) cat
-                            .get(Category.NAME), (String) cat
-                            .get(Category.DESCRIPTION)));
+        while (entries.next()) {
+            l.add(new AtoZCategoryAtomicEntry(new OID((String) entries
+                    .get("objectType"), entries.get("id")), (String) entries
+                    .get("title"), (String) entries.get("description")));
         }
 
         return (AtoZEntry[]) l.toArray(new AtoZEntry[l.size()]);
     }
 
-    private class DomainAtomicEntry implements AtoZAtomicEntry {
+    private class AtoZCategoryAtomicEntry implements AtoZAtomicEntry {
         private OID m_oid;
 
         private String m_title;
 
         private String m_description;
 
-        public DomainAtomicEntry(OID oid, String title, String description) {
+        public AtoZCategoryAtomicEntry(OID oid, String title, String description) {
             m_oid = oid;
             m_title = title;
             m_description = description;

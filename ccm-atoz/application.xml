@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  name="ccm-ldn-atoz"
+  prettyName="A-Z"
+  version="6.6.1"
+  release="1"
+  webapp="ROOT">
+
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-navigation" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-subsite" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-aplaws" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-util" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms-types-siteproxy" version="6.6.0" relation="ge"/>
+  </ccm:dependencies>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    The ccm-ldn-atoz package enables a site to present all it's content in 
+    alphabetical order as an additional service to it's users. Usually the 
+    theme provides a link to the page as part of its static elements. 
+    
+    By default the application presents the A-Z list at ~/ccm/atoz/.
+    
+    An administration interface is provided at ~/ccm/atoz/admin/. Here you 
+    can configure the content to be listed by selecting an appropriate 
+    content provider. 
+  </ccm:description>
+
+</ccm:application>

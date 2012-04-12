@@ -16,31 +16,32 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.atoz.ui.terms;
+package com.arsdigita.atoz.siteproxy.ui.admin;
 
+import com.arsdigita.atoz.ui.admin.ProviderDetails;
+import com.arsdigita.atoz.ui.admin.ProviderAdmin;
 import com.arsdigita.atoz.ui.admin.ProviderAdmin;
 import com.arsdigita.atoz.ui.admin.ProviderDetails;
-
 import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
-public class DomainProviderAdmin extends ProviderAdmin {
-    
-    private DomainProviderForm m_detailsForm;
+public class SiteProxyProviderAdmin extends ProviderAdmin {
+
+    private SiteProxyProviderForm m_detailsForm;
+
     private ActionLink m_editDetails;
+
     private ProviderDetails m_details;
 
-    public DomainProviderAdmin(ACSObjectSelectionModel provider) {
-        super("domainProviderAdmin", 
-              provider);
-               
+    public SiteProxyProviderAdmin(ACSObjectSelectionModel provider) {
+        super("siteProxyProviderAdmin", provider);
+
         m_details = new ProviderDetails(provider);
-        m_detailsForm = new DomainProviderForm(provider);
+        m_detailsForm = new SiteProxyProviderForm(provider);
         m_editDetails = new ActionLink("Edit details");
         m_editDetails.setIdAttr("edit");
 
@@ -48,39 +49,41 @@ public class DomainProviderAdmin extends ProviderAdmin {
         add(m_detailsForm);
         add(m_editDetails);
 
-        m_editDetails.addActionListener(new DomainProviderEditStart());
-        m_detailsForm.addCompletionListener(new DomainProviderEditComplete());
+        m_editDetails.addActionListener(new SiteProxyProviderEditStart());
+        m_detailsForm
+                .addCompletionListener(new SiteProxyProviderEditComplete());
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
-        
+
+        p.setVisibleDefault(m_details, true);
         p.setVisibleDefault(m_detailsForm, false);
     }
 
-    private void switchMode(PageState state,
-                            Component form,
-                            boolean active) {
-        form.setVisible(state, active);
-                
-        m_details.setVisible(state, !active);
-        m_editDetails.setVisible(state, !active);
-    }
-
-    private class DomainProviderEditStart implements ActionListener {
+    private class SiteProxyProviderEditStart implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
-            
+
             switchMode(state, m_detailsForm, true);
         }
     }
 
-    private class DomainProviderEditComplete implements ActionListener {
+    private class SiteProxyProviderEditComplete implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
 
             switchMode(state, m_detailsForm, false);
         }
+    }
+
+    private void switchMode(PageState state, SiteProxyProviderForm form,
+            boolean active) {
+        form.setVisible(state, active);
+
+        m_details.setVisible(state, !active);
+        m_editDetails.setVisible(state, !active);
     }
 
 }

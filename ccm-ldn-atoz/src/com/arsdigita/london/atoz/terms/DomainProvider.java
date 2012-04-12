@@ -18,8 +18,8 @@
 
 package com.arsdigita.london.atoz.terms;
 
-import com.arsdigita.london.atoz.AtoZGenerator;
-import com.arsdigita.london.atoz.AtoZProvider;
+import com.arsdigita.atoz.AtoZGenerator;
+import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.london.terms.Domain;
 
 import com.arsdigita.domain.DomainObjectFactory;

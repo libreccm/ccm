@@ -18,8 +18,8 @@
 
 package com.arsdigita.london.atoz.ui.terms;
 
-import com.arsdigita.london.atoz.AtoZProvider;
-import com.arsdigita.london.atoz.ui.admin.ProviderForm;
+import com.arsdigita.atoz.AtoZProvider;
+import com.arsdigita.atoz.ui.admin.ProviderForm;
 import com.arsdigita.london.atoz.terms.DomainProvider;
 import com.arsdigita.london.terms.Domain;
 

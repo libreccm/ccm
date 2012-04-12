@@ -16,31 +16,31 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.atoz.ui.terms;
+package com.arsdigita.atoz.ui.admin;
 
-import com.arsdigita.atoz.ui.admin.ProviderAdmin;
-import com.arsdigita.atoz.ui.admin.ProviderDetails;
-
-import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.event.ActionEvent;
-import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.ActionLink;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.Component;
 
-public class DomainProviderAdmin extends ProviderAdmin {
+public class ItemProviderAdmin extends ProviderAdmin {
     
-    private DomainProviderForm m_detailsForm;
+    private ItemProviderForm m_detailsForm;
     private ActionLink m_editDetails;
     private ProviderDetails m_details;
 
-    public DomainProviderAdmin(ACSObjectSelectionModel provider) {
-        super("domainProviderAdmin", 
-              provider);
+    private ItemProviderAliasList m_aliasList;
+    private ItemProviderAliasForm m_aliasForm;
+    private ActionLink m_addAlias;
+
+    public ItemProviderAdmin(ACSObjectSelectionModel provider) {
+        super("categoryProviderAdmin", provider);
                
         m_details = new ProviderDetails(provider);
-        m_detailsForm = new DomainProviderForm(provider);
+        m_detailsForm = new ItemProviderForm(provider);
         m_editDetails = new ActionLink("Edit details");
         m_editDetails.setIdAttr("edit");
 
@@ -48,14 +48,27 @@ public class DomainProviderAdmin extends ProviderAdmin {
         add(m_detailsForm);
         add(m_editDetails);
 
-        m_editDetails.addActionListener(new DomainProviderEditStart());
-        m_detailsForm.addCompletionListener(new DomainProviderEditComplete());
+        m_aliasList = new ItemProviderAliasList(provider);
+        m_aliasForm = new ItemProviderAliasForm(provider);
+        m_addAlias = new ActionLink("Add item alias");
+        m_addAlias.setIdAttr("addAlias");
+
+        add(m_aliasList);
+        add(m_aliasForm);
+        add(m_addAlias);
+
+        m_editDetails.addActionListener(new ItemProviderEditStart());
+        m_detailsForm.addCompletionListener(new ItemProviderEditComplete());
+
+        m_addAlias.addActionListener(new ItemAliasStart());
+        m_aliasForm.addCompletionListener(new ItemAliasComplete());
     }
 
     public void register(Page p) {
         super.register(p);
         
         p.setVisibleDefault(m_detailsForm, false);
+        p.setVisibleDefault(m_aliasForm, false);
     }
 
     private void switchMode(PageState state,
@@ -65,9 +78,12 @@ public class DomainProviderAdmin extends ProviderAdmin {
                 
         m_details.setVisible(state, !active);
         m_editDetails.setVisible(state, !active);
+
+        m_aliasList.setVisible(state, !active);
+        m_addAlias.setVisible(state, !active);
     }
 
-    private class DomainProviderEditStart implements ActionListener {
+    private class ItemProviderEditStart implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             
@@ -75,7 +91,7 @@ public class DomainProviderAdmin extends ProviderAdmin {
         }
     }
 
-    private class DomainProviderEditComplete implements ActionListener {
+    private class ItemProviderEditComplete implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
 
@@ -83,4 +99,19 @@ public class DomainProviderAdmin extends ProviderAdmin {
         }
     }
 
+    private class ItemAliasStart implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            PageState state = e.getPageState();
+
+            switchMode(state, m_aliasForm, true);
+        }
+    }
+
+    private class ItemAliasComplete implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            PageState state = e.getPageState();
+
+            switchMode(state, m_aliasForm, false);
+        }
+    }
 }

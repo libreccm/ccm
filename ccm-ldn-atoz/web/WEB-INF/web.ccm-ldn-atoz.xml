@@ -10,7 +10,7 @@
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-atoz</param-value>
+      <param-value>/templates/ccm-atoz</param-value>
     </init-param>
   </servlet>
   <!-- module ccm-ldn-atoz  -  servlet declarations END  -->
@@ -18,7 +18,7 @@
   <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN  -->
   <servlet-mapping>
     <servlet-name>atoz-files</servlet-name>
-    <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
+    <url-pattern>/ccm-atoz/files/*</url-pattern>
   </servlet-mapping>
   <!-- module ccm-ldn-atoz  -  servlet mappings END  -->
 
