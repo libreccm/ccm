@@ -55,6 +55,7 @@ public class NotesStep extends SecurityPropertyEditor {
         return m_itemModel.getSelectedItem( ps );
     }
 
+    @Override
     public void register( Page p ) {
         super.register( p );
 
