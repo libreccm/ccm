@@ -37,10 +37,10 @@ public class UnPublishedExtraXmlGenerator implements ExtraXMLGenerator {
         final GenericOrganizationalUnit orga =
                                         unPublished.getOrganization(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
-        if (orga != null) {
-            final Element orgaElem = parent.newChildElement("organization");
+        if (orga != null) {            
             final XmlGenerator generator = new XmlGenerator(orga);
-            generator.generateXML(state, orgaElem, "");
+            generator.setItemElemName("organization", "");
+            generator.generateXML(state, parent, "");
         }
     }
 

@@ -38,10 +38,10 @@ public class ExpertiseExtraXmlGenerator implements ExtraXMLGenerator {
         final GenericOrganizationalUnit orga =
                                         expertise.getOrganization(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
-        if (orga != null) {
-            final Element orgaElem = parent.newChildElement("organization");
+        if (orga != null) {            
             final XmlGenerator generator = new XmlGenerator(orga);
-            generator.generateXML(state, orgaElem, "");
+            generator.setItemElemName("organization", "");
+            generator.generateXML(state, parent, "");
         }
     }
 
@@ -51,10 +51,10 @@ public class ExpertiseExtraXmlGenerator implements ExtraXMLGenerator {
         final GenericOrganizationalUnit orderer =
                                         expertise.getOrderer(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
-        if (orderer != null) {
-            final Element ordererElem = parent.newChildElement("orderer");
+        if (orderer != null) {            
             final XmlGenerator generator = new XmlGenerator(orderer);
-            generator.generateXML(state, ordererElem, "");
+            generator.setItemElemName("orderer", "");
+            generator.generateXML(state, parent, "");
         }
     }
 

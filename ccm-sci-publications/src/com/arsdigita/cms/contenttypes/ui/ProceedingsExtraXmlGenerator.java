@@ -41,10 +41,10 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         final GenericOrganizationalUnit organizer =
                                         proceedings.getOrganizerOfConference(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
-        if (organizer != null) {
-            final Element organizerElem = parent.newChildElement("organizer");
+        if (organizer != null) {                       
             final XmlGenerator generator = new XmlGenerator(organizer);
-            generator.generateXML(state, organizerElem, "");
+            generator.setItemElemName("organizer", "");
+            generator.generateXML(state, parent, "");
         }
     }
 
@@ -70,6 +70,7 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
                                 final Element papersElem,
                                 final PageState state) {
         final XmlGenerator generator = new XmlGenerator(paper);
+        generator.setItemElemName("paper", "");
         generator.addItemAttribute("order", order.toString());
         generator.generateXML(state, papersElem, "");
     }

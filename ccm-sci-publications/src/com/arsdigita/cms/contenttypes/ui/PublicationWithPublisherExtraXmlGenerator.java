@@ -44,6 +44,7 @@ public class PublicationWithPublisherExtraXmlGenerator
         }
 
         final XmlGenerator generator = new XmlGenerator(publisher);
+        generator.setItemElemName("publisher", "");
         generator.generateXML(state, parent, "");                
     }
 

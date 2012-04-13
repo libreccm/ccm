@@ -37,11 +37,10 @@ public class InProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         final Proceedings proceedings =
                           inProceedings.getProceedings(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
-        if (proceedings != null) {
-            final Element proceedingsElem =
-                          parent.newChildElement("proceedings");
+        if (proceedings != null) {            
             final XmlGenerator generator = new XmlGenerator(proceedings);
-            generator.generateXML(state, proceedingsElem, "");
+            generator.setItemElemName("proceedings", "");
+            generator.generateXML(state, parent, "");
         }
     }
 

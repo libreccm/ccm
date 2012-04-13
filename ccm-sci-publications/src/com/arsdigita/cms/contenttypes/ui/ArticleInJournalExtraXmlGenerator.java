@@ -36,10 +36,10 @@ public class ArticleInJournalExtraXmlGenerator implements ExtraXMLGenerator {
                                   final PageState state) {
         final Journal journal = article.getJournal(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
-        if (journal != null) {
-            final Element journalElem = parent.newChildElement("journal");
+        if (journal != null) {            
             final XmlGenerator generator = new XmlGenerator(journal);
-            generator.generateXML(state, journalElem, "");
+            generator.setItemElemName("journal", "");
+            generator.generateXML(state, parent, "");
         }
     }
 

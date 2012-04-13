@@ -72,6 +72,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                  final Element authorsElem,
                                  final PageState state) {
         final XmlGenerator generator = new XmlGenerator(author);
+        generator.setItemElemName("author", "");
         generator.addItemAttribute("isEditor", isAuthor.toString());
         generator.addItemAttribute("order", order.toString());
         generator.generateXML(state, authorsElem, "");
@@ -101,6 +102,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                    final Element orgaunitsElem,
                                    final PageState state) {
         final XmlGenerator generator = new XmlGenerator(orgaunit);
+        generator.setItemElemName("organizationalunit", "");
         generator.generateXML(state, orgaunitsElem, "");
     }
 
@@ -125,6 +127,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                      final Element seriesElem,
                                      final PageState state) {
         final XmlGenerator generator = new XmlGenerator(series);
+        generator.setItemElemName("series", "");
         generator.generateXML(state, seriesElem, "");
     }
 
