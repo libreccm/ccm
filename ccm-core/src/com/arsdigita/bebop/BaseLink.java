@@ -18,34 +18,57 @@
  */
 package com.arsdigita.bebop;
 
-import com.arsdigita.xml.Element;
-import java.util.TooManyListenersException;
-
-import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.xml.Element;
+import java.util.TooManyListenersException;
 
 /**
  * The parent of all Bebop Link classes, this class represents a URL on a page.
  * It may contain a label, an image, or any other component.
  *
- * <p> The following table lists all Bebop Link classes and suggests when they
- * might be used. <p> <table BORDER=3> <tr> <th>Link Class</th> <th>Usage</th>
- * </tr> <tr> <td>{@link BaseLink}</td> <td>Parent class of Bebop Link classes.
- * Extend this class to build your own Link class.</td> </tr> <tr> <td>{@link Link}</td>
- * <td>Link class that manages its own URL variables. Session information is
- * added to the target URL for this type.</td> </tr> <tr> <td>{@link ExternalLink}</td>
- * <td>Link that does not encode the URL with any session information. Used for
- * a link to a page outside the site.</td> </tr> <tr> <td>{@link ControlLink}</td>
- * <td> Used for references within its own page (often as fields in a table
- * header for sorting a column).</td> </tr> <tr> <td>{@link ActionLink}</td>
- * <td>Sets its own control event and runs its own
+ * <p> The following table lists all Bebop Link classes and suggests
+ * when they might be used.
+ * <p>
+ * <table BORDER=3>
+ * <tr>
+ *  <th>Link Class</th>
+ *  <th>Usage</th>
+ * </tr>
+ * <tr>
+ *   <td>{@link BaseLink}</td>
+ *   <td>Parent class of Bebop Link classes. Extend this class to
+ * build your own Link class.</td>
+ * </tr>
+ * <tr>
+ *   <td>{@link Link}</td>
+ *   <td>Link class that manages its own URL variables. Session information
+ * is added to the target URL for this type.</td>
+ * </tr>
+ * <tr>
+ *   <td>{@link ExternalLink}</td>
+ *   <td>Link that does not encode the URL with any session information.
+ * Used for a link to a page outside the site.</td>
+ * </tr>
+ * <tr>
+ *   <td>{@link ControlLink}</td>
+ *   <td> Used for references within its own page (often
+ *  as fields in a table header for sorting a column).</td>
+ * </tr>
+ * <tr>
+ *    <td>{@link ActionLink}</td>
+ *    <td>Sets its own control event and runs its own 
  * {@link com.arsdigita.bebop.event.ActionListener}s. When the link is clicked,
- * the code in the Listener's <tt>actionPerformed</tt> method runs.</td> </tr>
- * <tr> <td>{@link ToggleLink}</td> <td>A link that turns into label when it is
- * selected and turns back into a link when it is unselected.</td> </tr>
+ * the code in the Listener's <tt>actionPerformed</tt> method runs.</td>
+ * </tr>
+ * <tr>
+ *    <td>{@link ToggleLink}</td>
+ *    <td>A link that turns into label when it is selected and
+ * turns back into a link when it is unselected.</td>
+ * </tr>
  * </table>
  *
  * @version $Id: BaseLink.java 998 2005-11-15 22:27:13Z sskracic $
@@ -60,10 +83,13 @@ public abstract class BaseLink extends TextStylable
     private final String TYPE_ATTR = "type";
     private final String HREF_NO_JAVASCRIPT = "href_no_javascript";
     private final String HREF = "href";
+
     protected String m_url;
     protected String m_noJavascriptURL = null;
     protected Component m_child;
+
     private PrintListener m_printListener;
+
     private String m_sConfirmMsg = "";
     private GlobalizedMessage m_confirmMsg;
 
@@ -132,16 +158,15 @@ public abstract class BaseLink extends TextStylable
     }
 
     /**
-     * Adds a print listener. Since the
-     * <code>PrintListener</code> is expected to modify the target of the
-     * <code>PrintEvent</code>, only one print listener can be set for a link.
-     *
+     * Adds a print listener.
+     * Since the <code>PrintListener</code> is expected to modify the
+     * target of the <code>PrintEvent</code>, only one print listener can be
+     * set for a link.
      * @param listener the print listener
-     * @throws IllegalArgumentException if
-     * <code>listener</code> is null.
+     * @throws IllegalArgumentException if <code>listener</code> is null.
      * @throws TooManyListenersException if a print listener has previously been
-     * added. @pre listener != null
-     */
+     *         added.
+     * @pre listener != null */
     public void addPrintListener(PrintListener listener)
             throws IllegalStateException, TooManyListenersException {
         if (listener == null) {
@@ -222,19 +247,18 @@ public abstract class BaseLink extends TextStylable
     protected abstract void generateURL(PageState state, Element parent);
 
     /**
-     * <p>Generates a DOM fragment: <p><pre>
+     * <p>Generates a DOM fragment:
+     * <p><pre>
      * &lt;bebop:link href="..." type="..." %bebopAttr;/>
-     * </pre> The
-     * <code>href</code> attribute contains the target the link should point to.
-     * The
-     * <code>type</code> attribute is used to give more finegrained control over
-     * which kind of link this element represents. The types are
-     * <code>link</code> for a
-     * <code>Link</code>,
-     * <code>control</code> for a {@link ControlLink}, and
-     * <code>toggle</code> for a {@link ToggleLink}. There may be additional
-     * attributes depending on what type of link this link represents.
-     *
+     * </pre>
+     * The <code>href</code> attribute contains the target the link
+     * should point to. The <code>type</code> attribute is used to
+     * give more finegrained control over which kind of link this element
+     * represents. The types are <code>link</code> for a
+     * <code>Link</code>, <code>control</code> for a {@link ControlLink},
+     * and <code>toggle</code> for a {@link ToggleLink}. There may be
+     * additional attributes depending on what type of link this link
+     * represents.
      * @see ControlLink#generateXML
      * @see ToggleLink#generateXML
      */
@@ -245,7 +269,7 @@ public abstract class BaseLink extends TextStylable
             Element link = parent.newChildElement("bebop:link", BEBOP_XML_NS);
             target.generateURL(state, link);
             target.exportConfirmAttributes(state, link);
-//            target.exportAttributes(link);
+            
             //setup the link without javascript
             target.setupNoJavascriptURL(state, link);
             target.exportAttributes(link);
@@ -320,10 +344,10 @@ public abstract class BaseLink extends TextStylable
     }
 
     /**
-     * Adds type-specific XML attributes to the XML element representing this
-     * link. Subclasses should override this method if they introduce more
-     * attributes than the ones {@link #generateXML generateXML} produces by
-     * default.
+     * Adds type-specific XML attributes to the XML element representing
+     * this link. Subclasses should override this method if they introduce
+     * more attributes than the ones {@link #generateXML generateXML}
+     * produces by default.
      *
      * @param state the current request
      * @param link the XML element representing this link
@@ -336,8 +360,8 @@ public abstract class BaseLink extends TextStylable
      * protection for this link</em>. Not for confirmation messages; Should call
      * setConfirmation for that.
      *
-     * @param value @pre value.toLowerCase().startsWith("return confirm(") ==
-     * false
+     * @param value
+     * @pre value.toLowerCase().startsWith("return confirm(") == false
      *
      * @see #setConfirmation
      */
@@ -355,13 +379,14 @@ public abstract class BaseLink extends TextStylable
 
     /**
      * Forces the user to click through a confirmation dialog before this link
-     * is followed. The user is prompted with the specified message. If the user
-     * does not does not confirm, the link is not followed. The current
+     * is followed. The user is prompted with the specified message. If the
+     * user does not does not confirm, the link is not followed. The current
      * implementation uses the JavaScript confirm function and the onClick
-     * attribute. If JavaScript is not enabled in the client browser, this
-     * method will redirect the browser to a Bebop confirmation page rather than
-     * use a JavaScript confirmation. Subsequent calls to setOnClick will undo
-     * the effect of this method.
+     * attribute.
+     * If JavaScript is not enabled in the client browser, this method will
+     * redirect the browser to a Bebop confirmation page rather than use
+     * a JavaScript confirmation.
+     * Subsequent calls to setOnClick will undo the effect of this method.
      *
      * @param message the confirmation message presented to the user. This
      * message cannot have an apostrophe or back slash
@@ -379,33 +404,42 @@ public abstract class BaseLink extends TextStylable
                     "confirmation message cannot contain apostrophe or back slash");
         }
 
-        setAttribute("confirm", "confirm");
-
-        //set the onclick attribute for the link
-        setAttribute(ON_CLICK, "return confirm(\\'" + message + "\\');");
-
         m_sConfirmMsg = message;
     }
 
+    /**
+     * Set a GlobalizedMessage as confirmation message
+     * @param msg 
+     */
     public void setConfirmation(GlobalizedMessage msg) {
         m_confirmMsg = msg;
     }
 
+    /**
+     * Generate XML output for confirmation links
+     * 
+     * @param state PageState
+     * @param link Parent element
+     */
     private void exportConfirmAttributes(PageState state, Element link) {
 
+        // If a confirmation message is set
         if (m_sConfirmMsg.length() > 0 || m_confirmMsg != null) {
-            // Set confirm link, if 
-            setAttribute("confirm", "confirm");
 
+            // then add the needed attributes to link
+            link.addAttribute("confirm", "confirm");
+
+            // If m_sConfirmMsg is not empty
             if (m_sConfirmMsg.length() > 0) {
 
-                //set the onclick attribute for the link
-                setAttribute(ON_CLICK, "return confirm(\\'" + m_sConfirmMsg + "\\');");
+                // then set the onclick attribute for the link with the static message
+                link.addAttribute(ON_CLICK, "return confirm(\\'" + m_sConfirmMsg + "\\');");
 
+            // else if m_configMsg is set
             } else if (m_confirmMsg != null) {
 
-                //set the onclick attribute for the link
-                setAttribute(ON_CLICK, "return confirm(\\'" + m_confirmMsg.localize() + "\\');");
+                //then set the onclick attribute for the link with a globalized message
+                link.addAttribute(ON_CLICK, "return confirm(\\'" + m_confirmMsg.localize() + "\\');");
 
             }
         }
