@@ -18,7 +18,7 @@
 
 package com.arsdigita.london.atoz.terms;
 
-import com.arsdigita.atoz.AbstractAtoZGenerator;
+import com.arsdigita.atoz.AtoZGeneratorAbstractImpl;
 import com.arsdigita.atoz.AtoZAtomicEntry;
 import com.arsdigita.atoz.AtoZEntry;
 import com.arsdigita.london.terms.Domain;
@@ -37,12 +37,22 @@ import com.arsdigita.xml.Element;
 import java.util.List;
 import java.util.ArrayList;
 
-public class DomainGenerator extends AbstractAtoZGenerator {
+/**
+ * 
+ * 
+ */
+public class DomainGenerator extends AtoZGeneratorAbstractImpl {
     public DomainGenerator(DomainProvider provider) {
         super(provider);
     }
 
+    /**
+     * 
+     * @param letter
+     * @return 
+     */
     public AtoZEntry[] getEntries(String letter) {
+
         DomainProvider provider = (DomainProvider) getProvider();
 
         Domain domain = provider.getDomain();
@@ -68,15 +78,24 @@ public class DomainGenerator extends AbstractAtoZGenerator {
         }
 
         return (AtoZEntry[]) l.toArray(new AtoZEntry[l.size()]);
+
     }
 
+    /**
+     * 
+     */
     private class DomainAtomicEntry implements AtoZAtomicEntry {
+
         private OID m_oid;
-
         private String m_title;
-
         private String m_description;
 
+        /**
+         * 
+         * @param oid
+         * @param title
+         * @param description 
+         */
         public DomainAtomicEntry(OID oid, String title, String description) {
             m_oid = oid;
             m_title = title;

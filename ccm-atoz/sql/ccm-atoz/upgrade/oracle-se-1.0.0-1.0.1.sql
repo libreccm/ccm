@@ -1,1 +1,1 @@
-@@ ../oracle-se/upgrade/add-item_provider.sql
+@@ oracle-se/add-item_provider.sql

@@ -26,6 +26,10 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.Classes;
 
+/** 
+ * 
+ * @author pb
+ */
 public class AtoZProviderType {
     
     private String m_title;

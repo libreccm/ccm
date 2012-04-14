@@ -18,22 +18,20 @@
 
 package com.arsdigita.atoz;
 
-import com.arsdigita.atoz.siteproxy.AtoZSiteProxyProvider;
+// import com.arsdigita.atoz.siteproxy.AtoZSiteProxyProvider;
+// import com.arsdigita.atoz.siteproxy.ui.admin.SiteProxyProviderAdmin;
+// import com.arsdigita.atoz.siteproxy.ui.admin.SiteProxyProviderForm;
+
+import com.arsdigita.atoz.ui.admin.CategoryProviderAdmin;
+import com.arsdigita.atoz.ui.admin.CategoryProviderForm;
+import com.arsdigita.atoz.ui.admin.ItemProviderAdmin;
+import com.arsdigita.atoz.ui.admin.ItemProviderForm;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.kernel.ACSObjectInstantiator;
-import com.arsdigita.london.atoz.terms.DomainProvider;
-import com.arsdigita.atoz.ui.admin.CategoryProviderAdmin;
-import com.arsdigita.atoz.ui.admin.CategoryProviderForm;
-import com.arsdigita.atoz.ui.admin.ItemProviderAdmin;
-import com.arsdigita.atoz.ui.admin.ItemProviderForm;
-import com.arsdigita.atoz.siteproxy.ui.admin.SiteProxyProviderAdmin;
-import com.arsdigita.atoz.siteproxy.ui.admin.SiteProxyProviderForm;
-import com.arsdigita.london.atoz.ui.terms.DomainProviderAdmin;
-import com.arsdigita.london.atoz.ui.terms.DomainProviderForm;
 import com.arsdigita.navigation.ApplicationNavigationModel;
 import com.arsdigita.navigation.DefaultNavigationModel;
 import com.arsdigita.persistence.DataObject;
@@ -93,42 +91,45 @@ public class Initializer extends CompoundInitializer {
 
         XML.parse(AtoZ.getConfig().getTraversalAdapters(),
                 new TraversalHandler());
+        
 
-        AtoZ.getConfig().registerProviderType(
-                new AtoZProviderType("Category Provider",
-                                     "Provides a category A-Z",
-                                     AtoZCategoryProvider.class,
-                                     CategoryProviderForm.class,
-                                     CategoryProviderAdmin.class));
-
-        AtoZ.getConfig().registerProviderType(
+        AtoZ.registerProviderType(
                 new AtoZProviderType("Item Provider", 
                                      "Provides an item A-Z",
                                      AtoZItemProvider.class, 
                                      ItemProviderForm.class,
                                      ItemProviderAdmin.class));
 
+        AtoZ.registerProviderType(
+                new AtoZProviderType("Category Provider",
+                                     "Provides a category A-Z",
+                                     AtoZCategoryProvider.class,
+                                     CategoryProviderForm.class,
+                                     CategoryProviderAdmin.class));
+
         // Introduces a dependency on ccm-types-siteproxy
         // Must be refactored into its own package.
-        AtoZ.getConfig().registerProviderType(
+/* MOVED to ccm-atoz-siteproxy
+        AtoZ.registerProviderType(
                 new AtoZProviderType("SiteProxy Provider",
                                      "Provides a SiteProxy A-Z",
                                      AtoZSiteProxyProvider.class,
                                      SiteProxyProviderForm.class,
                                      SiteProxyProviderAdmin.class));
-
+*/
         // Introduces dependenciy on navigation package 
+        // Function / purpose ??
         ApplicationNavigationModel.register(AtoZ.class.getName(),
-                new DefaultNavigationModel());
+                                            new DefaultNavigationModel());
 
         // Introduces dependency on ccm-ldn-typesesdervise ??
-        AtoZ.getConfig().registerProviderType(
+/*        AtoZ.registerProviderType(
                 new AtoZProviderType("ESD Toolkit Domain Provider",
                                      "Provides a ESD Toolkit A-Z", 
                                      DomainProvider.class,
                                      DomainProviderForm.class, 
                                      DomainProviderAdmin.class));
-
+*/
     }
 
 }

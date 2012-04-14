@@ -21,6 +21,10 @@ package com.arsdigita.atoz;
 import com.arsdigita.xml.Element;
 
 
+/**
+ * 
+ * 
+ */
 public interface AtoZAtomicEntry extends AtoZEntry {
     String getLink();
     Element getContent();

@@ -18,8 +18,6 @@
 
 package com.arsdigita.atoz;
 
-
-
 public interface AtoZEntry {    
     String getTitle();
     String getDescription();

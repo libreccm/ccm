@@ -37,6 +37,10 @@ import com.arsdigita.xml.Element;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.io.IOException;
 
+/**
+ * 
+ * 
+ */
 public class CategoryProviderBlackList extends SimpleContainer {
     
     private ACSObjectSelectionModel m_provider;
@@ -46,6 +50,7 @@ public class CategoryProviderBlackList extends SimpleContainer {
         m_provider = provider;
     }
 
+    @Override
     public void respond(PageState state) {
         String key = state.getControlEventName();
         String value = state.getControlEventValue();
@@ -61,6 +66,7 @@ public class CategoryProviderBlackList extends SimpleContainer {
     }
 
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         Element content = AtoZ.newElement("categoryProviderBlackList");

@@ -66,7 +66,7 @@ public class AdminPane extends SimpleContainer {
         m_createForm.addCompletionListener(new ProviderCreateComplete());
         add(m_createForm);
 
-        AtoZProviderType[] providers = AtoZ.getConfig().getProviderTypes();
+        AtoZProviderType[] providers = AtoZ.getProviderTypes();
         m_providerCreateMap = new HashMap();
         m_providerAdminMap = new HashMap();
 
@@ -85,6 +85,7 @@ public class AdminPane extends SimpleContainer {
         }
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
         

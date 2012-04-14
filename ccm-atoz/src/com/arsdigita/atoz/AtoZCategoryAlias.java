@@ -38,7 +38,7 @@ public class AtoZCategoryAlias extends DomainObject {
 	private static final Logger s_log = Logger.getLogger(AtoZCategoryAlias.class);
 	
 	public static final String BASE_DATA_OBJECT_TYPE = 
-                               "com.arsdigita.london.atoz.AtoZCategoryAlias";
+                               "com.arsdigita.atoz.AtoZCategoryAlias";
 	
     public static final String ID = "id";
     public static final String PROVIDER = "provider";
@@ -111,7 +111,7 @@ public class AtoZCategoryAlias extends DomainObject {
             return Sequences.getNextValue();
         } catch (SQLException e) {
             final String errorMsg = "Unable to generate a unique " +
-                "ACSObject id.";
+                                    "ACSObject id.";
             s_log.error(errorMsg);
             throw PersistenceException.newInstance(errorMsg, e);
         }

@@ -18,8 +18,6 @@
 
 package com.arsdigita.atoz;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DomainCollection;
@@ -34,12 +32,20 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 
+import org.apache.log4j.Logger;
+
+/**
+ * 
+ * 
+ */
 public class AtoZCategoryProvider extends AtoZProvider {
 
-    private static final Logger s_log = Logger.getLogger(AtoZCategoryProvider.class);
+    /** Private logger instance to assist debugging.                         */
+    private static final Logger s_log = 
+                                Logger.getLogger(AtoZCategoryProvider.class);
 
     public static final String BASE_DATA_OBJECT_TYPE = 
-                               "com.arsdigita.london.atoz.AtoZCategoryProvider";
+                               "com.arsdigita.atoz.AtoZCategoryProvider";
 
     public static final String IS_COMPOUND = "isCompound";
 
@@ -53,20 +59,32 @@ public class AtoZCategoryProvider extends AtoZProvider {
 
     public static final String CT_TYPE_ID = "type_id";
 
-    public static final String ATOMIC_ENTRIES = "com.arsdigita.london.atoz.getAtomicCategoryEntries";
+    public static final String ATOMIC_ENTRIES = 
+            "com.arsdigita.atoz.getAtomicCategoryEntries";
 
-    public static final String ATOMIC_ENTRIES_FOR_ROOT_CATEGORY = "com.arsdigita.london.atoz.getAtomicCategoryEntriesForRootCategory";
+    public static final String ATOMIC_ENTRIES_FOR_ROOT_CATEGORY = 
+            "com.arsdigita.atoz.getAtomicCategoryEntriesForRootCategory";
 
-    public static final String FILTERED_ATOMIC_ENTRIES = "com.arsdigita.london.atoz.getAtomicFilteredCategoryEntries";
+    public static final String FILTERED_ATOMIC_ENTRIES = 
+            "com.arsdigita.atoz.getAtomicFilteredCategoryEntries";
 
-    public static final String FILTERED_ATOMIC_ENTRIES_FOR_ROOT_CATEGORY = "com.arsdigita.london.atoz.getAtomicFilteredCategoryEntriesForRootCategory";
+    public static final String FILTERED_ATOMIC_ENTRIES_FOR_ROOT_CATEGORY = 
+            "com.arsdigita.atoz.getAtomicFilteredCategoryEntriesForRootCategory";
     
-    public static final String ALL_BLACK_LIST_TYPES = "com.arsdigita.london.atoz.getAllBlackListTypes";
+    public static final String ALL_BLACK_LIST_TYPES = 
+            "com.arsdigita.atoz.getAllBlackListTypes";
     
+    /**
+     * 
+     */
     public AtoZCategoryProvider() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Constructor
+     * @param type 
+     */
     protected AtoZCategoryProvider(String type) {
         super(type);
     }
@@ -145,7 +163,8 @@ public class AtoZCategoryProvider extends AtoZProvider {
     	
     	while (types.next()) {
     		String objectType = (String)types.get("objectType");
-    		s_log.debug("Excluding object type from DataCollection: " + objectType);
+    		s_log.debug("Excluding object type from DataCollection: " 
+                        + objectType);
     		definition.excludeSpecificObjectType(objectType);
     	}
     	types.close();
@@ -174,7 +193,8 @@ public class AtoZCategoryProvider extends AtoZProvider {
             cats.setParameter("rootCategoryID", root.getID());
         } else {
         	if(filterCats){
-        		cats = SessionManager.getSession().retrieveQuery(FILTERED_ATOMIC_ENTRIES);
+        		cats = SessionManager.getSession()
+                                     .retrieveQuery(FILTERED_ATOMIC_ENTRIES);
         	}else{
         		cats = SessionManager.getSession().retrieveQuery(ATOMIC_ENTRIES);
         	}

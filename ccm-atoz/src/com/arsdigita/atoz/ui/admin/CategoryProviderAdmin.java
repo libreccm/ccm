@@ -26,6 +26,10 @@ import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.Component;
 
+/**
+ * 
+ * 
+ */
 public class CategoryProviderAdmin extends ProviderAdmin {
 
     private CategoryProviderForm m_detailsForm;

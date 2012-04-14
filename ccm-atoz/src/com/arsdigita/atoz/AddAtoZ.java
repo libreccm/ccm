@@ -1,7 +1,22 @@
-package com.arsdigita.atoz;
+/*
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.log4j.Logger;
+package com.arsdigita.atoz;
 
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -13,17 +28,31 @@ import com.arsdigita.london.util.Transaction;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.web.Application;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.log4j.Logger;
 
+
+/**
+ * Command line utility to create an application instance of AtoZ. 
+ * 
+ * Usually Loader creates a (default) application instance. 
+ * 
+ */
 public class AddAtoZ extends Program {
 
     private static final Logger LOG = Logger.getLogger(AddAtoZ.class);
 
+    /**
+     * Default Constructor
+     */
     public AddAtoZ() {
         super("Add AtoZ instance", "1.0.0", "URL-FRAGMENT TITLE");
     }
 
     private void addAtoZ(String atozURL, String atozTitle) {
+
         if (!Application.isInstalled(AtoZ.BASE_DATA_OBJECT_TYPE, "/"+atozURL+"/")) {
+
             DomainObjectFactory.registerInstantiator(
                     AtoZ.BASE_DATA_OBJECT_TYPE, new DomainObjectInstantiator() {
                         public DomainObject doNewInstance(DataObject dataObject) {
@@ -33,10 +62,13 @@ public class AddAtoZ extends Program {
             Application app = Application.createApplication(
                     AtoZ.BASE_DATA_OBJECT_TYPE, atozURL, atozTitle, null);
             app.save();
+
         } else {
+
             System.err.println(AtoZ.BASE_DATA_OBJECT_TYPE
                     + " already installed at " + atozURL);
             System.exit(1);
+
         }
     }
 
@@ -46,6 +78,7 @@ public class AddAtoZ extends Program {
                 new KernelExcursion() {
                     public void excurse() {
                         setEffectiveParty(Kernel.getSystemParty());
+
                         String[] args = cmdLine.getArgs();
                         if (args.length == 2) {
                             String atozURL = args[0];

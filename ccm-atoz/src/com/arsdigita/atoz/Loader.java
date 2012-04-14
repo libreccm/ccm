@@ -41,6 +41,7 @@ public class Loader extends PackageLoader {
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+
                 setupAtoZ();
             }
         }.run();
@@ -71,6 +72,7 @@ public class Loader extends PackageLoader {
         ApplicationType type = setup.run();
         type.save();
 */
+
         /* Create new type legacy free application type                 
          * NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.
@@ -81,7 +83,7 @@ public class Loader extends PackageLoader {
         ApplicationType type = new ApplicationType("AtoZ",
                                                    AtoZ.BASE_DATA_OBJECT_TYPE );
         type.setDescription("A-Z of content.");
-        // type.setSingleton(true);
+        // type.setSingleton(true);  // For later use
         type.save();
 
         if (!Application.isInstalled(AtoZ.BASE_DATA_OBJECT_TYPE,

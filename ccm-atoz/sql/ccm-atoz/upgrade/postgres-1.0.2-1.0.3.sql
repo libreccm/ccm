@@ -1,3 +1,3 @@
 begin;
-\i ../postgres/upgrade/add-item_provider_alias.sql
+\i postgres/add-item_provider_alias.sql
 commit;

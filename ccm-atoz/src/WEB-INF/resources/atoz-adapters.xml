@@ -4,8 +4,8 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
 
-  <xrd:context name="com.arsdigita.london.atoz.ui.admin.ProviderList">
-    <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZProvider">
+  <xrd:context name="com.arsdigita.atoz.ui.admin.ProviderList">
+    <xrd:adapter objectType="com.arsdigita.atoz.AtoZProvider">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/defaultDomainClass"/>
@@ -14,9 +14,9 @@
     </xrd:adapter>
   </xrd:context>
 
-  <xrd:context name="com.arsdigita.london.atoz.ui.admin.ProviderDetails">
+  <xrd:context name="com.arsdigita.atoz.ui.admin.ProviderDetails">
 
-    <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZCategoryProvider">
+    <xrd:adapter objectType="com.arsdigita.atoz.AtoZCategoryProvider">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/defaultDomainClass"/>

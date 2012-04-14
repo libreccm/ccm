@@ -31,10 +31,11 @@ import org.apache.log4j.Logger;
 
 public abstract class AtoZProvider extends ACSObject {
 
+    /** Private logger instace to assist debugging                           */
     private static final Logger s_log = Logger.getLogger(AtoZProvider.class);
     
-    public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.london.atoz.AtoZProvider";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.atoz.AtoZProvider";
 
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";

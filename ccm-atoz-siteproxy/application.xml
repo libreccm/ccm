@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-atoz"
-  prettyName="A-Z"
+  name="ccm-atoz-siteproxy"
+  prettyName="A-Z for content type siteproxy"
   version="6.6.2"
   release="1"
   webapp="ROOT">
@@ -11,12 +11,13 @@
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-navigation" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-subsite" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-atoz" version="6.6.0" relation="ge"/>
+    <!--
     <ccm:requires name="ccm-ldn-aplaws" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-util" version="6.6.0" relation="ge"/>
-    <!--
-    <ccm:requires name="ccm-cms-types-siteproxy" version="6.6.0" relation="ge"/>
     -->
+    <ccm:requires name="ccm-cms-types-siteproxy" version="6.6.0" relation="ge"/>
   </ccm:dependencies>
 
   <ccm:contacts>

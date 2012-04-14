@@ -26,10 +26,14 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
+/**
+ * 
+ * 
+ */
 public class DomainProvider extends AtoZProvider {
     
-    public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.london.atoz.terms.DomainProvider";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.london.atoz.terms.DomainProvider";
 
     public static final String DOMAIN = "domain";
 

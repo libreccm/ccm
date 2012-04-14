@@ -21,7 +21,6 @@ package com.arsdigita.atoz;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Filter;
-
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
@@ -32,10 +31,15 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author pb
+ * 
  */
-public class AtoZCategoryGenerator extends AbstractAtoZGenerator {
+public class AtoZCategoryGenerator extends AtoZGeneratorAbstractImpl {
 
+    /**
+     * Constructor
+     * 
+     * @param provider 
+     */
     public AtoZCategoryGenerator(AtoZCategoryProvider provider) {
         super(provider);
     }

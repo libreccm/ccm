@@ -52,7 +52,7 @@ public class ProviderCreateForm extends Form {
         m_providerType.addValidationListener(new NotNullValidationListener());
         m_providerType.addOption(new Option(null, "--Select one--"));
 
-        AtoZProviderType[] providers = AtoZ.getConfig().getProviderTypes();
+        AtoZProviderType[] providers = AtoZ.getProviderTypes();
         for (int i = 0 ; i < providers.length ; i++) {
             m_providerType.addOption(
                 new Option(providers[i].getProvider().getName(),

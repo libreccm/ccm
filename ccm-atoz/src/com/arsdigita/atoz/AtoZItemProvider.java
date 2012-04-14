@@ -30,13 +30,14 @@ import com.arsdigita.categorization.Category;
 
 public class AtoZItemProvider extends AtoZProvider {
 
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.london.atoz.AtoZItemProvider";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.atoz.AtoZItemProvider";
 
     public static final String CATEGORY = "category";
     public static final String LOAD_PATHS = "loadPaths";
 
-    public static final String ATOMIC_ENTRIES = "com.arsdigita.london.atoz.getAtomicItemEntries";
+    public static final String ATOMIC_ENTRIES = 
+                               "com.arsdigita.atoz.getAtomicItemEntries";
 
     public AtoZItemProvider() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -87,7 +88,8 @@ public class AtoZItemProvider extends AtoZProvider {
     }
 
     public DomainCollection getAliases() {
-	DomainCollection aliases = new DomainCollection(SessionManager.getSession().retrieve(AtoZItemAlias.BASE_DATA_OBJECT_TYPE));
+	DomainCollection aliases = new DomainCollection(SessionManager.getSession()
+                                   .retrieve(AtoZItemAlias.BASE_DATA_OBJECT_TYPE));
 	aliases.addFilter("atozItemProvider = :providerId").set("providerId", getID());
 	aliases.addOrder("title");
         return aliases;

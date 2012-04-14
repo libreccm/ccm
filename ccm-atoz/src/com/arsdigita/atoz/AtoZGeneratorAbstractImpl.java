@@ -20,11 +20,11 @@ package com.arsdigita.atoz;
 
 
 
-public abstract class AbstractAtoZGenerator implements AtoZGenerator {
+public abstract class AtoZGeneratorAbstractImpl implements AtoZGenerator {
     
     private AtoZProvider m_provider;
 
-    public AbstractAtoZGenerator(AtoZProvider provider) {
+    public AtoZGeneratorAbstractImpl(AtoZProvider provider) {
         m_provider = provider;
     }
 

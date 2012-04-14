@@ -58,9 +58,6 @@ public class AtoZConfig extends AbstractConfig {
 
         return s_conf;
     }
-    
-    /**   */
-    private Set m_types;
 
 
     // ///////////////////////////////////////////////////////////////////////
@@ -69,31 +66,29 @@ public class AtoZConfig extends AbstractConfig {
 
     /** Rules for configuring information in generated XML                    */
     private Parameter m_adapters = new ResourceParameter
-            ("com.arsdigita.london.atoz.traversal_adapters", 
+            ("com.arsdigita.atoz.traversal_adapters", 
              Parameter.REQUIRED,
              "/WEB-INF/resources/atoz-adapters.xml");
     /** The UI widget for the Root Category Picker                            */
     private Parameter m_rootCategoryPicker = new ClassParameter(
-            "com.arsdigita.london.atoz.root_category_picker",
+            "com.arsdigita.atoz.root_category_picker",
             Parameter.REQUIRED,
             ApplicationCategoryPicker.class);
     /** Make AtoZ use subsite-specific navigation categories. Set to true, 
      *  and the AtoZ will use the subsite-specific navigation categories 
      *  if you define *any* CategoryProvider                       */
     private BooleanParameter m_useSubsiteSpecificNavigationCategory = new BooleanParameter
-            ("com.arsdigita.london.atoz.use_subsite_specific_navigation_category",
+            ("com.arsdigita.atoz.use_subsite_specific_navigation_category",
              Parameter.OPTIONAL,
              Boolean.FALSE);
     /** To filter out category without published items. If TRUE, the AtoZ 
      *  category providers will only return Categories with published items   */
     private BooleanParameter m_filterCategoryProdiver = new BooleanParameter (
-        		"com.arsdigita.london.atoz.filterCategoryProviders",
+        		"com.arsdigita.atoz.filterCategoryProviders",
         		Parameter.OPTIONAL,
         		Boolean.FALSE);
 
     public AtoZConfig() {
-
-        m_types = new HashSet();
 
         register(m_adapters);
         register(m_rootCategoryPicker);
@@ -104,21 +99,16 @@ public class AtoZConfig extends AbstractConfig {
     }
 
 
+    /**
+     * Provides access to the traversal adapter as stream.
+     * @return 
+     */
     InputStream getTraversalAdapters() {
         return (InputStream)get(m_adapters);
     }
     
     public Class getRootCategoryPicker() {
         return (Class)get(m_rootCategoryPicker);
-    }
-
-    public void registerProviderType(AtoZProviderType type) {
-        m_types.add(type);
-    }
-
-    public AtoZProviderType[] getProviderTypes() {
-        return (AtoZProviderType[])m_types
-            .toArray(new AtoZProviderType[m_types.size()]);
     }
 
     public boolean useSubsiteSpecificNavigationCategory() {

@@ -21,7 +21,7 @@ package com.arsdigita.atoz.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.dispatcher.SiteProxyPanel;
+// import com.arsdigita.cms.dispatcher.SiteProxyPanel;
 
 import com.arsdigita.kernel.Kernel;
 
@@ -43,6 +43,7 @@ public class AtoZPane extends SimpleContainer {
         m_letter = letter;
     }
 
+    @Override
     public void generateXML(PageState state, Element parent) {
         AtoZ atoz = (AtoZ) Kernel.getContext().getResource();
         AtoZGenerator[] generators = atoz.getGenerators();
@@ -74,8 +75,16 @@ public class AtoZPane extends SimpleContainer {
         }
     }
 
-    private void generateAtoZ(AtoZGenerator generator, String letter,
-            Element parent) {
+    /**
+     * 
+     * @param generator
+     * @param letter
+     * @param parent 
+     */
+    private void generateAtoZ(AtoZGenerator generator, 
+                              String letter,
+                              Element parent) {
+
         AtoZEntry[] entries = generator.getEntries(letter);
         Element content = AtoZ.newElement("provider");
         content.addAttribute("title", generator.getTitle());
@@ -84,6 +93,7 @@ public class AtoZPane extends SimpleContainer {
         generateAtoZEntries(entries, content);
 
         parent.addContent(content);
+
     }
 
     public void generateAtoZEntries(AtoZEntry[] entries, Element parent) {

@@ -31,7 +31,7 @@ import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.categorization.Category;
+// import com.arsdigita.categorization.Category;
 
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
@@ -49,6 +49,7 @@ public class CategoryProviderAliasList extends SimpleContainer {
         m_provider = provider;
     }
 
+    @Override
     public void respond(PageState state) {
         String key = state.getControlEventName();
         String value = state.getControlEventValue();
@@ -63,6 +64,7 @@ public class CategoryProviderAliasList extends SimpleContainer {
         }
     }
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         Element content = AtoZ.newElement("categoryProviderAliasList");

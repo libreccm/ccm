@@ -9,7 +9,7 @@ the front page of the HTML documentation it produces.
 
     <h1>Purpose</h1>
     <p>
-        The ccm-ldn-atoz package enables a site to present all it's content 
+        The ccm-atoz package enables a site to present all it's content 
         in alphabetical order as an additional service to it's users. Usually 
         the theme provides a link to the page as part of its static elements.
     </p>
@@ -28,7 +28,10 @@ the front page of the HTML documentation it produces.
     <p>&nbsp;</p>
 
     <h1>Additional Application Details</h1>
-    <p>&nbsp;</p>
+    <p>The content to present is retrieved from the storage by 'providers'. 
+       A generic provider for content items is part of the package, additional 
+       specialized providers may provide specific kind of content.
+    </p>
 
     <h1>Usage</h1>
     <p>
@@ -43,11 +46,15 @@ the front page of the HTML documentation it produces.
         Currently available providers are:
     </p>
     <ul>
-        <li>ESD Toolkit Domain Provider</li>
         <li>Item Provider</li>
+        <li>Catgegory Provider</li>        
+    </ul>
+    <p>
+        Extension packages make available:
+    </p>
+    <ul>
+        <li>ESD Toolkit Domain Provider</li>
         <li>SiteProxy Provider</li>
-        <li>Catgegory Provider</li>
-        
     </ul>
 
 

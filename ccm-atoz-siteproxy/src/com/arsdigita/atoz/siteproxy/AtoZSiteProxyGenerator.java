@@ -17,7 +17,7 @@
  */
 package com.arsdigita.atoz.siteproxy;
 
-import com.arsdigita.atoz.AbstractAtoZGenerator;
+import com.arsdigita.atoz.AtoZGeneratorAbstractImpl;
 import com.arsdigita.atoz.AtoZAtomicEntry;
 import com.arsdigita.atoz.AtoZCompoundEntry;
 import com.arsdigita.atoz.AtoZEntry;
@@ -37,7 +37,7 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
-public class AtoZSiteProxyGenerator extends AbstractAtoZGenerator {
+public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
 
     /**
      * Compound Entry for mathched Categories

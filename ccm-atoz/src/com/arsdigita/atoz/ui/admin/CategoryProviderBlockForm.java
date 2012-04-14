@@ -36,6 +36,10 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.kernel.ACSObject;
 
+/**
+ * 
+ * 
+ */
 public class CategoryProviderBlockForm extends Form {
 
     private ACSObjectSelectionModel m_provider;
@@ -43,6 +47,10 @@ public class CategoryProviderBlockForm extends Form {
     private ObjectCategoryPicker m_category;
     private SaveCancelSection m_buttons;
 
+    /**
+     * 
+     * @param provider 
+     */
     public CategoryProviderBlockForm(ACSObjectSelectionModel provider) {
         super("categoryBlockForm", new SimpleContainer()); 
         setRedirecting(true);
@@ -66,6 +74,9 @@ public class CategoryProviderBlockForm extends Form {
         addSubmissionListener(new ProviderSubmissionListener());
     }
         
+    /**
+     * 
+     */
     private class ProviderSubmissionListener implements FormSubmissionListener {
         public void submitted(FormSectionEvent e)
             throws FormProcessException {
@@ -78,6 +89,9 @@ public class CategoryProviderBlockForm extends Form {
         }
     }
 
+    /**
+     * 
+     */
     private class ProviderProcessListener implements FormProcessListener {
         public void process(FormSectionEvent e)
             throws FormProcessException {

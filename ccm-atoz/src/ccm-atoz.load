@@ -1,4 +1,5 @@
 <load>
+
   <requires>
     <table name="inits"/>
     <table name="acs_objects"/>
@@ -6,12 +7,15 @@
     <initializer class="com.arsdigita.london.util.Initializer"/>
     <initializer class="com.arsdigita.london.terms.Initializer"/>
   </requires>
+
   <provides>
     <table name="atoz_provider"/>
-    <initializer class="com.arsdigita.london.atoz.Initializer"/>
+    <initializer class="com.arsdigita.atoz.Initializer"/>
   </provides>
+
   <scripts>
-    <schema directory="ccm-ldn-atoz"/>
-    <data class="com.arsdigita.london.atoz.Loader"/>
+    <schema directory="ccm-atoz"/>
+    <data class="com.arsdigita.atoz.Loader"/>
   </scripts>
+
 </load>

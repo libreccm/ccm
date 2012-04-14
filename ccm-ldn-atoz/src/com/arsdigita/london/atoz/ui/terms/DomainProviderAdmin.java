@@ -29,12 +29,18 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
+/**
+ * 
+ */
 public class DomainProviderAdmin extends ProviderAdmin {
     
     private DomainProviderForm m_detailsForm;
     private ActionLink m_editDetails;
     private ProviderDetails m_details;
 
+    /**
+     * Constructor
+     */
     public DomainProviderAdmin(ACSObjectSelectionModel provider) {
         super("domainProviderAdmin", 
               provider);

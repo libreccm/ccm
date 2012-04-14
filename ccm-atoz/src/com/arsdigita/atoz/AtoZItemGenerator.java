@@ -34,7 +34,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtoZItemGenerator extends AbstractAtoZGenerator {
+public class AtoZItemGenerator extends AtoZGeneratorAbstractImpl {
 
     public AtoZItemGenerator(AtoZItemProvider provider) {
         super(provider);
@@ -72,9 +72,9 @@ public class AtoZItemGenerator extends AbstractAtoZGenerator {
                     live = item.getLiveVersion();
                     if (live != null) {
                         // should always be a ContentPage
-                        description = (live instanceof ContentPage) ? ((ContentPage) live)
-                                .getSearchSummary()
-                                : live.getName();
+                        description = (live instanceof ContentPage) 
+                                       ? ((ContentPage) live).getSearchSummary()
+                                       : live.getName();
                         title = "";
                         if (entries.get("aliasTitle") != null) {
                             title = entries.get("aliasTitle").toString();

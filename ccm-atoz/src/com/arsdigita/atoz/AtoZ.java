@@ -18,25 +18,33 @@
 
 package com.arsdigita.atoz;
 
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
-
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.domain.DomainCollection;
-
-import com.arsdigita.web.Application;
-
-import com.arsdigita.xml.Element;
-
 import com.arsdigita.util.Assert;
+import com.arsdigita.web.Application;
+import com.arsdigita.xml.Element;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 
 /**
- * Base class of the AtoZ application (module)
+ * Application domain class and main entry ponit of AtoZ application (package).
+ * 
+ * The package enables a site to present content in alphabetical oder as an
+ * additional service to it's users. The content tp present is retrieved from
+ * the storage by 'providers'. A generic provider for content items is part 
+ * of the package, additional specialized providers may provide specific kind
+ * of content.
+ * 
+ * It manages an registry of available providers which generate the content for
+ * specific content types and provides an entry point for the UI.
  * 
  */
 public class AtoZ extends Application {
@@ -49,6 +57,10 @@ public class AtoZ extends Application {
     /* Convenient Strings                                                     */
     public static final String PROVIDERS = "atozProviders";
     public static final String SORT_KEY = "sortKey";
+    
+    /** Internal registry of available providers. A provider delivers for a
+     *  specific content type the title to include in AtoZ list.              */
+    private static Set s_types = new HashSet();
 
     /** Config object containing various parameter    */
     private static final AtoZConfig s_config = AtoZConfig.getConfig();
@@ -115,6 +127,21 @@ public class AtoZ extends Application {
                            "http://xmlns.redhat.com/atoz/1.0");
     }
 
+    /**
+     * Adds a provider type to the internal list of providers (provider registry).
+     * Specifically used by Initializer(s) to incorporate additional providers.
+     * 
+     * @param type 
+     */
+    public static void registerProviderType(AtoZProviderType type) {
+        s_types.add(type);
+    }
+
+    public static AtoZProviderType[] getProviderTypes() {
+        return (AtoZProviderType[])s_types
+            .toArray(new AtoZProviderType[s_types.size()]);
+    }
+
 //  /*
 //   * Application specific method only required if installed in its own
 //   * web application context
@@ -139,13 +166,13 @@ public class AtoZ extends Application {
      *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
      *   <init-param>
      *     <param-name>template-path</param-name>
-     *     <param-value>/templates/ccm-ldn-atoz</param-value>
+     *     <param-value>/templates/ccm-atoz</param-value>
      *   </init-param>
      * </servlet>
      *
      * <servlet-mapping>
      *   <servlet-name>atoz-files</servlet-name>
-     *   <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
+     *   <url-pattern>/ccm-atoz/files/*</url-pattern>
      * </servlet-mapping>
      *
      * @return path name to the applications servlet/JSP

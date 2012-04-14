@@ -37,10 +37,16 @@ import com.arsdigita.persistence.SessionManager;
 
 import java.util.TooManyListenersException;
 
+/**
+ * 
+ */
 public class DomainProviderForm extends ProviderForm {
 
     private SingleSelect m_domain;
 
+    /**
+     * Constructor
+     */
     public DomainProviderForm(ACSObjectSelectionModel provider) {
         super("domainProvider", 
               DomainProvider.class, provider);
@@ -48,6 +54,10 @@ public class DomainProviderForm extends ProviderForm {
         setMetaDataAttribute("title", "Domain provider properties");
     }
         
+    /**
+     * 
+     */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
         
@@ -76,6 +86,12 @@ public class DomainProviderForm extends ProviderForm {
         add(m_domain);
     }
     
+    /**
+     * 
+     * @param state
+     * @param provider 
+     */
+    @Override
     protected void processWidgets(PageState state,
                                   AtoZProvider provider) {
         super.processWidgets(state, provider);
@@ -88,6 +104,12 @@ public class DomainProviderForm extends ProviderForm {
                 OID.valueOf(oid)));
     }
    
+    /**
+     * 
+     * @param state
+     * @param provider 
+     */
+    @Override
     protected void initWidgets(PageState state,
                                AtoZProvider provider) {
         super.initWidgets(state, provider);
