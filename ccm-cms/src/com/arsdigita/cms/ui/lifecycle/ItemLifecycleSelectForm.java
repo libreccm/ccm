@@ -60,7 +60,10 @@ import com.arsdigita.cms.workflow.CMSEngine;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.User;
+import com.arsdigita.notification.Notification;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
@@ -70,6 +73,9 @@ import com.arsdigita.workflow.simple.Engine;
 import com.arsdigita.workflow.simple.TaskException;
 import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -383,20 +389,68 @@ class ItemLifecycleSelectForm extends BaseForm {
                     public void run() {
                         PublishLock.getInstance().lock(item);
                         publisher.publish();
-                        PublishLock.getInstance().unlock(item);                       
+                        PublishLock.getInstance().unlock(item);
                     }
                 };
                 final Thread thread = new Thread(threadAction);
                 thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 
                     public void uncaughtException(final Thread thread,
-                                                  final Throwable ex) {                                                                      
+                                                  final Throwable ex) {
                         PublishLock.getInstance().setError(item);
                         s_log.error(String.format(
                                 "An error occurred while "
                                 + "publishing the item '%s': ",
                                 item.getOID().toString()),
                                     ex);
+
+                        if ((CMSConfig.getInstance().getPublicationFailureSender()
+                             == null)
+                            && (CMSConfig.getInstance().
+                                getPublicationFailureReceiver() == null)) {
+                            return;
+                        }
+
+                        final PartyCollection receiverParties = Party.
+                                retrieveAllParties();
+                        Party receiver = null;
+                        receiverParties.addEqualsFilter("primaryEmail",
+                                                        CMSConfig.getInstance().
+                                getPublicationFailureReceiver());
+                        if (receiverParties.next()) {
+                            receiver = receiverParties.getParty();
+                        }
+                        receiverParties.close();
+
+                        final PartyCollection senderParties = Party.
+                                retrieveAllParties();
+                        Party sender = null;
+                        senderParties.addEqualsFilter("primaryEmail", CMSConfig.
+                                getInstance().getPublicationFailureReceiver());
+                        if (senderParties.next()) {
+                            sender = senderParties.getParty();
+                        }
+                        senderParties.close();
+
+                        if ((sender != null) && (receiver != null)) {
+                            final Writer traceWriter = new StringWriter();
+                            final PrintWriter printWriter = new PrintWriter(
+                                    traceWriter);
+                            ex.printStackTrace(printWriter);
+
+                            final Notification notification = new Notification(
+                                    sender,
+                                    receiver,
+                                    String.format("Failed to publish item '%s'",
+                                                  item.getOID().toString()),
+                                    String.format("Publishing item '%s' failed "
+                                                  + "with error message: %s.\n\n"
+                                                  + "Stacktrace:\n%s",
+                                                  item.getOID().toString(),
+                                                  ex.getMessage(),
+                                                  traceWriter.toString()));
+                            notification.save();
+                        }
                     }
                 });
                 thread.start();

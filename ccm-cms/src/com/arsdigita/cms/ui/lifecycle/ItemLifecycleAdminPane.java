@@ -108,7 +108,7 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
         final Label errorMsg = new Label(gz("cms.ui.lifecycle.publish.error"));
         m_errorPane.setBody(errorMsg);
 
-        connect(selectForm, m_detailPane);
+        connect(selectForm, m_detailPane);                
     }
 
     private class ItemLifecycleRequestLocal extends LifecycleRequestLocal {

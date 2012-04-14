@@ -38,6 +38,8 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
@@ -54,6 +56,11 @@ import com.arsdigita.cms.ui.BaseItemPane;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.ui.item.ContentItemRequestLocal;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.PartyCollection;
+import com.arsdigita.notification.Notification;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.PropertyList;
@@ -65,6 +72,10 @@ import com.arsdigita.web.Web;
 import com.arsdigita.workflow.simple.TaskException;
 import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.xml.Element;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Locale;
 
 /**
  * This class contains the component which displays the information for a
@@ -97,6 +108,29 @@ class ItemLifecycleItemPane extends BaseItemPane {
         setDefault(m_detailPane);
 
         m_detailPane.add(new SummarySection());
+        final Label lastPublishedLabel = new Label();
+        lastPublishedLabel.addPrintListener(new PrintListener() {
+
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+                final ContentItem item = m_item.getContentItem(state).
+                        getLiveVersion();
+                final Label label = (Label) event.getTarget();
+                final String dateStr =
+                             DateFormat.getDateTimeInstance(DateFormat.LONG,
+                                                            DateFormat.SHORT,
+                                                            GlobalizationHelper.
+                        getNegotiatedLocale()).format(item.getLastModifiedDate());
+                final String msg = String.format(
+                        "%s %s",
+                        new GlobalizedMessage(
+                        "cms.ui.lifecycle.details.last_published",
+                        "com.arsdigita.cms.CMSResources").localize(),
+                        dateStr);
+                label.setLabel(msg);
+            }
+        });
+        m_detailPane.add(lastPublishedLabel);
         m_detailPane.add(new PhaseSection());
     }
 
@@ -258,6 +292,59 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                     + "publishing the item '%s': ",
                                     item.getOID().toString()),
                                         ex);
+
+                            if ((CMSConfig.getInstance().
+                                 getPublicationFailureSender()
+                                 == null)
+                                && (CMSConfig.getInstance().
+                                    getPublicationFailureReceiver() == null)) {
+                                return;
+                            }
+
+                            final PartyCollection receiverParties = Party.
+                                    retrieveAllParties();
+                            Party receiver = null;
+                            receiverParties.addEqualsFilter("primaryEmail",
+                                                            CMSConfig.
+                                    getInstance().
+                                    getPublicationFailureReceiver());
+                            if (receiverParties.next()) {
+                                receiver = receiverParties.getParty();
+                            }
+                            receiverParties.close();
+
+                            final PartyCollection senderParties = Party.
+                                    retrieveAllParties();
+                            Party sender = null;
+                            senderParties.addEqualsFilter("primaryEmail",
+                                                          CMSConfig.getInstance().
+                                    getPublicationFailureReceiver());
+                            if (senderParties.next()) {
+                                sender = senderParties.getParty();
+                            }
+                            senderParties.close();
+
+                            if ((sender != null) && (receiver != null)) {
+                                final Writer traceWriter = new StringWriter();
+                                final PrintWriter printWriter = new PrintWriter(
+                                        traceWriter);
+                                ex.printStackTrace(printWriter);
+
+                                final Notification notification =
+                                                   new Notification(
+                                        sender,
+                                        receiver,
+                                        String.format(
+                                        "Failed to publish item '%s'",
+                                        item.getOID().toString()),
+                                        String.format("Publishing item '%s' failed "
+                                                      + "with error message: %s.\n\n"
+                                                      + "Stacktrace:\n%s",
+                                                      item.getOID().toString(),
+                                                      ex.getMessage(),
+                                                      traceWriter.toString()));
+                                notification.save();
+                            }
                         }
                     });
 
@@ -345,6 +432,59 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                     + "publishing the item '%s': ",
                                     item.getOID().toString()),
                                         ex);
+
+                            if ((CMSConfig.getInstance().
+                                 getPublicationFailureSender()
+                                 == null)
+                                && (CMSConfig.getInstance().
+                                    getPublicationFailureReceiver() == null)) {
+                                return;
+                            }
+
+                            final PartyCollection receiverParties = Party.
+                                    retrieveAllParties();
+                            Party receiver = null;
+                            receiverParties.addEqualsFilter("primaryEmail",
+                                                            CMSConfig.
+                                    getInstance().
+                                    getPublicationFailureReceiver());
+                            if (receiverParties.next()) {
+                                receiver = receiverParties.getParty();
+                            }
+                            receiverParties.close();
+
+                            final PartyCollection senderParties = Party.
+                                    retrieveAllParties();
+                            Party sender = null;
+                            senderParties.addEqualsFilter("primaryEmail",
+                                                          CMSConfig.getInstance().
+                                    getPublicationFailureReceiver());
+                            if (senderParties.next()) {
+                                sender = senderParties.getParty();
+                            }
+                            senderParties.close();
+
+                            if ((sender != null) && (receiver != null)) {
+                                final Writer traceWriter = new StringWriter();
+                                final PrintWriter printWriter = new PrintWriter(
+                                        traceWriter);
+                                ex.printStackTrace(printWriter);
+
+                                final Notification notification =
+                                                   new Notification(
+                                        sender,
+                                        receiver,
+                                        String.format(
+                                        "Failed to publish item '%s'",
+                                        item.getOID().toString()),
+                                        String.format("Publishing item '%s' failed "
+                                                      + "with error message: %s.\n\n"
+                                                      + "Stacktrace:\n%s",
+                                                      item.getOID().toString(),
+                                                      ex.getMessage(),
+                                                      traceWriter.toString()));
+                                notification.save();
+                            }
                         }
                     });
 
@@ -515,6 +655,59 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                     + "publishing the item '%s': ",
                                     item.getOID().toString()),
                                         ex);
+
+                            if ((CMSConfig.getInstance().
+                                 getPublicationFailureSender()
+                                 == null)
+                                && (CMSConfig.getInstance().
+                                    getPublicationFailureReceiver() == null)) {
+                                return;
+                            }
+
+                            final PartyCollection receiverParties = Party.
+                                    retrieveAllParties();
+                            Party receiver = null;
+                            receiverParties.addEqualsFilter("primaryEmail",
+                                                            CMSConfig.
+                                    getInstance().
+                                    getPublicationFailureReceiver());
+                            if (receiverParties.next()) {
+                                receiver = receiverParties.getParty();
+                            }
+                            receiverParties.close();
+
+                            final PartyCollection senderParties = Party.
+                                    retrieveAllParties();
+                            Party sender = null;
+                            senderParties.addEqualsFilter("primaryEmail",
+                                                          CMSConfig.getInstance().
+                                    getPublicationFailureReceiver());
+                            if (senderParties.next()) {
+                                sender = senderParties.getParty();
+                            }
+                            senderParties.close();
+
+                            if ((sender != null) && (receiver != null)) {
+                                final Writer traceWriter = new StringWriter();
+                                final PrintWriter printWriter = new PrintWriter(
+                                        traceWriter);
+                                ex.printStackTrace(printWriter);
+
+                                final Notification notification =
+                                                   new Notification(
+                                        sender,
+                                        receiver,
+                                        String.format(
+                                        "Failed to publish item '%s'",
+                                        item.getOID().toString()),
+                                        String.format("Publishing item '%s' failed "
+                                                      + "with error message: %s.\n\n"
+                                                      + "Stacktrace:\n%s",
+                                                      item.getOID().toString(),
+                                                      ex.getMessage(),
+                                                      traceWriter.toString()));
+                                notification.save();
+                            }
                         }
                     });
 
@@ -550,6 +743,59 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                     + "publishing the item '%s': ",
                                     item.getOID().toString()),
                                         ex);
+
+                            if ((CMSConfig.getInstance().
+                                 getPublicationFailureSender()
+                                 == null)
+                                && (CMSConfig.getInstance().
+                                    getPublicationFailureReceiver() == null)) {
+                                return;
+                            }
+
+                            final PartyCollection receiverParties = Party.
+                                    retrieveAllParties();
+                            Party receiver = null;
+                            receiverParties.addEqualsFilter("primaryEmail",
+                                                            CMSConfig.
+                                    getInstance().
+                                    getPublicationFailureReceiver());
+                            if (receiverParties.next()) {
+                                receiver = receiverParties.getParty();
+                            }
+                            receiverParties.close();
+
+                            final PartyCollection senderParties = Party.
+                                    retrieveAllParties();
+                            Party sender = null;
+                            senderParties.addEqualsFilter("primaryEmail",
+                                                          CMSConfig.getInstance().
+                                    getPublicationFailureReceiver());
+                            if (senderParties.next()) {
+                                sender = senderParties.getParty();
+                            }
+                            senderParties.close();
+
+                            if ((sender != null) && (receiver != null)) {
+                                final Writer traceWriter = new StringWriter();
+                                final PrintWriter printWriter = new PrintWriter(
+                                        traceWriter);
+                                ex.printStackTrace(printWriter);
+
+                                final Notification notification =
+                                                   new Notification(
+                                        sender,
+                                        receiver,
+                                        String.format(
+                                        "Failed to publish item '%s'",
+                                        item.getOID().toString()),
+                                        String.format("Publishing item '%s' failed "
+                                                      + "with error message: %s.\n\n"
+                                                      + "Stacktrace:\n%s",
+                                                      item.getOID().toString(),
+                                                      ex.getMessage(),
+                                                      traceWriter.toString()));
+                                notification.save();
+                            }
                         }
                     });
 
@@ -594,7 +840,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
             private void doRepublish() {
                 final ContentItem item = (ContentItem) DomainObjectFactory.
                         newInstance(OID.valueOf(itemOid));
-                republish(item, false);                
+                republish(item, false);
             }
 
             public void run() {
@@ -624,7 +870,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
             private void doRepublishAndReset() {
                 final ContentItem item = (ContentItem) DomainObjectFactory.
                         newInstance(OID.valueOf(itemOid));
-                republish(item, true);                
+                republish(item, true);
             }
 
             public void run() {
