@@ -43,7 +43,6 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
 import com.arsdigita.xml.XML;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +53,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
-
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -65,20 +63,21 @@ import org.xml.sax.helpers.DefaultHandler;
  * into the database.
  *
  * @author Peter Boy (pboy@barkhof.uni-bremen.de)
+ * @author Sören Bernstein (quasi@barkhof.uni-bremen.de)
  * @author Jon Orris (jorris@redhat.com)
- * @version $Id:  $
+ * @version $Id: $
  */
 public final class ContentSectionSetup {
 
     private static Logger s_log = Logger.getLogger(ContentSectionSetup.class);
-    private HashMap m_tasks = new HashMap();
+    private HashMap<String, Role> m_roles = new HashMap<String, Role>();
     private LifecycleDefinition m_lcd;
     private WorkflowTemplate m_wf;
     final ContentSection m_section;
 
     /**
-     * Constructor. Using this constructor the content section has to be
-     * already created using ContentSection.create(name)
+     * Constructor. Using this constructor the content section has to be already
+     * created using ContentSection.create(name)
      *
      * @param section name of a content section previously created by
      * ContentSection.create
@@ -89,21 +88,22 @@ public final class ContentSectionSetup {
     }
 
     /**
-     * Wrapper class to create and configure a content section instance
-     * in one step.
+     * Wrapper class to create and configure a content section instance in one
+     * step.
      *
      * Method needs a transaction to proceed successfully.
-     * {@link com.arsdigita.cms.contentsection.Initializer#checkForNewContentSection() }
+     * {@link com.arsdigita.cms.contentsection.Initializer#checkForNewContentSection()
+     * }
      */
-    public static void setupContentSectionAppInstance(
-                                               String name,
-                                               List staffGroup,
-                                               Boolean isPubliclyViewable,
-                                               String itemResolverClassName,
-                                               String templateResolverClassName,
-                                               List sectionContentTypes,
-                                               Boolean useSectionCategories,
-                                               List categoryFileList) {
+    public static ContentSection setupContentSectionAppInstance(String name,
+            List defaultRoles,
+            List defaultWorkflows,
+            Boolean isPubliclyViewable,
+            String itemResolverClassName,
+            String templateResolverClassName,
+            List sectionContentTypes,
+            Boolean useSectionCategories,
+            List categoryFileList) {
 
         s_log.info("Creating content section on /" + name);
 
@@ -111,10 +111,10 @@ public final class ContentSectionSetup {
         ContentSectionSetup setup = new ContentSectionSetup(section);
 
         // Setup the access controls
-        setup.registerRoles(staffGroup);
+        setup.registerRoles(defaultRoles);
+        setup.registerWorkflows(defaultWorkflows);
         setup.registerViewers(isPubliclyViewable);
         setup.registerPublicationCycles();
-        setup.registerWorkflowTemplates();
         setup.registerResolvers(itemResolverClassName, templateResolverClassName);
 
         // setup.registerContentTypes((List)m_conf.getParameter(TYPES));
@@ -131,17 +131,17 @@ public final class ContentSectionSetup {
 
         section.save();
 
-        // return section;
+        return section;
 
     }
 
     /**
-     * Steps through a list of roles which are part of a staff group and 
+     * Steps through a list of roles which are part of a staff group and
      * delegates processing of each role.
-     * 
+     *
      * @param roles
      */
-    public void registerRoles(List roles) {
+    public void registerRoles(List<List> roles) {
 
         Iterator i = roles.iterator();
         while (i.hasNext()) {
@@ -150,21 +150,13 @@ public final class ContentSectionSetup {
             String name = (String) role.get(0);
             String desc = (String) role.get(1);
             List privileges = (List) role.get(2);
-            String task = (role.size() > 3 ? (String) role.get(3) : null);
 
             s_log.info("Creating role " + name);
 
+            Role newRole = registerRole(name, desc, privileges);
+            m_roles.put(name, newRole);
 
-            Role group = registerRole(
-                    name,
-                    desc,
-                    privileges);
-
-            if (task != null) {
-                m_tasks.put(task, group);
-            }
         }
-
     }
 
     /**
@@ -204,6 +196,15 @@ public final class ContentSectionSetup {
             }
         }
 
+        // Add site-wide administrator group by default to all roles
+        PartyCollection partyColl = Party.retrieveAllParties();
+        // FIXME: String for Site-wide Admininistrators is hardcoded because 
+        //        this group in inserted via sql-command during setup
+        partyColl.filter("Site-wide Administrators");
+        if(partyColl.next()) {
+            role.add(partyColl.getParty());
+        }
+        
         return role;
     }
 
@@ -259,9 +260,9 @@ public final class ContentSectionSetup {
     /**
      * Checks for specific item resolver and template resolver classes probably
      * specified in parameters, otherwise uses system wide default parameters
-     * specified in CMS global configuration file. Delegates persistence task
-     * to ContentSection.
-     *  
+     * specified in CMS global configuration file. Delegates persistence task to
+     * ContentSection.
+     *
      * @param itemResolverClassName
      * @param templateResolverClassName
      */
@@ -269,24 +270,22 @@ public final class ContentSectionSetup {
             String templateResolverClassName) {
 
         if (itemResolverClassName != null
-            && itemResolverClassName.length() > 0) {
+                && itemResolverClassName.length() > 0) {
             m_section.setItemResolverClass(itemResolverClassName);
             s_log.info("Registering " + itemResolverClassName
                     + " as the item resolver class");
         } else {
-            m_section.setItemResolverClass(ContentSection.getConfig()
-                     .getDefaultItemResolverClass().getName());
+            m_section.setItemResolverClass(ContentSection.getConfig().getDefaultItemResolverClass().getName());
             s_log.info("Registering " + itemResolverClassName
                     + " as the item resolver class");
         }
         if (templateResolverClassName != null
-            && templateResolverClassName.length() > 0) {
+                && templateResolverClassName.length() > 0) {
             m_section.setTemplateResolverClass(templateResolverClassName);
             s_log.info("Registering " + templateResolverClassName
                     + " as the template resolver class");
         } else {
-            m_section.setTemplateResolverClass(ContentSection.getConfig()
-                     .getDefaultTemplateResolverClass().getName());
+            m_section.setTemplateResolverClass(ContentSection.getConfig().getDefaultTemplateResolverClass().getName());
             s_log.info("Registering " + templateResolverClassName
                     + " as the template resolver class");
         }
@@ -295,9 +294,9 @@ public final class ContentSectionSetup {
     }
 
     /**
-     * Create a (default) publication cycle and store it in the datavbase 
+     * Create a (default) publication cycle and store it in the datavbase
      * (delegated to package com.arsdigita.cms.lifecycle)
-     * 
+     *
      * @throws InitializationException
      */
     public void registerPublicationCycles()
@@ -323,86 +322,110 @@ public final class ContentSectionSetup {
         m_section.save();
     }
 
-    /** 
+    private void registerWorkflows(List workflows) {
+
+        Iterator workflowsIter = workflows.iterator();
+
+        while (workflowsIter.hasNext()) {
+            HashMap<String, CMSTask> newTasks = new HashMap<String, CMSTask>();
+            HashMap<String, Object> workflow = (HashMap) workflowsIter.next();
+
+            // Create a new WorkflowTemplate
+            WorkflowTemplate wf = new WorkflowTemplate();
+            wf.setLabel((String) workflow.get("name"));
+            wf.setDescription((String) workflow.get("description"));
+            wf.save();
+
+            // Add tasks to workflow
+            Iterator tasksIter = ((List) workflow.get("tasks")).iterator();
+            while (tasksIter.hasNext()) {
+                HashMap<String, Object> task = (HashMap) tasksIter.next();
+
+                // Setup new task
+                CMSTask newTask = new CMSTask();
+                newTask.setLabel((String) task.get("name"));
+                newTask.setDescription((String) task.get("description"));
+                newTask.setTaskType(CMSTaskType.retrieveByName((String) task.get("type")));
+
+                // Add roles to task
+                if (task.containsKey("role")) {
+                    Iterator<String> roleIter = ((List<String>) task.get("role")).iterator();
+                    while (roleIter.hasNext()) {
+                        Role role = m_roles.get(roleIter.next());
+                        if (role != null) {
+                            newTask.assignGroup(role.getGroup());
+                        }
+                    }
+                }
+
+                // Save task
+                newTask.save();
+
+                // Save task to HashMap for fast access in the next loop
+                newTasks.put((String) task.get("name"), newTask);
+
+            }
+
+            // Setup task dependencies (easier to do it after creating all task)
+            tasksIter = ((List) workflow.get("tasks")).iterator();
+            while (tasksIter.hasNext()) {
+                HashMap<String, Object> task = (HashMap) tasksIter.next();
+                CMSTask newTask = newTasks.get((String) task.get("name"));
+
+                if (task.containsKey("dependOn")) {
+                    Iterator<String> dependOnIter = ((List<String>) task.get("dependOn")).iterator();
+                    while (dependOnIter.hasNext()) {
+                        CMSTask dependOn = newTasks.get(dependOnIter.next());
+                        if (dependOn != null) {
+                            newTask.addDependency(dependOn);
+                        }
+                    }
+                }
+                newTask.save();
+            }
+
+            // Add tasks to the workflow
+            for (CMSTask newTask : newTasks.values()) {
+                wf.addTask(newTask);
+            }
+
+            // Save workflow
+            wf.save();
+            
+            // Add Workflow to current section
+            m_section.addWorkflowTemplate(wf);
+            m_section.save();
+            
+            // If this workflow should be the default or is the first one
+            // save it for easy access in registerContentType
+            if(m_wf == null || (workflow.containsKey("isDefault") && workflow.get("isDefault").equals("true"))) {
+                m_wf = wf;
+            }
+        }
+    }
+
+    /**
      * Defines a (default for section) workflow which gets persisted in tne
      * database.
+     *
+     * This one is probably deprecated. 
      * 
      * @throws InitializationException
      */
-    public void registerWorkflowTemplates()
-            throws ConfigError {
+    public void registerWorkflowTemplates() throws ConfigError {
 
-        // The 3-step production workflow.
-        WorkflowTemplate wf = new WorkflowTemplate();
-        wf.setLabel((String) GlobalizationUtil.globalize(
-                "cms.installer.production_workflow").localize());
-        wf.setDescription("A process that involves creating and approving content.");
-        wf.save();
+        ContentSectionConfig config = new ContentSectionConfig();
+        config.load();
+        registerWorkflows(config.getDefaultWorkflows());
 
-        CMSTask authoring = new CMSTask();
-        authoring.setLabel((String) GlobalizationUtil.globalize(
-                "cms.installer.authoring").localize());
-        authoring.setDescription("Create content.");
-        authoring.save();
-
-
-        Role author = (Role) m_tasks.get("Authoring");
-        if (author != null) {
-            authoring.assignGroup(author.getGroup());
-        }
-
-        authoring.setTaskType(CMSTaskType.retrieve(CMSTaskType.AUTHOR));
-        authoring.save();
-
-        CMSTask approval = new CMSTask();
-        approval.setLabel((String) GlobalizationUtil.globalize(
-                "cms.installer.approval").localize());
-        approval.setDescription("Approve content.");
-        approval.save();
-        approval.addDependency(authoring);
-        approval.save();
-
-        Role approver = (Role) m_tasks.get("Approval");
-        if (approver != null) {
-            approval.assignGroup(approver.getGroup());
-        }
-
-        approval.setTaskType(CMSTaskType.retrieve(CMSTaskType.EDIT));
-        approval.save();
-
-
-        CMSTask deploy = new CMSTask();
-        deploy.setLabel((String) GlobalizationUtil.globalize(
-                "cms.installer.deploy").localize());
-        deploy.setDescription("Deploy content.");
-        deploy.save();
-        deploy.addDependency(approval);
-        deploy.save();
-
-        Role publisher = (Role) m_tasks.get("Publishing");
-        if (publisher != null) {
-            deploy.assignGroup(publisher.getGroup());
-        }
-
-        deploy.setTaskType(CMSTaskType.retrieve(CMSTaskType.DEPLOY));
-        deploy.save();
-
-        wf.addTask(authoring);
-        wf.addTask(approval);
-        wf.addTask(deploy);
-        wf.save();
-
-        m_section.addWorkflowTemplate(wf);
-        m_section.save();
-
-        m_wf = wf;
     }
 
-    /** 
+    /**
      * Steps through a list of content types to be available for this content
      * section and delegates processing of each type.
-     * 
-     * @param types list of content types to be available for this content section
+     *
+     * @param types list of content types to be available for this content
+     * section
      */
     public void registerContentTypes(List types) {
 
@@ -424,8 +447,9 @@ public final class ContentSectionSetup {
     }
 
     /**
-     * Process one content type and registers it with the current content section.
-     * 
+     * Process one content type and registers it with the current content
+     * section.
+     *
      * @param name
      * @return
      */
@@ -456,9 +480,9 @@ public final class ContentSectionSetup {
     }
 
     /**
-     * 
+     *
      * @param type
-     * @param filename 
+     * @param filename
      */
     void registerTemplate(ContentType type, String filename) {
         // Use the base of the file name (ie without path & extension)
@@ -487,7 +511,7 @@ public final class ContentSectionSetup {
 
         if (stream == null) {
             throw new IllegalStateException((String) GlobalizationUtil.globalize(
-                      "cms.installer.cannot_find_file").localize() + filename);
+                    "cms.installer.cannot_find_file").localize() + filename);
         }
 
         final BufferedReader input = new BufferedReader(new InputStreamReader(stream));
@@ -514,8 +538,7 @@ public final class ContentSectionSetup {
 
         temp.save();
 
-        TemplateManagerFactory.getInstance()
-                              .addTemplate(m_section, type, temp, "public");
+        TemplateManagerFactory.getInstance().addTemplate(m_section, type, temp, "public");
 
         temp.publish(m_lcd, new Date());
     }
@@ -545,6 +568,8 @@ public final class ContentSectionSetup {
         alert.setDescription(
                 "Receive alerts regarding expiration of pubished content");
         alert.save();
+
+
     }
 
 //  // Currently there is no way to persists alert preferemces, therefore
@@ -602,8 +627,8 @@ public final class ContentSectionSetup {
 //  }
 //  /////////////////////   Private Class Section   ////////////////////////////
     /**
-     *  SAX Handler for category lists.  Creates the categories as they are
-     *  defined, with structure, in the xml document.
+     * SAX Handler for category lists. Creates the categories as they are
+     * defined, with structure, in the xml document.
      */
     private class CategoryHandler extends DefaultHandler {
 
@@ -679,6 +704,4 @@ public final class ContentSectionSetup {
             }
         }
     }  // END private class CategoryHandler
-    
-    
 }

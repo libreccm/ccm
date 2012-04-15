@@ -18,13 +18,14 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.contentsection.ContentSectionConfig;
 import com.arsdigita.cms.contentsection.ContentSectionSetup;
-import com.arsdigita.cms.util.Util;
 import com.arsdigita.cms.contenttypes.XMLContentTypeHandler;
 import com.arsdigita.cms.portlet.ContentDirectoryPortlet;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
 import com.arsdigita.cms.portlet.ContentSectionsPortlet;
 import com.arsdigita.cms.portlet.TaskPortlet;
+import com.arsdigita.cms.util.Util;
 import com.arsdigita.formbuilder.util.FormbuilderSetup;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
@@ -38,35 +39,31 @@ import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.xml.XML;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 
 /**
  * <p>Executes nonrecurring at install time and loads (installs and initializes)
- * the Content Management System module,including the Content Center, CMS Service
- * applications, and CMS Mime Types service persistently into database.</p>
+ * the Content Management System module,including the Content Center, CMS
+ * Service applications, and CMS Mime Types service persistently into
+ * database.</p>
  *
  * <p>This class also optionally initializes user-defined content types. </p>
  * <p>Additional user-defined content sections can be loaded and initilized
- * using the recurring <pre>initializer</pre> at any startup.
+ * using the recurring
+ * <pre>initializer</pre> at any startup.
  *
- * <p>The tasks to perform are:</p>
- * <ol>
- *   <li>create CMS package type(content-section)</li>
- *   <li>create Workspace package type and instance</li>
- *   <li>create CMS Service package type and instance</li>
- *   <li>create CMS package (content-section) instance</li>
- * </ol>
+ * <p>The tasks to perform are:</p> <ol> <li>create CMS package
+ * type(content-section)</li> <li>create Workspace package type and
+ * instance</li> <li>create CMS Service package type and instance</li>
+ * <li>create CMS package (content-section) instance</li> </ol>
  *
- * <p>Configuration can be modified by configuration parameters before processing,
- * otherwise hardcoded default values take effect. After processing, the
- * installation values can not be modified anymore without a fresh installation
- * of the whole system.</p>
+ * <p>Configuration can be modified by configuration parameters before
+ * processing, otherwise hardcoded default values take effect. After processing,
+ * the installation values can not be modified anymore without a fresh
+ * installation of the whole system.</p>
  *
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @since ccm-cms version 6.6.0
@@ -74,38 +71,37 @@ import org.apache.log4j.Logger;
  */
 public class Loader extends PackageLoader {
 
-    /** Creates a s_logging category with name = full name of class */
+    /**
+     * Creates a s_logging category with name = full name of class
+     */
     private static final Logger s_log = Logger.getLogger(Loader.class);
-
-    /** Loader configuration object, singleton design pattern                  
-     * NOTE: LoaderConfig only supplies unmutable hard coded defaults! It is 
-     * not possible to alter any of the contained values by specifiying an
-     * configuration parameter during load step. If a configuration value 
-     * has to be configurable at load time, the parameter must be relocated
-     * into this Loader class!                                                */
+    /**
+     * Loader configuration object, singleton design pattern NOTE: LoaderConfig
+     * only supplies unmutable hard coded defaults! It is not possible to alter
+     * any of the contained values by specifiying an configuration parameter
+     * during load step. If a configuration value has to be configurable at load
+     * time, the parameter must be relocated into this Loader class!
+     */
     private static final LoaderConfig s_conf = LoaderConfig.getInstance();
-
     //  ///////////////////////////////////////////////////////////////////
     //  Configurable parameters during load step.
     //  ///////////////////////////////////////////////////////////////////
-    
     /**
      * The name(s) of the content section(s). In case of more than one name the
      * first is treated as default section. Otherwise the section created is the
      * default section. More sections can always be created during a subsequent
-     * system startup using initialization parameters. 
+     * system startup using initialization parameters.
      */
     private final Parameter m_contentSectionNames = new StringArrayParameter(
-                    "com.arsdigita.cms.loader.section_names",
-                    Parameter.REQUIRED,
-                    new String[] {"content"}
-                    );
-
-    /** List of classnames of internal base content types (needed in every
-     *  section created), generated while loading those content types in 
-     *  loadContentTypeDefinitions(files) for later use in register step.     */
+            "com.arsdigita.cms.loader.section_names",
+            Parameter.REQUIRED,
+            new String[]{"content"});
+    /**
+     * List of classnames of internal base content types (needed in every
+     * section created), generated while loading those content types in
+     * loadContentTypeDefinitions(files) for later use in register step.
+     */
     private ArrayList m_content_type_list = new ArrayList();
-
 
     /**
      * Standard constructor.
@@ -114,12 +110,12 @@ public class Loader extends PackageLoader {
         s_log.debug("CMS.loader (Constructor) invoked");
 
         register(m_contentSectionNames);
-        
+
         s_log.debug("CMS.loader (Constructor) completed");
     }
 
     /**
-     * 
+     *
      */
     public void run(final ScriptContext ctx) {
         s_log.debug("CMS.loader.run() invoked");
@@ -142,7 +138,7 @@ public class Loader extends PackageLoader {
 
                 // Step 4) Load CMS content section 
                 // Loads content section application type and instance in one step
-                loadContentSection( (String[]) get(m_contentSectionNames) );
+                loadContentSection((String[]) get(m_contentSectionNames));
 
                 // Step 5) Loading CMS portlets
                 s_log.debug("CMS.loader going to load portlets");
@@ -154,8 +150,8 @@ public class Loader extends PackageLoader {
                 // Loading forms widget into database
                 FormbuilderSetup fbs = new FormbuilderSetup();
                 fbs.setup(s_conf.getWidgetTypes(),
-                          s_conf.getProcessListenerTypes(),
-                          s_conf.getDataQueries());
+                        s_conf.getProcessListenerTypes(),
+                        s_conf.getDataQueries());
 
 
             }
@@ -165,23 +161,23 @@ public class Loader extends PackageLoader {
     /**
      * Loads the Workspace subpackage (content-center) into the database.
      *
-     * It is made public to be able to invoke it from the update script
-     * (e.g. 6.6.1-6.6.2). We need separate steps for loading and instantiating
+     * It is made public to be able to invoke it from the update script (e.g.
+     * 6.6.1-6.6.2). We need separate steps for loading and instantiating
      * because update skript requires.
      */
     public static ApplicationType loadWorkspaceApplicationType() {
         s_log.debug("Creating CMS Workspace...");
 
-        /* Create new type legacy free application type                 
-         * NOTE: The wording in the title parameter of ApplicationType
-         * determines the name of the subdirectory for the XSL stylesheets.
-         * It gets "urlized", i.e. trimming leading and trailing blanks and
-         * replacing blanks between words and illegal characters with an
-         * hyphen and converted to lower case.
-         * "Content Center" will become "content-center".                   */
-        ApplicationType type = new 
-                               ApplicationType(Workspace.INSTANCE_NAME,
-                                               Workspace.BASE_DATA_OBJECT_TYPE );
+        /*
+         * Create new type legacy free application type NOTE: The wording in the
+         * title parameter of ApplicationType determines the name of the
+         * subdirectory for the XSL stylesheets. It gets "urlized", i.e.
+         * trimming leading and trailing blanks and replacing blanks between
+         * words and illegal characters with an hyphen and converted to lower
+         * case. "Content Center" will become "content-center".
+         */
+        ApplicationType type = new ApplicationType(Workspace.INSTANCE_NAME,
+                Workspace.BASE_DATA_OBJECT_TYPE);
 
         type.setDescription("The content center workspace for content creators.");
         type.save();
@@ -193,14 +189,14 @@ public class Loader extends PackageLoader {
     /**
      * Instantiates the Workspace subpackage (content-center) (in the database).
      *
-     * It is made public to be able to invoke it from the update script
-     * (e.g. 6.6.1-6.6.2). We need separate steps for loading and instantiating
+     * It is made public to be able to invoke it from the update script (e.g.
+     * 6.6.1-6.6.2). We need separate steps for loading and instantiating
      * because update skript requires.
      *
      * @param workspaceType
      */
     public static void setupDefaultWorkspaceApplicationInstance(
-                                                ApplicationType workspaceType) {
+            ApplicationType workspaceType) {
 
         // create application instance 
         // Whether a legacy compatible or a legacy free application is
@@ -209,10 +205,10 @@ public class Loader extends PackageLoader {
         // old-style package key used as url fragment where to install the instance
         s_log.debug("Creating CMS Workspace instance ...");
         Workspace app = (Workspace) Application.createApplication(
-                                    Workspace.BASE_DATA_OBJECT_TYPE, // type
-                                    Workspace.PACKAGE_KEY,      // url fragment
-                                    Workspace.INSTANCE_NAME,    // title
-                                    null);                      // parent
+                Workspace.BASE_DATA_OBJECT_TYPE, // type
+                Workspace.PACKAGE_KEY, // url fragment
+                Workspace.INSTANCE_NAME, // title
+                null);                      // parent
         app.setDescription("The default CMS workspace instance.");
         app.save();
 
@@ -220,44 +216,42 @@ public class Loader extends PackageLoader {
         s_log.debug("Done loading CMS Workspace.");
     }
 
-    
     /**
      * CMS Service application is used by the Content Management System as a
-     * store for global resources and assets.
-     * It is made public to be able to invoke it from the update script
-     * (e.g. 6.6.1-6.6.2).
+     * store for global resources and assets. It is made public to be able to
+     * invoke it from the update script (e.g. 6.6.1-6.6.2).
      */
     public static ApplicationType loadServiceApplicationType() {
         s_log.debug("Loading CMS Servce Package...");
 
-        /* Create new type legacy free application type                 
-         * NOTE: The wording in the title parameter of ApplicationType
-         * determines the name of the subdirectory for the XSL stylesheets.
-         * It gets "urlized", i.e. trimming leading and trailing blanks and
-         * replacing blanks between words and illegal characters with an
-         * hyphen and converted to lower case.
-         * "CMS Service" will become "cms-service".                   */
-        ApplicationType type = new ApplicationType("CMS Service", 
-                                                   Service.BASE_DATA_OBJECT_TYPE );
+        /*
+         * Create new type legacy free application type NOTE: The wording in the
+         * title parameter of ApplicationType determines the name of the
+         * subdirectory for the XSL stylesheets. It gets "urlized", i.e.
+         * trimming leading and trailing blanks and replacing blanks between
+         * words and illegal characters with an hyphen and converted to lower
+         * case. "CMS Service" will become "cms-service".
+         */
+        ApplicationType type = new ApplicationType("CMS Service",
+                Service.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Services to store global resources and assets.");
         type.save();
 
         return type;
     }
 
-
     /**
      *
      * @param serviceType
      */
     public static void setupDefaultServiceApplicationInstance(
-                                                ApplicationType serviceType) {
+            ApplicationType serviceType) {
         // create legacy compatible  application instance,
         // old-style package key used as url fragment where to install the instance
         Service app = (Service) Application.createApplication(
-                serviceType,                      // type
-                Service.PRIMARY_URL_STUB,         // url fragment
-                "CMS Service Instance",           // title
+                serviceType, // type
+                Service.PRIMARY_URL_STUB, // url fragment
+                "CMS Service Instance", // title
                 null);                            // parent
         app.setDescription("The default CMS service instance.");
         app.save();
@@ -265,40 +259,39 @@ public class Loader extends PackageLoader {
         s_log.debug("Done creating CMS Service Package.");
     }
 
-    
     /**
      * Load a content section application type and an initial default
-     * content-section instance(s).
-     * Some configuration values which are to be considered as unmutable are
-     * specified in LoaderConfig.
-     * Uses new style application in legacy compatible mode.
+     * content-section instance(s). Some configuration values which are to be
+     * considered as unmutable are specified in LoaderConfig. Uses new style
+     * application in legacy compatible mode.
      *
      * NOTE: At ccm-cms load time no content type packages are available because
      * any content type depends on ccm-cms. Therefore, the loading step can not
      * process content type package assignment! Instead each content type itself
-     * must assign itself to an appropriate content section at it's load time. 
+     * must assign itself to an appropriate content section at it's load time.
      * Cf. {@link com.arsdigita.cms.contenttype.AbstractContentTypeLoader}.
-     * 
+     *
      * But the load step has to process the cms internal content types!
      */
     private void loadContentSection(String[] sectionNames) {
 
         // Step 1: Create content section application type
         //         prerequisite for concrete content-section instance creation.
-        
-        /* Create legacy-free application type                               
-         * NOTE: The wording in the title parameter of ApplicationType
-         * determines the name of the subdirectory for the XSL stylesheets.
-         * It gets "urlized", i.e. trimming leading and trailing blanks and
-         * replacing blanks between words and illegal characters with an
-         * hyphen and converted to lower case.
-         * "Content Section" will become "content-section".                   */
-        ApplicationType type = new ApplicationType( 
-                                       "Content Section",
-                                        ContentSection.BASE_DATA_OBJECT_TYPE );
+
+        /*
+         * Create legacy-free application type NOTE: The wording in the title
+         * parameter of ApplicationType determines the name of the subdirectory
+         * for the XSL stylesheets. It gets "urlized", i.e. trimming leading and
+         * trailing blanks and replacing blanks between words and illegal
+         * characters with an hyphen and converted to lower case. "Content
+         * Section" will become "content-section".
+         */
+        ApplicationType type = new ApplicationType(
+                "Content Section",
+                ContentSection.BASE_DATA_OBJECT_TYPE);
         type.setDescription("The CMS Content Section application.");
         type.save();
-        
+
         // Step 2: Load CMS specific privileges into central (core) privilege
         // system.
         createPrivileges();
@@ -306,73 +299,27 @@ public class Loader extends PackageLoader {
         // Step 3: Create the installation default content section(s).
         // ContentSection.create creates a section with several default values
         // which have to be adopted for a concrete installation.
-        for (int i = 0 ; i < sectionNames.length ; i++) {
-            
+        for (int i = 0; i < sectionNames.length; i++) {
+
             final String sectionName = sectionNames[i];
             s_log.debug("Creating content section on /" + sectionName);
 
             // Step 1: Validate name for section
             Util.validateURLParameter("name", sectionName);
+
+            ContentSectionConfig conf = new ContentSectionConfig();
+            conf.load();
             
-            // Step 2: Create a section using default values
-            ContentSection section = ContentSection.create(sectionName);
-            
-            // Step 3: Adopt the created section to site specific requirements
-            //         ContentSectionSetup is a convenient class to adopt a
-            //         section created by ContentSection.create()
-            ContentSectionSetup setup = new ContentSectionSetup(section);
-
-            // Step 3a: Roles (staff group) used in this content section. 
-            //          Register roles using a complete set of default roles 
-            //          defined in ContentSectionSetup
-            setup.registerRoles(s_conf.getStuffGroup());
-
-            // ViewerGroup populated in ContentSection, public access is determined
-            // by parameter (affecting characteristics of the viewer group)
-            setup.registerViewers(s_conf.isPubliclyViewable());
-
-            // Page resolver class, set autonomously by ContentSection.create()
-            // Item resolver class, configurable, defaults in place.
-            // Template resolver class, configurable, defaults in place.
-            // We should not overwrite the default in the initial default configuration
-
-            // register a predefined one-phase lifecycle for items.
-            setup.registerPublicationCycles();
-            // registers predefined "Authoring", "Approval", "Publishing' steps
-            setup.registerWorkflowTemplates();
-            setup.registerResolvers(s_conf.getItemResolverClass(),
-                                    s_conf.getTemplateResolverClass());
-            // XML generator class, set autonomously by ContentSection.create()
-
-            /* Register internal base content types. Paramter is a list of
-             * class names created by internal content type load method.
-             * @see loadContentTypeDefinitions(List)                          
-             * External content types (provided by additional packages) are
-             * not available at CMS load time and can not processed by Loader.
-             * Registration of those content types are dealt with in the 
-             * respective Loader or in the CMS workspace GUI.                 
-             * For each created section the base types get registered.        */
-            setup.registerContentTypes(m_content_type_list);
-            
-            // Section specific categories, usually not used.
-            // During initial load at install time nor used at all!
-            // default value is false so no categories get loaded.
-            if (s_conf.getUseSectionCategories()) {
-                Iterator files = ((List) s_conf.getCategoryFileList()).iterator();
-                while (files.hasNext()) {
-                    setup.registerCategories((String) files.next());
-                }
-            }
-
-            // registers a predefined standard recipient for alerts
-            setup.registerAlerts();
-
-            // Load a list of cms tasks and associated alert events
-            // Currently no functionality to persist them. Not a loader task yet
-            // setup.loadTaskAlerts(s_conf.getTaskAlerts());
-
-            section.save();  //persists any changes in the database (DomainObject)
-                             //i.e. creates an object (instance)
+            ContentSectionSetup.setupContentSectionAppInstance(sectionName,
+                                                               conf.getDefaultRoles(),
+                                                               conf.getDefaultWorkflows(),
+                                                               s_conf.isPubliclyViewable(),
+                                                               s_conf.getItemResolverClass(),
+                                                               s_conf.getTemplateResolverClass(),
+                                                               m_content_type_list,
+                                                               s_conf.getUseSectionCategories(),
+                                                               s_conf.getCategoryFileList());
+                    
         }
 
     }
@@ -381,13 +328,13 @@ public class Loader extends PackageLoader {
      * Parses XML file definition of (internal) base content types and loads
      * them into database. It fulfills a task similiar to the Loader of external
      * content type packages.
-     * 
+     *
      * The XML config looks like the example below, the "parentType" and "name"
-     * attributes are optional, and only required for creating
-     * User Defined ContentTypes. Label corresponds to ContentType's label and
-     * can be multiple words, and "name" to DynamicObject's name property,
-     * and must be a single word. The objectType attribute is ignored for
-     * UDCTs, as it gets dynamically generated.
+     * attributes are optional, and only required for creating User Defined
+     * ContentTypes. Label corresponds to ContentType's label and can be
+     * multiple words, and "name" to DynamicObject's name property, and must be
+     * a single word. The objectType attribute is ignored for UDCTs, as it gets
+     * dynamically generated.
      *
      * <b>UDCT Copyright</b>
      * <pre>
@@ -404,7 +351,7 @@ public class Loader extends PackageLoader {
      *      &lt;/ccm:authoring-kit&gt;
      *   &lt;/ccm:content-type&gt;
      * &lt;/ccm:content-types&gt;
-     *</pre>
+     * </pre>
      *
      * @see XMLContentTypeHandler
      */

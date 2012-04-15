@@ -22,26 +22,23 @@ package com.arsdigita.cms.contentsection;
 
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
+import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.UnfinishedTaskNotifier;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ContextCloseEvent;
-// import com.arsdigita.runtime.DataInitEvent;
+import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.web.Application;
-import com.arsdigita.cms.workflow.CMSTask;
-
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.Vector;
-
 import org.apache.log4j.Logger;
 
 
@@ -188,7 +185,9 @@ public class Initializer extends CompoundInitializer {
             for (Enumeration el=s_unfinishedTimers.elements();
                              el.hasMoreElements(); ) {
                 unfinishedTimer = (Timer) el.nextElement();
-                if(unfinishedTimer != null) unfinishedTimer.cancel();
+                if(unfinishedTimer != null) {
+                    unfinishedTimer.cancel();
+                }
                 unfinishedTimer = null;
             // s_unfinishedTimer = null;
             }
@@ -221,7 +220,8 @@ public class Initializer extends CompoundInitializer {
                 txn.beginTxn();
                 ContentSectionSetup.setupContentSectionAppInstance
                                     (newSectionName,
-                                     s_conf.getStuffGroup(),
+                                     s_conf.getDefaultRoles(),
+                                     s_conf.getDefaultWorkflows(),
                                      s_conf.isPubliclyViewable(),
                                      s_conf.getItemResolverClass(),
                                      s_conf.getTemplateResolverClass(),

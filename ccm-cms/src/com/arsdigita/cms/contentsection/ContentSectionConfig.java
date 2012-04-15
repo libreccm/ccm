@@ -23,14 +23,12 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-//import com.arsdigita.util.parameter.ParameterError;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
@@ -39,9 +37,13 @@ import org.apache.log4j.Logger;
  * Configures parameter which are not persisted in the database and may be
  * changes during each startup of the system.
  * @author pb
+ * @author Sören Bernstein (quasi@barkhof.uni-bremen.de)
  */
 public final class ContentSectionConfig extends AbstractConfig {
 
+    private List m_defaultRoles;
+    private List m_defaultWorkflows;
+    
     /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log =
                                 Logger.getLogger(ContentSectionConfig.class);
@@ -216,7 +218,6 @@ public final class ContentSectionConfig extends AbstractConfig {
 //                         "com.arsdigita.cms.loader.section_staff_group",
 //                         Parameter.REQUIRED,
 //                         null);
-    private List m_staffGroup;
 
 
     // Viewer group, set autonomously by ContentSection.create() method. We can
@@ -312,7 +313,7 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter
         m_useSectionCategories = new BooleanParameter
             ("com.arsdigita.cms.section.use_section_categories",
-             Parameter.REQUIRED, new Boolean(false));
+             Parameter.REQUIRED, false);
 
     /**
      * XML file containing the category tree to load for this content section.
@@ -460,7 +461,12 @@ public final class ContentSectionConfig extends AbstractConfig {
      * was burried in enterprise.init and not user available for configuration.
      * So it may turn into a permanent solution.
      */
-    public List getStuffGroup() {
+    
+    /**
+     * Changed: The forth field is not used anymore
+     *
+     */
+    public List getDefaultRoles() {
 
         final List<String> AUTH_PRIVS = Arrays.asList(
                      "new_item","read_item", "preview_item", "edit_item",
@@ -478,43 +484,169 @@ public final class ContentSectionConfig extends AbstractConfig {
                      "publish",
                      "staff_admin", "content_type_admin", "lifecycle_admin",
                      "workflow_admin", "category_admin");
+        final List<String> TRST_PRIVS = Arrays.asList(
+                     "new_item","read_item", "preview_item", "edit_item",
+                     "categorize_items", "delete_item", "approve_item",
+                     "publish", "apply_alternate_workflows");
 
-        m_staffGroup = new ArrayList();
+        m_defaultRoles = new ArrayList();
 
-        m_staffGroup.add
+        m_defaultRoles.add
                 ( new ArrayList() {{ add("Author");
                                      add("Creates new content");
                                      add(AUTH_PRIVS);
-                                     add("Authoring");
                                   }}
                  );
-        m_staffGroup.add
+        m_defaultRoles.add
                 ( new ArrayList() {{ add("Editor");
                                      add("Reviews and approves the author's work");
                                      add(EDIT_PRIVS);
-                                     add("Approval");
                                   }}
                  );
-        m_staffGroup.add
+        m_defaultRoles.add
                 ( new ArrayList() {{ add("Publisher");
                                      add("Deploys the content to the web site");
                                      add(PUBL_PRIVS);
-                                     add("Publishing");
                                   }}
                  );
-        m_staffGroup.add
+        m_defaultRoles.add
                 ( new ArrayList() {{ add("Manager");
                                      add("Manages the overall content section");
                                      add(MNGR_PRIVS);
-                                     // NB, manager doesn't have any assigned
-                                     // task for workflow - (as usual)
+                                  }}
+                 );
+        m_defaultRoles.add
+                ( new ArrayList() {{ add("Trusted User");
+                                     add("A trusted user is allowed to create and publish items without review");
+                                     add(TRST_PRIVS);
                                   }}
                  );
 
-        return (List) m_staffGroup ;
+        return (List) m_defaultRoles ;
 
     }
 
+    public List getDefaultWorkflows() {
+        
+        if(m_defaultWorkflows == null) {
+        
+        m_defaultWorkflows = new ArrayList();
+
+        // Prodcution Workflow
+        m_defaultWorkflows.add(
+                new HashMap<String, Object>() {{ put("name", "Redigierte Veröffentlichung");
+                                                 put("description", "A process that involves creating and approving content.");
+                                                 put("isDefault", "true");
+                                                 put("tasks", 
+                                                     new ArrayList() {{ add(
+                                                             new HashMap<String, Object>() {{ put("name", "Verfassen");
+                                                                                              put("description", "Create content.");
+                                                                                              put("type", "Author");
+                                                                                              put("role",  
+                                                                                                  new ArrayList<String>() {{ add("Author");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                           }}
+                                                                           );
+                                                                        add(
+                                                             new HashMap<String, Object>() {{ put("name", "Überprüfen");
+                                                                                              put("description", "Approve content.");
+                                                                                              put("type", "Edit");
+                                                                                              put("role",  
+                                                                                                  new ArrayList<String>() {{ add("Editor");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                              put("dependOn", 
+                                                                                                  new ArrayList<String>() {{ add("Verfassen");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                           }}
+                                                                           );
+                                                                        add(
+                                                             new HashMap<String, Object>() {{ put("name", "Veröffentlichen");
+                                                                                              put("description", "Deploy content.");
+                                                                                              put("type", "Deploy");
+                                                                                              put("role",  
+                                                                                                  new ArrayList<String>() {{ add("Publisher");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                              put("dependOn", 
+                                                                                                  new ArrayList<String>() {{ add("Überprüfen");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                           }}
+                                                                           );
+                                                                     }}
+                                                    );
+                                              }}
+                );
+
+        // TrustedUser Workflow
+        m_defaultWorkflows.add(
+                new HashMap<String, Object>() {{ put("name", "Direkte Veröffentlichung");
+                                                 put("description", "Create and publish content without review");
+                                                 put("isDefault", "false");
+                                                 put("tasks", 
+                                                     new ArrayList() {{ add(
+                                                             new HashMap<String, Object>() {{ put("name", "Verfassen");
+                                                                                              put("description", "Create content.");
+                                                                                              put("type", "Author");
+                                                                                              put("role",  
+                                                                                                  new ArrayList<String>() {{ add("Author");
+                                                                                                                             add("Trusted User");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                           }}
+                                                                           );
+                                                                        add(
+                                                             new HashMap<String, Object>() {{ put("name", "Veröffentlichen");
+                                                                                              put("description", "Deploy content.");
+                                                                                              put("type", "Deploy");
+                                                                                              put("role",  
+                                                                                                  new ArrayList<String>() {{ add("Publisher");
+                                                                                                                             add("Trusted User");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                              put("dependOn", 
+                                                                                                  new ArrayList<String>() {{ add("Verfassen");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                           }}
+                                                                           );
+                                                                     }}
+                                                    );
+                                              }}
+                );
+/*        
+        // Addiditonal Workflows
+        m_defaultWorkflows.add(
+                new HashMap<String, Object>() {{ put("name", "");
+                                                 put("description", "");
+                                                 put("tasks", 
+                                                     new ArrayList() {{ add(
+                                                             new HashMap<String, Object>() {{ put("name", "");
+                                                                                              put("description", "");
+                                                                                              put("type", "");
+                                                                                              put("role",  
+                                                                                                  new ArrayList<String>() {{ add("");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                              put("dependOn", 
+                                                                                                  new ArrayList<String>() {{ add("");
+                                                                                                                          }}
+                                                                                                 );
+                                                                                           }}
+                                                                           );
+                                                                     }}
+                                                    );
+                                              }}
+                );
+*/      
+        }
+        
+        return m_defaultWorkflows;
+    }
+    
     /**
      * Retrieve whether the content-section is publicly viewable (i.e. without
      * registration and login)
