@@ -127,24 +127,24 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             final Session session = SessionManager.getSession();
 
             /*final DataCollection profiles = getProfiles(session,
-            path.getProfileOwner(),
-            path.getPreview(),
-            GlobalizationHelper.
-            getNegotiatedLocale().getLanguage());
+             path.getProfileOwner(),
+             path.getPreview(),
+             GlobalizationHelper.
+             getNegotiatedLocale().getLanguage());
             
-            if (profiles.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
-            } else if (profiles.size() > 1) {
-            throw new IllegalStateException(
-            "More than one matching members found.");
-            }
+             if (profiles.isEmpty()) {
+             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+             return;
+             } else if (profiles.size() > 1) {
+             throw new IllegalStateException(
+             "More than one matching members found.");
+             }
             
-            profiles.next();
-            PublicPersonalProfile profile =
-            (PublicPersonalProfile) DomainObjectFactory.
-            newInstance(profiles.getDataObject());
-            profiles.close();*/
+             profiles.next();
+             PublicPersonalProfile profile =
+             (PublicPersonalProfile) DomainObjectFactory.
+             newInstance(profiles.getDataObject());
+             profiles.close();*/
 
             PublicPersonalProfile profile = getProfile(
                     session,
@@ -429,17 +429,17 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 final Session session = SessionManager.getSession();
 
                 /*DataCollection profiles =
-                session.retrieve(
-                com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
-                profiles.addFilter(String.format("profileUrl = '%s'",
-                profileOwner));
-                if (preview) {
-                profiles.addFilter(String.format("version = '%s'",
-                ContentItem.DRAFT));
-                } else {
-                profiles.addFilter(String.format("version = '%s'",
-                ContentItem.LIVE));
-                }*/
+                 session.retrieve(
+                 com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+                 profiles.addFilter(String.format("profileUrl = '%s'",
+                 profileOwner));
+                 if (preview) {
+                 profiles.addFilter(String.format("version = '%s'",
+                 ContentItem.DRAFT));
+                 } else {
+                 profiles.addFilter(String.format("version = '%s'",
+                 ContentItem.LIVE));
+                 }*/
 
                 DataCollection profiles = getProfiles(session,
                                                       profileOwner,
@@ -450,11 +450,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                         languageIndependentItems());
 
                 /*if (profiles.isEmpty()) {
-                profiles = getProfiles(session,
-                profileOwner,
-                preview,
-                GlobalizationHelper.LANG_INDEPENDENT);
-                }*/
+                 profiles = getProfiles(session,
+                 profileOwner,
+                 preview,
+                 GlobalizationHelper.LANG_INDEPENDENT);
+                 }*/
 
                 if (profiles.size() == 0) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -1005,31 +1005,31 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             ContentPage contentPage =
                         (ContentPage) item;
             /*logger.debug("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
-            + contentPage.getContentBundle().
-            hasInstance(GlobalizationHelper.getNegotiatedLocale().
-            getLanguage()));
-            if (contentPage.getContentBundle().
-            hasInstance(GlobalizationHelper.getNegotiatedLocale().
-            getLanguage())) {
-            contentPage =
-            (ContentPage) contentPage.getContentBundle().
-            getInstance(GlobalizationHelper.getNegotiatedLocale().
-            getLanguage());
-            item = (ContentItem) contentPage;
-            } else {
-            logger.error(
-            String.format(
-            "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
-            path.getNavPath(),
-            GlobalizationHelper.getNegotiatedLocale().
-            getLanguage(),
-            Kernel.getConfig().
-            languageIndependentItems(),
-            GlobalizationHelper.LANG_INDEPENDENT));
-            response.sendError(
-            HttpServletResponse.SC_NOT_FOUND);
-            return;
-            }*/
+             + contentPage.getContentBundle().
+             hasInstance(GlobalizationHelper.getNegotiatedLocale().
+             getLanguage()));
+             if (contentPage.getContentBundle().
+             hasInstance(GlobalizationHelper.getNegotiatedLocale().
+             getLanguage())) {
+             contentPage =
+             (ContentPage) contentPage.getContentBundle().
+             getInstance(GlobalizationHelper.getNegotiatedLocale().
+             getLanguage());
+             item = (ContentItem) contentPage;
+             } else {
+             logger.error(
+             String.format(
+             "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+             path.getNavPath(),
+             GlobalizationHelper.getNegotiatedLocale().
+             getLanguage(),
+             Kernel.getConfig().
+             languageIndependentItems(),
+             GlobalizationHelper.LANG_INDEPENDENT));
+             response.sendError(
+             HttpServletResponse.SC_NOT_FOUND);
+             return;
+             }*/
             if (contentPage.getContentBundle().hasInstance(profile.getLanguage(),
                                                            false)) {
                 contentPage =
@@ -1122,30 +1122,30 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             if (item instanceof ContentPage) {
                 ContentPage contentPage = (ContentPage) item;
                 /*logger.debug("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
-                + contentPage.getContentBundle().
-                hasInstance(GlobalizationHelper.getNegotiatedLocale().
-                getLanguage()));
-                if (contentPage.getContentBundle().
-                hasInstance(GlobalizationHelper.getNegotiatedLocale().
-                getLanguage())) {
-                contentPage = (ContentPage) contentPage.getContentBundle().
-                getInstance(GlobalizationHelper.getNegotiatedLocale().
-                getLanguage());
-                item = (ContentItem) contentPage;
-                } else {
-                logger.error(
-                String.format(
-                "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
-                path.getItemPath(),
-                GlobalizationHelper.getNegotiatedLocale().
-                getLanguage(),
-                Kernel.getConfig().
-                languageIndependentItems(),
-                GlobalizationHelper.LANG_INDEPENDENT));
-                response.sendError(
-                HttpServletResponse.SC_NOT_FOUND);
-                return;
-                }*/
+                 + contentPage.getContentBundle().
+                 hasInstance(GlobalizationHelper.getNegotiatedLocale().
+                 getLanguage()));
+                 if (contentPage.getContentBundle().
+                 hasInstance(GlobalizationHelper.getNegotiatedLocale().
+                 getLanguage())) {
+                 contentPage = (ContentPage) contentPage.getContentBundle().
+                 getInstance(GlobalizationHelper.getNegotiatedLocale().
+                 getLanguage());
+                 item = (ContentItem) contentPage;
+                 } else {
+                 logger.error(
+                 String.format(
+                 "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+                 path.getItemPath(),
+                 GlobalizationHelper.getNegotiatedLocale().
+                 getLanguage(),
+                 Kernel.getConfig().
+                 languageIndependentItems(),
+                 GlobalizationHelper.LANG_INDEPENDENT));
+                 response.sendError(
+                 HttpServletResponse.SC_NOT_FOUND);
+                 return;
+                 }*/
                 if (contentPage.getContentBundle().hasInstance(profile.
                         getLanguage(), false)) {
                     item = (ContentPage) contentPage.getContentBundle().
@@ -1187,30 +1187,49 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final DataCollection profiles =
                              session.retrieve(
                 com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
-        profiles.addFilter(String.format("profileUrl = '%s'",
-                                         profileOwner));
+                
+        final FilterFactory filterFactory = profiles.getFilterFactory();                
+        final Filter urlFilter = filterFactory.simple(String.format(
+                "profileUrl = '%s'",
+                profileOwner));
+        final Filter versionFilter;
         if (preview) {
-            profiles.addFilter(String.format("version = '%s'",
-                                             ContentItem.DRAFT));
+            versionFilter = filterFactory.simple(String.format("version = '%s'",
+                                                             ContentItem.DRAFT));
         } else {
-            profiles.addFilter(String.format("version = '%s'",
-                                             ContentItem.LIVE));
+            versionFilter = filterFactory.simple(String.format("version = '%s'",
+                                                             ContentItem.LIVE));
         }
 
-        if (allowLangIndependent) {
-            FilterFactory ff = profiles.getFilterFactory();
-            Filter filter = ff.or().
-                    addFilter(ff.equals("language", language)).
-                    addFilter(ff.and().
-                    addFilter(ff.equals("language",
-                                        GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(ff.notIn("parent",
-                                       "com.arsdigita.navigation.getParentIDsOfMatchedItems").
-                    set("language", language)));
-            profiles.addFilter(filter);
-        } else {
-            profiles.addFilter(String.format("language = '%s'", language));
+        final Filter langFilter = filterFactory.simple(String.format(
+                "language = '%s'", language));
+        
+        profiles.addFilter(urlFilter);
+        profiles.addFilter(versionFilter);
+        profiles.addFilter(langFilter);
+        
+        if (profiles.isEmpty()) {
+            profiles.reset();
+            profiles.addFilter(urlFilter);
+            profiles.addFilter(versionFilter);
+            profiles.addFilter(String.format("language = '%s'", 
+                                             GlobalizationHelper.LANG_INDEPENDENT));
         }
+
+//        if (allowLangIndependent) {
+//            FilterFactory ff = profiles.getFilterFactory();
+//            Filter filter = ff.or().
+//                    addFilter(ff.equals("language", language)).
+//                    addFilter(ff.and().
+//                    addFilter(ff.equals("language",
+//                                        GlobalizationHelper.LANG_INDEPENDENT)).
+//                    addFilter(ff.notIn("parent",
+//                                       "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+//                    set("language", language)));
+//            profiles.addFilter(filter);
+//        } else {
+//            profiles.addFilter(String.format("language = '%s'", language));
+//        }
 
         return profiles;
     }

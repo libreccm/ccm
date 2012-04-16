@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- * The class represents a (scientific) project. It extends 
+ * This class represents a (scientific) project. It extends 
  * {@link GenericOrganizationalUnit} and adds
  * some fields for additional information: 
  * </p>

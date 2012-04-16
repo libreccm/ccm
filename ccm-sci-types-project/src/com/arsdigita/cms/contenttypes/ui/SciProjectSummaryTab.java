@@ -13,15 +13,11 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
-import com.arsdigita.persistence.DataQuery;
-import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import org.apache.log4j.Logger;
 
@@ -265,7 +261,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
-        generator.setUseExtraXml(false);
+        generator.setUseExtraXml(true);
         generator.setItemElemName("member", "");
         generator.addItemAttribute("role", role);
         generator.generateXML(state, parent, "");
