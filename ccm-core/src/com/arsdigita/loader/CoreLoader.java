@@ -21,6 +21,7 @@ package com.arsdigita.loader;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.Charset;
 import com.arsdigita.globalization.Locale;
+import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
@@ -221,7 +222,7 @@ public class CoreLoader extends PackageLoader {
     private String getResource() {
         return (String) get(m_resource);
     }
-    
+
     /**
      * Retrieve systems recognized character sets.
      *
@@ -315,7 +316,7 @@ public class CoreLoader extends PackageLoader {
         // Used to invoke static class LoaderImpl - method load() in
         // com.arsdigita.search.lucene.IndexId. Same procedure is invoked by
         // the initializer each time the system starts. So it's redundant here.
-        // Using initializer code is favourable because it may be conditionally 
+        // Using initializer code is favourable because it may be conditionally
         // performed, depending on configuration (Lucene or Intermedia).
         // But the currently given implementation requires the loader
         // instruction here to let the code initialization time (i.e. at each
@@ -327,7 +328,7 @@ public class CoreLoader extends PackageLoader {
     }
 
     /**
-     * 
+     *
      * @param rootNode
      * @deprecated will be removed without replacement. Naot needed anymore
      */
@@ -387,7 +388,7 @@ public class CoreLoader extends PackageLoader {
 
 
     /**
-     * Ensure that at least one User with universal "admin" permission exists 
+     * Ensure that at least one User with universal "admin" permission exists
      * after installation.
      */
     private void createSystemAdministrator() {
@@ -445,6 +446,15 @@ public class CoreLoader extends PackageLoader {
             (new UniversalPermissionDescriptor
              (PrivilegeDescriptor.ADMIN, sa));
 
+        // Add system administrator to site-wide administrator group
+        GroupCollection groupColl = Group.retrieveAll();
+        // FIXME: String for Site-wide Admininistrators is hardcoded because
+        //        this group in inserted via sql-command during setup
+        groupColl.filter("Site-wide Administrators");
+        if(groupColl.next()) {
+            groupColl.getGroup().addMember(sa);
+        }
+
         s_log.debug("Adding administrator: \"" + givenName + " " +
                    familyName + "\" <" + emailAddress + ">");
         s_log.debug("CoreLoader: method createSystemAdministrator() completed.");
@@ -455,17 +465,17 @@ public class CoreLoader extends PackageLoader {
      * Setup Login application. Loads type into database and instances the
      * single default instance.
      * Has to be public access in order to enable  script Upgrade664 to use it.
-     * @return 
+     * @return
      */
     public static void loadLoginApp() {
- 
+
         ApplicationType loginType =
                 new ApplicationType("login",
                                     Login.BASE_DATA_OBJECT_TYPE );
         loginType.setDescription("CCM user login application");
         loginType.save();
-        
-        
+
+
         Application login = Application.createApplication(loginType,
                                                           "register",
                                                           "CCM Login",
@@ -481,14 +491,14 @@ public class CoreLoader extends PackageLoader {
      * Has to be public access in order to enable  script Upgrade664 to use it.
      */
     public static void loadAdminApp() {
- 
+
         ApplicationType adminType =
                 new ApplicationType("admin",
                                     Admin.BASE_DATA_OBJECT_TYPE );
         adminType.setDescription("CCM user and group administration");
         adminType.save();
-        
-        
+
+
         Application admin = Application.createApplication(adminType,
                                                           "admin",
                                                           "CCM Admin",
@@ -504,11 +514,11 @@ public class CoreLoader extends PackageLoader {
      */
     public static void loadPermissionsApp() {
 
-        /* NOTE: 
+        /* NOTE:
          * The wording in the title parameter of ApplicationType determines
          * the name of the subdirectory for the XSL stylesheets.
-         * It gets "urlized", i.e. trimming leading and trailing blanks and 
-         * replacing blanks between words and illegal characters with an hyphen 
+         * It gets "urlized", i.e. trimming leading and trailing blanks and
+         * replacing blanks between words and illegal characters with an hyphen
          * and converted to lower case.
          * Example: "Permissions" will become "permissions".
          */
@@ -517,7 +527,7 @@ public class CoreLoader extends PackageLoader {
                                     Permissions.BASE_DATA_OBJECT_TYPE );
         type.setDescription("CCM permissions administration");
         type.save();
-        
+
         Application app = Application.createApplication(type,
                                                         "permissions",
                                                         "CCM Permissions",
@@ -533,7 +543,7 @@ public class CoreLoader extends PackageLoader {
      * database and instantiate the (only) application instance.
      *
      * Public static access needed by upgrade script Upgrade664
-     * @return webDevType ApplicationType 
+     * @return webDevType ApplicationType
      */
     public static void loadWebDev() {
 
@@ -549,12 +559,12 @@ public class CoreLoader extends PackageLoader {
                                                            null);
         webDev.setDescription("The default WEB developer service instance.");
         webDev.save();
-        
+
         return;
     }
 
     /**
-     * Load core's basic portal infrastructure. 
+     * Load core's basic portal infrastructure.
      */
     private void loadPortal() {
         s_log.info("Adding resource type: portal");
@@ -568,7 +578,7 @@ public class CoreLoader extends PackageLoader {
 
     /**
      * Reads supported mime types from a file and ???.
-     * 
+     *
      * Run once during initial load.
      */
     private void loadMimeTypes() {
@@ -586,7 +596,7 @@ public class CoreLoader extends PackageLoader {
                 (new InputStreamReader(is), row.getParameters());
 
             while (loader.next()) {
-                
+
                 row.load(loader);
 
                 s_log.info("Adding mimetype: " + row.getType() + " (" +
@@ -595,7 +605,7 @@ public class CoreLoader extends PackageLoader {
                     (row.getType(), row.getJavaClass(), row.getObjectType());
                 mime.setLabel(row.getLabel());
                 mime.setFileExtension(row.getDefaultExtension());
-                
+
                 if (mime instanceof TextMimeType) {
                     ((TextMimeType) mime).setAllowINSOConvert
                         ("1".equals(row.getSizerOrINSO()));
@@ -603,11 +613,11 @@ public class CoreLoader extends PackageLoader {
                 if (mime instanceof ImageMimeType) {
                     ((ImageMimeType) mime).setImageSizer(row.getSizerOrINSO());
                 }
-                String[] extensions = 
+                String[] extensions =
                     StringUtils.split(row.getExtensions(), ',');
                 for (int i = 0; i < extensions.length; i++) {
-                    MimeTypeExtension ext = 
-                        MimeTypeExtension.create(extensions[i], 
+                    MimeTypeExtension ext =
+                        MimeTypeExtension.create(extensions[i],
                                                  mime.getMimeType());
                     ext.save();
                 }
