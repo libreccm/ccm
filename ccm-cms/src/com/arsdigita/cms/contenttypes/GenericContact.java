@@ -18,16 +18,22 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.RelationAttributeInterface;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
+import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
@@ -36,7 +42,7 @@ import org.apache.log4j.Logger;
  *
  */
 public class GenericContact extends ContentPage implements
-        RelationAttributeInterface {
+        RelationAttributeInterface, ExtraXMLGenerator {
 
     private static final Logger logger = Logger.getLogger(GenericContact.class);
     /**
@@ -291,5 +297,25 @@ public class GenericContact extends ContentPage implements
     @Override
     public String getRelationAttributeKey(String propertyName) {
         return null;
+    }
+
+    public void generateXML(ContentItem item, Element element, PageState state) {
+        StringTokenizer keys = s_config.getContactEntryKeys();
+        
+        Element contactKeysElem = element.newChildElement("contactKeys");        
+        while(keys.hasMoreElements()) {
+            contactKeysElem.newChildElement("contactKey").setText(keys.nextToken());
+        }
+    }
+
+    public void addGlobalStateParams(Page p) {
+        //Nothing
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(this);
+        return generators;
     }
 }
