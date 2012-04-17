@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategorizedCollection;
-import com.arsdigita.london.util.Categorization;
+import com.arsdigita.categorization.ui.CategorizationTree;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentItem;
@@ -405,7 +405,7 @@ public class RSSService {
         Element itemsSeq = new Element("Seq", rdfNS);
         channelItems.addContent(itemsSeq);
         
-        Map cats = Categorization.categorySubtreePath(root);
+        Map cats = CategorizationTree.getSubtreePath(root);
         s_log.debug("Get categories");
         Iterator i = cats.keySet().iterator();
         s_log.debug("About to iterate");

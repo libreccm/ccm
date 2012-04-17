@@ -48,6 +48,10 @@ import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
 import java.util.TooManyListenersException;
 
+/**
+ * 
+ * 
+ */
 public class ItemProviderAliasForm extends Form {
 
     private ACSObjectSelectionModel m_provider;

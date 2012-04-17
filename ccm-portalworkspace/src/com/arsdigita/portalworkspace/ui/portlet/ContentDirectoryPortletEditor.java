@@ -42,7 +42,7 @@ import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.portalworkspace.portlet.ContentDirectoryPortlet;
 // @deprecated use com.arsdigita.bebop.portal.PortletConfigFormSection
 // import com.arsdigita.london.portal.ui.PortletConfigFormSection;
-import com.arsdigita.london.util.Categorization;
+import com.arsdigita.categorization.ui.CategorizationTree;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.portal.Portlet;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -175,7 +175,7 @@ public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 			Application app = Web.getContext().getApplication();
 			Category root = Category.getRootForObject(app, getUseContext());
 
-			Map cats = Categorization.categorySubtreePath(root, " > ");
+			Map cats = CategorizationTree.getSubtreePath(root, " > ");
 			Iterator i = cats.keySet().iterator();
 			while (i.hasNext()) {
 				String path = (String) i.next();

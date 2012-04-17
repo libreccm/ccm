@@ -22,7 +22,7 @@ import com.arsdigita.london.contenttypes.Contact;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 
-public class AddContactToItemForm extends FormSection implements
+public class ContactToItemAddForm extends FormSection implements
 		FormInitListener, FormValidationListener, FormProcessListener,
 		FormSubmissionListener {
 
@@ -40,7 +40,7 @@ public class AddContactToItemForm extends FormSection implements
 
 	private Label m_searchFormLabel;
 
-	private AddContactPropertiesStep m_step;
+	private ContactPropertiesAddStep m_step;
 
 	private AuthoringKitWizard m_parent;
 
@@ -49,7 +49,7 @@ public class AddContactToItemForm extends FormSection implements
 
 	private ActionLink m_removeLink;
 
-	public AddContactToItemForm(AddContactPropertiesStep step) {
+	public ContactToItemAddForm(ContactPropertiesAddStep step) {
 		m_step = step;
 		m_parent = m_step.getParent();
 
@@ -94,7 +94,7 @@ public class AddContactToItemForm extends FormSection implements
 		add(m_itemSearch);
 	}
 
-	public AddContactToItemForm getThis() {
+	public ContactToItemAddForm getThis() {
 		return this;
 	}
 

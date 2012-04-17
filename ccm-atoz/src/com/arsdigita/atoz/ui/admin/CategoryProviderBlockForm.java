@@ -19,7 +19,7 @@
 package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.atoz.AtoZCategoryProvider;
-import com.arsdigita.london.util.ui.ObjectCategoryPicker;
+import com.arsdigita.categorization.ui.ObjectCategoryPicker;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;

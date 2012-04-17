@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.util.ui;
+package com.arsdigita.categorization.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.PageState;
@@ -25,6 +25,5 @@ import com.arsdigita.categorization.Category;
 public interface CategoryPicker extends Component {
         
     Category getCategory(PageState state);
-    void setCategory(PageState state, 
-                     Category cat);
+    void setCategory(PageState state, Category cat);
 }

@@ -41,10 +41,10 @@ import java.util.ArrayList;
  * 
  * @author Shashin Shinde <sshinde@redhat.com>
  *
- * @version $Id: CreatePhone.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContactCreatePhone.java 287 2005-02-22 00:29:02Z sskracic $
  *
  */
-class CreatePhone extends BasicItemForm {
+class ContactCreatePhone extends BasicItemForm {
 
   private ItemSelectionModel m_model;
 
@@ -57,7 +57,7 @@ class CreatePhone extends BasicItemForm {
    *          The ItemSelectionModel to use to obtain the Contact object to
    *          work on
    */
-  public CreatePhone(ItemSelectionModel itemModel) {
+  public ContactCreatePhone(ItemSelectionModel itemModel) {
     super("Contact_phone_create", itemModel);
     m_model = itemModel;
   }

@@ -5,7 +5,7 @@
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
-  <jsp:directive.page import="com.arsdigita.london.atoz.ui.admin.AdminPane"/>
+  <jsp:directive.page import="com.arsdigita.atoz.ui.admin.AdminPane"/>
   <jsp:directive.page import="com.arsdigita.toolbox.ui.ApplicationAuthenticationListener"/>
 
   <jsp:scriptlet>

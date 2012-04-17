@@ -23,7 +23,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.util.ui.AbstractCategoryPicker;
+import com.arsdigita.categorization.ui.AbstractCategoryPicker;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;

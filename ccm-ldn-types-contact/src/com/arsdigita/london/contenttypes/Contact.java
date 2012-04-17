@@ -340,9 +340,9 @@ public class Contact extends ContentPage {
   /**
    * Return collection of Phone objects associated with this Contact object.
    */
-  public PhonesCollection getPhones(){
+  public ContactPhonesCollection getPhones(){
     DataAssociationCursor dac = ((DataAssociation) get(PHONES)).cursor();
-    return new PhonesCollection(dac);
+    return new ContactPhonesCollection(dac);
   }
 
   private DataObject retrieveDataobject(String attr){

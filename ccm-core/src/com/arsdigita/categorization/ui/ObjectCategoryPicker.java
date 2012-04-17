@@ -16,14 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.util.ui;
+package com.arsdigita.categorization.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Option;
-import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.categorization.Category;
-import com.arsdigita.london.util.Categorization;
+import com.arsdigita.kernel.ACSObject;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -50,7 +49,7 @@ public abstract class ObjectCategoryPicker extends AbstractCategoryPicker {
             return;
         }
         
-        Map cats = Categorization.categorySubtreePath(root, " > ");
+        Map cats = CategorizationTree.getSubtreePath(root, " > ");
         Iterator i = cats.keySet().iterator();
         target.addOption(new Option(null, "-- pick one --"));
         while (i.hasNext()) {

@@ -33,7 +33,7 @@
         <xrd:property name="/object/rootUseContext/rootCategory"/>
       </xrd:associations>
     </xrd:adapter>
-
+<!--
     <xrd:adapter objectType="com.arsdigita.london.atoz.terms.DomainProvider">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
@@ -41,8 +41,8 @@
         <xrd:property name="/object/displayName"/>
       </xrd:attributes>
     </xrd:adapter>
-
-    <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZItemProvider">
+-->
+    <xrd:adapter objectType="com.arsdigita.atoz.AtoZItemProvider">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/defaultDomainClass"/>
@@ -56,8 +56,8 @@
         <xrd:property name="/object/category"/>
       </xrd:associations>
     </xrd:adapter>
-
-    <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZSiteProxyProvider">
+<!--
+    <xrd:adapter objectType="com.arsdigita.atoz.siteproxy.AtoZSiteProxyProvider">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/defaultDomainClass"/>
@@ -71,10 +71,10 @@
         <xrd:property name="/object/category"/>
       </xrd:associations>
     </xrd:adapter>
-    
+-->    
   </xrd:context>
 
-  <xrd:context name="com.arsdigita.london.atoz.ui.admin.CategoryProviderBlackList">
+  <xrd:context name="com.arsdigita.atoz.ui.admin.CategoryProviderBlackList">
     <xrd:adapter objectType="com.arsdigita.categorization.Category">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
@@ -85,7 +85,7 @@
     </xrd:adapter>
   </xrd:context>
 
-  <xrd:context name="com.arsdigita.london.atoz.ui.admin.CategoryProviderContentTypeBlacklist">
+  <xrd:context name="com.arsdigita.atoz.ui.admin.CategoryProviderContentTypeBlacklist">
     <xrd:adapter objectType="com.arsdigita.cms.ContentType">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
@@ -96,7 +96,7 @@
     </xrd:adapter>
   </xrd:context>
 
-  <xrd:context name="com.arsdigita.london.atoz.ui.admin.CategoryProviderAliasList">
+  <xrd:context name="com.arsdigita.atoz.ui.admin.CategoryProviderAliasList">
     <xrd:adapter objectType="com.arsdigita.categorization.Category">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
@@ -106,7 +106,7 @@
       </xrd:attributes>
     </xrd:adapter>
     
-    <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZCategoryAlias">
+    <xrd:adapter objectType="com.arsdigita.atoz.AtoZCategoryAlias">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/objectType"/>
@@ -116,7 +116,7 @@
     </xrd:adapter>
   </xrd:context>
 
-  <xrd:context name="com.arsdigita.london.atoz.ui.admin.ItemProviderAliasList">
+  <xrd:context name="com.arsdigita.atoz.ui.admin.ItemProviderAliasList">
     <xrd:adapter objectType="com.arsdigita.cms.ContentItem">
       <xrd:attributes rule="exclude">
       <!--
@@ -128,7 +128,7 @@
       </xrd:attributes>
     </xrd:adapter>
 
-    <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZItemAlias">
+    <xrd:adapter objectType="com.arsdigita.atoz.AtoZItemAlias">
       <xrd:attributes rule="exclude">
       <!--
         <xrd:property name="/object/id"/>

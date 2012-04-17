@@ -121,13 +121,8 @@ public class Category extends ACSObject {
                                             new PrivilegeDescriptor(
             "map_to_category");
     // Quasimodo: Begin
-    private static CategorizationConfig s_config = new CategorizationConfig();
-
-    static {
-        s_log.debug("Static initalizer starting...");
-        s_config.load();
-        s_log.debug("Static initalizer finished.");
-    }
+    private static CategorizationConfig s_config = CategorizationConfig
+                                                   .getConfig();
     // Quasimodo: End
     public static final String ROOT_CATEGORY = "rootCategory";
     public static final String USE_CONTEXT = "useContext";

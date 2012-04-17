@@ -26,10 +26,10 @@ import com.arsdigita.util.Assert;
 /** 
  *
  */
-public class AddContactPropertiesStep extends ResettableContainer {
+public class ContactPropertiesAddStep extends ResettableContainer {
 
 	private static final Logger s_log = Logger
-			.getLogger(AddContactPropertiesStep.class);
+			.getLogger(ContactPropertiesAddStep.class);
 
 	public static final String EDIT_SHEET_NAME = "edit";
 
@@ -45,7 +45,7 @@ public class AddContactPropertiesStep extends ResettableContainer {
 
 	private ContactDisplay m_display;
 
-	public AddContactPropertiesStep(ItemSelectionModel itemModel,
+	public ContactPropertiesAddStep(ItemSelectionModel itemModel,
 			AuthoringKitWizard parent) {
 
 		m_parent = parent;
@@ -76,7 +76,7 @@ public class AddContactPropertiesStep extends ResettableContainer {
 	}
 
 	private Component getFindContactSheet() {
-		return new AddContactToItemForm(this);
+		return new ContactToItemAddForm(this);
 	}
 
 	public ItemSelectionModel getItemSelectionModel() {

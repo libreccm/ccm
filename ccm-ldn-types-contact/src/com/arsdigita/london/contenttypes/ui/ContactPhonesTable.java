@@ -34,7 +34,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.london.contenttypes.Contact;
 import com.arsdigita.london.contenttypes.ContactPhone;
-import com.arsdigita.london.contenttypes.PhonesCollection;
+import com.arsdigita.london.contenttypes.ContactPhonesCollection;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
 
@@ -46,10 +46,10 @@ import java.math.BigDecimal;
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  *
- * @version $Id: PhonesTable.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContactPhonesTable.java 287 2005-02-22 00:29:02Z sskracic $
  *
  */
-class PhonesTable extends Table implements TableActionListener{
+class ContactPhonesTable extends Table implements TableActionListener{
 
   private ItemSelectionModel m_contactSel;
   
@@ -63,7 +63,7 @@ class PhonesTable extends Table implements TableActionListener{
    * @param selContact , ItemSelectionModel which provides the 
    * <code>Contact</code> object whose Phones are to be manipulated.
    */
-  public PhonesTable(ItemSelectionModel selContact) {
+  public ContactPhonesTable(ItemSelectionModel selContact) {
     super();
     m_contactSel = selContact;
 
@@ -102,7 +102,7 @@ class PhonesTable extends Table implements TableActionListener{
   private class PhonesTableModel implements TableModel{
     
     private Table m_table;
-    private PhonesCollection m_phones;
+    private ContactPhonesCollection m_phones;
     private ContactPhone m_phone;
     
     private PhonesTableModel(Table t,PageState ps,Contact c){

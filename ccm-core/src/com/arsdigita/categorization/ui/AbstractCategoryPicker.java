@@ -16,22 +16,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.util.ui;
+package com.arsdigita.categorization.ui;
 
 
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
-import com.arsdigita.categorization.Category;
+
 import java.util.TooManyListenersException;
 
 
 public abstract class AbstractCategoryPicker extends SingleSelect 
-    implements CategoryPicker {
+                                             implements CategoryPicker {
     
     public AbstractCategoryPicker(String name) {
         super(new OIDParameter(name));

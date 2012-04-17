@@ -21,16 +21,19 @@ package com.arsdigita.atoz.ui.admin;
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.atoz.AtoZCategoryProvider;
-import com.arsdigita.london.util.ui.CategoryPicker;
-
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.util.Classes;
 
-import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
+/**
+ * 
+ * 
+ */
 public class CategoryProviderForm extends ProviderForm {
 
     private CheckboxGroup m_compound;
@@ -43,6 +46,7 @@ public class CategoryProviderForm extends ProviderForm {
         setMetaDataAttribute("title", "Category provider properties");
     }
         
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
@@ -59,6 +63,7 @@ public class CategoryProviderForm extends ProviderForm {
         add(m_rootCategory);
     }
     
+    @Override
     protected void processWidgets(PageState state,
                                   AtoZProvider provider) {
         super.processWidgets(state, provider);
@@ -71,6 +76,7 @@ public class CategoryProviderForm extends ProviderForm {
         myprovider.setRootCategory(root);
     }
    
+    @Override
     protected void initWidgets(PageState state,
                                AtoZProvider provider) {
         super.initWidgets(state, provider);

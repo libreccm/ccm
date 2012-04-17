@@ -27,7 +27,7 @@ import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.atoz.siteproxy.AtoZSiteProxyProvider;
 import com.arsdigita.atoz.ui.admin.ProviderForm;
-import com.arsdigita.london.util.ui.CategoryPicker;
+import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.util.Classes;
 
 public class SiteProxyProviderForm extends ProviderForm {

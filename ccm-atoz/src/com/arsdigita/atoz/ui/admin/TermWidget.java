@@ -19,36 +19,25 @@
 
 package com.arsdigita.atoz.ui.admin;
 
-import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Terms;
-
-import com.arsdigita.aplaws.Aplaws;
-import com.arsdigita.bebop.form.Widget;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.parameters.ArrayParameter;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
-import com.arsdigita.xml.XML;
-
-import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ContentSection;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;

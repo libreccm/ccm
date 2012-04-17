@@ -34,10 +34,32 @@ public final class CategorizationConfig extends AbstractConfig {
     
     private static Logger s_log = Logger.getLogger(CategorizationConfig.class);
 
+    /** A logger instance to assist debugging.  */
     private final Parameter m_showInternalName;
 
+    /** Singelton config object.  */
+    private static CategorizationConfig s_conf;
+
     /**
-     * Public Constructor
+     * Gain a CategorizationConfig object.
+     *
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized CategorizationConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new CategorizationConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+    /**
+     * Public Constructor, BUT:
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
      */
     public CategorizationConfig() {
 

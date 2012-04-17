@@ -52,7 +52,7 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.kernel.ResourceType;
 
-import com.arsdigita.london.util.ui.CategoryPicker;
+import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.london.util.ui.ApplicationCategoryPicker;
 
 import com.redhat.persistence.metadata.Root;

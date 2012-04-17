@@ -38,15 +38,15 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  *
- * @version $Id: AddressPropertyForm.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContactAddressPropertyForm.java 287 2005-02-22 00:29:02Z sskracic $
  * 
  */
-public class AddressPropertyForm extends BasicItemForm {
+public class ContactAddressPropertyForm extends BasicItemForm {
 
   /** Name of this form */
   private static final String ID = "Contact_address_edit";
   
-  private static final Logger s_log = Logger.getLogger(AddressPropertyForm.class);
+  private static final Logger s_log = Logger.getLogger(ContactAddressPropertyForm.class);
   
   /**
    * Creates a new form to edit the <code>ContactAddress</code> object 
@@ -56,7 +56,7 @@ public class AddressPropertyForm extends BasicItemForm {
    * @param itemModel The ItemSelectionModel to use to obtain the Contact 
    *    object to work on
    **/
-  public AddressPropertyForm(ItemSelectionModel itemModel) {
+  public ContactAddressPropertyForm(ItemSelectionModel itemModel) {
     super(ID, itemModel);
   }
 

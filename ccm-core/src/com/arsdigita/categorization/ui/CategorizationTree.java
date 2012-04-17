@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package com.arsdigita.london.util;
+package com.arsdigita.categorization.ui;
 
 import com.arsdigita.categorization.Category;
 
@@ -30,22 +30,30 @@ import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
-public class Categorization {
+/**
+ * Utility class provides categorisation trees to help building categorization
+ * ui widgets.
+ */
+public class CategorizationTree {
     
-    private static final Logger s_log = Logger.getLogger(Categorization.class);
+    private static final Logger s_log = Logger.getLogger(CategorizationTree.class);
     
     /**
      * Retrieves the category subtree for the given root.
      * The returned map has String objects for full path
      * name as keys, and Category objects as values
      */
-    public static Map categorySubtreePath(Category root) {
-        return categorySubtreePath(root, " > ");
+    public static Map getSubtreePath(Category root) {
+        return getSubtreePath(root, " > ");
     }
 
     /**
+     * Retrieves the category subtree for the given root.
+     * The returned map has String objects for full path
+     * name as keys, and Category objects as values
      */
-    public static Map categorySubtreePath(Category root, String join) {
+    public static Map getSubtreePath(Category root, String join) {
+
         DomainCollection cats = new DomainCollection(
             SessionManager.getSession().retrieve(Category.BASE_DATA_OBJECT_TYPE)
         );

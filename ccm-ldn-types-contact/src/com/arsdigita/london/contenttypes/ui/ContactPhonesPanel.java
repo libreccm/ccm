@@ -30,18 +30,18 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * 
- * @version $Id: PhonesPanel.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContactPhonesPanel.java 287 2005-02-22 00:29:02Z sskracic $
  *  
  */
-public class PhonesPanel extends SimpleEditStep {
+public class ContactPhonesPanel extends SimpleEditStep {
 
   /** The name of the editing sheet added to this step */
   private static String EDIT_SHEET_NAME = "manage-phones";
 
-  public PhonesPanel(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+  public ContactPhonesPanel(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
     super(itemModel, parent);
 
-    BasicItemForm form = new CreatePhone(itemModel);
+    BasicItemForm form = new ContactCreatePhone(itemModel);
 
     add(
       EDIT_SHEET_NAME,
@@ -49,7 +49,7 @@ public class PhonesPanel extends SimpleEditStep {
       new WorkflowLockedComponentAccess(form, itemModel),
       form.getSaveCancelSection().getCancelButton());
 
-    PhonesTable phTable = new PhonesTable(itemModel); 
+    ContactPhonesTable phTable = new ContactPhonesTable(itemModel); 
     setDisplayComponent(phTable);
     
   }

@@ -43,6 +43,7 @@ public class ItemProviderAliasList extends SimpleContainer {
         m_provider = provider;
     }
 
+    @Override
     public void respond(PageState state) {
         String key = state.getControlEventName();
         String value = state.getControlEventValue();
@@ -54,6 +55,7 @@ public class ItemProviderAliasList extends SimpleContainer {
         }
     }
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         Element content = AtoZ.newElement("itemProviderAliasList");

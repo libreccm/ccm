@@ -43,7 +43,7 @@ import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.london.util.ui.CategoryPicker;
+import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.subsite.Site;

@@ -28,8 +28,9 @@ import java.math.BigDecimal;
 
 
 public abstract class UserPicker extends FormSection
-    implements FormProcessListener, FormInitListener
-{
+                                 implements FormProcessListener, 
+                                            FormInitListener   {
+
     private static final int USER_LIST_SIZE = 10;
 
     private static final String ADD_USER = "addUser";
@@ -185,6 +186,7 @@ public abstract class UserPicker extends FormSection
     }
 
 
+    @Override
     public void register( Page p ) {
         super.register( p );
 

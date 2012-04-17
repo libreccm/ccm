@@ -27,8 +27,6 @@ import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.london.util.ui.ApplicationCategoryPicker;
 
 import java.io.InputStream;
-import java.util.Set;
-import java.util.HashSet;
 
 import org.apache.log4j.Logger;
 

@@ -20,7 +20,6 @@ package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.PageState;

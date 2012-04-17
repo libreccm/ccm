@@ -18,6 +18,7 @@
 
 package com.arsdigita.london.util.ui;
 
+import com.arsdigita.categorization.ui.ObjectCategoryPicker;
 import com.arsdigita.web.Web;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.bebop.PageState;

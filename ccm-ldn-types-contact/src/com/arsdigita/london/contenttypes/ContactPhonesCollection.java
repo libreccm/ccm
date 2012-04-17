@@ -26,15 +26,15 @@ import com.arsdigita.persistence.DataCollection;
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  *
- * @version $Id: PhonesCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContactPhonesCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class PhonesCollection extends DomainCollection {
+public class ContactPhonesCollection extends DomainCollection {
   
   /**
    * Constructor.
    *
    **/
-  public PhonesCollection(DataCollection dataCollection) {
+  public ContactPhonesCollection(DataCollection dataCollection) {
       super(dataCollection);
   }
 

@@ -6,7 +6,7 @@
   <define:page name="childCategories" pageClass="com.arsdigita.cms.ui.authoring.EmptyPage" title="childCategories" cache="true">
 
     <define:component name="catSubtree"
-      classname="com.arsdigita.aplaws.ui.CategorySubtree"/>
+      classname="com.arsdigita.london.terms.ui.CategorySubtree"/>
   </define:page>
 
   <show:all/>

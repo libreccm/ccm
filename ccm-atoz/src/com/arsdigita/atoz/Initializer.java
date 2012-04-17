@@ -55,7 +55,7 @@ public class Initializer extends CompoundInitializer {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
-        add(new PDLInitializer(new ManifestSource("ccm-ldn-atoz.pdl.mf",
+        add(new PDLInitializer(new ManifestSource("ccm-atoz.pdl.mf",
                 new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
@@ -90,7 +90,7 @@ public class Initializer extends CompoundInitializer {
 
 
         XML.parse(AtoZ.getConfig().getTraversalAdapters(),
-                new TraversalHandler());
+                  new TraversalHandler());
         
 
         AtoZ.registerProviderType(
@@ -109,14 +109,15 @@ public class Initializer extends CompoundInitializer {
 
         // Introduces a dependency on ccm-types-siteproxy
         // Must be refactored into its own package.
-/* MOVED to ccm-atoz-siteproxy
+        /* MOVED to ccm-atoz-siteproxy
         AtoZ.registerProviderType(
                 new AtoZProviderType("SiteProxy Provider",
                                      "Provides a SiteProxy A-Z",
                                      AtoZSiteProxyProvider.class,
                                      SiteProxyProviderForm.class,
                                      SiteProxyProviderAdmin.class));
-*/
+        */
+
         // Introduces dependenciy on navigation package 
         // Function / purpose ??
         ApplicationNavigationModel.register(AtoZ.class.getName(),

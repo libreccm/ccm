@@ -5,7 +5,7 @@
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.StringParameter"/>
-  <jsp:directive.page import="com.arsdigita.london.atoz.ui.AtoZPane"/>
+  <jsp:directive.page import="com.arsdigita.atoz.ui.AtoZPane"/>
   
   <jsp:scriptlet>
     DispatcherHelper.cacheDisable(response);

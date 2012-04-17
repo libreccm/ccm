@@ -23,7 +23,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter;
 import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
-import com.arsdigita.london.contenttypes.ui.AddContactPropertiesStep;
+import com.arsdigita.london.contenttypes.ui.ContactPropertiesAddStep;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.runtime.DomainInitEvent;
@@ -151,7 +151,7 @@ public class ContactInitializer extends ContentTypeInitializer {
     }
 
     private Class getAuthoringStep() {
-        return AddContactPropertiesStep.class;
+        return ContactPropertiesAddStep.class;
     }
 
     private String getBaseType() {

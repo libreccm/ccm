@@ -41,6 +41,7 @@
         <ccm:application name="ccm-cms-types-siteproxy"/>
 
 <!--   Applications   -->
+        <ccm:application name="ccm-atoz"/>
         <ccm:application name="ccm-navigation"/>
         <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
@@ -52,7 +53,7 @@
 
 <!--   LDN core extensions  -->
         <ccm:application name="ccm-ldn-aplaws"/>
-        <ccm:application name="ccm-ldn-atoz"/>
+  <!--  <ccm:application name="ccm-ldn-atoz"/>    -->
         <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>

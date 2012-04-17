@@ -549,7 +549,7 @@
 
   <xsl:template match="atoz:providerDetails">
     <xsl:choose>
-      <xsl:when test="objectType = 'com.arsdigita.london.atoz.AtoZCategoryProvider'">
+      <xsl:when test="objectType = 'com.arsdigita.atoz.AtoZCategoryProvider'">
         <table class="property">
           <thead>
             <th colspan="2">Category Provider Details</th>
@@ -572,7 +572,7 @@
           </tr>
         </table>
       </xsl:when>
-      <xsl:when test="objectType = 'com.arsdigita.london.atoz.AtoZItemProvider'">
+      <xsl:when test="objectType = 'com.arsdigita.atoz.AtoZItemProvider'">
         <table class="property">
           <thead>
             <th colspan="2">Item Provider Details</th>
@@ -595,7 +595,7 @@
           </tr>
         </table>
       </xsl:when>
-      <xsl:when test="objectType = 'com.arsdigita.london.atoz.AtoZSiteProxyProvider'">
+      <xsl:when test="objectType = 'com.arsdigita.atoz.siteproxy.AtoZSiteProxyProvider'">
         <table class="property">
           <thead>
             <th colspan="2">SiteProxy Provider Details</th>

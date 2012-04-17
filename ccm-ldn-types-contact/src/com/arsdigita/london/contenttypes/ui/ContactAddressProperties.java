@@ -33,21 +33,21 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  *
- * @version $Id: AddressProperties.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContactAddressProperties.java 287 2005-02-22 00:29:02Z sskracic $
  * 
  */
-public class AddressProperties extends SimpleEditStep {
+public class ContactAddressProperties extends SimpleEditStep {
 
   /** The name of the editing sheet added to this step */
   public static String EDIT_SHEET_NAME = "edit-contact-address";
 
-  public AddressProperties(ItemSelectionModel itemModel,
+  public ContactAddressProperties(ItemSelectionModel itemModel,
                                AuthoringKitWizard parent) {
     super(itemModel, parent);
 
     BasicItemForm form;
 
-    form = new AddressPropertyForm(itemModel);
+    form = new ContactAddressPropertyForm(itemModel);
 
     add(EDIT_SHEET_NAME,
         "Edit",
