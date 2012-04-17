@@ -74,46 +74,27 @@ public abstract class UnPublished extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        /*    DataCollection collection;
+        final GenericOrganizationalUnitBundle bundle = getUnPublishedBundle().
+                getOrganization();
 
-         collection = (DataCollection) get(ORGANIZATION);
-
-         if (0 == collection.size()) {
-         return null;
-         } else {
-         DataObject dobj;
-
-         collection.next();
-         dobj = collection.getDataObject();
-         collection.close();
-
-         return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(
-         dobj);
-         }*/
-        return (GenericOrganizationalUnit) getUnPublishedBundle().
-                getOrganization().getPrimaryInstance();
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
+        }
     }
 
     public GenericOrganizationalUnit getOrganization(final String language) {
-        return (GenericOrganizationalUnit) getUnPublishedBundle().
-                getOrganization().getInstance(language);
+        final GenericOrganizationalUnitBundle bundle = getUnPublishedBundle().
+                getOrganization();
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getInstance(language);
+        }
     }
 
     public void setOrganization(final GenericOrganizationalUnit orga) {
-        /*GenericOrganizationalUnit oldOrga;
-
-         oldOrga = getOrganization();
-
-         if (oldOrga != null) {
-         remove(ORGANIZATION, oldOrga);
-         }
-
-         if (null != orga) {
-         Assert.exists(orga, GenericOrganizationalUnit.class);            
-         DataObject link = add(ORGANIZATION, orga);
-         link.set("orgaOrder", 1);
-         link.save();
-         }*/
         getUnPublishedBundle().setOrganization(orga);
     }
 
@@ -132,17 +113,18 @@ public abstract class UnPublished extends Publication {
     public void setNumberOfPages(Integer numberOfPages) {
         set(NUMBER_OF_PAGES, numberOfPages);
     }
-    
+
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
         generators.add(new UnPublishedExtraXmlGenerator());
         return generators;
     }
-    
-     @Override
+
+    @Override
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
-        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
         generators.add(new UnPublishedExtraXmlGenerator());
         return generators;
     }

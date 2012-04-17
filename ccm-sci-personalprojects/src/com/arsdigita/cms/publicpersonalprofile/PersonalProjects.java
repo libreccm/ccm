@@ -64,9 +64,7 @@ public class PersonalProjects implements ContentGenerator {
                 "personalProjects");
 
         if ((projects == null) || projects.isEmpty()) {
-            personalProjectsElem.newChildElement("noProjects");
-
-            return;
+            personalProjectsElem.newChildElement("noProjects");            
         } else {
             final List<SciProject> currentProjects = new ArrayList<SciProject>();
             final List<SciProject> finishedProjects =

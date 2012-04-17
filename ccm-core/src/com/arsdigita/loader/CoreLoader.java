@@ -21,8 +21,9 @@ package com.arsdigita.loader;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.Charset;
 import com.arsdigita.globalization.Locale;
-import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.EmailAddress;
+import com.arsdigita.kernel.Group;
+import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.PackageInstance;
@@ -51,32 +52,27 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.CSVParameterReader;
 import com.arsdigita.util.parameter.EmailParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
+import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.servlet.HttpHost;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.Web;
 import com.arsdigita.webdevsupport.WebDevSupport;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-// import java.util.Locale;
 import java.util.Map;
-
 import javax.mail.internet.InternetAddress;
-
 import org.apache.log4j.Logger;
 
 
