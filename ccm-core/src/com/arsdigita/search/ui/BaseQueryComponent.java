@@ -27,6 +27,7 @@ import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormModel;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.parameters.ParameterData;
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.xml.Element;
 
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -126,7 +127,9 @@ public class BaseQueryComponent extends QueryComponent {
         
         Element terms = Search.newElement("terms");
         terms.addAttribute("param", m_terms.getName());
-        terms.addAttribute("value", getTerms(state));
+        terms.addAttribute("value", 
+                           Globalization.decodeParameter(state.getRequest(), 
+                                                         m_terms.getName()));
         generateErrorXML(state, terms);
         content.addContent(terms);
 

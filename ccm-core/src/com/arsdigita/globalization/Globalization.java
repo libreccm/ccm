@@ -18,13 +18,13 @@
  */
 package com.arsdigita.globalization;
 
+import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.dispatcher.RequestContext;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.dispatcher.RequestContext;
-import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.Assert;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;

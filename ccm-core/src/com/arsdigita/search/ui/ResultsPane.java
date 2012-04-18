@@ -21,6 +21,7 @@ package com.arsdigita.search.ui;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.globalization.Globalization;
 
 import com.arsdigita.kernel.Party;
 import com.arsdigita.xml.Element;
@@ -34,6 +35,7 @@ import com.arsdigita.search.ResultSet;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.Web;
+import java.io.UnsupportedEncodingException;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -63,7 +65,7 @@ public class ResultsPane extends SimpleComponent {
     }
 
     public ResultsPane(QueryGenerator query,
-            String engine) {
+                       String engine) {
         m_query = query;
         m_engine = engine;
         m_pageNumber = new IntegerParameter("page");
@@ -83,20 +85,23 @@ public class ResultsPane extends SimpleComponent {
         ResultSet resultSet = null;
         try {
             resultSet = m_engine == null
-                    ? Search.process(spec)
-                    : Search.process(spec, Search.DEFAULT_RESULT_CACHE, m_engine);
+                        ? Search.process(spec)
+                        : Search.process(spec, Search.DEFAULT_RESULT_CACHE,
+                                         m_engine);
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Got result set " + resultSet.getClass()
-                        + " count: " + resultSet.getCount());
+                            + " count: " + resultSet.getCount());
             }
 
             if (resultSet.getCount() > 0) {
 
-                Integer page = (Integer) m_pageNumber.transformValue(state.getRequest());
+                Integer page = (Integer) m_pageNumber.transformValue(state.
+                        getRequest());
                 int pageNumber = (page == null ? 1 : page.intValue());
                 long objectCount = resultSet.getCount();
-                int pageCount = (int) Math.ceil((double) objectCount / (double) m_pageSize);
+                int pageCount = (int) Math.ceil((double) objectCount
+                                                / (double) m_pageSize);
 
                 if (pageNumber < 1) {
                     pageNumber = 1;
@@ -117,16 +122,17 @@ public class ResultsPane extends SimpleComponent {
 
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Paginator stats\n  page number:" + pageNumber
-                            + "\n  page count: " + pageCount + "\n  page size: "
-                            + m_pageSize + "\n start " + begin + "\n  end: "
-                            + end + "\n count: " + objectCount);
+                                + "\n  page count: " + pageCount
+                                + "\n  page size: "
+                                + m_pageSize + "\n start " + begin + "\n  end: "
+                                + end + "\n count: " + objectCount);
                 }
 
                 content.addContent(generatePaginatorXML(state,
-                        m_pageNumber.getName(),
-                        pageNumber, pageCount,
-                        m_pageSize, begin, end,
-                        objectCount));
+                                                        m_pageNumber.getName(),
+                                                        pageNumber, pageCount,
+                                                        m_pageSize, begin, end,
+                                                        objectCount));
                 content.addContent(generateDocumentsXML(state, results));
 
                 parent.addContent(content);
@@ -158,13 +164,13 @@ public class ResultsPane extends SimpleComponent {
     }
 
     protected Element generatePaginatorXML(PageState state,
-            String pageParam,
-            int pageNumber,
-            int pageCount,
-            int pageSize,
-            long begin,
-            long end,
-            long objectCount) {
+                                           String pageParam,
+                                           int pageNumber,
+                                           int pageCount,
+                                           int pageSize,
+                                           long begin,
+                                           long end,
+                                           long objectCount) {
         Element paginator = Search.newElement("paginator");
         URL url = Web.getContext().getRequestURL();
 
@@ -175,11 +181,15 @@ public class ResultsPane extends SimpleComponent {
             if (key.equals(pageParam)) {
                 continue;
             }
-            map.setParameterValues(key, url.getParameterValues(key));
+            //map.setParameterValues(key, url.getParameterValues(key));
+            map.setParameterValues(key,
+                                   decodeParameters(url.getParameterValues(key),
+                                                    state));
         }
 
         paginator.addAttribute("pageParam", m_pageNumber.getName());
-        paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).toString());
+        paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).
+                toString());
         paginator.addAttribute("pageNumber", XML.format(new Integer(pageNumber)));
         paginator.addAttribute("pageCount", XML.format(new Integer(pageCount)));
         paginator.addAttribute("pageSize", XML.format(new Integer(pageSize)));
@@ -189,8 +199,42 @@ public class ResultsPane extends SimpleComponent {
         return paginator;
     }
 
+    private String[] decodeParameters(final String[] parameters,
+                                      final PageState state) {
+        final String[] decoded = new String[parameters.length];
+
+        for (int i = 0; i < parameters.length; i++) {
+            decoded[i] = decodeParameter(parameters[i], state);
+        }
+
+        return decoded;
+    }
+
+    private String decodeParameter(final String parameter,
+                                   final PageState state) {
+        String re = state.getRequest().getParameter(Globalization.ENCODING_PARAM_NAME);
+        
+        if ((re == null) || (re.isEmpty())) {
+            re = Globalization.getDefaultCharset();
+        }
+        
+        if ((parameter == null) || (parameter.isEmpty())) {
+            return parameter;
+        } else if(Globalization.getDefaultCharset(state.getRequest()).equals(re)) {
+            return parameter;            
+        } else {
+            try {
+            return new String(parameter.getBytes(Globalization.getDefaultCharset(
+                    state.getRequest())), re);
+            } catch(UnsupportedEncodingException ex) {
+                s_log.warn("Unsupported encoding.", ex);
+                return parameter;
+            }
+        }
+    }
+
     protected Element generateDocumentsXML(PageState state,
-            Iterator results) {
+                                           Iterator results) {
         Element documents = Search.newElement("documents");
 
         if (s_log.isDebugEnabled()) {
@@ -208,7 +252,7 @@ public class ResultsPane extends SimpleComponent {
     }
 
     protected Element generateDocumentXML(PageState state,
-            Document doc) {
+                                          Document doc) {
         Element entry = Search.newElement("object");
 
         String summary = doc.getSummary();
@@ -216,7 +260,9 @@ public class ResultsPane extends SimpleComponent {
         java.net.URL url = doc.getURL();
 
         entry.addAttribute("oid", XML.format(doc.getOID()));
-        entry.addAttribute("url", XML.format(m_relative ? url.getPath() + "?" + url.getQuery() : url.toString()));
+        entry.addAttribute("url", XML.format(m_relative ? url.getPath() + "?"
+                                                          + url.getQuery()
+                                             : url.toString()));
         entry.addAttribute("score", XML.format(doc.getScore()));
         entry.addAttribute("title", XML.format(doc.getTitle()));
         if (summary != null) {
@@ -227,27 +273,30 @@ public class ResultsPane extends SimpleComponent {
 
         Date creationDate = doc.getCreationDate();
         if (creationDate != null) {
-            entry.addAttribute("creationDate", XML.format(creationDate.toString()));
+            entry.addAttribute("creationDate", XML.format(
+                    creationDate.toString()));
         }
         Party creationParty = doc.getCreationParty();
         if (creationParty != null) {
             entry.addAttribute("creationParty",
-                    XML.format(creationParty.getDisplayName()));
+                               XML.format(creationParty.getDisplayName()));
         }
 
         Date lastModifiedDate = doc.getLastModifiedDate();
         if (lastModifiedDate != null) {
             entry.addAttribute("lastModifiedDate",
-                    XML.format(lastModifiedDate));
+                               XML.format(lastModifiedDate));
         }
         Party lastModifiedParty = doc.getLastModifiedParty();
         if (lastModifiedParty != null) {
             entry.addAttribute("lastModifiedParty",
-                    XML.format(lastModifiedParty.getDisplayName()));
+                               XML.format(lastModifiedParty.getDisplayName()));
         }
 
-        s_log.debug("about to add the contentSectionName from search index Doc to search result xml");
-        entry.addAttribute("contentSectionName", XML.format(doc.getContentSection()));
+        s_log.debug(
+                "about to add the contentSectionName from search index Doc to search result xml");
+        entry.addAttribute("contentSectionName", XML.format(doc.
+                getContentSection()));
 
         return entry;
     }
