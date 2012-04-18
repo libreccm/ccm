@@ -302,9 +302,9 @@ public class GenericContact extends ContentPage implements
     public void generateXML(ContentItem item, Element element, PageState state) {
         StringTokenizer keys = s_config.getContactEntryKeys();
         
-        Element contactKeysElem = element.newChildElement("contactKeys");        
+        Element contactKeysElem = element.newChildElement("contactEntryKeys");        
         while(keys.hasMoreElements()) {
-            contactKeysElem.newChildElement("contactKey").setText(keys.nextToken());
+            contactKeysElem.newChildElement("entryKey").setText(keys.nextToken());
         }
     }
 
