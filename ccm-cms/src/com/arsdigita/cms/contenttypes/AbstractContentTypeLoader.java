@@ -55,6 +55,7 @@ import org.apache.log4j.Logger;
  * that can be used by content types to reduce code duplication.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
+ * @authro Sören Bernstein (quasi@barkhof.uni-bremen.de)
  * @version $Revision: #754 $ $Date: 2005/09/02 $ $Author: pboy $
  **/
 public abstract class AbstractContentTypeLoader extends PackageLoader {
@@ -111,12 +112,7 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
                 ldc.close();
             }
 
-            TaskCollection tc = section.getWorkflowTemplates();
-            WorkflowTemplate wf = null;
-            if (tc.next()) {
-                wf = (WorkflowTemplate) tc.getTask();
-                tc.close();
-            }
+            WorkflowTemplate wf = section.getDefaultWorkflowTemplate();
 
             for (Iterator it = types.iterator(); it.hasNext();) {
                 final ContentType type = (ContentType) it.next();

@@ -239,6 +239,9 @@ association {
        to section_workflow_template_map.section_id,
      join section_workflow_template_map.wf_template_id
        to cw_process_definitions.process_def_id;
+
+  // Save the default workflow template for a content section
+  Boolean[1..1] isDefault = section_workflow_template_map.is_default;
 }
 
 

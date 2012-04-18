@@ -112,7 +112,7 @@ public final class ContentSectionSetup {
 
         // Setup the access controls
         setup.registerRoles(defaultRoles);
-        setup.registerWorkflows(defaultWorkflows);
+        setup.registerWorkflowTemplates(defaultWorkflows);
         setup.registerViewers(isPubliclyViewable);
         setup.registerPublicationCycles();
         setup.registerResolvers(itemResolverClassName, templateResolverClassName);
@@ -322,7 +322,7 @@ public final class ContentSectionSetup {
         m_section.save();
     }
 
-    private void registerWorkflows(List workflows) {
+    private void registerWorkflowTemplates(List workflows) {
 
         Iterator workflowsIter = workflows.iterator();
 
@@ -399,6 +399,7 @@ public final class ContentSectionSetup {
             // If this workflow should be the default or is the first one
             // save it for easy access in registerContentType
             if(m_wf == null || (workflow.containsKey("isDefault") && workflow.get("isDefault").equals("true"))) {
+                m_section.setDefaultWorkflowTemplate(wf);
                 m_wf = wf;
             }
         }
@@ -416,7 +417,7 @@ public final class ContentSectionSetup {
 
         ContentSectionConfig config = new ContentSectionConfig();
         config.load();
-        registerWorkflows(config.getDefaultWorkflows());
+        registerWorkflowTemplates(config.getDefaultWorkflows());
 
     }
 

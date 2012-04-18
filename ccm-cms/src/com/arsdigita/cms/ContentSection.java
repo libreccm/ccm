@@ -90,6 +90,7 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:pihman@arsdigita.com">Michael Pih</a>
  * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
+ * @author Sören Bernstein (quasi@barkhof.uni-bremen.de)
  * @version $Revision: #37 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: ContentSection.java 2209 2011-06-22 07:59:10Z pboy $
  */
@@ -899,7 +900,11 @@ public class ContentSection extends Application {
      * @param template The workflow template
      */
     public void addWorkflowTemplate(WorkflowTemplate template) {
-        template.addToAssociation(getWorkflowTemplatesAssociation());
+        this.addWorkflowTemplate(template, false);
+    }
+    public void addWorkflowTemplate(WorkflowTemplate template, boolean isDefault) {
+        DataObject link = template.addToAssociation(getWorkflowTemplatesAssociation());
+        link.set("isDefault", isDefault);
     }
 
     /**
@@ -911,6 +916,67 @@ public class ContentSection extends Application {
         template.removeFromAssociation(getWorkflowTemplatesAssociation());
     }
 
+    /**
+     * Set a <code>WorkflowTemplate</code> as default for this ContentSection by label
+     * 
+     * @param wf The label of a workflow template to set as new default workflow template
+     */
+    public void setDefaultWorkflowTemplate(String wf) {
+        TaskCollection taskColl = getWorkflowTemplates();
+        while (taskColl.next()) {
+            if(((WorkflowTemplate) taskColl.getTask()).getLabel().equals(wf)) {
+                ((DataObject) taskColl.get("link")).set("isDefault", true);
+            } else {
+                ((DataObject) taskColl.get("link")).set("isDefault", false);
+            }
+        }
+    }
+    
+    /**
+     * Set a <code>WorkflowTemplate</code> as default for this ContentSection 
+     * 
+     * @param wf The workflow template to set as new default workflow template
+     */
+    public void setDefaultWorkflowTemplate(WorkflowTemplate wf) {
+        TaskCollection taskColl = getWorkflowTemplates();
+        while (taskColl.next()) {
+            if(((WorkflowTemplate) taskColl.getTask()).equals(wf)) {
+                ((DataObject) taskColl.get("link")).set("isDefault", true);
+            } else {
+                ((DataObject) taskColl.get("link")).set("isDefault", false);
+            }
+        }
+    }
+    
+    /**
+     * Get the default workflow template for this content section
+     * 
+     * @return the default workflow template or null, if this method fails
+     */
+    public WorkflowTemplate getDefaultWorkflowTemplate() {
+        TaskCollection taskColl = getWorkflowTemplates();
+        while(taskColl.next()) {
+            if(((Boolean) taskColl.get("link.isDefault"))) {
+                WorkflowTemplate wf = (WorkflowTemplate) taskColl.getTask();
+                taskColl.close();
+                return wf;
+            }
+        }
+        
+        // If we get here, there is no default workflow template set for this section
+        // To solve this, we fetch the first item and set it as default
+        taskColl = getWorkflowTemplates();
+        while(taskColl.next()) {
+            WorkflowTemplate wf = (WorkflowTemplate) taskColl.getTask();
+           ((DataObject) taskColl.get("link")).set("isDefault", true);
+            taskColl.close();
+            return wf;
+        }
+        
+        // OK, now we're screwed
+        return null;
+    }
+    
     private DataAssociation getWorkflowTemplatesAssociation() {
         return (DataAssociation) get(WF_TEMPLATES);
     }
