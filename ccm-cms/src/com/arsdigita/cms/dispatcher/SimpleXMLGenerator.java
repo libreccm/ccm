@@ -183,7 +183,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
             s_log.info("Item is using DomainObjectXMLRenderer");
 
             // This is the preferred method
-            Element content = startElement(useContext);
+            Element content = startElement(useContext, parent);
 
             ContentItemXMLRenderer renderer =
                                    new ContentItemXMLRenderer(content);
@@ -195,19 +195,19 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
             renderer.walk(item, ADAPTER_CONTEXT);
 
-            parent.addContent(content);
+            //parent.addContent(content);
 
             /*
              * 2011-08-27 jensp: Introduced to remove the annoying special templates
              * for MultiPartArticle, SiteProxy and others. The method called
              * here was already definied but not used. 
              * 
-             * 2011-10-23 jensp: It is not possible to disable the use of
+             * 2011-10-23 jensp: It is now possible to disable the use of
              * extra XML.
              */
             if (useExtraXml) {
                 for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
-                    generator.generateXML(item, parent, state);
+                    generator.generateXML(item, content, state);
                 }
             }
         }
@@ -236,7 +236,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
                                      Element parent,
                                      String useContext) {
 
-        Element element = startElement(useContext);
+        Element element = startElement(useContext, parent);
         Element additionalAttrs = UDItemElement(useContext);
 
         element.addAttribute("type", UDItem.getContentType().getLabel());
@@ -266,13 +266,15 @@ public class SimpleXMLGenerator implements XMLGenerator {
         }
 
         //element.addContent(additionalAttrs);
-        parent.addContent(element);
+        //parent.addContent(element);
 
     }
 
-    private Element startElement(String useContext) {
+    private Element startElement(String useContext, Element parent) {
         //Element element = new Element("cms:item", CMS.CMS_XML_NS);
-        final Element element = new Element(itemElemName, itemElemNs);
+        //final Element element = new Element(itemElemName, itemElemNs);
+        final Element element = parent.newChildElement("cms:item", 
+                                                       CMS.CMS_XML_NS);
         if (useContext != null) {
             element.addAttribute("useContext", useContext);
         }
