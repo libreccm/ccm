@@ -17,20 +17,24 @@ import com.arsdigita.xml.Element;
  */
 public class JournalExtraXmlGenerator implements ExtraXMLGenerator {
 
-    public void generateXML(final ContentItem item, 
-                            final Element element, 
+    private boolean listMode = false;
+
+    public void generateXML(final ContentItem item,
+                            final Element element,
                             final PageState state) {
         if (!(item instanceof Journal)) {
-             throw new IllegalArgumentException(String.format(
+            throw new IllegalArgumentException(String.format(
                     "ExtraXMLGenerator '%s' only supports items of type '%s'.",
                     getClass().getName(),
                     Journal.class.getName()));
         }
-        
-        final Journal journal = (Journal) item;
-        createArticlesXml(journal, element, state);
+
+        if (!listMode) {
+            final Journal journal = (Journal) item;
+            createArticlesXml(journal, element, state);
+        }
     }
-    
+
     private void createArticlesXml(final Journal journal,
                                    final Element parent,
                                    final PageState state) {
@@ -38,16 +42,16 @@ public class JournalExtraXmlGenerator implements ExtraXMLGenerator {
         if ((articles == null) || articles.isEmpty()) {
             return;
         }
-        
+
         final Element articlesElem = parent.newChildElement("articles");
-        while(articles.next()) {
+        while (articles.next()) {
             createArticleXml(articles.getArticle(),
                              articles.getArticleOrder(),
                              articlesElem,
                              state);
         }
     }
-    
+
     private void createArticleXml(final ArticleInJournal article,
                                   final Integer order,
                                   final Element articlesElem,
@@ -60,6 +64,11 @@ public class JournalExtraXmlGenerator implements ExtraXMLGenerator {
 
     public void addGlobalStateParams(final Page page) {
         //nothing
+    }
+
+    @Override
+    public void setListMode(final boolean listMode) {
+        this.listMode = listMode;
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {

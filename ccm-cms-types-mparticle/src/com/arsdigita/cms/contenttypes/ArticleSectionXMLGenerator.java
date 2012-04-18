@@ -43,6 +43,11 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
 
     public void addGlobalStateParams(final Page page) {
     }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
+        //nothing
+    }
 
     protected void generateSectionXML(final PageState state,
                                       final Element parent,

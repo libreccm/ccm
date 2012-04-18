@@ -39,13 +39,19 @@ public class ArticleInCollectedVolumeExtraXmlGenerator
         final CollectedVolume collectedVolume = article.getCollectedVolume(GlobalizationHelper.getNegotiatedLocale().getLanguage());
         if (collectedVolume != null) {            
             final XmlGenerator generator = new XmlGenerator(collectedVolume);
-            generator.setItemElemName("collectedVolume", "");
+            generator.setItemElemName("collectedVolume", "");            
+            generator.setListMode(true);
             generator.generateXML(state, parent, "");
         }
     }
 
     public void addGlobalStateParams(final Page p) {
         //nothing 
+    }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
+        //Nothing
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {

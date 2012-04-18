@@ -70,6 +70,13 @@ public class SimpleXMLGenerator implements XMLGenerator {
      */
     private boolean useExtraXml = true;
     /**
+     * jensp 2012-04-18: This value is forwarded to this ExtraXMLGenerators
+     * by calling {@link ExtraXMLGenerator#setListMode(boolean)}. The behavior
+     * triggered by this value depends on the specific implementation of
+     * the {@code ExtraXMLGenerator}
+     */
+    private boolean listMode = false;
+    /**
      * Extra attributes for the cms:item element.
      */
     private Map<String, String> itemAttributes =
@@ -103,6 +110,10 @@ public class SimpleXMLGenerator implements XMLGenerator {
         this.useExtraXml = useExtraXml;
     }
 
+    public void setListMode(final boolean listMode) {
+        this.listMode = listMode;
+    }
+    
     public void addItemAttribute(final String name,
                                  final String value) {
         itemAttributes.put(name, value);
@@ -207,6 +218,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
              */
             if (useExtraXml) {
                 for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
+                    generator.setListMode(listMode);
                     generator.generateXML(item, content, state);
                 }
             }
@@ -273,8 +285,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
     private Element startElement(String useContext, Element parent) {
         //Element element = new Element("cms:item", CMS.CMS_XML_NS);
         //final Element element = new Element(itemElemName, itemElemNs);
-        final Element element = parent.newChildElement("cms:item", 
-                                                       CMS.CMS_XML_NS);
+        final Element element = parent.newChildElement(itemElemName, 
+                                                       itemElemNs);
         if (useContext != null) {
             element.addAttribute("useContext", useContext);
         }

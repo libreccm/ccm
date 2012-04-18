@@ -38,12 +38,18 @@ public class ArticleInJournalExtraXmlGenerator implements ExtraXMLGenerator {
                 getNegotiatedLocale().getLanguage());
         if (journal != null) {            
             final XmlGenerator generator = new XmlGenerator(journal);
+            generator.setListMode(true);
             generator.setItemElemName("journal", "");
             generator.generateXML(state, parent, "");
         }
     }
 
     public void addGlobalStateParams(final Page p) {
+        //nothing
+    }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
         //nothing
     }
 

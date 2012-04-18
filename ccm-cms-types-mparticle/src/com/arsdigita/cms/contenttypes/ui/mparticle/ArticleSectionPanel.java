@@ -84,6 +84,11 @@ public class ArticleSectionPanel extends SimpleComponent implements
         p.addGlobalStateParam(m_page);
     }
 
+    @Override
+    public void setListMode(final boolean listMode) {
+        //nothing
+    }
+    
     /**
      * Try to get the section from the context
      * if there isn't (eg if we are looking at an index

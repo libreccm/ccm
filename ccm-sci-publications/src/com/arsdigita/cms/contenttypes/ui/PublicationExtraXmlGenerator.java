@@ -25,6 +25,8 @@ import java.util.List;
  */
 public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
+    private boolean listMode;
+
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
@@ -43,8 +45,10 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         final List<PublicationFormat> formats = SciPublicationsExporters.
                 getInstance().getSupportedFormats();
 
-        for (PublicationFormat format : formats) {
-            createExportLink(format, element, (Publication) item, state);
+        if (!listMode) {
+            for (PublicationFormat format : formats) {
+                createExportLink(format, element, (Publication) item, state);
+            }
         }
     }
 
@@ -75,6 +79,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         generator.setItemElemName("author", "");
         generator.addItemAttribute("isEditor", isAuthor.toString());
         generator.addItemAttribute("order", order.toString());
+        generator.setListMode(listMode);
         generator.generateXML(state, authorsElem, "");
     }
 
@@ -150,6 +155,11 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
     public void addGlobalStateParams(final Page page) {
         //Nothing for now
+    }
+
+    @Override
+    public void setListMode(final boolean listMode) {
+        this.listMode = listMode;
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {

@@ -183,6 +183,11 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
         //Nothing yet
     }
 
+    @Override
+    public void setListMode(final boolean listMode) {
+        //nothing
+    }
+    
     private String getProfileUrl(final PublicPersonalProfile profile) {
         final GenericPerson owner = profile.getOwner();
         final GenericPersonContactCollection contacts = owner.getContacts();

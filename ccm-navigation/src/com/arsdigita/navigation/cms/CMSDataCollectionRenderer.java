@@ -80,6 +80,7 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                 final ContentItem contentItem = (ContentItem) obj;
                 
                 for(ExtraXMLGenerator generator : contentItem.getExtraListXMLGenerators()) {
+                    generator.setListMode(true);
                     generator.generateXML(contentItem, item, null);
                 }
                  

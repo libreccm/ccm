@@ -44,7 +44,13 @@ public class UnPublishedExtraXmlGenerator implements ExtraXMLGenerator {
         }
     }
 
+    @Override
     public void addGlobalStateParams(final Page page) {
+        //nothing
+    }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
         //nothing
     }
 

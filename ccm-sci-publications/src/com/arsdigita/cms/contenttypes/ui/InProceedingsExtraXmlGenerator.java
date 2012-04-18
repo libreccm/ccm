@@ -40,6 +40,7 @@ public class InProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         if (proceedings != null) {            
             final XmlGenerator generator = new XmlGenerator(proceedings);
             generator.setItemElemName("proceedings", "");
+            generator.setListMode(true);
             generator.generateXML(state, parent, "");
         }
     }
@@ -48,6 +49,11 @@ public class InProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         //nothing
     }
 
+    @Override
+    public void setListMode(final boolean listMode) {
+        //nothing
+    }
+    
     private class XmlGenerator extends SimpleXMLGenerator {
 
         private final ContentItem item;

@@ -84,9 +84,15 @@ public class SiteProxyExtraXMLGenerator implements ExtraXMLGenerator {
         }
     }
 
+    @Override
     public void addGlobalStateParams(final Page page) {
     }
 
+    @Override
+    public void setListMode(final boolean listMode) {
+        //nothing
+    }
+    
     private String passParameters(final HttpServletRequest request,
                                   final String url) {
         StringBuilder sb = new StringBuilder(url);

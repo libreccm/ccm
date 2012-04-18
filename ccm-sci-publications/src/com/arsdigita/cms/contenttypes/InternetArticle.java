@@ -31,6 +31,7 @@ import java.util.List;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class InternetArticle extends Publication {
 
@@ -81,44 +82,26 @@ public class InternetArticle extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        /*DataCollection collection;
-
-        collection = (DataCollection) get(ORGANIZATION);
-
-        if (collection.size() == 0) {
+        final GenericOrganizationalUnitBundle bundle = getInternetArticleBundle().getOrganization();
+        
+        if (bundle == null) {
             return null;
         } else {
-            DataObject dobj;
-
-            collection.next();
-            dobj = collection.getDataObject();
-            collection.close();
-
-            return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(dobj);
-        }*/
-        
-        return (GenericOrganizationalUnit) getInternetArticleBundle().getOrganization().getPrimaryInstance();
+            return (GenericOrganizationalUnit) bundle.getPrimaryInstance();                    
+        }                
     }
     
     public GenericOrganizationalUnit getOrganization(final String language) {
-           return (GenericOrganizationalUnit) getInternetArticleBundle().getOrganization().getInstance(language);
+        final GenericOrganizationalUnitBundle bundle = getInternetArticleBundle().getOrganization();
+        
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getInstance(language);
+        }                   
     }
 
-    public void setOrganization(final GenericOrganizationalUnit orga) {
-        /*GenericOrganizationalUnit oldOrga;
-
-        oldOrga = getOrganization();
-        if(oldOrga != null) {
-            remove(ORGANIZATION, oldOrga);
-        }
-
-        if (orga != null) {
-            Assert.exists(orga, GenericOrganizationalUnit.class);
-            DataObject link = add(ORGANIZATION, orga);
-            link.set("orgaOrder", 1);
-            link.save();
-        }*/
-        
+    public void setOrganization(final GenericOrganizationalUnit orga) {        
         getInternetArticleBundle().setOrganization(orga);
     }
 
@@ -204,7 +187,9 @@ public class InternetArticle extends Publication {
     @Override
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
-        generators.add(new InternetArticleExtraXmlGenerator());
+        final ExtraXMLGenerator generator = new InternetArticleExtraXmlGenerator();
+        generator.setListMode(true);
+        generators.add(generator);
         return generators;
     }
 }

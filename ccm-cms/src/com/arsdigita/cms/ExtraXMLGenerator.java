@@ -6,6 +6,7 @@ package com.arsdigita.cms;
 
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.xml.Element;
 
 /**
@@ -27,7 +28,18 @@ public interface ExtraXMLGenerator {
 
     /**
      * Add all required global parameters.
-     * @param p The page which contains to item to render
+     * @param page The page which contains to item to render
      */
-    public void addGlobalStateParams(Page p);
+    public void addGlobalStateParams(Page page);
+    
+    /**
+     * This method is called by the {@link SimpleXMLGenerator} to forward the
+     * value of the listMode property. This method may does nothing. In other
+     * cases it allows it to disable the output of some properties, for example
+     * to avoid endless loops (item a includes item b in its XML output and 
+     * item b includes the XML output of item a).
+     * 
+     * @param listMode 
+     */
+    public void setListMode(boolean listMode);
 }

@@ -38,6 +38,7 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
     private final static Logger logger =
                                 Logger.getLogger(
             GenericOrgaUnitExtraXmlGenerator.class);
+    private boolean listMode = false;
     private final static String SELECTED_TAB_PARAM = "selectedTab";
     private String showOnly;
 
@@ -51,6 +52,10 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
                     + "only instances of GenericOrganizationalUnit only.");
         }
 
+        if (listMode) {
+            return;
+        }
+        
         final Element orgaUnitTabsElem = element.newChildElement("orgaUnitTabs");
 
         final Element availableTabsElem = orgaUnitTabsElem.newChildElement(
@@ -206,5 +211,10 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
 
     public void addGlobalStateParams(final Page page) {
         //Nothing yet
+    }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
+        this.listMode = listMode;
     }
 }

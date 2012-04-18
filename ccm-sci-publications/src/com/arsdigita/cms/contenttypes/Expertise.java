@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.contenttypes.ui.ExpertiseExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
@@ -75,45 +76,43 @@ public class Expertise extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        /*DataCollection collection;
+        final GenericOrganizationalUnitBundle bundle = getExpertiseBundle().
+                getOrganization();
 
-         collection = (DataCollection) get(ORGANIZATION);
-
-         if (0 == collection.size()) {
-         return null;
-         } else {
-         DataObject dobj;
-
-         collection.next();
-         dobj = collection.getDataObject();
-         collection.close();
-
-         return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(dobj);
-         }  */
-        return (GenericOrganizationalUnit) getExpertiseBundle().getOrganization().
-                getPrimaryInstance();
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
+        }
     }
 
     public GenericOrganizationalUnit getOrganization(final String language) {
-        return (GenericOrganizationalUnit) getExpertiseBundle().getOrganization().
-                getInstance(language);
+        final GenericOrganizationalUnitBundle bundle = getExpertiseBundle().
+                getOrganization();
+
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getInstance(GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage());
+        }
     }
 
     public void setOrganization(final GenericOrganizationalUnit orga) {
         /*GenericOrganizationalUnit oldOrga;
 
-        oldOrga = getOrganization();
-        if (oldOrga != null) {
-            remove(ORGANIZATION, oldOrga);
-        }
+         oldOrga = getOrganization();
+         if (oldOrga != null) {
+         remove(ORGANIZATION, oldOrga);
+         }
 
-        if (null != orga) {
-            Assert.exists(orga, GenericOrganizationalUnit.class);
-            DataObject link = add(ORGANIZATION, orga);
-            link.set("orgaOrder", 1);
-            link.save();
-        }*/
-        
+         if (null != orga) {
+         Assert.exists(orga, GenericOrganizationalUnit.class);
+         DataObject link = add(ORGANIZATION, orga);
+         link.set("orgaOrder", 1);
+         link.save();
+         }*/
+
         getExpertiseBundle().setOrganization(orga);
     }
 
@@ -126,48 +125,32 @@ public class Expertise extends Publication {
     }
 
     public GenericOrganizationalUnit getOrderer() {
-        /*DataCollection collection;
+        final GenericOrganizationalUnitBundle bundle = getExpertiseBundle().
+                getOrderer();
 
-        collection = (DataCollection) get(ORDERER);
-
-        if (0 == collection.size()) {
+        if (bundle == null) {
             return null;
         } else {
-            DataObject dobj;
-
-            collection.next();
-            dobj = collection.getDataObject();
-            collection.close();
-
-            return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(
-                    dobj);
-        }*/
-        
-        return (GenericOrganizationalUnit) getExpertiseBundle().getOrderer().getPrimaryInstance();                
-    }
-    
-    public GenericOrganizationalUnit getOrderer(final String language) {
-        return (GenericOrganizationalUnit) getExpertiseBundle().getOrderer().getInstance(language);                
-    }
-
-    public void setOrderer(final GenericOrganizationalUnit orderer) {
-        /*GenericOrganizationalUnit oldOrga;
-
-        oldOrga = getOrganization();
-        if (oldOrga != null) {
-            remove(ORDERER, oldOrga);
+            return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
         }
+    }
 
-        if (null != orderer) {
-            Assert.exists(orderer, GenericOrganizationalUnit.class);
-            DataObject link = add(ORDERER, orderer);
-            link.set("ordererOrder", 1);
-            link.save();
-        }*/
-        
+    public GenericOrganizationalUnit getOrderer(final String language) {
+        final GenericOrganizationalUnitBundle bundle = getExpertiseBundle().
+                getOrderer();
+
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getInstance(GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage());
+        }
+    }
+
+    public void setOrderer(final GenericOrganizationalUnit orderer) {     
         getExpertiseBundle().setOrderer(orderer);
     }
-    
+
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.
@@ -180,7 +163,9 @@ public class Expertise extends Publication {
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.
                 getExtraListXMLGenerators();
-        generators.add(new ExpertiseExtraXmlGenerator());
+        final ExtraXMLGenerator generator = new ExpertiseExtraXmlGenerator();
+        generator.setListMode(true);        
+        generators.add(generator);        
         return generators;
     }
 }

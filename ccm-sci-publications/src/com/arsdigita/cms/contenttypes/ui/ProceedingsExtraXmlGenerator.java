@@ -8,7 +8,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.InProceedingsCollection;
 import com.arsdigita.cms.contenttypes.Proceedings;
-import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
@@ -19,6 +18,8 @@ import com.arsdigita.xml.Element;
  * @version $Id$
  */
 public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
+
+    private boolean listMode = false;
 
     public void generateXML(final ContentItem item,
                             final Element element,
@@ -32,7 +33,9 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
 
         final Proceedings proceedings = (Proceedings) item;
         createOrganizerXml(proceedings, element, state);
-        createPapersXml(proceedings, element, state);
+        if (!listMode) {
+            createPapersXml(proceedings, element, state);
+        }
     }
 
     private void createOrganizerXml(final Proceedings proceedings,
@@ -41,7 +44,7 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         final GenericOrganizationalUnit organizer =
                                         proceedings.getOrganizerOfConference(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
-        if (organizer != null) {                       
+        if (organizer != null) {
             final XmlGenerator generator = new XmlGenerator(organizer);
             generator.setItemElemName("organizer", "");
             generator.generateXML(state, parent, "");
@@ -55,16 +58,17 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         if ((papers == null) || papers.isEmpty()) {
             return;
         }
-        
+
         final Element papersElem = parent.newChildElement("papers");
-        while(papers.next()) {
-            createPaperXml(papers.getPaper(GlobalizationHelper.getNegotiatedLocale().getLanguage()),
+        while (papers.next()) {
+            createPaperXml(papers.getPaper(GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage()),
                            papers.getPaperOrder(),
                            papersElem,
                            state);
         }
     }
-    
+
     private void createPaperXml(final InProceedings paper,
                                 final Integer order,
                                 final Element papersElem,
@@ -74,9 +78,14 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         generator.addItemAttribute("order", order.toString());
         generator.generateXML(state, papersElem, "");
     }
-    
+
     public void addGlobalStateParams(final Page page) {
         //nothing
+    }
+
+    @Override
+    public void setListMode(final boolean listMode) {
+        this.listMode = listMode;
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {

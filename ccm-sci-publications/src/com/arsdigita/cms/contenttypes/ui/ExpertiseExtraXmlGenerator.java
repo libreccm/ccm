@@ -40,6 +40,7 @@ public class ExpertiseExtraXmlGenerator implements ExtraXMLGenerator {
                 getNegotiatedLocale().getLanguage());
         if (orga != null) {            
             final XmlGenerator generator = new XmlGenerator(orga);
+            generator.setListMode(true);
             generator.setItemElemName("organization", "");
             generator.generateXML(state, parent, "");
         }
@@ -53,12 +54,18 @@ public class ExpertiseExtraXmlGenerator implements ExtraXMLGenerator {
                 getNegotiatedLocale().getLanguage());
         if (orderer != null) {            
             final XmlGenerator generator = new XmlGenerator(orderer);
+            generator.setListMode(true);
             generator.setItemElemName("orderer", "");
             generator.generateXML(state, parent, "");
         }
     }
 
     public void addGlobalStateParams(Page p) {
+        //nothing
+    }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
         //nothing
     }
 

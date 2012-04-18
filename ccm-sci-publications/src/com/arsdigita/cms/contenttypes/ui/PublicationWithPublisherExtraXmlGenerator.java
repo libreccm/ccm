@@ -51,6 +51,11 @@ public class PublicationWithPublisherExtraXmlGenerator
     public void addGlobalStateParams(final Page p) {
         //nothing                
     }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
+        //nothing
+    }
 
     private class XmlGenerator extends SimpleXMLGenerator {
 

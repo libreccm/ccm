@@ -212,21 +212,20 @@ public class PublicationAuthorAddForm
                     getSelectedAuthor();
             editing = true;
         }
-        if (!(author.getContentBundle().hasInstance(publication.getLanguage(),
+        
+        /*if (!(author.getContentBundle().hasInstance(publication.getLanguage(),
                                                     Kernel.getConfig().
               languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.authors.selectAuthor.no_suitable_language_variant"));
             return;
-        }
+        }*/
 
-        if (!editing) {
-            author = (GenericPerson) author.getContentBundle().getInstance(publication.
-                    getLanguage());
-            AuthorshipCollection authors = publication.getAuthors();
+        if (!editing) {            
+            AuthorshipCollection authors = publication.getAuthors();            
             authors.addFilter(
-                    String.format("id = %s", author.getID().toString()));
+                    String.format("id = %s", author.getContentBundle().getID().toString()));
             if (authors.size() > 0) {
                 data.addError(PublicationGlobalizationUtil.globalize(
                         "publications.ui.authors.selectAuthor.already_added"));

@@ -6,7 +6,6 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeCollection;
-import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
@@ -19,6 +18,8 @@ import com.arsdigita.xml.Element;
  */
 public class CollectedVolumeExtraXmlGenerator implements ExtraXMLGenerator {
 
+    private boolean listMode = false;
+
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
@@ -28,29 +29,33 @@ public class CollectedVolumeExtraXmlGenerator implements ExtraXMLGenerator {
                     getClass().getName(),
                     CollectedVolume.class.getName()));
         }
-        
+
         final CollectedVolume collectedVolume = (CollectedVolume) item;
-        createArticlesXml(collectedVolume, element, state);
+        if (!listMode) {
+            createArticlesXml(collectedVolume, element, state);
+        }
     }
-    
+
     private void createArticlesXml(final CollectedVolume collectedVolume,
                                    final Element parent,
                                    final PageState state) {
-        final ArticleInCollectedVolumeCollection articles = collectedVolume.getArticles();
+        final ArticleInCollectedVolumeCollection articles = collectedVolume.
+                getArticles();
         if ((articles == null) || articles.isEmpty()) {
             return;
         }
-        
+
         final Element articlesElem = parent.newChildElement("articles");
-        while(articles.next()) {
-            createArticleXml(articles.getArticle(GlobalizationHelper.getNegotiatedLocale().getLanguage()),
+        while (articles.next()) {
+            createArticleXml(articles.getArticle(GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage()),
                              articles.getArticleOrder(),
                              articlesElem,
                              state);
-            
+
         }
     }
-    
+
     private void createArticleXml(final ArticleInCollectedVolume article,
                                   final Integer order,
                                   final Element articlesElem,
@@ -63,6 +68,11 @@ public class CollectedVolumeExtraXmlGenerator implements ExtraXMLGenerator {
 
     public void addGlobalStateParams(final Page page) {
         //Nothing
+    }
+
+    @Override
+    public void setListMode(final boolean listMode) {
+        this.listMode = listMode;
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {

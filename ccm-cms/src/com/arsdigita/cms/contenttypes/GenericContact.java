@@ -299,6 +299,7 @@ public class GenericContact extends ContentPage implements
         return null;
     }
 
+    @Override
     public void generateXML(ContentItem item, Element element, PageState state) {
         StringTokenizer keys = s_config.getContactEntryKeys();
         
@@ -308,7 +309,13 @@ public class GenericContact extends ContentPage implements
         }
     }
 
+    @Override
     public void addGlobalStateParams(Page p) {
+        //Nothing
+    }
+    
+    @Override
+    public void setListMode(final boolean listMode) {
         //Nothing
     }
     

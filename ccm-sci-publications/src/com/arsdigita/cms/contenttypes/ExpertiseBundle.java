@@ -100,7 +100,7 @@ public class ExpertiseBundle extends PublicationBundle {
         if (orgaunitLive != null) {
             final DataObject link = add(ORGANIZATION, orgaunitLive);
 
-            link.set("orgaOrder", link.get("link.orgaOrder"));
+            link.set("orgaOrder", 1);
 
             link.save();
         }
@@ -117,7 +117,7 @@ public class ExpertiseBundle extends PublicationBundle {
         if (ordererLive != null) {
             final DataObject link = add(ORDERER, ordererLive);
 
-            link.set("ordererOrder", link.get("link.ordererOrder"));
+            link.set("ordererOrder", 1);
 
             link.save();
         }

@@ -1977,12 +1977,13 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                     DomainObject obj = DomainObjectFactory.newInstance(collection.getDataObject());
                     if (obj instanceof ContentItem) {
                         final ContentItem item = (ContentItem) obj;
+                        collection.close();
                         return item.copyReverseProperty(source, 
                                                         this, 
                                                         property,                                                       
                                                         copier);
                     }
-                }
+                }                
             }
         }
 
