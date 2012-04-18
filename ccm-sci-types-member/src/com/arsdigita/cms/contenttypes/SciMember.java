@@ -53,20 +53,5 @@ public class SciMember extends GenericPerson {
 
     public SciMember(final String type) {
         super(type);
-    }
-    
-    @Override
-    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
-        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
-        generators.add(new SciMemberExtraXmlGenerator());
-        return generators;
-    }
-
-    @Override
-    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
-        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
-        generators.add(new SciMemberExtraXmlGenerator());
-        return generators;
-    }
-    
+    }           
 }

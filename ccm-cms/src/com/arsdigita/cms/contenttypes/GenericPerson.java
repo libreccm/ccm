@@ -20,8 +20,10 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.LanguageInvariantContentItem;
 import com.arsdigita.cms.RelationAttributeInterface;
+import com.arsdigita.cms.contenttypes.ui.GenericPersonExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataObject;
@@ -29,6 +31,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -60,7 +63,6 @@ public class GenericPerson extends ContentPage implements
      */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericPerson";
-   
 
     /**
      * Default constructor. This creates a new (empty) GenericPerson.
@@ -75,17 +77,17 @@ public class GenericPerson extends ContentPage implements
     }
 
     public GenericPerson(OID id) throws DataObjectNotFoundException {
-        super(id);    
+        super(id);
     }
 
     public GenericPerson(DataObject obj) {
-        super(obj);        
+        super(obj);
     }
 
     public GenericPerson(String type) {
-        super(type);        
+        super(type);
     }
-    
+
     public GenericPersonBundle getGenericPersonBundle() {
         return (GenericPersonBundle) getContentBundle();
     }
@@ -330,7 +332,24 @@ public class GenericPerson extends ContentPage implements
         return getFullName();
     }
 
+    @Override
     public boolean isLanguageInvariant() {
         return true;
-    }   
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
+        generators.add(new GenericPersonExtraXmlGenerator());
+        return generators;
+    }
+
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.
+                getExtraListXMLGenerators();
+        generators.add(new GenericPersonExtraXmlGenerator());
+        return generators;
+    }
 }

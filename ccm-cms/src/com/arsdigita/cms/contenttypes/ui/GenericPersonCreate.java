@@ -12,7 +12,6 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
@@ -24,6 +23,7 @@ import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.LanguageWidget;
 import com.arsdigita.cms.ui.authoring.PageCreate;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
 import java.util.Date;
 
@@ -48,8 +48,7 @@ public class GenericPersonCreate extends PageCreate {
         ContentType type = getItemSelectionModel().getContentType();
         m_workflowSection = new ApplyWorkflowFormSection(type);
         add(m_workflowSection, ColumnPanel.INSERT);
-        add(new Label(GlobalizationUtil.globalize(
-                "cms.ui.authoring.content_type")));
+        add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.content_type")));
         add(new Label(type.getLabel()));
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
