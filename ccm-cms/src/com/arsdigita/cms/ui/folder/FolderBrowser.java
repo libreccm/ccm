@@ -454,7 +454,8 @@ public class FolderBrowser extends Table {
                 }
             };
             Label l = new Label();
-            l.setLabel("<font color=\"blue\">" + headerName + "</font>");
+            l.setLabel(headerName);
+            l.setClassAttr("folderBrowserLink");
             l.setOutputEscaping(false);
             l.setFontWeight(Label.BOLD);
 
