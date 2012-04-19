@@ -51,43 +51,37 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @author Richard Su (richard.su@alum.mit.edu)
  * @version $Id: LuceneSearch.java 1846 2009-03-06 04:17:36Z terry $
  *
- **/
-
+ *
+ */
 public class LuceneSearch {
 
     private static final Logger LOG = Logger.getLogger(LuceneSearch.class);
-
     private org.apache.lucene.document.Document m_doc;
     private float m_score;
-
     private Query m_query;
     private Filter m_filter;
-
     private long m_offset;
     private long m_howmany;
-
     private List m_hits;
     private Iterator m_hitIterator;
     private int m_size;
     private long m_searchTime = 0;
-
     private boolean m_rangeSet = false;
-
     private static final LuceneLock LOCK = LuceneLock.getInstance();
-
     /**
-     *  This is maximum number of search results that Lucene can return by default.
-     * If we need more than this, eg. for page 12 of search results we need entries
-     * 111-120, we have to use different (slower) search methods.
+     * This is maximum number of search results that Lucene can return by
+     * default. If we need more than this, eg. for page 12 of search results we
+     * need entries 111-120, we have to use different (slower) search methods.
      */
     public static final int LUCENE_MAX_HITS = 100;
 
     /**
-     * Search over all objects in the system. Returns objects that matches
-     * the search string.
+     * Search over all objects in the system. Returns objects that matches the
+     * search string.
      *
      * @param searchString user specified search string
-     **/
+     *
+     */
     public LuceneSearch(String searchString) {
         this(searchString, (Filter) null);
     }
@@ -97,7 +91,8 @@ public class LuceneSearch {
      *
      * @param searchString user specified search string
      * @param objectType ACS object type
-     **/
+     *
+     */
     public LuceneSearch(String searchString, String objectType) {
         this(searchString, new ObjectTypeFilter(objectType));
     }
@@ -107,33 +102,78 @@ public class LuceneSearch {
      *
      * @param searchString user specified search string
      * @param f a filter
-     **/
+     *
+     */
     public LuceneSearch(String searchString, Filter f) {
         m_filter = f;
         try {
             LuceneConfig conf = LuceneConfig.getConfig();
             Analyzer analyzer = conf.getAnalyzer();
             QueryParser parser = new QueryParser(Document.CONTENT, analyzer);
-            m_query = parser.parse(searchString);
+            m_query = parser.parse(escapeSearchString(searchString));
         } catch (ParseException ex) {
             LOG.fatal("failed parsing the expression: " + searchString, ex);
         }
+    }
+    
+    private String escapeSearchString(final String search) {
+        StringBuilder builder = new StringBuilder();
+
+        char c;
+        for (int i = 0; i < search.length(); i++) {
+            c = search.charAt(i);
+            //Missing breaks are correct here! 
+            switch (c) {
+                case '&':
+                case '|':
+                    if (search.length() > (i+1)) {
+                        if (search.charAt(i + 1) == c) {
+                            builder.append("\\");
+                            builder.append(c);
+                            builder.append(c);
+                            break;
+                        }
+                    }
+                case '+':
+                case '-':
+                case '!':
+                case '(':
+                case ')':
+                case '{':
+                case '}':
+                case '[':
+                case ']':
+                case '^':
+                case '\"':
+                case '~':
+                case '*':
+                case '?':
+                case ':':
+                case '\\':
+                    builder.append("\\");
+                default:
+                    builder.append(c);
+            }
+        }
+        
+        return builder.toString();
     }
 
     /**
      * Search given a preformed query.
      *
      * @param q a performed query
-     **/
+     *
+     */
     public LuceneSearch(Query q) {
         m_query = q;
         m_filter = null;
     }
 
     /**
-     *   @param offset indicates how many documents will be skipped, 0 means
-     *                 retrieve top-most hits
-     *   @param howmany maximum size of the result set
+     * @param offset indicates how many documents will be skipped, 0 means
+     * retrieve top-most hits
+     * @param howmany maximum size of the result set
      */
     public void setResultRange(long offset, long howmany) {
         m_rangeSet = true;
@@ -141,10 +181,10 @@ public class LuceneSearch {
         m_howmany = howmany;
     }
 
-
     private void performSearch() {
         if (LOG.isInfoEnabled()) {
-            LOG.info("About to perform search, query = " + m_query + ", filter = " + m_filter);
+            LOG.info("About to perform search, query = " + m_query
+                     + ", filter = " + m_filter);
         }
         long st = System.currentTimeMillis();
         m_hits = new ArrayList();
@@ -155,7 +195,8 @@ public class LuceneSearch {
             // search request, with explicitly stated requested document range.
             m_offset = 0;
             m_howmany = Search.CACHE_SIZE;
-            LOG.info("Result range not set.  Retrieving first " + m_howmany + " hits from the result set");
+            LOG.info("Result range not set.  Retrieving first " + m_howmany
+                     + " hits from the result set");
         }
         if (m_offset + m_howmany <= LUCENE_MAX_HITS) {
             performClassicSearch();
@@ -166,15 +207,15 @@ public class LuceneSearch {
         m_searchTime = System.currentTimeMillis() - st;
     }
 
-
     private void performClassicSearch() {
         if (LOG.isInfoEnabled()) {
-            LOG.info("Performing classic search, offset + howmany = " + (m_offset + m_howmany));
+            LOG.info("Performing classic search, offset + howmany = "
+                     + (m_offset + m_howmany));
         }
         Hits hits = null;
         IndexSearcher index = null;
         try {
-            synchronized(LOCK) {
+            synchronized (LOCK) {
                 index = new IndexSearcher(Index.getLocation());
                 hits = index.search(m_query, m_filter);
                 m_size = hits.length();
@@ -186,43 +227,46 @@ public class LuceneSearch {
         int docID = 0;
         try {
             int ndx = (int) m_offset;
-            while (ndx < hits.length()  &&  ndx < m_offset + m_howmany) {
+            while (ndx < hits.length() && ndx < m_offset + m_howmany) {
                 docID = hits.id(ndx);
                 float score = hits.score(ndx);
-                m_hits.add(new SearchResultWrapper(docID, score, hits.doc(ndx++)));
+                m_hits.add(
+                        new SearchResultWrapper(docID, score, hits.doc(ndx++)));
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Match #" + ndx + " doc: " + docID + " score: " + score);
+                    LOG.debug("Match #" + ndx + " doc: " + docID + " score: "
+                              + score);
                 }
             }
         } catch (IOException ioe) {
-            LOG.error("Can't retrieve doc #" + docID + " from the result set", ioe);
+            LOG.error("Can't retrieve doc #" + docID + " from the result set",
+                      ioe);
             return;
         }
         closeSearchIndex(index);
     }
 
-
-
-
     private void performCustomSearch() {
         if (LOG.isInfoEnabled()) {
-            LOG.info("Performing CUSTOM search, offset + howmany = " + (m_offset + m_howmany));
+            LOG.info("Performing CUSTOM search, offset + howmany = "
+                     + (m_offset + m_howmany));
         }
         IndexSearcher index = null;
         List unsortedHits = new ArrayList();
         try {
-            synchronized(LOCK) {
+            synchronized (LOCK) {
                 index = new IndexSearcher(Index.getLocation());
-                index.search(m_query, m_filter, new CustomHitCollector(unsortedHits));
+                index.search(m_query, m_filter, new CustomHitCollector(
+                        unsortedHits));
             }
         } catch (IOException ex) {
-            LOG.error("search failed" , ex);
+            LOG.error("search failed", ex);
             return;
         }
         m_size = unsortedHits.size();
         // Results from a custom search are not sorted.  We must explicitly sort them now,
         // with the documents having highest score on the top.
         Collections.sort(unsortedHits, new Comparator() {
+
             public int compare(Object o1, Object o2) {
                 CustomHitWrapper hit1 = (CustomHitWrapper) o1;
                 CustomHitWrapper hit2 = (CustomHitWrapper) o2;
@@ -237,10 +281,11 @@ public class LuceneSearch {
                 // to avoid all surprises
                 return hit1.getDocID() - hit2.getDocID();
             }
+
             public boolean equals(Object obj) {
                 return equals(obj);
             }
-          });
+        });
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Dumping sorted result set");
@@ -248,28 +293,33 @@ public class LuceneSearch {
             Iterator i = unsortedHits.iterator();
             while (i.hasNext()) {
                 CustomHitWrapper hit = (CustomHitWrapper) i.next();
-                LOG.debug("SORT #" + ++count + " doc: " + hit.getDocID() + " score: " + hit.getScore());
+                LOG.debug("SORT #" + ++count + " doc: " + hit.getDocID()
+                          + " score: " + hit.getScore());
             }
         }
         // Finally populate the search results
 
         int ndx = (int) m_offset;
-        while (ndx < m_size  &&  ndx < m_offset + m_howmany) {
+        while (ndx < m_size && ndx < m_offset + m_howmany) {
             CustomHitWrapper chw = (CustomHitWrapper) unsortedHits.get(ndx++);
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Match #" + ndx + " is within the requested document range");
-                LOG.debug("HIT doc: " + chw.getDocID() + " score: " + chw.getScore());
+                LOG.debug("Match #" + ndx
+                          + " is within the requested document range");
+                LOG.debug("HIT doc: " + chw.getDocID() + " score: " + chw.
+                        getScore());
             }
             try {
-                m_hits.add(new SearchResultWrapper(chw.getDocID(), chw.getScore(), index.doc(chw.getDocID())));
+                m_hits.add(new SearchResultWrapper(chw.getDocID(),
+                                                   chw.getScore(),
+                                                   index.doc(chw.getDocID())));
             } catch (IOException ioe) {
-                LOG.error("Could not retrieve doc #" + chw.getDocID() + " from search index", ioe);
+                LOG.error("Could not retrieve doc #" + chw.getDocID()
+                          + " from search index", ioe);
             }
         }
 
         closeSearchIndex(index);
     }
-
 
     private class CustomHitCollector extends HitCollector {
 
@@ -282,13 +332,12 @@ public class LuceneSearch {
 
         public void collect(int doc, float score) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Match #" + ++count + " doc: " + doc + " score: " + score);
+                LOG.debug("Match #" + ++count + " doc: " + doc + " score: "
+                          + score);
             }
             m_unsortedHits.add(new CustomHitWrapper(doc, score));
         }
     }
-
-
 
     private void closeSearchIndex(IndexSearcher index) {
         try {
@@ -300,8 +349,8 @@ public class LuceneSearch {
 
     /**
      * Returns the number of hits in this query.
-     **/
-
+     *
+     */
     public int size() {
         if (m_hits == null) {
             performSearch();
@@ -320,7 +369,8 @@ public class LuceneSearch {
      * Returns true if the search has more results
      *
      * @return true if the search has more results
-     **/
+     *
+     */
     public boolean next() {
         if (m_hits == null) {
             performSearch();
@@ -335,15 +385,16 @@ public class LuceneSearch {
     }
 
     /**
-     * Closes this search.  This is now no-op.
-     **/
+     * Closes this search. This is now no-op.
+     *
+     */
     public void close() {
     }
 
     /**
      * Returns the score of the current hit.
-     **/
-
+     *
+     */
     public float getScore() {
         return m_score;
     }
@@ -352,7 +403,8 @@ public class LuceneSearch {
      * Returns the ACS object ID of the current search hit.
      *
      * @return the object id
-     **/
+     *
+     */
     public BigDecimal getID() {
         return new BigDecimal(m_doc.get(Document.ID));
     }
@@ -361,14 +413,15 @@ public class LuceneSearch {
      * Returns the locale the current search hit is in.
      *
      * @return the locale the content is in
-     **/
+     *
+     */
     public Locale getLocale() {
         String language = m_doc.get(Document.LANGUAGE);
         String country = m_doc.get(Document.COUNTRY);
         if ("".equals(language) && "".equals(country)) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug( "Document: " + getID() + ", Language: " + language +
-                             ", Country: " + country );
+                LOG.debug("Document: " + getID() + ", Language: " + language
+                          + ", Country: " + country);
             }
             return null;
         } else {
@@ -380,7 +433,8 @@ public class LuceneSearch {
      * Returns the object type of the current search hit.
      *
      * @return the object type
-     **/
+     *
+     */
     public String getType() {
         return m_doc.get(Document.TYPE);
     }
@@ -389,7 +443,8 @@ public class LuceneSearch {
      * Returns type-specific info of the current search hit.
      *
      * @return the type-specific info
-     **/
+     *
+     */
     public String getTypeSpecificInfo() {
         return m_doc.get(Document.TYPE_SPECIFIC_INFO);
     }
@@ -398,7 +453,8 @@ public class LuceneSearch {
      * Returns the title of the current search hit.
      *
      * @return the link text for the object
-     **/
+     *
+     */
     public String getTitle() {
         return m_doc.get(Document.TITLE);
     }
@@ -407,26 +463,29 @@ public class LuceneSearch {
      * Returns a summary for the current search hit.
      *
      * @return a summary for the hit
-     **/
+     *
+     */
     public String getSummary() {
         return m_doc.get(Document.SUMMARY);
     }
 
     /**
-     * Returns the content of the current search hit, as it is stored in Lucene index.
+     * Returns the content of the current search hit, as it is stored in Lucene
+     * index.
      *
      * @return the content
-     **/
+     *
+     */
     public String getContent() {
         return m_doc.get(Document.CONTENT);
     }
-
 
     /**
      * Returns the creation date of the current search hit.
      *
      * @return the creation date.
-     **/
+     *
+     */
     public Date getCreationDate() {
         return toDate(m_doc.get(Document.CREATION_DATE));
     }
@@ -435,7 +494,8 @@ public class LuceneSearch {
      * Returns the last modified date of the current search hit.
      *
      * @return the last modified date.
-     **/
+     *
+     */
     public Date getLastModifiedDate() {
         return toDate(m_doc.get(Document.LAST_MODIFIED_DATE));
     }
@@ -444,7 +504,8 @@ public class LuceneSearch {
      * Returns a Date.
      *
      * @return Date.
-     **/
+     *
+     */
     private Date toDate(String date) {
         if (date == null || date.equals("")) {
             return null;
@@ -461,11 +522,11 @@ public class LuceneSearch {
      * Gets the title of the content section of the current search hit.
      *
      * @return content section title
-     **/
+     *
+     */
     public String getContentSection() {
         return m_doc.get(Document.CONTENT_SECTION);
     }
-
 
     private class CustomHitWrapper {
 
@@ -491,7 +552,8 @@ public class LuceneSearch {
 
         private org.apache.lucene.document.Document doc;
 
-        public SearchResultWrapper(int docID, float s, org.apache.lucene.document.Document d) {
+        public SearchResultWrapper(int docID, float s,
+                                   org.apache.lucene.document.Document d) {
             super(docID, s);
             doc = d;
         }
@@ -499,7 +561,5 @@ public class LuceneSearch {
         public org.apache.lucene.document.Document getDoc() {
             return doc;
         }
-
     }
 }
-

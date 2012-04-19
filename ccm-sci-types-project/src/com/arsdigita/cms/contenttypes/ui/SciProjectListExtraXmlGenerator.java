@@ -4,7 +4,6 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ExtraXMLGenerator;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciProject;
@@ -17,6 +16,9 @@ import com.arsdigita.xml.Element;
  */
 public class SciProjectListExtraXmlGenerator implements ExtraXMLGenerator {
 
+   
+    
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
@@ -39,10 +41,16 @@ public class SciProjectListExtraXmlGenerator implements ExtraXMLGenerator {
 
     }
 
+    @Override
     public void addGlobalStateParams(final Page page) {
         //Nothing for now
     }
 
+    @Override
+    public void setListMode(final boolean listMode) {
+        //nothing
+    }
+    
     private void generateMemberXml(final Element membersElem,
                                    final GenericPerson member,
                                    final String roleName) {
