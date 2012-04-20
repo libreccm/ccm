@@ -20,6 +20,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -28,10 +29,13 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id4
  */
 public class SeriesVolumesStep extends SimpleEditStep {
 
-    private static final String ADD_VOLUME_SHEET_NAME = "addVolume";
+    protected static final String ADD_VOLUME_SHEET_NAME = "addVolume";
+    private Publication selectedPublication;
+    private Integer selectedVolume;
 
     public SeriesVolumesStep(
             ItemSelectionModel itemModel,
@@ -46,16 +50,31 @@ public class SeriesVolumesStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
 
         BasicItemForm addVolumeSheet =
-                new SeriesVolumeAddForm(itemModel);
+                      new SeriesVolumeAddForm(itemModel, this);
         add(ADD_VOLUME_SHEET_NAME,
-                (String) PublicationGlobalizationUtil.globalize(
+            (String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.add_volume").localize(),
-                new WorkflowLockedComponentAccess(addVolumeSheet, itemModel),
-                addVolumeSheet.getSaveCancelSection().getCancelButton());
+            new WorkflowLockedComponentAccess(addVolumeSheet, itemModel),
+            addVolumeSheet.getSaveCancelSection().getCancelButton());
 
         SeriesVolumesTable volumesTable = new SeriesVolumesTable(
-                itemModel);
+                itemModel, this);
         setDisplayComponent(volumesTable);
     }
 
+    public Publication getSelectedPublication() {
+        return selectedPublication;
+    }
+
+    public void setSelectedPublication(final Publication selectedPublication) {
+        this.selectedPublication = selectedPublication;
+    }
+
+    public Integer getSelectedVolume() {
+        return selectedVolume;
+    }
+
+    public void setSelectedVolume(final Integer selectedVolume) {
+        this.selectedVolume = selectedVolume;
+    }
 }

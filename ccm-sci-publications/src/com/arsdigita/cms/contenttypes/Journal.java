@@ -38,6 +38,7 @@ public class Journal extends ContentPage {
     public static final String ISSN = "issn";
     public static final String FIRST_YEAR = "firstYear";
     public static final String LAST_YEAR = "lastYear";
+    public static final String ABSTRACT = "abstract";
     public static final String ARTICLES = "articles";
     public static final String ARTICLE_ORDER = "articleOrder";
     public static final String BASE_DATA_OBJECT_TYPE =
@@ -91,6 +92,14 @@ public class Journal extends ContentPage {
         set(LAST_YEAR, lastYear);
     }
 
+    public String getAbstract() {
+        return (String) get(ABSTRACT);
+    }
+    
+    public void setAbstract(final String abstractStr) {
+        set(ABSTRACT, abstractStr);
+    }
+    
     public ArticleInJournalCollection getArticles() {
         //return new ArticleInJournalCollection((DataCollection) get(ARTICLES));
         return getJournalBundle().getArticles();

@@ -282,7 +282,7 @@ public class PublicationAuthorsTable
                                       int row,
                                       int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+                           CMS.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
                     getSelectedObject(state);
 
@@ -314,7 +314,7 @@ public class PublicationAuthorsTable
                                       int row,
                                       int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+                            CMS.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
                     getSelectedObject(state);
 

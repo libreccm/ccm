@@ -91,7 +91,7 @@ public class UnPublishedBundle extends PublicationBundle {
         if (orgaunitLive != null) {
             final DataObject link = add(ORGANIZATION, orgaunitLive);
 
-            link.set("orgaOrder", link.get("link.orgaOrder"));
+            link.set("orgaOrder", 1);
 
             link.save();
         }
@@ -142,7 +142,7 @@ public class UnPublishedBundle extends PublicationBundle {
             final DataObject link = orgaBundle.add("unPublished",
                                                    liveUnPublished);
 
-            link.set("orgaOrder", publications.get("link.orderOrder"));
+            link.set("orgaOrder", 1);
 
             link.save();
         }

@@ -48,8 +48,12 @@ association {
 					          to cms_person_bundles.bundle_id;
 
             // Additional attributes for the editship
-	    Date[0..1] dateFrom = ct_series_editship.dateFrom DATE;
-	    Date[0..1] dateTo = ct_series_editship.dateTo DATE;
+	    Date[0..1] dateFrom = ct_series_editship.date_from DATE;
+            Boolean[0..1] dateFromSkipMonth = ct_series_editship.date_from_skip_month;
+            Boolean[0..1] dateFromSkipDay = ct_series_editship.date_from_skip_day;
+	    Date[0..1] dateTo = ct_series_editship.date_to DATE;
+            Boolean[0..1] dateToSkipMonth = ct_series_editship.date_to_skip_month;
+            Boolean[0..1] dateToSkipDay = ct_series_editship.date_to_skip_day;
 
 	    //Sorting is first done by the period defined by from and to,
 	    //and secondly by the following order attribute

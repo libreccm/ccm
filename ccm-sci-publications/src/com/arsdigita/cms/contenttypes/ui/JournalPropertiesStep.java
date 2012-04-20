@@ -84,6 +84,10 @@ public class JournalPropertiesStep extends SimpleEditStep {
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.lastYearOfPublication"),
                   Journal.LAST_YEAR);
+        
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.journal.abstract"),
+                  Journal.ABSTRACT);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(ContenttypesGlobalizationUtil.globalize(

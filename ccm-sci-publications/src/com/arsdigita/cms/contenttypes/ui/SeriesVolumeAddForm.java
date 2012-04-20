@@ -35,6 +35,7 @@ import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.VolumeInSeriesCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
@@ -51,10 +52,15 @@ public class SeriesVolumeAddForm extends BasicItemForm {
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "volumes";
     private ItemSelectionModel m_itemModel;
+    private SimpleEditStep editStep;
+    private Label selectedVolumeLabel;
+    private TextField volumeOfSeries;
 
-    public SeriesVolumeAddForm(ItemSelectionModel itemModel) {
+    public SeriesVolumeAddForm(ItemSelectionModel itemModel,
+                               SimpleEditStep editStep) {
         super("VolumesEntryForm", itemModel);
         m_itemModel = itemModel;
+        this.editStep = editStep;        
     }
 
     @Override
@@ -68,11 +74,14 @@ public class SeriesVolumeAddForm extends BasicItemForm {
                 Publication.class.getName()));
         add(m_itemSearch);
 
+        selectedVolumeLabel = new Label("");
+        add(selectedVolumeLabel);
+
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.volume_of_series").localize()));
         ParameterModel volumeOfSeriesParam = new IntegerParameter(
                 VolumeInSeriesCollection.VOLUME_OF_SERIES);
-        TextField volumeOfSeries = new TextField(volumeOfSeriesParam);
+        volumeOfSeries = new TextField(volumeOfSeriesParam);
         add(volumeOfSeries);
     }
 
@@ -80,6 +89,27 @@ public class SeriesVolumeAddForm extends BasicItemForm {
     public void init(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
+
+        final Publication publication = ((SeriesVolumesStep) editStep).
+                getSelectedPublication();
+        final Integer volume =
+                      ((SeriesVolumesStep) editStep).getSelectedVolume();
+
+        if (publication == null) {
+            m_itemSearch.setVisible(state, true);
+            selectedVolumeLabel.setVisible(state, false);
+        } else {
+            data.put(ITEM_SEARCH, publication);
+            if ((volume == null)) {
+                volumeOfSeries.setValue(state, 0);
+            } else {
+                volumeOfSeries.setValue(state, volume);
+            }
+
+            m_itemSearch.setVisible(state, false);
+            selectedVolumeLabel.setLabel(publication.getTitle(), state);
+            selectedVolumeLabel.setVisible(state, true);
+        }
 
         setVisible(state, true);
     }
@@ -93,13 +123,41 @@ public class SeriesVolumeAddForm extends BasicItemForm {
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            Publication volume = (Publication) data.get(ITEM_SEARCH);
-            volume = (Publication) volume.getContentBundle().getInstance(series.
-                    getLanguage());
+            Publication volume = ((SeriesVolumesStep) editStep).
+                    getSelectedPublication();
 
-            series.addVolume(volume,
-                             (Integer) data.get(
-                    VolumeInSeriesCollection.VOLUME_OF_SERIES));
+            Integer volOfSeries;
+            if (this.volumeOfSeries.getValue(state) == null) {
+                volOfSeries = null;
+            } else {
+                volOfSeries = data.getInteger(
+                        VolumeInSeriesCollection.VOLUME_OF_SERIES);
+            }
+
+            if (volume == null) {
+                volume = (Publication) data.get(ITEM_SEARCH);
+                volume = (Publication) volume.getContentBundle().getInstance(series.
+                        getLanguage());
+
+                series.addVolume(volume,
+                                 (Integer) data.get(
+                        VolumeInSeriesCollection.VOLUME_OF_SERIES));
+            } else {
+                VolumeInSeriesCollection volumes = series.getVolumes();
+
+                while (volumes.next()) {
+                    if (volumes.getPublication().equals(volume)) {
+                        break;
+                    }
+                }
+
+                volumes.setVolumeOfSeries(volOfSeries);
+
+                ((SeriesVolumesStep) editStep).setSelectedPublication(null);
+                ((SeriesVolumesStep) editStep).setSelectedVolume(null);
+
+                volumes.close();
+            }
         }
 
         init(fse);
@@ -109,8 +167,10 @@ public class SeriesVolumeAddForm extends BasicItemForm {
     public void validate(FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
+        boolean editing = false;
 
-        if (data.get(ITEM_SEARCH) == null) {
+        if ((((SeriesVolumesStep) editStep).getSelectedPublication() == null)
+            && (data.get(ITEM_SEARCH) == null)) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.series.volume_of_series.no_volume_selected"));
@@ -120,24 +180,21 @@ public class SeriesVolumeAddForm extends BasicItemForm {
         Series series = (Series) getItemSelectionModel().
                 getSelectedObject(state);
         Publication volume = (Publication) data.get(ITEM_SEARCH);
-        if (!(volume.getContentBundle().hasInstance(series.getLanguage(),
-                                                    Kernel.getConfig().
-              languageIndependentItems()))) {
-            data.addError(
-                    PublicationGlobalizationUtil.globalize(
-                    "publications.ui.series.volume_of_series.no_suitable_language_variant"));
-            return;
+        if (volume == null) {
+            volume = ((SeriesVolumesStep) editStep).getSelectedPublication();
+            editing = true;
         }
 
-        volume = (Publication) volume.getContentBundle().getInstance(series.
-                getLanguage());
-        VolumeInSeriesCollection volumes = series.getVolumes();
-        volumes.addFilter(String.format("id = %s", volume.getID().toString()));
-        if (volumes.size() > 0) {
-            data.addError(PublicationGlobalizationUtil.globalize(
-                    "publications.ui.series.volume_of_series.already_added"));
-        }
 
-        volumes.close();
+        if (!editing) {
+            VolumeInSeriesCollection volumes = series.getVolumes();
+            volumes.addFilter(
+                    String.format("id = %s", volume.getID().toString()));
+            if (volumes.size() > 0) {
+                data.addError(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.volume_of_series.already_added"));
+            }
+            volumes.close();
+        }
     }
 }

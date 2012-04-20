@@ -26,6 +26,10 @@ public class SeriesBundle extends ContentBundle {
     public static final String EDITORS = "editors";
     public static final String EDITOR_FROM = "dateFrom";
     public static final String EDITOR_TO = "dateTo";
+    public static final String EDITOR_FROM_SKIP_MONTH = "dateFromSkipMonth";
+    public static final String EDITOR_FROM_SKIP_DAY = "dateFromSkipDay";
+    public static final String EDITOR_TO_SKIP_MONTH = "dateToSkipMonth";
+    public static final String EDITOR_TO_SKIP_DAY = "dateToSkipDay";
     public static final String EDITOR_ORDER = "editor_order";
     public static final String PUBLICATIONS = "publications";
     public static final String VOLUME_OF_SERIES = "volumeOfSeries";
@@ -106,7 +110,15 @@ public class SeriesBundle extends ContentBundle {
             final DataObject link = add(EDITORS, livePerson);
 
             link.set(EDITOR_FROM, editors.get("link." + EDITOR_FROM));
+            link.set(EDITOR_FROM_SKIP_MONTH,
+                     editors.get("link." + EDITOR_FROM_SKIP_MONTH));
+            link.set(EDITOR_FROM_SKIP_DAY,
+                     editors.get("link." + EDITOR_FROM_SKIP_DAY));
             link.set(EDITOR_TO, editors.get("link." + EDITOR_TO));
+            link.set(EDITOR_TO_SKIP_MONTH,
+                     editors.get("link." + EDITOR_TO_SKIP_MONTH));
+            link.set(EDITOR_TO_SKIP_DAY,
+                     editors.get("link." + EDITOR_TO_SKIP_DAY));
             link.set(EDITOR_ORDER, editors.get("link." + EDITOR_ORDER));
 
             link.save();
@@ -175,7 +187,15 @@ public class SeriesBundle extends ContentBundle {
             final DataObject link = editor.add("series", liveSeries);
 
             link.set(EDITOR_FROM, series.get("link." + EDITOR_FROM));
+            link.set(EDITOR_FROM_SKIP_MONTH,
+                     series.get("link." + EDITOR_FROM_SKIP_MONTH));
+            link.set(EDITOR_FROM_SKIP_DAY,
+                     series.get("link." + EDITOR_FROM_SKIP_DAY));
             link.set(EDITOR_TO, series.get("link." + EDITOR_TO));
+            link.set(EDITOR_TO_SKIP_MONTH,
+                     series.get("link." + EDITOR_TO_SKIP_MONTH));
+            link.set(EDITOR_TO_SKIP_DAY,
+                     series.get("link." + EDITOR_TO_SKIP_DAY));
             link.set(EDITOR_ORDER, series.get("link." + EDITOR_ORDER));
 
             link.save();
@@ -188,13 +208,21 @@ public class SeriesBundle extends ContentBundle {
 
     public void addEditor(final GenericPerson editor,
                           final Date from,
-                          final Date to) {
+                          final Boolean fromSkipMonth,
+                          final Boolean fromSkipDay,
+                          final Date to,
+                          final Boolean toSkipMonth,
+                          final Boolean toSkipDay) {
         Assert.exists(editor, GenericPerson.class);
 
         final DataObject link = add(EDITORS, editor.getGenericPersonBundle());
 
         link.set(EDITOR_FROM, from);
+        link.set(EDITOR_FROM_SKIP_MONTH, fromSkipMonth);
+        link.set(EDITOR_FROM_SKIP_DAY, fromSkipDay);
         link.set(EDITOR_TO, to);
+        link.set(EDITOR_TO_SKIP_MONTH, toSkipMonth);
+        link.set(EDITOR_TO_SKIP_DAY, toSkipDay);
         link.set(EDITOR_ORDER, Integer.valueOf((int) getEditors().size()));
 
         link.save();
@@ -209,8 +237,8 @@ public class SeriesBundle extends ContentBundle {
     public VolumeInSeriesCollection getVolumes() {
         return new VolumeInSeriesCollection((DataCollection) get(PUBLICATIONS));
     }
-    
-    public void addVolume(final Publication publication, 
+
+    public void addVolume(final Publication publication,
                           final Integer volume) {
         Assert.exists(publication, Publication.class);
 

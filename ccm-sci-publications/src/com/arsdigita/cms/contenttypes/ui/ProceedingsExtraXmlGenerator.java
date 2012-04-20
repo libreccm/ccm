@@ -47,6 +47,7 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         if (organizer != null) {
             final XmlGenerator generator = new XmlGenerator(organizer);
             generator.setItemElemName("organizer", "");
+            generator.setListMode(true);
             generator.generateXML(state, parent, "");
         }
     }

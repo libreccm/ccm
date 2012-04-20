@@ -40,12 +40,14 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         final Publication publication = (Publication) item;
         createAuthorsXml(publication, element, state);
         createOrgaUnitsXml(publication, element, state);
-        createSeriesXml(publication, element, state);
-
-        final List<PublicationFormat> formats = SciPublicationsExporters.
-                getInstance().getSupportedFormats();
 
         if (!listMode) {
+            createSeriesXml(publication, element, state);
+
+            final List<PublicationFormat> formats = SciPublicationsExporters.
+                    getInstance().getSupportedFormats();
+
+
             for (PublicationFormat format : formats) {
                 createExportLink(format, element, (Publication) item, state);
             }

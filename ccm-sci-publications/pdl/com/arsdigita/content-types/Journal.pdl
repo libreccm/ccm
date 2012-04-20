@@ -27,7 +27,8 @@ object type Journal extends ContentPage {
 
   Integer[0..1] firstYear = ct_journal.firstyear INTEGER;
   Integer[0..1] lastYear = ct_journal.lastyear INTEGER;
-  String[0..1] issn = ct_journal.issn VARCHAR(9);       
+  String[0..1] issn = ct_journal.issn VARCHAR(9);     
+  String[0..1] abstract = ct_journal.abstract VARCHAR(4096);
 
   reference key (ct_journal.journal_id);
 }

@@ -33,9 +33,17 @@ import org.apache.log4j.Logger;
 public class EditshipCollection extends DomainCollection {
 
     public static final String LINK_FROM = "link.dateFrom";
+    public static final String LINK_FROM_SKIP_MONTH = "link.dateFromSkipMonth";
+    public static final String LINK_FROM_SKIP_DAY = "link.dateFromSkipDay";
     public static final String LINK_TO = "link.dateTo";
+    public static final String LINK_TO_SKIP_MONTH = "link.dateToSkipMonth";
+    public static final String LINK_TO_SKIP_DAY = "link.dateToSkipDay";
     public static final String FROM = "dateFrom";
+    public static final String FROM_SKIP_MONTH = "dateFromSkipMonth";
+    public static final String FROM_SKIP_DAY = "dateFromSkipDay";
     public static final String TO = "dateTo";
+    public static final String TO_SKIP_MONTH = "dateToSkipMonth";
+    public static final String TO_SKIP_DAY = "dateToSkipDay";
     public static final String LINKORDER = "link.editor_order";
     public static final String ORDER = "editor_order";
     private final static Logger s_log =
@@ -50,21 +58,56 @@ public class EditshipCollection extends DomainCollection {
     public Date getFrom() {
         return (Date) m_dataCollection.get(LINK_FROM);
     }
+    
+    public Boolean getFromSkipMonth() {
+        return (Boolean) m_dataCollection.get(LINK_FROM_SKIP_MONTH);
+    }
+    
+    public Boolean getFromSkipDay() {
+        return (Boolean) m_dataCollection.get(LINK_FROM_SKIP_DAY);
+    }
 
     public void setFrom(Date from) {
-        DataObject link = (DataObject) this.get("link");
-
+        final DataObject link = (DataObject) get("link");
         link.set(FROM, from);
+    }
+    
+    public void setFromSkipMonth(final Boolean skipMonth) {
+        final DataObject link = (DataObject) get("link");
+        link.set(FROM_SKIP_MONTH, skipMonth);
+    }
+    
+    public void setFromSkipDay(final Boolean skipDay) {
+        final DataObject link = (DataObject) get("link");
+        link.set(FROM_SKIP_DAY, skipDay);
     }
 
     public Date getTo() {
         return (Date) m_dataCollection.get(LINK_TO);
+    }
+    
+    public Boolean getToSkipMonth() {
+        return (Boolean) m_dataCollection.get(LINK_TO_SKIP_MONTH);
+    }
+    
+    public Boolean getToSkipDay() {
+        return (Boolean) m_dataCollection.get(LINK_TO_SKIP_DAY);
     }
 
     public void setTo(Date to) {
         DataObject link = (DataObject) this.get("link");
 
         link.set(TO, to);
+    }
+    
+    public void setToSkipMonth(final Boolean skipMonth) {
+        final DataObject link = (DataObject) get("link");
+        link.set(TO_SKIP_MONTH, skipMonth);
+    }
+    
+    public void setToSkipDay(final Boolean skipDay) {
+        final DataObject link = (DataObject) get("link");
+        link.set(TO_SKIP_DAY, skipDay);
     }
 
     /**

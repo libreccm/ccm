@@ -229,7 +229,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                 int row,
                 int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+                            CMS.getSecurityManager(state);
             Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
@@ -250,7 +250,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
+                     new Link(String.format("%s",
                                             value.toString(),
                                             editor.getLanguage()),
                               resolver.generateItemURL(state,
@@ -269,7 +269,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                                ex);
                     return new Label(value.toString());
                 }
-                Label label = new Label(String.format("%s (%s)",
+                Label label = new Label(String.format("%s",
                                                       value.toString(),
                                                       editor.getLanguage()));
                 return label;
@@ -290,7 +290,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                                       int row,
                                       int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+                            CMS.getSecurityManager(state);
             Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(

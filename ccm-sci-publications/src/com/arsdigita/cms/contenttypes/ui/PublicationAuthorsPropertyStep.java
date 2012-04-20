@@ -20,15 +20,16 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.cms.contenttypes.GenericPerson;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class PublicationAuthorsPropertyStep extends SimpleEditStep {
 

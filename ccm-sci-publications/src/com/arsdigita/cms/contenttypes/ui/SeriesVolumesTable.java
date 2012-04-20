@@ -40,7 +40,7 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.VolumeInSeriesCollection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -49,18 +49,23 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class SeriesVolumesTable extends Table implements TableActionListener {
 
     private static final Logger s_log =
                                 Logger.getLogger(SeriesVolumesTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
+    private final String TABLE_COL_EDIT_ASSOC = "table_col_edit_assoc";
     private final String TABLE_COL_DEL = "table_col_del";
     private ItemSelectionModel m_itemModel;
+    private SimpleEditStep editStep;
 
-    public SeriesVolumesTable(ItemSelectionModel itemModel) {
+    public SeriesVolumesTable(ItemSelectionModel itemModel,
+                              SimpleEditStep editStep) {
         super();
         m_itemModel = itemModel;
+        this.editStep = editStep;
 
         setEmptyView(
                 new Label(PublicationGlobalizationUtil.globalize(
@@ -79,13 +84,21 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
         colModel.add(new TableColumn(
                 2,
                 PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.volumes.edit_assoc").localize(),
+                TABLE_COL_EDIT_ASSOC));
+        colModel.add(new TableColumn(
+                3,
+                PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.volumes.remove").localize(),
                 TABLE_COL_DEL));
 
         setModelBuilder(new SeriesVolumesTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
-        colModel.get(2).setCellRenderer(new DeleteCellRenderer());
+        colModel.get(2).setCellRenderer(new EditAssocCellRenderer());
+        colModel.get(3).setCellRenderer(new DeleteCellRenderer());
+
+        addTableActionListener(this);
     }
 
     private class SeriesVolumesTableModelBuilder
@@ -150,6 +163,10 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                     return m_volumesCollection.getVolumeOfSeries();
                 case 2:
                     return PublicationGlobalizationUtil.globalize(
+                            "publications.ui.series.volumes.edit_assoc").
+                            localize();
+                case 3:
+                    return PublicationGlobalizationUtil.globalize(
                             "publication.ui.series.volumes.remove").localize();
                 default:
                     return null;
@@ -175,7 +192,7 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                 int row,
                 int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+                            CMS.getSecurityManager(state);
             Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
@@ -197,9 +214,8 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                 ContentSection section = CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            volume.getLanguage()),
+                     new Link(String.format("%s",
+                                            value.toString()),
                               resolver.generateItemURL(state,
                                                        volume,
                                                        section,
@@ -217,9 +233,38 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(String.format("%s (%s)",
-                                                      value.toString(),
-                                                      volume.getLanguage()));
+                Label label = new Label(String.format("%s",
+                                                      value.toString()));
+                return label;
+            }
+        }
+    }
+
+    private class EditAssocCellRenderer
+            extends LockableImpl
+            implements TableCellRenderer {
+
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int column) {
+            final SecurityManager securityManager =
+                                  CMS.getSecurityManager(state);
+            final Series series = (Series) m_itemModel.getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(
+                    state.getRequest(),
+                    SecurityManager.EDIT_ITEM,
+                    series);
+
+            if (canEdit) {
+                ControlLink link = new ControlLink(value.toString());
+                return link;
+            } else {
+                Label label = new Label(value.toString());
                 return label;
             }
         }
@@ -239,7 +284,7 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                 int row,
                 int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+                            CMS.getSecurityManager(state);
             Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canDelete = securityManager.canAccess(
@@ -271,11 +316,28 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
 
         Series series = (Series) m_itemModel.getSelectedObject(state);
 
-        //VolumeInSeriesCollection volumes = series.getVolumes();
-
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
+        VolumeInSeriesCollection volumes = series.getVolumes();
+
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
+        } else if (TABLE_COL_EDIT_ASSOC.equals(column.getHeaderKey().toString())) {
+            while (volumes.next()) {
+                if (volumes.getPublication(publication.getLanguage()).equals(
+                        publication)) {
+                    break;
+                }
+            }
+
+            ((SeriesVolumesStep) editStep).setSelectedPublication(
+                    publication);
+            ((SeriesVolumesStep) editStep).setSelectedVolume(volumes.
+                    getVolumeOfSeries());
+
+            volumes.close();
+
+            editStep.showComponent(state,
+                                   SeriesVolumesStep.ADD_VOLUME_SHEET_NAME);
         } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             series.removeVolume(publication);
         }

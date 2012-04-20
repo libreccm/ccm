@@ -26,7 +26,10 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.Hidden;
+import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.bebop.parameters.DateParameter;
+import com.arsdigita.bebop.parameters.IncompleteDateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -35,7 +38,6 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.kernel.Kernel;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -80,18 +82,49 @@ public class SeriesEditshipAddForm
         selectedEditorLabel = new Label("");
         add(selectedEditorLabel);
 
+        final ParameterModel fromSkipMonthParam =
+                             new BooleanParameter(
+                EditshipCollection.FROM_SKIP_MONTH);
+        Hidden fromSkipMonth = new Hidden(fromSkipMonthParam);
+        add(fromSkipMonth);
+
+        final ParameterModel fromSkipDayParam =
+                             new BooleanParameter(
+                EditshipCollection.FROM_SKIP_DAY);
+        Hidden fromSkipDay = new Hidden(fromSkipDayParam);
+        add(fromSkipDay);
+
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.editship.from").localize()));
-        ParameterModel fromParam = new DateParameter(EditshipCollection.FROM);
+        IncompleteDateParameter fromParam =
+                                new IncompleteDateParameter(
+                EditshipCollection.FROM);
+        fromParam.allowSkipDay(true);
+        fromParam.allowSkipMonth(true);
         com.arsdigita.bebop.form.Date from = new com.arsdigita.bebop.form.Date(
                 fromParam);
         Calendar today = new GregorianCalendar();
         from.setYearRange(1900, today.get(Calendar.YEAR));
         add(from);
 
+        final ParameterModel toSkipMonthParam =
+                             new BooleanParameter(
+                EditshipCollection.TO_SKIP_MONTH);
+        Hidden toSkipMonth = new Hidden(toSkipMonthParam);
+        add(toSkipMonth);
+
+        final ParameterModel toSkipDayParam =
+                             new BooleanParameter(EditshipCollection.TO_SKIP_DAY);
+        Hidden toSkipDay = new Hidden(toSkipDayParam);
+        add(toSkipDay);
+
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.editship.to").localize()));
-        ParameterModel toParam = new DateParameter(EditshipCollection.TO);
+        IncompleteDateParameter toParam =
+                                new IncompleteDateParameter(
+                EditshipCollection.TO);
+        toParam.allowSkipMonth(true);
+        toParam.allowSkipDay(true);
         com.arsdigita.bebop.form.Date to = new com.arsdigita.bebop.form.Date(
                 toParam);
         to.setYearRange(1900, today.get(Calendar.YEAR));
@@ -103,19 +136,15 @@ public class SeriesEditshipAddForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
 
-        GenericPerson editor;
-        Date from;
-        Date to;
-
-        editor = editStep.getSelectedEditor();
-        from = editStep.getSelectedEditorDateFrom();
-        to = editStep.getSelectedEditorDateTo();
+        GenericPerson editor = editStep.getSelectedEditor();
+        Date from = editStep.getSelectedEditorDateFrom();
+        Date to = editStep.getSelectedEditorDateTo();
 
         if (editor == null) {
             m_itemSearch.setVisible(state, true);
             selectedEditorLabel.setVisible(state, false);
         } else {
-            data.put(ITEM_SEARCH, editor);
+            //data.put(ITEM_SEARCH, editor);
             data.put(EditshipCollection.FROM, from);
             data.put(EditshipCollection.TO, to);
 
@@ -134,8 +163,8 @@ public class SeriesEditshipAddForm
         Series series =
                (Series) getItemSelectionModel().getSelectedObject(state);
 
-        if (!(this.getSaveCancelSection().
-              getCancelButton().isSelected(state))) {
+        if (this.getSaveCancelSection().
+                getSaveButton().isSelected(state)) {
             GenericPerson editor;
             editor = editStep.getSelectedEditor();
 
@@ -146,7 +175,15 @@ public class SeriesEditshipAddForm
 
                 series.addEditor(editorToAdd,
                                  (Date) data.get(EditshipCollection.FROM),
-                                 (Date) data.get(EditshipCollection.TO));
+                                 (Boolean) data.get(
+                        EditshipCollection.FROM_SKIP_MONTH),
+                                 (Boolean) data.get(
+                        EditshipCollection.FROM_SKIP_DAY),
+                                 (Date) data.get(EditshipCollection.TO),
+                                 (Boolean) data.get(
+                        EditshipCollection.TO_SKIP_MONTH),
+                                 (Boolean) data.get(
+                        EditshipCollection.TO_SKIP_DAY));
             } else {
                 EditshipCollection editors;
 
@@ -159,7 +196,15 @@ public class SeriesEditshipAddForm
                 }
 
                 editors.setFrom((Date) data.get(EditshipCollection.FROM));
+                editors.setFromSkipMonth((Boolean) data.get(
+                        EditshipCollection.FROM_SKIP_MONTH));
+                editors.setFromSkipDay((Boolean) data.get(
+                        EditshipCollection.FROM_SKIP_DAY));
                 editors.setTo((Date) data.get(EditshipCollection.TO));
+                editors.setToSkipMonth((Boolean) data.get(
+                        EditshipCollection.TO_SKIP_MONTH));
+                editors.setToSkipDay((Boolean) data.get(
+                        EditshipCollection.TO_SKIP_DAY));
 
                 editStep.setSelectedEditor(null);
                 editStep.setSelectedEditorDateFrom(null);
@@ -179,17 +224,19 @@ public class SeriesEditshipAddForm
             editStep.setSelectedEditor(null);
             editStep.setSelectedEditorDateFrom(null);
             editStep.setSelectedEditorDateTo(null);
-        }
 
-        init(fse);
+            init(fse);
+        }
     }
 
     @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
+        boolean editing = false;
 
-        if (data.get(ITEM_SEARCH) == null) {
+        if ((editStep.getSelectedEditor() == null)
+            && (data.get(ITEM_SEARCH) == null)) {
             data.addError(PublicationGlobalizationUtil.globalize(
                     "publications.ui.series.editship.no_editor_selected"));
             return;
@@ -198,24 +245,22 @@ public class SeriesEditshipAddForm
         Series series =
                (Series) getItemSelectionModel().getSelectedObject(state);
         GenericPerson editor = (GenericPerson) data.get(ITEM_SEARCH);
-        if (!(editor.getContentBundle().hasInstance(series.getLanguage(),
-                                                    Kernel.getConfig().
-              languageIndependentItems()))) {
-            data.addError(
-                    PublicationGlobalizationUtil.globalize(
-                    "publications.ui.series.editship.no_suitable_language_variant"));
-            return;
+        if (editor == null) {
+            editor = editStep.getSelectedEditor();
+            editing = true;
         }
 
-        editor = (GenericPerson) editor.getContentBundle().getInstance(series.
-                getLanguage());
-        EditshipCollection editors = series.getEditors();
-        editors.addFilter(String.format("id = %s", editor.getID().toString()));
-        if (editors.size() > 0) {
-            data.addError(PublicationGlobalizationUtil.globalize(
-                    "publications.ui.series.editship.already_added"));
-        }
 
-        editors.close();
+        if (!editing) {
+            EditshipCollection editors = series.getEditors();
+            editors.addFilter(
+                    String.format("id = %s", editor.getID().toString()));
+            if (editors.size() > 0) {
+                data.addError(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.editship.already_added"));
+            }
+
+            editors.close();
+        }
     }
 }

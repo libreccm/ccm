@@ -19,13 +19,14 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.SeriesExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -75,27 +76,27 @@ public class Series extends ContentPage {
         return (SeriesBundle) getContentBundle();
     }
     
-    public EditshipCollection getEditors() {
-        //return new EditshipCollection((DataCollection) get(EDITORS));
+    public EditshipCollection getEditors() {      
         return getSeriesBundle().getEditors();
     }
 
-    public void addEditor(final  GenericPerson editor, 
-                          final Date from, 
-                          final Date to) {
-//        Assert.exists(editor, GenericPerson.class);
-//
-//        DataObject link = add(EDITORS, editor);
-//        link.set(EDITOR_FROM, from);
-//        link.set(EDITOR_TO, to);
-//        link.set(EDITOR_ORDER, Integer.valueOf((int)getEditors().size()));
-        
-        getSeriesBundle().addEditor(editor, from, to);
+    public void addEditor(final GenericPerson editor,
+                          final Date from,
+                          final Boolean fromSkipMonth,
+                          final Boolean fromSkipDay,
+                          final Date to,
+                          final Boolean toSkipMonth,
+                          final Boolean toSkipDay) {        
+        getSeriesBundle().addEditor(editor, 
+                                    from, 
+                                    fromSkipMonth, 
+                                    fromSkipDay, 
+                                    to,
+                                    toSkipMonth, 
+                                    toSkipDay);
     }
 
-    public void removeEditor(final GenericPerson editor) {
-        //Assert.exists(editor, GenericPerson.class);
-        //remove(EDITORS, editor);
+    public void removeEditor(final GenericPerson editor) {      
         getSeriesBundle().removeEditor(editor);
     }
 
@@ -103,28 +104,35 @@ public class Series extends ContentPage {
         return !this.getEditors().isEmpty();
     }
 
-    public VolumeInSeriesCollection getVolumes() {
-        //return new VolumeInSeriesCollection((DataCollection) get(PUBLICATIONS));
+    public VolumeInSeriesCollection getVolumes() {        
         return getSeriesBundle().getVolumes();
     }
 
     public void addVolume(final Publication publication, final Integer volume) {
-//        Assert.exists(publication, Publication.class);
-//
-//        DataObject link = add(PUBLICATIONS, publication);
-//
-//        link.set(VOLUME_OF_SERIES, volume);
         getSeriesBundle().addVolume(publication, volume);
     }
 
-    public void removeVolume(final Publication publication) {
-        //Assert.exists(publication, Publication.class);
-        //remove(PUBLICATIONS, publication);
+    public void removeVolume(final Publication publication) {        
         getSeriesBundle().removeVolume(publication);
     }
 
     public boolean hasVolumes() {
         return !this.getVolumes().isEmpty();
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        generators.add(new SeriesExtraXmlGenerator());
+        return generators;
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        final ExtraXMLGenerator generator = new SeriesExtraXmlGenerator();
+        generator.setListMode(true);
+        return generators;
     }
 
 }
