@@ -91,6 +91,8 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
                                                   new PublicPersonalProfileXmlGenerator(
                         contacts.getContact());
                 cGenerator.setItemElemName("contact", "");
+                cGenerator.addItemAttribute("contactType", 
+                                            contacts.getContactType());
                 cGenerator.generateXML(state, contactsElem, "");
             }
 

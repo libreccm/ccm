@@ -46,4 +46,12 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
     public SciProjectBundle(final String type) {
         super(type);
     }
+    
+    public SciProject getProject() {
+        return (SciProject) getPrimaryInstance();        
+    }
+    
+    public SciProject getProject(final String language) {
+        return (SciProject) getInstance(language);
+    }
 }

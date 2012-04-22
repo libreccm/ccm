@@ -1,6 +1,7 @@
 package com.arsdigita.cms.publicpersonalprofile;
 
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contenttypes.GenericAddress;
 import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.GenericContactEntryCollection;
@@ -9,10 +10,11 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.SciProjectBundle;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
-import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
@@ -24,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
@@ -57,18 +60,19 @@ public class PersonalProjects implements ContentGenerator {
                                 final GenericPerson person,
                                 final PageState state,
                                 final String profileLanguage) {
-        final List<SciProject> projects = collectProjects(person,
-                                                          profileLanguage);
+        final List<SciProjectBundle> projects = collectProjects(person,
+                                                                profileLanguage);
 
         final Element personalProjectsElem = parent.newChildElement(
                 "personalProjects");
 
         if ((projects == null) || projects.isEmpty()) {
-            personalProjectsElem.newChildElement("noProjects");            
+            personalProjectsElem.newChildElement("noProjects");
         } else {
-            final List<SciProject> currentProjects = new ArrayList<SciProject>();
-            final List<SciProject> finishedProjects =
-                                   new ArrayList<SciProject>();
+            final List<SciProjectBundle> currentProjects =
+                                         new ArrayList<SciProjectBundle>();
+            final List<SciProjectBundle> finishedProjects =
+                                         new ArrayList<SciProjectBundle>();
 
             String sortBy = config.getSortBy();
             String sortByParam = state.getRequest().getParameter("sortBy");
@@ -86,70 +90,20 @@ public class PersonalProjects implements ContentGenerator {
         }
     }
 
-    private List<SciProject> collectProjects(final GenericPerson person,
-                                             final String language) {
-        final List<SciProject> projects = new ArrayList<SciProject>();
-
-        /*final DataCollection collection = (DataCollection) person.get(
-        "organizationalunit");
-        if (Kernel.getConfig().languageIndependentItems()) {*/
-        /* FilterFactory ff = collection.getFilterFactory();
-        Filter filter = ff.or().*/
-        /*addFilter(ff.equals("language",
-        com.arsdigita.globalization.GlobalizationHelper.
-        getNegotiatedLocale().getLanguage())).*/
-        /*addFilter(ff.equals("language", language)).
-        addFilter(ff.and().
-        addFilter(ff.equals("language",
-        GlobalizationHelper.LANG_INDEPENDENT)).
-        addFilter(ff.notIn("parent",
-        "com.arsdigita.london.navigation.getParentIDsOfMatchedItems").
-        set("language",
-        com.arsdigita.globalization.GlobalizationHelper.
-        getNegotiatedLocale().getLanguage())));
-        collection.addFilter(filter);*/
-        /*collection.addFilter(
-        String.format("(language = '%s' or language = '%s')",
-        language,
-        GlobalizationHelper.LANG_INDEPENDENT));
-        } else {
-        /*collection.addEqualsFilter("language",
-        com.arsdigita.globalization.GlobalizationHelper.
-        getNegotiatedLocale().getLanguage());*/
-        /* collection.addEqualsFilter("language", language);
-        }*/
-        final List<BigDecimal> processed = new ArrayList<BigDecimal>();
-        final DataCollection collection = (DataCollection) person.get(
-                "organizationalunit");
-        collection.addFilter(String.format("language = '%s'", language));
+    private List<SciProjectBundle> collectProjects(final GenericPerson person,
+                                                   final String language) {
+        final List<SciProjectBundle> projects =
+                                     new LinkedList<SciProjectBundle>();
+        final DataCollection collection = (DataCollection) person.
+                getGenericPersonBundle().get("organizationalunits");        
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
-            if (obj instanceof SciProject) {
-                processed.add(((SciProject) obj).getParent().getID());
-                projects.add((SciProject) obj);
+            if (obj instanceof SciProjectBundle) {
+                projects.add((SciProjectBundle) obj);
             }
         }
-
-        if (Kernel.getConfig().languageIndependentItems()) {
-            final DataCollection collectionLi = (DataCollection) person.get(
-                    "organizationalunit");
-            collectionLi.addFilter(
-                    String.format("language = '%s'",
-                                  GlobalizationHelper.LANG_INDEPENDENT));
-
-            while (collectionLi.next()) {
-                obj =
-                DomainObjectFactory.newInstance(collectionLi.getDataObject());
-                if (obj instanceof SciProject) {
-                    if (!(processed.contains(((SciProject) obj).getParent().
-                          getID()))) {
-                        projects.add((SciProject) obj);
-                    }
-                }
-            }
-        }
-
+     
         if (person.getAlias() != null) {
             collectProjects(person.getAlias(), projects, language);
 
@@ -158,40 +112,17 @@ public class PersonalProjects implements ContentGenerator {
     }
 
     private void collectProjects(final GenericPerson alias,
-                                 final List<SciProject> projects,
+                                 final List<SciProjectBundle> projects,
                                  final String language) {
-          final DataCollection collection = (DataCollection) alias.get(
-                "organizationalunit");
-        final List<BigDecimal> processed = new ArrayList<BigDecimal>();
-        collection.addFilter(String.format("language = '%s'", language));
+        final DataCollection collection = (DataCollection) alias.
+                getGenericPersonBundle().get("organizationalunits");        
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
-            if (obj instanceof SciProject) {
-                processed.add(((SciProject) obj).getParent().getID());
-                projects.add((SciProject) obj);
+            if (obj instanceof SciProjectBundle) {                
+                projects.add((SciProjectBundle) obj);
             }
         }
-
-        if (Kernel.getConfig().languageIndependentItems()) {
-            final DataCollection collectionLi = (DataCollection) alias.get(
-                    "organizationalunit");
-            collectionLi.addFilter(
-                    String.format("language  = '%s'",
-                                  GlobalizationHelper.LANG_INDEPENDENT));
-
-            while (collectionLi.next()) {
-                obj =
-                DomainObjectFactory.newInstance(collectionLi.getDataObject());
-                if (obj instanceof SciProject) {
-                    if (!(processed.contains(((SciProject) obj).getParent().
-                          getID()))) {
-                        projects.add((SciProject) obj);
-                    }
-                }
-            }
-        }
-
 
         if (alias.getAlias() != null) {
             collectProjects(alias.getAlias(), projects, language);
@@ -199,22 +130,22 @@ public class PersonalProjects implements ContentGenerator {
         }
     }
 
-    private void processProjects(final List<SciProject> projects,
-                                 final List<SciProject> currentProjects,
-                                 final List<SciProject> finishedProjects,
+    private void processProjects(final List<SciProjectBundle> projects,
+                                 final List<SciProjectBundle> currentProjects,
+                                 final List<SciProjectBundle> finishedProjects,
                                  final String sortBy) {
         final Calendar today = new GregorianCalendar();
         final Date todayDate = today.getTime();
-        for (SciProject project : projects) {
-            if ((project.getEnd() != null)
-                && project.getEnd().before(todayDate)) {
+        for (SciProjectBundle project : projects) {
+            if ((project.getProject().getEnd() != null)
+                && project.getProject().getEnd().before(todayDate)) {
                 finishedProjects.add(project);
             } else {
                 currentProjects.add(project);
             }
         }
 
-        Comparator<SciProject> comparator;
+        Comparator<SciProjectBundle> comparator;
         if ("date".equals(sortBy)) {
             comparator = new ProjectByDateComparator();
         } else {
@@ -226,8 +157,8 @@ public class PersonalProjects implements ContentGenerator {
     }
 
     private void generateGroupsXml(final Element parent,
-                                   final List<SciProject> currentProjects,
-                                   final List<SciProject> finishedProjects) {
+                                   final List<SciProjectBundle> currentProjects,
+                                   final List<SciProjectBundle> finishedProjects) {
         final Element availableGroups = parent.newChildElement(
                 "availableProjectGroups");
 
@@ -247,8 +178,8 @@ public class PersonalProjects implements ContentGenerator {
     }
 
     private void generateProjectsXml(final Element parent,
-                                     final List<SciProject> currentProjects,
-                                     final List<SciProject> finishedProjects,
+                                     final List<SciProjectBundle> currentProjects,
+                                     final List<SciProjectBundle> finishedProjects,
                                      final PageState state) {
         final Element projectsElem = parent.newChildElement("projects");
 
@@ -297,7 +228,7 @@ public class PersonalProjects implements ContentGenerator {
 
     private void generateProjectsGroupXml(final Element projectsElem,
                                           final String groupName,
-                                          final List<SciProject> projects,
+                                          final List<SciProjectBundle> projects,
                                           final PageState state) {
         if (projects == null) {
             return;
@@ -306,18 +237,17 @@ public class PersonalProjects implements ContentGenerator {
         final Element groupElem = projectsElem.newChildElement("projectGroup");
         groupElem.addAttribute("name", groupName);
 
-        for (SciProject project : projects) {
+        for (SciProjectBundle project : projects) {
             generateProjectXml(groupElem, project, state);
         }
     }
 
     private void generateProjectXml(final Element projectGroupElem,
-                                    final SciProject project,
+                                    final SciProjectBundle projectBundle,
                                     final PageState state) {
-        /*final PublicPersonalProfileXmlGenerator generator =
-        new PublicPersonalProfileXmlGenerator(
-        project);
-        generator.generateXML(state, projectGroupElem, "");*/
+        final SciProject project = projectBundle.getProject(GlobalizationHelper.
+                getNegotiatedLocale().getLanguage());
+       
         Element projectElem = projectGroupElem.newChildElement("project");
         projectElem.addAttribute("oid", project.getOID().toString());
 
@@ -380,7 +310,7 @@ public class PersonalProjects implements ContentGenerator {
 
         GenericOrganizationalUnitPersonCollection members;
         members = project.getPersons();
-        members.addOrder("surname asc, givenname asc");
+        //members.addOrder("surname asc, givenname asc");
 
         if (members.size() > 0) {
             Element membersElem = projectElem.newChildElement("members");
@@ -444,7 +374,7 @@ public class PersonalProjects implements ContentGenerator {
         Element surname = memberElem.newChildElement("surname");
         surname.setText(person.getSurname());
 
-        Element givenName = memberElem.newChildElement("givenname");
+        Element givenName = memberElem.newChildElement("givenName");
         givenName.setText(person.getGivenName());
 
         if ((person.getTitlePost() != null)
@@ -578,8 +508,8 @@ public class PersonalProjects implements ContentGenerator {
                               final String role,
                               final String status) {
             /*this.member = member;
-            this.role = role;
-            this.status = status;*/
+             this.role = role;
+             this.status = status;*/
             this(member.getOID(),
                  member.getSurname(),
                  member.getGivenName(),
@@ -616,8 +546,8 @@ public class PersonalProjects implements ContentGenerator {
         }
 
         /*public GenericPerson getMember() {
-        return member;
-        }*/
+         return member;
+         }*/
         public OID getOID() {
             return oid;
         }
@@ -659,15 +589,15 @@ public class PersonalProjects implements ContentGenerator {
         }
 
         /*@Override
-        public boolean equals(Object obj) {            
-        if (obj instanceof MemberListItem) {
-        MemberListItem other = (MemberListItem) obj;
+         public boolean equals(Object obj) {            
+         if (obj instanceof MemberListItem) {
+         MemberListItem other = (MemberListItem) obj;
         
-        return member.equals(other.getMember());
-        } else {
-        return false;
-        }                        
-        }*/
+         return member.equals(other.getMember());
+         } else {
+         return false;
+         }                        
+         }*/
         @Override
         public boolean equals(Object obj) {
             if (obj == null) {
@@ -714,9 +644,9 @@ public class PersonalProjects implements ContentGenerator {
         }
 
         /*@Override
-        public int hashCode() {       
-        return member.hashCode();
-        }*/
+         public int hashCode() {       
+         return member.hashCode();
+         }*/
         @Override
         public int hashCode() {
             int hash = 3;
@@ -739,29 +669,38 @@ public class PersonalProjects implements ContentGenerator {
         }
     }
 
-    private class ProjectByTitleComparator implements Comparator<SciProject> {
+    private class ProjectByTitleComparator
+            implements Comparator<SciProjectBundle> {
 
-        public int compare(final SciProject project1,
-                           final SciProject project2) {
-            return project1.getTitle().compareTo(project2.getTitle());
+        public int compare(final SciProjectBundle project1,
+                           final SciProjectBundle project2) {
+            return project1.getProject().getTitle().compareTo(project2.
+                    getProject().getTitle());
         }
     }
 
-    private class ProjectByDateComparator implements Comparator<SciProject> {
+    private class ProjectByDateComparator implements
+            Comparator<SciProjectBundle> {
 
-        public int compare(final SciProject project1,
-                           final SciProject project2) {
+        public int compare(final SciProjectBundle project1,
+                           final SciProjectBundle project2) {
             int ret = 0;
-            if ((project2.getBegin() != null) && (project1.getBegin() != null)) {
-                ret = project2.getBegin().compareTo(project1.getBegin());
+            if ((project2.getProject().getBegin() != null) && (project1.
+                                                               getProject().
+                                                               getBegin()
+                                                               != null)) {
+                ret = project2.getProject().getBegin().compareTo(project1.
+                        getProject().getBegin());
             }
             if ((ret == 0)
-                && (project2.getEnd() != null)
-                && (project1.getEnd() != null)) {
-                ret = project2.getEnd().compareTo(project1.getBegin());
+                && (project2.getProject().getEnd() != null)
+                && (project1.getProject().getEnd() != null)) {
+                ret = project2.getProject().getEnd().compareTo(project1.
+                        getProject().getBegin());
             }
             if (ret == 0) {
-                ret = project1.getTitle().compareTo(project2.getTitle());
+                ret = project1.getProject().getTitle().compareTo(project2.
+                        getProject().getTitle());
             }
 
             return ret;
@@ -801,5 +740,20 @@ public class PersonalProjects implements ContentGenerator {
         elem.addAttribute("date", dateFormat.format(date));
         elem.addAttribute("longDate", longDateFormat.format(date));
         elem.addAttribute("time", timeFormat.format(date));
+    }
+    
+     private class XmlGenerator extends SimpleXMLGenerator {
+
+        private final ContentItem item;
+
+        public XmlGenerator(final ContentItem item) {
+            super();
+            this.item = item;
+        }
+
+        @Override
+        protected ContentItem getContentItem(final PageState state) {
+            return item;            
+        }
     }
 }

@@ -238,7 +238,7 @@ public class DomainObjectFactory {
      */
     public synchronized static DomainObjectInstantiator registerInstantiator(
             ObjectType dataObjectType,
-                                                                             DomainObjectInstantiator instantiator) {
+            DomainObjectInstantiator instantiator) {
         if (null == dataObjectType) {
             throw new InstantiatorRegistryException("null", instantiator);
         }

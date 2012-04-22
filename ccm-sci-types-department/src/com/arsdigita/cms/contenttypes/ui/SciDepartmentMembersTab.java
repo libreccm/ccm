@@ -3,6 +3,8 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.ui.panels.CompareFilter;
@@ -15,6 +17,9 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
@@ -34,13 +39,13 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
     private static final String SURNAME_PARAM = "memberSurname";
     private final CompareFilter statusFilter = new CompareFilter(
             STATUS_PARAM,
-            "status",
+            "link.status",
             false,
             false,
             false);
     private final TextFilter surnameFilter =
                              new TextFilter(SURNAME_PARAM,
-                                            GenericPerson.SURNAME);
+                                            "name");
 
     static {
         config.load();
@@ -55,28 +60,29 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         }
     }
 
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit) {
-        if ((orgaunit.getPersons() != null)
-            && orgaunit.getPersons().size() > 0) {
-            return true;
-        } else if (config.isMergingMembers()) {
-            final DataQuery persons = getData(orgaunit);
-            return persons.isEmpty();
-        } else {
-            return false;
-        }
+//        if ((orgaunit.getPersons() != null)
+//            && orgaunit.getPersons().size() > 0) {
+//            return true;
+//        } else if (config.isMergingMembers()) {
+//            final DataQuery persons = getData(orgaunit);
+//            return persons.isEmpty();
+//        } else {
+//            return false;
+//        }
+
+        return !orgaunit.getPersons().isEmpty();
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
         final long start = System.currentTimeMillis();
-        final DataQuery persons = getData(orgaunit);
+        List<GenericPerson> members = getMembers(orgaunit, state);
         final HttpServletRequest request = state.getRequest();
-
-        applyStatusFilter(persons, request);
-        applySurnameFilter(persons, request);
-
+     
         final Element depMembersElem = parent.newChildElement(
                 "departmentMembers");
 
@@ -84,7 +90,8 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
         statusFilter.generateXml(filtersElem);
 
-        if (persons.isEmpty()) {
+        if (members.isEmpty()) {
+            //if (persons.isEmpty()) {
             if ((surnameFilter != null)
                 && (surnameFilter.getFilter() != null)
                 && !(surnameFilter.getFilter().trim().isEmpty())) {
@@ -94,8 +101,23 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             return;
         }
 
+        Collections.sort(members, new Comparator<GenericPerson>() {
+
+            public int compare(final GenericPerson person1, 
+                               final GenericPerson person2) {
+                String name1 = String.format("%s %s", person1.getSurname(),
+                                                      person1.getGivenName());
+                String name2 = String.format("%s %s", person2.getSurname(),
+                                                      person2.getGivenName());
+                
+                return name1.compareTo(name2);
+            }
+            
+        });
+        
         final Paginator paginator = new Paginator(request,
-                                                  (int) persons.size(),
+                                                  //(int) persons.size(),
+                                                  members.size(),
                                                   config.getPageSize());
 
         if ((paginator.getPageCount() > config.getEnableSearchLimit())
@@ -104,11 +126,13 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             surnameFilter.generateXml(filtersElem);
         }
 
-        paginator.applyLimits(persons);
         paginator.generateXml(depMembersElem);
+        if (paginator.getEnd() < members.size()) {
+            members = members.subList(paginator.getBegin(), paginator.getEnd());
+        }
 
-        while (persons.next()) {
-            generateMemberXml((BigDecimal) persons.get("memberId"),
+        for (GenericPerson member : members) {
+            generateMemberXml(member,
                               depMembersElem,
                               state);
         }
@@ -117,6 +141,62 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                    + "in %d ms.",
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));
+    }
+
+    protected List<GenericPerson> getMembers(
+            final GenericOrganizationalUnit orgaunit,
+            final PageState state) {
+        final long start = System.currentTimeMillis();
+
+        final List<GenericPerson> members = new LinkedList<GenericPerson>();
+
+        final GenericOrganizationalUnitPersonCollection persons = orgaunit.
+                getPersons();
+
+        if (state != null) {
+            applyStatusFilter(persons, state.getRequest());
+            applySurnameFilter(persons, state.getRequest());
+        }
+
+        while (persons.next()) {
+            members.add(persons.getPerson());
+        }
+
+        if (config.isMergingMembers()) {
+            getMembersFromSubordinateOrgaUnits(orgaunit, members, state);
+        }
+
+        logger.debug(String.format(
+                "Got members of department '%s'"
+                + "in '%d ms'. MergeMembers is set to '%b'.",
+                orgaunit.getName(),
+                System.currentTimeMillis() - start,
+                config.isMergingMembers()));
+        return members;
+    }
+
+    protected void getMembersFromSubordinateOrgaUnits(
+            final GenericOrganizationalUnit orgaunit,
+            final List<GenericPerson> members,
+            final PageState state) {
+        final GenericOrganizationalUnitSubordinateCollection subDeps = orgaunit.
+                getSubordinateOrgaUnits();
+        subDeps.addFilter(
+                "objecttype = 'com.arsdigita.cms.contenttypes.SciDepartment'");
+
+        while (subDeps.next()) {
+            getMembersFromSubordinateOrgaUnit(
+                    subDeps.getGenericOrganizationalUnit(), members, state);
+        }
+    }
+
+    protected void getMembersFromSubordinateOrgaUnit(
+            final GenericOrganizationalUnit subOrgaUnit,
+            final List<GenericPerson> members,
+            final PageState state) {
+        final List<GenericPerson> subOrgaUnitMembers = getMembers(subOrgaUnit,
+                                                                  state);
+        members.addAll(subOrgaUnitMembers);        
     }
 
     protected DataQuery getData(final GenericOrganizationalUnit orgaunit) {
@@ -133,7 +213,6 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         final DataQuery personsQuery = SessionManager.getSession().
                 retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
-        //final StringBuffer personsFilter = new StringBuffer();
         final List<String> orgaUnitIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
@@ -146,47 +225,13 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                              SciDepartmentSubDepartmentsStep.ASSOC_TYPE);
 
             while (subDepartmentsQuery.next()) {
-                /*if (personsFilter.length() > 0) {
-                personsFilter.append(" or ");
-                }
-                personsFilter.append(String.format("orgaunitId = %s",
-                subDepartmentsQuery.get(
-                "orgaunitId").toString()));*/
                 orgaUnitIds.add(subDepartmentsQuery.get("orgaunitId").toString());
             }
         } else {
-            /*personsFilter.append(String.format("orgaunitId = %s",
-            orgaunit.getID().toString()));*/
             orgaUnitIds.add(orgaunit.getID().toString());
         }
 
-        //personsQuery.addFilter(personsFilter.toString());        
         personsQuery.setParameter("orgaunitIds", orgaUnitIds);
-
-        /**
-         * Filter for language independent items
-         */
-        /*if (Kernel.getConfig().languageIndependentItems()) {
-            FilterFactory ff = personsQuery.getFilterFactory();
-            Filter filter = ff.or().
-                    addFilter(ff.equals("language",
-                                        com.arsdigita.globalization.GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage())).
-                    addFilter(ff.and().
-                    addFilter(ff.equals("language",
-                                        GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(ff.notIn("parentId",
-                                       "com.arsdigita.cms.contenttypes.getParentIDsOfMatchedItems").
-                    set("language",
-                        com.arsdigita.globalization.GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage())));
-            personsQuery.addFilter(filter);
-        } else {
-            personsQuery.addEqualsFilter("language",
-                                         com.arsdigita.globalization.GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage());
-        }*/
-
 
         personsQuery.addOrder(GenericPerson.SURNAME);
         personsQuery.addOrder(GenericPerson.GIVENNAME);
@@ -245,7 +290,8 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
-        generator.setUseExtraXml(false);
+        //generator.setUseExtraXml(false);
+        //generator.setListMode(true);
         generator.setItemElemName("member", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for member '%s' in %d ms.",

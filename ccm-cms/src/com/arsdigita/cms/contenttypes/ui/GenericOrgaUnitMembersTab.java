@@ -4,11 +4,13 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
@@ -18,130 +20,102 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
-    
+
     private final static Logger logger =
                                 Logger.getLogger(GenericOrgaUnitMembersTab.class);
-    
+
     public boolean hasData(final GenericOrganizationalUnit orgaunit) {
-        final long start = System.currentTimeMillis();
-        final boolean result = !getData(orgaunit).isEmpty();
-        logger.debug(String.format(
-                "Needed %d ms to determine if "
-                + "organizational unit '%s' has members. Merge is set to '%b'.",
-                System.currentTimeMillis() - start,
-                orgaunit.getName(),
-                isMergingMembers()));
-        return result;
+        /*final long start = System.currentTimeMillis();
+         final boolean result = !getData(orgaunit).isEmpty();
+         logger.debug(String.format(
+         "Needed %d ms to determine if "
+         + "organizational unit '%s' has members. Merge is set to '%b'.",
+         System.currentTimeMillis() - start,
+         orgaunit.getName(),
+         isMergingMembers()));
+         return result;*/
+        return !orgaunit.getPersons().isEmpty();
     }
-    
+
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
         final long start = System.currentTimeMillis();
-        
-        final DataQuery persons = getData(orgaunit, state);
-        
+
+        List<GenericPerson> persons = getPersons(orgaunit, state);
+
         final Element personsElem = parent.newChildElement(getXmlElementName());
-        
+
         if (getPageSize() != 0) {
-            final GenericOrgaUnitPaginator<DataQuery> paginator =
-                                                      new GenericOrgaUnitPaginator<DataQuery>(
-                    persons, state, getPageSize());
-            paginator.setRange(persons);
+            final Paginator paginator = new Paginator(
+                    state.getRequest(), persons.size(), getPageSize());
             paginator.generateXml(personsElem);
+            if (paginator.getEnd() < persons.size()) {
+                persons = persons.subList(paginator.getBegin(), paginator.getEnd());
+            }
         }
         
-        while (persons.next()) {
-            /*generatePersonXml((BigDecimal) persons.get("memberId"),
-                              parent,
-                              state);*/
-            generatePersonXml(((GenericOrganizationalUnitPersonCollection) persons).getPerson().getID(),
-                              parent,
-                              state);
+        for(GenericPerson person : persons) {
+            generatePersonXml(person, personsElem, state);
         }
+        
         logger.debug(String.format("Generated member list of organizational "
                                    + "unit '%s' in %d ms.",
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));
     }
-    
+
     private void generatePersonXml(final BigDecimal personId,
                                    final Element parent,
                                    final PageState state) {
         final GenericPerson person = new GenericPerson(personId);
-        
+
         final XmlGenerator generator = new XmlGenerator(person);
+        generator.setItemElemName("person", "");
         generator.generateXML(state, parent, "");
     }
     
-    protected abstract String getXmlElementName();
-    
-    protected abstract boolean isMergingMembers();
-    
-    protected abstract List<String> getAssocTypesToMerge();
-    
-    protected abstract List<String> getRolesToInclude();
-    
-    protected abstract List<String> getStatusesToInclude();
-    
-    protected abstract int getPageSize();
-    
-    protected DataQuery getData(final GenericOrganizationalUnit orgaunit,
-                                final PageState state) {
-        return getData(orgaunit);
+    private void generatePersonXml(final GenericPerson person,
+                                   final Element parent,
+                                   final PageState state) {        
+        final XmlGenerator generator = new XmlGenerator(person);
+        generator.generateXML(state, parent, "");
     }
-    
-    protected DataQuery getData(final GenericOrganizationalUnit orgaunit) {
-        return orgaunit.getPersons();
-        
-        /*final long start = System.currentTimeMillis();
-        
-        final DataQuery personsQuery = SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
-        
-        if (isMergingMembers()) {
-            final DataQuery subOrgaUnitsQuery =
-                            SessionManager.getSession().retrieveQuery(
-                    "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivly");
-            subOrgaUnitsQuery.setParameter("orgaunitId", orgaunit.getID().
-                    toString());
-            final StringBuffer assocTypeFilter = new StringBuffer();
-            for (String assocType : getAssocTypesToMerge()) {
-                if (assocTypeFilter.length() > 0) {
-                    assocTypeFilter.append(" or ");
-                }
-                assocTypeFilter.append(String.format("assocType = '%s'",
-                                                     assocType));
-            }
-            subOrgaUnitsQuery.addFilter(assocTypeFilter.toString());
-            
-            final StringBuffer buffer = new StringBuffer();
-            while (subOrgaUnitsQuery.next()) {
-                if (buffer.length() > 0) {
-                    buffer.append(" or ");
-                }
-                buffer.append(String.format("orgaunitId = %s",
-                                            subOrgaUnitsQuery.get("orgaunitId").
-                        toString()));
-            }
-          
-            personsQuery.addFilter(buffer.toString());
-        } else {
-            personsQuery.addFilter(String.format("orgaunitId = %s",
-                                                 orgaunit.getID().toString()));
-        }
-        
+
+    protected abstract String getXmlElementName();
+
+    protected abstract boolean isMergingMembers();
+
+    protected abstract List<String> getAssocTypesToMerge();
+
+    protected abstract List<String> getRolesToInclude();
+
+    protected abstract List<String> getStatusesToInclude();
+
+    protected abstract int getPageSize();
+
+    protected List<GenericPerson> getPersons(
+            final GenericOrganizationalUnit orgaunit,
+            final PageState state) {
+        final long start = System.currentTimeMillis();
+
+        final List<GenericPerson> persons = new LinkedList<GenericPerson>();
+
+        final GenericOrganizationalUnitPersonCollection personColl = orgaunit.
+                getPersons();
+
         if ((getRolesToInclude() != null) && !getRolesToInclude().isEmpty()) {
             final StringBuffer roleFilter = new StringBuffer();
             for (String role : getRolesToInclude()) {
                 if (roleFilter.length() > 0) {
                     roleFilter.append(" or ");
                 }
-                roleFilter.append(String.format("roleName = '%s'", role));
+                roleFilter.append(String.format("link.roleName = '%s'",
+                                                role));
             }
-            personsQuery.addFilter(roleFilter.toString());
+            personColl.addFilter(roleFilter.toString());
         }
-        
+
         if ((getStatusesToInclude() != null)
             && !getStatusesToInclude().isEmpty()) {
             final StringBuffer statusFilter = new StringBuffer();
@@ -149,21 +123,56 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
                 if (statusFilter.length() > 0) {
                     statusFilter.append(" or ");
                 }
-                statusFilter.append(String.format("status = '%s'", status));
+                statusFilter.append(String.format("link.status = '%s'", status));
             }
-            personsQuery.addFilter(statusFilter.toString());
+            personColl.addFilter(statusFilter.toString());
         }
-        
-        personsQuery.addOrder("surname");
-        personsQuery.addOrder("givenname");
-        
+
+        while (personColl.next()) {
+            persons.add(personColl.getPerson());
+        }
+
+        if (isMergingMembers()) {
+            getPersonsFromSubordinateOrgaUnits(orgaunit, persons, state);
+        }
+
         logger.debug(String.format(
-                "Got persons for organizational unit '%s'"
-                + "in %d ms. isMergingMembers is set to '%b'.",
+                "Got members of orgaunit '%s'"
+                + "in '%d ms'. MergeMembers is set to '%b'.",
                 orgaunit.getName(),
                 System.currentTimeMillis() - start,
                 isMergingMembers()));
-        return personsQuery;*/
+        return persons;
+    }
+
+    protected void getPersonsFromSubordinateOrgaUnits(
+            final GenericOrganizationalUnit orgaunit,
+            final List<GenericPerson> persons,
+            final PageState state) {
+        final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
+                                                             orgaunit.
+                getSubordinateOrgaUnits();
+        final StringBuffer assocTypeFilter = new StringBuffer();
+        for (String assocType : getAssocTypesToMerge()) {
+            if (assocTypeFilter.length() > 0) {
+                assocTypeFilter.append(" or ");
+            }
+            assocTypeFilter.append(String.format("assocType = '%s'", assocType));
+        }
+        subOrgaUnits.addFilter(assocTypeFilter.toString());
+
+        while (subOrgaUnits.next()) {
+            getPersonsFromSubordinateOrgaUnit(orgaunit, persons, state);
+        }
+    }
+
+    protected void getPersonsFromSubordinateOrgaUnit(
+            final GenericOrganizationalUnit subOrgaUnit,
+            final List<GenericPerson> persons,
+            final PageState state) {
+        final List<GenericPerson> subOrgaUnitMembers = getPersons(subOrgaUnit,
+                                                                  state);
+        persons.addAll(subOrgaUnitMembers);
     }
 
     /**
@@ -194,16 +203,16 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
             final PageState state) {
         //Nothing now
     }
-    
+
     private class XmlGenerator extends SimpleXMLGenerator {
-        
+
         private final GenericPerson person;
-        
+
         public XmlGenerator(final GenericPerson person) {
             super();
             this.person = person;
         }
-        
+
         @Override
         protected ContentItem getContentItem(final PageState state) {
             return person;

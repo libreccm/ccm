@@ -63,6 +63,10 @@ public class TextFilter implements Filter {
         }                
     }
 
+    public String getValue() {
+        return value;
+    }
+    
     @Override
     public void setValue(final String value) {
           this.value = value;

@@ -6,6 +6,7 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -97,7 +98,7 @@ public class Paginator {
                                    getBegin(),
                                    getEnd()));
         query.setRange(getBegin(), getEnd() + 1);
-    }
+    }        
 
     public int getPageCount() {
         return (int) Math.ceil((double) objectCount / (double) pageSize);
@@ -122,7 +123,7 @@ public class Paginator {
         return num;
     }
 
-    private int getBegin() {
+    public int getBegin() {
         if (pageNumber == 1) {
             return 1;
         } else {
@@ -130,11 +131,11 @@ public class Paginator {
         }
     }
 
-    private int getCount() {
+    public int getCount() {
         return Math.min(pageSize, (objectCount - getBegin() + 1));
     }
 
-    private int getEnd() {
+    public int getEnd() {
         int paginatorEnd = getBegin() + getCount() - 1;
         if (paginatorEnd < 0) {
             paginatorEnd = 0;

@@ -135,6 +135,14 @@ public class CompareFilter implements Filter {
 
         return filter.toString();
     }
+    
+    public String getValue() {
+        return value;
+    }
+    
+    public Operators getOperator() {
+        return options.get(value).getOperator();
+    }
 
     public void generateXml(final Element parent) {
         Element filter;

@@ -19,7 +19,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -152,7 +152,9 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return subordinateOrgaUnits.getTitle();
+                    return subordinateOrgaUnits.getGenericOrganizationalUnit(
+                            GlobalizationHelper.getNegotiatedLocale().
+                            getLanguage()).getTitle();
                 case 1:
                     return customizer.getDeleteLabel();
                 case 2:
@@ -166,7 +168,9 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
 
         @Override
         public Object getKeyAt(final int columnIndex) {
-            return subordinateOrgaUnits.getId();
+            return subordinateOrgaUnits.getGenericOrganizationalUnit(
+                    GlobalizationHelper.getNegotiatedLocale().getLanguage()).
+                    getID();
         }
     }
 
@@ -182,7 +186,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.
                     getSecurityManager(state);
             final GenericOrganizationalUnit subordinateOrgaUnit =
                                             new GenericOrganizationalUnit(
@@ -230,7 +234,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.
                     getSecurityManager(state);
             final GenericOrganizationalUnit orgaunit =
                                             (GenericOrganizationalUnit) itemModel.
@@ -303,9 +307,9 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
             }
             if ((customizer.getContentType() != null)
                 && !(customizer.getContentType().isEmpty())) {
-                subOrgaUnits.addFilter(String.format("objectType = '%s'",
-                                                             customizer.
-                        getContentType()));
+                subOrgaUnits.addFilter(
+                        String.format("objectType = '%s'",
+                                      customizer.getContentType()));
             }
 
             if ((subOrgaUnits.size() - 1) == row) {

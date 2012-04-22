@@ -171,12 +171,12 @@ query getIdsOfMembersOfOrgaUnits {
 
     do {        
         select distinct on (cms_persons.person_id) 
-                                                   cms_persons.person_id, 
-                                                   cms_persons.surname, 
-                                                   cms_persons.givenname, 
-                                                   cms_organizationalunits_person_map.organizationalunit_id, 
-                                                   cms_organizationalunits_person_map.role_name, 
-                                                   cms_organizationalunits_person_map.status
+                cms_persons.person_id, 
+                cms_persons.surname, 
+                cms_persons.givenname, 
+                cms_organizationalunits_person_map.organizationalunit_id, 
+                cms_organizationalunits_person_map.role_name, 
+                cms_organizationalunits_person_map.status
         from cms_persons 
         join cms_organizationalunits_person_map on cms_persons.person_id = cms_organizationalunits_person_map.person_id
         where cms_organizationalunits_person_map.organizationalunit_id in :orgaunitIds

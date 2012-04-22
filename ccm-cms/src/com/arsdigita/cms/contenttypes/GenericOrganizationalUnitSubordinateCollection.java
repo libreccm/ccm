@@ -157,6 +157,14 @@ public class GenericOrganizationalUnitSubordinateCollection extends DomainCollec
 
         return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
     }
+    
+     public GenericOrganizationalUnit getGenericOrganizationalUnit(
+             final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+
+        return (GenericOrganizationalUnit) bundle.getInstance(language);
+    }
 
     public BigDecimal getId() {
         return (BigDecimal) m_dataCollection.getDataObject().get(ACSObject.ID);

@@ -41,7 +41,7 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartments.tabs.members.merge",
                 Parameter.REQUIRED,
-                Boolean.TRUE);
+                Boolean.FALSE);
 
         register(statusValues);       
         register(pageSize);

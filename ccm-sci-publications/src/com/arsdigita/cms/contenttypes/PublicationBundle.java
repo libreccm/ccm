@@ -336,4 +336,12 @@ public class PublicationBundle extends ContentBundle {
         
         remove(SERIES, series.getSeriesBundle());
     }
+    
+    public Publication getPublication() {
+        return (Publication) getPrimaryInstance();
+    }
+    
+    public Publication getPublication(final String language) {
+        return (Publication) getInstance(language);
+    }
 }
