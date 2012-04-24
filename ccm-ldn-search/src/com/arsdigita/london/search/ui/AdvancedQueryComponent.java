@@ -22,9 +22,11 @@ import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormModel;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ui.ItemSearch;
 import com.arsdigita.cms.ui.search.ContentTypeFilterWidget;
 import com.arsdigita.cms.ui.search.VersionFilterComponent;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -76,10 +78,11 @@ public class AdvancedQueryComponent extends BaseQueryComponent {
         }
     }
 
+    @Override
     public void register(Form form, FormModel model) {
         s_log.debug("Adding " + m_hiddenAllowedContentSectionsList.getName() + " to form model");
         m_hiddenAllowedContentSectionsList.setPassIn(true);
-        model.addFormParam(m_hiddenAllowedContentSectionsList);
+        model.addFormParam(m_hiddenAllowedContentSectionsList);                
         super.register(form, model);
         m_form = form;
     }

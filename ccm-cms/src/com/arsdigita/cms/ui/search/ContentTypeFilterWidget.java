@@ -83,7 +83,7 @@ public class ContentTypeFilterWidget extends FilterWidget {
     private ContentType getParentType(PageState state) {
 
         ContentType ct = m_parentType;
-
+      
         BigDecimal singleTypeID =
                    (BigDecimal) state.getValue(new BigDecimalParameter(
                 ItemSearch.SINGLE_TYPE_PARAM));

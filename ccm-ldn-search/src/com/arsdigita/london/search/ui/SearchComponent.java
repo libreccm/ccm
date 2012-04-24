@@ -24,6 +24,8 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.cms.ui.ItemSearch;
 
 import com.arsdigita.search.ui.QueryComponent;
 import com.arsdigita.search.ui.ResultsPane;
@@ -51,7 +53,7 @@ public class SearchComponent extends SimpleContainer {
 
         m_results = new ResultsPane(query, engine);
         
-        add(m_form);
+        add(m_form);               
 
         if (Search.getConfig().getShowSponsoredLinks().booleanValue()) {
             m_links = new SponsoredLinksComponent(m_query);
@@ -69,8 +71,10 @@ public class SearchComponent extends SimpleContainer {
         */
     }
     
+    @Override
     public void register(Page p) {
         super.register(p);
+        p.addGlobalStateParam(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
         /*
         p.setVisibleDefault(m_results, false);
         */
