@@ -75,7 +75,7 @@ public class ImageBrowser extends Table {
     private static final int LINK = 4;
     private static final int DELETE = 5;
     private static final int NUM_COLUMNS = 6;
-    private int m_thumbSize;
+    private Dimension m_thumbSize;
     private static final Logger s_log = Logger.getLogger(ImageBrowser.class);
 
     /**
@@ -86,7 +86,7 @@ public class ImageBrowser extends Table {
      */
     public ImageBrowser(ImageBrowserModelBuilder b) {
         super(new BuilderAdapter(b), HEADERS);
-        setThumbnailSize(50);
+        setThumbnailSize(200, 150);
         m_builder = b;
 
         getHeader().setDefaultRenderer(new DefaultTableCellRenderer(false));
@@ -106,7 +106,7 @@ public class ImageBrowser extends Table {
     /**
      * @return the size, in pixels, of the thumbnail images
      */
-    public int getThumbnailSize() {
+    public Dimension getThumbnailSize() {
         return m_thumbSize;
     }
 
@@ -114,8 +114,8 @@ public class ImageBrowser extends Table {
      * Set the thumbnail size
      * @param size  the size, in pixels, of the thumbnail images
      */
-    public void setThumbnailSize(int size) {
-        m_thumbSize = size;
+    public void setThumbnailSize(int width, int height) {
+        m_thumbSize = new Dimension(width, height);
     }
 
     /**
@@ -176,11 +176,11 @@ public class ImageBrowser extends Table {
             int w, h;
 
             if (width == null || height == null) {
-                w = m_thumbSize;
-                h = m_thumbSize;
+                w = (int) m_thumbSize.getWidth();
+                h = (int) m_thumbSize.getHeight();
             } else {
                 Dimension d = ImageSizer.getScaledSize(
-                        width.intValue(), height.intValue(), m_thumbSize, m_thumbSize);
+                        width.intValue(), height.intValue(), (int) m_thumbSize.getWidth(), (int) m_thumbSize.getHeight());
                 w = (int) d.getWidth();
                 h = (int) d.getHeight();
             }
