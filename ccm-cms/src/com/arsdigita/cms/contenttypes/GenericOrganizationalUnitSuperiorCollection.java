@@ -152,6 +152,12 @@ public class GenericOrganizationalUnitSuperiorCollection extends DomainCollectio
                 newInstance(m_dataCollection.getDataObject());
         return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
     }
+    
+    public GenericOrganizationalUnit getGenericOrganizationalUnit(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.
+                newInstance(m_dataCollection.getDataObject());
+        return (GenericOrganizationalUnit) bundle.getInstance(language);
+    }
 
     public OID getOID() {
         return m_dataCollection.getDataObject().getOID();

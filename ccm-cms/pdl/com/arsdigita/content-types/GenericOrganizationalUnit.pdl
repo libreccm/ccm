@@ -102,18 +102,18 @@ query getIdsOfSubordinateOrgaUnitsRecursivly{
     
     do {
         with recursive subordinate_orgaunits(orgaunit_id, orgaunit_name) AS (
-            select cms_organizationalunits.organizationalunit_id as orgaunit_id,
+            select cms_orgaunit_bundles.bundle_id as orgaunit_id,
                    cms_items.name as orgaunit_name
-            from cms_organizationalunits 
-            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
-            where cms_organizationalunits.organizationalunit_id = :orgaunitId
+            from cms_orgaunit_bundles 
+            join cms_items on cms_orgaunit_bundles.bundle_id = cms_items.item_id
+            where cms_orgaunit_bundles.bundle_id = :orgaunitId
             union all 
-            select ou.organizationalunit_id as orgaunit_id,
+            select ou.bundle_id as orgaunit_id,
                    cms_items.name as orgaunit_name
             from subordinate_orgaunits sou,
-                 cms_organizationalunits ou
-            join cms_items on ou.organizationalunit_id = cms_items.item_id
-            join cms_organizationalunits_hierarchy_map on ou.organizationalunit_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+                 cms_orgaunit_bundles ou
+            join cms_items on ou.bundle_id = cms_items.item_id
+            join cms_organizationalunits_hierarchy_map on ou.bundle_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
             where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id
         )
         select orgaunit_id, orgaunit_name from subordinate_orgaunits
@@ -123,7 +123,7 @@ query getIdsOfSubordinateOrgaUnitsRecursivly{
     }
 }
 
-//Same as above but with an addional parameter
+//Same as above but with an additional parameter
 //@param orgaunitId The id of the organizational unit to start with
 //@param assocType Include only subordinate orga units with the specified assoc
 //type
@@ -133,18 +133,18 @@ query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
     
     do {
         with recursive subordinate_orgaunits(orgaunit_id, orgaunit_name) AS (
-            select cms_organizationalunits.organizationalunit_id as orgaunit_id,
+            select cms_orgaunit_bundles.bundle_id as orgaunit_id,
                    cms_items.name as orgaunit_name
-            from cms_organizationalunits 
-            join cms_items on cms_organizationalunits.organizationalunit_id = cms_items.item_id
-            where cms_organizationalunits.organizationalunit_id = :orgaunitId
+            from cms_orgaunit_bundles 
+            join cms_items on cms_orgaunit_bundles.bundle_id = cms_items.item_id
+            where cms_orgaunit_bundles.bundle_id = 17003
             union all 
-            select ou.organizationalunit_id as orgaunit_id,
+            select ou.bundle_id as orgaunit_id,
                    cms_items.name as orgaunit_name
             from subordinate_orgaunits sou,
-                 cms_organizationalunits ou
-            join cms_items on ou.organizationalunit_id = cms_items.item_id
-            join cms_organizationalunits_hierarchy_map on ou.organizationalunit_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+                 cms_orgaunit_bundles ou
+            join cms_items on ou.bundle_id = cms_items.item_id
+            join cms_organizationalunits_hierarchy_map on ou.bundle_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
             where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id and cms_organizationalunits_hierarchy_map.assoc_type = :assocType
         )
         select orgaunit_id, orgaunit_name from subordinate_orgaunits
@@ -160,8 +160,7 @@ query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
 query getIdsOfMembersOfOrgaUnits {
     BigDecimal memberId;
     BigDecimal orgaunitId;
-    String surname;
-    String givenname;
+    String name;    
     String roleName;
     String status;
     
@@ -170,24 +169,21 @@ query getIdsOfMembersOfOrgaUnits {
     }
 
     do {        
-        select distinct on (cms_persons.person_id) 
-                cms_persons.person_id, 
-                cms_persons.surname, 
-                cms_persons.givenname, 
-                cms_organizationalunits_person_map.organizationalunit_id, 
-                cms_organizationalunits_person_map.role_name, 
-                cms_organizationalunits_person_map.status
-        from cms_persons 
-        join cms_organizationalunits_person_map on cms_persons.person_id = cms_organizationalunits_person_map.person_id
-        where cms_organizationalunits_person_map.organizationalunit_id in :orgaunitIds
-        
+        select distinct on (cms_person_bundles.bundle_id)
+            cms_person_bundles.bundle_id,
+            cms_items.name,
+            cms_organizationalunits_person_map.organizationalunit_id,
+            cms_organizationalunits_person_map.role_name,
+            cms_organizationalunits_person_map.status
+        from cms_person_bundles
+        join cms_organizationalunits_person_map on cms_person_bundles.bundle_id = cms_organizationalunits_person_map.person_id
+        join cms_items on cms_person_bundles.bundle_id = cms_items.item_id
+        where cms_organizationalunits_person_map.organizationalunit_id in  :orgaunitIds        
     } map {
-        memberId = cms_persons.person_id;
+        memberId = cms_person_bundles.bundle_id;
         orgaunitId = cms_organizationalunits_person_map.organizationalunit_id;
-        surname = cms_persons.surname;
-        givenname = cms_persons.givenname;
+        name = cms_items.name;
         roleName = cms_organizationalunits_person_map.role_name;
         status = cms_organizationalunits_person_map.status;        
     }
 }
-//select distinct on (cms_persons.person_id) 

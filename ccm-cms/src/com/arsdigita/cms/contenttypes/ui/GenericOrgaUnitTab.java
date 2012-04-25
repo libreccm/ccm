@@ -15,10 +15,12 @@ public interface GenericOrgaUnitTab {
     /**
      * 
      * @param orgaunit
+     * @param state 
      * @return Returns true if the provided orgaunit has data to show in this
      * tab, false otherwise.
      */
-    boolean hasData(GenericOrganizationalUnit orgaunit);
+    boolean hasData(GenericOrganizationalUnit orgaunit,
+                    PageState state);
     
     /**
      * The implementation of this method creates the XML output for the tab.

@@ -19,6 +19,9 @@
 package com.redhat.persistence.common;
 
 import com.arsdigita.util.ConcurrentDict;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Path
@@ -26,16 +29,14 @@ import com.arsdigita.util.ConcurrentDict;
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Id: Path.java 287 2005-02-22 00:29:02Z sskracic $
  **/
-
 public class Path {
 
     //special case the id path since it shows up so often
     private static final Path ID_PATH = new Path("id");
     private static final int NO_DOT = -1;
-
     private static final ConcurrentDict DICT =
-        new ConcurrentDict(new Supplier());
-
+                                        new ConcurrentDict(new Supplier());
+    private static final Map<String, Path> DICT2 = new HashMap<String, Path>();
     private Path m_parent;  // initialized lazily from m_path
     private final String m_path;
     private final int m_lastDot;
@@ -45,36 +46,36 @@ public class Path {
         m_lastDot = m_path.lastIndexOf('.');
     }
 
-    public static final Path get(String path) {
+    public static Path get(String path) {
         if ("id".equals(path)) {
             return ID_PATH;
-        }
-        return (Path) DICT.get(path);
+        }        
+        return (Path) DICT.get(path);                               
     }
 
-    public static final Path add(String p1, String p2) {
+    public static Path add(String p1, String p2) {
         return Path.get(concat(p1, p2));
     }
 
-    public static final Path add(Path p1, String p2) {
-        return p1==null ? Path.get(p2) : Path.get(concat(p1.m_path, p2));
+    public static Path add(Path p1, String p2) {
+        return p1 == null ? Path.get(p2) : Path.get(concat(p1.getPath(), p2));
     }
 
-    public static final Path add(String p1, Path p2) {
-        return p2==null ? Path.get(p1): Path.get(concat(p1, p2.m_path));
+    public static Path add(String p1, Path p2) {
+        return p2 == null ? Path.get(p1) : Path.get(concat(p1, p2.getPath()));
     }
 
-    public static final Path add(Path p1, Path p2) {
+    public static Path add(Path p1, Path p2) {
         if (p1 == null) {
             return p2;
         } else if (p2 == null) {
             return p1;
         } else {
-            return Path.get(concat(p1.m_path, p2.m_path));
+            return Path.get(concat(p1.getPath(), p2.getPath()));
         }
     }
 
-    public static final Path relative(Path base, Path descendent) {
+    public static Path relative(Path base, Path descendent) {
         if (base == null) {
             return descendent;
         } else {
@@ -83,12 +84,12 @@ public class Path {
     }
 
     public Path getParent() {
-        if ( m_lastDot == NO_DOT ) {
+        if (m_lastDot == NO_DOT) {
             return null;
         }
 
-        synchronized(this) {
-            if (m_parent == null ) {
+        synchronized (this) {
+            if (m_parent == null) {
                 m_parent = Path.get(m_path.substring(0, m_lastDot));
             }
             return m_parent;
@@ -125,32 +126,35 @@ public class Path {
     }
 
     public String getName() {
-        return m_path.substring(m_lastDot+1);
+        return m_path.substring(m_lastDot + 1);
     }
 
     public String getPath() {
         return m_path;
     }
 
+    @Override
     public String toString() {
         return m_path;
     }
 
     private static String concat(String s1, String s2) {
-        if (s1 == null ) {
+        if (s1 == null) {
             return s2;
-        } else if (s2 == null ) {
+        } else if (s2 == null) {
             return s1;
         } else {
-            StringBuffer sb = new StringBuffer(s1.length() + s2.length() + 1);
+            StringBuilder sb = new StringBuilder(s1.length() + s2.length() + 1);
             sb.append(s1).append(".").append(s2);
             return sb.toString();
         }
     }
 
     private static class Supplier implements ConcurrentDict.EntrySupplier {
+
         public Object supply(Object key) {
             return new Path((String) key);
         }
+
     }
 }

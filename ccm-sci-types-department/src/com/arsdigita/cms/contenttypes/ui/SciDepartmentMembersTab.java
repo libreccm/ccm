@@ -3,8 +3,6 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.ui.panels.CompareFilter;
@@ -12,15 +10,15 @@ import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.Globalization;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Filter;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -39,13 +37,13 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
     private static final String SURNAME_PARAM = "memberSurname";
     private final CompareFilter statusFilter = new CompareFilter(
             STATUS_PARAM,
-            "link.status",
+            "status",
             false,
             false,
             false);
     private final TextFilter surnameFilter =
                              new TextFilter(SURNAME_PARAM,
-                                            "name");
+                                            GenericPerson.SURNAME);
 
     static {
         config.load();
@@ -61,18 +59,17 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
     }
 
     @Override
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
-//        if ((orgaunit.getPersons() != null)
-//            && orgaunit.getPersons().size() > 0) {
-//            return true;
-//        } else if (config.isMergingMembers()) {
-//            final DataQuery persons = getData(orgaunit);
-//            return persons.isEmpty();
-//        } else {
-//            return false;
-//        }
-
-        return !orgaunit.getPersons().isEmpty();
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
+        if ((orgaunit.getPersons() != null)
+            && orgaunit.getPersons().size() > 0) {
+            return true;
+        } else if (config.isMergingMembers()) {
+            final DataQuery persons = getData(orgaunit, state);
+            return persons.isEmpty();
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -80,9 +77,12 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                             final Element parent,
                             final PageState state) {
         final long start = System.currentTimeMillis();
-        List<GenericPerson> members = getMembers(orgaunit, state);
+        final DataQuery persons = getData(orgaunit, state);
         final HttpServletRequest request = state.getRequest();
-     
+
+        //applyStatusFilter(persons, request);
+        applySurnameFilter(persons, request);
+
         final Element depMembersElem = parent.newChildElement(
                 "departmentMembers");
 
@@ -90,8 +90,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
         statusFilter.generateXml(filtersElem);
 
-        if (members.isEmpty()) {
-            //if (persons.isEmpty()) {
+        if ((persons == null) || persons.isEmpty()) {
             if ((surnameFilter != null)
                 && (surnameFilter.getFilter() != null)
                 && !(surnameFilter.getFilter().trim().isEmpty())) {
@@ -101,23 +100,8 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             return;
         }
 
-        Collections.sort(members, new Comparator<GenericPerson>() {
-
-            public int compare(final GenericPerson person1, 
-                               final GenericPerson person2) {
-                String name1 = String.format("%s %s", person1.getSurname(),
-                                                      person1.getGivenName());
-                String name2 = String.format("%s %s", person2.getSurname(),
-                                                      person2.getGivenName());
-                
-                return name1.compareTo(name2);
-            }
-            
-        });
-        
         final Paginator paginator = new Paginator(request,
-                                                  //(int) persons.size(),
-                                                  members.size(),
+                                                  (int) persons.size(),
                                                   config.getPageSize());
 
         if ((paginator.getPageCount() > config.getEnableSearchLimit())
@@ -126,13 +110,11 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             surnameFilter.generateXml(filtersElem);
         }
 
+        paginator.applyLimits(persons);
         paginator.generateXml(depMembersElem);
-        if (paginator.getEnd() < members.size()) {
-            members = members.subList(paginator.getBegin(), paginator.getEnd());
-        }
 
-        for (GenericPerson member : members) {
-            generateMemberXml(member,
+        while (persons.next()) {
+            generateMemberXml((BigDecimal) persons.get("id"),
                               depMembersElem,
                               state);
         }
@@ -143,63 +125,8 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                    System.currentTimeMillis() - start));
     }
 
-    protected List<GenericPerson> getMembers(
-            final GenericOrganizationalUnit orgaunit,
-            final PageState state) {
-        final long start = System.currentTimeMillis();
-
-        final List<GenericPerson> members = new LinkedList<GenericPerson>();
-
-        final GenericOrganizationalUnitPersonCollection persons = orgaunit.
-                getPersons();
-
-        if (state != null) {
-            applyStatusFilter(persons, state.getRequest());
-            applySurnameFilter(persons, state.getRequest());
-        }
-
-        while (persons.next()) {
-            members.add(persons.getPerson());
-        }
-
-        if (config.isMergingMembers()) {
-            getMembersFromSubordinateOrgaUnits(orgaunit, members, state);
-        }
-
-        logger.debug(String.format(
-                "Got members of department '%s'"
-                + "in '%d ms'. MergeMembers is set to '%b'.",
-                orgaunit.getName(),
-                System.currentTimeMillis() - start,
-                config.isMergingMembers()));
-        return members;
-    }
-
-    protected void getMembersFromSubordinateOrgaUnits(
-            final GenericOrganizationalUnit orgaunit,
-            final List<GenericPerson> members,
-            final PageState state) {
-        final GenericOrganizationalUnitSubordinateCollection subDeps = orgaunit.
-                getSubordinateOrgaUnits();
-        subDeps.addFilter(
-                "objecttype = 'com.arsdigita.cms.contenttypes.SciDepartment'");
-
-        while (subDeps.next()) {
-            getMembersFromSubordinateOrgaUnit(
-                    subDeps.getGenericOrganizationalUnit(), members, state);
-        }
-    }
-
-    protected void getMembersFromSubordinateOrgaUnit(
-            final GenericOrganizationalUnit subOrgaUnit,
-            final List<GenericPerson> members,
-            final PageState state) {
-        final List<GenericPerson> subOrgaUnitMembers = getMembers(subOrgaUnit,
-                                                                  state);
-        members.addAll(subOrgaUnitMembers);        
-    }
-
-    protected DataQuery getData(final GenericOrganizationalUnit orgaunit) {
+    protected DataQuery getData(final GenericOrganizationalUnit orgaunit,
+                                final PageState state) {
         final long start = System.currentTimeMillis();
 
         if (!(orgaunit instanceof SciDepartment)) {
@@ -210,7 +137,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                     orgaunit.getClass().getName()));
         }
 
-        final DataQuery personsQuery = SessionManager.getSession().
+        final DataQuery personBundlesQuery = SessionManager.getSession().
                 retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
         final List<String> orgaUnitIds = new ArrayList<String>();
@@ -220,7 +147,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                             SessionManager.getSession().retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             subDepartmentsQuery.setParameter("orgaunitId",
-                                             orgaunit.getID().toString());
+                                             orgaunit.getContentBundle().getID().toString());
             subDepartmentsQuery.setParameter("assocType",
                                              SciDepartmentSubDepartmentsStep.ASSOC_TYPE);
 
@@ -228,13 +155,30 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                 orgaUnitIds.add(subDepartmentsQuery.get("orgaunitId").toString());
             }
         } else {
-            orgaUnitIds.add(orgaunit.getID().toString());
+            orgaUnitIds.add(orgaunit.getContentBundle().getID().toString());
         }
 
-        personsQuery.setParameter("orgaunitIds", orgaUnitIds);
+        personBundlesQuery.setParameter("orgaunitIds", orgaUnitIds);
+        applyStatusFilter(personBundlesQuery, state.getRequest());
 
-        personsQuery.addOrder(GenericPerson.SURNAME);
-        personsQuery.addOrder(GenericPerson.GIVENNAME);
+        final StringBuilder filterBuilder = new StringBuilder();
+        while (personBundlesQuery.next()) {
+            if (filterBuilder.length() > 0) {
+                filterBuilder.append(",");
+            }
+            filterBuilder.append(personBundlesQuery.get("memberId").toString());
+        }
+        final DataCollection membersQuery = SessionManager.getSession().retrieve(GenericPerson.BASE_DATA_OBJECT_TYPE);
+
+        if (filterBuilder.length() > 0) {
+            membersQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
+        } else {
+            //No member return null to indicate
+            return null;
+        }
+
+        membersQuery.addOrder(GenericPerson.SURNAME);
+        membersQuery.addOrder(GenericPerson.GIVENNAME);
 
         logger.debug(String.format(
                 "Got members of department '%s'"
@@ -242,7 +186,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                 orgaunit.getName(),
                 System.currentTimeMillis() - start,
                 config.isMergingMembers()));
-        return personsQuery;
+        return membersQuery;
     }
 
     private void applyStatusFilter(final DataQuery persons,
@@ -312,5 +256,6 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }

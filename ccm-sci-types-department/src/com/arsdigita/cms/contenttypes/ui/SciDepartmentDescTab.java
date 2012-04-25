@@ -15,7 +15,9 @@ public class SciDepartmentDescTab implements GenericOrgaUnitTab {
 
     public final Logger logger = Logger.getLogger(SciDepartmentDescTab.class);
 
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    @Override
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         final long start = System.currentTimeMillis();
         boolean result;
         final Desc desc = getData(orgaunit);
@@ -43,7 +45,7 @@ public class SciDepartmentDescTab implements GenericOrgaUnitTab {
         final Desc desc = getData(orgaunit);
 
         final Element descTabElem = parent.newChildElement("departmentDescription");
-        
+
         if ((desc.getShortDesc() != null)
             && !desc.getShortDesc().trim().isEmpty()) {
             final Element shortDescElem = descTabElem.newChildElement(
@@ -96,5 +98,6 @@ public class SciDepartmentDescTab implements GenericOrgaUnitTab {
         public void setDesc(final String desc) {
             this.desc = desc;
         }
+
     }
 }

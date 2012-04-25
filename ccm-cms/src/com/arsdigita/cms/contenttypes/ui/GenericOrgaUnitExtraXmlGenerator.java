@@ -55,7 +55,7 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         if (listMode) {
             return;
         }
-        
+
         final Element orgaUnitTabsElem = element.newChildElement("orgaUnitTabs");
 
         final Element availableTabsElem = orgaUnitTabsElem.newChildElement(
@@ -78,7 +78,7 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         if ((showOnly == null) || showOnly.isEmpty()) {
             for (Map.Entry<String, GenericOrgaUnitTab> entry :
                  tabs.entrySet()) {
-                if (entry.getValue().hasData(orgaunit)) {
+                if (entry.getValue().hasData(orgaunit, state)) {
                     createAvailableTabElem(availableTabsElem,
                                            entry.getKey(),
                                            selected);
@@ -92,8 +92,8 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
                 System.currentTimeMillis()
                 - availableStart));
 
-        if (tabs.containsKey(selected) && tabs.get(selected).hasData(
-                orgaunit)) {
+        if (tabs.containsKey(selected)
+            && tabs.get(selected).hasData(orgaunit, state)) {
             final GenericOrgaUnitTab selectedTab = tabs.get(selected);
             final Element selectedTabElem =
                           orgaUnitTabsElem.newChildElement(
@@ -212,9 +212,10 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
     public void addGlobalStateParams(final Page page) {
         //Nothing yet
     }
-    
+
     @Override
     public void setListMode(final boolean listMode) {
         this.listMode = listMode;
     }
+
 }

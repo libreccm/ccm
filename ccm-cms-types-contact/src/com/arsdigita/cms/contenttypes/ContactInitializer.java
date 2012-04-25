@@ -1,4 +1,3 @@
-
 package com.arsdigita.cms.contenttypes;
 
 import org.apache.log4j.Logger;
@@ -18,7 +17,7 @@ public class ContactInitializer extends ContentTypeInitializer {
 
     /** Private Logger instance for debugging purpose.                        */
     private static final Logger s_log = Logger.getLogger(ContactInitializer.class);
-    
+
     /**
      * Constructor, sets the PDL manifest file and object type string.
      */
@@ -26,7 +25,22 @@ public class ContactInitializer extends ContentTypeInitializer {
         super("ccm-cms-types-contact.pdl.mf",
               Contact.BASE_DATA_OBJECT_TYPE);
     }
-    
+
+//    @Override
+//    public void init(final DomainInitEvent event) {
+//        super.init(event);
+//
+//        DomainObjectFactory.registerInstantiator(Contact.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+//
+//            @Override
+//            public DomainObject doNewInstance(DataObject dataObject) {
+//                s_log.error("Using ContactInitalizer...");
+//                return new Contact(dataObject);
+//            }
+//
+//        });
+//    }
+
     /**
      * Retrieves fully qualified traversal adapter file name.
      * @return 
@@ -35,7 +49,7 @@ public class ContactInitializer extends ContentTypeInitializer {
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Contact.xml";
     }
-    
+
     /**
      * Retrieve location of this content type's internal default theme 
      * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
@@ -51,9 +65,9 @@ public class ContactInitializer extends ContentTypeInitializer {
      */
     @Override
     public String[] getStylesheets() {
-        return new String[] {
-            INTERNAL_THEME_TYPES_DIR + "Contact.xsl"
-        };
+        return new String[]{
+                    INTERNAL_THEME_TYPES_DIR + "Contact.xsl"
+                };
     }
-    
+
 }

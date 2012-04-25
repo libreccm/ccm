@@ -16,7 +16,8 @@ import com.arsdigita.xml.Element;
 public class GenericOrgaUnitContactsTab implements GenericOrgaUnitTab {
 
     @Override
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         return !getData(orgaunit).isEmpty();
     }
 
@@ -54,12 +55,12 @@ public class GenericOrgaUnitContactsTab implements GenericOrgaUnitTab {
     protected GenericOrganizationalUnitContactCollection getData(
             final GenericOrganizationalUnit orgaunit,
             final PageState state) {
-       return getData(orgaunit);
+        return getData(orgaunit);
     }
-    
+
     protected GenericOrganizationalUnitContactCollection getData(
             final GenericOrganizationalUnit orgaunit) {
-         return orgaunit.getContacts();
+        return orgaunit.getContacts();
     }
 
     private class ContactXmlLGenerator extends SimpleXMLGenerator {
@@ -75,5 +76,6 @@ public class GenericOrgaUnitContactsTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(PageState state) {
             return contact;
         }
+
     }
 }

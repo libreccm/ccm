@@ -90,6 +90,8 @@ public final class ConcurrentDict {
      * <p>Note that the <code>null</code> key is always mapped to
      * <code>null</code>.</p>
      *
+     * @param key 
+     * @return 
      * @see EntrySupplier#supply(Object)
      * @see #ConcurrentDict(ConcurrentDict.EntrySupplier)
      *

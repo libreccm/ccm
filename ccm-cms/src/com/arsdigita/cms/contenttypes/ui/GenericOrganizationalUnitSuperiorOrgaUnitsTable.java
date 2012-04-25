@@ -22,8 +22,10 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSuperiorCollectio
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 
 /**
  *
@@ -88,10 +90,10 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             final GenericOrganizationalUnit orgaunit =
-                                            (GenericOrganizationalUnit) itemModel.
-                    getSelectedObject(state);
+                                            (GenericOrganizationalUnit) itemModel.getSelectedObject(state);
             return new Model(table, state, orgaunit, customizer);
         }
+
     }
 
     private class Model implements TableModel {
@@ -110,14 +112,12 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 && !(customizer.getAssocType().isEmpty())) {
                 superiorOrgaUnits.addFilter(String.format(
                         "link.assocType = '%s'",
-                                                          customizer.
-                        getAssocType()));
+                        customizer.getAssocType()));
             }
             if ((customizer.getContentType() != null)
                 && !(customizer.getContentType().isEmpty())) {
                 superiorOrgaUnits.addFilter(String.format("objectType = '%s'",
-                                                          customizer.
-                        getContentType()));
+                                                          customizer.getContentType()));
             }
             this.customizer = customizer;
         }
@@ -156,8 +156,10 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
         }
 
         public Object getKeyAt(int columnIndex) {
-            return superiorOrgaUnits.getOID();
+            return superiorOrgaUnits.getGenericOrganizationalUnit(
+                    GlobalizationHelper.getNegotiatedLocale().getLanguage()).getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -171,12 +173,8 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = CMS.
-                    getSecurityManager(state);
-            final GenericOrganizationalUnitBundle superiorOrgaUnitBundle =
-                                            (GenericOrganizationalUnitBundle) DomainObjectFactory.
-                    newInstance((OID) key);
-            final GenericOrganizationalUnit superiorOrgaUnit = (GenericOrganizationalUnit) superiorOrgaUnitBundle.getPrimaryInstance();
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
+            final GenericOrganizationalUnit superiorOrgaUnit = new GenericOrganizationalUnit((BigDecimal) key);
 
             final boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
@@ -187,23 +185,18 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 final ContentSection section = CMS.getContext().
                         getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
-                final Link link = new Link(
-                        String.format("%s",
-                                      value.toString(),
-                                      superiorOrgaUnit.getLanguage()),
-                        resolver.generateItemURL(state,
-                                                 superiorOrgaUnit,
-                                                 section,
-                                                 superiorOrgaUnit.getVersion()));
+                final Link link = new Link(value.toString(),
+                                           resolver.generateItemURL(state,
+                                                                    superiorOrgaUnit,
+                                                                    section,
+                                                                    superiorOrgaUnit.getVersion()));
                 return link;
             } else {
-                final Label label = new Label(String.format(
-                        "%s (%s)",
-                        value.toString(),
-                        superiorOrgaUnit.getLanguage()));
+                final Label label = new Label(value.toString());
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
@@ -218,11 +211,9 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
-                    getSecurityManager(state);
+            final com.arsdigita.cms.SecurityManager securityManager = Utilities.getSecurityManager(state);
             final GenericOrganizationalUnit orgaunit =
-                                            (GenericOrganizationalUnit) itemModel.
-                    getSelectedObject(state);
+                                            (GenericOrganizationalUnit) itemModel.getSelectedObject(state);
 
 
             boolean canEdit = securityManager.canAccess(
@@ -239,6 +230,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 return label;
             }
         }
+
     }
 
     private class UpCellRenderer
@@ -262,6 +254,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 return link;
             }
         }
+
     }
 
     private class DownCellRenderer
@@ -278,11 +271,9 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                                       final int column) {
 
             final GenericOrganizationalUnit orgaunit =
-                                            (GenericOrganizationalUnit) itemModel.
-                    getSelectedObject(state);
+                                            (GenericOrganizationalUnit) itemModel.getSelectedObject(state);
             final GenericOrganizationalUnitSuperiorCollection supOrgaUnits =
-                                                              orgaunit.
-                    getSuperiorOrgaUnits();
+                                                              orgaunit.getSuperiorOrgaUnits();
 
             if ((supOrgaUnits.size() - 1) == row) {
                 final Label label = new Label("");
@@ -293,6 +284,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 return link;
             }
         }
+
     }
 
     private class ActionListener implements TableActionListener {
@@ -302,14 +294,11 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
             final PageState state = event.getPageState();
 
             final GenericOrganizationalUnit orgaunit =
-                                            (GenericOrganizationalUnit) itemModel.
-                    getSelectedObject(state);
-            final GenericOrganizationalUnit supOrgaUnit =
-                                            (GenericOrganizationalUnit) DomainObjectFactory.
-                    newInstance(OID.valueOf((String) event.getRowKey()));
+                                            (GenericOrganizationalUnit) itemModel.getSelectedObject(state);
+            final GenericOrganizationalUnit supOrgaUnit = new GenericOrganizationalUnit(
+                    new BigDecimal((String) event.getRowKey()));
             final GenericOrganizationalUnitSuperiorCollection supOrgaUnits =
-                                                              orgaunit.
-                    getSuperiorOrgaUnits();
+                                                              orgaunit.getSuperiorOrgaUnits();
 
             final TableColumn column = getColumnModel().get(event.getColumn().
                     intValue());
@@ -329,5 +318,6 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
         public void headSelected(final TableActionEvent event) {
             //Nothing now
         }
+
     }
 }

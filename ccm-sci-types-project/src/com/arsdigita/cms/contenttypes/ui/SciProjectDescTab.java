@@ -16,7 +16,8 @@ public class SciProjectDescTab implements GenericOrgaUnitTab {
 
     public final Logger logger = Logger.getLogger(SciProjectDescTab.class);
 
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         final long start = System.currentTimeMillis();
         boolean result;
         final Desc desc = getData(orgaunit);

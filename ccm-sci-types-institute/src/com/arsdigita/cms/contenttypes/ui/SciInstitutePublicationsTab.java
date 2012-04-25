@@ -77,7 +77,8 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         this.onlyWorkingPapers = onlyWorkingPapers;
     }
 
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         final long start = System.currentTimeMillis();
 
         final ContentTypeCollection types = ContentType.getAllContentTypes();

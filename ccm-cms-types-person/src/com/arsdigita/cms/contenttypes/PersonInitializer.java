@@ -20,13 +20,6 @@
 
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.domain.DomainObjectInstantiator;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.runtime.DomainInitEvent;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -51,7 +44,22 @@ public class PersonInitializer extends ContentTypeInitializer {
     public PersonInitializer() {
         super("ccm-cms-types-person.pdl.mf", Person.BASE_DATA_OBJECT_TYPE);
     }
-
+    
+//     @Override
+//    public void init(final DomainInitEvent event) {
+//        super.init(event);
+//
+//        DomainObjectFactory.registerInstantiator(Person.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
+//
+//            @Override
+//            public DomainObject doNewInstance(DataObject dataObject) {
+//                s_log.error("Using PersonInitalizer...");
+//                return new Person(dataObject);
+//            }
+//
+//        });
+//    }
+//
     /**
      * Retrieve location of this content type's internal default theme 
      * stylesheet(s) which concomitantly serve as a fallback if a custom theme 

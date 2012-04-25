@@ -68,7 +68,9 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                false);
     }
 
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    @Override
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         final long start = System.currentTimeMillis();
         final ContentTypeCollection types = ContentType.getAllContentTypes();
         types.addFilter(
@@ -123,7 +125,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
             statusFilter.generateXml(filtersElem);
 
             depProjectsElem.newChildElement("greeting");
-        
+
             final Calendar now = new GregorianCalendar();
             final String today = String.format("%d-%02d-%02d",
                                                now.get(Calendar.YEAR),
@@ -208,11 +210,11 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
             while (subDepartmentsQuery.next()) {
                 /*if (projectsFilter.length() > 0) {
-                projectsFilter.append(" or ");
-                }
-                projectsFilter.append(String.format("orgaunitId = %s",
-                subDepartmentsQuery.get(
-                "orgaunitId").toString()));*/
+                 projectsFilter.append(" or ");
+                 }
+                 projectsFilter.append(String.format("orgaunitId = %s",
+                 subDepartmentsQuery.get(
+                 "orgaunitId").toString()));*/
                 orgaunitIds.add(subDepartmentsQuery.get("orgaunitId").toString());
             }
         } else {
@@ -265,8 +267,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                     final Element parent,
                                     final PageState state) {
         final long start = System.currentTimeMillis();
-        final ContentPage project = (ContentPage) DomainObjectFactory.
-                newInstance(new OID(
+        final ContentPage project = (ContentPage) DomainObjectFactory.newInstance(new OID(
                 "com.arsdigita.cms.contenttypes.SciProject", projectId));
         logger.debug(String.format("Got domain object for project '%s' "
                                    + "in %d ms.",
@@ -301,5 +302,6 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }

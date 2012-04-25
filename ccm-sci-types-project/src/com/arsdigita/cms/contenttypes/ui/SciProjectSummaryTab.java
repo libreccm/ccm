@@ -39,7 +39,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         config.load();
     }
 
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         //Some of the data shown by this tab will ever be there
         return true;
     }

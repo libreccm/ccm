@@ -24,7 +24,9 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
     private final static Logger logger =
                                 Logger.getLogger(GenericOrgaUnitMembersTab.class);
 
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    @Override
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         /*final long start = System.currentTimeMillis();
          final boolean result = !getData(orgaunit).isEmpty();
          logger.debug(String.format(
@@ -54,11 +56,11 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
                 persons = persons.subList(paginator.getBegin(), paginator.getEnd());
             }
         }
-        
-        for(GenericPerson person : persons) {
+
+        for (GenericPerson person : persons) {
             generatePersonXml(person, personsElem, state);
         }
-        
+
         logger.debug(String.format("Generated member list of organizational "
                                    + "unit '%s' in %d ms.",
                                    orgaunit.getName(),
@@ -74,10 +76,10 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
         generator.setItemElemName("person", "");
         generator.generateXML(state, parent, "");
     }
-    
+
     private void generatePersonXml(final GenericPerson person,
                                    final Element parent,
-                                   final PageState state) {        
+                                   final PageState state) {
         final XmlGenerator generator = new XmlGenerator(person);
         generator.generateXML(state, parent, "");
     }
@@ -101,8 +103,7 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
 
         final List<GenericPerson> persons = new LinkedList<GenericPerson>();
 
-        final GenericOrganizationalUnitPersonCollection personColl = orgaunit.
-                getPersons();
+        final GenericOrganizationalUnitPersonCollection personColl = orgaunit.getPersons();
 
         if ((getRolesToInclude() != null) && !getRolesToInclude().isEmpty()) {
             final StringBuffer roleFilter = new StringBuffer();
@@ -150,8 +151,7 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
             final List<GenericPerson> persons,
             final PageState state) {
         final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
-                                                             orgaunit.
-                getSubordinateOrgaUnits();
+                                                             orgaunit.getSubordinateOrgaUnits();
         final StringBuffer assocTypeFilter = new StringBuffer();
         for (String assocType : getAssocTypesToMerge()) {
             if (assocTypeFilter.length() > 0) {
@@ -217,5 +217,6 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(final PageState state) {
             return person;
         }
+
     }
 }

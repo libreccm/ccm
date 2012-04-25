@@ -21,7 +21,8 @@ public abstract class GenericOrgaUnitSubordinateTab
             GenericOrgaUnitSubordinateTab.class);
 
     @Override
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         return !getData(orgaunit).isEmpty();
     }
 
@@ -78,8 +79,7 @@ public abstract class GenericOrgaUnitSubordinateTab
     protected GenericOrganizationalUnitSubordinateCollection getData(
             final GenericOrganizationalUnit orgaunit) {
         final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
-                                                             orgaunit.
-                getSubordinateOrgaUnits();
+                                                             orgaunit.getSubordinateOrgaUnits();
         subOrgaUnits.addFilter(
                 String.format("%s = '%s'",
                               GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE,
@@ -149,5 +149,6 @@ public abstract class GenericOrgaUnitSubordinateTab
         protected ContentItem getContentItem(final PageState state) {
             return orgaunit;
         }
+
     }
 }

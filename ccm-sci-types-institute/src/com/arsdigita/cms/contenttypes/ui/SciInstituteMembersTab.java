@@ -55,7 +55,8 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
         }
     }
 
-    public boolean hasData(final GenericOrganizationalUnit orgaunit) {
+    public boolean hasData(final GenericOrganizationalUnit orgaunit,
+                           final PageState state) {
         if ((orgaunit.getPersons() != null)
             && orgaunit.getPersons().size() > 0) {
             return true;

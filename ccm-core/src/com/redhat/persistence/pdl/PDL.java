@@ -803,7 +803,11 @@ public class PDL {
 		    String[] paths = new String[] { pone.getName(),
 						    ptwo.getName() };
 		    for (int i = 0; i < paths.length; i++) {
+                        //System.err.printf("Path.get(paths[i] contains path: %s\n", Path.get(paths[i]).getPath());
 			Mapping m = om.getMapping(Path.get(paths[i]));
+                        //if (m == null) {
+                        //    System.err.println("m is null");
+                        //}
 			if (m.getTable() != null) {
 			    om.setTable(m.getTable());
 			    break;
