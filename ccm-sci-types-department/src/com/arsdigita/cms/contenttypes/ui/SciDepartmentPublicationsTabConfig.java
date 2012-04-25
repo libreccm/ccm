@@ -15,8 +15,7 @@ public class SciDepartmentPublicationsTabConfig extends AbstractConfig {
     private final Parameter greetingSize;
     private final Parameter pageSize;
     private final Parameter enableSearchLimit;
-    private final Parameter mergePublications;
-    private final Parameter oneRowPerAuthor;
+    private final Parameter mergePublications;   
 
     public SciDepartmentPublicationsTabConfig() {
         greetingSize =
@@ -42,18 +41,11 @@ public class SciDepartmentPublicationsTabConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.scidepartment.tabs.publications.merge",
                 Parameter.REQUIRED,
                 Boolean.TRUE);
-
-        oneRowPerAuthor =
-        new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.tabs.publications.one_row_per_author",
-                             Parameter.REQUIRED,
-                             Boolean.FALSE);
-
+     
         register(greetingSize);
         register(pageSize);
         register(enableSearchLimit);
-        register(mergePublications);
-        register(oneRowPerAuthor);
+        register(mergePublications);     
 
         loadInfo();
     }
@@ -72,9 +64,5 @@ public class SciDepartmentPublicationsTabConfig extends AbstractConfig {
 
     public final boolean isMergingPublications() {
         return (Boolean) get(mergePublications);
-    }
-    
-    public final boolean getOneRowPerAuthor() {
-        return (Boolean) get(oneRowPerAuthor);
-    }
+    } 
 }

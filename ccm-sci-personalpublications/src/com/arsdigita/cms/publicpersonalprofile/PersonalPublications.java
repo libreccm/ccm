@@ -265,7 +265,7 @@ public class PersonalPublications implements ContentGenerator {
         final XmlGenerator generator = new XmlGenerator(publication);
         generator.setItemElemName("publications", "");
         generator.setListMode(true);
-        generator.generateXML(null, parent, "");
+        generator.generateXML(state, parent, "");
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {

@@ -86,85 +86,26 @@ association {
 }
 
 //Retrieves the publications (the ids). Allows filtering for a orgaunit id 
-//For each author there will be on row in the result
-query getIdsOfPublicationsForOrgaUnitOneRowPerAuthor {
-    BigDecimal publicationId;
-    String objectType;
-    BigDecimal orgaunitId;
-    String title;
-    Integer year;
-    String authorSurname;
-    String authorGivenname;
-    String language;
-
-    do {
-        select distinct on (cms_pages.item_id) cms_pages.item_id, 
-                                               cms_pages.title, 
-                                               acs_objects.object_type, 
-                                               cms_organizationalunits.organizationalunit_id, 
-                                               ct_publications.year, 
-                                               cms_persons.surname, 
-                                               cms_persons.givenname,
-                                               cms_items.language
-        from cms_pages 
-        join ct_publications on cms_pages.item_id = ct_publications.publication_id 
-        join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
-        join cms_persons on ct_publications_authorship.person_id = cms_persons.person_id 
-        join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
-        join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id
-        join acs_objects on cms_pages.item_id = acs_objects.object_id
-        join cms_items on cms_items.item_id = cms_pages.item_id
-        where cms_organizationalunits.organizationalunit_id in :orgaunitIds
-    } map {
-        publicationId = cms_pages.item_id;
-        objectType = acs_objects.object_type;
-        orgaunitId = cms_organizationalunits.organizationalunit_id;
-        title = cms_pages.title;
-        year = ct_publications.year;
-        authorSurname = cms_persons.surname;
-        authorGivenname = cms_persons.givenname;
-        language = cms_items.item_id;
-    }
-}
-
-//Retrieves the publications (the ids). Allows filtering for a orgaunit id 
 //The authors are merged into one field in the result, each publication will 
 //only appear one time
 query getIdsOfPublicationsForOrgaUnit {
-    BigDecimal publicationId;
-    String objectType;
+    BigDecimal publicationId;    
     BigDecimal orgaunitId;
-    String title;
-    Integer year;
-    String authors;
-    String language;
-    Boolean reviewed;
-
+    String name;
+    
     do {
-        select distinct on (cms_pages.item_id) cms_pages.item_id, 
-                                               acs_objects.object_type, 
-                                               cms_pages.title, 
-                                               cms_organizationalunits.organizationalunit_id, 
-                                               ct_publications.year, 
-                                               ct_publications.authors,              
-                                               cms_items.language,
-                                               ct_publications.reviewed
-        from cms_pages
-        join ct_publications on cms_pages.item_id = ct_publications.publication_id 
-        join cms_organizationalunits_publications_map on cms_pages.item_id = cms_organizationalunits_publications_map.publication_id
-        join cms_organizationalunits on cms_organizationalunits_publications_map.orgaunit_id = cms_organizationalunits.organizationalunit_id        
-        join acs_objects on cms_pages.item_id = acs_objects.object_id
-        join cms_items on cms_pages.item_id = cms_items.item_id
-        where cms_organizationalunits.organizationalunit_id in :orgaunitIds
+        select distinct on (ct_publication_bundles.bundle_id) 
+            ct_publication_bundles.bundle_id,                                                                                               
+            cms_items.name,
+            cms_organizationalunits_publications_map.orgaunit_id            
+        from ct_publication_bundles
+        join cms_items on ct_publication_bundles.bundle_id = cms_items.item_id
+        join cms_organizationalunits_publications_map on ct_publication_bundles.bundle_id = cms_organizationalunits_publications_map.publication_id        
+        where cms_organizationalunits_publications_map.orgaunit_id in :orgaunitIds
     } map {
-        publicationId = cms_pages.item_id;
-        objectType = acs_objects.object_type;
-        orgaunitId = cms_organizationalunits.organizationalunit_id;
-        title = cms_pages.title;
-        year = ct_publications.year;        
-        authors = ct_publications.authors;
-        language = cms_items.language;
-        reviewed = ct_publications.reviewed;
+        publicationId =ct_publication_bundles.bundle_id;        
+        orgaunitId = cms_organizationalunits_publications_map.orgaunit_id;
+        name = cms_items.name;
     }
 }
 
@@ -172,128 +113,18 @@ query getIdsOfPublicationsForOrgaUnit {
 query getPublicationsForAuthor {
     BigDecimal publicationId;
     BigDecimal authorId;
-    String objectType;    
-    String title;
-    Integer year;   
-    String language;
-    Boolean reviewed;
-    String authors;
-    BigDecimal parent;
+    String name;
 
     do {
-        select cms_pages.item_id, 
-               acs_objects.object_type, 
-               cms_pages.title, 
-               ct_publications_authorship.person_id, 
-               ct_publications.year, 
-               cms_items.language,
-               ct_publications.reviewed,
-               ct_publications.authors,
-               cms_items.parent_id
-        from cms_pages
-        join ct_publications on cms_pages.item_id = ct_publications.publication_id
-        join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
-        join cms_items on cms_pages.item_id = cms_items.item_id
-        join acs_objects on cms_pages.item_id = acs_objects.object_id
+        select ct_publication_bundles.bundle_id,
+               ct_publications_authorship.person_id,
+               cms_items.name
+        from ct_publication_bundles.bundle_id,
+             join cms_items on ct_publication_bundles.bundle_id = cms_items.item_id
+             join ct_publications_authorship on ct_publication_bundles.bundle_id = ct_publications_authorship.publication_id            
     } map {    
-        publicationId = cms_pages.item_id;
-        objectType = acs_objects.object_type;
+        publicationId = ct_publication_bundles.bundle_id;        
         authorId = ct_publications_authorship.person_id;
-        title = cms_pages.title;
-        year = ct_publications.year;        
-        language = ct_items.language;
-        reviewed = ct_publications.reviewed;
-        authors = ct_publications.authors;
-        parent = cms_items.parent_id;
-    }
-}
-
-//Retrieves all publications of an author
-query getPublicationsForAuthorWithAuthors {
-    BigDecimal publicationId;
-    BigDecimal authorId;
-    String objectType;    
-    String title;
-    Integer year;
-    String authors;
-    String language;
-    Boolean reviewed;
-
-    do {
-        select cms_pages.item_id, 
-               acs_objects.object_type, 
-               cms_pages.title, 
-               ct_publications_authorship.person_id, 
-               ct_publications.year, 
-               ct_publications.reviewed, 
-               ct_publications.authors
-               //(select array_to_string(array (select cms_persons.surname || ', ' || cms_persons.givenname
-               // from cms_persons
-               // join ct_publications_authorship on cms_persons.person_id = ct_publications_authorship.person_id
-               // where ct_publications_authorship.publication_id = cms_pages.item_id order by ct_publications_authorship.authorship_order), '; ')) as authors
-        from cms_pages
-        join ct_publications on cms_pages.item_id = ct_publications.publication_id
-        join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id
-        join cms_items on cms_pages.item_id = cms_items.item_id
-        join acs_objects on cms_pages.item_id = acs_objects.object_id
-    } map {    
-        publicationId = cms_pages.item_id;
-        objectType = acs_objects.object_type;
-        authorId = ct_publications_authorship.person_id;
-        title = cms_pages.title;
-        year = ct_publications.year;
-        authors = ct_publications.authors;
-        language = ct_items.language;
-        reviewed = ct_publications.reviewed;
-    }
-}
-
-//Old, possible obsolete queries. Will be removed soon
-query getAllYearsOfPublication {
-    Integer yearOfPublication;
-
-    do {
-        select distinct ct_publications.year 
-        from ct_publications        
-    } map {
-        yearOfPublication = ct_publications.year;
-    }
-}
-
-query getAllYearsOfPublicationForAuthor {
-    Integer yearOfPublication;
-
-    do {
-        select distinct ct_publications.year 
-        from ct_publications join  ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
-        where person_id = :author        
-    } map {
-        yearOfPublication = ct_publications.year;
-    }
-}
-
-query getAllPublicationTypesForAuthor {
-
-    String objectType;
-
-    do {
-        select distinct acs_objects.object_type 
-        from ct_publications join acs_objects on ct_publications.publication_id = acs_objects.object_id join ct_publications_authorship on ct_publications.publication_id = ct_publications_authorship.publication_id 
-        where person_id = :author
-    } map {
-        objectType = acs_objects.object_type;
-    }
-
-}
-
-query getIdsOfPublicationsOfSciMember {
-    BigDecimal publicationId;
-    
-    do {
-        select ct_publications_authorship.publication_id 
-        from ct_publications_authorship 
-        where ct_publications_authorship.person_id = :author
-    } map {
-        publicationId = ct_publications_authorship.publication_id;
+        name = cms_items.name;
     }
 }

@@ -39,13 +39,11 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
         final Publication publication = (Publication) item;
         createAuthorsXml(publication, element, state);
-        createOrgaUnitsXml(publication, element, state);
-
         if (!listMode) {
+            createOrgaUnitsXml(publication, element, state);
             createSeriesXml(publication, element, state);
 
-            final List<PublicationFormat> formats = SciPublicationsExporters.
-                    getInstance().getSupportedFormats();
+            final List<PublicationFormat> formats = SciPublicationsExporters.getInstance().getSupportedFormats();
 
 
             for (PublicationFormat format : formats) {
@@ -89,8 +87,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                     final Element parent,
                                     final PageState state) {
         final PublicationGenericOrganizationalsUnitCollection orgaunits =
-                                                              publication.
-                getOrganizationalUnits();
+                                                              publication.getOrganizationalUnits();
         if ((orgaunits == null) || orgaunits.isEmpty()) {
             return;
         }
@@ -98,8 +95,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         final Element orgaunitsElem = parent.newChildElement(
                 "organizationalunits");
         while (orgaunits.next()) {
-            createOrgaUnitXml(orgaunits.getOrganizationalUnit(GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage()),
+            createOrgaUnitXml(orgaunits.getOrganizationalUnit(GlobalizationHelper.getNegotiatedLocale().getLanguage()),
                               orgaunitsElem,
                               state);
         }
@@ -123,8 +119,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
         final Element seriesElem = parent.newChildElement("series");
         while (series.next()) {
-            createSeriesElemXml(series.getSeries(GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage()),
+            createSeriesElemXml(series.getSeries(GlobalizationHelper.getNegotiatedLocale().getLanguage()),
                                 seriesElem,
                                 state);
         }
@@ -177,5 +172,6 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }

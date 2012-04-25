@@ -225,7 +225,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         final StringBuilder filterBuilder = new StringBuilder();
         while (projectBundlesQuery.next()) {
             if (filterBuilder.length() > 0) {
-                filterBuilder.append(",");
+                filterBuilder.append(',');
             }
             filterBuilder.append(projectBundlesQuery.get("projectId").toString());
         }
@@ -235,10 +235,10 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         if (filterBuilder.length() == 0) {
             //No Projects, return null to indicate
             return null;
-        } else {
-            projectsQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
-        }        
-
+        } 
+        
+        projectsQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
+               
         if (Kernel.getConfig().languageIndependentItems()) {
             final FilterFactory filterFactory = projectsQuery.getFilterFactory();
             final Filter filter = filterFactory.or().

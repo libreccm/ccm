@@ -162,7 +162,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         final StringBuilder filterBuilder = new StringBuilder();
         while (personBundlesQuery.next()) {
             if (filterBuilder.length() > 0) {
-                filterBuilder.append(",");
+                filterBuilder.append(',');
             }
             filterBuilder.append(personBundlesQuery.get("memberId").toString());
         }
@@ -171,10 +171,10 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         if (filterBuilder.length() == 0) {
             //No member return null to indicate
             return null;
-        } else {
-            membersQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
         }
-
+        
+        membersQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
+        
         membersQuery.addOrder(GenericPerson.SURNAME);
         membersQuery.addOrder(GenericPerson.GIVENNAME);
 

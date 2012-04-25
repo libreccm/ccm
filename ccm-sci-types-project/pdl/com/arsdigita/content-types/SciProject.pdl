@@ -34,7 +34,7 @@ query getIdsOfProjectsOfOrgaUnit {
             cms_items.name,
             cms_organizationalunits_hierarchy_map.superior_orgaunit_id
         from ct_sci_project_bundles
-        join cms_items on ct_sci_project_bundles.bundle_id = ct_sci_project_bundles.bundle_id
+        join cms_items on ct_sci_project_bundles.bundle_id = cms_items.item_id
         join cms_organizationalunits_hierarchy_map on ct_sci_project_bundles.bundle_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
         where cms_organizationalunits_hierarchy_map.assoc_type = 'ProjectOf'
         and cms_organizationalunits_hierarchy_map.superior_orgaunit_id in :orgaunitIds

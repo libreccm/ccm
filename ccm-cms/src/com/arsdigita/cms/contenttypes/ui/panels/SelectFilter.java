@@ -1,5 +1,6 @@
 package com.arsdigita.cms.contenttypes.ui.panels;
 
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class SelectFilter implements Filter {
         this.allOptionIsDefault = allOptionIsDefault;
         this.propertyIsNumeric = propertyIsNumeric;
     }
-    
+
     public SelectFilter(final String label,
                         final String property,
                         final boolean reverseOptions,
@@ -74,11 +75,11 @@ public class SelectFilter implements Filter {
         this.queryProperty = queryProperty;
     }
 
-    public String getFilter() {        
+    public String getFilter() {
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {
                 value = ALL;
-            } else if(emptyDefaultOption) {
+            } else if (emptyDefaultOption) {
                 value = NONE;
             } else {
                 value = getOptions().get(0);
@@ -109,14 +110,14 @@ public class SelectFilter implements Filter {
         filter.addAttribute("type", "select");
         filter.addAttribute("label", label);
 
-        if(options.isEmpty()) {
+        if (options.isEmpty()) {
             return;
         }
-        
+
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {
                 selected = ALL;
-            } else if(emptyDefaultOption) {
+            } else if (emptyDefaultOption) {
                 selected = NONE;
             } else {
                 selected = options.get(0);
@@ -124,14 +125,14 @@ public class SelectFilter implements Filter {
         } else {
             selected = value;
         }
-        
+
         filter.addAttribute("selected", selected);
 
         if (emptyDefaultOption) {
             optionElem = filter.newChildElement("option");
             optionElem.addAttribute("label", NONE);
         }
-        
+
         if (allOption) {
             optionElem = filter.newChildElement("option");
             optionElem.addAttribute("label", ALL);
@@ -141,7 +142,7 @@ public class SelectFilter implements Filter {
             optionElem = filter.newChildElement("option");
             optionElem.addAttribute("label", optionStr);
             if (propertyIsNumeric) {
-                 optionElem.addAttribute("valueType", "number");
+                optionElem.addAttribute("valueType", "number");
             } else {
                 optionElem.addAttribute("valueType", "text");
             }
@@ -152,31 +153,36 @@ public class SelectFilter implements Filter {
         this.value = value;
     }
 
-    private List<String> getOptions() {              
+    private List<String> getOptions() {
         Object obj;
         String option;
         Set<String> optionsSet;
         List<String> options;
 
         optionsSet = new HashSet<String>();
-              
-        while(dataQuery.next()) {
-            obj = dataQuery.get(queryProperty);
+
+        while (dataQuery.next()) {
+            if (dataQuery instanceof DataCollection) {
+                obj = ((DataCollection) dataQuery.get(queryProperty));
+            } else {
+                obj = dataQuery.get(queryProperty);
+            }
             if (obj == null) {
                 continue;
             }
             option = obj.toString();
             optionsSet.add(option);
         }
-         
+
         dataQuery.rewind();
-        
+
         options = new ArrayList<String>(optionsSet);
         Collections.sort(options);
         if (reverseOptions) {
             Collections.reverse(options);
         }
-        
+
         return options;
     }
+
 }
