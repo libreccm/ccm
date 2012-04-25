@@ -26,100 +26,21 @@ object type SciProjectBundle extends GenericOrganizationalUnitBundle {
 query getIdsOfProjectsOfOrgaUnit {
     BigDecimal projectId;
     BigDecimal orgaunitId;
-    String title;
-    Date projectBegin;    
-    Date projectEnd;
+    String name;
 
     do {
-        select distinct on (ct_sci_projects.project_id) ct_sci_projects.project_id, cms_pages.title, ct_sci_projects.projectbegin, ct_sci_projects.projectend, cms_organizationalunits_hierarchy_map.superior_orgaunit_id
-        from ct_sci_projects
-        join cms_pages on ct_sci_projects.project_id = cms_pages.item_id
-        join cms_organizationalunits_hierarchy_map on ct_sci_projects.project_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+        select distinct on (ct_sci_project_bundles.bundle_id) 
+            ct_sci_project_bundles.bundle_id, 
+            cms_items.name,
+            cms_organizationalunits_hierarchy_map.superior_orgaunit_id
+        from ct_sci_project_bundles
+        join cms_items on ct_sci_project_bundles.bundle_id = ct_sci_project_bundles.bundle_id
+        join cms_organizationalunits_hierarchy_map on ct_sci_project_bundles.bundle_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
         where cms_organizationalunits_hierarchy_map.assoc_type = 'ProjectOf'
         and cms_organizationalunits_hierarchy_map.superior_orgaunit_id in :orgaunitIds
     } map {
-        projectId = ct_sci_projects.project_id;
+        projectId = ct_sci_project_bundles.bundle_id;
         orgaunitId = cms_organizationalunits_hierarchy_map.superior_orgaunit_id;
-        title = cms_pages.title;
-        projectBegin = ct_sci_projects.projectbegin;
-        projectEnd = ct_sci_projects.projectend;
+        name = cms_items.name;
     }
 }
-
-// Some queries from old SciProjects, from ccm-sci-types-organization module
-//Not used anywhere. Kept for reference.
-//query getIdsOfContactsOfSciProject {
-  //  BigDecimal contactId;
-//
-  //  do {
-  //      select cms_organizationalunits_contact_map.contact_id 
-  //      from cms_organizationalunits_contact_map        
-  //      where cms_organizationalunits_contact_map.organizationalunit_id = :project       
-  //  } map {
-  //      contactId = cms_organizationalunits_contact_map.contact_id;
-  //  }
-//}
-
-//query getIdsOfSubProjectsOfSciProject {
-//    BigDecimal projectId;
-//
-//    do {
-//        select cms_organizationalunit_hierarchy_map.subordinate_orgaunit_id
-//        from cms_organizationalunit_hierarchy_map
-//        where cms_organizationalunit_hierarchy_map.superior_orgaunit_id = :project
-//        and cms_organizationalunit_hierarchy_map.assoc_type = 'subproject'
-//    } map {
-//        projectId = ct_sciorga_projects_subprojects_map.project_id;
-//    }
-//}
-
-//query getIdsOfMembersOfSciProject {
-//    BigDecimal memberId;
-//
-//    do {
-//        select cms_organizationalunits_person_map.person_id
-//        from cms_organizationalunits_person_map      
-//        where cms_organizationalunits_person_map.organizationalunit_id = :project
-//    } map {
-//        memberId = cms_organizationalunits_person_map.person_id;
-//    }
-//}
-
-//query getIdsOfActiveMembersOfSciProject {
-//    BigDecimal memberId;
-//
-//    do {
-//        select cms_organizationalunits_person_map.person_id
-//        from cms_organizationalunits_person_map        
-//        where cms_organizationalunits_person_map.organizationalunit_id = :project 
-//        and cms_organizationalunits_person_map.status = 'active'
-//    } map {
-//        memberId = cms_organizationalunits_person_map.person_id;
-//    }
-//}
-//
-//query getIdsOfAssociatedMembersOfSciProject {
-//    BigDecimal memberId;
-//
-//    do {
-//        select cms_organizationalunits_person_map.person_id
-//        from cms_organizationalunits_person_map       
-//        where cms_organizationalunits_person_map.organizationalunit_id = :project 
-//        and cms_organizationalunits_person_map.status = 'associated'
-//    } map {
-//        memberId = cms_organizationalunits_person_map.personId;
-////    }
-//}
-
-//query getIdsOfFormerMembersOfSciProject {
-//    BigDecimal memberId;
-//
-//    do {
-//        select cms_organizationalunits_person_map.cms_persons.person_id
-//        from cms_organizationalunits_person_map   
-//        where cms_organizationalunits_person_map.organizationalunit_id = :project 
-//        and (cms_organizationalunits_person_map.status = 'former' or cms_organizationalunits_person_map.status = 'associatedFormer')
-//    } map {
-//        memberId = cms_organizationalunits_person_map.personId;
-//    }
-//}

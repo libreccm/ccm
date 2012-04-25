@@ -137,7 +137,7 @@ query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
                    cms_items.name as orgaunit_name
             from cms_orgaunit_bundles 
             join cms_items on cms_orgaunit_bundles.bundle_id = cms_items.item_id
-            where cms_orgaunit_bundles.bundle_id = 17003
+            where cms_orgaunit_bundles.bundle_id = :orgaunitId
             union all 
             select ou.bundle_id as orgaunit_id,
                    cms_items.name as orgaunit_name
@@ -178,7 +178,7 @@ query getIdsOfMembersOfOrgaUnits {
         from cms_person_bundles
         join cms_organizationalunits_person_map on cms_person_bundles.bundle_id = cms_organizationalunits_person_map.person_id
         join cms_items on cms_person_bundles.bundle_id = cms_items.item_id
-        where cms_organizationalunits_person_map.organizationalunit_id in  :orgaunitIds        
+        where cms_organizationalunits_person_map.organizationalunit_id in :orgaunitIds        
     } map {
         memberId = cms_person_bundles.bundle_id;
         orgaunitId = cms_organizationalunits_person_map.organizationalunit_id;
