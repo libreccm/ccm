@@ -587,12 +587,25 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.REQUIRED,
             "");
 
+    /////////////////////////////////////////////////
+    // ImageBrowser Parameter
+    /////////////////////////////////////////////////
+    private final Parameter m_imageBrowserThumbnailMaxWidth = new IntegerParameter(
+            "com.arsdigita.cms.image_browser.thumbnail_max_width",
+            Parameter.REQUIRED,
+            50);
+    private final Parameter m_imageBrowserThumbnailMaxHeight = new IntegerParameter(
+            "com.arsdigita.cms.image_browser.thumbnail_max_height",
+            Parameter.REQUIRED,
+            50);
+    
     // ///////////////////////////////////////////
     // publishToFile package related parameter
     // ///////////////////////////////////////////
     // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
     // private final Parameter m_disableItemPfs;
     // private final Parameter m_publishToFileClass;
+    
     /**
      * Constructor, but do NOT instantiate this class directly.
      *
@@ -674,7 +687,10 @@ public final class CMSConfig extends AbstractConfig {
         register(m_publishingFailureSender);
         register(m_publishingFailureReceiver);
 
-
+        // ImageBrowser
+        register(m_imageBrowserThumbnailMaxWidth);
+        register(m_imageBrowserThumbnailMaxHeight);
+        
         // publishToFile package related parameter
         // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
         // register(m_disableItemPfs);
@@ -1105,4 +1121,13 @@ public final class CMSConfig extends AbstractConfig {
     public String getPublicationFailureReceiver() {
         return (String) get(m_publishingFailureReceiver);
     }
+
+    public Integer getImageBrowserThumbnailMaxWidth() {
+        return (Integer) get(m_imageBrowserThumbnailMaxWidth);
+    }
+
+    public Integer getImageBrowserThumbnailMaxHeight() {
+        return (Integer) get(m_imageBrowserThumbnailMaxHeight);
+    }
+
 }

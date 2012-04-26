@@ -34,7 +34,6 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.Service;
-// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
@@ -86,7 +85,8 @@ public class ImageBrowser extends Table {
      */
     public ImageBrowser(ImageBrowserModelBuilder b) {
         super(new BuilderAdapter(b), HEADERS);
-        setThumbnailSize(200, 150);
+        setThumbnailSize(CMS.getConfig().getImageBrowserThumbnailMaxWidth(),
+                         CMS.getConfig().getImageBrowserThumbnailMaxHeight());
         m_builder = b;
 
         getHeader().setDefaultRenderer(new DefaultTableCellRenderer(false));
@@ -114,7 +114,7 @@ public class ImageBrowser extends Table {
      * Set the thumbnail size
      * @param size  the size, in pixels, of the thumbnail images
      */
-    public void setThumbnailSize(int width, int height) {
+    public final void setThumbnailSize(int width, int height) {
         m_thumbSize = new Dimension(width, height);
     }
 
