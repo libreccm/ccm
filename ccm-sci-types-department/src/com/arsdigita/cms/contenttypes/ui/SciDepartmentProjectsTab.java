@@ -218,7 +218,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                 orgaunitIds.add(subDepartmentsQuery.get("orgaunitId").toString());
             }
         } else {
-            orgaunitIds.add(orgaunit.getID().toString());
+            orgaunitIds.add(orgaunit.getContentBundle().getID().toString());
         }
         projectBundlesQuery.setParameter("orgaunitIds", orgaunitIds);
                       

@@ -77,8 +77,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final DataCollection persons = getData(orgaunit, state);
         final HttpServletRequest request = state.getRequest();
-
-        //applyStatusFilter(persons, request);
+      
         applySurnameFilter(persons, request);
 
         final Element depMembersElem = parent.newChildElement(

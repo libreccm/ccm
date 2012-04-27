@@ -42,7 +42,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
     private static final String YEAR_PARAM = "yearOfPublication";
     private static final String TITLE_PARAM = "title";
     private static final String AUTHOR_PARAM = "author";
-    private final SelectFilter yearFilter = new SelectFilter("year",
+    private final SelectFilter yearFilter = new SelectFilter(YEAR_PARAM,
                                                              YEAR_PARAM,
                                                              true,
                                                              true,
@@ -107,7 +107,6 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
         if (((yearValue == null) || yearValue.trim().isEmpty())
             && ((titleValue == null) || titleValue.trim().isEmpty())
             && ((authorValue == null) || authorValue.trim().isEmpty())) {
-            //&& ((sortValue == null) || sortValue.trim().isEmpty())) {
 
             depPublicationsElem.newChildElement("greeting");
 
@@ -119,14 +118,13 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
 
             publications.addOrder("title asc");
 
-            publications.setRange(1, config.getGreetingSize() + 1);
-
             yearFilter.setDataQuery(publications, YEAR_PARAM);
 
             yearFilter.generateXml(filtersElem);
             titleFilter.generateXml(filtersElem);
             authorFilter.generateXml(filtersElem);
 
+            publications.setRange(1, config.getGreetingSize() + 1);
         } else {
 
             publications.addOrder("yearOfPublication desc");
@@ -205,8 +203,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
         final DataQuery publicationBundlesQuery;
 
         publicationBundlesQuery =
-        SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForOrgaUnit");
+        SessionManager.getSession().retrieveQuery("com.arsdigita.cms.contenttypes.getIdsOfPublicationsForOrgaUnit");
         final List<String> orgaunitIds = new ArrayList<String>();
 
         if (config.isMergingPublications()) {
@@ -221,7 +218,7 @@ public class SciDepartmentPublicationsTab implements GenericOrgaUnitTab {
                 orgaunitIds.add(subDepartmentsQuery.get("orgaunitId").toString());
             }
         } else {
-            orgaunitIds.add(orgaunit.getID().toString());
+            orgaunitIds.add(orgaunit.getContentBundle().getID().toString());
         }
 
         publicationBundlesQuery.setParameter("orgaunitIds", orgaunitIds);

@@ -14,6 +14,10 @@ import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
@@ -123,11 +127,10 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
 
         final Element headsElem = parent.newChildElement("heads");
 
-        final GenericOrganizationalUnitPersonCollection heads = institute.
-                getPersons();
+        final GenericOrganizationalUnitPersonCollection heads = institute.getPersons();
         heads.addFilter(roleFilter.toString());
         heads.addFilter(statusFilter.toString());
-        heads.addOrder("name");     
+        heads.addOrder("name");
 
         while (heads.next()) {
             generateMemberXml(heads.getPerson(), headsElem, state);
@@ -170,17 +173,31 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
                                               activeStatus));
         }
 
-        final Element headsElem = parent.newChildElement("heads");
+        final GenericOrganizationalUnitPersonCollection headsCollection = department.getPersons();
+        headsCollection.addFilter(roleFilter.toString());
+        headsCollection.addFilter(statusFilter.toString());
 
-        final GenericOrganizationalUnitPersonCollection heads = department.
-                getPersons();
-        heads.addFilter(roleFilter.toString());
-        heads.addFilter(statusFilter.toString());
-        heads.addOrder("surname");
-        heads.addOrder("givenname");
+        final List<GenericPerson> heads = new ArrayList<GenericPerson>();
+        while (headsCollection.next()) {
+            heads.add(headsCollection.getPerson());
+        }
+        Collections.sort(heads, new Comparator<GenericPerson>() {
 
-        while (heads.next()) {
-            generateMemberXml(heads.getPerson(), headsElem, state);
+            public int compare(final GenericPerson person1,
+                               final GenericPerson person2) {
+                final String name1 = String.format("%s %s", person1.getSurname(), person1.getGivenName());
+                final String name2 = String.format("%s %s", person2.getSurname(), person2.getGivenName());
+                return name1.compareTo(name2);
+            }
+
+        });
+
+        if (!heads.isEmpty()) {
+            final Element headsElem = parent.newChildElement("heads");
+            //while (headsCollection.next()) {
+            for (GenericPerson head : heads) {
+                generateMemberXml(head, headsElem, state);
+            }
         }
 
         logger.debug(String.format("Generated head of department XML for department '%s' "
@@ -195,8 +212,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
 
         final GenericOrganizationalUnitSubordinateCollection departments =
-                                                             institute.
-                getSubordinateOrgaUnits();
+                                                             institute.getSubordinateOrgaUnits();
         departments.addFilter(
                 String.format("%s = '%s'",
                               GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE,
@@ -278,8 +294,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
                                        final Element parent,
                                        final PageState state) {
         final long start = System.currentTimeMillis();
-        final GenericOrganizationalUnitContactCollection contacts = department.
-                getContacts();
+        final GenericOrganizationalUnitContactCollection contacts = department.getContacts();
 
         if ((contacts == null) || contacts.isEmpty()) {
             return;
@@ -321,8 +336,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
         relAttrs.addFilter(String.format("attribute = '%s'",
                                          "GenericContactTypes"));
         relAttrs.addFilter(String.format("attr_key = '%s'", contactTypeKey));
-        relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.
-                getNegotiatedLocale().getLanguage()));
+        relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.getNegotiatedLocale().getLanguage()));
 
         if (relAttrs.isEmpty()) {
             return contactTypeKey;
@@ -348,5 +362,6 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }

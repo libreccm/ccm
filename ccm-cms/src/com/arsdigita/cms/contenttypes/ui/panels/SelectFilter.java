@@ -162,11 +162,9 @@ public class SelectFilter implements Filter {
         optionsSet = new HashSet<String>();
 
         while (dataQuery.next()) {
-            if (dataQuery instanceof DataCollection) {
-                obj = ((DataCollection) dataQuery.get(queryProperty));
-            } else {
-                obj = dataQuery.get(queryProperty);
-            }
+
+            obj = dataQuery.get(queryProperty);
+
             if (obj == null) {
                 continue;
             }
