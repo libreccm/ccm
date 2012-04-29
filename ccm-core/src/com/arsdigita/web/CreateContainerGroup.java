@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Group;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;

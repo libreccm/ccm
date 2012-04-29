@@ -22,7 +22,7 @@ package com.arsdigita.core.upgrade;
 import com.arsdigita.loader.CoreLoader;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;

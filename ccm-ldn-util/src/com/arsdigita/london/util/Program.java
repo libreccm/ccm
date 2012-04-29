@@ -24,7 +24,7 @@ package com.arsdigita.london.util;
  * @deprecated - use {@link com.arsdigita.packaging.Program} 
  * 
  */
-public abstract class Program extends com.arsdigita.packaging.Program {
+public abstract class Program extends com.arsdigita.util.cmd.Program {
     
     public Program(String name,
                    String version,

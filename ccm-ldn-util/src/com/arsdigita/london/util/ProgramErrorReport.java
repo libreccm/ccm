@@ -25,7 +25,7 @@ import com.arsdigita.logging.ErrorReport;
  * @deprecated - use {@link com.arsdigita.packaging.ProgramErrorReport} 
  *
  */
-public class ProgramErrorReport extends com.arsdigita.packaging.ProgramErrorReport {
+public class ProgramErrorReport extends com.arsdigita.util.cmd.ProgramErrorReport {
     
     public ProgramErrorReport(Throwable throwable,
                               String[] args) {

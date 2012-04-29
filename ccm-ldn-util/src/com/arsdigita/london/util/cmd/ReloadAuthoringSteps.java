@@ -2,7 +2,7 @@ package com.arsdigita.london.util.cmd;
 
 import com.arsdigita.cms.contenttypes.XMLContentTypeHandler;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.xml.XML;
 import org.apache.commons.cli.CommandLine;
 

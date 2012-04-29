@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.packaging;
+package com.arsdigita.util.cmd;
 
 import com.arsdigita.logging.ErrorReport;
 

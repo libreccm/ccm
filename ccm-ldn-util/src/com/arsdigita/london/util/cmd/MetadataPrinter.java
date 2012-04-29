@@ -4,7 +4,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Session;

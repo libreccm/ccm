@@ -108,7 +108,7 @@ public class SQLRegressionGenerator {
      * an exception is for the build process within ant to fail on
      * error.
      **/
-    public static final void main(String[] args) throws PDLException {
+    public static void main(String[] args) throws PDLException {
 
         org.apache.log4j.BasicConfigurator.configure();
 

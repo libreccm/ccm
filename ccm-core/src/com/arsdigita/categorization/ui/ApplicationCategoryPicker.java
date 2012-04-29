@@ -16,13 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.util.ui;
+package com.arsdigita.categorization.ui;
 
-import com.arsdigita.categorization.ui.ObjectCategoryPicker;
-import com.arsdigita.web.Web;
-import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.web.Web;
 
+/**
+ * Minimal implementation of abstract class ObjectCategoryPicker
+ * 
+ */
 public class ApplicationCategoryPicker extends ObjectCategoryPicker {
     
     public ApplicationCategoryPicker(String name) {

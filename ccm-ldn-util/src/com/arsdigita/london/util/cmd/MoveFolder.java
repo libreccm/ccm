@@ -6,7 +6,7 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemCollection;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import java.util.Arrays;
 import org.apache.commons.cli.CommandLine;
 

@@ -73,8 +73,8 @@ public class MasterTool {
      *
      * @param args the command line arguments
      */
-
     public static final void main(final String[] args) {
+
         final PrintStream out = System.out;
         final PrintStream err = System.err;
 
@@ -125,6 +125,9 @@ public class MasterTool {
         }
     }
 
+    /**
+     * 
+     */
     private static final class Commands {
 
         private List m_commands = new ArrayList();
