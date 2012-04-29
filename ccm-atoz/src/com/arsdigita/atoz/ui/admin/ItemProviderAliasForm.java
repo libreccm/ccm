@@ -40,8 +40,8 @@ import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
-import com.arsdigita.atoz.AtoZItemAlias;
-import com.arsdigita.atoz.AtoZItemProvider;
+import com.arsdigita.atoz.ItemAlias;
+import com.arsdigita.atoz.ItemProvider;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -88,7 +88,7 @@ public class ItemProviderAliasForm extends Form {
                         PageState state = event.getPageState();
                         boolean valueSet = false;
 
-			Category category = ((AtoZItemProvider) m_provider.getSelectedObject(state))
+			Category category = ((ItemProvider) m_provider.getSelectedObject(state))
 			    .getCategory();
 
 			CategorizedCollection children = category.getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
@@ -139,7 +139,7 @@ public class ItemProviderAliasForm extends Form {
             throws FormProcessException {
             PageState state = e.getPageState();
 
-            AtoZItemProvider provider = (AtoZItemProvider) m_provider
+            ItemProvider provider = (ItemProvider) m_provider
                 .getSelectedObject(state);
 
             BigDecimal itemId = new BigDecimal(m_item.getValue(state).toString());
@@ -150,11 +150,11 @@ public class ItemProviderAliasForm extends Form {
 
             //provider.addAlias(item, letter, title);
 
-	    AtoZItemAlias alias = (AtoZItemAlias) Classes.newInstance(AtoZItemAlias.class);
+	    ItemAlias alias = (ItemAlias) Classes.newInstance(ItemAlias.class);
 	    alias.setTitle(title);
 	    alias.setLetter(letter);
 	    alias.setContentItem(item);
-	    alias.setAtoZItemProvider(provider);
+	    alias.setItemProvider(provider);
 	    alias.save();
 
             fireCompletionEvent(state);

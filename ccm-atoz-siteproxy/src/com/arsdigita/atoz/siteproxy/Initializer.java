@@ -22,8 +22,10 @@ import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProviderType;
 import com.arsdigita.atoz.siteproxy.ui.admin.SiteProxyProviderAdmin;
 import com.arsdigita.atoz.siteproxy.ui.admin.SiteProxyProviderForm;
+import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.xml.XML;
 
 /**
  *
@@ -39,10 +41,14 @@ public class Initializer extends CompoundInitializer {
 	public void init(DomainInitEvent evt) {
 		super.init(evt);
 
+        
+        XML.parse(Config.getConfig().getTraversalAdapters(),
+                  new TraversalHandler());
+
         AtoZ.registerProviderType(
                 new AtoZProviderType("SiteProxy Provider",
                                      "Provides a SiteProxy A-Z",
-                                     AtoZSiteProxyProvider.class,
+                                     SiteProxyProvider.class,
                                      SiteProxyProviderForm.class,
                                      SiteProxyProviderAdmin.class));
 

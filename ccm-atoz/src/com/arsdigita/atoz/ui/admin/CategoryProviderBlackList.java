@@ -24,7 +24,7 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.PageState;
 
 import com.arsdigita.atoz.AtoZ;
-import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.atoz.CategoryProvider;
 
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.domain.DomainCollection;
@@ -59,7 +59,7 @@ public class CategoryProviderBlackList extends SimpleContainer {
             Category cat = (Category)DomainObjectFactory
                 .newInstance(OID.valueOf(value));
 
-            AtoZCategoryProvider provider = (AtoZCategoryProvider)
+            CategoryProvider provider = (CategoryProvider)
                 m_provider.getSelectedObject(state);
             provider.removeBlock(cat);
         }
@@ -72,7 +72,7 @@ public class CategoryProviderBlackList extends SimpleContainer {
         Element content = AtoZ.newElement("categoryProviderBlackList");
         exportAttributes(content);
         
-        AtoZCategoryProvider provider = (AtoZCategoryProvider)
+        CategoryProvider provider = (CategoryProvider)
             m_provider.getSelectedObject(state);
         
 

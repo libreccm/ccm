@@ -30,7 +30,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.AtoZ;
-import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.atoz.CategoryProvider;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
@@ -53,7 +53,7 @@ public class CategoryProviderContentTypeBlacklist extends SimpleContainer {
             ContentType contentType = (ContentType) DomainObjectFactory
                     .newInstance(OID.valueOf(value));
 
-            AtoZCategoryProvider provider = (AtoZCategoryProvider) m_provider
+            CategoryProvider provider = (CategoryProvider) m_provider
                     .getSelectedObject(state);
             provider.removeContentTypeBlock(contentType);
         }
@@ -64,7 +64,7 @@ public class CategoryProviderContentTypeBlacklist extends SimpleContainer {
                 .newElement("categoryProviderContentTypeBlackList");
         exportAttributes(content);
 
-        AtoZCategoryProvider provider = (AtoZCategoryProvider) m_provider
+        CategoryProvider provider = (CategoryProvider) m_provider
                 .getSelectedObject(state);
 
         DomainCollection entries = provider.getContentTypeBlackList();

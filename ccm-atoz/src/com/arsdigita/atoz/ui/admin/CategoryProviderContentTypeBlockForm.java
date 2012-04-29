@@ -41,7 +41,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
-import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.atoz.CategoryProvider;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -119,7 +119,7 @@ public class CategoryProviderContentTypeBlockForm extends Form {
         public void process(FormSectionEvent e) throws FormProcessException {
             PageState state = e.getPageState();
 
-            AtoZCategoryProvider provider = (AtoZCategoryProvider) m_provider
+            CategoryProvider provider = (CategoryProvider) m_provider
                     .getSelectedObject(state);
 
             BigDecimal contentTypeID = (BigDecimal) m_type_picker

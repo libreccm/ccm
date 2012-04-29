@@ -18,13 +18,13 @@
 
 package com.arsdigita.atoz.ui.admin;
 
-import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.Component;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
 /**
  * 
@@ -56,6 +56,10 @@ public class CategoryProviderAdmin extends ProviderAdmin {
 
     private ActionLink m_addAlias;
 
+    /**
+     * 
+     * @param provider 
+     */
     public CategoryProviderAdmin(ACSObjectSelectionModel provider) {
         super("categoryProviderAdmin", provider);
 
@@ -108,6 +112,7 @@ public class CategoryProviderAdmin extends ProviderAdmin {
         m_aliasForm.addCompletionListener(new CategoryAliasComplete());
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
 

@@ -25,8 +25,8 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.AtoZ;
-import com.arsdigita.atoz.AtoZItemAlias;
-import com.arsdigita.atoz.AtoZItemProvider;
+import com.arsdigita.atoz.ItemAlias;
+import com.arsdigita.atoz.ItemProvider;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
@@ -49,7 +49,7 @@ public class ItemProviderAliasList extends SimpleContainer {
         String value = state.getControlEventValue();
         
         if (DELETE.equals(key)) {
-            AtoZItemAlias alias = (AtoZItemAlias) DomainObjectFactory
+            ItemAlias alias = (ItemAlias) DomainObjectFactory
                 .newInstance(OID.valueOf(value));
 	    alias.delete();
         }
@@ -61,12 +61,12 @@ public class ItemProviderAliasList extends SimpleContainer {
         Element content = AtoZ.newElement("itemProviderAliasList");
         exportAttributes(content);
         
-        AtoZItemProvider provider = (AtoZItemProvider)
+        ItemProvider provider = (ItemProvider)
             m_provider.getSelectedObject(state);
         
         DomainCollection entries = provider.getAliases();
         while (entries.next()) {
-	    AtoZItemAlias alias = (AtoZItemAlias) entries.getDomainObject();
+	    ItemAlias alias = (ItemAlias) entries.getDomainObject();
 
             Element el = AtoZ.newElement("itemProviderAlias");
             el.addAttribute("letter", XML.format(entries.get("letter")));

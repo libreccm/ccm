@@ -38,14 +38,14 @@ import org.apache.log4j.Logger;
  * 
  * 
  */
-public class AtoZCategoryProvider extends AtoZProvider {
+public class CategoryProvider extends AtoZProvider {
 
     /** Private logger instance to assist debugging.                         */
     private static final Logger s_log = 
-                                Logger.getLogger(AtoZCategoryProvider.class);
+                                Logger.getLogger(CategoryProvider.class);
 
     public static final String BASE_DATA_OBJECT_TYPE = 
-                               "com.arsdigita.atoz.AtoZCategoryProvider";
+                               "com.arsdigita.atoz.CategoryProvider";
 
     public static final String IS_COMPOUND = "isCompound";
 
@@ -77,7 +77,7 @@ public class AtoZCategoryProvider extends AtoZProvider {
     /**
      * 
      */
-    public AtoZCategoryProvider() {
+    public CategoryProvider() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
@@ -85,15 +85,15 @@ public class AtoZCategoryProvider extends AtoZProvider {
      * Constructor
      * @param type 
      */
-    protected AtoZCategoryProvider(String type) {
+    protected CategoryProvider(String type) {
         super(type);
     }
 
-    public AtoZCategoryProvider(DataObject obj) {
+    public CategoryProvider(DataObject obj) {
         super(obj);
     }
 
-    public AtoZCategoryProvider(OID oid) {
+    public CategoryProvider(OID oid) {
         super(oid);
     }
 
@@ -104,9 +104,17 @@ public class AtoZCategoryProvider extends AtoZProvider {
         super.delete();
     }
 
-    public static AtoZCategoryProvider create(String title, String description,
-            boolean isCompound) {
-        AtoZCategoryProvider provider = new AtoZCategoryProvider();
+    /**
+     * 
+     * @param title
+     * @param description
+     * @param isCompound
+     * @return 
+     */
+    public static CategoryProvider create(String title, 
+                                          String description,
+                                          boolean isCompound) {
+        CategoryProvider provider = new CategoryProvider();
         provider.setup(title, description, isCompound);
         return provider;
     }
@@ -125,12 +133,12 @@ public class AtoZCategoryProvider extends AtoZProvider {
     }
 
     public void addAlias(Category cat, String letter, String title) {
-    	AtoZCategoryAlias alias = new AtoZCategoryAlias();
+    	CategoryAlias alias = new CategoryAlias();
     	alias.setup(cat, letter, title);
         add(ALIASES, alias);
     }
 
-    public void removeAlias(AtoZCategoryAlias alias) {
+    public void removeAlias(CategoryAlias alias) {
         remove(ALIASES, alias);
     }
 
@@ -212,7 +220,7 @@ public class AtoZCategoryProvider extends AtoZProvider {
     }
 
     public AtoZGenerator getGenerator() {
-        return new AtoZCategoryGenerator(this);
+        return new CategoryGenerator(this);
     }
 
     public void addContentTypeBlock(ContentType contentType) {

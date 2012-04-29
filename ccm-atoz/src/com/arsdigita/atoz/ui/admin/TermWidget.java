@@ -19,7 +19,7 @@
 
 package com.arsdigita.atoz.ui.admin;
 
-import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.atoz.CategoryProvider;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.CMS;
@@ -153,7 +153,7 @@ public class TermWidget extends com.arsdigita.london.terms.ui.TermWidget {
      *  copied from com.arsdigita.aplaws.ui.ACSObjectCategoryPicker 
      */
     protected Domain getDomain(PageState state) {
-    	AtoZCategoryProvider provider = (AtoZCategoryProvider)m_provider.getSelectedObject(state);
+    	CategoryProvider provider = (CategoryProvider)m_provider.getSelectedObject(state);
     	Category root = Category.getRootForObject(provider);
     	
         if (s_log.isDebugEnabled()) {

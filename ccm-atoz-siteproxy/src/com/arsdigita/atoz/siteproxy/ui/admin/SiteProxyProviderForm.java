@@ -25,7 +25,7 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
-import com.arsdigita.atoz.siteproxy.AtoZSiteProxyProvider;
+import com.arsdigita.atoz.siteproxy.SiteProxyProvider;
 import com.arsdigita.atoz.ui.admin.ProviderForm;
 import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.util.Classes;
@@ -35,7 +35,7 @@ public class SiteProxyProviderForm extends ProviderForm {
     private CategoryPicker m_category_picker;
 
     public SiteProxyProviderForm(ACSObjectSelectionModel provider) {
-        super("siteProxyProvider", AtoZSiteProxyProvider.class, provider);
+        super("siteProxyProvider", SiteProxyProvider.class, provider);
 
         setMetaDataAttribute("title", "SiteProxy provider properties");
     }
@@ -52,7 +52,7 @@ public class SiteProxyProviderForm extends ProviderForm {
 
     protected void initWidgets(PageState state, AtoZProvider provider) {
         super.initWidgets(state, provider);
-        AtoZSiteProxyProvider siteProxyProvider = (AtoZSiteProxyProvider) provider;
+        SiteProxyProvider siteProxyProvider = (SiteProxyProvider) provider;
         if (siteProxyProvider != null)
             m_category_picker.setCategory(state, siteProxyProvider
                     .getCategory());
@@ -61,7 +61,7 @@ public class SiteProxyProviderForm extends ProviderForm {
     protected void processWidgets(PageState state, AtoZProvider provider) {
         super.processWidgets(state, provider);
 
-        AtoZSiteProxyProvider siteProxyProvider = (AtoZSiteProxyProvider) provider;
+        SiteProxyProvider siteProxyProvider = (SiteProxyProvider) provider;
 
         siteProxyProvider.setCategory(m_category_picker.getCategory(state));
     }

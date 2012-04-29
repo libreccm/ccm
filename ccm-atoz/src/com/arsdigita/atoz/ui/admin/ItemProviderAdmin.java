@@ -26,6 +26,10 @@ import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.Component;
 
+/**
+ * 
+ * 
+ */
 public class ItemProviderAdmin extends ProviderAdmin {
     
     private ItemProviderForm m_detailsForm;
@@ -36,6 +40,10 @@ public class ItemProviderAdmin extends ProviderAdmin {
     private ItemProviderAliasForm m_aliasForm;
     private ActionLink m_addAlias;
 
+    /**
+     * 
+     * @param provider 
+     */
     public ItemProviderAdmin(ACSObjectSelectionModel provider) {
         super("categoryProviderAdmin", provider);
                
@@ -64,6 +72,11 @@ public class ItemProviderAdmin extends ProviderAdmin {
         m_aliasForm.addCompletionListener(new ItemAliasComplete());
     }
 
+    /**
+     * 
+     * @param p 
+     */
+    @Override
     public void register(Page p) {
         super.register(p);
         
@@ -71,6 +84,12 @@ public class ItemProviderAdmin extends ProviderAdmin {
         p.setVisibleDefault(m_aliasForm, false);
     }
 
+    /**
+     * 
+     * @param state
+     * @param form
+     * @param active 
+     */
     private void switchMode(PageState state,
                             Component form,
                             boolean active) {

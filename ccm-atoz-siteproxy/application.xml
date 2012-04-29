@@ -26,6 +26,10 @@
   </ccm:contacts>
 
   <ccm:description>
+    The ccm-atoz-siteproxy package is an extension for the ccm-atoz package in
+    combination with the ccm-cms-types-siteproxy package. It enables the 
+    ccm-atoz package to deal with siteproxy content.
+    
     The ccm-atoz package enables a site to present all it's content in 
     alphabetical order as an additional service to it's users. Usually the 
     theme provides a link to the page as part of its static elements. 

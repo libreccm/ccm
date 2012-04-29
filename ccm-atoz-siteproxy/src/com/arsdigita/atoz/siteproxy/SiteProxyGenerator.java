@@ -22,10 +22,6 @@ import com.arsdigita.atoz.AtoZAtomicEntry;
 import com.arsdigita.atoz.AtoZCompoundEntry;
 import com.arsdigita.atoz.AtoZEntry;
 import com.arsdigita.atoz.AtoZProvider;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contenttypes.SiteProxy;
 import com.arsdigita.cms.dispatcher.SiteProxyPanel;
@@ -37,10 +33,19 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
-public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * 
+ * 
+ */
+public class SiteProxyGenerator extends AtoZGeneratorAbstractImpl {
 
     /**
-     * Compound Entry for mathched Categories
+     * Compound Entry for matched Categories
      * 
      */
     private class AtoZCategoriesCompoundEntry implements AtoZCompoundEntry {
@@ -62,7 +67,7 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
         /*
          * (non-Javadoc)
          * 
-         * @see com.arsdigita.london.atoz.AtoZCompoundEntry#getEntries()
+         * @see com.arsdigita.atoz.AtoZCompoundEntry#getEntries()
          */
         public AtoZEntry[] getEntries() {
             return (AtoZEntry[]) entries.toArray(new AtoZEntry[entries.size()]);
@@ -71,7 +76,7 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
         /*
          * (non-Javadoc)
          * 
-         * @see com.arsdigita.london.atoz.AtoZEntry#getTitle()
+         * @see com.arsdigita.atoz.AtoZEntry#getTitle()
          */
         public String getTitle() {
             return m_title;
@@ -80,7 +85,7 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
         /*
          * (non-Javadoc)
          * 
-         * @see com.arsdigita.london.atoz.AtoZEntry#getDescription()
+         * @see com.arsdigita.atoz.AtoZEntry#getDescription()
          */
         public String getDescription() {
             return m_description;
@@ -88,7 +93,10 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
 
     }
 
-    private class AtoZSiteProxyAtomicEntry implements AtoZAtomicEntry {
+    /**
+     * 
+     */
+    private class SiteProxyAtomicEntry implements AtoZAtomicEntry {
         
         private static final String SITE_PROXY_PANEL_NAME = "cms:siteProxyPanel";
 
@@ -98,7 +106,14 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
 
         private String m_url;
 
-        public AtoZSiteProxyAtomicEntry(OID oid, String title, String url) {
+        /**
+         * Constructor
+         * 
+         * @param oid
+         * @param title
+         * @param url 
+         */
+        public SiteProxyAtomicEntry(OID oid, String title, String url) {
             m_oid = oid;
             m_title = title;
             m_url = url;
@@ -127,13 +142,13 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
                 return null;
 
             Element child = new Element(
-                    AtoZSiteProxyAtomicEntry.SITE_PROXY_PANEL_NAME,
-                    CMS.CMS_XML_NS);
+                                    SiteProxyAtomicEntry.SITE_PROXY_PANEL_NAME,
+                                    CMS.CMS_XML_NS);
             child.addAttribute("title", m_title);
             child.addAttribute("oid", m_oid.toString());
 
             URLData data = SiteProxyPanel.internalGetRemoteXML(child,
-                    this.m_url);
+                                                               this.m_url);
 
             /* check for data and exception */
             if (data == null)
@@ -145,12 +160,12 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
         }
     }
 
-    public AtoZSiteProxyGenerator(AtoZProvider provider) {
+    public SiteProxyGenerator(AtoZProvider provider) {
         super(provider);
     }
 
     public AtoZEntry[] getEntries(String letter) {
-        AtoZSiteProxyProvider siteProxyProvider = (AtoZSiteProxyProvider) getProvider();
+        SiteProxyProvider siteProxyProvider = (SiteProxyProvider) getProvider();
 
         DataQuery entries = siteProxyProvider.getAtomicEntries(letter);
 
@@ -176,7 +191,7 @@ public class AtoZSiteProxyGenerator extends AtoZGeneratorAbstractImpl {
             }
 
             /* create atomic entry */
-            AtoZSiteProxyAtomicEntry atomicEntry = new AtoZSiteProxyAtomicEntry(
+            SiteProxyAtomicEntry atomicEntry = new SiteProxyAtomicEntry(
                     new OID(SiteProxy.BASE_DATA_OBJECT_TYPE, entries.get("id")),
                     (String) entries.get("title"), (String) entries.get("url"));
 

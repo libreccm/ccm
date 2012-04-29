@@ -35,7 +35,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
-import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.atoz.CategoryProvider;
 
 /**
  * 
@@ -111,7 +111,7 @@ public class CategoryProviderAliasForm extends Form {
             throws FormProcessException {
             PageState state = e.getPageState();
 
-            AtoZCategoryProvider provider = (AtoZCategoryProvider)m_provider
+            CategoryProvider provider = (CategoryProvider)m_provider
                 .getSelectedObject(state);
 
             Category cat = new Category(((BigDecimal[])m_termWidget.getValue(state))[0]);

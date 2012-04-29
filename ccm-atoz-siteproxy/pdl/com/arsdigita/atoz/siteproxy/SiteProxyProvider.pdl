@@ -15,11 +15,12 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-model com.arsdigita.atoz;
+model com.arsdigita.atoz.siteproxy;
 
+import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.categorization.Category;
 
-object type AtoZSiteProxyProvider extends AtoZProvider {
+object type SiteProxyProvider extends AtoZProvider {
     Category[1..1] category = join atoz_siteproxy_provider.category_id to
                                 cat_categories.category_id;
     reference key (atoz_siteproxy_provider.provider_id);

@@ -18,11 +18,6 @@
 
 package com.arsdigita.atoz;
 
-import java.math.BigDecimal;
-import java.sql.SQLException;
-
-import org.apache.log4j.Logger;
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.db.Sequences;
 import com.arsdigita.domain.DomainObject;
@@ -30,15 +25,22 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
 
+import java.math.BigDecimal;
+import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
+
 /**
  * 
  * 
  */
-public class AtoZCategoryAlias extends DomainObject {
-	private static final Logger s_log = Logger.getLogger(AtoZCategoryAlias.class);
+public class CategoryAlias extends DomainObject {
+
+    /** Creates a s_logging category with name = to the full name of class  */
+    private static final Logger s_log = Logger.getLogger(CategoryAlias.class);
 	
 	public static final String BASE_DATA_OBJECT_TYPE = 
-                               "com.arsdigita.atoz.AtoZCategoryAlias";
+                               "com.arsdigita.atoz.CategoryAlias";
 	
     public static final String ID = "id";
     public static final String PROVIDER = "provider";
@@ -46,19 +48,19 @@ public class AtoZCategoryAlias extends DomainObject {
 	public static final String LETTER = "letter";
 	public static final String TITLE = "title";
 	
-	public AtoZCategoryAlias() {
+	public CategoryAlias() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    protected AtoZCategoryAlias(String type) {
+    protected CategoryAlias(String type) {
         super(type);
     }
 
-    public AtoZCategoryAlias(DataObject obj) {
+    public CategoryAlias(DataObject obj) {
         super(obj);
     }
 
-    public AtoZCategoryAlias(OID oid) {
+    public CategoryAlias(OID oid) {
         super(oid);
     }
 
@@ -71,6 +73,7 @@ public class AtoZCategoryAlias extends DomainObject {
     /**
      * Called from base class (DomainObject) constructors.
      */
+    @Override
     protected void initialize() {
         super.initialize();
 
@@ -78,8 +81,8 @@ public class AtoZCategoryAlias extends DomainObject {
                 set(ID, generateID());
     }
 
-    public AtoZCategoryProvider getProvider() {
-        return (AtoZCategoryProvider)get(PROVIDER);
+    public CategoryProvider getProvider() {
+        return (CategoryProvider)get(PROVIDER);
     }
 
     public Category getCategory() {

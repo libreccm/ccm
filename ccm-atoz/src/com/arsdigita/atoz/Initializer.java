@@ -81,10 +81,10 @@ public class Initializer extends CompoundInitializer {
 
 
         DomainObjectFactory f = evt.getFactory();
-    	f.registerInstantiator(AtoZCategoryAlias.BASE_DATA_OBJECT_TYPE,
+    	f.registerInstantiator(CategoryAlias.BASE_DATA_OBJECT_TYPE,
                                new DomainObjectInstantiator() {
             protected DomainObject doNewInstance(DataObject dataObject) {
-                return new AtoZCategoryAlias(dataObject);
+                return new CategoryAlias(dataObject);
             }
         });
 
@@ -96,14 +96,14 @@ public class Initializer extends CompoundInitializer {
         AtoZ.registerProviderType(
                 new AtoZProviderType("Item Provider", 
                                      "Provides an item A-Z",
-                                     AtoZItemProvider.class, 
+                                     ItemProvider.class, 
                                      ItemProviderForm.class,
                                      ItemProviderAdmin.class));
 
         AtoZ.registerProviderType(
                 new AtoZProviderType("Category Provider",
                                      "Provides a category A-Z",
-                                     AtoZCategoryProvider.class,
+                                     CategoryProvider.class,
                                      CategoryProviderForm.class,
                                      CategoryProviderAdmin.class));
 

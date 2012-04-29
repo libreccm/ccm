@@ -9,37 +9,40 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 
-public class AtoZSiteProxyProvider extends AtoZProvider {
+public class SiteProxyProvider extends AtoZProvider {
 
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.atoz.AtoZSiteProxyProvider";
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.atoz.siteproxy.SiteProxyProvider";
 
     public static final String CATEGORY = "category";
 
-    private static final String ATOMIC_SITEPROXY_ENTRIES_QUERY = "com.arsdigita.london.atoz.getAtomicSiteProxyEntries";
+    private static final String ATOMIC_SITEPROXY_ENTRIES_QUERY = 
+                                "com.arsdigita.atoz.getAtomicSiteProxyEntries";
 
-    public AtoZSiteProxyProvider() {
+    public SiteProxyProvider() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public AtoZSiteProxyProvider(String type) {
+    public SiteProxyProvider(String type) {
         super(type);
     }
 
-    public AtoZSiteProxyProvider(DataObject obj) {
+    public SiteProxyProvider(DataObject obj) {
         super(obj);
     }
 
-    public AtoZSiteProxyProvider(OID oid) {
+    public SiteProxyProvider(OID oid) {
         super(oid);
     }
 
     public AtoZGenerator getGenerator() {
-        return new AtoZSiteProxyGenerator(this);
+        return new SiteProxyGenerator(this);
     }
 
-    public static AtoZSiteProxyProvider create(String title,
-            String description, Category category) {
-        AtoZSiteProxyProvider siteProxyProvider = new AtoZSiteProxyProvider();
+    public static SiteProxyProvider create(String title,
+                                           String description, 
+                                           Category category) {
+        SiteProxyProvider siteProxyProvider = new SiteProxyProvider();
         siteProxyProvider.setup(title, description, category);
         return siteProxyProvider;
     }
@@ -64,7 +67,7 @@ public class AtoZSiteProxyProvider extends AtoZProvider {
 
     public DataQuery getAtomicEntries(String letter) {
         DataQuery items = SessionManager.getSession().retrieveQuery(
-                ATOMIC_SITEPROXY_ENTRIES_QUERY);
+                                             ATOMIC_SITEPROXY_ENTRIES_QUERY);
         items.setParameter("providerID", getID());
         items.setParameter("letter", letter + '%');
         return items;

@@ -20,13 +20,13 @@ package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
-import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.atoz.CategoryProvider;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.categorization.Category;
-import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.categorization.ui.CategoryPicker;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.util.Classes;
 
 
@@ -41,7 +41,7 @@ public class CategoryProviderForm extends ProviderForm {
 
     public CategoryProviderForm(ACSObjectSelectionModel provider) {
         super("categoryProvider", 
-              AtoZCategoryProvider.class, provider);
+              CategoryProvider.class, provider);
 
         setMetaDataAttribute("title", "Category provider properties");
     }
@@ -68,7 +68,7 @@ public class CategoryProviderForm extends ProviderForm {
                                   AtoZProvider provider) {
         super.processWidgets(state, provider);
         
-        AtoZCategoryProvider myprovider = (AtoZCategoryProvider)provider;
+        CategoryProvider myprovider = (CategoryProvider)provider;
         myprovider.setCompound(false);
         //myprovider.setCompound(Boolean.TRUE.equals(m_compound.getValue(state)));
         
@@ -81,7 +81,7 @@ public class CategoryProviderForm extends ProviderForm {
                                AtoZProvider provider) {
         super.initWidgets(state, provider);
 
-        AtoZCategoryProvider myprovider = (AtoZCategoryProvider)provider;
+        CategoryProvider myprovider = (CategoryProvider)provider;
         if (provider != null) {
             //m_compound.setValue(state, new Boolean(myprovider.isCompound()));
             

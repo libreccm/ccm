@@ -19,7 +19,7 @@ model com.arsdigita.atoz;
 
 import com.arsdigita.categorization.Category;
 
-object type AtoZItemProvider extends AtoZProvider {
+object type ItemProvider extends AtoZProvider {
     Category[1..1] category = join atoz_item_provider.category_id to
                                 cat_categories.category_id;
     String[0..1] loadPaths = atoz_item_provider.load_paths      VARCHAR(200);

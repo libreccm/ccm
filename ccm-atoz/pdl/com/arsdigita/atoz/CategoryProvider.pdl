@@ -20,13 +20,13 @@ model com.arsdigita.atoz;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentType;
 
-object type AtoZCategoryProvider extends AtoZProvider {
+object type CategoryProvider extends AtoZProvider {
     Boolean[1..1] isCompound = atoz_cat_provider.is_compound BIT;
 
     reference key (atoz_cat_provider.provider_id);
 }
 
-object type AtoZCategoryAlias {
+object type CategoryAlias {
   BigDecimal[1..1] id = atoz_cat_aliases.object_id;
 
   Category[1..1] category =
@@ -39,9 +39,9 @@ object type AtoZCategoryAlias {
 }
 
 association {
-  AtoZCategoryProvider[0..n] atozProvider1 = join cat_categories.category_id
+  CategoryProvider[0..n] atozProvider1 = join cat_categories.category_id
                                                to atoz_cat_blacklist_map.category_id,
-                                             join atoz_cat_blacklist_map.provider_id
+                                         join atoz_cat_blacklist_map.provider_id
                                                to atoz_cat_provider.provider_id;
   Category[0..n] atozBlackList = join atoz_cat_provider.provider_id
                                  to atoz_cat_blacklist_map.provider_id,
@@ -50,16 +50,16 @@ association {
 }
 
 association {
-  AtoZCategoryProvider[1..1] provider =
+  CategoryProvider[1..1] provider =
     join atoz_cat_aliases.provider_id
       to atoz_cat_provider.provider_id;
-  component AtoZCategoryAlias[0..n] aliases =
+  component CategoryAlias[0..n] aliases =
     join atoz_cat_provider.provider_id
   	  to atoz_cat_aliases.provider_id;
 }
 
 association {
-  AtoZCategoryProvider[0..n] atozProvider3 = join content_types.type_id
+  CategoryProvider[0..n] atozProvider3 = join content_types.type_id
                                                to atoz_cat_ct_blacklist_map.type_id,
                                              join  atoz_cat_ct_blacklist_map.provider_id
                                                to atoz_cat_provider.provider_id;

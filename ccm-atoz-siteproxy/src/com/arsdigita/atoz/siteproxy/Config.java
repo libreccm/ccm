@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.atoz;
+package com.arsdigita.atoz.siteproxy;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
@@ -33,24 +33,24 @@ import org.apache.log4j.Logger;
 /**
  *  This is the configuration file for the AtoZ application
  */
-public class AtoZConfig extends AbstractConfig {
+public class Config extends AbstractConfig {
     
     /** A logger instance to assist debugging.  */
-    private static final Logger s_log = Logger.getLogger(AtoZConfig.class);
+    private static final Logger s_log = Logger.getLogger(Config.class);
 
     /** Singelton config object.  */
-    private static AtoZConfig s_conf;
+    private static Config s_conf;
 
     /**
-     * Gain a AtoZConfig object.
+     * Gain a Config object.
      *
      * Singelton pattern, don't instantiate a config object using the
      * constructor directly!
      * @return
      */
-    public static synchronized AtoZConfig getConfig() {
+    public static synchronized Config getConfig() {
         if (s_conf == null) {
-            s_conf = new AtoZConfig();
+            s_conf = new Config();
             s_conf.load();
         }
 
@@ -64,37 +64,16 @@ public class AtoZConfig extends AbstractConfig {
 
     /** Rules for configuring information in generated XML                    */
     private Parameter m_adapters = new ResourceParameter
-            ("com.arsdigita.atoz.traversal_adapters", 
+            ("com.arsdigita.atoz.siteproxy.traversal_adapters", 
              Parameter.REQUIRED,
-             "/WEB-INF/resources/atoz-adapters.xml");
-    /** The UI widget for the Root Category Picker                            */
-    private Parameter m_rootCategoryPicker = new ClassParameter(
-            "com.arsdigita.atoz.root_category_picker",
-            Parameter.REQUIRED,
-            ApplicationCategoryPicker.class);
-    /** Make AtoZ use subsite-specific navigation categories. Set to true, 
-     *  and the AtoZ will use the subsite-specific navigation categories 
-     *  if you define *any* CategoryProvider                       */
-    private BooleanParameter m_useSubsiteSpecificNavigationCategory = new BooleanParameter
-            ("com.arsdigita.atoz.use_subsite_specific_navigation_category",
-             Parameter.OPTIONAL,
-             Boolean.FALSE);
-    /** To filter out category without published items. If TRUE, the AtoZ 
-     *  category providers will only return Categories with published items   */
-    private BooleanParameter m_filterCategoryProdiver = new BooleanParameter (
-        		"com.arsdigita.atoz.filterCategoryProviders",
-        		Parameter.OPTIONAL,
-        		Boolean.FALSE);
+             "/WEB-INF/resources/atoz-siteproxy-adapters.xml");
 
     /**
      * Constructor
      */
-    public AtoZConfig() {
+    public Config() {
 
         register(m_adapters);
-        register(m_rootCategoryPicker);
-        register(m_useSubsiteSpecificNavigationCategory);
-        register(m_filterCategoryProdiver);
 
         loadInfo();
     }
@@ -108,15 +87,4 @@ public class AtoZConfig extends AbstractConfig {
         return (InputStream)get(m_adapters);
     }
     
-    public Class getRootCategoryPicker() {
-        return (Class)get(m_rootCategoryPicker);
-    }
-
-    public boolean useSubsiteSpecificNavigationCategory() {
-        return ((Boolean) get(m_useSubsiteSpecificNavigationCategory)).booleanValue();
-    }
-    
-    public boolean filterCategoryProviders () {
-    	return ((Boolean) get(m_filterCategoryProdiver)).booleanValue();
-    }
 }

@@ -18,6 +18,8 @@
 
 package com.arsdigita.atoz.ui.admin;
 
+import com.arsdigita.atoz.ItemProvider;
+import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.form.Option;
@@ -26,37 +28,41 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.categorization.ui.AbstractCategoryPicker;
+import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainServiceInterfaceExposer;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
-import com.arsdigita.atoz.AtoZItemProvider;
-import com.arsdigita.atoz.AtoZProvider;
-import com.arsdigita.categorization.ui.AbstractCategoryPicker;
-import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * 
+ * 
+ */
 public class ItemProviderForm extends ProviderForm {
 
     private CategoryPicker m_picker;
     private TextField m_loadPaths;
 
     public ItemProviderForm(ACSObjectSelectionModel provider) {
-        super("itemProvider", AtoZItemProvider.class, provider);
+        super("itemProvider", ItemProvider.class, provider);
 
         setMetaDataAttribute("title", "Item provider properties");
     }
 
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
-        m_loadPaths = new TextField(AtoZItemProvider.LOAD_PATHS);
+        m_loadPaths = new TextField(ItemProvider.LOAD_PATHS);
         ((SimpleComponent)m_loadPaths).setMetaDataAttribute("label", "Attributes to retrieve");
         add(m_loadPaths);
         m_loadPaths.addValidationListener(new StringInRangeValidationListener(0, 200));
@@ -66,21 +72,23 @@ public class ItemProviderForm extends ProviderForm {
         add(m_picker);
     }
 
+    @Override
     protected void processWidgets(PageState state,
                                   AtoZProvider provider) {
         super.processWidgets(state, provider);
 
-        AtoZItemProvider myprovider = (AtoZItemProvider)provider;
+        ItemProvider myprovider = (ItemProvider)provider;
 
         myprovider.setCategory(m_picker.getCategory(state));
         myprovider.setLoadPaths( (String) m_loadPaths.getValue(state));
     }
 
+    @Override
     protected void initWidgets(PageState state,
                                AtoZProvider provider) {
         super.initWidgets(state, provider);
 
-        AtoZItemProvider myprovider = (AtoZItemProvider)provider;
+        ItemProvider myprovider = (ItemProvider)provider;
         if (provider != null) {
             //m_compound.setValue(state, new Boolean(myprovider.isCompound()));
 

@@ -20,11 +20,11 @@ model com.arsdigita.atoz;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.kernel.ACSObject;
 
-object type AtoZItemAlias extends ACSObject {
-  AtoZItemProvider[1..1] atozItemProvider = join atoz_item_aliases.provider_id
-                                             to atoz_item_provider.provider_id;
+object type ItemAlias extends ACSObject {
+  ItemProvider[1..1] itemProvider = join atoz_item_aliases.provider_id
+                                         to atoz_item_provider.provider_id;
   ContentItem[1..1] contentItem = join atoz_item_aliases.item_id
-                                    to cms_items.item_id;
+                                       to cms_items.item_id;
 
   String[1..1] title = atoz_item_aliases.title VARCHAR(200);
   String[1..1] letter = atoz_item_aliases.letter CHAR(1);

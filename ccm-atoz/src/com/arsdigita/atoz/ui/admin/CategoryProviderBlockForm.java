@@ -18,7 +18,7 @@
 
 package com.arsdigita.atoz.ui.admin;
 
-import com.arsdigita.atoz.AtoZCategoryProvider;
+import com.arsdigita.atoz.CategoryProvider;
 import com.arsdigita.categorization.ui.ObjectCategoryPicker;
 
 import com.arsdigita.bebop.PageState;
@@ -97,7 +97,7 @@ public class CategoryProviderBlockForm extends Form {
             throws FormProcessException {
             PageState state = e.getPageState();
 
-            AtoZCategoryProvider provider = (AtoZCategoryProvider)m_provider
+            CategoryProvider provider = (CategoryProvider)m_provider
                 .getSelectedObject(state);
 
             Category cat = m_category.getCategory(state);

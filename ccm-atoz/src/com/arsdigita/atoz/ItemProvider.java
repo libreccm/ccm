@@ -28,10 +28,14 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.categorization.Category;
 
 
-public class AtoZItemProvider extends AtoZProvider {
+/**
+ * 
+ * 
+ */
+public class ItemProvider extends AtoZProvider {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.atoz.AtoZItemProvider";
+                               "com.arsdigita.atoz.ItemProvider";
 
     public static final String CATEGORY = "category";
     public static final String LOAD_PATHS = "loadPaths";
@@ -39,26 +43,38 @@ public class AtoZItemProvider extends AtoZProvider {
     public static final String ATOMIC_ENTRIES = 
                                "com.arsdigita.atoz.getAtomicItemEntries";
 
-    public AtoZItemProvider() {
+    /**
+     * Constructor
+     */
+    public ItemProvider() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    protected AtoZItemProvider(String type) {
+    /**
+     * Constructor
+     */
+    protected ItemProvider(String type) {
         super(type);
     }
 
-    public AtoZItemProvider(DataObject obj) {
+    /**
+     * Constructor
+     */
+    public ItemProvider(DataObject obj) {
         super(obj);
     }
 
-    public AtoZItemProvider(OID oid) {
+    /**
+     * Constructor
+     */
+    public ItemProvider(OID oid) {
         super(oid);
     }
 
-    public static AtoZItemProvider create(String title,
+    public static ItemProvider create(String title,
                                           String description,
                                           Category category) {
-        AtoZItemProvider provider = new AtoZItemProvider();
+        ItemProvider provider = new ItemProvider();
         provider.setup(title, description, category);
         return provider;
     }
@@ -87,24 +103,40 @@ public class AtoZItemProvider extends AtoZProvider {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public DomainCollection getAliases() {
 	DomainCollection aliases = new DomainCollection(SessionManager.getSession()
-                                   .retrieve(AtoZItemAlias.BASE_DATA_OBJECT_TYPE));
-	aliases.addFilter("atozItemProvider = :providerId").set("providerId", getID());
+                                   .retrieve(ItemAlias.BASE_DATA_OBJECT_TYPE));
+	aliases.addFilter("itemProvider = :providerId").set("providerId", getID());
 	aliases.addOrder("title");
         return aliases;
     }
     
+    /**
+     * 
+     * @param loadPaths 
+     */
     public void setLoadPaths( String loadPaths ) {
         set( LOAD_PATHS, loadPaths );
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getLoadPaths() {
         return (String) get( LOAD_PATHS );
     }
 
+    /**
+     * 
+     * @return 
+     */
     public AtoZGenerator getGenerator() {
-        return new AtoZItemGenerator(this);
+        return new ItemGenerator(this);
     }
 
 }

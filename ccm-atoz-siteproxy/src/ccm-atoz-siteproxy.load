@@ -1,0 +1,22 @@
+<load>
+
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <initializer class="com.arsdigita.atoz.Initializer"/>
+  </requires>
+
+  <provides>
+    <table name="atoz_provider"/>
+    <initializer class="com.arsdigita.atoz.siteproxy.Initializer"/>
+  </provides>
+
+  <scripts>
+    <schema directory="ccm-atoz-siteproxy"/>
+<!--
+    <data class="com.arsdigita.atoz.siteproxy.Loader"/>
+-->
+  </scripts>
+
+</load>

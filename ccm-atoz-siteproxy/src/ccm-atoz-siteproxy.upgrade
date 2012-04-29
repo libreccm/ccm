@@ -1,0 +1,8 @@
+<upgrade>
+<!--
+  <version from="x.y.z" to="x.y.a">
+    <!-- AtoZ SiteProxy ........                 -->
+    <script sql="ccm-atoz-siteproxy/upgrade/::database::-x.y.z-x.y.a.sql"/>
+  </version>
+-->
+</upgrade>

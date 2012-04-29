@@ -27,41 +27,61 @@ import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 
 
-public class AtoZItemAlias extends ACSObject {
+public class ItemAlias extends ACSObject {
 
-    private static final Logger s_log = Logger.getLogger(AtoZItemAlias.class);
+    private static final Logger s_log = Logger.getLogger(ItemAlias.class);
     
-    public static final String BASE_DATA_OBJECT_TYPE = AtoZItemAlias.class.getName();
+    public static final String BASE_DATA_OBJECT_TYPE = ItemAlias.class.getName();
 
     public static final String TITLE = "title";
     public static final String LETTER = "letter";
-    public static final String ATOZ_ITEM_PROVIDER = "atozItemProvider";
+    public static final String ITEM_PROVIDER = "itemProvider";
     public static final String CONTENT_ITEM = "contentItem";
 
-    public AtoZItemAlias() {
+    /**
+     * Constructor
+     */
+    public ItemAlias() {
         this(BASE_DATA_OBJECT_TYPE);
     }
     
-    public AtoZItemAlias(String type) {
+    /**
+     * Constructor
+     */
+    public ItemAlias(String type) {
         super(type);
     }
     
-    public AtoZItemAlias(DataObject obj) {
+    /**
+     * Constructor
+     */
+    public ItemAlias(DataObject obj) {
         super(obj);
     }
 
-    public AtoZItemAlias(OID oid) {
+    /**
+     * Constructor
+     * @param oid 
+     */
+    public ItemAlias(OID oid) {
         super(oid);
     }
     
+    /**
+     * 
+     * @param title
+     * @param letter
+     * @param itemProvider
+     * @param contentItem 
+     */
     protected void setup(String title,
                          String letter,
-			 AtoZItemProvider atozItemProvider,
-			 ContentItem contentItem) {
+                         ItemProvider itemProvider,
+                         ContentItem contentItem) {
         setTitle(title);
         setLetter(letter);
-	setAtoZItemProvider(atozItemProvider);
-	setContentItem(contentItem);
+        setItemProvider(itemProvider);
+        setContentItem(contentItem);
     }
 
     public String getTitle() {
@@ -81,16 +101,16 @@ public class AtoZItemAlias extends ACSObject {
         set(LETTER, letter);
     }
 
-    public void setAtoZItemProvider(AtoZItemProvider atozItemProvider) {
-        Assert.exists(atozItemProvider, AtoZItemProvider.class);
-        set(ATOZ_ITEM_PROVIDER, atozItemProvider );
+    public void setItemProvider(ItemProvider itemProvider) {
+        Assert.exists(itemProvider, ItemProvider.class);
+        set(ITEM_PROVIDER, itemProvider );
     }
 
-    public AtoZItemProvider getAtoZItemProvider() {
-        if (get(ATOZ_ITEM_PROVIDER) == null) {
+    public ItemProvider getItemProvider() {
+        if (get(ITEM_PROVIDER) == null) {
             return null;
         } else {
-            return new AtoZItemProvider((DataObject) get(ATOZ_ITEM_PROVIDER));
+            return new ItemProvider((DataObject) get(ITEM_PROVIDER));
         }
     }
 

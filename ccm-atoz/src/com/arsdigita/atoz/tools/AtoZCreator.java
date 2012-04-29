@@ -16,8 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.atoz;
+package com.arsdigita.atoz.tools;
 
+import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
@@ -38,14 +39,15 @@ import org.apache.log4j.Logger;
  * Usually Loader creates a (default) application instance. 
  * 
  */
-public class AddAtoZ extends Program {
+public class AtoZCreator extends Program {
 
-    private static final Logger LOG = Logger.getLogger(AddAtoZ.class);
+    /** A logger instance to assist debugging.  */
+    private static final Logger s_log = Logger.getLogger(AtoZCreator.class);
 
     /**
      * Default Constructor
      */
-    public AddAtoZ() {
+    public AtoZCreator() {
         super("Add AtoZ instance", "1.0.0", "URL-FRAGMENT TITLE");
     }
 
@@ -105,7 +107,7 @@ public class AddAtoZ extends Program {
      * @param args
      */
     public static void main(String[] args) {
-        new AddAtoZ().run(args);
+        new AtoZCreator().run(args);
     }
 
 }

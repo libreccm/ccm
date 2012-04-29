@@ -18,30 +18,34 @@
 
 package com.arsdigita.atoz;
 
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentPage;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.persistence.DataQuery;
-import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Filter;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
-public class AtoZItemGenerator extends AtoZGeneratorAbstractImpl {
+/**
+ * 
+ * 
+ */
+public class CategoryGenerator extends AtoZGeneratorAbstractImpl {
 
-    public AtoZItemGenerator(AtoZItemProvider provider) {
+    /**
+     * Constructor
+     * 
+     * @param provider 
+     */
+    public CategoryGenerator(CategoryProvider provider) {
         super(provider);
     }
 
     public AtoZEntry[] getEntries(String letter) {
-        AtoZItemProvider provider = (AtoZItemProvider) getProvider();
+        CategoryProvider provider = (CategoryProvider) getProvider();
 
         DataQuery entries = provider.getAtomicEntries();
         Filter f = entries.addFilter("sortKey like :sortKey");
@@ -49,57 +53,29 @@ public class AtoZItemGenerator extends AtoZGeneratorAbstractImpl {
         entries.addOrder("sortKey");
 
         List l = new ArrayList();
-        ContentBundle bundle;
-        ContentItem item;
-        ContentItem live;
-        String description;
-        String title;
-
         while (entries.next()) {
-            bundle = new ContentBundle(new BigDecimal(entries.get("id")
-                    .toString()));
-            if (bundle != null) {
-                /* Fix by Quasimodo*/
-                /* getPrimaryInstance doesn't negotiate the language of the content item */
-                /* item = bundle.getPrimaryInstance(); */
-                item = bundle.negotiate(DispatcherHelper.getRequest().getLocales());
-                
-                if (item != null) {
-                    // this is necessary because aliases refer to the non-live
-                    // version,
-                    // while straight items refer to the live-version (to avoid
-                    // duplicates)
-                    live = item.getLiveVersion();
-                    if (live != null) {
-                        // should always be a ContentPage
-                        description = (live instanceof ContentPage) 
-                                       ? ((ContentPage) live).getSearchSummary()
-                                       : live.getName();
-                        title = "";
-                        if (entries.get("aliasTitle") != null) {
-                            title = entries.get("aliasTitle").toString();
-                        }
-                        if (title.equals("")) {
-                            title = live.getDisplayName();
-                        }
-                        l.add(new AtoZItemAtomicEntry(live.getOID(), title,
-                                description));
-                    }
-                }
-            }
+            l.add(new CategoryAtomicEntry(new OID(
+                                              (String) entries.get("objectType"), 
+                                              entries.get("id")), 
+                                          (String) entries.get("title"), 
+                                          (String) entries.get("description"))
+                 );
         }
 
         return (AtoZEntry[]) l.toArray(new AtoZEntry[l.size()]);
     }
 
-    private class AtoZItemAtomicEntry implements AtoZAtomicEntry {
+    /**
+     * 
+     */
+    private class CategoryAtomicEntry implements AtoZAtomicEntry {
         private OID m_oid;
 
         private String m_title;
 
         private String m_description;
 
-        public AtoZItemAtomicEntry(OID oid, String title, String description) {
+        public CategoryAtomicEntry(OID oid, String title, String description) {
             m_oid = oid;
             m_title = title;
             m_description = description;
