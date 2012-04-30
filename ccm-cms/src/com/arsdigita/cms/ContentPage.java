@@ -49,7 +49,7 @@ public class ContentPage extends ContentItem {
     private static final Logger s_log = Logger.getLogger(ContentPage.class);
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.ContentPage";
+                               "com.arsdigita.cms.ContentPage";
 
     public static final String TITLE = "title";
     public static final String SUMMARY = "summary";
@@ -58,9 +58,9 @@ public class ContentPage extends ContentItem {
 
 
     protected static final String PAGES_IN_FOLDER =
-        "com.arsdigita.cms.pagesInFolder";
+                                  "com.arsdigita.cms.pagesInFolder";
     protected static final String PAGES_IN_CATEGORY =
-        "com.arsdigita.cms.pagesInFolderByCategory";
+                                  "com.arsdigita.cms.pagesInFolderByCategory";
     public static final String QUERY_PAGE = "page";
     public static final String QUERY_TYPE = "type";
     public static final String QUERY_ROOT_ID = "rootFolderID";

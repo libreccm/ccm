@@ -33,7 +33,7 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;

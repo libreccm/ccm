@@ -25,7 +25,7 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.london.terms.Loader;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 
 
 public class Upgrade100to101 extends Program {

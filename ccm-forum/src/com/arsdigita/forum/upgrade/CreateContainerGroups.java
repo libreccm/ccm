@@ -29,7 +29,7 @@ import com.arsdigita.forum.ThreadSubscription;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.messaging.MessageThread;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;

@@ -13,17 +13,16 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.london.util.Program;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.web.Application;
+import com.arsdigita.util.cmd.Program;
+
 
 /**
- * @author chris.gilbert@westsussex.gov.uk
  * create and grant permission to group who can then add quick
  * links under any category
  *
- *
-
+ * @author chris.gilbert@westsussex.gov.uk
  */
 public class Upgrade650to651 extends Program {
 

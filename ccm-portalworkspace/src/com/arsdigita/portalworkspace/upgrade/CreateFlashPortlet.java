@@ -23,7 +23,7 @@ import org.apache.commons.cli.CommandLine;
 import com.arsdigita.portalworkspace.portlet.FlashPortlet;
 import com.arsdigita.portalworkspace.portlet.FlashPortletInitializer;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 
 /**
  * Loads the {@link FlashPortlet}.

@@ -30,7 +30,7 @@ import com.arsdigita.kernel.KernelExcursion;
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
 
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;

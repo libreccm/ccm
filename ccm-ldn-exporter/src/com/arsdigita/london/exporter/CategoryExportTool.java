@@ -29,7 +29,7 @@ import org.apache.commons.cli.OptionBuilder;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 

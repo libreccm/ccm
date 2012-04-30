@@ -26,7 +26,7 @@ import com.arsdigita.kernel.PackageInstanceCollection;
 import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.Resource;
 import com.arsdigita.kernel.ResourceType;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;

@@ -37,8 +37,6 @@
 
 <!--   Content Types   -->
         <ccm:application name="ccm-cms-types-article"/>
-        <!-- Currently siteproxy is a prerequisite for ccm-ldn-atoz        -->
-        <ccm:application name="ccm-cms-types-siteproxy"/>
 
 <!--   Applications   -->
         <ccm:application name="ccm-atoz"/>
@@ -53,7 +51,6 @@
 
 <!--   LDN core extensions  -->
         <ccm:application name="ccm-ldn-aplaws"/>
-  <!--  <ccm:application name="ccm-ldn-atoz"/>    -->
         <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>
@@ -87,6 +84,7 @@
         <ccm:application name="ccm-forum"/>     
 
 <!--   Standard Bundle's  LDN extensions  -->
+        <ccm:application name="ccm-ldn-atoz"/> 
         <ccm:application name="ccm-ldn-importer"/>
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>
@@ -111,11 +109,14 @@
         <ccm:application name="ccm-cms-types-organization"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-simpleaddress"/>
+        <!-- CHECK: Really part of extended?   -->
+        <ccm:application name="ccm-cms-types-siteproxy"/>
         <!-- Current code does not include any xsl templates, 
              neither it does not appear in content center -->
         <ccm:application name="ccm-cms-types-motditem"/>
 
 <!--   Extended Bundle's Applications   -->
+        <ccm:application name="ccm-atoz-siteproxy"/> <!-- requires siteproxy!--> 
         <ccm:application name="ccm-auth-http"/>
         <!--  currently doesn't work for unknown reason                      -->
         <ccm:application name="ccm-simplesurvey"/>

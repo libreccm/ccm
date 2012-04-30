@@ -20,7 +20,7 @@ package com.arsdigita.london.search;
 
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.london.util.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.london.util.Transaction;
 
 import com.arsdigita.persistence.DataCollection;

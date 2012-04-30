@@ -18,15 +18,9 @@
 
 package com.arsdigita.london.util.cmd;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-import com.arsdigita.persistence.CompoundFilter;
-import com.arsdigita.persistence.Filter;
-import com.arsdigita.persistence.FilterFactory;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.london.util.Transaction;
 
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
@@ -40,10 +34,7 @@ import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Iterator;
-
-import java.math.BigDecimal;
 
 
 public class BulkDelete extends BulkUnpublish {
@@ -52,6 +43,9 @@ public class BulkDelete extends BulkUnpublish {
 
     protected boolean deleteFolderStructure;
 
+    /**
+     * Constructor
+     */
     public BulkDelete() {
         super("Bulk Delete", "1.0.0");
 
@@ -66,6 +60,11 @@ public class BulkDelete extends BulkUnpublish {
 
     }
 
+    /**
+     * 
+     * @param cmdLine 
+     */
+    @Override
     protected void doRun(CommandLine cmdLine) {
         //delete(new OID(ContentItem.BASE_DATA_OBJECT_TYPE, 13890351));
 

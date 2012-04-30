@@ -19,7 +19,7 @@
 package com.arsdigita.navigation.tools;
 
 import com.arsdigita.navigation.Template;
-import com.arsdigita.london.util.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.london.util.Transaction;
 
 import org.apache.commons.cli.CommandLine;

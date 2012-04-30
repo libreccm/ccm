@@ -18,18 +18,25 @@
 
 package com.arsdigita.london.util;
 
-import com.arsdigita.logging.ErrorReport;
 
 /**
  * 
- * @deprecated - use {@link com.arsdigita.packaging.ProgramErrorReport} 
- *
+ * @deprecated - use {@link com.arsdigita.util.cmd.Program} 
+ * 
  */
-public class ProgramErrorReport extends com.arsdigita.util.cmd.ProgramErrorReport {
+public abstract class Program extends com.arsdigita.util.cmd.Program {
     
-    public ProgramErrorReport(Throwable throwable,
-                              String[] args) {
-        super(throwable, args);
-    }    
+    public Program(String name,
+                   String version,
+                   String usage) {
+        super(name, version, usage, true);
+    }
+
+    public Program(String name,
+                   String version,
+                   String usage,
+                   boolean startup) {
+        super(name, version, usage, startup);
+    }
 
 }

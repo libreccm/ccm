@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 
 public class DefaultAncestorsFixer extends Program {
     

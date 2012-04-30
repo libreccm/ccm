@@ -18,12 +18,11 @@
 
 package com.arsdigita.london.util.cmd;
 
-
-import com.arsdigita.london.util.Program;
-import org.apache.commons.cli.CommandLine;
-
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
+import com.arsdigita.util.cmd.Program;
+
+import org.apache.commons.cli.CommandLine;
 
 public class SiteMapList extends Program {
     

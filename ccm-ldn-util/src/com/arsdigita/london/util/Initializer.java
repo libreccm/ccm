@@ -48,6 +48,7 @@ public class Initializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
+    @Override
     public void init(DataInitEvent ev) {
         super.init(ev);
 

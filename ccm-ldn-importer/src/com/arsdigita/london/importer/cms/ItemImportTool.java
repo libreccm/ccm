@@ -36,7 +36,7 @@ import com.arsdigita.london.importer.DomainObjectMapper;
 import com.arsdigita.london.importer.ImportParser;
 import com.arsdigita.london.importer.ParserDispatcher;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.HashMap;
 import java.util.Map;

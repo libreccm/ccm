@@ -26,7 +26,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
 

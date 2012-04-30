@@ -4,7 +4,7 @@ import org.apache.commons.cli.CommandLine;
 
 import com.arsdigita.navigation.portlet.NavigationTreePortlet;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 
 public class CreateNavigationDirectoryPortlet extends Program
 {

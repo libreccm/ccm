@@ -19,12 +19,12 @@
 package com.arsdigita.navigation.upgrades;
 
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-import com.arsdigita.navigation.Loader;
-
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.navigation.Loader;
+import com.arsdigita.util.cmd.Program;
+
 import org.apache.commons.cli.CommandLine;
 
 

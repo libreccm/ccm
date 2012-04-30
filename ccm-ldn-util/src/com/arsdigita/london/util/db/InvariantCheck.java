@@ -18,12 +18,14 @@
 
 package com.arsdigita.london.util.db;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
 import com.arsdigita.xml.XML;
+import com.arsdigita.util.cmd.Program;
+import com.arsdigita.london.util.Transaction;
+
+import java.util.Iterator;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
-import java.util.Iterator;
 
 public class InvariantCheck extends Program {
 

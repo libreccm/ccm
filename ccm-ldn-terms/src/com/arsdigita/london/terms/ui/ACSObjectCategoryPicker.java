@@ -56,6 +56,11 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
     private ACSObjectCategoryForm m_form;
     private BigDecimalParameter m_root;
 
+    /**
+     * 
+     * @param root
+     * @param mode 
+     */
     public ACSObjectCategoryPicker(BigDecimalParameter root, StringParameter mode) {
 
         m_form = getForm(root, mode);
@@ -65,93 +70,28 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
         m_form.addCompletionListener(new ItemCategoryFormCompletion());
     }
 
+    /**
+     * 
+     * @param root
+     * @param mode
+     * @return 
+     */
     protected abstract ACSObjectCategoryForm getForm(BigDecimalParameter root,
             StringParameter mode);
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     protected abstract ACSObject getObject(PageState state);
 
-    private class ItemCategoryFormCompletion implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent ev) {
-
-            PageState state = ev.getPageState();
-            Domain domain = getDomain(state);
-            String domainKey = domain.getKey();
-
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Saving categories in: " + domainKey);
-            }
-
-//            ACSObject object = getObject(state);
-//
-//            if ("LGCL".equals(domainKey)) {
-//                lgclSelected(domain, object);
-//            } else if ("LGDL".equals(domainKey)) {
-//                lgdlSelected(domain, object);
-//            }
-
-            fireCompletionEvent(state);
-        }
-//        private void lgclSelected(Domain domain, ACSObject object) {
-//            List lgclTerms = getCurrentCategories(domain, object);
-//
-//            Domain gcl = Domain.retrieve("GCL");
-//            Collection gclTerms = getRelatedTerms(lgclTerms, gcl);
-//            clearTerms(gcl, object);
-//            assignTerms(gclTerms, object);
-//
-//            // The assignment below is removed to satisfy requirement 4.1,
-//            // use case 1 of the document "Metadata Improvements" version 1
-//            // by Camden, dated 23/01/05.
-//            //Domain lgsl = Domain.retrieve("LGSL");
-//            //Collection lgslTerms = getRelatedTerms(lgclTerms, lgsl);
-//            //clearTerms(lgsl, object);
-//            //assignTerms(lgslTerms, object);
-//
-//            // adding processing or mapping from LGCL to APLAWS-NAV too
-////  Deactivated here.
-////  If needed
-////          boolean lgclOverrideAnav = Aplaws.getAplawsConfig().getOverrideAnavFromLGCLMappings().booleanValue();
-////          if (lgclOverrideAnav) {
-////              Domain aplawsNav = Domain.retrieve("APLAWS-NAV");
-////              Collection aplawsNavTerms = getRelatedTerms(lgclTerms, aplawsNav);
-////              clearTerms(aplawsNav, object);
-////              assignTerms(aplawsNavTerms, object);
-////          }
-//        }
-//
-//        // User has selected a term in the LGDL hierarchy, which includes
-//        // terms from the LGSL. We're only interested in LGSL terms here.
-//        private void lgdlSelected(Domain domain, ACSObject object) {
-//            Domain lgsl = Domain.retrieve("LGSL");
-//            Domain gcl = Domain.retrieve("GCL");
-//            Domain lgcl = Domain.retrieve("LGCL");
-//
-//            // We have a mapping LGSL -> LGCL based on the reverse of a
-//            // published mapping. We don't have a mapping LGSL -> GCL, so we
-//            // do LGSL -> LGCL -> GCL instead.
-//
-//            List lgslTerms = getCurrentCategories(lgsl, object);
-//            Collection lgclTerms = getRelatedTerms(lgslTerms, lgcl);
-//
-//            LinkedList lgclIDs = new LinkedList();
-//            Iterator i = lgclTerms.iterator();
-//            while (i.hasNext()) {
-//                Term term = (Term) i.next();
-//                lgclIDs.add(term.getModel().getID());
-//            }
-//
-//            Collection gclTerms = getRelatedTerms(lgclIDs, gcl);
-//
-//            clearTerms(lgcl, object);
-//            assignTerms(lgclTerms, object);
-//
-//            clearTerms(gcl, object);
-//            assignTerms(gclTerms, object);
-//        }
-    }
-
+    /**
+     * 
+     * @param domain
+     * @param object
+     * @return 
+     */
     protected List getCurrentCategories(Domain domain, ACSObject object) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Getting terms from " + domain + " to " + object);
@@ -264,4 +204,96 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
         }
         return null;
     }
+
+
+    /**
+     * 
+     */
+    private class ItemCategoryFormCompletion implements ActionListener {
+
+        /**
+         * 
+         * @param ev 
+         */
+        @Override
+        public void actionPerformed(ActionEvent ev) {
+
+            PageState state = ev.getPageState();
+            Domain domain = getDomain(state);
+            String domainKey = domain.getKey();
+
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Saving categories in: " + domainKey);
+            }
+
+//            ACSObject object = getObject(state);
+//
+//            if ("LGCL".equals(domainKey)) {
+//                lgclSelected(domain, object);
+//            } else if ("LGDL".equals(domainKey)) {
+//                lgdlSelected(domain, object);
+//            }
+
+            fireCompletionEvent(state);
+        }
+
+//        private void lgclSelected(Domain domain, ACSObject object) {
+//            List lgclTerms = getCurrentCategories(domain, object);
+//
+//            Domain gcl = Domain.retrieve("GCL");
+//            Collection gclTerms = getRelatedTerms(lgclTerms, gcl);
+//            clearTerms(gcl, object);
+//            assignTerms(gclTerms, object);
+//
+//            // The assignment below is removed to satisfy requirement 4.1,
+//            // use case 1 of the document "Metadata Improvements" version 1
+//            // by Camden, dated 23/01/05.
+//            //Domain lgsl = Domain.retrieve("LGSL");
+//            //Collection lgslTerms = getRelatedTerms(lgclTerms, lgsl);
+//            //clearTerms(lgsl, object);
+//            //assignTerms(lgslTerms, object);
+//
+//            // adding processing or mapping from LGCL to APLAWS-NAV too
+////  Deactivated here.
+////  If needed
+////          boolean lgclOverrideAnav = Aplaws.getAplawsConfig().getOverrideAnavFromLGCLMappings().booleanValue();
+////          if (lgclOverrideAnav) {
+////              Domain aplawsNav = Domain.retrieve("APLAWS-NAV");
+////              Collection aplawsNavTerms = getRelatedTerms(lgclTerms, aplawsNav);
+////              clearTerms(aplawsNav, object);
+////              assignTerms(aplawsNavTerms, object);
+////          }
+//        }
+//
+//        // User has selected a term in the LGDL hierarchy, which includes
+//        // terms from the LGSL. We're only interested in LGSL terms here.
+//        private void lgdlSelected(Domain domain, ACSObject object) {
+//            Domain lgsl = Domain.retrieve("LGSL");
+//            Domain gcl = Domain.retrieve("GCL");
+//            Domain lgcl = Domain.retrieve("LGCL");
+//
+//            // We have a mapping LGSL -> LGCL based on the reverse of a
+//            // published mapping. We don't have a mapping LGSL -> GCL, so we
+//            // do LGSL -> LGCL -> GCL instead.
+//
+//            List lgslTerms = getCurrentCategories(lgsl, object);
+//            Collection lgclTerms = getRelatedTerms(lgslTerms, lgcl);
+//
+//            LinkedList lgclIDs = new LinkedList();
+//            Iterator i = lgclTerms.iterator();
+//            while (i.hasNext()) {
+//                Term term = (Term) i.next();
+//                lgclIDs.add(term.getModel().getID());
+//            }
+//
+//            Collection gclTerms = getRelatedTerms(lgclIDs, gcl);
+//
+//            clearTerms(lgcl, object);
+//            assignTerms(lgclTerms, object);
+//
+//            clearTerms(gcl, object);
+//            assignTerms(gclTerms, object);
+//        }
+    }
+
 }

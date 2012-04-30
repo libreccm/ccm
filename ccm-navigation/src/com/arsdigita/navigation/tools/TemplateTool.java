@@ -16,21 +16,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.navigation;
+package com.arsdigita.navigation.tools;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.navigation.Template;
+import com.arsdigita.util.cmd.Program;
+
+import com.arsdigita.london.util.Transaction;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * 
+ */
 public class TemplateTool extends Program {
     
     private static final Logger s_log = Logger.getLogger(TemplateTool.class);
 
+    /**
+     * Constructor
+     */
     TemplateTool() {
         super("Template Tool",
               "1.0.0",
@@ -43,7 +52,12 @@ public class TemplateTool extends Program {
             .create("d"));
     }
     
+    /**
+     * 
+     * @param cmdLine 
+     */
     protected void doRun(CommandLine cmdLine) {
+
         final String[] args = cmdLine.getArgs();
         final boolean delete = cmdLine.hasOption("d");
 
@@ -84,7 +98,11 @@ public class TemplateTool extends Program {
         }.run();
     }
 
-    public static final void main(String[] args) {
+    /**
+     * 
+     * @param args 
+     */
+    public static void main(String[] args) {
         new TemplateTool().run(args);
     }
 }

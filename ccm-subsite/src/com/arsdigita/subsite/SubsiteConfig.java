@@ -25,7 +25,7 @@ import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.london.util.ui.ApplicationCategoryPicker;
+import com.arsdigita.categorization.ui.ApplicationCategoryPicker;
 
 import java.io.InputStream;
 import java.util.Map;

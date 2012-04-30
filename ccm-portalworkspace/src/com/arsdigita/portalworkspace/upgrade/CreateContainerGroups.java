@@ -26,7 +26,7 @@ import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspaceCollection;
-import com.arsdigita.london.util.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.web.ApplicationType;

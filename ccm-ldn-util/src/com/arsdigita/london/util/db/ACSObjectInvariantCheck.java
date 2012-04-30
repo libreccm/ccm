@@ -23,6 +23,9 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.cmd.Program;
+import com.arsdigita.london.util.Transaction;
+
 import com.redhat.persistence.metadata.Column;
 import com.redhat.persistence.metadata.ObjectMap;
 import com.redhat.persistence.metadata.Table;
@@ -32,11 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
-import java.util.Iterator;
 
 public class ACSObjectInvariantCheck extends Program {
 

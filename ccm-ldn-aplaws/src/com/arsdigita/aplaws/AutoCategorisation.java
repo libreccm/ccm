@@ -68,7 +68,7 @@ import com.arsdigita.web.Application;
  * 
  * @author apevec@redhat.com
  */
-public class AutoCategorisation extends com.arsdigita.packaging.Program {
+public class AutoCategorisation extends com.arsdigita.util.cmd.Program {
 
     private static final Logger LOG = Logger.getLogger(AutoCategorisation.class);
     private static final String CCM_PREFIX = "/ccm/";

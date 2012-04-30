@@ -26,7 +26,7 @@ import com.arsdigita.london.importer.DomainObjectMapper;
 import com.arsdigita.london.importer.ImportParser;
 import com.arsdigita.london.importer.ParserDispatcher;
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 
 
 /**

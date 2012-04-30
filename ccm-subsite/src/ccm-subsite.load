@@ -5,7 +5,6 @@
     <initializer class="com.arsdigita.core.Initializer"/>
     <table name="cms_items"/>
     <initializer class="com.arsdigita.cms.Initializer"/>
-    <initializer class="com.arsdigita.london.util.Initializer"/>
     <initializer class="com.arsdigita.navigation.Initializer"/>
   </requires>
   <provides>

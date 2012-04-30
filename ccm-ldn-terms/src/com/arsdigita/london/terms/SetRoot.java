@@ -21,7 +21,7 @@ package com.arsdigita.london.terms;
 import org.apache.commons.cli.CommandLine;
 
 import com.arsdigita.london.util.Transaction;
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.web.Application;
 
 

@@ -1,6 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.packaging.Program;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.util.jdbc.Connections;
 import java.math.BigDecimal;
