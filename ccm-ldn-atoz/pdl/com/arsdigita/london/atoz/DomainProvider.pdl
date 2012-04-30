@@ -15,14 +15,14 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-model com.arsdigita.london.atoz.terms;
+model com.arsdigita.london.atoz;
 
 import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.london.terms.Domain;
 
 object type DomainProvider extends AtoZProvider {
-    Domain[1..1] domain = join trm_atoz_providers.domain to trm_domains.key;
+    Domain[1..1] domain = join atoz_trm_providers.domain to trm_domains.key;
 
-    reference key (trm_atoz_providers.provider_id);
+    reference key (atoz_trm_providers.provider_id);
 }
 

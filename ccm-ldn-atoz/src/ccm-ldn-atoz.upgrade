@@ -1,0 +1,6 @@
+<upgrade>
+  <version from="6.6.1" to="6.6.2">
+    <!-- AtoZ ldn-domain add inits after split from generic atoz package     -->
+    <script sql="ccm-ldn-atoz/upgrade/::database::-6.6.1-6.6.2.sql"/>
+  </version>
+</upgrade>

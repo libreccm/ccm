@@ -16,21 +16,40 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.atoz.terms;
+package com.arsdigita.london.atoz;
 
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProviderType;
-// import com.arsdigita.london.atoz.terms.DomainProvider;   //same package
-import com.arsdigita.london.atoz.ui.terms.DomainProviderAdmin;
-import com.arsdigita.london.atoz.ui.terms.DomainProviderForm;
+import com.arsdigita.db.DbHelper;
+import com.arsdigita.domain.xml.TraversalHandler;
+import com.arsdigita.london.atoz.ui.DomainProviderAdmin;
+import com.arsdigita.london.atoz.ui.DomainProviderForm;
+import com.arsdigita.persistence.pdl.ManifestSource;
+import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.xml.XML;
 
 /**
+ * Initializes ccm-ldn-atoz, a A-Z system extension for ESD terms
  *
  * @author pb
  */
 public class Initializer extends CompoundInitializer {
+
+    /**
+     * Constructor
+     */
+    public Initializer() {
+
+        final String url = RuntimeConfig.getConfig().getJDBCURL();
+        final int database = DbHelper.getDatabaseFromURL(url);
+
+        add(new PDLInitializer(new ManifestSource("ccm-ldn-atoz.pdl.mf",
+                new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
+    }
 
     /**
      * 
@@ -40,7 +59,10 @@ public class Initializer extends CompoundInitializer {
 	public void init(DomainInitEvent evt) {
 		super.init(evt);
 
-        // Introduces dependency on ccm-ldn-typesesdervise ??
+        
+        XML.parse(DomainConfig.getConfig().getTraversalAdapters(),
+                  new TraversalHandler());
+
         AtoZ.registerProviderType(
                 new AtoZProviderType("ESD Toolkit Domain Provider",
                                      "Provides a ESD Toolkit A-Z", 

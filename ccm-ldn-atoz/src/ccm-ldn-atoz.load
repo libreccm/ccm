@@ -1,0 +1,22 @@
+<load>
+
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <initializer class="com.arsdigita.atoz.Initializer"/>
+  </requires>
+
+  <provides>
+    <table name="atoz_trm_providers"/>
+    <initializer class="com.arsdigita.london.atoz.Initializer"/>
+  </provides>
+
+  <scripts>
+    <schema directory="ccm-ldn-atoz"/>
+<!--
+    <data class="com.arsdigita.london.atoz.Loader"/>
+-->
+  </scripts>
+
+</load>

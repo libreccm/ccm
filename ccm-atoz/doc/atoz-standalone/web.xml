@@ -9,7 +9,7 @@
     <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
     <init-param>
       <param-name>uri</param-name>
-      <param-value>/ccm-ldn-atoz/</param-value>
+      <param-value>/ccm-atoz/</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -19,7 +19,7 @@
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
       <param-name>template-path</param-name>
-      <param-value>/templates/ccm-ldn-atoz</param-value>
+      <param-value>/templates/ccm-atoz</param-value>
     </init-param>
   </servlet>
 

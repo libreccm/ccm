@@ -16,16 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.atoz.terms;
+package com.arsdigita.london.atoz;
 
 import com.arsdigita.atoz.AtoZGeneratorAbstractImpl;
 import com.arsdigita.atoz.AtoZAtomicEntry;
 import com.arsdigita.atoz.AtoZEntry;
-import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.Term;
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.Term;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
@@ -42,6 +41,11 @@ import java.util.ArrayList;
  * 
  */
 public class DomainGenerator extends AtoZGeneratorAbstractImpl {
+
+    /**
+     * Constructor
+     * @param provider 
+     */
     public DomainGenerator(DomainProvider provider) {
         super(provider);
     }

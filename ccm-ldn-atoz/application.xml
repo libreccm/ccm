@@ -2,26 +2,34 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-ldn-atoz"
   prettyName="A-Z"
-  version="6.6.1"
+  version="6.6.2"
   release="1"
   webapp="ROOT">
 
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-atoz" version="6.6.0" relation="ge"/>
+    <!--
     <ccm:requires name="ccm-navigation" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-subsite" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-aplaws" version="6.6.0" relation="ge"/>
+    -->
     <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-util" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-cms-types-siteproxy" version="6.6.0" relation="ge"/>
   </ccm:dependencies>
+
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
+
   <ccm:description>
-    The ccm-ldn-atoz package enables a site to present all it's content in 
+    The ccm-ldn-atoz package is an extension for the ccm-atoz package in
+    combination with the ccm-ldn-terms package. It enables the ccm-atoz package
+    to deal with LAW specific terms.
+    
+    The ccm-atoz package enables a site to present all it's content in 
     alphabetical order as an additional service to it's users. Usually the 
     theme provides a link to the page as part of its static elements. 
     

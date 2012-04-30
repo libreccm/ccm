@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.atoz.ui.terms;
+package com.arsdigita.london.atoz.ui;
 
 import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.atoz.ui.admin.ProviderForm;
-import com.arsdigita.london.atoz.terms.DomainProvider;
+import com.arsdigita.london.atoz.DomainProvider;
 import com.arsdigita.london.terms.Domain;
 
 import com.arsdigita.bebop.PageState;

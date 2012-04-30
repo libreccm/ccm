@@ -14,7 +14,7 @@
       </xs:documentation>
 
       <xs:appinfo>
-        <gen:class>com.arsdigita.london.atoz.ui.AtoZPane</gen:class>
+        <gen:class>com.arsdigita.atoz.ui.AtoZPane</gen:class>
       </xs:appinfo>
     </xs:annotation>
 

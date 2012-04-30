@@ -24,9 +24,9 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.london.util.Program;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.web.Application;
 
 import org.apache.commons.cli.CommandLine;

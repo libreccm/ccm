@@ -3,7 +3,10 @@
           xmlns:show="/WEB-INF/bebop-show.tld"
     version="1.2">
 
-  <define:page name="childCategories" pageClass="com.arsdigita.cms.ui.authoring.EmptyPage" title="childCategories" cache="true">
+  <define:page name="childCategories" 
+               pageClass="com.arsdigita.cms.ui.authoring.EmptyPage" 
+               title="childCategories" 
+               cache="true">
 
     <define:component name="catSubtree"
       classname="com.arsdigita.london.terms.ui.CategorySubtree"/>

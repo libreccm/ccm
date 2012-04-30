@@ -147,7 +147,7 @@ public class AtoZ extends Application {
 //   * web application context
 //   */
 //  public String getContextPath() {
-//      return "/ccm-ldn-atoz";
+//      return "/ccm-atoz";
 //  }
 
     /**

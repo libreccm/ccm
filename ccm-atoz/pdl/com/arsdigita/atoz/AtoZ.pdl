@@ -20,5 +20,8 @@ model com.arsdigita.atoz;
 import com.arsdigita.web.Application;
 
 object type AtoZ extends Application {
-    reference key (atoz_app.application_id);
+ // Nothing to persist yet
+    // there is only one instance of AtoZ and
+    // no instance specific settings about to be persisted.
+ // reference key (atoz_app.application_id);
 }

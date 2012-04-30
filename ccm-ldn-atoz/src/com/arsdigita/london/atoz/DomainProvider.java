@@ -16,13 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.atoz.terms;
+package com.arsdigita.london.atoz;
 
 import com.arsdigita.atoz.AtoZGenerator;
 import com.arsdigita.atoz.AtoZProvider;
-import com.arsdigita.london.terms.Domain;
-
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.london.terms.Domain;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
@@ -33,7 +32,7 @@ import com.arsdigita.persistence.OID;
 public class DomainProvider extends AtoZProvider {
     
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.london.atoz.terms.DomainProvider";
+                               "com.arsdigita.london.atoz.DomainProvider";
 
     public static final String DOMAIN = "domain";
 

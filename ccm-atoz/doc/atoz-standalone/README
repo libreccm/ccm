@@ -1,6 +1,9 @@
 Up to APLAWS version 1.0.4 atoz had been installed into its own
 application context: [webapps]/ccm-ldn-atoz.
 
+Up to that version the package was named ccm-ldn-atoz and has then renamed to
+ccm-atoz.
+
 Now it is installed inside the main APLAWS application context along
 with all other applications.
 
@@ -8,16 +11,16 @@ If shortcuts should be installed as its own web context again following
 modifications are necessary:
 1.  remove webapp="xxx" from application.xml
 2.  move the files in this dir to WEB-INF/
-3.  change src/com/ad/london/atoz/AtoZ.java 
+3.  change src/com/ad/atoz/AtoZ.java 
     method getServletContext() as back to "/files"
 4.  edit themes/.../xsl/index.xsl according the comment
-5.  edit in ccm-ldn-aplaws /web/themes/static/aplaws/atoz.xml
+5.  edit in ccm-aplaws /web/themes/static/aplaws/atoz.xml
     according to the comment
 
 
 Running it in its own webapplication context nevertheless is not suggestive.
 It needs several xsl files of the main application (esp. core) for basic
-operations, which hac been directly mapped from the main applications directory
+operations, which has been directly mapped from the main applications directory
 tree into its own directory tree. So no module separation is possible, no
 security context useable etc.
 

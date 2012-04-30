@@ -50,6 +50,9 @@ import com.arsdigita.xml.XML;
  */
 public class Initializer extends CompoundInitializer {
 
+    /**
+     * Constructor
+     */
     public Initializer() {
 
         final String url = RuntimeConfig.getConfig().getJDBCURL();
