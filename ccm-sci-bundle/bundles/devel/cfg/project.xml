@@ -166,6 +166,9 @@
 
 <!--   Applications under evaluation  -->
         <!--  Currently broken.          -->
+        <ccm:application name="ccm-atoz"/>  
+        <ccm:application name="ccm-atoz-siteproxy"/>  
+        <ccm:application name="ccm-ldn-atoz"/>  
         <ccm:application name="ccm-docmgr"/> 
         <!-- some minor program issues  -->
         <ccm:application name="ccm-portalserver"/>
