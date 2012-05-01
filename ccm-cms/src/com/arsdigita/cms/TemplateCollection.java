@@ -34,7 +34,7 @@ import com.arsdigita.mimetypes.MimeType;
  * @see com.arsdigita.cms.ItemTemplateCollection
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TemplateCollection.java 2090 2010-04-17 08:04:14Z pboy $
+ * @version $Id: TemplateCollection.java 2280 2012-03-10 23:55:04Z pboy $
  */
 public abstract class TemplateCollection extends DomainCollection {
 

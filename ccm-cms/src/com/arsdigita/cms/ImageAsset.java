@@ -53,7 +53,7 @@ import org.apache.log4j.Logger;
  * @author Jack Chung
  * @author Stanislav Freidin
  *
- * @version $Id: ImageAsset.java 2090 2010-04-17 08:04:14Z pboy $
+ * @version $Id: ImageAsset.java 2225 2011-08-02 18:53:56Z pboy $
  */
 public class ImageAsset extends BinaryAsset {
 

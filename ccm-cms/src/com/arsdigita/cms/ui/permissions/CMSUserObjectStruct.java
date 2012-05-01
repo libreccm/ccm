@@ -42,7 +42,7 @@ import java.math.BigDecimal;
  * the party_id and the corresponding entity.
  *
  * @author Stefan Deusch (sdeusch@arsdigita.com)
- * @version $Id: CMSUserObjectStruct.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CMSUserObjectStruct.java 2090 2010-04-17 08:04:14Z pboy $
  */
 class CMSUserObjectStruct implements CMSPermissionsConstants {
 

@@ -186,7 +186,7 @@ import java.util.Set;
  * @author Stanislav Freidin &lt;sfreidin@redhat.com&gt;
  * @author Jens Pelzetter
  *
- * @version $Id: ContentItem.java 2218 2011-06-22 23:55:36Z pboy $
+ * @version $Id: ContentItem.java 2305 2012-05-01 12:26:33Z pboy $
  */
 public class ContentItem extends VersionedACSObject implements CustomCopy {
 

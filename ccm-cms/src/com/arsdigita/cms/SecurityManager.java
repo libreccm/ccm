@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
  * <p>Security class used for checking and granting privileges in CMS.</p>
  *
  * @author Michael Pih
- * @version $Id: SecurityManager.java 2161 2011-02-02 00:16:13Z pboy $
+ * @version $Id: SecurityManager.java 2280 2012-03-10 23:55:04Z pboy $
  */
 public class SecurityManager implements Security, SecurityConstants {
 

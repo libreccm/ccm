@@ -22,11 +22,10 @@ package com.arsdigita.util.cmd;
  * @deprecated Use CLI (http://jakarta.apache.org/commons/cli/index.html) instead.
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: StringSwitch.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class StringSwitch extends Switch {
-
-    public final static String versionId = "$Id: StringSwitch.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public StringSwitch(String name, String usage, String defValue) {
         super(name, PARAMETER, usage, defValue);

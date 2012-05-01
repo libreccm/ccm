@@ -60,7 +60,7 @@ import com.arsdigita.mimetypes.MimeType;
  * @author Karl Goldstein (karlg@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: TemplateManager.java 2090 2010-04-17 08:04:14Z pboy $ 
+ * @version $Id: TemplateManager.java 2280 2012-03-10 23:55:04Z pboy $ 
  */
 public interface TemplateManager {
 

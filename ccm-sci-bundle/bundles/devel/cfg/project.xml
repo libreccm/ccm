@@ -37,7 +37,8 @@
 
 <!--   Applications   -->
         <ccm:application name="ccm-navigation"/>
-        <!-- ccm-portalworkspace depends on ccm-subsite  -->
+        <!-- ccm-portalworkspace depends on ccm-subsite  -
+             in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>
@@ -103,9 +104,14 @@
 <!--   Extended Bundle                                                       -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
-<!--   Extended Bundle's Content Assets   -->
+<!--   Extended Bundle's Content Types   -->
+        <!-- package survey is currently broken
+        <ccm:application name="ccm-cms-types-survey"/>
+        -->
 
 <!--   Extended Bundle's Applications   -->
+        <ccm:application name="ccm-docrepo"/>
+        <ccm:application name="ccm-forum"/>  
 
 <!--   Extended Bundle's SCI extensions  -->
 
@@ -130,9 +136,6 @@
         <ccm:application name="ccm-cms-types-pressrelease"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-siteproxy"/>
-        <!-- package survey is currently broken
-        <ccm:application name="ccm-cms-types-survey"/>
-        -->
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 
 <!--  Applications   -->
@@ -140,9 +143,7 @@
 -->
         <ccm:application name="ccm-auth-http"/>
         <ccm:application name="ccm-bookmarks"/>
-        <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-faq"/>  
-        <ccm:application name="ccm-forum"/>  
         <ccm:application name="ccm-forum-categorised"/>
 <!--
 -->

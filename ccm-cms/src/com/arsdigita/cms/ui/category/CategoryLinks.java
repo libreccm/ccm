@@ -37,7 +37,7 @@ import com.arsdigita.util.LockableImpl;
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: CategoryLinks.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CategoryLinks.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class CategoryLinks extends List {
     public final static String SUB_CATEGORY = "sc";

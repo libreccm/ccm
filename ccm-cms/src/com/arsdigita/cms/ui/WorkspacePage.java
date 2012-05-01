@@ -46,7 +46,7 @@ import com.arsdigita.ui.DebugPanel;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: CMSPageWorkspacePage.java 2090 2010-04-17 08:04:14Z pboy $
+ * @version $Id: WorkspacePage.java 2280 2012-03-10 23:55:04Z pboy $
  */
 public class WorkspacePage extends CMSPage implements ActionListener {
 

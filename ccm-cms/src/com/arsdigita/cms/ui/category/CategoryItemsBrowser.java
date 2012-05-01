@@ -52,7 +52,7 @@ import com.arsdigita.util.Assert;
  *
  * WARNING: The code to actually list the items is currently a travesty.
  * It needs to be re-written from scratch, by using custom data queries.
- * @version $Id: CategoryItemsBrowser.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: CategoryItemsBrowser.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class CategoryItemsBrowser extends Grid {
 

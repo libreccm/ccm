@@ -67,7 +67,7 @@ import org.apache.log4j.Logger;
  *
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @since ccm-cms version 6.6.0
- * @version $Id: Loader.java 2212 2011-06-22 08:39:04Z pboy $
+ * @version $Id: Loader.java 2305 2012-05-01 12:26:33Z pboy $
  */
 public class Loader extends PackageLoader {
 

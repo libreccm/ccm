@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 
 /** 
  * 
- * @version $Id: ContentSectionRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContentSectionRequestLocal.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public final class ContentSectionRequestLocal extends RequestLocal {
 

@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * content section.
  *
  * @author Scott Seago 
- * @version $Id: CategoryUseContextModelBuilder.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: CategoryUseContextModelBuilder.java 2090 2010-04-17 08:04:14Z pboy $
  */
 class CategoryUseContextModelBuilder extends AbstractListModelBuilder {
 

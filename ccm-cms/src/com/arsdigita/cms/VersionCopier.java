@@ -36,7 +36,7 @@ import java.util.HashSet;
  * versions.
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
- * @version $Id: VersionCopier.java 2140 2011-01-16 12:04:20Z pboy $
+ * @version $Id: VersionCopier.java 2291 2012-04-22 15:41:24Z pboy $
  */
 class VersionCopier extends ObjectCopier {
 

@@ -55,7 +55,7 @@ import java.util.StringTokenizer;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Id: ContentType.java 2070 2010-01-28 08:47:41Z pboy $
+ * @version $Id: ContentType.java 2277 2012-02-22 15:23:49Z pboy $
  */
 public class ContentType extends ACSObject {
 

@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
  *
  * @author Daniel Berrange
  * @see com.arsdigita.kernel.Kernel
- * @version $Id: CMS.java 2167 2011-06-19 21:12:12Z pboy $
+ * @version $Id: CMS.java 2286 2012-03-11 09:14:14Z pboy $
  */
 public abstract class CMS {
 

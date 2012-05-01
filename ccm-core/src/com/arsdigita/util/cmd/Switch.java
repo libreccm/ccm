@@ -22,14 +22,14 @@ import com.arsdigita.util.Assert;
 import java.util.List;
 
 /**
- * @deprecated Use CLI (http://jakarta.apache.org/commons/cli/index.html) instead.
+ * (Obviously) a command line option
+ * 
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: Switch.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated Use CLI (http://jakarta.apache.org/commons/cli/index.html) instead.
+ */
 public abstract class Switch {
-
-    public final static String versionId = "$Id: Switch.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static abstract class Type {
         abstract String[] parse(CommandLine cmd, List args);

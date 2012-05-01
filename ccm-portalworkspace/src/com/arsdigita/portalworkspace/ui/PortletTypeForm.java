@@ -111,7 +111,10 @@ public class PortletTypeForm extends Form {
 		}
 	};
 
-	public PortletTypeForm() {
+	/**
+     * Default constructor
+     */
+    public PortletTypeForm() {
 		this("portletTypeForm");
 	}
 

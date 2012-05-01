@@ -60,7 +60,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Michael Pih
  * @author Xixi D'Moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ContentSectionPage.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ContentSectionPage.java 2224 2011-08-01 07:45:23Z pboy $
  */
 public class ContentSectionPage extends CMSPage implements ActionListener {
 

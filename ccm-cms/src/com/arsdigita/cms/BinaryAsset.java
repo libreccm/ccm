@@ -38,7 +38,7 @@ import java.io.OutputStream;
  * @author Jack Chung
  * @author Stanislav Freidin
  *
- * @version $Id: BinaryAsset.java 2090 2010-04-17 08:04:14Z pboy $ 
+ * @version $Id: BinaryAsset.java 2245 2011-11-15 08:03:57Z pboy $ 
  */
 public abstract class BinaryAsset extends Asset {
 
