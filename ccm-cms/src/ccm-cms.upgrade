@@ -52,7 +52,9 @@
     <script sql="ccm-cms/upgrade/::database::-6.6.3-6.6.4.sql"/>
   </version>
   <version from="6.6.4" to="6.6.5">
-    <script class="com.arsdigita.cms.contenttypes.GenericContactPersonAssocUpgrade"/>
+    <script class="com.arsdigita.cms.contenttypes.upgrades.CreateContactBundles"/>
+    <script class="com.arsdigita.cms.contenttypes.upgrades.CreatePersonBundles"/>
+    <script class="com.arsdigita.cms.contenttypes.upgrades.GenericContactGenericPersonAssocUpgrade"/>
     <script sql="ccm-cms/upgrade::database::-6.6.4-6.6.5.sql"/>
   </version>
  <version from="6.6.5" to="6.6.6">
@@ -61,6 +63,6 @@
   </version>
  <version from="6.6.6" to="6.6.7">
     <!-- CMS Workspace&Service now loaded as legacy free application  -->
-    <script sql="ccm-cms/upgrade/::database::-6.6.6-6.6.7.sql"/>
+    <script sql="ccm-cms/upgrade/::database::-6.6.6-6.6.7.sql"/>    
   </version>
 </upgrade>

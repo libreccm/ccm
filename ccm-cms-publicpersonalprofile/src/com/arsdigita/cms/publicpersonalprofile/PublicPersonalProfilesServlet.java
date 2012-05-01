@@ -13,7 +13,6 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.GenericAddress;
@@ -58,6 +57,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import com.arsdigita.cms.ReusableImageAsset;
 
 /**
  * Servlet for the PublicPersonalProfile application.

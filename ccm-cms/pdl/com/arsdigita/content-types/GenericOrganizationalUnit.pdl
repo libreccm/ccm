@@ -56,15 +56,15 @@ association {
 // Links a organization with persons.
 association {
 
-    GenericOrganizationalUnitBundle[0..n] organizationalunits = join cms_bundles.bundle_id
+    GenericOrganizationalUnitBundle[0..n] organizationalunits = join cms_person_bundles.bundle_id
                                                                   to cms_organizationalunits_person_map.person_id,
                                                                 join cms_organizationalunits_person_map.organizationalunit_id
-                                                                  to cms_bundles.bundle_id;
+                                                                  to cms_orgaunit_bundles.bundle_id;
 
-    GenericPersonBundle[0..n] persons = join cms_bundles.bundle_id
+    GenericPersonBundle[0..n] persons = join cms_orgaunit_bundles.bundle_id
                                           to cms_organizationalunits_person_map.organizationalunit_id,
                                         join cms_organizationalunits_person_map.person_id
-                                          to cms_bundles.bundle_id;
+                                          to cms_person_bundles.bundle_id;
 
    // Additional attributes for the association
    String[0..1] role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
