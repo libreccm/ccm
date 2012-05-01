@@ -39,9 +39,10 @@
         <ccm:application name="ccm-cms-types-article"/>
 
 <!--   Applications   -->
-        <ccm:application name="ccm-atoz"/>
+        <ccm:application name="ccm-atoz"/>  <!-- part of (default) theme -->
         <ccm:application name="ccm-navigation"/>
-        <!-- ccm-portalworkspace depends on ccm-subsite  -->
+        <!-- ccm-portalworkspace depends on ccm-subsite  -
+             in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-portalworkspace-homepage"/>
         <ccm:application name="ccm-rssfeed"/>                    
@@ -109,7 +110,6 @@
         <ccm:application name="ccm-cms-types-organization"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-simpleaddress"/>
-        <!-- CHECK: Really part of extended?   -->
         <ccm:application name="ccm-cms-types-siteproxy"/>
         <!-- Current code does not include any xsl templates, 
              neither it does not appear in content center -->

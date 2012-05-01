@@ -16,13 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.aplaws.ui;
+package com.arsdigita.bundle.ui;
 
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.ui.AbstractTermDetails;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.navigation.Navigation;
+import com.arsdigita.london.navigation.Navigation;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.domain.DomainObjectFactory;

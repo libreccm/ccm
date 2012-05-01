@@ -42,6 +42,13 @@ public class WebAppPatternGenerator implements PatternGenerator {
         Application app = Web.getContext().getApplication();
         String ctx = app == null ? null : app.getContextPath();
 
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Generating Values key: " + key + " [" +
+                        "Web.getContext(): " + Web.getContext() + "," +
+                        "Application: " + Web.getContext().getApplication() + "," +
+                        "ContextPath: " + ctx  + "," +  "]");
+        }
+
         if (app == null || 
             ctx == null ||
             "".equals(ctx)) {

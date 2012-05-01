@@ -270,7 +270,7 @@ public class Loader extends PackageLoader {
         }
 
         /* Determine Domain and Application objects, both MUST exist!         */
-        Domain domain = Domain.retrieve(domainKey);  
+        Domain domain = Domain.retrieve(domainKey);  // package com.arsdigita.london.terms
         Application app = Application.retrieveApplicationForPath(appURL);
         
         /* Create domain mapping                                              */

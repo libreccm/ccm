@@ -19,14 +19,14 @@
 package com.arsdigita.aplaws;
 
 import com.arsdigita.categorization.Categorization;
-import com.arsdigita.london.terms.TermCategoryListener;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.ContextCloseEvent;
-import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.templating.PatternStylesheetResolver;
+
+import com.arsdigita.london.terms.TermCategoryListener;
+
 import org.apache.log4j.Logger;
 
-import com.arsdigita.templating.PatternStylesheetResolver;
 
 /**
  * The APLAWS initializer.
@@ -40,12 +40,7 @@ public class Initializer extends CompoundInitializer {
 
 
     /**
-     * An empty implementation of {@link Initializer#init(DataInitEvent)}.
-     */
-    @Override
-    public void init(DataInitEvent evt) {}
-
-    /**
+     * Package Implementation of  {@link Initializer#init(DomainInitEvent)}. 
      * 
      * @param evt
      */
@@ -60,12 +55,4 @@ public class Initializer extends CompoundInitializer {
             new WebAppPatternGenerator()
         );
     }
-
-
-    /**
-     * An empty implementation of {@link Initializer#close()}.
-     */
-    @Override
-    public void close(ContextCloseEvent evt) {}
-
 }

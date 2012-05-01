@@ -23,6 +23,12 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.ui.AbstractAssignedTerms;
 
+/**
+ * 
+ * Invoked by jsp
+ * (e.g. templates/ccm-cms/content-section/default/aplaws-item.jsp
+ * previously: packages/content-section/templates/default/aplaws-item.jsp)
+ */
 public class AssignedItemTerms extends AbstractAssignedTerms {
 
     protected ACSObject getObject(PageState state) {

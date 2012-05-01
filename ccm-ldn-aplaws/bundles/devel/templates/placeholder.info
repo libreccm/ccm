@@ -1,3 +1,6 @@
+The installation program copies all sub-directories and files in this directory 
+into the applications webapps subdirectory templates. 
+
 Subdirectory  <navigation> may optionally contain navigation item templates for
 navigation index pages which either overwrite or ammend those templates
 which are default for ccm-ldn-aplaws and stored in 
@@ -10,3 +13,4 @@ provide a customised template.txt file replacing the default file
    /src/WEB-INF/navigation/templates.txt
 This file must be specified in parameter 
    com.arsdigita.navigation.templates_file
+It usually stored in res/bundle/navigation

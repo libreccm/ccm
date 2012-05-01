@@ -2,7 +2,7 @@ Bundle subdir themes
 
 Purpose:
 This subdir may optionally contain theme files which either replace part of the
-theme or add files to the theme provided as default for ScientificCMS and this
+theme or add files to the theme provided as default for APLAWS+ and this
 way adopt the theme for site specific design. 
 
 All files and subdirectories all copied asis to the applications ~/themes 
@@ -10,4 +10,4 @@ directory in its document (context) root.
 
 It is the responsibility of developer / system integrator to ensure all files
 are copied to the right location and the theme works with the modification. No
-functionality or consistency check is perfordmed!
+functionality or consistency check is performed!

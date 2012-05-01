@@ -26,7 +26,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ui.authoring.*;
+import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
 import com.arsdigita.london.terms.ui.TermWidget;

@@ -42,6 +42,7 @@ public class SimplePage extends com.arsdigita.ui.SimplePage {
     }
         
 
+    @Override
     public Element generateXMLHelper(PageState state,
                                      Document parent) {
         Element page = super.generateXMLHelper(state, parent);

@@ -276,21 +276,6 @@ public class Loader extends PackageLoader {
         registerDomain(customNavKey, '/'+customNavPath+'/', null);
         registerDomain(customNavKey, "/content/", customNavUseContext);
 
-        // Switch /portal/ to use 1 column layout for funky aplaws stuff.
-        // pboy: This will have no effect at all. A portal page created at
-        // url /portal/ (and beneath) will always use the homepage jsp's which
-        // are hardcoded to create a three column design and ignore any
-        // column configuration. All portal pages at other urls are not
-        // affect by this setting which touches only the one application (portal)
-        // at url /portal/. Portal pages at other urls use the corresponding
-        // configuration parameter for its initial value and number of columns
-        // may be modified at any time using configuration ui.
-        /*
-        Workspace portal = (Workspace)Application
-            .retrieveApplicationForPath("/portal/");
-        portal.setDefaultLayout(PageLayout
-                                .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));
-         */
     }
 
     public void registerServicesTemplate(String appURL) {
@@ -330,9 +315,8 @@ public class Loader extends PackageLoader {
                                String appURL,
                                String context) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Mapping domain " + domainKey + 
-                        " to app " + appURL + 
-                        " in context " + context);
+            s_log.debug("Mapping domain " + domainKey + " to app " + appURL
+                        + " in context " + context);
         }
 
         /* Determine Domain and Application objects, both MUST exist!         */
