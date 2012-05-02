@@ -32,6 +32,10 @@ public abstract class AbstractBundleUpgrade extends Program {
 
     protected abstract String getBundleContraintName();
 
+    protected String getSuperBundleTable() {
+        return "cms_bundles";
+    }
+    
     @Override
     public void doRun(final CommandLine cmdLine) {
         System.out.println("Starting upgrade...");
@@ -66,9 +70,10 @@ public abstract class AbstractBundleUpgrade extends Program {
             stmt.addBatch(String.format("ALTER TABLE ONLY %s "
                                         + "ADD CONSTRAINT %s "
                                         + "FOREIGN KEY (bundle_id) "
-                                        + "REFERENCES cms_bundles(bundle_id);",
+                                        + "REFERENCES %s(bundle_id);",
                                         getBundleTableName(),
-                                        getBundleContraintName()));
+                                        getBundleContraintName(),
+                                        getSuperBundleTable()));
 
             stmt.executeBatch();
 

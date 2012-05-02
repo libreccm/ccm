@@ -1,4 +1,4 @@
-package com.arsdigita.cms.contenttypes;
+package com.arsdigita.cms.contenttypes.upgrades;
 
 import com.arsdigita.util.cmd.Program;
 import com.arsdigita.runtime.RuntimeConfig;
