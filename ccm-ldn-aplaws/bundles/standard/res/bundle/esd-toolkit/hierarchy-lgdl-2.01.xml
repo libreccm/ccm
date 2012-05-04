@@ -1,0 +1,612 @@
+<?xml version="1.0"?>
+<terms:hierarchy xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
+  <terms:domain resource="http://www.esd.org.uk/standards/lgdl/2.01/lgdltermslist.xml"/>
+  <terms:term id="1"/>
+  <terms:term id="16"/>
+  <terms:term id="37"/>
+  <terms:term id="41"/>
+  <terms:term id="53"/>
+  <terms:term id="63"/>
+  <terms:term id="69"/>
+  <terms:term id="7"/>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="2"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="4"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="5"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="6"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="83"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="17"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="18"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="19"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="20"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="21"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="22"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="23"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="24"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="25"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="26"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="27"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="28"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="29"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="30"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="31"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="32"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="33"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="34"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="35"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="16"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="36"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="37"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="38"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="37"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="39"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="37"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="40"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="42"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="43"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="44"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="45"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="46"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="47"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="48"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="49"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="50"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="51"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="41"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="52"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="54"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="55"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="56"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="57"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="58"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="59"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="60"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="61"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="53"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="62"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="63"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="64"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="63"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="65"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="63"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="66"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="63"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="67"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="63"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="68"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="70"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="71"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="72"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="73"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="74"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="75"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="76"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="77"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="78"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="79"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="80"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="81"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="69"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="82"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="10"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="11"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="12"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="13"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="14"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="15"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="8"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="9"/>
+    </terms:destination>
+  </terms:orderedPair>
+</terms:hierarchy>

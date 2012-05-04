@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" about="http://www.esd.org.uk/standards/lgil/2.00/lgil.xml" key="LGIL" title="Local Government Interaction Type List" version="0.01" released="2004-04-01">
+  <terms:term id="0" name="Applications for service" inAtoZ="false"/>
+  <terms:term id="1" name="Booking venues, resources and courses" inAtoZ="false"/>
+  <terms:term id="2" name="Collecting revenue" inAtoZ="false"/>
+  <terms:term id="3" name="Consultation" inAtoZ="false"/>
+  <terms:term id="4" name="Paying for goods and services" inAtoZ="false"/>
+  <terms:term id="5" name="Procurement" inAtoZ="false"/>
+  <terms:term id="6" name="Providing access to community, professionals or business networks" inAtoZ="false"/>
+  <terms:term id="7" name="Providing benefits and grants" inAtoZ="false"/>
+  <terms:term id="8" name="Providing information" inAtoZ="false"/>
+  <terms:term id="9" name="Regulation" inAtoZ="false"/>
+  <terms:term id="10" name="Appealing" inAtoZ="false"/>
+  <terms:term id="11" name="Changes in circumstances" inAtoZ="false"/>
+  <terms:term id="12" name="Checking status" inAtoZ="false"/>
+  <terms:term id="13" name="Complaints" inAtoZ="false"/>
+  <terms:term id="14" name="Renewing" inAtoZ="false"/>
+  <terms:term id="15" name="Repairing" inAtoZ="false"/>
+  <terms:term id="16" name="Replacing" inAtoZ="false"/>
+  <terms:term id="17" name="Reporting" inAtoZ="false"/>
+  <terms:term id="18" name="Entitlement checking" inAtoZ="false"/>
+  <terms:term id="19" name="Registration and Licensing" inAtoZ="false"/>
+</terms:domain>

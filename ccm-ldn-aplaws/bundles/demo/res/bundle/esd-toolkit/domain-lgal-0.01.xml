@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" about="http://www.esd.org.uk/standards/lgal/0.01/lgal.xml" key="LGAL" title="Local Government Audience Type List" version="0.01" released="2004-04-01">
+  <terms:term id="0" name="Businesses" inAtoZ="false"/>
+  <terms:term id="1" name="Small and medium enterprises" inAtoZ="false"/>
+  <terms:term id="2" name="Sole traders" inAtoZ="false"/>
+  <terms:term id="3" name="Partnerships" inAtoZ="false"/>
+  <terms:term id="4" name="Limited companies" inAtoZ="false"/>
+  <terms:term id="5" name="Public limited companies" inAtoZ="false"/>
+  <terms:term id="6" name="Carers" inAtoZ="false"/>
+  <terms:term id="7" name="Foster carers" inAtoZ="false"/>
+  <terms:term id="8" name="Children" inAtoZ="false"/>
+  <terms:term id="9" name="Children in care" inAtoZ="false"/>
+  <terms:term id="10" name="Pre-teens" inAtoZ="false"/>
+  <terms:term id="11" name="Teenagers" inAtoZ="false"/>
+  <terms:term id="12" name="Toddlers" inAtoZ="false"/>
+  <terms:term id="13" name="Civil and public servants" inAtoZ="false"/>
+  <terms:term id="14" name="Chairpeople" inAtoZ="false"/>
+  <terms:term id="15" name="Chief executives" inAtoZ="false"/>
+  <terms:term id="16" name="Civic ambassadors" inAtoZ="false"/>
+  <terms:term id="17" name="Councillors" inAtoZ="false"/>
+  <terms:term id="18" name="City councillors" inAtoZ="false"/>
+  <terms:term id="19" name="County councillors" inAtoZ="false"/>
+  <terms:term id="20" name="District councillors" inAtoZ="false"/>
+  <terms:term id="21" name="Island councillors" inAtoZ="false"/>
+  <terms:term id="22" name="Metropolitan councillors" inAtoZ="false"/>
+  <terms:term id="23" name="Parish councillors" inAtoZ="false"/>
+  <terms:term id="24" name="Shire councillors" inAtoZ="false"/>
+  <terms:term id="25" name="Town councillors" inAtoZ="false"/>
+  <terms:term id="26" name="Unitary councillors" inAtoZ="false"/>
+  <terms:term id="27" name="Mayors" inAtoZ="false"/>
+  <terms:term id="28" name="Elected mayors" inAtoZ="false"/>
+  <terms:term id="29" name="Members of European Parliament" inAtoZ="false"/>
+  <terms:term id="30" name="Members of Parliament" inAtoZ="false"/>
+  <terms:term id="31" name="Registrar of births, deaths and marriages" inAtoZ="false"/>
+  <terms:term id="32" name="Commuters" inAtoZ="false"/>
+  <terms:term id="33" name="Disabled people" inAtoZ="false"/>
+  <terms:term id="34" name="People with special needs" inAtoZ="false"/>
+  <terms:term id="35" name="Registered disabled people" inAtoZ="false"/>
+  <terms:term id="36" name="Employees" inAtoZ="false"/>
+  <terms:term id="37" name="Full-time employees" inAtoZ="false"/>
+  <terms:term id="38" name="Part-time employees" inAtoZ="false"/>
+  <terms:term id="39" name="Employers" inAtoZ="false"/>
+  <terms:term id="40" name="Public sector employers" inAtoZ="false"/>
+  <terms:term id="41" name="Private sector employers" inAtoZ="false"/>
+  <terms:term id="42" name="Voluntary sector employers" inAtoZ="false"/>
+  <terms:term id="43" name="Ethnic groups" inAtoZ="false"/>
+  <terms:term id="44" name="Asians" inAtoZ="false"/>
+  <terms:term id="45" name="Bangladeshis" inAtoZ="false"/>
+  <terms:term id="46" name="Indians" inAtoZ="false"/>
+  <terms:term id="47" name="Pakistanis" inAtoZ="false"/>
+  <terms:term id="48" name="Blacks" inAtoZ="false"/>
+  <terms:term id="49" name="Africans" inAtoZ="false"/>
+  <terms:term id="50" name="Caribbean" inAtoZ="false"/>
+  <terms:term id="51" name="Chinese" inAtoZ="false"/>
+  <terms:term id="52" name="Whites" inAtoZ="false"/>
+  <terms:term id="53" name="British" inAtoZ="false"/>
+  <terms:term id="54" name="English" inAtoZ="false"/>
+  <terms:term id="55" name="Scottish" inAtoZ="false"/>
+  <terms:term id="56" name="Welsh" inAtoZ="false"/>
+  <terms:term id="57" name="Irish" inAtoZ="false"/>
+  <terms:term id="58" name="Portuguese" inAtoZ="false"/>
+  <terms:term id="59" name="Mixed race" inAtoZ="false"/>
+  <terms:term id="60" name="White and black Caribbean" inAtoZ="false"/>
+  <terms:term id="61" name="White and black Africans" inAtoZ="false"/>
+  <terms:term id="62" name="White and black Asians" inAtoZ="false"/>
+  <terms:term id="63" name="Gays and lesbians" inAtoZ="false"/>
+  <terms:term id="64" name="Lesbians" inAtoZ="false"/>
+  <terms:term id="65" name="Gays" inAtoZ="false"/>
+  <terms:term id="66" name="Bisexuals" inAtoZ="false"/>
+  <terms:term id="67" name="Transgender" inAtoZ="false"/>
+  <terms:term id="68" name="Jobseekers" inAtoZ="false"/>
+  <terms:term id="69" name="Low income households" inAtoZ="false"/>
+  <terms:term id="70" name="Men" inAtoZ="false"/>
+  <terms:term id="71" name="Widowers" inAtoZ="false"/>
+  <terms:term id="72" name="Non UK residents" inAtoZ="false"/>
+  <terms:term id="73" name="Asylum seekers" inAtoZ="false"/>
+  <terms:term id="74" name="International students" inAtoZ="false"/>
+  <terms:term id="75" name="Refugees" inAtoZ="false"/>
+  <terms:term id="76" name="Visitors to the UK" inAtoZ="false"/>
+  <terms:term id="77" name="Tourists" inAtoZ="false"/>
+  <terms:term id="78" name="Older people" inAtoZ="false"/>
+  <terms:term id="79" name="State pensioners" inAtoZ="false"/>
+  <terms:term id="80" name="Parents and guardians" inAtoZ="false"/>
+  <terms:term id="81" name="Foster parents" inAtoZ="false"/>
+  <terms:term id="82" name="Legal guardians" inAtoZ="false"/>
+  <terms:term id="83" name="Single parents" inAtoZ="false"/>
+  <terms:term id="84" name="Working mothers" inAtoZ="false"/>
+  <terms:term id="85" name="Professionals" inAtoZ="false"/>
+  <terms:term id="86" name="Acupuncturists" inAtoZ="false"/>
+  <terms:term id="87" name="Chemists" inAtoZ="false"/>
+  <terms:term id="88" name="Chiropodists" inAtoZ="false"/>
+  <terms:term id="89" name="Coroners" inAtoZ="false"/>
+  <terms:term id="90" name="Barristers" inAtoZ="false"/>
+  <terms:term id="91" name="Dentists" inAtoZ="false"/>
+  <terms:term id="92" name="Doctors" inAtoZ="false"/>
+  <terms:term id="93" name="General practitioners" inAtoZ="false"/>
+  <terms:term id="94" name="Door supervisors" inAtoZ="false"/>
+  <terms:term id="95" name="Hairdressers" inAtoZ="false"/>
+  <terms:term id="96" name="Interpreters" inAtoZ="false"/>
+  <terms:term id="97" name="Locksmiths" inAtoZ="false"/>
+  <terms:term id="98" name="Nurses" inAtoZ="false"/>
+  <terms:term id="99" name="Opticians" inAtoZ="false"/>
+  <terms:term id="100" name="Physiotherapists" inAtoZ="false"/>
+  <terms:term id="101" name="Plumbers" inAtoZ="false"/>
+  <terms:term id="102" name="Podiatrists" inAtoZ="false"/>
+  <terms:term id="103" name="Solicitors" inAtoZ="false"/>
+  <terms:term id="104" name="Wardens" inAtoZ="false"/>
+  <terms:term id="105" name="Mobile wardens" inAtoZ="false"/>
+  <terms:term id="106" name="Owners, residents and managers" inAtoZ="false"/>
+  <terms:term id="107" name="Landlords" inAtoZ="false"/>
+  <terms:term id="108" name="Residents" inAtoZ="false"/>
+  <terms:term id="109" name="Tenants" inAtoZ="false"/>
+  <terms:term id="110" name="Non-English speakers" inAtoZ="false"/>
+  <terms:term id="111" name="Students" inAtoZ="false"/>
+  <terms:term id="112" name="Home students" inAtoZ="false"/>
+  <terms:term id="113" name="Teachers" inAtoZ="false"/>
+  <terms:term id="114" name="Mentors" inAtoZ="false"/>
+  <terms:term id="115" name="Voluntary sector" inAtoZ="false"/>
+  <terms:term id="116" name="Volunteers" inAtoZ="false"/>
+  <terms:term id="117" name="Women" inAtoZ="false"/>
+  <terms:term id="118" name="Widows" inAtoZ="false"/>
+  <terms:term id="119" name="Educational workers" inAtoZ="false"/>
+  <terms:term id="120" name="School governors" inAtoZ="false"/>
+  <terms:term id="121" name="School inspectors" inAtoZ="false"/>
+</terms:domain>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms:hierarchy xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
+  <terms:domain resource="http://www.aplaws.org.uk/standards/rss/1.00/termslist.xml"/>
+  <terms:term id="1"/>
+  <terms:term id="2"/>
+  <terms:term id="3"/>
+</terms:hierarchy>

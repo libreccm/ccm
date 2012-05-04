@@ -15,38 +15,51 @@
                webapp="ROOT" 
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
+<ccm:databases>
+        <ccm:database name="postgres"/>
+        <ccm:database name="oracle-se"/>
+</ccm:databases>
+
   <ccm:build>
       
-        <!-- Core Modules, mandatory part of any Aplaws installation.     -->
-        <!-- Do NOT edit this section!                                    -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    APLAWS+ set of CORE packages                                         -->
+<!--    NONE can be omitted for technical reasons / internal dependencies    -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
+<!--   Main apps   -->
         <ccm:application name="ccm-core"/>
         <ccm:application name="ccm-cms"/>
-        
-        <ccm:application name="ccm-cms-assets-imagestep"/>
-        <ccm:application name="ccm-cms-assets-relatedlink"/>
 
+<!--   Content Assets   -->
+
+<!--   Content Types   -->
         <ccm:application name="ccm-cms-types-article"/>
-        <ccm:application name="ccm-cms-types-filestorageitem"/>
-        <ccm:application name="ccm-cms-types-formitem"/>
-        <ccm:application name="ccm-cms-types-formsectionitem"/>
-        <!-- siteproxy is a prerequisite for ccm-ldn-atoz  -->
-        <ccm:application name="ccm-cms-types-siteproxy"/>
 
+<!--   Applications   -->
+        <ccm:application name="ccm-atoz"/>  <!-- part of (default) theme -->
+        <ccm:application name="ccm-navigation"/>
+        <!-- ccm-portalworkspace depends on ccm-subsite  -
+             in class ui.PortletTypeForm                 -->
+        <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-portalworkspace-homepage"/>
+        <ccm:application name="ccm-rssfeed"/>                    
+        <ccm:application name="ccm-shortcuts"/>
+        <ccm:application name="ccm-subsite"/>                    
+        <ccm:application name="ccm-themedirector"/>
+
+<!--   LDN core extensions  -->
         <ccm:application name="ccm-ldn-aplaws"/>
-        <ccm:application name="ccm-ldn-atoz"/>
-        <ccm:application name="ccm-ldn-dublin"/> 
-        <ccm:application name="ccm-ldn-subsite"/>
-        <ccm:application name="ccm-ldn-rss"/>
+        <ccm:application name="ccm-ldn-dublin"/>
+        <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
-        <ccm:application name="ccm-navigation"/>
-        <ccm:application name="ccm-portalworkspace"/>
-        <ccm:application name="ccm-portalworkspace-homepage"/>
-        <ccm:application name="ccm-search"/>
-        <ccm:application name="ccm-shortcuts"/>
-        <ccm:application name="ccm-themedirector"/>
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    APLAWS+  OPTIONAL packages                                           -->
+<!--    Various combinations of these packages make up specific bundles      -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 
         <!-- Optional Modules for an Aplaws installation.                 -->

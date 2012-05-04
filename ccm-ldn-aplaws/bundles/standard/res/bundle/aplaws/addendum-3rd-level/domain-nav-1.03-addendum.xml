@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?><terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" xmlns:lgcl="http://www.esd.org.uk/standards" about="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml" key="APLAWS-NAV" title="APLAWS Navigation List" version="1.03" released="2004-01-07">
+          <terms:term id="6" name="Business rates" inAtoZ="true"/>
+	    <terms:term id="9" name="Council opportunities" inAtoZ="false"/>
+	    <terms:term id="14" name="Planning partnerships" inAtoZ="false"/>
+	    <terms:term id="16" name="Business sites" inAtoZ="true"/>
+	    <terms:term id="20" name="Premises to let" inAtoZ="true"/>
+	    <terms:term id="48" name="Business associations" inAtoZ="false"/>
+	    <terms:term id="49" name="Business development" inAtoZ="true"/>
+	    <terms:term id="50" name="Chambers of commerce" inAtoZ="true"/>
+	    <terms:term id="51" name="Chambers of trade" inAtoZ="false"/>
+	    <terms:term id="52" name="Conference facilities" inAtoZ="false"/>
+	    <terms:term id="53" name="Starting a business" inAtoZ="true"/>
+	    <terms:term id="54" name="Self employment" inAtoZ="true"/>
+	    <terms:term id="55" name="Small and medium sized enterprises" inAtoZ="true"/>
+	    <terms:term id="56" name="Trading requirements" inAtoZ="false"/>
+	    <terms:term id="58" name="Youth enterprise" inAtoZ="true"/>
+	    <terms:term id="63" name="Employment regulations" inAtoZ="false"/>
+	    <terms:term id="65" name="Recruitment" inAtoZ="false"/>
+	    <terms:term id="67" name="Accidents at work" inAtoZ="true"/>
+	    <terms:term id="68" name="Key workers" inAtoZ="true"/>
+	    <terms:term id="69" name="Smart cards" inAtoZ="true"/>
+	    <terms:term id="71" name="Animal health" inAtoZ="true"/>
+	    <terms:term id="72" name="Business legislation" inAtoZ="false"/>
+	    <terms:term id="75" name="Description of goods" inAtoZ="true"/>
+	    <terms:term id="76" name="Fair trading" inAtoZ="true"/>
+	    <terms:term id="78" name="Fake goods" inAtoZ="true"/>
+	    <terms:term id="79" name="Fraud" inAtoZ="true"/>
+	    <terms:term id="80" name="Hallmarking" inAtoZ="true"/>
+	    <terms:term id="81" name="Home authority advice" inAtoZ="false"/>
+	    <terms:term id="84" name="Misleading advertising" inAtoZ="true"/>
+	    <terms:term id="85" name="Money lenders" inAtoZ="true"/>
+	    <terms:term id="86" name="Pricing" inAtoZ="false"/>
+	    <terms:term id="87" name="Products and systems audit" inAtoZ="false"/>
+	    <terms:term id="89" name="Traders' rights" inAtoZ="false"/>
+	    <terms:term id="90" name="Water meters" inAtoZ="true"/>
+	    <terms:term id="91" name="Weights and measures" inAtoZ="true"/>
+	    <terms:term id="96" name="Credit advice" inAtoZ="false"/>
+	    <terms:term id="98" name="Debt and money" inAtoZ="true"/>
+	    <terms:term id="99" name="Faulty goods" inAtoZ="false"/>
+	    <terms:term id="108" name="Asylum seekers" inAtoZ="true"/>
+	    <terms:term id="109" name="Ethnic support groups" inAtoZ="true"/>
+	    <terms:term id="111" name="Race relations" inAtoZ="true"/>
+	    <terms:term id="113" name="Refugees" inAtoZ="true"/>
+	    <terms:term id="115" name="Bahai faith" inAtoZ="false"/>
+	    <terms:term id="116" name="Buddhism" inAtoZ="false"/>
+	    <terms:term id="117" name="Christianity" inAtoZ="false"/>
+	    <terms:term id="134" name="Hinduism" inAtoZ="false"/>
+	    <terms:term id="135" name="Humanism" inAtoZ="false"/>
+	    <terms:term id="136" name="Islam" inAtoZ="false"/>
+	    <terms:term id="137" name="Judaism" inAtoZ="false"/>
+	    <terms:term id="139" name="Paganism" inAtoZ="false"/>
+	    <terms:term id="141" name="Quakers" inAtoZ="false"/>
+	    <terms:term id="142" name="Religious organisations" inAtoZ="false"/>
+	    <terms:term id="143" name="Salvation Army" inAtoZ="false"/>
+	    <terms:term id="144" name="Secular societies" inAtoZ="false"/>
+	    <terms:term id="145" name="Sikhism" inAtoZ="false"/>
+	    <terms:term id="148" name="Births" inAtoZ="true"/>
+	    <terms:term id="152" name="Marriage" inAtoZ="true"/>
+	    <terms:term id="160" name="Deaths" inAtoZ="true"/>
+	    <terms:term id="173" name="Community centres" inAtoZ="true"/>
+	    <terms:term id="174" name="Community development" inAtoZ="true"/>
+	    <terms:term id="176" name="Community services" inAtoZ="true"/>
+	    <terms:term id="177" name="Village halls" inAtoZ="false"/>
+	    <terms:term id="183" name="Twin towns" inAtoZ="true"/>
+	    <terms:term id="185" name="Befriending schemes" inAtoZ="false"/>
+	    <terms:term id="186" name="Carers groups" inAtoZ="false"/>
+	    <terms:term id="188" name="Ex-service groups" inAtoZ="false"/>
+	    <terms:term id="189" name="Friendly societies" inAtoZ="false"/>
+	    <terms:term id="198" name="Soroptomists" inAtoZ="false"/>
+	    <terms:term id="199" name="Self-help groups" inAtoZ="false"/>
+	    <terms:term id="200" name="Trusts" inAtoZ="false"/>
+	    <terms:term id="207" name="Examinations" inAtoZ="true"/>
+	    <terms:term id="220" name="Adult education providers" inAtoZ="false"/>
+	    <terms:term id="222" name="Family education" inAtoZ="false"/>
+	    <terms:term id="223" name="Learning partnerships" inAtoZ="false"/>
+	    <terms:term id="224" name="Literacy" inAtoZ="false"/>
+	    <terms:term id="225" name="Multicultural education" inAtoZ="false"/>
+	    <terms:term id="228" name="Numeracy" inAtoZ="false"/>
+	    <terms:term id="229" name="People with special needs" inAtoZ="false"/>
+	    <terms:term id="230" name="Sports development" inAtoZ="false"/>
+	    <terms:term id="252" name="Crossing patrols" inAtoZ="true"/>
+	    <terms:term id="253" name="Education welfare service" inAtoZ="false"/>
+	    <terms:term id="264" name="School buildings" inAtoZ="false"/>
+	    <terms:term id="265" name="School transport" inAtoZ="false"/>
+	    <terms:term id="270" name="Attendance" inAtoZ="true"/>
+	    <terms:term id="271" name="Bullying" inAtoZ="true"/>
+	    <terms:term id="283" name="Animals" inAtoZ="true"/>
+	    <terms:term id="296" name="Pests" inAtoZ="true"/>
+	    <terms:term id="321" name="Air pollution" inAtoZ="true"/>
+	    <terms:term id="324" name="Hazardous and toxic substances" inAtoZ="true"/>
+	    <terms:term id="332" name="Light pollution" inAtoZ="false"/>
+	    <terms:term id="345" name="Water pollution" inAtoZ="true"/>
+	    <terms:term id="348" name="Agri food support" inAtoZ="true"/>
+	    <terms:term id="357" name="Abandoned vehicles" inAtoZ="true"/>
+	    <terms:term id="358" name="Buildings" inAtoZ="true"/>
+	    <terms:term id="362" name="Bridges" inAtoZ="true"/>
+	    <terms:term id="374" name="Development planning" inAtoZ="false"/>
+	    <terms:term id="375" name="District planning" inAtoZ="false"/>
+	    <terms:term id="377" name="Compulsory purchase orders" inAtoZ="true"/>
+	    <terms:term id="379" name="Green belt" inAtoZ="false"/>
+	    <terms:term id="381" name="Land searches" inAtoZ="false"/>
+	    <terms:term id="383" name="Maps" inAtoZ="true"/>
+	    <terms:term id="387" name="Structure plans" inAtoZ="true"/>
+	    <terms:term id="388" name="Town planning" inAtoZ="false"/>
+	    <terms:term id="389" name="Unitary Development Plan" inAtoZ="true"/>
+	    <terms:term id="391" name="Common land" inAtoZ="false"/>
+	    <terms:term id="392" name="Conservation" inAtoZ="true"/>
+	    <terms:term id="407" name="Display advertisements and hoardings" inAtoZ="true"/>
+	    <terms:term id="410" name="Energy conservation" inAtoZ="true"/>
+	    <terms:term id="411" name="Energy efficiency" inAtoZ="true"/>
+	    <terms:term id="412" name="Renewable energy" inAtoZ="false"/>
+	    <terms:term id="413" name="Graffiti removal" inAtoZ="true"/>
+	    <terms:term id="415" name="Grass cutting" inAtoZ="true"/>
+	    <terms:term id="422" name="Doorstep collection" inAtoZ="false"/>
+	    <terms:term id="424" name="Land fill" inAtoZ="true"/>
+	    <terms:term id="426" name="Public conveniences" inAtoZ="true"/>
+	    <terms:term id="427" name="Recycling centres" inAtoZ="true"/>
+	    <terms:term id="428" name="Recycling facilities" inAtoZ="false"/>
+	    <terms:term id="429" name="Rubbish and waste" inAtoZ="true"/>
+	    <terms:term id="452" name="Weather forecasts" inAtoZ="false"/>
+	    <terms:term id="455" name="Armed forces" inAtoZ="false"/>
+	    <terms:term id="460" name="Bylaws" inAtoZ="true"/>
+	    <terms:term id="463" name="Agendas" inAtoZ="false"/>
+	    <terms:term id="464" name="Audits" inAtoZ="false"/>
+	    <terms:term id="465" name="Budgets" inAtoZ="false"/>
+	    <terms:term id="466" name="Census" inAtoZ="false"/>
+	    <terms:term id="468" name="Code of conduct" inAtoZ="false"/>
+	    <terms:term id="469" name="Current projects" inAtoZ="false"/>
+	    <terms:term id="472" name="Decisions" inAtoZ="false"/>
+	    <terms:term id="473" name="Minutes" inAtoZ="false"/>
+	    <terms:term id="474" name="Motions" inAtoZ="false"/>
+	    <terms:term id="475" name="News" inAtoZ="false"/>
+	    <terms:term id="476" name="Council publications" inAtoZ="true"/>
+	    <terms:term id="493" name="Reports" inAtoZ="false"/>
+	    <terms:term id="494" name="Summary" inAtoZ="false"/>
+	    <terms:term id="495" name="Transcripts" inAtoZ="false"/>
+	    <terms:term id="496" name="Council land and property" inAtoZ="true"/>
+	    <terms:term id="498" name="Council procedures" inAtoZ="true"/>
+	    <terms:term id="509" name="Contacts, consultation &amp; feedback" inAtoZ="true"/>
+	    <terms:term id="522" name="Freedom of information" inAtoZ="true"/>
+	    <terms:term id="525" name="Electoral boundaries" inAtoZ="true"/>
+	    <terms:term id="527" name="Electoral registration" inAtoZ="true"/>
+	    <terms:term id="528" name="Electoral services" inAtoZ="true"/>
+	    <terms:term id="530" name="Local elections" inAtoZ="false"/>
+	    <terms:term id="531" name="Mayoral elections" inAtoZ="false"/>
+	    <terms:term id="532" name="Running for office" inAtoZ="false"/>
+	    <terms:term id="533" name="Voting" inAtoZ="false"/>
+	    <terms:term id="541" name="Modernisation" inAtoZ="true"/>
+	    <terms:term id="542" name="Partnerships" inAtoZ="false"/>
+	    <terms:term id="546" name="Political structure" inAtoZ="false"/>
+	    <terms:term id="555" name="Campaigns" inAtoZ="true"/>
+	    <terms:term id="556" name="Debates" inAtoZ="false"/>
+	    <terms:term id="557" name="Demonstrations or marches" inAtoZ="true"/>
+	    <terms:term id="558" name="Hearings" inAtoZ="false"/>
+	    <terms:term id="559" name="Initiatives and projects" inAtoZ="false"/>
+	    <terms:term id="560" name="Legal proceedings" inAtoZ="false"/>
+	    <terms:term id="563" name="News conferences" inAtoZ="true"/>
+	    <terms:term id="564" name="Speech or presentations" inAtoZ="false"/>
+	    <terms:term id="567" name="Development aid" inAtoZ="false"/>
+	    <terms:term id="568" name="Third world" inAtoZ="false"/>
+	    <terms:term id="570" name="Campaigning groups" inAtoZ="false"/>
+	    <terms:term id="580" name="Forums" inAtoZ="false"/>
+	    <terms:term id="582" name="Commercial interest groups" inAtoZ="false"/>
+	    <terms:term id="583" name="Trade unions" inAtoZ="true"/>
+	    <terms:term id="585" name="Communist" inAtoZ="false"/>
+	    <terms:term id="587" name="Cooperative" inAtoZ="false"/>
+	    <terms:term id="588" name="Green" inAtoZ="false"/>
+	    <terms:term id="589" name="Independent" inAtoZ="false"/>
+	    <terms:term id="590" name="Labour" inAtoZ="false"/>
+	    <terms:term id="594" name="Government offices" inAtoZ="true"/>
+	    <terms:term id="595" name="Regional development" inAtoZ="false"/>
+	    <terms:term id="598" name="Alcohol, drugs and substance use" inAtoZ="false"/>
+	    <terms:term id="603" name="Child health" inAtoZ="false"/>
+	    <terms:term id="634" name="Children with disabilities" inAtoZ="false"/>
+	    <terms:term id="645" name="Incapacity" inAtoZ="true"/>
+	    <terms:term id="646" name="Learning disabilities" inAtoZ="true"/>
+	    <terms:term id="659" name="Physical disability" inAtoZ="true"/>
+	    <terms:term id="697" name="Family planning" inAtoZ="false"/>
+	    <terms:term id="698" name="Health education" inAtoZ="false"/>
+	    <terms:term id="699" name="Health action zone" inAtoZ="true"/>
+	    <terms:term id="700" name="Health costs" inAtoZ="false"/>
+	    <terms:term id="701" name="Healthy living" inAtoZ="false"/>
+	    <terms:term id="711" name="Health promotion" inAtoZ="true"/>
+	    <terms:term id="715" name="Illnesses and conditions" inAtoZ="false"/>
+	    <terms:term id="793" name="Infectious diseases" inAtoZ="true"/>
+	    <terms:term id="797" name="Mental health" inAtoZ="true"/>
+	    <terms:term id="816" name="Primary health care" inAtoZ="true"/>
+	    <terms:term id="833" name="Walk in centres" inAtoZ="false"/>
+	    <terms:term id="834" name="Private health care" inAtoZ="false"/>
+	    <terms:term id="839" name="Travel health" inAtoZ="false"/>
+	    <terms:term id="840" name="Treatments and therapies" inAtoZ="false"/>
+	    <terms:term id="858" name="Care needs" inAtoZ="true"/>
+	    <terms:term id="859" name="Welfare rights" inAtoZ="true"/>
+	    <terms:term id="861" name="Children and family care" inAtoZ="false"/>
+	    <terms:term id="891" name="General support care" inAtoZ="false"/>
+	    <terms:term id="937" name="Home care" inAtoZ="false"/>
+	    <terms:term id="969" name="Temporary accommodation" inAtoZ="true"/>
+	    <terms:term id="988" name="Evictions" inAtoZ="true"/>
+	    <terms:term id="991" name="Homelessness" inAtoZ="true"/>
+	    <terms:term id="1010" name="Job centres" inAtoZ="true"/>
+	    <terms:term id="1011" name="Job seekers" inAtoZ="true"/>
+	    <terms:term id="1025" name="Family law" inAtoZ="false"/>
+	    <terms:term id="1027" name="Community legal services" inAtoZ="false"/>
+	    <terms:term id="1028" name="Legal aid" inAtoZ="false"/>
+	    <terms:term id="1030" name="County courts" inAtoZ="false"/>
+	    <terms:term id="1031" name="Crown Courts" inAtoZ="false"/>
+	    <terms:term id="1032" name="Magistrates courts" inAtoZ="false"/>
+	    <terms:term id="1042" name="Cinemas" inAtoZ="true"/>
+	    <terms:term id="1043" name="Circuses" inAtoZ="true"/>
+	    <terms:term id="1044" name="Crafts" inAtoZ="true"/>
+	    <terms:term id="1045" name="Dance" inAtoZ="true"/>
+	    <terms:term id="1066" name="Drama" inAtoZ="true"/>
+	    <terms:term id="1067" name="Eating out" inAtoZ="true"/>
+	    <terms:term id="1068" name="Fairs" inAtoZ="true"/>
+	    <terms:term id="1069" name="Fairgrounds" inAtoZ="true"/>
+	    <terms:term id="1070" name="Firework displays" inAtoZ="true"/>
+	    <terms:term id="1072" name="Literature" inAtoZ="false"/>
+	    <terms:term id="1073" name="Music" inAtoZ="true"/>
+	    <terms:term id="1097" name="Theatres" inAtoZ="true"/>
+	    <terms:term id="1100" name="Archives" inAtoZ="true"/>
+	    <terms:term id="1103" name="Branch libraries" inAtoZ="false"/>
+	    <terms:term id="1104" name="Mobile libraries" inAtoZ="true"/>
+	    <terms:term id="1105" name="Reference libraries" inAtoZ="true"/>
+	    <terms:term id="1109" name="Historic monuments" inAtoZ="true"/>
+	    <terms:term id="1110" name="Historical records" inAtoZ="false"/>
+	    <terms:term id="1111" name="Historic sites" inAtoZ="true"/>
+	    <terms:term id="1114" name="Amateur radio" inAtoZ="false"/>
+	    <terms:term id="1116" name="Astrology" inAtoZ="false"/>
+	    <terms:term id="1118" name="Computers" inAtoZ="false"/>
+	    <terms:term id="1120" name="Food and drink" inAtoZ="false"/>
+	    <terms:term id="1121" name="Games" inAtoZ="false"/>
+	    <terms:term id="1122" name="Gardening" inAtoZ="false"/>
+	    <terms:term id="1123" name="Geography" inAtoZ="false"/>
+	    <terms:term id="1124" name="Geology" inAtoZ="false"/>
+	    <terms:term id="1125" name="International groups" inAtoZ="false"/>
+	    <terms:term id="1126" name="Languages" inAtoZ="false"/>
+	    <terms:term id="1127" name="Magic" inAtoZ="false"/>
+	    <terms:term id="1128" name="Mathematics" inAtoZ="false"/>
+	    <terms:term id="1129" name="Models" inAtoZ="false"/>
+	    <terms:term id="1130" name="Regional groups" inAtoZ="false"/>
+	    <terms:term id="1131" name="Science" inAtoZ="false"/>
+	    <terms:term id="1134" name="Animal collections" inAtoZ="false"/>
+	    <terms:term id="1136" name="Beaches" inAtoZ="true"/>
+	    <terms:term id="1137" name="Countryside" inAtoZ="true"/>
+	    <terms:term id="1145" name="Gardens" inAtoZ="true"/>
+	    <terms:term id="1151" name="Picnic sites" inAtoZ="true"/>
+	    <terms:term id="1152" name="Playgrounds and adventure playgrounds" inAtoZ="true"/>
+	    <terms:term id="1153" name="Ranger service" inAtoZ="true"/>
+	    <terms:term id="1154" name="Rivers" inAtoZ="true"/>
+	    <terms:term id="1159" name="Village greens" inAtoZ="true"/>
+	    <terms:term id="1162" name="Woodlands" inAtoZ="true"/>
+	    <terms:term id="1249" name="Accommodation" inAtoZ="true"/>
+	    <terms:term id="1257" name="Places to visit" inAtoZ="false"/>
+	    <terms:term id="1259" name="Royal observer corps" inAtoZ="false"/>
+	    <terms:term id="1260" name="Territorial Army" inAtoZ="false"/>
+	    <terms:term id="1262" name="Air training corps" inAtoZ="false"/>
+	    <terms:term id="1263" name="Army cadet corps" inAtoZ="false"/>
+	    <terms:term id="1264" name="Beavers" inAtoZ="false"/>
+	    <terms:term id="1265" name="Boys brigade" inAtoZ="false"/>
+	    <terms:term id="1266" name="Brownies" inAtoZ="false"/>
+	    <terms:term id="1268" name="Cubs" inAtoZ="false"/>
+	    <terms:term id="1269" name="European scouts" inAtoZ="false"/>
+	    <terms:term id="1270" name="Girls Brigade" inAtoZ="false"/>
+	    <terms:term id="1271" name="Girls venture corps" inAtoZ="false"/>
+	    <terms:term id="1275" name="Scouts" inAtoZ="false"/>
+	    <terms:term id="1276" name="Sea cadet corps" inAtoZ="false"/>
+	    <terms:term id="1278" name="Social welfare" inAtoZ="false"/>
+	    <terms:term id="1279" name="Special interest groups" inAtoZ="false"/>
+	    <terms:term id="1280" name="Sports teams &amp; classes" inAtoZ="false"/>
+	    <terms:term id="1281" name="Venture scouts" inAtoZ="false"/>
+	    <terms:term id="1282" name="Voluntary work" inAtoZ="true"/>
+	    <terms:term id="1283" name="Woodcraft folk" inAtoZ="false"/>
+	    <terms:term id="1284" name="Young Farmers" inAtoZ="false"/>
+	    <terms:term id="1285" name="Youth clubs" inAtoZ="true"/>
+	    <terms:term id="1288" name="Emergency phone numbers" inAtoZ="true"/>
+	    <terms:term id="1289" name="Accident prevention" inAtoZ="true"/>
+	    <terms:term id="1294" name="Civil protection" inAtoZ="false"/>
+	    <terms:term id="1295" name="Emergency planning" inAtoZ="true"/>
+	    <terms:term id="1296" name="Floods" inAtoZ="true"/>
+	    <terms:term id="1300" name="Anti-social behaviour" inAtoZ="false"/>
+	    <terms:term id="1301" name="CCTV" inAtoZ="true"/>
+	    <terms:term id="1303" name="Neighbourhood watch" inAtoZ="false"/>
+	    <terms:term id="1304" name="Crime and disorder" inAtoZ="true"/>
+	    <terms:term id="1305" name="Crime prevention" inAtoZ="true"/>
+	    <terms:term id="1306" name="Offender support" inAtoZ="false"/>
+	    <terms:term id="1307" name="Offending team" inAtoZ="false"/>
+	    <terms:term id="1308" name="Police" inAtoZ="true"/>
+	    <terms:term id="1309" name="Prisons" inAtoZ="true"/>
+	    <terms:term id="1311" name="Discrimination or harassment" inAtoZ="true"/>
+	    <terms:term id="1316" name="Nuisance" inAtoZ="true"/>
+	    <terms:term id="1328" name="Immigration and nationality" inAtoZ="true"/>
+	    <terms:term id="1333" name="Privacy and data protection" inAtoZ="true"/>
+	    <terms:term id="1339" name="Canals" inAtoZ="false"/>
+	    <terms:term id="1340" name="Community transport" inAtoZ="false"/>
+	    <terms:term id="1345" name="Foot bridges" inAtoZ="true"/>
+	    <terms:term id="1346" name="Footpaths" inAtoZ="true"/>
+	    <terms:term id="1347" name="Bridleways" inAtoZ="true"/>
+	    <terms:term id="1348" name="Byways" inAtoZ="false"/>
+	    <terms:term id="1350" name="Pavements" inAtoZ="true"/>
+	    <terms:term id="1354" name="MOT" inAtoZ="true"/>
+	    <terms:term id="1356" name="Parking" inAtoZ="true"/>
+	    <terms:term id="1366" name="Roads and highways" inAtoZ="true"/>
+	    <terms:term id="1371" name="Adopted roads and highways" inAtoZ="true"/>
+	    <terms:term id="1372" name="Bollards" inAtoZ="false"/>
+	    <terms:term id="1374" name="HGV management and signing" inAtoZ="true"/>
+	    <terms:term id="1375" name="Road building" inAtoZ="true"/>
+	    <terms:term id="1377" name="Road safety" inAtoZ="true"/>
+	    <terms:term id="1379" name="Road works" inAtoZ="true"/>
+	    <terms:term id="1380" name="Safer routes to school" inAtoZ="false"/>
+	    <terms:term id="1382" name="Traffic calming" inAtoZ="true"/>
+	    <terms:term id="1383" name="Traffic counts" inAtoZ="false"/>
+	    <terms:term id="1385" name="Traffic management" inAtoZ="true"/>
+	    <terms:term id="1386" name="Weight limits" inAtoZ="false"/>
+	    <terms:term id="1387" name="Weighbridges" inAtoZ="true"/>
+	    <terms:term id="1389" name="Air services" inAtoZ="false"/>
+	    <terms:term id="1390" name="Buses" inAtoZ="true"/>
+	    <terms:term id="1396" name="Local transport links" inAtoZ="true"/>
+	    <terms:term id="1398" name="Riverboats" inAtoZ="true"/>
+	    <terms:term id="1399" name="Taxi ranks" inAtoZ="true"/>
+	    <terms:term id="1400" name="Trains" inAtoZ="true"/>
+	    <terms:term id="1401" name="Trams" inAtoZ="true"/>
+	    <terms:term id="1405" name="Gully cleansing" inAtoZ="true"/>
+	    <terms:term id="1406" name="Icy roads" inAtoZ="true"/>
+	    <terms:term id="1408" name="Manhole covers" inAtoZ="true"/>
+	    <terms:term id="1409" name="Potholes" inAtoZ="true"/>
+	    <terms:term id="1410" name="Road cleaning" inAtoZ="true"/>
+	    <terms:term id="1412" name="Snow clearance" inAtoZ="true"/>
+	    <terms:term id="1413" name="Street furniture" inAtoZ="false"/>
+	    <terms:term id="1419" name="Street lighting" inAtoZ="true"/>
+	    <terms:term id="1420" name="Street repairs" inAtoZ="true"/>
+	    <terms:term id="1422" name="Verges" inAtoZ="false"/>
+	    <terms:term id="1442" name="Restaurants and catering" inAtoZ="true"/>
+	    <terms:term id="1459" name="Educational visits" inAtoZ="false"/>
+	    <terms:term id="1463" name="Socialist" inAtoZ="false"/>
+	    <terms:term id="1465" name="Medical advice and support" inAtoZ="false"/>
+	    <terms:term id="1484" name="Injuries" inAtoZ="false"/>
+	    <terms:term id="1490" name="Sports facilities" inAtoZ="false"/>
+	    <terms:term id="1494" name="Sports clubs" inAtoZ="false"/>
+	    <terms:term id="1558" name="Sustainable development" inAtoZ="false"/>
+	    <terms:term id="1560" name="Council issued certificates" inAtoZ="false"/>
+	    <terms:term id="1561" name="Council notices" inAtoZ="false"/>
+	    <terms:term id="1562" name="Council plans" inAtoZ="false"/>
+	    <terms:term id="1563" name="Regional statistics" inAtoZ="false"/>
+	    <terms:term id="1568" name="Referendums" inAtoZ="false"/>
+	    <terms:term id="1569" name="Access for disabled" inAtoZ="true"/>
+	    <terms:term id="1588" name="Home insurance" inAtoZ="false"/>
+	    <terms:term id="1602" name="Public meetings" inAtoZ="true"/>
+	    <terms:term id="1604" name="Complementary medicine" inAtoZ="false"/>
+	    <terms:term id="1617" name="Tree management" inAtoZ="false"/>
+	    <terms:term id="1619" name="Local wildlife" inAtoZ="false"/>
+	    <terms:term id="1622" name="Nursery schools" inAtoZ="true"/>
+	    <terms:term id="1623" name="Primary schools" inAtoZ="true"/>
+	    <terms:term id="1624" name="Secondary schools" inAtoZ="true"/>
+	    <terms:term id="1631" name="Consumer complaints" inAtoZ="false"/>
+	    <terms:term id="1637" name="Consumer safety" inAtoZ="false"/>
+	    <terms:term id="1664" name="Value added tax" inAtoZ="false"/>
+	    <terms:term id="1665" name="Economic regeneration" inAtoZ="true"/>
+	    <terms:term id="1676" name="Human resource management" inAtoZ="false"/>
+	    <terms:term id="1688" name="Food standards" inAtoZ="true"/>
+	    <terms:term id="1740" name="Twin villages" inAtoZ="false"/>
+	    <terms:term id="1768" name="Private schools" inAtoZ="false"/>
+	    <terms:term id="1769" name="Public schools" inAtoZ="true"/>
+	    <terms:term id="1770" name="Boarding schools" inAtoZ="false"/>
+	    <terms:term id="1774" name="School admissions" inAtoZ="true"/>
+	    <terms:term id="1802" name="Social benefits" inAtoZ="true"/>
+	    <terms:term id="1812" name="Business services" inAtoZ="false"/>
+	    <terms:term id="1814" name="Fire safety" inAtoZ="false"/>
+	    <terms:term id="2682" name="Exhibitions" inAtoZ="false"/>
+	    <terms:term id="2700" name="Genealogy" inAtoZ="false"/>
+	    <terms:term id="2701" name="Family tree" inAtoZ="false"/>
+	    <terms:term id="2705" name="Horoscopes" inAtoZ="false"/>
+	    <terms:term id="2712" name="Real ale" inAtoZ="false"/>
+	    <terms:term id="2714" name="Fossils" inAtoZ="false"/>
+	    <terms:term id="2715" name="Foreign languages" inAtoZ="false"/>
+	    <terms:term id="2741" name="Tourist information centres" inAtoZ="false"/>
+	    <terms:term id="2772" name="Motorcycles" inAtoZ="false"/>
+	    <terms:term id="2833" name="Road gritting" inAtoZ="true"/>
+	    <terms:term id="2877" name="Consumer advice agencies" inAtoZ="false"/>
+	    <terms:term id="2915" name="Warranties" inAtoZ="false"/>
+	    <terms:term id="2931" name="Sales to Children" inAtoZ="false"/>
+	    <terms:term id="3007" name="School uniforms" inAtoZ="false"/>
+	    <terms:term id="3009" name="Dangerous and wild animals" inAtoZ="true"/>
+	    <terms:term id="3012" name="Council tax and finance" inAtoZ="true"/>
+	    <terms:term id="3022" name="Income support" inAtoZ="true"/>
+	    <terms:term id="3026" name="Zebra crossing" inAtoZ="true"/>
+	    <terms:term id="3027" name="Sex education" inAtoZ="false"/>
+	    <terms:term id="3037" name="Fares, passes and permits" inAtoZ="true"/>
+	    <terms:term id="3048" name="Public transport infrastructure" inAtoZ="false"/>
+	    <terms:term id="3053" name="Public transport investment" inAtoZ="false"/>
+	    <terms:term id="3086" name="Tunnels" inAtoZ="false"/>
+	    <terms:term id="3090" name="Radio controlled miniatures" inAtoZ="false"/>
+	    <terms:term id="3091" name="Commercial properties" inAtoZ="true"/>
+	    <terms:term id="3099" name="Metrology laboratories" inAtoZ="false"/>
+	    <terms:term id="3114" name="General elections" inAtoZ="false"/>
+	    <terms:term id="3118" name="Charities and citizens' interest groups" inAtoZ="false"/>
+	    <terms:term id="3119" name="Citizens advice bureaux" inAtoZ="true"/>
+	    <terms:term id="3121" name="Conservative" inAtoZ="false"/>
+	    <terms:term id="3122" name="Liberal democrat" inAtoZ="false"/>
+	    <terms:term id="3131" name="Sports grants and development funds" inAtoZ="true"/>
+	    <terms:term id="3132" name="Sports information and ticketing" inAtoZ="false"/>
+	    <terms:term id="3135" name="Girlguiding" inAtoZ="false"/>
+	    <terms:term id="3139" name="Business security (crime)" inAtoZ="false"/>
+	    <terms:term id="3140" name="Records offices" inAtoZ="false"/>
+	    <terms:term id="3141" name="Ladies circles" inAtoZ="false"/>
+	    <terms:term id="3142" name="Lions clubs" inAtoZ="false"/>
+	    <terms:term id="3143" name="Rotary clubs" inAtoZ="false"/>
+	    <terms:term id="3144" name="Round tables" inAtoZ="false"/>
+	    <terms:term id="3158" name="Land pollution" inAtoZ="false"/>
+	    <terms:term id="3159" name="Industrial properties" inAtoZ="true"/>
+	    <terms:term id="3160" name="Calibration services" inAtoZ="true"/>
+	    <terms:term id="3164" name="Job vacancies" inAtoZ="true"/>
+	    <terms:term id="3165" name="Collecting things" inAtoZ="false"/>
+	    <terms:term id="3176" name="Multicultural library service" inAtoZ="false"/>
+	    <terms:term id="3177" name="Children's library service" inAtoZ="false"/>
+	    <terms:term id="3178" name="Reading groups" inAtoZ="false"/>
+	    <terms:term id="3179" name="Schools library service" inAtoZ="false"/>
+	    <terms:term id="3301" name="Animal licences" inAtoZ="true"/>
+	    <terms:term id="3302" name="Building and construction licences" inAtoZ="true"/>
+	    <terms:term id="3303" name="Credit licences" inAtoZ="false"/>
+	    <terms:term id="3304" name="Entertainment licences" inAtoZ="true"/>
+	    <terms:term id="3305" name="Fire safety licences" inAtoZ="false"/>
+	    <terms:term id="3306" name="Food related licences" inAtoZ="false"/>
+	    <terms:term id="3307" name="Gambling and lottery licences" inAtoZ="true"/>
+	    <terms:term id="3308" name="Highway projection licences" inAtoZ="false"/>
+	    <terms:term id="3309" name="Leisure licences" inAtoZ="true"/>
+	    <terms:term id="3310" name="Non-medical licences" inAtoZ="false"/>
+	    <terms:term id="3311" name="Nursing agency licenses" inAtoZ="false"/>
+	    <terms:term id="3312" name="Personal treatment licences" inAtoZ="true"/>
+	    <terms:term id="3313" name="Retail licences" inAtoZ="false"/>
+	    <terms:term id="3314" name="Scrap metal licences" inAtoZ="false"/>
+	    <terms:term id="3315" name="Street trading licences" inAtoZ="true"/>
+	    <terms:term id="3316" name="Taxi and minicab licences" inAtoZ="true"/>
+	    <terms:term id="3317" name="Local businesses and markets" inAtoZ="true"/>
+	    <terms:term id="3318" name="Building and construction" inAtoZ="false"/>
+	    <terms:term id="3319" name="Communication" inAtoZ="false"/>
+	    <terms:term id="3320" name="Distribution and service" inAtoZ="false"/>
+	    <terms:term id="3321" name="Manufacturing" inAtoZ="false"/>
+	    <terms:term id="3322" name="Mineral extraction, mining and quarrying" inAtoZ="true"/>
+	    <terms:term id="3324" name="Business awards and grants" inAtoZ="true"/>
+	    <terms:term id="3325" name="Business planning" inAtoZ="false"/>
+	    <terms:term id="3326" name="Health and safety investigations" inAtoZ="false"/>
+	    <terms:term id="3327" name="Health and safety requirements" inAtoZ="false"/>
+	    <terms:term id="3328" name="Health and safety training" inAtoZ="true"/>
+	    <terms:term id="3331" name="Fire safety enforcement" inAtoZ="false"/>
+	    <terms:term id="3337" name="Central government departments" inAtoZ="true"/>
+	    <terms:term id="3338" name="Civic offices" inAtoZ="false"/>
+	    <terms:term id="3340" name="Council performance" inAtoZ="true"/>
+	    <terms:term id="3341" name="Council policies and plans" inAtoZ="true"/>
+	    <terms:term id="3342" name="Council vacancies" inAtoZ="true"/>
+	    <terms:term id="3343" name="Decision making (council)" inAtoZ="true"/>
+	    <terms:term id="3348" name="Complaints about schools" inAtoZ="false"/>
+	    <terms:term id="3349" name="Consultations on education" inAtoZ="false"/>
+	    <terms:term id="3351" name="Educational awards and benefits" inAtoZ="true"/>
+	    <terms:term id="3352" name="Extra-curricular activities" inAtoZ="true"/>
+	    <terms:term id="3357" name="Independent schools" inAtoZ="true"/>
+	    <terms:term id="3358" name="School catering" inAtoZ="false"/>
+	    <terms:term id="3360" name="School standards" inAtoZ="true"/>
+	    <terms:term id="3361" name="Special educational needs" inAtoZ="true"/>
+	    <terms:term id="3362" name="Special schools" inAtoZ="true"/>
+	    <terms:term id="3363" name="Term dates" inAtoZ="false"/>
+	    <terms:term id="3364" name="Mentoring" inAtoZ="false"/>
+	    <terms:term id="3365" name="Supply teaching" inAtoZ="false"/>
+	    <terms:term id="3367" name="Dog registration" inAtoZ="false"/>
+	    <terms:term id="3368" name="Dog warden schemes" inAtoZ="true"/>
+	    <terms:term id="3369" name="Importing animals" inAtoZ="false"/>
+	    <terms:term id="3370" name="Pet care" inAtoZ="false"/>
+	    <terms:term id="3371" name="Stray animals" inAtoZ="false"/>
+	    <terms:term id="3373" name="Food hygiene and quality" inAtoZ="true"/>
+	    <terms:term id="3376" name="Parks and open spaces" inAtoZ="false"/>
+	    <terms:term id="3378" name="Traveller sites" inAtoZ="true"/>
+	    <terms:term id="3381" name="Decision notices (planning)" inAtoZ="false"/>
+	    <terms:term id="3382" name="Environmental planning policies" inAtoZ="true"/>
+	    <terms:term id="3383" name="Geo technical services" inAtoZ="false"/>
+	    <terms:term id="3384" name="Land use planning" inAtoZ="true"/>
+	    <terms:term id="3385" name="Local plan - minerals" inAtoZ="false"/>
+	    <terms:term id="3386" name="Local plan - waste" inAtoZ="true"/>
+	    <terms:term id="3387" name="Residential planning" inAtoZ="false"/>
+	    <terms:term id="3388" name="Sites and projects policies" inAtoZ="false"/>
+	    <terms:term id="3389" name="Street numbering and naming" inAtoZ="true"/>
+	    <terms:term id="3390" name="Zoning" inAtoZ="false"/>
+	    <terms:term id="3392" name="Education on recycling" inAtoZ="false"/>
+	    <terms:term id="3394" name="Animal fouling" inAtoZ="false"/>
+	    <terms:term id="3395" name="Flyposting" inAtoZ="false"/>
+	    <terms:term id="3396" name="Flytipping" inAtoZ="true"/>
+	    <terms:term id="3397" name="Road spillage" inAtoZ="false"/>
+	    <terms:term id="3398" name="Street litter bins" inAtoZ="true"/>
+	    <terms:term id="3399" name="Vandalism" inAtoZ="false"/>
+	    <terms:term id="3412" name="Council estates parking" inAtoZ="false"/>
+	    <terms:term id="3413" name="Council home exchange" inAtoZ="true"/>
+	    <terms:term id="3414" name="Council tenancies" inAtoZ="true"/>
+	    <terms:term id="3415" name="Garages (council)" inAtoZ="true"/>
+	    <terms:term id="3416" name="Hard to let and easy to access properties" inAtoZ="false"/>
+	    <terms:term id="3417" name="Housing allocations" inAtoZ="true"/>
+	    <terms:term id="3418" name="Introductory tenancies" inAtoZ="false"/>
+	    <terms:term id="3419" name="Property alterations" inAtoZ="false"/>
+	    <terms:term id="3420" name="Right to buy council house" inAtoZ="true"/>
+	    <terms:term id="3421" name="Unauthorised occupation (council homes)" inAtoZ="true"/>
+	    <terms:term id="3422" name="Accommodation certification" inAtoZ="false"/>
+	    <terms:term id="3423" name="Housing crime" inAtoZ="false"/>
+	    <terms:term id="3425" name="Joining a housing association" inAtoZ="false"/>
+	    <terms:term id="3427" name="Home move purchase grants" inAtoZ="true"/>
+	    <terms:term id="3428" name="Housing rents" inAtoZ="true"/>
+	    <terms:term id="3431" name="Adapting homes" inAtoZ="false"/>
+	    <terms:term id="3432" name="Council housing repairs" inAtoZ="false"/>
+	    <terms:term id="3433" name="Council initiatives" inAtoZ="false"/>
+	    <terms:term id="3434" name="Garden maintenance" inAtoZ="false"/>
+	    <terms:term id="3435" name="Housing grants" inAtoZ="true"/>
+	    <terms:term id="3436" name="Housing surveys" inAtoZ="false"/>
+	    <terms:term id="3437" name="Modernising homes" inAtoZ="true"/>
+	    <terms:term id="3439" name="Careers advice" inAtoZ="false"/>
+	    <terms:term id="3440" name="Job training and development" inAtoZ="true"/>
+	    <terms:term id="3443" name="Parliament" inAtoZ="true"/>
+	    <terms:term id="3444" name="Local attractions" inAtoZ="false"/>
+	    <terms:term id="3445" name="Archaeological services" inAtoZ="false"/>
+	    <terms:term id="3446" name="Joining a library" inAtoZ="false"/>
+	    <terms:term id="3447" name="Library facilities" inAtoZ="false"/>
+	    <terms:term id="3448" name="Library loans and fines" inAtoZ="false"/>
+	    <terms:term id="3449" name="Library stock sales" inAtoZ="false"/>
+	    <terms:term id="3450" name="Coaching and management (sports)" inAtoZ="true"/>
+	    <terms:term id="3451" name="Sports and games" inAtoZ="false"/>
+	    <terms:term id="3452" name="Communal facilities" inAtoZ="false"/>
+	    <terms:term id="3453" name="Ambulance service" inAtoZ="false"/>
+	    <terms:term id="3456" name="Road markings and signage" inAtoZ="true"/>
+	    <terms:term id="3458" name="Boats and shipping vessels" inAtoZ="true"/>
+	    <terms:term id="3464" name="Inspections (trading standards)" inAtoZ="true"/>
+	    <terms:term id="3468" name="Information for school governors" inAtoZ="true"/>
+	    <terms:term id="3479" name="Arts development" inAtoZ="true"/>
+	    <terms:term id="3481" name="Transport for the disabled" inAtoZ="false"/>
+	    </terms:domain>

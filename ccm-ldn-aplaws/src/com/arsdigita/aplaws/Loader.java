@@ -42,8 +42,6 @@ import com.arsdigita.navigation.Template;
 import com.arsdigita.navigation.TemplateMapping;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
-// import com.arsdigita.portalworkspace.PageLayout;
-// import com.arsdigita.portalworkspace.Workspace;
 
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -69,45 +67,45 @@ public class Loader extends PackageLoader {
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     private static final String[] s_esdFiles = new String[] {
-        "WEB-INF/esd-toolkit/domain-gcl-2.10.xml",
-        "WEB-INF/esd-toolkit/domain-lgcl-1.04.xml",
-        "WEB-INF/esd-toolkit/domain-lgdl-2.01.xml",
-        "WEB-INF/esd-toolkit/domain-lgil-0.01.xml",
-        "WEB-INF/esd-toolkit/domain-lgsl-2.01.xml",
-        "WEB-INF/esd-toolkit/domain-lgal-0.01.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgcl-1.04.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgdl-2.01-lgsl-2.01.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgdl-2.01.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgil-0.01.xml",
-        "WEB-INF/esd-toolkit/mapping-lgcl-1.04-gcl-2.10.xml",
-        "WEB-INF/esd-toolkit/mapping-lgcl-1.04-lgsl-2.01.xml",
-        "WEB-INF/esd-toolkit/mapping-lgsl-2.00-lgcl-1.04.xml",
-        "WEB-INF/esd-toolkit/related-lgcl-1.04.xml",
-        "WEB-INF/aplaws/domain-rss-1.00.xml",
-        "WEB-INF/aplaws/hierarchy-rss-1.00.xml",
-        "WEB-INF/aplaws/domain-nav-1.03.xml",
-        "WEB-INF/aplaws/hierarchy-nav-1.03.xml"
+        "bundle/esd-toolkit/domain-gcl-2.10.xml",
+        "bundle/esd-toolkit/domain-lgcl-1.04.xml",
+        "bundle/esd-toolkit/domain-lgdl-2.01.xml",
+        "bundle/esd-toolkit/domain-lgil-0.01.xml",
+        "bundle/esd-toolkit/domain-lgsl-2.01.xml",
+        "bundle/esd-toolkit/domain-lgal-0.01.xml",
+        "bundle/esd-toolkit/hierarchy-lgcl-1.04.xml",
+        "bundle/esd-toolkit/hierarchy-lgdl-2.01-lgsl-2.01.xml",
+        "bundle/esd-toolkit/hierarchy-lgdl-2.01.xml",
+        "bundle/esd-toolkit/hierarchy-lgil-0.01.xml",
+        "bundle/esd-toolkit/mapping-lgcl-1.04-gcl-2.10.xml",
+        "bundle/esd-toolkit/mapping-lgcl-1.04-lgsl-2.01.xml",
+        "bundle/esd-toolkit/mapping-lgsl-2.00-lgcl-1.04.xml",
+        "bundle/esd-toolkit/related-lgcl-1.04.xml",
+        "bundle/aplaws/domain-rss-1.00.xml",
+        "bundle/aplaws/hierarchy-rss-1.00.xml",
+        "bundle/aplaws/domain-nav-1.03.xml",
+        "bundle/aplaws/hierarchy-nav-1.03.xml"
     };
 
     private static final String[] s_esdFilesLite = new String[] {
-        "WEB-INF/esd-toolkit/domain-gcl-2.10.xml",
-        "WEB-INF/esd-toolkit/domain-lgcl-lite-1.04.xml",
-        "WEB-INF/esd-toolkit/domain-lgdl-2.01.xml",
-        "WEB-INF/esd-toolkit/domain-lgil-0.01.xml",
-        "WEB-INF/esd-toolkit/domain-lgsl-2.01.xml",
-        "WEB-INF/esd-toolkit/domain-lgal-0.01.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgcl-lite-1.04.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgdl-2.01-lgsl-2.01.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgdl-2.01.xml",
-        "WEB-INF/esd-toolkit/hierarchy-lgil-0.01.xml",
-        "WEB-INF/esd-toolkit/mapping-lgcl-1.04-gcl-2.10.xml",
-        "WEB-INF/esd-toolkit/mapping-lgcl-1.04-lgsl-2.01.xml",
-        "WEB-INF/esd-toolkit/mapping-lgsl-2.00-lgcl-1.04.xml",
-        "WEB-INF/esd-toolkit/related-lgcl-1.04.xml",
-        "WEB-INF/aplaws/domain-rss-1.00.xml",
-        "WEB-INF/aplaws/hierarchy-rss-1.00.xml",
-        "WEB-INF/aplaws/domain-nav-1.03.xml",
-        "WEB-INF/aplaws/hierarchy-nav-1.03.xml"
+        "bundle/esd-toolkit/domain-gcl-2.10.xml",
+        "bundle/esd-toolkit/domain-lgcl-lite-1.04.xml",
+        "bundle/esd-toolkit/domain-lgdl-2.01.xml",
+        "bundle/esd-toolkit/domain-lgil-0.01.xml",
+        "bundle/esd-toolkit/domain-lgsl-2.01.xml",
+        "bundle/esd-toolkit/domain-lgal-0.01.xml",
+        "bundle/esd-toolkit/hierarchy-lgcl-lite-1.04.xml",
+        "bundle/esd-toolkit/hierarchy-lgdl-2.01-lgsl-2.01.xml",
+        "bundle/esd-toolkit/hierarchy-lgdl-2.01.xml",
+        "bundle/esd-toolkit/hierarchy-lgil-0.01.xml",
+        "bundle/esd-toolkit/mapping-lgcl-1.04-gcl-2.10.xml",
+        "bundle/esd-toolkit/mapping-lgcl-1.04-lgsl-2.01.xml",
+        "bundle/esd-toolkit/mapping-lgsl-2.00-lgcl-1.04.xml",
+        "bundle/esd-toolkit/related-lgcl-1.04.xml",
+        "bundle/aplaws/domain-rss-1.00.xml",
+        "bundle/aplaws/hierarchy-rss-1.00.xml",
+        "bundle/aplaws/domain-nav-1.03.xml",
+        "bundle/aplaws/hierarchy-nav-1.03.xml"
     };
 
     private StringParameter m_servicesDomain;
@@ -224,7 +222,7 @@ public class Loader extends PackageLoader {
                                       null);
 
         String[] files = Boolean.TRUE.equals(get(m_liteLoad)) ?
-            s_esdFilesLite : s_esdFiles;
+                             s_esdFilesLite : s_esdFiles;
 
         final Parser parser = new Parser();
         // for each filename in the array of files containing categories
@@ -287,7 +285,7 @@ public class Loader extends PackageLoader {
         Template template = Template.create(
             "APLAWS Services",
             "APLAWS ESD Toolkit Services",
-            "/packages/navigation/templates/aplaws-services.jsp");
+            "/templates/ccm-navigation/navigation/aplaws-services.jsp");
 
         new TemplateMapping( template, root, Template.DEFAULT_DISPATCHER_CONTEXT,
                                              Template.DEFAULT_USE_CONTEXT );
@@ -297,7 +295,7 @@ public class Loader extends PackageLoader {
         Template template = Template.create(
             "APLAWS Portal",
             "APLAWS Portal in category",
-            "/packages/navigation/templates/aplaws-portal.jsp");
+            "/templates/ccm-navigation/navigation/aplaws-portal.jsp");
     }
     
     /**

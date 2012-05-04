@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" about="http://www.esd.org.uk/standards/lgdl/2.01/lgdltermslist.xml" key="LGDL" title="Local Government Directories List" version="2.01" released="2004-07-19">
+  <terms:term id="1" name="Arts and leisure" inAtoZ="false"/>
+  <terms:term id="2" name="Exhibitions" inAtoZ="false"/>
+  <terms:term id="3" name="Libraries" inAtoZ="false"/>
+  <terms:term id="4" name="Museums and galleries" inAtoZ="false"/>
+  <terms:term id="5" name="Physical activity and sports" inAtoZ="false"/>
+  <terms:term id="6" name="Tourism" inAtoZ="false"/>
+  <terms:term id="7" name="Education" inAtoZ="false"/>
+  <terms:term id="8" name="Adult education" inAtoZ="false"/>
+  <terms:term id="9" name="Consultation on education" inAtoZ="false"/>
+  <terms:term id="10" name="Extra-curricular activities" inAtoZ="false"/>
+  <terms:term id="11" name="Help for nursery, primary and secondary school pupils" inAtoZ="false"/>
+  <terms:term id="12" name="Help for parents of nursery, primary and secondary school aged children" inAtoZ="false"/>
+  <terms:term id="13" name="Help for students in further/higher education" inAtoZ="false"/>
+  <terms:term id="14" name="Learning resource centres - school library service" inAtoZ="false"/>
+  <terms:term id="15" name="Schools" inAtoZ="false"/>
+  <terms:term id="16" name="Environmental services" inAtoZ="false"/>
+  <terms:term id="17" name="Archaeological services" inAtoZ="false"/>
+  <terms:term id="18" name="Business licences and street trading" inAtoZ="false"/>
+  <terms:term id="19" name="Countryside" inAtoZ="false"/>
+  <terms:term id="20" name="Demolitions" inAtoZ="false"/>
+  <terms:term id="21" name="Environmental health" inAtoZ="false"/>
+  <terms:term id="22" name="Health and safety" inAtoZ="false"/>
+  <terms:term id="23" name="Land and premises" inAtoZ="false"/>
+  <terms:term id="24" name="Marine/waterway services" inAtoZ="false"/>
+  <terms:term id="25" name="Markets management" inAtoZ="false"/>
+  <terms:term id="26" name="Parking" inAtoZ="false"/>
+  <terms:term id="27" name="Parks and open spaces" inAtoZ="false"/>
+  <terms:term id="28" name="Planning, building control and town centre management" inAtoZ="false"/>
+  <terms:term id="29" name="Public rights of way" inAtoZ="false"/>
+  <terms:term id="30" name="Records Office" inAtoZ="false"/>
+  <terms:term id="31" name="Refuse" inAtoZ="false"/>
+  <terms:term id="32" name="Roads, highways and pavements" inAtoZ="false"/>
+  <terms:term id="33" name="Street care and cleaning" inAtoZ="false"/>
+  <terms:term id="34" name="Trading standards" inAtoZ="false"/>
+  <terms:term id="35" name="Unitary authorities" inAtoZ="false"/>
+  <terms:term id="36" name="Voluntary organisations" inAtoZ="false"/>
+  <terms:term id="37" name="Fire and emergency services" inAtoZ="false"/>
+  <terms:term id="38" name="Emergency planning" inAtoZ="false"/>
+  <terms:term id="39" name="Fire safety" inAtoZ="false"/>
+  <terms:term id="40" name="Firefighting/rescue" inAtoZ="false"/>
+  <terms:term id="41" name="Housing" inAtoZ="false"/>
+  <terms:term id="42" name="Commercial property" inAtoZ="false"/>
+  <terms:term id="43" name="Council housing - tenants" inAtoZ="false"/>
+  <terms:term id="44" name="Council leasholder and freeholder management" inAtoZ="false"/>
+  <terms:term id="45" name="Council lettings and housing allocations service" inAtoZ="false"/>
+  <terms:term id="46" name="Council run sheltered housing" inAtoZ="false"/>
+  <terms:term id="47" name="Dealing with housing crime" inAtoZ="false"/>
+  <terms:term id="48" name="Housing advice" inAtoZ="false"/>
+  <terms:term id="49" name="Housing finance" inAtoZ="false"/>
+  <terms:term id="50" name="Improvements, repairs and regeneration" inAtoZ="false"/>
+  <terms:term id="51" name="Multiple occupancy homes" inAtoZ="false"/>
+  <terms:term id="52" name="Right to buy" inAtoZ="false"/>
+  <terms:term id="53" name="Miscellaneous" inAtoZ="false"/>
+  <terms:term id="54" name="Advice to business and community" inAtoZ="false"/>
+  <terms:term id="55" name="Births, deaths and marriages" inAtoZ="false"/>
+  <terms:term id="56" name="Corporate complaints" inAtoZ="false"/>
+  <terms:term id="57" name="Cremations and funerals" inAtoZ="false"/>
+  <terms:term id="58" name="Democracy" inAtoZ="false"/>
+  <terms:term id="59" name="Generic processes" inAtoZ="false"/>
+  <terms:term id="60" name="Legal services" inAtoZ="false"/>
+  <terms:term id="61" name="Recruitment" inAtoZ="false"/>
+  <terms:term id="62" name="Statistics and census information" inAtoZ="false"/>
+  <terms:term id="63" name="Revenues and benefits/finance" inAtoZ="false"/>
+  <terms:term id="64" name="Business rates (NNDR)" inAtoZ="false"/>
+  <terms:term id="65" name="Council tax" inAtoZ="false"/>
+  <terms:term id="66" name="Council tax benefit" inAtoZ="false"/>
+  <terms:term id="67" name="Housing benefit" inAtoZ="false"/>
+  <terms:term id="68" name="Procurement" inAtoZ="false"/>
+  <terms:term id="69" name="Social services" inAtoZ="false"/>
+  <terms:term id="70" name="Advice and support" inAtoZ="false"/>
+  <terms:term id="71" name="Carers" inAtoZ="false"/>
+  <terms:term id="72" name="Childre, young people and families" inAtoZ="false"/>
+  <terms:term id="73" name="Community care" inAtoZ="false"/>
+  <terms:term id="74" name="Financial/welfare benefits and other help" inAtoZ="false"/>
+  <terms:term id="75" name="Help at home" inAtoZ="false"/>
+  <terms:term id="76" name="HIV services" inAtoZ="false"/>
+  <terms:term id="77" name="Legal help" inAtoZ="false"/>
+  <terms:term id="78" name="Out of hours" inAtoZ="false"/>
+  <terms:term id="79" name="Physical and sensory disabilities" inAtoZ="false"/>
+  <terms:term id="80" name="Staying in hospital" inAtoZ="false"/>
+  <terms:term id="81" name="Transportation/mobility" inAtoZ="false"/>
+  <terms:term id="82" name="Youth Offending" inAtoZ="false"/>
+  <terms:term id="83" name="Arts centres" inAtoZ="false"/>
+</terms:domain>
