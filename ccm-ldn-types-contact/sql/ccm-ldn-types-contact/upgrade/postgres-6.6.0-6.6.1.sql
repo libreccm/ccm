@@ -1,21 +1,27 @@
 --
--- Copyright (C) 2007 Magpie. All Rights Reserved.
+-- Copyright (C) 2012 Peter Boy All Rights Reserved.
 --
--- The contents of this file are subject to the CCM Public
--- License (the "License"); you may not use this file except in
--- compliance with the License. You may obtain a copy of the
--- License at http://www.redhat.com/licenses/ccmpl.html.
+-- This library is free software; you can redistribute it and/or
+-- modify it under the terms of the GNU Lesser General Public License
+-- as published by the Free Software Foundation; either version 2.1 of
+-- the License, or (at your option) any later version.
 --
--- Software distributed under the License is distributed on an
--- "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express
--- or implied. See the License for the specific language governing
--- rights and limitations under the License.
+-- This library is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+-- Lesser General Public License for more details.
 --
+-- You should have received a copy of the GNU Lesser General Public
+-- License along with this library; if not, write to the Free Software
+-- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+--
+-- $Id: postgres-6.6.0-6.6.1.sql pboy $
 
-\echo Red Hat Enterprise CMS 6.5.0 -> 6.5.1 Upgrade Script (PostgreSQL)
+\echo APLAWS ldn contact  6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
 
 begin;
 
-\i default/6.5.0-6.5.1/contact_content_item_map_table.sql
+\i default/6.6.0-6.6.1/ren_contact_tables.sql
+\i default/6.6.0-6.6.1/upd_system_tables.sql
 
 commit;

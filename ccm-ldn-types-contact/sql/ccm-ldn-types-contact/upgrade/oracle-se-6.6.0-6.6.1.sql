@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2007 Magpie. All Rights Reserved.
+-- Copyright (C) 2012 Peter Boy All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,5 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
+-- $Id: oracle-se-6.6.0-6.6.1.sql pboy $
 
-@@ default/6.5.0-6.5.1/contact_content_item_map_table.sql
+@@ default/6.6.0-6.6.1/ren_contact_tables.sql
+@@ default/6.6.0-6.6.1/upd_system_tables.sql
