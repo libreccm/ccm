@@ -23,6 +23,5 @@
 
 -- NOTE: Order is significant
 @@ default/6.6.1-6.6.2/upd_system_tables.sql
-@@ default/6.6.1-6.6.2/drop_app_table.sql
 @@ default/6.6.1-6.6.2/ren_domainprovider_table.sql
 

@@ -17,7 +17,6 @@
 --
 -- $Id: drop_app_table.sql pboy $
 
--- drops table atoz_app which just contained application type id and is
--- never used for any action. 
+-- Don't do it! Application table is required with this package.
 
-drop table atoz_app ;
+-- drop table atoz_app ;

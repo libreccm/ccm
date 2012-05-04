@@ -26,7 +26,6 @@ begin;
 
 -- NOTE: Order is significant
 \i default/6.6.1-6.6.2/upd_system_tables.sql
-\i default/6.6.1-6.6.2/drop_app_table.sql
 \i default/6.6.1-6.6.2/ren_domainprovider_table.sql
 
 commit;
