@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+  <ctd:content-type label="Coventry Person"
+    description="A Coventry person type"
+    objectType="com.arsdigita.coventry.cms.contenttypes.Person"
+    classname="com.arsdigita.coventry.cms.contenttypes.Person">
+
+     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+       <ctd:authoring-step label="Basic Properties"
+         description= "Edit the title, name, start date, date/time, location, lead, main contributor, type, map link, and cost"
+         component="com.arsdigita.coventry.cms.contenttypes.ui.PersonPropertiesStep"
+         ordering="1"/>
+
+       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
+     </ctd:authoring-kit>
+  </ctd:content-type>
+</ctd:content-types>

@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="cov_persons"/>
+    <initializer class="com.arsdigita.coventry.cms.contenttypes.PersonInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-ldn-coventry-person"/>
+    <data class="com.arsdigita.coventry.cms.contenttypes.PersonLoader"/>
+  </scripts>
+</load>

@@ -1,0 +1,32 @@
+//
+// Copyright (C) 2001, 2002 Red Hat Inc. All Rights Reserved.
+//
+// The contents of this file are subject to the CCM Public
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.redhat.com/licenses/ccmpl.html
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+// $Id: Councillor.pdl 1489 2007-03-19 11:39:58Z apevec $
+// $DateTime: 2004/03/03 15:41:14 $
+
+model com.arsdigita.coventry.cms.contenttypes;
+
+import com.arsdigita.cms.TextPage;
+import com.arsdigita.coventry.cms.contenttypes.Person;
+
+// object type to hold extended attributes of event content type
+
+object type Councillor extends com.arsdigita.coventry.cms.contenttypes.Person {
+    String [0..1] position            = cov_councillors.position VARCHAR(4000);
+    String [0..1] politicalParty = cov_councillors.political_party VARCHAR(1000);
+    String [0..1] ward = cov_councillors.ward VARCHAR(1000);
+    String [0..1] areaOfResponsibility = cov_councillors.responsibility VARCHAR(1000);
+    String [0..1] termOfOffice = cov_councillors.term_of_office VARCHAR(1000);
+    String [0..1] surgeryDetails = cov_councillors.surgery_details VARCHAR(4000);
+    reference key (cov_councillors.item_id);
+}
