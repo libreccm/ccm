@@ -30,7 +30,7 @@ import com.arsdigita.bebop.form.OptionGroup;
  *  &lt;/define:checkboxGroup>
  * </pre>
  * 
- * @version $Id: DefineCheckboxGroup.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: DefineCheckboxGroup.java 2089 2010-04-17 07:55:43Z pboy $ 
  */
 public class DefineCheckboxGroup extends DefineOptionGroup {
 

@@ -60,7 +60,7 @@ import org.apache.log4j.Logger;
  * configuration files and adds jsp templates to navigation.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 2223 2011-08-01 07:33:57Z pboy $
+ * @version $Id: Loader.java 2255 2011-11-17 08:46:40Z pboy $
  */
 public class Loader extends PackageLoader {
 

@@ -32,7 +32,7 @@ import java.util.EventListener;
  *
  * @author David Lutterkort 
  *
- * @version $Id: ActionListener.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ActionListener.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public interface ActionListener extends EventListener {
 

@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
  * Initializes ccm-simplesurvey at each system startup.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Initializer.java 759 2005-09-02 15:25:32Z sskracic $
+ * @version $Id: Initializer.java 2297 2012-05-01 07:57:05Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

@@ -40,7 +40,7 @@ import com.arsdigita.bebop.util.GlobalizationUtil;
 
 /**
  *
- * @version $Id: AddProcess.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: AddProcess.java 2089 2010-04-17 07:55:43Z pboy $ 
  */
 public class AddProcess extends Form
     implements FormProcessListener, FormInitListener,

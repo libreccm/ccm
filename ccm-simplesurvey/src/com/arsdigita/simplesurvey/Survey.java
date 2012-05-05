@@ -43,7 +43,7 @@ import java.util.Date;
  * the main domain object of the Simple Survey application.
  *
  * @author <a href="mailto:pmarklun@arsdigita.com">Peter Marklund</a>
- * @version $Id: Survey.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: Survey.java 2286 2012-03-11 09:14:14Z pboy $
  */
 public class Survey extends ACSObject {
 

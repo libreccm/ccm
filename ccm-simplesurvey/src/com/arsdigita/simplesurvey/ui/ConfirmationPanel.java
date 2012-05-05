@@ -26,7 +26,7 @@ import com.arsdigita.ui.UI;
  * A page confirming that a survey response has been submitted.
  *
  * @author <a href="mailto:pmarklun@arsdigita.com">Peter Marklund</a>
- * @version $Id: ConfirmationPanel.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: ConfirmationPanel.java 2164 2011-06-19 20:31:22Z pboy $
  */
 public class ConfirmationPanel extends SimpleSurveyPanel {
 

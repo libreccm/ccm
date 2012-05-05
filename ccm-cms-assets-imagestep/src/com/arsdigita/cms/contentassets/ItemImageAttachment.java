@@ -168,16 +168,16 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
      * Automatically publish an unpublished image
      */
     public boolean copyProperty(final CustomCopy source,
-            final Property property,
-            final ItemCopier copier) {
+                                final Property property,
+                                final ItemCopier copier) {
         String attribute = property.getName();
         if (ItemCopier.VERSION_COPY == copier.getCopyType()
-                && IMAGE.equals(attribute)) {
+                                       && IMAGE.equals(attribute)) {
             ItemImageAttachment attachment = (ItemImageAttachment) source;
             ReusableImageAsset image = attachment.getImage();
 
             ReusableImageAsset liveImage =
-                    (ReusableImageAsset) image.getLiveVersion();
+                               (ReusableImageAsset) image.getLiveVersion();
 
             if (null == liveImage) {
                 liveImage = (ReusableImageAsset) image.createLiveVersion();
@@ -210,7 +210,7 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         // when we delete the link, the image still references it in DB
         // can't make it composite because then image is deleted if we delete
         // link. Have to set link to null first (I think)
-        DomainObject link = DomainObjectFactory.newInstance((DataObject) get(IMAGE_LINK));
+        DomainObject link = DomainObjectFactory.newInstance((DataObject)get(IMAGE_LINK));
         set(IMAGE_LINK, null);
         save();
         link.delete();

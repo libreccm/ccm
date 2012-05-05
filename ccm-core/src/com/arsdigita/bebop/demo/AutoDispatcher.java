@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * A dispatcher that looks for "buildPage*" methods, invokes them,
  * and constructs an index page with links automatically.
  *
- * @version $Id: AutoDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: AutoDispatcher.java 2089 2010-04-17 07:55:43Z pboy $
  */
 public class AutoDispatcher extends BebopMapDispatcher {
 

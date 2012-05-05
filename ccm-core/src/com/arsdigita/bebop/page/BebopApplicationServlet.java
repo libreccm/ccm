@@ -60,7 +60,7 @@ import org.apache.log4j.Logger;
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author chris gilbert - allow BebopApplicationServlet pages to disable
  *                         client/middleware
- * @version $Id: BebopApplicationServlet.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $
+ * @version $Id: BebopApplicationServlet.java 2292 2012-04-22 15:42:43Z pboy $
  */
 public class BebopApplicationServlet extends BaseApplicationServlet {
 

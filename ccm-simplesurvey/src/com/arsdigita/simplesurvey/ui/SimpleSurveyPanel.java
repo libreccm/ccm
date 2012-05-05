@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletRequest;
  * The Page class that all pages in the Simple Survey application extend.
  *
  * @author <a href="mailto:pmarklun@arsdigita.com">Peter Marklund</a>
- * @version $Id: SimpleSurveyPanel.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: SimpleSurveyPanel.java 2286 2012-03-11 09:14:14Z pboy $
  */
 public abstract class SimpleSurveyPanel extends SimpleContainer {
 

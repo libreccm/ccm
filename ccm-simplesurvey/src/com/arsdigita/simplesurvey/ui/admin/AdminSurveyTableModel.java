@@ -35,7 +35,7 @@ import com.arsdigita.util.Assert;
  * 
  *
  * @author <a href="mailto:pmarklun@arsdigita.com">Peter Marklund</a>
- * @version $Id: AdminSurveyTableModel.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: AdminSurveyTableModel.java 2099 2010-04-17 15:35:14Z pboy $
  */
 public class AdminSurveyTableModel implements TableModel {
 

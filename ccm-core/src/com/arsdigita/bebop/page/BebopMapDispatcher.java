@@ -42,7 +42,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * to be coded with a specific map or to override the map lookup for certain
  * sets of URLs.
  *
- * @version $Id: BebopMapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: BebopMapDispatcher.java 2284 2012-03-11 01:37:17Z pboy $
  */
 public class BebopMapDispatcher extends MapDispatcher {
 

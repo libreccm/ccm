@@ -15,7 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: postgres-create.sql 1704 2008-06-08 14:45:43Z pboy $
+-- $Id: postgres-create.sql 2141 2011-01-16 12:17:15Z pboy $
 -- $DateTime: 2004/08/16 18:10:38 $
 
 begin;

@@ -28,7 +28,7 @@ import com.arsdigita.util.Assert;
  *
  * @see Survey
  * @author <a href="mailto:justin@arsdigita.com">Justin Ross</a>
- * @version $Id: ResponseCollection.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: ResponseCollection.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ResponseCollection extends DomainCollection {
 

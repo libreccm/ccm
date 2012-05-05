@@ -15,7 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-// $Id: Admin.pdl 1230 2006-06-22 11:50:59Z apevec $
+// $Id: Admin.pdl 2284 2012-03-11 01:37:17Z pboy $
 // $DateTime: 2004/08/16 18:10:38 $
 model com.arsdigita.ui.admin;
 

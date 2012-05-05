@@ -17,8 +17,6 @@ package com.arsdigita.cms.docmgr;
 
 import org.apache.log4j.Logger;
 
-// import com.arsdigita.cms.docmgr.ui.CategoryDocsNavigatorPortlet;
-// import com.arsdigita.cms.docmgr.ui.LegacyCategoryDocsNavigatorPortlet;
 import com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -26,12 +24,8 @@ import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-// import com.arsdigita.portal.PortletType;
-// import com.arsdigita.portal.apportlet.AppPortletSetup;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-// import com.arsdigita.web.ApplicationSetup;
-// import com.arsdigita.web.ApplicationType;
 
 
 /**

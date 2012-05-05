@@ -33,7 +33,7 @@ import com.arsdigita.bebop.event.ParameterEvent;
  *    @author Uday Mathur 
  *    @author Stas Freidin 
  *    @author Rory Solomon 
- * @version $Id: DateInRangeValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DateInRangeValidationListener.java 2089 2010-04-17 07:55:43Z pboy $
  */
 
 public class DateInRangeValidationListener implements ParameterListener {

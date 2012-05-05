@@ -11,7 +11,7 @@
                prettyName="APLAWS plus Custom Spin" 
                version="2-0-0" 
                release="custom-beta-1-r2234"
-               webxml="web.xml-aplaws" 
+               webxml="web.xml" 
                webapp="ROOT" 
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

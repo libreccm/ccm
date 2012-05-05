@@ -50,7 +50,7 @@ import com.arsdigita.bebop.PageState;
  * Tables all Simple Surveys in the system.
  *
  * @author <a href="mailto:pmarklun@arsdigita.com">Peter Marklund</a>
- * @version $Id: SurveyTable.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: SurveyTable.java 2286 2012-03-11 09:14:14Z pboy $
  */
 public class SurveyTable extends Table {
 

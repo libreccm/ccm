@@ -36,7 +36,7 @@ import org.apache.log4j.Logger;
  * application type in database.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 759 2005-09-02 15:25:32Z sskracic $
+ * @version $Id: Loader.java 2297 2012-05-01 07:57:05Z pboy $
  */
 public class Loader extends PackageLoader {
 

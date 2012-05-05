@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
  *
  * @author Joseph Bank 
  * @version 1.0
- * @version $Id: AuditingObserver.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: AuditingObserver.java 2089 2010-04-17 07:55:43Z pboy $
  */
 
 public class AuditingObserver implements DomainObjectObserver {

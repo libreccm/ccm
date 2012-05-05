@@ -52,7 +52,7 @@ import com.arsdigita.util.LockableImpl;
  * Tables all Simple Surveys in the system.
  *
  * @author <a href="mailto:pmarklun@arsdigita.com">Peter Marklund</a>
- * @version $Id: AdminSurveyTable.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: AdminSurveyTable.java 2286 2012-03-11 09:14:14Z pboy $
  */
 public class AdminSurveyTable extends Table {
 

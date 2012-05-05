@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  *
  * @author Joseph Bank 
  * @version 1.0
- * @version $Id: BasicAuditTrail.java 1547 2007-03-29 14:24:57Z chrisgilbert23 $
+ * @version $Id: BasicAuditTrail.java 2089 2010-04-17 07:55:43Z pboy $
  **/
 public class BasicAuditTrail extends DomainObject implements Audited {
 

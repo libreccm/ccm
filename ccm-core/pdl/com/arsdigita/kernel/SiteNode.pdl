@@ -15,7 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-// $Id: SiteNode.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $Id: SiteNode.pdl 2141 2011-01-16 12:17:15Z pboy $
 // $DateTime: 2004/08/16 18:10:38 $
 model com.arsdigita.kernel;
 
@@ -24,7 +24,7 @@ model com.arsdigita.kernel;
 // A "site node" is a node in a URL hierarchy that can be mapped
 // to an application instance.
 //
-// @version "$Id: SiteNode.pdl 287 2005-02-22 00:29:02Z sskracic $"
+// @version "$Id: SiteNode.pdl 2141 2011-01-16 12:17:15Z pboy $"
 //
 
 object type SiteNode extends ACSObject {
