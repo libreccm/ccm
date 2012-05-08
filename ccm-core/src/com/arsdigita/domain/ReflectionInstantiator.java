@@ -78,7 +78,7 @@ public class ReflectionInstantiator extends DomainObjectInstantiator {
                SecurityException
     {
         Class javaClass = Class.forName(domainClassName);
-        m_constructor = javaClass.getConstructor(s_dataArgs);        
+        m_constructor = javaClass.getConstructor(s_dataArgs);
         // We should add a check that the domain class is indeed
         // a subclass of DomainObject
     }
