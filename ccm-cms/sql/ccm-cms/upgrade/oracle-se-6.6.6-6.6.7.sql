@@ -23,3 +23,4 @@ PROMPT Red Hat Enterprise CMS 6.6.6 -> 6.6.7 Upgrade Script (Oracle)
 
 @@ ../default/upgrade/6.6.6-6.6.7/remove_workspace_legacy_entries.sql
 @@ ../default/upgrade/6.6.6-6.6.7/remove_service_legacy_entries.sql
+@@ ../default/upgrade/6.6.6-6.6.7/add_default_workflow.sql

@@ -15,12 +15,6 @@
   </servlet>
 
   <servlet>
-    <servlet-name>worker</servlet-name>
-    <servlet-class>com.arsdigita.london.search.SearchWorkerServlet</servlet-class>
-    <load-on-startup>2</load-on-startup>
-  </servlet>
-
-  <servlet>
     <servlet-name>files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>

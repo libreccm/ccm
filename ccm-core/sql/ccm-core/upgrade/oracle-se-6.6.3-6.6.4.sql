@@ -27,11 +27,11 @@ PROMPT Red Hat Enterprise CORE 6.6.3 -> 6.6.4 Upgrade Script (Oracle)
 -- Remove DS entries in apm_package* which are not used anymore.
 @@ default/6.6.3-6.6.4/remove_ds_legacy_entries.sql
 
--- Remove admin entries in apm_package* which are not used anymore.
-@@ default/6.6.3-6.6.4/remove_admin_legacy_entries.sql
-
 -- Remove sitemap entries in apm_package* which are not used anymore.
 @@ default/6.6.3-6.6.4/remove_sitemap_legacy_entries.sql
+
+-- Remove admin entries in apm_package* which are not used anymore.
+@@ default/6.6.3-6.6.4/remove_admin_legacy_entries.sql
 
 -- Remove permissions entries in apm_package* which are not used anymore.
 @@ default/6.6.3-6.6.4/remove_permissions_legacy_entries.sql

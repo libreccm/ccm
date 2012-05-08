@@ -24,6 +24,9 @@ begin;
 -- Under unknown circumstances a constraint may get lost during updating.
 -- Only needed under special conditions or when a missing constraint causes
 -- errors.
+\echo 'This update is only needed if the constraints are missing.'
+\echo 'If the update complains about an existing constraint it is safe '
+\echo 'to ignore this error message.'
 \i ../default/upgrade/6.6.0-6.6.1/upd_constraints.sql
 
 commit;

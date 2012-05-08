@@ -127,7 +127,7 @@ final class SimpleURIResolver implements URIResolver {
             // are relative to 'thisURL'
             return new StreamSource(is, thisURL.toString());
         } catch (IOException ex) {
-            throw new TransformerException("cannot read stream", ex);
+            throw new TransformerException(String.format("cannot read stream for %s", thisURL.toString()), ex);
         }
     }
 }

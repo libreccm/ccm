@@ -87,30 +87,10 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
-<!--
-  <servlet>
-    <servlet-name>legacy-dispatcher</servlet-name>
-    <servlet-class>com.arsdigita.sitenode.SiteNodeDispatcher</servlet-class>
-    <load-on-startup>3</load-on-startup>
-  </servlet>
--->
   <servlet>
     <servlet-name>ccm-dispatcher</servlet-name>
-    <servlet-class>com.arsdigita.web.DispatcherServlet</servlet-class>
-<!--
-    <init-param>
-      <param-name>fallback-servlet</param-name>
-      <param-value>legacy-dispatcher</param-value>
-    </init-param> 
--->
     <load-on-startup>2</load-on-startup>
   </servlet>
-<!--
-  <servlet>
-    <servlet-name>legacy-adapter</servlet-name>
-    <servlet-class>com.arsdigita.web.LegacyAdapterServlet</servlet-class>
-  </servlet>
--->
   <servlet>
     <servlet-name>cache-manager</servlet-name>
     <servlet-class>com.arsdigita.caching.CacheServlet</servlet-class>
@@ -462,12 +442,7 @@
     <servlet-name>ccm-dispatcher</servlet-name>
     <url-pattern>/ccm/*</url-pattern>
   </servlet-mapping>
-<!--
-  <servlet-mapping>
-    <servlet-name>legacy-adapter</servlet-name>
-    <url-pattern>/templates/servlet/legacy-adapter/*</url-pattern>
-  </servlet-mapping>
--->
+
   <servlet-mapping>
     <servlet-name>cache-manager</servlet-name>
     <url-pattern>/expireCache/*</url-pattern>
