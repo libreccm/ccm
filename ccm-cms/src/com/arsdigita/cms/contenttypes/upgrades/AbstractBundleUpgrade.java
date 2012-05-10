@@ -95,10 +95,9 @@ public abstract class AbstractBundleUpgrade extends Program {
                     "SELECT parent_id "
                     + "FROM cms_items "
                     + "JOIN %s "
-                    + "ON cms_items.item_id = %s.%s",
+                    + "ON cms_items.item_id = %s.bundle_id",
                     getBundleTableName(),
-                    getBundleTableName(),
-                    getIdColName()));
+                    getBundleTableName()));
 
             while (personsRs.next()) {
                 stmt.addBatch(String.format("INSERT INTO %s (bundle_id) "

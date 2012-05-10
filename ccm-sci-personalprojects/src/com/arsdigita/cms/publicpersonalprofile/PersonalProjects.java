@@ -18,7 +18,6 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,7 +94,7 @@ public class PersonalProjects implements ContentGenerator {
         final List<SciProjectBundle> projects =
                                      new LinkedList<SciProjectBundle>();
         final DataCollection collection = (DataCollection) person.
-                getGenericPersonBundle().get("organizationalunits");        
+                getGenericPersonBundle().get("organizationalunits");               
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
@@ -248,13 +247,15 @@ public class PersonalProjects implements ContentGenerator {
         final SciProject project = projectBundle.getProject(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
        
+        if (project == null) {
+            return;
+        }
+        
         Element projectElem = projectGroupElem.newChildElement("project");
         projectElem.addAttribute("oid", project.getOID().toString());
 
         Element title = projectElem.newChildElement("title");
-        title.setText(project.getTitle());
-
-        //Element beginElem = projectElem.newChildElement("projectbegin");
+        title.setText(project.getTitle());        
 
         if ((project.getAddendum() != null)
             && !(project.getAddendum().isEmpty())) {

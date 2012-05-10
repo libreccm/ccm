@@ -125,27 +125,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             final Element root = document.getRootElement();
 
             final Session session = SessionManager.getSession();
-
-            /*final DataCollection profiles = getProfiles(session,
-             path.getProfileOwner(),
-             path.getPreview(),
-             GlobalizationHelper.
-             getNegotiatedLocale().getLanguage());
-            
-             if (profiles.isEmpty()) {
-             response.sendError(HttpServletResponse.SC_NOT_FOUND);
-             return;
-             } else if (profiles.size() > 1) {
-             throw new IllegalStateException(
-             "More than one matching members found.");
-             }
-            
-             profiles.next();
-             PublicPersonalProfile profile =
-             (PublicPersonalProfile) DomainObjectFactory.
-             newInstance(profiles.getDataObject());
-             profiles.close();*/
-
+           
             PublicPersonalProfile profile = getProfile(
                     session,
                     path.getProfileOwner(),
