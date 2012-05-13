@@ -91,13 +91,13 @@
         <ccm:application name="ccm-ldn-types-esdservice"/>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--   Extended Bundle                                                       -->
+<!--   Complete Bundle   DEPRECATED!                                         -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
-<!--   Extended Bundle's Content Assets   -->
+<!--   Complete Bundle's Content Assets   -->
         <ccm:application name="ccm-cms-assets-imagestep"/>
 
-<!--   Extended Bundle's  Content Types   -->
+<!--   Complete Bundle's  Content Types   -->
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
         <ccm:application name="ccm-cms-types-event"/>
@@ -115,7 +115,7 @@
              neither it does not appear in content center -->
         <ccm:application name="ccm-cms-types-motditem"/>
 
-<!--   Extended Bundle's Applications   -->
+<!--   Complete Bundle's Applications   -->
         <ccm:application name="ccm-atoz-siteproxy"/> <!-- requires siteproxy!--> 
         <ccm:application name="ccm-auth-http"/>
         <!--  currently doesn't work for unknown reason                      -->
@@ -124,7 +124,7 @@
         <ccm:application name="ccm-formbuilder-pdf"/>
         <ccm:application name="ccm-ldn-userpreferences"/>
 
-<!--   Extended Bundle's  LDN extensions  -->
+<!--   Complete Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
 

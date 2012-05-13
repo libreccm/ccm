@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml -custom- containing all modules of the current aplaws
+<!-- project.xml - BASE - containing all modules of the current aplaws
      repository. A set of core modules is active, others are commented out 
-     and should activated (uncomment) according to customers requirements.  -->
+     and may be activated (uncomment) according to customers requirements.
+     
+     The unmodified (as distributed) bundle may be used to create a custom
+     set of packages by a site administrator using ccm-hostinit command and
+     an appropriate set of add-on packages.                                  -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
                ccmVersion="6.1" 
                name="aplaws" 
-               prettyName="APLAWS plus Custom Spin" 
+               prettyName="APLAWS plus Base Bundle" 
                version="2-0-0" 
-               release="custom-beta-1-r2234"
+               release="base-beta-1"
                webxml="web.xml" 
                webapp="ROOT" 
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
