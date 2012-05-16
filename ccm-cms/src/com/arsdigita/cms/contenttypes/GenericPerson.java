@@ -54,8 +54,7 @@ public class GenericPerson extends ContentPage implements
     public static final String CONTACTS = "contacts";
     public static final String CONTACTS_KEY = "linkKey";
     public static final String CONTACTS_ORDER = "linkOrder";
-    public static final String ALIAS = "alias";
-    public static final String DABIN_ID = "dabinId";
+    public static final String ALIAS = "alias";    
     private static final String RELATION_ATTRIBUTES =
                                 "contacts.link_key:GenericContactType";
     /**
@@ -166,15 +165,7 @@ public class GenericPerson extends ContentPage implements
     public void unsetAlias() {
         set(ALIAS, null);
     }
-
-    public Integer getDabinId() {
-        return (Integer) get(DABIN_ID);
-    }
-
-    public void setDabinId(final Integer dabinId) {
-        set(DABIN_ID, dabinId);
-    }
-
+   
     /**
      * A convenient method which combines {@code titlePre}, {@code givenName),
      * {@code surname} and {@code titlePost}.
