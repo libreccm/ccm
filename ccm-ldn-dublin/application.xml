@@ -16,6 +16,9 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
+    The Dublin Core application for compliance with the Dublin Core Metadata 
+    standard.
+    
     The Red Hat Web Application Framework is a platform for writing
     database-backed web applications in Java.
   </ccm:description>

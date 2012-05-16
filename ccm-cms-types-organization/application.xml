@@ -19,6 +19,6 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Organization Content Type for the Red Hat CCM CMS.
+    The Organization Content Type Stores organization information.
   </ccm:description>
 </ccm:application>

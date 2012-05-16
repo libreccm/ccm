@@ -48,16 +48,16 @@ alter table portlet_navigation_tree
     REFERENCES portlets(portlet_id);
 
 update application_types
-    set object_type = 'com.arsdigita.london.navigation.portlet.NavigationTreePortlet'
+    set object_type = 'com.arsdigita.navigation.portlet.NavigationTreePortlet'
     where object_type
-    like 'com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet' ;
+    like 'com.arsdigita.portalworkspace.portlet.NavigationDirectoryPortlet' ;
 
 update application_types
     set title = 'Navigation Tree'
     where object_type
-    like 'com.arsdigita.london.navigation.portlet.NavigationTreePortlet' ;
+    like 'com.arsdigita.navigation.portlet.NavigationTreePortlet' ;
 
 update application_types
     set description = 'Displays a tree of navigation categories'
     where object_type
-    like 'com.arsdigita.london.navigation.portlet.NavigationTreePortlet' ;
+    like 'com.arsdigita.navigation.portlet.NavigationTreePortlet' ;

@@ -1,5 +1,6 @@
 <upgrade>
   <version from="0.0.0" to="6.6.0">
+  <!-- applicapable for UHB trunk only!  --> 
     <script sql="ccm-sci-bundle/upgrade/::database::-0.0.0-6.6.0.sql"/>
   </version>
 </upgrade>

@@ -20,6 +20,6 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The EsdService Content Type for created for Tameside project.
+    The EsdService Content Type.
   </ccm:description>
 </ccm:application>

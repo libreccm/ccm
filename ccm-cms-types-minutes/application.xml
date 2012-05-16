@@ -19,6 +19,6 @@
     <ccm:contact uri="mailto:ccm@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Minutes Content Type for the Red Hat CCM CMS.
+    The Minutes Content Type for publishing meeting minutes.
   </ccm:description>
 </ccm:application>

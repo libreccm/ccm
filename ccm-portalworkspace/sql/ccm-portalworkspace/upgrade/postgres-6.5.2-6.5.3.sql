@@ -15,6 +15,6 @@
 -- 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 begin;
-\i ../default/upgrade/add-flash-portlet.sql
+\i default/6.5.2-6.5.3/add-flash-portlet.sql
 commit;
 

@@ -114,11 +114,11 @@
         <ccm:application name="ccm-simplesurvey"/>
         <!--  Without known funcionality                                     -->
         <ccm:application name="ccm-formbuilder-pdf"/>
-        <ccm:application name="ccm-ldn-userpreferences"/>
 
 <!--   Complete Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-userpreferences"/>
 
 
   </ccm:build>

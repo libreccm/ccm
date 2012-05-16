@@ -19,6 +19,6 @@
     <ccm:contact uri="mailto:ccm@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Service Content Type for the Red Hat CCM CMS.
+    The Service Content Type for publishing service information.
   </ccm:description>
 </ccm:application>

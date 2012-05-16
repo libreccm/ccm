@@ -65,8 +65,8 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Standard Bundle's Content Assets   -->
-        <ccm:application name="ccm-cms-assets-relatedlink"/>
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Standard Bundle's  Content Types   -->
         <ccm:application name="ccm-cms-types-filestorageitem"/>
@@ -132,7 +132,9 @@
         -->
 
 <!--   ADD-ONs Bundle's  LDN extensions  -->
+        <!--
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
+        -->
 
 </ccm:project>

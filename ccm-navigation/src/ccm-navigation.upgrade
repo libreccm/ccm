@@ -14,12 +14,18 @@
     <script class="com.arsdigita.navigation.upgrades.Upgrade650to651"/>
   </version>
   <version from="6.6.0" to="6.6.1">
+    <!-- Moved NavigationTreeePortlet to Navigation Package  -->
+    <!-- MUST actually be processed AFTER 6.6.2-6.6.3!
+         and AFTER ccm-portalws 6.5.1-6.5.2 which in turn must be processed
+         AFTER ccm-portalws 6.6.0-6-6-1 (rnaming ccm-ldn-portal)          -->
     <script sql="ccm-navigation/upgrade/::database::-6.6.0-6.6.1.sql"/>
   </version>
   <version from="6.6.1" to="6.6.2">
+    <!--  Removed legacy entries, london.navigation now legacy free.  -->
     <script sql="ccm-navigation/upgrade/::database::-6.6.1-6.6.2.sql"/>
   </version>
   <version from="6.6.2" to="6.6.3">
+    <!--  Renamed ccm-ldn-navigation to ccm-navigation  -->
     <script sql="ccm-navigation/upgrade/::database::-6.6.2-6.6.3.sql"/>
   </version>
 </upgrade>

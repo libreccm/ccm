@@ -1,28 +1,30 @@
 <upgrade>
   <version from="1.4.1" to="1.4.2">
-    <script sql="ccm-ldn-portal/upgrade/::database::-1.4.1-1.4.2.sql"/>
+    <script sql="ccm-portalworkspace/upgrade/::database::-1.4.1-1.4.2.sql"/>
   </version>
   <version from="6.3.0" to="6.3.1">
-    <script sql="ccm-ldn-portal/upgrade/::database::-6.3.0-6.3.1.sql"/>
+    <script sql="ccm-portalworkspace/upgrade/::database::-6.3.0-6.3.1.sql"/>
   </version>
   <version from="6.3.1" to="6.3.2">
-    <script sql="ccm-ldn-portal/upgrade/::database::-6.3.1-6.3.2.sql"/>
+    <script sql="ccm-portalworkspace/upgrade/::database::-6.3.1-6.3.2.sql"/>
   </version>
   <version from="6.5.0" to="6.5.1">
-    <script class="com.arsdigita.london.portal.upgrade.CreateContainerGroups"/>
+    <script class="com.arsdigita.portalworkspace.upgrade.CreateContainerGroups"/>
   </version>
   <version from="6.5.1" to="6.5.2">
-    <script sql="ccm-ldn-portal/upgrade/::database::-6.5.1-6.5.2.sql"/>
-    <script class="com.arsdigita.london.portal.upgrade.CreateNavigationDirectoryPortlet"/>
+    <script sql="ccm-portalworkspace/upgrade/::database::-6.5.1-6.5.2.sql"/>
+    <script class="com.arsdigita.portalworkspace.upgrade.CreateNavigationDirectoryPortlet"/>
   </version>
   <version from="6.5.2" to="6.5.3">
-    <script sql="ccm-ldn-portal/upgrade/::database::-6.5.2-6.5.3.sql"/>
-    <script class="com.arsdigita.london.portal.upgrade.CreateFlashPortlet"/>
+    <script sql="ccm-portalworkspace/upgrade/::database::-6.5.2-6.5.3.sql"/>
+    <script class="com.arsdigita.portalworkspace.upgrade.CreateFlashPortlet"/>
   </version>
   <version from="6.6.0" to="6.6.1">
+    <!-- Rename ccm-ldn-portal  to ccm-portalworkspace   -->
     <script sql="ccm-portalworkspace/upgrade/::database::-6.6.0-6.6.1.sql"/>
   </version>
   <version from="6.6.1" to="6.6.2">
+    <!--  Refactored Legacy Free     --> 
     <script sql="ccm-portalworkspace/upgrade/::database::-6.6.1-6.6.2.sql"/>
   </version>
 </upgrade>

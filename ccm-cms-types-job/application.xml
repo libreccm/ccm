@@ -19,6 +19,6 @@
     <ccm:contact uri="mailto:ccm@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Job Content Type for the Red Hat CCM CMS.
+    The Job Content Type for publishing job vacancy announcements.
   </ccm:description>
 </ccm:application>

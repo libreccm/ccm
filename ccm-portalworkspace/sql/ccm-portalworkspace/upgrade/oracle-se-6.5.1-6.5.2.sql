@@ -14,7 +14,5 @@
 -- along with this library; if not, write to the Free Software Foundation, Inc.,
 -- 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-begin;
-\i ../default/upgrade/add-navigation-directory-portlet.sql
-commit;
+@@ default/6.5.1-6.5.2/add-navigation-directory-portlet.sql
 

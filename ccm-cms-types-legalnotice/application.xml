@@ -19,6 +19,6 @@
     <ccm:contact uri="mailto:ccm@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Legal Notice Content Type for the Red Hat CCM CMS.
+    The Legal Notice Content Type for publishing legal notices.
   </ccm:description>
 </ccm:application>

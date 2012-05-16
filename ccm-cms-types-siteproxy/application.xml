@@ -19,6 +19,6 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Glossary Item Content Type for the Red Hat CCM CMS.
+    A content type that lets you proxy remote sites and style the provided XML.
   </ccm:description>
 </ccm:application>

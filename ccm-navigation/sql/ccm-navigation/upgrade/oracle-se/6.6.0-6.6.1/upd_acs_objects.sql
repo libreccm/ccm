@@ -24,8 +24,8 @@
 
 update acs_objects
     set (object_type,display_name,default_domain_class)  =
-        ('com.arsdigita.london.navigation.portlet.NavigationTreePortlet',
+        ('com.arsdigita.navigation.portlet.NavigationTreePortlet',
          'Navigation Tree',
-         'com.arsdigita.london.navigation.portlet.NavigationTreePortlet')
+         'com.arsdigita.navigation.portlet.NavigationTreePortlet')
     where object_type
-        like 'com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet' ;
+        like 'com.arsdigita.portalworkspace.portlet.NavigationDirectoryPortlet' ;

@@ -1,6 +1,8 @@
 <upgrade>
+<!-- nothing to upgrade yet
   <version from="6.x.0" to="6.x.1">
     <script sql="ccm-faq/upgrade/::database::-6.x.0-6.x.1.sql"/>
     <script class="com.arsdigita.faq.upgrade.xyz"/>
   </version>
+-->
 </upgrade>
