@@ -146,7 +146,7 @@ public class GreetingItem extends AbstractComponent {
 
         for (ExtraXMLGenerator generator : baseItem.getExtraXMLGenerators()) {
             try {
-                generator.generateXML(baseItem, content, new PageState(null,
+                generator.generateXML(baseItem, itemEl, new PageState(null,
                                                                        request,
                                                                        response));
             } catch (ServletException ex) {
