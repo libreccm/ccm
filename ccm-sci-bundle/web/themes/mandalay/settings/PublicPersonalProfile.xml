@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2011 Jens Pelzetter
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<settings>
+
+  <setting id="setImage">false</setting>
+  <setting id="setImageMaxHeight">200</setting>
+  <setting id="setImageMaxWidth">200</setting>
+  <setting id="setImageCaption">false</setting>
+  <setting id="setOwnerImage">true</setting>
+  <setting id="setOwnerImageMaxWidth">200</setting>
+  <setting id="setOwnerImageMaxHeight">200</setting>
+  <setting id="showProfileImage">true</setting>
+  <setting id="showProfileMaxWidth">200</setting>
+  <setting id="showProfileMaxHeight">200</setting>
+
+  <!-- The following three settings are defining the order 
+       of the information in the HTML output on the first 
+       page of a profile.
+       
+       Available values are:
+       address...: The address associated with the contact of the profile owner
+       contact...: The contact data of the profile owner
+       ownerimage: The image associated with the person item the owner
+  -->
+  <setting id="contentPos1">ownerimage</setting>
+  <setting id="contentPos2">address</setting>
+  <setting id="contentPos3">contact</setting>
+
+</settings>

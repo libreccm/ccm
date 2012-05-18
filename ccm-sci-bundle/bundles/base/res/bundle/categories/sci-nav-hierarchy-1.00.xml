@@ -8,7 +8,7 @@
 -->
 
 <terms:hierarchy xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
-  <terms:domain resource="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml"/>
+  <terms:domain resource="http://www.scientificcms.org/standards/nav/2.00/termslist.xml"/>
   <!-- set root terms  -->
   <terms:term id="1000"/>
   <terms:term id="3000"/>

@@ -1,0 +1,25 @@
+/* 
+    Copyright: 2011 Sören Bernstein
+*/
+
+/* Dieses CSS ist fr alle Standard-konformen Browser (Gecko, Safari) */
+
+/* Erlaubte Techniken / Befehle:
+
+   - Alle Techniken / Befehle aus basic.css
+     und zus?zlich:
+
+   - HTML-Formate (CSS 2.0 - Standard, Wildcards erlaubt, aber IE hat Probleme mit +, > )
+   - Attributbedingte Formate ([attr]) (nicht fr IE)
+   - Pseudoformate fr alle Elemente (:active...) (nicht fr IE)
+   - Positionsangebe fixed (nicht fr IE)
+   - Gr?enangaben min-/max-width, min-/max-height (nicht fr IE)
+   -
+
+*/
+
+/* Standard-Einstellungen fr HTML-Tags */
+
+/* Spezielle styles fr die barrierefreie Anzeige, werden von grafischen Browsern ausgeblendet*/
+
+

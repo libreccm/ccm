@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="menu/name/subhead1">subhead1</line>
+  <line id="menu/name/subhead2">subhead2</line>
+  <line id="menu/name/subhead3">subhead3</line>
+  <line id="menu/name/subhead4">subhead4</line>
+</translations>

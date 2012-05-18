@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2011 Jens Pelzetter
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="SciPublicationsListsortAndFilterList">Publikationen filtern und sortieren</line>
+  <line id="SciPublicationsListfilterList">Publikationen filtern</line>
+  <line id="SciPublicationsListsortList">Publikationen sortieren</line>
+  <line id="SciPublicationsListSubmitFilters">Publikationen filtern</line>
+  <line id="SciPublicationsListSortList">Publikationen sortieren</line>
+  <line id="SciPublicationsListtitle">Nach Titel filtern</line>
+  <line id="SciPublicationsListauthor">Nach Autor filtern</line>
+  <line id="SciPublicationsListyearOfPublication">Erscheinungsjahr</line>
+  <line id="SciPublicationsListyearOfPublicationAll">Alle</line>
+  <line id="SciPublicationsListSortBy">Sortieren nach</line>
+  <line id="SciPublicationsListSortBytitle">Titel</line>
+  <line id="SciPublicationsListSortByyearAsc">Jahr (aufsteigend)</line>
+  <line id="SciPublicationsListSortByyearDesc">Jahr (absteigend)</line>
+  <line id="SciPublicationsListSortByauthors">Autoren</line>
+
+  <line id="SciProjectListsortAndFilterList">Projekte filtern und sortieren</line>
+  <line id="SciProjectListfilterList">Projekte filtern</line>
+  <line id="SciProjectListsortList">Projekte sortieren</line>
+  <line id="SciProjectListSubmitFilters">Projekte filtern</line>
+  <line id="SciProjectListSortList">Projekte sortieren</line>
+  <line id="SciProjectListtitle">Nach Titel filtern</line>
+  <line id="SciProjectListprojectstatus">Nach Status filtern</line>
+  <line id="SciProjectListprojectstatusongoing">Laufende Projekte</line>
+  <line id="SciProjectListprojectstatusfinished">Abgeschlossene Projekte</line>
+  <line id="SciProjectListprojectstatusAll">Alle Projekte</line>
+  <line id="SciProjectListSortBytitle">Titel</line>
+
+  <line id="sciOrganizationPublicationssortAndFilterList"></line>
+  <line id="sciOrganizationPublicationsfilterList">Publikationen filtern</line>
+  <line id="sciOrganizationPublicationssortList">Publikationen sortieren</line>
+  <line id="sciOrganizationPublicationsSubmitFilters">Publikationen filtern</line>
+  <line id="sciOrganizationPublicationstitle">Nach Titel filtern</line>
+  <line id="sciOrganizationPublicationsauthors">Nach Autor filtern</line>
+  <line id="sciOrganizationPublicationsyearOfPublication">Nach Erscheinungjahr filtern</line>
+  <line id="sciOrganizationPublicationsyearOfPublicationAll">Alle</line>
+  <line id="sciOrganizationPublicationsSortBy">Sortieren nach</line>
+  <line id="sciOrganizationPublicationsSortBytitle">Titel</line>
+  <line id="sciOrganizationPublicationsSortByyearAsc">Jahr (aufsteigend)</line>
+  <line id="sciOrganizationPublicationsSortByyearDesc">Jahr (absteigend)</line>    
+  <line id="sciOrganizationPublicationsSortList">Publikationen sortieren</line>    
+
+  <line id="sciOrganizationProjectssortAndFilterList">Projekte filtern und sortieren</line>
+  <line id="sciOrganizationProjectsfilterList">Projekte filtern</line>
+  <line id="sciOrganizationProjectssortList">Projekte sortieren</line>
+  <line id="sciOrganizationProjectsSubmitFilters">Projekte filtern</line>
+  <line id="sciOrganizationProjectsSortList">Projekte sortieren</line>
+  <line id="sciOrganizationProjectstitle">Nach Titel filtern</line>
+  <line id="sciOrganizationProjectsprojectstatus">Nach Status filtern</line>
+  <line id="sciOrganizationProjectsprojectstatusongoing">Laufende Projekte</line>
+  <line id="sciOrganizationProjectsprojectstatusfinished">Abgeschlossene Projekte</line>
+  <line id="sciOrganizationProjectsprojectstatusAll">Alle Projekte</line>
+  <line id="sciOrganizationProjectsSortBytitle">Titel</line>
+  <line id="sciOrganizationPublicationstypeAll">Alle</line>
+  <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.CollectedVolume">Sammelband</line>
+  <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.GreyLiterature">Sonstiges</line>
+    <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.Monograph">Monographie</line>
+  <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.WorkingPaper">Arbeitspapier</line>
+
+  <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.ArticleInJournal">Zeitschriftenbeitrag</line>
+  <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.CollectedVolume">Sammelband</line>
+  <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.GreyLiterature">Sonstiges</line>
+    <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.Monograph">Monographie</line>
+  <line id="sciOrganizationPublicationstypecom.arsdigita.cms.contenttypes.WorkingPaper">Arbeitspapier</line>
+
+  <line id="sciDepartmentPublicationssortAndFilterList"></line>
+  <line id="sciDepartmentPublicationsfilterList">Publikationen filtern</line>
+  <line id="sciDepartmentPublicationssortList">Publikationen sortieren</line>
+  <line id="sciDepartmentPublicationsSubmitFilters">Publikationen filtern</line>
+  <line id="sciDepartmentPublicationstitle">Nach Titel filtern</line>
+  <line id="sciDepartmentPublicationsauthors">Nach Autor filtern</line>
+  <line id="sciDepartmentPublicationsyearOfPublication">Nach Erscheinungjahr filtern</line>
+  <line id="sciDepartmentPublicationsyearOfPublicationAll">Alle</line>
+  <line id="sciDepartmentPublicationsSortBy">Sortieren nach</line>
+  <line id="sciDepartmentPublicationsSortBytitle">Titel</line>
+  <line id="sciDepartmentPublicationsSortByyearAsc">Jahr (aufsteigend)</line>
+  <line id="sciDepartmentPublicationsSortByyearDesc">Jahr (absteigend)</line>    
+  <line id="sciDepartmentPublicationsSortList">Publikationen sortieren</line>    
+
+  <line id="sciDepartmentProjectssortAndFilterList">Projekte filtern und sortieren</line>
+  <line id="sciDepartmentProjectsfilterList">Projekte filtern</line>
+  <line id="sciDepartmentProjectssortList">Projekte sortieren</line>
+  <line id="sciDepartmentProjectsSubmitFilters">Projekte filtern</line>
+  <line id="sciDepartmentProjectsSortList">Projekte sortieren</line>
+  <line id="sciDepartmentProjectstitle">Nach Titel filtern</line>
+  <line id="sciDepartmentProjectsprojectstatus">Nach Status filtern</line>
+  <line id="sciDepartmentProjectsprojectstatusongoing">Laufende Projekte</line>
+  <line id="sciDepartmentProjectsprojectstatusfinished">Abgeschlossene Projekte</line>
+  <line id="sciDepartmentProjectsprojectstatusAll">Alle Projekte</line>
+  <line id="sciDepartmentProjectsSortBytitle">Titel</line>
+
+  
+</translations>

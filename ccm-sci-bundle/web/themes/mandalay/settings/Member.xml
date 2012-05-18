@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<settings>
+  <setting id="setFullname">false</setting>
+  <setting id="setNameDetails">true</setting>
+  <setting id="setBirthdate">false</setting>
+  <setting id="setGender">false</setting>
+  <setting id="setDescription">false</setting>
+  <setting id="setImage">true</setting>
+  <setting id="setImageMaxHeight"></setting>
+  <setting id="setImageMaxWidth"></setting>
+  <setting id="setImageCaption"></setting>
+
+  <setting id="listView/setLeadText">true</setting>
+  <setting id="listView/setLeadTextLength">440</setting>
+  <setting id="listView/setMoreButton">true</setting>
+  
+  <setting id="linkView/setImageAndText">true</setting>
+  <setting id="linkView/setImage">true</setting>
+  <setting id="linkView/setImageMaxHeight">200</setting>
+  <setting id="linkView/setImageMaxWidth">200</setting>
+  <setting id="linkView/setImageCaption">false</setting>
+  <setting id="linkView/setDescription">true</setting>
+  <setting id="linkView/setDescriptionLength">0</setting>
+  <setting id="linkView/setMoreButton">false</setting>
+<!--
+  <setting id=""></setting>
+-->
+</settings>

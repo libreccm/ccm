@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<settings>
+  <setting id="setQueryPrefix">true</setting>
+  <setting id="setSearchFormInResultList">true</setting>
+  <setting id="setAdditionFilter">true</setting>
+  <setting id="setScore">true</setting>
+  <setting id="setGraphicScore">true</setting>
+  <setting id="setGraphicScoreWidth">50</setting>
+  <setting id="setGraphicScoreEmptyImage">images/search/scoreEmpty.gif</setting>
+  <setting id="setGraphicScoreFullImage">images/search/scoreFull.gif</setting>
+  <setting id="setSummary">true</setting>
+  <setting id="setAdminResultMode">list</setting>
+  
+  <setting id="filter/setContentType">true</setting>
+  <setting id="filter/setContentType">true</setting>
+  <setting id="filter/setObjectType">true</setting>
+  <setting id="filter/setHost">true</setting>
+  <setting id="filter/setCategory">true</setting>
+  <setting id="filter/setCreationUser">true</setting>
+  <setting id="filter/setLastModifiedUser">true</setting>
+  <setting id="filter/setLaunchDate">true</setting>
+  <setting id="filter/setLastModifiedDate">true</setting>
+  <setting id="filter/setCreationDate">true</setting>
+  <setting id="filter/setPartyText">true</setting>
+</settings>

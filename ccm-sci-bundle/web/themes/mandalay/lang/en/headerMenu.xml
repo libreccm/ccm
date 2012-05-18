@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="menu/name/home">Home</line>
+  <line id="menu/name/members">Members</line>
+  <line id="menu/name/bibliothek">Library</line>
+  <line id="menu/name/sitemap">Sitemap</line>
+  <line id="menu/name/kontakt">Contact</line>
+</translations>

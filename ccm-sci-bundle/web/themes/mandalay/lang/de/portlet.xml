@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">Deutsch</line>
+  <line id="version">0.9</line>
+
+  <line id="bookmark/edit/link">Bearbeiten</line>
+
+  <line id="contentSection/admin/link">Administrieren</line>
+
+  <line id="login/welcomeMessage">Willkommen</line>
+  <line id="login/login/link">Login</line>
+  <line id="login/login/title">Einloggen</line>
+  <line id="login/logout/link">Logout</line>
+  <line id="login/logout/title">Ausloggen</line>
+
+  <line id="recentPostings/none">Keine aktuellen Informationen</line>
+  
+  <line id="taskList/noTasks">Keine Aufgaben</line>
+  <line id="taskList/action">Aktion: </line>
+  <line id="taskList/dueDate">Fälligkeitsdatum: </line>
+  <line id="taskList/assignedUsers/none">Keine zugewiesen Benutzer</line>
+  <line id="taskList/assignedUsers/one">1 zugewiesener Benutzer</line>
+  <line id="taskList/assingedUsers/more"> zugewiesene Benutzer</line>
+  
+  <line id="weblog/viewAll/title">Alle Weblogs ansehen</line>
+  <line id="weblog/viewAll/link">Alle Weblogs ansehen</line>
+</translations>

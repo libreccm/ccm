@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="query">Search:</line>
+  <line id="additionalFilters">Additional Filters:</line>
+  <line id="listheader/score">Evaluation</line>
+  <line id="listheader/title">Title</line>
+  <line id="listheader/summary">Abstract</line>
+  <line id="listheader/addlink"> </line>
+  <line id="resultlist/select"> Choose</line>
+  <line id="searchfilter/types">Typ:</line>
+  <line id="searchfilter/sites">Server:</line>
+  <line id="searchfilter/categories">Category:</line>
+  <line id="searchfilter/searchRecursiv">Search sub-categories</line>
+  <line id="searchfilter/creationUser">Created by:</line>
+  <line id="searchfilter/lastModUser">Changed by:</line>
+  <line id="searchfilter/launchDate">Published in:</line>
+  <line id="searchfilter/lastModDate">Changed by:</line>
+  <line id="searchfilter/creationDate">Created by:</line>
+  <line id="searchfilter/dateRange/day">Day</line>
+  <line id="searchfilter/dateRange/month">Month</line>
+  <line id="searchfilter/dateRange/year">Year</line>
+  <line id="searchfilter/dateRange/from">by:</line>
+  <line id="searchfilter/dateRange/to">to:</line>
+</translations>

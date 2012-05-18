@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+    
+    This file is part of Mandalay.
+    
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+    
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.9</line>
+
+  <line id="admin/members">Workspace Members</line>
+  <line id="admin/admins">Administrators</line>
+  <line id="admin/categories">Assigned Categories</line>
+  <line id="admin/actions">Extreme Action</line>
+
+  <line id="pane/delete/confirmMessage">Are you sure you want to delete this pane?</line>
+
+  <line id="sitemap/newApplication">Creat New Application</line>
+  <line id="sitemap/allApplications">All Applications</line>
+  <line id="sitemap/applicationDetails/header">Application Details</line>
+  <line id="sitemap/editDetails">Edit details</line>
+  <line id="sitemap/applicationDetails/title">Title: </line>
+  <line id="sitemap/applicationDetails/description">Description: </line>
+  <line id="sitemap/applicationDetails/url">URL: </line>
+  
+  <line id="workspace/view/title">View</line>
+  <line id="workspace/view/link">View</line>
+  <line id="workspace/view/text">View</line>
+  <line id="workspace/edit/title">Edit</line>
+  <line id="workspace/edit/link">Edit</line>
+  <line id="workspace/edit/text">Edit</line>
+  <line id="workspace/admin/title">Admin</line>
+  <line id="workspace/admin/link">Admin</line>
+  <line id="workspace/admin/text">Admin</line>
+
+</translations>

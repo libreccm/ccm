@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2010, Jens Pelzetter
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<settings>
+  
+  <setting id="setImage">false</setting>
+  <setting id="setImageCaption">true</setting>
+  <setting id="setImageMaxHeight"></setting>
+  <setting id="setImageMaxWidth"></setting>
+
+  <setting id="setAddendum">true</setting>
+  <setting id="setShortDesc">true</setting>
+  <setting id="setDesc">true</setting>
+
+  <setting id="descTab/setImage">true</setting>
+  <setting id="summaryTab/setImage">true</setting>
+  <setting id="tabs/setImageCaption">true</setting>
+  <setting id="tabs/setImageMaxHeight"></setting>
+  <setting id="tabs/setImageMaxWidth"></setting>
+
+  <!-- 
+       To omit contact data for members with the specific status, 
+       add a setting of the form
+       
+       membersTab/$status/showContactData
+       
+       to omit contact data if the specificed status has been selected. For example,
+       to omit the contact data for members with the status 'former'
+       add this line:
+       
+       <setting id="membersTab/former/showContactData">false</setting>
+  -->
+  <setting id="membersTab/former/showContactData">false</setting>
+
+  <!--
+      To show contact entries add an entry for each contact entry below
+      
+      Example:
+      <setting id="membersTab/active/contactentry/email/show">true</setting>
+      
+      will show the contact entry with the key 'email' for active members.
+  -->
+  <setting id="membersTab/active/contactentry/phoneOffice/show">true</setting>
+  <setting id="membersTab/active/contactentry/email/show">true</setting>
+  <setting id="membersTab/active/contactentry/office/show">true</setting>
+  
+  <setting id="membersTab/associated/contactentry/phoneOffice/show">true</setting>
+  <setting id="membersTab/associated/contactentry/email/show">true</setting>
+  <setting id="membersTab/associated/contactentry/office/show">true</setting>
+
+  <!--
+      To show an associated address for members with a specific status add 
+      a setting like
+      
+      <setting id="membersTab/associated/showAddress">true</setting>
+      
+      This will display the associated address for all members with the status
+      'associated'.
+  -->
+  <setting id="membersTab/associated/showAddress">true</setting>
+
+  <setting id="subNavSeparator"></setting>
+
+  <setting id="listView/setLinkToDetails">false</setting>
+  <setting id="listView/setLeadText">true</setting>
+  <setting id="listView/setLeadTextLength">440</setting>
+  <setting id="listView/setMoreButton">true</setting>
+
+  <setting id="linkView/setLinkToDetails">false</setting>
+  <setting id="linkView/setImageAndText">true</setting>
+  <setting id="linkView/setImage">true</setting>
+  <setting id="linkView/setImageMaxHeight">200</setting>
+  <setting id="linkView/setImageMaxWidth">200</setting>
+  <setting id="linkView/setImageCaption">false</setting>
+  <setting id="linkView/setDescription">true</setting>
+  <setting id="linkView/setDescriptionLength">0</setting>
+  <setting id="linkView/setMoreButton">false</setting>  
+
+  <setting id="subDepartmentList/mode">ullist</setting>
+  <setting id="subDepartmentList/linkSubDepartment">true</setting>
+  <setting id="subDepartmentList/showHead">true</setting>
+  <setting id="subDepartmentList/linkHead">true</setting>
+  <setting id="subDepartmentList/showShortDesc">true</setting>
+
+  <setting id="projectList/mode">ullist</setting>
+  <setting id="projectList/linkProject">true</setting>
+  <setting id="projectList/showMembers">true</setting>
+  <setting id="projectList/emphHead">true</setting>
+  <setting id="projectList/linkMember">false</setting>
+  <setting id="projectList/showShortDesc">true</setting>
+
+  <setting id="memberList/mode">ullist</setting>
+  <setting id="memberList/collect">true</setting>
+  <setting id="memberList/linkMember">true</setting>
+  <setting id="memberList/showTitles">true</setting>
+  <setting id="memberList/showRoom">true</setting>
+  <setting id="memberList/showPhone">true</setting>
+  <setting id="memberList/showEmail">true</setting>
+  <setting id="memberList/linkEmail">true</setting>
+
+</settings>

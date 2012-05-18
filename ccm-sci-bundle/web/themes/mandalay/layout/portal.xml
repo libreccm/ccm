@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006 - 2012 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<pageLayout>
+  <head>
+    <title>
+      <separator>: </separator>
+      <showText>
+        <line>layout/page/head/title</line>
+      </showText>
+      <usePageTitle/>
+    </title>
+    <useCSSLoader/>
+  </head>
+  <body>
+
+    <div id="pageWrap">
+      <div id="head">
+        <div id="header">
+          <div id="headerOverlayTop">
+            <showLanguageSelector/>
+            <div>
+              <showStaticMenu name="topMenu" id="topMenu"/>
+              <showQuicksearch/>
+            </div>
+          </div>
+          <showHeaderImage class="headerImage"/>
+          <div id="nav">
+            <showNavigationMenu>
+              <setMinLevel>0</setMinLevel>
+              <setMaxLevel>1</setMaxLevel>
+              <setFirstLevelMode>vertical</setFirstLevelMode>
+              <setRootLevelStaticText>true</setRootLevelStaticText>
+              <setColorset>true</setColorset>
+            </showNavigationMenu>
+            <div class="endFloat"/>
+          </div>
+        </div>
+        <div class="endFloat"/>
+      </div>
+
+      <showBreadcrumbs/>
+      <div id="contentWrap" withColorset="true">
+        <div id="workspace">
+          <showContent>
+            <useLastModified/>
+            <usePageTitle/>
+            <useContent/>
+          </showContent>
+        </div>
+      </div>
+
+      <div id="pageFooter" class="endFloat" classIf="right, borderRight" withColorset="true">
+        <useLastModified/>
+        <showLink id="toTop">
+          <link>#top</link>
+          <name>toTop</name>
+        </showLink>
+      </div>
+
+      <div id="fillEmptySpace"/>
+
+      <div id="footer">
+        <div id="footerContent">
+          <showStaticMenu id="footerMenu" name="footerMenu"/>
+          <showImage class="logoScientificCMS startLeftFloat">
+            <src>images/footer/ScientificCMS.png</src>
+            <alt>layout/page/footer/scientificcms/alt</alt>
+            <name>layout/page/footer/scientificcms/name</name>
+            <title>layout/page/footer/scientificcms/title</title>
+            <link>http://www.scientificcms.org</link>
+          </showImage>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</pageLayout>

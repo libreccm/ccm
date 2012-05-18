@@ -11,8 +11,11 @@ http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::u
 http://::host::/themes/servlet/content-item/index.xsl?oid=::item_template_oid::&delegated=::item_delegated_url::
 
 # added by Quasimodo
-# Theme with single entry point (e.g Mandalay)
+# Theme with single entry point (e.g Mandalay) managed by themedirector
 http://::host::/resource/::webapp::/themes/::themedir::/::theme::/start.xsl
+
+# Theme with single entry point (e.g Mandalay) unmanaged default
+http://::host::/resource/::webapp::/themes/mandalay/start.xsl
 
 # Theme, with optional locale & prefix
 http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::-::locale::.xsl
@@ -24,24 +27,14 @@ http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application:
 
 # APLAWS generic default, with locale and prefix
 # XXX change ROOT -> ccm-ldn-aplaws
-http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::-::prefix::-::locale::.xsl
-http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::-::prefix::.xsl
-http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::-::prefix::-::locale::.xsl
-http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::-::prefix::.xsl
+# http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::-::prefix::-::locale::.xsl
+# http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::-::prefix::.xsl
 
 # APLAWS generic default, with locale
 # XXX change ROOT -> ccm-ldn-aplaws
-http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::-::locale::.xsl
-http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::.xsl
-http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::-::locale::.xsl
-http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::.xsl
+# http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::-::locale::.xsl
+# http://::host::/resource/ROOT/themes/static/aplaws-generic/::application::-::url::.xsl
 
 # Global default, from application's own web app
-http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
-http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::.xsl
-
-# Global default, from application's own web app - relocated version >= 6.6.1
-http://::host::/resource/ROOT/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
-http://::host::/resource/ROOT/themes/heirloom/apps/::application::/xsl/::url::.xsl
 http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
 http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::.xsl

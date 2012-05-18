@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="address">Address:</line>
+  <line id="postalCode">Postal code:</line>
+  <line id="countryName">Country:</line>
+  <line id="phone">Phone:</line>
+  <line id="mobile">Mobile:</line>
+  <line id="fax">Fax:</line>
+  <line id="email">Email:</line>
+  <line id="notes">Notes:</line>
+
+  <line id="moreButton">more »</line>
+  <line id="moreButtonTitle">read more</line>
+</translations>

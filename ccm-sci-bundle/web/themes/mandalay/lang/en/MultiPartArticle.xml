@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="sections">Chapter overview: </line>
+  <line id="section">Chapter </line>
+  <line id="page">Page </line>
+  <line id="top">to top</line>
+  <line id="prev">Previous page</line>
+  <line id="next">Next page</line>
+
+  <line id="moreButton">more »</line>
+  <line id="moreButtonTitle">read more</line>
+</translations>

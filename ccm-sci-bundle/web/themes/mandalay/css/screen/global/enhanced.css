@@ -1,0 +1,69 @@
+/* 
+    Copyright: 2011 Sören Bernstein
+*/
+
+/* Dieses CSS ist fr alle Standard-konformen Browser (Gecko, Safari) */
+
+/* Erlaubte Techniken / Befehle:
+
+   - Alle Techniken / Befehle aus basic.css
+     und zus?zlich:
+
+   - HTML-Formate (CSS 2.0 - Standard, Wildcards erlaubt, aber IE hat Probleme mit +, > )
+   - Attributbedingte Formate ([attr]) (nicht fr IE)
+   - Pseudoformate fr alle Elemente (:active...) (nicht fr IE)
+   - Positionsangebe fixed (nicht fr IE)
+   - Gr?enangaben min-/max-width, min-/max-height (nicht fr IE)
+   -
+
+*/
+
+/* Standard-Einstellungen fr HTML-Tags */
+
+/* Spezielle styles fr die barrierefreie Anzeige, werden von grafischen Browsern ausgeblendet*/
+
+/* Header */
+#header {
+}
+
+/* Subheader fr Breadcrumbs und Quicksearch */
+#subheader {
+}
+
+/* Navigation */
+#menu { }
+
+/* Footer */
+#footer { }
+
+/* Info */
+#info { }
+
+/* Content */
+#image { }
+
+div#main a[href$=".pdf"],
+div#info a[href$=".pdf"]
+{ 
+  background-image:url(../../../images/pdf.gif);
+  background-repeat:no-repeat;
+  background-position:left center;
+  padding-left:19px;
+ }
+
+div#main a[href^="http://"]
+{ 
+  background-image:url(../../../images/external2.png);
+  background-repeat:no-repeat;
+  background-position:right center;
+  padding-right:12px;
+ }
+/*  
+#content.profile tr:nth-child(even) {
+  background-color: #f3eee4;
+}
+
+#content.profile tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+*/

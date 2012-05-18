@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">Deutsch</line>
+  <line id="version">0.8</line>
+
+  <line id="greeting">Willkommen</line>
+  
+  <line id="taskPanel/noTasks">Keine zugewiesenen Aufgaben vorhanden</line>
+  <line id="taskPanel/notLocked">Nicht gesperrt</line>
+  <line id="taskPanel/lockedByYou">Durch Sie gesperrt</line>
+  <line id="taskPanel/lockedBySomeoneElse">Durch einen anderen Benutzer gesperrt</line>
+  <line id="taskPanel/notAssigned">Niemandem zugewiesen</line>
+
+  <line id="summary/itemSummary/header">Zusammenfassung</line>
+  <line id="summary/itemSummary/type">Contenttyp: </line>
+  <line id="summary/itemSummary/name">Name: </line>
+  <line id="summary/itemSummary/title">Titel: </line>
+  <line id="summary/itemSummary/description">Beschreibung: </line>
+  <line id="summary/itemSummary/subjectCategories">Schlagwörter: </line>
+
+  <line id="summary/categorySummary/header">Kategorien</line>
+  <line id="summary/stableLink/header">Permalink</line>
+
+  <line id="summary/lifecycle/header">Lifecylce</line>
+  <line id="summary/lifecycle/noLifecycle">Kein Lifecycle definiert</line>
+  <line id="summary/lifecycle/itemNotYetPublished/startText">Dieser Eintrag wird am </line>
+  <line id="summary/lifecycle/itemNotYetPublished/middleText"> veröffentlicht und </line>
+  <line id="summary/lifecycle/itemNotYetPublished/endText"> entfernt werden.</line>
+  <line id="summary/lifecycle/itemAlreadyEnded/startText">Dieser Eintrag wurde am </line>
+  <line id="summary/lifecycle/itemAlreadyEnded/middleText"> veröffentlicht und </line>
+  <line id="summary/lifecycle/itemAlreadyEnded/endText"> wieder entfernt.</line>
+  <line id="summary/lifecycle/itemPublished/startText">Dieser Eintrag wurde am </line>
+  <line id="summary/lifecycle/itemPublished/middleText"> veröffentlicht und wird </line>
+  <line id="summary/lifecycle/itemPublished/endText"> entfernt.</line>
+  
+  <line id="summary/workflow/header">Workflow</line>
+  <line id="summary/workflow/restartEditing">Erneut bearbeiten</line>
+  <line id="summary/workflow/noComment">Kein Kommentar</line>
+  
+  <line id="summary/revisionSummary/header">Versionen</line>
+  <line id="summary/revisionSummary/currentRevision">Aktuelle Version</line>
+  <line id="summary/revisionSummary/initialRevision">Ursprüngliche Version</line>
+  <line id="summary/revisionSummary/viewRevision">Version ansehen</line>
+  
+  <line id="categoryStep/header">Kategorien zuweisen</line>
+  <line id="categoryStep/addCategories">Kategorien hinzufügen</line>
+  <line id="categoryStep/noCategories">Es sind keine Kategorien dieses Kontextes zugewiesen</line>
+  <line id="categoryStep/removeCategory">Zuweisung aufheben</line>
+  
+  <line id="imageDisplay/infoOverlay/name">Name: </line>
+  <line id="imageDisplay/infoOverlay/type">Bildtyp: </line>
+  <line id="imageDisplay/infoOverlay/typeUnknown">UNBEKANNT</line>
+  <line id="imageDisplay/infoOverlay/dimensions">Maße (HxB): </line>
+  <line id="imageDisplay/infoOverlay/caption">Bildunterschrift: </line>
+  <line id=""></line>
+</translations>
