@@ -137,30 +137,30 @@ public class ThemeDownloadServlet extends BaseServlet implements ThemeDirectorCo
         DispatcherHelper.maybeCacheDisable(sresp);
         sresp.setContentType("application/zip; charset=UTF-8");
 
-        // The WebAppRoot should be something like this:
-        // /var/ccm-devel/web/<username>/<projectname>/webapps/ccm-ldn-theme;
-        // and we actually want the webapps directory
-        File currentRoot = new File(Web.getServletContext().getRealPath("/"));
-        File webapps = currentRoot.getParentFile();
+        // Want the path in the filesystem to webcontext of this application
+        // (i.e. context root / document root)
+        File applicationRoot = new File(Web.getServletContext().getRealPath("/"));
 
-        // if we have a Theme, we send back either prod or dev, depending on
-        // the url.  If we don't have a theme, then we return everything.
         if (theme != null) {
-            File downloadFiles = null;
-            String prefix = null;
+            // if we have a Theme, we send back either prod or dev, depending on
+            // the url. 
+            File downloadFiles = null;  // Path to the actual theme to download
+            String prefix = null;       // Wether devel or prod
             // If "themes-prod" is ever moved to a different directory,
             // we could then get rid of the "type" argument (see below in
             // DirectoryFilter)
             String type = null;
+            // Determine the path, dependet of devel / prod
             if (sreq.getPathInfo().indexOf("/" + PUBLISHED_PREFIX) > -1) {
                 prefix = PUBLISHED_PREFIX;
-                downloadFiles = new File(currentRoot, PROD_THEMES_BASE_DIR);
+                downloadFiles = new File(applicationRoot, PROD_THEMES_BASE_DIR);
                 type = PROD_DIR_STUB;
             } else {
-                downloadFiles = new File(currentRoot, DEV_THEMES_BASE_DIR);
+                downloadFiles = new File(applicationRoot, DEV_THEMES_BASE_DIR);
                 prefix = DEVELOPMENT_PREFIX;
                 type = DEV_DIR_STUB;
             }
+
             sresp.setHeader("Content-Disposition",
                             "attachment; filename=\"" + prefix + theme.getURL() +
                             ".zip\"");
@@ -170,12 +170,19 @@ public class ThemeDownloadServlet extends BaseServlet implements ThemeDirectorCo
                  Files.listFilesInTree(downloadFiles,
                                        new DirectoryFilter(theme.getURL(), type)),
                  downloadFiles);
+
         } else if (theme == null) {
-            // we have to create our own config becuase no other
+            // If we don't have a theme, then we return everything (i.e. the
+            // web tree of each module installed).
+            
+            // Get a list of all installed packages by querying 
+            // registry.properties from registry. 
+            // We have to create our own config instance because no other
             // classes provide access to one
             RegistryConfig rc = new RegistryConfig();
             rc.load();
             String[] packages = rc.getPackages();
+
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
             sresp.setHeader("Content-Disposition",
@@ -191,18 +198,16 @@ public class ThemeDownloadServlet extends BaseServlet implements ThemeDirectorCo
                         new ZipWriterManifestReader(is, out, current,
                                                     packages[i]);
                     reader.setFileName(packages[i]);
-                    reader.processFile();
+                    reader.processFile();  // 2012-05 (PB): Doesn't work!
                 } else {
                     s_log.warn("Unable to open up resource " + current);
                 }
             }
 
-            // Special case add the auto-generated XSL fiel for content types
+            // Special case add the auto-generated XSL file for content types
             Iterator paths = ContentType.getXSLFileURLs();
             out.putNextEntry(new ZipEntry("waf-xsl/themes/servlet/content-type/index.xsl"));
-            IO.copy(multiplexXSLFiles(paths),
-                    out);
-
+            IO.copy(multiplexXSLFiles(paths), out);
 
             out.close();
         }

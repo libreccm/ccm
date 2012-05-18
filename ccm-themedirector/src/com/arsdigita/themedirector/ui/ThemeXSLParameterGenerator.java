@@ -74,10 +74,11 @@ public class ThemeXSLParameterGenerator implements XSLParameterGenerator,
         }
 
         if (themeURL != null) {
-        //  modified as ccm-ldn-theme is no longer installed in its own context
+        //  modified as ccm-themedirector (previously ccm-ldn-theme) is 
+        //  no longer installed in its own context
         //  return "/" + WEB_APP_NAME + "/" + THEMES_DIR + "/" +
         //  If we want to install it as a separate web application again we
-        //  should find a way to determin the name from a central configuration
+        //  should find a way to determine the name from a central configuration
             return "/" + THEMES_DIR + "/" +
                 Web.getContext().getRequestURL().getContextPath() +
                 baseDir + themeURL;

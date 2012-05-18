@@ -110,13 +110,20 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
         getBody().connect(addThemeLink, m_themeForm);
         addAction(addThemeLink, ActionGroup.ADD);
 
-        getBody().add(new Label(GlobalizationUtil.globalize("theme.download_default_base_styles")));        
-
+        // add the "Download default base styxle" form
+        // PB 2012-05: Download in ThemeDownloadServlet doesn't work, commented 
+        // out for now. Not useful anyway because it downloads web tree of every
+        // package installed, probably filtered by theme file extensions (xsl, 
+        // css, etc).
+/*        
+        getBody().add(new Label(GlobalizationUtil
+                                .globalize("theme.download_default_base_styles")));        
         Link downloadFilesLink = new Link(new Label(GlobalizationUtil.globalize
                                ("theme.download_default_base_styles")), 
                                       "download/" + ALL_STYLES_ZIP_NAME);
         addAction(downloadFilesLink, ActionGroup.ADD);
-
+*/
+        // add the "Select Standard Theme" form
         Form defaultThemeForm = createDefaultThemeForm();
         addAction( defaultThemeForm );
     }
