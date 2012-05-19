@@ -2,7 +2,6 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.contenttypes.ui.SciProjectExtraXmlGenerator;
-import com.arsdigita.cms.contenttypes.ui.SciProjectListExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -371,7 +370,7 @@ public class SciProject extends GenericOrganizationalUnit {
     @Override
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
-        generators.add(new SciProjectListExtraXmlGenerator());
+        generators.add(new SciProjectExtraXmlGenerator());
         return generators;
     }
     
