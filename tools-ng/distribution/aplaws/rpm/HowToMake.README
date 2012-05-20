@@ -1,0 +1,15 @@
+
+Creating Patch files
+====================
+
+(1) Edit the file to be patched in the same directory as the original file
+keeping it as *.bak or similiar. The location must be in the rpm build
+area relativ to RPM_BUILD_DIR (where the sources are unpacked) because the
+patch is performed during the prep step.
+
+(2) use diff -Naur  [oldFileVersion]  [newFileVersion]  >  File.patch
+
+(3) Copy the *.patch file into distribution source directory (usually
+somethink like ~/rpm/SOURCE) and keep it in this svn repository directory
+
+(4) Add a line "Patchx File.Patch to the spec file.
