@@ -87,9 +87,7 @@
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
 
 <!--   Standard Bundle's SCI extension  -->
-        <!--
         <ccm:application name="ccm-sci-personalprojects"/>
-        -->
         <ccm:application name="ccm-sci-personalpublications"/>
         <ccm:application name="ccm-sci-publications"/>
 
