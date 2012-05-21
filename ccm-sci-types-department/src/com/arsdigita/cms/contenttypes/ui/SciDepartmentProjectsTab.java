@@ -309,7 +309,8 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(project);
         generator.setItemElemName("project", "");
-        generator.setUseExtraXml(false);
+        generator.setUseExtraXml(true);
+        generator.setListMode(true);
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for project '%s' in %d ms.",
                                    project.getName(),

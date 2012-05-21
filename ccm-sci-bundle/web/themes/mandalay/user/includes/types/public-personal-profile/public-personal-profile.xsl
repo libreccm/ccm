@@ -268,7 +268,7 @@
         </xsl:call-template>
       </xsl:variable>
       <xsl:if test="$setOwnerImage = 'true'">
-        <xsl:for-each select="../profileOwner/owner">
+        <xsl:for-each select="./profileOwner/owner">
           <xsl:call-template name="mandalay:imageAttachment">
             <xsl:with-param name="maxWidth">
               <xsl:call-template name="mandalay:getSetting">

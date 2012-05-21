@@ -101,7 +101,7 @@
       </xsl:if>
 
       <ul class="availableData">	
-	<xsl:for-each select="../orgaUnitTabs/availableTabs/availableTab">
+	<xsl:for-each select="./orgaUnitTabs/availableTabs/availableTab">
 	  <li>
 	    <xsl:if test="./@selected = 'true'">
 	      <xsl:attribute name="class">selectedTab active</xsl:attribute>
@@ -127,7 +127,7 @@
 	</xsl:for-each>
       </ul>
 
-      <xsl:apply-templates select="../orgaUnitTabs/selectedTab" mode="tabs"/>
+      <xsl:apply-templates select="./orgaUnitTabs/selectedTab" mode="tabs"/>
 
     </div>
   </xsl:template>

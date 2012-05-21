@@ -187,6 +187,7 @@
 	      <xsl:value-of select="./title"/>
 	    </a>
 	    <br/>
+	    <xsl:if test="count(./heads/head) &gt; 0">
 	    <xsl:call-template name="mandalay:getStaticText">
 	      <xsl:with-param name="module" select="'SciInstitute'"/>
 	      <xsl:with-param name="id" select="'departmentHeadPreText'"/>
@@ -256,6 +257,7 @@
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:for-each>
+	    </xsl:if>
 	  </li>
 	</xsl:for-each>
       </ul>

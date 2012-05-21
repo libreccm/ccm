@@ -272,12 +272,12 @@
 		  <xsl:with-param name="id" select="'projectsTab/projectHeadPostText'"/>
 	      </xsl:call-template>
 	    </xsl:if>
-	    <xsl:for-each select="./persons">
-	      <xsl:if test="string-length(./givenname) &gt; 0">
-		<xsl:value-of select="./givenname"/>
+	    <xsl:for-each select="./members/member">
+	      <xsl:if test="string-length(./givenName) &gt; 0">
+		<xsl:value-of select="./givenName"/>
 	      <xsl:text> </xsl:text>		    
 	      </xsl:if>
-	      <xsl:if test="string-length(./givenname) &gt; 0">
+	      <xsl:if test="string-length(./surname) &gt; 0">
 		<xsl:value-of select="./surname"/>
 	      </xsl:if>
 	      <xsl:if test="./link/role_name = 'head'">

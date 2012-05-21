@@ -333,6 +333,7 @@
     <!-- technical data -->
     <xsl:param name="oid"/>
     <xsl:param name="useRelativeUrl" select="'false'"/>
+
     <xsl:apply-templates>
       <!-- publication data -->
       <xsl:with-param name="authors" select="$authors"/>

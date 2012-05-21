@@ -202,7 +202,7 @@
 
     <xsl:if test="./publications">
       <ul class="publicationList">
-	<xsl:for-each select="publications">
+	<xsl:for-each select="./publications">
 	  <li class="sciPublication">
 	    <xsl:apply-templates select="." mode="list_view"/>
 	  </li>

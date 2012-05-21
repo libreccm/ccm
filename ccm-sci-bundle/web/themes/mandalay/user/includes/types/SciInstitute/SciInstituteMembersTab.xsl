@@ -212,13 +212,13 @@
       <xsl:for-each select="./member">
 	<li class="sciMember">
 	  <xsl:choose>
-	    <xsl:when test="($linkMembers = 'true') and ($showContactData = 'true')">
+	    <xsl:when test="($linkMembers = 'true') and ($showContactData = 'true') and (string-length(./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']) &gt; 0)">
 	      <a class="CIname memberName">
 		<xsl:attribute name="href">
-		  <xsl:value-of select="./contacts/contactentries[keyId='homepage']/value"/>
+		  <xsl:value-of select="./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value"/>
 		</xsl:attribute>
-		  <xsl:if test="string-length(./titlePre) &gt; 0">
-		    <xsl:value-of select="./titlePre"/>
+		  <xsl:if test="string-length(./titlepre) &gt; 0">
+		    <xsl:value-of select="./titlepre"/>
 		    <xsl:text> </xsl:text>
 		  </xsl:if>
 		  <xsl:if test="string-length(./givenname) &gt; 0">
@@ -228,15 +228,15 @@
 		  <xsl:if test="string-length(./givenname) &gt; 0">
 		    <xsl:value-of select="./surname"/>
 		  </xsl:if>
-		  <xsl:if test="string-length(./titlePost) &gt; 0">
+		  <xsl:if test="string-length(./titlepost) &gt; 0">
 		    <xsl:text>, </xsl:text>
-		    <xsl:value-of select="./titlePost"/>
+		    <xsl:value-of select="./titlepost"/>
 		  </xsl:if>	 
 	      </a>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <span class="CIname memberName">
-		  <xsl:if test="string-length(./titlePre) &gt; 0">
+		  <xsl:if test="string-length(./titlepre) &gt; 0">
 		    <xsl:value-of select="./titlePre"/>
 		  <xsl:text> </xsl:text>
 		  </xsl:if>
@@ -247,9 +247,9 @@
 		  <xsl:if test="string-length(./givenname) &gt; 0">
 		    <xsl:value-of select="./surname"/>
 		  </xsl:if>
-		  <xsl:if test="string-length(./titlePost) &gt; 0">
+		  <xsl:if test="string-length(./titlepost) &gt; 0">
 		    <xsl:text>, </xsl:text>
-		    <xsl:value-of select="./titlePost"/>
+		    <xsl:value-of select="./titlepost"/>
 		  </xsl:if>	 
 	      </span>
 	    </xsl:otherwise>
@@ -258,7 +258,7 @@
 	  <xsl:if test="$showContactData = 'true'">
 	    <span class="contact">	    
 	      
-	      <xsl:for-each select="./contacts/contactentries">
+	      <xsl:for-each select="./contacts/contact[@contactType='commonContact']/contactentries">
 		<xsl:sort select="key"/>
 		<xsl:variable name="showContactEntry">
 		  <xsl:call-template name="mandalay:getSetting">
@@ -305,7 +305,8 @@
 		      </xsl:choose>
 		    </span>		      
 		  </span>
-		  <xsl:text> </xsl:text>
+		  <br/>
+<!--		  <xsl:text> </xsl:text>-->
 		</xsl:if>
 	      </xsl:for-each>
 	      <xsl:if test="($showAddress = 'true') and (string-length(./contacts/address/address) &gt; 0)">
