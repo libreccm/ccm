@@ -1,15 +1,15 @@
-# Service-wide configuration file for APLAWS+ service.
-# This will be sourced by APLAWS+ init script after the system-wide  configuration
-# file /etc/aplaws/aplaws.conf, thus allowing values to be overridden in a 
-# per-service manner.
+# Service-wide configuration file for ScientificCMS service.
+# This will be sourced by ScientificCMS init script after the system-wide
+# configuration file /etc/scientificcms/scientificcms.conf, thus allowing values 
+# to be overridden in a per-service manner.
 #
 # NEVER change the init script itself. To change values for all services make
-# your changes in /etc/aplaws/aplaws.conf!
+# your changes in /etc/scientificcms/scientificcms.conf!
 #
 # To change values for a specific service make your edits here.
 # To create a new service create a link from /etc/init.d/<your new service> to
-# /etc/init.d/aplaws (do not copy the init script) and make a copy of the
-# /etc/sysconfig/aplaws file to /etc/sysconfig/<your new service> and change
+# /etc/init.d/scientificcms (do not copy the init script) and make a copy of the
+# /etc/sysconfig/scientificcms file to /etc/sysconfig/<your new service> and change
 # the property values so the two services won't conflict. Register the new
 # service in the system as usual (see chkconfig and similars).
 #

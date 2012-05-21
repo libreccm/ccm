@@ -1090,12 +1090,23 @@
 
       <!-- Deploy bin -->
       <target name="deploy-bin-{$name}" depends="init">
+        <!-- copy task is not able to preserve file permissions on unix
+             systems but uses the target's system default umask. On most
+             systems the execute bit will not be preserved.                  -->
         <copy todir="${{this.deploy.bin.dir}}">
           <fileset dir="{$name}">
             <include name="${{bin.dir}}/**"/>
           </fileset>
           <mapper type="glob" to="*" from="${{bin.dir}}${{file.separator}}*"/>
         </copy>
+        <!-- In order tp preseve file permissions on unix, we could try (but
+             doesn't work under Windows).
+        <exec executable="cp">
+            <arg line="-p -R ${srcDir} ${destDir}"/>
+        </exec>
+
+
+        -->
       </target>
 
       <!-- Deploy Javadoc -->

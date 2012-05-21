@@ -4,5 +4,5 @@
     rotate 52
     compress
     missingok
-    create 0644 aplaws aplaws-admin
+    create 0644 scicms scicms-admin
 }

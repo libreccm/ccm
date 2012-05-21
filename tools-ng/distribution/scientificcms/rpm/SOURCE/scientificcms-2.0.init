@@ -1,20 +1,20 @@
 #!/bin/bash
 #
-# aplaws      This shell script takes care of starting and stopping the 
-#             embedded Tomcat Servlet Containere for aplaws
+# scientificcms      This shell script takes care of starting and stopping the 
+#                    embedded Tomcat Servlet Containere for ScientificCMS
 #
 # Copied from jpackage.org / Fedora Tomcat scripts. All honours granted.
 #
 # chkconfig: - 80 20
 #
 ### BEGIN INIT INFO
-# Provides: aplaws
+# Provides: scientificcms
 # Required-Start: $network $syslog
 # Required-Stop: $network $syslog
 # Default-Start:
 # Default-Stop:
-# Description: RPM edition of aplaws
-# Short-Description: start and stop aplaws
+# Description: RPM edition of scientificcms
+# Short-Description: start and stop scientificcms
 ### END INIT INFO
 #
 # - originally written by Henri Gomez, Keith Irwin, and Nicolas Mailhot
@@ -47,7 +47,7 @@ else
 fi
 
 # Get the tomcat config (use this for environment specific settings)
-TOMCAT_CFG="/etc/aplaws/aplaws.conf"
+TOMCAT_CFG="/etc/scientificcms/scientificcms.conf"
 if [ -r "$TOMCAT_CFG" ]; then
     . $TOMCAT_CFG
 fi
@@ -61,15 +61,15 @@ fi
 CONNECTOR_PORT="${CONNECTOR_PORT:-8080}"
 
 # Path to the tomcat launch script
-TOMCAT_SCRIPT="/usr/sbin/aplaws"
+TOMCAT_SCRIPT="/usr/sbin/scientificcms"
 
 # Tomcat program name
 TOMCAT_PROG="${NAME}"
         
 # Define the tomcat username
-# Tomcat_USER and ~GROUP are defined in sourced aplaws.conf file!
-# TOMCAT_USER="${TOMCAT_USER:-aplaws}"
-# TOMCAT_GROUP="${TOMCAT_GROUP:-aplaws-admin}"
+# Tomcat_USER and ~GROUP are defined in sourced scientificcms.conf file!
+# TOMCAT_USER="${TOMCAT_USER:-scicms}"
+# TOMCAT_GROUP="${TOMCAT_GROUP:-scicms-admin}"
 
 # Define the tomcat log file
 TOMCAT_LOG="${TOMCAT_LOG:-/var/log/${NAME}/catalina.out}"
@@ -113,7 +113,7 @@ function makeHomeDir() {
         echo "$CATALINA_HOME does not exist, creating"
         if [ ! -d "/usr/share/${NAME}" ]; then
             mkdir /usr/share/${NAME}
-            cp -pLR /usr/share/aplaws/* /usr/share/${NAME}
+            cp -pLR /usr/share/scientificcms/* /usr/share/${NAME}
         fi
         mkdir -p /var/log/${NAME} \
                  /var/cache/${NAME} \
@@ -123,8 +123,8 @@ function makeHomeDir() {
 		  ln -fs /var/log/${NAME} ${CATALINA_HOME}/logs
         cp -pLR /usr/share/${NAME}/bin $CATALINA_HOME
         cp -pLR /usr/share/${NAME}/conf $CATALINA_HOME
-        ln -fs /usr/share/java/aplaws ${CATALINA_HOME}/lib
-        ln -fs /usr/share/aplaws/webapps ${CATALINA_HOME}/webapps
+        ln -fs /usr/share/java/scientificcms ${CATALINA_HOME}/lib
+        ln -fs /usr/share/scientificcms/webapps ${CATALINA_HOME}/webapps
         chown ${TOMCAT_USER}:${TOMCAT_GROUP} /var/log/${NAME}
     fi
 }
@@ -177,8 +177,8 @@ function start() {
     if [ "$RETVAL" -eq "0" -a "$?" -eq "0" ]; then
       chown ${TOMCAT_USER}:${TOMCAT_GROUP} $TOMCAT_LOG
     fi
-    if [ "$CATALINA_HOME" != "/usr/share/aplaws" -a "$RETVAL" -eq "0" ]; then
-        # Create an aplaws directory if it doesn't exist
+    if [ "$CATALINA_HOME" != "/usr/share/scientificcms" -a "$RETVAL" -eq "0" ]; then
+        # Create an scientificcms directory if it doesn't exist
         makeHomeDir
         # If CATALINA_HOME doesn't exist modify port number so that
         # multiple instances don't interfere with each other

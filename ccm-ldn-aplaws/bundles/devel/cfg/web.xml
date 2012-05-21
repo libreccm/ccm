@@ -89,6 +89,7 @@
 
   <servlet>
     <servlet-name>ccm-dispatcher</servlet-name>
+    <servlet-class>com.arsdigita.web.DispatcherServlet</servlet-class>
     <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet>

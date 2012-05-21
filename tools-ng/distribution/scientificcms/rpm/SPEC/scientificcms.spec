@@ -28,22 +28,23 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# APLAWS+ details
+# ScientificCMS details
 %global bundle std
 %global major_version 2
 %global minor_version 0
 %global micro_version 0
-%global revision beta1.r1669
+%global revision beta1.r1668
 %define dist .openccm
 
-%global apuid 291
+%global scuid 295
+%global scusr scicms
 %global arch noarch
 
 # Servlet Container Details
 %global sc_name tomcat6
 %global sc_major_version 6
 %global sc_minor_version 0
-%global sc_micro_version 32
+%global sc_micro_version 35
 %global packdname apache-tomcat-%{sc_major_version}.%{sc_minor_version}.%{sc_micro_version}
 
 %global jspspec 2.1
@@ -84,7 +85,7 @@ Release:       %{bundle}.%{revision}
 Summary:       ScientificCMS Collaboration and Content Management System bundled with Tomcat6 servlet container.
 
 License:       LGPL 
-URL:           http://apalaws.org/
+URL:           http://scientificcms.org/
 # Tomcat stuff
 Source0:       apache-tomcat-%{sc_major_version}.%{sc_minor_version}.%{sc_micro_version}.tar.gz
 Source1:       %{name}-%{major_version}.%{minor_version}.conf
@@ -94,11 +95,11 @@ Source4:       %{name}-%{major_version}.%{minor_version}.wrapper
 Source5:       %{name}-%{major_version}.%{minor_version}.logrotate
 #  Source6:       %{sc_name}-%{sc_major_version}.%{sc_minor_version}-digest.script
 #  Source7:       %{sc_name}-%{sc_major_version}.%{sc_minor_version}-tool-wrapper.script
-# APLAWS+ stuff
-Source8:       %{name}-%{bundle}-%{major_version}-%{minor_version}-%{micro_version}-beta-1.war
+# ScientificCMS stuff
+Source8:       %{name}-%{major_version}-%{minor_version}-%{micro_version}-%{bundle}.war
 Source9:       postgresql-jdbc-8.4.701.jar
 Source10:      ojdbc14.jar
-Source11:      %{name}-%{bundle}-addon-%{major_version}-%{minor_version}-%{micro_version}-beta-1.zip
+Source11:      %{name}-addon-%{major_version}-%{minor_version}-%{micro_version}-%{bundle}.zip
 
 Patch0:        %{sc_name}-%{sc_major_version}.%{sc_minor_version}-tomcat-users-webapp.patch
 Patch1:        %{sc_name}-%{sc_major_version}.%{sc_minor_version}-server-xml.patch
@@ -125,7 +126,8 @@ Requires(postun): jpackage-utils
 
 
 %description
-ScientificCMS is content and collaboration management web application.
+ScientificCMS is content and collaboration management web application to help
+scientific institutes to maintain their web content.
 
 This package distributes ScientificCMS with the original, unmodified binary 
 Apache Tomcat distribution integrated in a FHS compliant structure and 
@@ -139,7 +141,7 @@ Summary: Provides additional packages not included in the ScientificCMS ${bundle
 Requires: %{name} = %{epoch}:%{version}-%{release}
 
 %description addons
-Provides additional packages not included in the APLAWS ${bundle} bundle.
+Provides additional packages not included in the ScientificCMS ${bundle} bundle.
 
 # --------------------------------------------------------------------------
 
@@ -227,14 +229,14 @@ rm -rf $RPM_BUILD_ROOT
          -e "s|\@\@\@TCTEMP\@\@\@|%{tempdir}|g"  \
          -e "s|\@\@\@LIBDIR\@\@\@|%{_libdir}|g"  \
          -e "s|\@\@\@TCPID\@\@\@|%{name}|g"  \
-         -e "s|\@\@\@TCUSER\@\@\@|%{name}|g" %{SOURCE1} \
+         -e "s|\@\@\@TCUSER\@\@\@|%{scusr}|g" %{SOURCE1} \
     > ${RPM_BUILD_ROOT}%{confdir}/%{name}.conf
 
 %{__sed} -e "s|\@\@\@TCHOME\@\@\@|%{homedir}|g" \
          -e "s|\@\@\@TCTEMP\@\@\@|%{tempdir}|g" \
          -e "s|\@\@\@LIBDIR\@\@\@|%{_libdir}|g" \
          -e "s|\@\@\@TCPID\@\@\@|%{name}|g"     \
-         -e "s|\@\@\@TCUSER\@\@\@|%{name}|g" %{SOURCE3} \
+         -e "s|\@\@\@TCUSER\@\@\@|%{scusr}|g" %{SOURCE3} \
     > ${RPM_BUILD_ROOT}%{_sysconfdir}/sysconfig/%{name}
 
 %{__install} -m 0644 %{SOURCE2} \
@@ -269,10 +271,10 @@ popd
 
 
 %pre
-# add the aplaws user and group
-%{_sbindir}/groupadd -g %{apuid} -r aplaws-admin 2>/dev/null || :
-%{_sbindir}/useradd -c "ScientificCMS" -u %{apuid} -g nobody -N   \
-    -s /bin/bash -r -d %{homedir} aplaws 2>/dev/null || :
+# add the scicms user and group
+groupadd -g %{scuid} -r %{scusr}-admin 2>/dev/null || :
+useradd -c "ScientificCMS" -u %{scuid} -g nobody -N   \
+    -s /bin/bash -r -d %{homedir} %{scusr} 2>/dev/null || :
 
 
 %post
@@ -303,29 +305,29 @@ fi
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 
 # attribute flags for basic tomcat directories and config files
-%attr(2775,aplaws,aplaws-admin) %dir %{basedir}
-%attr(7775,aplaws,aplaws-admin) %dir %{webappdir}
-%attr(0775,aplaws,aplaws-admin) %dir %{cachedir}
-%attr(0775,aplaws,aplaws-admin) %dir %{tempdir}
-%attr(0775,aplaws,aplaws-admin) %dir %{workdir}
+%attr(2775,scicms,scicms-admin) %dir %{basedir}
+%attr(7775,scicms,scicms-admin) %dir %{webappdir}
+%attr(0775,scicms,scicms-admin) %dir %{cachedir}
+%attr(0775,scicms,scicms-admin) %dir %{tempdir}
+%attr(0775,scicms,scicms-admin) %dir %{workdir}
 # (from sl spec)
-%attr(0775,aplaws,aplaws-admin) %dir %{logdir}
-%attr(0644,aplaws,aplaws-admin) %{logdir}/catalina.out
+%attr(0775,scicms,scicms-admin) %dir %{logdir}
+%attr(0644,scicms,scicms-admin) %{logdir}/catalina.out
 
-%attr(0775,root,aplaws-admin) %dir %{confdir}
-%attr(0775,root,aplaws-admin) %dir %{confdir}/Catalina
-%attr(0775,root,aplaws-admin) %dir %{confdir}/Catalina/localhost
-%attr(0664,aplaws,aplaws-admin) %config(noreplace) %{confdir}/%{name}.conf
-%attr(0664,aplaws,aplaws-admin) %config(noreplace) %{confdir}/*.policy
-%attr(0664,aplaws,aplaws-admin) %config(noreplace) %{confdir}/*.properties
-%attr(0664,aplaws,aplaws-admin) %config(noreplace) %{confdir}/context.xml
-%attr(0664,aplaws,aplaws-admin) %config(noreplace) %{confdir}/server.xml
-%attr(0664,aplaws,aplaws-admin) %config(noreplace) %{confdir}/tomcat-users.xml
-%attr(0666,aplaws,aplaws-admin) %config(noreplace) %{confdir}/web.xml
+%attr(0775,root,scicms-admin) %dir %{confdir}
+%attr(0775,root,scicms-admin) %dir %{confdir}/Catalina
+%attr(0775,root,scicms-admin) %dir %{confdir}/Catalina/localhost
+%attr(0664,scicms,scicms-admin) %config(noreplace) %{confdir}/%{name}.conf
+%attr(0664,scicms,scicms-admin) %config(noreplace) %{confdir}/*.policy
+%attr(0664,scicms,scicms-admin) %config(noreplace) %{confdir}/*.properties
+%attr(0664,scicms,scicms-admin) %config(noreplace) %{confdir}/context.xml
+%attr(0664,scicms,scicms-admin) %config(noreplace) %{confdir}/server.xml
+%attr(0664,scicms,scicms-admin) %config(noreplace) %{confdir}/tomcat-users.xml
+%attr(0666,scicms,scicms-admin) %config(noreplace) %{confdir}/web.xml
 
 %dir %{homedir}
 # specify files to include in package for installation
-%defattr(0664,aplaws,aplaws-admin,0775)
+%defattr(0664,scicms,scicms-admin,0775)
 %{homedir}/LICENSE
 %{homedir}/NOTICE
 %{homedir}/RELEASE*
@@ -338,16 +340,22 @@ fi
 %{homedir}/conf
 
 #  %files admin-webapps
-%defattr(0664,aplaws,aplaws-admin,0775)
+%defattr(0664,scicms,scicms-admin,0775)
 %{webappdir}/host-manager
 %{webappdir}/manager
 
 #%files webapps
-%defattr(0664,aplaws,aplaws-admin,0775)
+%defattr(0664,scicms,scicms-admin,0775)
 %{webappdir}/ROOT
 
+%attr(0774,scicms,scicms-admin) %{webappdir}/ROOT/WEB-INF/bin/ccm
+%attr(0774,scicms,scicms-admin) %{webappdir}/ROOT/WEB-INF/bin/ccm-hostinit
+%attr(0774,scicms,scicms-admin) %{webappdir}/ROOT/WEB-INF/bin/ccm-run
+%attr(0774,scicms,scicms-admin) %{webappdir}/ROOT/WEB-INF/bin/libexec/ant/bin/ant
+%attr(0774,scicms,scicms-admin) %{webappdir}/ROOT/WEB-INF/bin/libexec/ant/bin/antRun
+
 %files addons
-%defattr(0664,aplaws,aplaws-admin,0775)
+%defattr(0664,scicms,scicms-admin,0775)
 %{addondir}
 
 

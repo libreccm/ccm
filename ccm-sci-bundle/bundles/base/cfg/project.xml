@@ -11,7 +11,7 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="ScientificCMS" 
+                    name="scientificcms" 
               prettyName="Scientific CMS" 
                  version="2-0-0" 
                  release="base" 
