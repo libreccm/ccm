@@ -63,6 +63,11 @@ public class Navigation extends Application {
                            NavigationConstants.NAV_NS);
     }
     
+    public static Element newElement(final Element parent, final String name) {
+        return parent.newChildElement(String.format("%s:%s", NavigationConstants.NAV_PREFIX, name), 
+                                      NavigationConstants.NAV_NS);
+    }
+    
     public static String redirectURL(OID oid) {
         ParameterMap map = new ParameterMap();
         map.setParameter( NavigationConstants.OID, oid.toString() );

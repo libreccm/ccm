@@ -133,12 +133,14 @@ public class SimpleXMLGenerator implements XMLGenerator {
      * @param useContext The use context
      */
     public void generateXML(PageState state, Element parent, String useContext) {
-
-        ContentSection section = CMS.getContext().getContentSection();
+        final long start = System.nanoTime();
+        
+        //ContentSection section = CMS.getContext().getContentSection();
         ContentItem item = getContentItem(state);
 
+        System.out.printf("After getting contentitem: %d ms\n", (System.nanoTime() - start) / 1000000);
+        
         s_log.info("Generate XML for item " + item.getOID());
-
 
         Party currentParty = Kernel.getContext().getParty();
         if (currentParty == null) {
@@ -164,6 +166,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
         }
         String className = item.getDefaultDomainClass();
 
+        System.out.printf("After creating permission attributes: %d ms\n", (System.nanoTime() - start) / 1000000);
+        
         // Ensure correct subtype of ContentItem is instantiated
         if (!item.getClass().getName().equals(className)) {
             s_log.info("Specializing item");
@@ -178,6 +182,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
                         ex);
             }
         }
+        
+        System.out.printf("After checking type: %d ms\n", (System.nanoTime() - start) / 1000000);
 
         // Implementing XMLGenerator directly is now deprecated
         if (item instanceof XMLGenerator) {
@@ -205,6 +211,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
             renderer.setRevisitFullObject(true);
 
             renderer.walk(item, ADAPTER_CONTEXT);
+            
+            System.out.printf("After getting rendering standard item xml: %d ms\n", (System.nanoTime() - start) / 1000000);
 
             //parent.addContent(content);
 
@@ -222,6 +230,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
                     generator.generateXML(item, content, state);
                 }
             }
+            
+            System.out.printf("After rendering extra xml: %d ms\n", (System.nanoTime() - start) / 1000000);
         }
     }
 

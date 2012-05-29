@@ -50,14 +50,18 @@ public class ArticleInJournalConverter extends AbstractRisConverter {
 
         article = (ArticleInJournal) publication;
 
-        getRisBuilder().setType(RisTypes.MGZN);
+        getRisBuilder().setType(RisTypes.JOUR);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
 
         if (article.getJournal() != null) {
-            getRisBuilder().addField(RisFields.JF,
+            getRisBuilder().addField(RisFields.T2,
                                      article.getJournal().getTitle());
+        }
+
+        if (article.getIssue() != null) {
+            getRisBuilder().addField(RisFields.M1, article.getIssue());
         }
 
         if (article.getVolume() != null) {
@@ -67,11 +71,17 @@ public class ArticleInJournalConverter extends AbstractRisConverter {
 
         if (article.getPagesFrom() != null) {
             getRisBuilder().addField(RisFields.SP,
-                                     article.getPagesFrom().toString());
-            getRisBuilder().addField(RisFields.EP,
+                                     String.format("%d - %d", article.getPagesFrom(), article.getPagesTo()));
+            /*
+             * getRisBuilder().addField(RisFields.EP,
                                      article.getPagesTo().toString());
+             */
         }
-
+        
+        if (article.getReviewed()) {
+            getRisBuilder().addField(RisFields.RI, "");
+        }        
+        
         return getRisBuilder().toRis();
     }
 

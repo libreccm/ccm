@@ -47,7 +47,7 @@ public class CollectedVolumeConverter extends AbstractRisConverter {
 
         collectedVolume = (CollectedVolume) publication;
 
-        getRisBuilder().setType(RisTypes.BOOK);
+        getRisBuilder().setType(RisTypes.EDBOOK);
         convertAuthors(publication);
 
         convertTitle(publication);

@@ -61,7 +61,7 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                                    DataObject dobj,
                                    ACSObject obj,
                                    int index) {
-        if (obj != null) {
+        if (obj != null) {            
             ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(item);
             renderer.setRevisitFullObject(false);
             renderer.setWrapAttributes(true);
@@ -74,7 +74,7 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
              * possible to set the adapter context used from a JSP template, 
              * using DataCollectionRenderer#setSpecializeObjectsContext(String).
              */          
-            renderer.walk(obj, getSpecializeObjectsContext());
+            renderer.walk(obj, getSpecializeObjectsContext());            
             
             if ((obj instanceof ContentItem) && useExtraXml) {
                 final ContentItem contentItem = (ContentItem) obj;
@@ -84,7 +84,7 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                     generator.generateXML(contentItem, item, null);
                 }
                  
-            }
+            }                       
         }
     }
 }

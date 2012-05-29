@@ -63,6 +63,10 @@ public enum RisTypes {
      */
     CONF,
     /**
+     * Conference Paper
+     */
+    CPAPER,
+    /**
      * Catalog
      */
     CTLG,
@@ -71,9 +75,17 @@ public enum RisTypes {
      */
     DATA,
     /**
+     * Edited book
+     */
+    EDBOOK,
+    /**
      * Electronic citation
      */
     ELEC,
+    /**
+     * Eletronic Article
+     */
+    EJOUR,
     /**
      * Generic
      */

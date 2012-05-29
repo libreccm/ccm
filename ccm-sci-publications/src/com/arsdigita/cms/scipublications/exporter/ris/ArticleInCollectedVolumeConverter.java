@@ -56,18 +56,18 @@ public class ArticleInCollectedVolumeConverter extends AbstractRisConverter {
         convertYear(publication);
 
         if (article.getCollectedVolume() != null) {
-            getRisBuilder().addField(RisFields.BT,
+            getRisBuilder().addField(RisFields.T2,
                                      article.getCollectedVolume().getTitle());
 
         }
 
         if (article.getPagesFrom() != null) {
             getRisBuilder().addField(RisFields.SP,
-                                     article.getPagesFrom().toString());
-            if (article.getPagesTo() != null) {
+                                     String.format("%d - %d", article.getPagesFrom(), article.getPagesTo()));
+            /*if (article.getPagesTo() != null) {
                 getRisBuilder().addField(RisFields.EP,
                                          article.getPagesTo().toString());
-            }
+            }*/
         }
 
         return getRisBuilder().toRis();

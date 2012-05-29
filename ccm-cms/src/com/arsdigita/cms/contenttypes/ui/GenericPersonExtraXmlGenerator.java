@@ -13,31 +13,31 @@ import com.arsdigita.xml.Element;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
 
     public void generateXML(final ContentItem item,
                             final Element element,
-                            final PageState state) {
+                            final PageState state) {        
         if (!(item instanceof GenericPerson)) {
             throw new IllegalArgumentException(
                     "The GenericPersonExtraXmlGenerator can only process "
                     + "instances of GenericPerson");
-        }
+        }       
 
         final GenericPerson person = (GenericPerson) item;
-        final GenericPersonContactCollection contacts = person.getContacts();
+        final GenericPersonContactCollection contacts = person.getContacts();        
 
         final Element contactsElem = element.newChildElement("contacts");
-        while (contacts.next()) {
+        while (contacts.next()) {            
+            final GenericContact contact = contacts.getContact(GlobalizationHelper.getNegotiatedLocale().getLanguage());
             generateContactXml(
-                    contactsElem,
-                    contacts.getContact(GlobalizationHelper.getNegotiatedLocale().
-                    getLanguage()),
-                    state);
-        }
+                    contactsElem,                    
+                    contact,
+                    state);            
+        }        
     }
 
     private void generateContactXml(final Element contactsElem,
@@ -52,7 +52,7 @@ public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
     public void addGlobalStateParams(final Page page) {
         //Nothing
     }
-    
+
     @Override
     public void setListMode(final boolean listMode) {
         //nothing

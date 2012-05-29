@@ -331,5 +331,16 @@ public enum RisFields {
      * Edition. Not found in the specification, but used but by some other
      * exports.
      */
-    ET
+    ET,
+    /**
+     * Reviewed item
+     */
+    RI,
+    /**
+     * DA
+     */
+    DA,
+    C1,
+    C2,
+    C3
 }

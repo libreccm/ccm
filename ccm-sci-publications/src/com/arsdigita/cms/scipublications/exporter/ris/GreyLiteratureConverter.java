@@ -29,10 +29,22 @@ public class GreyLiteratureConverter extends AbstractRisConverter {
 
         greyLiterature = (GreyLiterature) publication;
 
-        getRisBuilder().setType(RisTypes.GEN);
+        getRisBuilder().setType(RisTypes.UNPB);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
+        
+        if (greyLiterature.getPlace() != null) {
+            getRisBuilder().addField(RisFields.CY, greyLiterature.getPlace());
+        }
+        
+        if (greyLiterature.getNumber() != null) {
+            getRisBuilder().addField(RisFields.M1, greyLiterature.getNumber());
+        }
+        
+        if (greyLiterature.getOrganization() != null) {
+            getRisBuilder().addField(RisFields.PB, greyLiterature.getOrganization().getTitle());
+        }
 
         return getRisBuilder().toRis();
     }

@@ -51,31 +51,30 @@ public class InProceedingsConverter extends AbstractRisConverter {
 
         inProceedings = (InProceedings) publication;
 
-        getRisBuilder().setType(RisTypes.GEN);
+        getRisBuilder().setType(RisTypes.CPAPER);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
 
+        if (inProceedings.getProceedings() != null) {
+            final Proceedings proceedings = inProceedings.getProceedings();
+            if (proceedings.getPlaceOfConference() != null) {
+                getRisBuilder().addField(RisFields.CY, proceedings.getPlaceOfConference());
+            }
+            
+            
+            
+        }
+        
         if (inProceedings.getPagesFrom() != null) {
             getRisBuilder().addField(RisFields.SP,
-                    inProceedings.getPagesFrom().toString());
-             getRisBuilder().addField(RisFields.EP,
-                    inProceedings.getPagesTo().toString());
+                                     String.format("%d - %d", 
+                                                   inProceedings.getPagesFrom(),
+                                                   inProceedings.getPagesTo()));
+             /*getRisBuilder().addField(RisFields.EP,
+                    inProceedings.getPagesTo().toString());*/
         }
-
-        if(inProceedings.getProceedings() != null) {
-            Proceedings proceedings;
-
-            proceedings = inProceedings.getProceedings();
-
-            getRisBuilder().addField(RisFields.BT,
-                    proceedings.getTitle());
-
-            convertVolume(proceedings);
-            convertSeries(proceedings);
-            convertPublisher(proceedings);
-        }
-
+       
         return getRisBuilder().toString();
     }
 

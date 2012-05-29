@@ -3,13 +3,10 @@
  *
  * Autor: Sören Bernstein
  *
- * Diese Klasse realisiert eine ObjectList für Navigation,
- * der man Filterbefehle für die SQL-Abfrage mitgeben kann.
- * Auf diese Weise lassen sich Objekte listen, die bestimmte
- * Kriterien erfüllen.
+ * Diese Klasse realisiert eine ObjectList für Navigation, der man Filterbefehle für die SQL-Abfrage mitgeben kann. Auf
+ * diese Weise lassen sich Objekte listen, die bestimmte Kriterien erfüllen.
  *
- * Angelegt wurde Sie für die Auflistung der aktuellen News
- * und Veranstalungen auf einer Navigationsseite.
+ * Angelegt wurde Sie für die Auflistung der aktuellen News und Veranstalungen auf einer Navigationsseite.
  */
 package com.arsdigita.navigation.ui.object;
 
@@ -50,9 +47,9 @@ public class ComplexObjectList extends AbstractObjectList {
     }
 
     /**
-     * Hinzufügen eines SQL-Filter zur Abfrage
-     * Verarbeitet einen boolschen Filter, der SQL-konform Formatiert ist.
-     * Siehe PostgreSQL-Handbuch zur where-Klausel
+     * Hinzufügen eines SQL-Filter zur Abfrage Verarbeitet einen boolschen Filter, der SQL-konform Formatiert ist. Siehe
+     * PostgreSQL-Handbuch zur where-Klausel
+     *
      * @param sqlfilter
      */
     public void setSQLFilter(String sqlfilter) {
@@ -75,8 +72,8 @@ public class ComplexObjectList extends AbstractObjectList {
         m_customAttributes.put(attribute, value);
     }
 
-    /* Diese Methode überschreibt die Methode aus der Eltern-Klasse, um
-     * die SQL-Filter berücksichtigen zu können
+    /*
+     * Diese Methode überschreibt die Methode aus der Eltern-Klasse, um die SQL-Filter berücksichtigen zu können
      */
     @Override
     protected DataCollection getObjects(HttpServletRequest request,
@@ -109,7 +106,9 @@ public class ComplexObjectList extends AbstractObjectList {
         return objects;
     }
 
-    /* Diese Methode wird vom Servlet aufgerufen */
+    /*
+     * Diese Methode wird vom Servlet aufgerufen
+     */
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
         Element content = Navigation.newElement("complexObjectList");
@@ -121,9 +120,9 @@ public class ComplexObjectList extends AbstractObjectList {
         for (Map.Entry<String, String> attribute : m_customAttributes.entrySet()) {
             content.addAttribute(attribute.getKey(), attribute.getValue());
         }
-
+        
         content.addContent(generateObjectListXML(request, response));
-
+        
         return content;
     }
 }

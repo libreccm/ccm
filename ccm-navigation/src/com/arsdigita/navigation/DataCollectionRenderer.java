@@ -140,7 +140,7 @@ public class DataCollectionRenderer extends LockableImpl {
         // Quasimodo: End
 
         Element content = Navigation.newElement("objectList");
-
+        
         //Return the empty nav:item & nav:paginator tags.
         // Quasimodo: Why should I??? There is no need for a paginator if there aren't any elements
         if (!m_navItems) {
@@ -203,9 +203,9 @@ public class DataCollectionRenderer extends LockableImpl {
         paginator.addAttribute("objectCount", new Long(objectCount).toString());
 
         content.addContent(paginator);
-
+        
         int index = 0;
-        while (objects.next()) {
+        while (objects.next()) {            
             DataObject dobj = objects.getDataObject();
             ACSObject object = null;
             if (m_specializeObjects) {
@@ -214,11 +214,10 @@ public class DataCollectionRenderer extends LockableImpl {
                     s_log.error(String.format("Failed to specialize object with with id %s. Skiping object.", dobj.getOID().toString()));
                     continue;
                 } else {
-                    s_log.error("Specializing successful.");
+                    s_log.debug("Specializing successful.");
                 }
-            }
-
-            Element item = Navigation.newElement("item");
+            }           
+            Element item = Navigation.newElement(content, "item");                      
 
             Iterator attributes = m_attributes.iterator();
             while (attributes.hasNext()) {
@@ -226,23 +225,23 @@ public class DataCollectionRenderer extends LockableImpl {
                 String[] paths = StringUtils.split(name, '.');
                 outputValue(item, dobj, name, paths, 0);
             }
-
+                       
             Iterator properties = m_properties.iterator();
             while (properties.hasNext()) {
                 DataCollectionPropertyRenderer property = (DataCollectionPropertyRenderer) properties.next();
                 property.render(objects, item);
             }
-
-            Element path = Navigation.newElement("path");
+                        
+            Element path = Navigation.newElement(item, "path");
             path.setText(getStableURL(dobj, object));
-            item.addContent(path);
+            //item.addContent(path);
 
             generateItemXML(item, dobj, object, index);
 
             index++;
-            content.addContent(item);
+            //content.addContent(item);           
         }
-
+        
         return content;
     }
 

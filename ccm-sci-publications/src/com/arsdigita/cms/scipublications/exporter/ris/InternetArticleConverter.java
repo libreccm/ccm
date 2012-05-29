@@ -50,10 +50,18 @@ public class InternetArticleConverter extends AbstractRisConverter {
 
         article = (InternetArticle) publication;
 
-        getRisBuilder().setType(RisTypes.GEN);
+        getRisBuilder().setType(RisTypes.EJOUR);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
+        
+        if (article.getReviewed()) {
+            getRisBuilder().addField(RisFields.RI, "");
+        }
+        
+        if (article.getUrl() != null) {
+            getRisBuilder().addField(RisFields.UR, article.getUrl());
+        }
 
         return getRisBuilder().toRis();
     }

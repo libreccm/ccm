@@ -25,8 +25,7 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.SeriesCollection;
 
 /**
- * An abstract base implementation of the {@link RisConverter} interface 
- * providing common functionality.
+ * An abstract base implementation of the {@link RisConverter} interface providing common functionality.
  *
  * @author Jens Pelzetter
  */
@@ -66,16 +65,18 @@ public abstract class AbstractRisConverter implements RisConverter {
 
     protected void convertYear(final Publication publication) {
         getRisBuilder().addField(RisFields.PY,
-                                 String.format("%d///", publication.
-                getYearOfPublication()));
+                                 String.format("%d///", publication.getYearOfPublication()));
     }
 
     protected void convertPublisher(final PublicationWithPublisher publication) {
+        convertPublisher(publication, RisFields.CY);
+    }
+
+    protected void convertPublisher(final PublicationWithPublisher publication, final RisFields placeField) {
         if (publication.getPublisher() != null) {
             if ((publication.getPublisher().getPlace() != null)
                 && !(publication.getPublisher().getPlace().isEmpty())) {
-                getRisBuilder().addField(RisFields.CY,
-                                         publication.getPublisher().getPlace());
+                getRisBuilder().addField(placeField, publication.getPublisher().getPlace());
             }
 
             getRisBuilder().addField(RisFields.PB,

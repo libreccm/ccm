@@ -57,7 +57,17 @@ public class ProceedingsConverter extends AbstractRisConverter {
 
         convertVolume(proceedings);
         convertSeries(publication);
-        convertPublisher(proceedings);
+        convertPublisher(proceedings, RisFields.C1);
+        
+        if (proceedings.getPlaceOfConference() != null) {
+            getRisBuilder().addField(RisFields.CY, proceedings.getPlaceOfConference());
+        }
+        
+        if (proceedings.getNameOfConference() != null) {
+            getRisBuilder().addField(RisFields.T2, proceedings.getNameOfConference());
+        }
+        
+        
 
 
         return getRisBuilder().toRis();
