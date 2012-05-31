@@ -453,7 +453,8 @@ public class CoreLoader extends PackageLoader {
         groupColl.filter("Site-wide Administrators");
         if(groupColl.next()) {
             groupColl.getGroup().addMember(sa);
-        }
+        }        
+        groupColl.close();
 
         s_log.debug("Adding administrator: \"" + givenName + " " +
                    familyName + "\" <" + emailAddress + ">");

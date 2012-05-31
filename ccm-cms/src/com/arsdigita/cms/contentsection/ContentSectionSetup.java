@@ -204,6 +204,7 @@ public final class ContentSectionSetup {
         if(partyColl.next()) {
             role.add(partyColl.getParty());
         }
+        partyColl.close();
         
         return role;
     }
