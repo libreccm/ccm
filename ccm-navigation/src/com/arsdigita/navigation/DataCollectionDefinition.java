@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -66,8 +66,8 @@ public class DataCollectionDefinition extends LockableImpl {
 
     public final void setObjectType(String objectType) {
         Assert.isUnlocked(this);
-        validateObjectType(objectType);
         m_objectType = objectType;
+        validateObjectType(objectType);
     }
 
     public final void setSpecificObjectType(String specificObjectType) {
@@ -86,6 +86,12 @@ public class DataCollectionDefinition extends LockableImpl {
     }
 
     public void setDateAttribute(DataCollectionRenderer renderer) {
+
+        // Stop here, if the set object type is invalid a.k.a. not installed
+        if(this.hasInvalidObjectType()) {
+            return;
+        }
+
         ObjectType type = SessionManager.getMetadataRoot().getObjectType(
                 m_objectType);
         s_log.debug("set date attribute for collection of " + type.
@@ -124,8 +130,19 @@ public class DataCollectionDefinition extends LockableImpl {
     private final void validateObjectType(String objectType) {
         ObjectType type = SessionManager.getMetadataRoot().getObjectType(
                 objectType);
-        Assert.exists(type, ObjectType.class);
-        validateObjectType(type);
+
+        // WTF: I don't need an exception if the requested objecttype doesn't exists
+        // That will only ruin your website
+        //Assert.exists(type, ObjectType.class);
+        if(type == null) {
+            m_objectType = "";
+        } else {
+            validateObjectType(type);
+        }
+    }
+
+    public boolean hasInvalidObjectType() {
+        return m_objectType.isEmpty();
     }
 
     protected void validateObjectType(ObjectType type) {
@@ -153,7 +170,7 @@ public class DataCollectionDefinition extends LockableImpl {
     }
 
     /**
-     * Activates a filter for content types which are blacklisted 
+     * Activates a filter for content types which are blacklisted
      * in the AtoZ module.
      */
     public void setBlackListTypes(boolean blackListTypes) {
@@ -180,6 +197,11 @@ public class DataCollectionDefinition extends LockableImpl {
 
     public final DataCollection getDataCollection(NavigationModel model) {
         Assert.isLocked(this);
+
+        // Stop here, if the set object type is invalid a.k.a. not installed
+        if(this.hasInvalidObjectType()) {
+            return null;
+        }
 
         DataCollection objects = SessionManager.getSession().retrieve(
                 m_objectType);

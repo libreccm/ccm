@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -60,8 +60,14 @@ public abstract class AbstractObjectList
 
     protected DataCollection getObjects(HttpServletRequest request,
             HttpServletResponse response) {
-        // definition needs to know if the renderer is rendering a date 
-        // attribute so that it can decide whether to order by date for 
+
+        // Stop here, if the set object type is invalid a.k.a. not installed
+        if (m_definition.hasInvalidObjectType()) {
+            return null;
+        }
+
+        // definition needs to know if the renderer is rendering a date
+        // attribute so that it can decide whether to order by date for
         // a date order category
         m_definition.setDateAttribute(m_renderer);
 
@@ -103,8 +109,7 @@ public abstract class AbstractObjectList
                         addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
                         addFilter(ff.and().
                             addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                            addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems")
-                                .set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                            addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
                 objects.addFilter(filter);
             } else {
                 objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());

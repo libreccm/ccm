@@ -123,7 +123,7 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     /**
-     * @param objects 
+     * @param objects
      * @param pageNumber current page, starting from 1
      * @return
      */
@@ -132,9 +132,9 @@ public class DataCollectionRenderer extends LockableImpl {
         Assert.isLocked(this);
 
         // Quasimodo: Begin
-        // If objects is empty, do not insert objectList-element but do insert noContent-element
-        // and return immediately
-        if (objects.isEmpty()) {
+        // If objects is null or empty, do not insert objectList-element
+        // but do insert noContent-element and return immediately
+        if (objects == null || objects.isEmpty()) {
             return Navigation.newElement("noContent");
         }
         // Quasimodo: End

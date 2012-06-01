@@ -3,10 +3,13 @@
  *
  * Autor: Sören Bernstein
  *
- * Diese Klasse realisiert eine ObjectList für Navigation, der man Filterbefehle für die SQL-Abfrage mitgeben kann. Auf
- * diese Weise lassen sich Objekte listen, die bestimmte Kriterien erfüllen.
+ * Diese Klasse realisiert eine ObjectList für Navigation,
+ * der man Filterbefehle für die SQL-Abfrage mitgeben kann.
+ * Auf diese Weise lassen sich Objekte listen, die bestimmte
+ * Kriterien erfüllen.
  *
- * Angelegt wurde Sie für die Auflistung der aktuellen News und Veranstalungen auf einer Navigationsseite.
+ * Angelegt wurde Sie für die Auflistung der aktuellen News
+ * und Veranstalungen auf einer Navigationsseite.
  */
 package com.arsdigita.navigation.ui.object;
 
@@ -36,7 +39,7 @@ public class ComplexObjectList extends AbstractObjectList {
     protected String m_filter = null;
     protected Map m_filterParameters = new HashMap();
     protected Map<String, String> m_customAttributes =
-                                  new HashMap<String, String>();
+            new HashMap<String, String>();
 
     public void setCustomName(String name) {
         m_customName = name;
@@ -47,9 +50,10 @@ public class ComplexObjectList extends AbstractObjectList {
     }
 
     /**
-     * Hinzufügen eines SQL-Filter zur Abfrage Verarbeitet einen boolschen Filter, der SQL-konform Formatiert ist. Siehe
-     * PostgreSQL-Handbuch zur where-Klausel
-     *
+     * Hinzufügen eines SQL-Filter zur Abfrage
+     * Verarbeitet einen boolschen Filter, der SQL-konform Formatiert ist.
+     * Siehe PostgreSQL-Handbuch zur where-Klausel
+(??)
      * @param sqlfilter
      */
     public void setSQLFilter(String sqlfilter) {
@@ -73,42 +77,43 @@ public class ComplexObjectList extends AbstractObjectList {
     }
 
     /*
-     * Diese Methode überschreibt die Methode aus der Eltern-Klasse, um die SQL-Filter berücksichtigen zu können
+     * die SQL-Filter berücksichtigen zu können
      */
     @Override
     protected DataCollection getObjects(HttpServletRequest request,
-                                        HttpServletResponse response) {
+            HttpServletResponse response) {
         DataCollection objects = super.getObjects(request, response);
 
-        // Setze den Filter
-        if (m_filter != null) {
+        // Don't try do anything with a null object
+        if (objects != null) {
 
-            FilterFactory fact = objects.getFilterFactory();
-            Filter sql = fact.simple(m_filter);
+            // Setze den Filter
+            if (m_filter != null) {
 
-            // Setze die Parameter
-            Iterator params = m_filterParameters.entrySet().iterator();
-            while (params.hasNext()) {
+                FilterFactory fact = objects.getFilterFactory();
+                Filter sql = fact.simple(m_filter);
 
-                Map.Entry entry = (Map.Entry) params.next();
-                String param = (String) entry.getKey();
-                Object value = (Object) entry.getValue();
-                if (value != null) {
-                    sql.set(param, value);
+                // Setze die Parameter
+                Iterator params = m_filterParameters.entrySet().iterator();
+                while (params.hasNext()) {
+
+                    Map.Entry entry = (Map.Entry) params.next();
+                    String param = (String) entry.getKey();
+                    Object value = (Object) entry.getValue();
+                    if (value != null) {
+                        sql.set(param, value);
+                    }
+
                 }
 
+                objects.addFilter(sql);
+
             }
-
-            objects.addFilter(sql);
-
         }
-
         return objects;
     }
 
-    /*
-     * Diese Methode wird vom Servlet aufgerufen
-     */
+    /* Diese Methode wird vom Servlet aufgerufen */
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
         Element content = Navigation.newElement("complexObjectList");
@@ -120,9 +125,9 @@ public class ComplexObjectList extends AbstractObjectList {
         for (Map.Entry<String, String> attribute : m_customAttributes.entrySet()) {
             content.addAttribute(attribute.getKey(), attribute.getValue());
         }
-        
+
         content.addContent(generateObjectListXML(request, response));
-        
+
         return content;
     }
 }
