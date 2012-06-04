@@ -32,6 +32,7 @@ import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
@@ -49,7 +50,6 @@ import java.util.Date;
 public abstract class BasicPageForm extends BasicItemForm {
 
     private FormSection m_widgetSection;
-
 //    public static final String DESCRIPTION = ContentPage.DESCRIPTION;
     public static final String LAUNCH_DATE = ContentPage.LAUNCH_DATE;
 
@@ -72,12 +72,11 @@ public abstract class BasicPageForm extends BasicItemForm {
      * @param itemModel The {@link ItemSelectionModel} which will
      *   be responsible for loading the current item
      */
-    public BasicPageForm(String formName, 
-                         ColumnPanel columnPanel, 
+    public BasicPageForm(String formName,
+                         ColumnPanel columnPanel,
                          ItemSelectionModel itemModel) {
         super(formName, columnPanel, itemModel);
     }
-
 
     /**
      * Add various widgets to the form. Child classes should override
@@ -95,11 +94,9 @@ public abstract class BasicPageForm extends BasicItemForm {
 //        add(description);
 //
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            add(new Label(GlobalizationUtil.
-                          globalize("cms.ui.authoring.page_launch_date")));
+            add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
-            com.arsdigita.bebop.form.Date launchDate
-                = new com.arsdigita.bebop.form.Date(launchDateParam);
+            com.arsdigita.bebop.form.Date launchDate = new com.arsdigita.bebop.form.Date(launchDateParam);
             if (ContentSection.getConfig().getRequireLaunchDate()) {
                 launchDate.addValidationListener(new LaunchDateValidationListener());
                 // if launch date is required, help user by suggesting today's date
@@ -124,7 +121,7 @@ public abstract class BasicPageForm extends BasicItemForm {
         FormData data = e.getFormData();
         PageState state = e.getPageState();
         ContentPage item =
-            (ContentPage)getItemSelectionModel().getSelectedObject(state);
+                    (ContentPage) getItemSelectionModel().getSelectedObject(state);
 
         if (item != null) {
             // Preset fields
@@ -134,14 +131,21 @@ public abstract class BasicPageForm extends BasicItemForm {
             if (!ContentSection.getConfig().getHideLaunchDate()) {
                 data.put(LAUNCH_DATE, item.getLaunchDate());
                 // if launch date is required, help user by suggesting today's date
-            	if (ContentSection.getConfig().getRequireLaunchDate() 
-            			&& item.getLaunchDate() == null) {
-            		data.put(LAUNCH_DATE, new Date());
-            	}
+                if (ContentSection.getConfig().getRequireLaunchDate()
+                    && item.getLaunchDate() == null) {
+                    data.put(LAUNCH_DATE, new Date());
+                }
             }
         }
 
         return item;
+    }
+
+    @Override
+    public void validate(final FormSectionEvent fse) throws FormProcessException {
+        final Folder folder = (Folder) getItemSelectionModel().getSelectedItem(fse.getPageState()).getParent();
+        Assert.exists(folder);
+        validateNameUniqueness(folder, fse);
     }
 
     /**
@@ -157,15 +161,15 @@ public abstract class BasicPageForm extends BasicItemForm {
         FormData data = e.getFormData();
         PageState state = e.getPageState();
         ContentPage item =
-            (ContentPage)getItemSelectionModel().getSelectedObject(state);
+                    (ContentPage) getItemSelectionModel().getSelectedObject(state);
 
         if (item != null) {
             // Update attributes
-            item.setName((String)data.get(NAME));
-            item.setTitle((String)data.get(TITLE));
+            item.setName((String) data.get(NAME));
+            item.setTitle((String) data.get(TITLE));
 //            item.setDescription((String)data.get(DESCRIPTION));
             if (!ContentSection.getConfig().getHideLaunchDate()) {
-                item.setLaunchDate((Date)data.get(LAUNCH_DATE));
+                item.setLaunchDate((Date) data.get(LAUNCH_DATE));
             }
         }
 
@@ -183,8 +187,8 @@ public abstract class BasicPageForm extends BasicItemForm {
      * @pre state != null
      * @post return != null
      */
-    public ContentPage createContentPage(PageState state) 
-          throws FormProcessException {
+    public ContentPage createContentPage(PageState state)
+            throws FormProcessException {
 
         ItemSelectionModel m = getItemSelectionModel();
         Assert.exists(m);
@@ -195,8 +199,8 @@ public abstract class BasicPageForm extends BasicItemForm {
         try {
             item = (ContentPage) m.createItem();
         } catch (ServletException ex) {
-            throw new 
-                FormProcessException((String)GlobalizationUtil.globalize("cms.ui.authoring.couldnt_create_contentpage").localize(),  ex);
+            throw new FormProcessException((String) GlobalizationUtil.globalize(
+                    "cms.ui.authoring.couldnt_create_contentpage").localize(), ex);
         }
 
         // Make sure the item will be remembered across requests
@@ -211,16 +215,16 @@ public abstract class BasicPageForm extends BasicItemForm {
     public class LaunchDateValidationListener implements ParameterListener {
 
         @Override
-    	public void validate(final ParameterEvent e) {
-    		
-    		final ParameterData data = e.getParameterData();
-    		final Object value = data.getValue();
+        public void validate(final ParameterEvent e) {
 
-    		if (value == null) {
-    			data.addError("launch date is required");
-    			return;
-    		}
-    	}
+            final ParameterData data = e.getParameterData();
+            final Object value = data.getValue();
+
+            if (value == null) {
+                data.addError("launch date is required");
+                return;
+            }
+        }
+
     }
-	    
 }
