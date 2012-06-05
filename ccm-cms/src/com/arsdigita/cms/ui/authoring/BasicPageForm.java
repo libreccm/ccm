@@ -30,11 +30,13 @@ import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.util.Assert;
 
 import javax.servlet.ServletException;
@@ -141,12 +143,20 @@ public abstract class BasicPageForm extends BasicItemForm {
         return item;
     }
 
-    @Override
+    /*@Override
     public void validate(final FormSectionEvent fse) throws FormProcessException {
-        final Folder folder = (Folder) getItemSelectionModel().getSelectedItem(fse.getPageState()).getParent();
-        Assert.exists(folder);
-        validateNameUniqueness(folder, fse);
-    }
+        ACSObject parent = getItemSelectionModel().getSelectedItem(fse.getPageState()).getParent();
+
+
+        if (parent instanceof ContentBundle) {
+            parent = ((ContentBundle) parent).getParent();
+        }
+        if (parent instanceof Folder) {
+            final Folder folder = (Folder) parent;
+            Assert.exists(folder);
+            validateNameUniqueness(folder, fse);
+        }
+    }*/
 
     /**
      * Utility method to process the name/title widgets. Child classes
