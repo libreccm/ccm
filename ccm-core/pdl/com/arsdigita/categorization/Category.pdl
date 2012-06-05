@@ -117,7 +117,8 @@ association {
                                                ELSE
                                                 max(sort_key)
                                           END + 1
-                                     from cat_object_category_map)
+                                     from cat_object_category_map
+                                     where category_id = :categories.id)
                              ELSE
                                  (:sortKey)
                              END
