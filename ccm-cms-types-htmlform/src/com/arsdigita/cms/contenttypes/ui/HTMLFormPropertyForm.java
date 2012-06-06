@@ -94,7 +94,7 @@ public class HTMLFormPropertyForm extends BasicPageForm implements FormProcessLi
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
-        FormData d = e.getFormData();
+        super.validate(e);
     }
 
     /** Form initialisation hook. Fills widgets with data. */

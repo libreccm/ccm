@@ -242,6 +242,8 @@ public class EventPropertyForm extends BasicPageForm
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
+        super.validate(e);
+        
         FormData d = e.getFormData();
         java.util.Date startDate = d.getDate(START_DATE);
         java.util.Date endDate = d.getDate(END_DATE);

@@ -72,7 +72,7 @@ public class GenericArticlePropertyForm extends BasicPageForm
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
-        FormData d = e.getFormData();
+        super.validate(e);        
     }
 
     /** Form initialisation hook. Fills widgets with data. */

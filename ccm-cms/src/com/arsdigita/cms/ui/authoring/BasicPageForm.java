@@ -31,6 +31,7 @@ import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
@@ -43,12 +44,12 @@ import javax.servlet.ServletException;
 import java.util.Date;
 
 /**
- * A form for editing subclasses of ContentPage. This is just a convenience
- * class.
+ * A form for editing subclasses of ContentPage. This is just a convenience class.
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #22 $ $DateTime: 2004/08/17 23:15:09 $
- **/
+ *
+ */
 public abstract class BasicPageForm extends BasicItemForm {
 
     private FormSection m_widgetSection;
@@ -59,8 +60,7 @@ public abstract class BasicPageForm extends BasicItemForm {
      * Construct a new BasicPageForm
      *
      * @param formName the name of this form
-     * @param itemModel The {@link ItemSelectionModel} which will
-     *   be responsible for loading the current item
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible for loading the current item
      */
     public BasicPageForm(String formName, ItemSelectionModel itemModel) {
         super(formName, itemModel);
@@ -71,8 +71,7 @@ public abstract class BasicPageForm extends BasicItemForm {
      *
      * @param formName the name of this form
      * @param columnPanel the columnpanel of the form
-     * @param itemModel The {@link ItemSelectionModel} which will
-     *   be responsible for loading the current item
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible for loading the current item
      */
     public BasicPageForm(String formName,
                          ColumnPanel columnPanel,
@@ -81,8 +80,8 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * Add various widgets to the form. Child classes should override
-     * this method to perform all their widget-adding needs
+     * Add various widgets to the form. Child classes should override this method to perform all their widget-adding
+     * needs
      */
     @Override
     protected void addWidgets() {
@@ -109,13 +108,10 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * Utility method to initialize the name/title widgets. Child classes
-     * may call this method from the init listener
+     * Utility method to initialize the name/title widgets. Child classes may call this method from the init listener
      *
-     * @param e the {@link FormSectionEvent} which was passed to the
-     *    init listener
-     * @return the ContentPage instance which was extracted from the
-     *   ItemSelectionModel
+     * @param e the {@link FormSectionEvent} which was passed to the init listener
+     * @return the ContentPage instance which was extracted from the ItemSelectionModel
      */
     public ContentPage initBasicWidgets(FormSectionEvent e) {
         Assert.exists(getItemSelectionModel());
@@ -143,9 +139,10 @@ public abstract class BasicPageForm extends BasicItemForm {
         return item;
     }
 
-    /*@Override
+    @Override
     public void validate(final FormSectionEvent fse) throws FormProcessException {
-        ACSObject parent = getItemSelectionModel().getSelectedItem(fse.getPageState()).getParent();
+        final ContentItem item = getItemSelectionModel().getSelectedItem(fse.getPageState());
+        ACSObject parent = item.getParent();
 
 
         if (parent instanceof ContentBundle) {
@@ -154,16 +151,18 @@ public abstract class BasicPageForm extends BasicItemForm {
         if (parent instanceof Folder) {
             final Folder folder = (Folder) parent;
             Assert.exists(folder);
-            validateNameUniqueness(folder, fse);
+            final FormData data = fse.getFormData();
+            final String name = data.getString(NAME);
+            if (!item.getName().equals(name)) {
+                validateNameUniqueness(folder, fse);
+            }
         }
-    }*/
+    }
 
     /**
-     * Utility method to process the name/title widgets. Child classes
-     * may call this method from the process listener.
+     * Utility method to process the name/title widgets. Child classes may call this method from the process listener.
      *
-     * @param e the {@link FormSectionEvent} which was passed to the
-     *    process listener
+     * @param e the {@link FormSectionEvent} which was passed to the process listener
      */
     public ContentPage processBasicWidgets(FormSectionEvent e) {
         Assert.exists(getItemSelectionModel());
@@ -187,15 +186,11 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * A utility method that will create a new item and tell the selection
-     * model to select the new item. Creation components may call this method
-     * in the process listener of their form. See {@link PageCreate} for
-     * an example.
+     * A utility method that will create a new item and tell the selection model to select the new item. Creation
+     * components may call this method in the process listener of their form. See {@link PageCreate} for an example.
      *
      * @param state the current page state
-     * @return the new content item (or a proper subclass thereof)
-     * @pre state != null
-     * @post return != null
+     * @return the new content item (or a proper subclass thereof) @pre state != null @post return != null
      */
     public ContentPage createContentPage(PageState state)
             throws FormProcessException {
@@ -220,7 +215,8 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * Constructs a new <code>LaunchDateValidationListener</code>.
+     * Constructs a new
+     * <code>LaunchDateValidationListener</code>.
      */
     public class LaunchDateValidationListener implements ParameterListener {
 
@@ -235,6 +231,5 @@ public abstract class BasicPageForm extends BasicItemForm {
                 return;
             }
         }
-
     }
 }

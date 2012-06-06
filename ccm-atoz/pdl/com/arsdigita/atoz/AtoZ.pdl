@@ -22,5 +22,5 @@ import com.arsdigita.web.Application;
 // In contrast to other applications atoz_app is needed here and used in
 // associations, e.g. AtoZProvider.
 object type AtoZ extends Application {
-    reference key (atoz_app.application_id);
+       reference key (atoz_app.application_id);
 }

@@ -67,9 +67,11 @@ public class PublisherCreate extends PageCreate {
             add(launchDate);
         }
     }
-
+    
     @Override
-    public void validate(FormSectionEvent fse) throws FormProcessException {
+    public void validate(FormSectionEvent fse) throws FormProcessException {       
+        //We don't call super.validate(fse); here because the name (URL fragment) of a publisher is generated in a different manner
+        //than the name (URL fragment) of other content items.
         Folder folder = m_parent.getFolder(fse.getPageState());
         Assert.exists(folder);
         validateNameUniqueness(folder, fse, Publisher.urlSave(getFullName(fse)));
