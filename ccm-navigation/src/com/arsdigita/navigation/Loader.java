@@ -182,6 +182,9 @@ public class Loader extends PackageLoader {
         String templatesFile = (String)get(m_templatesFile);
         InputStream file = Thread.currentThread().getContextClassLoader()
                                  .getResourceAsStream(templatesFile);
+        if (file == null) {
+            throw new UncheckedWrapperException(String.format("Failed to open templates files %s.", templatesFile));
+        }
         BufferedReader templates =
             new BufferedReader( new InputStreamReader( file ) );
 
