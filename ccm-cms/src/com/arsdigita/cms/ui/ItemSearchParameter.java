@@ -38,7 +38,6 @@ import java.math.BigDecimal;
  *
  * @author <a href="mailto:sseago@redhat.com">Scott Seago</a>
  */
-
 public class ItemSearchParameter extends StringParameter {
 
     private ContentType m_contentType;
@@ -50,9 +49,8 @@ public class ItemSearchParameter extends StringParameter {
      * @param name the name of the request parameter from which item
      */
     public ItemSearchParameter(String name) {
-        this(name,null);
+        this(name, null);
     }
-
 
     /**
      * Create a new item search parameter corresponding to a request parameter
@@ -62,10 +60,10 @@ public class ItemSearchParameter extends StringParameter {
      * @param contentType If not null, search will be limited to the
      * specified content type 
      */
-    public ItemSearchParameter(String name, 
-			       ContentType contentType) {
+    public ItemSearchParameter(String name,
+                               ContentType contentType) {
         super(name);
-	m_contentType = contentType;
+        m_contentType = contentType;
     }
 
     /**
@@ -80,22 +78,27 @@ public class ItemSearchParameter extends StringParameter {
      */
     @Override
     public Object transformValue(HttpServletRequest request)
-        throws IllegalArgumentException {
+            throws IllegalArgumentException {
 
         String itemStr = Globalization.decodeParameter(request, getName());
-	
+
         return unmarshal(itemStr);
     }
 
     @Override
     public Object unmarshal(String encoded)
-        throws IllegalArgumentException {
+            throws IllegalArgumentException {
 
         // As stated above, if we get an invalid address just return null.
         if (encoded == null || encoded.length() < 1) {
             return null;
-	}
-        String idStr = encoded.substring(0,encoded.indexOf(' '));
+        }
+        String idStr;
+        if (encoded.indexOf(' ') < 0) {
+            idStr = encoded;
+        } else {
+            idStr = encoded.substring(0, encoded.indexOf(' '));
+        }
         if (idStr == null || idStr.length() < 1) {
             return null;
         }
@@ -105,19 +108,15 @@ public class ItemSearchParameter extends StringParameter {
         }
         ContentItem contentItem;
         try {
-            contentItem = (ContentItem) DomainObjectFactory.newInstance
-                (new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemID));
+            contentItem = (ContentItem) DomainObjectFactory.newInstance(new OID(ContentItem.BASE_DATA_OBJECT_TYPE,
+                                                                                itemID));
         } catch (DataObjectNotFoundException e) {
-            throw new IllegalArgumentException
-                (encoded + 
-                 " is not a valid contentItem." + 
-                 e.getMessage());
+            throw new IllegalArgumentException(encoded + " is not a valid contentItem." + e.getMessage());
         }
-    
-	if (m_contentType != null && 
-	    !contentItem.isContentType(m_contentType)) {
-	    return null;
-	}
+
+        if (m_contentType != null && !contentItem.isContentType(m_contentType)) {
+            return null;
+        }
         return contentItem;
     }
 
@@ -126,11 +125,11 @@ public class ItemSearchParameter extends StringParameter {
         if (value == null) {
             return null;
         } else {
-	    ContentPage theItem = (ContentPage) value;
-	    return (theItem.getID().toString() + " (" + theItem.getTitle() + ")");
+            ContentPage theItem = (ContentPage) value;
+            return (theItem.getID().toString() + " (" + theItem.getTitle() + ")");
         }
     }
-        
+
     @Override
     public Class getValueClass() {
         return ContentPage.class;

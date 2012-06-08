@@ -30,10 +30,12 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
@@ -55,6 +57,7 @@ public class ItemSearchWidget extends FormSection
         implements BebopConstants, FormSubmissionListener, FormInitListener {
 
     private static final Logger s_log = Logger.getLogger(ItemSearchWidget.class);
+    private Hidden m_selected;
     private TextField m_item;
     private Submit m_search;
     private Submit m_clear;
@@ -67,7 +70,9 @@ public class ItemSearchWidget extends FormSection
     private String m_searchName;
     private String m_clearName;
     private ParameterModel m_model;
+    private ParameterModel m_searchModel;
     public static final String BEBOP_ITEM_SEARCH = "bebop:itemSearch";
+    public static final String SEARCH = "search";
     public static final boolean LIMIT_TO_CONTENT_SECTION = false;
 
     private class ItemFragment extends TextField {
@@ -77,7 +82,7 @@ public class ItemSearchWidget extends FormSection
         public ItemFragment(ParameterModel parameter, ItemSearchWidget parent) {
             super(parameter);
             this.parent = parent;
-            this.setReadOnly();
+            //this.setReadOnly();
             this.setSize(35);
         }
     }
@@ -89,7 +94,7 @@ public class ItemSearchWidget extends FormSection
         public SearchFragment(String name, ItemSearchWidget parent) {
             super(name, "Search");
             this.parent = parent;
-            this.setAttribute("onClick", "return " + parent.m_item.getName().
+            this.setAttribute("onClick", "return " + parent.m_selected.getName(). //+ parent.m_item.getName().
                     replace('.', '_') + "Popup(this.form)");
             this.setAttribute("value", "Search");
         }
@@ -109,7 +114,7 @@ public class ItemSearchWidget extends FormSection
         public ClearFragment(String name, ItemSearchWidget parent) {
             super(name, "Clear");
             this.parent = parent;
-            this.setAttribute("onClick", "this.form." + parent.m_item.getName()
+            this.setAttribute("onClick", "this.form." + parent.m_selected.getName() //parent.m_item.getName()
                                          + ".value = \"\"; return false;");
             this.setAttribute("value", "Clear");
         }
@@ -199,9 +204,13 @@ public class ItemSearchWidget extends FormSection
         } else {
             typeURLFrag = null;
         }
+        
+        m_searchModel = new StringParameter(SEARCH);
 
         m_contentType = contentType;
-        m_item = new ItemFragment(model, this);
+        m_selected = new Hidden(model);
+        //m_item = new ItemFragment(model, this);
+        m_item = new TextField(m_searchModel);
         m_search = new SearchFragment(m_searchName, this);
         m_clear = new ClearFragment(m_clearName, this);
         m_jsLabel = new LabelFragment("", false, this);
@@ -215,8 +224,9 @@ public class ItemSearchWidget extends FormSection
                 ParameterMap params = new ParameterMap();
                 params.setParameter("section_id",
                                     CMS.getContext().getContentSection().getID());
-                params.setParameter("widget", formName + ".elements['" + m_item.
+                params.setParameter("widget", formName + ".elements['" + m_selected. //m_item.
                         getName() + "']");
+                params.setParameter("searchWidget", formName + ".elements['" + m_item.getName() + "']");                
                 if (typeURLFrag != null) {
                     params.setParameter("single_type", typeURLFrag);
                 }
@@ -235,10 +245,12 @@ public class ItemSearchWidget extends FormSection
                 t.setLabel(" <script language=javascript> "
                            + " <!-- \n"
                            + " function "
-                           + m_item.getName().replace('.', '_')
+                           //+ m_item.getName().replace('.', '_')
+                           + m_selected.getName().replace('.', '_')
                            + "Popup(theForm) { \n"
-                           + " aWindow = window.open(\"" + url
-                           + "\", \"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes,menubar=no\");\n return false;\n"
+                           + " aWindow = window.open(\"" + url + "\", "
+                           + "\"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes\");\n"                           
+                           + "return false;\n"
                            + " } \n"
                            + " --> \n"
                            + " </script> ");
@@ -249,6 +261,7 @@ public class ItemSearchWidget extends FormSection
         FormSection searchSection = new FormSection(new BoxPanel(
                 BoxPanel.HORIZONTAL));
         searchSection.add(m_item);
+        searchSection.add(m_selected);
         searchSection.add(m_search);
         searchSection.add(m_clear);
         searchSection.add(m_jsLabel);

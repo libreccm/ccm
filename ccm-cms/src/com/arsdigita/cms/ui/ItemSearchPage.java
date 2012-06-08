@@ -54,6 +54,7 @@ public class ItemSearchPage extends CMSPage {
 
     private final static String XSL_CLASS = "CMS Admin";
     private TabbedPane m_tabbedPane;
+    private ItemSearchFlatBrowsePane m_flatBrowse;
     private ItemSearchBrowsePane m_browse;
     private ItemSearchPopup m_search;
     //private ItemSearchCreateItemPane m_create;
@@ -72,11 +73,13 @@ public class ItemSearchPage extends CMSPage {
 
         addGlobalStateParam(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
+        addGlobalStateParam(new StringParameter("searchWidget"));        
 
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
         m_browse = getBrowsePane();
+        m_flatBrowse = getFlatBrowsePane();
         m_search = getSearchPane();
 //        m_create = getCreatePane();
 
@@ -98,6 +101,14 @@ public class ItemSearchPage extends CMSPage {
         return m_browse;
     }
 
+    protected  ItemSearchFlatBrowsePane getFlatBrowsePane() {
+        if (m_flatBrowse == null) {
+            m_flatBrowse = new ItemSearchFlatBrowsePane("flatBrowse");
+        }
+        
+        return m_flatBrowse;
+    }
+    
     /**
      * Creates, and then caches, the Creation pane. Overriding this
      * method to return null will prevent this tab from appearing.
@@ -135,6 +146,7 @@ public class ItemSearchPage extends CMSPage {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);
 
+        addToPane(pane, "flatBrowse", getFlatBrowsePane());
         addToPane(pane, "browse", getBrowsePane());
         addToPane(pane, "search", getSearchPane());
 //        addToPane(pane, "create", getCreatePane());
