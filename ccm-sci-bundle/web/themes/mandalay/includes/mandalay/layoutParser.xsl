@@ -52,6 +52,7 @@
         <xsl:value-of select="$lang"/>
       </xsl:attribute>
       <xsl:apply-templates/>
+      <script type="text/javascript" src="/assets/xinha/plugins/Equation/ASCIIMathML.js"></script>
     </html>
   </xsl:template>
 
@@ -76,7 +77,7 @@
     </xsl:variable>
     <xsl:variable name="colorClass">
       <xsl:if test="@withColorset='true'">
-        <xsl:call-template name="mandalay:getColorset"/>
+        <xsl:call-template name="mandalay:getColorset"/>       
       </xsl:if>
     </xsl:variable>
     
@@ -179,9 +180,6 @@
     </title>
   </xsl:template>
 
-  <xsl:template match="useImageGallery">
-    <xsl:call-template name="mandalay:imageGallery"/>
-  </xsl:template>
 
   <!-- ************************************************************************************************************ -->
   <!-- ************************************************************************************************************ -->
