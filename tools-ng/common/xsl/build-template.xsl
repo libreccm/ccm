@@ -164,6 +164,8 @@
     <property value="off" name="compile.deprecation"/>
     <property value="off" name="compile.verbose"/>
     <property value="off" name="compile.nowarn"/>
+    <!-- By default build target for the JVM version used by the actual build system -->
+    <property value="${{ant.java.version}}" name="compile.target"/>
 
     <property value="rulesets/design.xml,rulesets/imports.xml"
                name="pmd.rulesets"/>
@@ -557,6 +559,8 @@
         <!-- Usually true by default setting, main work is done here! -->
         <xsl:if test="$hassrcdir">
           <mkdir dir="{$name}/${{build.src.dir}}"/>
+          <echo message="Build system version: ${{ant.java.version}} " />
+          <echo message="Compile target version: ${{compile.target}} " />
           <xsl:if test="$jdodirs">
             <if>
               <not>
@@ -2230,6 +2234,7 @@
       deprecation="${{compile.deprecation}}"
       verbose="${{compile.verbose}}"
       nowarn="${{compile.nowarn}}"
+      target="${{compile.target}}"
       destdir="{$destdir}"
       classpathref="{$classpathref}">
       <src refid="{$srcpathref}"/>
