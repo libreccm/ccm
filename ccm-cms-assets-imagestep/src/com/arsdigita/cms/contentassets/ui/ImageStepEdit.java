@@ -18,8 +18,6 @@
 
 package com.arsdigita.cms.contentassets.ui;
 
-import com.arsdigita.cms.contentassets.ItemImageAttachment;
-
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
@@ -39,33 +37,31 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
-import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.ParameterData;
+import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.util.Assert;
-import com.arsdigita.util.StringUtils;
-
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.ui.FileUploadSection;
 import com.arsdigita.cms.ui.ImageBrowser;
 import com.arsdigita.cms.ui.ImageChooser;
-
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.util.Assert;
+import com.arsdigita.util.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 public class ImageStepEdit extends SimpleContainer
@@ -143,8 +139,9 @@ public class ImageStepEdit extends SimpleContainer
     private void setImageComponent( PageState ps, final String activeKey ) {
         m_imageComponent.setSelectedKey( ps, activeKey );
 
-        if( s_log.isDebugEnabled() )
+        if( s_log.isDebugEnabled() ) {
             s_log.debug( "Selected component: " + activeKey );
+        }
 
         Map componentsMap = m_imageComponent.getComponentsMap();
         Iterator i = componentsMap.keySet().iterator();
@@ -167,17 +164,18 @@ public class ImageStepEdit extends SimpleContainer
         PageState ps = event.getPageState();
 
         ItemImageAttachment attachment = m_imageStep.getAttachment( ps );
-        if( null == attachment ) return;
-
-        // XXX: Do something
+        if( null == attachment ) {
+            // XXX: Do something
+        }
     }
 
     public void process( FormSectionEvent event ) throws FormProcessException {
         PageState ps = event.getPageState();
         ImageComponent component = getImageComponent( ps );
 
-        if( !component.getSaveCancelSection().getSaveButton().isSelected( ps ) )
+        if( !component.getSaveCancelSection().getSaveButton().isSelected( ps ) ) {
             return;
+        }
 
         ContentItem item = m_imageStep.getItem( ps );
         if( null == item ) {
@@ -270,7 +268,8 @@ public class ImageStepEdit extends SimpleContainer
             add(new Label("Use Context"));
             m_useContext = new TextField("useContext");
             m_useContext.setSize(40);
-            m_useContext.addValidationListener( new UniqueUseContextListener() );
+// Removed to use multiple images with fancyBox
+//            m_useContext.addValidationListener( new UniqueUseContextListener() );
             add(m_useContext);
 
             m_saveCancel = new SaveCancelSection();
@@ -417,7 +416,8 @@ public class ImageStepEdit extends SimpleContainer
             m_form.add(new Label("Use Context"));
             m_useContext = new TextField("useContext");
             m_useContext.setSize(40);
-            m_useContext.addValidationListener( new UniqueUseContextListener() );
+// Removed to use multiple images with fancyBox
+//            m_useContext.addValidationListener( new UniqueUseContextListener() );
             m_form.add(m_useContext);
 
             m_saveCancel = new SaveCancelSection();

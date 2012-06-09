@@ -21,6 +21,8 @@ package com.arsdigita.cms.contentassets.ui;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
 
 import com.arsdigita.bebop.AbstractSingleSelectionModel;
+import com.arsdigita.bebop.ActionLink;
+import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
@@ -29,6 +31,7 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.ui.ImageChooser;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
@@ -68,10 +71,12 @@ public class ImageStep extends SecurityPropertyEditor {
         m_attachmentOID = new OIDParameter( "attachmentID" );
         m_attachmentSelection = new AttachmentSelectionModel();
 
+
         m_add = new ImageStepEdit( this );
         WorkflowLockedComponentAccess addCA =
             new WorkflowLockedComponentAccess( m_add, m_itemSelection );
         addComponent( "add", "Add Image", addCA );
+
 
         m_display = new ImageStepDisplay( this );
         setDisplayComponent(m_display);
@@ -93,6 +98,7 @@ public class ImageStep extends SecurityPropertyEditor {
         });
     }
 
+    @Override
     public void register( Page p ) {
         super.register( p );
 
@@ -132,9 +138,12 @@ public class ImageStep extends SecurityPropertyEditor {
         extends AbstractSingleSelectionModel
     {
         private final RequestLocal m_attachment = new RequestLocal() {
+            @Override
             protected Object initialValue( PageState ps ) {
                 OID oid = (OID) getSelectedKey( ps );
-                if( null == oid ) return null;
+                if( null == oid ) {
+                    return null;
+                }
 
                 return DomainObjectFactory.newInstance( oid );
             }
@@ -142,7 +151,9 @@ public class ImageStep extends SecurityPropertyEditor {
 
         public Object getSelectedKey( PageState ps ) {
             OID oid = (OID) ps.getValue( m_attachmentOID );
-            if( null == oid ) return null;
+            if( null == oid ) {
+                return null;
+            }
 
             return oid;
         }
