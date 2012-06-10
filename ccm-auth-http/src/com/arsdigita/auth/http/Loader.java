@@ -28,9 +28,8 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Application;
-
+import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 
 /**
