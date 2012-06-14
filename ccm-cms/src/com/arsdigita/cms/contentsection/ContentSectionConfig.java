@@ -20,11 +20,7 @@
 package com.arsdigita.cms.contentsection;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.parameter.BooleanParameter;
-import com.arsdigita.util.parameter.IntegerParameter;
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.StringArrayParameter;
-import com.arsdigita.util.parameter.StringParameter;
+import com.arsdigita.util.parameter.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -671,7 +667,7 @@ public final class ContentSectionConfig extends AbstractConfig {
 
 
     /**
-     * Retrieve weather to use section specific categories. If true they are
+     * Retrieve whether to use section specific categories. If true they are
      * loaded using the next parameters file list {@see getUseSectionCategories()}
      *
      * Default value is false, so standard navigation is used.

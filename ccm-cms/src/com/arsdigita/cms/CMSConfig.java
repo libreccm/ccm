@@ -40,23 +40,11 @@ import com.arsdigita.cms.ui.authoring.ItemCategoryExtension;
 import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.StringUtils;
-import com.arsdigita.util.parameter.BooleanParameter;
-import com.arsdigita.util.parameter.EnumerationParameter;
-import com.arsdigita.util.parameter.ErrorList;
-import com.arsdigita.util.parameter.IntegerParameter;
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ResourceParameter;
-import com.arsdigita.util.parameter.SpecificClassParameter;
-import com.arsdigita.util.parameter.StringArrayParameter;
-import com.arsdigita.util.parameter.StringParameter;
+import com.arsdigita.util.parameter.*;
+
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -102,7 +90,7 @@ public final class CMSConfig extends AbstractConfig {
      */
     private static Map s_skipAssetSteps = null;
     /**
-     * Item category add form speciofies Subclass of ItemCategoryForm to use for
+     * Item category add form specifies Subclass of ItemCategoryForm to use for
      * the assign categories step. Used in
      * c.ad.cms.ui.authoring.ItemCategoryStep
      */
@@ -439,6 +427,19 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.OPTIONAL,
             Category.SORT_KEY);
     /**
+     * Allow creation of a new Use Context in category tab of content sections.
+     * "Use Context" is the construct to constitute a category hierarchy
+     * implementet in core. It is superseded by the construct "Category Domain"
+     * in Terms (ccm-ldn-terms).
+     * Global parameter for all content sections. Default is false because all
+     * installation bundles use Terms.
+     */
+    private final Parameter m_allowCategoryCreateUseContext =
+                            new BooleanParameter(
+            "com.arsdigita.cms.allow_category_create_use_context",
+            Parameter.REQUIRED,
+            Boolean.FALSE);
+    /**
      * Allow content creation in Workspace (content center) section listing.
      * Allows you to turn off the ability to create content in the section
      * listing
@@ -451,7 +452,7 @@ public final class CMSConfig extends AbstractConfig {
     /**
      * Hide the legacy public site link in Workspace (content center) section
      * listing. Legacy public site display is replaced by navigation based
-     * presentation (or by portlets) and should be hidden in the admin ui be
+     * presentation (or by portlets) and should be hidden in the admin ui by
      * default now.
      */
     private final Parameter m_hideLegacyPublicSiteLink =
@@ -570,9 +571,6 @@ public final class CMSConfig extends AbstractConfig {
     //Actives threaded publishing. If active, the publish process for 
     //content items will run in a separate thread. May useful if you have
     //large objects. 
-    //
-    //WARNING: Not tested very much. Use at your own risk.
-    //
     ////////////////////////////////////////////////////
     private final Parameter m_threadPublishing = new BooleanParameter(
             "com.arsdigita.cms.lifecycle.threaded_publishing",
@@ -664,6 +662,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_categoryTreeOrdering);
         register(m_hasContactsAuthoringStep);
         register(m_hideTextAssetUploadFile);
+        register(m_allowCategoryCreateUseContext);
         register(m_allowContentCreateInSectionListing);
         register(m_hideLegacyPublicSiteLink);
 
@@ -1079,6 +1078,20 @@ public final class CMSConfig extends AbstractConfig {
 
     public final boolean getHideTextAssetUploadFile() {
         return ((Boolean) get(m_hideTextAssetUploadFile)).booleanValue();
+    }
+
+    /**
+     * Retrieve whether to allow creation of a new Use Context in category tab 
+     * of content sections. "Use Context" is used to constitute a category 
+     * hierarchy in core. It is superseded by the construct "Category Domain"
+     * in Terms (ccm-ldn-terms).
+     * Global parameter for all content sections. Default is false because all
+     * installation bundles use Terms.
+     * @return TRUE if creation is allowed, otherwise FALSE (default)
+     */
+    public final boolean getAllowCategoryCreateUseContext() {
+        return ((Boolean) get(m_allowCategoryCreateUseContext)).
+                booleanValue();
     }
 
     public final boolean getAllowContentCreateInSectionListing() {

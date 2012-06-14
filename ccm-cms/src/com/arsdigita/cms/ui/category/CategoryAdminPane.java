@@ -18,24 +18,8 @@
  */
 package com.arsdigita.cms.ui.category;
 
-import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.List;
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.ParameterSingleSelectionModel;
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.SingleSelectionModel;
-import com.arsdigita.bebop.Tree;
-import com.arsdigita.bebop.event.ActionEvent;
-import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.ChangeEvent;
-import com.arsdigita.bebop.event.ChangeListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.*;
+import com.arsdigita.bebop.event.*;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.CategorizedCollection;
@@ -54,9 +38,7 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.Section;
 import com.arsdigita.xml.Element;
-
 import java.math.BigDecimal;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -109,12 +91,15 @@ public final class CategoryAdminPane extends BaseAdminPane {
         ActionGroup contextGroup = new ActionGroup();
         contextSection.setBody(contextGroup);
         contextGroup.setSubject(list);
-        ActionLink addContextAction = new ActionLink(new Label(gz("cms.ui.category.add_use_context")));
-        Form addContextForm = new AddUseContextForm(m_contextModel);
-        getBody().add(addContextForm);
-        getBody().connect(addContextAction,addContextForm);
-        contextGroup.addAction(new VisibilityComponent(addContextAction,
-                                                       SecurityManager.CATEGORY_ADMIN));
+
+        if (CMS.getConfig().getAllowCategoryCreateUseContext()) {
+            ActionLink addContextAction = new ActionLink(new Label(gz("cms.ui.category.add_use_context")));
+            Form addContextForm = new AddUseContextForm(m_contextModel);
+            getBody().add(addContextForm);
+            getBody().connect(addContextAction,addContextForm);
+            contextGroup.addAction(new VisibilityComponent(addContextAction,
+                                                           SecurityManager.CATEGORY_ADMIN));
+        }    
 
         final Section categorySection = new Section();
         categorySection.setHeading(new Label(gz("cms.ui.categories")));
@@ -152,6 +137,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
     }
 
 
+    @Override
     public void register(final Page page) {
         super.register(page);
 
@@ -166,6 +152,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
             m_alternativeLabel = new Label("Can't be deleted");
         }
 
+        @Override
         public void generateXML(PageState state, Element parent) {
             if (!isVisible(state)) { return; }
 
@@ -250,6 +237,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
     }
 
     private final class SelectionRequestLocal extends CategoryRequestLocal {
+        @Override
         protected final Object initialValue(final PageState state) {
             final String id = m_model.getSelectedKey(state).toString();
 
@@ -262,6 +250,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
     }
 
     private final class ParentRequestLocal extends CategoryRequestLocal {
+        @Override
         protected final Object initialValue(final PageState state) {
             return m_category.getCategory(state).getDefaultParentCategory();
         }
@@ -286,6 +275,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
         public UseContextSelectionModel(ParameterModel m) {
             super(m);
         }
+        @Override
         public Object getSelectedKey(PageState state) {
             Object val = super.getSelectedKey(state);
             if (val == null || ((String) val).length() == 0) {
