@@ -156,7 +156,7 @@ public class ItemSearchSection extends FormSection
         p.setVisibleDefault(m_results, false);
         p.addGlobalStateParam(new BigDecimalParameter(SINGLE_TYPE_PARAM));
     }
-
+        
     /**
      * Displays the "keywords" and "content types" widgets
      */

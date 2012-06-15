@@ -20,7 +20,7 @@ public class PublicPersonalProfileOwnerAssocUpgrade extends AbstractAssocUpgrade
 
     @Override
     protected String getTableName() {
-        return "ct_public_personal_profile_owner_map.owner_id";
+        return "ct_public_personal_profile_owner_map";
     }
 
     @Override

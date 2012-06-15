@@ -13,6 +13,8 @@ import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -47,6 +49,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
     public static final String SEARCHWIDGET_PARAM = "searchWidget";
     private final Table resultsTable;
     private final StringParameter queryParam;
+    private final Label jsLabel;
     
 
     public ItemSearchFlatBrowsePane(final String name) {
@@ -54,15 +57,34 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
 
         queryParam = new StringParameter(QUERY_PARAM);
 
-        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);
+        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);        
         boxPanel.add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.filter")));
         final TextField filter = new TextField(new StringParameter(QUERY_PARAM));                   
-        boxPanel.add(filter);
-        add(boxPanel);
+        boxPanel.add(filter);        
+        jsLabel = new Label("", false);
+        jsLabel.addPrintListener(new PrintListener() {
+
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+                final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
+                ((Label)event.getTarget()).setLabel(String.format(
+                        " <script language=javascript type=\"text/javascript\">"
+                        + "<!--"
+                        + "alert(\"test\")"                                                 
+                        + "self.elements['%s'].value='test';"//window.opener.document.%s.value;"
+                        + "-->"
+                        + "</script> ",
+                        filter.getName(),
+                        searchWidget));
+                
+            }
+        });
+        boxPanel.add(jsLabel);
+        add(boxPanel);        
 
         resultsTable = new ResultsTable();
         add(resultsTable);
-
+                                        
         addInitListener(this);
         addProcessListener(this);
     }

@@ -8,17 +8,19 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.Address;
 import com.arsdigita.cms.contenttypes.Contact;
+import com.arsdigita.cms.contenttypes.GenericContactBundle;
 import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.GenericPersonBundle;
 import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.SciMember;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.packaging.Program;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.util.cmd.Program;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -68,7 +70,7 @@ public class PersonImporter extends Program {
     private Folder addressFolder;
     private Category membersActiveCategory;
     private Category membersFormerCategory;
-    private Category membersAssociatedCategory;
+    //private Category membersAssociatedCategory;
     //Department key -> category
     private final Map<String, Category> membersActiveDepartmentCategories =
                                         new TreeMap<String, Category>();
@@ -149,8 +151,7 @@ public class PersonImporter extends Program {
         addressSection = getContentSection((config.getProperty(
                                             "address.contentsection")));
 
-        LifecycleDefinitionCollection lifecycles = membersSection.
-                getLifecycleDefinitions();
+        LifecycleDefinitionCollection lifecycles = membersSection.getLifecycleDefinitions();
         while (lifecycles.next()) {
             membersLifecycle = lifecycles.getLifecycleDefinition();
         }
@@ -203,9 +204,9 @@ public class PersonImporter extends Program {
                 "members.active.category")));
         membersFormerCategory = new Category(new BigDecimal(config.getProperty(
                 "members.former.category")));
-        membersAssociatedCategory = new Category(new BigDecimal(config.
-                getProperty(
-                "members.associated.category")));
+//        membersAssociatedCategory = new Category(new BigDecimal(config.
+//                getProperty(
+//                "members.associated.category")));
 
         //Get department ids from DaBIn DB
         //Create connection to the DaBIn MySQL database
@@ -304,16 +305,13 @@ public class PersonImporter extends Program {
 
         System.out.println("Configuration values:");
         System.out.println("---------------------");
-        System.out.printf("membersSection         = %s\n", membersSection.
-                getName());
+        System.out.printf("membersSection         = %s\n", membersSection.getName());
         System.out.printf("membersContactsSection = %s\n",
                           membersContactsSection.getName());
-        System.out.printf("authorsSection         = %s\n", authorsSection.
-                getName());
+        System.out.printf("authorsSection         = %s\n", authorsSection.getName());
         System.out.printf("authorsContactsSection = %s\n",
                           authorsContactsSection.getName());
-        System.out.printf("personsSection         = %s\n", personsSection.
-                getName());
+        System.out.printf("personsSection         = %s\n", personsSection.getName());
         System.out.printf("personsContactsSection = %s\n",
                           personsContactsSection.getName());
         System.out.println("");
@@ -336,8 +334,8 @@ public class PersonImporter extends Program {
                           membersActiveCategory.getName());
         System.out.printf("membersFormerCategory = %s\n",
                           membersFormerCategory.getName());
-        System.out.printf("membersAssociatedCategory = %s\n",
-                          membersAssociatedCategory.getName());
+//        System.out.printf("membersAssociatedCategory = %s\n",
+//                          membersAssociatedCategory.getName());
 
         System.out.println(
                 "Categories for active members in the departments "
@@ -422,16 +420,18 @@ public class PersonImporter extends Program {
             address.setCity(config.getProperty("address.city"));
             address.setIsoCountryCode(config.getProperty("address.country"));
             address.setLanguage("de");
+            address.save();
 
             final ContentBundle addressBundle = new ContentBundle(address);
             addressBundle.setDefaultLanguage("de");
 
             address.setContentSection(addressSection);
             addressBundle.setContentSection(addressSection);
-            addressFolder.addItem(addressBundle);
+            addressBundle.save();
+            addressFolder.addItem(addressBundle);            
 
             try {
-                while (result.next()) {                    
+                while (result.next()) {
                     System.out.printf("Processing person '%d' of '%d':\n", i,
                                       number);
                     System.out.printf("\tPerson_Id = %s\n",
@@ -461,6 +461,7 @@ public class PersonImporter extends Program {
                     LifecycleDefinition lifecycleDefinition = null;
                     LifecycleDefinition contactLifecycleDefinition = null;
                     Category category = null;
+                    System.out.println("Eigenschaft...");
                     if ("Aktiv".equals(result.getString("person.Eigenschaft"))) {
                         person = new SciMember();
                         section = membersSection;
@@ -482,23 +483,25 @@ public class PersonImporter extends Program {
                         lifecycleDefinition = membersLifecycle;
                         contactLifecycleDefinition = membersContactsLifecycle;
                         category = membersFormerCategory;
-                    } else if ("Assoziert".equals(result.getString(
-                            "person.Eigenschaft"))) {
-                        person = new SciMember();
-                        section = membersSection;
-                        folder = membersFolder;
-                        contactsSection = membersContactsSection;
-                        contactsFolder = membersContactsFolder;
-                        category = membersAssociatedCategory;
-                        lifecycleDefinition = membersLifecycle;
-                        category = membersAssociatedCategory;
-                        contactLifecycleDefinition = membersContactsLifecycle;
-                    } 
+                    }
+//                    } else if ("Assoziert".equals(result.getString(
+//                            "person.Eigenschaft"))) {
+//                        person = new SciMember();
+//                        section = membersSection;
+//                        folder = membersFolder;
+//                        contactsSection = membersContactsSection;
+//                        contactsFolder = membersContactsFolder;
+//                        category = membersAssociatedCategory;
+//                        lifecycleDefinition = membersLifecycle;
+//                        category = membersAssociatedCategory;
+//                        contactLifecycleDefinition = membersContactsLifecycle;
+//                    } 
 
+                    System.out.println("Person basic data...");
                     person.setSurname(result.getString("person.Name"));
                     person.setGivenName(result.getString("person.Vorname"));
                     person.setTitlePre(result.getString("person.Anrede"));
-                    person.setDabinId(result.getInt("person.Person_Id"));
+                    //person.setDabinId(result.getInt("person.Person_Id"));
                     person.setLanguage("de");
                     person.setContentSection(section);
                     person.setLifecycle(createLifecycle(lifecycleDefinition));
@@ -506,7 +509,7 @@ public class PersonImporter extends Program {
 
                     resolveDuplicateNameAndTitle(person, folder);
 
-                    ContentBundle personBundle = new ContentBundle(person);
+                    GenericPersonBundle personBundle = new GenericPersonBundle(person);
                     personBundle.setDefaultLanguage("de");
                     personBundle.setContentSection(section);
                     folder.addItem(personBundle);
@@ -519,6 +522,7 @@ public class PersonImporter extends Program {
                         category.addChild(personBundle);
                     }
 
+                    System.out.println("Department assoc...");
                     if ("Aktiv".equals(result.getString("person.Eigenschaft"))
                         || "Ehemalig".equals(result.getString(
                             "person.Eigenschaft"))
@@ -531,17 +535,14 @@ public class PersonImporter extends Program {
                             if ("Aktiv".equals(result.getString(
                                     "person.Eigenschaft"))) {
                                 depCat =
-                                membersActiveDepartmentCategories.get(result.
-                                        getString("abteilunglink.Abteilung_Id"));
+                                membersActiveDepartmentCategories.get(result.getString("abteilunglink.Abteilung_Id"));
                             } else if ("Ehemalig".equals(result.getString(
                                     "person.Eigenschaft"))) {
                                 depCat =
-                                membersFormerDepartmentCategories.get(result.
-                                        getString("abteilunglink.Abteilung_Id"));
+                                membersFormerDepartmentCategories.get(result.getString("abteilunglink.Abteilung_Id"));
                             } else if ("Assoziert".equals(result.getString(
                                     "person.Eigenschaft"))) {
-                                depCat = membersAssociatedDepartmentCategories.
-                                        get(result.getString(
+                                depCat = membersAssociatedDepartmentCategories.get(result.getString(
                                         "abteilunglink.Abteilung_Id"));
                             }
 
@@ -550,17 +551,34 @@ public class PersonImporter extends Program {
                             }
                         }
                     }
-
+                    
+                    System.out.println("Contact...");                    
                     if (!result.getString("person.Angaben").isEmpty()) {
-                        Contact contact = new Contact();
+                        System.out.println("Creating contact...");
+                        Contact contact = new Contact();                        
+                        System.out.println("Setting language...");
                         contact.setLanguage("de");
-                        contact.setName(String.format("%s-kontakt", person.
-                                getName()));
-                        contact.setTitle(String.format("%s Kontakt", person.
-                                getTitle()));
+                        System.out.println("Setting name...");                        
+                        contact.setName(String.format("%s-kontakt", person.getName()));                                                                        
+                        System.out.println("setting title...");
+                        contact.setTitle(String.format("%s Kontakt", person.getTitle()));
+                        
+                        System.out.println("Creating contact bundle...");
+                        contact.setContentSection(contactsSection);
+                        contact.setLifecycle(createLifecycle(
+                                contactLifecycleDefinition));
+                        GenericContactBundle contactBundle = new GenericContactBundle(contact);
+                        
+                        contactBundle.setDefaultLanguage("de");
+                        contactBundle.setContentSection(contactsSection);
+                        contactsFolder.addItem(contactBundle);
+                        contactBundle.save();
+                        
+                        System.out.printf("Setting person to %s...\n", person.getContentBundle().getName());                        
                         contact.setPerson(person, "commonContact");
+                        System.err.println("Done with contact base data.");
 
-
+                        System.err.println("Spliting 'Angaben'...");
                         final String[] contactData =
                                        result.getString("person.Angaben").split(
                                 "\n");
@@ -577,7 +595,7 @@ public class PersonImporter extends Program {
                             key = token.substring(0, token.indexOf('=')).trim();
                             value =
                             token.substring(token.indexOf('=') + 1).trim();
-
+                            
                             if ("Raum_1".equals(key)) {
                                 contact.addContactEntry(
                                         new GenericContactEntry(contact,
@@ -613,16 +631,7 @@ public class PersonImporter extends Program {
                             }
                         }
 
-                        contact.setAddress(address);
-
-                        contact.setContentSection(contactsSection);
-                        contact.setLifecycle(createLifecycle(
-                                contactLifecycleDefinition));
-                        ContentBundle contactBundle = new ContentBundle(contact);
-                        contactBundle.setDefaultLanguage("de");
-                        contactBundle.setContentSection(contactsSection);
-                        contactsFolder.addItem(contactBundle);
-                        contactBundle.save();
+                        contact.setAddress(address);                        
 
                         if (homepage != null) {
                             RelatedLink homepageLink;
@@ -672,8 +681,7 @@ public class PersonImporter extends Program {
             path.append("/");
         }
 
-        final ContentSection _section = (ContentSection) ContentSection.
-                retrieveApplicationForPath(path.toString());
+        final ContentSection _section = (ContentSection) ContentSection.retrieveApplicationForPath(path.toString());
 
         if (_section == null) {
             throw new DataObjectNotFoundException("Content section not found with path "
@@ -779,4 +787,5 @@ public class PersonImporter extends Program {
         page.setName(resolvedName);
         page.setTitle(resolvedTitle);
     }
+
 }
