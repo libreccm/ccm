@@ -124,6 +124,11 @@ public class ServiceServlet extends BaseApplicationServlet {
     /**
      * Implements the (abstract) doService method of BaseApplicationServlet to
      * perform the services.
+     * @param sreq 
+     * @param sresp 
+     * @param app 
+     * @throws ServletException 
+     * @throws IOException 
      * @see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)
      */
@@ -146,7 +151,7 @@ public class ServiceServlet extends BaseApplicationServlet {
         // An empty remaining URL or a URL which doesn't end in trailing slash:
         // probably want to redirect.
         if ( m_trailingSlashList.contains(url) && !originalUrl.endsWith("/") ) {
-            DispatcherHelper.sendRedirect(sresp, originalUrl + "/");
+            DispatcherHelper.sendRedirect(sreq, sresp, originalUrl + "/");
             return;
         }
 
@@ -155,6 +160,19 @@ public class ServiceServlet extends BaseApplicationServlet {
         /* checkUserAccess(request, response, actx);     */
 
         ResourceHandler page = getResource(url);
+        
+        if (page == null) {
+            //Retry without last part
+            final String[] tokens = url.split("/");
+            
+            final StringBuilder altUrlBuilder = new StringBuilder('/');
+            for(int i = 0; i < tokens.length - 1; i++) {
+                altUrlBuilder.append(tokens[i]);
+                altUrlBuilder.append('/');
+            }
+            page = getResource(altUrlBuilder.toString());
+        }
+        
         if ( page != null ) {
             // Serve the page.
             page.init();
