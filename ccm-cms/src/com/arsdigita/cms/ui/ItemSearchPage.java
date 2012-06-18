@@ -62,6 +62,7 @@ public class ItemSearchPage extends CMSPage {
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
+    private boolean showFlatBrowsePane = false;
 
     /**
      * Construct a new ItemSearchPage
@@ -73,13 +74,15 @@ public class ItemSearchPage extends CMSPage {
 
         addGlobalStateParam(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
-        addGlobalStateParam(new StringParameter("searchWidget"));        
+        addGlobalStateParam(new StringParameter("searchWidget"));
 
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
         m_browse = getBrowsePane();
-        m_flatBrowse = getFlatBrowsePane();
+        if (showFlatBrowsePane) {
+            m_flatBrowse = getFlatBrowsePane();
+        }
         m_search = getSearchPane();
 //        m_create = getCreatePane();
 
@@ -89,9 +92,8 @@ public class ItemSearchPage extends CMSPage {
     }
 
     /**
-     * Creates, and then caches, the Browse pane. Overriding this
-     * method to return null will prevent this tab from appearing.
-     * Note: not implemented yet.
+     * Creates, and then caches, the Browse pane. Overriding this method to return null will prevent this tab from
+     * appearing. Note: not implemented yet.
      */
     protected ItemSearchBrowsePane getBrowsePane() {
         if (m_browse == null) {
@@ -101,17 +103,17 @@ public class ItemSearchPage extends CMSPage {
         return m_browse;
     }
 
-    protected  ItemSearchFlatBrowsePane getFlatBrowsePane() {
+    protected ItemSearchFlatBrowsePane getFlatBrowsePane() {
         if (m_flatBrowse == null) {
             m_flatBrowse = new ItemSearchFlatBrowsePane("flatBrowse");
         }
-        
+
         return m_flatBrowse;
     }
-    
+
     /**
-     * Creates, and then caches, the Creation pane. Overriding this
-     * method to return null will prevent this tab from appearing.
+     * Creates, and then caches, the Creation pane. Overriding this method to return null will prevent this tab from
+     * appearing.
      */
     protected ItemSearchPopup getSearchPane() {
         if (m_search == null) {
@@ -130,32 +132,35 @@ public class ItemSearchPage extends CMSPage {
 //
 //        return m_create;
 //    }
-
     /**
-     * Created the TabbedPane to use for this page. Sets the class
-     * attribute for this tabbed pane. The default implementation uses a
-     * {@link com.arsdigita.bebop.TabbedPane} and sets the class
-     * attribute to "CMS Admin." This implementation also adds tasks,
-     * content sections, and search panes.
+     * Created the TabbedPane to use for this page. Sets the class attribute for this tabbed pane. The default
+     * implementation uses a
+     * {@link com.arsdigita.bebop.TabbedPane} and sets the class attribute to "CMS Admin." This implementation also adds
+     * tasks, content sections, and search panes.
      *
-     * Developers can override this method to add only the tabs they
-     * want, or to add additional tabs after the default CMS tabs are
-     * added.
+     * Developers can override this method to add only the tabs they want, or to add additional tabs after the default
+     * CMS tabs are added.
      */
     protected TabbedPane createTabbedPane() {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);
 
-        addToPane(pane, "flatBrowse", getFlatBrowsePane());
+        if (showFlatBrowsePane) {
+            addToPane(pane, "flatBrowse", getFlatBrowsePane());
+        }
         addToPane(pane, "browse", getBrowsePane());
         addToPane(pane, "search", getSearchPane());
 //        addToPane(pane, "create", getCreatePane());
 
-        if(s_conf.getItemSearchDefaultTab().equals("browse")) {
+        if (s_conf.getItemSearchDefaultTab().equals("browse")) {
             pane.setDefaultPane(m_browse);
         }
-        if(s_conf.getItemSearchDefaultTab().equals("search")) {
+        if (s_conf.getItemSearchDefaultTab().equals("search")) {
             pane.setDefaultPane(m_search);
+        }
+
+        if (showFlatBrowsePane) {
+            pane.setDefaultPane(m_flatBrowse);
         }
 
         //pane.addActionListener(this);
@@ -164,12 +169,11 @@ public class ItemSearchPage extends CMSPage {
     }
 
     /**
-     * Adds the specified component, with the specified tab name, to the
-     * tabbed pane only if it is not null.
+     * Adds the specified component, with the specified tab name, to the tabbed pane only if it is not null.
      *
-     * @param pane The pane to which to add the tab
+     * @param pane    The pane to which to add the tab
      * @param tabName The name of the tab if it's added
-     * @param comp The component to add to the pane
+     * @param comp    The component to add to the pane
      */
     protected void addToPane(TabbedPane pane, String tabName, Component comp) {
         if (comp != null) {
@@ -178,8 +182,7 @@ public class ItemSearchPage extends CMSPage {
     }
 
     /**
-     * When a new tab is selected, reset the state of the
-     * formerly-selected pane.
+     * When a new tab is selected, reset the state of the formerly-selected pane.
      *
      * @param event The event fired by selecting a tab
      */
@@ -197,8 +200,8 @@ public class ItemSearchPage extends CMSPage {
      */
     @Override
     public void dispatch(final HttpServletRequest request,
-            final HttpServletResponse response,
-            RequestContext actx)
+                         final HttpServletResponse response,
+                         RequestContext actx)
             throws IOException, ServletException {
         new CMSExcursion() {
 
@@ -220,10 +223,12 @@ public class ItemSearchPage extends CMSPage {
 
                 final Document doc = buildDocument(request, response);
                 final PresentationManager pm =
-                        Templating.getPresentationManager();
+                                          Templating.getPresentationManager();
 
                 pm.servePage(doc, request, response);
             }
+
         }.run();
     }
+
 }

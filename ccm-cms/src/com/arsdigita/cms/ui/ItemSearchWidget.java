@@ -85,6 +85,7 @@ public class ItemSearchWidget extends FormSection
             //this.setReadOnly();
             this.setSize(35);
         }
+
     }
 
     private class SearchFragment extends Submit {
@@ -105,6 +106,7 @@ public class ItemSearchWidget extends FormSection
                       || parent.m_searchComponent.hasQuery(ps))
                     && super.isVisible(ps));
         }
+
     }
 
     private class ClearFragment extends Submit {
@@ -118,6 +120,7 @@ public class ItemSearchWidget extends FormSection
                                          + ".value = \"\"; return false;");
             this.setAttribute("value", "Clear");
         }
+
     }
 
     private class LabelFragment extends Label {
@@ -129,6 +132,7 @@ public class ItemSearchWidget extends FormSection
             super(name, escaping);
             this.parent = parent;
         }
+
     }
 
     private class ItemSearchFragment extends ItemSearchSectionInline {
@@ -156,6 +160,7 @@ public class ItemSearchWidget extends FormSection
                      || hasQuery(ps))
                     && super.isVisible(ps));
         }
+
     }
 
     private class HRLabel extends Label {
@@ -170,6 +175,7 @@ public class ItemSearchWidget extends FormSection
                      || m_searchComponent.hasQuery(ps))
                     && super.isVisible(ps));
         }
+
     }
 
     /**
@@ -204,7 +210,7 @@ public class ItemSearchWidget extends FormSection
         } else {
             typeURLFrag = null;
         }
-        
+
         m_searchModel = new StringParameter(SEARCH);
 
         m_contentType = contentType;
@@ -226,7 +232,7 @@ public class ItemSearchWidget extends FormSection
                                     CMS.getContext().getContentSection().getID());
                 params.setParameter("widget", formName + ".elements['" + m_selected. //m_item.
                         getName() + "']");
-                params.setParameter("searchWidget", formName + ".elements['" + m_item.getName() + "']");                
+                params.setParameter("searchWidget", formName + ".elements['" + m_item.getName() + "']");
                 if (typeURLFrag != null) {
                     params.setParameter("single_type", typeURLFrag);
                 }
@@ -248,13 +254,15 @@ public class ItemSearchWidget extends FormSection
                            //+ m_item.getName().replace('.', '_')
                            + m_selected.getName().replace('.', '_')
                            + "Popup(theForm) { \n"
-                           + " aWindow = window.open(\"" + url + "\", "
-                           + "\"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes\");\n"                           
+                           + " aWindow = window.open(\"" + url + "&query=\" + document.getElementById('" + m_item.getName() + "').value , "
+                           //+ "\"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes\");\n"                           
+                           + "\"search\", \"toolbar=yes,width=\" + screen.width*0.5 + \",height=\" + screen.height*0.5 + \",status=no,scrollbars=yes,resize=yes\");\n"                           
                            + "return false;\n"
                            + " } \n"
                            + " --> \n"
                            + " </script> ");
             }
+
         });
         m_topHR = new HRLabel();
         add(m_topHR);
@@ -417,4 +425,5 @@ public class ItemSearchWidget extends FormSection
             }
         }
     }
+
 }

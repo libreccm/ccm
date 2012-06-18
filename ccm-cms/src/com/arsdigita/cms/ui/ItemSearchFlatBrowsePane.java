@@ -5,18 +5,23 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.GridPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.PaginationModelBuilder;
+import com.arsdigita.bebop.Paginator;
+import com.arsdigita.bebop.RequestLocal;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
@@ -31,11 +36,14 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.toolbox.ui.DataQueryBuilder;
+import com.arsdigita.toolbox.ui.DataTable;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
+import org.bouncycastle.asn1.ess.ContentIdentifier;
 
 /**
  *
@@ -44,47 +52,36 @@ import java.math.BigDecimal;
  */
 public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, FormProcessListener {
 
-    private static final String QUERY_PARAM = "query";
+    private static final String QUERY_PARAM = "queryStr";
     public static final String WIDGET_PARAM = "widget";
     public static final String SEARCHWIDGET_PARAM = "searchWidget";
+    public static final String FILTER_SUBMIT = "filterSubmit";
     private final Table resultsTable;
+    private final Paginator paginator;
     private final StringParameter queryParam;
-    private final Label jsLabel;
-    
 
     public ItemSearchFlatBrowsePane(final String name) {
         super(name);
 
+        final BoxPanel mainPanel = new BoxPanel(BoxPanel.VERTICAL);
+
         queryParam = new StringParameter(QUERY_PARAM);
 
-        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);        
+        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);
         boxPanel.add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.filter")));
-        final TextField filter = new TextField(new StringParameter(QUERY_PARAM));                   
-        boxPanel.add(filter);        
-        jsLabel = new Label("", false);
-        jsLabel.addPrintListener(new PrintListener() {
-
-            public void prepare(final PrintEvent event) {
-                final PageState state = event.getPageState();
-                final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
-                ((Label)event.getTarget()).setLabel(String.format(
-                        " <script language=javascript type=\"text/javascript\">"
-                        + "<!--"
-                        + "alert(\"test\")"                                                 
-                        + "self.elements['%s'].value='test';"//window.opener.document.%s.value;"
-                        + "-->"
-                        + "</script> ",
-                        filter.getName(),
-                        searchWidget));
-                
-            }
-        });
-        boxPanel.add(jsLabel);
-        add(boxPanel);        
+        final TextField filter = new TextField(new StringParameter(QUERY_PARAM));
+        boxPanel.add(filter);
+        boxPanel.add(new Submit(FILTER_SUBMIT, GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit")));
+        mainPanel.add(boxPanel);
 
         resultsTable = new ResultsTable();
-        add(resultsTable);
-                                        
+        paginator = new Paginator((PaginationModelBuilder) resultsTable.getModelBuilder(), 5);
+        mainPanel.add(paginator);
+
+        mainPanel.add(resultsTable);
+
+        add(mainPanel);
+
         addInitListener(this);
         addProcessListener(this);
     }
@@ -95,8 +92,15 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         page.addComponentStateParam(this, queryParam);
     }
 
-    public void init(final FormSectionEvent fse) throws FormProcessException {        
-        
+    public void init(final FormSectionEvent fse) throws FormProcessException {
+        final PageState state = fse.getPageState();
+        final FormData data = fse.getFormData();
+
+        final String query = (String) data.get(QUERY_PARAM);
+        if ((query == null) || query.isEmpty()) {
+            data.setParameter(QUERY_PARAM,
+                              new ParameterData(queryParam, state.getValue(new StringParameter(ItemSearchPopup.QUERY))));
+        }
     }
 
     public void process(final FormSectionEvent fse) throws FormProcessException {
@@ -104,6 +108,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         final PageState state = fse.getPageState();
 
         state.setValue(queryParam, data.get(QUERY_PARAM));
+        state.setValue(new StringParameter(ItemSearchPopup.QUERY), data.get(QUERY_PARAM));
     }
 
     private class ResultsTable extends Table {
@@ -115,6 +120,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         public ResultsTable() {
             super();
             setEmptyView(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.no_items")));
+            setClassAttr("dataTable");
 
             final TableColumnModel columnModel = getColumnModel();
             columnModel.add(new TableColumn(0,
@@ -128,16 +134,61 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
                                             TABLE_COL_TYPE));
 
             setModelBuilder(new ResultsTableModelBuilder());
-            
+
             columnModel.get(0).setCellRenderer(new TitleCellRenderer());
         }
 
     }
 
-    private class ResultsTableModelBuilder extends LockableImpl implements TableModelBuilder {
+    private class ResultsTableModelBuilder extends LockableImpl implements TableModelBuilder, PaginationModelBuilder {
+
+        //private DataCollection collection;
+        private RequestLocal collection = new RequestLocal();
 
         public TableModel makeModel(final Table table, final PageState state) {
-            return new ResultsTableModel(table, state);
+            
+            if (collection.get(state) == null) {
+                query(state);
+            } 
+
+            ((DataCollection) collection.get(state)).setRange(paginator.getFirst(state), paginator.getLast(state) + 1);
+            
+            return new ResultsTableModel(table, state, (DataCollection) collection.get(state));
+        }
+
+        public int getTotalSize(final Paginator paginator, final PageState state) {
+            if (collection.get(state) == null) {
+                query(state);
+            }
+            
+            //((DataCollection)collection.get(state)).setRange(paginator.getFirst(state), paginator.getLast(state) + 1);
+
+            return (int) ((DataCollection)collection.get(state)).size();
+        }
+
+        public boolean isVisible(PageState state) {
+            return true;
+        }
+
+        private void query(final PageState state) {
+            final Session session = SessionManager.getSession();
+            final BigDecimal typeId = (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+            if (typeId == null) {
+                collection.set(state, session.retrieve(ContentPage.BASE_DATA_OBJECT_TYPE));
+            } else {
+                final ContentType type = new ContentType(typeId);
+                collection.set(state, session.retrieve(type.getClassName()));
+            }
+
+            final String query = (String) state.getValue(queryParam);
+            if ((query != null) && !query.isEmpty()) {
+                ((DataCollection)collection.get(state)).addFilter(String.format(
+                        "(lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
+                        ContentItem.NAME, query,
+                        ContentPage.TITLE, query));
+            }
+            
+            ((DataCollection) collection.get(state)).addOrder("title asc, name asc");
         }
 
     }
@@ -148,23 +199,22 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         private final DataCollection collection;
         private ContentItem currentItem;
 
-        public ResultsTableModel(final Table table, final PageState state) {
+        public ResultsTableModel(final Table table, final PageState state, final DataCollection collection) {
             this.table = table;
-            final Session session = SessionManager.getSession();
-            final BigDecimal typeId = (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
-            if (typeId == null) {
-                collection = session.retrieve(ContentPage.BASE_DATA_OBJECT_TYPE);
-            } else {
-                final ContentType type = new ContentType(typeId);
-                collection = session.retrieve(type.getClassName());
-            }
 
-            final String query = (String) state.getValue(queryParam);
-            if ((query != null) && !query.isEmpty()) {
-                collection.addFilter(String.format("(lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
-                                                   ContentItem.NAME, query,
-                                                   ContentPage.TITLE, query));
+            this.collection = collection;
+
+            /*
+             * final Session session = SessionManager.getSession(); final BigDecimal typeId = (BigDecimal)
+             * state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM)); if (typeId == null) { collection =
+             * session.retrieve(ContentPage.BASE_DATA_OBJECT_TYPE); } else { final ContentType type = new
+             * ContentType(typeId); collection = session.retrieve(type.getClassName()); }
+             *
+             * final String query = (String) state.getValue(queryParam); if ((query != null) && !query.isEmpty()) {
+             * collection.addFilter(String.format( "(lower(%s) like lower('%%%s%%')) or (lower(%s) like
+             * lower('%%%s%%'))", ContentItem.NAME, query, ContentPage.TITLE, query));
             }
+             */
         }
 
         public int getColumnCount() {
@@ -227,35 +277,39 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         public Object getKeyAt(final int columnIndex) {
             return currentItem.getID();
         }
+
     }
-    
+
     private class TitleCellRenderer extends LockableImpl implements TableCellRenderer {
 
-        public Component getComponent(final Table table, 
-                                      final PageState state, 
-                                      final Object value, 
-                                      final boolean isSelected, 
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
                                       final Object key,
-                                      final int row, 
+                                      final int row,
                                       final int column) {
+
+            if (value == null) {
+                return new Label("???");
+            }
+
             final Link link = new Link(value.toString(), "");
-            
+
             final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
             final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
-            
+
             final ContentPage page = new ContentPage((BigDecimal) key);
-            
+
             link.setOnClick(String.format(
                     "window.opener.document.%s.value=\"%s\";window.opener.document.%s.value=\"%s\";self.close();return false;",
-                                          widget,
-                                          key.toString(),
-                                          searchWidget,
-                                          page.getTitle()));
-                        
+                    widget,
+                    key.toString(),
+                    searchWidget,
+                    page.getTitle()));
+
             return link;
         }
-        
-        
-        
+
     }
 }

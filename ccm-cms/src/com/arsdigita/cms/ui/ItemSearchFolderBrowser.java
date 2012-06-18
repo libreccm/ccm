@@ -43,6 +43,7 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
@@ -347,6 +348,7 @@ public class ItemSearchFolderBrowser extends Table {
                     String widget =
                            (String) state.getValue(new StringParameter(
                             ItemSearchPopup.WIDGET_PARAM));
+                    String searchWidget = (String) state.getValue(new StringParameter("searchWidget"));
                     boolean useURL =
                             "true".equals(state.getValue(new StringParameter(
                             ItemSearchPopup.URL_PARAM)));
@@ -358,9 +360,9 @@ public class ItemSearchFolderBrowser extends Table {
                             getDomainObject().getOID())
                                         : id
                                           + " (" + name + ")";
+                    String title = ((ContentPage) coll.getDomainObject()).getTitle();
 
-                    Label js = new Label(generateJSLabel(id, widget,
-                                                         fillString),
+                    Label js = new Label(generateJSLabel(id, widget, searchWidget, fillString, title),
                                          false);
                     container.add(js);
 
@@ -377,15 +379,13 @@ public class ItemSearchFolderBrowser extends Table {
             }
         }
 
-        private String generateJSLabel(BigDecimal id, String widget, String fill) {
+        private String generateJSLabel(BigDecimal id, String widget, String searchWidget, String fill, String title) {
             StringBuilder buffer = new StringBuilder();
-            buffer.append(" <script language=javascript> "
-                          + " <!-- \n"
-                          + " function fillItem"
-                          + id
-                          + "() { \n"
-                          + " window.opener.document."
-                          + widget + ".value=\"" + fill + "\";\n");
+            buffer.append(" <script language=javascript> ");
+                          buffer.append( " <!-- \n");
+                          buffer.append(" function fillItem").append(id).append("() { \n");                          
+                          buffer.append(" window.opener.document.").append(widget).append(".value=\"").append(fill).append("\";\n");
+                          buffer.append(" window.opener.document.").append(searchWidget).append(".value=\"").append(title).append("\";\n");
             // set protocol to 'other' in FCKEditor, else relative url prepended by http://
             if (Bebop.getConfig().getDHTMLEditor().equals(
                     BebopConstants.BEBOP_FCKEDITOR)) {

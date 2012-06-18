@@ -34,10 +34,8 @@ import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * An extension of {@link ItemSearch} for use in a popup
- * search window. The display of results is altered so that
- * selecting a result closes the window & passes the id of
- * the selected item back to the opener.
+ * An extension of {@link ItemSearch} for use in a popup search window. The display of results is altered so that
+ * selecting a result closes the window & passes the id of the selected item back to the opener.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Id: ItemSearchPopup.java 1397 2006-11-29 14:10:38Z sskracic $
@@ -45,14 +43,16 @@ import javax.servlet.http.HttpServletRequest;
 public class ItemSearchPopup extends ItemSearch {
 
     private static final org.apache.log4j.Logger s_log =
-            org.apache.log4j.Logger.getLogger(ItemSearchPopup.class);
+                                                 org.apache.log4j.Logger.getLogger(ItemSearchPopup.class);
     public static final String WIDGET_PARAM = "widget";
     public static final String URL_PARAM = "useURL";
+    public static final String QUERY = "query";
 
     /**
-     * Construct a new <code>ItemSearchPopup</code> component
+     * Construct a new
+     * <code>ItemSearchPopup</code> component
      *
-     * @param context the context for the retrieved items. Should be
+     * @param context               the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      * @param limitToContentSection limit the search to the current content section
      */
@@ -66,6 +66,7 @@ public class ItemSearchPopup extends ItemSearch {
         super.register(p);
         p.addGlobalStateParam(new StringParameter(WIDGET_PARAM));
         p.addGlobalStateParam(new StringParameter(URL_PARAM));
+        p.addGlobalStateParam(new StringParameter(QUERY));
     }
 
     @Override
@@ -83,6 +84,7 @@ public class ItemSearchPopup extends ItemSearch {
         protected Component createResultsPane(QueryGenerator generator) {
             return new PopupResultsPane(generator);
         }
+
     }
 
     /**
@@ -112,38 +114,39 @@ public class ItemSearchPopup extends ItemSearch {
 
             String widget = (String) state.getValue(
                     new StringParameter(WIDGET_PARAM));
+            String searchWidget = (String) state.getValue(new StringParameter("searchWidget"));
 
             boolean useURL = "true".equals(
                     state.getValue(new StringParameter(URL_PARAM)));
 
             String fillString = useURL
-                    ? getItemURL(state.getRequest(), doc.getOID())
-                    : doc.getOID().get("id").toString()
-                    + " (" + doc.getTitle() + ")";
+                                ? getItemURL(state.getRequest(), doc.getOID())
+                                : doc.getOID().get("id").toString()
+                                  + " (" + doc.getTitle() + ")";
+            String title = doc.getTitle();
 
             Element jsLabel = Search.newElement("jsAction");
             jsLabel.addAttribute("name", "fillItem"
-                    + doc.getOID().get("id") + "()");
+                                         + doc.getOID().get("id") + "()");
             jsLabel.setText(generateJSLabel((BigDecimal) doc.getOID().get("id"),
-                    widget, fillString));
+                                            widget, searchWidget, fillString, title));
             element.addContent(jsLabel);
 
             return element;
         }
 
-        private String generateJSLabel(BigDecimal id, String widget, String fill) {
+        private String generateJSLabel(BigDecimal id, String widget, String searchWidget, String fill, String title) {
             return " <script language=javascript> "
-                    + " <!-- \n"
-                    + " function fillItem"
-                    + id
-                    + "() { \n"
-                    + " window.opener.document."
-                    + widget + ".value=\"" + fill + "\";\n"
-                    + " self.close(); \n"
-                    + " return false; \n"
-                    + " } \n"
-                    + " --> \n"
-                    + " </script> ";
+                   + " <!-- \n"
+                   + " function fillItem" + id + "() { \n"
+                   + " window.opener.document." + widget + ".value=\"" + fill + "\";\n"
+                   + " window.opener.document." + searchWidget + ".value=\"" + title + "\";\n"
+                   + " self.close(); \n"
+                   + " return false; \n"
+                   + " } \n"
+                   + " --> \n"
+                   + " </script> ";
         }
+
     }
 }
