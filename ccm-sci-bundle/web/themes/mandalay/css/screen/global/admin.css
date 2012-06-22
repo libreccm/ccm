@@ -266,7 +266,7 @@ div.cmsGlobalNavigation > span {
 div#cmsHeader div.cmsGlobalNavigation { 
   position: absolute;
   right: 0em;
-top:4em;
+  top:3em;
   margin-right: 1em;
 }
 
@@ -349,17 +349,14 @@ div.bebopLeft div.bebopPanelRow {
   border:2px solid #cccccc;
 width:95%;
 }
-/*edit pardis*/
 
  div.bebopPanelRow { 
   margin-bottom:1em;
-width:40%;
 }
 div.bebopPanelRow table tr td { 
   margin-bottom:1em;
 /*width:10%;*/
 }
-/**/
 
 div.bebopPanelRow textarea{
 width:100%;
