@@ -62,7 +62,7 @@ public class ItemSearchPage extends CMSPage {
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
-    private boolean showFlatBrowsePane = false;
+    private final boolean showFlatBrowsePane;
 
     /**
      * Construct a new ItemSearchPage
@@ -75,6 +75,9 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
         addGlobalStateParam(new StringParameter("searchWidget"));
+     
+        showFlatBrowsePane = s_conf.getItemSearchFlatBrowsePaneEnable();
+
 
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
@@ -152,15 +155,16 @@ public class ItemSearchPage extends CMSPage {
         addToPane(pane, "search", getSearchPane());
 //        addToPane(pane, "create", getCreatePane());
 
-        if (s_conf.getItemSearchDefaultTab().equals("browse")) {
+        if ("browse".equals(s_conf.getItemSearchDefaultTab())) {
             pane.setDefaultPane(m_browse);
         }
-        if (s_conf.getItemSearchDefaultTab().equals("search")) {
+        if ("search".equals(s_conf.getItemSearchDefaultTab())) {
             pane.setDefaultPane(m_search);
         }
-
-        if (showFlatBrowsePane) {
+        if ("flatBrowse".equals(s_conf.getItemSearchDefaultTab()) && showFlatBrowsePane) {
             pane.setDefaultPane(m_flatBrowse);
+        } else {
+            pane.setDefaultPane(m_browse);
         }
 
         //pane.addActionListener(this);

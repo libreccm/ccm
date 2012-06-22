@@ -28,6 +28,7 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
@@ -59,6 +60,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
     private final Table resultsTable;
     private final Paginator paginator;
     private final StringParameter queryParam;
+    private final static CMSConfig CMS_CONFIG = CMSConfig.getInstance();
 
     public ItemSearchFlatBrowsePane(final String name) {
         super(name);
@@ -67,19 +69,20 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
 
         queryParam = new StringParameter(QUERY_PARAM);
 
-        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);
+        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);        
         boxPanel.add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.filter")));
-        final TextField filter = new TextField(new StringParameter(QUERY_PARAM));
+        final TextField filter = new TextField(new StringParameter(QUERY_PARAM));        
         boxPanel.add(filter);
         boxPanel.add(new Submit(FILTER_SUBMIT, GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit")));
         mainPanel.add(boxPanel);
 
         resultsTable = new ResultsTable();
-        paginator = new Paginator((PaginationModelBuilder) resultsTable.getModelBuilder(), 5);
+        paginator = new Paginator((PaginationModelBuilder) resultsTable.getModelBuilder(),
+                                  CMS_CONFIG.getItemSearchFlatBrowsePanePageSize());
         mainPanel.add(paginator);
 
-        mainPanel.add(resultsTable);
-
+        mainPanel.add(resultsTable);       
+        
         add(mainPanel);
 
         addInitListener(this);
@@ -100,6 +103,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         if ((query == null) || query.isEmpty()) {
             data.setParameter(QUERY_PARAM,
                               new ParameterData(queryParam, state.getValue(new StringParameter(ItemSearchPopup.QUERY))));
+            state.setValue(queryParam, data.getParameter(QUERY_PARAM).getValue());            
         }
     }
 
@@ -146,13 +150,13 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         private RequestLocal collection = new RequestLocal();
 
         public TableModel makeModel(final Table table, final PageState state) {
-            
+
             if (collection.get(state) == null) {
                 query(state);
-            } 
+            }
 
             ((DataCollection) collection.get(state)).setRange(paginator.getFirst(state), paginator.getLast(state) + 1);
-            
+
             return new ResultsTableModel(table, state, (DataCollection) collection.get(state));
         }
 
@@ -160,10 +164,10 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
             if (collection.get(state) == null) {
                 query(state);
             }
-            
+
             //((DataCollection)collection.get(state)).setRange(paginator.getFirst(state), paginator.getLast(state) + 1);
 
-            return (int) ((DataCollection)collection.get(state)).size();
+            return (int) ((DataCollection) collection.get(state)).size();
         }
 
         public boolean isVisible(PageState state) {
@@ -182,12 +186,12 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
 
             final String query = (String) state.getValue(queryParam);
             if ((query != null) && !query.isEmpty()) {
-                ((DataCollection)collection.get(state)).addFilter(String.format(
+                ((DataCollection) collection.get(state)).addFilter(String.format(
                         "(lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
                         ContentItem.NAME, query,
                         ContentPage.TITLE, query));
             }
-            
+
             ((DataCollection) collection.get(state)).addOrder("title asc, name asc");
         }
 
@@ -204,17 +208,6 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
 
             this.collection = collection;
 
-            /*
-             * final Session session = SessionManager.getSession(); final BigDecimal typeId = (BigDecimal)
-             * state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM)); if (typeId == null) { collection =
-             * session.retrieve(ContentPage.BASE_DATA_OBJECT_TYPE); } else { final ContentType type = new
-             * ContentType(typeId); collection = session.retrieve(type.getClassName()); }
-             *
-             * final String query = (String) state.getValue(queryParam); if ((query != null) && !query.isEmpty()) {
-             * collection.addFilter(String.format( "(lower(%s) like lower('%%%s%%')) or (lower(%s) like
-             * lower('%%%s%%'))", ContentItem.NAME, query, ContentPage.TITLE, query));
-            }
-             */
         }
 
         public int getColumnCount() {

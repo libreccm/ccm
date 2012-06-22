@@ -543,6 +543,15 @@ public final class CMSConfig extends AbstractConfig {
                             new StringParameter(
             "com.arsdigita.cms.item_search.default_tab",
             Parameter.REQUIRED, "browse");
+     private final Parameter m_itemSearchFlatBrowsePaneEnable = new BooleanParameter(
+            "com.arsdigita.cms.item_search.flat_browse_pane.enable",
+            Parameter.REQUIRED,
+            true);    
+    private final Parameter m_itemSearchFlatBrowsePanePageSize = new IntegerParameter(
+            "com.arsdigita.cms.item_search.flat_browse_pane.page_size",
+            Parameter.REQUIRED,
+            20);
+    
     /////////////////////////////////////////////
     // FolderBrowse
     /////////////////////////////////////////////
@@ -595,7 +604,8 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_imageBrowserThumbnailMaxHeight = new IntegerParameter(
             "com.arsdigita.cms.image_browser.thumbnail_max_height",
             Parameter.REQUIRED,
-            50);
+            50);      
+   
     
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -664,7 +674,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_hideTextAssetUploadFile);
         register(m_allowCategoryCreateUseContext);
         register(m_allowContentCreateInSectionListing);
-        register(m_hideLegacyPublicSiteLink);
+        register(m_hideLegacyPublicSiteLink);        
 
         // Content Center (Workspace) config related parameters
         register(m_contentCenterMap);
@@ -695,6 +705,9 @@ public final class CMSConfig extends AbstractConfig {
         // register(m_disableItemPfs);
         // register(m_publishToFileClass);
 
+        register(m_itemSearchFlatBrowsePaneEnable);        
+        register(m_itemSearchFlatBrowsePanePageSize);
+        
         loadInfo();
     }
 
@@ -1141,6 +1154,14 @@ public final class CMSConfig extends AbstractConfig {
 
     public Integer getImageBrowserThumbnailMaxHeight() {
         return (Integer) get(m_imageBrowserThumbnailMaxHeight);
+    }
+    
+    public Boolean getItemSearchFlatBrowsePaneEnable() {
+        return (Boolean) get(m_itemSearchFlatBrowsePaneEnable);
+    }
+    
+    public Integer getItemSearchFlatBrowsePanePageSize() {
+         return (Integer) get(m_itemSearchFlatBrowsePanePageSize);
     }
 
 }
