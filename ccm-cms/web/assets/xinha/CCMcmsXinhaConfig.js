@@ -13,7 +13,7 @@ xinha_init=xinha_init?xinha_init:function(){
 xinha_editors=xinha_editors?xinha_editors:["myTextArea","anotherOne"];
 xinha_plugins=xinha_plugins?xinha_plugins:["CharacterMap","CharCounter",
     "ContextMenu","DefinitionList","FindReplace","ListType","QuickTag",
-    "SmartReplace","Stylist","TableOperations","UnFormat","Equation"];
+    "SmartReplace","Stylist","TableOperations","UnFormat","Equation","OpenCCM"];
 if(!Xinha.loadPlugins(xinha_plugins,xinha_init)){
 return;
 }
