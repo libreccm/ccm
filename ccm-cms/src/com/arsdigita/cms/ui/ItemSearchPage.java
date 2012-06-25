@@ -19,8 +19,11 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
+import com.arsdigita.bebop.event.RequestEvent;
+import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMS;
@@ -75,7 +78,7 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
         addGlobalStateParam(new StringParameter("searchWidget"));
-     
+
         showFlatBrowsePane = s_conf.getItemSearchFlatBrowsePaneEnable();
 
 
@@ -92,6 +95,18 @@ public class ItemSearchPage extends CMSPage {
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
         add(m_tabbedPane);
+        addRequestListener(new RequestListener() {
+
+            public void pageRequested(final RequestEvent event) {
+                final PageState state = event.getPageState();
+
+                //if (showFlatBrowsePane) {
+//                    m_tabbedPane.setTabVisible(state, 0, false);
+  //                  m_tabbedPane.setSelectedIndex(state, 1);
+                }
+            }
+
+        });
     }
 
     /**
