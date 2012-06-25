@@ -101,9 +101,9 @@ public class ItemSearchPage extends CMSPage {
                 final PageState state = event.getPageState();
 
                 //if (showFlatBrowsePane) {
-//                    m_tabbedPane.setTabVisible(state, 0, false);
-  //                  m_tabbedPane.setSelectedIndex(state, 1);
-                }
+                //    m_tabbedPane.setTabVisible(state, 0, false);
+              //     m_tabbedPane.setSelectedIndex(state, 1);
+                //}
             }
 
         });
