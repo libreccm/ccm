@@ -62,6 +62,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 public class ImageStepEdit extends SimpleContainer
