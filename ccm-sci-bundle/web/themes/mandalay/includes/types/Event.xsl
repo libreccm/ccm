@@ -409,23 +409,6 @@
         </xsl:if>
       </div>
     </xsl:if>
-    <a>
-      <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
-      <xsl:attribute name="title">
-        <xsl:call-template name="mandalay:shying">
-          <xsl:with-param name="title">
-            <xsl:value-of select="nav:attribute[@name='title']"/>
-          </xsl:with-param>
-          <xsl:with-param name="mode">dynamic</xsl:with-param>
-        </xsl:call-template>
-      </xsl:attribute>
-      <xsl:call-template name="mandalay:shying">
-        <xsl:with-param name="title">
-          <xsl:value-of disable-output-escaping="yes" select="nav:attribute[@name='title']"/>
-        </xsl:with-param>
-        <xsl:with-param name="mode">dynamic</xsl:with-param>
-      </xsl:call-template>
-    </a>
 
     <a class="CIname">
       <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>

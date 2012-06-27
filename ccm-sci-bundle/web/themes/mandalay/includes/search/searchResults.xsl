@@ -43,8 +43,6 @@
   <!-- DE Zeigt das Ergebnis in der Admin-Oberfläche an -->
   <!-- EN Show the result on admin pages -->
   <xsl:template match="search:results">
-    <xsl:apply-templates select="search:paginator" mode="header"/>
-    <xsl:apply-templates select="search:paginator" mode="navbar"/>
     <xsl:choose>
       <xsl:when test="../search:query/bebop:formWidget[@name='draft_search']">
         <xsl:apply-templates select="search:documents" mode="admin"/>
@@ -53,7 +51,6 @@
         <xsl:apply-templates select="search:documents"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates select="search:paginator" mode="navbar"/>
   </xsl:template>
   
 </xsl:stylesheet>

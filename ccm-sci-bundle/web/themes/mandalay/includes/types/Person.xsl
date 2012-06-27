@@ -351,8 +351,8 @@
 
   <xsl:template name="CT_Person_Link" match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.Person']" mode="link_view">
 
-    <!-- DE Hole alle benötigten Einstellungen-->
-    <!-- EN Getting all needed setting-->
+    <!-- DE Hole alle benötigten Einstellungen -->
+    <!-- EN Getting all needed setting -->
     <xsl:variable name="setImageAndText">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'Person'"/>

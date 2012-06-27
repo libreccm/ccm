@@ -92,8 +92,7 @@
 
     <div id="mainBody">
       <xsl:apply-templates select="/bebop:page/cms:contentPanel[@id = 'siteProxyItemXML']"/>
-      <xsl:apply-templates select="/bebop:page/cms:contentPanel/cms:siteProxyPanel"/>
-      <xsl:apply-templates select="/bebop:page/cms:siteProxyPanel"/>
+      <xsl:apply-templates select="cms:siteProxyPanel"/>
       <div class="endFloat"/>
     </div>
     <div class="endFloat"/>

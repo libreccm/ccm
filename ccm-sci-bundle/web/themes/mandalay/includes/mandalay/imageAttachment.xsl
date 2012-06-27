@@ -147,12 +147,14 @@ Parameter showCaption: boolean to sshow caption
         <xsl:attribute name="class">
           <xsl:value-of select="$imageGallery"/>
         </xsl:attribute>
-        <xsl:attribute name="rel">
-          <xsl:value-of select="$imageGallery"/>
-        </xsl:attribute>
+        <xsl:if test="$imageGallery != 'imageZoom'">
+          <xsl:attribute name="rel">
+            <xsl:value-of select="$imageGallery"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:call-template name="mandalay:imageGallerySetup">
           <xsl:with-param name="imageGallery" select="$imageGallery"/>
-        </xsl:call-template>        
+        </xsl:call-template>
         <img>
           <xsl:attribute name="src">
             <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>

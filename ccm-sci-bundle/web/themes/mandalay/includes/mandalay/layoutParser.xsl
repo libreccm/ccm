@@ -52,7 +52,6 @@
         <xsl:value-of select="$lang"/>
       </xsl:attribute>
       <xsl:apply-templates/>
-      <script type="text/javascript" src="/assets/xinha/plugins/Equation/ASCIIMathML.js"></script>
     </html>
   </xsl:template>
 
@@ -77,7 +76,7 @@
     </xsl:variable>
     <xsl:variable name="colorClass">
       <xsl:if test="@withColorset='true'">
-        <xsl:call-template name="mandalay:getColorset"/>       
+        <xsl:call-template name="mandalay:getColorset"/>
       </xsl:if>
     </xsl:variable>
     
@@ -161,6 +160,13 @@
     <xsl:call-template name="mandalay:cssLoader"/>
   </xsl:template>
 
+  <xsl:template match="useFancybox">
+    <xsl:call-template name="mandalay:fancybox"/>
+  </xsl:template>
+
+  <xsl:template match="useMathJax">
+    <script type="text/javascript" src="/assets/mathjax/MathJax.js?config=TeX-MML-AM_HTMLorMML"/>
+  </xsl:template>
 
   <!-- DE Setze den lokalisierten Seitentitel -->
   <!-- EN Setup localized page title -->
@@ -448,11 +454,11 @@
           <xsl:with-param name="layoutTree" select="."/>
         </xsl:apply-templates>
       </xsl:when>
-      <xsl:when test="../useSearchResults">
-        <xsl:apply-templates select="$resultTree/search:results/search:paginator" mode="header">
+      <xsl:otherwise>
+        <xsl:apply-templates select="$resultTree//search:paginator" mode="header">
           <xsl:with-param name="layoutTree" select="."/>
         </xsl:apply-templates>
-      </xsl:when>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
@@ -464,11 +470,11 @@
           <xsl:with-param name="layoutTree" select="."/>
         </xsl:apply-templates>
       </xsl:when>
-      <xsl:when test="../useSearchResults">
-        <xsl:apply-templates select="$resultTree/search:results/search:paginator" mode="navbar">
+      <xsl:otherwise>
+        <xsl:apply-templates select="$resultTree//search:paginator" mode="navbar">
           <xsl:with-param name="layoutTree" select="."/>
         </xsl:apply-templates>
-      </xsl:when>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
