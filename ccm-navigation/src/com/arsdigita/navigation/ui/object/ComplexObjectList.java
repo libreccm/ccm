@@ -53,7 +53,6 @@ public class ComplexObjectList extends AbstractObjectList {
      * Hinzufügen eines SQL-Filter zur Abfrage
      * Verarbeitet einen boolschen Filter, der SQL-konform Formatiert ist.
      * Siehe PostgreSQL-Handbuch zur where-Klausel
-(??)
      * @param sqlfilter
      */
     public void setSQLFilter(String sqlfilter) {
@@ -76,12 +75,12 @@ public class ComplexObjectList extends AbstractObjectList {
         m_customAttributes.put(attribute, value);
     }
 
-    /*
+    /* Diese Methode überschreibt die Methode aus der Eltern-Klasse, um
      * die SQL-Filter berücksichtigen zu können
      */
     @Override
     protected DataCollection getObjects(HttpServletRequest request,
-            HttpServletResponse response) {
+                                        HttpServletResponse response) {
         DataCollection objects = super.getObjects(request, response);
 
         // Don't try do anything with a null object
