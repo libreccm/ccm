@@ -39,9 +39,12 @@ public class FormSectionItemLoader extends AbstractContentTypeLoader {
         "/WEB-INF/content-types/com/arsdigita/cms/formbuilder/FormSectionItem.xml"
     };
 
+    /** List of content sections to install FormSection. An empty list installs
+     *  Forms into the default (first) content section only.
+     */
     private final Parameter m_contentSections = new StringParameter
         ("com.arsdigita.cms.formbuilder.FormSectionItem.sections",
-         Parameter.REQUIRED, "content");
+         Parameter.REQUIRED, "");
 
     {
         register(m_contentSections);
@@ -52,6 +55,15 @@ public class FormSectionItemLoader extends AbstractContentTypeLoader {
         return TYPES;
     }
 
+    /**
+     * Overwrites parents class's method to predefine into which content sections
+     * Forms should get installed.
+     * An empty list (the default parents's implementation) gets Forms installed
+     * into the default section only.
+     * 
+     * @return Array of content sections Forms should be installed into 
+     */
+    @Override
     public List getContentSections() {
         List result = new ArrayList(1);
         result.add(get(m_contentSections));

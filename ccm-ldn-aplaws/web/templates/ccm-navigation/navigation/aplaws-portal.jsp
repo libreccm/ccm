@@ -28,7 +28,7 @@
     <define:component name="portalWorkspace"
       classname="com.arsdigita.london.portal.ui.WorkspaceViewer"/>
     <jsp:scriptlet>
-      ((com.arsdigita.london.portal.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
+      ((com.arsdigita.portalworkspace.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
     </jsp:scriptlet>
   </define:page>
 
