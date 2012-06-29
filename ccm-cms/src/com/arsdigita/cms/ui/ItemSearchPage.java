@@ -52,6 +52,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Scott Seago (scott@arsdigita.com)
  * @author Sören Bernstein (sbernstein@quasiweb.de)
+ * @author Jens Pelzetter (jens@jp-digital.de)
  */
 public class ItemSearchPage extends CMSPage {
 
@@ -65,7 +66,7 @@ public class ItemSearchPage extends CMSPage {
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
-    private final boolean showFlatBrowsePane;
+    //private final boolean showFlatBrowsePane;
 
     /**
      * Construct a new ItemSearchPage
@@ -79,16 +80,16 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
         addGlobalStateParam(new StringParameter("searchWidget"));
 
-        showFlatBrowsePane = s_conf.getItemSearchFlatBrowsePaneEnable();
+        //showFlatBrowsePane = s_conf.getItemSearchFlatBrowsePaneEnable();
 
 
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
         m_browse = getBrowsePane();
-        if (showFlatBrowsePane) {
-            m_flatBrowse = getFlatBrowsePane();
-        }
+//        if (showFlatBrowsePane) {
+//            m_flatBrowse = getFlatBrowsePane();
+//        }
         m_search = getSearchPane();
 //        m_create = getCreatePane();
 
@@ -100,6 +101,14 @@ public class ItemSearchPage extends CMSPage {
             public void pageRequested(final RequestEvent event) {
                 final PageState state = event.getPageState();
 
+                final String query = (String) state.getValue(new StringParameter(ItemSearchPopup.QUERY));
+                
+                if ((query == null) || query.isEmpty()) {
+                    m_tabbedPane.setSelectedIndex(state, 1);
+                } else {
+                    m_tabbedPane.setSelectedIndex(state, 0);
+                }
+                
                 //if (showFlatBrowsePane) {
                 //    m_tabbedPane.setTabVisible(state, 0, false);
               //     m_tabbedPane.setSelectedIndex(state, 1);
@@ -163,9 +172,9 @@ public class ItemSearchPage extends CMSPage {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);
 
-        if (showFlatBrowsePane) {
+        //if (showFlatBrowsePane) {
             addToPane(pane, "flatBrowse", getFlatBrowsePane());
-        }
+        //}
         addToPane(pane, "browse", getBrowsePane());
         addToPane(pane, "search", getSearchPane());
 //        addToPane(pane, "create", getCreatePane());
@@ -176,11 +185,11 @@ public class ItemSearchPage extends CMSPage {
         if ("search".equals(s_conf.getItemSearchDefaultTab())) {
             pane.setDefaultPane(m_search);
         }
-        if ("flatBrowse".equals(s_conf.getItemSearchDefaultTab()) && showFlatBrowsePane) {
+        //if ("flatBrowse".equals(s_conf.getItemSearchDefaultTab()) && showFlatBrowsePane) {        
             pane.setDefaultPane(m_flatBrowse);
-        } else {
+        //} else {
             pane.setDefaultPane(m_browse);
-        }
+        //}
 
         //pane.addActionListener(this);
 //        pane.setTabVisible(null, pane, true);

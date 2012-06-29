@@ -42,6 +42,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.WorkspaceServlet;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
@@ -57,7 +58,8 @@ public class ItemSearchWidget extends FormSection
         implements BebopConstants, FormSubmissionListener, FormInitListener {
 
     private static final Logger s_log = Logger.getLogger(ItemSearchWidget.class);
-    private Hidden m_selected;
+    //private Hidden m_selected;    
+    private TextField m_selected;    
     private TextField m_item;
     private Submit m_search;
     private Submit m_clear;
@@ -71,6 +73,8 @@ public class ItemSearchWidget extends FormSection
     private String m_clearName;
     private ParameterModel m_model;
     private ParameterModel m_searchModel;
+    private String searchLabelText = (String) GlobalizationUtil.globalize("cms.ui.item_search.search").localize();
+    private String selectedLabelText = (String) GlobalizationUtil.globalize("cms.ui.item_search.selected").localize();
     public static final String BEBOP_ITEM_SEARCH = "bebop:itemSearch";
     public static final String SEARCH = "search";
     public static final boolean LIMIT_TO_CONTENT_SECTION = false;
@@ -82,7 +86,7 @@ public class ItemSearchWidget extends FormSection
         public ItemFragment(ParameterModel parameter, ItemSearchWidget parent) {
             super(parameter);
             this.parent = parent;
-            //this.setReadOnly();
+            this.setReadOnly();
             this.setSize(35);
         }
 
@@ -116,8 +120,9 @@ public class ItemSearchWidget extends FormSection
         public ClearFragment(String name, ItemSearchWidget parent) {
             super(name, "Clear");
             this.parent = parent;
-            this.setAttribute("onClick", "this.form." + parent.m_selected.getName() //parent.m_item.getName()
-                                         + ".value = \"\"; return false;");
+            this.setAttribute("onClick", "this.form." + parent.m_selected.getName() + ".value = \"\";"
+                                         + "this.form." + parent.m_item.getName() + ".value = \"\";"
+                                         + "return false;");
             this.setAttribute("value", "Clear");
         }
 
@@ -189,8 +194,10 @@ public class ItemSearchWidget extends FormSection
     /**
      * Construct a new ItemSearchWidget. The model must be an
      * ItemSearchParameter
+     * @param model
+     * @param contentType  
      */
-    public ItemSearchWidget(ParameterModel model, ContentType contentType) {
+    public ItemSearchWidget(final ParameterModel model, final ContentType contentType) {
         super(new BoxPanel(BoxPanel.VERTICAL));
 
         if (!(model instanceof ItemSearchParameter)) {
@@ -214,7 +221,23 @@ public class ItemSearchWidget extends FormSection
         m_searchModel = new StringParameter(SEARCH);
 
         m_contentType = contentType;
-        m_selected = new Hidden(model);
+        //m_selected = new Hidden(model);
+        m_selected = new ItemFragment(model, this);
+        final Label selectedItemLabel = new Label(selectedLabelText); 
+        selectedItemLabel.addPrintListener(new PrintListener() {
+            public void prepare(final PrintEvent event) {
+                final Label target = (Label) event.getTarget();                
+                target.setLabel(selectedLabelText);                
+            }
+        });
+        final Label searchLabel = new Label(searchLabelText);
+        searchLabel.addPrintListener(new PrintListener() {
+
+            public void prepare(final PrintEvent event) {
+                final Label target = (Label) event.getTarget();
+                target.setLabel(searchLabelText);               
+            }
+        });
         //m_item = new ItemFragment(model, this);
         m_item = new TextField(m_searchModel);
         m_search = new SearchFragment(m_searchName, this);
@@ -232,7 +255,7 @@ public class ItemSearchWidget extends FormSection
                                     CMS.getContext().getContentSection().getID());
                 params.setParameter("widget", formName + ".elements['" + m_selected. //m_item.
                         getName() + "']");
-                params.setParameter("searchWidget", formName + ".elements['" + m_item.getName() + "']");
+                params.setParameter("searchWidget", formName + ".elements['" + m_item.getName() + "']");                
                 if (typeURLFrag != null) {
                     params.setParameter("single_type", typeURLFrag);
                 }
@@ -256,7 +279,7 @@ public class ItemSearchWidget extends FormSection
                            + "Popup(theForm) { \n"
                            + " aWindow = window.open(\"" + url + "&query=\" + document.getElementById('" + m_item.getName() + "').value , "
                            //+ "\"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes\");\n"                           
-                           + "\"search\", \"toolbar=yes,width=\" + screen.width*0.5 + \",height=\" + screen.height*0.5 + \",status=no,scrollbars=yes,resize=yes\");\n"                           
+                           + "\"search\", \"toolbar=no,width=\" + screen.width*0.5 + \",height=\" + screen.height*0.5 + \",status=no,scrollbars=yes,resize=yes\");\n"                           
                            + "return false;\n"
                            + " } \n"
                            + " --> \n"
@@ -266,12 +289,17 @@ public class ItemSearchWidget extends FormSection
         });
         m_topHR = new HRLabel();
         add(m_topHR);
-        FormSection searchSection = new FormSection(new BoxPanel(
-                BoxPanel.HORIZONTAL));
-        searchSection.add(m_item);
-        searchSection.add(m_selected);
-        searchSection.add(m_search);
-        searchSection.add(m_clear);
+        final FormSection searchSection = new FormSection(new BoxPanel(BoxPanel.VERTICAL));
+        final BoxPanel searchRow = new BoxPanel(BoxPanel.HORIZONTAL);
+        searchRow.add(searchLabel);
+        searchRow.add(m_item);               
+        searchRow.add(m_search);
+        searchRow.add(m_clear);
+        final BoxPanel itemRow = new BoxPanel(BoxPanel.HORIZONTAL);
+        itemRow.add(selectedItemLabel);                
+        itemRow.add(m_selected);           
+        searchSection.add(searchRow);
+        searchSection.add(itemRow);
         searchSection.add(m_jsLabel);
         add(searchSection);
         if (m_contentType == null) {
@@ -340,75 +368,75 @@ public class ItemSearchWidget extends FormSection
         }
     }
 
-    public void submitted(FormSectionEvent e) throws FormProcessException {
-        PageState s = e.getPageState();
-        FormData data = e.getFormData();
+    public void submitted(final FormSectionEvent event) throws FormProcessException {
+        final PageState state = event.getPageState();
+        final FormData data = event.getFormData();
         s_log.debug("Doing submission");
-        if (m_searchComponent.isItemSelected(s)) {
+        if (m_searchComponent.isItemSelected(state)) {
             s_log.debug("Item selected");
-            ContentItem item = m_searchComponent.getSelectedItem(s);
+            ContentItem item = m_searchComponent.getSelectedItem(state);
             if (item != null) {
-                m_item.setValue(s, item);
+                m_item.setValue(state, item);
             }
             try {
-                m_searchComponent.setVisible(s, false);
-                m_topHR.setVisible(s, false);
-                m_bottomHR.setVisible(s, false);
-                m_search.setVisible(s, true);
+                m_searchComponent.setVisible(state, false);
+                m_topHR.setVisible(state, false);
+                m_bottomHR.setVisible(state, false);
+                m_search.setVisible(state, true);
             } catch (IllegalStateException ex) {
                 // component is in metaform. nothing to do here. Custom generateXML must hide for us
             }
 
             throw new FormProcessException("item search FormSection submit");
 
-        } else if (m_searchComponent.hasQuery(s)) {
+        } else if (m_searchComponent.hasQuery(state)) {
             s_log.debug("Has query");
             try {
-                m_searchComponent.setVisible(s, true);
-                m_searchComponent.processQuery(s);
-                m_topHR.setVisible(s, true);
-                m_bottomHR.setVisible(s, true);
-                m_search.setVisible(s, false);
+                m_searchComponent.setVisible(state, true);
+                m_searchComponent.processQuery(state);
+                m_topHR.setVisible(state, true);
+                m_bottomHR.setVisible(state, true);
+                m_search.setVisible(state, false);
             } catch (IllegalStateException ex) {
                 // component is in metaform. nothing to do here. Custom generateXML must hide for us
             }
 
             if (m_contentType != null) {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                state.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
                            m_contentType.getID());
             } else {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                state.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
                            null);
             }
             throw new FormProcessException("item search FormSection submit");
-        } else if (m_search.isSelected(s)) {
+        } else if (m_search.isSelected(state)) {
             s_log.debug("Search selected");
             try {
-                m_searchComponent.setVisible(s, true);
-                m_searchComponent.processQuery(s);
-                m_topHR.setVisible(s, true);
-                m_bottomHR.setVisible(s, true);
-                m_search.setVisible(s, false);
+                m_searchComponent.setVisible(state, true);
+                m_searchComponent.processQuery(state);
+                m_topHR.setVisible(state, true);
+                m_bottomHR.setVisible(state, true);
+                m_search.setVisible(state, false);
             } catch (IllegalStateException ex) {
                 // component is in metaform. nothing to do here. Custom generateXML must hide for us
             }
 
             if (m_contentType != null) {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                state.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
                            m_contentType.getID());
             } else {
-                s.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
+                state.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
                            null);
             }
             throw new FormProcessException("item search FormSection submit");
-        } else if (m_clear.isSelected(s)) {
+        } else if (m_clear.isSelected(state)) {
             s_log.debug("Clear selected");
-            m_item.setValue(s, null);
+            m_item.setValue(state, null);
             try {
-                m_searchComponent.setVisible(s, false);
-                m_topHR.setVisible(s, false);
-                m_bottomHR.setVisible(s, false);
-                m_search.setVisible(s, true);
+                m_searchComponent.setVisible(state, false);
+                m_topHR.setVisible(state, false);
+                m_bottomHR.setVisible(state, false);
+                m_search.setVisible(state, true);                
             } catch (IllegalStateException ex) {
                 // component is in metaform. nothing to do here. Custom generateXML must hide for us
             }
@@ -416,14 +444,30 @@ public class ItemSearchWidget extends FormSection
         } else {
             s_log.debug("Something else");
             try {
-                m_searchComponent.setVisible(s, false);
-                m_topHR.setVisible(s, false);
-                m_bottomHR.setVisible(s, false);
-                m_search.setVisible(s, true);
+                m_searchComponent.setVisible(state, false);
+                m_topHR.setVisible(state, false);
+                m_bottomHR.setVisible(state, false);
+                m_search.setVisible(state, true);
             } catch (IllegalStateException ex) {
                 // component is in metaform. nothing to do here. Custom generateXML must hide for us
             }
         }
     }
 
+    public String getSearchLabelText() {
+        return searchLabelText;        
+    }
+    
+    public void setSearchLabelText(final String searchLabelText) {
+        this.searchLabelText = searchLabelText;
+    }
+
+    public String getSelectedLabelText() {
+        return selectedLabelText;
+    }
+
+    public void setSelectedLabelText(String selectedLabelText) {
+        this.selectedLabelText = selectedLabelText;
+    }
+        
 }

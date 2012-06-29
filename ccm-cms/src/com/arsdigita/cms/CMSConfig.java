@@ -542,11 +542,11 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_itemSearchDefaultTab =
                             new StringParameter(
             "com.arsdigita.cms.item_search.default_tab",
-            Parameter.REQUIRED, "browse");
-     private final Parameter m_itemSearchFlatBrowsePaneEnable = new BooleanParameter(
-            "com.arsdigita.cms.item_search.flat_browse_pane.enable",
-            Parameter.REQUIRED,
-            true);    
+            Parameter.REQUIRED, "flatBrowse");
+//     private final Parameter m_itemSearchFlatBrowsePaneEnable = new BooleanParameter(
+//            "com.arsdigita.cms.item_search.flat_browse_pane.enable",
+//            Parameter.REQUIRED,
+//            true);    
     private final Parameter m_itemSearchFlatBrowsePanePageSize = new IntegerParameter(
             "com.arsdigita.cms.item_search.flat_browse_pane.page_size",
             Parameter.REQUIRED,
@@ -705,7 +705,7 @@ public final class CMSConfig extends AbstractConfig {
         // register(m_disableItemPfs);
         // register(m_publishToFileClass);
 
-        register(m_itemSearchFlatBrowsePaneEnable);        
+//        register(m_itemSearchFlatBrowsePaneEnable);        
         register(m_itemSearchFlatBrowsePanePageSize);
         
         loadInfo();
@@ -1156,9 +1156,9 @@ public final class CMSConfig extends AbstractConfig {
         return (Integer) get(m_imageBrowserThumbnailMaxHeight);
     }
     
-    public Boolean getItemSearchFlatBrowsePaneEnable() {
-        return (Boolean) get(m_itemSearchFlatBrowsePaneEnable);
-    }
+//    public Boolean getItemSearchFlatBrowsePaneEnable() {
+//        return (Boolean) get(m_itemSearchFlatBrowsePaneEnable);
+//    }
     
     public Integer getItemSearchFlatBrowsePanePageSize() {
          return (Integer) get(m_itemSearchFlatBrowsePanePageSize);
