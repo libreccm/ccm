@@ -163,6 +163,7 @@ public abstract class BasicPageForm extends BasicItemForm {
      * Utility method to process the name/title widgets. Child classes may call this method from the process listener.
      *
      * @param e the {@link FormSectionEvent} which was passed to the process listener
+     * @return  
      */
     public ContentPage processBasicWidgets(FormSectionEvent e) {
         Assert.exists(getItemSelectionModel());

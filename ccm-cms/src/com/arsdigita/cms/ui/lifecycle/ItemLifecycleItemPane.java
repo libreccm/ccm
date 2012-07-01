@@ -78,10 +78,9 @@ import java.io.Writer;
 import java.util.Locale;
 
 /**
- * This class contains the component which displays the information for a
- * particular lifecycle, with the ability to edit and delete. This information
- * also includes the associated phases for this lifecycle, also with the ability
- * to add, edit, and delete.
+ * This class contains the component which displays the information for a particular lifecycle, with the ability to edit
+ * and delete. This information also includes the associated phases for this lifecycle, also with the ability to add,
+ * edit, and delete.
  *
  * @author Michael Pih
  * @author Jack Chung
@@ -116,11 +115,16 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 final ContentItem item = m_item.getContentItem(state).
                         getLiveVersion();
                 final Label label = (Label) event.getTarget();
-                final String dateStr =
-                             DateFormat.getDateTimeInstance(DateFormat.LONG,
-                                                            DateFormat.SHORT,
-                                                            GlobalizationHelper.
-                        getNegotiatedLocale()).format(item.getLastModifiedDate());
+                final String dateStr;
+                if ((item == null) || item.getLastModifiedDate() == null) {
+                    dateStr = "";
+                } else {
+                    dateStr =
+                    DateFormat.getDateTimeInstance(DateFormat.LONG,
+                                                   DateFormat.SHORT,
+                                                   GlobalizationHelper.getNegotiatedLocale()).format(item.
+                            getLastModifiedDate());
+                }
                 final String msg = String.format(
                         "%s %s",
                         new GlobalizedMessage(
@@ -129,9 +133,12 @@ class ItemLifecycleItemPane extends BaseItemPane {
                         dateStr);
                 label.setLabel(msg);
             }
+
         });
         m_detailPane.add(lastPublishedLabel);
-        m_detailPane.add(new PhaseSection());
+
+        m_detailPane.add(
+                new PhaseSection());
     }
 
     private class SummarySection extends Section {
@@ -163,8 +170,8 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
                 final DateFormat format =
                                  DateFormat.getDateTimeInstance(DateFormat.FULL,
-                                                                ContentSection.
-                        getConfig().getHideTimezone() ? DateFormat.SHORT
+                                                                ContentSection.getConfig().getHideTimezone()
+                                                                ? DateFormat.SHORT
                                                                 : DateFormat.FULL);
 
                 props.add(new Property(gz("cms.ui.name"),
@@ -184,6 +191,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
                 return props;
             }
+
         }
     }
 
@@ -223,6 +231,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 s_log.debug("User cannot publish " + item.getOID());
             }
         }
+
     }
 
     private class UnpublishLink extends PublishLink {
@@ -241,12 +250,13 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
                 item.unpublish();
 
-                final String target = URL.getDispatcherPath() + ContentItemPage.
-                        getItemURL(item,
-                                   ContentItemPage.AUTHORING_TAB);
+                final String target = URL.getDispatcherPath()
+                                      + ContentItemPage.getItemURL(item,
+                                                                   ContentItemPage.AUTHORING_TAB);
 
                 throw new RedirectSignal(target, true);
             }
+
         }
     }
 
@@ -276,8 +286,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 final ContentItem item = m_item.getContentItem(state);
 
                 /*
-                 * jensp 2011-12-14: Check is threaded publishing is active. If
-                 * yes, execute publishing in a thread.
+                 * jensp 2011-12-14: Check is threaded publishing is active. If yes, execute publishing in a thread.
                  */
                 if (CMSConfig.getInstance().getThreadedPublishing()) {
                     final Republisher republisher = new Republisher(item);
@@ -301,20 +310,17 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 return;
                             }
 
-                            final PartyCollection receiverParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.
-                                    getInstance().
+                                                            CMSConfig.getInstance().
                                     getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
                             }
                             receiverParties.close();
 
-                            final PartyCollection senderParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
                                                           CMSConfig.getInstance().
@@ -346,6 +352,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 notification.save();
                             }
                         }
+
                     });
 
                     thread.start();
@@ -367,6 +374,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                     }
                 }
             }
+
         }
 
         /**
@@ -375,11 +383,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
         private class Republisher implements Runnable {
 
             /**
-             * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from multiple
-             * threads. So we have to create a new instance a the data object in
-             * the run method. To avoid any sort a problems, we store the OID as
-             * a string and convert it back to an OID in the run method.
+             * Saves OID of item as a string. This is necessary because it is not possible to access to same data object
+             * instance from multiple threads. So we have to create a new instance a the data object in the run method.
+             * To avoid any sort a problems, we store the OID as a string and convert it back to an OID in the run
+             * method.
              */
             private final String itemOid;
 
@@ -388,12 +395,12 @@ class ItemLifecycleItemPane extends BaseItemPane {
             }
 
             public void run() {
-                final ContentItem item = (ContentItem) DomainObjectFactory.
-                        newInstance(OID.valueOf(itemOid));
+                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(OID.valueOf(itemOid));
                 PublishLock.getInstance().lock(item);
                 republish(item, false);
                 PublishLock.getInstance().unlock(item);
             }
+
         }
     }
 
@@ -416,8 +423,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                 final ContentItem item = m_item.getContentItem(state);
 
                 /**
-                 * jensp 2011-12-14: Execute is a thread if threaded publishing
-                 * is active.
+                 * jensp 2011-12-14: Execute is a thread if threaded publishing is active.
                  */
                 if (CMSConfig.getInstance().getThreadedPublishing()) {
                     final Republisher republisher = new Republisher(item);
@@ -441,20 +447,17 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 return;
                             }
 
-                            final PartyCollection receiverParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.
-                                    getInstance().
+                                                            CMSConfig.getInstance().
                                     getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
                             }
                             receiverParties.close();
 
-                            final PartyCollection senderParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
                                                           CMSConfig.getInstance().
@@ -486,6 +489,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 notification.save();
                             }
                         }
+
                     });
 
                     thread.start();
@@ -507,6 +511,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                     }
                 }
             }
+
         }
 
         /**
@@ -515,11 +520,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
         private class Republisher implements Runnable {
 
             /**
-             * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from multiple
-             * threads. So we have to create a new instance a the data object in
-             * the run method. To avoid any sort a problems, we store the OID as
-             * a string and convert it back to an OID in the run method.
+             * Saves OID of item as a string. This is necessary because it is not possible to access to same data object
+             * instance from multiple threads. So we have to create a new instance a the data object in the run method.
+             * To avoid any sort a problems, we store the OID as a string and convert it back to an OID in the run
+             * method.
              */
             private final String itemOid;
 
@@ -528,12 +532,12 @@ class ItemLifecycleItemPane extends BaseItemPane {
             }
 
             public void run() {
-                final ContentItem item = (ContentItem) DomainObjectFactory.
-                        newInstance(OID.valueOf(itemOid));
+                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(OID.valueOf(itemOid));
                 PublishLock.getInstance().lock(item);
                 republish(item, true);
                 PublishLock.getInstance().unlock(item);
             }
+
         }
     }
 
@@ -547,6 +551,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
 
             group.setSubject(new PhaseTable());
         }
+
     }
 
     private class PhaseTable extends Table {
@@ -560,11 +565,11 @@ class ItemLifecycleItemPane extends BaseItemPane {
                         lz("cms.ui.item.lifecycle.end_date")
                     });
         }
+
     }
 
     /**
-     * New style pane. Uses a select box for the action to avoid wrong clicks on
-     * unpublish.
+     * New style pane. Uses a select box for the action to avoid wrong clicks on unpublish.
      *
      * @author Jens Pelzetter
      */
@@ -638,8 +643,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
             final ContentItem item = m_item.getContentItem(state);
 
             /**
-             * Republish/Republish and Reset are executed in the thread if
-             * threaded publishing is active.
+             * Republish/Republish and Reset are executed in the thread if threaded publishing is active.
              */
             if (REPUBLISH.equals(selected)) {
                 if (CMSConfig.getInstance().getThreadedPublishing()) {
@@ -664,20 +668,17 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 return;
                             }
 
-                            final PartyCollection receiverParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.
-                                    getInstance().
+                                                            CMSConfig.getInstance().
                                     getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
                             }
                             receiverParties.close();
 
-                            final PartyCollection senderParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
                                                           CMSConfig.getInstance().
@@ -709,6 +710,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 notification.save();
                             }
                         }
+
                     });
 
                     thread.start();
@@ -752,20 +754,17 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 return;
                             }
 
-                            final PartyCollection receiverParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.
-                                    getInstance().
+                                                            CMSConfig.getInstance().
                                     getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
                             }
                             receiverParties.close();
 
-                            final PartyCollection senderParties = Party.
-                                    retrieveAllParties();
+                            final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
                                                           CMSConfig.getInstance().
@@ -797,6 +796,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 notification.save();
                             }
                         }
+
                     });
 
                     thread.start();
@@ -825,11 +825,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
         private class RepublishRunner implements Runnable {
 
             /**
-             * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from multiple
-             * threads. So we have to create a new instance a the data object in
-             * the run method. To avoid any sort a problems, we store the OID as
-             * a string and convert it back to an OID in the run method.
+             * Saves OID of item as a string. This is necessary because it is not possible to access to same data object
+             * instance from multiple threads. So we have to create a new instance a the data object in the run method.
+             * To avoid any sort a problems, we store the OID as a string and convert it back to an OID in the run
+             * method.
              */
             private final String itemOid;
 
@@ -838,28 +837,26 @@ class ItemLifecycleItemPane extends BaseItemPane {
             }
 
             private void doRepublish() {
-                final ContentItem item = (ContentItem) DomainObjectFactory.
-                        newInstance(OID.valueOf(itemOid));
+                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(OID.valueOf(itemOid));
                 republish(item, false);
             }
 
             public void run() {
-                final ContentItem item = (ContentItem) DomainObjectFactory.
-                        newInstance(OID.valueOf(itemOid));
+                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(OID.valueOf(itemOid));
                 PublishLock.getInstance().lock(item);
                 doRepublish();
                 PublishLock.getInstance().unlock(item);
             }
+
         }
 
         private class RepublishAndResetRunner implements Runnable {
 
             /**
-             * Saves OID of item as a string. This is necessary because it is
-             * not possible to access to same data object instance from multiple
-             * threads. So we have to create a new instance a the data object in
-             * the run method. To avoid any sort a problems, we store the OID as
-             * a string and convert it back to an OID in the run method.
+             * Saves OID of item as a string. This is necessary because it is not possible to access to same data object
+             * instance from multiple threads. So we have to create a new instance a the data object in the run method.
+             * To avoid any sort a problems, we store the OID as a string and convert it back to an OID in the run
+             * method.
              */
             private final String itemOid;
 
@@ -868,18 +865,17 @@ class ItemLifecycleItemPane extends BaseItemPane {
             }
 
             private void doRepublishAndReset() {
-                final ContentItem item = (ContentItem) DomainObjectFactory.
-                        newInstance(OID.valueOf(itemOid));
+                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(OID.valueOf(itemOid));
                 republish(item, true);
             }
 
             public void run() {
-                final ContentItem item = (ContentItem) DomainObjectFactory.
-                        newInstance(OID.valueOf(itemOid));
+                final ContentItem item = (ContentItem) DomainObjectFactory.newInstance(OID.valueOf(itemOid));
                 PublishLock.getInstance().lock(item);
                 doRepublishAndReset();
                 PublishLock.getInstance().unlock(item);
             }
+
         }
     }
 }
