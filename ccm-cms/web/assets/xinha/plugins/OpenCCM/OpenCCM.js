@@ -64,6 +64,12 @@ function OpenCCM(editor)
     cfg.addToolbarElement(["separator"], "insertimage", 1);
   }
   
+  if(typeof editor._insertImage == 'undefined') 
+  {
+    editor._insertImage = function() { self.showImageDialog(); };
+    // editor.config.btnList.insertimage[3] = function() { self.show(); }
+  }
+  
   // Register double click action
   cfg.dblclickList["a"][0] = function(e, target) { self.showLinkDialog(self._getSelectedAnchor()); };
 }

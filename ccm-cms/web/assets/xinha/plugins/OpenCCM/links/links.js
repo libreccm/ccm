@@ -5,13 +5,14 @@ OpenCCM.prototype.showLinkDialog = function(link)
     this.prepareLinkDialog();
   }
 
-  var editor = this.editor;
-  this.link = link;
   if(!link && this.editor.selectionEmpty(this.editor.getSelection()))
   {
     alert(this._lc("You need to select some text before creating a link"));
     return false;
   }
+
+  var editor = this.editor;
+  this.link = link;
 
   var data =
   {
