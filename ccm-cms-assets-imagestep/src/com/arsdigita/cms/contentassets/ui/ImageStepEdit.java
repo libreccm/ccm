@@ -113,7 +113,7 @@ public class ImageStepEdit extends SimpleContainer
             Object key = i.next();
             Component component = (Component) componentsMap.get( key );
 
-            p.setVisibleDefault( component, UPLOAD.equals( key ) );
+            p.setVisibleDefault( component, LIBRARY.equals( key ) );
         }
 
         p.addComponentStateParam( this, m_imageComponentKey );
@@ -276,6 +276,10 @@ public class ImageStepEdit extends SimpleContainer
             m_saveCancel = new SaveCancelSection();
             add(m_saveCancel);
 
+            /* Removed by Quasimodo: Changed editing workflow, so that library comes first
+             * Also, library mode has now a link to upload images whixh will link to this 
+             * form. Consequently, this link will create a loop, which isn't fatal but 
+             * confusing
             ActionLink library = new ActionLink( "Select an existing image" );
             library.addActionListener( new ActionListener() {
                 public void actionPerformed( ActionEvent ev ) {
@@ -283,6 +287,7 @@ public class ImageStepEdit extends SimpleContainer
                 }
             } );
             add( library, ColumnPanel.FULL_WIDTH );
+            */
         }
 
         public SaveCancelSection getSaveCancelSection() {
