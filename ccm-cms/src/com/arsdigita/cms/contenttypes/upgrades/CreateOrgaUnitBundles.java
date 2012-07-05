@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle;
  * @version $Id$
  */
 public class CreateOrgaUnitBundles extends AbstractBundleUpgrade {
-
-    public CreateOrgaUnitBundles() {
-        super("CreateOrgaUnitBundles", "1.0.0", "");
-    }
-
-    public static void main(final String args[]) {
-        new CreateOrgaUnitBundles().run(args);
-    }
-
+  
     @Override
     protected String getBundleTableName() {
         return "cms_orgaunit_bundles";

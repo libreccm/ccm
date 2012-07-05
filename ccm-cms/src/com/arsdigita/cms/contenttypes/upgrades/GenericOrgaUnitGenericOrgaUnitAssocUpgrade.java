@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class GenericOrgaUnitGenericOrgaUnitAssocUpgrade extends AbstractAssocUpgrade {
-
-    public GenericOrgaUnitGenericOrgaUnitAssocUpgrade() {
-        super("GenericOrgaUnitGenericOrgaUnitAssocUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String args[]) {
-        new GenericOrgaUnitGenericOrgaUnitAssocUpgrade().run(args);
-    }
-
+  
     @Override
     protected String getTableName() {
         return "cms_organizationalunits_hierarchy_map";

@@ -9,15 +9,7 @@ import com.arsdigita.cms.contenttypes.GenericPersonBundle;
  * @version $Id$
  */
 public class CreatePersonBundles extends AbstractBundleUpgrade {
-
-    public CreatePersonBundles() {
-        super("CreatePersonBundles", "1.0.0", "");
-    }
     
-    public static void main(final String args[]) {
-        new CreatePersonBundles().run(args);
-    }
-
     @Override
     protected String getBundleTableName() {
         return "cms_person_bundles";

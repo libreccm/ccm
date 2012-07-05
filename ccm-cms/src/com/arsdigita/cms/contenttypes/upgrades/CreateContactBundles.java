@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.GenericContactBundle;
  * @version $Id$
  */
 public class CreateContactBundles extends AbstractBundleUpgrade {
-
-    public CreateContactBundles() {
-        super("CreateContactBundles", "1.0.0", "");
-    }
-
-    public static void main(final String args[]) {
-        new CreateContactBundles().run(args);
-    }
-
+    
     @Override
     protected String getBundleTableName() {
         return "cms_contact_bundles";

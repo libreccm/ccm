@@ -1,25 +1,19 @@
 package com.arsdigita.cms.contenttypes.upgrades;
 
 import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.util.cmd.Program;
 import com.arsdigita.util.jdbc.Connections;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.apache.commons.cli.CommandLine;
 
 /**
  *
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public abstract class AbstractBundleUpgrade extends Program {
-
-    public AbstractBundleUpgrade(final String name, final String version, final String usage) {
-        super(name, version, usage);
-    }
-
+public abstract class AbstractBundleUpgrade {
+    
     protected abstract String getBundleTableName();
 
     protected abstract String getContentItemTableName();
@@ -35,9 +29,8 @@ public abstract class AbstractBundleUpgrade extends Program {
     protected String getSuperBundleTable() {
         return "cms_bundles";
     }
-    
-    @Override
-    public void doRun(final CommandLine cmdLine) {
+     
+    public void doUpgrade() {
         System.out.println("Starting upgrade...");
 
         System.out.println("Trying to get JDBC connection...");
@@ -137,6 +130,7 @@ public abstract class AbstractBundleUpgrade extends Program {
 
     private void rollback(final Connection conn) {
         try {
+            System.err.println("WARNING: Rollback.");
             conn.rollback();
         } catch (SQLException ex1) {
             System.err.println("Rollback failed.");

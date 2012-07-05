@@ -1,7 +1,6 @@
 package com.arsdigita.cms.contenttypes.upgrades;
 
 import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.util.cmd.Program;
 import com.arsdigita.util.jdbc.Connections;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -13,17 +12,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.cli.CommandLine;
 
 /**
  *
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public abstract class AbstractAssocUpgrade extends Program {
+public abstract class AbstractAssocUpgrade {
 
-    public AbstractAssocUpgrade(final String name, final String version, final String usage) {
-        super(name, version, usage);
+    public AbstractAssocUpgrade() {
+        //Nothing
     }
 
     protected abstract String getTableName();
@@ -43,9 +41,8 @@ public abstract class AbstractAssocUpgrade extends Program {
     protected abstract String getOwnerTableName();
 
     protected abstract String getMemberTableName();
-
-    @Override
-    protected void doRun(final CommandLine cmdLine) {
+    
+    protected void doUpgrade() {
         System.out.println("Starting upgrade...");
         final List<AssocEntry> oldData = new ArrayList<AssocEntry>();
 

@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class GenericOrgaUnitGenericContactAssocUpgrade extends AbstractAssocUpgrade {
-    
-    public GenericOrgaUnitGenericContactAssocUpgrade() {
-        super("GenericOrgaUnitGenericContactAssocUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String args[]) {
-        new GenericOrgaUnitGenericContactAssocUpgrade().run(args);
-    }
-
+       
     @Override
     protected String getTableName() {
         return "cms_organizationalunits_contact_map";

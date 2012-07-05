@@ -52,14 +52,7 @@
     <script sql="ccm-cms/upgrade/::database::-6.6.3-6.6.4.sql"/>
   </version>
   <version from="6.6.4" to="6.6.5">
-    <script class="com.arsdigita.cms.contenttypes.upgrades.CreateContactBundles"/>
-    <script class="com.arsdigita.cms.contenttypes.upgrades.CreateOrgaUnitBundles"/>
-    <script class="com.arsdigita.cms.contenttypes.upgrades.CreatePersonBundles"/>
-    <script class="com.arsdigita.cms.contenttypes.upgrades.GenericContactGenericPersonAssocUpgrade"/>
-    <script class="com.arsdigita.cms.contenttypes.upgrades.GenericOrgaUnitGenericContactAssocUpgrade"/>
-    <script class="com.arsdigita.cms.contenttypes.upgrades.GenericOrgaUnitGenericOrgaUnitAssocUpgrade"/>
-    <script class="com.arsdigita.cms.contenttypes.upgrades.GenericOrgaUnitGenericPersonAssocUpgrade"/>
-    <script sql="ccm-cms/upgrade::database::-6.6.4-6.6.5.sql"/>
+    <script class="com.arsdigita.cms.contenttypes.upgrades.Upgrade664to665"/>      
   </version>
  <version from="6.6.5" to="6.6.6">
     <!--  ContentSection now loaded as legacy free application             -->
