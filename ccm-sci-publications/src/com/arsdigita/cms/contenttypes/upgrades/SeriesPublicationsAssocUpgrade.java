@@ -10,14 +10,6 @@ import java.util.Map;
  */
 public class SeriesPublicationsAssocUpgrade extends AbstractAssocUpgrade {
 
-    public SeriesPublicationsAssocUpgrade() {
-        super("SeriesPublicationsAssocUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new SeriesPublicationsAssocUpgrade().run(args);
-    }
-
     @Override
     protected String getTableName() {
         return "ct_publications_volume_in_series";

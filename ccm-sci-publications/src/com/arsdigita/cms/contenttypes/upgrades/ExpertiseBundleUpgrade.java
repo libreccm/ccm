@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.ExpertiseBundle;
  * @version $Id$
  */
 public class ExpertiseBundleUpgrade extends AbstractBundleUpgrade {
-    
-    public ExpertiseBundleUpgrade() {
-        super("ExpertiseBundleUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new ExpertiseBundleUpgrade().run(args);
-    }
-
+       
     @Override
     protected String getBundleTableName() {
         return "ct_expertise_bundles";

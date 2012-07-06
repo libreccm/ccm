@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.JournalBundle;
  * @version $Id$
  */
 public class JournalBundleUpgrade extends AbstractBundleUpgrade {
-
-    public JournalBundleUpgrade() {
-        super("JournalBundle", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new JournalBundleUpgrade().run(args);
-    }
-
+    
     @Override
     protected String getBundleTableName() {
         return "ct_journal_bundles";

@@ -10,14 +10,6 @@ import java.util.Map;
  */
 public class SeriesEditorsAssocUpgrade extends AbstractAssocUpgrade {
 
-    public SeriesEditorsAssocUpgrade() {
-        super("SeriesEditorsAssocUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new SeriesEditorsAssocUpgrade().run(args);
-    }
-
     @Override
     protected String getTableName() {
         return "ct_series_editship";

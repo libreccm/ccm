@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class PublicationWithPublisherPublisherAssocUpgrade extends AbstractAssocUpgrade {
-
-    public PublicationWithPublisherPublisherAssocUpgrade() {
-        super("PublicationWithPublisherPublisherAssocUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new PublicationWithPublisherPublisherAssocUpgrade().run(args);
-    }
-
+   
     @Override
     protected String getTableName() {
         return "ct_publication_with_publisher_publisher_map";

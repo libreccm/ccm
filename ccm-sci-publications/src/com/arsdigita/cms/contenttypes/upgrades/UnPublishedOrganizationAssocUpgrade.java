@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class UnPublishedOrganizationAssocUpgrade extends AbstractAssocUpgrade {
-    
-    public UnPublishedOrganizationAssocUpgrade()  {
-        super("UnPublishedOrganizationAssocUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new UnPublishedOrganizationAssocUpgrade().run(args);
-    }
-
+       
     @Override
     protected String getTableName() {
         return "ct_unpublished_organization_map";

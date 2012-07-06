@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class ProceedingsPapersAssocUpgrade extends AbstractAssocUpgrade {
-
-    public ProceedingsPapersAssocUpgrade() {
-        super("ProceedingsPapersAssocUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new ProceedingsPapersAssocUpgrade().run(args);
-    }
-
+ 
     @Override
     protected String getTableName() {
         return "ct_proceedings_papers_map";

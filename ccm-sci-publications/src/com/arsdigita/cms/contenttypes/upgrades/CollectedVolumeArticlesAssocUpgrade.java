@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class CollectedVolumeArticlesAssocUpgrade extends AbstractAssocUpgrade {
-
-    public CollectedVolumeArticlesAssocUpgrade() {
-        super("CollectedVolumeArticlesAssocUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new CollectedVolumeArticlesAssocUpgrade().run(args);
-    }
-
+    
     @Override
     protected String getTableName() {
         return "ct_collected_volume_article_map";

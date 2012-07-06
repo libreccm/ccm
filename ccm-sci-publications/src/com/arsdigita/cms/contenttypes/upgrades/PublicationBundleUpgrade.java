@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.PublicationBundle;
  * @version $Id$
  */
 public class PublicationBundleUpgrade extends AbstractBundleUpgrade {
-    
-    public PublicationBundleUpgrade() {
-        super("PublicationBundleUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new PublicationBundleUpgrade().run(args);
-    }
-
+        
     @Override
     protected String getBundleTableName() {
         return "ct_publication_bundles";

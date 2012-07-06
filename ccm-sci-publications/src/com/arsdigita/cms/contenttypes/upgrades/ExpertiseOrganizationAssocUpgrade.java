@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class ExpertiseOrganizationAssocUpgrade extends AbstractAssocUpgrade {
-    
-    public ExpertiseOrganizationAssocUpgrade() {
-        super("ExpertiseOrganizationAssocUpgrade", "1.0.0", "");
-    }    
-    
-    public static void main(final String[] args) {
-        new ExpertiseOrganizationAssocUpgrade().run(args);
-    }
-
+   
     @Override
     protected String getTableName() {
         return "ct_expertise_organization_map";

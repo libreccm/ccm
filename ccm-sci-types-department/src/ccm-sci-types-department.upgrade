@@ -1,5 +1,5 @@
 <upgrade>
     <version from="6.6.4" to="6.6.5">
-        <script class="com.arsdigita.cms.contenttypes.upgrades.SciDepartmentBundleUpgrade"/>
+        <script class="com.arsdigita.cms.contenttypes.upgrades.SciDepartmentUpgrade664to665"/>
     </version>
 </upgrade>

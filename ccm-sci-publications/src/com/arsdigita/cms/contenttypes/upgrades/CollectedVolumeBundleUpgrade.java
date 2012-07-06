@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.CollectedVolumeBundle;
  * @version $Id$
  */
 public class CollectedVolumeBundleUpgrade extends AbstractBundleUpgrade {
-    
-    public CollectedVolumeBundleUpgrade() {
-        super("CollectedVolumeBundleUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new CollectedVolumeBundleUpgrade().run(args);
-    }
-
+      
     @Override
     protected String getBundleTableName() {
         return "ct_collected_volume_bundles";

@@ -1,31 +1,20 @@
 package com.arsdigita.cms.contenttypes.upgrades;
 
 import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.util.cmd.Program;
 import com.arsdigita.util.jdbc.Connections;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.apache.commons.cli.CommandLine;
 
 /**
  *
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class JournalTypeUpgrade extends Program {
-
-    public JournalTypeUpgrade() {
-        super("JournalTypeUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new JournalTypeUpgrade().run(args);
-    }
-
-    @Override
-    protected void doRun(final CommandLine cmdLine) {
+public class JournalTypeUpgrade {
+    
+    protected void doUpgrade() {
         System.out.println("Starting upgrade...");
 
         System.out.println("Trying to get JDBC connection...");
@@ -166,4 +155,5 @@ public class JournalTypeUpgrade extends Program {
             printStackTrace(ex.getNextException());
         }
     }
+
 }

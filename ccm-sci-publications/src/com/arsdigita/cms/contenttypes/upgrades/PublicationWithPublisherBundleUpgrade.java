@@ -9,14 +9,6 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisherBundle;
  */
 public class PublicationWithPublisherBundleUpgrade extends AbstractBundleUpgrade {
 
-    public PublicationWithPublisherBundleUpgrade() {
-        super("PublicationWithPublisherBundleUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new PublicationWithPublisherBundleUpgrade().run(args);
-    }
-
     @Override
     protected String getBundleTableName() {
         return "ct_publication_with_publisher_bundles";

@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.UnPublishedBundle;
  * @version $Id$
  */
 public class UnPublishedBundleUpgrade extends AbstractBundleUpgrade {
-    
-    public UnPublishedBundleUpgrade() {
-        super("UnPublishedBundleUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args ) {
-        new UnPublishedBundleUpgrade().run(args);
-    }
-
+  
     @Override
     protected String getBundleTableName() {
         return "ct_unpublished_bundles";

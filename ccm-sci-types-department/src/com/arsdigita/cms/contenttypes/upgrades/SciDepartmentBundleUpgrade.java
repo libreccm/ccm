@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.SciDepartmentBundle;
  * @version $Id$
  */
 public class SciDepartmentBundleUpgrade extends AbstractBundleUpgrade {
-
-    public SciDepartmentBundleUpgrade() {
-        super("SciDepartmentBundleUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new SciDepartmentBundleUpgrade().run(args);
-    }
-
+   
     @Override
     protected String getBundleTableName() {
         return "ct_sci_department_bundles";

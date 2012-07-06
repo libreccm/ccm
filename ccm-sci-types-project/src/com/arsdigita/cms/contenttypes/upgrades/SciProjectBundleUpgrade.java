@@ -9,14 +9,6 @@ import com.arsdigita.cms.contenttypes.SciProjectBundle;
  */
 public class SciProjectBundleUpgrade extends AbstractBundleUpgrade {
     
-    public SciProjectBundleUpgrade() {
-        super("SciProjectBundleUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new SciProjectBundleUpgrade().run(args);
-    }
-
     @Override
     protected String getBundleTableName() {
         return "ct_sci_project_bundles";

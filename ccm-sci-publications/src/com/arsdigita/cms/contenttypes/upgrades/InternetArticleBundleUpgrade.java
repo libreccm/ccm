@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.InternetArticleBundle;
  * @version $Id$
  */
 public class InternetArticleBundleUpgrade extends AbstractBundleUpgrade {
-
-    public InternetArticleBundleUpgrade() {
-        super("InternetArticleBundleUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new InternetArticleBundleUpgrade().run(args);
-    }
-
+  
     @Override
     protected String getBundleTableName() {
         return "ct_internet_article_bundles";

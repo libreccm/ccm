@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class PublicationOrgaUnitAssocUpgrade extends AbstractAssocUpgrade {
-
-    public PublicationOrgaUnitAssocUpgrade() {
-        super("PublicationOrgaUnitAssocUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new PublicationOrgaUnitAssocUpgrade().run(args);
-    }
-
+   
     @Override
     protected String getTableName() {
         return "cms_organizationalunits_publications_map";

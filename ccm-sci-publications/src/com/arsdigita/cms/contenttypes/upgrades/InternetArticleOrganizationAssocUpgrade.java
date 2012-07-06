@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class InternetArticleOrganizationAssocUpgrade extends AbstractAssocUpgrade {
-    
-    public InternetArticleOrganizationAssocUpgrade() {
-        super("InternetArticleOrganizationAssocUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new InternetArticleOrganizationAssocUpgrade().run(args);
-    }
-
+       
     @Override
     protected String getTableName() {
         return "ct_internet_article_organization_map";

@@ -8,15 +8,7 @@ import com.arsdigita.cms.contenttypes.ProceedingsBundle;
  * @version $Id$
  */
 public class ProceedingsBundleUpgrade extends AbstractBundleUpgrade {
-    
-    public ProceedingsBundleUpgrade() {
-        super("ProceedingsBundleUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new ProceedingsBundleUpgrade().run(args);
-    }
-
+       
     @Override
     protected String getBundleTableName() {
         return "ct_proceedings_bundles";

@@ -9,14 +9,6 @@ import com.arsdigita.cms.contenttypes.SeriesBundle;
  */
 public class SeriesBundleUpgrade extends AbstractBundleUpgrade {
 
-    public SeriesBundleUpgrade() {
-        super("SeriesBundleUpgrade", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new SeriesBundleUpgrade().run(args);
-    }
-
     @Override
     protected String getBundleTableName() {
         return "ct_series_bundles";

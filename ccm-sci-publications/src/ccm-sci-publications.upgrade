@@ -6,32 +6,6 @@
         <script sql="ccm-sci-publications/upgrade/::database::-6.6.1-6.6.2.sql"/>
     </version>
     <version from="6.6.2" to="6.6.3">
-        <script class="com.arsdigita.cms.contenttypes.upgrades.JournalTypeUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ArticleInCollectedVolumeBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ArticleInJournalBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.CollectedVolumeBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ExpertiseBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.InProceedingsBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.InternetArticleBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.JournalBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ProceedingsBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicationBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicationWithPublisherBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublisherBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.SeriesBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.UnPublishedBundleUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.CollectedVolumeArticlesAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ExpertiseOrdererAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ExpertiseOrganizationAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.InternetArticleOrganizationAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.JournalArticlesAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ProceedingsOrganizerAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.ProceedingsPapersAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicationAuthorsAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicationOrgaunitAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicationWithPublisherAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.SeriesEditorsAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.SeriesPublicationsAssocUpgrade"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.UnPublishedOrganizationAssocUpgrade"/>
+        <script class="com.arsdigita.cms.contenttypes.upgrades.SciPublicationsUpgrade662to663"/>       
     </version>
 </upgrade>
