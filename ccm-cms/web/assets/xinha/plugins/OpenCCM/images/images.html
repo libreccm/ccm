@@ -124,7 +124,7 @@
         <l10n>Enable Zoom:</l10n>
       </label>
       <div class="value">
-        <input type="checkbox" name="[zoom]" id="[zoom]" title="_(Enable zoom)" checked="checked"/>
+        <input type="checkbox" name="[zoom]" id="[zoom]" title="_(Enable zoom)"/>
       </div>
       <label class="key" for="[gallery]">
         <l10n>Enable Gallery:</l10n>
@@ -150,6 +150,7 @@
       <div class="value">
         <input type="text" name="[height]" id="[height]" title="_(Resize to height)"/>
       </div>
+      <input type="hidden" name="[aspect]" id="[aspect]"/>
     </fieldset>
   </div>
 
@@ -160,6 +161,7 @@
 
   <div class="buttons" id="[buttons]">
     <input type="button" id="[ok]"     value="_(OK)"     />
+    <input type="button" id="[remove]"     value="_(Remove)"     />
     <input type="button" id="[cancel]" value="_(Cancel)" />
   </div>
 </div>

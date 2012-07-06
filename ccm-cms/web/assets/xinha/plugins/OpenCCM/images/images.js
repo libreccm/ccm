@@ -24,35 +24,40 @@ OpenCCM.prototype.showImageDialog = function(image)
 
   if (typeof image == "undefined" )
   {
-  alert ("was?");
     image = editor.getParentElement();
-    if ( image && image.tagName.toLowerCase() != 'img' )
+    if ( image && image.tagName.toLowerCase() != "img" )
     {
       image = null;
-      alert("WAS?");
     }
   }
 
-  if(image && image.tagName.toLowerCase == "img")
+  this.image = image;
+
+  if(image && image.tagName.toLowerCase() == "img")
   {
-    var src = this.editor.fixRelativeLinks(image.getAttribute('src'));
-    
-    data.src    = src;
-    data.alt    = image.alt;
-    data.name   = image.name;
-    data.title  = image.title;
-    data.width  = image.width;
-    data.height = image.height;
+    data.src    = this.editor.fixRelativeLinks(image.getAttribute("src"));
+    data.alt    = image.getAttribute("alt");
+    data.name   = image.getAttribute("name");
+    data.title  = image.getAttribute("title");
+    data.width  = image.getAttribute("width");
+    data.height = image.getAttribute("height");
 
-    data.caption = ""/*image.next.tagName=="span"*/;
-    data.zoom = "" /*image.parent.rel == "zoom"*/;
-    data.gallery = "" /*image.parent.rel == "imageGallery"*/;
+    if(image.parentNode.tagName.toLowerCase() == "div")
+    {
+      data.alignment = image.parentNode.getAttribute("class").substring(image.parentNode.getAttribute("class").indexOf(" "));
+      data.caption = (image.nextSibling.tagName.toLowerCase() == "span") ? image.nextSibling.firstChild.nodeValue : "";
+    }
+    else
+    {
+      data.alignment = image.parentNode.parentNode.getAttribute("class").substring(image.parentNode.getAttribute("class").indexOf(" "));
+      data.zoom = (image.parentNode.getAttribute("class") == "imageZoom") ? "on" : "";
+      data.gallery = (image.parentNode.getAttribute("class") == "imageGallery") ? "on" : "";
+//    data.galleryName = (image.parentNode.getAttribute("class") == "imageGallery") ? image.parentNode.getAttribute("rel") : "";
 
-//    data.context = image.parent.rel;
+      data.caption = (image.parentNode.nextSibling.tagName.toLowerCase() == "span") ? image.parentNode.nextSibling.firstChild.nodeValue : "";
+    }
 
-    data.alignment   = "" /*image.parent.parent.class*/;
-
-//      aspect      = "";
+    data.aspect = data.width / data.height;
   }
 
   // now calling the show method of the Xinha.Dialog object to set the values and show the actual dialog
@@ -68,11 +73,15 @@ OpenCCM.prototype.prepareImageDialog = function()
 
   // Connect the OK and Cancel buttons
   dialog.getElementById('ok').onclick = function() {self.imageApply();}
-//  dialog.getElementById('clear').onclick = function() { self.imageRemove(); };
+  dialog.getElementById('remove').onclick = function() { self.imageRemove(); };
   dialog.getElementById('cancel').onclick = function() { self.dialogs["images"].hide()};
 
   // Connect the Select button
   dialog.getElementById('browse').onclick = function() { self.imageBrowse(window); };
+
+  // Connect onkeyup ecent handler with dimension filed to recalculate the size according to aspect ratio
+  dialog.getElementById('width').onkeyup = function() { self.calcHeight(); };
+  dialog.getElementById('height').onkeyup = function() { self.calcWidth(); };
 
   this.imageDialogReady = true;
 };
@@ -84,7 +93,8 @@ OpenCCM.prototype.imageApply = function()
   var values = this.dialogs["images"].hide();
   var image  = this.image;
   var editor = this.editor;
-
+  var modifyImage = (image != null && image.tagName.toLowerCase() == "img");
+  
   var imgAttr =
   {
     src    : "",
@@ -137,7 +147,6 @@ OpenCCM.prototype.imageApply = function()
   if(values.zoom || values.gallery)
   {
     linkAttr.href = values.src;
-    
     if(values.zoom)
     {
       linkAttr.rel = "";
@@ -152,30 +161,48 @@ OpenCCM.prototype.imageApply = function()
   }
 
   // Read form values for div
-/*
-  if(values.alignment != "")
+  if(values.alignment.value != "")
   {
-    var alignment = values.alignment;
-    divAttr.class += " " + alignment;
+    divAttr.class += " " + values.alignment.value;
   }
-*/
+
+  var div;
 
   // Modify Image
-  if(image && image.tagName.toLowerCase() == "img")
+  if(modifyImage)
   {
-   alert("Modifying image aka removing currently selected image");
+    // Get the parent for img node
+    div = image.parentNode;
+    
+    // if the tagname of div is "a"
+    if(div.tagName.toLowerCase() == "a")
+    {
+      // go up one level to find the real div
+      div = div.parentNode;
+    }
+    
+    // remove all childs from div.image
+    while (div.childNodes.length > 0)
+    {
+      div.removeChild(div.firstChild);
+    }
+  }
+  
+  // Add Image
+  else
+  {
+    // create new div.image
+    div = document.createElement("div");
   }
 
-  // Add Image
-  alert("Adding image");
-  
-
-  var div = document.createElement("div");
+  // set attributes for div
   for(var attr in divAttr)
   {
     div.setAttribute(attr, divAttr[attr]);
   }
 
+  // the folling has to be done for both cases
+  // insert link, if fancybox features are activated
   if(values.zoom || values.gallery)
   {
     link = document.createElement("a");
@@ -186,6 +213,7 @@ OpenCCM.prototype.imageApply = function()
     div.appendChild(link);
   }
 
+  // insert the image, obviously
   var img = document.createElement("img");
   for(var attr in imgAttr)
   {
@@ -200,6 +228,7 @@ OpenCCM.prototype.imageApply = function()
     div.appendChild(img);
   }
 
+  // insert caption if selected
   if(values.caption)
   {
     var span = document.createElement("span");
@@ -207,51 +236,61 @@ OpenCCM.prototype.imageApply = function()
     {
       span.setAttribute(attr, spanAttr[attr]);
     }
+    span.appendChild(document.createTextNode(imgAttr.title));
     
     div.appendChild(span);
   }
 
-  editor.insertNodeAtSelection(div);
-
-/*
-  if ( !img )
-  {
-    if ( Xinha.is_ie )
-    {
-      var sel = editor.getSelection();
-      var range = editor.createRange(sel);
-      editor._doc.execCommand("insertimage", false, param.f_url);
-      img = range.parentElement();
-      // wonder if this works...
-      if ( img.tagName.toLowerCase() != "img" )
-      {
-        img = img.previousSibling;
-      }
-    }
-    else
-    {
-      img = document.createElement('img');
-      img.src = param.f_url;
-      editor.insertNodeAtSelection(img);
-      if ( !img.tagName )
-      {
-        // if the cursor is at the beginning of the document
-        img = range.startContainer.firstChild;
-      }
-    }
-  }
-  else
-  {
-    img.src = param.f_url;
+  // insert new div only if we not modifying an image
+  if(!modifyImage) {
+    editor.insertNodeAtSelection(div);
   }
 
-*/
+  // set cursor after div
+  this.editor.selectNodeContents(div.nextSibling, 0);
+};
+
+OpenCCM.prototype.imageRemove = function() {
+  
+  // Close the dialog
+  this.dialogs["images"].hide();
+  
+  // Get the parent div for img node
+  var div = this.image.parentNode;
+  
+  // if the tagname of div is "a"
+  if(div.tagName.toLowerCase() == "a")
+  {
+    // go up one level to find the real div
+    div = div.parentNode;
+  }
+  
+  // remove this div
+  div.parentNode.removeChild(div);
+  return true;
 };
 
 OpenCCM.prototype.imageBrowse = function(window)
 {
-  this.dialogs["images"].getElementById(this.dialogs["images"].id["src"]).value = "/theme/mandalay/ccm/cms-service/stream/image/?image_id=9001";
-  this.dialogs["images"].getElementById(this.dialogs["images"].id["width"]).value = "304";
-  this.dialogs["images"].getElementById(this.dialogs["images"].id["height"]).value = "420";
-  this.dialogs["images"].getElementById(this.dialogs["images"].id["name"]).value = "Schild.jpg";
+  var dialog = this.dialogs["images"];
+  dialog.getElementById(dialog.id["src"]).value = "/theme/mandalay/ccm/cms-service/stream/image/?image_id=9001";
+  dialog.getElementById(dialog.id["width"]).value = "304";
+  dialog.getElementById(dialog.id["height"]).value = "420";
+  dialog.getElementById(dialog.id["name"]).value = "Schild.jpg";
+  dialog.getElementById(dialog.id["aspect"]).value = dialog.getElementById(dialog.id["width"]).value / dialog.getElementById(dialog.id["height"]).value;
 };
+
+OpenCCM.prototype.calcWidth = function()
+{
+    var dialog = this.dialogs["images"];
+    dialog.getElementById(dialog.id["width"]).value = 
+      Math.round(dialog.getElementById("height").value * dialog.getElementById("aspect").value);
+};
+
+OpenCCM.prototype.calcHeight = function()
+{
+    var dialog = this.dialogs["images"];
+    dialog.getElementById(dialog.id["height"]).value = 
+      Math.round(dialog.getElementById("width").value / dialog.getElementById("aspect").value);
+};
+

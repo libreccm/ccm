@@ -168,11 +168,7 @@ public class BaseImage extends ResourceHandlerImpl {
                     e.toString());
             return;
         }
-        if (imageId == null && oid == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                    "either " + IMAGE_ID + " or " + OID_PARAM + " is required.");
-            return;
-        } else if (imageId != null && oid != null) {
+        if ((imageId == null && oid == null) || (imageId != null && oid != null)) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "either " + IMAGE_ID + " or " + OID_PARAM + " is required.");
             return;
@@ -228,6 +224,18 @@ public class BaseImage extends ResourceHandlerImpl {
 
 //        response.setContentType(image.getMimeType().getMimeType());
 
+/* Quasimodo: on demand resizing of images
+        int width;
+        int height;
+        
+        width = Integer.parseInt(request.getParameter("width"));
+        height = Integer.parseInt(request.getParameter("height"));
+        
+        if(width || height) {
+            
+        }
+*/
+        
         setHeaders(response, image);
         send(response, image);
     }
