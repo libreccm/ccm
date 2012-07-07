@@ -5,7 +5,6 @@
     </version>
     <!-- Applicable for UHB only!  -->
     <version from="6.6.2" to="6.6.3">
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicPersonalProfileBundleCreate"/>
-        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicPersonalProfileOwnerAssocUpgrade"/>
+        <script class="com.arsdigita.cms.contenttypes.upgrades.PublicPersonalProfileUpgrade662to563"/>        
     </version>
 </upgrade>

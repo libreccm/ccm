@@ -9,14 +9,6 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle;
  */
 public class PublicPersonalProfileBundleCreate extends AbstractBundleUpgrade {
 
-    public PublicPersonalProfileBundleCreate() {
-        super("PublicPersonalProfileBundleCreate", "1.0.0", "");
-    }
-
-    public static void main(final String[] args) {
-        new PublicPersonalProfileBundleCreate().run(args);
-    }
-
     @Override
     protected String getBundleTableName() {
         return "ct_public_personal_profile_bundles";

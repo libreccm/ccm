@@ -9,15 +9,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class PublicPersonalProfileOwnerAssocUpgrade extends AbstractAssocUpgrade {
-    
-    public PublicPersonalProfileOwnerAssocUpgrade() {
-        super("PublicPersonalProfileOwnerAssocUpgrade", "1.0.0", "");
-    }
-    
-    public static void main(final String[] args) {
-        new PublicPersonalProfileOwnerAssocUpgrade().run(args);
-    }
-
+       
     @Override
     protected String getTableName() {
         return "ct_public_personal_profile_owner_map";
