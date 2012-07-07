@@ -1,6 +1,8 @@
 package com.arsdigita.cms.contenttypes.upgrades;
 
+import com.arsdigita.cms.contenttypes.XMLContentTypeHandler;
 import com.arsdigita.util.cmd.Program;
+import com.arsdigita.xml.XML;
 import org.apache.commons.cli.CommandLine;
 
 /**
@@ -43,6 +45,25 @@ public class SciPublicationsUpgrade662to663 extends Program {
         new SeriesEditorsAssocUpgrade().doUpgrade();
         new SeriesPublicationsAssocUpgrade().doUpgrade();
         new UnPublishedOrganizationAssocUpgrade().doUpgrade();
+        
+        XMLContentTypeHandler handler = new XMLContentTypeHandler();
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Publication.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/PublicationWithPublisher.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ArticleInCollectedVolume.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ArticleInJournal.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/CollectedVolume.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ExpertiseBundle", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/InProceedings.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/InternetArticle.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Journal.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Proceedings.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Publisher.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Series.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/UnPublished.xml", handler);
+    }
+    
+    public static void main(final String[] args) {
+        new SciPublicationsUpgrade662to663().run(args);
     }
 
 }

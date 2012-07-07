@@ -1,6 +1,8 @@
 package com.arsdigita.cms.contenttypes.upgrades;
 
+import com.arsdigita.cms.contenttypes.XMLContentTypeHandler;
 import com.arsdigita.util.cmd.Program;
+import com.arsdigita.xml.XML;
 import org.apache.commons.cli.CommandLine;
 
 /**
@@ -16,6 +18,9 @@ public class SciProjectUpgrade665to666 extends Program {
     @Override
     protected void doRun(final CommandLine cmdLine) {
         new SciProjectBundleUpgrade().doUpgrade();
+        
+        XMLContentTypeHandler handler = new XMLContentTypeHandler();
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SciProject.xml", handler);
     }
     
     public static void main(final String[] args) {

@@ -1,6 +1,8 @@
 package com.arsdigita.cms.contenttypes.upgrades;
 
+import com.arsdigita.cms.contenttypes.XMLContentTypeHandler;
 import com.arsdigita.util.cmd.Program;
+import com.arsdigita.xml.XML;
 import org.apache.commons.cli.CommandLine;
 
 /**
@@ -16,7 +18,10 @@ public class SciDepartmentUpgrade664to665 extends Program {
 
     @Override
     protected void doRun(CommandLine cmdLine) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        new SciDepartmentBundleUpgrade().doUpgrade();
+        
+        XMLContentTypeHandler handler = new XMLContentTypeHandler();
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SciDepartment.xml", handler);
     }
 
     public static void main(final String[] args) {
