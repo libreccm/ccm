@@ -21,6 +21,7 @@ package com.arsdigita.cms.ui.authoring;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
@@ -72,20 +73,21 @@ public abstract class NewItemForm extends Form {
      *
      */
     public NewItemForm(String name) {
-        super(name, new BoxPanel(BoxPanel.HORIZONTAL));
+        //super(name, new BoxPanel(BoxPanel.HORIZONTAL));
+        super(name, new BoxPanel(BoxPanel.VERTICAL));
         setIdAttr("new_item_form");
 
-        BoxPanel panel = (BoxPanel) getPanel();
+        BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);//(BoxPanel) getPanel();
         panel.setWidth("2%");
         panel.setBorder(0);
 
         m_emptyLabel = new Label(globalize("cms.ui.authoring.no_types_registered"), false);
         m_emptyLabel.setIdAttr("empty_label");
-        add(m_emptyLabel);
+        panel.add(m_emptyLabel);
 
         m_createLabel = new Label(globalize("cms.ui.authoring.create_new"), false);
         m_createLabel.setIdAttr("create_label");
-        add(m_createLabel);
+        panel.add(m_createLabel);
 
         m_typeWidget = new SingleSelect(new BigDecimalParameter(TYPE_ID));
         try {
@@ -162,11 +164,12 @@ public abstract class NewItemForm extends Form {
             throw new UncheckedWrapperException("Too  many listeners: " + e.getMessage(), e);
         }
 
-        add(m_typeWidget);
+        panel.add(m_typeWidget);
 
         m_submit = new Submit("new", globalize("cms.ui.authoring.go"));
-        add(m_submit);
-
+        panel.add(m_submit);
+        
+        add(panel);
     }
 
     public abstract ContentSection getContentSection(PageState state);

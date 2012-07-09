@@ -61,12 +61,11 @@ public class ItemSearchPage extends CMSPage {
     private ItemSearchFlatBrowsePane m_flatBrowse;
     private ItemSearchBrowsePane m_browse;
     private ItemSearchPopup m_search;
-    //private ItemSearchCreateItemPane m_create;
+    private ItemSearchCreateItemPane m_create;
     private BigDecimalParameter m_sectionId;
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
-    //private final boolean showFlatBrowsePane;
 
     /**
      * Construct a new ItemSearchPage
@@ -80,18 +79,13 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
         addGlobalStateParam(new StringParameter("searchWidget"));
 
-        //showFlatBrowsePane = s_conf.getItemSearchFlatBrowsePaneEnable();
-
-
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
+        m_flatBrowse = getFlatBrowsePane();
         m_browse = getBrowsePane();
-//        if (showFlatBrowsePane) {
-//            m_flatBrowse = getFlatBrowsePane();
-//        }
         m_search = getSearchPane();
-//        m_create = getCreatePane();
+        m_create = getCreatePane();
 
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
@@ -102,17 +96,21 @@ public class ItemSearchPage extends CMSPage {
                 final PageState state = event.getPageState();
 
                 final String query = (String) state.getValue(new StringParameter(ItemSearchPopup.QUERY));
-                
+
                 if ((query == null) || query.isEmpty()) {
                     m_tabbedPane.setSelectedIndex(state, 1);
                 } else {
                     m_tabbedPane.setSelectedIndex(state, 0);
                 }
                 
-                //if (showFlatBrowsePane) {
-                //    m_tabbedPane.setTabVisible(state, 0, false);
-              //     m_tabbedPane.setSelectedIndex(state, 1);
-                //}
+                BigDecimal typeParam = (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+                if (typeParam == null) {
+                    m_tabbedPane.setTabVisible(state, m_create, false);
+                    m_create.setVisible(state, false);
+                } else {
+                    m_tabbedPane.setTabVisible(state, m_create, true);
+                    m_create.setVisible(state, true);
+                }
             }
 
         });
@@ -152,13 +150,14 @@ public class ItemSearchPage extends CMSPage {
         return m_search;
     }
 
-//    protected ItemSearchCreateItemPane getCreatePane() {
-//        if(m_create == null) {
-//            m_create = new ItemSearchCreateItemPane();
-//        }
-//
-//        return m_create;
-//    }
+    protected ItemSearchCreateItemPane getCreatePane() {
+        if (m_create == null) {
+            m_create = new ItemSearchCreateItemPane(this);
+        }
+
+        return m_create;
+    }
+
     /**
      * Created the TabbedPane to use for this page. Sets the class attribute for this tabbed pane. The default
      * implementation uses a
@@ -172,12 +171,11 @@ public class ItemSearchPage extends CMSPage {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);
 
-        //if (showFlatBrowsePane) {
-            addToPane(pane, "flatBrowse", getFlatBrowsePane());
-        //}
+
+        addToPane(pane, "flatBrowse", getFlatBrowsePane());
         addToPane(pane, "browse", getBrowsePane());
         addToPane(pane, "search", getSearchPane());
-//        addToPane(pane, "create", getCreatePane());
+        addToPane(pane, "create", getCreatePane());
 
         if ("browse".equals(s_conf.getItemSearchDefaultTab())) {
             pane.setDefaultPane(m_browse);
@@ -185,14 +183,10 @@ public class ItemSearchPage extends CMSPage {
         if ("search".equals(s_conf.getItemSearchDefaultTab())) {
             pane.setDefaultPane(m_search);
         }
-        //if ("flatBrowse".equals(s_conf.getItemSearchDefaultTab()) && showFlatBrowsePane) {        
-            pane.setDefaultPane(m_flatBrowse);
-        //} else {
-            pane.setDefaultPane(m_browse);
-        //}
 
-        //pane.addActionListener(this);
-//        pane.setTabVisible(null, pane, true);
+        //pane.setDefaultPane(m_flatBrowse);      
+        pane.setDefaultPane(m_browse);
+
         return pane;
     }
 
@@ -258,5 +252,12 @@ public class ItemSearchPage extends CMSPage {
 
         }.run();
     }
+    
+    protected void setTabActive(final PageState state, final Component component, final boolean value) {
+        m_tabbedPane.setTabVisible(state, component, value);
+    }
 
+     protected void setTabActive(final PageState state, final int index, final boolean value) {
+        m_tabbedPane.setTabVisible(state, index, value);
+    }
 }

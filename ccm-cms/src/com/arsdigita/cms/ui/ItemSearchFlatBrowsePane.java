@@ -65,6 +65,8 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
     public ItemSearchFlatBrowsePane(final String name) {
         super(name);
 
+        setIdAttr("itemSearchFlatBrowse");
+        
         final BoxPanel mainPanel = new BoxPanel(BoxPanel.VERTICAL);
 
         queryParam = new StringParameter(QUERY_PARAM);

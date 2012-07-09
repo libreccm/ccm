@@ -269,7 +269,7 @@ public class FlatItemList extends SegmentedPanel
 
         m_selector = new CreationSelector(m_typeSel, m_folderSel);
         m_newItemSeg.add(m_selector);
-        m_newItemSeg.add(new Label("<br/>", false));
+        //m_newItemSeg.add(new Label("<br/>", false));
 
         // The 'new folder' segment
         m_newFolderSeg.addHeader(new Label(globalize("cms.ui.new_folder")));

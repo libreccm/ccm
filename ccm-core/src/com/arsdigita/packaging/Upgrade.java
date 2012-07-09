@@ -55,33 +55,18 @@ class Upgrade extends Command {
 
     private static final Logger logger = Logger.getLogger(Upgrade.class);
     private static final Options s_options = getOptions();
-
     private String m_from;
     private String m_to;
     private final List m_scripts;
 
     static {
         logger.debug("Static initalizer starting...");
-        s_options.addOption
-            (OptionBuilder
-             .isRequired()
-             .hasArg()
-             .withLongOpt("from-version")
-             .withDescription("Upgrade from version VERSION")
-             .create());
-        s_options.addOption
-            (OptionBuilder
-             .isRequired()
-             .hasArg()
-             .withLongOpt("to-version")
-             .withDescription("Upgrade to version VERSION")
-             .create());
-        s_options.addOption
-            (OptionBuilder
-             .hasArg()
-             .withLongOpt("parameters")
-             .withDescription("Parameters to pass to upgrade scripts")
-             .create());
+        s_options.addOption(OptionBuilder.isRequired().hasArg().withLongOpt("from-version").withDescription(
+                "Upgrade from version VERSION").create());
+        s_options.addOption(OptionBuilder.isRequired().hasArg().withLongOpt("to-version").withDescription(
+                "Upgrade to version VERSION").create());
+        s_options.addOption(OptionBuilder.hasArg().withLongOpt("parameters").withDescription(
+                "Parameters to pass to upgrade scripts").create());
         logger.debug("Static initalizer finished.");
     }
 
@@ -147,8 +132,7 @@ class Upgrade extends Command {
 
         final String spec = key + ".upgrade";
 
-        final InputStream in = Thread.currentThread().getContextClassLoader
-            ().getResourceAsStream(spec);
+        final InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(spec);
 
         if (in == null) {
             System.err.println("Cannot find " + spec);
@@ -158,18 +142,19 @@ class Upgrade extends Command {
         XML.parse(in, new Parser());
 
         if (m_scripts.isEmpty()) {
-            System.err.println("No appropriate upgrades found; make sure " +
-                               "that your 'to' and 'from' versions match " +
-                               "the intended upgrade exactly");
+            System.err.println("No appropriate upgrades found; make sure " + "that your 'to' and 'from' versions match "
+                               + "the intended upgrade exactly");
             return false;
         } else {
-            System.out.println("Number of scripts: " + m_scripts.size() );
+            System.out.println("Number of scripts: " + m_scripts.size());
         }
 
-        Iterator iter = m_scripts.iterator();
-        while (iter.hasNext()) {
+        //Iterator iter = m_scripts.iterator();        
+        //while (iter.hasNext()) {
+        for (int k = 0; k < m_scripts.size(); k++) {
 
-            final String[] parts = (String[]) iter.next();
+            System.out.printf("Running script %d/%d\n", (k + 1), m_scripts.size());
+            final String[] parts = (String[]) m_scripts.get(k); //(String[]) iter.next();
 
             final String classname = parts[0];
             final String sql = parts[1];
@@ -183,7 +168,7 @@ class Upgrade extends Command {
 
                 try {
                     method = clacc.getMethod("main",
-                                             new Class[] {String[].class});
+                                             new Class[]{String[].class});
                 } catch (NoSuchMethodException nsme) {
                     throw new UncheckedWrapperException(nsme);
                 } catch (SecurityException se) {
@@ -194,7 +179,7 @@ class Upgrade extends Command {
                 LinkedList ll = new LinkedList();
                 if (params != null) {
                     for (int i = 0; i < params.length; i++) {
-                        String[] split = StringUtils.split(params[i],',');
+                        String[] split = StringUtils.split(params[i], ',');
                         for (int j = 0; j < split.length; j++) {
                             ll.add(split[j]);
                         }
@@ -202,7 +187,7 @@ class Upgrade extends Command {
                 }
 
                 try {
-                    method.invoke(null, new Object[] {ll.toArray(new String[] {})});
+                    method.invoke(null, new Object[]{ll.toArray(new String[]{})});
                 } catch (IllegalAccessException iae) {
                     throw new UncheckedWrapperException(iae);
                 } catch (InvocationTargetException ite) {
@@ -212,11 +197,9 @@ class Upgrade extends Command {
             } else if (sql != null) {
                 final SchemaLoader loader = new SchemaLoader(sql);
 
-                System.out.println("Running SQL upgrade " + loader + ", " +
-                                   "loaded from the classpath");
+                System.out.println("Running SQL upgrade " + loader + ", " + "loaded from the classpath");
 
-                final Connection conn = Connections.acquire
-                    (RuntimeConfig.getConfig().getJDBCURL());
+                final Connection conn = Connections.acquire(RuntimeConfig.getConfig().getJDBCURL());
 
                 loader.run(conn);
 
@@ -235,9 +218,10 @@ class Upgrade extends Command {
     }
 
     /**
-     * 
+     *
      */
     private class Parser extends DefaultHandler {
+
         private String m_version;
 
         @Override
@@ -265,14 +249,12 @@ class Upgrade extends Command {
                     final String sql = attrs.getValue(uri, "sql");
 
                     if (classname == null && sql == null
-                            || classname != null && sql != null) {
-                        throw new IllegalArgumentException
-                            ("The script element must have a 'class' " +
-                             "argument or a 'sql' argument; it may not " +
-                             "have both");
+                        || classname != null && sql != null) {
+                        throw new IllegalArgumentException("The script element must have a 'class' "
+                                                           + "argument or a 'sql' argument; it may not " + "have both");
                     }
 
-                    m_scripts.add(new String[] {classname, sql});
+                    m_scripts.add(new String[]{classname, sql});
                 }
             }
         }
@@ -285,5 +267,6 @@ class Upgrade extends Command {
                 m_version = null;
             }
         }
+
     }
 }
