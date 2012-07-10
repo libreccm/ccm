@@ -45,22 +45,22 @@ import java.util.HashSet;
 
 /**
  * abstract form for assigning categories to acs_objects. The assigned
- * categories are those specified by the category widget, which is 
- * retrieved by the concrete subclass' implementation of getCategoryWidget. 
- * 
- * The category widget may be an implementation of CategoryWidget, which 
- * generates a javascript tree of categories. Implementations need only 
+ * categories are those specified by the category widget, which is
+ * retrieved by the concrete subclass' implementation of getCategoryWidget.
+ *
+ * The category widget may be an implementation of CategoryWidget, which
+ * generates a javascript tree of categories. Implementations need only
  * specify an XML prefix and namespace.
- * 
+ *
  * The object that is to be assigned to the categories is specified
  * by the concrete subclass' implentation of getObject
- * 
+ *
  * @author chris.gilbert@westsussex.gov.uk
  *
- * 
+ *
  */
 // this class has been abstracted out from the original cms specific category form
-// in ccm-cms 
+// in ccm-cms
 public abstract class ACSObjectCategoryForm extends Form {
 
     private Widget m_category;
@@ -111,10 +111,10 @@ public abstract class ACSObjectCategoryForm extends Form {
 
                 ACSObject object = getObject(state);
 
-                HashSet curSelectesdCat = new HashSet();
+                HashSet curSelectedCat = new HashSet();
                 CategoryCollection cats = new CategorizedObject(object).getParents();
                 while (cats.next()) {
-                    curSelectesdCat.add(cats.getCategory().getID());
+                    curSelectedCat.add(cats.getCategory().getID());
                 }
 
                 BigDecimal[] ids = (BigDecimal[]) m_category.getValue(state);
@@ -123,7 +123,7 @@ public abstract class ACSObjectCategoryForm extends Form {
                             new OID(Category.BASE_DATA_OBJECT_TYPE,
                             ids[i]));
 
-                    if(!curSelectesdCat.contains(ids[i])) {
+                    if(!curSelectedCat.contains(ids[i])) {
                         cat.addChild(object);
                     } else {
                         cat.removeChild(object);
