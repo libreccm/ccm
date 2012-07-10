@@ -42,14 +42,12 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.HierarchyDenormalization;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
-
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -86,7 +84,7 @@ import org.apache.log4j.Logger;
  * @version $Revision: 1.1 $ $DateTime: $
  *
  * <p>Localization is done with some new classes, so the category tree is
- * now multilanguage. This is completly transparent to the rest of the 
+ * now multilanguage. This is completly transparent to the rest of the
  * system (hopefully) and uses the negotiated language from the browser
  * environment. The following attributes are localizable:
  *
@@ -178,6 +176,7 @@ public class Category extends ACSObject {
     private CategoryLocalizationCollection m_categoryLocalizationCollection;
     // Quasimodo: End
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -378,7 +377,7 @@ public class Category extends ACSObject {
     public String getName(String locale) {
 
         // Test for localized version
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -468,7 +467,7 @@ public class Category extends ACSObject {
      * Returns the name of the <b>preferred</b> category along with its default ancestors.
      * Equivalent to #getQualifiedName(String,boolean) if this Category is not a synonym.
      * Synonym name is appended in parentheses.
-     *    
+     *
      * @param delimiter string to separate category names
      * @param includeRoot should root category be shown
      * @return category path
@@ -529,7 +528,7 @@ public class Category extends ACSObject {
      */
     public void setName(String name, String locale) {
 
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
             m_categoryLocalizationCollection.getCategoryLocalization().setName(
                     name);
@@ -558,7 +557,7 @@ public class Category extends ACSObject {
 
         // Test for localized version
         // HACK
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -603,7 +602,7 @@ public class Category extends ACSObject {
      */
     public void setDescription(String description, String locale) {
 
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
             m_categoryLocalizationCollection.getCategoryLocalization().
                     setDescription(description);
@@ -631,7 +630,7 @@ public class Category extends ACSObject {
     public String getURL(String locale) {
 
         // Test for localized version
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -664,7 +663,7 @@ public class Category extends ACSObject {
      */
     public void setURL(String url, String locale) {
 
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
             m_categoryLocalizationCollection.getCategoryLocalization().setURL(
                     url);
@@ -693,19 +692,19 @@ public class Category extends ACSObject {
      * 2. If not, check if localized version exists
      *  2.1 If so, return isEnabled from localized version
      *  2.2 If not, return Category.getConfig().getShowInternalName()
-     * 
+     *
      */
     public boolean isEnabled(String locale) {
 
-        // If locale == "" return global status
+        // If locale is empty return global status
         // or if globally disabled, return category as disabled
-        if (locale == "" || ((Boolean) get(IS_ENABLED)).booleanValue() == false) {
+        if (locale.isEmpty() || ((Boolean) get(IS_ENABLED)).booleanValue() == false) {
             return ((Boolean) get(IS_ENABLED)).booleanValue();
         }
 
         // Test for localized version
         // HACK
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -742,7 +741,7 @@ public class Category extends ACSObject {
      */
     public void setEnabled(boolean isEnabled, String locale) {
 
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
             m_categoryLocalizationCollection.getCategoryLocalization().
                     setEnabled(isEnabled);
@@ -757,7 +756,7 @@ public class Category extends ACSObject {
      * <code>false</false> otherwise.
      */
     public void setEnabled(boolean isEnabled) {
-        set(IS_ENABLED, new Boolean(isEnabled));
+        set(IS_ENABLED, isEnabled);
     }
 
     /**
@@ -777,7 +776,7 @@ public class Category extends ACSObject {
      * @see #isAbstract()
      */
     public void setAbstract(boolean isAbstract) {
-        set(IS_ABSTRACT, new Boolean(isAbstract));
+        set(IS_ABSTRACT, isAbstract);
     }
 
     /**
@@ -799,7 +798,7 @@ public class Category extends ACSObject {
      * <code>false</code> otherwise
      */
     public void setIgnoreParentIndexItem(boolean ignoreParentIndexItem) {
-        set(IGNORE_PARENT_INDEX_ITEM, new Boolean(ignoreParentIndexItem));
+        set(IGNORE_PARENT_INDEX_ITEM, ignoreParentIndexItem);
     }
 
     /**
@@ -851,6 +850,7 @@ public class Category extends ACSObject {
     /**
      * @see com.arsdigita.domain.DomainObject#beforeSave()
      */
+    @Override
     protected void beforeSave() {
         super.beforeSave();
         if (get(DEFAULT_ANCESTORS) == null) {
@@ -861,6 +861,7 @@ public class Category extends ACSObject {
     /**
      * Placed a hook for a CategoryListener trigger.
      */
+    @Override
     protected void beforeDelete() {
         Categorization.triggerDeletionEvent(this);
         super.beforeDelete();
@@ -890,6 +891,7 @@ public class Category extends ACSObject {
      * must call {@link #deleteCategoryAndOrphan()}, {@link
      * #deleteCategorySubtree()}, or {@link #deleteCategoryAndRemap()}.
      */
+    @Override
     public void delete() {
         // see if the only "children" are non-default
         DataAssociationCursor children = getRelatedCategories(CHILD);
@@ -1081,9 +1083,9 @@ public class Category extends ACSObject {
     }
 
     /**
-     * Add a preferred category, which marks the current category as a synonym. 
+     * Add a preferred category, which marks the current category as a synonym.
      * When a synonym category is selected, preferred category should be used instead
-     * i.e. assigned to the item.  
+     * i.e. assigned to the item.
      */
     public void addPreferredCategory(Category preferred) {
         addMapping(preferred, PREFERRED);
@@ -1206,7 +1208,7 @@ public class Category extends ACSObject {
                 category.setDefaultAncestors(null);
             }
         } catch (CategoryNotFoundException e) {
-            ;// leave the context alone and thus we want to do nothing
+            // leave the context alone and thus we want to do nothing
         }
         remove(RELATED, category);
         Categorization.triggerRemoveChildEvent(this, category);
@@ -1560,7 +1562,7 @@ public class Category extends ACSObject {
         int count = 0;
         while (cursor.next()) {
             DataObject link = cursor.getLink();
-            link.set(SORT_KEY, new Integer(count));
+            link.set(SORT_KEY, new BigDecimal(count));
             count++;
         }
     }
@@ -1601,8 +1603,8 @@ public class Category extends ACSObject {
 
             DataObject link1 = null;
             DataObject link2 = null;
-            BigDecimal key1 = null;
-            BigDecimal key2 = null;
+            BigDecimal key1;
+            BigDecimal key2;
 
             DataAssociationCursor cursor =
                                   ((DataAssociation) get(CHILD_OBJECTS)).cursor();
@@ -1729,8 +1731,8 @@ public class Category extends ACSObject {
             return pathExtension;
         }
 
-        StringBuffer sb =
-                     new StringBuffer(path.length() + pathExtension.length() + 1);
+        StringBuilder sb =
+                     new StringBuilder(path.length() + pathExtension.length() + 1);
         sb.append(path).append(".").append(pathExtension);
         return sb.toString();
     }
@@ -1855,7 +1857,7 @@ public class Category extends ACSObject {
         }
 
         StringTokenizer st = new StringTokenizer(path, delim);
-        StringBuffer subpath = new StringBuffer();
+        StringBuilder subpath = new StringBuilder();
 
         while (st.hasMoreTokens()) {
             subpath.append(st.nextToken()).append(delim);
@@ -1890,7 +1892,7 @@ public class Category extends ACSObject {
     }
 
     private static String appendID(String path) {
-        StringBuffer sb = new StringBuffer(path.length() + 3);
+        StringBuilder sb = new StringBuilder(path.length() + 3);
         sb.append(path).append(".").append(ID);
         return sb.toString();
     }
@@ -1969,8 +1971,9 @@ public class Category extends ACSObject {
         }
     }
 
+    @Override
     public String toString() {
-        StringBuffer result = new StringBuffer(128);
+        StringBuilder result = new StringBuilder(128);
         result.append("name=").append(getName()).append("; ");
         result.append("oid=").append(getOID());
         return result.toString();
@@ -2213,7 +2216,7 @@ public class Category extends ACSObject {
                                String url) {
 
         // If locale don't exist
-        if (locale != "" && m_categoryLocalizationCollection != null && !m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && !m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Get DataAssociation
@@ -2241,7 +2244,7 @@ public class Category extends ACSObject {
     public boolean delLanguage(String locale) {
 
         // If locale exist
-        if (locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Get DataAssociation
