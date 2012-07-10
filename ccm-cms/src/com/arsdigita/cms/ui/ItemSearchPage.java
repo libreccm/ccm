@@ -97,6 +97,10 @@ public class ItemSearchPage extends CMSPage {
 
                 final String query = (String) state.getValue(new StringParameter(ItemSearchPopup.QUERY));
 
+                if (m_tabbedPane.getCurrentPane(state) == m_create) {
+                    return;
+                }
+                
                 if ((query == null) || query.isEmpty()) {
                     m_tabbedPane.setSelectedIndex(state, 1);
                 } else {

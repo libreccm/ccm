@@ -39,10 +39,11 @@ import java.math.BigDecimal;
 class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListener, FormSubmissionListener {
 
     private static final String CONTENT_TYPE_ID = "ct";
+    private static final String FOLDER_ID = "folder_id";
     private NewItemForm m_newItem;
     private SingleSelectionModel m_typeSel;
     private FlatFolderPicker m_folderPicker;
-    private final BaseTree m_tree;
+    //private final BaseTree m_tree;
     private final SingleSelectionModel m_model;
     private final FolderSelectionModel m_folderSel; // To support legacy UI code
     private final FolderRequestLocal m_folder;
@@ -54,18 +55,19 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
 
     public ItemSearchCreateItemPane(final ItemSearchPage parent) {
         super();
-               
+
         this.parent = parent;
 
         m_segPanel = new SegmentedPanel("itemSearchCreate");
         m_creationSeg = new Segment();
         m_newItemSeg = new Segment();
-        
-        m_newItem = new SectionNewItemForm("newItem");
-        m_newItem.addProcessListener(this);
 
-        m_tree = new BaseTree(new FolderTreeModelBuilder());
-        m_model = m_tree.getSelectionModel();
+        m_newItem = new SectionNewItemForm("newItem");
+        //m_newItem.addProcessListener(this);
+
+        //m_tree = new BaseTree(new FolderTreeModelBuilder());
+        //m_model = m_tree.getSelectionModel();
+        m_model = new ParameterSingleSelectionModel(new BigDecimalParameter(FOLDER_ID));
         m_folderSel = new FolderSelectionModel(m_model);
         m_folder = new FolderRequestLocal(m_folderSel);
 
@@ -94,7 +96,7 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
 
         m_segPanel.add(m_newItemSeg);
         m_segPanel.add(m_creationSeg);
-        
+
         add(m_segPanel);
 
     }
@@ -105,30 +107,38 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
 
         page.setVisibleDefault(m_newItemSeg, true);
         page.setVisibleDefault(m_creationSeg, false);
-                        
+
         page.addComponentStateParam(this, m_typeSel.getStateParameter());
-        page.addComponentStateParam(this, m_folderSel.getStateParameter());                   
+        page.addComponentStateParam(this, m_folderSel.getStateParameter());
     }
 
     public void submitted(final FormSectionEvent fse) {
-        
+        final PageState state = fse.getPageState();
+
+        final BigDecimal typeID = m_newItem.getTypeID(state);
+        m_typeSel.setSelectedKey(state, typeID);
+        final BigDecimal folderId = (BigDecimal) m_folderPicker.getValue(state);
+        m_folderSel.setSelectedKey(state, folderId);
+
+        m_newItemSeg.setVisible(state, false);
+        m_creationSeg.setVisible(state, true);
     }
 
-    public void process(FormSectionEvent fse) throws FormProcessException {      
+    public void process(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final Object source = fse.getSource();
         //if (source == m_newItem) {
-            final BigDecimal typeID = m_newItem.getTypeID(state);
-            m_typeSel.setSelectedKey(state, typeID);
-            final BigDecimal folderId = (BigDecimal) m_folderPicker.getValue(state);
-            m_folderSel.setSelectedKey(state, folderId);            
+        final BigDecimal typeID = m_newItem.getTypeID(state);
+        m_typeSel.setSelectedKey(state, typeID);
+        final BigDecimal folderId = (BigDecimal) m_folderPicker.getValue(state);
+        m_folderSel.setSelectedKey(state, folderId);
 
-            //m_newItem.setVisible(state, false);
-            //m_creator.setVisible(state, true);
-            //m_newItemSeg.setVisible(state, false);
-            m_creationSeg.setVisible(state, true);
-            //parent.setTabActive(state, this, true);           
-            //newItemMode(state);
+        //m_newItem.setVisible(state, false);
+        //m_creator.setVisible(state, true);
+        m_newItemSeg.setVisible(state, false);
+        m_creationSeg.setVisible(state, true);
+        //parent.setTabActive(state, this, true);           
+        //newItemMode(state);
         //}
     }
 
@@ -141,6 +151,5 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
         public ContentSection getContentSection(PageState s) {
             return CMS.getContext().getContentSection();
         }
-
     }
 }
