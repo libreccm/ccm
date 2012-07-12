@@ -21,8 +21,6 @@ package com.arsdigita.cms.contentassets.ui;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
 
 import com.arsdigita.bebop.AbstractSingleSelectionModel;
-import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
@@ -31,7 +29,7 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.ui.ImageChooser;
+import com.arsdigita.cms.ui.ImageComponent;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
@@ -83,8 +81,8 @@ public class ImageStep extends SecurityPropertyEditor {
 
         Iterator imageComponents = m_add.getImageComponents();
         while( imageComponents.hasNext() ) {
-            ImageStepEdit.ImageComponent component =
-                (ImageStepEdit.ImageComponent) imageComponents.next();
+            ImageComponent component =
+                (ImageComponent) imageComponents.next();
 
             addListeners( component.getForm(),
                           component.getSaveCancelSection().getCancelButton() );
