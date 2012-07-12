@@ -16,6 +16,14 @@ import com.arsdigita.cms.ReusableImageAsset;
  */
 public interface ImageComponent {
 
+    public static final int DISPLAY_ONLY = 0;
+    public static final int SELECT_IMAGE = 1;
+    public static final int ATTACH_IMAGE = 2;
+    public static final int ADMIN_IMAGES = 3;
+
+    public static final String UPLOAD = "upload";
+    public static final String LIBRARY = "library";
+
     ReusableImageAsset getImage(FormSectionEvent event) throws FormProcessException;
 
     String getCaption(FormSectionEvent event);

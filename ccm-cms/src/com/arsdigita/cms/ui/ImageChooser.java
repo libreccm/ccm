@@ -95,14 +95,18 @@ public class ImageChooser extends BoxPanel {
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      */
     public ImageChooser(String context) {
-        this(context, ImageBrowser.SELECT_IMAGE);
+        this(context, ImageComponent.ATTACH_IMAGE);
+    }
+
+    public ImageChooser(int mode) {
+        this(ContentItem.DRAFT, mode);
     }
 
     /**
      * Construct a new ImageChooser
      */
     public ImageChooser() {
-        this(ContentItem.DRAFT, ImageBrowser.SELECT_IMAGE);
+        this(ContentItem.DRAFT, ImageComponent.ATTACH_IMAGE);
     }
 
     /**

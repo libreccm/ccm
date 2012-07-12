@@ -25,62 +25,76 @@ import java.io.IOException;
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageUploadComponent extends Form implements ImageComponent {
+
     private final FileUploadSection m_imageFile;
     private final TextField m_caption;
     private final TextField m_title;
     private final TextArea m_description;
     private final TextField m_useContext;
     private final SaveCancelSection m_saveCancel;
+    private int m_mode;
 
     public ImageUploadComponent() {
+            this(ImageComponent.ATTACH_IMAGE);
+    }
+    
+    public ImageUploadComponent(int mode) {
         super("imageUploadComponent", new ColumnPanel(2));
+        m_mode = mode;
         setEncType("multipart/form-data");
         // Ignoring deprecated constructor.
         m_imageFile = new FileUploadSection("Image Type", "image", ImageAsset.MIME_JPEG);
         m_imageFile.getFileUploadWidget().addValidationListener(new NotNullValidationListener());
         add(m_imageFile, ColumnPanel.FULL_WIDTH);
-        add(new Label("Caption"));
+
+        // Initialize all widgets
         m_caption = new TextField("caption");
-        m_caption.addValidationListener(new NotNullValidationListener());
-        m_caption.addValidationListener(new StringLengthValidationListener(40));
-        m_caption.setSize(40);
-        add(m_caption);
         m_title = new TextField("title");
         m_description = new TextArea("description");
-        // We only show the title and description fields in the case where
-        // getIsImageStepDescriptionAndTitleShown is false.
-        /*
-         * if
-         * (ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown())
-         * { add(new Label("Title")); m_title.addValidationListener(new
-         * NotNullValidationListener()); m_title.setSize(40);
-         * m_title.addValidationListener(new
-         * StringLengthValidationListener(40)); add(m_title);
-         *
-         * add(new Label("Description"));
-         * m_description.addValidationListener(new
-         * NotNullValidationListener());
-         * m_description.addValidationListener(new
-         * StringLengthValidationListener(600)); m_description.setCols(30);
-         * m_description.setRows(5); add(m_description);
-         *
-         * }
-         */
-        add(new Label("Use Context"));
         m_useContext = new TextField("useContext");
-        m_useContext.setSize(40);
-        add(m_useContext);
+
+        // add widget only if we are in attach mode
+        if (m_mode == ImageComponent.ATTACH_IMAGE) {
+            add(new Label("Caption"));
+            m_caption.addValidationListener(new NotNullValidationListener());
+            m_caption.addValidationListener(new StringLengthValidationListener(40));
+            m_caption.setSize(40);
+            add(m_caption);
+
+            // We only show the title and description fields in the case where
+            // getIsImageStepDescriptionAndTitleShown is false.
+
+//        if (ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown()) {
+//            add(new Label("Title"));
+//            m_title.addValidationListener(new NotNullValidationListener());
+//            m_title.setSize(40);
+//            m_title.addValidationListener(new StringLengthValidationListener(40));
+//            add(m_title);
+//
+//            add(new Label("Description"));
+//            m_description.addValidationListener(new NotNullValidationListener());
+//            m_description.addValidationListener(new StringLengthValidationListener(600));
+//            m_description.setCols(30);
+//            m_description.setRows(5);
+//            add(m_description);
+//
+//        }
+
+            add(new Label("Use Context"));
+            m_useContext.setSize(40);
+            add(m_useContext);
+        }
         m_saveCancel = new SaveCancelSection();
         add(m_saveCancel);
+
         /*
-         * Removed by Quasimodo: Changed editing workflow, so that library
-         * comes first Also, library mode has now a link to upload images
-         * whixh will link to this form. Consequently, this link will create
-         * a loop, which isn't fatal but confusing ActionLink library = new
-         * ActionLink( "Select an existing image" );
-         * library.addActionListener( new ActionListener() { public void
-         * actionPerformed( ActionEvent ev ) { setImageComponent(
-         * ev.getPageState(), LIBRARY ); } } ); add( library,
+         * Removed by Quasimodo: Changed editing workflow, so that library comes
+         * first Also, library mode has now a link to upload images which will
+         * link to this form. Consequently, this link will create a loop, which
+         * isn't fatal but confusing. ActionLink library = new ActionLink(
+         * "Select an existing image" ); library.addActionListener( new
+         * ActionListener() { public void actionPerformed( ActionEvent ev ) {
+         * setImageComponent( ev.getPageState(), LIBRARY ); } } ); add( library,
          * ColumnPanel.FULL_WIDTH );
          */
     }
@@ -127,5 +141,4 @@ public class ImageUploadComponent extends Form implements ImageComponent {
     public Form getForm() {
         return this;
     }
-    
 }

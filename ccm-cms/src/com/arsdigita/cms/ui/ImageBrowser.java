@@ -34,6 +34,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.Service;
+import com.arsdigita.cms.ui.ImageComponent;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
@@ -65,9 +66,6 @@ import org.apache.log4j.Logger;
  */
 public class ImageBrowser extends Table {
 
-    public static final int DISPLAY_ONLY = 0;
-    public static final int SELECT_IMAGE = 1;
-    public static final int ADMIN_IMAGES = 2;
     private ImageBrowserModelBuilder m_builder;
     private static final String[] HEADERS = {"Thumbnail", "Name", "Size", "Type", "Action", ""};
     private static final int THUMB = 0;
@@ -76,8 +74,8 @@ public class ImageBrowser extends Table {
     private static final int TYPE = 3;
     private static final int LINK = 4;
     private static final int DELETE = 5;
-    private static int s_numColumns = -1;
-    private int m_mode = DISPLAY_ONLY;
+    private int m_numColumns = -1;
+    private int m_mode;
     private Dimension m_thumbSize;
     private static final Logger s_log = Logger.getLogger(ImageBrowser.class);
 
@@ -89,7 +87,7 @@ public class ImageBrowser extends Table {
      */
     public ImageBrowser(ImageBrowserModelBuilder b) {
 
-        this(b, ImageBrowser.SELECT_IMAGE);
+        this(b, ImageComponent.ATTACH_IMAGE);
     }
 
     public ImageBrowser(ImageBrowserModelBuilder b, int mode) {
@@ -114,9 +112,13 @@ public class ImageBrowser extends Table {
     }
 
     private void addColumn(TableCellRenderer renderer) {
-        getColumn(++s_numColumns).setCellRenderer(renderer);
+        getColumn(++m_numColumns).setCellRenderer(renderer);
     }
 
+    public int getNumColumns() {
+        return  m_numColumns;
+    }
+    
     /**
      * @return the size, in pixels, of the thumbnail images
      */
@@ -217,7 +219,7 @@ public class ImageBrowser extends Table {
                 boolean isSelected, Object key,
                 int row, int column) {
 
-            if (m_mode == ImageBrowser.SELECT_IMAGE) {
+            if (m_mode == ImageComponent.SELECT_IMAGE) {
                 return super.getComponent(table, state, value, isSelected, key, row, column);
             }
 
@@ -239,7 +241,7 @@ public class ImageBrowser extends Table {
                 int row, int column) {
 
             // Only show delete link in admin mode
-            if (m_mode == ADMIN_IMAGES) {
+            if (m_mode == ImageComponent.ADMIN_IMAGES) {
 
                 boolean canDelete = false;
                 // SecurityManager sm = Utilities.getSecurityManager(state);
@@ -300,7 +302,8 @@ public class ImageBrowser extends Table {
 
         @Override
         public int getColumnCount() {
-            return ImageBrowser.s_numColumns;
+            return ((ImageBrowser)m_model).getNumColumns();
+            //            return ImageBrowser.s_numColumns;
         }
 
         @Override

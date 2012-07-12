@@ -29,6 +29,7 @@ import java.math.BigDecimal;
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageLibraryComponent extends SimpleContainer implements ImageComponent {
+
     private final ImageChooser m_chooser;
     private final ItemSelectionModel m_imageModel;
     private final BigDecimalParameter m_imageID;
@@ -38,11 +39,17 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
     private final TextField m_title;
     private final TextField m_useContext;
     private final SaveCancelSection m_saveCancel;
+    private int m_mode;
 
     public ImageLibraryComponent() {
+        this(ImageComponent.SELECT_IMAGE);
+    }
+
+    public ImageLibraryComponent(int mode) {
+        m_mode = mode;
         m_imageID = new BigDecimalParameter("imageID");
         m_imageModel = new ItemSelectionModel(m_imageID);
-        m_chooser = new ImageChooser(ContentItem.DRAFT, ImageBrowser.ADMIN_IMAGES);
+        m_chooser = new ImageChooser(ContentItem.DRAFT, m_mode);
         m_chooser.addImageActionListener(new ImageBrowser.LinkActionListener() {
 
             public void deleteClicked(PageState ps, BigDecimal imageID) {
@@ -62,42 +69,46 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
             }
         });
         add(m_chooser);
-        m_form = new Form("imageStepEditLibrary", new ColumnPanel(2));
+
+        // Form for additional fields and submit
+        m_form = new Form("imageLibraryComponent", new ColumnPanel(2));
         add(m_form);
-        m_form.add(new Label("Caption"));
+
+        // Initialize all wisgets
         m_caption = new TextField("caption");
-        m_caption.addValidationListener(new NotNullValidationListener());
-        m_caption.setSize(40);
-        m_form.add(m_caption);
         m_description = new TextField("description");
-        m_description.addValidationListener(new NotNullValidationListener());
-        m_description.setSize(40);
         m_title = new TextField("title");
-        m_title.addValidationListener(new NotNullValidationListener());
-        m_title.setSize(40);
-        // Only show the title and description fields where these have
-        // been explicitly requested.
-        /*
-         * if
-         * (ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown())
-         * { m_form.add(new Label("Description"));
-         * m_form.add(m_description); m_form.add(new Label("Title"));
-         * m_form.add(m_title); }
-         */
-        m_form.add(new Label("Use Context"));
         m_useContext = new TextField("useContext");
-        m_useContext.setSize(40);
-        m_form.add(m_useContext);
+
+        // Show additional fields only in default mode a.k.a. ATTACH_IMAGE like
+        // in image-step
+        if (m_mode == ImageComponent.ATTACH_IMAGE) {
+            m_form.add(new Label("Caption"));
+            m_caption.addValidationListener(new NotNullValidationListener());
+            m_caption.setSize(40);
+            m_form.add(m_caption);
+            m_description.addValidationListener(new NotNullValidationListener());
+            m_description.setSize(40);
+            m_title.addValidationListener(new NotNullValidationListener());
+            m_title.setSize(40);
+            // Only show the title and description fields where these have
+            // been explicitly requested.
+        /*
+             * if
+             * (ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown())
+             * { m_form.add(new Label("Description"));
+             * m_form.add(m_description); m_form.add(new Label("Title"));
+             * m_form.add(m_title); }
+             */
+            m_form.add(new Label("Use Context"));
+            m_useContext.setSize(40);
+            m_form.add(m_useContext);
+        }
+
+        // save and cancel buttons
         m_saveCancel = new SaveCancelSection();
         m_form.add(m_saveCancel);
-        ActionLink upload = new ActionLink("Upload a new image");
-        upload.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent ev) {
-                //                    setImageComponent(ev.getPageState(), UPLOAD);
-            }
-        });
-        add(upload, ColumnPanel.FULL_WIDTH);
     }
 
     public ReusableImageAsset getImage(FormSectionEvent event) {
@@ -138,5 +149,13 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancel;
     }
-    
+
+    public void addUploadLink(ActionListener actionListener) {
+        // Add action link to image upload component
+        if (m_mode != ImageComponent.DISPLAY_ONLY) {
+            ActionLink upload = new ActionLink("Upload new image");
+            upload.addActionListener(actionListener);
+            add(upload, ColumnPanel.FULL_WIDTH);
+        }
+    }
 }
