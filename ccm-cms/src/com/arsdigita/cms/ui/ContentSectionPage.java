@@ -133,6 +133,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     private FolderAdminPane m_folderPane;
     private BrowsePane m_browsePane;
     private LayoutPanel m_searchPane;
+    private ImagesPane m_imagesPane;
     private RoleAdminPane m_rolePane;
     private WorkflowAdminPane m_workflowPane;
     private LifecycleAdminPane m_lifecyclePane;
@@ -165,6 +166,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         m_folderPane = getFolderAdminPane();
         m_browsePane = getBrowsePane();
         m_searchPane = getSearchPane();
+        m_imagesPane = getImagesPane();
         m_rolePane = getRoleAdminPane();
         m_workflowPane = getWorkflowAdminPane();
         m_lifecyclePane = getLifecycleAdminPane();
@@ -247,6 +249,13 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         return m_searchPane;
     }
 
+    protected ImagesPane getImagesPane() {
+        if(m_imagesPane == null) {
+            m_imagesPane = new ImagesPane();
+        }
+        return m_imagesPane;
+    } 
+    
     protected RoleAdminPane getRoleAdminPane() {
         if (m_rolePane == null) {
             m_rolePane = new RoleAdminPane();
@@ -366,6 +375,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         //tab(pane, "cms.ui.folders", getFolderAdminPane());
         tab(pane, "cms.ui.browse", getBrowsePane());
         tab(pane, "cms.ui.search", getSearchPane());
+        tab(pane, "cms.ui.images", getImagesPane());
         tab(pane, "cms.ui.roles", getRoleAdminPane());
         tab(pane, "cms.ui.workflows", getWorkflowAdminPane());
         tab(pane, "cms.ui.lifecycles", getLifecycleAdminPane());
@@ -404,6 +414,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
 
         if (pane == m_searchPane) {
             m_searchPane.reset(state);
+        } else if (pane == m_imagesPane) {
+            m_imagesPane.reset(state);
         } else if (pane == m_folderPane) {
             m_folderPane.reset(state);
         } else if (pane == m_browsePane) {

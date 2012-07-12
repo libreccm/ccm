@@ -46,8 +46,8 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * Displays a list of images in a Table. The table will look
- * something like this:
+ * Displays a list of images in a Table. The table will look something like
+ * this:
  *
  * <blockquote><pre><code>
  * +-----------+-------+-------+------+----------+
@@ -65,6 +65,9 @@ import org.apache.log4j.Logger;
  */
 public class ImageBrowser extends Table {
 
+    public static final int DISPLAY_ONLY = 0;
+    public static final int SELECT_IMAGE = 1;
+    public static final int ADMIN_IMAGES = 2;
     private ImageBrowserModelBuilder m_builder;
     private static final String[] HEADERS = {"Thumbnail", "Name", "Size", "Type", "Action", ""};
     private static final int THUMB = 0;
@@ -73,7 +76,8 @@ public class ImageBrowser extends Table {
     private static final int TYPE = 3;
     private static final int LINK = 4;
     private static final int DELETE = 5;
-    private static final int NUM_COLUMNS = 6;
+    private static int s_numColumns = -1;
+    private int m_mode = DISPLAY_ONLY;
     private Dimension m_thumbSize;
     private static final Logger s_log = Logger.getLogger(ImageBrowser.class);
 
@@ -84,23 +88,33 @@ public class ImageBrowser extends Table {
      * component with its {@link ImageBrowserModel} during each request
      */
     public ImageBrowser(ImageBrowserModelBuilder b) {
+
+        this(b, ImageBrowser.SELECT_IMAGE);
+    }
+
+    public ImageBrowser(ImageBrowserModelBuilder b, int mode) {
         super(new BuilderAdapter(b), HEADERS);
+        m_mode = mode;
         setThumbnailSize(CMS.getConfig().getImageBrowserThumbnailMaxWidth(),
-                         CMS.getConfig().getImageBrowserThumbnailMaxHeight());
+                CMS.getConfig().getImageBrowserThumbnailMaxHeight());
         m_builder = b;
 
         getHeader().setDefaultRenderer(new DefaultTableCellRenderer(false));
-        getColumn(0).setCellRenderer(new ThumbnailCellRenderer());
-        getColumn(1).setCellRenderer(new DefaultTableCellRenderer(false));
-        getColumn(2).setCellRenderer(new DefaultTableCellRenderer(false));
-        getColumn(3).setCellRenderer(new DefaultTableCellRenderer(false));
-        getColumn(4).setCellRenderer(new DefaultTableCellRenderer(true));
-        getColumn(5).setCellRenderer(new DeleteCellRenderer());
+        addColumn(new ThumbnailCellRenderer());
+        addColumn(new DefaultTableCellRenderer(false));
+        addColumn(new DefaultTableCellRenderer(false));
+        addColumn(new DefaultTableCellRenderer(false));
+        addColumn(new SelectCellRenderer());
+        addColumn(new DeleteCellRenderer());
 
         setCellPadding("4");
         setBorder("1");
 
         setClassAttr("imageBrowser");
+    }
+
+    private void addColumn(TableCellRenderer renderer) {
+        getColumn(++s_numColumns).setCellRenderer(renderer);
     }
 
     /**
@@ -112,7 +126,8 @@ public class ImageBrowser extends Table {
 
     /**
      * Set the thumbnail size
-     * @param size  the size, in pixels, of the thumbnail images
+     *
+     * @param size the size, in pixels, of the thumbnail images
      */
     public final void setThumbnailSize(int width, int height) {
         m_thumbSize = new Dimension(width, height);
@@ -127,17 +142,15 @@ public class ImageBrowser extends Table {
 
     /**
      * @param state The current page state
-     * @return the {@link ImageBrowserModel} used in the current
-     *   request
+     * @return the {@link ImageBrowserModel} used in the current request
      */
     public ImageBrowserModel getImageBrowserModel(PageState state) {
         return ((ImageModelAdapter) getTableModel(state)).getModel();
     }
 
     /**
-     * An action listener that only gets fired when the "select"
-     * link is clicked. Child classes should override the
-     * linkClicked method.
+     * An action listener that only gets fired when the "select" link is
+     * clicked. Child classes should override the linkClicked method.
      */
     public static abstract class LinkActionListener
             extends TableActionAdapter {
@@ -192,6 +205,26 @@ public class ImageBrowser extends Table {
         }
     }
 
+    // Renders the select link if the mode needs one
+    private class SelectCellRenderer extends DefaultTableCellRenderer {
+
+        public SelectCellRenderer() {
+            super(true);
+        }
+
+        @Override
+        public Component getComponent(Table table, PageState state, Object value,
+                boolean isSelected, Object key,
+                int row, int column) {
+
+            if (m_mode == ImageBrowser.SELECT_IMAGE) {
+                return super.getComponent(table, state, value, isSelected, key, row, column);
+            }
+
+            return new Label("");
+        }
+    }
+
     // Renders the delete link if the user has permission to delete
     // the asset and it's not used in an article.
     private class DeleteCellRenderer extends DefaultTableCellRenderer {
@@ -204,27 +237,32 @@ public class ImageBrowser extends Table {
         public Component getComponent(Table table, PageState state, Object value,
                 boolean isSelected, Object key,
                 int row, int column) {
-            boolean canDelete = false;
-         // SecurityManager sm = Utilities.getSecurityManager(state);
-            SecurityManager sm = CMS.getSecurityManager(state);
-            if (sm.canAccess(state.getRequest(), SecurityManager.DELETE_IMAGES)) {
-                try {
-                    ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance(new OID(ImageAsset.BASE_DATA_OBJECT_TYPE, (BigDecimal) key));
+
+            // Only show delete link in admin mode
+            if (m_mode == ADMIN_IMAGES) {
+
+                boolean canDelete = false;
+                // SecurityManager sm = Utilities.getSecurityManager(state);
+                SecurityManager sm = CMS.getSecurityManager(state);
+                if (sm.canAccess(state.getRequest(), SecurityManager.DELETE_IMAGES)) {
+                    try {
+                        ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance(new OID(ImageAsset.BASE_DATA_OBJECT_TYPE, (BigDecimal) key));
 //XXX Find a new way to figure out, if this image is used by any CI so we can decide if it can be deleted
 //                    if (!GenericArticleImageAssociation.imageHasAssociation(asset)) {
 //                        canDelete = true;
 //                    }
-                } catch (DataObjectNotFoundException e) {
-                    // can't find asset, can't delete it
+                    } catch (DataObjectNotFoundException e) {
+                        // can't find asset, can't delete it
+                    }
+
                 }
-
+                
+                // can delete image because it's not in use
+                if (canDelete) {
+                    return super.getComponent(table, state, value, isSelected, key, row, column);
+                }
             }
-
-            if (canDelete) {
-                return super.getComponent(table, state, value, isSelected, key, row, column);
-            } else {
-                return new Label("");
-            }
+            return new Label("");
         }
     }
 
@@ -262,7 +300,7 @@ public class ImageBrowser extends Table {
 
         @Override
         public int getColumnCount() {
-            return ImageBrowser.NUM_COLUMNS;
+            return ImageBrowser.s_numColumns;
         }
 
         @Override
@@ -311,7 +349,7 @@ public class ImageBrowser extends Table {
                     return m.getMimeType();
 
                 case ImageBrowser.LINK:
-                    return "select";
+                        return "select";
 
                 case ImageBrowser.DELETE:
                     return "delete";

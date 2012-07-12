@@ -66,32 +66,43 @@ public class ImageChooser extends BoxPanel {
      *
      * @param context the context for the retrieved items. Should be
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     * @param mode the display mode for the ImageBrowser
      */
-    public ImageChooser(String context) {
+    public ImageChooser(String context, int mode) {
         super(BoxPanel.VERTICAL);
 
         m_keyword = new StringParameter(KEYWORD);
         m_sel = new ParameterSingleSelectionModel(m_keyword);
         m_form = new ImageKeywordForm(m_sel);
-	DefaultImageBrowserModelBuilder modelBuilder = 
-	    new DefaultImageBrowserModelBuilder(m_sel, context);
-        m_browser = new ImageBrowser(modelBuilder);
-	modelBuilder.setImageBrowser(m_browser);
+        DefaultImageBrowserModelBuilder modelBuilder = 
+            new DefaultImageBrowserModelBuilder(m_sel, context);
+        m_browser = new ImageBrowser(modelBuilder, mode);
+        modelBuilder.setImageBrowser(m_browser);
 
 
-	m_paginator = new Paginator
-	    (modelBuilder,
-	     LIST_SIZE);
+        m_paginator = new Paginator
+            (modelBuilder,
+             LIST_SIZE);
         super.add(m_form);
-	super.add(m_paginator);
+        super.add(m_paginator);
         super.add(m_browser);
+    }
+
+    /**
+     * Construct a new ImageChooser
+     *
+     * @param context the context for the retrieved items. Should be
+     *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     */
+    public ImageChooser(String context) {
+        this(context, ImageBrowser.SELECT_IMAGE);
     }
 
     /**
      * Construct a new ImageChooser
      */
     public ImageChooser() {
-        this(ContentItem.DRAFT);
+        this(ContentItem.DRAFT, ImageBrowser.SELECT_IMAGE);
     }
 
     /**
