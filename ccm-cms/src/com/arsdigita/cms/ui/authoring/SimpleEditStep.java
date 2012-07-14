@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.ui.authoring;
 
+import com.arsdigita.bebop.Label;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,9 +27,12 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.RequestEvent;
 import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.ContentItemPage;
@@ -133,7 +137,7 @@ public class SimpleEditStep extends SecurityPropertyEditor
         	component.setItemSelectionModel(itemModel);
         	addDisplayComponent(component);
         	
-        }
+        }        
     }
 
     /** 

@@ -25,7 +25,7 @@ public class FlatFolderPicker extends AbstractFolderPicker {
     }
 
     protected void addOptions(PageState state, SingleSelect target) {
-        target.addOption(new Option(null, ""));
+        target.addOption(new Option("", ""));
 
         final ContentSection section = CMS.getContext().getContentSection();
         //final String sectionName = section.getName();
@@ -70,7 +70,7 @@ public class FlatFolderPicker extends AbstractFolderPicker {
             path = String.format("%s/%s", prefix, folder.getName());
         }
 
-        target.addOption(new Option(folder.getID().toString(), path));
+        target.addOption(new Option(folder.getOID().toString(), path));
 
         final ItemCollection children = folder.getChildren();
         children.addEqualsFilter("objectType", Folder.BASE_DATA_OBJECT_TYPE);

@@ -100,7 +100,7 @@ public class TabbedPane extends SimpleContainer {
         while (i.hasNext()) {
             Pane pane = (Pane) i.next();
             p.setVisibleDefault(pane.getComponent(), pane == m_defaultPane);
-        }
+        }                
     }
 
     /**

@@ -5,7 +5,6 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.GridPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.Page;
@@ -13,7 +12,6 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.PaginationModelBuilder;
 import com.arsdigita.bebop.Paginator;
 import com.arsdigita.bebop.RequestLocal;
-import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
@@ -37,14 +35,10 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.toolbox.ui.DataQueryBuilder;
-import com.arsdigita.toolbox.ui.DataTable;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import org.bouncycastle.asn1.ess.ContentIdentifier;
 
 /**
  *
@@ -297,7 +291,10 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
             final ContentPage page = new ContentPage((BigDecimal) key);
 
             link.setOnClick(String.format(
-                    "window.opener.document.%s.value=\"%s\";window.opener.document.%s.value=\"%s\";self.close();return false;",
+                    "window.opener.document.%s.value=\"%s\";"
+                    + "window.opener.document.%s.value=\"%s\";"
+                    + "self.close();"
+                    + "return false;",
                     widget,
                     key.toString(),
                     searchWidget,

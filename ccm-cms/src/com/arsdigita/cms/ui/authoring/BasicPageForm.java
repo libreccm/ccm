@@ -123,6 +123,7 @@ public abstract class BasicPageForm extends BasicItemForm {
 
         if (item != null) {
             // Preset fields
+            data.put(CONTENT_ITEM_ID, item.getID().toString());
             data.put(NAME, item.getName());
             data.put(TITLE, item.getTitle());
 //            data.put(DESCRIPTION, item.getDescription());

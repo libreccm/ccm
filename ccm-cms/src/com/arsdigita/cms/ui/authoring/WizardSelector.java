@@ -22,6 +22,7 @@ package com.arsdigita.cms.ui.authoring;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Resettable;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.AuthoringKit;
@@ -29,6 +30,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.xml.Element;
 
 import java.math.BigDecimal;
@@ -81,7 +83,7 @@ public class WizardSelector extends AuthoringKitSelector
             new ItemSelectionModel(type,
                                    (BigDecimalParameter)m_itemSel.getStateParameter());
 
-        AuthoringKitWizard w = new AuthoringKitWizard(type, itemModel);
+        AuthoringKitWizard w = new AuthoringKitWizard(type, itemModel);        
         return w;
     }
 
@@ -114,7 +116,7 @@ public class WizardSelector extends AuthoringKitSelector
         } else {
             typeId = type.getID();
         }
-
+              
         // Return the selected wizard
         return (Component)getComponent(typeId);
     }

@@ -31,6 +31,7 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
+import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
@@ -66,6 +67,7 @@ public abstract class BasicItemForm
     private final ItemSelectionModel m_itemModel;
     private SaveCancelSection m_saveCancelSection;
     private FormSection m_widgetSection;
+    public static final String CONTENT_ITEM_ID = ContentItem.ID;
     public static final String NAME = ContentItem.NAME;
     public static final String TITLE = ContentPage.TITLE;
     public static final String LANGUAGE = ContentItem.LANGUAGE;
@@ -137,7 +139,12 @@ public abstract class BasicItemForm
      */
     protected void addWidgets() {
         //add(new FormErrorDisplay(this), ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
-
+        
+        //add(new Label("id"));
+        final Hidden id = new Hidden(CONTENT_ITEM_ID);
+         //final TextField id = new TextField(CONTENT_ITEM_ID);
+        add(id);
+        
         // JavaScript auto-name generation is off by default.
         // It is turned on under the following circumstances
         //

@@ -133,6 +133,8 @@ public class ContentItemPage extends CMSPage implements ActionListener {
     private ItemRevisionAdminPane m_revisionsPane;
     private ItemTemplates m_templatesPane;
     private Link m_previewLink;
+    private GlobalNavigation m_globalNavigation;
+    private ContentItemContextBar m_contextBar;
 
     private class ItemRequestLocal extends ContentItemRequestLocal {
 
@@ -194,8 +196,11 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         m_returnURL = new StringParameter(RETURN_URL);
         addGlobalStateParam(m_returnURL);
 
-        add(new GlobalNavigation());
-        add(new ContentItemContextBar(m_itemModel));
+        m_globalNavigation = new GlobalNavigation();
+        add(m_globalNavigation);
+        
+        m_contextBar = new ContentItemContextBar(m_itemModel);
+        add(m_contextBar);
 
         // Create panels.
         m_summaryPane = new Summary(m_itemModel);
@@ -416,7 +421,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
      * @param tab The index of the tab to display
      */
     public static String getItemURL(ContentItem item, int tab) {
-        final ContentSection section = ContentSection.getContentSection(item);
+        final ContentSection section = item.getContentSection();
 
         if (section == null) {
             return null;
@@ -504,5 +509,13 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         return ContentSection.getConfig().getUseStreamlinedCreation()
                && STREAMLINED_CREATION_ACTIVE.equals(state.getRequest().
                 getParameter(STREAMLINED_CREATION));
+    }           
+    
+    protected TabbedPane getTabbedPane() {
+        return m_tabbedPane;
+    }
+    
+    protected WizardSelector getWizardPane() {
+        return m_wizardPane;
     }
 }
