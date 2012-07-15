@@ -54,6 +54,7 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
 
     public static final String WIDGET_PARAM = "widget";
     public static final String SEARCHWIDGET_PARAM = "searchWidget";
+    public static final String PUBLISHWIDGET_PARAM = "publishWidget";
     private static final String CONTENT_TYPE_ID = "ct";
     private static final String FOLDER_ID = "folder_id";
     private final NewItemForm m_newItem;
@@ -127,7 +128,7 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
         m_folderPicker = new FlatFolderPicker("flatFolder");
         //m_newItem.add(m_folderPicker);
         folderRow.add(m_folderPicker);
-        m_newItem.add(folderRow);        
+        m_newItem.add(folderRow);
 
         m_newItemSeg.add(m_newItem);
 
@@ -156,15 +157,19 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
 
                         final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
                         final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
+                        final String publishWidget = (String) state.getValue(new StringParameter(PUBLISHWIDGET_PARAM));
 
                         target.setOnClick(String.format("window.opener.document.%s.value=\"%s\";"
+                                                        + "window.opener.document.%s.value=\"%s\";"
                                                         + "window.opener.document.%s.value=\"%s\";"
                                                         + "self.close();"
                                                         + "return false;",
                                                         widget,
                                                         item.getID().toString(),
                                                         searchWidget,
-                                                        title));
+                                                        title,
+                                                        publishWidget,
+                                                        Boolean.TRUE.toString()));
                     }
 
                 });
@@ -187,6 +192,7 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
 
                 final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
                 final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
+                final String publishWidget = (String) state.getValue(new StringParameter(PUBLISHWIDGET_PARAM));
 
                 final ContentSection section = item.getContentSection();
                 final String nodeURL = section.getPath() + "/";
@@ -194,11 +200,14 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormProcessListen
                                                                      ContentItemPage.AUTHORING_TAB, true);
                 target.setTarget(linkTarget);
                 target.setOnClick(String.format("window.opener.document.%s.value=\"%s\";"
+                                                + "window.opener.document.%s.value=\"%s\";"
                                                 + "window.opener.document.%s.value=\"%s\";",
                                                 widget,
                                                 item.getID().toString(),
                                                 searchWidget,
-                                                title));
+                                                title,
+                                                publishWidget,
+                                                Boolean.TRUE.toString()));
 
             }
 

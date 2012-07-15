@@ -30,14 +30,21 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.lifecycle.Lifecycle;
+import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.workflow.simple.TaskException;
+import com.arsdigita.workflow.simple.Workflow;
+import java.util.Date;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -75,8 +82,7 @@ public class PublicationAuthorAddForm
                 "publications.ui.authors.selectAuthor").localize()));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
-                ContentType.findByAssociatedObjectType(GenericPerson.class.
-                getName()));
+                ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
         add(m_itemSearch);
 
         selectedAuthorLabel = new Label("");
@@ -98,8 +104,7 @@ public class PublicationAuthorAddForm
         Boolean editor;
 
         author = ((PublicationAuthorsPropertyStep) editStep).getSelectedAuthor();
-        editor = ((PublicationAuthorsPropertyStep) editStep).
-                isSelectedAuthorEditor();
+        editor = ((PublicationAuthorsPropertyStep) editStep).isSelectedAuthorEditor();
 
         if (author == null) {
             s_log.warn("No author selected.");
@@ -134,8 +139,7 @@ public class PublicationAuthorAddForm
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             GenericPerson author;
-            author = ((PublicationAuthorsPropertyStep) editStep).
-                    getSelectedAuthor();
+            author = ((PublicationAuthorsPropertyStep) editStep).getSelectedAuthor();
 
             Boolean editor;
 
@@ -152,6 +156,25 @@ public class PublicationAuthorAddForm
                         getInstance(publication.getLanguage());
 
                 publication.addAuthor(authorToAdd, editor);
+
+                final String publishStr = data.getString(ItemSearchWidget.PUBLISH);
+                final Boolean publish = Boolean.valueOf(publishStr);
+                if (publish) {
+                    final LifecycleDefinition lifecycleDef = ContentTypeLifecycleDefinition.getLifecycleDefinition(
+                            authorToAdd.getContentSection(), authorToAdd.getContentType());
+
+                    if (lifecycleDef == null) {
+                        s_log.warn(String.format("Cannot publish item %s because it has no default lifecycle",
+                                                 authorToAdd.getOID().toString()));
+                    } else {
+                        authorToAdd.publish(lifecycleDef, new Date());
+                        authorToAdd.getLifecycle().start();
+                        final Workflow workflow = Workflow.getObjectWorkflow(authorToAdd);
+                        if (workflow != null) {
+                            workflow.delete();
+                        }
+                    }
+                }
             } else {
                 AuthorshipCollection authors;
 
@@ -167,8 +190,7 @@ public class PublicationAuthorAddForm
 
                 ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthor(
                         null);
-                ((PublicationAuthorsPropertyStep) editStep).
-                        setSelectedAuthorEditor(null);
+                ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthorEditor(null);
 
                 authors.close();
             }
@@ -208,22 +230,21 @@ public class PublicationAuthorAddForm
                 getSelectedObject(state);
         GenericPerson author = (GenericPerson) data.get(ITEM_SEARCH);
         if (author == null) {
-            author = ((PublicationAuthorsPropertyStep) editStep).
-                    getSelectedAuthor();
+            author = ((PublicationAuthorsPropertyStep) editStep).getSelectedAuthor();
             editing = true;
         }
-        
-        /*if (!(author.getContentBundle().hasInstance(publication.getLanguage(),
-                                                    Kernel.getConfig().
-              languageIndependentItems()))) {
-            data.addError(
-                    PublicationGlobalizationUtil.globalize(
-                    "publications.ui.authors.selectAuthor.no_suitable_language_variant"));
-            return;
-        }*/
 
-        if (!editing) {            
-            AuthorshipCollection authors = publication.getAuthors();            
+        /*if (!(author.getContentBundle().hasInstance(publication.getLanguage(),
+         Kernel.getConfig().
+         languageIndependentItems()))) {
+         data.addError(
+         PublicationGlobalizationUtil.globalize(
+         "publications.ui.authors.selectAuthor.no_suitable_language_variant"));
+         return;
+         }*/
+
+        if (!editing) {
+            AuthorshipCollection authors = publication.getAuthors();
             authors.addFilter(
                     String.format("id = %s", author.getContentBundle().getID().toString()));
             if (authors.size() > 0) {
@@ -234,4 +255,5 @@ public class PublicationAuthorAddForm
             authors.close();
         }
     }
+
 }

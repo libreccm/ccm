@@ -78,6 +78,7 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
         addGlobalStateParam(new StringParameter("searchWidget"));
+        addGlobalStateParam(new StringParameter("publishWidget"));
 
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);

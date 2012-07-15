@@ -245,7 +245,7 @@ public class ItemSearchWidget extends FormSection
         });
         //m_item = new ItemFragment(model, this);
 
-        m_publish = new Hidden(PUBLISH);
+        m_publish = new Hidden(PUBLISH);        
         add(m_publish);
 
         m_item = new TextField(m_searchModel);
@@ -268,7 +268,7 @@ public class ItemSearchWidget extends FormSection
                 if (typeURLFrag != null) {
                     params.setParameter("single_type", typeURLFrag);
                 }
-
+                params.setParameter("publishWidget", formName + ".elements['" + m_publish.getName() + "']");
 
                 String searchURL = WorkspaceServlet.getURLStubForClass(
                         ItemSearchPage.class.getName());
@@ -286,10 +286,18 @@ public class ItemSearchWidget extends FormSection
                            //+ m_item.getName().replace('.', '_')
                            + m_selected.getName().replace('.', '_')
                            + "Popup(theForm) { \n"
+                           + "var width = screen.width * 0.5;\n"
+                           + "var height = screen.height * 0.5;\n"
+                           + "if ((width < 800) && (screen.width >= 800)) {\n"
+                           + "width = 800;\n"
+                           + "}\n"
+                           + "if ((height < 600) && (screen.height >= 600)) {\n"                           
+                           + "height = 600;\n"
+                           + "}\n"
                            + " aWindow = window.open(\"" + url + "&query=\" + document.getElementById('" + m_item.
                         getName() + "').value , "
                            //+ "\"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes\");\n"                           
-                           + "\"search\", \"toolbar=yes,width=\" + screen.width*0.5 + \",height=\" + screen.height*0.5 + \",status=no,scrollbars=yes,resize=yes\");\n "
+                           + "\"search\", \"toolbar=no,width=\" + width + \",height=\" + height + \",status=no,scrollbars=yes,resize=yes\");\n "
                            + "return false;\n"
                            + " } \n"
                            + " --> \n"
@@ -373,7 +381,7 @@ public class ItemSearchWidget extends FormSection
             m_topHR.setVisible(s, false);
             m_bottomHR.setVisible(s, false);
             m_search.setVisible(s, true);
-            e.getFormData().put(PUBLISH, Boolean.TRUE.toString());
+            e.getFormData().put(PUBLISH, Boolean.FALSE.toString());
         } catch (IllegalStateException ex) {
             // component is in metaform. nothing to do here. Custom generateXML must hide for us
         }

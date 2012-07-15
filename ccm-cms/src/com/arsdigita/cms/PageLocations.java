@@ -28,6 +28,5 @@ package com.arsdigita.cms;
  **/
 public interface PageLocations {
     public String SECTION_PAGE = "admin/index.jsp";
-    public String ITEM_PAGE = "admin/item.jsp";
-    public String ITEM_SEARCH_ITEM_PAGE = "admin/itemsearchitem.jsp";
+    public String ITEM_PAGE = "admin/item.jsp";   
 }
