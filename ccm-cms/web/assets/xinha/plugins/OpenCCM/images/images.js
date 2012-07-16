@@ -57,6 +57,7 @@ OpenCCM.prototype.showImageDialog = function(image)
       data.caption = (image.parentNode.nextSibling.tagName.toLowerCase() == "span") ? image.parentNode.nextSibling.firstChild.nodeValue : "";
     }
 
+    // Calculate aspect ratio
     data.aspect = data.width / data.height;
   }
 
@@ -72,21 +73,34 @@ OpenCCM.prototype.prepareImageDialog = function()
   var dialog = this.dialogs["images"] = new Xinha.Dialog(editor, OpenCCM.imagesHtml, 'Xinha',{width:410})
 
   // Connect the OK and Cancel buttons
-  dialog.getElementById('ok').onclick = function() {self.imageApply();}
-  dialog.getElementById('remove').onclick = function() { self.imageRemove(); };
-  dialog.getElementById('cancel').onclick = function() { self.dialogs["images"].hide()};
+  dialog.getElementById("ok").onclick = function() {self.imageApply();}
+  dialog.getElementById("remove").onclick = function() { self.imageRemove(); };
+  dialog.getElementById("cancel").onclick = function() { self.dialogs["images"].hide()};
 
   // Connect the Select button
-  dialog.getElementById('browse').onclick = function() { self.imageBrowse(window); };
+  dialog.getElementById("browse").onclick = function() { self.imageBrowse(window); };
 
-  // Connect onkeyup ecent handler with dimension filed to recalculate the size according to aspect ratio
-  dialog.getElementById('width').onkeyup = function() { self.calcHeight(); };
-  dialog.getElementById('height').onkeyup = function() { self.calcWidth(); };
+  // Connect onkeyup event handler with dimension filed to recalculate the size according to aspect ratio
+  dialog.getElementById("width").onkeyup = function() { self.calcHeight(); };
+  dialog.getElementById("height").onkeyup = function() { self.calcWidth(); };
+
+  // OnResize 
+  this.dialogs["images"].onresize = function ()
+  {
+    var newHeightForPreview = 
+    parseInt(this.height, 10) 
+//    - this.getElementById("h1").offsetHeight 
+//    - this.getElementById("buttons").offsetHeight
+//    - this.getElementById("inputs").offsetHeight 
+    - parseInt(this.rootElem.style.paddingBottom, 10);
+    this.getElementById("preview").style.height = ((newHeightForPreview > 0) ? newHeightForPreview : 0) + "px";
+    this.getElementById("preview").style.width = "98%";
+  };
 
   this.imageDialogReady = true;
 };
 
-// 
+// Write HTML code
 OpenCCM.prototype.imageApply = function()
 {
 
@@ -272,12 +286,27 @@ OpenCCM.prototype.imageRemove = function() {
 
 OpenCCM.prototype.imageBrowse = function(window)
 {
+  this.imageSet({
+      src    : "/theme/mandalay/ccm/cms-service/stream/image/?image_id=9001", 
+      width  : "304",
+      height : "420",
+      name   : "Schild.jpg"
+    });
+};
+
+OpenCCM.prototype.imageSet = function(imageData)
+{
   var dialog = this.dialogs["images"];
-  dialog.getElementById(dialog.id["src"]).value = "/theme/mandalay/ccm/cms-service/stream/image/?image_id=9001";
-  dialog.getElementById(dialog.id["width"]).value = "304";
-  dialog.getElementById(dialog.id["height"]).value = "420";
-  dialog.getElementById(dialog.id["name"]).value = "Schild.jpg";
+  dialog.getElementById(dialog.id["src"]).value = imageData.src;
+  dialog.getElementById(dialog.id["ipreview"]).src = imageData.src;
+  dialog.getElementById(dialog.id["width"]).value = imageData.width;
+  dialog.getElementById(dialog.id["height"]).value = imageData.height;
+  dialog.getElementById(dialog.id["name"]).value = imageData.name;
   dialog.getElementById(dialog.id["aspect"]).value = dialog.getElementById(dialog.id["width"]).value / dialog.getElementById(dialog.id["height"]).value;
+  if(imageData.src != "")
+  {
+    dialog.getElementById(dialog.id["preview"]).style.display = "block";
+  }
 };
 
 OpenCCM.prototype.calcWidth = function()

@@ -12,7 +12,6 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
@@ -42,7 +41,7 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
     private int m_mode;
 
     public ImageLibraryComponent() {
-        this(ImageComponent.SELECT_IMAGE);
+        this(ImageComponent.ATTACH_IMAGE);
     }
 
     public ImageLibraryComponent(int mode) {
@@ -107,8 +106,9 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
 
         // save and cancel buttons
         m_saveCancel = new SaveCancelSection();
-        m_form.add(m_saveCancel);
-
+        if (m_mode == ImageComponent.SELECT_IMAGE || m_mode == ImageComponent.ATTACH_IMAGE) {
+            m_form.add(m_saveCancel);
+        }
     }
 
     public ReusableImageAsset getImage(FormSectionEvent event) {

@@ -5,12 +5,17 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.MapComponentSelectionModel;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import java.util.HashMap;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,34 +23,47 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  */
 public class ImageSelectPage extends CMSPage {
 
+    public static final Logger s_log = Logger.getLogger(ImagesPane.class);
     private final static String XSL_CLASS = "CMS Admin";
     private TabbedPane m_tabbedPane;
     private ImageLibraryComponent m_imageLibrary;
     private ImageUploadComponent m_imageUpload;
     private BigDecimalParameter m_sectionId;
+    private final StringParameter m_imageComponentKey;
+    private final MapComponentSelectionModel m_imageComponent;
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
 
     public ImageSelectPage() {
-        super(GlobalizationUtil.globalize("cms.ui.item_search.page_title").localize().toString(), new SimpleContainer());
+        super(GlobalizationUtil.globalize("cms.ui.image_selelect.page_title").localize().toString(), new SimpleContainer());
 
         setClassAttr("cms-admin");
 
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
+        m_imageComponentKey = new StringParameter("imageComponent");
+
+        ParameterSingleSelectionModel componentModel =
+                new ParameterSingleSelectionModel(m_imageComponentKey);
+        m_imageComponent =
+                new MapComponentSelectionModel(componentModel, new HashMap());
+
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
+
         add(m_tabbedPane);
 
+        addGlobalStateParam(m_imageComponentKey);
     }
 
     protected ImageLibraryComponent getImageLibraryPane() {
         if (m_imageLibrary == null) {
             m_imageLibrary = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE);
-//        library.getForm().addInitListener(this);
-//        library.getForm().addProcessListener(this);
+            m_imageLibrary.getForm().addInitListener(new ImageComponentSelectListener(m_imageComponent));
+            m_imageLibrary.getForm().addProcessListener(new ImageComponentSelectListener(m_imageComponent));
+            m_imageComponent.getComponentsMap().put(ImageComponent.LIBRARY, m_imageLibrary);
         }
         return m_imageLibrary;
     }
@@ -54,8 +72,9 @@ public class ImageSelectPage extends CMSPage {
 
         if (m_imageUpload == null) {
             m_imageUpload = new ImageUploadComponent(ImageComponent.SELECT_IMAGE);
-//        upload.getForm().addInitListener(this);
-//        upload.getForm().addProcessListener(this);
+            m_imageUpload.getForm().addInitListener(new ImageComponentSelectListener(m_imageComponent));
+            m_imageUpload.getForm().addProcessListener(new ImageComponentSelectListener(m_imageComponent));
+            m_imageComponent.getComponentsMap().put(ImageComponent.UPLOAD, m_imageUpload);
         }
         return m_imageUpload;
     }
@@ -81,24 +100,7 @@ public class ImageSelectPage extends CMSPage {
      */
     protected void addToPane(TabbedPane pane, String tabName, Component comp) {
         if (comp != null) {
-            pane.addTab(GlobalizationUtil.globalize("cms.ui.item_search." + tabName).localize().toString(), comp);
+            pane.addTab(GlobalizationUtil.globalize("cms.ui.image_" + tabName).localize().toString(), comp);
         }
     }
-
-    /* Listeners */
-    
-    /** 
-     * InitListener
-     * 
-     * this init listener selects the object with the submitted oid
-     */
-//    private init() {
-//        
-//    }
-
-    /**
-     * ProcessListener
-     * 
-     * this process listener 
-     */
 }

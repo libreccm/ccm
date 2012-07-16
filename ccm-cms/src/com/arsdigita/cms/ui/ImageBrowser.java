@@ -219,7 +219,7 @@ public class ImageBrowser extends Table {
                 boolean isSelected, Object key,
                 int row, int column) {
 
-            if (m_mode == ImageComponent.SELECT_IMAGE) {
+            if (m_mode == ImageComponent.SELECT_IMAGE || m_mode == ImageComponent.ATTACH_IMAGE) {
                 return super.getComponent(table, state, value, isSelected, key, row, column);
             }
 

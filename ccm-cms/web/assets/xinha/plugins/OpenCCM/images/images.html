@@ -17,6 +17,10 @@
     width: 8em;
   }
   
+  fieldset.preview {
+    display: none;
+  }
+  
   .value {
     margin-left: 5.5em;
     margin-right: 1em;
@@ -48,6 +52,14 @@
     width: 100% !important;
   }
   
+  div.preview  {
+    magirn:
+  }
+  
+  label.preview {
+    display: block;
+    font-weight: bold;
+  }
   
   .itemname {
     margin: 0.1em;
@@ -152,16 +164,18 @@
       </div>
       <input type="hidden" name="[aspect]" id="[aspect]"/>
     </fieldset>
-  </div>
 
-  <div>
-    <l10n>Image Preview:</l10n><br />
-    <iframe id="[ipreview]" frameborder="0" style="border : 1px solid gray;" height="200" width="100%" src="about:blank"></iframe>
+    <fieldset id="[preview]" class="preview">
+      <legend>
+        <l10n>Preview</l10n>
+      </legend>
+      <img src="about:blank" id="[ipreview]">
+    </fieldset>
   </div>
 
   <div class="buttons" id="[buttons]">
-    <input type="button" id="[ok]"     value="_(OK)"     />
-    <input type="button" id="[remove]"     value="_(Remove)"     />
-    <input type="button" id="[cancel]" value="_(Cancel)" />
+    <input type="button" id="[ok]"     value="_(OK)"    />
+    <input type="button" id="[remove]" value="_(Remove)"/>
+    <input type="button" id="[cancel]" value="_(Cancel)"/>
   </div>
 </div>

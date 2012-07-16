@@ -8,6 +8,7 @@ import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.MapComponentSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -35,9 +36,9 @@ public class ImageUploadComponent extends Form implements ImageComponent {
     private int m_mode;
 
     public ImageUploadComponent() {
-            this(ImageComponent.ATTACH_IMAGE);
+        this(ImageComponent.ATTACH_IMAGE);
     }
-    
+
     public ImageUploadComponent(int mode) {
         super("imageUploadComponent", new ColumnPanel(2));
         m_mode = mode;
@@ -110,7 +111,7 @@ public class ImageUploadComponent extends Form implements ImageComponent {
         try {
             ReusableImageAsset image = new ReusableImageAsset();
             image.loadFromFile(filename, imageFile, ImageAsset.MIME_JPEG);
-            image.setDescription((String) m_caption.getValue(ps));
+//            image.setDescription((String) m_caption.getValue(ps));
             return image;
         } catch (IOException ex) {
             ImagesPane.s_log.error("Error loading image from file", ex);
@@ -141,4 +142,5 @@ public class ImageUploadComponent extends Form implements ImageComponent {
     public Form getForm() {
         return this;
     }
+
 }
