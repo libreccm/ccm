@@ -40,12 +40,17 @@ import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ContentTypeLifecycleDefinition;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.Workspace;
 import com.arsdigita.cms.WorkspaceServlet;
+import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
+import com.arsdigita.workflow.simple.Workflow;
+import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
@@ -72,6 +77,7 @@ public class ItemSearchWidget extends FormSection
     private String m_name;
     private String m_searchName;
     private String m_clearName;
+    private Folder m_defaultCreationFolder;
     private ParameterModel m_model;
     private ParameterModel m_searchModel;
     private String searchLabelText = (String) GlobalizationUtil.globalize("cms.ui.item_search.search").localize();
@@ -245,7 +251,7 @@ public class ItemSearchWidget extends FormSection
         });
         //m_item = new ItemFragment(model, this);
 
-        m_publish = new Hidden(PUBLISH);        
+        m_publish = new Hidden(PUBLISH);
         add(m_publish);
 
         m_item = new TextField(m_searchModel);
@@ -270,6 +276,10 @@ public class ItemSearchWidget extends FormSection
                 }
                 params.setParameter("publishWidget", formName + ".elements['" + m_publish.getName() + "']");
 
+                if (m_defaultCreationFolder != null) {
+                    params.setParameter("defaultCreationFolder", m_defaultCreationFolder.getOID().toString());
+                }
+
                 String searchURL = WorkspaceServlet.getURLStubForClass(
                         ItemSearchPage.class.getName());
                 s_log.debug("Search URL stub is: " + searchURL);
@@ -280,28 +290,28 @@ public class ItemSearchWidget extends FormSection
 
                 URL url = URL.there(state.getRequest(), searchURL, params);
 
-                t.setLabel(" <script language=javascript> "
-                           + " <!-- \n"
-                           + " function "
-                           //+ m_item.getName().replace('.', '_')
-                           + m_selected.getName().replace('.', '_')
-                           + "Popup(theForm) { \n"
-                           + "var width = screen.width * 0.5;\n"
-                           + "var height = screen.height * 0.5;\n"
-                           + "if ((width < 800) && (screen.width >= 800)) {\n"
-                           + "width = 800;\n"
-                           + "}\n"
-                           + "if ((height < 600) && (screen.height >= 600)) {\n"                           
-                           + "height = 600;\n"
-                           + "}\n"
-                           + " aWindow = window.open(\"" + url + "&query=\" + document.getElementById('" + m_item.
-                        getName() + "').value , "
-                           //+ "\"search\", \"toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes\");\n"                           
-                           + "\"search\", \"toolbar=no,width=\" + width + \",height=\" + height + \",status=no,scrollbars=yes,resize=yes\");\n "
-                           + "return false;\n"
-                           + " } \n"
-                           + " --> \n"
-                           + " </script> ");
+                t.setLabel(
+                        " <script language=javascript> "
+                        + " <!-- \n"
+                        + " function "
+                        + m_selected.getName().replace('.', '_')
+                        + "Popup(theForm) { \n"
+                        + "var width = screen.width * 0.5;\n"
+                        + "var height = screen.height * 0.5;\n"
+                        + "if ((width < 800) && (screen.width >= 800)) {\n"
+                        + "width = 800;\n"
+                        + "}\n"
+                        + "if ((height < 600) && (screen.height >= 600)) {\n"
+                        + "height = 600;\n"
+                        + "}\n"
+                        + " aWindow = window.open(\"" + url + "&query=\" + document.getElementById('"
+                        + m_item.getName() + "').value , "
+                        + "\"search\", \"toolbar=no,width=\" + width + \",height=\" + height + \",status=no,scrollbars=yes,resize=yes\");\n"
+                        + "document." + formName + "." + m_publish.getName() + ".value = \"false\";\n "
+                        + "return false;\n"
+                        + " } \n"
+                        + " --> \n"
+                        + " </script> ");
             }
 
         });
@@ -485,8 +495,32 @@ public class ItemSearchWidget extends FormSection
         return selectedLabelText;
     }
 
-    public void setSelectedLabelText(String selectedLabelText) {
+    public void setSelectedLabelText(final String selectedLabelText) {
         this.selectedLabelText = selectedLabelText;
     }
 
+    public void setDefaultCreationFolder(final Folder folder) {
+        m_defaultCreationFolder = folder;
+    }
+
+    public void publishCreatedItem(final FormData data, final ContentItem item) {
+        final String publishStr = data.getString(ItemSearchWidget.PUBLISH);
+        final Boolean publish = Boolean.valueOf(publishStr);
+        if (publish) {
+            final LifecycleDefinition lifecycleDef = ContentTypeLifecycleDefinition.getLifecycleDefinition(
+                    item.getContentSection(), item.getContentType());
+
+            if (lifecycleDef == null) {
+                s_log.warn(String.format("Cannot publish item %s because it has no default lifecycle",
+                                         item.getOID().toString()));
+            } else {
+                item.publish(lifecycleDef, new Date());
+                item.getLifecycle().start();
+                final Workflow workflow = Workflow.getObjectWorkflow(item);
+                if (workflow != null) {
+                    workflow.delete();
+                }
+            }
+        }
+    }
 }

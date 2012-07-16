@@ -31,10 +31,12 @@ import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeLifecycleDefinition;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.ui.ItemSearchWidget;
@@ -43,6 +45,7 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.workflow.simple.TaskException;
 import com.arsdigita.workflow.simple.Workflow;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
@@ -67,6 +70,11 @@ public class PublicationAuthorAddForm
     private Label selectedAuthorLabel;
     private static final String ISEDITOR = "isEditor";
     private CheckboxGroup isEditor;
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public PublicationAuthorAddForm(ItemSelectionModel itemModel,
                                     SimpleEditStep editStep) {
@@ -84,6 +92,9 @@ public class PublicationAuthorAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
         add(m_itemSearch);
+        if ((config.getDefaultAuthorsFolder() != null) && (config.getDefaultAuthorsFolder() != 0)) {
+            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolder())));
+        }
 
         selectedAuthorLabel = new Label("");
         add(selectedAuthorLabel);
@@ -157,24 +168,25 @@ public class PublicationAuthorAddForm
 
                 publication.addAuthor(authorToAdd, editor);
 
-                final String publishStr = data.getString(ItemSearchWidget.PUBLISH);
-                final Boolean publish = Boolean.valueOf(publishStr);
-                if (publish) {
-                    final LifecycleDefinition lifecycleDef = ContentTypeLifecycleDefinition.getLifecycleDefinition(
-                            authorToAdd.getContentSection(), authorToAdd.getContentType());
-
-                    if (lifecycleDef == null) {
-                        s_log.warn(String.format("Cannot publish item %s because it has no default lifecycle",
-                                                 authorToAdd.getOID().toString()));
-                    } else {
-                        authorToAdd.publish(lifecycleDef, new Date());
-                        authorToAdd.getLifecycle().start();
-                        final Workflow workflow = Workflow.getObjectWorkflow(authorToAdd);
-                        if (workflow != null) {
-                            workflow.delete();
-                        }
-                    }
-                }
+//                final String publishStr = data.getString(ItemSearchWidget.PUBLISH);
+//                final Boolean publish = Boolean.valueOf(publishStr);
+//                if (publish) {
+//                    final LifecycleDefinition lifecycleDef = ContentTypeLifecycleDefinition.getLifecycleDefinition(
+//                            authorToAdd.getContentSection(), authorToAdd.getContentType());
+//
+//                    if (lifecycleDef == null) {
+//                        s_log.warn(String.format("Cannot publish item %s because it has no default lifecycle",
+//                                                 authorToAdd.getOID().toString()));
+//                    } else {
+//                        authorToAdd.publish(lifecycleDef, new Date());
+//                        authorToAdd.getLifecycle().start();
+//                        final Workflow workflow = Workflow.getObjectWorkflow(authorToAdd);
+//                        if (workflow != null) {
+//                            workflow.delete();
+//                        }
+//                    }
+//                }
+                m_itemSearch.publishCreatedItem(data, authorToAdd);
             } else {
                 AuthorshipCollection authors;
 

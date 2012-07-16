@@ -27,33 +27,13 @@ public class FlatFolderPicker extends AbstractFolderPicker {
     protected void addOptions(PageState state, SingleSelect target) {
         target.addOption(new Option("", ""));
 
-        final ContentSection section = CMS.getContext().getContentSection();
-        //final String sectionName = section.getName();
+        final ContentSection section = CMS.getContext().getContentSection();        
         final Folder root = section.getRootFolder();
 
-        final String path = ""; // String.format("%s:", sectionName);
-
-        //addFolders(target, path, root.getChildren().addEqualsFilter("objectType", Folder.BASE_DATA_OBJECT_TYPE));
+        final String path = ""; 
+        
         addFolder(target, path, root);
 
-
-//        DataCollection terms = SessionManager.getSession()
-//            .retrieve(Term.BASE_DATA_OBJECT_TYPE);
-//        terms.addPath("model.id");
-//        terms.addPath("model.objectType");
-//        terms.addPath("model.name");
-//        terms.addPath("domain.title");
-//        terms.addOrder("domain.title");
-//        terms.addOrder("model.name");
-//        
-//        target.addOption(new Option(null, "-- pick one --"));
-//        while (terms.next()) {
-//            target.addOption(
-//                new Option(new OID((String)terms.get("model.objectType"),
-//                                   terms.get("model.id")).toString(),
-//                           terms.get("domain.title") + " -> " + 
-//                           terms.get("model.name")));
-//        }
     }
 
     private void addFolders(final SingleSelect target, final String path, ItemCollection folders) {

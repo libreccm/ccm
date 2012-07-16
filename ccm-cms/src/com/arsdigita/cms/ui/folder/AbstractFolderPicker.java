@@ -4,15 +4,14 @@
  */
 package com.arsdigita.cms.ui.folder;
 
-import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.toolbox.ui.OIDParameter;
 import java.util.TooManyListenersException;
 
 /**
@@ -21,8 +20,7 @@ import java.util.TooManyListenersException;
  */
 public abstract class AbstractFolderPicker extends SingleSelect {
 
-    public AbstractFolderPicker(String name) {
-        //super(new OIDParameter(name));
+    public AbstractFolderPicker(String name) {        
         super(new StringParameter(name));
 
         try {

@@ -54,6 +54,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
     private final Table resultsTable;
     private final Paginator paginator;
     private final StringParameter queryParam;
+    private final Submit submit;
     private final static CMSConfig CMS_CONFIG = CMSConfig.getInstance();
 
     public ItemSearchFlatBrowsePane(final String name) {
@@ -69,7 +70,8 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         boxPanel.add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.filter")));
         final TextField filter = new TextField(new StringParameter(QUERY_PARAM));        
         boxPanel.add(filter);
-        boxPanel.add(new Submit(FILTER_SUBMIT, GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit")));
+        submit = new Submit(FILTER_SUBMIT, GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit"));
+        boxPanel.add(submit);
         mainPanel.add(boxPanel);
 
         resultsTable = new ResultsTable();
@@ -179,13 +181,14 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
                 final ContentType type = new ContentType(typeId);
                 collection.set(state, session.retrieve(type.getClassName()));
             }
+            ((DataCollection)collection.get(state)).addFilter("version = 'draft'");
 
             final String query = (String) state.getValue(queryParam);
             if ((query != null) && !query.isEmpty()) {
                 ((DataCollection) collection.get(state)).addFilter(String.format(
-                        "(lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
+                        "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%')))",
                         ContentItem.NAME, query,
-                        ContentPage.TITLE, query));
+                        ContentPage.TITLE, query));               
             }
 
             ((DataCollection) collection.get(state)).addOrder("title asc, name asc");
@@ -302,6 +305,9 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
 
             return link;
         }
-
+    }
+    
+    protected Submit getSubmit() {
+        return submit;
     }
 }

@@ -25,18 +25,21 @@ import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.event.RequestEvent;
 import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.CMSExcursion;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
+import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Document;
 import com.arsdigita.web.Web;
@@ -63,6 +66,7 @@ public class ItemSearchPage extends CMSPage {
     private ItemSearchPopup m_search;
     private ItemSearchCreateItemPane m_create;
     private BigDecimalParameter m_sectionId;
+    private int m_lastTab;
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
@@ -79,7 +83,8 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
         addGlobalStateParam(new StringParameter("searchWidget"));
         addGlobalStateParam(new StringParameter("publishWidget"));
-
+        addGlobalStateParam(new StringParameter("defaultCreationFolder"));
+        addGlobalStateParam(new IntegerParameter("lastTab"));
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
@@ -91,6 +96,7 @@ public class ItemSearchPage extends CMSPage {
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
         add(m_tabbedPane);
+
         addRequestListener(new RequestListener() {
 
             public void pageRequested(final RequestEvent event) {
@@ -98,17 +104,8 @@ public class ItemSearchPage extends CMSPage {
 
                 final String query = (String) state.getValue(new StringParameter(ItemSearchPopup.QUERY));
 
-                if (m_tabbedPane.getCurrentPane(state) == m_create) {
-                    return;
-                }
-                
-                if ((query == null) || query.isEmpty()) {
-                    m_tabbedPane.setSelectedIndex(state, 1);
-                } else {
-                    m_tabbedPane.setSelectedIndex(state, 0);
-                }
-                
-                BigDecimal typeParam = (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+                BigDecimal typeParam =
+                           (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
                 if (typeParam == null) {
                     m_tabbedPane.setTabVisible(state, m_create, false);
                     m_create.setVisible(state, false);
@@ -116,11 +113,81 @@ public class ItemSearchPage extends CMSPage {
                     m_tabbedPane.setTabVisible(state, m_create, true);
                     m_create.setVisible(state, true);
                 }
+
+                if (state.getValue(new IntegerParameter("lastTab")) == null) {
+                    if ((query == null) || query.isEmpty()) {
+                        m_tabbedPane.setSelectedIndex(state, 1);
+                    } else {
+                        m_tabbedPane.setSelectedIndex(state, 0);
+                    }
+
+//                    m_tabbedPane.setTabVisible(state, m_create, false);
+//                    m_create.setVisible(state, false);
+
+                }
+
+                state.setValue(new IntegerParameter("lastTab"), m_tabbedPane.getSelectedIndex(state));
+
+                if (state.getValue(new StringParameter("defaultCreationFolder")) != null) {
+                    m_create.setDefaultFolder((String) state.getValue(new StringParameter("defaultCreationFolder")));
+                }
+
+//                if (m_lastTab != m_tabbedPane.getSelectedIndex(state)) {
+//                    m_lastTab = m_tabbedPane.getSelectedIndex(state);                    
+//                    return;
+//                }
+//
+//                //If create pane is selected do nothing (else we don't stay in the create pane)
+//                if (m_tabbedPane.getCurrentPane(state) == m_create) {
+//                    return;
+//                }
+//
+//                if ((query == null) || query.isEmpty()) {
+//                    m_tabbedPane.setSelectedIndex(state, 1);
+//                } else {
+//                    m_tabbedPane.setSelectedIndex(state, 1);
+//                }                
+
+//                if (m_tabbedPane.getCurrentPane(state) == m_create) {
+//                    m_tabbedPane.setTabVisible(state, m_create, false);
+//                    m_create.setVisible(state, false);
+//                }
+//
+//                m_lastTab = m_tabbedPane.getSelectedIndex(state);
             }
 
         });
+
+//        m_tabbedPane.addActionListener(new ActionListener() {
+//
+//            public void actionPerformed(final ActionEvent event) {
+//                final PageState state = event.getPageState();
+//
+//            }
+//
+//        });
+
+//        m_flatBrowse.addProcessListener(new FormProcessListener() {
+//
+//            public void process(final FormSectionEvent fse) throws FormProcessException {
+//                if (m_flatBrowse.getSubmit().isSelected(fse.getPageState())) {
+//                    enableCreatePane(fse.getPageState());
+//                }
+//            }
+//
+//        });
     }
 
+//    private void enableCreatePane(final PageState state) {
+//        final BigDecimal typeParam = (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+//        if (typeParam == null) {
+//            m_tabbedPane.setTabVisible(state, m_create, false);
+//            m_create.setVisible(state, false);
+//        } else {
+//            m_tabbedPane.setTabVisible(state, m_create, true);
+//            m_create.setVisible(state, true);
+//        }
+//    }
     /**
      * Creates, and then caches, the Browse pane. Overriding this method to return null will prevent this tab from
      * appearing. Note: not implemented yet.
@@ -257,12 +324,17 @@ public class ItemSearchPage extends CMSPage {
 
         }.run();
     }
-    
+
     protected void setTabActive(final PageState state, final Component component, final boolean value) {
         m_tabbedPane.setTabVisible(state, component, value);
     }
 
-     protected void setTabActive(final PageState state, final int index, final boolean value) {
+    protected void setTabActive(final PageState state, final int index, final boolean value) {
         m_tabbedPane.setTabVisible(state, index, value);
     }
+
+    protected void setDefaultCreationFolder(final Folder folder) {
+        m_create.setDefaultFolder(folder.getOID().toString());
+    }
+
 }
