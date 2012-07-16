@@ -19,27 +19,20 @@
 package com.arsdigita.cms.ui.authoring;
 
 import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.MapComponentSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.SingleSelectionModel;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.cms.AuthoringKit;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
-import com.arsdigita.cms.ui.ScriptPrinter;
+import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.xml.Element;
-import org.apache.log4j.Logger;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  * Selects a component based on content type. Helper class for {@link
@@ -54,7 +47,6 @@ public abstract class AuthoringKitSelector extends SimpleContainer {
     private Map m_comps;
     private MapComponentSelectionModel m_sel;
     ContentTypeCollection m_types;
-    private ScriptPrinter scriptPrinter;
 
     /**
      * Construct a new AuthoringKitSelector. Load all the possible authoring kits from the database and construct
@@ -105,23 +97,7 @@ public abstract class AuthoringKitSelector extends SimpleContainer {
                     m_comps.put(type.getID(), c);
                     s_log.info("Added component " + c + " for "
                                + type.getAssociatedObjectType());
-                }
-
-                if (c instanceof LayoutPanel) {
-                    Label label = new Label("", false);
-                    label.addPrintListener(new PrintListener() {
-
-                        public void prepare(final PrintEvent event) {
-                            final Label label = (Label) event.getTarget();
-                            if (scriptPrinter != null) {
-                                label.setLabel(scriptPrinter.printScript(event.getPageState()));
-                            }
-                        }
-
-                    });
-
-                    ((LayoutPanel) c).setBottom(label);
-                }
+                }                
             }
         }
     }
