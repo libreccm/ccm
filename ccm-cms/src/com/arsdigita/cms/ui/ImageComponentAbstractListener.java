@@ -20,12 +20,12 @@ import org.apache.log4j.Logger;
  *
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
-public class ImageComponentAttachListener implements FormInitListener, FormProcessListener {
+public abstract class ImageComponentAbstractListener implements FormInitListener, FormProcessListener {
 
     private static final Logger s_log = Logger.getLogger(ImageComponentSelectListener.class);
     MapComponentSelectionModel m_imageComponent;
 
-    public ImageComponentAttachListener(MapComponentSelectionModel imageComponent) {
+    public ImageComponentAbstractListener(MapComponentSelectionModel imageComponent) {
         super();
         m_imageComponent = imageComponent;
     }
@@ -33,12 +33,9 @@ public class ImageComponentAttachListener implements FormInitListener, FormProce
     public void init(FormSectionEvent event)
             throws FormProcessException {
         PageState ps = event.getPageState();
-        setImageComponent(ps, ImageComponent.LIBRARY);
-
-//        ItemImageAttachment attachment = m_imageStep.getAttachment(ps);
-//        if (null == attachment) {
-        // XXX: Do something
-//        }
+        if (!m_imageComponent.isSelected(ps)) {
+            setImageComponent(ps, ImageComponent.LIBRARY);
+        }
     }
 
     public void process(FormSectionEvent event) throws FormProcessException {
@@ -51,33 +48,12 @@ public class ImageComponentAttachListener implements FormInitListener, FormProce
 
         ReusableImageAsset image = component.getImage(event);
 
-
-//        ContentItem item = m_imageStep.getItem(ps);
-//        if (null == item) {
-//            s_log.error("No item selected in ImageStepEdit",
-//                    new RuntimeException());
-//            return;
-//        }
-
-//        ItemImageAttachment attachment = m_imageStep.getAttachment(ps);
-//        if (null == attachment) {
-//            attachment = new ItemImageAttachment(item, image);
-//        }
-//        attachment.setCaption(component.getCaption(event));
-
-        // We only set the description and title based on the UI in
-        // the case where getIsImageStepDescriptionAndTitleShown is true.
-        // Otherwise, we leave this as the default value.  This means 
-        // existing values are not overwritten if the image is edited when
-        // isImageStepDescriptionAndTitleShown is false.
-//        if (ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown()) {
-//            attachment.setDescription(component.getDescription(event));
-//            attachment.setTitle(component.getTitle(event));
-//        }
-//        attachment.setUseContext(component.getUseContext(event));
+        processImage(event, ps, component, image);
     }
 
-    private ImageComponent getImageComponent(PageState ps) {
+    protected abstract void processImage(FormSectionEvent event, PageState ps, ImageComponent component, ReusableImageAsset image);
+
+    protected ImageComponent getImageComponent(PageState ps) {
         if (!m_imageComponent.isSelected(ps)) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("No component selected");
@@ -91,7 +67,7 @@ public class ImageComponentAttachListener implements FormInitListener, FormProce
 
     }
 
-    private void setImageComponent(PageState ps, final String activeKey) {
+    protected void setImageComponent(PageState ps, final String activeKey) {
         m_imageComponent.setSelectedKey(ps, activeKey);
 
         if (s_log.isDebugEnabled()) {

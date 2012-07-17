@@ -32,6 +32,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
     //private ImageChooser imageChooser;
     private final StringParameter m_imageComponentKey;
     private final MapComponentSelectionModel m_imageComponent;
+//    private final ImageComponentAdminListener m_adminListener;
 
     public ImagesPane() {
         // Left column is empty, this is only to provide the same layout for all
@@ -47,20 +48,21 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         m_imageComponent = new MapComponentSelectionModel(componentModel, new HashMap());
 
         Map selectors = m_imageComponent.getComponentsMap();
-
+//        m_adminListener = new ImageComponentAdminListener(m_imageComponent);
+        
         ImageUploadComponent upload = new ImageUploadComponent(ImageComponent.ADMIN_IMAGES);
-        //upload.getForm().addInitListener(new ImageComponentAdminListener(m_imageComponent));
         // For future use
-        // upload.addProcessListener(new ImageComponentAdminListener(m_imageComponent));
+        //upload.getForm().addInitListener(m_adminListener);
+        // upload.addProcessListener(m_adminListener);
         selectors.put(ImageComponent.UPLOAD, upload);
         body.addSegment(
                 new Label(GlobalizationUtil.globalize("cms.ui.image_upload")),
                 upload);
 
         ImageLibraryComponent library = new ImageLibraryComponent(ImageComponent.ADMIN_IMAGES);
-        //library.getForm().addInitListener(new ImageComponentAdminListener(m_imageComponent));
         // For future use
-        // library.getForm().addProcessListener(new ImageComponentAdminListener);
+        //library.getForm().addInitListener(m_adminListener);
+        // library.getForm().addProcessListener(m_adminListener);
 //        library.addUploadLink(new ActionListener() {
 //
 //            public void actionPerformed(ActionEvent ev) {

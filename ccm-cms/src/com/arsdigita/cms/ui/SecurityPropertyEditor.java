@@ -225,6 +225,7 @@ public class SecurityPropertyEditor extends PropertyEditor {
      * @param form The form
      * @param cancelButton the "Cancel" button on the form
      */
+    @Override
     public void addListeners(FormSection form, Submit cancelButton) {
         addSecurityListener(form);
         super.addListeners(form, cancelButton);
@@ -247,6 +248,7 @@ public class SecurityPropertyEditor extends PropertyEditor {
             super();
         }
 
+        @Override
         public PropertyEditorModel makeModel(PropertyEditor p, PageState s) {
             return new AccessListModel (
                                         getProperties(p),
@@ -273,16 +275,19 @@ public class SecurityPropertyEditor extends PropertyEditor {
             m_manager = Utilities.getSecurityManager(m_state);
         }
 
+        @Override
         public boolean next() {
             while(super.next()) {
                 Object key = getKey();
                 ComponentAccess ca = (ComponentAccess)m_access.get(key);
 
-                if(ca == null) // No access restricitons
+                if(ca == null) {
                     return true;
+                }
 
-                if ( ca.canAccess(m_state, m_manager) ) // Access checks out
+                if ( ca.canAccess(m_state, m_manager) ) {
                     return true;
+                }
 
                 // Otherwise, skip the property
             }

@@ -10,6 +10,7 @@ import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.ActionListener;
@@ -27,7 +28,7 @@ import java.math.BigDecimal;
  *
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
-public class ImageLibraryComponent extends SimpleContainer implements ImageComponent {
+public class ImageLibraryComponent extends SimpleContainer implements ImageComponent, Resettable {
 
     private final ImageChooser m_chooser;
     private final ItemSelectionModel m_imageModel;
@@ -157,5 +158,12 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
             upload.addActionListener(actionListener);
             add(upload, ColumnPanel.FULL_WIDTH);
         }
+    }
+
+    // Reset this component 
+    public void reset(PageState ps) {
+        // clear selection
+        m_imageModel.clearSelection(ps);
+        m_chooser.clearKeyword(ps);
     }
 }
