@@ -27,15 +27,11 @@ import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.FormInitListener;
-import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.ui.ImageComponent;
 import com.arsdigita.cms.ui.ImageLibraryComponent;
@@ -47,16 +43,18 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 public class ImageStepEdit extends SimpleContainer
-        implements Resettable, FormProcessListener, FormInitListener {
+        implements Resettable/*
+ * , FormProcessListener, FormInitListener
+ */ {
 
     private static final Logger s_log = Logger.getLogger(ImageStepEdit.class);
     private final ImageStep m_imageStep;
     private final StringParameter m_imageComponentKey;
     private final MapComponentSelectionModel m_imageComponent;
+    private final ImageComponentAttachListener m_attachListener;
 
     public ImageStepEdit(ImageStep step) {
         m_imageStep = step;
@@ -69,10 +67,11 @@ public class ImageStepEdit extends SimpleContainer
                 new MapComponentSelectionModel(componentModel, new HashMap());
 
         Map selectors = m_imageComponent.getComponentsMap();
+        m_attachListener = new ImageComponentAttachListener(m_imageComponent, m_imageStep);
 
         ImageLibraryComponent library = new ImageLibraryComponent();
-        library.getForm().addInitListener(this);
-        library.getForm().addProcessListener(this);
+        library.getForm().addInitListener(m_attachListener);
+        library.getForm().addProcessListener(m_attachListener);
         library.addUploadLink(new ActionListener() {
 
             public void actionPerformed(ActionEvent ev) {
@@ -81,10 +80,10 @@ public class ImageStepEdit extends SimpleContainer
         });
         selectors.put(ImageComponent.LIBRARY, library);
         add(library);
-        
+
         ImageUploadComponent upload = new ImageUploadComponent();
-        upload.getForm().addInitListener(this);
-        upload.getForm().addProcessListener(this);
+        upload.getForm().addInitListener(m_attachListener);
+        upload.getForm().addProcessListener(m_attachListener);
         selectors.put(ImageComponent.UPLOAD, upload);
         add(upload);
 
@@ -110,20 +109,6 @@ public class ImageStepEdit extends SimpleContainer
         return m_imageComponent.getComponentsMap().values().iterator();
     }
 
-    private ImageComponent getImageComponent(PageState ps) {
-        if (!m_imageComponent.isSelected(ps)) {
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("No component selected");
-                s_log.debug("Selected: " + m_imageComponent.getComponent(ps));
-            }
-
-            m_imageComponent.setSelectedKey(ps, ImageComponent.UPLOAD);
-        }
-
-        return (ImageComponent) m_imageComponent.getComponent(ps);
-
-    }
-
     private void setImageComponent(PageState ps, final String activeKey) {
         m_imageComponent.setSelectedKey(ps, activeKey);
 
@@ -147,64 +132,34 @@ public class ImageStepEdit extends SimpleContainer
         }
     }
 
-    public void init(FormSectionEvent event)
-            throws FormProcessException {
-        PageState ps = event.getPageState();
-
-        ItemImageAttachment attachment = m_imageStep.getAttachment(ps);
-        if (null == attachment) {
-            // XXX: Do something
-        }
-    }
-
-    public void process(FormSectionEvent event) throws FormProcessException {
-        PageState ps = event.getPageState();
-        ImageComponent component = getImageComponent(ps);
-
-        if (!component.getSaveCancelSection().getSaveButton().isSelected(ps)) {
-            return;
-        }
-
-        ContentItem item = m_imageStep.getItem(ps);
-        if (null == item) {
-            s_log.error("No item selected in ImageStepEdit",
-                    new RuntimeException());
-            return;
-        }
-
-        ReusableImageAsset image = component.getImage(event);
-
-        ItemImageAttachment attachment = m_imageStep.getAttachment(ps);
-        if (null == attachment) {
-            attachment = new ItemImageAttachment(item, image);
-        }
-        attachment.setCaption(component.getCaption(event));
-
-        // We only set the description and title based on the UI in
-        // the case where getIsImageStepDescriptionAndTitleShown is true.
-        // Otherwise, we leave this as the default value.  This means 
-        // existing values are not overwritten if the image is edited when
-        // isImageStepDescriptionAndTitleShown is false.
-        if (ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown()) {
-            attachment.setDescription(component.getDescription(event));
-            attachment.setTitle(component.getTitle(event));
-        }
-        attachment.setUseContext(component.getUseContext(event));
-    }
-
-    public void reset(PageState state) {
-        Page p = state.getPage();
-        
+    // Reset this component and all of it's resettable childs
+    public void reset(PageState ps) {
         Map componentsMap = m_imageComponent.getComponentsMap();
+        m_imageComponent.setSelectedKey(ps, ImageComponent.LIBRARY);
         Iterator i = componentsMap.keySet().iterator();
         while (i.hasNext()) {
             Object key = i.next();
             Component component = (Component) componentsMap.get(key);
 
-            p.setVisibleDefault(component, ImageComponent.LIBRARY.equals(key));
+            ps.setVisible(component, ImageComponent.LIBRARY.equals(key));
+            
+            // Reset all components if they are of type Resettable
+            if (component instanceof Resettable) {
+                ((Resettable) component).reset(ps);
+            }
         }
     }
 
+    // We only set the description and title based on the UI in
+    // the case where getIsImageStepDescriptionAndTitleShown is true.
+    // Otherwise, we leave this as the default value.  This means 
+    // existing values are not overwritten if the image is edited when
+    // isImageStepDescriptionAndTitleShown is false.
+//        if (ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown()) {
+//            attachment.setDescription(component.getDescription(event));
+//            attachment.setTitle(component.getTitle(event));
+//        }
+//        attachment.setUseContext(component.getUseContext(event));
     private class UniqueUseContextListener implements ParameterListener {
 
         public void validate(ParameterEvent ev)

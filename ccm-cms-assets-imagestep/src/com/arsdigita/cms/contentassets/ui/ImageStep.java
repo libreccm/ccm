@@ -75,7 +75,6 @@ public class ImageStep extends SecurityPropertyEditor {
             new WorkflowLockedComponentAccess( m_add, m_itemSelection );
         addComponent( "add", "Add Image", addCA );
 
-
         m_display = new ImageStepDisplay( this );
         setDisplayComponent(m_display);
 
@@ -174,5 +173,11 @@ public class ImageStep extends SecurityPropertyEditor {
         public ParameterModel getStateParameter() {
             return m_attachmentOID;
         }
+    }
+
+    @Override
+    public void showDisplayPane(PageState state) {
+        super.showDisplayPane(state);
+        m_add.reset(state);
     }
 }
