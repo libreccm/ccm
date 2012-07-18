@@ -31,7 +31,7 @@ public class ArticleInCollectedVolumeBundleUpgrade extends AbstractBundleUpgrade
 
     @Override
     protected String getPrimaryKeyConstraintName() {
-        return "ct_article_in_collected_volume_bundles";
+        return "ct_art_in_col_vol_bun__p_1khsq";
     }
 
     @Override

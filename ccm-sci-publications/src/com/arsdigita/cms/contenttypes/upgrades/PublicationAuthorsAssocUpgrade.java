@@ -22,13 +22,13 @@ public class PublicationAuthorsAssocUpgrade extends AbstractAssocUpgrade {
 
     @Override
     protected String getMemberIdCol() {
-        return "author_id";
+        return "person_id";
     }
 
     @Override
     protected Map<String, String> getAttributes() {
         final Map<String, String> attributes = new HashMap<String, String>();
-        attributes.put("editor", "BIT");
+        attributes.put("editor", "boolean");
         attributes.put("authorship_order", "integer");
         return attributes;
     }

@@ -28,9 +28,9 @@ public class Upgrade664to665 extends Program {
         
         //Reload authoring steps
         XMLContentTypeHandler handler = new XMLContentTypeHandler();
-        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericContact.xml", handler);
-        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericOrganizationalUnit.xml", handler);
-        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericPerson.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/GenericContact.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/GenericOrganizationalUnit.xml", handler);
+        XML.parseResource("/WEB-INF/content-types/GenericPerson.xml", handler);
     }
     
     public static void main(final String[] args) {

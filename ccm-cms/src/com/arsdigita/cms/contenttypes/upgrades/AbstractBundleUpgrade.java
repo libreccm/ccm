@@ -51,7 +51,7 @@ public abstract class AbstractBundleUpgrade {
             final Statement stmt = conn.createStatement();
 
             stmt.addBatch(String.format("CREATE TABLE %s ( "
-                                        + "bundle_id integer NOT NULL)",
+                                        + "bundle_id integer NOT NULL);",
                                         getBundleTableName()));
 
             stmt.addBatch(String.format("ALTER TABLE ONLY %s "
@@ -88,20 +88,21 @@ public abstract class AbstractBundleUpgrade {
                     "SELECT parent_id "
                     + "FROM cms_items "
                     + "JOIN %s "
-                    + "ON cms_items.item_id = %s.bundle_id",
-                    getBundleTableName(),
-                    getBundleTableName()));
+                    + "ON cms_items.item_id = %s.%s;",
+                    getContentItemTableName(),
+                    getContentItemTableName(),
+                    getIdColName()));
 
             while (personsRs.next()) {
                 stmt.addBatch(String.format("INSERT INTO %s (bundle_id) "
-                                            + "VALUES (%d)",
-                                            getBundleClassName(),
+                                            + "VALUES (%d);",
+                                            getBundleTableName(),
                                             personsRs.getInt(1)));
                 stmt.addBatch(String.format(
                         "UPDATE acs_objects "
                         + "SET default_domain_class = '%s',"
                         + "object_type = '%s' "
-                        + "WHERE object_id = %d",
+                        + "WHERE object_id = %d;",
                         getBundleClassName(),
                         getBundleClassName(),
                         personsRs.getInt(1)));

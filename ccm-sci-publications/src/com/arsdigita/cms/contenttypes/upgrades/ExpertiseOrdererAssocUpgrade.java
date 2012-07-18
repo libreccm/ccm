@@ -12,7 +12,7 @@ public class ExpertiseOrdererAssocUpgrade extends AbstractAssocUpgrade {
   
     @Override
     protected String getTableName() {
-        return "ct_expertise_orderer";
+        return "ct_expertise_orderer_map";
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ExpertiseOrdererAssocUpgrade extends AbstractAssocUpgrade {
 
     @Override
     protected String getMemberTableName() {
-        return "ct_orgaunit_bundles";
+        return "cms_orgaunit_bundles";
     }
 
 }

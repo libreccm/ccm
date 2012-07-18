@@ -187,12 +187,12 @@ public abstract class AbstractAssocUpgrade {
                 final StringBuilder attributeValues = new StringBuilder();
                 for (Map.Entry<String, String> attribute : getAttributes().entrySet()) {
                     attributeValues.append(",");
-                    if (attribute.getValue().startsWith("character")) {
-                        attributeValues.append('\"');
+                    if (attribute.getValue().startsWith("character") || attribute.getValue().startsWith("BIT") || attribute.getValue().startsWith("boolean")) {
+                        attributeValues.append('\'');
                     }
                     attributeValues.append(entry.getAttributes().get(attribute.getKey()));
-                    if (attribute.getValue().startsWith("character")) {
-                        attributeValues.append('\"');
+                    if (attribute.getValue().startsWith("character") || attribute.getValue().startsWith("BIT") || attribute.getValue().startsWith("boolean")) {
+                        attributeValues.append('\'');
                     }
                 }
                 stmt.addBatch(String.format("INSERT INTO %s ("

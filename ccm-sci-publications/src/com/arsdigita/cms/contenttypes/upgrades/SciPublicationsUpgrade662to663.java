@@ -52,7 +52,7 @@ public class SciPublicationsUpgrade662to663 extends Program {
         XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ArticleInCollectedVolume.xml", handler);
         XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ArticleInJournal.xml", handler);
         XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/CollectedVolume.xml", handler);
-        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ExpertiseBundle", handler);
+        XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Expertise.xml", handler);
         XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/InProceedings.xml", handler);
         XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/InternetArticle.xml", handler);
         XML.parseResource("/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Journal.xml", handler);
