@@ -27,17 +27,21 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.Journal;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 
 /**
- * Form for adding an associatio between an article in a journal and a journal.
+ * Form for adding an association between an article in a journal and a journal.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class ArticleInJournalJournalForm
         extends BasicItemForm
@@ -46,6 +50,11 @@ public class ArticleInJournalJournalForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "journal";
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public ArticleInJournalJournalForm(ItemSelectionModel itemModel) {
         super("ArticleInJournalJournal", itemModel);
@@ -58,6 +67,9 @@ public class ArticleInJournalJournalForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 Journal.class.getName()));
+        if ((config.getDefaultJournalsFolder() != null) && (config.getDefaultJournalsFolder() != 0)) {
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultJournalsFolder())));
+        }
         add(itemSearch);
     }
 
@@ -77,10 +89,10 @@ public class ArticleInJournalJournalForm
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             Journal journal = (Journal) data.get(ITEM_SEARCH);
-            journal = (Journal) journal.getContentBundle().getInstance(article.
-                    getLanguage());
+            journal = (Journal) journal.getContentBundle().getInstance(article.getLanguage());
 
             article.setJournal(journal);
+            itemSearch.publishCreatedItem(data, article);
         }
 
         init(fse);
@@ -112,4 +124,5 @@ public class ArticleInJournalJournalForm
             return;
         }
     }
+
 }

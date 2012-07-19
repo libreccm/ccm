@@ -78,6 +78,7 @@ public class GenericOrganizationalUnitContactAddForm
                 "cms.contenttypes.ui.genericorgaunit.select_contact").localize()));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericContact.class.getName()));
+        m_itemSearch.setDisableCreatePane(true);
         add(m_itemSearch);
 
         selectedContactLabel = new Label("");

@@ -27,18 +27,22 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 
 /**
  * Form for adding an association between a InProceedings publication and
  * a proceedings publication.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class InProceedingsProceedingsForm
         extends BasicItemForm
@@ -47,6 +51,11 @@ public class InProceedingsProceedingsForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "proceedings";
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public InProceedingsProceedingsForm(ItemSelectionModel itemModel) {
         super("InProceedingsProceedings", itemModel);
@@ -60,6 +69,9 @@ public class InProceedingsProceedingsForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 Proceedings.class.getName()));
+         if ((config.getDefaultProceedingsFolder() != null) && (config.getDefaultProceedingsFolder() != 0)) {
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultProceedingsFolder())));
+        }
         add(itemSearch);
     }
 
@@ -83,6 +95,7 @@ public class InProceedingsProceedingsForm
                     getInstance(inProceedings.getLanguage());
 
             inProceedings.setProceedings(proceedings);
+            itemSearch.publishCreatedItem(data, proceedings);
         }
 
         init(fse);

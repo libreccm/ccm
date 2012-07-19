@@ -8,16 +8,20 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class PublicationWithPublisherSetPublisherForm
         extends BasicItemForm
@@ -26,6 +30,12 @@ public class PublicationWithPublisherSetPublisherForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "setPublisher";
+      private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
+
 
     public PublicationWithPublisherSetPublisherForm(
             final ItemSelectionModel itemModel) {
@@ -37,10 +47,10 @@ public class PublicationWithPublisherSetPublisherForm
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.publisher").localize()));
         itemSearch =
-        new ItemSearchWidget(
-                ITEM_SEARCH,
-                ContentType.findByAssociatedObjectType(
-                Publisher.class.getName()));
+        new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(Publisher.class.getName()));
+        if ((config.getDefaultPublisherFolder() != null) && config.getDefaultPublisherFolder() != 0) {
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultPublisherFolder())));            
+        }
         add(itemSearch);
     }
 
@@ -61,10 +71,10 @@ public class PublicationWithPublisherSetPublisherForm
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             Publisher publisher = (Publisher) data.get(ITEM_SEARCH);
-            publisher = (Publisher) publisher.getContentBundle().getInstance(publication.
-                    getLanguage());
+            publisher = (Publisher) publisher.getContentBundle().getInstance(publication.getLanguage());
 
             publication.setPublisher(publisher);
+            itemSearch.publishCreatedItem(data, publisher);
         }
 
         init(fse);
@@ -91,8 +101,8 @@ public class PublicationWithPublisherSetPublisherForm
               languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
-                    "publications.ui.with_publisher.publisher.no_suitable_language_variant"));
-            return;
+                    "publications.ui.with_publisher.publisher.no_suitable_language_variant"));            
         }
     }
+
 }

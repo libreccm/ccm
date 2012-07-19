@@ -8,16 +8,20 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.InternetArticle;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class InternetArticleOrganizationForm
         extends BasicItemForm
@@ -26,6 +30,11 @@ public class InternetArticleOrganizationForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "internetArticleOrga";
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public InternetArticleOrganizationForm(final ItemSelectionModel itemModel) {
         super("InternetArticleOrganizationForm", itemModel);
@@ -35,9 +44,13 @@ public class InternetArticleOrganizationForm
     public void addWidgets() {
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.select_organization")));
-        itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(GenericOrganizationalUnit.class.
-                getName()));
+        itemSearch = new ItemSearchWidget(ITEM_SEARCH,
+                                          ContentType.findByAssociatedObjectType(
+                GenericOrganizationalUnit.class.getName()));
+        if ((config.getDefaultOrganizationsFolder() != null) && (config.getDefaultOrganizationsFolder() != 0)) {
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultOrganizationsFolder())));
+        }
+
         add(itemSearch);
     }
 
@@ -56,12 +69,12 @@ public class InternetArticleOrganizationForm
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.
-                    get(ITEM_SEARCH);
+            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
             orga = (GenericOrganizationalUnit) orga.getContentBundle().
                     getInstance(article.getLanguage());
 
             article.setOrganization(orga);
+            itemSearch.publishCreatedItem(data, orga);
         }
 
         init(fse);
@@ -83,12 +96,12 @@ public class InternetArticleOrganizationForm
                 getSelectedObject(state);
         GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(
                 ITEM_SEARCH);
-        if (!(orga.getContentBundle().hasInstance(article.getLanguage(), Kernel.
-              getConfig().languageIndependentItems()))) {
+        if (!(orga.getContentBundle().hasInstance(article.getLanguage(), Kernel.getConfig().languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.internetarticle.select_organization.no_suitable_language_variant"));
             return;
         }
     }
+
 }

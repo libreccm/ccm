@@ -25,6 +25,7 @@ import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.event.RequestEvent;
 import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMSConfig;
@@ -85,6 +86,7 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new StringParameter("publishWidget"));
         addGlobalStateParam(new StringParameter("defaultCreationFolder"));
         addGlobalStateParam(new IntegerParameter("lastTab"));
+        addGlobalStateParam(new BooleanParameter("disableCreatePane"));
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
@@ -103,10 +105,11 @@ public class ItemSearchPage extends CMSPage {
                 final PageState state = event.getPageState();
 
                 final String query = (String) state.getValue(new StringParameter(ItemSearchPopup.QUERY));
+                final Boolean disableCreatePane = (Boolean) state.getValue(new BooleanParameter("disableCreatePane"));
 
                 BigDecimal typeParam =
                            (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
-                if (typeParam == null) {
+                if ((typeParam == null) || disableCreatePane) {
                     m_tabbedPane.setTabVisible(state, m_create, false);
                     m_create.setVisible(state, false);
                 } else {

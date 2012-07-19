@@ -41,6 +41,7 @@ public class GenericOrganizationalUnitPublicationAddForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(Publication.class.
                 getName()));
+        itemSearch.setDisableCreatePane(true);
         add(itemSearch);
     }
 

@@ -27,18 +27,22 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 
 /**
  * Form for adding an association between an ArticleInCollectedVolume and a
  * CollectedVolume.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class ArticleInCollectedVolumeCollectedVolumeForm
         extends BasicItemForm
@@ -47,6 +51,11 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "collectedVolume";
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public ArticleInCollectedVolumeCollectedVolumeForm(
             ItemSelectionModel itemModel) {
@@ -61,6 +70,9 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 CollectedVolume.class.getName()));
+        if ((config.getDefaultCollectedVolumesFolder() != null) && (config.getDefaultCollectedVolumesFolder() != 0)) {
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultCollectedVolumesFolder())));
+        }
         add(itemSearch);
     }
 
@@ -87,6 +99,7 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
                     article.getLanguage());
 
             article.setCollectedVolume(collectedVolume);
+            itemSearch.publishCreatedItem(data, article);
         }
 
         init(fse);
@@ -113,12 +126,12 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
 
         if (!(collectedVolume.getContentBundle().hasInstance(
               article.getLanguage(),
-                                                             Kernel.getConfig().
+              Kernel.getConfig().
               languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
                     "publications.ui.articleInCollectedVolume.selectCollectedVolume.no_suitable_language_variant"));
-            return;
         }
     }
+
 }

@@ -44,13 +44,13 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.globalization.GlobalizationHelper;
-import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
  * Form for adding related persons the an organization.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class GenericOrganizationalUnitPersonAddForm
         extends BasicItemForm
@@ -81,6 +81,7 @@ public class GenericOrganizationalUnitPersonAddForm
                 findByAssociatedObjectType(getPersonType()));
         /*m_itemSearch.getItemField().addValidationListener(
         new NotNullValidationListener());*/
+        m_itemSearch.setDisableCreatePane(true);
         add(this.m_itemSearch);
 
         selectedPersonNameLabel = new Label("");

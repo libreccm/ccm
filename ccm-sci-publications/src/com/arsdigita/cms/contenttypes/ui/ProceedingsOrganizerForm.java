@@ -8,16 +8,20 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class ProceedingsOrganizerForm
         extends BasicItemForm
@@ -26,6 +30,11 @@ public class ProceedingsOrganizerForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "departmentOrga";
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public ProceedingsOrganizerForm(final ItemSelectionModel itemModel) {
         super("ProceedingsOrganizerForm", itemModel);
@@ -35,9 +44,12 @@ public class ProceedingsOrganizerForm
     protected void addWidgets() {
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.organizer")));
-        itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(GenericOrganizationalUnit.class.
-                getName()));
+        itemSearch = new ItemSearchWidget(ITEM_SEARCH,
+                                          ContentType.findByAssociatedObjectType(
+                GenericOrganizationalUnit.class.getName()));
+        if ((config.getDefaultOrganizationsFolder() != null) && (config.getDefaultOrganizationsFolder() != 0)) {
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultOrganizationsFolder())));
+        }
         add(itemSearch);
     }
 
@@ -63,6 +75,7 @@ public class ProceedingsOrganizerForm
                     getInstance(proceedings.getLanguage());
 
             proceedings.setOrganizerOfConference(organizer);
+            itemSearch.publishCreatedItem(data, organizer);
 
         }
 
@@ -82,8 +95,7 @@ public class ProceedingsOrganizerForm
 
         Proceedings proceedings = (Proceedings) getItemSelectionModel().
                 getSelectedObject(state);
-        GenericOrganizationalUnit organizer = (GenericOrganizationalUnit) data.
-                get(ITEM_SEARCH);
+        GenericOrganizationalUnit organizer = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
         if (!(organizer.getContentBundle().hasInstance(proceedings.getLanguage(),
                                                        Kernel.getConfig().
               languageIndependentItems()))) {
@@ -93,4 +105,5 @@ public class ProceedingsOrganizerForm
             return;
         }
     }
+
 }

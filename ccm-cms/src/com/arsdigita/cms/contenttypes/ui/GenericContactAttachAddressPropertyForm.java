@@ -77,6 +77,7 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericAddress"));
+        m_itemSearch.setDisableCreatePane(true);        
         add(this.m_itemSearch);
     }
 

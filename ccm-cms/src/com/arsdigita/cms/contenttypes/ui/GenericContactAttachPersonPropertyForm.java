@@ -17,20 +17,19 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.cms.contenttypes.GenericPerson;
-import com.arsdigita.cms.contenttypes.GenericContact;
-import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
+import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.cms.ui.ItemSearchWidget;
+import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.UncheckedWrapperException;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -88,6 +87,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericPerson"));
+        m_itemSearch.setDisableCreatePane(true);
         add(this.m_itemSearch);
 
         // GenericContact type field

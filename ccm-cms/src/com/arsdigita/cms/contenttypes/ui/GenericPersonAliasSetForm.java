@@ -55,7 +55,7 @@ public class GenericPersonAliasSetForm
                 "cms.contenttypes.ui.person.alias.select").localize()));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
-                "com.arsdigita.cms.contenttypes.GenericPerson"));
+                "com.arsdigita.cms.contenttypes.GenericPerson"));        
         add(itemSearch);
     }
 
@@ -87,6 +87,7 @@ public class GenericPersonAliasSetForm
                     getLanguage());
 
             person.setAlias(alias);
+            itemSearch.publishCreatedItem(data, alias);
         }
 
         init(fse);

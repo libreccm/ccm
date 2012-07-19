@@ -36,12 +36,12 @@ import com.arsdigita.cms.contenttypes.VolumeInSeriesCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.kernel.Kernel;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class SeriesVolumeAddForm extends BasicItemForm {
 
@@ -72,6 +72,7 @@ public class SeriesVolumeAddForm extends BasicItemForm {
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 Publication.class.getName()));
+        m_itemSearch.setDisableCreatePane(true);
         add(m_itemSearch);
 
         selectedVolumeLabel = new Label("");

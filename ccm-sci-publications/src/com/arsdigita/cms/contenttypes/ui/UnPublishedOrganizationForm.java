@@ -8,16 +8,20 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class UnPublishedOrganizationForm
         extends BasicItemForm
@@ -26,6 +30,11 @@ public class UnPublishedOrganizationForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "unPublishedOrga";
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public UnPublishedOrganizationForm(final ItemSelectionModel itemModel) {
         super("UnPublishedOrganizationForm", itemModel);
@@ -38,6 +47,9 @@ public class UnPublishedOrganizationForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 GenericOrganizationalUnit.class.getName()));
+        if ((config.getDefaultOrganizationsFolder() != null) && (config.getDefaultOrganizationsFolder() != 0)) {
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultOrganizationsFolder())));
+        }
         add(itemSearch);
     }
 
@@ -56,12 +68,12 @@ public class UnPublishedOrganizationForm
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.
-                    get(ITEM_SEARCH);
+            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
             orga = (GenericOrganizationalUnit) orga.getContentBundle().
                     getInstance(unPublished.getLanguage());
 
             unPublished.setOrganization(orga);
+            itemSearch.publishCreatedItem(data, orga);
 
         }
 
@@ -92,4 +104,5 @@ public class UnPublishedOrganizationForm
             return;
         }
     }
+
 }

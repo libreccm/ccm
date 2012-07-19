@@ -19,8 +19,6 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -29,17 +27,22 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class PublicationSeriesAddForm
         extends BasicItemForm
@@ -52,6 +55,12 @@ public class PublicationSeriesAddForm
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "series";
     private ItemSelectionModel m_itemModel;
+      private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
+
 
     public PublicationSeriesAddForm(ItemSelectionModel itemModel) {
         super("SeriesEntryForm", itemModel);
@@ -65,6 +74,9 @@ public class PublicationSeriesAddForm
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(Series.class.getName()));
+        if ((config.getDefaultSeriesFolder() != null) && (config.getDefaultSeriesFolder() != 0)) {
+            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultSeriesFolder())));
+        }
         add(m_itemSearch);
     }
 
@@ -90,6 +102,7 @@ public class PublicationSeriesAddForm
                     getLanguage());
 
             publication.addSeries(series);
+            m_itemSearch.publishCreatedItem(data, series);
         }
 
         init(fse);

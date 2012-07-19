@@ -27,18 +27,22 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.ArticleInJournalCollection;
 import com.arsdigita.cms.contenttypes.Journal;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class JournalArticleAddForm
         extends BasicItemForm
@@ -51,6 +55,11 @@ public class JournalArticleAddForm
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "articles";
     private ItemSelectionModel m_itemModel;
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public JournalArticleAddForm(ItemSelectionModel itemModel) {
         super("ArticlesAddForm", itemModel);
@@ -66,6 +75,9 @@ public class JournalArticleAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 ArticleInJournal.class.getName()));
+         if ((config.getDefaultArticlesInJournalFolder() != null) && (config.getDefaultArticlesInJournalFolder() != 0)) {
+            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultArticlesInJournalFolder())));
+        }
         add(m_itemSearch);
     }
 
@@ -90,6 +102,7 @@ public class JournalArticleAddForm
                     getLanguage());
 
             journal.addArticle(article);
+            m_itemSearch.publishCreatedItem(data, article);
         }
 
         init(fse);

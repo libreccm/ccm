@@ -80,6 +80,7 @@ public class ItemSearchWidget extends FormSection
     private Folder m_defaultCreationFolder;
     private ParameterModel m_model;
     private ParameterModel m_searchModel;
+    private boolean disableCreatePane = false;
     private String searchLabelText = (String) GlobalizationUtil.globalize("cms.ui.item_search.search").localize();
     private String selectedLabelText = (String) GlobalizationUtil.globalize("cms.ui.item_search.selected").localize();
     public static final String BEBOP_ITEM_SEARCH = "bebop:itemSearch";
@@ -275,6 +276,7 @@ public class ItemSearchWidget extends FormSection
                     params.setParameter("single_type", typeURLFrag);
                 }
                 params.setParameter("publishWidget", formName + ".elements['" + m_publish.getName() + "']");
+                params.setParameter("disableCreatePane", Boolean.toString(disableCreatePane));
 
                 if (m_defaultCreationFolder != null) {
                     params.setParameter("defaultCreationFolder", m_defaultCreationFolder.getOID().toString());
@@ -522,5 +524,13 @@ public class ItemSearchWidget extends FormSection
                 }
             }
         }
+    }
+    
+    public boolean getDisableCreatePane() {
+        return disableCreatePane;
+    }
+    
+    public void setDisableCreatePane(final boolean disableCreatePane) {
+        this.disableCreatePane = disableCreatePane;
     }
 }

@@ -28,16 +28,18 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.parameters.BooleanParameter;
-import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.IncompleteDateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.EditshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -46,6 +48,7 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class SeriesEditshipAddForm
         extends BasicItemForm
@@ -60,6 +63,11 @@ public class SeriesEditshipAddForm
     private ItemSelectionModel m_itemModel;
     private SeriesEditshipStep editStep;
     private Label selectedEditorLabel;
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public SeriesEditshipAddForm(ItemSelectionModel itemModel,
                                  SeriesEditshipStep editStep) {
@@ -77,6 +85,9 @@ public class SeriesEditshipAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.
                 getName()));
+        if ((config.getDefaultAuthorsFolder() != null) && (config.getDefaultAuthorsFolder() != 0)) {
+            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolder())));
+        }
         add(m_itemSearch);
 
         selectedEditorLabel = new Label("");
@@ -184,6 +195,7 @@ public class SeriesEditshipAddForm
                         EditshipCollection.TO_SKIP_MONTH),
                                  (Boolean) data.get(
                         EditshipCollection.TO_SKIP_DAY));
+                m_itemSearch.publishCreatedItem(data, editor);
             } else {
                 EditshipCollection editors;
 

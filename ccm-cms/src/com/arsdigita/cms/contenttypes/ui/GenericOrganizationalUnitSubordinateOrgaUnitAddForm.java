@@ -42,6 +42,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 customizer.getSubordinateOrgaUnitType()));
+        itemSearch.setDisableCreatePane(true);
         add(itemSearch);
     }
 

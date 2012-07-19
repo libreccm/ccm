@@ -27,18 +27,22 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeCollection;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class CollectedVolumeArticleAddForm
         extends BasicItemForm
@@ -52,6 +56,11 @@ public class CollectedVolumeArticleAddForm
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "articles";
     private ItemSelectionModel m_itemModel;
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public CollectedVolumeArticleAddForm(ItemSelectionModel itemModel) {
         super("ArticlesAddForm", itemModel);
@@ -67,6 +76,9 @@ public class CollectedVolumeArticleAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 ArticleInCollectedVolume.class.getName()));
+         if ((config.getDefaultArticlesInCollectedVolumeFolder() != null) && (config.getDefaultArticlesInCollectedVolumeFolder() != 0)) {
+            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultArticlesInCollectedVolumeFolder())));
+        }
         add(m_itemSearch);
     }
 
@@ -94,6 +106,7 @@ public class CollectedVolumeArticleAddForm
                     getInstance(collectedVolume.getLanguage());
 
             collectedVolume.addArticle(article);
+            m_itemSearch.publishCreatedItem(data, article);
         }
 
         init(fse);
