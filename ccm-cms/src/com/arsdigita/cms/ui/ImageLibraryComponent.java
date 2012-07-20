@@ -160,10 +160,11 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         }
     }
 
-    // Reset this component 
+    // Reset this component
     public void reset(PageState ps) {
         // clear selection
         m_imageModel.clearSelection(ps);
+        m_chooser.clearSelection(ps);
         m_chooser.clearKeyword(ps);
     }
 }

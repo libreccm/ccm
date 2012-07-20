@@ -47,11 +47,12 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         m_imageComponent = new MapComponentSelectionModel(componentModel, new HashMap());
 
         Map selectors = m_imageComponent.getComponentsMap();
-        m_adminListener = new ImageComponentAdminListener(m_imageComponent);
+        m_adminListener = new ImageComponentAdminListener(m_imageComponent, this);
 
         ImageUploadComponent upload = new ImageUploadComponent(ImageComponent.ADMIN_IMAGES);
         upload.getForm().addInitListener(m_adminListener);
-        upload.addProcessListener(m_adminListener);
+        upload.getForm().addSubmissionListener(m_adminListener);
+        upload.getForm().addProcessListener(m_adminListener);
         selectors.put(ImageComponent.UPLOAD, upload);
         body.addSegment(
                 new Label(GlobalizationUtil.globalize("cms.ui.image_upload")),

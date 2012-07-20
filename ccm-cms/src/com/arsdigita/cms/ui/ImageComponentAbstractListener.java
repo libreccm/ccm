@@ -11,6 +11,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.cms.ReusableImageAsset;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
  *
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
-public abstract class ImageComponentAbstractListener implements FormInitListener, FormProcessListener {
+public abstract class ImageComponentAbstractListener implements FormInitListener, FormProcessListener, FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(ImageComponentSelectListener.class);
     MapComponentSelectionModel m_imageComponent;
@@ -38,6 +39,15 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
         }
     }
 
+    public void submitted(FormSectionEvent event) throws FormProcessException {
+        PageState ps = event.getPageState();
+        ImageComponent component = getImageComponent(ps);
+
+        if(component.getSaveCancelSection().getCancelButton().isSelected(ps)) {
+            cancelled(ps);
+        }
+    }
+
     public void process(FormSectionEvent event) throws FormProcessException {
         PageState ps = event.getPageState();
         ImageComponent component = getImageComponent(ps);
@@ -51,6 +61,9 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
         processImage(event, ps, component, image);
     }
 
+
+    protected void cancelled(PageState ps) {};
+    
     protected abstract void processImage(FormSectionEvent event, PageState ps, ImageComponent component, ReusableImageAsset image);
 
     protected ImageComponent getImageComponent(PageState ps) {
