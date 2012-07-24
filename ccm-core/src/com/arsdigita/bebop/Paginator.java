@@ -18,7 +18,6 @@
  */
 package com.arsdigita.bebop;
 
-
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.bebop.parameters.IntegerParameter;
@@ -27,12 +26,12 @@ import com.arsdigita.util.LockableImpl;
 import com.arsdigita.xml.Element;
 
 /**
- *  A pagination component
- * used to select different page views from a list of items.
+ * A pagination component used to select different page views from a list of
+ * items.
  *
  * <p>In most cases, this component will be used with either a {@link
- * List} or a {@link Table}. Here is an example on how to use this
- * pagination component with a Table:
+ * List} or a {@link Table}. Here is an example on how to use this pagination
+ * component with a Table:
  *
  * <blockquote><pre><code>
  * Table myTable = new Table(new myTableModelBuilder(),
@@ -44,11 +43,11 @@ import com.arsdigita.xml.Element;
  * p.add(myTable);
  * </code></pre></blockquote>
  *
- * <p>The model builder that is used in <code>myTable</code> was designed
- * to also implement the {@link PaginationModelBuilder}
- * interface. With both interfaces being implemented by the same
- * class, it is much easier to cache the results of operations
- * performed on the {@link com.arsdigita.persistence.DataQuery} used to generate the results.
+ * <p>The model builder that is used in
+ * <code>myTable</code> was designed to also implement the {@link PaginationModelBuilder}
+ * interface. With both interfaces being implemented by the same class, it is
+ * much easier to cache the results of operations performed on the {@link com.arsdigita.persistence.DataQuery}
+ * used to generate the results.
  *
  * <blockquote><pre><code>
  * public class myTableModelBuilder extends LockableImpl
@@ -79,16 +78,16 @@ import com.arsdigita.xml.Element;
  * }
  * </code></pre></blockquote>
  *
- * <p>Subclasses that wish to render the page links in a different format
- * will override the {@link #buildPaginationDisplay()} method. The
- * implementation of this method must set the selection model used to
- * retrieve the page number by calling the {@link
- * #setPageNumSelectionModel(SingleSelectionModel)} method. Aside from
- * changing the display, this pagination component will hide itself if
- * {@link PaginationModelBuilder#getTotalSize(Paginator, PageState)}
- * is less than the page size (i.e., a single page can be used to
- * display the entire results). This default behavior can be changed
- * by calling {@link #setHiddenIfSinglePage(boolean)} with
+ * <p>Subclasses that wish to render the page links in a different format will
+ * override the {@link #buildPaginationDisplay()} method. The implementation of
+ * this method must set the selection model used to retrieve the page number by
+ * calling the {@link
+ * #setPageNumSelectionModel(SingleSelectionModel)} method. Aside from changing
+ * the display, this pagination component will hide itself if
+ * {@link PaginationModelBuilder#getTotalSize(Paginator, PageState)} is less
+ * than the page size (i.e., a single page can be used to display the entire
+ * results). This default behavior can be changed by calling {@link #setHiddenIfSinglePage(boolean)}
+ * with
  * <code>false</code>.
  *
  * @see PaginationModelBuilder
@@ -96,48 +95,44 @@ import com.arsdigita.xml.Element;
  * @author Phong Nguyen
  * @version $Id: Paginator.java 287 2005-02-22 00:29:02Z sskracic $
  * @since 4.6.10
- **/
+ *
+ */
 public class Paginator extends SimpleContainer implements Resettable {
 
     // $Change: 44247 $
     // $Revision: #16 $
     // $DateTime: 2004/08/16 18:10:38 $
     // $Author: sskracic $
-
     // The builder which returns the total number of items to
     // paginate.
     private PaginationModelBuilder m_builder;
-
     // The selection model that returns the selected page number. The
     // contained ParameterModel should be a StringParameter, since
     // this is the default for List and Table.
     private SingleSelectionModel m_pageNumModel;
-
     // The selection model that returns the number of items to display
     // for one page.
     private SingleSelectionModel m_pageSizeModel;
-
     // This is used to determine if this component should be hidden
     // when there is only a single page to display. Defaults to true.
     private boolean m_hiddenIfSinglePage;
-
     // A label that contains a space, "&nbsp;". This is used to insert
     // spaces between the page links from within the list's
     // generateXML() method.
     private BoxPanel m_spacePanel;
     private Label m_space;
-
     // defined in List.java
     private static final String _SELECT_EVENT = "s";
 
     /**
      * Constructor.
      *
-     * @param builder The builder used to retrieve the total number of
-     * results to paginate.
-     * @param defaultPageSize The default number of results to display on
-     * each page.
-     **/
+     * @param builder The builder used to retrieve the total number of results
+     * to paginate.
+     * @param defaultPageSize The default number of results to display on each
+     * page.
+     *
+     */
     public Paginator(PaginationModelBuilder builder, int defaultPageSize) {
         super();
 
@@ -157,16 +152,15 @@ public class Paginator extends SimpleContainer implements Resettable {
     }
 
     /**
-     * Builds the display for rendering the page links. Subclasses can
-     * override this method to provide a different rendering of the
-     * page links. If this is the case, make sure that the {@link
-     * #setPageNumSelectionModel(SingleSelectionModel)} method is
-     * called to set the selection model for retrieving the selected
-     * page number.
-     **/
+     * Builds the display for rendering the page links. Subclasses can override
+     * this method to provide a different rendering of the page links. If this
+     * is the case, make sure that the {@link
+     * #setPageNumSelectionModel(SingleSelectionModel)} method is called to set
+     * the selection model for retrieving the selected page number.
+     *
+     */
     protected void buildPaginationDisplay() {
-        PaginatorList list = new PaginatorList
-            (new PageListModelBuilder(this, getPaginationModelBuilder()));
+        PaginatorList list = new PaginatorList(new PageListModelBuilder(this, getPaginationModelBuilder()));
         setPageNumSelectionModel(list.getSelectionModel());
 
         // This is used within the list's generateXML() method to
@@ -183,14 +177,14 @@ public class Paginator extends SimpleContainer implements Resettable {
     }
 
     /**
-     * Sets the selection model that is used for returning the
-     * selected page number. Subclasses that override the {@link
-     * #buildPaginationDisplay()} method will need to call this
-     * method.
+     * Sets the selection model that is used for returning the selected page
+     * number. Subclasses that override the {@link
+     * #buildPaginationDisplay()} method will need to call this method.
      *
-     * @param pageNumModel The selection model used for returning the
-     * selected page number.
-     **/
+     * @param pageNumModel The selection model used for returning the selected
+     * page number.
+     *
+     */
     protected void setPageNumSelectionModel(SingleSelectionModel pageNumModel) {
         m_pageNumModel = pageNumModel;
     }
@@ -200,7 +194,8 @@ public class Paginator extends SimpleContainer implements Resettable {
      *
      * @param state Represents the current state of the request.
      * @return The selected page number.
-     **/
+     *
+     */
     public int getSelectedPageNum(PageState state) {
         String pageNum = (String) m_pageNumModel.getSelectedKey(state);
         if (pageNum == null) {
@@ -215,7 +210,8 @@ public class Paginator extends SimpleContainer implements Resettable {
      *
      * @param state Represents the current state of the request.
      * @param pageNum The number of the page to set as selected.
-     **/
+     *
+     */
     public void setSelectedPageNum(PageState state, int pageNum) {
         m_pageNumModel.setSelectedKey(state, String.valueOf(pageNum));
     }
@@ -225,7 +221,8 @@ public class Paginator extends SimpleContainer implements Resettable {
      *
      * @param state Represents the current state of the request.
      * @return The number of items to display per page.
-     **/
+     *
+     */
     public int getPageSize(PageState state) {
         return ((Integer) m_pageSizeModel.getSelectedKey(state)).intValue();
     }
@@ -235,22 +232,23 @@ public class Paginator extends SimpleContainer implements Resettable {
      *
      * @param state Represents the current state of the request.
      * @param pageSize The number of items to display per page.
-     **/
+     *
+     */
     public void setPageSize(PageState state, int pageSize) {
         m_pageSizeModel.setSelectedKey(state, new Integer(pageSize));
     }
 
     /**
-     *  This returns the total number of pages that will be displayed
-     *  by this paginator.
+     * This returns the total number of pages that will be displayed by this
+     * paginator.
      *
-     *  @param state The page state
+     * @param state The page state
      */
     public int getTotalPages(PageState state) {
         int totalSize = m_builder.getTotalSize(this, state);
         int pageSize = getPageSize(state);
-        int minSize = totalSize/pageSize;
-        if (minSize*pageSize == totalSize) {
+        int minSize = totalSize / pageSize;
+        if (minSize * pageSize == totalSize) {
             return minSize;
         } else {
             return minSize + 1;
@@ -262,7 +260,8 @@ public class Paginator extends SimpleContainer implements Resettable {
      *
      * @param state Represents the current state of the request.
      * @return The number of the first item to display.
-     **/
+     *
+     */
     public int getFirst(PageState state) {
         return ((getSelectedPageNum(state) - 1) * getPageSize(state)) + 1;
     }
@@ -272,7 +271,8 @@ public class Paginator extends SimpleContainer implements Resettable {
      *
      * @param state Represents the current state of the request.
      * @return The number of teh last item to display.
-     **/
+     *
+     */
     public int getLast(PageState state) {
         // NOTE: If the returned integer is used for
         // DataQuery.setRange(int, int), then it needs to be
@@ -281,66 +281,74 @@ public class Paginator extends SimpleContainer implements Resettable {
     }
 
     /**
-     * Returns the builder that is used to retrieve the total number
-     * of items to paginate.
+     * Returns the builder that is used to retrieve the total number of items to
+     * paginate.
      *
-     * @return The builder used to compute the total number of items
-     * to paginate.
-     **/
+     * @return The builder used to compute the total number of items to
+     * paginate.
+     *
+     */
     public PaginationModelBuilder getPaginationModelBuilder() {
         return m_builder;
     }
 
     /**
-     * Specifies whether this component is hidden if there is only a
-     * single page of items to display.
+     * Specifies whether this component is hidden if there is only a single page
+     * of items to display.
      *
-     * @return Returns <code>true</code> if this component is hidden
-     * when there is only a single page to view.
-     **/
+     * @return Returns
+     * <code>true</code> if this component is hidden when there is only a single
+     * page to view.
+     *
+     */
     public boolean isHiddenIfSinglePage() {
         return m_hiddenIfSinglePage;
     }
 
     /**
-     * Sets whether or not this component should be hidden if
-     * there is only a single page of items to display.
+     * Sets whether or not this component should be hidden if there is only a
+     * single page of items to display.
      *
-     * @param isHidden By default, this component will be hidden when
-     * there is only a single page to display. Set this to
+     * @param isHidden By default, this component will be hidden when there is
+     * only a single page to display. Set this to
      * <code>false</code> if this is not the desired effect.
-     **/
+     *
+     */
     public void setHiddenIfSinglePage(boolean isHidden) {
         m_hiddenIfSinglePage = isHidden;
     }
 
     /**
-     * Returns <code>true</code> if this component is visible.
-     * This component will not be visible if the paginator
-     * model builder's isVisible method reports false.
-     * If this component is set to be hidden when there is only
-     * a single page to display, then the total page size returned
-     * from the {@link PaginationModelBuilder} object must be
-     * greater than the number of items per page.
+     * Returns
+     * <code>true</code> if this component is visible. This component will not
+     * be visible if the paginator model builder's isVisible method reports
+     * false. If this component is set to be hidden when there is only a single
+     * page to display, then the total page size returned from the {@link PaginationModelBuilder}
+     * object must be greater than the number of items per page.
      *
      * @param state Represents the current state of the request.
-     * @return Returns <code>true</code> if this component is visible.
+     * @return Returns
+     * <code>true</code> if this component is visible.
      *
      * @see #getPageSize(PageState)
      * @see PaginationModelBuilder#getTotalSize(Paginator, PageState)
-     **/
+     *
+     */
+    @Override
     public boolean isVisible(PageState state) {
-        return ( super.isVisible(state) &&
-                 m_builder.isVisible(state) &&
-                 ( (!m_hiddenIfSinglePage) ||
-                   m_builder.getTotalSize(this, state) > getPageSize(state)) );
+        return (super.isVisible(state)
+                && m_builder.isVisible(state)
+                && ((!m_hiddenIfSinglePage)
+                || m_builder.getTotalSize(this, state) > getPageSize(state)));
     }
 
     /**
      * Register the page size selection model.
      *
      * @param p The page to register with.
-     **/
+     *
+     */
+    @Override
     public void register(Page p) {
         super.register(p);
         p.setVisibleDefault(m_spacePanel, false);
@@ -351,20 +359,21 @@ public class Paginator extends SimpleContainer implements Resettable {
      * Resets this component by clearing the selected page.
      *
      * @param state Represents the current state of the request.
-     **/
+     *
+     */
     public void reset(PageState state) {
         m_pageNumModel.clearSelection(state);
     }
 
     /**
-     * This class was added to provide greater flexibility in
-     * displaying the page links. Links can be displayed in a space
-     * separated list to support wrapping or in a table with a fixed
-     * number of page links per row. By default the page links will be
-     * rendered inside a one-cell table. If the number of page links
-     * to display per line is specified, then each page link will be
-     * rendered in it's own cell.
-     **/
+     * This class was added to provide greater flexibility in displaying the
+     * page links. Links can be displayed in a space separated list to support
+     * wrapping or in a table with a fixed number of page links per row. By
+     * default the page links will be rendered inside a one-cell table. If the
+     * number of page links to display per line is specified, then each page
+     * link will be rendered in it's own cell.
+     *
+     */
     private class PaginatorList extends List {
 
         public PaginatorList(ListModelBuilder builder) {
@@ -372,30 +381,29 @@ public class Paginator extends SimpleContainer implements Resettable {
         }
 
         /**
-         * If the number of page links to display per line is
-         * specified then the generated xml will be similar to that of
-         * a Table. Else, it will be similar to a simple container.
+         * If the number of page links to display per line is specified then the
+         * generated xml will be similar to that of a Table. Else, it will be
+         * similar to a simple container.
          *
          * @param state Represents the current state of the request.
          * @param parent The element to which to attach the XML.
-         **/
+         *
+         */
+        @Override
         public void generateXML(PageState state, Element parent) {
-            if ( ! this.isVisible(state)) {
+            if (!this.isVisible(state)) {
                 return;
             }
 
             // maybe display the Previous arrow
             if (getSelectedPageNum(state) > 1) {
-                state.setControlEvent
-                    (this, _SELECT_EVENT,
-                     Integer.toString(getSelectedPageNum(state) - 1));
+                state.setControlEvent(this, _SELECT_EVENT,
+                        Integer.toString(getSelectedPageNum(state) - 1));
                 (new ControlLink(new Label("<"))).generateXML(state, parent);
                 (new Label(" ")).generateXML(state, parent);
-                state.setControlEvent
-                    (this, _SELECT_EVENT,
-                     Integer.toString(getSelectedPageNum(state) - 1));
-                (new ControlLink(new Label(GlobalizationUtil.globalize("bebop.previous"))))
-                    .generateXML(state, parent);
+                state.setControlEvent(this, _SELECT_EVENT,
+                        Integer.toString(getSelectedPageNum(state) - 1));
+                (new ControlLink(new Label(GlobalizationUtil.globalize("bebop.previous")))).generateXML(state, parent);
                 (new Label("  ")).generateXML(state, parent);
             }
 
@@ -407,30 +415,26 @@ public class Paginator extends SimpleContainer implements Resettable {
                 String key = m.getKey();
                 // Converting both keys to String for comparison
                 // since ListModel.getKey returns a String
-                boolean selected = (selKey != null) && (key != null) &&
-                    selKey.toString().equals(key.toString());
+                boolean selected = (selKey != null) && (key != null)
+                        && selKey.toString().equals(key.toString());
 
-                state.setControlEvent
-                    (this, _SELECT_EVENT, m.getKey());
+                state.setControlEvent(this, _SELECT_EVENT, m.getKey());
                 c = getCellRenderer().getComponent(this, state, m.getElement(),
-                                                   m.getKey(), i, selected);
+                        m.getKey(), i, selected);
                 c.generateXML(state, parent);
-                m_space.generateXML(state,parent);
+                m_space.generateXML(state, parent);
                 i += 1;
             }
 
             // maybe display the next arrow
             if (getSelectedPageNum(state) < getTotalPages(state)) {
-                state.setControlEvent
-                    (this, _SELECT_EVENT,
-                     Integer.toString(getSelectedPageNum(state) + 1));
+                state.setControlEvent(this, _SELECT_EVENT,
+                        Integer.toString(getSelectedPageNum(state) + 1));
                 (new Label("  ")).generateXML(state, parent);
-                (new ControlLink(new Label(GlobalizationUtil.globalize("bebop.next"))))
-                    .generateXML(state, parent);
+                (new ControlLink(new Label(GlobalizationUtil.globalize("bebop.next")))).generateXML(state, parent);
                 (new Label(" ")).generateXML(state, parent);
-                state.setControlEvent
-                    (this, _SELECT_EVENT,
-                     Integer.toString(getSelectedPageNum(state) + 1));
+                state.setControlEvent(this, _SELECT_EVENT,
+                        Integer.toString(getSelectedPageNum(state) + 1));
                 (new ControlLink(new Label(">"))).generateXML(state, parent);
             }
 
@@ -440,15 +444,16 @@ public class Paginator extends SimpleContainer implements Resettable {
 
     /**
      * A list model builder for the pagination list.
-     **/
+     *
+     */
     private class PageListModelBuilder extends LockableImpl
-        implements ListModelBuilder {
+            implements ListModelBuilder {
 
         Paginator m_paginator;
         PaginationModelBuilder m_builder;
 
         public PageListModelBuilder(Paginator paginator,
-                                    PaginationModelBuilder builder) {
+                PaginationModelBuilder builder) {
             super();
             m_paginator = paginator;
             m_builder = builder;
@@ -456,17 +461,18 @@ public class Paginator extends SimpleContainer implements Resettable {
 
         public ListModel makeModel(List list, PageState state) {
             return new PageListModel(m_builder.getTotalSize(m_paginator, state),
-                                     getPageSize(state),
-                                     getSelectedPageNum(state));
+                    getPageSize(state),
+                    getSelectedPageNum(state));
         }
     }
 
     /**
-     * A list model for the pagination list which is used to generate
-     * the text for the page links.
-     **/
+     * A list model for the pagination list which is used to generate the text
+     * for the page links.
+     *
+     */
     private class PageListModel extends LockableImpl
-        implements ListModel {
+            implements ListModel {
 
         int m_totalSize;
         int m_pageSize;
@@ -490,17 +496,15 @@ public class Paginator extends SimpleContainer implements Resettable {
         }
 
         public Object getElement() {
-            /*  TODO: Remove or relocate this
-                int begin = ((m_pageCount-1) * m_pageSize) + 1;
-                int end = (m_pageCount) * m_pageSize;
-                if (end > m_totalSize) {
-                end = m_totalSize;
-                }
-                return "" + begin + "-" + end;
-            */
+            /*
+             * TODO: Remove or relocate this int begin = ((m_pageCount-1) *
+             * m_pageSize) + 1; int end = (m_pageCount) * m_pageSize; if (end >
+             * m_totalSize) { end = m_totalSize; } return "" + begin + "-" +
+             * end;
+             */
             if (Math.abs(m_current - m_pageCount) <= 5
-                || m_pageCount == 1
-                || m_pageCount * m_pageSize >= m_totalSize){
+                    || m_pageCount == 1
+                    || m_pageCount * m_pageSize >= m_totalSize) {
                 return Integer.toString(m_pageCount);
             } else {
                 return ".";

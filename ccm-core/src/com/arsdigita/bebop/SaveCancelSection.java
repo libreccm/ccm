@@ -22,6 +22,7 @@ import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Container;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.bebop.util.GlobalizationUtil;
 
 /**
  * A form section with two buttons (Save and Cancel) aligned to
@@ -59,10 +60,10 @@ public class SaveCancelSection extends FormSection {
 
     private void createWidgets() {
         m_saveWidget = new Submit("save");
-        m_saveWidget.setButtonLabel("Save");
+        m_saveWidget.setButtonLabel(GlobalizationUtil.globalize("bebop.save"));
 
         m_cancelWidget = new Submit("cancel");
-        m_cancelWidget.setButtonLabel("Cancel");
+        m_cancelWidget.setButtonLabel(GlobalizationUtil.globalize("bebop.cancel"));
     }
 
     /**
