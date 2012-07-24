@@ -204,13 +204,13 @@ OpenCCM.prototype.linkRemove = function()
 
 OpenCCM.prototype.linkBrowse = function(window)
 {
-  baseURL = window.location.href;//.pathname;
-  offset  = baseURL.lastIndexOf("/");
-  destURL = baseURL.slice(0, offset+1) + "search.jsp?useURL=true&widget=getElementById('" + this.dialogs["links"].id["ci_href"] + "')";
+  var baseURL = window.location.href;
+  var offset  = baseURL.lastIndexOf("/");
+  var destURL = baseURL.slice(0, offset+1) + "search.jsp?useURL=true&widget=getElementById('" + this.dialogs["links"].id["ci_href"] + "')";
 
 //  var searchDialog = new Xinha.Dialog(this.editor, destURL, '');//,{width:800, height:600}, {'closable':true});
 //  searchDialog.show();
-  window.open(destURL, "_blank", "directories=no,toolbar=no,width=600,height=400,status=no,menubar=no");
+  window.open(destURL, "_blank", "scrollbars=yes,directories=no,toolbar=no,width=800,height=600,status=no,menubar=no");
 
   return false;
 }

@@ -43,24 +43,9 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.util.GlobalizationUtil;
-
-;import com.arsdigita.globalization.GlobalizationHelper;
-import com.arsdigita.util.LockableImpl;
-import java.math.BigDecimal;
-import org.apache.log4j.Logger;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizationHelper;
-
-import com.arsdigita.globalization.GlobalizationHelper;
-import com.arsdigita.util.LockableImpl;
-
-import java.math.BigDecimal;
-
-import org.apache.log4j.Logger;
-import com.arsdigita.util.LockableImpl;
-import java.math.BigDecimal;
-import org.apache.log4j.Logger;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;

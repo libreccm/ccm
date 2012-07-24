@@ -45,26 +45,26 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         this(ImageComponent.ATTACH_IMAGE);
     }
 
-    public ImageLibraryComponent(int mode) {
+    public ImageLibraryComponent(final int mode) {
         m_mode = mode;
         m_imageID = new BigDecimalParameter("imageID");
         m_imageModel = new ItemSelectionModel(m_imageID);
         m_chooser = new ImageChooser(ContentItem.DRAFT, m_mode);
         m_chooser.addImageActionListener(new ImageBrowser.LinkActionListener() {
 
-            public void deleteClicked(PageState ps, BigDecimal imageID) {
-                ImagesPane.s_log.debug("Clicked delete");
-                ReusableImageAsset image = new ReusableImageAsset(imageID);
+            public void deleteClicked(final PageState state, final BigDecimal imageID) {
+                ImagesPane.S_LOG.debug("Clicked delete");
+                final ReusableImageAsset image = new ReusableImageAsset(imageID);
                 image.delete();
             }
 
-            public void linkClicked(PageState ps, BigDecimal imageID) {
-                ImagesPane.s_log.debug("Clicked select");
+            public void linkClicked(final PageState state, final BigDecimal imageID) {
+                ImagesPane.S_LOG.debug("Clicked select");
                 try {
-                    ReusableImageAsset image = new ReusableImageAsset(imageID);
-                    m_imageModel.setSelectedObject(ps, image);
+                    final ReusableImageAsset image = new ReusableImageAsset(imageID);
+                    m_imageModel.setSelectedObject(state, image);
                 } catch (DataObjectNotFoundException ex) {
-                    ImagesPane.s_log.error("Selected non-existant image: " + imageID, ex);
+                    ImagesPane.S_LOG.error("Selected non-existant image: " + imageID, ex);
                 }
             }
         });
@@ -112,35 +112,35 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         }
     }
 
-    public ReusableImageAsset getImage(FormSectionEvent event) {
-        PageState ps = event.getPageState();
-        return (ReusableImageAsset) m_imageModel.getSelectedItem(ps);
+    public ReusableImageAsset getImage(final FormSectionEvent event) {
+        final PageState state = event.getPageState();
+        return (ReusableImageAsset) m_imageModel.getSelectedItem(state);
     }
 
     @Override
-    public void register(Page p) {
-        super.register(p);
-        p.addComponentStateParam(this, m_imageID);
+    public void register(final Page page) {
+        super.register(page);
+        page.addComponentStateParam(this, m_imageID);
     }
 
-    public String getCaption(FormSectionEvent event) {
-        PageState ps = event.getPageState();
-        return (String) m_caption.getValue(ps);
+    public String getCaption(final FormSectionEvent event) {
+        final PageState state = event.getPageState();
+        return (String) m_caption.getValue(state);
     }
 
-    public String getDescription(FormSectionEvent event) {
-        PageState ps = event.getPageState();
-        return (String) m_description.getValue(ps);
+    public String getDescription(final FormSectionEvent event) {
+        final PageState state = event.getPageState();
+        return (String) m_description.getValue(state);
     }
 
-    public String getTitle(FormSectionEvent event) {
-        PageState ps = event.getPageState();
-        return (String) m_title.getValue(ps);
+    public String getTitle(final FormSectionEvent event) {
+        final PageState state = event.getPageState();
+        return (String) m_title.getValue(state);
     }
 
-    public String getUseContext(FormSectionEvent event) {
-        PageState ps = event.getPageState();
-        return (String) m_useContext.getValue(ps);
+    public String getUseContext(final FormSectionEvent event) {
+        final PageState state = event.getPageState();
+        return (String) m_useContext.getValue(state);
     }
 
     public Form getForm() {
@@ -151,20 +151,20 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         return m_saveCancel;
     }
 
-    public void addUploadLink(ActionListener actionListener) {
+    public void addUploadLink(final ActionListener actionListener) {
         // Add action link to image upload component
         if (m_mode != ImageComponent.DISPLAY_ONLY) {
-            ActionLink upload = new ActionLink("Upload new image");
+            final ActionLink upload = new ActionLink("Upload new image");
             upload.addActionListener(actionListener);
             add(upload, ColumnPanel.FULL_WIDTH);
         }
     }
 
     // Reset this component
-    public void reset(PageState ps) {
+    public void reset(final PageState state) {
         // clear selection
-        m_imageModel.clearSelection(ps);
-        m_chooser.clearSelection(ps);
-        m_chooser.clearKeyword(ps);
+        m_imageModel.clearSelection(state);
+        m_chooser.clearSelection(state);
+        m_chooser.clearKeyword(state);
     }
 }

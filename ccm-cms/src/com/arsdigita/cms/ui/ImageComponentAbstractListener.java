@@ -81,7 +81,6 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
     }
 
     protected void setImageComponent(PageState ps, final String activeKey) {
-        m_imageComponent.setSelectedKey(ps, activeKey);
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Selected component: " + activeKey);

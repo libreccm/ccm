@@ -12,8 +12,6 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.RequestEvent;
-import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMSConfig;
@@ -28,11 +26,13 @@ import org.apache.log4j.Logger;
  */
 public class ImageSelectPage extends CMSPage {
 
-    public static final Logger s_log = Logger.getLogger(ImagesPane.class);
+    private static final Logger S_LOG = Logger.getLogger(ImagesPane.class);
+    
     private final static String XSL_CLASS = "CMS Admin";
     private TabbedPane m_tabbedPane;
     private ImageLibraryComponent m_imageLibrary;
     private ImageUploadComponent m_imageUpload;
+    private ImageSelectResultPane m_resultPane;
     private BigDecimalParameter m_sectionId;
     private final StringParameter m_imageComponentKey;
     private final MapComponentSelectionModel m_imageComponent;
@@ -40,9 +40,10 @@ public class ImageSelectPage extends CMSPage {
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
+    public static final String RESULT = "result";
 
     public ImageSelectPage() {
-        super(GlobalizationUtil.globalize("cms.ui.image_selelect.page_title").localize().toString(), new SimpleContainer());
+        super(GlobalizationUtil.globalize("cms.ui.image_select.page_title").localize().toString(), new SimpleContainer());
 
         setClassAttr("cms-admin");
 
@@ -55,7 +56,8 @@ public class ImageSelectPage extends CMSPage {
                 new ParameterSingleSelectionModel(m_imageComponentKey);
         m_imageComponent =
                 new MapComponentSelectionModel(componentModel, new HashMap());
-        m_selectListener = new ImageComponentSelectListener(m_imageComponent);
+        
+        m_selectListener = new ImageComponentSelectListener(m_imageComponent, getResultPane());
 
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
@@ -73,9 +75,11 @@ public class ImageSelectPage extends CMSPage {
                 if (m_tabbedPane.getCurrentPane(ps).equals(m_imageUpload)) {
                     m_imageComponent.setSelectedKey(ps, ImageComponent.UPLOAD);
                 }
-
             }
         });
+        
+        add(m_resultPane);
+        
         addGlobalStateParam(m_imageComponentKey);
     }
 
@@ -100,6 +104,13 @@ public class ImageSelectPage extends CMSPage {
         return m_imageUpload;
     }
 
+    protected ImageSelectResultPane getResultPane() {
+        if (m_resultPane == null) {
+            m_resultPane = new ImageSelectResultPane();
+        }
+        return m_resultPane;
+    }
+
     protected TabbedPane createTabbedPane() {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);
@@ -119,7 +130,7 @@ public class ImageSelectPage extends CMSPage {
      * @param tabName The name of the tab if it's added
      * @param comp The component to add to the pane
      */
-    protected void addToPane(TabbedPane pane, String tabName, Component comp) {
+    protected void addToPane(final TabbedPane pane, final String tabName, final Component comp) {
         if (comp != null) {
             pane.addTab(GlobalizationUtil.globalize("cms.ui.image_" + tabName).localize().toString(), comp);
         }

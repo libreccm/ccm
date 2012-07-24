@@ -17,18 +17,17 @@ import org.apache.log4j.Logger;
  */
 public class ImageComponentSelectListener extends ImageComponentAbstractListener {
 
-    private static final Logger s_log = Logger.getLogger(ImageComponentSelectListener.class);
+    private static final Logger S_LOG = Logger.getLogger(ImageComponentSelectListener.class);
+    private final ImageSelectResultPane m_resultPane;
 
-    public ImageComponentSelectListener(MapComponentSelectionModel imageComponent) {
+    public ImageComponentSelectListener(MapComponentSelectionModel imageComponent, ImageSelectResultPane resultPane) {
         super(imageComponent);
+        m_resultPane = resultPane;
     }
 
     protected void processImage(FormSectionEvent event, PageState ps, ImageComponent component, ReusableImageAsset image) {
-        // SELECT {
-        String name = image.getDisplayName();
-        BigDecimal id = image.getID();
-        BigDecimal width = image.getWidth();
-        BigDecimal height = image.getHeight();
-        // SELECT }
+        m_resultPane.setResult(image.getDisplayName(), image.getID(), image.getWidth(), image.getHeight());
+        
+        m_imageComponent.setSelectedKey(ps, ImageSelectPage.RESULT);
     }
 }

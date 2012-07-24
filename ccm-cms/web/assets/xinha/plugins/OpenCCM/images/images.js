@@ -286,12 +286,15 @@ OpenCCM.prototype.imageRemove = function() {
 
 OpenCCM.prototype.imageBrowse = function(window)
 {
-  this.imageSet({
-      src    : "/theme/mandalay/ccm/cms-service/stream/image/?image_id=9001", 
-      width  : "304",
-      height : "420",
-      name   : "Schild.jpg"
-    });
+  var baseURL = window.location.href;
+  var offset  = baseURL.lastIndexOf("/");
+  var destURL = baseURL.slice(0, offset+1) + "image_select.jsp";
+
+//  var searchDialog = new Xinha.Dialog(this.editor, destURL, '');//,{width:800, height:600}, {'closable':true});
+//  searchDialog.show();
+  var selectWindow = window.open(destURL, "_blank", "scrollbars=yes,directories=no,toolbar=no,width=800,height=600,status=no,menubar=no");
+  selectWindow.openCCM = this;
+//  return false;
 };
 
 OpenCCM.prototype.imageSet = function(imageData)

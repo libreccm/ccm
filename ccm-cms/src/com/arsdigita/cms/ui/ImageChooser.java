@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui;
 
-
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
@@ -41,12 +40,12 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
-
 /**
- * Sticks a form at the top of an {@link ImageBrowser} in order to
- * search images by keyword
+ * Sticks a form at the top of an {@link ImageBrowser} in order to search images
+ * by keyword
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
+ * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  * @version $Id: ImageChooser.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ImageChooser extends BoxPanel {
@@ -56,10 +55,8 @@ public class ImageChooser extends BoxPanel {
     private Paginator m_paginator;
     private StringParameter m_keyword;
     private SingleSelectionModel m_sel;
-
     public static final String KEYWORD = "kw";
     public static int LIST_SIZE = 20;
-
 
     /**
      * Construct a new ImageChooser
@@ -74,15 +71,12 @@ public class ImageChooser extends BoxPanel {
         m_keyword = new StringParameter(KEYWORD);
         m_sel = new ParameterSingleSelectionModel(m_keyword);
         m_form = new ImageKeywordForm(m_sel);
-        DefaultImageBrowserModelBuilder modelBuilder = 
-            new DefaultImageBrowserModelBuilder(m_sel, context);
+        DefaultImageBrowserModelBuilder modelBuilder = new DefaultImageBrowserModelBuilder(m_sel, context);
         m_browser = new ImageBrowser(modelBuilder, mode);
         modelBuilder.setImageBrowser(m_browser);
 
 
-        m_paginator = new Paginator
-            (modelBuilder,
-             LIST_SIZE);
+        m_paginator = new Paginator(modelBuilder, LIST_SIZE);
         super.add(m_form);
         super.add(m_paginator);
         super.add(m_browser);
@@ -112,6 +106,7 @@ public class ImageChooser extends BoxPanel {
     /**
      * Add the "keyword" parameter to the page state
      */
+    @Override
     public void register(Page p) {
         p.addComponent(this);
         p.addComponentStateParam(this, m_keyword);
@@ -119,8 +114,7 @@ public class ImageChooser extends BoxPanel {
 
     /**
      * Add an action listener to the browser. The inner class
-     * {@link ImageBrowser.LinkActionListener} will probably be
-     * used here.
+     * {@link ImageBrowser.LinkActionListener} will probably be used here.
      *
      * @param l the action listener.
      */
@@ -129,8 +123,8 @@ public class ImageChooser extends BoxPanel {
     }
 
     /**
-     * Add a submission listener to the form. The listener will
-     * fire whenever a button on the form is clicked.
+     * Add a submission listener to the form. The listener will fire whenever a
+     * button on the form is clicked.
      *
      * @param l the action listener.
      */
@@ -153,8 +147,8 @@ public class ImageChooser extends BoxPanel {
     }
 
     /**
-     * Set the specified keyword. All images matching the keyword
-     * will be displayed in the browser.
+     * Set the specified keyword. All images matching the keyword will be
+     * displayed in the browser.
      *
      * @param state The page state
      * @param word The new keyword
@@ -177,7 +171,7 @@ public class ImageChooser extends BoxPanel {
      * @return the current keyword
      */
     public String getKeyword(PageState state) {
-        return (String)m_sel.getSelectedKey(state);
+        return (String) m_sel.getSelectedKey(state);
     }
 
     /**
@@ -207,29 +201,28 @@ public class ImageChooser extends BoxPanel {
      * The form which specifies a keyword for the image browser.
      */
     public static class ImageKeywordForm extends Form
-        implements FormProcessListener, FormInitListener {
+            implements FormProcessListener, FormInitListener {
 
         private SingleSelectionModel m_sel;
         private SaveCancelSection m_saveCancel;
-
         public static String WORD = "word";
 
         /**
          * Construct a new ImageKeywordForm
-         * @param sel The SingleSelectionModel which the form will use to
-         *   set the keyword
+         *
+         * @param sel The SingleSelectionModel which the form will use to set
+         * the keyword
          */
         public ImageKeywordForm(SingleSelectionModel sel) {
             super("ImageKeywordForm", new BoxPanel(BoxPanel.HORIZONTAL));
             m_sel = sel;
 
             add(new Label(GlobalizationUtil.globalize("cms.ui.enter_a_keyword")));
-            TextField t = new TextField(WORD);
-	    // allow null keyword field for view all
-            //t.addValidationListener(new NotNullValidationListener("keyword"));
-            add(t);
+            final TextField keyword = new TextField(WORD);
+            add(keyword);
             m_saveCancel = new SaveCancelSection();
-            m_saveCancel.getSaveButton().setButtonLabel("Search");
+            m_saveCancel.getSaveButton().setButtonLabel(GlobalizationUtil.globalize("cms.ui.search"));
+            m_saveCancel.getCancelButton().setButtonLabel(GlobalizationUtil.globalize("cms.ui.clear"));
             add(m_saveCancel);
 
             addProcessListener(this);
@@ -241,10 +234,10 @@ public class ImageChooser extends BoxPanel {
         /**
          * Set the keyword in the text widget
          */
-        public void init(FormSectionEvent e) throws FormProcessException {
-            PageState s = e.getPageState();
-            FormData data = e.getFormData();
-            data.put(WORD, m_sel.getSelectedKey(s));
+        public void init(final FormSectionEvent event) throws FormProcessException {
+            final PageState state = event.getPageState();
+            final FormData data = event.getFormData();
+            data.put(WORD, m_sel.getSelectedKey(state));
         }
 
         /**
@@ -261,10 +254,15 @@ public class ImageChooser extends BoxPanel {
             return m_sel;
         }
 
-        public void process(FormSectionEvent e) {
-            FormData data = e.getFormData();
-            PageState state = e.getPageState();
-            m_sel.setSelectedKey(state, (String)data.get(WORD));
+        public void process(final FormSectionEvent event) {
+            final FormData data = event.getFormData();
+            final PageState state = event.getPageState();
+            if (m_saveCancel.getCancelButton().isSelected(state)) {
+                m_sel.clearSelection(event.getPageState());
+                data.put(WORD, null);
+            } else {
+                m_sel.setSelectedKey(state, (String) data.get(WORD));
+            }
         }
     }
 }
