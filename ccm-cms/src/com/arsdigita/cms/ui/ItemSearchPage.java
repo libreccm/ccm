@@ -87,6 +87,7 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new StringParameter("defaultCreationFolder"));
         addGlobalStateParam(new IntegerParameter("lastTab"));
         addGlobalStateParam(new BooleanParameter("disableCreatePane"));
+        addGlobalStateParam(new BooleanParameter("editAfterCreate"));
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
@@ -133,6 +134,10 @@ public class ItemSearchPage extends CMSPage {
 
                 if (state.getValue(new StringParameter("defaultCreationFolder")) != null) {
                     m_create.setDefaultFolder((String) state.getValue(new StringParameter("defaultCreationFolder")));
+                }
+                
+                if (state.getValue(new BooleanParameter("editAfterCreate")) != null) {
+                    m_create.setEditAfterCreate((Boolean) state.getValue(new BooleanParameter("editAfterCreate")));
                 }
 
 //                if (m_lastTab != m_tabbedPane.getSelectedIndex(state)) {
@@ -339,5 +344,9 @@ public class ItemSearchPage extends CMSPage {
     protected void setDefaultCreationFolder(final Folder folder) {
         m_create.setDefaultFolder(folder.getOID().toString());
     }
+    
+    protected void setEditAfterCreate(final boolean editAfterCreate) {
+        m_create.setEditAfterCreate(editAfterCreate);
+    } 
 
 }
