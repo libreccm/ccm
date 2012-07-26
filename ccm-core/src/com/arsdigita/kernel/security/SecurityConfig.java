@@ -53,11 +53,10 @@ public class SecurityConfig extends AbstractConfig {
     public static int SECRET_KEY_BYTES = 16;
     /** The class name of the SecurityHelper implementation. Must implement
     SecurityHelper interface                                              */
-    private final Parameter m_securityHelperClass =
-                            new SpecificClassParameter(
+    private final Parameter m_securityHelperClass = new SpecificClassParameter(
             "waf.security_helper_class", Parameter.REQUIRED,
-                                                       com.arsdigita.kernel.security.DefaultSecurityHelper.class,
-                                                       com.arsdigita.kernel.security.SecurityHelper.class);
+            com.arsdigita.kernel.security.DefaultSecurityHelper.class,
+            com.arsdigita.kernel.security.SecurityHelper.class);
 //  /** This parameter is obsolete.                                           */
 //  private final Parameter m_sessionTrackingMethod  = new StringParameter
 //      ("waf.session_tracking_method", Parameter.REQUIRED, "cookie");
@@ -67,8 +66,7 @@ public class SecurityConfig extends AbstractConfig {
      *  Include a leading dot for each extension.                             */
     private final Parameter m_excludedExtensions = new StringArrayParameter(
             "waf.excluded_extensions", Parameter.REQUIRED,
-                                                                            new String[]{
-                ".jpg", ".gif", ".png", ".pdf"});
+            new String[]{".jpg", ".gif", ".png", ".pdf"});
 // /////////////////////////////////////////////////////////////////////////////
 // This section completely moved to com.arsdigita.ui.UIConfig.
 // Configuration is not an Initializer task.
@@ -114,7 +112,7 @@ public class SecurityConfig extends AbstractConfig {
             "waf.cookie_domain", Parameter.OPTIONAL, null);
     private final Parameter m_loginConfig = new StringArrayParameter(
             "waf.login_config", Parameter.REQUIRED,
-                                                                     new String[]{
+            new String[]{
                 "Request:com.arsdigita.kernel.security.AdminLoginModule:sufficient",
                 "Request:com.arsdigita.kernel.security.RecoveryLoginModule:sufficient",
                 "Request:com.arsdigita.kernel.security.CookieLoginModule:requisite",
@@ -138,23 +136,10 @@ public class SecurityConfig extends AbstractConfig {
      * Constructs an empty SecurityConfig object
      */
     public SecurityConfig() {
+
         register(m_securityHelperClass);
 //      register(m_sessionTrackingMethod);
         register(m_excludedExtensions);
-
-//  MOVED, see above
-//      register(m_rootPage);
-//      register(m_loginPage);
-//      register(m_newUserPage);
-//      register(m_logoutPage);
-//      register(m_cookiesPage);
-//      register(m_changePage);
-//      register(m_recoverPage);
-//      register(m_expiredPage);
-//      register(m_workspacePage);
-//      register(m_loginRedirectPage);
-//      register(m_permissionPage);
-//      register(m_permSinglePage);
 
         register(m_cookieDomain);
         register(m_loginConfig);
@@ -176,10 +161,6 @@ public class SecurityConfig extends AbstractConfig {
     public static final synchronized SecurityConfig getConfig() {
         if (s_config == null) {
             s_config = new SecurityConfig();
-            // deprecated
-            // s_config.require("ccm-core/runtime.properties");
-            // use instead:
-            // read values from the persistent storage
             s_config.load();
         }
 
@@ -209,44 +190,6 @@ public class SecurityConfig extends AbstractConfig {
         return Arrays.asList((String[]) get(m_excludedExtensions));
     }
 
-//  MOVED, see above
-//  String getRootPage() {
-//      return (String) get(m_rootPage);
-//  }
-//  String getLoginPage() {
-//      return (String) get(m_loginPage);
-//  }
-//  String getNewUserPage() {
-//      return (String) get(m_newUserPage);
-//  }
-//  String getLogoutPage() {
-//      return (String) get(m_logoutPage);
-//  }
-//  String getCookiesPage() {
-//      return (String) get(m_cookiesPage);
-//  }
-//  String getChangePage() {
-//      return (String) get(m_changePage);
-//  }
-//  String getRecoverPage() {
-//      return (String) get(m_recoverPage);
-//  }
-//  String getExpiredPage() {
-//      return (String) get(m_expiredPage);
-//  }
-//  String getWorkspacePage() {
-//      return (String) get(m_workspacePage);
-//  }
-//  public String getLoginRedirectPage() {
-//      return (String) get(m_loginRedirectPage);
-//  }
-//  String getPermissionPage() {
-//      return (String) get(m_permissionPage);
-//  }
-//  String getPermSinglePage() {
-//      return (String) get(m_permSinglePage);
-//  }
-//  ///////////////////////////////////////////////////////////////////////////
     public String getCookieDomain() {
         return (String) get(m_cookieDomain);
     }

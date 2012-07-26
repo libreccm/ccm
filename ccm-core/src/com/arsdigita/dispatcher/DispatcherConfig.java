@@ -37,7 +37,7 @@ public final class DispatcherConfig extends AbstractConfig {
     private final Parameter m_cachingActive;
     private final Parameter m_defaultExpiry;
 
-    /** Default top-level container for all Bebop components and containersPage.
+    /** Default top-level container for all Bebop components and containersPage
      *  to use for dispatching Bebop pages. A custom installation may provide 
      *  it's own implementation. Use with care because all pages inherit from
      *  this class! 
