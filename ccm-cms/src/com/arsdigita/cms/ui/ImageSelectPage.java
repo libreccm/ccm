@@ -38,7 +38,6 @@ public class ImageSelectPage extends CMSPage {
     private final MapComponentSelectionModel m_imageComponent;
     private final ImageComponentSelectListener m_selectListener;
     private static final CMSConfig s_conf = CMSConfig.getInstance();
-    private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
     public static final String RESULT = "result";
 
@@ -85,7 +84,7 @@ public class ImageSelectPage extends CMSPage {
 
     protected ImageLibraryComponent getImageLibraryPane() {
         if (m_imageLibrary == null) {
-            m_imageLibrary = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE);
+            m_imageLibrary = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE, this);
             m_imageLibrary.getForm().addInitListener(m_selectListener);
             m_imageLibrary.getForm().addProcessListener(m_selectListener);
             m_imageComponent.getComponentsMap().put(ImageComponent.LIBRARY, m_imageLibrary);

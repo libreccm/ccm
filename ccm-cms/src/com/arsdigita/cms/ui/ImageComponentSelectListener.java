@@ -4,11 +4,11 @@
  */
 package com.arsdigita.cms.ui;
 
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.MapComponentSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ReusableImageAsset;
-import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
@@ -25,9 +25,14 @@ public class ImageComponentSelectListener extends ImageComponentAbstractListener
         m_resultPane = resultPane;
     }
 
+    @Override
+    protected void cancelled(PageState ps) {
+        super.cancelled(ps);
+        m_resultPane.reset(ps);
+    }
+    
     protected void processImage(FormSectionEvent event, PageState ps, ImageComponent component, ReusableImageAsset image) {
-        m_resultPane.setResult(image.getDisplayName(), image.getID(), image.getWidth(), image.getHeight());
-        
         m_imageComponent.setSelectedKey(ps, ImageSelectPage.RESULT);
+        m_resultPane.reset(ps);
     }
 }

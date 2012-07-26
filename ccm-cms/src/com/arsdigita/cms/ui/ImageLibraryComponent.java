@@ -42,10 +42,10 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
     private int m_mode;
 
     public ImageLibraryComponent() {
-        this(ImageComponent.ATTACH_IMAGE);
+        this(ImageComponent.ATTACH_IMAGE, null);
     }
 
-    public ImageLibraryComponent(final int mode) {
+    public ImageLibraryComponent(final int mode, final ImageSelectPage parent) {
         m_mode = mode;
         m_imageID = new BigDecimalParameter("imageID");
         m_imageModel = new ItemSelectionModel(m_imageID);
@@ -62,6 +62,9 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
                 ImagesPane.S_LOG.debug("Clicked select");
                 try {
                     final ReusableImageAsset image = new ReusableImageAsset(imageID);
+                    if(m_mode == ImageComponent.SELECT_IMAGE) {
+                        parent.getResultPane().setResult(image.getDisplayName(), image.getID(), image.getWidth(), image.getHeight());
+                    }
                     m_imageModel.setSelectedObject(state, image);
                 } catch (DataObjectNotFoundException ex) {
                     ImagesPane.S_LOG.error("Selected non-existant image: " + imageID, ex);
@@ -105,8 +108,14 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
             m_form.add(m_useContext);
         }
 
+//        if (m_mode == ImageComponent.SELECT_IMAGE) {
+//            m_form.setOnSubmit("selectImage();");
+//        }
+        
         // save and cancel buttons
         m_saveCancel = new SaveCancelSection();
+        m_saveCancel.getSaveButton().setOnClick("selectImage(this)");
+        m_saveCancel.getCancelButton().setOnClick("selectImage(this)");
         if (m_mode == ImageComponent.SELECT_IMAGE || m_mode == ImageComponent.ATTACH_IMAGE) {
             m_form.add(m_saveCancel);
         }
