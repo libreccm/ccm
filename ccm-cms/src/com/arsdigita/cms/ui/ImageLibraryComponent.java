@@ -45,6 +45,10 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         this(ImageComponent.ATTACH_IMAGE, null);
     }
 
+    public ImageLibraryComponent(final int mode) {
+        this(mode, null);
+    }
+
     public ImageLibraryComponent(final int mode, final ImageSelectPage parent) {
         m_mode = mode;
         m_imageID = new BigDecimalParameter("imageID");
