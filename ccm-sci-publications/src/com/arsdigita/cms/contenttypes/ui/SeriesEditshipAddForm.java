@@ -88,6 +88,7 @@ public class SeriesEditshipAddForm
         if ((config.getDefaultAuthorsFolder() != null) && (config.getDefaultAuthorsFolder() != 0)) {
             m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolder())));
         }
+        m_itemSearch.setEditAfterCreate(false);
         add(m_itemSearch);
 
         selectedEditorLabel = new Label("");

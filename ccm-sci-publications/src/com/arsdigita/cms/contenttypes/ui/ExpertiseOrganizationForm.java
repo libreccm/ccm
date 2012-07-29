@@ -36,7 +36,6 @@ public class ExpertiseOrganizationForm
         config.load();
     }
 
-
     public ExpertiseOrganizationForm(final ItemSelectionModel itemModel) {
         super("ExpertiseOrganizationForm", itemModel);
     }
@@ -48,9 +47,10 @@ public class ExpertiseOrganizationForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericOrganizationalUnit.class.
                 getName()));
-         if ((config.getDefaultOrganizationsFolder() != null) && (config.getDefaultOrganizationsFolder() != 0)) {
+        if ((config.getDefaultOrganizationsFolder() != null) && (config.getDefaultOrganizationsFolder() != 0)) {
             itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultOrganizationsFolder())));
         }
+        itemSearch.setEditAfterCreate(false);
         add(itemSearch);
     }
 
@@ -106,4 +106,5 @@ public class ExpertiseOrganizationForm
         }
 
     }
+
 }

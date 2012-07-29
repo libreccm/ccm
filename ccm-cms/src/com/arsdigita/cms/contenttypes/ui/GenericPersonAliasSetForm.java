@@ -55,7 +55,8 @@ public class GenericPersonAliasSetForm
                 "cms.contenttypes.ui.person.alias.select").localize()));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
-                "com.arsdigita.cms.contenttypes.GenericPerson"));        
+                "com.arsdigita.cms.contenttypes.GenericPerson"));      
+        itemSearch.setEditAfterCreate(false);
         add(itemSearch);
     }
 

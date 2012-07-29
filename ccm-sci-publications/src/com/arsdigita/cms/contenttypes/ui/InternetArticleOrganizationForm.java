@@ -50,7 +50,7 @@ public class InternetArticleOrganizationForm
         if ((config.getDefaultOrganizationsFolder() != null) && (config.getDefaultOrganizationsFolder() != 0)) {
             itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultOrganizationsFolder())));
         }
-
+        itemSearch.setEditAfterCreate(false);
         add(itemSearch);
     }
 

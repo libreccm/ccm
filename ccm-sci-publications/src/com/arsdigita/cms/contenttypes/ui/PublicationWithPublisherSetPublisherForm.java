@@ -51,6 +51,7 @@ public class PublicationWithPublisherSetPublisherForm
         if ((config.getDefaultPublisherFolder() != null) && config.getDefaultPublisherFolder() != 0) {
             itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultPublisherFolder())));            
         }
+        itemSearch.setEditAfterCreate(false);
         add(itemSearch);
     }
 

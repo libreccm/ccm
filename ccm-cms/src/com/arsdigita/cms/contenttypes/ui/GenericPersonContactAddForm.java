@@ -134,6 +134,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
             person.addContact(contact,
                               (String) data.get(
                     GenericPersonContactCollection.CONTACTS_KEY));
+            m_itemSearch.publishCreatedItem(data, contact);
         }
 
         init(fse);

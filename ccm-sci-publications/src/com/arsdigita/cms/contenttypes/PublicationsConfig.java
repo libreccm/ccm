@@ -42,52 +42,52 @@ public class PublicationsConfig extends AbstractConfig {
 
         defaultAuthorsFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_authors_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultSeriesFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_series_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultPublisherFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_publisher_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultCollectedVolumesFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultJournalsFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_journals_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultArticlesInCollectedVolumeFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultOrganizationsFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_organizations_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultProceedingsFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultInProceedingsFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_inproccedings_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         defaultArticlesInJournalFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder",
-                Parameter.REQUIRED,
+                Parameter.OPTIONAL,
                 null);
 
         register(attachOrgaUnitsStep);

@@ -70,6 +70,7 @@ public class ArticleInJournalJournalForm
         if ((config.getDefaultJournalsFolder() != null) && (config.getDefaultJournalsFolder() != 0)) {
             itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultJournalsFolder())));
         }
+        itemSearch.setEditAfterCreate(false);
         add(itemSearch);
     }
 
