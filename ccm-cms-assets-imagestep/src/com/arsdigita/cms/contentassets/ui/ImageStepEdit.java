@@ -45,17 +45,26 @@ import java.util.Iterator;
 import java.util.Map;
 import org.apache.log4j.Logger;
 
+/**
+ * Pluggable authoring step to add an ImageAsset to a content item.
+ *
+ * @author unknown
+ * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ */
 public class ImageStepEdit extends SimpleContainer
-        implements Resettable/*
- * , FormProcessListener, FormInitListener
- */ {
+        implements Resettable {
 
-    private static final Logger s_log = Logger.getLogger(ImageStepEdit.class);
+    private static final Logger S_LOG = Logger.getLogger(ImageStepEdit.class);
     private final ImageStep m_imageStep;
     private final StringParameter m_imageComponentKey;
     private final MapComponentSelectionModel m_imageComponent;
     private final ImageComponentAttachListener m_attachListener;
 
+    /**
+     * Creates a new ImageStepEidt form.
+     * 
+     * @param step the parent {@link ImageStep} form
+     */
     public ImageStepEdit(ImageStep step) {
         m_imageStep = step;
 
@@ -73,7 +82,6 @@ public class ImageStepEdit extends SimpleContainer
         library.getForm().addInitListener(m_attachListener);
         library.getForm().addProcessListener(m_attachListener);
         library.addUploadLink(new ActionListener() {
-
             public void actionPerformed(ActionEvent ev) {
                 setImageComponent(ev.getPageState(), ImageComponent.UPLOAD);
             }
@@ -105,15 +113,15 @@ public class ImageStepEdit extends SimpleContainer
         p.addComponentStateParam(this, m_imageComponentKey);
     }
 
-    Iterator getImageComponents() {
+    protected Iterator getImageComponents() {
         return m_imageComponent.getComponentsMap().values().iterator();
     }
 
     private void setImageComponent(PageState ps, final String activeKey) {
         m_imageComponent.setSelectedKey(ps, activeKey);
 
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Selected component: " + activeKey);
+        if (S_LOG.isDebugEnabled()) {
+            S_LOG.debug("Selected component: " + activeKey);
         }
 
         Map componentsMap = m_imageComponent.getComponentsMap();
@@ -124,15 +132,19 @@ public class ImageStepEdit extends SimpleContainer
 
             boolean isVisible = activeKey.equals(key);
 
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Key: " + key + "; Visibility: " + isVisible);
+            if (S_LOG.isDebugEnabled()) {
+                S_LOG.debug("Key: " + key + "; Visibility: " + isVisible);
             }
 
             ps.setVisible(component, isVisible);
         }
     }
 
-    // Reset this component and all of it's resettable childs
+    /**
+     * Reset this component and all of it's resettable childs.
+     * 
+     * @param ps Page state
+     */
     public void reset(PageState ps) {
         Map componentsMap = m_imageComponent.getComponentsMap();
         m_imageComponent.setSelectedKey(ps, ImageComponent.LIBRARY);
@@ -142,7 +154,7 @@ public class ImageStepEdit extends SimpleContainer
             Component component = (Component) componentsMap.get(key);
 
             ps.setVisible(component, ImageComponent.LIBRARY.equals(key));
-            
+
             // Reset all components if they are of type Resettable
             if (component instanceof Resettable) {
                 ((Resettable) component).reset(ps);
@@ -160,6 +172,8 @@ public class ImageStepEdit extends SimpleContainer
 //            attachment.setTitle(component.getTitle(event));
 //        }
 //        attachment.setUseContext(component.getUseContext(event));
+    
+    @Deprecated
     private class UniqueUseContextListener implements ParameterListener {
 
         public void validate(ParameterEvent ev)

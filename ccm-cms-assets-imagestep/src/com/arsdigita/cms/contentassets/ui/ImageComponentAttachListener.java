@@ -15,7 +15,10 @@ import com.arsdigita.cms.ui.ImageComponentAbstractListener;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * A listener to attach an image to a content item.
+ * 
+ * This listerner is used by {@link ImageStepEdit}.
+ * 
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageComponentAttachListener extends ImageComponentAbstractListener {
@@ -43,6 +46,5 @@ public class ImageComponentAttachListener extends ImageComponentAbstractListener
 
         attachment.setCaption(component.getCaption(event));
         
-//        setImageComponent(ps, ImageComponent.LIBRARY);
     }
 }

@@ -18,8 +18,6 @@
 
 package com.arsdigita.cms.contentassets.ui;
 
-import com.arsdigita.cms.contentassets.ItemImageAttachment;
-
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
@@ -35,25 +33,25 @@ import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.ui.ImageDisplay;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.xml.Element;
-
 import javax.servlet.ServletException;
-
 import org.apache.log4j.Logger;
 
 /**
- * Pluggable authoring step to add an ImageAsset to a content item
- * Currently only supports adding one image though the PDL has
- * association for multiple.
+ * Pluggable authoring step to add an ImageAsset to a content item.
+ * 
+ * @author unknown
+ * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
  */
 
 public class ImageStepDisplay extends SimpleContainer {
-    private static final Logger s_log = Logger.getLogger(ImageStepDisplay.class);
+    private static final Logger S_LOG = Logger.getLogger(ImageStepDisplay.class);
 
     private final ImageStep m_imageStep;
 
@@ -69,6 +67,7 @@ public class ImageStepDisplay extends SimpleContainer {
         mainLabel.setFontWeight(Label.ITALIC);
 
         List imageList = new List( new ImageListModelBuilder() ) {
+            @Override
             public void respond( PageState ps ) throws ServletException {
                 if( DELETE.equals( ps.getControlEventName() ) ) {
                     String attachment = ps.getControlEventValue();
@@ -168,6 +167,7 @@ public class ImageStepDisplay extends SimpleContainer {
 
                 }
 
+                @Override
                 protected ImageAsset getImageAsset( PageState ps ) {
                     return attachment.getImage();
                 }
@@ -191,6 +191,7 @@ public class ImageStepDisplay extends SimpleContainer {
             container.add( useContextPanel );
 
             ControlLink delete = new ControlLink( "Delete" ) {
+                @Override
                 public void setControlEvent( PageState ps ) {
                     String oid = ps.getControlEventValue();
                     ps.setControlEvent( list, DELETE, oid );

@@ -18,8 +18,6 @@
 
 package com.arsdigita.cms.contentassets.ui;
 
-import com.arsdigita.cms.contentassets.ItemImageAttachment;
-
 import com.arsdigita.bebop.AbstractSingleSelectionModel;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
@@ -29,6 +27,7 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.ui.ImageComponent;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -36,15 +35,14 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
-
 import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 
 /**
- * Pluggable authoring step to add an ImageAsset to a content item
- * Currently only supports adding one image though the PDL has
- * association for multiple.
+ * Pluggable authoring step to add an ImageAsset to a content item.
+ * 
+ * @author unknown
+ * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
  */
 
 public class ImageStep extends SecurityPropertyEditor {
@@ -175,6 +173,13 @@ public class ImageStep extends SecurityPropertyEditor {
         }
     }
 
+    /**
+     * Show display pane.
+     * 
+     * Also, reset the forms for reuse.
+     * 
+     * @param state 
+     */
     @Override
     public void showDisplayPane(PageState state) {
         super.showDisplayPane(state);
