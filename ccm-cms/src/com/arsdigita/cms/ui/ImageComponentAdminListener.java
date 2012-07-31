@@ -13,7 +13,10 @@ import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.toolbox.ui.ComponentMap;
 
 /**
- *
+ * A listener to administer images.
+ * 
+ * This listerner is used by {@link ImagesPane}.
+ * 
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 class ImageComponentAdminListener extends ImageComponentAbstractListener implements ActionListener {

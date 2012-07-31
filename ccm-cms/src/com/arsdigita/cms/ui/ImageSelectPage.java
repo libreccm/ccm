@@ -21,7 +21,11 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * A {@link CMSPage} to select and upload images.
+ * 
+ * This page is used by /web/templates/ccm-cms/content-section/admin/image_select.jsp
+ * which is used by the OpenCCM plugin for Xihna editor.
+ * 
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageSelectPage extends CMSPage {
@@ -32,7 +36,7 @@ public class ImageSelectPage extends CMSPage {
     private TabbedPane m_tabbedPane;
     private ImageLibraryComponent m_imageLibrary;
     private ImageUploadComponent m_imageUpload;
-    private ImageSelectResultPane m_resultPane;
+    private ImageSelectResultComponent m_result;
     private BigDecimalParameter m_sectionId;
     private final StringParameter m_imageComponentKey;
     private final MapComponentSelectionModel m_imageComponent;
@@ -56,7 +60,7 @@ public class ImageSelectPage extends CMSPage {
         m_imageComponent =
                 new MapComponentSelectionModel(componentModel, new HashMap());
         
-        m_selectListener = new ImageComponentSelectListener(m_imageComponent, getResultPane());
+        m_selectListener = new ImageComponentSelectListener(m_imageComponent, getResultComponent());
 
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
@@ -77,11 +81,16 @@ public class ImageSelectPage extends CMSPage {
             }
         });
         
-        add(m_resultPane);
+        add(m_result);
         
         addGlobalStateParam(m_imageComponentKey);
     }
 
+    /**
+     * Create the image library pane
+     * 
+     * @return m_imageLibrary
+     */
     protected ImageLibraryComponent getImageLibraryPane() {
         if (m_imageLibrary == null) {
             m_imageLibrary = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE, this);
@@ -92,6 +101,11 @@ public class ImageSelectPage extends CMSPage {
         return m_imageLibrary;
     }
 
+    /**
+     * Create the image upload pane
+     * 
+     * @return m_imageUpload
+     */
     protected ImageUploadComponent getImageUploadPane() {
 
         if (m_imageUpload == null) {
@@ -103,13 +117,21 @@ public class ImageSelectPage extends CMSPage {
         return m_imageUpload;
     }
 
-    protected ImageSelectResultPane getResultPane() {
-        if (m_resultPane == null) {
-            m_resultPane = new ImageSelectResultPane();
+    /**
+     * Creates an {@link ImageSelectResultComponent}
+     * 
+     * @return m_resultPane
+     */
+    protected ImageSelectResultComponent getResultComponent() {
+        if (m_result == null) {
+            m_result = new ImageSelectResultComponent();
         }
-        return m_resultPane;
+        return m_result;
     }
 
+    /**
+     * Create the tabbed pane
+     */
     protected TabbedPane createTabbedPane() {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);

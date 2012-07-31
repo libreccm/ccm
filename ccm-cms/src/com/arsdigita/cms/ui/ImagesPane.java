@@ -34,7 +34,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
- * A LayoutPanel to insert into ContentSectionPage or ImageSelectPage
+ * A {@link LayoutPanel} to insert into {@link ContentSectionPage}.
  *
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
@@ -77,6 +77,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         final Map selectors = m_imageComponent.getComponentsMap();
         m_adminListener = new ImageComponentAdminListener(m_imageComponent, this);
 
+        // Image library component
         final ImageLibraryComponent library = new ImageLibraryComponent(ImageComponent.ADMIN_IMAGES);
         library.getForm().addInitListener(m_adminListener);
         library.getForm().addProcessListener(m_adminListener);
@@ -86,6 +87,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
                 new Label(GlobalizationUtil.globalize("cms.ui.image_library")),
                 library));
 
+        // Image upload component
         final ImageUploadComponent upload = new ImageUploadComponent(ImageComponent.ADMIN_IMAGES);
         upload.getForm().addInitListener(m_adminListener);
         upload.getForm().addSubmissionListener(m_adminListener);
@@ -126,6 +128,11 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         page.addComponentStateParam(this, m_imageComponentKey);
     }
 
+    /**
+     * Resets this pane and all its resettable components.
+     * 
+     * @param state Page state
+     */
     @Override
     public final void reset(final PageState state) {
         super.reset(state);

@@ -34,7 +34,6 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.Service;
-import com.arsdigita.cms.ui.ImageComponent;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
@@ -62,6 +61,7 @@ import org.apache.log4j.Logger;
  * </code></pre></blockquote>
  *
  * @author Stanislav Freidin
+ * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
  * @version $Id: ImageBrowser.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ImageBrowser extends Table {
@@ -80,7 +80,7 @@ public class ImageBrowser extends Table {
     private static final Logger s_log = Logger.getLogger(ImageBrowser.class);
 
     /**
-     * Construct a new ImageBrowser
+     * Construct a new ImageBrowser with default mode.
      *
      * @param builder the {@link ImageBrowserModelBuilder} that will supply this
      * component with its {@link ImageBrowserModel} during each request
@@ -90,6 +90,13 @@ public class ImageBrowser extends Table {
         this(b, ImageComponent.ATTACH_IMAGE);
     }
 
+    /**
+     * Construct a new ImageBrowser with requested mode.
+     *
+     * @param builder the {@link ImageBrowserModelBuilder} that will supply this
+     * component with its {@link ImageBrowserModel} during each request
+     * @param mode the component mode (see {@link ImageComponent})
+     */
     public ImageBrowser(ImageBrowserModelBuilder b, int mode) {
         super(new BuilderAdapter(b), HEADERS);
         m_mode = mode;

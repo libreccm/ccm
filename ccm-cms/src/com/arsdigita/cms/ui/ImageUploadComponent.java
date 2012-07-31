@@ -21,7 +21,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * An image upload component.
  *
+ * This component can be used in different places to add image upload capabilities
+ * in a convinient way. This class uses a listener class which should be extended
+ * from {@link ImageComponentAbstractListener}.
+ * 
+ * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageUploadComponent extends Form implements ImageComponent {
@@ -34,10 +40,18 @@ public class ImageUploadComponent extends Form implements ImageComponent {
     private final SaveCancelSection m_saveCancel;
     private int m_mode;
 
+    /**
+     * Creates an ImageUploadComponent in attach mode.
+     */
     public ImageUploadComponent() {
         this(ImageComponent.ATTACH_IMAGE);
     }
 
+    /**
+     * Creates an ImageUploadComponent with the selected mode.
+     * 
+     * @param mode The operation mode (see {@link ImageComponent)
+     */
     public ImageUploadComponent(int mode) {
         super("imageUploadComponent", new ColumnPanel(2));
         m_mode = mode;

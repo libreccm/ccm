@@ -75,20 +75,17 @@ import org.apache.log4j.Logger;
  * @version $Id: CategoryItemPane.java 1967 2009-08-29 21:05:51Z pboy $
  */
 class CategoryItemPane extends BaseItemPane {
-    
-    private static final Logger s_log = Logger.getLogger
-            (CategoryItemPane.class);
-    
+
+    private static final Logger s_log = Logger.getLogger(CategoryItemPane.class);
     private final SingleSelectionModel m_model;
     private final CategoryRequestLocal m_category;
-
     private final SimpleContainer m_detailPane;
 
     public CategoryItemPane(final SingleSelectionModel model,
-                            final CategoryRequestLocal category,
-                            final ActionLink addLink,
-                            final ActionLink editLink,
-                            final ActionLink deleteLink) {
+            final CategoryRequestLocal category,
+            final ActionLink addLink,
+            final ActionLink editLink,
+            final ActionLink deleteLink) {
         m_model = model;
         m_category = category;
 
@@ -99,16 +96,15 @@ class CategoryItemPane extends BaseItemPane {
         setDefault(m_detailPane);
 
         final ActionLink orderItemsLink = new ActionLink(new Label(
-                                   gz("cms.ui.category.categorized_objects"))) {
+                gz("cms.ui.category.categorized_objects"))) {
             @Override
             public boolean isVisible(PageState state) {
                 // update for live items only
                 if (!super.isVisible(state)) {
                     return false;
                 }
-                CategorizedCollection items = m_category.getCategory
-                        (state).getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
-                items.addEqualsFilter(ContentItem.VERSION,ContentItem.LIVE);
+                CategorizedCollection items = m_category.getCategory(state).getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
+                items.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
                 boolean canOrder = items.size() > 1;
                 items.close();
                 return canOrder;
@@ -123,55 +119,53 @@ class CategoryItemPane extends BaseItemPane {
 
         // Change index item
         final ActionLink indexLink = new ActionLink(new Label(gz(
-                                         "cms.ui.category.change_index_item")));
+                "cms.ui.category.change_index_item")));
         final Form indexForm = new IndexItemSelectionForm(m_category);
         add(indexForm);
 
         ViewItemLink viewIndexLink = new ViewItemLink(new Label(gz(
-                                        "cms.ui.category.view_index_item")),"");
+                "cms.ui.category.view_index_item")), "");
         EditItemLink editIndexLink = new EditItemLink(new Label(gz(
-                                        "cms.ui.category.edit_index_item")),"");
+                "cms.ui.category.edit_index_item")), "");
 
         // Summary
         m_detailPane.add(new SummarySection(editLink, deleteLink, indexLink,
-                                 viewIndexLink, editIndexLink, orderItemsLink));
-        
+                viewIndexLink, editIndexLink, orderItemsLink));
+
         // Quasimodo: BEGIN
         // Localizations
         ActionLink addCategoryLocalizationLink = new ActionLink(new Label(gz(
-                                         "cms.ui.category.localization_add"))) {
+                "cms.ui.category.localization_add"))) {
             @Override
             public boolean isVisible(PageState state) {
                 // Only show addLanguage button, if there are langauges to add
-                int countSupportedLanguages = (
-                        Kernel.getConfig()).getSupportedLanguagesTokenizer()
-                                                   .countTokens();
-                long countLanguages = 
+                int countSupportedLanguages = (Kernel.getConfig()).getSupportedLanguagesTokenizer()
+                        .countTokens();
+                long countLanguages =
                         m_category.getCategory(state)
-                                  .getCategoryLocalizationCollection().size();
-                
-                if(countLanguages < countSupportedLanguages) {
+                        .getCategoryLocalizationCollection().size();
+
+                if (countLanguages < countSupportedLanguages) {
                     return true;
                 } else {
                     return false;
                 }
             }
         };
-        
+
         CategoryLocalizationAddForm addCategoryLocalizationForm =
-                                    new CategoryLocalizationAddForm(m_category);
+                new CategoryLocalizationAddForm(m_category);
         m_detailPane.add(new CategoryLocalizationSection(addCategoryLocalizationLink));
         add(addCategoryLocalizationForm);
         connect(addCategoryLocalizationLink, addCategoryLocalizationForm);
         connect(addCategoryLocalizationForm);
         // Quasimodo: END
-        
+
         // Subcategories
         m_detailPane.add(new SubcategorySection(addLink));
 
         // Linked categories
-        final ActionLink linkAddLink = new ActionLink
-              (new Label(gz("cms.ui.category.linked_add")));
+        final ActionLink linkAddLink = new ActionLink(new Label(gz("cms.ui.category.linked_add")));
 
         final Form linkForm = new LinkForm(m_category);
         add(linkForm);
@@ -196,6 +190,7 @@ class CategoryItemPane extends BaseItemPane {
     }
 
     private class EditVisible extends VisibilityComponent {
+
         EditVisible(final Component child) {
             super(child, null);
         }
@@ -207,6 +202,7 @@ class CategoryItemPane extends BaseItemPane {
     }
 
     private class AdminVisible extends VisibilityComponent {
+
         AdminVisible(final Component child) {
             super(child, null);
         }
@@ -220,9 +216,9 @@ class CategoryItemPane extends BaseItemPane {
     private class SummarySection extends Section {
 
         SummarySection(final ActionLink editLink,
-                       final ActionLink deleteLink,
-                       final ActionLink indexLink,
-                       final ActionLink orderItemsLink) {
+                final ActionLink deleteLink,
+                final ActionLink indexLink,
+                final ActionLink orderItemsLink) {
             setHeading(new Label(gz("cms.ui.category.details")));
 
             final ActionGroup group = new ActionGroup();
@@ -241,11 +237,11 @@ class CategoryItemPane extends BaseItemPane {
          * the user to view and edit the content index item.
          */
         SummarySection(final ActionLink editLink,
-                       final ActionLink deleteLink,
-                       final ActionLink indexLink,
-                       final BaseLink viewIndexItem,
-                       final BaseLink editIndexItem,
-                       final ActionLink orderItemsLink) {
+                final ActionLink deleteLink,
+                final ActionLink indexLink,
+                final BaseLink viewIndexItem,
+                final BaseLink editIndexItem,
+                final ActionLink orderItemsLink) {
             setHeading(new Label(gz("cms.ui.category.details")));
 
             final ActionGroup group = new ActionGroup();
@@ -262,6 +258,7 @@ class CategoryItemPane extends BaseItemPane {
         }
 
         private class Properties extends PropertyList {
+
             @Override
             protected final java.util.List properties(final PageState state) {
                 final java.util.List props = super.properties(state);
@@ -272,20 +269,19 @@ class CategoryItemPane extends BaseItemPane {
 
                 if (item != null) {
                     itemTitle = item.getDisplayName();
-                } else if (!category.ignoreParentIndexItem() 
-                		   && category.getParentCategoryCount() > 0) 
-                {
-                	Category ancestor = findParentCategoryWithNonInheritedIndexItem(category);
-                	if (ancestor != null) {
-                		if (ancestor.getIndexObject() != null) {
-                			itemTitle = ancestor.getIndexObject().getDisplayName();
-                		}
-                		itemTitle += " (Inherited from " 
-              		              + ancestor.getDisplayName() + ")";
-                	} else {
-                		// The complete hierarchy is set to inherit.
-                		// Just leave the itemTitle as None.
-                	}
+                } else if (!category.ignoreParentIndexItem()
+                        && category.getParentCategoryCount() > 0) {
+                    Category ancestor = findParentCategoryWithNonInheritedIndexItem(category);
+                    if (ancestor != null) {
+                        if (ancestor.getIndexObject() != null) {
+                            itemTitle = ancestor.getIndexObject().getDisplayName();
+                        }
+                        itemTitle += " (Inherited from "
+                                + ancestor.getDisplayName() + ")";
+                    } else {
+                        // The complete hierarchy is set to inherit.
+                        // Just leave the itemTitle as None.
+                    }
                 }
 
                 props.add(new Property(gz("cms.ui.name"),
@@ -295,57 +291,67 @@ class CategoryItemPane extends BaseItemPane {
                 props.add(new Property(gz("cms.ui.category.url"),
                         category.getURL("")));
                 props.add(new Property(gz("cms.ui.category.is_not_abstract"),
-                                       category.isAbstract() ?
-                                       gz("cms.ui.no") :
-                                       gz("cms.ui.yes")));
+                        category.isAbstract()
+                        ? gz("cms.ui.no")
+                        : gz("cms.ui.yes")));
                 props.add(new Property(gz("cms.ui.category.is_enabled"),
-                        category.isEnabled("") ?
-                                       gz("cms.ui.yes") :
-                                       gz("cms.ui.no")));
+                        category.isEnabled("")
+                        ? gz("cms.ui.yes")
+                        : gz("cms.ui.no")));
                 props.add(new Property(gz("cms.ui.category.index_item"),
-                                       itemTitle));
+                        itemTitle));
 
                 return props;
             }
         }
     }
-    
+
     // Loop over the parents and recurse up the hierarchy the find the first
     // parent with an explicit index item ignoreParentIndexItem is true.
     private Category findParentCategoryWithNonInheritedIndexItem(Category c) {
-    	if (c.getParentCategoryCount() == 0) {
-    		return null;
-    	}
-    	CategoryCollection parents = c.getParents();
-    	while (parents.next()) {
-    		Category p = parents.getCategory();
-    		if (p.getDirectIndexObject() != null || p.ignoreParentIndexItem()) {
-    			return p;
-    		}
-    		// Try the parents of this parent.
-    		Category gp = findParentCategoryWithNonInheritedIndexItem(p);
-    		if (gp != null) {
-    			return gp;
-    		}
-    	}
-    	return null;
+        if (c.getParentCategoryCount() == 0) {
+            return null;
+        }
+        CategoryCollection parents = c.getParents();
+        while (parents.next()) {
+            Category p = parents.getCategory();
+            if (p.getDirectIndexObject() != null || p.ignoreParentIndexItem()) {
+                return p;
+            }
+            // Try the parents of this parent.
+            Category gp = findParentCategoryWithNonInheritedIndexItem(p);
+            if (gp != null) {
+                return gp;
+            }
+        }
+        return null;
     }
-    
+
     // Quasimodo: BEGIN
     // CategoryLocalizationSection
     private class CategoryLocalizationSection extends Section {
+
+        private CategoryLocalizationTable m_catLocalizationTable;
+        private CategoryLocalizationEditForm m_editCategoryLocalizationForm;
+
         CategoryLocalizationSection(ActionLink addLink) {
             setHeading(new Label(gz("cms.ui.category.localizations")));
-            
+
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            
-            group.setSubject(new CategoryLocalizationTable(m_category, m_model));
+            m_catLocalizationTable = new CategoryLocalizationTable(m_category, m_model);
+            group.setSubject(m_catLocalizationTable);
             group.addAction(new AdminVisible(addLink), ActionGroup.ADD);
+
+            m_editCategoryLocalizationForm = new CategoryLocalizationEditForm(m_category, "de");
+            connect(m_editCategoryLocalizationForm);
+            connect(m_catLocalizationTable, 0, m_editCategoryLocalizationForm);
+
         }
     }
 
     private class SubcategorySection extends Section {
+
         SubcategorySection(final ActionLink addLink) {
             setHeading(new Label(gz("cms.ui.category.subcategories")));
 
@@ -358,6 +364,7 @@ class CategoryItemPane extends BaseItemPane {
     }
 
     private class LinkedCategorySection extends Section {
+
         LinkedCategorySection(final ActionLink linkAddLink) {
             setHeading(new Label(gz("cms.ui.category.linked")));
 
@@ -375,6 +382,7 @@ class CategoryItemPane extends BaseItemPane {
     }
 
     private class CategoryTemplateSection extends Section {
+
         CategoryTemplateSection() {
             setHeading(new Label(gz("cms.ui.category.templates")));
 
@@ -388,6 +396,7 @@ class CategoryItemPane extends BaseItemPane {
     }
 
     private class PermissionsSection extends Section {
+
         @Override
         public boolean isVisible(PageState ps) {
             Category cat = m_category.getCategory(ps);
@@ -400,7 +409,7 @@ class CategoryItemPane extends BaseItemPane {
             final ActionGroup group = new ActionGroup();
             setBody(group);
 
-            PrivilegeDescriptor[] privs = new PrivilegeDescriptor[] {
+            PrivilegeDescriptor[] privs = new PrivilegeDescriptor[]{
                 PrivilegeDescriptor.EDIT,
                 Category.MAP_DESCRIPTOR,
                 PrivilegeDescriptor.DELETE,
@@ -413,8 +422,7 @@ class CategoryItemPane extends BaseItemPane {
             privMap.put(Category.MAP_DESCRIPTOR.getName(), "Categorize Items");
             privMap.put("admin", "Admin");
 
-            final CMSPermissionsPane permPane = new CMSPermissionsPane
-                (privs, privMap, new ACSObjectSelectionModel(m_model)) {
+            final CMSPermissionsPane permPane = new CMSPermissionsPane(privs, privMap, new ACSObjectSelectionModel(m_model)) {
                 @Override
                 public void showAdmin(PageState ps) {
                     Assert.exists(m_model.getSelectedKey(ps));
@@ -425,7 +433,7 @@ class CategoryItemPane extends BaseItemPane {
             };
 
             final ActionLink restoreDefault = new ActionLink(new Label(gz(
-                                       "cms.ui.restore_default_permissions"))) {
+                    "cms.ui.restore_default_permissions"))) {
                 @Override
                 public boolean isVisible(PageState ps) {
                     Category cat = m_category.getCategory(ps);
@@ -434,7 +442,7 @@ class CategoryItemPane extends BaseItemPane {
             };
 
             final ActionLink useCustom = new ActionLink(new Label(gz(
-                                           "cms.ui.use_custom_permissions"))) {
+                    "cms.ui.use_custom_permissions"))) {
                 @Override
                 public boolean isVisible(PageState ps) {
                     Category cat = m_category.getCategory(ps);
@@ -460,18 +468,18 @@ class CategoryItemPane extends BaseItemPane {
                             parent = cat.getDefaultParentCategory();
                         } catch (CategoryNotFoundException ce) {
                             throw new IllegalStateException(
-                                "link shouldn't exist for root categories");
+                                    "link shouldn't exist for root categories");
                         }
                         PermissionService.setContext(cat, parent);
 
                         // revoke all direct permissions so category will only
                         // have inherited permissions
                         ObjectPermissionCollection perms =
-                            PermissionService.getDirectGrantedPermissions(
+                                PermissionService.getDirectGrantedPermissions(
                                 cat.getOID());
                         while (perms.next()) {
                             PermissionService.revokePermission(
-                                new PermissionDescriptor(
+                                    new PermissionDescriptor(
                                     perms.getPrivilege(), cat.getOID(),
                                     perms.getGranteeOID()));
                         }
@@ -510,15 +518,15 @@ class CategoryItemPane extends BaseItemPane {
             add(new Submit("Done"));
 
         }
-
     }
 
     /*
      * This private class creates a link to the index item for a category.
      */
     private class ViewItemLink extends Link {
+
         ViewItemLink(Component c, String s) {
-            super(c,s);
+            super(c, s);
         }
 
         // Build the preview link.  This uses a standard redirect link to find 
@@ -526,10 +534,10 @@ class CategoryItemPane extends BaseItemPane {
         @Override
         protected String prepareURL(final PageState state, String location) {
 
-            ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state)
-                                                               .getDirectIndexObject()))
-                                                               .getPrimaryInstance();
-            if(indexItem==null) {
+            ContentItem indexItem = ((ContentBundle) (m_category.getCategory(state)
+                    .getDirectIndexObject()))
+                    .getPrimaryInstance();
+            if (indexItem == null) {
                 return "";
             } else {
                 return "/redirect/?oid=" + URLEncoder.encode(indexItem.getOID().toString());
@@ -543,7 +551,7 @@ class CategoryItemPane extends BaseItemPane {
                 return false;
             }
             ACSObject indexItem = m_category.getCategory(state).getDirectIndexObject();
-            if(indexItem==null) {
+            if (indexItem == null) {
                 return false;
             } else {
                 return true;
@@ -552,36 +560,38 @@ class CategoryItemPane extends BaseItemPane {
     };
 
     private class EditItemLink extends Link {
+
         EditItemLink(Component c, String s) {
-            super(c,s);
+            super(c, s);
         }
 
         /**
-         * Build the preview link.  This is based on code in the
-         * ContentSoonExpiredPane class. The prepareURL method of the parent
-         * is overwritten.  This method is called by the printwriter
+         * Build the preview link. This is based on code in the
+         * ContentSoonExpiredPane class. The prepareURL method of the parent is
+         * overwritten. This method is called by the printwriter
          */
         @Override
         protected String prepareURL(final PageState state, String location) {
             boolean canEdit = false;
-            ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state)
-                                                         .getDirectIndexObject()))
-                                                         .getPrimaryInstance();
-            if(indexItem==null) {
+            ContentItem indexItem = ((ContentBundle) (m_category.getCategory(state)
+                    .getDirectIndexObject()))
+                    .getPrimaryInstance();
+            if (indexItem == null) {
                 return "";
             }
-            if (!isItemEditable(indexItem,state)) {
+            if (!isItemEditable(indexItem, state)) {
                 return "";
             } else {
                 BigDecimal draftID = indexItem.getDraftVersion().getID();
-                return "item.jsp?item_id=" + draftID + "&set_tab=" +
-                                             ContentItemPage.AUTHORING_TAB;
+                return "item.jsp?item_id=" + draftID + "&set_tab="
+                        + ContentItemPage.AUTHORING_TAB;
             }
         }
 
         /**
          * We only show this link when an index item exists for this category
          * and the user is allowed to edit this item.
+         *
          * @param state
          * @return
          */
@@ -591,16 +601,16 @@ class CategoryItemPane extends BaseItemPane {
                 return false;
             }
             ACSObject indexItem = m_category.getCategory(state).getDirectIndexObject();
-            if(indexItem==null) {
+            if (indexItem == null) {
                 return false;
             } else {
-                return isItemEditable((ContentItem)indexItem,state);
+                return isItemEditable((ContentItem) indexItem, state);
             }
         }
 
         /**
-         * This method checks whether a usern is allowed to edit a
-         * particular item.
+         * This method checks whether a usern is allowed to edit a particular
+         * item.
          *
          * @param item
          * @param state
@@ -610,13 +620,13 @@ class CategoryItemPane extends BaseItemPane {
             BigDecimal id = item.getID();
             User user = Web.getContext().getUser();
             ContentItem ci = new ContentItem(new OID(ContentItem.class.getName(),
-                                     Integer.parseInt(id.toString())));
+                    Integer.parseInt(id.toString())));
             Iterator permissions = PermissionService.getImpliedPrivileges(
-                                       ci.getOID(), user.getOID());
+                    ci.getOID(), user.getOID());
             while (permissions.hasNext()) {
-                PrivilegeDescriptor permission = (PrivilegeDescriptor)permissions.next();
-                if (permission.equals(PrivilegeDescriptor.ADMIN) ||
-                        permission.equals(PrivilegeDescriptor.EDIT)) {
+                PrivilegeDescriptor permission = (PrivilegeDescriptor) permissions.next();
+                if (permission.equals(PrivilegeDescriptor.ADMIN)
+                        || permission.equals(PrivilegeDescriptor.EDIT)) {
                     return true;
                 }
             }

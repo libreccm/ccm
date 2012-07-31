@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.arsdigita.cms.ui;
 
@@ -11,11 +10,18 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ReusableImageAsset;
 
 /**
- *
+ * Interface for ImageCompnents.
+ * 
+ * All components for image handling (like {@link ImageLibraryComponent} or
+ * {@link ImageUploadComponent}) should implement this interface.
+ * 
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public interface ImageComponent {
 
+    /**
+     * The modes
+     */
     public static final int DISPLAY_ONLY = 0;
     public static final int SELECT_IMAGE = 1;
     public static final int ATTACH_IMAGE = 2;

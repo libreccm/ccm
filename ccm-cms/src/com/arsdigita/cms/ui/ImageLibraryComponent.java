@@ -25,7 +25,13 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import java.math.BigDecimal;
 
 /**
+ * An image library component.
  *
+ * This component can be used in different places to add an image library
+ * in a convinient way. This class uses a listener class which should be extended
+ * from {@link ImageComponentAbstractListener}.
+ * 
+ * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageLibraryComponent extends SimpleContainer implements ImageComponent, Resettable {
@@ -67,7 +73,7 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
                 try {
                     final ReusableImageAsset image = new ReusableImageAsset(imageID);
                     if(m_mode == ImageComponent.SELECT_IMAGE) {
-                        parent.getResultPane().setResult(image.getDisplayName(), image.getID(), image.getWidth(), image.getHeight());
+                        parent.getResultComponent().setResult(image);
                     }
                     m_imageModel.setSelectedObject(state, image);
                 } catch (DataObjectNotFoundException ex) {
@@ -164,6 +170,11 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         return m_saveCancel;
     }
 
+    /**
+     * Add a link to an {@link ImageUploadComponent}
+     * 
+     * @param actionListener 
+     */
     public void addUploadLink(final ActionListener actionListener) {
         // Add action link to image upload component
         if (m_mode != ImageComponent.DISPLAY_ONLY) {
@@ -173,7 +184,9 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         }
     }
 
-    // Reset this component
+    /**
+     * Reset this component.
+     */
     public void reset(final PageState state) {
         // clear selection
         m_imageModel.clearSelection(state);

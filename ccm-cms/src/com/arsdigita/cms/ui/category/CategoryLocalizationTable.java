@@ -27,6 +27,7 @@ import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.event.TableActionListener;
+import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
@@ -49,8 +50,8 @@ import java.util.Locale;
 /**
  * Lists all existing localizations for a selected category.
  *
- * This class is part of the admin GUI of CCM and extends the standard form
- * in order to present forms for managing the multi-language categories.
+ * This class is part of the admin GUI of CCM and extends the standard form in
+ * order to present forms for managing the multi-language categories.
  *
  * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  */
@@ -75,7 +76,7 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
         // if table is empty:
         setEmptyView(new Label(GlobalizationUtil.globalize(
                 "cms.ui.category.localization_none")));
-        TableColumnModel tab_model = getColumnModel();
+TableColumnModel tab_model = getColumnModel();
 
         // define columns
         // XXX globalize
@@ -139,7 +140,7 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
 
         /**
          * Check collection for the existence of another row.
-         * 
+         *
          * If exists, fetch the value of current CategoryLocalization object
          * into m_categoryLocalization class variable.
          */
@@ -158,6 +159,7 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
 
         /**
          * Return the
+         *
          * @see com.arsdigita.bebop.table.TableModel#getElementAt(int)
          */
         public Object getElementAt(int columnIndex) {
@@ -197,22 +199,22 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
                 boolean isSelected, Object key,
                 int row, int column) {
 
-//
+
 //            if (canEdit) {
-//                CategoryLocalization cl;
-//
-//                try {
-//                    cl = new CategoryLocalization((BigDecimal) key);
-//                } catch (DataObjectNotFoundException ex) {
-//                    return new Label(value.toString());
-//                }
-//
-//                ContentSection section = CMS.getContext().getContentSection();
-//                ItemResolver resolver = section.getItemResolver();
-//
+//            CategoryLocalization cl;
+
+//            try {
+//                cl = new CategoryLocalization((BigDecimal) key);
+//            } catch (DataObjectNotFoundException ex) {
+//                return new Label(value.toString());
+//            }
+
+//            ContentSection section = CMS.getContext().getContentSection();
+//            ItemResolver resolver = section.getItemResolver();
+
 //                return new Link(value.toString(), resolver.generateItemURL(state, cl, section, cl.getVersion()));
-                ControlLink link = new ControlLink(value.toString());
-                return link;
+            ControlLink link = new ControlLink(value.toString());
+            return link;
         }
     }
 
@@ -230,9 +232,9 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
     }
 
     /**
-     * Provide implementation to TableActionListener method.
-     * Code that comes into picture when a link on the table is clicked.
-     * Handles edit and delete event.
+     * Provide implementation to TableActionListener method. Code that comes
+     * into picture when a link on the table is clicked. Handles edit and delete
+     * event.
      */
     public void cellSelected(TableActionEvent evt) {
 
@@ -260,8 +262,8 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
     }
 
     /**
-     * provide Implementation to TableActionListener method.
-     * Does nothing in our case.
+     * provide Implementation to TableActionListener method. Does nothing in our
+     * case.
      */
     public void headSelected(TableActionEvent e) {
         throw new UnsupportedOperationException("Not Implemented");
