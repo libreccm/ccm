@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>]>
 
 <!-- 
     Copyright: 2006, 2007, 2008 Sören Bernstein
@@ -19,14 +20,29 @@
     along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<settings>
-  <setting id="languages">[de] en</setting>
-  <setting id="showDebug">false</setting>
+<!-- DE
+  Hier wird ein Script eingefügt
+-->
 
-  <setting id="css/media">screen</setting>
-  <setting id="css/media">print</setting>
+<!-- EN
+  Inserts a script
+-->
 
-  <setting id="separator"> | </setting>
+<!-- Autor: Sören Bernstein -->
 
-  <setting id="includeFileNameIntoFileLinks">false</setting>
-</settings>
+<xsl:stylesheet 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+  xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+  xmlns:nav="http://ccm.redhat.com/navigation"
+  xmlns:mandalay="http://mandalay.quasiweb.de" 
+  exclude-result-prefixes="xsl bebop cms nav mandalay"
+  version="1.0">
+
+  <xsl:template match="scipt">
+    <script type="{@type}">
+      <xsl:value-of select="."/>
+    </script>
+  </xsl:template>
+
+</xsl:stylesheet>

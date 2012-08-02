@@ -26,6 +26,8 @@
   <line id="moreButton">weiter...</line>
   <line id="moreButtonTitle">mehr lesen</line>
 
+  <line id="departmentHeadPreText"> (Abteilungsleitung) </line>
+
   <line id="tabs/summary">Überblick</line>
   <line id="tabs/desc">Details</line>
   <line id="tabs/members">Mitglieder</line>
@@ -70,8 +72,8 @@
   <line id="publicationsTab/filters/heading">Publikationsliste filtern</line>
   <line id="publicationsTab/filters/submit">Filter anwenden</line>
   <line id="publicationsTab/filters/reset">Filter zurücksetzen</line>
-  <line id="publicationsTab/filters/year/label">Erscheinungsjahr</line>
-  <line id="publicationsTab/filters/year/all">Alle</line>
+  <line id="publicationsTab/filters/yearOfPublication/label">Erscheinungsjahr</line>
+  <line id="publicationsTab/filters/yearOfPublication/all">Alle</line>
   <line id="publicationsTab/filters/title/label">Titel</line>
   <line id="publicationsTab/filters/author/label">Autor (Nachname)</line>
   <line id="publicationsTab/greeting">Hier sehen Sie die aktuellsten 10 Publikationen. Weitere Publikationen finden Sie über die Filter oben.</line>

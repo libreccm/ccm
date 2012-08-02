@@ -1592,7 +1592,7 @@
 	</xsl:otherwise>
       </xsl:choose>
 
-      <xsl:if test="($titleLastChar != '.') and ($titleLastChar != '!') and titleLastChar != '?'">
+      <xsl:if test="($titleLastChar != '.') and ($titleLastChar != '!') and ($titleLastChar != '?')">
 	<xsl:value-of select="./@after"/>
       </xsl:if>
     </span>
@@ -1854,7 +1854,7 @@
 	  <span class="publicationAuthorGivenName">
 	    <xsl:choose>
 	      <xsl:when test="./@initialsOnly='true'">
-		<xsl:value-of select="substring($givenName, 1, 2)"/>
+		<xsl:value-of select="substring($givenName, 1, 2)"/><xsl:text>.</xsl:text>
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:value-of select="$givenName"/>

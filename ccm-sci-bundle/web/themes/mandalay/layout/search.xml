@@ -29,6 +29,8 @@
       <usePageTitle/>
     </title>
     <useCSSLoader/>
+    <useFancybox>
+    <useMathJax/>
   </head>
   <body>
     <div id="pageWrap">

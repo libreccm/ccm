@@ -251,11 +251,20 @@
 	    </span>		    
 	    <span class="contactentryValue">
 	      <xsl:choose>
-		<xsl:when test="contains(./value, '@')">
+		<xsl:when test="(substring(./value, 1, 7) = 'http://') or (substring(./value, 1, 3) = 'www') or contains(./value, '@')">
 		  <a>
-		    <xsl:attribute name="href">
-		      <xsl:value-of select="concat('mailto:', ./value)"/>
-		    </xsl:attribute>
+		    <xsl:choose>
+		      <xsl:when test="contains(./value, '@')">
+			<xsl:attribute name="href">
+			  <xsl:value-of select="concat('mailto:', ./value)"/>
+			</xsl:attribute>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:attribute name="href">
+			  <xsl:value-of select="./value"/>
+			</xsl:attribute>
+		      </xsl:otherwise>
+		    </xsl:choose>
 		    <xsl:value-of select="./value"/>
 		  </a>
 		</xsl:when>

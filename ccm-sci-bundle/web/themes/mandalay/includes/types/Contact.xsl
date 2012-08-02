@@ -462,7 +462,11 @@
         </xsl:call-template>    
       </h3>
     </xsl:if>
-    <xsl:apply-templates select="contactentries"/>
+    <xsl:for-each select="./contactEntryKeys/entryKey">
+      <xsl:apply-templates select="../../contactentries[keyId=current()]">
+	<xsl:with-param name="key" select="entryKey"/>
+      </xsl:apply-templates>
+    </xsl:for-each>      
   </xsl:if>
 </xsl:template>
 

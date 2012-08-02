@@ -63,5 +63,6 @@
   <setting id="onCleanup"></setting>
   <setting id="onClose"></setting>
 -->
+  <setting id="type">image</setting>
   <setting id=""></setting>
 </settings>

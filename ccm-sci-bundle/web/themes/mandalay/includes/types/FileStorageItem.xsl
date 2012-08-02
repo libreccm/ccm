@@ -84,6 +84,13 @@
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="includeFileNameIntoFileLinks">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'global'"/>
+        <xsl:with-param name="setting" select="'includeFileNameIntoFileLinks'"/>
+        <xsl:with-param name="default" select="'false'"/>	
+      </xsl:call-template>
+    </xsl:variable>
     
     <div id="greeting">
       <xsl:if test="$setImage = 'true'">
@@ -102,33 +109,55 @@
     </div>
     <div id="fsiAction">
       <xsl:if test="$setViewLink = 'true'">
-        <a href="{$dispatcher-prefix}/cms-service/stream/asset/?asset_id={./file/id}">
-          <xsl:attribute name="title">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'FileStorageItem'"/>
-              <xsl:with-param name="id" select="'view/title'" />
-            </xsl:call-template>
-          </xsl:attribute>
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'FileStorageItem'"/>
-            <xsl:with-param name="id" select="'view/link'" />
-          </xsl:call-template>
-        </a>
+	<a>
+	  <xsl:attribute name="href">	  
+	    <xsl:choose>
+	      <xsl:when test="$includeFileNameIntoFileLinks = 'true'">		
+		<xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/asset/<xsl:value-of select="./file/name"/>?asset_id=<xsl:value-of select="./file/id"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/asset/?asset_id=<xsl:value-of select="./file/id"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <!--	    <a href="{$dispatcher-prefix}/cms-service/stream/asset/{./file/name}/?asset_id={./file/id}">-->
+	  <xsl:attribute name="title">
+	    <xsl:call-template name="mandalay:getStaticText">
+	      <xsl:with-param name="module" select="'FileStorageItem'"/>
+	      <xsl:with-param name="id" select="'view/title'" />
+	    </xsl:call-template>
+	  </xsl:attribute>
+	  <xsl:call-template name="mandalay:getStaticText">
+	    <xsl:with-param name="module" select="'FileStorageItem'"/>
+	    <xsl:with-param name="id" select="'view/link'" />
+	  </xsl:call-template>
+	</a>
       </xsl:if>
       <xsl:if test="$setViewLink = 'true' and $setSaveLink = 'true'">
         <xsl:value-of select="$separator"/>
       </xsl:if>
       <xsl:if test="$setSaveLink = 'true'">
-        <a href="{$dispatcher-prefix}/cms-service/download/asset/?asset_id={./file/id}">
-          <xsl:attribute name="title">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'FileStorageItem'"/>
+	<a>
+	  <xsl:attribute name="href">
+	    <xsl:choose>
+	      <xsl:when test="$includeFileNameIntoFileLinks = 'true'">		
+		<xsl:value-of select="$dispatcher-prefix"/>/cms-service/download/asset/<xsl:value-of select="./file/name"/>?asset_id=<xsl:value-of select="./file/id"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$dispatcher-prefix"/>/cms-service/download/asset/?asset_id=<xsl:value-of select="./file/id"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <!--<a href="{$dispatcher-prefix}/cms-service/download/asset/{./file/name}/?asset_id={./file/id}">-->
+	  <xsl:attribute name="title">
+	    <xsl:call-template name="mandalay:getStaticText">
+	      <xsl:with-param name="module" select="'FileStorageItem'"/>
               <xsl:with-param name="id" select="'download/title'" />
-            </xsl:call-template>
-          </xsl:attribute>
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'FileStorageItem'"/>
-            <xsl:with-param name="id" select="'download/link'" />
+	    </xsl:call-template>
+	  </xsl:attribute>
+	  <xsl:call-template name="mandalay:getStaticText">
+	    <xsl:with-param name="module" select="'FileStorageItem'"/>
+	    <xsl:with-param name="id" select="'download/link'" />
           </xsl:call-template>
         </a>
       </xsl:if>

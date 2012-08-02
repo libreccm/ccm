@@ -29,6 +29,8 @@
       <usePageTitle/>
     </title>
     <useCSSLoader/>
+    <useFancbox/>
+    <useMathJax/>
   </head>
   <body>
 

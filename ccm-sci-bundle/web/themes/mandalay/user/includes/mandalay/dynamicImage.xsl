@@ -28,35 +28,35 @@
     exclude-result-prefixes="xsl bebop cms mandalay nav"
     version="1.0">
 
-  <xsl:template name="mandalay:headerImage">
+  <xsl:template name="mandalay:dynamicImage">
    
     <xsl:variable name="path">
-      <xsl:call-template name="mandalay:headerImagePath"/>
+      <xsl:call-template name="mandalay:dynamicImagePath"/>
     </xsl:variable>
 
     <xsl:variable name="src">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="node" select="''"/>
-        <xsl:with-param name="module" select="'headerImage'"/>
+        <xsl:with-param name="module" select="@class"/>
         <xsl:with-param name="setting" select="concat($path, 'src')"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="alt">
       <xsl:call-template name="mandalay:getStaticText">
-        <xsl:with-param name="module" select="'headerImage'"/>
+        <xsl:with-param name="module" select="@class"/>
         <xsl:with-param name="id" select="concat($path, 'alt')"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="title">
       <xsl:call-template name="mandalay:getStaticText">
-        <xsl:with-param name="module" select="'headerImage'"/>
+        <xsl:with-param name="module" select="@class"/>
         <xsl:with-param name="id" select="concat($path, 'title')"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="name">
       <xsl:call-template name="mandalay:getStaticText">
-        <xsl:with-param name="module" select="'headerImage'"/>
+        <xsl:with-param name="module" select="@class"/>
         <xsl:with-param name="id" select="concat($path, 'name')"/>
       </xsl:call-template>
     </xsl:variable>
@@ -88,14 +88,14 @@
     </img>
   </xsl:template>
   
-  <xsl:template name="mandalay:headerImagePath">
+  <xsl:template name="mandalay:dynamicImagePath">
     <xsl:param name="position" select="count($resultTree//nav:categoryPath/nav:category)"/>
     <xsl:variable name="path" select="substring-after($resultTree//nav:categoryPath/nav:category[position() = $position]/@url, 'ccm/')"/>
 
     <xsl:variable name="foundSetting">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="node" select="''"/>
-        <xsl:with-param name="module" select="'headerImage'"/>
+        <xsl:with-param name="module" select="@class"/>
         <xsl:with-param name="setting" select="concat($path, 'src')"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
@@ -105,7 +105,7 @@
       <xsl:choose>
 
         <xsl:when test="$foundSetting = '' and $position > 0 ">
-          <xsl:call-template name="mandalay:headerImagePath">
+          <xsl:call-template name="mandalay:dynamicImagePath">
             <xsl:with-param name="position" select="$position -1"/>
           </xsl:call-template>
         </xsl:when>

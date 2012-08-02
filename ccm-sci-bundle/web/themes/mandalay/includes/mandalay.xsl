@@ -59,6 +59,7 @@
   <xsl:import href="mandalay/quicksearch.xsl"/>
   <xsl:import href="mandalay/relatedItems.xsl"/>
   <xsl:import href="mandalay/relatedLinks.xsl"/>
+  <xsl:import href="mandalay/script.xsl"/>
   <xsl:import href="mandalay/staticImage.xsl"/>
   <xsl:import href="mandalay/staticLink.xsl"/>
   <xsl:import href="mandalay/staticMenu.xsl"/>

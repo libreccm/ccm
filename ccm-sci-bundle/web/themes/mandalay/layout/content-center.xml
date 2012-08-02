@@ -29,17 +29,18 @@
       <usePageTitle/>    
     </title>
     <useCSSLoader/>
+    <useMathJax/>
   </head>
   <body>
     <div id="cmsHeader">
-<showImage class="logo">
-	<src>images/logo.png</src>
-	<alt>header/logo/alt</alt>
-	<name>header/logo/name</name>
-	<link>/navigation/</link>
+      <showImage class="logo">
+        <src>images/logo.png</src>
+        <alt>header/logo/alt</alt>
+        <name>header/logo/name</name>
+        <link>/navigation/</link>
       </showImage>
- <showCMSGreeting/>
-     <showCMSGlobalNavigation>
+      <showCMSGreeting/>
+      <showCMSGlobalNavigation>
         <usePreviewLink/>
         <useContentCenterLink/>
         <useWorkspaceLink/>
@@ -48,7 +49,7 @@
       </showCMSGlobalNavigation>
      
       <showTabbedPane/>
-<showBebopContextBar>
+      <showBebopContextBar>
         <separator> > </separator>
       </showBebopContextBar>
     </div>

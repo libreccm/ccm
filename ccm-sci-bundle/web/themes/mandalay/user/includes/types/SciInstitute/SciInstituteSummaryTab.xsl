@@ -188,75 +188,75 @@
 	    </a>
 	    <br/>
 	    <xsl:if test="count(./heads/head) &gt; 0">
-	    <xsl:call-template name="mandalay:getStaticText">
-	      <xsl:with-param name="module" select="'SciInstitute'"/>
-	      <xsl:with-param name="id" select="'departmentHeadPreText'"/>
-	    </xsl:call-template>
-	    <xsl:for-each select="./heads/head">
-	      <xsl:choose>
-		<xsl:when test="($linkHeads = 'true') and (./contacts/contactentries[keyId='homepage'])">
-		  <a class="memberName">
-		    <xsl:attribute name="href"><xsl:value-of select="./contacts/contactentries[keyId='homepage']/value"/></xsl:attribute>
-		    <xsl:if test="string-length(./titlePre) &gt; 0">
-		      <xsl:value-of select="./titlePre"/>
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
-		    <xsl:if test="string-length(./titlepre) &gt; 0">
-		      <xsl:value-of select="./titlepre"/>
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
-		    <xsl:if test="string-length(./givenname) &gt; 0">
-		      <xsl:value-of select="./givenname"/>
+	      <xsl:call-template name="mandalay:getStaticText">
+		<xsl:with-param name="module" select="'SciInstitute'"/>
+		<xsl:with-param name="id" select="'departmentHeadPreText'"/>
+	      </xsl:call-template>
+	      <xsl:for-each select="./heads/head">
+		<xsl:choose>
+		  <xsl:when test="($linkHeads = 'true') and (./contacts/contactentries[keyId='homepage'])">
+		    <a class="memberName">
+		      <xsl:attribute name="href"><xsl:value-of select="./contacts/contactentries[keyId='homepage']/value"/></xsl:attribute>
+		      <xsl:if test="string-length(./titlePre) &gt; 0">
+			<xsl:value-of select="./titlePre"/>
+			<xsl:text> </xsl:text>
+		      </xsl:if>
+		      <xsl:if test="string-length(./titlepre) &gt; 0">
+			<xsl:value-of select="./titlepre"/>
+			<xsl:text> </xsl:text>
+		      </xsl:if>
+		      <xsl:if test="string-length(./givenname) &gt; 0">
+			<xsl:value-of select="./givenname"/>
+			<xsl:text> </xsl:text>		    
+		      </xsl:if>
+		      <xsl:if test="string-length(./givenname) &gt; 0">
+			<xsl:value-of select="./surname"/>
+		      </xsl:if>
+		      <xsl:if test="string-length(./titlePost) &gt; 0">
+			<xsl:text>, </xsl:text>
+			<xsl:value-of select="./titlePost"/>
+		      </xsl:if>	 
+		      <xsl:if test="string-length(./titlepost) &gt; 0">
+			<xsl:text>, </xsl:text>
+			<xsl:value-of select="./titlepost"/>
+		      </xsl:if>	 
+		      <xsl:if test="(count(../head) &gt; 1) and (position() != last())">
+			<xsl:text>, </xsl:text>
+		      </xsl:if>
+		    </a>
+		  </xsl:when>	
+		  <xsl:otherwise>
+		    <span class="memberName">
+		      <xsl:if test="string-length(./titlePre) &gt; 0">
+			<xsl:value-of select="./titlePre"/>
+			<xsl:text> </xsl:text>
+		      </xsl:if>
+		      <xsl:if test="string-length(./titlepre) &gt; 0">
+			<xsl:value-of select="./titlepre"/>
+			<xsl:text> </xsl:text>
+		      </xsl:if>
+		      <xsl:if test="string-length(./givenname) &gt; 0">
+			<xsl:value-of select="./givenname"/>
 		      <xsl:text> </xsl:text>		    
-		    </xsl:if>
-		    <xsl:if test="string-length(./givenname) &gt; 0">
-		      <xsl:value-of select="./surname"/>
-		    </xsl:if>
-		    <xsl:if test="string-length(./titlePost) &gt; 0">
-		      <xsl:text>, </xsl:text>
-		      <xsl:value-of select="./titlePost"/>
-		    </xsl:if>	 
-		    <xsl:if test="string-length(./titlepost) &gt; 0">
-		    <xsl:text>, </xsl:text>
-		    <xsl:value-of select="./titlepost"/>
-		    </xsl:if>	 
-		    <xsl:if test="(count(../head) &gt; 1) and (position() != last())">
-		      <xsl:text>, </xsl:text>
-		    </xsl:if>
-		  </a>
-		</xsl:when>	
-		<xsl:otherwise>
-		  <span class="memberName">
-		    <xsl:if test="string-length(./titlePre) &gt; 0">
-		      <xsl:value-of select="./titlePre"/>
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
-		    <xsl:if test="string-length(./titlepre) &gt; 0">
-		      <xsl:value-of select="./titlepre"/>
-		  <xsl:text> </xsl:text>
-		    </xsl:if>
-		    <xsl:if test="string-length(./givenname) &gt; 0">
-		      <xsl:value-of select="./givenname"/>
-		      <xsl:text> </xsl:text>		    
-		    </xsl:if>
-		    <xsl:if test="string-length(./givenname) &gt; 0">
-		      <xsl:value-of select="./surname"/>
-		    </xsl:if>
-		    <xsl:if test="string-length(./titlePost) &gt; 0">
-		      <xsl:text>, </xsl:text>
-		      <xsl:value-of select="./titlePost"/>
-		    </xsl:if>	 
-		    <xsl:if test="string-length(./titlepost) &gt; 0">
-		      <xsl:text>, </xsl:text>
-		      <xsl:value-of select="./titlepost"/>
-		    </xsl:if>	 
-		    <xsl:if test="(count(../head) &gt; 1) and (position() != last())">
-		      <xsl:text>, </xsl:text>
-		    </xsl:if>
-		  </span>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:for-each>
+		      </xsl:if>
+		      <xsl:if test="string-length(./givenname) &gt; 0">
+			<xsl:value-of select="./surname"/>
+		      </xsl:if>
+		      <xsl:if test="string-length(./titlePost) &gt; 0">
+			<xsl:text>, </xsl:text>
+			<xsl:value-of select="./titlePost"/>
+		      </xsl:if>	 
+		      <xsl:if test="string-length(./titlepost) &gt; 0">
+			<xsl:text>, </xsl:text>
+			<xsl:value-of select="./titlepost"/>
+		      </xsl:if>	 
+		      <xsl:if test="(count(../head) &gt; 1) and (position() != last())">
+			<xsl:text>, </xsl:text>
+		      </xsl:if>
+		    </span>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:for-each>
 	    </xsl:if>
 	  </li>
 	</xsl:for-each>

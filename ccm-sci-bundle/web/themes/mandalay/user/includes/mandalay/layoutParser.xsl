@@ -49,10 +49,10 @@
   </xsl:template>
   -->
 
-  <xsl:template match="showHeaderImage">
+  <xsl:template match="showDynamicImage">
     <div>
       <xsl:call-template name="mandalay:setParameters"/>
-      <xsl:call-template name="mandalay:headerImage"/>
+      <xsl:call-template name="mandalay:dynamicImage"/>
     </div>
   </xsl:template>
 

@@ -40,7 +40,7 @@
   <!--
     <xsl:import href="types/XXX.xsl"/>
   -->
-  <xsl:import href="mandalay/headerImage.xsl"/>
+  <xsl:import href="mandalay/dynamicImage.xsl"/>
   <xsl:import href="mandalay/homepageTitle.xsl"/>
   <xsl:import href="mandalay/layoutParser.xsl"/>
   

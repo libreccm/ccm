@@ -180,7 +180,7 @@ Parameter showCaption: boolean to sshow caption
             <xsl:when test="$setZoomLink = 'true' and (width != $width or height != $height)">
               <a>
                 <xsl:attribute name="href">
-                  <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>
+                  <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/<xsl:value-of select="name"/>/?image_id=<xsl:value-of select="id"/>
                 </xsl:attribute>
                 <xsl:choose>
                   <xsl:when test="not(../caption) or $showCaption='false'">

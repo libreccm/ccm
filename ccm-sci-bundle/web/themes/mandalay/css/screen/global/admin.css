@@ -212,6 +212,12 @@ div#cmsHeader a:hover {
   color: #a75b3b;
 }
 
+div#cmsHeader .logo {
+  min-height: 50px;
+  border: 1px solid #aea691;
+}
+
+
 div#cmsHeader div { 
   position:relative;
   float: left;
@@ -266,7 +272,7 @@ div.cmsGlobalNavigation > span {
 div#cmsHeader div.cmsGlobalNavigation { 
   position: absolute;
   right: 0em;
-  top:3em;
+top:4em;
   margin-right: 1em;
 }
 
@@ -352,11 +358,13 @@ width:95%;
 
  div.bebopPanelRow { 
   margin-bottom:1em;
+width:40%;
 }
 div.bebopPanelRow table tr td { 
   margin-bottom:1em;
 /*width:10%;*/
 }
+
 
 div.bebopPanelRow textarea{
 width:100%;
@@ -581,4 +589,25 @@ border:1px solid #613d6b;
 color:#613d6b;
 }
 
+/* ImageBrowser */
+.tile {
+  float: left;
+  width: 220px;
+  min-height: 220px;
+  margin: 0.3em;
+  border: 1px dotted gray;
+  overflow: hidden;
+}
 
+.tile img {
+  margin: 0.5em;
+}
+
+.tile div {
+  text-align: center;
+  height: 170px;
+}
+
+.tile div + div {
+  height: auto;
+}

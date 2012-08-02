@@ -1022,6 +1022,9 @@ div.image span.caption {
   font-size: 0.85em;
 }
 
+.image + .image {
+  display: none;
+}
 
 /*-------CT NewsItem--------*/
 

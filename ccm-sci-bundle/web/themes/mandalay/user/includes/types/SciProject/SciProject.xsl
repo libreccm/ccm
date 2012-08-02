@@ -338,4 +338,140 @@
       </xsl:if> 
   </xsl:template>
 
+  <xsl:template name="CT_SciProject_Link" 
+		match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.SciProject']" 
+		mode="link_view">
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
+    <xsl:variable name="setImageAndText">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setImageAndText'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImage">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setImage'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxHeight">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setImageMaxHeight'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxWidth">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setImageMaxWidth'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageCaption">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setImageCaption'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setDescription">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setDescription'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setDescriptionLength">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setDescriptionLength'"/>
+        <xsl:with-param name="default" select="'0'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setMoreButton">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkView/setMoreButton'"/>
+        <xsl:with-param name="default" select="'false'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
+    <!-- EN -->
+    <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
+      <a>
+        <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
+        <xsl:attribute name="title">
+          <xsl:call-template name="mandalay:shying">
+            <xsl:with-param name="title">
+              <xsl:value-of select="./linkTitle"/>
+            </xsl:with-param>
+            <xsl:with-param name="mode">dynamic</xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+        <xsl:for-each select="./targetItem">
+          <xsl:call-template name="mandalay:imageAttachment">
+            <xsl:with-param name="showCaption" select="$setImageCaption" />
+            <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
+            <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+          </xsl:call-template>
+        </xsl:for-each>
+      </a>
+    </xsl:if>
+    <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
+      <a class="CIname">
+        <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
+        <xsl:attribute name="title">
+          <xsl:call-template name="mandalay:shying">
+            <xsl:with-param name="title">
+              <xsl:value-of select="./linkTitle"/>
+            </xsl:with-param>
+            <xsl:with-param name="mode">dynamic</xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+        <xsl:call-template name="mandalay:shying">
+          <xsl:with-param name="title">
+            <xsl:value-of disable-output-escaping="yes" select="./linkTitle"/>
+          </xsl:with-param>
+          <xsl:with-param name="mode">dynamic</xsl:with-param>
+        </xsl:call-template>
+      </a>
+      <xsl:if test="./linkDescription and $setDescription">
+        <br />
+        <xsl:choose>
+          <xsl:when test="$setDescriptionLength = '0'">
+            <xsl:value-of disable-output-escaping="yes" select="./linkDescription" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of disable-output-escaping="yes" select="substring(./linkDescription, 1, $setDescriptionLength)" />
+            <xsl:if test="string-length(./linkDescription) > $setDescriptionLength">
+              <xsl:text>...</xsl:text>
+              <xsl:if test="$setMoreButton = 'true'">
+                <span class="moreButton">
+                  <a>
+                    <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
+                    <xsl:attribute name="title">
+                      <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'SciMember'"/>
+                        <xsl:with-param name="id" select="'moreButtonTitle'"/>
+                      </xsl:call-template>
+                    </xsl:attribute>
+                    <xsl:call-template name="mandalay:getStaticText">
+                      <xsl:with-param name="module" select="'SciMember'"/>
+                      <xsl:with-param name="id" select="'moreButton'"/>
+                    </xsl:call-template>
+                  </a> 
+                </span>
+              </xsl:if>
+            </xsl:if>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>

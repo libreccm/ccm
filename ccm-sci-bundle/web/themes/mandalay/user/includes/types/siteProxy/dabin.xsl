@@ -31,6 +31,25 @@
 
   <!-- DE Liste mit DaBIn-Ausgaben -->
   <xsl:template match="dabin:list">
+    <xsl:if test="./dabin:menu">
+      <span class="dabinMenu">
+	<xsl:for-each select="./dabin:menu/dabin:entry">
+	  <span>
+	    <xsl:if test="./@active = 'true'">
+	      <xsl:attribute name="class">active</xsl:attribute>
+	    </xsl:if>
+	    <a>
+	      <xsl:attribute name="href">?<xsl:value-of select="./@linkParam"/></xsl:attribute>
+	      <xsl:call-template name="mandalay:getStaticText">
+		<xsl:with-param name="module" select="'DaBIn'"/>
+		<xsl:with-param name="id" select="concat('menu/', ./@value)"/>
+	      </xsl:call-template>
+	    </a>
+	  </span>      
+	  <xsl:if test="position() != last()"> | </xsl:if>
+	</xsl:for-each>
+      </span>
+    </xsl:if>
     <ul class="dabinList">
       <xsl:apply-templates mode="list_view"/>
     </ul>
