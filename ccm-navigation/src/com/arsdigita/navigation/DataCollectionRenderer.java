@@ -105,7 +105,8 @@ public class DataCollectionRenderer extends LockableImpl {
 
     /**
      * Sets the context of the traversal adapter used the render the objects
-     * if {@link #m_specializeObjects} is set to <code>true</code>
+     * if {@link #m_specializeObjects} is set to
+     * <code>true</code>
      *
      * @param context The adapter context.
      */
@@ -125,6 +126,7 @@ public class DataCollectionRenderer extends LockableImpl {
     /**
      * @param objects
      * @param pageNumber current page, starting from 1
+     *
      * @return
      */
     public Element generateXML(DataCollection objects,
@@ -140,7 +142,7 @@ public class DataCollectionRenderer extends LockableImpl {
         // Quasimodo: End
 
         Element content = Navigation.newElement("objectList");
-        
+
         //Return the empty nav:item & nav:paginator tags.
         // Quasimodo: Why should I??? There is no need for a paginator if there aren't any elements
         if (!m_navItems) {
@@ -203,9 +205,9 @@ public class DataCollectionRenderer extends LockableImpl {
         paginator.addAttribute("objectCount", new Long(objectCount).toString());
 
         content.addContent(paginator);
-        
+
         int index = 0;
-        while (objects.next()) {            
+        while (objects.next()) {
             DataObject dobj = objects.getDataObject();
             ACSObject object = null;
             if (m_specializeObjects) {
@@ -216,8 +218,8 @@ public class DataCollectionRenderer extends LockableImpl {
                 } else {
                     s_log.debug("Specializing successful.");
                 }
-            }           
-            Element item = Navigation.newElement(content, "item");                      
+            }
+            Element item = Navigation.newElement(content, "item");
 
             Iterator attributes = m_attributes.iterator();
             while (attributes.hasNext()) {
@@ -225,13 +227,13 @@ public class DataCollectionRenderer extends LockableImpl {
                 String[] paths = StringUtils.split(name, '.');
                 outputValue(item, dobj, name, paths, 0);
             }
-                       
+
             Iterator properties = m_properties.iterator();
             while (properties.hasNext()) {
                 DataCollectionPropertyRenderer property = (DataCollectionPropertyRenderer) properties.next();
                 property.render(objects, item);
             }
-                        
+
             Element path = Navigation.newElement(item, "path");
             path.setText(getStableURL(dobj, object));
             //item.addContent(path);
@@ -239,9 +241,9 @@ public class DataCollectionRenderer extends LockableImpl {
             generateItemXML(item, dobj, object, index);
 
             index++;
-            //content.addContent(item);           
+            //content.addContent(item);
         }
-        
+
         return content;
     }
 
@@ -300,12 +302,13 @@ public class DataCollectionRenderer extends LockableImpl {
                 // Quasimodo: BEGIN
                 // Add attributes for date and time
                 Locale negLocale = com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale();
-                DateFormat dateFormatter = DateFormat.getDateInstance(
-                        DateFormat.MEDIUM, negLocale);
-                DateFormat timeFormatter = DateFormat.getTimeInstance(
-                        DateFormat.SHORT, negLocale);
+                DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, negLocale);
+                DateFormat longDateFormatter = DateFormat.getDateInstance(DateFormat.LONG, negLocale);
+                DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT, negLocale);
                 attribute.addAttribute("date", dateFormatter.format(date));
+                attribute.addAttribute("longDate", longDateFormatter.format(date));
                 attribute.addAttribute("time", timeFormatter.format(date));
+                attribute.addAttribute("monthName", calDate.getDisplayName(Calendar.MONTH, Calendar.LONG, negLocale));
                 // Quasimodo: END
 
             }
