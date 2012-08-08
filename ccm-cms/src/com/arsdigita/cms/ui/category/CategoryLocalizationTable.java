@@ -21,13 +21,11 @@ package com.arsdigita.cms.ui.category;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.event.TableActionListener;
-import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
@@ -36,13 +34,7 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryLocalization;
 import com.arsdigita.categorization.CategoryLocalizationCollection;
-import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import java.util.Locale;
@@ -61,22 +53,23 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
     private final SingleSelectionModel m_model;
     private final String TABLE_COL_LANG = "table_col_lang";
     private final String TABLE_COL_DEL = "table_col_del";
+    private final SingleSelectionModel m_catLocale;
 
     /**
      * Creates a new instance of CategoryLocalizationTable
      */
-    public CategoryLocalizationTable(final CategoryRequestLocal category,
-            final SingleSelectionModel model) {
+    public CategoryLocalizationTable(final CategoryRequestLocal category, final SingleSelectionModel model, SingleSelectionModel catLocale) {
 
         super();
 
         m_category = category;
         m_model = model;
+        m_catLocale = catLocale;
 
         // if table is empty:
         setEmptyView(new Label(GlobalizationUtil.globalize(
                 "cms.ui.category.localization_none")));
-TableColumnModel tab_model = getColumnModel();
+        TableColumnModel tab_model = getColumnModel();
 
         // define columns
         // XXX globalize
@@ -196,25 +189,15 @@ TableColumnModel tab_model = getColumnModel();
     private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
+                boolean isSelected, final Object key,
                 int row, int column) {
 
 
-//            if (canEdit) {
-//            CategoryLocalization cl;
-
-//            try {
-//                cl = new CategoryLocalization((BigDecimal) key);
-//            } catch (DataObjectNotFoundException ex) {
-//                return new Label(value.toString());
-//            }
-
-//            ContentSection section = CMS.getContext().getContentSection();
-//            ItemResolver resolver = section.getItemResolver();
-
-//                return new Link(value.toString(), resolver.generateItemURL(state, cl, section, cl.getVersion()));
-            ControlLink link = new ControlLink(value.toString());
-            return link;
+            if (m_category.getCategory(state).canEdit()) {
+                return new ControlLink(value.toString());
+            } else {
+                return new Label(value.toString());
+            }
         }
     }
 
@@ -224,10 +207,14 @@ TableColumnModel tab_model = getColumnModel();
                 boolean isSelected, Object key,
                 int row, int column) {
 
-            ControlLink link = new ControlLink(value.toString());
-            link.setConfirmation((String) GlobalizationUtil.globalize(
-                    "cms.ui.category.localization_confirm_delete").localize());
-            return link;
+            if (m_category.getCategory(state).canDelete()) {
+                ControlLink link = new ControlLink(value.toString());
+                link.setConfirmation((String) GlobalizationUtil.globalize(
+                        "cms.ui.category.localization_confirm_delete").localize());
+                return link;
+            } else {
+                return null;
+            }
         }
     }
 
@@ -252,6 +239,7 @@ TableColumnModel tab_model = getColumnModel();
 
         // Edit
         if (col.getHeaderKey().toString().equals(TABLE_COL_LANG)) {
+            m_catLocale.setSelectedKey(state, categoryLocalization.getLocale());
         }
 
         // Delete

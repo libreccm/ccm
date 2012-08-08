@@ -25,6 +25,7 @@ import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.event.ActionEvent;
@@ -32,6 +33,7 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
@@ -80,6 +82,8 @@ class CategoryItemPane extends BaseItemPane {
     private final SingleSelectionModel m_model;
     private final CategoryRequestLocal m_category;
     private final SimpleContainer m_detailPane;
+    private final StringParameter m_catLocaleParam = new StringParameter("catLocale");
+    private final ParameterSingleSelectionModel m_catLocale;
 
     public CategoryItemPane(final SingleSelectionModel model,
             final CategoryRequestLocal category,
@@ -88,9 +92,9 @@ class CategoryItemPane extends BaseItemPane {
             final ActionLink deleteLink) {
         m_model = model;
         m_category = category;
+        m_catLocale = new ParameterSingleSelectionModel(m_catLocaleParam);
 
         // Details
-
         m_detailPane = new SimpleContainer();
         add(m_detailPane);
         setDefault(m_detailPane);
@@ -145,7 +149,8 @@ class CategoryItemPane extends BaseItemPane {
                         m_category.getCategory(state)
                         .getCategoryLocalizationCollection().size();
 
-                if (countLanguages < countSupportedLanguages) {
+                if (m_category.getCategory(state).canEdit()
+                        && countLanguages < countSupportedLanguages) {
                     return true;
                 } else {
                     return false;
@@ -339,14 +344,14 @@ class CategoryItemPane extends BaseItemPane {
 
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            m_catLocalizationTable = new CategoryLocalizationTable(m_category, m_model);
+            m_catLocalizationTable = new CategoryLocalizationTable(m_category, m_model, m_catLocale);
             group.setSubject(m_catLocalizationTable);
             group.addAction(new AdminVisible(addLink), ActionGroup.ADD);
 
-            m_editCategoryLocalizationForm = new CategoryLocalizationEditForm(m_category, "de");
+            m_editCategoryLocalizationForm = new CategoryLocalizationEditForm(m_category, m_catLocale);
+            add(m_editCategoryLocalizationForm);
             connect(m_editCategoryLocalizationForm);
             connect(m_catLocalizationTable, 0, m_editCategoryLocalizationForm);
-
         }
     }
 
@@ -529,7 +534,7 @@ class CategoryItemPane extends BaseItemPane {
             super(c, s);
         }
 
-        // Build the preview link.  This uses a standard redirect link to find 
+        // Build the preview link.  This uses a standard redirect link to find
         // the content. The prepareURL method is called by the printwriter
         @Override
         protected String prepareURL(final PageState state, String location) {
@@ -593,6 +598,7 @@ class CategoryItemPane extends BaseItemPane {
          * and the user is allowed to edit this item.
          *
          * @param state
+         *
          * @return
          */
         @Override
@@ -614,6 +620,7 @@ class CategoryItemPane extends BaseItemPane {
          *
          * @param item
          * @param state
+         *
          * @return
          */
         private boolean isItemEditable(ContentItem item, PageState state) {

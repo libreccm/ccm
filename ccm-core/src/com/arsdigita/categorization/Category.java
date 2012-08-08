@@ -59,25 +59,25 @@ import org.apache.log4j.Logger;
  * <p>This is a persistent class backed by the data object type whose name is
  * specified by {@link #BASE_DATA_OBJECT_TYPE}. The attribute names of of this
  * data object type are exposed via the public string fields such as {@link
- * #CHILD}, {@link #DEFAULT_ANCESTORS}.  See below.</p>
+ * #CHILD}, {@link #DEFAULT_ANCESTORS}. See below.</p>
  *
  * <p>This version of the class deprecates the notion of <em>category
  * purposes</em> and replaces it with the notion of <em>use contexts</em>.
  * The following methods should no longer be used:</p>
  *
  * <ul>
- *   <li>{@link #getPurposes()}</li>
- *   <li>{@link #addPurpose(CategoryPurpose)}</li>
- *   <li>{@link #removePurpose(CategoryPurpose)}</li>
+ * <li>{@link #getPurposes()}</li>
+ * <li>{@link #addPurpose(CategoryPurpose)}</li>
+ * <li>{@link #removePurpose(CategoryPurpose)}</li>
  * </ul>
  *
  * <p>The following methods should be used instead:</p>
  *
  * <ul>
- *   <li>{@link #getRootForObject(ACSObject, String)}</li>
- *   <li>{@link #setRootForObject(ACSObject, Category,String)}</li>
- *   <li>{@link #clearRootForObject(ACSObject, String)}</li>
- *   <li>{@link #getRootCategories(ACSObject)}</li>
+ * <li>{@link #getRootForObject(ACSObject, String)}</li>
+ * <li>{@link #setRootForObject(ACSObject, Category,String)}</li>
+ * <li>{@link #clearRootForObject(ACSObject, String)}</li>
+ * <li>{@link #getRootCategories(ACSObject)}</li>
  * </ul>
  *
  * @author Randy Graebner
@@ -89,10 +89,10 @@ import org.apache.log4j.Logger;
  * environment. The following attributes are localizable:
  *
  * <ul>
- *   <li>Name</li>
- *   <li>Description</li>
- *   <li>URL</li>
- *   <li>IsEnabled</li>
+ * <li>Name</li>
+ * <li>Description</li>
+ * <li>URL</li>
+ * <li>IsEnabled</li>
  * </ul>
  *
  * To use localized URLs I had to change NavigationFileReolver.resolveCategory()
@@ -106,21 +106,24 @@ public class Category extends ACSObject {
     private static final Logger s_log = Logger.getLogger(Category.class);
     /**
      * @see ObjectType
-     **/
+     *
+     */
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.categorization.Category";
+            "com.arsdigita.categorization.Category";
     private static final String BASE_DATA_OBJECT_PACKAGE =
-                                "com.arsdigita.categorization";
+            "com.arsdigita.categorization";
     /**
-     * The <code>PrivilegeDescriptor corresponding</code> to the privilege to
+     * The
+     * <code>PrivilegeDescriptor corresponding</code> to the privilege to
      * map subcategories and objects to this category
-     **/
+     *
+     */
     public static final PrivilegeDescriptor MAP_DESCRIPTOR =
-                                            new PrivilegeDescriptor(
+            new PrivilegeDescriptor(
             "map_to_category");
     // Quasimodo: Begin
     private static CategorizationConfig s_config = CategorizationConfig
-                                                   .getConfig();
+            .getConfig();
     // Quasimodo: End
     public static final String ROOT_CATEGORY = "rootCategory";
     public static final String USE_CONTEXT = "useContext";
@@ -128,38 +131,64 @@ public class Category extends ACSObject {
     public static final String ROOT_USE_CONTEXT = "rootUseContext";
     public static final String OWNER_USE_CONTEXT = "ownerUseContext";
     // category-category mapping types
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String CHILD = "child";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String PARENTS = "parents";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String RELATED = "related";
     public static final String PREFERRED = "preferred";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String REL_TYPE = "relationType";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String SORT_KEY = "sortKey";
     public static final String IS_DEFAULT = "isDefault";
     public static final String IS_INDEX = "isIndex";
     public static final String PARENT_CATEGORY = "parentCategory";
     public static final String CATEGORY_ID = "categoryID";
     // these are some constants to use in the code
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String NAME = "name";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String DESCRIPTION = "description";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String URL = "url";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String IS_ENABLED = "isEnabled";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String IS_ABSTRACT = "isAbstract";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String DEFAULT_ANCESTORS = "defaultAncestors";
-    /** An attribute name for the underlying data object. */
+    /**
+     * An attribute name for the underlying data object.
+     */
     public static final String IGNORE_PARENT_INDEX_ITEM =
-                               "ignoreParentIndexItem";
-    /** An attribute name for the underlying data object. */
+            "ignoreParentIndexItem";
+    /**
+     * An attribute name for the underlying data object.
+     */
     private static final String PURPOSES = "purposes";
     // this contains association names from the pdl file
     public final static String CHILD_OBJECTS = "childObjects";
@@ -168,7 +197,7 @@ public class Category extends ACSObject {
     public static final String LOCALIZATIONS = "localizations";
     // some named queries in the pdl files
     private static final String CHILD_CATEGORY_IDS =
-                                "com.arsdigita.categorization.childCategoryIDs";
+            "com.arsdigita.categorization.childCategoryIDs";
     private static final String CURRENT_SORT_KEY = "currentSortKey";
     private HierarchyDenormalization m_hierarchy;
     // Quasimodo: Begin
@@ -183,7 +212,8 @@ public class Category extends ACSObject {
 
     /**
      * Returns the model name of {@link #BASE_DATA_OBJECT_TYPE}.
-     **/
+     *
+     */
     public static String getBaseDataObjectPackage() {
         return BASE_DATA_OBJECT_PACKAGE;
     }
@@ -192,7 +222,8 @@ public class Category extends ACSObject {
      * Initializes the category with the specified data object.
      *
      * @param categoryObjectData the data object
-     **/
+     *
+     */
     public Category(DataObject categoryObjectData) {
         super(categoryObjectData);
     }
@@ -202,7 +233,8 @@ public class Category extends ACSObject {
      * Category(Category.BSE_DATA_OBJECT_TYPE)}.
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(String)
-     **/
+     *
+     */
     public Category() {
         this(BASE_DATA_OBJECT_TYPE);
     }
@@ -216,7 +248,8 @@ public class Category extends ACSObject {
      * @see com.arsdigita.domain.DomainObject#DomainObject(String)
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.metadata.ObjectType
-     **/
+     *
+     */
     public Category(String typeName) {
         super(typeName);
     }
@@ -229,7 +262,8 @@ public class Category extends ACSObject {
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(ObjectType)
      * @see com.arsdigita.persistence.DataObject
-     **/
+     *
+     */
     public Category(ObjectType type) {
         super(type);
     }
@@ -239,19 +273,21 @@ public class Category extends ACSObject {
      * storage mechanism.
      *
      * @param oid the OID for the data object to retrieve
+     *
      * @throws DataObjectNotFoundException if this OID is invalid or has been
-     * deleted.
+     *                                     deleted.
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(OID)
      * @see com.arsdigita.persistence.DataObject
-     **/
+     *
+     */
     public Category(OID oid) {
         super(oid);
     }
 
     /**
      * Retrieves the data object with the specified ID from the persistence
-     * storage mechanism.  This method is just a wrapper for the {@link
+     * storage mechanism. This method is just a wrapper for the {@link
      * #Category(OID)} constructor.
      *
      * @throws DataObjectNotFoundException
@@ -263,7 +299,7 @@ public class Category extends ACSObject {
     /**
      * Creates a new category with the given name and description.
      *
-     * @param name the name for the new category
+     * @param name        the name for the new category
      * @param description the description for the new category
      */
     public Category(String name, String description) {
@@ -276,9 +312,9 @@ public class Category extends ACSObject {
      * Creates a new category with the given name, description and URL
      * component.
      *
-     * @param name the name for the new category
+     * @param name        the name for the new category
      * @param description the description for the new category
-     * @param url URL component used when browsing categories.
+     * @param url         URL component used when browsing categories.
      */
     public Category(String name, String description, String url) {
         this();
@@ -289,14 +325,15 @@ public class Category extends ACSObject {
 
     /**
      * Retrieves the category with the given category ID, and sets the name and
-     * description.  For the new name and descrption to be permanent, the caller
+     * description. For the new name and descrption to be permanent, the caller
      * must call the save() method.
      *
-     * @param categoryID the category ID
-     * @param name the category name
+     * @param categoryID  the category ID
+     * @param name        the category name
      * @param description the category description
+     *
      * @exception DataObjectNotFoundException if this OID is
-     *            invalid or has been deleted.
+     *                                        invalid or has been deleted.
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(OID)
      */
@@ -308,15 +345,16 @@ public class Category extends ACSObject {
 
     /**
      * Retrieves the category with the given category ID, and sets the name and
-     * description.  For the new name and descrption to be permanent, the caller
+     * description. For the new name and descrption to be permanent, the caller
      * must call the save() method.
      *
-     * @param categoryID the category ID
-     * @param name the category name
+     * @param categoryID  the category ID
+     * @param name        the category name
      * @param description the category description
-     * @param url URL component used when browsing categories.
+     * @param url         URL component used when browsing categories.
+     *
      * @exception DataObjectNotFoundException if this OID is
-     *            invalid or has been deleted.
+     *                                        invalid or has been deleted.
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(OID)
      */
@@ -359,7 +397,7 @@ public class Category extends ACSObject {
 
         m_hierarchy = new HierarchyDenormalization(
                 "com.arsdigita.categorization.updateCategoryDescendants", this,
-                                                   DEFAULT_ANCESTORS) {
+                DEFAULT_ANCESTORS) {
         };
 
         m_categoryLocalizationCollection = new CategoryLocalizationCollection(
@@ -370,14 +408,15 @@ public class Category extends ACSObject {
 
     /**
      * Quasimodo:
-     * Returns the localized name or the name key if localized version don't exist
+     * Returns the localized name or the name key if localized version don't
+     * exist
      *
      * @return the category name.
      */
     public String getName(String locale) {
 
         // Test for localized version
-        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -402,8 +441,9 @@ public class Category extends ACSObject {
     }
 
     /**
-     * Returns the display name of the category.  This overrides the parent
+     * Returns the display name of the category. This overrides the parent
      * implementation.
+     *
      * @return the category name.
      */
     public String getDisplayName(String locale) {
@@ -411,8 +451,9 @@ public class Category extends ACSObject {
     }
 
     /**
-     * Returns the display name of the category.  This overrides the parent
+     * Returns the display name of the category. This overrides the parent
      * implementation.
+     *
      * @return the category name.
      */
     @Override
@@ -421,7 +462,7 @@ public class Category extends ACSObject {
     }
 
     /**
-     *  Returns the name of the category along with its default ancestors.
+     * Returns the name of the category along with its default ancestors.
      *
      * <p>For example, when called on the <em>Televised Events</em> category in
      * <href="package-summary.html#taxonomy">this example</a>, the return value
@@ -429,16 +470,16 @@ public class Category extends ACSObject {
      * Events". </p>
      *
      * @see #getDefaultAscendants()
-     * @param delimiter The string to use to seperate the parents from the
-     * children.  For example, to obtain the above-mentioned result, you need to
-     * pass in <code>" >> "</code> as the delimiter.
+     * @param delimiter   The string to use to seperate the parents from the
+     *                    children. For example, to obtain the above-mentioned result, you need to
+     *                    pass in <code>" >> "</code> as the delimiter.
      *
      * @param includeRoot This indicates whether or not the root category should
-     * be included in the name.
+     *                    be included in the name.
      *
-     * @return the qualified name as explained above.  May return
-     * <code>null</code> this is the root category, and <code>includeRoot</code>
-     * is false.
+     * @return the qualified name as explained above. May return
+     *         <code>null</code> this is the root category, and <code>includeRoot</code>
+     *         is false.
      */
     public String getQualifiedName(String delimiter, boolean includeRoot) {
         // If the collection only contains the root and the root is not desired
@@ -464,16 +505,19 @@ public class Category extends ACSObject {
     }
 
     /**
-     * Returns the name of the <b>preferred</b> category along with its default ancestors.
-     * Equivalent to #getQualifiedName(String,boolean) if this Category is not a synonym.
+     * Returns the name of the <b>preferred</b> category along with its default
+     * ancestors.
+     * Equivalent to #getQualifiedName(String,boolean) if this Category is not a
+     * synonym.
      * Synonym name is appended in parentheses.
      *
-     * @param delimiter string to separate category names
+     * @param delimiter   string to separate category names
      * @param includeRoot should root category be shown
+     *
      * @return category path
      */
     public String getPreferredQualifiedName(String delimiter,
-                                            boolean includeRoot) {
+            boolean includeRoot) {
         // is this a synonym?
         CategoryCollection cc = new CategoryCollection(getRelatedCategories(
                 PREFERRED));
@@ -481,7 +525,7 @@ public class Category extends ACSObject {
             Category preferred = cc.getCategory();
             cc.close();
             String preferredPath = preferred.getQualifiedName(delimiter,
-                                                              includeRoot);
+                    includeRoot);
             return preferredPath + " (" + getName() + ")";
         } else {
             return getQualifiedName(delimiter, includeRoot);
@@ -493,11 +537,11 @@ public class Category extends ACSObject {
      *
      * @see #getDefaultAscendants()
      *
-     * @param delimiter The string to use to seperate the parents from
-     * the children.
-
+     * @param delimiter   The string to use to seperate the parents from
+     *                    the children.
+     *
      * @param includeRoot This indicates whether or not the root category should
-     * be included in the URL.
+     *                    be included in the URL.
      */
     public String getQualifiedURL(String delimiter, boolean includeRoot) {
         // If the collection only contains the root and the root is not desired
@@ -549,7 +593,8 @@ public class Category extends ACSObject {
      * Returns the description of the category.
      *
      * Quasimodo:
-     * Returns localized version of description or description key if localized version don't exist
+     * Returns localized version of description or description key if localized
+     * version don't exist
      *
      * @return the category description.
      */
@@ -557,7 +602,7 @@ public class Category extends ACSObject {
 
         // Test for localized version
         // HACK
-        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -576,6 +621,7 @@ public class Category extends ACSObject {
 
     /**
      * Returns the description of the category.
+     *
      * @return the category name.
      */
     public String getDescription() {
@@ -587,7 +633,9 @@ public class Category extends ACSObject {
      * Returns a string repesenting the default ancestors of the category
      *
      * It can be useful and more efficient then working with the
-     * CategoryCollection returned by @see getDefaultAscendants() when comparing
+     * CategoryCollection returned by
+     *
+     * @see getDefaultAscendants() when comparing
      * ids whose position in the path is known.
      * (Added by Chris Gilbert)
      */
@@ -623,18 +671,19 @@ public class Category extends ACSObject {
      * Returns the URL component of the category.
      *
      * Quasimodo:
-     * Returns the localized version of the URL or URL-key if localized version don't exist
+     * Returns the localized version of the URL or URL-key if localized version
+     * don't exist
      *
      * @return URL component used when browsing categories
      */
     public String getURL(String locale) {
 
         // Test for localized version
-        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
-            String url =  m_categoryLocalizationCollection.getURL();
+            String url = m_categoryLocalizationCollection.getURL();
             //return m_categoryLocalizationCollection.getURL();
             m_categoryLocalizationCollection.rewind();
             return url;
@@ -684,28 +733,24 @@ public class Category extends ACSObject {
      * Determines the current state of the category.
      *
      * @return <code>true</code> if the category is enabled; <code>false</code>
-     * otherwise.
+     *         otherwise.
      *
      * Quasimodo:
      * This is getting a bit more compliated:
      * 1. Check if category is globally disabled
      * 2. If not, check if localized version exists
-     *  2.1 If so, return isEnabled from localized version
-     *  2.2 If not, return Category.getConfig().getShowInternalName()
+     * 2.1 If so, return isEnabled from localized version
+     * 2.2 If not, return Category.getConfig().getShowInternalName()
      *
      */
     public boolean isEnabled(String locale) {
 
-        // If locale is empty return global status
-        // or if globally disabled, return category as disabled
-        if (locale.isEmpty() || ((Boolean) get(IS_ENABLED)).booleanValue() == false) {
-            return ((Boolean) get(IS_ENABLED)).booleanValue();
-        }
-
-        // Test for localized version
-        // HACK
-        if (!locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
-                localizationExists(locale)) {
+        // If not gloebally disabled and locale is not null or empty, test for localized version
+        if (locale != null &&
+            !locale.isEmpty() &&
+            ((Boolean) get(IS_ENABLED)).booleanValue() == true &&
+            m_categoryLocalizationCollection != null &&
+            m_categoryLocalizationCollection.localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
             boolean isEnabled = m_categoryLocalizationCollection.isEnabled();
@@ -715,10 +760,8 @@ public class Category extends ACSObject {
 
         } else {
 
-            // Return value of Category.getConfig().getShowInternalName()
-            // This will disable all categories without selected locale, if Category.getConfig().getShowInternalName() == false
-            return Category.getConfig().getShowInternalName();
-
+            // In any other case return global status
+            return ((Boolean) get(IS_ENABLED)).booleanValue();
         }
 
     }
@@ -727,7 +770,7 @@ public class Category extends ACSObject {
      * Determines the current state of the category.
      *
      * @return <code>true</code> if the category is enabled; <code>false</code>
-     * otherwise.
+     *         otherwise.
      */
     public boolean isEnabled() {
         return isEnabled(GlobalizationHelper.getNegotiatedLocale().getLanguage());
@@ -737,7 +780,7 @@ public class Category extends ACSObject {
      * Sets whether the category is enabled.
      *
      * @param isEnabled <code>true</code> if the category is enabled;
-     * <code>false</false> otherwise.
+     *                  <code>false</false> otherwise.
      */
     public void setEnabled(boolean isEnabled, String locale) {
 
@@ -753,7 +796,7 @@ public class Category extends ACSObject {
      * Sets whether the category is enabled.
      *
      * @param isEnabled <code>true</code> if the category is enabled;
-     * <code>false</false> otherwise.
+     *                  <code>false</false> otherwise.
      */
     public void setEnabled(boolean isEnabled) {
         set(IS_ENABLED, isEnabled);
@@ -764,7 +807,7 @@ public class Category extends ACSObject {
      * categories.
      *
      * @return <code>true</code> if the category is abstract; <code>false</code>
-     * otherwise.
+     *         otherwise.
      */
     public boolean isAbstract() {
         return ((Boolean) get(IS_ABSTRACT)).booleanValue();
@@ -783,8 +826,9 @@ public class Category extends ACSObject {
      * Determine whether this category should have a default index item
      * associated with it (i.e.it's parent category).
      *
-     * @return <code>true</code> if the parent index item should be ignored (no default index item)
-     * <code>false</code> otherwise.
+     * @return <code>true</code> if the parent index item should be ignored (no
+     *         default index item)
+     *         <code>false</code> otherwise.
      */
     public boolean ignoreParentIndexItem() {
         return ((Boolean) get(IGNORE_PARENT_INDEX_ITEM)).booleanValue();
@@ -794,8 +838,9 @@ public class Category extends ACSObject {
      * Set whether this category should have a default index item
      * associated with it (i.e.it's parent category).
      *
-     * @param ignoreParentIndexItem <code>true</code> if the parent index item should be ignored (no default index item)
-     * <code>false</code> otherwise
+     * @param ignoreParentIndexItem <code>true</code> if the parent index item
+     *                              should be ignored (no default index item)
+     *                              <code>false</code> otherwise
      */
     public void setIgnoreParentIndexItem(boolean ignoreParentIndexItem) {
         set(IGNORE_PARENT_INDEX_ITEM, ignoreParentIndexItem);
@@ -803,7 +848,8 @@ public class Category extends ACSObject {
 
     /**
      * @deprecated use the "use context" APIs instead
-     **/
+     *
+     */
     public Collection getPurposes() {
         DataAssociationCursor purposeCur = ((DataAssociation) get(PURPOSES)).
                 cursor();
@@ -817,21 +863,25 @@ public class Category extends ACSObject {
     }
 
     /**
-     * Adds the specified purpose  to this category.
+     * Adds the specified purpose to this category.
      *
      * @param purpose The purpose
+     *
      * @deprecated use the "use context" APIs instead
-     **/
+     *
+     */
     public void addPurpose(CategoryPurpose purpose) {
         add(PURPOSES, purpose);
     }
 
     /**
-     * Removes the specified purpose  from this category.
+     * Removes the specified purpose from this category.
      *
      * @param purpose the purpose
+     *
      * @deprecated use the "use context" APIs instead
-     **/
+     *
+     */
     public void removePurpose(CategoryPurpose purpose) {
         remove(PURPOSES, purpose);
     }
@@ -871,7 +921,7 @@ public class Category extends ACSObject {
      * Determines whether the passed in object is a category.
      *
      * @return <code>true</code> if the passed in object is a category;
-     * <code>false</code> otherwise.
+     *         <code>false</code> otherwise.
      *
      * @param object the object to test
      */
@@ -882,13 +932,13 @@ public class Category extends ACSObject {
 
     /**
      * Cleans up all the mappings where this category is a child, and then
-     * deletes the category.  This method should generally not be used. Use
+     * deletes the category. This method should generally not be used. Use
      * {@link #deleteCategoryAndRemap()}, {@link #deleteCategoryAndOrphan()}, or
      * {@link #deleteCategorySubtree()} instead.
      *
      * @throws CategorizationException if the category has child objects or
-     * subcategories mapped to it.  If the object has children, the programmer
-     * must call {@link #deleteCategoryAndOrphan()}, {@link
+     *                                 subcategories mapped to it. If the object has children, the programmer
+     *                                 must call {@link #deleteCategoryAndOrphan()}, {@link
      * #deleteCategorySubtree()}, or {@link #deleteCategoryAndRemap()}.
      */
     @Override
@@ -899,8 +949,8 @@ public class Category extends ACSObject {
         try {
             if (children.next()) {
                 throw new CategorizationException("This category is the default parent of another category."
-                                                  + " You must explicitly delete the child categories first. "
-                                                  + "Child category: " + children.
+                        + " You must explicitly delete the child categories first. "
+                        + "Child category: " + children.
                         getDataObject());
             }
         } finally {
@@ -908,13 +958,13 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor objects =
-                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
         if (objects != null) {
             try {
                 if (objects.next()) {
                     throw new CategorizationException("This category has child objects. You must delete "
-                                                      + " any such objects explicitly, before deleting the "
-                                                      + " category.  Child object: " + objects.
+                            + " any such objects explicitly, before deleting the "
+                            + " category.  Child object: " + objects.
                             getDataObject());
                 }
             } finally {
@@ -941,13 +991,14 @@ public class Category extends ACSObject {
      *
      * <p>If the category to be deleted is not the default parent of the child
      * category, this method deletes the mapping but it does not delete that
-     * section of the subtree (similar to the way a UNIX <code>rm -r</code>
+     * section of the subtree (similar to the way a UNIX
+     * <code>rm -r</code>
      * works on symbolic links).
      */
     public void deleteCategorySubtree() {
         // we get the association between this category and its children
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
 
         while (cursor.next()) {
             DataObject link = cursor.getLink();
@@ -962,9 +1013,9 @@ public class Category extends ACSObject {
     }
 
     /**
-     * Deletes the passed in category after remapping all the children.  Adds a
+     * Deletes the passed in category after remapping all the children. Adds a
      * mapping from the children to the default parent of the passed in category
-     * if the mapping does not already exist.  If the category that is the
+     * if the mapping does not already exist. If the category that is the
      * parent of the to-be-deleted category is abstract then any objects that
      * are children of that object are not remapped to anywhere
      */
@@ -986,7 +1037,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
 
         while (cursor.next()) {
             DataObject link = cursor.getLink();
@@ -1021,7 +1072,7 @@ public class Category extends ACSObject {
 
     /**
      * Deletes the passed in category. Does not remap any of the children
-     * categories or objects.  Instead, it just deletes all records of the
+     * categories or objects. Instead, it just deletes all records of the
      * mappings.
      */
     public void deleteCategoryAndOrphan() {
@@ -1047,7 +1098,7 @@ public class Category extends ACSObject {
      * for creating subcategories with this category instance as the parent.</p>
      *
      * <p>It is important to note that a category cannot be a CHILD and a
-     * RELATED category at the same time.  If the category is RELATED and you
+     * RELATED category at the same time. If the category is RELATED and you
      * call addChild, the category is removed from the group of RELATED
      * categories and becomes a CHILD category.</p>
      *
@@ -1055,7 +1106,8 @@ public class Category extends ACSObject {
      *
      * @pre !isAbstract()
      * @pre canMap()
-     **/
+     *
+     */
     public void addChild(ACSObject object) {
         addMapping(object, "child");
     }
@@ -1070,21 +1122,24 @@ public class Category extends ACSObject {
      * mappings.</p>
      *
      * <p>It is important to note that a category cannot be a CHILD and a
-     * RELATED category at the same time.  If the category is RELATED and you
+     * RELATED category at the same time. If the category is RELATED and you
      * call addChild, the category is removed from the group of RELATED
      * categories and becomes a CHILD category.</p>
      *
      * @param category The related category
+     *
      * @pre canMap()
      *
-     **/
+     *
+     */
     public void addRelatedCategory(Category category) {
         addMapping(category, RELATED);
     }
 
     /**
      * Add a preferred category, which marks the current category as a synonym.
-     * When a synonym category is selected, preferred category should be used instead
+     * When a synonym category is selected, preferred category should be used
+     * instead
      * i.e. assigned to the item.
      */
     public void addPreferredCategory(Category preferred) {
@@ -1102,12 +1157,12 @@ public class Category extends ACSObject {
             return;
         }
         Assert.isFalse(isAbstract(),
-                       "You cannot categorize an object "
-                       + "within an abstract category.  If you are "
-                       + "seeing this message then your UI is "
-                       + "allowing you to do something that you "
-                       + "are not allowed to do and you "
-                       + "should email your site administrator.");
+                "You cannot categorize an object "
+                + "within an abstract category.  If you are "
+                + "seeing this message then your UI is "
+                + "allowing you to do something that you "
+                + "are not allowed to do and you "
+                + "should email your site administrator.");
 
         if (RELATED.equals(relationType)) {
             throw new CategorizationException(
@@ -1116,7 +1171,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
         cursor.addEqualsFilter(ID, acsObj.getID());
         if (cursor.size() == 0) {
             // if the cursor.size() > 0 then the object is already
@@ -1125,12 +1180,12 @@ public class Category extends ACSObject {
             Categorization.triggerMapEvent(this, acsObj);
             if (s_log.isDebugEnabled()) {
                 s_log.debug(acsObj + " added to " + CHILD_OBJECTS + " of catID="
-                            + getID() + " type=" + relationType + " (ignored)");
+                        + getID() + " type=" + relationType + " (ignored)");
             }
         } else {
             if (s_log.isDebugEnabled()) {
                 s_log.debug(acsObj + " is already related to catID=" + getID()
-                            + " type=" + relationType + " (ignored)");
+                        + " type=" + relationType + " (ignored)");
             }
         }
     }
@@ -1139,8 +1194,8 @@ public class Category extends ACSObject {
         // Let's check for loops.
         if ("child".equals(relationType) && category.isMemberOfSubtree(this)) {
             throw new CategorizationException("The object that you are "
-                                              + "trying to add as a child is already "
-                                              + "a member of the subtree.");
+                    + "trying to add as a child is already "
+                    + "a member of the subtree.");
         }
 
 
@@ -1148,7 +1203,7 @@ public class Category extends ACSObject {
         // Otherwise, we add and then update.
 
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
         cursor.addEqualsFilter(ID, category.getID());
         DataObject link;
         if (cursor.next()) {
@@ -1167,7 +1222,7 @@ public class Category extends ACSObject {
         cursor.close();
         if (s_log.isDebugEnabled()) {
             s_log.debug("updating related catID=" + category.getID() + " type="
-                        + relationType + " default=false");
+                    + relationType + " default=false");
         }
 
         link.set(REL_TYPE, relationType);
@@ -1176,12 +1231,14 @@ public class Category extends ACSObject {
 
     /**
      * Removes a category mapping from the domain object so that an ACS object
-     * is no longer a child of a category.  This actually deletes the mapping.
+     * is no longer a child of a category. This actually deletes the mapping.
      *
      * @param acsObj the domain object to uncategorize
+     *
      * @pre canMap()
      * @throws NullPointerException if <code>acsObj</code> is null
-     **/
+     *
+     */
     public void removeChild(ACSObject acsObj) {
         if (acsObj == null) {
             throw new NullPointerException("acsObj");
@@ -1198,7 +1255,8 @@ public class Category extends ACSObject {
      * Removes the specified child category.
      *
      * @throws NullPointerException if category is null
-     **/
+     *
+     */
     public void removeChild(Category category) {
         Assert.exists(category, Category.class);
 
@@ -1215,7 +1273,7 @@ public class Category extends ACSObject {
     }
 
     /**
-     * This takes a category and removes its relation to this category.  If the
+     * This takes a category and removes its relation to this category. If the
      * passed in category is also a child then it is still a child after this
      * call.
      *
@@ -1296,7 +1354,7 @@ public class Category extends ACSObject {
      * objects or child categories).
      *
      * @return <code>true</code> if the category is a leaf; <code>false</code>
-     * otherwise.
+     *         otherwise.
      */
     public boolean isLeaf() {
         return !hasChildCategories() && !hasChildObjects();
@@ -1305,8 +1363,9 @@ public class Category extends ACSObject {
     /**
      * Determines whether the category has child objects.
      *
-     * @return <code>true</code> if the category does not have any child objects;
-     * <code>false</code> otherwise.
+     * @return <code>true</code> if the category does not have any child
+     *         objects;
+     *         <code>false</code> otherwise.
      */
     public boolean hasChildObjects() {
         return (getNumberOfChildObjects() != 0);
@@ -1316,7 +1375,7 @@ public class Category extends ACSObject {
      * Determines whether the category has any child categories.
      *
      * @return <code>true</code> if the category does not have any child
-     * categories; <code>false</code> otherwise.
+     *         categories; <code>false</code> otherwise.
      */
     public boolean hasChildCategories() {
         return (getNumberOfChildCategories() != 0);
@@ -1326,21 +1385,21 @@ public class Category extends ACSObject {
      * Determines whether the category is a root.
      *
      * @return <code>true</code> if the category does not have
-     * any parents; <code>false</code> otherwise.
+     *         any parents; <code>false</code> otherwise.
      */
     public boolean isRoot() {
         return (getParentCategoryCount() == 0);
     }
 
     /**
-     *  Returns the number of parent categories for this category.
+     * Returns the number of parent categories for this category.
      *
-     *  @return the number of times has this category has been
-     *  mapped to a new category.
+     * @return the number of times has this category has been
+     *         mapped to a new category.
      */
     public long getParentCategoryCount() {
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(PARENTS)).cursor();
+                ((DataAssociation) get(PARENTS)).cursor();
         try {
             return cursor.size();
         } finally {
@@ -1349,20 +1408,21 @@ public class Category extends ACSObject {
     }
 
     /**
-     *  Sets this category's default parent category to the one that is passed
-     *  in.
+     * Sets this category's default parent category to the one that is passed
+     * in.
      *
-     *  <p><b>This clears the previous default mapping.</b> The results will be
-     *  saved for the user when the transaction is committed. </p>
+     * <p><b>This clears the previous default mapping.</b> The results will be
+     * saved for the user when the transaction is committed. </p>
      *
-     *  <p>If the passed in parent is not already a parent then this makes the
-     *  object a parent. </p>
+     * <p>If the passed in parent is not already a parent then this makes the
+     * object a parent. </p>
      *
-     *  @param parent the category that will become the new
-     *             default category.  Pass in null to clear the current
-     *             default parent.
-     *  @exception CategoryNotFoundException if the passed in category is
-     *          not a parent of this category.
+     * @param parent the category that will become the new
+     *               default category. Pass in null to clear the current
+     *               default parent.
+     *
+     * @exception CategoryNotFoundException if the passed in category is
+     *                                      not a parent of this category.
      *
      */
     public void setDefaultParentCategory(Category parent) {
@@ -1371,7 +1431,7 @@ public class Category extends ACSObject {
 
         boolean found = false;
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(PARENTS)).cursor();
+                ((DataAssociation) get(PARENTS)).cursor();
         while (cursor.next()) {
             DataObject category = cursor.getDataObject();
             DataObject link = cursor.getLink();
@@ -1407,7 +1467,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
 
         cursor.addEqualsFilter(ID, child.getID());
         if (cursor.next()) {
@@ -1458,10 +1518,10 @@ public class Category extends ACSObject {
 
     /**
      * Swaps the order of the child object with the next child object
-     * categorized in the category.  So, if the original order is "A, B, C" and
-     * you called B.swapWithPrevious(), the new order would be "B, A, B".  If
+     * categorized in the category. So, if the original order is "A, B, C" and
+     * you called B.swapWithPrevious(), the new order would be "B, A, B". If
      * this is called on the first item of the list (e.g. "A") then nothing
-     * happens.  If no sort key has been assigned yet then this does not alter
+     * happens. If no sort key has been assigned yet then this does not alter
      * anything.
      *
      * @see #swapWithNext(ACSObject)
@@ -1473,7 +1533,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
 
         cursor.addEqualsFilter(ID, child.getID());
         if (cursor.next()) {
@@ -1529,7 +1589,7 @@ public class Category extends ACSObject {
     private void swapCategoryKeys(int key, int nextKey) {
         swapKeys(getSession().retrieveDataOperation(
                 "com.arsdigita.categorization.swapCategoryWithNextCategory"),
-                 key, nextKey);
+                key, nextKey);
     }
 
     /**
@@ -1538,7 +1598,7 @@ public class Category extends ACSObject {
     private void swapObjectKeys(int key, int nextKey) {
         swapKeys(getSession().retrieveDataOperation(
                 "com.arsdigita.categorization.swapObjectWithNextObject"),
-                 key, nextKey);
+                key, nextKey);
     }
 
     /**
@@ -1572,7 +1632,7 @@ public class Category extends ACSObject {
      * otherwise).
      *
      * @param child The child object or category to set the sortKey for
-     * @param key The integer to use for the sortKey
+     * @param key   The integer to use for the sortKey
      */
     public void setSortKey(ACSObject child, int key) {
         if (isCategory(child)) {
@@ -1581,7 +1641,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
 
         cursor.addEqualsFilter(ID, child.getID());
         if (cursor.next()) {
@@ -1595,7 +1655,7 @@ public class Category extends ACSObject {
      * Explicitly swaps the sort keys for two child objects
      *
      * @param child The child object or category to set the sortKey for
-     * @param key The integer to use for the sortKey
+     * @param key   The integer to use for the sortKey
      */
     public void swapSortKeys(BigDecimal childID1, BigDecimal childID2) {
 
@@ -1607,7 +1667,7 @@ public class Category extends ACSObject {
             BigDecimal key2;
 
             DataAssociationCursor cursor =
-                                  ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                    ((DataAssociation) get(CHILD_OBJECTS)).cursor();
             cursor.addEqualsFilter(ID, childID1);
             if (cursor.next()) {
                 link1 = cursor.getLink();
@@ -1647,20 +1707,22 @@ public class Category extends ACSObject {
      * filter, if desired.
      *
      * @param relation The type of relation to retrieve.
-     * @pre relation == Category.CHILD || relation == Category.RELATED || relation == Category.PREFERRED
+     *
+     * @pre relation == Category.CHILD || relation == Category.RELATED ||
+     * relation == Category.PREFERRED
      */
     public DataAssociationCursor getRelatedCategories(String relation) {
         Assert.isTrue(relation.equals(CHILD) || relation.equals(RELATED)
-                      || relation.equals(PREFERRED),
-                      " invalid relation {" + relation + "}");
+                || relation.equals(PREFERRED),
+                " invalid relation {" + relation + "}");
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
         cursor.addEqualsFilter("link.relationType", relation);
         return cursor;
     }
 
     /**
-     * Returns the number of child categories for this category.  This is more
+     * Returns the number of child categories for this category. This is more
      * efficient than retreiving the collection of categories and calling
      * <code>myCollection.size()</code>.
      *
@@ -1677,7 +1739,8 @@ public class Category extends ACSObject {
      *
      * @see #getDescendants()
      * @throws NullPointerException if objectType is null
-     **/
+     *
+     */
     public CategoryCollection getChildren() {
         return new CategoryCollection(getRelatedCategories(CHILD));
     }
@@ -1688,7 +1751,8 @@ public class Category extends ACSObject {
      *
      * @see #getObjects(String, String)
      * @throws NullPointerException if objectType is null
-     **/
+     *
+     */
     public CategorizedCollection getObjects(String objectType) {
         return getObjects(objectType, null);
     }
@@ -1697,18 +1761,20 @@ public class Category extends ACSObject {
      * Returns a collection of the child objects of this category.
      *
      * @param objectType the return collection will only contain objects of this
-     * type
-     * @param path the fragment of the PDL join path leading from the specified
-     * object type to the <code>Category</code> object type.  The common case
-     * for CMS is to pass <code>"parent"</code> as the value of
-     * <code>path</code>.  The common scenario for many other applications is to
-     * pass <code>null</code>, in which case {@link #getObjects(String)} can be
-     * used.
+     *                   type
+     * @param path       the fragment of the PDL join path leading from the
+     *                   specified
+     *                   object type to the <code>Category</code> object type. The common case
+     *                   for CMS is to pass <code>"parent"</code> as the value of
+     *                   <code>path</code>. The common scenario for many other applications is to
+     *                   pass <code>null</code>, in which case {@link #getObjects(String)} can be
+     *                   used.
      *
      * @pre objectType!=null && path!=null
      * @post return != null
      * @throws NullPointerException if either parameter is null
-     **/
+     *
+     */
     public CategorizedCollection getObjects(String objectType, String path) {
         if (objectType == null) {
             throw new NullPointerException("objectType");
@@ -1732,13 +1798,13 @@ public class Category extends ACSObject {
         }
 
         StringBuilder sb =
-                     new StringBuilder(path.length() + pathExtension.length() + 1);
+                new StringBuilder(path.length() + pathExtension.length() + 1);
         sb.append(path).append(".").append(pathExtension);
         return sb.toString();
     }
 
     /**
-     * Returns the number of child objects for this category.  This is more
+     * Returns the number of child objects for this category. This is more
      * efficient than retreiving the collection of objects and calling
      * <code>myCollection.size()</code>.
      *
@@ -1746,7 +1812,7 @@ public class Category extends ACSObject {
      */
     public long getNumberOfChildObjects() {
         DataAssociationCursor association =
-                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
         if (association == null) {
             return 0;
         } else {
@@ -1757,20 +1823,21 @@ public class Category extends ACSObject {
     /**
      * Returns the parent categories for this category (the categories under
      * which this category is categorized).
-     **/
+     *
+     */
     public CategoryCollection getParents() {
         return new CategoryCollection(((DataAssociation) get(PARENTS)).cursor());
     }
 
     /**
-     * Returns the default parent category.  Note that this category may not be
+     * Returns the default parent category. Note that this category may not be
      * enabled.
      *
      * @return the default parent category.
      */
     public Category getDefaultParentCategory() {
         DataAssociationCursor cursor =
-                              ((DataAssociation) get(PARENTS)).cursor();
+                ((DataAssociation) get(PARENTS)).cursor();
 
         cursor.addEqualsFilter("link.isDefault", Boolean.TRUE);
         try {
@@ -1782,19 +1849,21 @@ public class Category extends ACSObject {
         }
 
         throw new CategoryNotFoundException("The Category " + this + " does "
-                                            + "not have a default parent");
+                + "not have a default parent");
     }
 
     /**
      * Determines whether the ACS object is in the subtree with the specified
-     * category as the root.  This works for both categories and regular ACS
-     * objects.  If the object, the category, or some mapping between the object
+     * category as the root. This works for both categories and regular ACS
+     * objects. If the object, the category, or some mapping between the object
      * and category has not been saved, this method does not guarantee a correct
      * result.
      *
      * @param acsObject the item to search for
+     *
      * @return <code>true</code> if the object appears mapped somewhere in
      *         the subtree; <code>false</code> otherwise.
+     *
      * @pre acsObject != null
      */
     public boolean isMemberOfSubtree(ACSObject acsObject) {
@@ -1831,7 +1900,7 @@ public class Category extends ACSObject {
      */
     public CategoryCollection getDefaultAscendants() {
         DataCollection collection =
-                       getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+                getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
         String ids = (String) get(DEFAULT_ANCESTORS);
         if (ids == null) {
@@ -1888,7 +1957,7 @@ public class Category extends ACSObject {
      */
     public CategorizedCollection getDescendantObjects() {
         return getDescendantObjects(ACSObject.BASE_DATA_OBJECT_TYPE,
-                                    "categories.roTransParents");
+                "categories.roTransParents");
     }
 
     private static String appendID(String path) {
@@ -1898,7 +1967,7 @@ public class Category extends ACSObject {
     }
 
     public CategorizedCollection getDescendantObjects(String objectType,
-                                                      String path) {
+            String path) {
         s_log.info("retrieving objectType=" + objectType + "; path=" + path);
         final CategorizedCollection result = new CategorizedCollection(getSession().
                 retrieve(objectType));
@@ -1915,11 +1984,13 @@ public class Category extends ACSObject {
      * @param path A string representing the relative path.
      *
      * @return Array of constituent categories. The first element of the array
-     * is the current category (hence the array will always have length >=
-     * 1). If the path is bad, this returns <code>null</code>.
+     *         is the current category (hence the array will always have length >=
+     *         1). If the path is bad, this returns <code>null</code>.
      *
-     * This one may be patched to work with localized URLs. I didn't do it for now
-     * because I don't know where it is called and if it's really needed to patch.
+     * This one may be patched to work with localized URLs. I didn't do it for
+     * now
+     * because I don't know where it is called and if it's really needed to
+     * patch.
      * Quasimodo
      *
      */
@@ -1987,7 +2058,7 @@ public class Category extends ACSObject {
         DataCollection dc = SessionManager.getSession().retrieve(
                 "com.arsdigita.categorization.UseContext");
         dc.addFilter("categoryOwner.id = :ownerID").set("ownerID",
-                                                        acsObj.getID());
+                acsObj.getID());
         return dc;
     }
 
@@ -2004,7 +2075,8 @@ public class Category extends ACSObject {
 
     /**
      * Returns a collection of root categories to which this object is mapped.
-     **/
+     *
+     */
     public static RootCategoryCollection getRootCategories(ACSObject acsObj) {
         return new RootCategoryCollection(getRootCategoriesAssoc(acsObj));
     }
@@ -2012,7 +2084,8 @@ public class Category extends ACSObject {
     /**
      * Retrieves the root category associated with an object in the given use
      * context.
-     **/
+     *
+     */
     public static Category getRootForObject(ACSObject object, String context) {
         DataCollection cats = getRootCategoriesAssoc(object);
 
@@ -2032,9 +2105,9 @@ public class Category extends ACSObject {
                 DataObject secondRoot = cats.getDataObject();
                 cats.close();
                 throw new IllegalStateException("there is more than one root for object:\n"
-                                                + object + "\nfirst root: "
-                                                + triple + "\nsecond root: "
-                                                + secondRoot);
+                        + object + "\nfirst root: "
+                        + triple + "\nsecond root: "
+                        + secondRoot);
             }
             cats.close();
         }
@@ -2046,7 +2119,7 @@ public class Category extends ACSObject {
      *
      * @see #setRootForObject(ACSObject, Category, String)
      * @param object the object to own the root category
-     * @param root the root category for the object
+     * @param root   the root category for the object
      */
     public static void setRootForObject(ACSObject acsObj, Category root) {
         setRootForObject(acsObj, root, null);
@@ -2057,30 +2130,32 @@ public class Category extends ACSObject {
      *
      * <p>Conceptually, this method provides a means to add/remove elements
      * to/from a set of triples of the form (<em>acsObj</em>, <em>rootCat</em>,
-     * <em>useContext</em>).  No two triples have the same (<em>acsObj</em>,
+     * <em>useContext</em>). No two triples have the same (<em>acsObj</em>,
      * <em>rootCat</em>) pair. </p>
      *
      * <p>If <em>acsObj</em> is already mapped to some other category in the
      * specified use context, then the existing triple's category value is
-     * updated to <code>rootCat</code>.  Otherwise, a new triple is added.</p>
+     * updated to
+     * <code>rootCat</code>. Otherwise, a new triple is added.</p>
      *
-     * <p>In theory, <code>rootCat</code> should be a root category, i.e. it
-     * should have no parents.  This method does not check if this is indeed the
+     * <p>In theory,
+     * <code>rootCat</code> should be a root category, i.e. it
+     * should have no parents. This method does not check if this is indeed the
      * case.</p>
      *
      * @see #setRootForObject(ACSObject, Category, String)
      * @param object the object to own the root category
-     * @param root the root category for the object
+     * @param root   the root category for the object
      */
     public static void setRootForObject(ACSObject acsObj, Category rootCat,
-                                        String context) {
+            String context) {
 
         DataCollection rootCats = getRootCategoriesAssoc(acsObj);
         rootCats.addEqualsFilter(USE_CONTEXT, context);
         if (rootCats.next()) {
             DataObject triple = rootCats.getDataObject();
             triple.set(ROOT_CATEGORY,
-                       DomainServiceInterfaceExposer.getDataObject(rootCat));
+                    DomainServiceInterfaceExposer.getDataObject(rootCat));
             rootCats.close();
             return;
         }
@@ -2097,9 +2172,9 @@ public class Category extends ACSObject {
             throw new UncheckedWrapperException(ex);
         }
         triple.set(CATEGORY_OWNER,
-                   DomainServiceInterfaceExposer.getDataObject(acsObj));
+                DomainServiceInterfaceExposer.getDataObject(acsObj));
         triple.set(ROOT_CATEGORY,
-                   DomainServiceInterfaceExposer.getDataObject(rootCat));
+                DomainServiceInterfaceExposer.getDataObject(rootCat));
         triple.set(USE_CONTEXT, context);
     }
 
@@ -2116,16 +2191,19 @@ public class Category extends ACSObject {
     }
 
     /**
-     * Calls {@link #clearRootForObject(ACSObject, String)} with the null context.
+     * Calls {@link #clearRootForObject(ACSObject, String)} with the null
+     * context.
      *
      * @see #clearRootForObject(ACSObject, String)
-     **/
+     *
+     */
     public static void clearRootForObject(ACSObject object) {
         clearRootForObject(object, null);
     }
 
     /**
-     * Removes any root category associated with the object in the specified context.
+     * Removes any root category associated with the object in the specified
+     * context.
      *
      * @param object the object to remove the root category from
      */
@@ -2140,13 +2218,13 @@ public class Category extends ACSObject {
 
     /**
      * Returns a boolean indicating if the current user can edit the properties
-     * of the category.  This does not include mapping child objects.  For
+     * of the category. This does not include mapping child objects. For
      * mapping, use canMap.
      */
     public boolean canEdit() {
         return PermissionService.checkPermission(new PermissionDescriptor(
                 PrivilegeDescriptor.EDIT, this,
-                                                                          Kernel.
+                Kernel.
                 getContext().getParty()));
     }
 
@@ -2157,19 +2235,19 @@ public class Category extends ACSObject {
     public boolean canDelete() {
         return PermissionService.checkPermission(new PermissionDescriptor(
                 PrivilegeDescriptor.DELETE, this,
-                                                                          Kernel.
+                Kernel.
                 getContext().getParty()));
     }
 
     /**
      * Returns a boolean indicating if the current user can map a child object
-     * to this category.  This must return true in order to call addChild or
+     * to this category. This must return true in order to call addChild or
      * removeChild.
      */
     public boolean canMap() {
         return PermissionService.checkPermission(new PermissionDescriptor(
                 MAP_DESCRIPTOR, this,
-                                                                          Kernel.
+                Kernel.
                 getContext().getParty()));
     }
 
@@ -2180,19 +2258,19 @@ public class Category extends ACSObject {
     public boolean canRead() {
         return PermissionService.checkPermission(new PermissionDescriptor(
                 PrivilegeDescriptor.READ, this,
-                                                                          Kernel.
+                Kernel.
                 getContext().getParty()));
     }
 
     /**
      * This returns a boolean indicating if the current user has the permission
-     * to change the permissions on this category.  If canAdmin == true then all
+     * to change the permissions on this category. If canAdmin == true then all
      * of the other canXXX also are true
      */
     public boolean canAdmin() {
         return PermissionService.checkPermission(new PermissionDescriptor(
                 PrivilegeDescriptor.ADMIN, this,
-                                                                          Kernel.
+                Kernel.
                 getContext().getParty()));
     }
 
@@ -2213,7 +2291,7 @@ public class Category extends ACSObject {
      * Add a new language set to this category
      */
     public boolean addLanguage(String locale, String name, String description,
-                               String url) {
+            String url) {
 
         // If locale don't exist
         if (!locale.isEmpty() && m_categoryLocalizationCollection != null && !m_categoryLocalizationCollection.
