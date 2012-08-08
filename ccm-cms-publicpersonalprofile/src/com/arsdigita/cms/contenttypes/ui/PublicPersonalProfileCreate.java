@@ -162,6 +162,8 @@ public class PublicPersonalProfileCreate extends PageCreate {
 
     @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {
+        super.validate(fse);
+        
         Folder folder = m_parent.getFolder(fse.getPageState());
         Assert.exists(folder);
         String id = (String) fse.getFormData().get(

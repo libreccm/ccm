@@ -582,6 +582,8 @@ public class PageEditDynamic extends SecurityPropertyEditor {
          * confirms this was the same item to be edited
          */
         public void validate(FormSectionEvent event) throws FormProcessException {
+            super.validate(event);
+            
             PageState state = event.getPageState();
             FormData data = event.getFormData();
 

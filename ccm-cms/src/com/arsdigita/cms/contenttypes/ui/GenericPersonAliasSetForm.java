@@ -127,6 +127,8 @@ public class GenericPersonAliasSetForm
     @Override
     public void validate(final FormSectionEvent fse)
             throws FormProcessException {
+        super.validate(fse);
+        
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
 

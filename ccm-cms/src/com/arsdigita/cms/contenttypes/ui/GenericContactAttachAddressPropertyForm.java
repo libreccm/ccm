@@ -149,6 +149,8 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
+        super.validate(e);
+        
         final PageState state = e.getPageState();
         final FormData data = e.getFormData();
         

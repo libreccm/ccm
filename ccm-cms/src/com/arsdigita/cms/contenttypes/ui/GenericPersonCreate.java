@@ -75,6 +75,8 @@ public class GenericPersonCreate extends PageCreate {
     // Validate: ensure name uniqueness
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
+        super.validate(e);
+        
         Folder f = m_parent.getFolder(e.getPageState());
         Assert.exists(f);
         validateNameUniqueness(f, e, GenericPerson.urlSave(getItemName(e)));

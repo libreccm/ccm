@@ -90,6 +90,8 @@ public class PublicPersonalProfilePropertyForm
 
     @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {
+        super.validate(fse);
+        
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
 

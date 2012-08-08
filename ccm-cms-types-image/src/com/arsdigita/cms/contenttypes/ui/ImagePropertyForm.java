@@ -206,6 +206,8 @@ public class ImagePropertyForm
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
+        super.validate(e);
+        
         FormData d = e.getFormData();
     }
 

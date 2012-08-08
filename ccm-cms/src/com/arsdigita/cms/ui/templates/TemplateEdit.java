@@ -133,6 +133,8 @@ public class TemplateEdit extends SimpleEditStep {
         }
 
         public void validate(FormSectionEvent event) throws FormProcessException {
+            super.validate(event);
+            
             PageState state = event.getPageState();
             FormData data = event.getFormData();
             Template t = getTemplate(state);
