@@ -34,7 +34,6 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
 import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -47,9 +46,7 @@ import org.apache.log4j.Logger;
  */
 public class PageCreate extends BasicPageForm
         implements FormSubmissionListener, CreationComponent {
-
-    private static final Logger s_log = Logger.getLogger(PageCreate.class);
-
+  
     protected final CreationSelector m_parent;
     protected ApplyWorkflowFormSection m_workflowSection;
 
@@ -105,13 +102,17 @@ public class PageCreate extends BasicPageForm
         return m_workflowSection;
     }
 
-    // Init: create a new item id
+    /** create a new item id
+     * 
+     */
     public void init(FormSectionEvent e) throws FormProcessException {
         // this is currently a no-op
     }
 
-    // Submission: If the Cancel button was pressed, hide self and
-    // show the display component
+    /**
+     * If the Cancel button was pressed, hide self and
+     * show the display component
+     */ 
     public void submitted(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
 
@@ -124,14 +125,18 @@ public class PageCreate extends BasicPageForm
         }
     }
 
-    // Validate: ensure name uniqueness
+    /**
+     * Validate inputs to ensure name uniqueness. Note: We can't call {@code super.validate(FormSectionEvent)} here
+     * because the super method {@link BasicPageForm#validate(com.arsdigita.bebop.event.FormSectionEvent)} tries
+     * to access things which on existing yet.
+     * 
+     * @param event 
+     */
     @Override
-    public void validate(FormSectionEvent e) throws FormProcessException {
-        super.validate(e);
-        
-        Folder f = m_parent.getFolder(e.getPageState());
-        Assert.exists(f);
-        validateNameUniqueness(f, e);
+    public void validate(final FormSectionEvent event) throws FormProcessException {       
+        final Folder folder = m_parent.getFolder(event.getPageState());
+        Assert.exists(folder);
+        validateNameUniqueness(folder, event);
     }
 
     // Process: save fields to the database

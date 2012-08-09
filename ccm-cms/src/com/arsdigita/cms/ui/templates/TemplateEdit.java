@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.templates;
 
-
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -52,7 +51,7 @@ import org.apache.log4j.Logger;
 public class TemplateEdit extends SimpleEditStep {
 
     private static Logger s_log =
-        Logger.getLogger(TemplateEdit.class);
+                          Logger.getLogger(TemplateEdit.class);
 
     /**
      * Construct a new TemplateEdit component
@@ -73,8 +72,8 @@ public class TemplateEdit extends SimpleEditStep {
 
         //DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel, false);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.templates.name").localize(),  ContentItem.NAME);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.templates.label").localize(),  Template.LABEL);
+        sheet.add((String) GlobalizationUtil.globalize("cms.ui.templates.name").localize(), ContentItem.NAME);
+        sheet.add((String) GlobalizationUtil.globalize("cms.ui.templates.label").localize(), Template.LABEL);
 
         setDisplayComponent(sheet);
     }
@@ -101,13 +100,13 @@ public class TemplateEdit extends SimpleEditStep {
         protected void addWidgets() {
             add(new Label(GlobalizationUtil.globalize("cms.ui.templates.name")));
             TextField nameWidget =
-                new TextField(new TrimmedStringParameter(NAME));
+                      new TextField(new TrimmedStringParameter(NAME));
             nameWidget.addValidationListener(new NameValidationListener());
             add(nameWidget);
 
             add(new Label(GlobalizationUtil.globalize("cms.ui.templates.label")));
             TextField labelWidget =
-                new TextField(new TrimmedStringParameter(Template.LABEL));
+                      new TextField(new TrimmedStringParameter(Template.LABEL));
             labelWidget.addValidationListener(new NotNullValidationListener());
             add(labelWidget);
         }
@@ -127,34 +126,35 @@ public class TemplateEdit extends SimpleEditStep {
             FormData data = e.getFormData();
             PageState state = e.getPageState();
             Template t = getTemplate(state);
-            t.setName((String)data.get(NAME));
-            t.setLabel((String)data.get(Template.LABEL));
+            t.setName((String) data.get(NAME));
+            t.setLabel((String) data.get(Template.LABEL));
             t.save();
         }
 
         public void validate(FormSectionEvent event) throws FormProcessException {
-            super.validate(event);
-            
+            //Calling super.validate(e) here causes an exception because the super method checks things which not available
+            //here.
+
             PageState state = event.getPageState();
             FormData data = event.getFormData();
             Template t = getTemplate(state);
 
-            String newName = (String)data.get(NAME);
+            String newName = (String) data.get(NAME);
             String oldName = t.getName();
 
             // Validation passes if the item name is the same.
-            if ( !newName.equalsIgnoreCase(oldName) ) {
-                validateNameUniqueness((Folder)t.getParent(), event);
+            if (!newName.equalsIgnoreCase(oldName)) {
+                validateNameUniqueness((Folder) t.getParent(), event);
             }
         }
 
         // Get the current template
         public Template getTemplate(PageState state) {
             Template t =
-                (Template) getItemSelectionModel().getSelectedObject(state);
+                     (Template) getItemSelectionModel().getSelectedObject(state);
             Assert.exists(t);
             return t;
         }
-    }
 
+    }
 }

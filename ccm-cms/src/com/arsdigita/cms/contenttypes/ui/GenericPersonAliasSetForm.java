@@ -124,10 +124,10 @@ public class GenericPersonAliasSetForm
         }
     }
 
-    @Override
-    public void validate(final FormSectionEvent fse)
-            throws FormProcessException {
-        super.validate(fse);
+    @Override    
+    public void validate(final FormSectionEvent fse) throws FormProcessException {        
+        //We don't call super.validate(fse) here because the super method checks for things which are not available 
+        //here, causing an exception.
         
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();

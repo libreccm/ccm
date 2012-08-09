@@ -179,7 +179,8 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
-        super.validate(e);
+        //Calling super.validate(e) here causes an exception because the super method checks things which not available
+        //here.
         
         final PageState state = e.getPageState();
         final FormData data = e.getFormData();

@@ -72,11 +72,13 @@ public class GenericPersonCreate extends PageCreate {
         }
     }
 
-    // Validate: ensure name uniqueness
+    /**
+     * Ensure name uniqueness. Note: We can't call {@code super.validate(FormSectionEvent)} here
+     * because the super method {@link BasicPageForm#validate(com.arsdigita.bebop.event.FormSectionEvent)} tries
+     * to access things which on existing yet.
+     */
     @Override
-    public void validate(FormSectionEvent e) throws FormProcessException {
-        super.validate(e);
-        
+    public void validate(FormSectionEvent e) throws FormProcessException {       
         Folder f = m_parent.getFolder(e.getPageState());
         Assert.exists(f);
         validateNameUniqueness(f, e, GenericPerson.urlSave(getItemName(e)));

@@ -160,10 +160,13 @@ public class PublicPersonalProfileCreate extends PageCreate {
         }
     }
 
+     /**
+     * Ensure name uniqueness. Note: We can't call {@code super.validate(FormSectionEvent)} here
+     * because the super method {@link BasicPageForm#validate(com.arsdigita.bebop.event.FormSectionEvent)} tries
+     * to access things which on existing yet.
+     */
     @Override
-    public void validate(FormSectionEvent fse) throws FormProcessException {
-        super.validate(fse);
-        
+    public void validate(FormSectionEvent fse) throws FormProcessException {               
         Folder folder = m_parent.getFolder(fse.getPageState());
         Assert.exists(folder);
         String id = (String) fse.getFormData().get(
