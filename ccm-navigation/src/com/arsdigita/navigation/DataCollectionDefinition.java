@@ -195,6 +195,13 @@ public class DataCollectionDefinition extends LockableImpl {
         m_properties.add(property);
     }
 
+    /**
+     * Get a collection of objects from the database defined by model or
+     * null if the requested object type is invalid
+     * 
+     * @param model
+     * @return data collection or null 
+     */
     public final DataCollection getDataCollection(NavigationModel model) {
         Assert.isLocked(this);
 

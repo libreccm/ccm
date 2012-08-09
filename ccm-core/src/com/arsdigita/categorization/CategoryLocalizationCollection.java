@@ -36,11 +36,12 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     private String lastFoundLocale;
     
     public CategoryLocalizationCollection(Category category) {
-        super(category.getLocalizations().getDataCollection());
+        this(category.getLocalizations().getDataCollection());
     }
 
     public CategoryLocalizationCollection(DataCollection dataCollection) {
         super(dataCollection);
+        addOrder("locale");
     }
 
     /**
@@ -118,9 +119,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
      */
     public boolean localizationExists(String locale) {
                
-        // Really string comparison using !=  ??
-        // && !locale.isEmpty() ?
-        if (!m_dataCollection.isEmpty() && locale != "") {
+        if (!m_dataCollection.isEmpty() && !"".equals(locale)) {
 
             // First check, if we are already at the right position. This will speed up repeated access for the same locale
             if (this.getPosition() > 0 && this.getCategoryLocalization().

@@ -21,19 +21,21 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.navigation.DataCollectionDefinition;
 import com.arsdigita.navigation.DataCollectionRenderer;
-
 import com.arsdigita.persistence.DataCollection;
-
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-
 import com.arsdigita.xml.Element;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Abstract base class for object lists
+ * 
+ * @author unknown
+ * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ */
 public abstract class AbstractObjectList
         extends AbstractComponent implements ObjectList {
 
@@ -58,6 +60,14 @@ public abstract class AbstractObjectList
         return m_renderer;
     }
 
+    /**
+     * Get a list of objects from the database which meet a set criteria or
+     * null if the requested object type is invalid
+     * 
+     * @param request
+     * @param response
+     * @return the object list or null 
+     */
     protected DataCollection getObjects(HttpServletRequest request,
             HttpServletResponse response) {
 

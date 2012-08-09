@@ -745,18 +745,19 @@ public class Category extends ACSObject {
      */
     public boolean isEnabled(String locale) {
 
-        // If not gloebally disabled and locale is not null or empty, test for localized version
-        if (locale != null &&
-            !locale.isEmpty() &&
-            ((Boolean) get(IS_ENABLED)).booleanValue() == true &&
-            m_categoryLocalizationCollection != null &&
-            m_categoryLocalizationCollection.localizationExists(locale)) {
+        // If globally disabled, return category as disabled
+        if (((Boolean) get(IS_ENABLED)).booleanValue() == false) {
+            return false;
+        }
+
+        // Test for localized version
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+                localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
             boolean isEnabled = m_categoryLocalizationCollection.isEnabled();
             m_categoryLocalizationCollection.rewind();
             return isEnabled;
-            //return m_categoryLocalizationCollection.isEnabled();
 
         } else {
 

@@ -15,22 +15,22 @@ package com.arsdigita.navigation.ui.object;
 
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractObjectList;
-
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
-
-
 import com.arsdigita.xml.Element;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * A complex object list
+ * 
+ * An object list which will accept SQL filters to customize the content easily.
+ * 
+ * @author Sören Bernstein <sbernstein@quasiweb.de>
  */
 public class ComplexObjectList extends AbstractObjectList {
 
@@ -41,19 +41,52 @@ public class ComplexObjectList extends AbstractObjectList {
     protected Map<String, String> m_customAttributes =
             new HashMap<String, String>();
 
+    // Getter / Setter
+    
+    /**
+     * Sets a custom name for this list.
+     * @param name the list name
+     */
     public void setCustomName(String name) {
         m_customName = name;
     }
 
+    /**
+     * Gets the costum name for this list.
+     * @return the list name
+     */
     public String getCustomName() {
         return m_customName;
     }
 
     /**
-     * Hinzufügen eines SQL-Filter zur Abfrage
-     * Verarbeitet einen boolschen Filter, der SQL-konform Formatiert ist.
-     * Siehe PostgreSQL-Handbuch zur where-Klausel
-     * @param sqlfilter
+     * Adds a custom attribute
+     * 
+     * @param attribute
+     * @param value 
+     */
+    public void addCustomAttribute(final String attribute, final String value) {
+        m_customAttributes.put(attribute, value);
+    }
+
+    /**
+     * Gets a custom attribute
+     * 
+     * @param attribute
+     * @return 
+     */
+    public String getCustomAttribute(final String attribute) {
+        return m_customAttributes.get(attribute);
+    }
+
+
+    /**
+     * Add a SQL filter to query.
+     * This filter can handle wildcards which have to be set with {@link #setParameter(java.lang.String, java.lang.Object)}
+     * 
+     *See PostgreSQL handbook about where clause
+     * 
+     * @param sqlfilter the sql filter
      */
     public void setSQLFilter(String sqlfilter) {
 
@@ -61,22 +94,22 @@ public class ComplexObjectList extends AbstractObjectList {
 
     }
 
+    /**
+     * Set parameter for for sql filter.
+     * 
+     * @param parameterName the parameter name of the 
+     * @param value the value attached to the parameter
+     */
     public void setParameter(String parameterName, Object value) {
 
         m_filterParameters.put(parameterName, value);
 
     }
 
-    public String getCustomAttribute(final String attribute) {
-        return m_customAttributes.get(attribute);
-    }
-
-    public void addCustomAttribute(final String attribute, final String value) {
-        m_customAttributes.put(attribute, value);
-    }
-
-    /* Diese Methode überschreibt die Methode aus der Eltern-Klasse, um
-     * die SQL-Filter berücksichtigen zu können
+    /** 
+     * Get all objects for this list.
+     * 
+     * Overrides the parent class to allow for sql filter
      */
     @Override
     protected DataCollection getObjects(HttpServletRequest request,
@@ -112,7 +145,7 @@ public class ComplexObjectList extends AbstractObjectList {
         return objects;
     }
 
-    /* Diese Methode wird vom Servlet aufgerufen */
+    /* This method will be called by the servlet */
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
         Element content = Navigation.newElement("complexObjectList");

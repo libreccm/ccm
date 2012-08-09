@@ -22,8 +22,10 @@ import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BaseLink;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.FormModel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
+import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.SimpleContainer;
@@ -82,8 +84,6 @@ class CategoryItemPane extends BaseItemPane {
     private final SingleSelectionModel m_model;
     private final CategoryRequestLocal m_category;
     private final SimpleContainer m_detailPane;
-    private final StringParameter m_catLocaleParam = new StringParameter("catLocale");
-    private final ParameterSingleSelectionModel m_catLocale;
 
     public CategoryItemPane(final SingleSelectionModel model,
             final CategoryRequestLocal category,
@@ -92,7 +92,6 @@ class CategoryItemPane extends BaseItemPane {
             final ActionLink deleteLink) {
         m_model = model;
         m_category = category;
-        m_catLocale = new ParameterSingleSelectionModel(m_catLocaleParam);
 
         // Details
         m_detailPane = new SimpleContainer();
@@ -338,9 +337,13 @@ class CategoryItemPane extends BaseItemPane {
 
         private CategoryLocalizationTable m_catLocalizationTable;
         private CategoryLocalizationEditForm m_editCategoryLocalizationForm;
+        private StringParameter m_catLocaleParam;
+        private ParameterSingleSelectionModel m_catLocale;
 
         CategoryLocalizationSection(ActionLink addLink) {
             setHeading(new Label(gz("cms.ui.category.localizations")));
+            m_catLocaleParam = new StringParameter("catLocale");
+            m_catLocale = new ParameterSingleSelectionModel(m_catLocaleParam);
 
             final ActionGroup group = new ActionGroup();
             setBody(group);
@@ -352,6 +355,12 @@ class CategoryItemPane extends BaseItemPane {
             add(m_editCategoryLocalizationForm);
             connect(m_editCategoryLocalizationForm);
             connect(m_catLocalizationTable, 0, m_editCategoryLocalizationForm);
+        }
+
+        @Override
+        public void register(Page page) {
+            super.register(page);
+            page.addComponentStateParam(m_editCategoryLocalizationForm, m_catLocaleParam);
         }
     }
 
