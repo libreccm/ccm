@@ -87,14 +87,7 @@ OpenCCM.prototype.prepareImageDialog = function()
   // OnResize 
   this.dialogs["images"].onresize = function ()
   {
-    var newHeightForPreview = 
-    parseInt(this.height, 10) 
-//    - this.getElementById("h1").offsetHeight 
-//    - this.getElementById("buttons").offsetHeight
-//    - this.getElementById("inputs").offsetHeight 
-    - parseInt(this.rootElem.style.paddingBottom, 10);
-    this.getElementById("preview").style.height = ((newHeightForPreview > 0) ? newHeightForPreview : 0) + "px";
-    this.getElementById("preview").style.width = "98%";
+    self.resizePreview(this);
   };
 
   this.imageDialogReady = true;
@@ -299,17 +292,30 @@ OpenCCM.prototype.imageBrowse = function(window)
 
 OpenCCM.prototype.imageSet = function(imageData)
 {
-  var dialog = this.dialogs["images"];
+  var dialog = this.dialogs["images"]
   dialog.getElementById(dialog.id["src"]).value = imageData.src;
   dialog.getElementById(dialog.id["ipreview"]).src = imageData.src;
   dialog.getElementById(dialog.id["width"]).value = imageData.width;
   dialog.getElementById(dialog.id["height"]).value = imageData.height;
   dialog.getElementById(dialog.id["name"]).value = imageData.name;
   dialog.getElementById(dialog.id["aspect"]).value = dialog.getElementById(dialog.id["width"]).value / dialog.getElementById(dialog.id["height"]).value;
+
+  this.resizePreview(dialog);
+
   if(imageData.src != "")
   {
     dialog.getElementById(dialog.id["preview"]).style.display = "block";
+  } else {
+    dialog.getElementById(dialog.id["preview"]).style.display = "none";
   }
+};
+
+OpenCCM.prototype.resizePreview = function(dialog) {
+  var aspect = dialog.getElementById(dialog.id["aspect"]).value;
+  var previewWidth = dialog.width - 22;
+
+  dialog.getElementById(dialog.id["ipreview"]).style.height = Math.round(previewWidth / aspect) + "px";
+  dialog.getElementById(dialog.id["ipreview"]).style.width = previewWidth + "px";
 };
 
 OpenCCM.prototype.calcWidth = function()
