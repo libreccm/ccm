@@ -9,12 +9,13 @@ import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.Service;
+import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 
 /**
- * A component which will insert a javascript to the xml output with the 
+ * A component which will insert a javascript to the xml output with the
  * image information for the OpenCCM plugin for Xinha editor.
- * 
+ *
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageSelectResultComponent extends SimpleContainer implements Resettable {
@@ -28,7 +29,7 @@ public class ImageSelectResultComponent extends SimpleContainer implements Reset
 
     /**
      * Save image imformation
-     * 
+     *
      * @param iamge an {@link ImageAsset}
      */
     public void setResult(final ImageAsset image/*, final String name, final BigDecimal id, final BigDecimal width, final BigDecimal height*/) {
@@ -48,9 +49,10 @@ public class ImageSelectResultComponent extends SimpleContainer implements Reset
         if (m_valid) {
 
             script.append("if(button.id == \"save\" ) {");
-            
+
             script.append("window.opener.openCCM.imageSet({");
             script.append("      src    : \"");
+            script.append(URL.getDispatcherPath());
             script.append(Service.getImageURL(m_image));
             script.append("\", ");
             script.append("      name   : \"");
@@ -75,7 +77,7 @@ public class ImageSelectResultComponent extends SimpleContainer implements Reset
 
     /**
      * Reset this component.
-     * 
+     *
      * @param state Page state
      */
     public void reset(PageState state) {
