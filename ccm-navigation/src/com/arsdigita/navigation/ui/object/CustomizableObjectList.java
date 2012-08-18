@@ -274,11 +274,11 @@ public class CustomizableObjectList extends ComplexObjectList {
         /*
          * if (request.getCharacterEncoding() == null) {
          */
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            logger.error(ex);
-        }
+//        try {
+//            request.setCharacterEncoding("UTF-8");
+//        } catch (UnsupportedEncodingException ex) {
+//            logger.error(ex);
+//        }
         //}
 
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
