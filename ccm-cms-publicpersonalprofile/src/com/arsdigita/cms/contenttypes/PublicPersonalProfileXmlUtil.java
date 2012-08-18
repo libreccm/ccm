@@ -27,7 +27,11 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.ui.UI;
 import com.arsdigita.xml.Element;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,12 +73,12 @@ public class PublicPersonalProfileXmlUtil {
             appUrl = String.format("%s/ccm%s", prefix, appPath);
         }
 
-        Element navRoot =
+        final Element navRoot =
                 root.newChildElement("nav:categoryMenu",
                                      "http://ccm.redhat.com/navigation");
         navRoot.addAttribute("id", "categoryMenu");
 
-        Element navList =
+        final Element navList =
                 navRoot.newChildElement("nav:category",
                                         "http://ccm.redhat.com/navigation");
         navList.addAttribute("AbstractTree", "AbstractTree");
@@ -91,7 +95,7 @@ public class PublicPersonalProfileXmlUtil {
 
 
         if (config.getShowHomeNavEntry()) {
-            Element navHome =
+            final Element navHome =
                     navList.newChildElement("nav:category",
                                             "http://ccm.redhat.com/navigation");
             navHome.addAttribute("AbstractTree", "AbstractTree");
@@ -106,7 +110,7 @@ public class PublicPersonalProfileXmlUtil {
 
             /*String homeLabel = homeLabels.get(GlobalizationHelper.
             getNegotiatedLocale().getLanguage());*/
-            String homeLabel = homeLabels.get(profile.getLanguage());
+            final String homeLabel = homeLabels.get(profile.getLanguage());
             if (homeLabel == null) {
                 navHome.addAttribute("title", "Home");
             } else {
@@ -120,13 +124,13 @@ public class PublicPersonalProfileXmlUtil {
         }
 
         //Get the available Navigation items
-        PublicPersonalProfileNavItemCollection navItems =
+        final PublicPersonalProfileNavItemCollection navItems =
                                                new PublicPersonalProfileNavItemCollection();
         /*navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
         getLanguage());*/
         navItems.addLanguageFilter(profile.getLanguage());
         final Map<String, PublicPersonalProfileNavItem> navItemMap =
-                                                        new HashMap<String, PublicPersonalProfileNavItem>();
+                                                        new LinkedHashMap<String, PublicPersonalProfileNavItem>();
         PublicPersonalProfileNavItem navItem;
         while (navItems.next()) {
             navItem = navItems.getNavItem();
@@ -153,14 +157,15 @@ public class PublicPersonalProfileXmlUtil {
                                                       profile.getProfileUrl()));
         profileElem.addAttribute("title", profile.getOwner().getFullName());
 
-        //Get the related links of the profiles
-        DataCollection links =
+        //Get the related links of the profile
+        final DataCollection links =
                        RelatedLink.getRelatedLinks(profile,
                                                    PublicPersonalProfile.LINK_LIST_NAME);
         links.addOrder(Link.ORDER);
         RelatedLink link;
         String navLinkKey;
         Element navElem;
+        final List<NavLink> navLinks = new ArrayList<NavLink>();                
         while (links.next()) {
             link = (RelatedLink) DomainObjectFactory.newInstance(links.
                     getDataObject());
@@ -172,10 +177,10 @@ public class PublicPersonalProfileXmlUtil {
                 //ToDo
             }
 
-            ContentItem targetItem = link.getTargetItem();
+            final ContentItem targetItem = link.getTargetItem();
             if (!(targetItem instanceof PublicPersonalProfile)
                 && (targetItem instanceof ContentPage)) {
-                ContentPage targetPage = (ContentPage) targetItem;
+                final ContentPage targetPage = (ContentPage) targetItem;
                 /*if (!(targetPage.getContentBundle().hasInstance(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage(),
                 false))) {
@@ -187,40 +192,95 @@ public class PublicPersonalProfileXmlUtil {
                     continue;
                 }
             }
-
+            
+            navLinks.add(createNavLink(navItem, navLinkKey, targetItem));
+        }
+        
+        Collections.sort(navLinks);
+        
+        for(NavLink navLink : navLinks) {
             navElem =
             navList.newChildElement("nav:category",
                                     "http://ccm.redhat.com/navigation");
             navElem.addAttribute("AbstractTree", "AbstractTree");
             navElem.addAttribute("description", "");
             //navHome.addAttribute("id", "");
-            if ((navPath != null) && navPath.equals(navLinkKey)) {
+            if ((navPath != null) && navPath.equals(navLink.getKey())) {
                 navElem.addAttribute("isSelected", "true");
                 final Element currentPathElem =
                               pathElem.newChildElement("nav:category",
                                                        "http://ccm.redhat.com/navigation");
-                currentPathElem.addAttribute("title", navItem.getLabel());
+                currentPathElem.addAttribute("title", navLink.getNavItem().getLabel());
                 currentPathElem.addAttribute("url",
                                              String.format("%s/%s/%s",
                                                            appUrl,
                                                            profile.getProfileUrl(),
-                                                           navLinkKey));
+                                                           navLink.getKey()));
             } else {
                 navElem.addAttribute("isSelected", "false");
             }
             navElem.addAttribute("sortKey", "");
-            if (navItem == null) {
-                navElem.addAttribute("title", navLinkKey);
+            if (navLink.getTarget() == null) {
+                navElem.addAttribute("title", navLink.getKey());
             } else {
-                navElem.addAttribute("title", navItem.getLabel());
+                navElem.addAttribute("title", navLink.getNavItem().getLabel());
             }
             navElem.addAttribute("url", String.format("%s/%s/%s",
                                                       appUrl,
                                                       profile.getProfileUrl(),
-                                                      navLinkKey));
+                                                      navLink.getKey()));
 
-            navElem.addAttribute("navItem", navLinkKey);
+            navElem.addAttribute("navItem", navLink.getKey());
 
         }
+    }
+    
+    private NavLink createNavLink(final PublicPersonalProfileNavItem navItem, 
+                                  final String key, 
+                                  final ContentItem target) {
+        final NavLink navLink = new NavLink();
+        navLink.setNavItem(navItem);
+        navLink.setKey(key);
+        navLink.setTarget(target);
+        return navLink;
+    }
+    
+    private class NavLink implements Comparable<NavLink> {
+        private PublicPersonalProfileNavItem navItem;
+        private String key;
+        private ContentItem target;
+                 
+        public NavLink() {
+            //Nothing
+        }
+        
+        public PublicPersonalProfileNavItem getNavItem() {
+            return navItem;
+        }
+
+        public void setNavItem(final PublicPersonalProfileNavItem navItem) {
+            this.navItem = navItem;
+        }
+
+        public ContentItem getTarget() {
+            return target;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(final String key) {
+            this.key = key;
+        }
+                
+        public void setTarget(final ContentItem target) {
+            this.target = target;
+        }
+
+        public int compareTo(final NavLink other) {
+            return navItem.getOrder().compareTo(other.getNavItem().getOrder());
+        }
+                        
     }
 }

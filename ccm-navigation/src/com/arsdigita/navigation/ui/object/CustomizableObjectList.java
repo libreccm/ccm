@@ -1,5 +1,6 @@
 package com.arsdigita.navigation.ui.object;
 
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
@@ -193,7 +194,7 @@ public class CustomizableObjectList extends ComplexObjectList {
      * @return The property to sort by.
      */
     public String getOrder(final String id) {
-        String order = sortFields.get(id);
+        final String order = sortFields.get(id);
         if ((order == null) || order.isEmpty()) {
             return new ArrayList<String>(sortFields.values()).get(0);
         }
@@ -211,10 +212,10 @@ public class CustomizableObjectList extends ComplexObjectList {
      * @return
      */
     @Override
-    protected DataCollection getObjects(HttpServletRequest request,
-                                        HttpServletResponse response) {
+    protected DataCollection getObjects(final HttpServletRequest request,
+                                        final HttpServletResponse response) {
         //Set filters (using the SQL)
-        StringBuilder sqlFilters = new StringBuilder();
+        final StringBuilder sqlFilters = new StringBuilder();
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             if ((filterEntry.getValue().getFilter() == null)
                 || (filterEntry.getValue().getFilter().isEmpty())) {
@@ -232,7 +233,7 @@ public class CustomizableObjectList extends ComplexObjectList {
             setSQLFilter(sqlFilters.toString());
         }
 
-        DataCollection objects = super.getObjects(request, response);
+        final DataCollection objects = super.getObjects(request, response);
 
         return objects;
     }
@@ -250,10 +251,10 @@ public class CustomizableObjectList extends ComplexObjectList {
      * @return
      */
     @Override
-    public Element generateXML(HttpServletRequest request,
-                               HttpServletResponse response) {
+    public Element generateXML(final HttpServletRequest request,
+                               final HttpServletResponse response) {
         //Some stuff for the list (copied from ComplexObjectList)
-        Element content = Navigation.newElement("customizableObjectList");
+        final Element content = Navigation.newElement("customizableObjectList");
 
         if (m_customName != null) {
             content.addAttribute(CUSTOM_NAME, m_customName);
@@ -281,22 +282,22 @@ public class CustomizableObjectList extends ComplexObjectList {
         //}
 
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
-            String value = request.getParameter(filterEntry.getKey());
+            final String value = Globalization.decodeParameter(request, filterEntry.getKey());
 
             if ((value != null) && !value.isEmpty()) {
                 filterEntry.getValue().setValue(value);
             }
         }
 
-        Element controls = content.newChildElement("filterControls");
+        final Element controls = content.newChildElement("filterControls");
         controls.addAttribute("customName", m_customName);
 
-        Element filterElems = controls.newChildElement("filters");
+        final Element filterElems = controls.newChildElement("filters");
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             filterElems.addContent(filterEntry.getValue().getXml());
         }
 
-        if (sortFields.size() > 0) {
+        if (!sortFields.isEmpty()) {
             //Look for a sort parameter. If one is found, use one to sort the data
             //collection (if it is a valid value). If no sort parameter is found,
             //use the first sort field as default.
@@ -305,10 +306,10 @@ public class CustomizableObjectList extends ComplexObjectList {
                 sortByKey = new ArrayList<String>(sortFields.keySet()).get(0);
             }
 
-            Element sortFieldElems = controls.newChildElement("sortFields");
+            final Element sortFieldElems = controls.newChildElement("sortFields");
             sortFieldElems.addAttribute("sortBy", sortByKey);
             for (Map.Entry<String, String> sortField : sortFields.entrySet()) {
-                Element sortFieldElem = sortFieldElems.newChildElement(
+                final Element sortFieldElem = sortFieldElems.newChildElement(
                         "sortField");
                 sortFieldElem.addAttribute("label", sortField.getKey());
             }
