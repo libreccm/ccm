@@ -417,14 +417,11 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                          final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(subProject);
-        generator.setUseExtraXml(false);
+        generator.setUseExtraXml(true);
+        generator.setListMode(true);
+        generator.setItemElemName("subProject", "");
         generator.generateXML(state, parent, "");
-        /*
-         * final Element subProjectElem = parent.newChildElement("subProject");
-         * final Element subProjectTitle =
-         * subProjectElem.newChildElement("title");
-        subProjectTitle.setText(subProject.getTitle());
-         */
+      
         logger.debug(String.format("Generated XML for subproject '%s' in"
                                    + "%d ms",
                                    subProject.getName(),
