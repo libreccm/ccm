@@ -44,25 +44,53 @@ OpenCCM.prototype.showImageDialog = function(image)
 
     if(image.parentNode.tagName.toLowerCase() == "div")
     {
+      // Parent node is not a link, so there is not zoom or gallery function
       data.alignment = image.parentNode.getAttribute("class").substring(image.parentNode.getAttribute("class").indexOf(" "));
-      data.caption = (image.nextSibling.tagName.toLowerCase() == "span") ? image.nextSibling.firstChild.nodeValue : "";
+      data.caption = (image.nextSibling.tagName.toLowerCase() == "span" && image.nextSibling.firstChild) ? image.nextSibling.firstChild.nodeValue : "";
+      data.zoom = "";
+      data.gallery = "";
+//      data.galleryName = "";
     }
     else
     {
+      // Parent node is a link
       data.alignment = image.parentNode.parentNode.getAttribute("class").substring(image.parentNode.getAttribute("class").indexOf(" "));
       data.zoom = (image.parentNode.getAttribute("class") == "imageZoom") ? "on" : "";
       data.gallery = (image.parentNode.getAttribute("class") == "imageGallery") ? "on" : "";
 //    data.galleryName = (image.parentNode.getAttribute("class") == "imageGallery") ? image.parentNode.getAttribute("rel") : "";
 
-      data.caption = (image.parentNode.nextSibling.tagName.toLowerCase() == "span") ? image.parentNode.nextSibling.firstChild.nodeValue : "";
+      data.caption = (image.parentNode.nextSibling.tagName.toLowerCase() == "span" && image.parentNode.nextSibling.firstChild) ? image.parentNode.nextSibling.firstChild.nodeValue : "";
     }
 
     // Calculate aspect ratio
     data.aspect = data.width / data.height;
   }
-
+  else
+  {
+    data.alignment = "";
+//    data.caption = "";
+    data.zoom = "";
+    data.gallery = "";
+//    data.galleryName = "";
+  }
+  
   // now calling the show method of the Xinha.Dialog object to set the values and show the actual dialog
   this.dialogs["images"].show(data);
+
+  // If image set, show preview
+  if(data.src != "")
+  {
+    this.dialogs["images"].getElementById(this.dialogs["images"].id["ipreview"]).src = data.src;
+    this.resizePreview(this.dialogs["images"]);
+    this.dialogs["images"].getElementById(this.dialogs["images"].id["preview"]).style.display = "block";
+  }
+  else
+  {
+    // Preview dekativieren
+    this.dialogs["images"].getElementById(this.dialogs["images"].id["ipreview"]).src = "about:blank";
+    this.dialogs["images"].getElementById(this.dialogs["images"].id["preview"]).style.display = "none";
+  }
+
 };
 
 OpenCCM.prototype.prepareImageDialog = function()
@@ -75,7 +103,7 @@ OpenCCM.prototype.prepareImageDialog = function()
   // Connect the OK and Cancel buttons
   dialog.getElementById("ok").onclick = function() {self.imageApply();}
   dialog.getElementById("remove").onclick = function() { self.imageRemove(); };
-  dialog.getElementById("cancel").onclick = function() { self.dialogs["images"].hide()};
+  dialog.getElementById("cancel").onclick = function() { self.dialogs["images"].hide(); };
 
   // Connect the Select button
   dialog.getElementById("browse").onclick = function() { self.imageBrowse(window); };
@@ -87,7 +115,7 @@ OpenCCM.prototype.prepareImageDialog = function()
   // OnResize 
   this.dialogs["images"].onresize = function ()
   {
-    self.resizePreview(this);
+    self.resizeDialog(this);
   };
 
   this.imageDialogReady = true;
@@ -107,6 +135,7 @@ OpenCCM.prototype.imageApply = function()
     src    : "",
     alt    : "",
     title  : "",
+    name   : "",
     width  : "",
     height : ""
   };
@@ -140,6 +169,7 @@ OpenCCM.prototype.imageApply = function()
   // Read form values for image
   imgAttr.src = values.src;
   imgAttr.alt = values.alt;
+  imgAttr.name = values.name;
   imgAttr.title = values.title;
   imgAttr.width = values.width;
   imgAttr.height = values.height;
@@ -162,7 +192,7 @@ OpenCCM.prototype.imageApply = function()
     
     else if(values.gallery)
     {
-      linkAttr.rel = "imageGalleryName";
+      linkAttr.rel = "imageGallery";
       linkAttr.class = "imageGallery";
     }
   }
@@ -257,7 +287,8 @@ OpenCCM.prototype.imageApply = function()
   this.editor.selectNodeContents(div.nextSibling, 0);
 };
 
-OpenCCM.prototype.imageRemove = function() {
+OpenCCM.prototype.imageRemove = function()
+{
   
   // Close the dialog
   this.dialogs["images"].hide();
@@ -274,6 +305,7 @@ OpenCCM.prototype.imageRemove = function() {
   
   // remove this div
   div.parentNode.removeChild(div);
+  
   return true;
 };
 
@@ -292,30 +324,68 @@ OpenCCM.prototype.imageBrowse = function(window)
 
 OpenCCM.prototype.imageSet = function(imageData)
 {
-  var dialog = this.dialogs["images"]
+  var dialog = this.dialogs["images"];
   dialog.getElementById(dialog.id["src"]).value = imageData.src;
   dialog.getElementById(dialog.id["ipreview"]).src = imageData.src;
   dialog.getElementById(dialog.id["width"]).value = imageData.width;
   dialog.getElementById(dialog.id["height"]).value = imageData.height;
   dialog.getElementById(dialog.id["name"]).value = imageData.name;
-  dialog.getElementById(dialog.id["aspect"]).value = dialog.getElementById(dialog.id["width"]).value / dialog.getElementById(dialog.id["height"]).value;
-
-  this.resizePreview(dialog);
+  dialog.getElementById(dialog.id["aspect"]).value = imageData.width / imageData.height;
 
   if(imageData.src != "")
   {
+//    this.resizePreview(dialog);
     dialog.getElementById(dialog.id["preview"]).style.display = "block";
+    this.resizeDialog(dialog);
   } else {
     dialog.getElementById(dialog.id["preview"]).style.display = "none";
   }
 };
 
-OpenCCM.prototype.resizePreview = function(dialog) {
-  var aspect = dialog.getElementById(dialog.id["aspect"]).value;
-  var previewWidth = dialog.width - 22;
+OpenCCM.prototype._getCombinedComponentHeight = function()
+{
+  var dialog = this.dialogs["images"];
+  return  dialog.getElementById(dialog.id["h1"]).offsetHeight +
+          dialog.getElementById(dialog.id["common"]).offsetHeight +
+          dialog.getElementById(dialog.id["layout"]).offsetHeight +
+          dialog.getElementById(dialog.id["dimensions"]).offsetHeight +
+          dialog.getElementById(dialog.id["buttons"]).offsetHeight +
+          parseInt(dialog.rootElem.style.paddingBottom,10) +
+          10;
+};
 
-  dialog.getElementById(dialog.id["ipreview"]).style.height = Math.round(previewWidth / aspect) + "px";
-  dialog.getElementById(dialog.id["ipreview"]).style.width = previewWidth + "px";
+OpenCCM.prototype.resizeDialog = function(dialog)
+{
+  if(dialog.getElementById(dialog.id["preview"]).style.display == "block")
+  {
+    // Recalculate height of preview
+    dialog.getElementById(dialog.id["preview"]).style.height = Math.min(Math.max(0, dialog.height - this._getCombinedComponentHeight() - 20), Math.round((window.innerHeight * 0.8) - this._getCombinedComponentHeight())) + "px";
+    // Resize preview image
+    this.resizePreview(dialog);
+  }
+};
+
+OpenCCM.prototype.resizePreview = function(dialog)
+{
+  var layoutElem = dialog.getElementById(dialog.id["layout"]);
+  var previewElem = dialog.getElementById(dialog.id["preview"]);
+  
+  var maxWidth = layoutElem.offsetWidth - 5;
+  var maxHeight = previewElem.offsetHeight && previewElem.offsetHeight - 15 < Math.round((window.innerHeight * 0.8) - this._getCombinedComponentHeight()) 
+                    ? previewElem.offsetHeight - 15
+                    : Math.round((window.innerHeight * 0.8) - this._getCombinedComponentHeight());
+  
+  dialog.getElementById(dialog.id["ipreview"]).style.width = "auto";
+  dialog.getElementById(dialog.id["ipreview"]).style.height = "auto";
+
+  var width = parseInt(dialog.getElementById(dialog.id["ipreview"]).width,10);
+  var height = parseInt(dialog.getElementById(dialog.id["ipreview"]).height,10);
+
+  var zoom = Math.min(maxWidth / width,
+                      maxHeight / height);
+    
+  var w = dialog.getElementById(dialog.id["ipreview"]).style.width = Math.round(width * zoom) + "px";
+  var h = dialog.getElementById(dialog.id["ipreview"]).style.height = Math.round(height * zoom) + "px";
 };
 
 OpenCCM.prototype.calcWidth = function()

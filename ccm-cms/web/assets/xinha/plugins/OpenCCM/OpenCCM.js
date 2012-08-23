@@ -74,7 +74,8 @@ function OpenCCM(editor)
   cfg.dblclickList["a"][0] = function(e, target) { self.showLinkDialog(self._getSelectedAnchor()); };
 }
 
-OpenCCM.prototype.findButton = function(string) {
+OpenCCM.prototype.findButton = function(string)
+{
   var toolbar = this.editor.config.toolbar;
   
   for(i = 0; i < toolbar.length; i++)
@@ -91,7 +92,8 @@ OpenCCM.prototype.findButton = function(string) {
   return false;
 }
 
-OpenCCM.prototype._lc = function(string) {
+OpenCCM.prototype._lc = function(string)
+{
   return Xinha._lc(string, 'OpenCCM');
 }
 
@@ -100,7 +102,8 @@ OpenCCM.prototype.onGenerateOnce = function ()
   this.loadAssets();
 }
 
-OpenCCM.prototype.loadAssets = function() {
+OpenCCM.prototype.loadAssets = function()
+{
   var self = OpenCCM;
 
   if (self.loading)

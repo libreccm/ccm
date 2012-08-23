@@ -52,10 +52,6 @@
     width: 100% !important;
   }
   
-  div.preview  {
-    magirn:
-  }
-  
   label.preview {
     display: block;
     font-weight: bold;
@@ -74,13 +70,18 @@
   .buttons {
     text-align: center;
   }
+  
+  .preview img {
+    display: block;
+    margin: auto;
+  }
 </style>
-<h1 id="[h1]">
+<h1 id="[h1]" class="heading">
   <l10n>Insert/Modify Image</l10n>
 </h1>
 <div style="position:relative">
   <div id="[options]">
-    <div class="common">
+    <div class="common" id="[common]">
       <label class="key" for="[name]">
         <l10n>Name:</l10n>
       </label>
@@ -107,8 +108,8 @@
       <div class="value">
         <input type="text" name="[caption]" id="[caption]" title="_(Insert caption)" />
       </div>
-    </div>
 -->
+    </div>
     <input type="hidden" name="[src]" id="[src]"/>
 
     <fieldset id="[layout]">
@@ -172,7 +173,6 @@
       <img src="about:blank" id="[ipreview]">
     </fieldset>
   </div>
-
   <div class="buttons" id="[buttons]">
     <input type="button" id="[ok]"     value="_(OK)"    />
     <input type="button" id="[remove]" value="_(Remove)"/>
