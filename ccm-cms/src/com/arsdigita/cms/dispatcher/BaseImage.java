@@ -19,8 +19,10 @@
 package com.arsdigita.cms.dispatcher;
 
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.caching.CacheTable;
 import com.arsdigita.cms.Asset;
 import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.cms.CachedImage;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -62,6 +64,8 @@ public class BaseImage extends ResourceHandlerImpl {
 //    private BigDecimalParameter m_objectID;
     private final boolean m_download;
     private String m_disposition;
+    // ImageCache
+    private static CacheTable s_imageCache = new CacheTable("BaseImageCache");
     private static final Logger s_log =
             Logger.getLogger(BaseImage.class);
 
@@ -88,8 +92,8 @@ public class BaseImage extends ResourceHandlerImpl {
      * Content-Disposition in HTTP.
      */
     protected void setFilenameHeader(HttpServletResponse response,
-            ImageAsset image) {
-        String filename = image.getName();
+            CachedImage cachedImage) {
+        String filename = cachedImage.getName();
         if (filename == null) {
             filename = s_defaultName;
         }
@@ -102,14 +106,12 @@ public class BaseImage extends ResourceHandlerImpl {
         response.setHeader("Content-Disposition", disposition.toString());
     }
 
-    private void setHeaders(HttpServletResponse response,
-            ImageAsset image) {
-        setFilenameHeader(response, image);
+    private void setHeaders(HttpServletResponse response, CachedImage cachedImage) {
+        setFilenameHeader(response, cachedImage);
 
-        Long contentLength = new Long(image.getSize());
-        response.setContentLength(contentLength.intValue());
+        response.setContentLength(cachedImage.getSize());
 
-        MimeType mimeType = image.getMimeType();
+        MimeType mimeType = cachedImage.getMimeType();
 
         if (m_download || mimeType == null) {
             // Section 19.5.1 of RFC2616 says this implies download
@@ -120,19 +122,19 @@ public class BaseImage extends ResourceHandlerImpl {
         }
 
         // Default caching for all other types
-        if ("live".equals(image.getVersion())) {
+        if ("live".equals(cachedImage.getVersion())) {
             DispatcherHelper.cacheForWorld(response);
         } else {
             DispatcherHelper.cacheDisable(response);
         }
     }
 
-    private void send(HttpServletResponse response,
-            ImageAsset image) throws IOException {
+    private void send(HttpServletResponse response, CachedImage cachedImage) throws IOException {
+
         // Stream the blob.
         OutputStream out = response.getOutputStream();
         try {
-            image.writeBytes(out);
+            cachedImage.writeBytes(out);
         } finally {
             out.close();
         }
@@ -151,57 +153,137 @@ public class BaseImage extends ResourceHandlerImpl {
             RequestContext actx)
             throws IOException, ServletException {
 
-        // Fetch and validate the image ID
         OID oid = null;
         BigDecimal imageId = null;
-//        BigDecimal transactionID = null;
-//        BigDecimal objectID = null;
+        CachedImage cachedImage = null;
+        String resizeParam = "";
+
+        // Get URL parameters
+        String widthParam = request.getParameter("width");
+        String heightParam = request.getParameter("height");
+
+        // Need the OID, but can work with imageId
         try {
+            // Try to get OID and imageId, there should only be one not both
             oid = (OID) m_oid.transformValue(request);
             imageId = (BigDecimal) m_imageId.transformValue(request);
-//            transactionID =
-//                (BigDecimal) m_transactionID.transformValue(request);
-//            objectID =
-//                (BigDecimal) m_objectID.transformValue(request);
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     e.toString());
             return;
         }
+        // We can't handle both OID and imageId at the same time
         if ((imageId == null && oid == null) || (imageId != null && oid != null)) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "either " + IMAGE_ID + " or " + OID_PARAM + " is required.");
             return;
         }
+        // If the OID is still null
         if (oid == null) {
+            // Get the OID from the imageID
             oid = new OID(ImageAsset.BASE_DATA_OBJECT_TYPE, imageId);
         }
+        // Finally, we have a valid OID
 
-//        Transaction transaction = null;
-//        GenericArticle article = null;
-        // XXX: add back rollback
-        /*if (transactionID != null) {
-        try {
-        transaction =
-        new Transaction(transactionID);
-        // we have a transaction so let's see if we have an article
-        if (objectID != null) {
-        article = new GenericArticle(objectID);
-        article.rollBackTo(transaction);
-        }
-        } catch (DataObjectNotFoundException e) {
-        s_log.warn("Unable to locate transaction " + transactionID);
-        // this is non-critical so we just continue
-        }
-        }*/
+        // Process URL parameter
+        if (widthParam != null && heightParam != null) {
+            try {
 
-        ImageAsset image = null;
-//        if (article == null) {
+                // Set width
+                if (!widthParam.isEmpty() && widthParam.matches("^[0-9]*$")) {
+                    resizeParam += "&width=" + widthParam;
+                }
+            } catch (NumberFormatException numberEx) {
+                s_log.warn("width parameter invalid " + widthParam);
+            }
+
+            try {
+
+                // Set height
+                if (!heightParam.isEmpty() && heightParam.matches("^[0-9]*$")) {
+                    resizeParam += "&height=" + heightParam;
+                }
+
+            } catch (NumberFormatException numberEx) {
+                s_log.warn("height parameter invalid " + heightParam);
+            }
+        }
+        // Now, we have all information we need to proceed
+
+        if (!resizeParam.isEmpty()) {
+
+            // Try to get the CachedImage with the OID from the imageCache
+            cachedImage = (CachedImage) s_imageCache.get(oid.toString() + resizeParam);
+
+            // If cachedImage is still null, the resized version of this oid is 
+            // not in the cache. So, we try to find the original version to 
+            // avoid unnesseccary database access
+            if (cachedImage == null) {
+
+                // Get the original version
+                cachedImage = (CachedImage) s_imageCache.get(oid.toString());
+
+                // If cachedImage is still null, it is not in the imageCache
+                if (cachedImage == null) {
+
+                    // Get it from the database
+                    cachedImage = this.getImageAssetFromDB(response, oid);
+
+                    // If cachedImage is still null, we can't find the oid in the DB either
+                    // There is something broken. Bail out.
+                    if (cachedImage == null) {
+                        return;
+                    }
+
+                    // Put the CachedImage into the imageCache
+                    s_imageCache.put(oid.toString(), cachedImage);
+                }
+
+                // Create a resized version of the cachedImage 
+                cachedImage = new CachedImage(cachedImage, resizeParam);
+
+                // Put the CacheImageAsset into the imageCache
+                s_imageCache.put(oid.toString(), cachedImage + resizeParam);
+            }
+
+        } else {
+
+            // Try to get the CachedImage with the OID from the imageCache
+            cachedImage = (CachedImage) (s_imageCache.get(oid.toString()));
+
+            // If cachedImage is still null, it is not in the imageCache
+            if (cachedImage == null) {
+
+                // Get it from the database
+                cachedImage = this.getImageAssetFromDB(response, oid);
+
+                // If cachedImage is still null, we can't find the oid in the DB either
+                // There is something broken. Bail out.
+                if (cachedImage == null) {
+                    return;
+                }
+            }
+
+            // Put the CacheImageAsset into the imageCache
+            s_imageCache.put(oid.toString(), cachedImage);
+        }
+
+        setHeaders(response, cachedImage);
+        send(response, cachedImage);
+    }
+
+    private CachedImage getImageAssetFromDB(HttpServletResponse response, OID oid) throws IOException {
+
+        ImageAsset imageAsset = null;
+
+        s_log.info(oid.toString() + " is not in imageCache. Fetching from database");
+
+        // Try to get the Asset from database and test for ImageAsset
         try {
             Asset a = (Asset) DomainObjectFactory.newInstance(oid);
 
             if (a instanceof ImageAsset) {
-                image = (ImageAsset) a;
+                imageAsset = (ImageAsset) a;
             } else {
                 if (s_log.isInfoEnabled()) {
                     s_log.info("Asset " + oid + " is not an ImageAsset");
@@ -210,33 +292,9 @@ public class BaseImage extends ResourceHandlerImpl {
         } catch (DataObjectNotFoundException nfe) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
                     "no ImageAsset with oid " + oid);
-            return;
+            return null;
         }
-//        }
 
-//        if (image.getMimeType() == null) {
-//            response.sendError(HttpServletResponse.SC_NOT_FOUND,
-//                    "MIME type not found for ImageAsset " + imageId);
-//        }
-
-        // Not until permissions are properly assigned to assets
-        //checkUserAccess(request, response, actx, image);
-
-//        response.setContentType(image.getMimeType().getMimeType());
-
-/* Quasimodo: on demand resizing of images
-        int width;
-        int height;
-        
-        width = Integer.parseInt(request.getParameter("width"));
-        height = Integer.parseInt(request.getParameter("height"));
-        
-        if(width || height) {
-            
-        }
-*/
-        
-        setHeaders(response, image);
-        send(response, image);
+        return new CachedImage(imageAsset);
     }
 }

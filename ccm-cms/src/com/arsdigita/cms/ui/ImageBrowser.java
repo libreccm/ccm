@@ -187,28 +187,12 @@ public class ImageBrowser extends Table {
                 boolean isSelected, Object key,
                 int row, int column) {
             ImageAsset a = (ImageAsset) value;
-            // String url = Utilities.getImageURL(a);
+
             String url = Service.getImageURL(a);
+            String resizeParam = "&width=" +  new Double(m_thumbSize.getWidth()).intValue() + "&height=" + new Double(m_thumbSize.getHeight()).intValue();
 
-            Image img = new Image(URL.getDispatcherPath() + url);
+            Image img = new Image(URL.getDispatcherPath() + url + resizeParam, a.getName());
             img.setBorder("0");
-            img.setAlt(a.getName());
-
-            BigDecimal width = a.getWidth(), height = a.getHeight();
-            int w, h;
-
-            if (width == null || height == null) {
-                w = (int) m_thumbSize.getWidth();
-                h = (int) m_thumbSize.getHeight();
-            } else {
-                Dimension d = ImageSizer.getScaledSize(
-                        width.intValue(), height.intValue(), (int) m_thumbSize.getWidth(), (int) m_thumbSize.getHeight());
-                w = (int) d.getWidth();
-                h = (int) d.getHeight();
-            }
-
-            img.setWidth(Integer.toString(w));
-            img.setHeight(Integer.toString(h));
 
             return new Link(img, url);
         }
