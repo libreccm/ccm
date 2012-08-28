@@ -21,6 +21,7 @@ package com.arsdigita.cms.dispatcher;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.caching.CacheTable;
 import com.arsdigita.cms.Asset;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.CachedImage;
 import com.arsdigita.dispatcher.DispatcherHelper;
@@ -53,21 +54,21 @@ public class BaseImage extends ResourceHandlerImpl {
     public static final String IMAGE_ID = "image_id";
     public static final String OID_PARAM = "oid";
     private final static String s_defaultName = "Image";
-    // the transactionID and objectID allow us to rollback to a specific
-    // version of an image.  If we only have a transactionID and
-    // the item is its own master then we can also roll it back
-//    public static final String TRANSACTION_ID = "transID";
-//    public static final String OBJECT_ID = "objectID";
     private BigDecimalParameter m_imageId;
     private OIDParameter m_oid;
-//    private BigDecimalParameter m_transactionID;
-//    private BigDecimalParameter m_objectID;
     private final boolean m_download;
     private String m_disposition;
     // ImageCache
-    private static CacheTable s_imageCache = new CacheTable("BaseImageCache");
-    private static final Logger s_log =
-            Logger.getLogger(BaseImage.class);
+    private static CacheTable s_imageCache = null;
+
+    static {
+        if (CMS.getConfig().getImageCacheEnable()) {
+            s_imageCache = new CacheTable("BaseImageCache",
+                    CMS.getConfig().getImageCacheMaxAge(),
+                    CMS.getConfig().getImageCacheMaxSize());
+        }
+    }
+    private static final Logger s_log = Logger.getLogger(BaseImage.class);
 
     /**
      * Construct the resource handler
@@ -75,8 +76,6 @@ public class BaseImage extends ResourceHandlerImpl {
     public BaseImage(boolean download) {
         m_imageId = new BigDecimalParameter(IMAGE_ID);
         m_oid = new OIDParameter(OID_PARAM);
-//        m_transactionID = new BigDecimalParameter(TRANSACTION_ID);
-//        m_objectID = new BigDecimalParameter(OBJECT_ID);
 
         m_download = download;
         if (m_download) {
@@ -243,7 +242,7 @@ public class BaseImage extends ResourceHandlerImpl {
                 cachedImage = new CachedImage(cachedImage, resizeParam);
 
                 // Put the CacheImageAsset into the imageCache
-                s_imageCache.put(oid.toString(), cachedImage + resizeParam);
+                s_imageCache.put(oid.toString() + resizeParam, cachedImage);
             }
 
         } else {
@@ -270,6 +269,36 @@ public class BaseImage extends ResourceHandlerImpl {
 
         setHeaders(response, cachedImage);
         send(response, cachedImage);
+    }
+
+    private CachedImage getCachedImage(HttpServletResponse response, OID oid, String resizeParam) throws IOException {
+
+        CachedImage cachedImage = null;
+
+        if (s_imageCache != null) {
+            cachedImage = (CachedImage) s_imageCache.get(oid.toString() + resizeParam);
+
+            if (cachedImage == null) {
+
+                if (!resizeParam.isEmpty()) {
+                    cachedImage = (CachedImage) s_imageCache.get(oid.toString());
+
+                    // Create a resized version of the cachedImage 
+                    cachedImage = new CachedImage(cachedImage, resizeParam);
+
+                    // Put the CacheImageAsset into the imageCache
+                    s_imageCache.put(oid.toString() + resizeParam, cachedImage);
+                }
+            }
+        } else {
+            cachedImage = getImageAssetFromDB(response, oid);
+
+            if (cachedImage != null && !resizeParam.isEmpty()) {
+                cachedImage = new CachedImage(cachedImage, resizeParam);
+            }
+        }
+
+        return cachedImage;
     }
 
     private CachedImage getImageAssetFromDB(HttpServletResponse response, OID oid) throws IOException {

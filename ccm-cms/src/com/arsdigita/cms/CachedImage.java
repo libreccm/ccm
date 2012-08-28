@@ -185,13 +185,13 @@ public class CachedImage {
         
         // Resize image with imagescalr
         if (width > 0 && height > 0) {
-            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.SPEED, width, height);
+            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, width, height);
         }
         if (width > 0 && height <= 0) {
-            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH, width);
+            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_WIDTH, width);
         }
         if (width <= 0 && height > 0) {
-            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_HEIGHT, height);
+            bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_TO_HEIGHT, height);
         }
 
         // Set Dimensions
@@ -213,6 +213,7 @@ public class CachedImage {
         }
     }
 
+    @Override
     public int hashCode() {
         return this.hash.hashCode();
     }

@@ -606,6 +606,22 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.REQUIRED,
             50);      
    
+    /////////////////////////////////////////////////
+    // ImageCache Parameter
+    /////////////////////////////////////////////////
+    private final Parameter m_imageCache = new BooleanParameter(
+            "com.arsdigita.cms.image_cache.enable",
+            Parameter.REQUIRED,
+            true);
+    private final Parameter m_imageCacheMaxSize = new IntegerParameter(
+            "com.arsdigita.cms.image_cache.max_size",
+            Parameter.REQUIRED,
+            100);
+    private final Parameter m_imageCacheMaxAge = new IntegerParameter(
+            "com.arsdigita.cms.image_cache.max_age",
+            Parameter.REQUIRED,
+            300);      
+   
     
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -700,6 +716,11 @@ public final class CMSConfig extends AbstractConfig {
         register(m_imageBrowserThumbnailMaxWidth);
         register(m_imageBrowserThumbnailMaxHeight);
         
+        // ImageCache Parameter
+        register(m_imageCache);
+        register(m_imageCacheMaxSize);
+        register(m_imageCacheMaxAge);
+
         // publishToFile package related parameter
         // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
         // register(m_disableItemPfs);
@@ -1154,6 +1175,18 @@ public final class CMSConfig extends AbstractConfig {
 
     public Integer getImageBrowserThumbnailMaxHeight() {
         return (Integer) get(m_imageBrowserThumbnailMaxHeight);
+    }
+    
+    public Boolean getImageCacheEnable() {
+        return (Boolean) get(m_imageCache);
+    }
+
+    public Integer getImageCacheMaxSize() {
+        return (Integer) get(m_imageCacheMaxSize);
+    }
+
+    public Integer getImageCacheMaxAge() {
+        return (Integer) get(m_imageCacheMaxAge);
     }
     
 //    public Boolean getItemSearchFlatBrowsePaneEnable() {
