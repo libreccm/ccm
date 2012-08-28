@@ -11,15 +11,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import javax.imageio.ImageIO;
 import org.apache.log4j.Logger;
 import org.imgscalr.Scalr;
-import org.imgscalr.Scalr.*;
 
 /**
+ * This is an in-memory copy of an {@link ImageAsset} to be stored in the image
+ * cache of {@link BaseImage}. Also, this class is able to create server-side
+ * resized versions of ImageAssets.
  *
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
@@ -34,11 +35,23 @@ public class CachedImage {
     private BigDecimal height;
     private static final Logger s_log = Logger.getLogger(CachedImage.class);
 
-    public CachedImage(ImageAsset imageAsset, int width, int height) {
+    /**
+     * Create a resized version of an ImageAsset for dispatching
+     *
+     * @param imageAsset the ImageAsset to save
+     * @param maxWidth   the max width to resize the image to
+     * @param maxHeight  the max height to resize the image to
+     */
+    public CachedImage(ImageAsset imageAsset, int maxWidth, int maxHeight) {
         this(imageAsset);
-        this.resizeImage(width, height);
+        this.resizeImage(maxWidth, maxHeight);
     }
 
+    /**
+     * Create a original size version of an ImageAsset for dispatching
+     *
+     * @param imageAsset The ImageAsset to save
+     */
     public CachedImage(ImageAsset imageAsset) {
 
         this.hash = imageAsset.getOID().toString();
@@ -50,11 +63,20 @@ public class CachedImage {
         this.height = imageAsset.getHeight();
     }
 
+    /**
+     * Create a resized version of another CachedImage. This is a convienience
+     * constructor to handle the maxWidth and maxHeight param in a single
+     * String.
+     *
+     * @param cachedImage the cachedImage to resize
+     * @param resizeParam the resize paramter as
+     *                    "&maxWidth=<int>&maxHeight=<int>"
+     */
     public CachedImage(CachedImage cachedImage, String resizeParam) {
         this(cachedImage);
 
-        int width = 0;
-        int height = 0;
+        int maxWidth = 0;
+        int maxHeight = 0;
 
         String[] params = resizeParam.split("&");
         for (int i = 0; i < params.length; i++) {
@@ -65,23 +87,35 @@ public class CachedImage {
             String key = params[i].substring(0, params[i].indexOf("="));
             String value = params[i].substring(params[i].indexOf("=") + 1);
 
-            if (key.equalsIgnoreCase("width")) {
-                width = Integer.parseInt(value);
+            if (key.equalsIgnoreCase("maxWidth")) {
+                maxWidth = Integer.parseInt(value);
             }
 
-            if (key.equalsIgnoreCase("height")) {
-                height = Integer.parseInt(value);
+            if (key.equalsIgnoreCase("maxHeight")) {
+                maxHeight = Integer.parseInt(value);
             }
         }
 
-        this.resizeImage(width, height);
+        this.resizeImage(maxWidth, maxHeight);
     }
 
-    public CachedImage(CachedImage cachedImage, int width, int height) {
+    /**
+     * Create a resized version aof another CacheImage.
+     *
+     * @param cachedImage the CachedImage to resize
+     * @param maxWidth    max width of the image after resizing
+     * @param height      max height of the image after resizing
+     */
+    public CachedImage(CachedImage cachedImage, int maxWidth, int height) {
         this(cachedImage);
-        this.resizeImage(width, height);
+        this.resizeImage(maxWidth, height);
     }
 
+    /**
+     * This is just for internal use to set all the fields.
+     *
+     * @param cachedImage the CacheImage
+     */
     private CachedImage(CachedImage cachedImage) {
         this.hash = cachedImage.hash;
         this.name = cachedImage.getName();
@@ -92,61 +126,79 @@ public class CachedImage {
         this.height = cachedImage.getHeight();
     }
 
+    /**
+     * Get filename
+     *
+     * @return the filename
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Get actual width of this instance
+     *
+     * @return image width
+     */
     public BigDecimal getWidth() {
         return this.width;
     }
 
+    /**
+     * Get actual height of this instance
+     *
+     * @return image height
+     */
     public BigDecimal getHeight() {
         return this.height;
     }
 
+    /**
+     * Get actual size of this instance
+     *
+     * @return image size
+     */
     public int getSize() {
         return this.image.length;
     }
 
+    /**
+     * Get version (aka live of draft)
+     */
     public String getVersion() {
         return this.version;
     }
 
+    /**
+     * Get {@link MimeType}
+     *
+     * @return the {@MimeType}
+     */
     public MimeType getMimeType() {
         return this.mimetype;
     }
 
+    /**
+     * Get the image data
+     *
+     * @return the image data
+     */
     public byte[] getImage() {
         return this.image;
     }
 
     /**
-     * Retrieves the Blob content.
+     * Write the image to an OutputStream
      *
-     * @return the Blob content
+     * @param os OutputStream to be written to
+     *
+     * @return number of bytes written
+     *
+     * @throws IOException
      */
-/*
-  protected byte[] getContent() {
-        byte[] content = null;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        try {
-            ImageIO.write(image, "JPEG", out);
-            content = out.toByteArray();
-        } catch (IOException ioEx) {
-            s_log.warn("Could not write byte array", ioEx);
-        } catch (IllegalArgumentException illEx) {
-            s_log.warn("image is not initialized", illEx);
-        } finally {
-            return content;
-        }
-    }
-*/
     public long writeBytes(OutputStream os) throws IOException {
-        byte[] bytes = this.getImage();
-        os.write(bytes);
-
-        return (long) (bytes.length);
+        os.write(this.getImage());
+        return (long) (this.getSize());
     }
 
     /**
@@ -154,8 +206,7 @@ public class CachedImage {
      *
      * @param file The file on the server to write to.
      */
-    public void writeToFile(File file)
-            throws IOException {
+    public void writeToFile(File file) throws IOException {
         FileOutputStream fs = new FileOutputStream(file);
         try {
             fs.write(this.getImage());
@@ -167,6 +218,16 @@ public class CachedImage {
         }
     }
 
+    /**
+     * Method to proportional resize an image into the defined boundaries.
+     * Either width or height can be 0.
+     * If height is 0, the image will be fit to width.
+     * If width is 0, the image will be fit to height.
+     * If both paramters are 0, this method will not do anything.
+     *
+     * @param width  max width of the image after resizing
+     * @param height max height of the image after resizing
+     */
     private void resizeImage(int width, int height) {
 
         // No valid resizing imformation
@@ -182,7 +243,7 @@ public class CachedImage {
         } catch (IOException ioEx) {
             s_log.warn("Could not read image", ioEx);
         }
-        
+
         // Resize image with imagescalr
         if (width > 0 && height > 0) {
             bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, width, height);
@@ -197,9 +258,9 @@ public class CachedImage {
         // Set Dimensions
         this.width = new BigDecimal(bufferedImage.getWidth());
         this.height = new BigDecimal(bufferedImage.getHeight());
-        
+
         this.hash = this.hash + "&width=" + this.width + "&height=" + this.height;
-        
+
         // Write BufferedImage to byte array
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -217,5 +278,19 @@ public class CachedImage {
     public int hashCode() {
         return this.hash.hashCode();
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CachedImage other = (CachedImage) obj;
+        if ((this.hash == null) ? (other.hash != null) : !this.hash.equals(other.hash)) {
+            return false;
+        }
+        return true;
+    }
 }

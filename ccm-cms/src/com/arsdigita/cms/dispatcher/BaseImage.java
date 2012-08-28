@@ -22,8 +22,8 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.caching.CacheTable;
 import com.arsdigita.cms.Asset;
 import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.CachedImage;
+import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -31,21 +31,24 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 
 /**
  * A resource handler which streams out a blob from the database.
+ * This class can use a special image cache to speed up image dispatching. Also,
+ * during dispatch this class will create server-side resized images depending
+ * on the URL parameter. Resizing is done by ImageScalr. The image cahce can be
+ * activated and configured by com.arsdigita.cms.image_cache.* parameters.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
+ * @author Sören Bernstein <sbernstein@zes.uni-bremen.de>
  * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: BaseImage.java 1571 2007-04-20 15:57:54Z apevec $
  */
@@ -62,12 +65,13 @@ public class BaseImage extends ResourceHandlerImpl {
     private static CacheTable s_imageCache = null;
 
     static {
-        if (CMS.getConfig().getImageCacheEnable()) {
+        if (CMS.getConfig().getImageCacheEnabled()) {
             s_imageCache = new CacheTable("BaseImageCache",
                     CMS.getConfig().getImageCacheMaxAge(),
                     CMS.getConfig().getImageCacheMaxSize());
         }
     }
+    private final bool IMAGE_CACHE_PREFETCH = CMS.getConfig().getImageCachePrefetchEnabled();
     private static final Logger s_log = Logger.getLogger(BaseImage.class);
 
     /**
@@ -142,9 +146,9 @@ public class BaseImage extends ResourceHandlerImpl {
     /**
      * Streams an image from the database.
      *
-     * @param request The servlet request object
+     * @param request  The servlet request object
      * @param response the servlet response object
-     * @param actx The request context
+     * @param actx     The request context
      */
     @Override
     public void dispatch(HttpServletRequest request,
@@ -158,8 +162,8 @@ public class BaseImage extends ResourceHandlerImpl {
         String resizeParam = "";
 
         // Get URL parameters
-        String widthParam = request.getParameter("width");
-        String heightParam = request.getParameter("height");
+        String maxWidthParam = request.getParameter("maxWidth");
+        String maxHeightParam = request.getParameter("maxHeight");
 
         // Need the OID, but can work with imageId
         try {
@@ -185,114 +189,56 @@ public class BaseImage extends ResourceHandlerImpl {
         // Finally, we have a valid OID
 
         // Process URL parameter
-        if (widthParam != null && heightParam != null) {
+        if (maxWidthParam != null && maxHeightParam != null) {
             try {
 
-                // Set width
-                if (!widthParam.isEmpty() && widthParam.matches("^[0-9]*$")) {
-                    resizeParam += "&width=" + widthParam;
+                // Set width if supplied by URL parameter
+                if (!maxWidthParam.isEmpty() && maxWidthParam.matches("^[0-9]*$")) {
+                    resizeParam += "&maxWidth=" + maxWidthParam;
                 }
             } catch (NumberFormatException numberEx) {
-                s_log.warn("width parameter invalid " + widthParam);
+                s_log.warn("maxWidth parameter invalid " + maxWidthParam);
             }
 
             try {
 
-                // Set height
-                if (!heightParam.isEmpty() && heightParam.matches("^[0-9]*$")) {
-                    resizeParam += "&height=" + heightParam;
+                // Set height if supplied by URL parameter
+                if (!maxHeightParam.isEmpty() && maxHeightParam.matches("^[0-9]*$")) {
+                    resizeParam += "&maxHeight=" + maxHeightParam;
                 }
 
             } catch (NumberFormatException numberEx) {
-                s_log.warn("height parameter invalid " + heightParam);
+                s_log.warn("maxHeight parameter invalid " + maxHeightParam);
             }
         }
         // Now, we have all information we need to proceed
 
-        if (!resizeParam.isEmpty()) {
-
-            // Try to get the CachedImage with the OID from the imageCache
-            cachedImage = (CachedImage) s_imageCache.get(oid.toString() + resizeParam);
-
-            // If cachedImage is still null, the resized version of this oid is 
-            // not in the cache. So, we try to find the original version to 
-            // avoid unnesseccary database access
-            if (cachedImage == null) {
-
-                // Get the original version
-                cachedImage = (CachedImage) s_imageCache.get(oid.toString());
-
-                // If cachedImage is still null, it is not in the imageCache
-                if (cachedImage == null) {
-
-                    // Get it from the database
-                    cachedImage = this.getImageAssetFromDB(response, oid);
-
-                    // If cachedImage is still null, we can't find the oid in the DB either
-                    // There is something broken. Bail out.
-                    if (cachedImage == null) {
-                        return;
-                    }
-
-                    // Put the CachedImage into the imageCache
-                    s_imageCache.put(oid.toString(), cachedImage);
-                }
-
-                // Create a resized version of the cachedImage 
-                cachedImage = new CachedImage(cachedImage, resizeParam);
-
-                // Put the CacheImageAsset into the imageCache
-                s_imageCache.put(oid.toString() + resizeParam, cachedImage);
-            }
-
-        } else {
-
-            // Try to get the CachedImage with the OID from the imageCache
-            cachedImage = (CachedImage) (s_imageCache.get(oid.toString()));
-
-            // If cachedImage is still null, it is not in the imageCache
-            if (cachedImage == null) {
-
-                // Get it from the database
-                cachedImage = this.getImageAssetFromDB(response, oid);
-
-                // If cachedImage is still null, we can't find the oid in the DB either
-                // There is something broken. Bail out.
-                if (cachedImage == null) {
-                    return;
-                }
-            }
-
-            // Put the CacheImageAsset into the imageCache
-            s_imageCache.put(oid.toString(), cachedImage);
+        // Get the image
+        cachedImage = this.getImage(response, oid, resizeParam);
+        if (cachedImage == null) {
+            // ok, something is really weird now. Can't find image with this oid. Bailing out.
+            return;
         }
 
         setHeaders(response, cachedImage);
         send(response, cachedImage);
     }
 
-    private CachedImage getCachedImage(HttpServletResponse response, OID oid, String resizeParam) throws IOException {
+    private CachedImage getImage(HttpServletResponse response, OID oid, String resizeParam) throws IOException {
 
         CachedImage cachedImage = null;
 
+        // Test for cache
         if (s_imageCache != null) {
-            cachedImage = (CachedImage) s_imageCache.get(oid.toString() + resizeParam);
 
-            if (cachedImage == null) {
+            // Image cache is enabled, try to fetch images from cache
+            cachedImage = getImageFromCache(response, oid, resizeParam);
 
-                if (!resizeParam.isEmpty()) {
-                    cachedImage = (CachedImage) s_imageCache.get(oid.toString());
-
-                    // Create a resized version of the cachedImage 
-                    cachedImage = new CachedImage(cachedImage, resizeParam);
-
-                    // Put the CacheImageAsset into the imageCache
-                    s_imageCache.put(oid.toString() + resizeParam, cachedImage);
-                }
-            }
         } else {
-            cachedImage = getImageAssetFromDB(response, oid);
 
+            // Image cache is disabled
+            // Get the original image from db
+            cachedImage = getImageFromDB(response, oid);
             if (cachedImage != null && !resizeParam.isEmpty()) {
                 cachedImage = new CachedImage(cachedImage, resizeParam);
             }
@@ -301,7 +247,61 @@ public class BaseImage extends ResourceHandlerImpl {
         return cachedImage;
     }
 
-    private CachedImage getImageAssetFromDB(HttpServletResponse response, OID oid) throws IOException {
+    /**
+     * Fetches the {@link CachedImage} from the image cache. If tge object
+     * could not be found in the cache, this method falls back to
+     * {@link #getImageFromDB(javax.servlet.http.HttpServletResponse, com.arsdigita.persistence.OID)}.
+     * This method will also store the CachedImage in the image cache for future
+     * use.
+     *
+     * @param response The HttpServletResponse
+     * @param oid the {@link OID} of the wanted object
+     * @param resizeParam the resize paramters of the wanted object
+     * @return the wanted {@link CachedImage} in the correct size or null, if the object could not be found
+     * @throws IOException
+     */
+    private CachedImage getImageFromCache(HttpServletResponse response, OID oid, String resizeParam) throws IOException {
+        CachedImage cachedImage;
+
+        cachedImage = (CachedImage) s_imageCache.get(oid.toString() + resizeParam);
+
+        // If we coundn't find the specific version
+        if (cachedImage == null) {
+
+            // If we were looking for a resized version
+            if (!resizeParam.isEmpty()) {
+
+                // try to find the original version in the cache by recursion
+                cachedImage = this.getImageFromCache(response, oid, "");
+
+                if (cachedImage != null) {
+                    cachedImage = new CachedImage(cachedImage, resizeParam);
+                    s_imageCache.put(oid.toString() + resizeParam, cachedImage);
+                }
+            } else {
+
+                // look for the original version in the database
+                cachedImage = getImageFromDB(response, oid);
+
+                // If we found the image, put it into the image cache
+                if (cachedImage != null && IMAGE_CACHE_PREFETCH) {
+                    s_imageCache.put(oid.toString(), cachedImage);
+                }
+            }
+        }
+        return cachedImage;
+    }
+
+    /**
+     * Fetches the {@link ImageAsset} with the supplied {@link OID} from the database
+     * and converts it to a {@CachedImage}.
+     *
+     * @param response the HttpServletResponse
+     * @param oid the {@link OID} to the ImageAsset
+     * @return the ImageAsset with the oid as CachedImage or null, if not found
+     * @throws IOException
+     */
+    private CachedImage getImageFromDB(HttpServletResponse response, OID oid) throws IOException {
 
         ImageAsset imageAsset = null;
 
@@ -311,6 +311,7 @@ public class BaseImage extends ResourceHandlerImpl {
         try {
             Asset a = (Asset) DomainObjectFactory.newInstance(oid);
 
+            // Make sure we have an ImageAsset
             if (a instanceof ImageAsset) {
                 imageAsset = (ImageAsset) a;
             } else {
@@ -319,8 +320,7 @@ public class BaseImage extends ResourceHandlerImpl {
                 }
             }
         } catch (DataObjectNotFoundException nfe) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                    "no ImageAsset with oid " + oid);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "no ImageAsset with oid " + oid);
             return null;
         }
 

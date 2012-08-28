@@ -511,7 +511,7 @@ public final class CMSConfig extends AbstractConfig {
     // ///////////////////////////////////////////
     // Content Section config related parameters
     // ///////////////////////////////////////////
-//  Nolonger used, 
+//  Nolonger used,
 //  replaced by c.ad.cms.ContentSection.getDefaultSection().getName()
 //  private final Parameter m_defaultSection = new StringParameter(
 //          "com.arsdigita.cms.default_content_section",
@@ -546,12 +546,12 @@ public final class CMSConfig extends AbstractConfig {
 //     private final Parameter m_itemSearchFlatBrowsePaneEnable = new BooleanParameter(
 //            "com.arsdigita.cms.item_search.flat_browse_pane.enable",
 //            Parameter.REQUIRED,
-//            true);    
+//            true);
     private final Parameter m_itemSearchFlatBrowsePanePageSize = new IntegerParameter(
             "com.arsdigita.cms.item_search.flat_browse_pane.page_size",
             Parameter.REQUIRED,
             20);
-    
+
     /////////////////////////////////////////////
     // FolderBrowse
     /////////////////////////////////////////////
@@ -567,7 +567,7 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.REQUIRED,
             100);
     //////////////////////////////////////////////
-    //If set to true the old style ItemLifecycleItemPane (allows you to 
+    //If set to true the old style ItemLifecycleItemPane (allows you to
     //republish and withdraw items) is used. Otherwise the new style form is
     //used, which is more secure against wrong clicks.
     //////////////////////////////////////////////
@@ -577,9 +577,9 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.REQUIRED,
             false);
     ////////////////////////////////////////////////
-    //Actives threaded publishing. If active, the publish process for 
+    //Actives threaded publishing. If active, the publish process for
     //content items will run in a separate thread. May useful if you have
-    //large objects. 
+    //large objects.
     ////////////////////////////////////////////////////
     private final Parameter m_threadPublishing = new BooleanParameter(
             "com.arsdigita.cms.lifecycle.threaded_publishing",
@@ -604,15 +604,19 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_imageBrowserThumbnailMaxHeight = new IntegerParameter(
             "com.arsdigita.cms.image_browser.thumbnail_max_height",
             Parameter.REQUIRED,
-            50);      
-   
+            50);
+
     /////////////////////////////////////////////////
     // ImageCache Parameter
     /////////////////////////////////////////////////
-    private final Parameter m_imageCache = new BooleanParameter(
+    private final Parameter m_imageCacheEnabled = new BooleanParameter(
             "com.arsdigita.cms.image_cache.enable",
             Parameter.REQUIRED,
             true);
+    private final Parameter m_imageCachePrefetchEnabled = new BooleanParameter(
+            "com.arsdigita.cms.image_cache.prefetch_enable",
+            Parameter.REQUIRED,
+            false);
     private final Parameter m_imageCacheMaxSize = new IntegerParameter(
             "com.arsdigita.cms.image_cache.max_size",
             Parameter.REQUIRED,
@@ -620,16 +624,16 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_imageCacheMaxAge = new IntegerParameter(
             "com.arsdigita.cms.image_cache.max_age",
             Parameter.REQUIRED,
-            300);      
-   
-    
+            300);
+
+
     // ///////////////////////////////////////////
     // publishToFile package related parameter
     // ///////////////////////////////////////////
     // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
     // private final Parameter m_disableItemPfs;
     // private final Parameter m_publishToFileClass;
-    
+
     /**
      * Constructor, but do NOT instantiate this class directly.
      *
@@ -690,7 +694,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_hideTextAssetUploadFile);
         register(m_allowCategoryCreateUseContext);
         register(m_allowContentCreateInSectionListing);
-        register(m_hideLegacyPublicSiteLink);        
+        register(m_hideLegacyPublicSiteLink);
 
         // Content Center (Workspace) config related parameters
         register(m_contentCenterMap);
@@ -715,9 +719,10 @@ public final class CMSConfig extends AbstractConfig {
         // ImageBrowser
         register(m_imageBrowserThumbnailMaxWidth);
         register(m_imageBrowserThumbnailMaxHeight);
-        
+
         // ImageCache Parameter
-        register(m_imageCache);
+        register(m_imageCacheEnabled);
+        register(m_imageCachePrefetchEnabled);
         register(m_imageCacheMaxSize);
         register(m_imageCacheMaxAge);
 
@@ -726,9 +731,9 @@ public final class CMSConfig extends AbstractConfig {
         // register(m_disableItemPfs);
         // register(m_publishToFileClass);
 
-//        register(m_itemSearchFlatBrowsePaneEnable);        
+//        register(m_itemSearchFlatBrowsePaneEnable);
         register(m_itemSearchFlatBrowsePanePageSize);
-        
+
         loadInfo();
     }
 
@@ -945,7 +950,7 @@ public final class CMSConfig extends AbstractConfig {
         }
         // Store class reference so it can be recreated for each page.
         // This requires a fix to all components using extraXMLGenerators,
-        // for example see the currently only one in core/cms: GreetingItemExtraXML 
+        // for example see the currently only one in core/cms: GreetingItemExtraXML
         gens.add(gen.getClass()); // XXX assumes default ctor
     }
 
@@ -1115,8 +1120,8 @@ public final class CMSConfig extends AbstractConfig {
     }
 
     /**
-     * Retrieve whether to allow creation of a new Use Context in category tab 
-     * of content sections. "Use Context" is used to constitute a category 
+     * Retrieve whether to allow creation of a new Use Context in category tab
+     * of content sections. "Use Context" is used to constitute a category
      * hierarchy in core. It is superseded by the construct "Category Domain"
      * in Terms (ccm-ldn-terms).
      * Global parameter for all content sections. Default is false because all
@@ -1176,9 +1181,13 @@ public final class CMSConfig extends AbstractConfig {
     public Integer getImageBrowserThumbnailMaxHeight() {
         return (Integer) get(m_imageBrowserThumbnailMaxHeight);
     }
-    
-    public Boolean getImageCacheEnable() {
-        return (Boolean) get(m_imageCache);
+
+    public Boolean getImageCacheEnabled() {
+        return (Boolean) get(m_imageCacheEnabled);
+    }
+
+    public Boolean getImageCachePrefetchEnabled() {
+        return (Boolean) get(m_imageCachePrefetchEnabled);
     }
 
     public Integer getImageCacheMaxSize() {
@@ -1188,11 +1197,11 @@ public final class CMSConfig extends AbstractConfig {
     public Integer getImageCacheMaxAge() {
         return (Integer) get(m_imageCacheMaxAge);
     }
-    
+
 //    public Boolean getItemSearchFlatBrowsePaneEnable() {
 //        return (Boolean) get(m_itemSearchFlatBrowsePaneEnable);
 //    }
-    
+
     public Integer getItemSearchFlatBrowsePanePageSize() {
          return (Integer) get(m_itemSearchFlatBrowsePanePageSize);
     }

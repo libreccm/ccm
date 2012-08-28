@@ -83,7 +83,7 @@ public class ImageBrowser extends Table {
      * Construct a new ImageBrowser with default mode.
      *
      * @param builder the {@link ImageBrowserModelBuilder} that will supply this
-     * component with its {@link ImageBrowserModel} during each request
+     *                component with its {@link ImageBrowserModel} during each request
      */
     public ImageBrowser(ImageBrowserModelBuilder b) {
 
@@ -94,14 +94,14 @@ public class ImageBrowser extends Table {
      * Construct a new ImageBrowser with requested mode.
      *
      * @param builder the {@link ImageBrowserModelBuilder} that will supply this
-     * component with its {@link ImageBrowserModel} during each request
-     * @param mode the component mode (see {@link ImageComponent})
+     *                component with its {@link ImageBrowserModel} during each request
+     * @param mode    the component mode (see {@link ImageComponent})
      */
     public ImageBrowser(ImageBrowserModelBuilder b, int mode) {
         super(new BuilderAdapter(b), HEADERS);
         m_mode = mode;
         setThumbnailSize(CMS.getConfig().getImageBrowserThumbnailMaxWidth(),
-                CMS.getConfig().getImageBrowserThumbnailMaxHeight());
+                         CMS.getConfig().getImageBrowserThumbnailMaxHeight());
         m_builder = b;
 
         getHeader().setDefaultRenderer(new DefaultTableCellRenderer(false));
@@ -123,9 +123,9 @@ public class ImageBrowser extends Table {
     }
 
     public int getNumColumns() {
-        return  m_numColumns;
+        return m_numColumns;
     }
-    
+
     /**
      * @return the size, in pixels, of the thumbnail images
      */
@@ -151,6 +151,7 @@ public class ImageBrowser extends Table {
 
     /**
      * @param state The current page state
+     *
      * @return the {@link ImageBrowserModel} used in the current request
      */
     public ImageBrowserModel getImageBrowserModel(PageState state) {
@@ -189,7 +190,8 @@ public class ImageBrowser extends Table {
             ImageAsset a = (ImageAsset) value;
 
             String url = Service.getImageURL(a);
-            String resizeParam = "&width=" +  new Double(m_thumbSize.getWidth()).intValue() + "&height=" + new Double(m_thumbSize.getHeight()).intValue();
+            // Sets url paramter to resize the images server-side
+            String resizeParam = "&maxWidth=" + new Double(m_thumbSize.getWidth()).intValue() + "&maxHeight=" + new Double(m_thumbSize.getHeight()).intValue();
 
             Image img = new Image(URL.getDispatcherPath() + url + resizeParam, a.getName());
             img.setBorder("0");
@@ -249,7 +251,7 @@ public class ImageBrowser extends Table {
                     }
 
                 }
-                
+
                 // can delete image because it's not in use
                 if (canDelete) {
                     return super.getComponent(table, state, value, isSelected, key, row, column);
@@ -293,7 +295,7 @@ public class ImageBrowser extends Table {
 
         @Override
         public int getColumnCount() {
-            return ((ImageBrowser)m_model).getNumColumns();
+            return ((ImageBrowser) m_model).getNumColumns();
             //            return ImageBrowser.s_numColumns;
         }
 
@@ -343,7 +345,7 @@ public class ImageBrowser extends Table {
                     return m.getMimeType();
 
                 case ImageBrowser.LINK:
-                        return "select";
+                    return "select";
 
                 case ImageBrowser.DELETE:
                     return "delete";
