@@ -150,14 +150,23 @@ public class OrderedCategorizedObjectsList extends CategorizedObjectsList {
 
         if (NEXT_EVENT.equals(event) || PREV_EVENT.equals(event)) {
             try {
-                ContentItem child =
-                    new ContentItem(new BigDecimal(ps.getControlEventValue()));
+                ContentItem child = new ContentItem(new BigDecimal(ps.getControlEventValue()));
+                ContentItem draft = null;
+                if (ContentItem.LIVE.equals(child.getVersion())) {
+                    draft = child.getDraftVersion();
+                }
                 final Category parent = getCategory(ps);
 
                 if (NEXT_EVENT.equals(event)) {
                     parent.swapWithNext(child);
+                    if (draft != null) {
+                        parent.swapWithNext(draft);
+                    }
                 } else {
                     parent.swapWithPrevious(child);
+                    if (draft != null) {
+                        parent.swapWithPrevious(draft);
+                    }
                 }
                 parent.save();
             } catch (DataObjectNotFoundException e) {

@@ -35,7 +35,6 @@ import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import javax.servlet.ServletException;
 
-
 /**
  * A List of all objects currently categorized under this category
  *
@@ -52,14 +51,13 @@ public class CategorizedObjectsList extends SortableCategoryList {
 
         setModelBuilder(new CategorizedObjectsModelBuilder());
 
-        Label label = new Label(GlobalizationUtil.globalize
-                            ("cms.ui.category.item.none"));
+        Label label = new Label(GlobalizationUtil.globalize("cms.ui.category.item.none"));
         label.setFontWeight(Label.ITALIC);
         setEmptyView(label);
     }
 
     /**
-     *  This actually performs the sorting
+     * This actually performs the sorting
      */
     public void respond(PageState ps) throws ServletException {
         String event = ps.getControlEventName();
@@ -67,10 +65,17 @@ public class CategorizedObjectsList extends SortableCategoryList {
         if (NEXT_EVENT.equals(event) || PREV_EVENT.equals(event)) {
             BigDecimal selectedID = new BigDecimal(ps.getControlEventValue());
             Category parent = getCategory(ps);
+
+            final ContentItem selectedItem = new ContentItem(selectedID);
+            final BigDecimal selectedDraftId = selectedItem.getDraftVersion().getID();
             
-            if (CMS.getContext().getSecurityManager().canAccess
-                (SecurityManager.CATEGORY_ADMIN)) {
-                parent.swapSortKeys(selectedID, getSwapID(parent,selectedID,event));
+            if (CMS.getContext().getSecurityManager().canAccess(SecurityManager.CATEGORY_ADMIN)) {
+                BigDecimal swapId = getSwapID(parent, selectedID, event);
+                parent.swapSortKeys(selectedID, swapId);
+                final ContentItem draftSwapItem = new ContentItem(swapId);
+                final BigDecimal draftSwapId = selectedItem.getDraftVersion().getID();
+                parent.swapSortKeys(selectedDraftId, draftSwapId);
+                
             }
         } else {
             super.respond(ps);
@@ -83,9 +88,8 @@ public class CategorizedObjectsList extends SortableCategoryList {
         boolean foundSelectedID = false;
 
         if (category != null && category.hasChildObjects()) {
-            CategorizedCollection items = category.getObjects
-                (ContentItem.BASE_DATA_OBJECT_TYPE);
-            items.addEqualsFilter(ContentItem.VERSION,ContentItem.LIVE);
+            CategorizedCollection items = category.getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
+            items.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
             items.sort(true);
             while (items.next()) {
                 BigDecimal thisID = items.getACSObject().getID();
@@ -111,14 +115,14 @@ public class CategorizedObjectsList extends SortableCategoryList {
 
     private class CategorizedObjectsModelBuilder extends LockableImpl
             implements ListModelBuilder {
+
         public final ListModel makeModel(final List list,
                                          final PageState state) {
             final Category category = getCategory(state);
 
             if (category != null && category.hasChildObjects()) {
-                CategorizedCollection items = category.getObjects
-                    (ContentItem.BASE_DATA_OBJECT_TYPE);
-                items.addEqualsFilter(ContentItem.VERSION,ContentItem.LIVE);
+                CategorizedCollection items = category.getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
+                items.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
                 items.sort(true);
                 return new CategorizedCollectionListModel(items);
             } else {
@@ -131,6 +135,7 @@ public class CategorizedObjectsList extends SortableCategoryList {
      * A {@link ListModel} that iterates over categorized objects via an iterator
      */
     private static class CategorizedCollectionListModel implements ListModel {
+
         private CategorizedCollection m_objs;
         private ACSObject m_object;
 
@@ -140,7 +145,7 @@ public class CategorizedObjectsList extends SortableCategoryList {
         }
 
         public boolean next() {
-            if ( m_objs.next() ) {
+            if (m_objs.next()) {
                 m_object = (ACSObject) m_objs.getDomainObject();
                 return true;
             } else {

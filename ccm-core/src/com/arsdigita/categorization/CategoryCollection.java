@@ -21,6 +21,7 @@ package com.arsdigita.categorization;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.ACSObjectCollection;
 import com.arsdigita.persistence.DataCollection;
+import java.math.BigDecimal;
 
 /**
  * Represents a collection of categories.
@@ -84,6 +85,10 @@ public class CategoryCollection extends ACSObjectCollection {
         return getCategory();
     }
 
+    public BigDecimal getSortKey() {
+        return (BigDecimal) get("link.sortKey");
+    }
+    
     /**
      * Sorts the category collection by the category sort key.
      *

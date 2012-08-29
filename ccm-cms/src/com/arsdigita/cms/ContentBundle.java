@@ -670,7 +670,8 @@ public class ContentBundle extends ContentItem {
         CategoryCollection categories = source.getCategoryCollection();
         while (categories.next()) {
             final Category category = categories.getCategory();
-            category.addChild(this);
+            
+            category.addChild(this, categories.getSortKey());
             category.save(); // XXX remove me
         }
         categories.close();

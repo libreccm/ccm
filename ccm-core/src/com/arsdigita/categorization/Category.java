@@ -1047,7 +1047,7 @@ public class Category extends ACSObject {
             remove(RELATED_CATEGORIES, cursor.getDataObject());
             if ("child".equals(relationType)) {
                 Category category = new Category(cursor.getDataObject());
-                parent.addChild(category);
+                parent.addChild(category, null);
                 if (Boolean.TRUE.equals(isDefault)) {
                     category.setDefaultParentCategory(parent);
                 }
@@ -1104,13 +1104,18 @@ public class Category extends ACSObject {
      * categories and becomes a CHILD category.</p>
      *
      * @param object the domain object to categorize
+     * @param sortKey optional sort key. May be <code>null</code>
      *
      * @pre !isAbstract()
      * @pre canMap()
      *
      */
+    public void addChild(ACSObject object, BigDecimal sortKey) {
+        addMapping(object, "child", sortKey);
+    }
+    
     public void addChild(ACSObject object) {
-        addMapping(object, "child");
+        addChild(object, null);
     }
 
     /**
@@ -1149,10 +1154,14 @@ public class Category extends ACSObject {
 
     /**
      * Adds the passed in object to the correct association.
+     * 
+     * @param acsObj Object to add to the category
+     * @param relationType Type of the relation
+     * @param sortKey Optional sort key. May be <code>null</code>.
      *
      * @pre canMap()
      */
-    private void addMapping(ACSObject acsObj, String relationType) {
+    private void addMapping(ACSObject acsObj, String relationType, BigDecimal sortKey) {
         if (acsObj instanceof Category) {
             addMapping((Category) acsObj, relationType);
             return;
@@ -1177,7 +1186,10 @@ public class Category extends ACSObject {
         if (cursor.size() == 0) {
             // if the cursor.size() > 0 then the object is already
             // a child and does not need to be added again.
-            add(CHILD_OBJECTS, acsObj);
+            DataObject link = add(CHILD_OBJECTS, acsObj);
+            if (sortKey != null) {
+            link.set("sortKey", sortKey);
+            }
             Categorization.triggerMapEvent(this, acsObj);
             if (s_log.isDebugEnabled()) {
                 s_log.debug(acsObj + " added to " + CHILD_OBJECTS + " of catID="

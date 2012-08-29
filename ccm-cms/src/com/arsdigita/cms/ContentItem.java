@@ -1893,6 +1893,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
 
         // If live Bundle already exists, recategorize.
+        // jensp 2012: Behavior changed. The ContentBundle will also be republished.
         if (PARENT.equals(attribute)) {
             ACSObject parent = ((ContentItem) source).getParent();
             if (parent != null && copier.getCopyType()
@@ -1906,9 +1907,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                     //published because the ContentBundle was not republished.
                     //Moved the next lines out of the if below to enable 
                     //republishing of the ContentBundle
-                    final ContentBundle liveBundle =
-                                        (ContentBundle) bundle.
-                            createPendingVersion(null);
+                    final ContentBundle liveBundle = (ContentBundle) bundle.createPendingVersion(null);
                     /*
                      * if (liveBundle == null) { } else { Set liveCatSet = new
                      * HashSet(); Set draftCatSet = new HashSet();
