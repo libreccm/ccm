@@ -60,21 +60,26 @@ public class CategorizedObjectsList extends SortableCategoryList {
      * This actually performs the sorting
      */
     public void respond(PageState ps) throws ServletException {
-        String event = ps.getControlEventName();
+        final String event = ps.getControlEventName();
 
         if (NEXT_EVENT.equals(event) || PREV_EVENT.equals(event)) {
-            BigDecimal selectedID = new BigDecimal(ps.getControlEventValue());
-            Category parent = getCategory(ps);
+            final BigDecimal selectedID = new BigDecimal(ps.getControlEventValue());
+            final Category parent = getCategory(ps);
 
             final ContentItem selectedItem = new ContentItem(selectedID);
             final BigDecimal selectedDraftId = selectedItem.getDraftVersion().getID();
             
             if (CMS.getContext().getSecurityManager().canAccess(SecurityManager.CATEGORY_ADMIN)) {
-                BigDecimal swapId = getSwapID(parent, selectedID, event);
+                final BigDecimal swapId = getSwapID(parent, selectedID, event);
                 parent.swapSortKeys(selectedID, swapId);
-                final ContentItem draftSwapItem = new ContentItem(swapId);
-                final BigDecimal draftSwapId = selectedItem.getDraftVersion().getID();
-                parent.swapSortKeys(selectedDraftId, draftSwapId);
+                final ContentItem swapItem = new ContentItem(swapId);
+                final BigDecimal swapDraftId = swapItem.getDraftVersion().getID();
+                
+                final BigDecimal sortKey1 = parent.getSortKey(selectedItem);
+                final BigDecimal sortKey2 = parent.getSortKey(swapItem);
+                
+                parent.setSortKey(new ContentItem(selectedDraftId), sortKey1);
+                parent.setSortKey(new ContentItem(swapDraftId), sortKey2);
                 
             }
         } else {

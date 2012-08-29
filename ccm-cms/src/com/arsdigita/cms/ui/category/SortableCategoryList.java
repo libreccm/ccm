@@ -23,6 +23,7 @@ import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ui.SortableList;
@@ -100,7 +101,7 @@ abstract class SortableCategoryList extends SortableList {
                     }
 
                     parent.save();
-                }
+                }               
             } catch (DataObjectNotFoundException e) {
                 s_log.error("Trying to create categories with state = " + ps, e);
                 throw new ServletException(e);

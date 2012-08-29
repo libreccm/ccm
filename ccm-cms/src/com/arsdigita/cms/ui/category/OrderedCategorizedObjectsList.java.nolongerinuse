@@ -169,6 +169,7 @@ public class OrderedCategorizedObjectsList extends CategorizedObjectsList {
                     }
                 }
                 parent.save();
+                                                
             } catch (DataObjectNotFoundException e) {
                 s_log.error("Trying to create categories with state = " + ps, e);
                 throw new ServletException(e);

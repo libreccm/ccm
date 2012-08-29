@@ -71,7 +71,7 @@ public class BaseImage extends ResourceHandlerImpl {
                     CMS.getConfig().getImageCacheMaxSize());
         }
     }
-    private final bool IMAGE_CACHE_PREFETCH = CMS.getConfig().getImageCachePrefetchEnabled();
+    private final boolean IMAGE_CACHE_PREFETCH = CMS.getConfig().getImageCachePrefetchEnabled();
     private static final Logger s_log = Logger.getLogger(BaseImage.class);
 
     /**

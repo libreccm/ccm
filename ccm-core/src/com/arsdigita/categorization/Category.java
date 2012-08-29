@@ -109,9 +109,9 @@ public class Category extends ACSObject {
      *
      */
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.categorization.Category";
+                               "com.arsdigita.categorization.Category";
     private static final String BASE_DATA_OBJECT_PACKAGE =
-            "com.arsdigita.categorization";
+                                "com.arsdigita.categorization";
     /**
      * The
      * <code>PrivilegeDescriptor corresponding</code> to the privilege to
@@ -119,7 +119,7 @@ public class Category extends ACSObject {
      *
      */
     public static final PrivilegeDescriptor MAP_DESCRIPTOR =
-            new PrivilegeDescriptor(
+                                            new PrivilegeDescriptor(
             "map_to_category");
     // Quasimodo: Begin
     private static CategorizationConfig s_config = CategorizationConfig
@@ -185,7 +185,7 @@ public class Category extends ACSObject {
      * An attribute name for the underlying data object.
      */
     public static final String IGNORE_PARENT_INDEX_ITEM =
-            "ignoreParentIndexItem";
+                               "ignoreParentIndexItem";
     /**
      * An attribute name for the underlying data object.
      */
@@ -197,7 +197,7 @@ public class Category extends ACSObject {
     public static final String LOCALIZATIONS = "localizations";
     // some named queries in the pdl files
     private static final String CHILD_CATEGORY_IDS =
-            "com.arsdigita.categorization.childCategoryIDs";
+                                "com.arsdigita.categorization.childCategoryIDs";
     private static final String CURRENT_SORT_KEY = "currentSortKey";
     private HierarchyDenormalization m_hierarchy;
     // Quasimodo: Begin
@@ -416,7 +416,8 @@ public class Category extends ACSObject {
     public String getName(String locale) {
 
         // Test for localized version
-        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null
+            && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -517,7 +518,7 @@ public class Category extends ACSObject {
      * @return category path
      */
     public String getPreferredQualifiedName(String delimiter,
-            boolean includeRoot) {
+                                            boolean includeRoot) {
         // is this a synonym?
         CategoryCollection cc = new CategoryCollection(getRelatedCategories(
                 PREFERRED));
@@ -525,7 +526,7 @@ public class Category extends ACSObject {
             Category preferred = cc.getCategory();
             cc.close();
             String preferredPath = preferred.getQualifiedName(delimiter,
-                    includeRoot);
+                                                              includeRoot);
             return preferredPath + " (" + getName() + ")";
         } else {
             return getQualifiedName(delimiter, includeRoot);
@@ -602,7 +603,8 @@ public class Category extends ACSObject {
 
         // Test for localized version
         // HACK
-        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null
+            && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -679,7 +681,8 @@ public class Category extends ACSObject {
     public String getURL(String locale) {
 
         // Test for localized version
-        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null
+            && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -751,7 +754,8 @@ public class Category extends ACSObject {
         }
 
         // Test for localized version
-        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.
+        if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null
+            && m_categoryLocalizationCollection.
                 localizationExists(locale)) {
 
             // Return value of isEnabled from localized version, so categories could be disabled depending on locale
@@ -950,8 +954,8 @@ public class Category extends ACSObject {
         try {
             if (children.next()) {
                 throw new CategorizationException("This category is the default parent of another category."
-                        + " You must explicitly delete the child categories first. "
-                        + "Child category: " + children.
+                                                  + " You must explicitly delete the child categories first. "
+                                                  + "Child category: " + children.
                         getDataObject());
             }
         } finally {
@@ -959,13 +963,13 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor objects =
-                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
         if (objects != null) {
             try {
                 if (objects.next()) {
                     throw new CategorizationException("This category has child objects. You must delete "
-                            + " any such objects explicitly, before deleting the "
-                            + " category.  Child object: " + objects.
+                                                      + " any such objects explicitly, before deleting the "
+                                                      + " category.  Child object: " + objects.
                             getDataObject());
                 }
             } finally {
@@ -999,7 +1003,7 @@ public class Category extends ACSObject {
     public void deleteCategorySubtree() {
         // we get the association between this category and its children
         DataAssociationCursor cursor =
-                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
 
         while (cursor.next()) {
             DataObject link = cursor.getLink();
@@ -1038,7 +1042,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
 
         while (cursor.next()) {
             DataObject link = cursor.getLink();
@@ -1113,7 +1117,7 @@ public class Category extends ACSObject {
     public void addChild(ACSObject object, BigDecimal sortKey) {
         addMapping(object, "child", sortKey);
     }
-    
+
     public void addChild(ACSObject object) {
         addChild(object, null);
     }
@@ -1167,12 +1171,12 @@ public class Category extends ACSObject {
             return;
         }
         Assert.isFalse(isAbstract(),
-                "You cannot categorize an object "
-                + "within an abstract category.  If you are "
-                + "seeing this message then your UI is "
-                + "allowing you to do something that you "
-                + "are not allowed to do and you "
-                + "should email your site administrator.");
+                       "You cannot categorize an object "
+                       + "within an abstract category.  If you are "
+                       + "seeing this message then your UI is "
+                       + "allowing you to do something that you "
+                       + "are not allowed to do and you "
+                       + "should email your site administrator.");
 
         if (RELATED.equals(relationType)) {
             throw new CategorizationException(
@@ -1181,24 +1185,24 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
         cursor.addEqualsFilter(ID, acsObj.getID());
         if (cursor.size() == 0) {
             // if the cursor.size() > 0 then the object is already
             // a child and does not need to be added again.
             DataObject link = add(CHILD_OBJECTS, acsObj);
             if (sortKey != null) {
-            link.set("sortKey", sortKey);
+                link.set("sortKey", sortKey);
             }
             Categorization.triggerMapEvent(this, acsObj);
             if (s_log.isDebugEnabled()) {
                 s_log.debug(acsObj + " added to " + CHILD_OBJECTS + " of catID="
-                        + getID() + " type=" + relationType + " (ignored)");
+                            + getID() + " type=" + relationType + " (ignored)");
             }
         } else {
             if (s_log.isDebugEnabled()) {
                 s_log.debug(acsObj + " is already related to catID=" + getID()
-                        + " type=" + relationType + " (ignored)");
+                            + " type=" + relationType + " (ignored)");
             }
         }
     }
@@ -1207,8 +1211,8 @@ public class Category extends ACSObject {
         // Let's check for loops.
         if ("child".equals(relationType) && category.isMemberOfSubtree(this)) {
             throw new CategorizationException("The object that you are "
-                    + "trying to add as a child is already "
-                    + "a member of the subtree.");
+                                              + "trying to add as a child is already "
+                                              + "a member of the subtree.");
         }
 
 
@@ -1216,7 +1220,7 @@ public class Category extends ACSObject {
         // Otherwise, we add and then update.
 
         DataAssociationCursor cursor =
-                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
         cursor.addEqualsFilter(ID, category.getID());
         DataObject link;
         if (cursor.next()) {
@@ -1235,7 +1239,7 @@ public class Category extends ACSObject {
         cursor.close();
         if (s_log.isDebugEnabled()) {
             s_log.debug("updating related catID=" + category.getID() + " type="
-                    + relationType + " default=false");
+                        + relationType + " default=false");
         }
 
         link.set(REL_TYPE, relationType);
@@ -1412,7 +1416,7 @@ public class Category extends ACSObject {
      */
     public long getParentCategoryCount() {
         DataAssociationCursor cursor =
-                ((DataAssociation) get(PARENTS)).cursor();
+                              ((DataAssociation) get(PARENTS)).cursor();
         try {
             return cursor.size();
         } finally {
@@ -1444,7 +1448,7 @@ public class Category extends ACSObject {
 
         boolean found = false;
         DataAssociationCursor cursor =
-                ((DataAssociation) get(PARENTS)).cursor();
+                              ((DataAssociation) get(PARENTS)).cursor();
         while (cursor.next()) {
             DataObject category = cursor.getDataObject();
             DataObject link = cursor.getLink();
@@ -1480,7 +1484,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
 
         cursor.addEqualsFilter(ID, child.getID());
         if (cursor.next()) {
@@ -1546,7 +1550,7 @@ public class Category extends ACSObject {
         }
 
         DataAssociationCursor cursor =
-                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
 
         cursor.addEqualsFilter(ID, child.getID());
         if (cursor.next()) {
@@ -1602,7 +1606,7 @@ public class Category extends ACSObject {
     private void swapCategoryKeys(int key, int nextKey) {
         swapKeys(getSession().retrieveDataOperation(
                 "com.arsdigita.categorization.swapCategoryWithNextCategory"),
-                key, nextKey);
+                 key, nextKey);
     }
 
     /**
@@ -1611,7 +1615,7 @@ public class Category extends ACSObject {
     private void swapObjectKeys(int key, int nextKey) {
         swapKeys(getSession().retrieveDataOperation(
                 "com.arsdigita.categorization.swapObjectWithNextObject"),
-                key, nextKey);
+                 key, nextKey);
     }
 
     /**
@@ -1640,6 +1644,24 @@ public class Category extends ACSObject {
         }
     }
 
+    public BigDecimal getSortKey(final ACSObject object) {
+        return getSortKey(object.getID());
+    }
+
+    public BigDecimal getSortKey(final BigDecimal objId) {
+        final DataAssociationCursor cursor = ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+        cursor.addEqualsFilter(ID, objId);
+        if (cursor.next()) {
+            return (BigDecimal) cursor.getLink().get(SORT_KEY);
+        }
+
+        return null;
+    }
+
+    public void setSortKey(ACSObject object, int key) {
+        setSortKey(object, new BigDecimal(key));
+    }
+
     /**
      * Explicitly sets the sort key for this child object (category or
      * otherwise).
@@ -1647,19 +1669,19 @@ public class Category extends ACSObject {
      * @param child The child object or category to set the sortKey for
      * @param key   The integer to use for the sortKey
      */
-    public void setSortKey(ACSObject child, int key) {
+    public void setSortKey(ACSObject child, BigDecimal key) {
         if (isCategory(child)) {
             setSortKey((Category) child, key);
             return;
         }
 
         DataAssociationCursor cursor =
-                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
 
         cursor.addEqualsFilter(ID, child.getID());
         if (cursor.next()) {
             DataObject link = cursor.getLink();
-            link.set(SORT_KEY, new BigDecimal(key));
+            link.set(SORT_KEY, key);
         }
         cursor.close();
     }
@@ -1680,7 +1702,7 @@ public class Category extends ACSObject {
             BigDecimal key2;
 
             DataAssociationCursor cursor =
-                    ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                                  ((DataAssociation) get(CHILD_OBJECTS)).cursor();
             cursor.addEqualsFilter(ID, childID1);
             if (cursor.next()) {
                 link1 = cursor.getLink();
@@ -1726,10 +1748,10 @@ public class Category extends ACSObject {
      */
     public DataAssociationCursor getRelatedCategories(String relation) {
         Assert.isTrue(relation.equals(CHILD) || relation.equals(RELATED)
-                || relation.equals(PREFERRED),
-                " invalid relation {" + relation + "}");
+                      || relation.equals(PREFERRED),
+                      " invalid relation {" + relation + "}");
         DataAssociationCursor cursor =
-                ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
+                              ((DataAssociation) get(RELATED_CATEGORIES)).cursor();
         cursor.addEqualsFilter("link.relationType", relation);
         return cursor;
     }
@@ -1811,7 +1833,7 @@ public class Category extends ACSObject {
         }
 
         StringBuilder sb =
-                new StringBuilder(path.length() + pathExtension.length() + 1);
+                      new StringBuilder(path.length() + pathExtension.length() + 1);
         sb.append(path).append(".").append(pathExtension);
         return sb.toString();
     }
@@ -1825,7 +1847,7 @@ public class Category extends ACSObject {
      */
     public long getNumberOfChildObjects() {
         DataAssociationCursor association =
-                ((DataAssociation) get(CHILD_OBJECTS)).cursor();
+                              ((DataAssociation) get(CHILD_OBJECTS)).cursor();
         if (association == null) {
             return 0;
         } else {
@@ -1850,7 +1872,7 @@ public class Category extends ACSObject {
      */
     public Category getDefaultParentCategory() {
         DataAssociationCursor cursor =
-                ((DataAssociation) get(PARENTS)).cursor();
+                              ((DataAssociation) get(PARENTS)).cursor();
 
         cursor.addEqualsFilter("link.isDefault", Boolean.TRUE);
         try {
@@ -1862,7 +1884,7 @@ public class Category extends ACSObject {
         }
 
         throw new CategoryNotFoundException("The Category " + this + " does "
-                + "not have a default parent");
+                                            + "not have a default parent");
     }
 
     /**
@@ -1913,7 +1935,7 @@ public class Category extends ACSObject {
      */
     public CategoryCollection getDefaultAscendants() {
         DataCollection collection =
-                getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+                       getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
         String ids = (String) get(DEFAULT_ANCESTORS);
         if (ids == null) {
@@ -1970,7 +1992,7 @@ public class Category extends ACSObject {
      */
     public CategorizedCollection getDescendantObjects() {
         return getDescendantObjects(ACSObject.BASE_DATA_OBJECT_TYPE,
-                "categories.roTransParents");
+                                    "categories.roTransParents");
     }
 
     private static String appendID(String path) {
@@ -1980,7 +2002,7 @@ public class Category extends ACSObject {
     }
 
     public CategorizedCollection getDescendantObjects(String objectType,
-            String path) {
+                                                      String path) {
         s_log.info("retrieving objectType=" + objectType + "; path=" + path);
         final CategorizedCollection result = new CategorizedCollection(getSession().
                 retrieve(objectType));
@@ -2053,6 +2075,7 @@ public class Category extends ACSObject {
         public String getToken() {
             return m_token;
         }
+
     }
 
     @Override
@@ -2071,7 +2094,7 @@ public class Category extends ACSObject {
         DataCollection dc = SessionManager.getSession().retrieve(
                 "com.arsdigita.categorization.UseContext");
         dc.addFilter("categoryOwner.id = :ownerID").set("ownerID",
-                acsObj.getID());
+                                                        acsObj.getID());
         return dc;
     }
 
@@ -2118,9 +2141,9 @@ public class Category extends ACSObject {
                 DataObject secondRoot = cats.getDataObject();
                 cats.close();
                 throw new IllegalStateException("there is more than one root for object:\n"
-                        + object + "\nfirst root: "
-                        + triple + "\nsecond root: "
-                        + secondRoot);
+                                                + object + "\nfirst root: "
+                                                + triple + "\nsecond root: "
+                                                + secondRoot);
             }
             cats.close();
         }
@@ -2161,14 +2184,14 @@ public class Category extends ACSObject {
      * @param root   the root category for the object
      */
     public static void setRootForObject(ACSObject acsObj, Category rootCat,
-            String context) {
+                                        String context) {
 
         DataCollection rootCats = getRootCategoriesAssoc(acsObj);
         rootCats.addEqualsFilter(USE_CONTEXT, context);
         if (rootCats.next()) {
             DataObject triple = rootCats.getDataObject();
             triple.set(ROOT_CATEGORY,
-                    DomainServiceInterfaceExposer.getDataObject(rootCat));
+                       DomainServiceInterfaceExposer.getDataObject(rootCat));
             rootCats.close();
             return;
         }
@@ -2185,9 +2208,9 @@ public class Category extends ACSObject {
             throw new UncheckedWrapperException(ex);
         }
         triple.set(CATEGORY_OWNER,
-                DomainServiceInterfaceExposer.getDataObject(acsObj));
+                   DomainServiceInterfaceExposer.getDataObject(acsObj));
         triple.set(ROOT_CATEGORY,
-                DomainServiceInterfaceExposer.getDataObject(rootCat));
+                   DomainServiceInterfaceExposer.getDataObject(rootCat));
         triple.set(USE_CONTEXT, context);
     }
 
@@ -2304,7 +2327,7 @@ public class Category extends ACSObject {
      * Add a new language set to this category
      */
     public boolean addLanguage(String locale, String name, String description,
-            String url) {
+                               String url) {
 
         // If locale don't exist
         if (!locale.isEmpty() && m_categoryLocalizationCollection != null && !m_categoryLocalizationCollection.
@@ -2356,4 +2379,5 @@ public class Category extends ACSObject {
 
         return false;
     }
+
 }
