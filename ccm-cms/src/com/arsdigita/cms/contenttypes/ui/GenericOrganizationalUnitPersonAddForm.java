@@ -81,7 +81,7 @@ public class GenericOrganizationalUnitPersonAddForm
                 findByAssociatedObjectType(getPersonType()));
         /*m_itemSearch.getItemField().addValidationListener(
         new NotNullValidationListener());*/
-        m_itemSearch.setDisableCreatePane(true);
+        m_itemSearch.setDisableCreatePane(false);
         add(this.m_itemSearch);
 
         selectedPersonNameLabel = new Label("");
