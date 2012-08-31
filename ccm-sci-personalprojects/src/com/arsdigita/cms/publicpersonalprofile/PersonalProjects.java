@@ -697,7 +697,7 @@ public class PersonalProjects implements ContentGenerator {
                 && (project2.getProject().getEnd() != null)
                 && (project1.getProject().getEnd() != null)) {
                 ret = project2.getProject().getEnd().compareTo(project1.
-                        getProject().getBegin());
+                        getProject().getEnd());
             }
             if (ret == 0) {
                 ret = project1.getProject().getTitle().compareTo(project2.
