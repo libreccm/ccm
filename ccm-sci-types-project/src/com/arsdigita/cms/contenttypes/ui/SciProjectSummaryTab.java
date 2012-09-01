@@ -302,7 +302,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                       final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(contact);
-        generator.setUseExtraXml(false);
+        generator.setUseExtraXml(true);
         generator.setItemElemName("contact", "");
         generator.addItemAttribute("contactType",
                                    getContactTypeName(contactType));

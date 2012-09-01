@@ -65,6 +65,7 @@ public class GenericContact extends ContentPage implements
         s_config.load();
         logger.debug("Static initializer finished");
     }
+
     /**
      * Data object type for this domain object
      */
@@ -128,7 +129,7 @@ public class GenericContact extends ContentPage implements
          * // Close Collection to prevent an open ResultSet collection.close();
          *
          * return (GenericPerson) DomainObjectFactory.newInstance(dobj);
-        }
+         }
          */
 
         return getGenericContactBundle().getPerson();
@@ -145,7 +146,7 @@ public class GenericContact extends ContentPage implements
          * link.set(GenericPerson.CONTACTS_KEY, contactType);
          * link.set(GenericPerson.CONTACTS_ORDER, new
          * BigDecimal(person.getContacts().size())); link.save();
-        }
+         }
          */
 
         getGenericContactBundle().setPerson(person, contactType);
@@ -166,7 +167,7 @@ public class GenericContact extends ContentPage implements
         /*
          * GenericPerson oldPerson; oldPerson = getPerson(); if (oldPerson !=
          * null) { remove(PERSON, oldPerson);
-        }
+         }
          */
 
         getGenericContactBundle().unsetPerson();
@@ -301,10 +302,34 @@ public class GenericContact extends ContentPage implements
 
     @Override
     public void generateXML(ContentItem item, Element element, PageState state) {
+        if (getPerson() != null) {
+            Element personElem = element.newChildElement("person");
+            GenericPerson person = getPerson();
+
+            if ((person.getSurname() != null) && !person.getSurname().isEmpty()) {
+                Element surnameElem = personElem.newChildElement("surname");
+                surnameElem.setText(person.getSurname());
+            }
+
+            if ((person.getGivenName() != null) && !person.getGivenName().isEmpty()) {
+                Element givenNameElem = personElem.newChildElement("givenname");
+                givenNameElem.setText(person.getGivenName());
+            }
+
+            if ((person.getTitlePre() != null) && !person.getTitlePre().isEmpty()) {
+                Element titlePreElem = personElem.newChildElement("titlepre");
+                titlePreElem.setText(person.getTitlePre());
+            }
+
+            if ((person.getTitlePost() != null) && !person.getTitlePost().isEmpty()) {
+                Element titlePostElem = personElem.newChildElement("titlepost");
+                titlePostElem.setText(person.getTitlePost());
+            }
+        }
+
         StringTokenizer keys = s_config.getContactEntryKeys();
-        
-        Element contactKeysElem = element.newChildElement("contactEntryKeys");        
-        while(keys.hasMoreElements()) {
+        Element contactKeysElem = element.newChildElement("contactEntryKeys");
+        while (keys.hasMoreElements()) {
             contactKeysElem.newChildElement("entryKey").setText(keys.nextToken());
         }
     }
@@ -313,16 +338,17 @@ public class GenericContact extends ContentPage implements
     public void addGlobalStateParams(Page p) {
         //Nothing
     }
-    
+
     @Override
     public void setListMode(final boolean listMode) {
         //Nothing
     }
-    
+
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
         generators.add(this);
         return generators;
     }
+
 }
