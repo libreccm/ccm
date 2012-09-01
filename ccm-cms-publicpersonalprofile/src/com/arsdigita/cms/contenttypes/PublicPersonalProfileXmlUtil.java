@@ -17,12 +17,10 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-// import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
-// import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.ui.UI;
@@ -74,13 +72,13 @@ public class PublicPersonalProfileXmlUtil {
         }
 
         final Element navRoot =
-                root.newChildElement("nav:categoryMenu",
-                                     "http://ccm.redhat.com/navigation");
+                      root.newChildElement("nav:categoryMenu",
+                                           "http://ccm.redhat.com/navigation");
         navRoot.addAttribute("id", "categoryMenu");
 
         final Element navList =
-                navRoot.newChildElement("nav:category",
-                                        "http://ccm.redhat.com/navigation");
+                      navRoot.newChildElement("nav:category",
+                                              "http://ccm.redhat.com/navigation");
         navList.addAttribute("AbstractTree", "AbstractTree");
         navList.addAttribute("description", "");
         navList.addAttribute("id", "");
@@ -88,16 +86,16 @@ public class PublicPersonalProfileXmlUtil {
         navList.addAttribute("sortKey", "");
         navList.addAttribute("title", "publicPersonalProfileNavList");
         /*navList.addAttribute("url", String.format("%s/%s",
-        appUrl,
-        profile.getProfileUrl()));*/
+         appUrl,
+         profile.getProfileUrl()));*/
         navList.addAttribute("url", String.format("/ccm%s",
                                                   UI.getConfig().getRootPage()));
 
 
         if (config.getShowHomeNavEntry()) {
             final Element navHome =
-                    navList.newChildElement("nav:category",
-                                            "http://ccm.redhat.com/navigation");
+                          navList.newChildElement("nav:category",
+                                                  "http://ccm.redhat.com/navigation");
             navHome.addAttribute("AbstractTree", "AbstractTree");
             navHome.addAttribute("description", "");
             navHome.addAttribute("id", profile.getID().toString());
@@ -109,7 +107,7 @@ public class PublicPersonalProfileXmlUtil {
             navHome.addAttribute("sortKey", "");
 
             /*String homeLabel = homeLabels.get(GlobalizationHelper.
-            getNegotiatedLocale().getLanguage());*/
+             getNegotiatedLocale().getLanguage());*/
             final String homeLabel = homeLabels.get(profile.getLanguage());
             if (homeLabel == null) {
                 navHome.addAttribute("title", "Home");
@@ -125,9 +123,9 @@ public class PublicPersonalProfileXmlUtil {
 
         //Get the available Navigation items
         final PublicPersonalProfileNavItemCollection navItems =
-                                               new PublicPersonalProfileNavItemCollection();
+                                                     new PublicPersonalProfileNavItemCollection();
         /*navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-        getLanguage());*/
+         getLanguage());*/
         navItems.addLanguageFilter(profile.getLanguage());
         final Map<String, PublicPersonalProfileNavItem> navItemMap =
                                                         new LinkedHashMap<String, PublicPersonalProfileNavItem>();
@@ -159,13 +157,13 @@ public class PublicPersonalProfileXmlUtil {
 
         //Get the related links of the profile
         final DataCollection links =
-                       RelatedLink.getRelatedLinks(profile,
-                                                   PublicPersonalProfile.LINK_LIST_NAME);
+                             RelatedLink.getRelatedLinks(profile,
+                                                         PublicPersonalProfile.LINK_LIST_NAME);
         links.addOrder(Link.ORDER);
         RelatedLink link;
         String navLinkKey;
         Element navElem;
-        final List<NavLink> navLinks = new ArrayList<NavLink>();                
+        final List<NavLink> navLinks = new ArrayList<NavLink>();
         while (links.next()) {
             link = (RelatedLink) DomainObjectFactory.newInstance(links.
                     getDataObject());
@@ -174,31 +172,26 @@ public class PublicPersonalProfileXmlUtil {
             navItem = navItemMap.get(navLinkKey);
 
             if (navItem == null) {
-                //ToDo
+                continue;
             }
 
             final ContentItem targetItem = link.getTargetItem();
             if (!(targetItem instanceof PublicPersonalProfile)
                 && (targetItem instanceof ContentPage)) {
                 final ContentPage targetPage = (ContentPage) targetItem;
-                /*if (!(targetPage.getContentBundle().hasInstance(GlobalizationHelper.
-                getNegotiatedLocale().getLanguage(),
-                false))) {
-                continue;
-                }*/
-                if (!(targetPage.getContentBundle().hasInstance(profile.
-                      getLanguage(),
+
+                if (!(targetPage.getContentBundle().hasInstance(profile.getLanguage(),
                                                                 false))) {
                     continue;
                 }
+
+                navLinks.add(createNavLink(navItem, navLinkKey, targetItem));
             }
-            
-            navLinks.add(createNavLink(navItem, navLinkKey, targetItem));
         }
-        
+
         Collections.sort(navLinks);
-        
-        for(NavLink navLink : navLinks) {
+
+        for (NavLink navLink : navLinks) {
             navElem =
             navList.newChildElement("nav:category",
                                     "http://ccm.redhat.com/navigation");
@@ -234,9 +227,9 @@ public class PublicPersonalProfileXmlUtil {
 
         }
     }
-    
-    private NavLink createNavLink(final PublicPersonalProfileNavItem navItem, 
-                                  final String key, 
+
+    private NavLink createNavLink(final PublicPersonalProfileNavItem navItem,
+                                  final String key,
                                   final ContentItem target) {
         final NavLink navLink = new NavLink();
         navLink.setNavItem(navItem);
@@ -244,16 +237,17 @@ public class PublicPersonalProfileXmlUtil {
         navLink.setTarget(target);
         return navLink;
     }
-    
+
     private class NavLink implements Comparable<NavLink> {
+
         private PublicPersonalProfileNavItem navItem;
         private String key;
         private ContentItem target;
-                 
+
         public NavLink() {
             //Nothing
         }
-        
+
         public PublicPersonalProfileNavItem getNavItem() {
             return navItem;
         }
@@ -273,7 +267,7 @@ public class PublicPersonalProfileXmlUtil {
         public void setKey(final String key) {
             this.key = key;
         }
-                
+
         public void setTarget(final ContentItem target) {
             this.target = target;
         }
@@ -281,6 +275,6 @@ public class PublicPersonalProfileXmlUtil {
         public int compareTo(final NavLink other) {
             return navItem.getOrder().compareTo(other.getNavItem().getOrder());
         }
-                        
+
     }
 }
