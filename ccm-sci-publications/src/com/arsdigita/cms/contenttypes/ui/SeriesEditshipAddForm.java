@@ -170,9 +170,9 @@ public class SeriesEditshipAddForm
 
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
-        FormData data = fse.getFormData();
-        PageState state = fse.getPageState();
-        Series series =
+        final FormData data = fse.getFormData();
+        final PageState state = fse.getPageState();
+        final Series series =
                (Series) getItemSelectionModel().getSelectedObject(state);
 
         if (this.getSaveCancelSection().
@@ -181,7 +181,7 @@ public class SeriesEditshipAddForm
             editor = editStep.getSelectedEditor();
 
             if (editor == null) {
-                GenericPerson editorToAdd =
+                final GenericPerson editorToAdd =
                               (GenericPerson) data.get(ITEM_SEARCH);
                 editorToAdd.getContentBundle().getInstance(series.getLanguage());
 
@@ -196,7 +196,7 @@ public class SeriesEditshipAddForm
                         EditshipCollection.TO_SKIP_MONTH),
                                  (Boolean) data.get(
                         EditshipCollection.TO_SKIP_DAY));
-                m_itemSearch.publishCreatedItem(data, editor);
+                m_itemSearch.publishCreatedItem(data, editorToAdd);
             } else {
                 EditshipCollection editors;
 
