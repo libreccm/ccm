@@ -176,16 +176,21 @@ public class PublicPersonalProfileXmlUtil {
             }
 
             final ContentItem targetItem = link.getTargetItem();
-            if (!(targetItem instanceof PublicPersonalProfile)
-                && (targetItem instanceof ContentPage)) {
+            System.out.printf("targetItem.getClass.getName: %s\n", targetItem.getClass().getName());
+            if ((targetItem instanceof PublicPersonalProfile)
+                || (targetItem instanceof ContentPage)) {
                 final ContentPage targetPage = (ContentPage) targetItem;
 
                 if (!(targetPage.getContentBundle().hasInstance(profile.getLanguage(),
                                                                 false))) {
+                    System.out.printf("No suitable language found. Continuing...\n");
                     continue;
                 }
 
+                System.out.printf("Creating navigation entry for %s\n", navLinkKey);
                 navLinks.add(createNavLink(navItem, navLinkKey, targetItem));
+            } else {
+                System.out.println("targetItem is not a PublicPersonalProfile and not a content item");
             }
         }
 
