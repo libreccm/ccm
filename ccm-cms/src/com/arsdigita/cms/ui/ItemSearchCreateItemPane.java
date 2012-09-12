@@ -21,8 +21,6 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMS;
@@ -32,15 +30,11 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.NewItemForm;
 import com.arsdigita.cms.ui.folder.FlatFolderPicker;
-import com.arsdigita.cms.ui.folder.FolderRequestLocal;
 import com.arsdigita.cms.ui.folder.FolderSelectionModel;
 import com.arsdigita.cms.ui.item.ContentItemRequestLocal;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
-import java.util.TooManyListenersException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -56,6 +50,7 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
     public static final String PUBLISHWIDGET_PARAM = "publishWidget";
     private static final String CONTENT_TYPE_ID = "ct";
     private static final String FOLDER_ID = "folder_id";
+    private static final String FLAT_FOLDER = "flatFolder";
     private final NewItemForm m_newItem;
     private final SingleSelectionModel m_typeSel;
     private final FlatFolderPicker m_folderPicker;
@@ -92,7 +87,6 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
         m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
 
         m_creator = new CreationSelector(m_typeSel, m_folderSel) {
-
             @Override
             public void editItem(final PageState state, final ContentItem item) {
 
@@ -108,7 +102,7 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
 
         final BoxPanel folderRow = new BoxPanel(BoxPanel.HORIZONTAL);
         folderRow.add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.create.folder_select")));
-        m_folderPicker = new FlatFolderPicker("flatFolder");
+        m_folderPicker = new FlatFolderPicker(FLAT_FOLDER);
         folderRow.add(m_folderPicker);
         m_newItem.add(folderRow);
         m_newItemSeg.add(m_newItem);
@@ -124,7 +118,6 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
         m_fallBackLink = new Link(
                 (String) GlobalizationUtil.globalize("cms.ui.search.create.fallback").localize(),
                 new PrintListener() {
-
                     public void prepare(final PrintEvent event) {
                         final Link target = (Link) event.getTarget();
                         final PageState state = event.getPageState();
@@ -156,7 +149,7 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
                             ((Label) target.getChild()).setLabel((String) GlobalizationUtil.globalize(
                                     "cms.ui.search.create.select_close").localize());
                             scriptAction = "self.close();\n"
-                                     + "return false;";
+                                           + "return false;";
                         }
 
                         target.setOnClick(String.format("window.opener.document.%s.value=\"%s\";"
@@ -251,7 +244,6 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
         final BoxPanel linkPanel = new BoxPanel(BoxPanel.VERTICAL);
         final Label jsLabel = new Label("", false);
         jsLabel.addPrintListener(new PrintListener() {
-
             public void prepare(final PrintEvent event) {
                 final Label target = (Label) event.getTarget();
                 final PageState state = event.getPageState();
@@ -323,20 +315,28 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
     public void init(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
-        if (((data.get("flatFolder") == null) || "".equals(data.get("flatFolder")))
+        if (((data.get(FLAT_FOLDER) == null) || "".equals(data.get(FLAT_FOLDER)))
             && (defaultFolder != null)) {
-            data.put("flatFolder", defaultFolder.toString());
+            data.put(FLAT_FOLDER, defaultFolder.toString());
         }
 
 
     }
 
-    public void submitted(final FormSectionEvent fse) {
+    public void submitted(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
 
         final BigDecimal typeID = m_newItem.getTypeID(state);
         m_typeSel.setSelectedKey(state, typeID);
-        final OID folderOID = OID.valueOf((String) m_folderPicker.getValue(state));
+
+        final String folderOidStr = (String) m_folderPicker.getValue(state);
+        if ((folderOidStr == null) || folderOidStr.isEmpty()) {
+            fse.getFormData().addError(FLAT_FOLDER, GlobalizationUtil.globalize(
+                    "cms.ui.item_search.create.folder_missing"));
+            throw new FormProcessException((String) GlobalizationUtil.globalize(
+                    "cms.ui.item_search.create.folder_missing").localize());
+        }
+        final OID folderOID = OID.valueOf(folderOidStr);
         m_folderSel.setSelectedKey(state, folderOID.get("id"));
         m_newItemSeg.setVisible(state, false);
         m_creationSeg.setVisible(state, true);
