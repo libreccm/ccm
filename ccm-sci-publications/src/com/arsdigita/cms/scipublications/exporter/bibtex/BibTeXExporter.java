@@ -20,7 +20,7 @@
 package com.arsdigita.cms.scipublications.exporter.bibtex;
 
 import com.arsdigita.cms.contenttypes.Publication;
-import com.arsdigita.cms.scipublications.exporter.PublicationFormat;
+import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
 import com.arsdigita.cms.scipublications.exporter.bibtex.converters.BibTeXConverter;
 import com.arsdigita.cms.scipublications.exporter.bibtex.converters.BibTeXConverters;

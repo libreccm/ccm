@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
- * for the Center of Social Politics of the University of Bremen
+ * Copyright (c) 2010 Jens Pelzetter, ScientificCMS.org team
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,6 +18,7 @@
  */
 package com.arsdigita.cms.scipublications.exporter;
 
+import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
  * {@link SciPublicationsExporter} interface. It is implemented as a Singleton.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public final class SciPublicationsExporters {
 
@@ -67,10 +68,8 @@ public final class SciPublicationsExporters {
 
         for (SciPublicationsExporter exporter : exporterServices) {
             logger.debug(String.format("Found exporter for format '%s'...",
-                                       exporter.getSupportedFormat().getName().
-                    toLowerCase()));
-            exporters.put(exporter.getSupportedFormat().getName().toLowerCase(),
-                          exporter);
+                                       exporter.getSupportedFormat().getName().toLowerCase()));
+            exporters.put(exporter.getSupportedFormat().getName().toLowerCase(), exporter);
         }
         logger.debug(String.format("Found %d exporters.", exporters.size()));
     }
@@ -102,11 +101,11 @@ public final class SciPublicationsExporters {
 
         supportedFormats = new ArrayList<PublicationFormat>();
 
-        for (Map.Entry<String, SciPublicationsExporter> entry : exporters.
-                entrySet()) {
+        for (Map.Entry<String, SciPublicationsExporter> entry : exporters.entrySet()) {
             supportedFormats.add(entry.getValue().getSupportedFormat());
         }
 
         return supportedFormats;
     }
+
 }

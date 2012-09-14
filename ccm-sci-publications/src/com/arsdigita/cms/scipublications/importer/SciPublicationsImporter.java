@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter, ScientificCMS.org Team
+ * Copyright (c) 2012 Jens Pelzetter, ScientificCMS.org team
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,31 +16,31 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.scipublications.exporter;
+package com.arsdigita.cms.scipublications.importer;
 
-import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 
 /**
- * This interface describes the methods provided by all publication exporters.
- *
- * @author Jens Pelzetter
+ * Interface for publication importers
+ * 
+ * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public interface SciPublicationsExporter {
-
-    /**
-     *
-     * @return A description of the export format provided by this exporter.
+public interface SciPublicationsImporter {
+    
+    /**    
+     * @return Description of the format supported by the importer implementation. 
      */
     PublicationFormat getSupportedFormat();
-
+           
     /**
-     * Exports an publication to the format provided by this exporter.
-     *
-     * @param publication The publication to export.
-     * @return The data of the publication in the provided export format.
+     * Parses the provided string and creates publications from the string. 
+     * 
+     * @param publications The string conaining the publications in the format supported by this importer
+     * @param pretend If set to {@link true} no publications will be created. This can be used for debugging purposes 
+     * or to check an file containing publications
+     * @return A report describing what the importer has done
      */
-    String exportPublication(Publication publication);
-
+    String importPublications(String publications, boolean pretend);
+    
 }

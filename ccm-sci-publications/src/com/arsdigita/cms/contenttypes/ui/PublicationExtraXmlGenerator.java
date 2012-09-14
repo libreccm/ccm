@@ -12,7 +12,7 @@ import com.arsdigita.cms.contenttypes.PublicationGenericOrganizationalsUnitColle
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.cms.scipublications.exporter.PublicationFormat;
+import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporters;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;

@@ -17,13 +17,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.scipublications.exporter;
+package com.arsdigita.cms.scipublications.imexporter;
 
 import javax.activation.MimeType;
 
 /**
  * Describes the format provided by an implementation of 
- * {@link SciPublicationsExporter}.
+ * {@link SciPublicationsExporter} or {@link SciPublicationsImporter}.
  *
  * @author Jens Pelzetter
  */
