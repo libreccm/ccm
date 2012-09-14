@@ -63,6 +63,7 @@ public class CollectedVolumeExtraXmlGenerator implements ExtraXMLGenerator {
         final XmlGenerator generator = new XmlGenerator(article);
         generator.setItemElemName("article", "");
         generator.addItemAttribute("order", order.toString());
+        generator.setListMode(true);
         generator.generateXML(state, articlesElem, "");
     }
 

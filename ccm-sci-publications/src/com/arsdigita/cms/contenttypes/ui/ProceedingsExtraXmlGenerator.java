@@ -77,6 +77,7 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         final XmlGenerator generator = new XmlGenerator(paper);
         generator.setItemElemName("paper", "");
         generator.addItemAttribute("order", order.toString());
+        generator.setListMode(true);
         generator.generateXML(state, papersElem, "");
     }
 
