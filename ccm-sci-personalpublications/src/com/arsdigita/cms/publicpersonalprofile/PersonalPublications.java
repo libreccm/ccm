@@ -12,7 +12,6 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -34,10 +33,10 @@ import org.apache.log4j.Logger;
 public class PersonalPublications implements ContentGenerator {
 
     private final static String MISC = "misc";
-    private final static PersonalPublicationsConfig config =
-                                                    new PersonalPublicationsConfig();
-    private final static Logger logger = Logger.getLogger(
-            PersonalPublications.class);
+    private final static PersonalPublicationsConfig config = new PersonalPublicationsConfig();
+    private final static Logger logger = Logger.getLogger(PersonalPublications.class);
+    private static final String REVIEWED = "_reviewed";
+    private static final String NOT_REVIEWED = "_notreviewed";
 
     static {
         config.load();
@@ -50,11 +49,9 @@ public class PersonalPublications implements ContentGenerator {
                                 final String language) {
         final long start = System.currentTimeMillis();
 
-        final List<PublicationBundle> publications =
-                                      collectPublications(person, language);
+        final List<PublicationBundle> publications = collectPublications(person, language);
 
-        final Element personalPubsElem = parent.newChildElement(
-                "personalPublications");
+        final Element personalPubsElem = parent.newChildElement("personalPublications");
         final long overallSize;
         if (publications == null) {
             overallSize = 0;
@@ -77,16 +74,11 @@ public class PersonalPublications implements ContentGenerator {
                                           publicationsByGroup);
             }
 
-            final List<PublicationBundle> miscGroup =
-                                          filterPublicationsForMiscGroup(
-                    publications, groupsConfig);
+            final List<PublicationBundle> miscGroup = filterPublicationsForMiscGroup(publications, groupsConfig);
             publicationsByGroup.put(MISC, miscGroup);
 
-            final Element availableGroupsElem =
-                          personalPubsElem.newChildElement(
-                    "availablePublicationGroups");
-            final Element publicationsElem = personalPubsElem.newChildElement(
-                    "publications");
+            final Element availableGroupsElem = personalPubsElem.newChildElement("availablePublicationGroups");
+            final Element publicationsElem = personalPubsElem.newChildElement("publications");
 
             if (overallSize < config.getGroupSplit()) {
                 publicationsElem.addAttribute("all", "all");
@@ -146,14 +138,13 @@ public class PersonalPublications implements ContentGenerator {
             final String language) {
         final List<PublicationBundle> publications =
                                       new LinkedList<PublicationBundle>();
-        final List<BigDecimal> processed = new ArrayList<BigDecimal>();
-        final DataCollection collection = (DataCollection) author.
-                getGenericPersonBundle().get("publication");
+        //final List<BigDecimal> processed = new ArrayList<BigDecimal>();
+        final DataCollection collection = (DataCollection) author.getGenericPersonBundle().get("publication");
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
             if (obj instanceof PublicationBundle) {
-                processed.add(((PublicationBundle) obj).getParent().getID());
+                //processed.add(((PublicationBundle) obj).getParent().getID());
                 publications.add((PublicationBundle) obj);
             }
         }
@@ -168,8 +159,7 @@ public class PersonalPublications implements ContentGenerator {
     private void collectPublications(final GenericPerson alias,
                                      final List<PublicationBundle> publications,
                                      final String language) {
-        final DataCollection collection = (DataCollection) alias.
-                getGenericPersonBundle().get("publication");
+        final DataCollection collection = (DataCollection) alias.getGenericPersonBundle().get("publication");
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
@@ -186,8 +176,7 @@ public class PersonalPublications implements ContentGenerator {
     private Map<String, List<String>> getGroupsConfig() {
         final String conf = config.getPublictionGroups();
 
-        final Map<String, List<String>> groups =
-                                        new LinkedHashMap<String, List<String>>();
+        final Map<String, List<String>> groups = new LinkedHashMap<String, List<String>>();
         final String[] groupTokens = conf.split(";");
 
         for (String groupToken : groupTokens) {
@@ -213,11 +202,8 @@ public class PersonalPublications implements ContentGenerator {
         groups.put(tokens[0], types);
     }
 
-    private void generateAvailableForGroup(final String groupName,
-                                           final Element availableGroupsElem) {
-        final Element group =
-                      availableGroupsElem.newChildElement(
-                "availablePublicationGroup");
+    private void generateAvailableForGroup(final String groupName, final Element availableGroupsElem) {
+        final Element group = availableGroupsElem.newChildElement("availablePublicationGroup");
         group.addAttribute("name", groupName);
     }
 
@@ -238,8 +224,7 @@ public class PersonalPublications implements ContentGenerator {
             generateAvailableForGroup(groupName, availableGroupsElem);
         }
 
-        final Element groupElem = publicationsElem.newChildElement(
-                "publicationGroup");
+        final Element groupElem = publicationsElem.newChildElement("publicationGroup");
         groupElem.addAttribute("name", groupName);
 
         if (withPaginator) {
@@ -262,7 +247,7 @@ public class PersonalPublications implements ContentGenerator {
     private void generatePublicationXml(final Publication publication,
                                         final Element parent,
                                         final PageState state) {
-        final XmlGenerator generator = new XmlGenerator(publication);
+        final PersonalPublications.XmlGenerator generator = new PersonalPublications.XmlGenerator(publication);
         generator.setItemElemName("publications", "");
         generator.setListMode(true);
         generator.generateXML(state, parent, "");
@@ -281,6 +266,7 @@ public class PersonalPublications implements ContentGenerator {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 
     private String selectGroup(final HttpServletRequest request,
@@ -308,23 +294,57 @@ public class PersonalPublications implements ContentGenerator {
             final List<String> typeTokens,
             final List<PublicationBundle> publications,
             final Map<String, List<PublicationBundle>> publicationsByGroup) {
-        final List<PublicationBundle> group =
-                                      new LinkedList<PublicationBundle>();
+        final List<PublicationBundle> group = new LinkedList<PublicationBundle>();
 
         for (PublicationBundle publication : publications) {
             for (String typeToken : typeTokens) {
-                if (publication.getContentType().getAssociatedObjectType().
-                        equals(
-                        typeToken)) {
-                    group.add(publication);
+//                if (publication.getContentType().getAssociatedObjectType().equals(typeToken)) {
+//                    group.add(publication);
+//                    break;
+//                }
+                if (addPublicationToGroup(publication, typeToken, group)) {
                     break;
                 }
             }
         }
 
-        if (group.size() > 0) {
+        if (!group.isEmpty()) {
             publicationsByGroup.put(groupName, group);
         }
+    }
+
+    private boolean addPublicationToGroup(final PublicationBundle publication,
+                                          final String typeToken,
+                                          final List<PublicationBundle> group) {
+        final String type;
+        final Boolean reviewed;
+        if (typeToken.endsWith(REVIEWED)) {
+            type = typeToken.substring(0, typeToken.indexOf(REVIEWED));
+            reviewed = Boolean.TRUE;
+        } else if (typeToken.endsWith(NOT_REVIEWED)) {
+            type = typeToken.substring(0, typeToken.indexOf(NOT_REVIEWED));
+            reviewed = Boolean.FALSE;
+        } else {
+            type = typeToken;
+            reviewed = null;
+        }
+
+        if (reviewed == null) {
+            if (publication.getContentType().getAssociatedObjectType().equals(type)) {
+                group.add(publication);
+                return true;
+            }
+        } else {
+            final Boolean pubReviewed = ((Publication) publication.getPrimaryInstance()).getReviewed();
+            if (publication.getContentType().getAssociatedObjectType().equals(type)
+                && (reviewed.equals(pubReviewed)
+                    || (pubReviewed == null))) {
+                group.add(publication);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private List<PublicationBundle> filterPublicationsForMiscGroup(
@@ -336,8 +356,7 @@ public class PersonalPublications implements ContentGenerator {
         for (PublicationBundle publication : publications) {
             for (Map.Entry<String, List<String>> entry : groupsConfig.entrySet()) {
                 for (String type : entry.getValue()) {
-                    if (publication.getContentType().getAssociatedObjectType().
-                            equals(type)) {
+                    if (publication.getContentType().getAssociatedObjectType().equals(getTypeFromTypeToken(type))) {
                         found = true;
                     }
                 }
@@ -350,4 +369,15 @@ public class PersonalPublications implements ContentGenerator {
 
         return misc;
     }
+
+    private String getTypeFromTypeToken(final String typeToken) {
+        if (typeToken.endsWith(REVIEWED)) {
+            return typeToken.substring(0, typeToken.indexOf(REVIEWED));
+        } else if (typeToken.endsWith(NOT_REVIEWED)) {
+            return typeToken.substring(0, typeToken.indexOf(NOT_REVIEWED));
+        } else {
+            return typeToken;
+        }
+    }
+
 }
