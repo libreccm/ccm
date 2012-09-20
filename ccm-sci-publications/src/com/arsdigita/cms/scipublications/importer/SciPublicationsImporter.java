@@ -37,10 +37,11 @@ public interface SciPublicationsImporter {
      * Parses the provided string and creates publications from the string. 
      * 
      * @param publications The string conaining the publications in the format supported by this importer
-     * @param pretend If set to {@link true} no publications will be created. This can be used for debugging purposes 
-     * or to check an file containing publications
+     * @param pretend If set to {@code true} no publications will be created. This can be used for debugging purposes 
+     * or to check an file containing publications.
+     * @param publishNewItems If set to {@code true} the items created by the importer will also be published. 
      * @return A report describing what the importer has done
      */
-    String importPublications(String publications, boolean pretend);
+    String importPublications(String publications, boolean pretend, boolean publishNewItems);
     
 }

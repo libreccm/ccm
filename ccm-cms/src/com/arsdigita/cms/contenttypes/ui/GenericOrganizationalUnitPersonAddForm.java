@@ -81,7 +81,7 @@ public class GenericOrganizationalUnitPersonAddForm
                 findByAssociatedObjectType(getPersonType()));
         /*m_itemSearch.getItemField().addValidationListener(
         new NotNullValidationListener());*/
-        m_itemSearch.setDisableCreatePane(false);
+        m_itemSearch.setDisableCreatePane(true);
         add(this.m_itemSearch);
 
         selectedPersonNameLabel = new Label("");
@@ -188,6 +188,7 @@ public class GenericOrganizationalUnitPersonAddForm
                         GenericOrganizationalUnitPersonCollection.PERSON_ROLE),
                                (String) data.get(
                         GenericOrganizationalUnitPersonCollection.STATUS));
+                m_itemSearch.publishCreatedItem(data, personToAdd);
             } else {
                 GenericOrganizationalUnitPersonCollection persons;
 

@@ -93,7 +93,7 @@ public class ArticleInJournalJournalForm
             journal = (Journal) journal.getContentBundle().getInstance(article.getLanguage());
 
             article.setJournal(journal);
-            itemSearch.publishCreatedItem(data, article);
+            itemSearch.publishCreatedItem(data, journal);
         }
 
         init(fse);

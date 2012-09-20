@@ -68,6 +68,7 @@ public class PublicationGenericOrganizationalUnitAddForm
                     getInstance(publication.getLanguage(), true);
             
             publication.addOrganizationalUnit(orgaunit);
+            itemSearch.publishCreatedItem(data, orgaunit);
         }
 
         init(fse);

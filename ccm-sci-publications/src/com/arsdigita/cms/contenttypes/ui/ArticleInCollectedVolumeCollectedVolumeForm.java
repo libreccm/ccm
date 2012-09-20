@@ -99,7 +99,7 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
                     article.getLanguage());
 
             article.setCollectedVolume(collectedVolume);
-            itemSearch.publishCreatedItem(data, article);
+            itemSearch.publishCreatedItem(data, collectedVolume);
         }
 
         init(fse);
