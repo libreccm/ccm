@@ -70,10 +70,10 @@ public class PersonalPublicationsConfig extends AbstractConfig {
                 "com.arsdigita.cms.publicpersonalprofile.publications.groups",
                 Parameter.REQUIRED,
                 "monographs:com.arsdigita.cms.contenttypes.Monograph;"
+                + "collectedVolumes:com.arsdigita.cms.contenttypes.CollectedVolume;"
                 + "collectedVolumeArticles:com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;"
                 + "journalArticlesReviewed:com.arsdigita.cms.contenttypes.ArticleInJournal_reviewed;"
-                + "journalArticles:com.arsdigita.cms.contenttypes.ArticleInJournal_notreviewed;"
-                + "collectedVolumes:com.arsdigita.cms.contenttypes.CollectedVolume");
+                + "journalArticles:com.arsdigita.cms.contenttypes.ArticleInJournal_notreviewed");
 
         groupSplit = new IntegerParameter(
                 "com.arsdigita.cms.publicpersonlprofile.publications.groupSplit",
@@ -124,4 +124,5 @@ public class PersonalPublicationsConfig extends AbstractConfig {
     public final String getOrder() {
         return (String) get(order);
     }
+
 }

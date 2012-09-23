@@ -65,7 +65,7 @@ public class PersonalPublications implements ContentGenerator {
         } else {
             final Map<String, List<String>> groupsConfig = getGroupsConfig();
             final Map<String, List<PublicationBundle>> publicationsByGroup =
-                                                       new HashMap<String, List<PublicationBundle>>();
+                                                       new LinkedHashMap<String, List<PublicationBundle>>();
 
             for (Map.Entry<String, List<String>> entry : groupsConfig.entrySet()) {
                 filterPublicationsByGroup(entry.getKey(),
