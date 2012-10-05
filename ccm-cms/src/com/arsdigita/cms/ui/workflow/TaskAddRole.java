@@ -53,8 +53,8 @@ import java.util.Iterator;
 import java.util.TooManyListenersException;
 
 class TaskAddRole extends CMSForm {
-    private final TaskRequestLocal m_task;
 
+    private final TaskRequestLocal m_task;
     private final OptionGroup m_roles;
     private final Submit m_add;
     private final Submit m_cancel;
@@ -90,6 +90,7 @@ class TaskAddRole extends CMSForm {
     }
 
     private class InitListener implements FormInitListener {
+
         public final void init(final FormSectionEvent e)
                 throws FormProcessException {
             final PageState state = e.getPageState();
@@ -104,45 +105,52 @@ class TaskAddRole extends CMSForm {
 
             m_roles.setValue(state, list.toArray());
         }
+
     }
 
     private class ProcessListener implements FormProcessListener {
+
         public final void process(final FormSectionEvent e)
                 throws FormProcessException {
             final PageState state = e.getPageState();
-            final CMSTask task = m_task.getTask(state);
+            if (m_add.isSelected(state)) {
+                final CMSTask task = m_task.getTask(state);
 
-            task.removeAllGroupAssignees();
+                task.removeAllGroupAssignees();
 
-            final String[] roles = (String[]) m_roles.getValue(state);
+                final String[] roles = (String[]) m_roles.getValue(state);
 
-            if (roles != null) {
-                for (int i = 0; i < roles.length; i++) {
-                    task.assignGroup(new Group(new BigDecimal(roles[i])));
+                if (roles != null) {
+                    for (int i = 0; i < roles.length; i++) {
+                        task.assignGroup(new Group(new BigDecimal(roles[i])));
+                    }
                 }
-            }
 
-            task.save();
+                task.save();
+            }
         }
+
     }
 
     private class SubmissionListener implements FormSubmissionListener {
+
         public final void submitted(final FormSectionEvent e)
                 throws FormProcessException {
             final PageState state = e.getPageState();
-            final SecurityManager sm = Utilities.getSecurityManager(state);
+            final SecurityManager sm = CMS.getSecurityManager(state);
 
             if (!sm.canAccess(state.getRequest(),
                               SecurityManager.WORKFLOW_ADMIN)) {
-                throw new FormProcessException
-                    (lz(("cms.ui.workflow.insufficient_privileges")));
+                throw new FormProcessException(lz(("cms.ui.workflow.insufficient_privileges")));
             }
         }
+
     }
 
     private class RoleOptionPrintListener extends DataQueryOptionPrintListener {
+
         public static final String QUERY_NAME =
-            "com.arsdigita.cms.getStaffRoles";
+                                   "com.arsdigita.cms.getStaffRoles";
 
         public RoleOptionPrintListener() {
             super();
@@ -163,8 +171,9 @@ class TaskAddRole extends CMSForm {
         }
 
         public String getValue(DataQuery d) {
-            return (String)d.get("name");
+            return (String) d.get("name");
         }
+
     }
 
     private static GlobalizedMessage gz(final String key) {
@@ -174,4 +183,5 @@ class TaskAddRole extends CMSForm {
     private static String lz(final String key) {
         return (String) gz(key).localize();
     }
+
 }
