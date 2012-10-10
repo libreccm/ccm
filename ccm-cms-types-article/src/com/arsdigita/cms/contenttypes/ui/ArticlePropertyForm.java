@@ -66,6 +66,7 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
      */
     public ArticlePropertyForm(ItemSelectionModel itemModel, ArticlePropertiesStep step) {
         super(itemModel, step);
+        m_step = step;
         addSubmissionListener(this);
     }
 
@@ -131,7 +132,7 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
 
             article.setLead((String) data.get(LEAD));
             article.save();
-        }
+        }        
         if (m_step != null) {
             m_step.maybeForwardToNextStep(fse.getPageState());
         }
