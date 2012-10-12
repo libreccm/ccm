@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui.admin;
 
 import java.util.HashMap;
@@ -42,15 +41,10 @@ import com.arsdigita.web.ApplicationTypeCollection;
 public class ApplicationPane extends SimpleContainer {
 
     private Map m_edit; // Map of application type -> edit config form
-
     private Map m_create;
-
     private NewApplicationForm m_newApp;
-
     private ApplicationDetails m_appDetails;
-
     private ActionLink m_editLink;
-
     private ApplicationSelectionModel m_app;
 
     /**
@@ -58,144 +52,156 @@ public class ApplicationPane extends SimpleContainer {
      * @param app
      */
     public ApplicationPane(ApplicationSelectionModel app) {
-		super("portal:applicationPane", PortalConstants.PORTAL_XML_NS);
+        super("portal:applicationPane", PortalConstants.PORTAL_XML_NS);
 
-		m_app = app;
+        m_app = app;
 
-		m_create = new HashMap();
-		m_edit = new HashMap();
+        m_create = new HashMap();
+        m_edit = new HashMap();
 
-		m_appDetails = new ApplicationDetails(app);
-		add(m_appDetails);
+        m_appDetails = new ApplicationDetails(app);
+        add(m_appDetails);
 
-		m_editLink = new ActionLink("edit");
-		m_editLink.addActionListener(new ApplicationEditListener());
-		add(m_editLink);
+        m_editLink = new ActionLink("edit");
+        m_editLink.addActionListener(new ApplicationEditListener());
+        add(m_editLink);
 
-		m_newApp = new NewApplicationForm();
-		m_newApp.addCompletionListener(new ApplicationCreateListener());
-		add(m_newApp);
+        m_newApp = new NewApplicationForm();
+        m_newApp.addCompletionListener(new ApplicationCreateListener());
+        add(m_newApp);
 
-		final RequestLocal appRL = new RequestLocal() {
-			public Object initialValue(PageState state) {
-				return m_app.getSelectedObject(state);
-			}
-		};
+        final RequestLocal appRL = new RequestLocal() {
+            public Object initialValue(PageState state) {
+                return m_app.getSelectedObject(state);
+            }
 
-		ApplicationTypeCollection types = ApplicationType
-				.retrieveAllApplicationTypes();
-		while (types.next()) {
-			ApplicationType type = types.getApplicationType();
+        };
 
-			ResourceConfigComponent create = type.getCreateComponent(appRL);
-			create.addCompletionListener(new ApplicationCompleteCreateListener(
-					create));
-			m_create.put(type.getOID(), create);
-			add(create);
+        ApplicationTypeCollection types = ApplicationType
+                .retrieveAllApplicationTypes();
+        while (types.next()) {
+            ApplicationType type = types.getApplicationType();
 
-			ResourceConfigComponent modify = type.getModifyComponent(appRL);
-			modify.addCompletionListener(new ApplicationCompleteEditListener(
-					modify));
-			m_edit.put(type.getOID(), modify);
-			add(modify);
-		}
+            ResourceConfigComponent create = type.getCreateComponent(appRL);
+            create.addCompletionListener(new ApplicationCompleteCreateListener(
+                    create));
+            m_create.put(type.getOID(), create);
+            add(create);
 
-	}
+            ResourceConfigComponent modify = type.getModifyComponent(appRL);
+            modify.addCompletionListener(new ApplicationCompleteEditListener(
+                    modify));
+            m_edit.put(type.getOID(), modify);
+            add(modify);
+        }
 
-	public void register(Page p) {
-		super.register(p);
+    }
 
-		Iterator c = m_create.keySet().iterator();
-		while (c.hasNext()) {
-			OID type = (OID) c.next();
-			p.setVisibleDefault((Component) m_create.get(type), false);
-		}
+    public void register(Page p) {
+        super.register(p);
 
-		Iterator e = m_edit.keySet().iterator();
-		while (e.hasNext()) {
-			OID type = (OID) e.next();
-			p.setVisibleDefault((Component) m_edit.get(type), false);
-		}
-	}
+        Iterator c = m_create.keySet().iterator();
+        while (c.hasNext()) {
+            OID type = (OID) c.next();
+            p.setVisibleDefault((Component) m_create.get(type), false);
+        }
 
-	private class ApplicationCreateListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			PageState state = e.getPageState();
+        Iterator e = m_edit.keySet().iterator();
+        while (e.hasNext()) {
+            OID type = (OID) e.next();
+            p.setVisibleDefault((Component) m_edit.get(type), false);
+        }
+    }
 
-			ApplicationType type = m_newApp.getApplicationType(state);
+    private class ApplicationCreateListener implements ActionListener {
 
-			Component editor = (Component) m_create.get(type.getOID());
-			editor.setVisible(state, true);
+        public void actionPerformed(ActionEvent e) {
+            PageState state = e.getPageState();
 
-			m_newApp.setVisible(state, false);
-			m_appDetails.setVisible(state, false);
-			m_editLink.setVisible(state, false);
-		}
-	}
+            ApplicationType type = m_newApp.getApplicationType(state);
 
-	private class ApplicationEditListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			PageState state = e.getPageState();
+            Component editor = (Component) m_create.get(type.getOID());
+            editor.setVisible(state, true);
 
-			Application app = (Application) m_app.getSelectedObject(state);
+            m_newApp.setVisible(state, false);
+            m_appDetails.setVisible(state, false);
+            m_editLink.setVisible(state, false);
+        }
 
-			Component editor = (Component) m_edit.get(app.getResourceType()
-					.getOID());
-			editor.setVisible(state, true);
+    }
 
-			m_newApp.setVisible(state, false);
-			m_appDetails.setVisible(state, false);
-			m_editLink.setVisible(state, false);
-		}
-	}
+    private class ApplicationEditListener implements ActionListener {
 
-	private class ApplicationCompleteCreateListener implements ActionListener {
-		private Component m_src;
+        public void actionPerformed(ActionEvent e) {
+            PageState state = e.getPageState();
 
-		public ApplicationCompleteCreateListener(Component src) {
-			m_src = src;
-		}
+            Application app = (Application) m_app.getSelectedObject(state);
 
-		public void actionPerformed(ActionEvent e) {
-			PageState state = e.getPageState();
+            Component editor = (Component) m_edit.get(app.getResourceType()
+                    .getOID());
+            editor.setVisible(state, true);
 
-			ResourceConfigComponent c = (ResourceConfigComponent) m_src;
-			Resource newResource = c.createResource(state);
-			c.setVisible(state, false);
+            m_newApp.setVisible(state, false);
+            m_appDetails.setVisible(state, false);
+            m_editLink.setVisible(state, false);
+        }
 
-			// Copy categorization from nav app instance
-			Resource parentResource = newResource.getParentResource();
-			Category.setRootForObject(newResource, Category
-					.getRootForObject(parentResource));
+    }
 
-			m_newApp.setVisible(state, true);
-			m_appDetails.setVisible(state, true);
-			m_editLink.setVisible(state, true);
+    private class ApplicationCompleteCreateListener implements ActionListener {
 
-			m_app.clearSelection(state);
-		}
-	}
+        private Component m_src;
 
-	private class ApplicationCompleteEditListener implements ActionListener {
-		private Component m_src;
+        public ApplicationCompleteCreateListener(Component src) {
+            m_src = src;
+        }
 
-		public ApplicationCompleteEditListener(Component src) {
-			m_src = src;
-		}
+        public void actionPerformed(ActionEvent e) {
+            PageState state = e.getPageState();
 
-		public void actionPerformed(ActionEvent e) {
-			PageState state = e.getPageState();
+            ResourceConfigComponent c = (ResourceConfigComponent) m_src;
+            Resource newResource = c.createResource(state);
+            if (newResource != null) {
 
-			ResourceConfigComponent c = (ResourceConfigComponent) m_src;
-			c.modifyResource(state);
-			c.setVisible(state, false);
 
-			m_newApp.setVisible(state, true);
-			m_appDetails.setVisible(state, true);
-			m_editLink.setVisible(state, true);
+                c.setVisible(state, false);
 
-			m_app.clearSelection(state);
-		}
-	}
+                // Copy categorization from nav app instance
+                Resource parentResource = newResource.getParentResource();
+                Category.setRootForObject(newResource, Category
+                        .getRootForObject(parentResource));
+            }
 
+            m_newApp.setVisible(state, true);
+            m_appDetails.setVisible(state, true);
+            m_editLink.setVisible(state, true);
+
+            m_app.clearSelection(state);
+        }
+
+    }
+
+    private class ApplicationCompleteEditListener implements ActionListener {
+
+        private Component m_src;
+
+        public ApplicationCompleteEditListener(Component src) {
+            m_src = src;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            PageState state = e.getPageState();
+
+            ResourceConfigComponent c = (ResourceConfigComponent) m_src;
+            c.modifyResource(state);
+            c.setVisible(state, false);
+
+            m_newApp.setVisible(state, true);
+            m_appDetails.setVisible(state, true);
+            m_editLink.setVisible(state, true);
+
+            m_app.clearSelection(state);
+        }
+
+    }
 }
