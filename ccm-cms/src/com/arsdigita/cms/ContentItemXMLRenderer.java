@@ -48,7 +48,7 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
                         final String path,
                         final String context,
                         final DomainObject linkObject) {
-        final long start = System.nanoTime();
+        //final long start = System.nanoTime();
         
         DomainObject nObj = obj;
 
@@ -60,7 +60,7 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
 
         super.walk(adapter, nObj, path, context, linkObject);
         
-        System.out.printf("Walked object in %d ms\n", (System.nanoTime() - start) / 1000000);
+        //System.out.printf("Walked object in %d ms\n", (System.nanoTime() - start) / 1000000);
     }
 
     @Override
