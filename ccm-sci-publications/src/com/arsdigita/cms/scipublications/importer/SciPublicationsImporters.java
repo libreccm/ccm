@@ -1,6 +1,5 @@
 package com.arsdigita.cms.scipublications.importer;
 
-import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +16,7 @@ import org.apache.log4j.Logger;
  */
 public class SciPublicationsImporters {
 
-    private static final Logger logger = Logger.getLogger(SciPublicationsImporters.class);
+    private static final Logger LOGGER = Logger.getLogger(SciPublicationsImporters.class);
     /**
      * Asscociation of the format the responsible importer.
      */
@@ -33,18 +32,18 @@ public class SciPublicationsImporters {
      * {@link SciPublicationsImporters} and puts them into the {@link #importers} map.
      */
     private SciPublicationsImporters() {
-        logger.debug("Creating SciPublicationsImporter instance...");
+        LOGGER.debug("Creating SciPublicationsImporter instance...");
         final ServiceLoader<SciPublicationsImporter> importerServices;
 
-        logger.debug("Loading all available implementations of the SciPublicationsImporter interface...");
+        LOGGER.debug("Loading all available implementations of the SciPublicationsImporter interface...");
         importerServices = ServiceLoader.load(SciPublicationsImporter.class);
 
         for (SciPublicationsImporter importer : importerServices) {
-            logger.debug(String.format("Found importer for format '%s'...",
+            LOGGER.debug(String.format("Found importer for format '%s'...",
                                        importer.getSupportedFormat().getName().toLowerCase()));
             importers.put(importer.getSupportedFormat().getName().toLowerCase(), importer);
         }
-        logger.debug(String.format("Found %d importers.", importers.size()));
+        LOGGER.debug(String.format("Found %d importers.", importers.size()));
     }
 
     public static SciPublicationsImporters getInstance() {
@@ -55,7 +54,7 @@ public class SciPublicationsImporters {
      * Retrieves the importer for the specified format.
      * 
      * @param format The format which should be supported by the importer.
-     * @return  The importer for the specified format, or <code>null</code> if there is no export which supports the
+     * @return  The importer for the specified format, or <code>null</code> if there is no importer which supports the
      * specified format.
      */
     public SciPublicationsImporter getImporterForFormat(final String format) {

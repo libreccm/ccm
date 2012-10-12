@@ -79,35 +79,35 @@ public class PublicationFormat {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof PublicationFormat)) {
             return false;
         }
+        
         final PublicationFormat other = (PublicationFormat) obj;
-        if ((this.name == null) ? (other.name != null)
-            : !this.name.equals(other.name)) {
+        if ((name == null) && other.getName() != null) {
             return false;
-        }
-        if (this.mimeType != other.mimeType && (this.mimeType == null || !this.mimeType.
-                                                equals(other.mimeType))) {
+        }  else if((name != null) && other.getName() == null) {
             return false;
+        } else {
+            return name.equals(other.getName());
         }
-        if ((this.fileExtension == null) ? (other.fileExtension != null)
-            : !this.fileExtension.equals(other.fileExtension)) {
-            return false;
-        }
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 5;
+        if (this.name == null) {
+            hash *= 37;
+        } else {
+            hash = 37 * hash + this.name.hashCode();
+        }        
         return hash;
     }
-
+    
     @Override
     public String toString() {
         return String.format("PublicationFormat = {name = \"%s\"; "
