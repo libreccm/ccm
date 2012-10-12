@@ -575,7 +575,7 @@ public class Workspace extends Application {
         //            .retrieve("com.arsdigita.kernel.Party");
         Filter f = dc.addNotInSubqueryFilter(
                           "id",
-                          "com.arsdigita.london.portal.WorkspaceParticipantIDs");
+                          "com.arsdigita.portalworkspace.WorkspaceParticipantIDs");
         f.set("workspaceID", getID());
         return new PartyCollection(dc);
     }
@@ -594,7 +594,7 @@ public class Workspace extends Application {
      **/
     public Iterator getParticipantInitials() {
         DataQuery query = SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.london.portal.WorkspaceParticipantInitials");
+                "com.arsdigita.portalworkspace.WorkspaceParticipantInitials");
         query.setParameter("workspaceID", getID());
 
         LinkedList result = new LinkedList();
@@ -750,7 +750,7 @@ public class Workspace extends Application {
 
     public WorkspaceCollection getChildWorkspaces() {
         DataQuery query = SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.london.portal.childWorkspacesForApplicationID");
+                "com.arsdigita.portalworkspace.childWorkspacesForApplicationID");
         query.setParameter("applicationID", getID());
 
         DataCollection collection =
