@@ -93,7 +93,7 @@ public class AddNewStyleApplicationEntries extends Program {
                 ApplicationType appType = null;
                 appType = Loader.loadWorkspaceApplicationType();
                 // get corresponding package type
-                PackageType packageType = appType.getPackageType();
+                PackageType packageType = PackageType.findByKey("content-center");
                 // get all installed instances
                 PackageInstanceCollection allPackages = packageType
                                                         .getInstances();
@@ -119,7 +119,7 @@ public class AddNewStyleApplicationEntries extends Program {
                 appType = null;
                 appType = Loader.loadServiceApplicationType();
                 // get corresponding package type
-                packageType = appType.getPackageType();
+                packageType = PackageType.findByKey("cms-service");
                 // get all installed instances
                 allPackages = packageType.getInstances();
                 aPackage = null ;
