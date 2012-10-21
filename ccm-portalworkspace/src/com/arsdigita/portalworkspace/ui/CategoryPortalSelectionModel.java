@@ -16,25 +16,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.homepage;
+package com.arsdigita.portalworkspace.ui;
 
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.NavigationModel;
-
-import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.DataCollection;
-
-import com.arsdigita.domain.DomainObjectFactory;
-
-import com.arsdigita.categorization.Category;
-import com.arsdigita.util.Assert;
-import com.arsdigita.bebop.PageState;
-
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.portalworkspace.Workspace;
-import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
+import com.arsdigita.util.Assert;
 
 /**
+ * (Short description)
  * 
+ * Purpose: Service class to use in a Navigation jsp index page to enable
+ * the inclusion of a portal workspace as a leaf page into a navigation tree.
  * 
  */
 public class CategoryPortalSelectionModel extends WorkspaceSelectionModel {

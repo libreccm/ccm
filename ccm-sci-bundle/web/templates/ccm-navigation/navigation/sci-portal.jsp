@@ -9,7 +9,7 @@
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
-  <jsp:directive.page import="com.arsdigita.aplaws.ui.CategoryPortalSelectionModel"/>
+  <jsp:directive.page import="com.arsdigita.portalworkspace.ui.CategoryPortalSelectionModel"/>
 
   <jsp:scriptlet>
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
