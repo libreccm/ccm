@@ -19,6 +19,7 @@
 package com.arsdigita.cms.scipublications.importer;
 
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
+import com.arsdigita.cms.scipublications.importer.report.ImportReport;
 
 /**
  * Interface for publication importers
@@ -40,8 +41,8 @@ public interface SciPublicationsImporter {
      * @param pretend If set to {@code true} no publications will be created. This can be used for debugging purposes 
      * or to check an file containing publications.
      * @param publishNewItems If set to {@code true} the items created by the importer will also be published. 
-     * @return A report describing what the importer has done
+     * @return A report describing what the importer has done.
      */
-    String importPublications(String publications, boolean pretend, boolean publishNewItems);
+    ImportReport importPublications(String publications, boolean pretend, boolean publishNewItems);
     
 }

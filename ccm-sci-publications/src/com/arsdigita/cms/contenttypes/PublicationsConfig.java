@@ -26,6 +26,7 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter defaultProceedingsFolder;
     private final Parameter defaultInProceedingsFolder;
     private final Parameter defaultArticlesInJournalFolder;
+    private final Parameter defaultPublicationsFolder;
 
     public PublicationsConfig() {
         attachOrgaUnitsStep =
@@ -90,6 +91,11 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.OPTIONAL,
                 null);
 
+        defaultPublicationsFolder = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_publications_folder",
+                Parameter.OPTIONAL,
+                null);
+
         register(attachOrgaUnitsStep);
         register(attachPublicationsStepTo);
         register(defaultAuthorsFolder);
@@ -102,6 +108,7 @@ public class PublicationsConfig extends AbstractConfig {
         register(defaultProceedingsFolder);
         register(defaultInProceedingsFolder);
         register(defaultArticlesInJournalFolder);
+        register(defaultPublicationsFolder);
 
         loadInfo();
     }
@@ -129,7 +136,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultSeriesFolder);
         }
     }
-    
+
     public Integer getDefaultPublisherFolder() {
         if (get(defaultPublisherFolder) == null) {
             return null;
@@ -137,7 +144,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultPublisherFolder);
         }
     }
-    
+
     public Integer getDefaultCollectedVolumesFolder() {
         if (get(defaultCollectedVolumesFolder) == null) {
             return null;
@@ -145,7 +152,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultCollectedVolumesFolder);
         }
     }
-    
+
     public Integer getDefaultJournalsFolder() {
         if (get(defaultJournalsFolder) == null) {
             return null;
@@ -161,7 +168,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultArticlesInCollectedVolumeFolder);
         }
     }
-    
+
     public Integer getDefaultOrganizationsFolder() {
         if (get(defaultOrganizationsFolder) == null) {
             return null;
@@ -169,7 +176,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultOrganizationsFolder);
         }
     }
-    
+
     public Integer getDefaultProceedingsFolder() {
         if (get(defaultProceedingsFolder) == null) {
             return null;
@@ -177,7 +184,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultProceedingsFolder);
         }
     }
-    
+
     public Integer getDefaultInProceedingsFolder() {
         if (get(defaultInProceedingsFolder) == null) {
             return null;
@@ -185,12 +192,21 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultInProceedingsFolder);
         }
     }
-    
-     public Integer getDefaultArticlesInJournalFolder() {
+
+    public Integer getDefaultArticlesInJournalFolder() {
         if (get(defaultArticlesInJournalFolder) == null) {
             return null;
         } else {
             return (Integer) get(defaultArticlesInJournalFolder);
         }
     }
+
+    public Integer getDefaultPublicationsFolder() {
+        if (get(defaultPublicationsFolder) == null) {
+            return null;
+        } else {
+            return (Integer) get(defaultPublicationsFolder);
+        }
+    }
+
 }

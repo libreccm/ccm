@@ -19,15 +19,16 @@
 package com.arsdigita.cms.scipublications.importer;
 
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
+import com.arsdigita.cms.scipublications.importer.report.ImportReport;
 import com.arsdigita.util.cmd.Program;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -36,7 +37,7 @@ import org.apache.log4j.Logger;
  */
 public class ImporterCli extends Program {
 
-    private static final Logger LOGGER = Logger.getLogger(ImporterCli.class);
+    //private static final Logger LOGGER = Logger.getLogger(ImporterCli.class);
     private static final String PRETEND = "pretend";
     private static final String PUBLISH = "publish";
     private static final String LIST = "list";
@@ -57,7 +58,7 @@ public class ImporterCli extends Program {
         options.addOption(OptionBuilder
                 .withLongOpt(LIST)
                 .withDescription("List all available importers and exit")
-                .create());        
+                .create());
     }
 
     public static void main(final String args[]) {
@@ -66,23 +67,26 @@ public class ImporterCli extends Program {
 
     @Override
     protected void doRun(final CommandLine cmdLine) {
-        LOGGER.info("Publications Importer CLI tool.");
+        final PrintWriter writer = new PrintWriter(System.out);
+        final PrintWriter errWriter = new PrintWriter(System.err);
+        
+        writer.printf("Publications Importer CLI tool.\n");
         if (cmdLine.hasOption(LIST)) {
             final List<PublicationFormat> formats = SciPublicationsImporters.getInstance().getSupportedFormats();
-            LOGGER.info("Supported formats:");            
-            for(PublicationFormat format : formats) {
-                LOGGER.info(String.format("%s, MIME type: %s, file extension: %s", format.getName(), 
-                                                                     format.getMimeType().toString(),
-                                                                     format.getFileExtension()));
+            writer.printf("Supported formats:\n");
+            for (PublicationFormat format : formats) {
+                writer.printf("%s, MIME type: %s, file extension: %s\n", format.getName(),
+                                  format.getMimeType().toString(),
+                                  format.getFileExtension());
             }
             return;
         }
-        
+
         final boolean pretend = cmdLine.hasOption(PRETEND);
         final boolean publish = cmdLine.hasOption(PUBLISH);
 
         if (cmdLine.getArgs().length != 1) {
-            LOGGER.error("Missing file/directory to import.");
+            errWriter.printf("Missing file/directory to import.\n");
             help(System.err);
             return;
         }
@@ -93,6 +97,9 @@ public class ImporterCli extends Program {
     }
 
     protected void importFile(final File file, final boolean pretend, final boolean publish) {
+        final PrintWriter writer = new PrintWriter(System.out);
+        final PrintWriter errWriter = new PrintWriter(System.err);
+
         if (file == null) {
             throw new IllegalArgumentException("File object is null.");
         }
@@ -107,25 +114,28 @@ public class ImporterCli extends Program {
             final String extension = fileName.substring(fileName.lastIndexOf('.'));
             final PublicationFormat format = findFormatForExtension(extension);
             if (format == null) {
-                LOGGER.error(String.format("No importer for publication format identified "
-                        + "by file extension '%s' available.",
-                        extension));                
+                errWriter.printf(String.format("No importer for publication format identified "
+                                               + "by file extension '%s' available.\n",
+                                               extension));
                 return;
             }
-            
+
             final SciPublicationsImporter importer = SciPublicationsImporters.getInstance().getImporterForFormat(
-                    format.getName());    
+                    format.getName());
             final String data;
             try {
                 data = FileUtils.readFileToString(file);
             } catch (IOException ex) {
-                LOGGER.error(String.format("Failed to read file '%s'.", file.getAbsolutePath()), ex);
+                errWriter.printf(String.format("Failed to read file '%s'.\n", file.getAbsolutePath()), ex);
                 return;
             }
-            LOGGER.info(String.format("Importing publications from file '%s'...", file.getAbsolutePath()));
-            importer.importPublications(data, pretend, publish);
+            writer.printf("Importing publications from file '%s'...\n", file.getAbsolutePath());
+            final ImportReport report = importer.importPublications(data, pretend, publish);
+
+            writer.printf("Import finished. Report:\n\n");
+            writer.print(report.toString());
         } else {
-            LOGGER.info(String.format("File %s does not exist.", file.getAbsolutePath()));
+            errWriter.printf("File %s does not exist.\n", file.getAbsolutePath());
         }
     }
 
