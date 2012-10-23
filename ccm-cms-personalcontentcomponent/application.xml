@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+                 name="ccm-sci-types-personalpublicationsitem"
+                 prettyName="PersonalPublicationsItem"
+                 version="6.6.0"
+                 release="1"
+                 webapp="ROOT">
+
+    <ccm:dependencies>
+        <ccm:requires name="ccm-core" version="6.6.3" relation="ge"/>
+        <ccm:requires name="ccm-cms" version="6.6.7" relation="ge"/>
+        <ccm:requires name="ccm-cms-publicpersonalprofile" version="6.6.0" release="ge"/>        
+    </ccm:dependencies>
+
+    <ccm:directories>    
+        <ccm:directory name="src"/>
+    </ccm:directories>
+
+    <ccm:contacts>
+        <ccm:contact uri="http://www.scientificcms.org" type="website"/>
+        <ccm:contact uri="mailto:info@scientificcms.org" type="support"/>
+    </ccm:contacts>
+    <ccm:description>
+        Allows it to use the PersonalPublications content generator as navigation item.
+    </ccm:description>
+  
+</ccm:application>

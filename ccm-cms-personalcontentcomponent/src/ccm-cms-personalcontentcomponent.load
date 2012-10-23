@@ -1,0 +1,11 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>		
+	<table name="cms_items"/>
+        <table name="ct_public_personal_profiles"/>
+        <initializer class="com.arsdigita.cms.Initializer"/>
+        <initializer class="com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileInitializer"/>
+        <initializer class="com.arsdigita.cms.contenttypes.PublicPersonalProfileInitializer"/>
+    </requires>
+</load>

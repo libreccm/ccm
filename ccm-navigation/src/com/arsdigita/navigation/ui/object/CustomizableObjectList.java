@@ -269,7 +269,7 @@ public class CustomizableObjectList extends ComplexObjectList {
         //- They have to be registered very early, so we can't add new parameters
         //  from a JSP.
         //- The HttpRequest is available here.
-        //So we use the HTTP request directly, which allows use to use a
+        //So we use the HTTP request directly, which allows us to use a
         //dedicated parameter for each of the filters.
         /*
          * if (request.getCharacterEncoding() == null) {
