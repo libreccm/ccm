@@ -21,7 +21,7 @@
 
 begin;
 
-\i ../default/upgrade/6.6.0-6.6.1/drop_constraints_ct_addresses.sql
+\i ../default/upgrade/6.6.0-6.6.1/drop_constraints_ct_adresses.sql
 \i ../default/upgrade/6.6.0-6.6.1/upd_table_iso_countries.sql
 \i ../default/upgrade/6.6.0-6.6.1/upd_table_ct_addresses.sql
 \i ../default/upgrade/6.6.0-6.6.1/upd_system_tables.sql
