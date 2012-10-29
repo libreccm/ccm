@@ -121,7 +121,7 @@
       </label>
       <div class="value">
         <select size="1" name="[alignment]" id="[alignment]" title="_(Positioning of this image)">
-          <option value=""      ><l10n>Not set</l10n></option>
+          <option value="none"  ><l10n>Not set</l10n></option>
           <option value="left"  ><l10n>Left</l10n></option>
           <option value="center"><l10n>Center</l10n></option>
           <option value="right" ><l10n>Right</l10n></option>
@@ -133,17 +133,15 @@
       <div class="value">
         <input type="checkbox" name="[caption]" id="[caption]" title="_(Show caption)" checked="checked"/>
       </div>
-      <label class="key" for="[zoom]">
-        <l10n>Enable Zoom:</l10n>
+      <label class="key" for="[fancybox]">
+        <l10n>Fancybox:</l10n>
       </label>
       <div class="value">
-        <input type="checkbox" name="[zoom]" id="[zoom]" title="_(Enable zoom)"/>
-      </div>
-      <label class="key" for="[gallery]">
-        <l10n>Enable Gallery:</l10n>
-      </label>
-      <div class="value">
-        <input type="checkbox" name="[gallery]" id="[gallery]" title="_(Enable gallery)"/>
+        <select size="1" name="[fancybox]" id="[fancybox]" title="_()">
+          <option value="none"        ><l10n>None</l10n></option>
+          <option value="imageZoom"   ><l10n>Zoom</l10n></option>
+          <option value="imageGallery"><l10n>Gallery</l10n></option>
+        </select>
       </div>
     </fieldset>
 

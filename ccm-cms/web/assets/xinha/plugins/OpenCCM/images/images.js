@@ -17,8 +17,11 @@ OpenCCM.prototype.showImageDialog = function(image)
     width       : "",
     height      : "",
     caption     : "",
-    zoom        : "",
-    gallery     : "",
+
+    alignment   : "",
+    caption     : "",
+    fancybox    : "",
+
     aspect      : ""
   };
 
@@ -33,7 +36,7 @@ OpenCCM.prototype.showImageDialog = function(image)
 
   this.image = image;
 
-  if(image && image.tagName.toLowerCase() == "img")
+  if (image && image.tagName.toLowerCase() == "img")
   {
     data.src    = this.editor.fixRelativeLinks(image.getAttribute("src"));
     data.alt    = image.getAttribute("alt");
@@ -42,35 +45,50 @@ OpenCCM.prototype.showImageDialog = function(image)
     data.width  = image.getAttribute("width");
     data.height = image.getAttribute("height");
 
-    if(image.parentNode.tagName.toLowerCase() == "div")
+    if (image.parentNode.tagName.toLowerCase() == "div")
     {
       // Parent node is not a link, so there is not zoom or gallery function
-      data.alignment = image.parentNode.getAttribute("class").substring(image.parentNode.getAttribute("class").indexOf(" "));
+      alignment = image.parentNode.getAttribute("class");
+      if (alignment != "image none")
+      {
+        data.alignment = alignment.substring(alignment.indexOf(" ") + 1);
+      }
+      else
+      {
+        data.alignment = "none";
+      }
       data.caption = (image.nextSibling.tagName.toLowerCase() == "span" && image.nextSibling.firstChild) ? image.nextSibling.firstChild.nodeValue : "";
-      data.zoom = "";
-      data.gallery = "";
+
+      data.fancybox = "none";
 //      data.galleryName = "";
     }
     else
     {
       // Parent node is a link
-      data.alignment = image.parentNode.parentNode.getAttribute("class").substring(image.parentNode.getAttribute("class").indexOf(" "));
-      data.zoom = (image.parentNode.getAttribute("class") == "imageZoom") ? "on" : "";
-      data.gallery = (image.parentNode.getAttribute("class") == "imageGallery") ? "on" : "";
+      alignment = image.parentNode.parentNode.getAttribute("class");
+      if (alignment != "image none")
+      {
+        data.alignment = alignment.substring(alignment.indexOf(" ") + 1);
+      }
+      else
+      {
+        data.alignment="none";
+      }
+
+      data.fancybox = image.parentNode.getAttribute("class");
 //    data.galleryName = (image.parentNode.getAttribute("class") == "imageGallery") ? image.parentNode.getAttribute("rel") : "";
 
       data.caption = (image.parentNode.nextSibling.tagName.toLowerCase() == "span" && image.parentNode.nextSibling.firstChild) ? image.parentNode.nextSibling.firstChild.nodeValue : "";
     }
-
+    
     // Calculate aspect ratio
     data.aspect = data.width / data.height;
   }
   else
   {
-    data.alignment = "";
+    data.alignment = "none";
 //    data.caption = "";
-    data.zoom = "";
-    data.gallery = "";
+    data.fancybox = "none";
 //    data.galleryName = "";
   }
   
@@ -151,7 +169,6 @@ OpenCCM.prototype.imageApply = function()
     href  : "",
     rel   : "",
     class : ""
-    
   };
 
   var divAttr =
@@ -181,20 +198,18 @@ OpenCCM.prototype.imageApply = function()
   }
 
   // Read form values for link
-  if(values.zoom || values.gallery)
+  if(values.fancybox.value == "imageZoom")
   {
     linkAttr.href = values.src;
-    if(values.zoom)
-    {
-      linkAttr.rel = "";
-      linkAttr.class = "imageZoom";
-    }
+    linkAttr.rel = "";
+    linkAttr.class = "imageZoom";
+  }
     
-    else if(values.gallery)
-    {
-      linkAttr.rel = "imageGallery";
-      linkAttr.class = "imageGallery";
-    }
+  else if(values.fancybox.value == "imageGallery")
+  {
+    linkAttr.href = values.src;
+    linkAttr.rel = "imageGallery";
+    linkAttr.class = "imageGallery";
   }
 
   // Read form values for div
@@ -240,7 +255,7 @@ OpenCCM.prototype.imageApply = function()
 
   // the folling has to be done for both cases
   // insert link, if fancybox features are activated
-  if(values.zoom || values.gallery)
+  if(values.fancybox.value != "none")
   {
     link = document.createElement("a");
     for(var attr in linkAttr)
@@ -256,7 +271,7 @@ OpenCCM.prototype.imageApply = function()
   {
     img.setAttribute(attr, imgAttr[attr]);
   }
-  if(values.zoom || values.gallery)
+  if(values.fancybox.value != "none")
   {
     link.appendChild(img);
   }
@@ -358,11 +373,15 @@ OpenCCM.prototype.resizeDialog = function(dialog)
 {
   if(dialog.getElementById(dialog.id["preview"]).style.display == "block")
   {
+
+
     // Recalculate height of preview
     dialog.getElementById(dialog.id["preview"]).style.height = Math.min(Math.max(0, dialog.height - this._getCombinedComponentHeight() - 20), Math.round((window.innerHeight * 0.8) - this._getCombinedComponentHeight())) + "px";
     // Resize preview image
     this.resizePreview(dialog);
   }
+  dialog.width  = Math.min(Math.max(10, dialog.width), Math.round((window.innerWidth * 0.8)));
+  dialog.height = Math.min(Math.max(10, dialog.height), Math.round((window.innerHeight * 0.8)));
 };
 
 OpenCCM.prototype.resizePreview = function(dialog)
@@ -374,16 +393,21 @@ OpenCCM.prototype.resizePreview = function(dialog)
   var maxHeight = previewElem.offsetHeight && previewElem.offsetHeight - 15 < Math.round((window.innerHeight * 0.8) - this._getCombinedComponentHeight()) 
                     ? previewElem.offsetHeight - 15
                     : Math.round((window.innerHeight * 0.8) - this._getCombinedComponentHeight());
-  
+
   dialog.getElementById(dialog.id["ipreview"]).style.width = "auto";
   dialog.getElementById(dialog.id["ipreview"]).style.height = "auto";
 
   var width = parseInt(dialog.getElementById(dialog.id["ipreview"]).width,10);
   var height = parseInt(dialog.getElementById(dialog.id["ipreview"]).height,10);
 
-  var zoom = Math.min(maxWidth / width,
-                      maxHeight / height);
-    
+// alert("W: " + maxWidth +" "+ width + "H: " + maxHeight +" "+ height);
+
+  var zoom = height > 0
+                ? Math.min(maxWidth / width, maxHeight / height)
+                : maxWidth / width;
+  
+// alert("Zoom: " + zoom);
+  
   var w = dialog.getElementById(dialog.id["ipreview"]).style.width = Math.round(width * zoom) + "px";
   var h = dialog.getElementById(dialog.id["ipreview"]).style.height = Math.round(height * zoom) + "px";
 };
