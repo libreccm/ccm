@@ -1,13 +1,10 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.InternetArticleBundle;
-import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
-import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -109,19 +106,12 @@ class InternetArticleImporter extends AbstractPublicationImporter<InternetArticl
     }
 
     @Override
-    public InternetArticle createPublication() {
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
-
-        final InternetArticle article = new InternetArticle();
-        article.setContentSection(folder.getContentSection());
-        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-
-        final InternetArticleBundle bundle = new InternetArticleBundle(article);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-
-        return article;
+    protected InternetArticle createPublication() {        
+        return new InternetArticle();      
     }
 
+    @Override
+    protected PublicationBundle createBundle(final InternetArticle article) {
+        return new InternetArticleBundle(article);
+    }
 }

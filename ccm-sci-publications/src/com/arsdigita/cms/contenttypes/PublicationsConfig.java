@@ -1,7 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.runtime.AbstractConfig;
-
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;

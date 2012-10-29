@@ -1,13 +1,9 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.GreyLiterature;
-import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
-import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 
 /**
  *
@@ -28,22 +24,6 @@ class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature>
         processPagesTo(publication);
 
         return publication;
-    }
-
-    @Override
-    protected GreyLiterature createPublication() {
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
-
-        final GreyLiterature greyLiterature = new GreyLiterature();
-        greyLiterature.setContentSection(folder.getContentSection());
-        greyLiterature.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-
-        final PublicationBundle bundle = new PublicationBundle(greyLiterature);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-
-        return greyLiterature;
     }
 
     private void processPagesFrom(final GreyLiterature publication) {
@@ -68,6 +48,16 @@ class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature>
             getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
                                                  getData().getLineNumber()));
         }
+    }
+
+    @Override
+    protected GreyLiterature createPublication() {
+        return new GreyLiterature();
+    }
+
+    @Override
+    protected PublicationBundle createBundle(final GreyLiterature greyLiterature) {
+        return new PublicationBundle(greyLiterature);
     }
 
 }

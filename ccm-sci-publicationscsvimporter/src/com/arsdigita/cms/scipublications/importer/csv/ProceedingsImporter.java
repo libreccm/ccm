@@ -1,13 +1,10 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.ProceedingsBundle;
-import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
-import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 
 /**
  *
@@ -35,18 +32,12 @@ class ProceedingsImporter extends AbstractPublicationWithPublisherImporter<Proce
     }        
     
     @Override
-    protected Proceedings createPublication() {
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
-        
-        final Proceedings proceedings = new Proceedings();
-        proceedings.setContentSection(folder.getContentSection());
-        proceedings.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        
-        final ProceedingsBundle bundle = new ProceedingsBundle(proceedings);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-        
-        return proceedings;                
-    }            
+    protected Proceedings createPublication() {                
+        return new Proceedings();        
+    }       
+    
+    @Override
+    protected PublicationBundle createBundle(final Proceedings proceedings) {
+        return new ProceedingsBundle(proceedings);
+    }
 }

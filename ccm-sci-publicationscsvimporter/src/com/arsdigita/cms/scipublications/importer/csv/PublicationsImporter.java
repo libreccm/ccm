@@ -31,6 +31,7 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.Review;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
+import com.arsdigita.cms.scipublications.importer.SciPublicationsImportException;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImporter;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.ImportReport;
@@ -51,10 +52,19 @@ public class PublicationsImporter implements SciPublicationsImporter {
     private static final Logger LOGGER = Logger.getLogger(PublicationsImporter.class);
     private static final String LINE_SEP = "\n";
     private static final String COL_SEP = "\t";
+    private static final CsvImporterConfig CONFIG = new CsvImporterConfig();
 //    private static final String AUTHORS_SEP = ";";
 //    private static final String AUTHOR_NAME_SEP = ",";
 //    private static final String DR_TITLE = "Dr.";
 //    private static final String PROF_DR = "Prof. Dr.";
+
+    static {
+        CONFIG.load();
+    }
+
+    public static CsvImporterConfig getConfig() {
+        return CONFIG;
+    }
 
     public PublicationFormat getSupportedFormat() {
         try {
@@ -71,9 +81,11 @@ public class PublicationsImporter implements SciPublicationsImporter {
         }
     }
 
+    @Override
     public ImportReport importPublications(final String publications,
                                            final boolean pretend,
-                                           final boolean publishNewItems) {
+                                           final boolean publishNewItems)
+            throws SciPublicationsImportException {
         final String[] linesWithHeader = publications.split(LINE_SEP);
         final String[] lines = Arrays.copyOfRange(linesWithHeader, 1, linesWithHeader.length);
         final ImportReport report = new ImportReport();
@@ -85,11 +97,16 @@ public class PublicationsImporter implements SciPublicationsImporter {
         final TransactionContext tctx = session.getTransactionContext();
         tctx.beginTxn();
 
-        int lineNumber = 2; //Because we are starting at line 2 of the CSV file (line 1 contains the column headers)
-        for (String line : lines) {
-            final PublicationImportReport result = importPublication(line, lineNumber, publishNewItems);
-            report.addPublication(result);
-            lineNumber++;
+        try {
+            int lineNumber = 2; //Because we are starting at line 2 of the CSV file (line 1 contains the column headers)
+            for (String line : lines) {
+                final PublicationImportReport result = importPublication(line, lineNumber, publishNewItems);
+                report.addPublication(result);
+                lineNumber++;
+            }
+        } catch (Exception ex) {
+            tctx.abortTxn();            
+            throw new SciPublicationsImportException(ex);
         }
 
         if (pretend) {
@@ -106,16 +123,21 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                                       final boolean publishNewItems) {
         final PublicationImportReport report = new PublicationImportReport();
 
-        final String[] cols = line.split(COL_SEP);
-        //Check number of cols       
-        if (cols.length == 30) {
+        final String[] cols = line.split(COL_SEP, -30);
+        //Check number of cols    
+        System.err.println("Checking number of cols...");
+        if (cols.length != 30) {
             report.setSuccessful(false);
             report.addMessage(String.format("!!! Wrong number of columns. Exepcted 30 columns but found %d columns. "
                                             + "Skiping line %d!\n", cols.length, lineNumber));
+            return report;
         }
+        System.err.println("Checked number of cols...");
 
+        System.err.println("Creating csv object...");
         final CsvLine data = new CsvLine(cols, lineNumber);
 
+        System.err.println("Calling importer...");
         if (ArticleInCollectedVolume.class.getSimpleName().equals(data.getType())) {
             processArticleInCollectedVolume(publishNewItems, data, report);
         } else if (ArticleInCollectedVolume.class.getSimpleName().equals(data.getType())) {
@@ -131,6 +153,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
         } else if (InternetArticle.class.getSimpleName().equals(data.getType())) {
             processInternetArticle(publishNewItems, data, report);
         } else if (Monograph.class.getSimpleName().equals(data.getType())) {
+            System.err.println("CAlling monograph importer...");
             processMonograph(publishNewItems, data, report);
         } else if (Proceedings.class.getSimpleName().equals(data.getType())) {
             processProceedings(publishNewItems, data, report);
@@ -236,6 +259,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
         if (isPublicationAlreadyInDatabase(data, Proceedings.class.getSimpleName(), report)) {
             return;
         }
+        System.err.println("Publication is not in database");
 
         final ProceedingsImporter importer = new ProceedingsImporter(data, report);
         importer.doImport(publishNewItems);
@@ -297,13 +321,13 @@ public class PublicationsImporter implements SciPublicationsImporter {
         collection.addFilter(titleFilter);
         collection.addFilter(yearFilter);
 
-        final boolean result = collection.isEmpty();
+        final boolean result = !collection.isEmpty();
         collection.close();
 
         report.setTitle(title);
         report.setType(type);
         report.addField(new FieldImportReport("Year of publication", year));
-        report.setAlreadyInDatabase(true);
+        report.setAlreadyInDatabase(result);
 
         return result;
     }

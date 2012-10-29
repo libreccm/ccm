@@ -1,16 +1,22 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.AuthorData;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
+import com.arsdigita.kernel.Kernel;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -48,7 +54,11 @@ abstract class AbstractPublicationImporter<T extends Publication> {
      */
     public final void doImport(final boolean publishNewItems) {
         final T publication = importPublication();
+
         publication.save();
+
+        assignCategories(publication.getPublicationBundle());
+
         if (publishNewItems) {
             final Calendar now = new GregorianCalendar();
             final LifecycleDefinitionCollection lifecycles = publication.getContentSection().getLifecycleDefinitions();
@@ -56,6 +66,7 @@ abstract class AbstractPublicationImporter<T extends Publication> {
             final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
             publication.publish(lifecycleDef, now.getTime());
         }
+
     }
 
     /**
@@ -80,11 +91,29 @@ abstract class AbstractPublicationImporter<T extends Publication> {
         final T publication = createPublication();
 
         processTitleAndName(publication);
+                        
+        publication.save();
+        
+        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
+        final Folder folder = new Folder(new BigDecimal(folderId));
+        publication.setContentSection(folder.getContentSection());
+        publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+
+        publication.save();
+
+        final PublicationBundle bundle = createBundle(publication);
+        bundle.setParent(folder);
+        bundle.setContentSection(folder.getContentSection());
+
+        bundle.save();
+        
         publication.setAbstract(data.getAbstract());
         publication.setMisc(data.getMisc());
         processReviewed(publication);
         processAuthors(publication);
 
+        publication.save();
+        
         return publication;
     }
 
@@ -94,6 +123,8 @@ abstract class AbstractPublicationImporter<T extends Publication> {
      * @return 
      */
     protected abstract T createPublication();
+
+    protected abstract PublicationBundle createBundle(final T publication);
 
     private void processTitleAndName(final T publication) {
         publication.setTitle(data.getTitle());
@@ -183,6 +214,29 @@ abstract class AbstractPublicationImporter<T extends Publication> {
                 author.setGivenName(nameTokens[1]);
             }
             authors.add(author);
+        }
+    }
+
+    private void assignCategories(final PublicationBundle publicationBundle) {
+        if ((data.getScope() != null) && "Persönlich".equals(data.getScope())) {
+            //Don't assign to a category, publications in only for personal profile
+            return;
+        }
+
+        final String[] departments = data.getDepartment().split(",");
+
+        final Category defaultCat = PublicationsImporter.getConfig().getDefaultCategory();
+        if (defaultCat != null) {
+            defaultCat.addChild(publicationBundle);
+        }
+
+        final Map<String, Category> depCats = PublicationsImporter.getConfig().getDepartmentCategories();
+        Category category;
+        for (String department : departments) {
+            category = depCats.get(department);
+            if (category != null) {
+                category.addChild(publicationBundle);
+            }
         }
     }
 

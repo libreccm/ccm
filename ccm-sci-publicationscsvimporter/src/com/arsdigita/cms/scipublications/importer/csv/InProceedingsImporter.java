@@ -1,14 +1,11 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.InProceedingsBundle;
-import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 
 /**
  *
@@ -66,18 +63,13 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
 
     @Override
     protected InProceedings createPublication() {
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
+        return new InProceedings();
 
-        final InProceedings inProceedings = new InProceedings();
-        inProceedings.setContentSection(folder.getContentSection());
-        inProceedings.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+    }
 
-        final InProceedingsBundle bundle = new InProceedingsBundle(inProceedings);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-
-        return inProceedings;
+    @Override
+    protected PublicationBundle createBundle(final InProceedings inProceedings) {
+        return new InProceedingsBundle(inProceedings);
     }
 
 }

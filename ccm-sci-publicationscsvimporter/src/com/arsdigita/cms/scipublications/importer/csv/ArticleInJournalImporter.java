@@ -1,14 +1,11 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.ArticleInJournalBundle;
-import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -101,18 +98,12 @@ class ArticleInJournalImporter extends AbstractPublicationImporter<ArticleInJour
 
     @Override
     protected ArticleInJournal createPublication() {
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
+        return new ArticleInJournal();
+    }
 
-        final ArticleInJournal article = new ArticleInJournal();
-        article.setContentSection(folder.getContentSection());
-        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-
-        final ArticleInJournalBundle bundle = new ArticleInJournalBundle(article);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-
-        return article;
+    @Override
+    protected PublicationBundle createBundle(final ArticleInJournal article) {
+        return new ArticleInJournalBundle(article);
     }
 
 }

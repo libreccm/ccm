@@ -145,15 +145,15 @@ public class PublicationImportReport {
         
         writer.printf("%24s: %s\n", "title", title);
         writer.printf("%24s: %s\n", "type", type);
-        writer.printf("%24s: %b\n", successful);
+        writer.printf("%24s: %b\n", "Already in database", alreadyInDatabase);
+        writer.printf("%24s: %b\n", "successful", successful);        
         if (!successful) {
             writer.printf("Import failed. Messages from importer:\n ");
             for(String message : messages) {
                 writer.printf("%s\n", message);
             }
             return strWriter.toString();
-        }
-        writer.printf("%24s: %b\n", "Already in database", alreadyInDatabase);
+        }        
         writer.printf("Authors:");
         for(AuthorImportReport author: authors) {
             writer.printf("%s\n", author.toString());

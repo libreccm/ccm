@@ -1,14 +1,11 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeBundle;
-import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 
 /**
  *
@@ -70,18 +67,12 @@ class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<Artic
     }
 
     @Override
-    protected ArticleInCollectedVolume createPublication() {
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
-
-        final ArticleInCollectedVolume article = new ArticleInCollectedVolume();
-        article.setContentSection(folder.getContentSection());
-        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-
-        final ArticleInCollectedVolumeBundle bundle = new ArticleInCollectedVolumeBundle(article);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-
-        return article;
-    }        
+    protected ArticleInCollectedVolume createPublication() {        
+        return new ArticleInCollectedVolume();                
+    }      
+    
+    @Override
+    protected PublicationBundle createBundle(final ArticleInCollectedVolume article) {
+        return new ArticleInCollectedVolumeBundle(article);
+    }
 }

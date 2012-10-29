@@ -1,12 +1,9 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.Monograph;
-import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisherBundle;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
-import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 
 /**
  *
@@ -20,19 +17,13 @@ class MonographImporter extends AbstractPublicationWithPublisherImporter<Monogra
     }
 
     @Override
-    protected Monograph createPublication() {
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
-
-        final Monograph monograph = new Monograph();
-        monograph.setContentSection(folder.getContentSection());
-        monograph.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-
-        final PublicationWithPublisherBundle bundle = new PublicationWithPublisherBundle(monograph);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-        
-        return monograph;
+    protected Monograph createPublication() {      
+      return new Monograph();              
     }
+    
+    @Override
+    protected PublicationBundle createBundle(final Monograph monograph) {
+        return new PublicationWithPublisherBundle(monograph);
+    } 
 
 }

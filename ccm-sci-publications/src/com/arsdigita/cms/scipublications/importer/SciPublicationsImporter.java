@@ -42,7 +42,9 @@ public interface SciPublicationsImporter {
      * or to check an file containing publications.
      * @param publishNewItems If set to {@code true} the items created by the importer will also be published. 
      * @return A report describing what the importer has done.
+     * @throws SciPublicationsImportException If a none recoverable error occurs
      */
-    ImportReport importPublications(String publications, boolean pretend, boolean publishNewItems);
+    ImportReport importPublications(String publications, boolean pretend, boolean publishNewItems) 
+            throws SciPublicationsImportException;
     
 }

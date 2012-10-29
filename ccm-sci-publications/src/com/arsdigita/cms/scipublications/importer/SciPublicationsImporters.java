@@ -58,7 +58,7 @@ public class SciPublicationsImporters {
      * specified format.
      */
     public SciPublicationsImporter getImporterForFormat(final String format) {
-        return importers.get(format);
+        return importers.get(format.toLowerCase());
     }
 
     /**

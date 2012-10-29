@@ -54,19 +54,21 @@ public class ImportReport {
         writer.printf("Number of publications imported: %d\n", publications.size());
         writer.printf("Pretend mode: %b\n", pretend);
         if (pretend) {
-            writer.printf("Pretend mode is active. None of the publications in this report have been imported. The"
-                    + "import only shown what would be done if the publications are truly imported.");
+            writer.printf("Pretend mode is active. None of the publications in this report have been imported. The "
+                    + "report only shows what would be done if the publications are truly imported.\n");
         }
         for(PublicationImportReport publication: publications) {
             for(int i = 0; i < 80; i++) {
                 writer.append('-');
             }
+            writer.append('\n');
             
             writer.append(publication.toString());
             
             for(int i = 0; i < 80; i++) {
                 writer.append('-');
             }
+            writer.append('\n');
         }
         
         return strWriter.toString();
