@@ -260,6 +260,20 @@
 
     <target name="ccm-run">
         <echo>ccm-run ${ccm.classname} ${ccm.parameters}</echo>
+
+        <if>
+            <equals arg1="${app.server.debug.on}" arg2="true" />
+            <then>
+   		     <property name="app.server.debugger"
+                       value="-agentlib:jdwp=transport=dt_socket,server=y,address=${app.server.debug.port},suspend=${app.server.debug.suspend}" />
+            </then>
+            <else>
+             <!-- dummy value required to start tomcat successfully -->
+   		     <property name="app.server.debugger"
+                       value="-showversion" />
+            </else>
+        </if>
+
         <java classname="${ccm.classname}" fork="yes">
             <classpath>
                 <path refid="ccm.tools.classpath" />
@@ -267,6 +281,7 @@
                 <fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
             </classpath>
             <sysproperty key="ccm.home" value="${ccm.home}" />
+	    <jvmarg value="${app.server.debugger}" />
             <arg line="${ccm.parameters}" />
         </java>
     </target>
