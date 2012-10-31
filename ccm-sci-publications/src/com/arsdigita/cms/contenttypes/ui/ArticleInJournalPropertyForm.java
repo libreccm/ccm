@@ -54,6 +54,7 @@ public class ArticleInJournalPropertyForm
     private static final String REVIEWED = "reviewed";
     private ArticleInJournalPropertiesStep m_step;
     public static final String ID = "ArticleInJournalEdit";
+    private Label reviewedLabel;
     private CheckboxGroup reviewed;
 
     public ArticleInJournalPropertyForm(ItemSelectionModel itemModel) {
@@ -112,13 +113,22 @@ public class ArticleInJournalPropertyForm
         pubDate.setYearRange(1900, today.get(Calendar.YEAR) + 2);
         add(pubDate);
 
-         add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.reviewed")));
+        reviewedLabel = new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.reviewed"));
+        add(reviewedLabel);
         reviewed = new CheckboxGroup("reviewedGroup");
         reviewed.addOption(new Option(REVIEWED, ""));
         add(reviewed);
     }
-
+    
+    protected final Label getReviewedLabel() {
+        return reviewedLabel;
+    }
+    
+    protected final CheckboxGroup getReviewed() {
+        return reviewed;
+    }
+    
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         super.init(fse);
@@ -167,4 +177,5 @@ public class ArticleInJournalPropertyForm
             article.save();
         }
     }
+
 }

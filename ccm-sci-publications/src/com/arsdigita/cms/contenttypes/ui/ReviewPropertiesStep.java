@@ -21,12 +21,17 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import java.text.DateFormat;
 
 /**
  *
@@ -41,8 +46,45 @@ public class ReviewPropertiesStep extends ArticleInJournalPropertiesStep {
 
     public static Component getReviewPropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) ArticleInJournalPropertiesStep.
-                getArticleInJournalPropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
+                getPublicationPropertySheet(itemModel);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.volume"),
+                  ArticleInJournal.VOLUME);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.issue"),
+                  ArticleInJournal.ISSUE);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.pages_from"),
+                  ArticleInJournal.PAGES_FROM);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.pages_to"),
+                  ArticleInJournal.PAGES_TO);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.publication_date"),
+                  ArticleInJournal.PUBLICATION_DATE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
+            public String format(DomainObject obj,
+                                 String attribute,
+                                 PageState state) {
+
+                ArticleInJournal article = (ArticleInJournal) obj;
+
+                if (article.getPublicationDate() != null) {
+                    return DateFormat.getDateInstance(DateFormat.LONG).format(
+                            article.getPublicationDate());
+                } else {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                }
+            }
+
+        });
 
         return sheet;
     }
@@ -73,4 +115,5 @@ public class ReviewPropertiesStep extends ArticleInJournalPropertiesStep {
                 "publications.ui.publication.basic_properties").
                 localize()), basicProperties);
     }
+
 }

@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -63,22 +64,26 @@ public class ReviewPropertyForm
 
     @Override
     protected void addWidgets() {
-        super.addWidgets();
+        super.addWidgets();                
     }
 
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         super.init(fse);
 
-        FormData data = fse.getFormData();
-        Review review = (Review) initBasicWidgets(fse);       
+        final PageState state = fse.getPageState();
+        getReviewedLabel().setVisible(state, false);
+        getReviewed().setVisible(state, false);
+        
+//        FormData data = fse.getFormData();
+//        Review review = (Review) initBasicWidgets(fse);               
     }
 
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
         super.process(fse);
 
-        FormData data = fse.getFormData();
-        Review review = (Review) processBasicWidgets(fse);      
+//        FormData data = fse.getFormData();
+//        Review review = (Review) processBasicWidgets(fse);      
     }
 }
