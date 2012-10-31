@@ -67,10 +67,10 @@ public class JournalPropertiesStep extends SimpleEditStep {
                 itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.name"),
+                "publications.ui.journal.name"),
                   Publication.NAME);
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.title"),
+                "publications.ui.journal.title"),
                   Publication.TITLE);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
