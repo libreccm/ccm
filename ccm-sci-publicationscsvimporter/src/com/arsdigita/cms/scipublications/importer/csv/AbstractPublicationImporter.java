@@ -6,6 +6,7 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
+import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.AuthorData;
@@ -66,6 +67,8 @@ abstract class AbstractPublicationImporter<T extends Publication> {
             final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
             publication.publish(lifecycleDef, now.getTime());
         }
+        
+        report.setSuccessful(true);
 
     }
 
@@ -159,8 +162,10 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     private void processAuthors(final T publication) {
         final List<AuthorData> authorsData = parseAuthors(data.getAuthors());
 
+        AuthorImportReport authorReport;
         for (AuthorData authorData : authorsData) {
-            importerUtil.processAuthor(publication, authorData);
+            authorReport = importerUtil.processAuthor(publication, authorData);
+            report.addAuthor(authorReport);
         }
     }
 

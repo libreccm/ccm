@@ -27,7 +27,6 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**

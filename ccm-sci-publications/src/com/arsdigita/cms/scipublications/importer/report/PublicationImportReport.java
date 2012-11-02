@@ -12,7 +12,7 @@ import java.util.List;
  * @version $Id$
  */
 public class PublicationImportReport {
-    
+
     private String title;
     private String type;
     private boolean alreadyInDatabase;
@@ -57,7 +57,7 @@ public class PublicationImportReport {
     public void addField(final FieldImportReport field) {
         fields.add(field);
     }
-    
+
     public void setFields(final List<FieldImportReport> fields) {
         this.fields = fields;
     }
@@ -69,7 +69,7 @@ public class PublicationImportReport {
     public void addAuthor(final AuthorImportReport author) {
         authors.add(author);
     }
-    
+
     public void setAuthors(final List<AuthorImportReport> authors) {
         this.authors = authors;
     }
@@ -81,7 +81,7 @@ public class PublicationImportReport {
     public void setPublisher(final PublisherImportReport publisher) {
         this.publisher = publisher;
     }
-        
+
     public CollectedVolumeImportReport getCollectedVolume() {
         return collectedVolume;
     }
@@ -113,7 +113,7 @@ public class PublicationImportReport {
     public void addOrgaUnit(final OrganizationalUnitImportReport orgaUnit) {
         orgaUnits.add(orgaUnit);
     }
-    
+
     public void setOrgaUnits(final List<OrganizationalUnitImportReport> orgaUnits) {
         this.orgaUnits = orgaUnits;
     }
@@ -133,29 +133,29 @@ public class PublicationImportReport {
     public void addMessage(final String message) {
         messages.add(message);
     }
-    
+
     public void setMessage(final List<String> messages) {
         this.messages = messages;
     }
-            
+
     @Override
     public String toString() {
         final StringWriter strWriter = new StringWriter();
         final PrintWriter writer = new PrintWriter(strWriter);
-        
+
         writer.printf("%24s: %s\n", "title", title);
         writer.printf("%24s: %s\n", "type", type);
         writer.printf("%24s: %b\n", "Already in database", alreadyInDatabase);
-        writer.printf("%24s: %b\n", "successful", successful);        
+        writer.printf("%24s: %b\n", "successful", successful);
         if (!successful) {
             writer.printf("Import failed. Messages from importer:\n ");
-            for(String message : messages) {
+            for (String message : messages) {
                 writer.printf("%s\n", message);
             }
             return strWriter.toString();
-        }        
-        writer.printf("Authors:");
-        for(AuthorImportReport author: authors) {
+        }
+        writer.printf("%24s", "Authors:\n");
+        for (AuthorImportReport author : authors) {
             writer.printf("%s\n", author.toString());
         }
         if (publisher != null) {
@@ -170,20 +170,21 @@ public class PublicationImportReport {
         if (proceedings != null) {
             writer.printf("Proceedings:\n%s\n", proceedings.toString());
         }
-        for(FieldImportReport field : fields) {
+        for (FieldImportReport field : fields) {
             writer.printf("%s\n", field.toString());
         }
-        for(OrganizationalUnitImportReport orgaUnit : orgaUnits) {
+        for (OrganizationalUnitImportReport orgaUnit : orgaUnits) {
             writer.printf("%s\n", orgaUnit.toString());
         }
-                
-        writer.printf("Messages:\n");
-        for(String message : messages) {
-            writer.printf("%s\n", message);
+
+        if (!messages.isEmpty()) {
+            writer.printf("Messages:\n");
+            for (String message : messages) {
+                writer.printf("%s\n", message);
+            }
         }
-        
+
         return strWriter.toString();
     }
-    
-    
+
 }

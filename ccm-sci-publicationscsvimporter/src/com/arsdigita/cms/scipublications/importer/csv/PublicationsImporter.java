@@ -105,7 +105,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                 lineNumber++;
             }
         } catch (Exception ex) {
-            tctx.abortTxn();            
+            tctx.abortTxn();             
             throw new SciPublicationsImportException(ex);
         }
 
