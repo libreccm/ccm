@@ -12,8 +12,9 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
 abstract class AbstractUnPublishedImporter<T extends UnPublished> extends AbstractPublicationImporter<T> {
 
     protected AbstractUnPublishedImporter(final CsvLine data,
-                                          final PublicationImportReport report) {
-        super(data, report);
+                                          final PublicationImportReport report,
+                                          final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
@@ -23,12 +24,14 @@ abstract class AbstractUnPublishedImporter<T extends UnPublished> extends Abstra
         final PublicationImportReport report = getReport();
 
         if ((data.getPlace() != null) && !data.getPlace().isEmpty()) {
-            publication.setPlace(data.getPlace());
+            if (!isPretend()) {
+                publication.setPlace(data.getPlace());
+            }
             report.addField(new FieldImportReport("place", data.getPlace()));
         }
 
         processNumberOfPages(publication);
-        
+
         return publication;
     }
 
@@ -36,7 +39,9 @@ abstract class AbstractUnPublishedImporter<T extends UnPublished> extends Abstra
         if ((getData().getNumberOfPages() != null) && !getData().getNumberOfPages().isEmpty()) {
             try {
                 final int volume = Integer.parseInt(getData().getNumberOfPages());
-                publication.setNumberOfPages(volume);
+                if (!isPretend()) {
+                    publication.setNumberOfPages(volume);
+                }
                 getReport().addField(new FieldImportReport("Number of pages", getData().getNumberOfPages()));
             } catch (NumberFormatException ex) {
                 getReport().addMessage(String.format("Failed to parse numberOfPages data in line %d.",

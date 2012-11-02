@@ -16,8 +16,8 @@ import java.util.Date;
  */
 class InternetArticleImporter extends AbstractPublicationImporter<InternetArticle> {
 
-    public InternetArticleImporter(final CsvLine data, final PublicationImportReport report) {
-        super(data, report);
+    public InternetArticleImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
@@ -27,19 +27,25 @@ class InternetArticleImporter extends AbstractPublicationImporter<InternetArticl
         final PublicationImportReport report = getReport();
 
         if ((data.getPlace() != null) && !data.getPlace().isEmpty()) {
-            article.setPlace(data.getPlace());
+            if (!isPretend()) {
+                article.setPlace(data.getPlace());
+            }
             report.addField(new FieldImportReport("Place", data.getPlace()));
         }
 
         processNumberOfPages(article);
 
         if ((data.getEdition() != null) && !data.getEdition().isEmpty()) {
-            article.setEdition(data.getEdition());
+            if (!isPretend()) {
+                article.setEdition(data.getEdition());
+            }
             report.addField(new FieldImportReport("Edition", data.getEdition()));
         }
 
         if ((data.getIssn() != null) && !data.getIssn().isEmpty()) {
-            article.setISSN(data.getIssn());
+            if (!isPretend()) {
+                article.setISSN(data.getIssn());
+            }
             report.addField(new FieldImportReport("ISSN", data.getIssn()));
         }
 
@@ -47,17 +53,23 @@ class InternetArticleImporter extends AbstractPublicationImporter<InternetArticl
         processPublicationDate(article);
 
         if ((data.getUrl() != null) && !data.getUrl().isEmpty()) {
-            article.setUrl(data.getUrl());
+            if (!isPretend()) {
+                article.setUrl(data.getUrl());
+            }
             report.addField(new FieldImportReport("URL", data.getUrl()));
         }
 
         if ((data.getUrn() != null) && !data.getUrn().isEmpty()) {
-            article.setUrn(data.getUrn());
+            if (!isPretend()) {
+                article.setUrn(data.getUrn());
+            }
             report.addField(new FieldImportReport("URN", data.getUrn()));
         }
 
         if ((data.getDoi() != null) && !data.getDoi().isEmpty()) {
-            article.setDoi(data.getDoi());
+            if (!isPretend()) {
+                article.setDoi(data.getDoi());
+            }
             report.addField(new FieldImportReport("DOI", data.getDoi()));
         }
 
@@ -68,7 +80,9 @@ class InternetArticleImporter extends AbstractPublicationImporter<InternetArticl
         if ((getData().getNumberOfPages() != null) && !getData().getNumberOfPages().isEmpty()) {
             try {
                 final int volume = Integer.parseInt(getData().getNumberOfPages());
-                publication.setNumberOfPages(volume);
+                if (!isPretend()) {
+                    publication.setNumberOfPages(volume);
+                }
                 getReport().addField(new FieldImportReport("Number of pages", getData().getNumberOfPages()));
             } catch (NumberFormatException ex) {
                 getReport().addMessage(String.format("Failed to parse numberOfPages data in line %d.",
@@ -82,7 +96,9 @@ class InternetArticleImporter extends AbstractPublicationImporter<InternetArticl
             final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
             try {
                 final Date date = dateFormat.parse(getData().getLastAccess());
-                article.setLastAccessed(date);
+                if (!isPretend()) {
+                    article.setLastAccessed(date);
+                }
                 getReport().addField(new FieldImportReport("Last access", getData().getLastAccess()));
             } catch (java.text.ParseException ex) {
                 getReport().addMessage(String.format("Failed to parse date of last access in line %d.",
@@ -96,7 +112,9 @@ class InternetArticleImporter extends AbstractPublicationImporter<InternetArticl
             final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
             try {
                 final Date date = dateFormat.parse(getData().getPublicationDate());
-                article.setPublicationDate(date);
+                if (!isPretend()) {
+                    article.setPublicationDate(date);
+                }
                 getReport().addField(new FieldImportReport("Publication date", getData().getPublicationDate()));
             } catch (java.text.ParseException ex) {
                 getReport().addMessage(String.format("Failed to parse publication date in line %d.",
@@ -106,12 +124,21 @@ class InternetArticleImporter extends AbstractPublicationImporter<InternetArticl
     }
 
     @Override
-    protected InternetArticle createPublication() {        
-        return new InternetArticle();      
+    protected InternetArticle createPublication() {
+        if (isPretend()) {
+            return null;
+        } else {
+            return new InternetArticle();
+        }
     }
 
     @Override
     protected PublicationBundle createBundle(final InternetArticle article) {
-        return new InternetArticleBundle(article);
+        if (isPretend()) {
+            return null;
+        } else {
+            return new InternetArticleBundle(article);
+        }
     }
+
 }

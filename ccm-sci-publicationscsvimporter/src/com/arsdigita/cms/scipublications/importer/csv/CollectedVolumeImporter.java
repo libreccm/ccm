@@ -12,18 +12,28 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class CollectedVolumeImporter extends AbstractPublicationWithPublisherImporter<CollectedVolume> {
 
-    protected CollectedVolumeImporter(final CsvLine data, final PublicationImportReport report) {
-        super(data, report);
+    protected CollectedVolumeImporter(final CsvLine data, 
+                                      final PublicationImportReport report,
+                                      final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
     protected CollectedVolume createPublication() {
-        return new CollectedVolume();
+        if (isPretend()) {
+            return null;
+        } else {
+            return new CollectedVolume();
+        }
     }
 
     @Override
     protected PublicationBundle createBundle(final CollectedVolume collectedVolume) {
-        return new CollectedVolumeBundle(collectedVolume);
+        if (isPretend()) {
+            return null;
+        } else {
+            return new CollectedVolumeBundle(collectedVolume);
+        }
     }
 
 }

@@ -31,11 +31,13 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     private static final String EDITOR_STR = "(Hrsg.)";
     private final CsvLine data;
     private final PublicationImportReport report;
+    private final boolean pretend;
     private final ImporterUtil importerUtil = new ImporterUtil();
 
-    public AbstractPublicationImporter(final CsvLine data, final PublicationImportReport report) {
+    public AbstractPublicationImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
         this.data = data;
         this.report = report;
+        this.pretend = pretend;
     }
 
     protected CsvLine getData() {
@@ -50,24 +52,31 @@ abstract class AbstractPublicationImporter<T extends Publication> {
         return report;
     }
 
+    protected boolean isPretend() {
+        return pretend;
+    }
+
     /**
      * This method is called by {@link PublicationsImporter}.
      */
     public final void doImport(final boolean publishNewItems) {
         final T publication = importPublication();
 
-        publication.save();
+        if (!pretend) {
+            publication.save();
 
-        assignCategories(publication.getPublicationBundle());
+            assignCategories(publication.getPublicationBundle());
 
-        if (publishNewItems) {
-            final Calendar now = new GregorianCalendar();
-            final LifecycleDefinitionCollection lifecycles = publication.getContentSection().getLifecycleDefinitions();
-            lifecycles.next();
-            final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
-            publication.publish(lifecycleDef, now.getTime());
+            if (publishNewItems) {
+                final Calendar now = new GregorianCalendar();
+                final LifecycleDefinitionCollection lifecycles = publication.getContentSection().
+                        getLifecycleDefinitions();
+                lifecycles.next();
+                final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
+                publication.publish(lifecycleDef, now.getTime());
+            }
         }
-        
+
         report.setSuccessful(true);
 
     }
@@ -94,29 +103,32 @@ abstract class AbstractPublicationImporter<T extends Publication> {
         final T publication = createPublication();
 
         processTitleAndName(publication);
-                        
-        publication.save();
-        
-        final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
-        final Folder folder = new Folder(new BigDecimal(folderId));
-        publication.setContentSection(folder.getContentSection());
-        publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-
-        publication.save();
-
-        final PublicationBundle bundle = createBundle(publication);
-        bundle.setParent(folder);
-        bundle.setContentSection(folder.getContentSection());
-
-        bundle.save();
-        
-        publication.setAbstract(data.getAbstract());
-        publication.setMisc(data.getMisc());
         processReviewed(publication);
+
+        if (!pretend) {
+            publication.save();
+
+            final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
+            final Folder folder = new Folder(new BigDecimal(folderId));
+            publication.setContentSection(folder.getContentSection());
+            publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+
+            publication.save();
+
+            final PublicationBundle bundle = createBundle(publication);
+            bundle.setParent(folder);
+            bundle.setContentSection(folder.getContentSection());
+
+            bundle.save();
+
+            publication.setAbstract(data.getAbstract());
+            publication.setMisc(data.getMisc());
+                        
+            publication.save();
+        }
+        
         processAuthors(publication);
 
-        publication.save();
-        
         return publication;
     }
 
@@ -130,9 +142,11 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     protected abstract PublicationBundle createBundle(final T publication);
 
     private void processTitleAndName(final T publication) {
-        publication.setTitle(data.getTitle());
-        publication.setName(normalizeString(data.getTitle()));
-        report.setTitle(publication.getTitle());
+        if (!pretend) {
+            publication.setTitle(data.getTitle());
+            publication.setName(normalizeString(data.getTitle()));
+        }
+        report.setTitle(data.getTitle());
     }
 
     private void processReviewed(final T publication) {
@@ -155,7 +169,9 @@ abstract class AbstractPublicationImporter<T extends Publication> {
             reviewed = false;
         }
 
-        publication.setReviewed(reviewed);
+        if (!pretend) {
+            publication.setReviewed(reviewed);
+        }
         report.addField(new FieldImportReport("reviewed", Boolean.toString(reviewed)));
     }
 
@@ -164,7 +180,7 @@ abstract class AbstractPublicationImporter<T extends Publication> {
 
         AuthorImportReport authorReport;
         for (AuthorData authorData : authorsData) {
-            authorReport = importerUtil.processAuthor(publication, authorData);
+            authorReport = importerUtil.processAuthor(publication, authorData, pretend);
             report.addAuthor(authorReport);
         }
     }

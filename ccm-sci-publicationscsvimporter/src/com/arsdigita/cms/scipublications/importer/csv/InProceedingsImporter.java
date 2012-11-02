@@ -14,8 +14,8 @@ import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
  */
 class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
 
-    public InProceedingsImporter(final CsvLine data, final PublicationImportReport report) {
-        super(data, report);
+    public InProceedingsImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
@@ -28,11 +28,12 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
         processPagesFrom(inProceedings);
         processPagesTo(inProceedings);
 
-        importerUtil.processProceedings(inProceedings,
-                                        data.getCollectedVolume(),
-                                        inProceedings.getYearOfPublication(),
-                                        data.getConference(),
-                                        parseAuthors(data.getCollectedVolumeAuthors()));
+        report.setProceedings(importerUtil.processProceedings(inProceedings,
+                                                              data.getCollectedVolume(),
+                                                              inProceedings.getYearOfPublication(),
+                                                              data.getConference(),
+                                                              parseAuthors(data.getCollectedVolumeAuthors()),
+                                                              isPretend()));
 
         return inProceedings;
     }
@@ -41,7 +42,9 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
         if ((getData().getPageFrom() != null) && !getData().getPageFrom().isEmpty()) {
             try {
                 final int pagesFrom = Integer.parseInt(getData().getPageFrom());
-                publication.setPagesFrom(pagesFrom);
+                if (!isPretend()) {
+                    publication.setPagesFrom(pagesFrom);
+                }
                 getReport().addField(new FieldImportReport("Pages from", getData().getPageFrom()));
             } catch (NumberFormatException ex) {
                 getReport().addMessage(String.format("Failed to parse pageFrom data in line '%d'.",
@@ -53,7 +56,9 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
     private void processPagesTo(final InProceedings publication) {
         try {
             final int pagesTo = Integer.parseInt(getData().getPageTo());
-            publication.setPagesFrom(pagesTo);
+            if (!isPretend()) {
+                publication.setPagesFrom(pagesTo);
+            }
             getReport().addField(new FieldImportReport("Pages to", getData().getPageFrom()));
         } catch (NumberFormatException ex) {
             getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
@@ -63,13 +68,21 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
 
     @Override
     protected InProceedings createPublication() {
-        return new InProceedings();
+        if (isPretend()) {
+            return null;
+        } else {
+            return new InProceedings();
+        }
 
     }
 
     @Override
     protected PublicationBundle createBundle(final InProceedings inProceedings) {
-        return new InProceedingsBundle(inProceedings);
+        if (isPretend()) {
+            return null;
+        } else {
+            return new InProceedingsBundle(inProceedings);
+        }
     }
 
 }

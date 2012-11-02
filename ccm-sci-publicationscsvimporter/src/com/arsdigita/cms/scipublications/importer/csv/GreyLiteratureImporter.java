@@ -12,8 +12,8 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature> {
 
-    protected GreyLiteratureImporter(final CsvLine data, final PublicationImportReport report) {
-        super(data, report);
+    protected GreyLiteratureImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
@@ -30,7 +30,9 @@ class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature>
         if ((getData().getPageFrom() != null) && !getData().getPageFrom().isEmpty()) {
             try {
                 final int pagesFrom = Integer.parseInt(getData().getPageFrom());
-                publication.setPagesFrom(pagesFrom);
+                if (!isPretend()) {
+                    publication.setPagesFrom(pagesFrom);
+                }
                 getReport().addField(new FieldImportReport("Pages from", getData().getPageFrom()));
             } catch (NumberFormatException ex) {
                 getReport().addMessage(String.format("Failed to parse pageFrom data in line '%d'.",
@@ -42,7 +44,9 @@ class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature>
     private void processPagesTo(final GreyLiterature publication) {
         try {
             final int pagesTo = Integer.parseInt(getData().getPageTo());
-            publication.setPagesFrom(pagesTo);
+            if (!isPretend()) {
+                publication.setPagesFrom(pagesTo);
+            }
             getReport().addField(new FieldImportReport("Pages to", getData().getPageFrom()));
         } catch (NumberFormatException ex) {
             getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
@@ -52,12 +56,20 @@ class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature>
 
     @Override
     protected GreyLiterature createPublication() {
-        return new GreyLiterature();
+        if (isPretend()) {
+            return null;
+        } else {
+            return new GreyLiterature();
+        }
     }
 
     @Override
     protected PublicationBundle createBundle(final GreyLiterature greyLiterature) {
-        return new PublicationBundle(greyLiterature);
+        if (isPretend()) {
+            return null;
+        } else {
+            return new PublicationBundle(greyLiterature);
+        }
     }
 
 }

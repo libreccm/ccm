@@ -12,8 +12,8 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class ExpertiseImporter extends AbstractPublicationImporter<Expertise> {
 
-    protected ExpertiseImporter(final CsvLine data, final PublicationImportReport report) {
-        super(data, report);
+    protected ExpertiseImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
@@ -23,7 +23,9 @@ class ExpertiseImporter extends AbstractPublicationImporter<Expertise> {
         final PublicationImportReport report = getReport();
 
         if ((data.getPlace() != null) && !data.getPlace().isEmpty()) {
-            expertise.setPlace(data.getPlace());
+            if (!isPretend()) {
+                expertise.setPlace(data.getPlace());
+            }
             report.addField(new FieldImportReport("Place", data.getPlace()));
         }
 
@@ -36,7 +38,9 @@ class ExpertiseImporter extends AbstractPublicationImporter<Expertise> {
         if ((getData().getNumberOfPages() != null) && !getData().getNumberOfPages().isEmpty()) {
             try {
                 final int volume = Integer.parseInt(getData().getNumberOfPages());
-                publication.setNumberOfPages(volume);
+                if (!isPretend()) {
+                    publication.setNumberOfPages(volume);
+                }
                 getReport().addField(new FieldImportReport("Number of pages", getData().getNumberOfPages()));
             } catch (NumberFormatException ex) {
                 getReport().addMessage(String.format("Failed to parse numberOfPages data in line %d.",
@@ -47,12 +51,20 @@ class ExpertiseImporter extends AbstractPublicationImporter<Expertise> {
 
     @Override
     protected Expertise createPublication() {
-        return new Expertise();
+        if (isPretend()) {
+            return null;
+        } else {
+            return new Expertise();
+        }
     }
 
     @Override
     protected PublicationBundle createBundle(final Expertise expertise) {
-        return new PublicationBundle(expertise);
+        if (isPretend()) {
+            return null;
+        } else {
+            return new PublicationBundle(expertise);
+        }
     }
 
 }

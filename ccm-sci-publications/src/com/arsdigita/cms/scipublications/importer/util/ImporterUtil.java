@@ -36,7 +36,9 @@ import java.util.List;
  */
 public class ImporterUtil {
 
-    public AuthorImportReport processAuthor(final Publication publication, final AuthorData authorData) {
+    public AuthorImportReport processAuthor(final Publication publication,
+                                            final AuthorData authorData,
+                                            final boolean pretend) {
         final AuthorImportReport report = new AuthorImportReport();
 
         final Session session = SessionManager.getSession();
@@ -44,234 +46,261 @@ public class ImporterUtil {
         collection.addEqualsFilter("surname", authorData.getSurname());
         collection.addEqualsFilter("givenname", authorData.getGivenName());
 
-        final GenericPerson author;
         report.setSurname(authorData.getSurname());
         report.setGivenName(authorData.getGivenName());
         report.setEditor(authorData.isEditor());
 
         if (collection.isEmpty()) {
-            final Integer folderId = Publication.getConfig().getDefaultAuthorsFolder();
-            final Folder folder = new Folder(new BigDecimal(folderId));
-            if (folder == null) {
-                throw new IllegalArgumentException("Error getting folders for authors.");
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultAuthorsFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Error getting folders for authors.");
+                }
+
+                final SciAuthor author = new SciAuthor();
+                author.setSurname(authorData.getSurname());
+                author.setGivenName(authorData.getGivenName());
+                author.setName(GenericPerson.urlSave(String.format("%s %s",
+                                                                   authorData.getSurname(),
+                                                                   authorData.getGivenName())));
+                author.setContentSection(folder.getContentSection());
+                author.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                author.save();
+
+                final GenericPersonBundle bundle = new GenericPersonBundle(author);
+                bundle.setParent(folder);
+                bundle.setContentSection(folder.getContentSection());
+                bundle.save();
+
+                publication.addAuthor(author, authorData.isEditor());
             }
 
-            final SciAuthor newAuthor = new SciAuthor();
-            newAuthor.setSurname(authorData.getSurname());
-            newAuthor.setGivenName(authorData.getGivenName());
-            newAuthor.setName(GenericPerson.urlSave(String.format("%s %s",
-                                                                  authorData.getSurname(),
-                                                                  authorData.getGivenName())));
-            newAuthor.setContentSection(folder.getContentSection());
-            newAuthor.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-            newAuthor.save();
-
-            final GenericPersonBundle bundle = new GenericPersonBundle(newAuthor);
-            bundle.setParent(folder);
-            bundle.setContentSection(folder.getContentSection());
-            bundle.save();
-
             report.setCreated(true);
-            author = newAuthor;
+
         } else {
-            collection.next();
-            author = new GenericPerson(collection.getDataObject());
+            if (!pretend) {
+                final GenericPerson author;
+                collection.next();
+                author = new GenericPerson(collection.getDataObject());
+                publication.addAuthor(author, authorData.isEditor());
+            }
             report.setCreated(false);
         }
 
-        publication.addAuthor(author, authorData.isEditor());
-
+        collection.close();
         return report;
     }
 
     public PublisherImportReport processPublisher(final PublicationWithPublisher publication,
                                                   final String place,
-                                                  final String publisherName) {
+                                                  final String publisherName,
+                                                  final boolean pretend) {
         final PublisherImportReport report = new PublisherImportReport();
 
         final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(Publisher.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("title", publisherName);
         collection.addEqualsFilter("place", place);
-        final Publisher publisher;
         report.setPublisherName(publisherName);
         report.setPlace(place);
         if (collection.isEmpty()) {
-            final Integer folderId = Publication.getConfig().getDefaultPublisherFolder();
-            final Folder folder = new Folder(new BigDecimal(folderId));
-            if (folder == null) {
-                throw new IllegalArgumentException("Error getting folders for publishers");
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultPublisherFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Error getting folders for publishers");
+                }
+
+                final Publisher publisher = new Publisher();
+                publisher.setPublisherName(publisherName);
+                publisher.setPlace(place);
+                publisher.setTitle(String.format("%s %s", publisherName, place));
+                publisher.setName(Publisher.urlSave(String.format("%s %s", publisherName, place)));
+                publisher.setContentSection(folder.getContentSection());
+                publisher.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                publisher.save();
+
+                final PublisherBundle bundle = new PublisherBundle(publisher);
+                bundle.setParent(folder);
+                bundle.setContentSection(folder.getContentSection());
+                bundle.save();
+
+                publication.setPublisher(publisher);
             }
 
-            final Publisher newPublisher = new Publisher();
-            newPublisher.setPublisherName(publisherName);
-            newPublisher.setPlace(place);
-            newPublisher.setTitle(String.format("%s %s", publisherName, place));
-            newPublisher.setName(Publisher.urlSave(String.format("%s %s", publisherName, place)));
-            newPublisher.setContentSection(folder.getContentSection());
-            newPublisher.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-            newPublisher.save();
-
-            final PublisherBundle bundle = new PublisherBundle(newPublisher);
-            bundle.setParent(folder);
-            bundle.setContentSection(folder.getContentSection());
-            bundle.save();
-
             report.setCreated(true);
-            publisher = newPublisher;
         } else {
-            collection.next();
-            publisher = new Publisher(collection.getDataObject());
+            if (!pretend) {
+                collection.next();
+                final Publisher publisher = new Publisher(collection.getDataObject());
+                publication.setPublisher(publisher);
+            }
             report.setCreated(false);
         }
 
-        publication.setPublisher(publisher);
-
+        collection.close();
         return report;
     }
-    
+
     public CollectedVolumeImportReport processCollectedVolume(final ArticleInCollectedVolume article,
                                                               final String title,
                                                               final int year,
-                                                              final List<AuthorData> authors) {
+                                                              final List<AuthorData> authors,
+                                                              final boolean pretend) {
         final CollectedVolumeImportReport report = new CollectedVolumeImportReport();
-        
+
         final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(CollectedVolume.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("title", title);
         collection.addEqualsFilter("yearOfPublication", year);
-        final CollectedVolume collectedVolume;
         report.setCollectedVolumeTitle(title);
         if (collection.isEmpty()) {
-            final Integer folderId = Publication.getConfig().getDefaultCollectedVolumesFolder();
-            final Folder folder = new Folder(new BigDecimal(folderId));
-            if (folder == null) {
-                throw new IllegalArgumentException("Error getting foldes for collected volumes.");
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultCollectedVolumesFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Error getting foldes for collected volumes.");
+                }
+
+                final CollectedVolume collectedVolume = new CollectedVolume();
+                collectedVolume.setTitle(title);
+                collectedVolume.setName(normalizeString(title));
+                collectedVolume.setContentSection(folder.getContentSection());
+                collectedVolume.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                collectedVolume.save();
+
+                final CollectedVolumeBundle bundle = new CollectedVolumeBundle(collectedVolume);
+                bundle.setParent(folder);
+                bundle.setContentSection(folder.getContentSection());
+                bundle.save();
+
+                collectedVolume.setYearOfPublication(year);
+                for (AuthorData author : authors) {
+                    report.addAuthor(processAuthor(collectedVolume, author, pretend));
+                }
+
+                collectedVolume.save();
+                article.setCollectedVolume(collectedVolume);
             }
-            
-            final CollectedVolume newCollectedVolume = new CollectedVolume();
-            newCollectedVolume.setTitle(title);            
-            newCollectedVolume.setName(normalizeString(title));
-            newCollectedVolume.setContentSection(folder.getContentSection());
-             newCollectedVolume.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-            newCollectedVolume.save();
-            
-            final CollectedVolumeBundle bundle = new CollectedVolumeBundle(newCollectedVolume);
-            bundle.setParent(folder);
-            bundle.setContentSection(folder.getContentSection());
-            bundle.save();
-            
-            newCollectedVolume.setYearOfPublication(year);
-            for(AuthorData author : authors) {
-                report.addAuthor(processAuthor(newCollectedVolume, author));
-            }            
-           
-            newCollectedVolume.save();
-            
+
             report.setCreated(true);
-            collectedVolume = newCollectedVolume;            
+
         } else {
-            collection.next();
-            collectedVolume = new CollectedVolume(collection.getDataObject());
+            if (!pretend) {
+                collection.next();
+                final CollectedVolume collectedVolume = new CollectedVolume(collection.getDataObject());
+                article.setCollectedVolume(collectedVolume);
+            }
             report.setCreated(false);
         }
-        
-        article.setCollectedVolume(collectedVolume);
-        
+
+        collection.close();
         return report;
     }
-    
+
     public ProceedingsImportReport processProceedings(final InProceedings inProceedings,
                                                       final String title,
                                                       final int year,
-                                                      final String conference,                                                     
-                                                      final List<AuthorData> authors) {
+                                                      final String conference,
+                                                      final List<AuthorData> authors,
+                                                      final boolean pretend) {
         final ProceedingsImportReport report = new ProceedingsImportReport();
-        
+
         final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(Proceedings.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("title", title);
         collection.addEqualsFilter("yearOfPublication", year);
-        final Proceedings proceedings;
         report.setProceedingsTitle(title);
         if (collection.isEmpty()) {
-            final Integer folderId = Publication.getConfig().getDefaultProceedingsFolder();
-            final Folder folder = new Folder(new BigDecimal(folderId));
-            if (folder == null) {
-                throw new IllegalArgumentException("Failed to get folder for proceedings.");
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultProceedingsFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Failed to get folder for proceedings.");
+                }
+
+                final Proceedings proceedings = new Proceedings();
+                proceedings.setTitle(title);
+                proceedings.setName(normalizeString(title));
+                proceedings.setNameOfConference(conference);
+                report.setConference(conference);
+                proceedings.setContentSection(folder.getContentSection());
+                proceedings.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                proceedings.save();
+
+                final ProceedingsBundle bundle = new ProceedingsBundle(proceedings);
+                bundle.setContentSection(folder.getContentSection());
+                bundle.setParent(folder);
+                bundle.save();
+
+                proceedings.setYearOfPublication(year);
+                for (AuthorData author : authors) {
+                    report.addAuthor(processAuthor(proceedings, author, pretend));
+                }
+                inProceedings.setProceedings(proceedings);
             }
-            
-            final Proceedings newProceedings = new Proceedings();
-            newProceedings.setTitle(title);            
-            newProceedings.setName(normalizeString(title));
-            newProceedings.setNameOfConference(conference);
-            report.setConference(conference);
-            newProceedings.setContentSection(folder.getContentSection());
-            newProceedings.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-            newProceedings.save();
-            
-            final ProceedingsBundle bundle = new ProceedingsBundle(newProceedings);
-            bundle.setContentSection(folder.getContentSection());
-            bundle.setParent(folder);
-            bundle.save();
-            
-            newProceedings.setYearOfPublication(year);            
-            for(AuthorData author : authors) {
-               report.addAuthor(processAuthor(newProceedings, author));
-            }
-            
+
             report.setCreated(true);
-            proceedings = newProceedings;                    
+
         } else {
-            collection.next();
-            proceedings = new Proceedings(collection.getDataObject());
+            if (!pretend) {
+                collection.next();
+                final Proceedings proceedings = new Proceedings(collection.getDataObject());
+                inProceedings.setProceedings(proceedings);
+            }
             report.setCreated(false);
         }
-        
-        inProceedings.setProceedings(proceedings);
-                       
+
+        collection.close();
         return report;
     }
 
-    public JournalImportReport processJournal(final ArticleInJournal article, final String title) {
+    public JournalImportReport processJournal(final ArticleInJournal article,
+                                              final String title,
+                                              final boolean pretend) {
         final JournalImportReport report = new JournalImportReport();
-        
+
         final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(Journal.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("title", title);
-        final Journal journal;
+
         report.setJournalTitle(title);
         if (collection.isEmpty()) {
-            final Integer folderId = Publication.getConfig().getDefaultJournalsFolder();
-            final Folder folder = new Folder(new BigDecimal(folderId));
-            if (folder == null) {
-                throw new IllegalArgumentException("Error getting folder for journals");
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultJournalsFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Error getting folder for journals");
+                }
+
+                final Journal newJournal = new Journal();
+                newJournal.setTitle(title);
+                newJournal.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                newJournal.setContentSection(folder.getContentSection());
+                newJournal.save();
+
+                final JournalBundle bundle = new JournalBundle(newJournal);
+                bundle.setParent(folder);
+                bundle.setContentSection(folder.getContentSection());
+                bundle.save();
+
+                article.setJournal(newJournal);
             }
-            
-            final Journal newJournal = new Journal();
-            newJournal.setTitle(title);            
-            newJournal.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-            newJournal.setContentSection(folder.getContentSection());
-            newJournal.save();
-            
-            final JournalBundle bundle = new JournalBundle(newJournal);
-            bundle.setParent(folder);
-            bundle.setContentSection(folder.getContentSection());
-            bundle.save();
-            
             report.setCreated(true);
-            journal = newJournal;
         } else {
-            collection.next();
-            journal = new Journal(collection.getDataObject());            
-            report.setCreated(false);            
+            if (!pretend) {
+                collection.next();
+                final Journal journal = new Journal(collection.getDataObject());
+                article.setJournal(journal);
+            }
+            report.setCreated(false);
         }
-        
-        article.setJournal(journal);                        
-        
+
+        collection.close();
         return report;
     }
-    
+
     protected final String normalizeString(final String str) {
         if (str == null) {
             return "null";

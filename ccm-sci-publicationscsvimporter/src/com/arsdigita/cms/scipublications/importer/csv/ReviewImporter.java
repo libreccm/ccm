@@ -11,13 +11,17 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class ReviewImporter extends ArticleInJournalImporter {
 
-    public ReviewImporter(final CsvLine data, final PublicationImportReport report) {
-        super(data, report);
+    public ReviewImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
     protected ArticleInJournal createPublication() {
-        return new Review();
+        if (isPretend()) {
+            return null;
+        } else {
+            return new Review();
+        }
     }
 
 }

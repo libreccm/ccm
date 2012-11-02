@@ -12,18 +12,26 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class MonographImporter extends AbstractPublicationWithPublisherImporter<Monograph> {
 
-    protected MonographImporter(final CsvLine data, final PublicationImportReport report) {
-        super(data, report);
+    protected MonographImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
+        super(data, report, pretend);
     }
 
     @Override
-    protected Monograph createPublication() {      
-      return new Monograph();              
+    protected Monograph createPublication() {
+        if (isPretend()) {
+            return null;
+        } else {
+            return new Monograph();
+        }
     }
-    
+
     @Override
     protected PublicationBundle createBundle(final Monograph monograph) {
-        return new PublicationWithPublisherBundle(monograph);
-    } 
+        if (isPretend()) {
+            return null;
+        } else {
+            return new PublicationWithPublisherBundle(monograph);
+        }
+    }
 
 }
