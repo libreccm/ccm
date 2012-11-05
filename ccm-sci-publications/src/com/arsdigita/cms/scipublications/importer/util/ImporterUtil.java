@@ -27,7 +27,9 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -36,12 +38,18 @@ import java.util.List;
  */
 public class ImporterUtil {
 
+    private final Set<String> createdAuthors = new HashSet<String>();
+    private final Set<String> createdColVols = new HashSet<String>();
+    private final Set<String> createdJournals = new HashSet<String>();
+    private final Set<String> createdProcs = new HashSet<String>();
+    private final Set<String> createdPublishers = new HashSet<String>();
+
     public AuthorImportReport processAuthor(final Publication publication,
                                             final AuthorData authorData,
                                             final boolean pretend) {
         final AuthorImportReport report = new AuthorImportReport();
-
         final Session session = SessionManager.getSession();
+
         final DataCollection collection = session.retrieve(GenericPerson.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("surname", authorData.getSurname());
         collection.addEqualsFilter("givenname", authorData.getGivenName());
@@ -77,6 +85,15 @@ public class ImporterUtil {
             }
 
             report.setCreated(true);
+
+            //Special handling for pretend mode
+            if (pretend && createdAuthors.contains(String.format("%s %s",
+                                                                 authorData.getSurname(),
+                                                                 authorData.getGivenName()))) {
+                report.setCreated(false);
+            } else {
+                createdAuthors.add(String.format("%s %s", authorData.getSurname(), authorData.getGivenName()));
+            }
 
         } else {
             if (!pretend) {
@@ -130,6 +147,13 @@ public class ImporterUtil {
             }
 
             report.setCreated(true);
+
+            //Special handling for pretend mode
+            if (pretend && createdPublishers.contains(String.format("%s %s", publisherName, place))) {
+                report.setCreated(false);
+            } else {
+                createdPublishers.add(String.format("%s %s", publisherName, place));
+            }
         } else {
             if (!pretend) {
                 collection.next();
@@ -145,8 +169,10 @@ public class ImporterUtil {
 
     public CollectedVolumeImportReport processCollectedVolume(final ArticleInCollectedVolume article,
                                                               final String title,
-                                                              final int year,
+                                                              final String year,
                                                               final List<AuthorData> authors,
+                                                              final String publisherName,
+                                                              final String place,
                                                               final boolean pretend) {
         final CollectedVolumeImportReport report = new CollectedVolumeImportReport();
 
@@ -175,10 +201,19 @@ public class ImporterUtil {
                 bundle.setContentSection(folder.getContentSection());
                 bundle.save();
 
-                collectedVolume.setYearOfPublication(year);
+                int yearOfPub;
+                try {
+                    yearOfPub = Integer.parseInt(year);
+                } catch (NumberFormatException ex) {
+                    yearOfPub = 0;
+                }
+
+                collectedVolume.setYearOfPublication(yearOfPub);
                 for (AuthorData author : authors) {
                     report.addAuthor(processAuthor(collectedVolume, author, pretend));
                 }
+
+                report.setPublisher(processPublisher(collectedVolume, place, publisherName, pretend));
 
                 collectedVolume.save();
                 article.setCollectedVolume(collectedVolume);
@@ -186,6 +221,18 @@ public class ImporterUtil {
 
             report.setCreated(true);
 
+            //Special handling for pretend mode
+            if (pretend && createdColVols.contains(String.format("%s %s", title, year))) {
+                report.setCreated(false);
+            } else {
+                if (pretend) {
+                    for (AuthorData author : authors) {
+                        report.addAuthor(processAuthor(null, author, pretend));
+                    }
+                    report.setPublisher(processPublisher(null, place, publisherName, pretend));
+                }
+                createdColVols.add(String.format("%s %s", title, year));
+            }
         } else {
             if (!pretend) {
                 collection.next();
@@ -201,9 +248,11 @@ public class ImporterUtil {
 
     public ProceedingsImportReport processProceedings(final InProceedings inProceedings,
                                                       final String title,
-                                                      final int year,
+                                                      final String year,
                                                       final String conference,
                                                       final List<AuthorData> authors,
+                                                      final String publisherName,
+                                                      final String place,
                                                       final boolean pretend) {
         final ProceedingsImportReport report = new ProceedingsImportReport();
 
@@ -234,14 +283,38 @@ public class ImporterUtil {
                 bundle.setParent(folder);
                 bundle.save();
 
-                proceedings.setYearOfPublication(year);
+                int yearOfPub;
+                try {
+                    yearOfPub = Integer.parseInt(year);
+                } catch(NumberFormatException ex ){
+                    yearOfPub = 0;
+                }
+                proceedings.setYearOfPublication(yearOfPub);
                 for (AuthorData author : authors) {
                     report.addAuthor(processAuthor(proceedings, author, pretend));
                 }
+                               
+                report.setPublisher(processPublisher(proceedings, publisherName, place, pretend));
+
+                proceedings.save();
                 inProceedings.setProceedings(proceedings);
             }
 
             report.setCreated(true);
+
+            //Special handling for pretend mode
+            if (pretend && createdProcs.contains(String.format("%s %s", title, year))) {
+                report.setCreated(false);
+            } else {
+                if (pretend) {
+                    for (AuthorData author : authors) {
+                        report.addAuthor(processAuthor(null, author, pretend));
+                    }
+                    report.setPublisher(processPublisher(null, place, publisherName, pretend));
+                    report.setConference(conference);
+                }
+                createdProcs.add(String.format("%s %s", title, year));
+            }
 
         } else {
             if (!pretend) {
@@ -288,6 +361,13 @@ public class ImporterUtil {
                 article.setJournal(newJournal);
             }
             report.setCreated(true);
+
+            //Special handling for pretend mode
+            if (pretend && createdJournals.contains(title)) {
+                report.setCreated(false);
+            } else {
+                createdJournals.add(title);
+            }
         } else {
             if (!pretend) {
                 collection.next();

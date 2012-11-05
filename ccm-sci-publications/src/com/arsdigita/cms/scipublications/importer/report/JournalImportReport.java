@@ -29,9 +29,9 @@ public class JournalImportReport {
     @Override
     public String toString() {
         if (created) {
-            return String.format("Created journal '%s' and linked it to publication.");
+            return String.format("Created journal '%s' and linked it to publication.", journalTitle);
         } else {
-            return String.format("Found journal '%s' in database and linked it to publication.");
+            return String.format("Found journal '%s' in database and linked it to publication.", journalTitle);
         }
     }
 

@@ -53,9 +53,9 @@ public class AuthorImportReport {
             authorType = "author";
         }
 
-        if (created) {
+        if (created) {            
             return String.format("Created author '%s, %s'. Linked to publication as %s.",
-                                 surname, givenName, authorType);
+                                 surname, givenName, authorType);            
         } else {
             return String.format("Found author '%s, %s' in database. Linked to publication as %s.",
                                  surname, givenName, authorType);

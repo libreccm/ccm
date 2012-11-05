@@ -19,6 +19,7 @@ public class ProceedingsImportReport {
     private Date dateFromOfConference;
     private Date dateToOfConference;
     private List<AuthorImportReport> authors = new ArrayList<AuthorImportReport>();
+    private PublisherImportReport publisher;
     private boolean created;
 
     public String getProceedingsTitle() {
@@ -65,6 +66,14 @@ public class ProceedingsImportReport {
         this.authors = authors;
     }
 
+    public PublisherImportReport getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(final PublisherImportReport publisher) {
+        this.publisher = publisher;
+    }
+        
     public boolean isCreated() {
         return created;
     }
@@ -82,19 +91,24 @@ public class ProceedingsImportReport {
             for (int i = 0; i < 40; i++) {
                 writer.append("- ");
             }
+            writer.append('\n');
 
-            writer.printf("Created proceedings '%s' and linked them with publication.");
+            writer.printf("Created proceedings '%s' and linked them with publication.\n", proceedingsTitle);
             writer.printf("Conference.............: %s\n", conference);
-            writer.printf("Date from of conference: %s\n", dateToOfConference.toString());
-            writer.printf("Date to of conference..: %s\n", dateToOfConference.toString());
+            //writer.printf("Date from of conference: %s\n", dateToOfConference.toString());
+            //writer.printf("Date to of conference..: %s\n", dateToOfConference.toString());
             writer.print("Authors:\n");
             for(AuthorImportReport author : authors) {
                 writer.printf("%s\n", author.toString());
             }
                         
+            writer.append(publisher.toString());
+            writer.append('\n');            
+            
             for (int i = 0; i < 40; i++) {
                 writer.append("- ");
             }
+            writer.append('\n');
 
             return strWriter.toString();
         } else {

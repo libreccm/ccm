@@ -14,13 +14,16 @@ import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
  */
 class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<ArticleInCollectedVolume> {
 
-    public ArticleInCollectedVolumeImporter(CsvLine data, PublicationImportReport report, final boolean pretend) {
-        super(data, report, pretend);
+    public ArticleInCollectedVolumeImporter(final CsvLine data, 
+                                            final PublicationImportReport report, 
+                                            final boolean pretend,
+                                            final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override
     public ArticleInCollectedVolume importPublication() {
-        final ArticleInCollectedVolume article = importPublication();
+        final ArticleInCollectedVolume article = super.importPublication();
         final CsvLine data = getData();
         final PublicationImportReport report = getReport();
         final ImporterUtil importerUtil = getImporterUtil();
@@ -38,8 +41,10 @@ class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<Artic
         report.setCollectedVolume(importerUtil.processCollectedVolume(
                 article,
                 data.getCollectedVolume(),
-                article.getYearOfPublication(),
+                data.getYear(),
                 parseAuthors(data.getCollectedVolumeAuthors()),
+                data.getPublisher(),
+                data.getPlace(),
                 isPretend()));
 
 
@@ -65,9 +70,9 @@ class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<Artic
         try {
             final int pagesTo = Integer.parseInt(getData().getPageTo());
             if (!isPretend()) {
-                publication.setPagesFrom(pagesTo);
+                publication.setPagesTo(pagesTo);
             }
-            getReport().addField(new FieldImportReport("Pages to", getData().getPageFrom()));
+            getReport().addField(new FieldImportReport("Pages to", getData().getPageTo()));
         } catch (NumberFormatException ex) {
             getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
                                                  getData().getLineNumber()));

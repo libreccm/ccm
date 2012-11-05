@@ -4,6 +4,7 @@ import com.arsdigita.cms.contenttypes.Expertise;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 
 /**
  *
@@ -12,8 +13,11 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class ExpertiseImporter extends AbstractPublicationImporter<Expertise> {
 
-    protected ExpertiseImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
-        super(data, report, pretend);
+    protected ExpertiseImporter(final CsvLine data, 
+                                final PublicationImportReport report, 
+                                final boolean pretend,
+                                final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.arsdigita.cms.contenttypes.ProceedingsBundle;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 
 /**
  *
@@ -13,8 +14,11 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class ProceedingsImporter extends AbstractPublicationWithPublisherImporter<Proceedings> {
 
-    public ProceedingsImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
-        super(data, report, pretend);
+    public ProceedingsImporter(final CsvLine data, 
+                               final PublicationImportReport report, 
+                               final boolean pretend,
+                               final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override

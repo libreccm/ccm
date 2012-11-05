@@ -4,6 +4,7 @@ import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.ArticleInJournalBundle;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
+import com.arsdigita.cms.scipublications.importer.report.JournalImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import java.text.DateFormat;
@@ -19,8 +20,9 @@ class ArticleInJournalImporter extends AbstractPublicationImporter<ArticleInJour
 
     protected ArticleInJournalImporter(final CsvLine data,
                                        final PublicationImportReport report,
-                                       final boolean pretend) {
-        super(data, report, pretend);
+                                       final boolean pretend,
+                                       final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override
@@ -42,7 +44,10 @@ class ArticleInJournalImporter extends AbstractPublicationImporter<ArticleInJour
         processPublicationDate(article);
 
         if ((data.getJournal() != null) && !data.getJournal().isEmpty()) {
-            importerUtil.processJournal(article, data.getJournal(), isPretend());
+            final JournalImportReport journalReport = importerUtil.processJournal(article, 
+                                                                                  data.getJournal(), 
+                                                                                  isPretend());
+            report.setJournal(journalReport);
         }
 
 
@@ -83,9 +88,9 @@ class ArticleInJournalImporter extends AbstractPublicationImporter<ArticleInJour
         try {
             final int pagesTo = Integer.parseInt(getData().getPageTo());
             if (!isPretend()) {
-                publication.setPagesFrom(pagesTo);
+                publication.setPagesTo(pagesTo);
             }
-            getReport().addField(new FieldImportReport("Pages to", getData().getPageFrom()));
+            getReport().addField(new FieldImportReport("Pages to", getData().getPageTo()));
         } catch (NumberFormatException ex) {
             getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
                                                  getData().getLineNumber()));

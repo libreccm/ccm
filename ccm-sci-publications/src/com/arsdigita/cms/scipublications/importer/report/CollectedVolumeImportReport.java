@@ -15,7 +15,8 @@ public class CollectedVolumeImportReport {
     
     private String collectedVolumeTitle;
     private List<AuthorImportReport> authors = new ArrayList<AuthorImportReport>();
-    private boolean created;
+    private PublisherImportReport publisher;
+    private boolean created;    
 
     public String getCollectedVolumeTitle() {
         return collectedVolumeTitle;
@@ -36,6 +37,14 @@ public class CollectedVolumeImportReport {
     public void setAuthors(final List<AuthorImportReport> authors) {
         this.authors = authors;
     }
+    
+    public PublisherImportReport getPublisher() {
+        return publisher;
+    }
+    
+    public void setPublisher(final PublisherImportReport publisher) {
+        this.publisher = publisher;
+    }
 
     public boolean isCreated() {
         return created;
@@ -54,12 +63,16 @@ public class CollectedVolumeImportReport {
             for(int i = 0; i < 40; i++) {
                 writer.append("- ");
             }
+            writer.append("\n");
             
-            writer.printf("Created collected volume '%s' and linked it with publication.\n");
-            writer.print("Author of collected volume:\n");            
+            writer.printf("Created collected volume '%s' and linked it with publication.\n", collectedVolumeTitle);
+            writer.print("Authors of collected volume:\n");            
             for(AuthorImportReport author : authors) {
                 writer.printf("%s\n", author.toString());
             }
+            
+            writer.append(publisher.toString());
+            writer.append('\n');
             
             for(int i = 0; i < 40; i++) {
                 writer.append("- ");

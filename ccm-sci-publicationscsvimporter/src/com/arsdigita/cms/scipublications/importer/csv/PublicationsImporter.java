@@ -36,6 +36,7 @@ import com.arsdigita.cms.scipublications.importer.SciPublicationsImporter;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.ImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
@@ -89,6 +90,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
         final String[] linesWithHeader = publications.split(LINE_SEP);
         final String[] lines = Arrays.copyOfRange(linesWithHeader, 1, linesWithHeader.length);
         final ImportReport report = new ImportReport();
+        final ImporterUtil importerUtil = new ImporterUtil();
 
         report.setImporter("CSV Importer");
         report.setPretend(pretend);
@@ -100,12 +102,16 @@ public class PublicationsImporter implements SciPublicationsImporter {
         try {
             int lineNumber = 2; //Because we are starting at line 2 of the CSV file (line 1 contains the column headers)
             for (String line : lines) {
-                final PublicationImportReport result = importPublication(line, lineNumber, publishNewItems, pretend);
+                final PublicationImportReport result = importPublication(line,
+                                                                         lineNumber,
+                                                                         publishNewItems,
+                                                                         pretend,
+                                                                         importerUtil);
                 report.addPublication(result);
                 lineNumber++;
             }
         } catch (Exception ex) {
-            tctx.abortTxn();             
+            tctx.abortTxn();
             throw new SciPublicationsImportException(ex);
         }
 
@@ -121,47 +127,43 @@ public class PublicationsImporter implements SciPublicationsImporter {
     private PublicationImportReport importPublication(final String line,
                                                       final int lineNumber,
                                                       final boolean publishNewItems,
-                                                      final boolean pretend) {
+                                                      final boolean pretend,
+                                                      final ImporterUtil importerUtil) {
         final PublicationImportReport report = new PublicationImportReport();
 
         final String[] cols = line.split(COL_SEP, -30);
-        //Check number of cols    
-        System.err.println("Checking number of cols...");
+        //Check number of cols          
         if (cols.length != 30) {
             report.setSuccessful(false);
             report.addMessage(String.format("!!! Wrong number of columns. Exepcted 30 columns but found %d columns. "
                                             + "Skiping line %d!\n", cols.length, lineNumber));
             return report;
         }
-        System.err.println("Checked number of cols...");
 
-        System.err.println("Creating csv object...");
         final CsvLine data = new CsvLine(cols, lineNumber);
 
-        System.err.println("Calling importer...");
         if (ArticleInCollectedVolume.class.getSimpleName().equals(data.getType())) {
-            processArticleInCollectedVolume(publishNewItems, data, report, pretend);
-        } else if (ArticleInCollectedVolume.class.getSimpleName().equals(data.getType())) {
-            processArticleInJournal(publishNewItems, data, report, pretend);
+            processArticleInCollectedVolume(publishNewItems, data, report, pretend, importerUtil);
+        } else if (ArticleInJournal.class.getSimpleName().equals(data.getType())) {
+            processArticleInJournal(publishNewItems, data, report, pretend, importerUtil);
         } else if (CollectedVolume.class.getSimpleName().equals(data.getType())) {
-            processCollectedVolume(publishNewItems, data, report, pretend);
+            processCollectedVolume(publishNewItems, data, report, pretend, importerUtil);
         } else if (Expertise.class.getSimpleName().equals(data.getType())) {
-            processExpertise(publishNewItems, data, report, pretend);
+            processExpertise(publishNewItems, data, report, pretend, importerUtil);
         } else if (GreyLiterature.class.getSimpleName().equals(data.getType())) {
-            processGreyLiterature(publishNewItems, data, report, pretend);
+            processGreyLiterature(publishNewItems, data, report, pretend, importerUtil);
         } else if (InProceedings.class.getSimpleName().equals(data.getType())) {
-            processInProceedings(publishNewItems, data, report, pretend);
+            processInProceedings(publishNewItems, data, report, pretend, importerUtil);
         } else if (InternetArticle.class.getSimpleName().equals(data.getType())) {
-            processInternetArticle(publishNewItems, data, report, pretend);
+            processInternetArticle(publishNewItems, data, report, pretend, importerUtil);
         } else if (Monograph.class.getSimpleName().equals(data.getType())) {
-            System.err.println("CAlling monograph importer...");
-            processMonograph(publishNewItems, data, report, pretend);
+            processMonograph(publishNewItems, data, report, pretend, importerUtil);
         } else if (Proceedings.class.getSimpleName().equals(data.getType())) {
-            processProceedings(publishNewItems, data, report, pretend);
+            processProceedings(publishNewItems, data, report, pretend, importerUtil);
         } else if (Review.class.getSimpleName().equals(data.getType())) {
-            processReview(publishNewItems, data, report, pretend);
+            processReview(publishNewItems, data, report, pretend, importerUtil);
         } else if (WorkingPaper.class.getSimpleName().equals(data.getType())) {
-            processWorkingPaper(publishNewItems, data, report, pretend);
+            processWorkingPaper(publishNewItems, data, report, pretend, importerUtil);
         }
 
         return report;
@@ -170,120 +172,133 @@ public class PublicationsImporter implements SciPublicationsImporter {
     private void processArticleInCollectedVolume(final boolean publishNewItems,
                                                  final CsvLine data,
                                                  final PublicationImportReport report,
-                                                 final boolean pretend) {
+                                                 final boolean pretend,
+                                                 final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, ArticleInCollectedVolume.class.getSimpleName(), report)) {
             return;
         }
 
-        final ArticleInCollectedVolumeImporter importer = new ArticleInCollectedVolumeImporter(data, report, pretend);
+        final ArticleInCollectedVolumeImporter importer = new ArticleInCollectedVolumeImporter(data,
+                                                                                               report,
+                                                                                               pretend,
+                                                                                               importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processArticleInJournal(final boolean publishNewItems,
                                          final CsvLine data,
                                          final PublicationImportReport report,
-                                         final boolean pretend) {
+                                         final boolean pretend,
+                                         final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, ArticleInJournal.class.getSimpleName(), report)) {
             return;
         }
 
-        final ArticleInJournalImporter importer = new ArticleInJournalImporter(data, report, pretend);
+        final ArticleInJournalImporter importer = new ArticleInJournalImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processCollectedVolume(final boolean publishNewItems,
                                         final CsvLine data,
                                         final PublicationImportReport report,
-                                        final boolean pretend) {
+                                        final boolean pretend,
+                                        final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, CollectedVolume.class.getSimpleName(), report)) {
             return;
         }
 
-        final CollectedVolumeImporter importer = new CollectedVolumeImporter(data, report, pretend);
+        final CollectedVolumeImporter importer = new CollectedVolumeImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processExpertise(final boolean publishNewItems, final CsvLine data,
-                                  final PublicationImportReport report, 
-                                  final boolean pretend) {
+                                  final PublicationImportReport report,
+                                  final boolean pretend,
+                                  final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Expertise.class.getSimpleName(), report)) {
             return;
         }
 
-        final ExpertiseImporter importer = new ExpertiseImporter(data, report, pretend);
+        final ExpertiseImporter importer = new ExpertiseImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processGreyLiterature(final boolean publishNewItems,
                                        final CsvLine data,
                                        final PublicationImportReport report,
-                                       final boolean pretend) {
+                                       final boolean pretend,
+                                       final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, GreyLiterature.class.getSimpleName(), report)) {
             return;
         }
 
-        final GreyLiteratureImporter importer = new GreyLiteratureImporter(data, report, pretend);
+        final GreyLiteratureImporter importer = new GreyLiteratureImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processInProceedings(final boolean publishNewItems,
                                       final CsvLine data,
                                       final PublicationImportReport report,
-                                      final boolean pretend) {
+                                      final boolean pretend,
+                                      final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, InProceedings.class.getSimpleName(), report)) {
             return;
         }
 
-        final InProceedingsImporter importer = new InProceedingsImporter(data, report, pretend);
+        final InProceedingsImporter importer = new InProceedingsImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processInternetArticle(final boolean publishNewItems,
                                         final CsvLine data,
                                         final PublicationImportReport report,
-                                        final boolean pretend) {
+                                        final boolean pretend,
+                                        final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, InternetArticle.class.getSimpleName(), report)) {
             return;
         }
 
-        final InternetArticleImporter importer = new InternetArticleImporter(data, report, pretend);
+        final InternetArticleImporter importer = new InternetArticleImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processMonograph(final boolean publishNewItems,
                                   final CsvLine data,
                                   final PublicationImportReport report,
-                                  final boolean pretend) {
+                                  final boolean pretend,
+                                  final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Monograph.class.getSimpleName(), report)) {
             return;
         }
 
-        final MonographImporter importer = new MonographImporter(data, report, pretend);
+        final MonographImporter importer = new MonographImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processProceedings(final boolean publishNewItems,
                                     final CsvLine data,
                                     final PublicationImportReport report,
-                                    final boolean pretend) {
+                                    final boolean pretend,
+                                    final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Proceedings.class.getSimpleName(), report)) {
             return;
         }
         System.err.println("Publication is not in database");
 
-        final ProceedingsImporter importer = new ProceedingsImporter(data, report, pretend);
+        final ProceedingsImporter importer = new ProceedingsImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 
     private void processReview(final boolean publishNewItems,
                                final CsvLine data,
-                               final PublicationImportReport report, 
-                               final boolean pretend) {
+                               final PublicationImportReport report,
+                               final boolean pretend,
+                               final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Review.class.getSimpleName(), report)) {
             return;
         }
 
-        final ReviewImporter importer = new ReviewImporter(data, report, pretend);
+        final ReviewImporter importer = new ReviewImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
 
     }
@@ -291,12 +306,13 @@ public class PublicationsImporter implements SciPublicationsImporter {
     private void processWorkingPaper(final boolean publishNewItems,
                                      final CsvLine data,
                                      final PublicationImportReport report,
-                                     final boolean pretend) {
+                                     final boolean pretend,
+                                     final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, WorkingPaper.class.getSimpleName(), report)) {
             return;
         }
 
-        final WorkingPaperImporter importer = new WorkingPaperImporter(data, report, pretend);
+        final WorkingPaperImporter importer = new WorkingPaperImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }
 

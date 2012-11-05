@@ -14,8 +14,11 @@ import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
  */
 class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
 
-    public InProceedingsImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
-        super(data, report, pretend);
+    public InProceedingsImporter(final CsvLine data, 
+                                 final PublicationImportReport report, 
+                                 final boolean pretend,
+                                 final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override
@@ -30,9 +33,11 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
 
         report.setProceedings(importerUtil.processProceedings(inProceedings,
                                                               data.getCollectedVolume(),
-                                                              inProceedings.getYearOfPublication(),
+                                                              data.getYear(),
                                                               data.getConference(),
                                                               parseAuthors(data.getCollectedVolumeAuthors()),
+                                                              data.getPublisher(),
+                                                              data.getPlace(),
                                                               isPretend()));
 
         return inProceedings;
@@ -57,9 +62,9 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
         try {
             final int pagesTo = Integer.parseInt(getData().getPageTo());
             if (!isPretend()) {
-                publication.setPagesFrom(pagesTo);
+                publication.setPagesTo(pagesTo);
             }
-            getReport().addField(new FieldImportReport("Pages to", getData().getPageFrom()));
+            getReport().addField(new FieldImportReport("Pages to", getData().getPageTo()));
         } catch (NumberFormatException ex) {
             getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
                                                  getData().getLineNumber()));

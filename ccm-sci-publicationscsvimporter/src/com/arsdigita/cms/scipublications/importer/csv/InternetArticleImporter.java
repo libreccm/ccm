@@ -5,6 +5,7 @@ import com.arsdigita.cms.contenttypes.InternetArticleBundle;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,8 +17,11 @@ import java.util.Date;
  */
 class InternetArticleImporter extends AbstractPublicationImporter<InternetArticle> {
 
-    public InternetArticleImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
-        super(data, report, pretend);
+    public InternetArticleImporter(final CsvLine data, 
+                                   final PublicationImportReport report, 
+                                   final boolean pretend,
+                                   final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override

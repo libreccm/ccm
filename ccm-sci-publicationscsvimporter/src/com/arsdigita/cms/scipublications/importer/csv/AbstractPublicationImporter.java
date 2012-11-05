@@ -32,12 +32,16 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     private final CsvLine data;
     private final PublicationImportReport report;
     private final boolean pretend;
-    private final ImporterUtil importerUtil = new ImporterUtil();
+    private final ImporterUtil importerUtil;
 
-    public AbstractPublicationImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
+    public AbstractPublicationImporter(final CsvLine data, 
+                                       final PublicationImportReport report, 
+                                       final boolean pretend, 
+                                       final ImporterUtil importerUtil) {
         this.data = data;
         this.report = report;
         this.pretend = pretend;
+        this.importerUtil = importerUtil;
     }
 
     protected CsvLine getData() {

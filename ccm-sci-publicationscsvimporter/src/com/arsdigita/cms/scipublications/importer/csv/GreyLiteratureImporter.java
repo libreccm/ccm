@@ -4,6 +4,7 @@ import com.arsdigita.cms.contenttypes.GreyLiterature;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 
 /**
  *
@@ -12,8 +13,11 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
  */
 class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature> {
 
-    protected GreyLiteratureImporter(final CsvLine data, final PublicationImportReport report, final boolean pretend) {
-        super(data, report, pretend);
+    protected GreyLiteratureImporter(final CsvLine data, 
+                                     final PublicationImportReport report, 
+                                     final boolean pretend,
+                                     final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override
@@ -45,9 +49,9 @@ class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature>
         try {
             final int pagesTo = Integer.parseInt(getData().getPageTo());
             if (!isPretend()) {
-                publication.setPagesFrom(pagesTo);
+                publication.setPagesTo(pagesTo);
             }
-            getReport().addField(new FieldImportReport("Pages to", getData().getPageFrom()));
+            getReport().addField(new FieldImportReport("Pages to", getData().getPageTo()));
         } catch (NumberFormatException ex) {
             getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
                                                  getData().getLineNumber()));

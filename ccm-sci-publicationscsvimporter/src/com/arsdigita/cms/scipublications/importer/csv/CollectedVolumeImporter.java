@@ -4,6 +4,7 @@ import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.contenttypes.CollectedVolumeBundle;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 
 /**
  *
@@ -14,8 +15,9 @@ class CollectedVolumeImporter extends AbstractPublicationWithPublisherImporter<C
 
     protected CollectedVolumeImporter(final CsvLine data, 
                                       final PublicationImportReport report,
-                                      final boolean pretend) {
-        super(data, report, pretend);
+                                      final boolean pretend,
+                                      final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override

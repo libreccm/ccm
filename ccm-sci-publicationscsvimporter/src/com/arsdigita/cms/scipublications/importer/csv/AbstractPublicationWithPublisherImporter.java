@@ -3,6 +3,7 @@ package com.arsdigita.cms.scipublications.importer.csv;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 
 /**
  *
@@ -14,8 +15,9 @@ abstract class AbstractPublicationWithPublisherImporter<T extends PublicationWit
 
     public AbstractPublicationWithPublisherImporter(final CsvLine data,
                                                     final PublicationImportReport report,
-                                                    final boolean pretend) {
-        super(data, report, pretend);
+                                                    final boolean pretend, 
+                                                    final ImporterUtil importerUtil) {
+        super(data, report, pretend, importerUtil);
     }
 
     @Override
