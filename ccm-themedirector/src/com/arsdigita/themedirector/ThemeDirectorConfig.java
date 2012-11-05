@@ -96,8 +96,8 @@ public class ThemeDirectorConfig extends AbstractConfig {
         requests 'all graphics files' */
     private final Parameter m_fileExtParam =
             new StringParameter
-                ("themedirector.graphics_file_extensions",
-                  Parameter.REQUIRED, "bmp css gif jpeg jpg js png xml xsl");
+                ("themedirector.file_extensions",
+                  Parameter.REQUIRED, "bmp css eot gif jpeg jpg js png svg ttf woff xml xsl");
 
     /** number of seconds before checking for updated development files.
         in a multi-jvm installation. (0 means never start)                   */
