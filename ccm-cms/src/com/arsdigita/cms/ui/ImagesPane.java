@@ -5,6 +5,7 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.FormModel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.List;
 import com.arsdigita.bebop.ListPanel;
@@ -16,16 +17,17 @@ import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SegmentedPanel;
 import com.arsdigita.bebop.SegmentedPanel.Segment;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
+import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.toolbox.ui.Section;
+import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,14 +49,15 @@ public class ImagesPane extends LayoutPanel implements Resettable {
     private ListPanel m_listPanel;
     final private SegmentedPanel m_body;
     private HashMap<String, Segment> m_bodySegments = new HashMap();
-    private final SingleSelectionModel m_model;
+    private final ResettableParameterSingleSelectionModel m_model;
     private final List m_links;
+    private final LinksSection m_modes;
 
     public ImagesPane() {
         super();
 
-        m_model = new ParameterSingleSelectionModel(new StringParameter(List.SELECTED));
-
+        m_model = new ResettableParameterSingleSelectionModel(new StringParameter(List.SELECTED));
+        m_model.setDefaultSelection(ImageComponent.LIBRARY);
         m_model.addChangeListener(new ImageAdminSelectionListener());
 
         m_links = new List(new ImageAdminListModelBuilder());
@@ -63,8 +66,8 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         final SimpleContainer left = new SimpleContainer();
         setLeft(left);
 
-        final LinksSection staff = new LinksSection();
-        left.add(staff);
+        m_modes = new LinksSection();
+        left.add(m_modes);
 
         m_body = new SegmentedPanel();
         setBody(m_body);
@@ -81,7 +84,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         final ImageLibraryComponent library = new ImageLibraryComponent(ImageComponent.ADMIN_IMAGES);
         library.getForm().addInitListener(m_adminListener);
         library.getForm().addProcessListener(m_adminListener);
-        library.addUploadLink(m_adminListener);
+//        library.addUploadLink(m_adminListener);
         selectors.put(ImageComponent.LIBRARY, library);
         m_bodySegments.put(ImageComponent.LIBRARY, m_body.addSegment(
                 new Label(GlobalizationUtil.globalize("cms.ui.image_library")),
@@ -107,69 +110,76 @@ public class ImagesPane extends LayoutPanel implements Resettable {
 
         while (keys.hasNext()) {
             String key = keys.next();
-            page.setVisibleDefault(m_bodySegments.get(key), ImageComponent.LIBRARY.equals(key));
-//            for (int index = 0; index < m_bodySegments.get(key).size(); index++) {
-
-//                Component component = m_bodySegments.get(key).get(index);
-//                page.setVisibleDefault(component, ImageComponent.LIBRARY.equals(key));
-//            }
+            page.setVisibleDefault(m_bodySegments.get(key), m_model.getDefaultSelection().equals(key));
         }
 
-        //        final Map componentsMap = m_imageComponent.getComponentsMap();
-        //
-        //        final Iterator keyIter = componentsMap.keySet().iterator();
-        //        while (keyIter.hasNext()) {
-        //            final Object key = keyIter.next();
-        //            final Component component = (Component) componentsMap.get(key);
-        //
-        //            page.setVisibleDefault(component, ImageComponent.LIBRARY.equals(key));
-        //        }
-        //
         page.addComponentStateParam(this, m_imageComponentKey);
     }
 
     /**
      * Resets this pane and all its resettable components.
-     * 
+     *
      * @param state Page state
      */
     @Override
     public final void reset(final PageState state) {
         super.reset(state);
 
+        m_model.reset(state);
+        this.setActiveImageComponent(state, m_model.getDefaultSelection());
+    }
+
+    public final void setActiveImageComponent(PageState state, String activeComp) {
+
         Iterator<String> keys = m_bodySegments.keySet().iterator();
 
         while (keys.hasNext()) {
+
             String key = keys.next();
-            state.setVisible(m_bodySegments.get(key), ImageComponent.LIBRARY.equals(key));
+            final boolean visibility = key.equals(activeComp);
+            state.setVisible(m_bodySegments.get(key), visibility);
 
             for (int index = 0; index < m_bodySegments.get(key).size(); index++) {
 
                 Component component = m_bodySegments.get(key).get(index);
-//                state.setVisible(component, ImageComponent.LIBRARY.equals(key));
-                // Reset all components if they are of type Resettable
 
+                // Reset all components if they are of type Resettable
                 if (component instanceof Resettable) {
                     ((Resettable) component).reset(state);
                 }
+
+                // Set visibility
+                component.setVisible(state, visibility);
             }
         }
+    }
 
+    private class ResettableParameterSingleSelectionModel extends ParameterSingleSelectionModel
+            implements Resettable {
 
-//        final Map componentsMap = m_imageComponent.getComponentsMap();
-//        m_imageComponent.setSelectedKey(state, ImageComponent.LIBRARY);
-//        final Iterator keyIter = componentsMap.keySet().iterator();
-//        while (keyIter.hasNext()) {
-//            final Object key = keyIter.next();
-//            final Component component = (Component) componentsMap.get(key);
-//
-//            state.setVisible(component, ImageComponent.LIBRARY.equals(key));
-//
-//            // Reset all components if they are of type Resettable
-//            if (component instanceof Resettable) {
-//                ((Resettable) component).reset(state);
-//            }
-//        }
+        private String defaultKey;
+
+        public ResettableParameterSingleSelectionModel(ParameterModel m) {
+            super(m);
+        }
+
+        public void setDefaultSelection(String selKey) {
+            this.defaultKey = selKey;
+        }
+
+        public String getDefaultSelection() {
+            return defaultKey;
+        }
+
+        public void reset(PageState state) {
+
+            if (Assert.isEnabled()) {
+                final FormModel model = state.getPage().getStateModel();
+                Assert.isTrue(model.containsFormParam(getStateParameter()));
+            }
+
+            state.setValue(getStateParameter(), this.defaultKey);
+        }
     }
 
     private class ImageAdminListModel implements ListModel {
@@ -212,13 +222,13 @@ public class ImagesPane extends LayoutPanel implements Resettable {
 
             final PageState state = e.getPageState();
 
-//            getBody().reset(state);
+//            ImagesPane.this.reset(state);
 
             if (m_model.isSelected(state)) {
                 S_LOG.debug("The selection model is selected; displaying "
                         + "the item pane");
 
-//                getBody().push(state, getItemPane());
+                ImagesPane.this.setActiveImageComponent(state, state.getControlEventValue());
             }
         }
     }
