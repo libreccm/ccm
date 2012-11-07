@@ -162,7 +162,7 @@ public class ImporterUtil {
                 bundle.save();
 
                 publication.setPublisher(publisher);
-                
+
                 if (publish) {
                     publishItem(publisher);
                 }
@@ -239,7 +239,7 @@ public class ImporterUtil {
 
                 collectedVolume.save();
                 article.setCollectedVolume(collectedVolume);
-                
+
                 if (publish) {
                     publishItem(collectedVolume);
                 }
@@ -324,7 +324,7 @@ public class ImporterUtil {
 
                 proceedings.save();
                 inProceedings.setProceedings(proceedings);
-                
+
                 if (publish) {
                     publishItem(proceedings);
                 }
@@ -390,7 +390,7 @@ public class ImporterUtil {
                 bundle.save();
 
                 article.setJournal(journal);
-                
+
                 if (publish) {
                     publishItem(journal);
                 }
@@ -421,7 +421,9 @@ public class ImporterUtil {
         final LifecycleDefinitionCollection lifecycles = item.getContentSection().getLifecycleDefinitions();
         lifecycles.next();
         final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
-        item.publish(lifecycleDef, now.getTime());
+        final ContentItem pending = item.publish(lifecycleDef, now.getTime());
+        lifecycles.close();
+        item.promotePendingVersion(pending);
     }
 
     protected final String normalizeString(final String str) {
@@ -435,4 +437,5 @@ public class ImporterUtil {
                 replace(" ", "-").
                 replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase().trim();
     }
+
 }
