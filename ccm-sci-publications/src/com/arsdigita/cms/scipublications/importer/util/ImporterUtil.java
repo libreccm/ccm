@@ -294,7 +294,7 @@ public class ImporterUtil {
                     report.addAuthor(processAuthor(proceedings, author, pretend));
                 }
                                
-                report.setPublisher(processPublisher(proceedings, publisherName, place, pretend));
+                report.setPublisher(processPublisher(proceedings, place, publisherName, pretend));
 
                 proceedings.save();
                 inProceedings.setProceedings(proceedings);
@@ -347,18 +347,19 @@ public class ImporterUtil {
                     throw new IllegalArgumentException("Error getting folder for journals");
                 }
 
-                final Journal newJournal = new Journal();
-                newJournal.setTitle(title);
-                newJournal.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-                newJournal.setContentSection(folder.getContentSection());
-                newJournal.save();
+                final Journal journal = new Journal();
+                journal.setName(normalizeString(title));
+                journal.setTitle(title);
+                journal.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                journal.setContentSection(folder.getContentSection());
+                journal.save();
 
-                final JournalBundle bundle = new JournalBundle(newJournal);
+                final JournalBundle bundle = new JournalBundle(journal);
                 bundle.setParent(folder);
                 bundle.setContentSection(folder.getContentSection());
                 bundle.save();
 
-                article.setJournal(newJournal);
+                article.setJournal(journal);
             }
             report.setCreated(true);
 
