@@ -90,7 +90,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
         final String[] linesWithHeader = publications.split(LINE_SEP);
         final String[] lines = Arrays.copyOfRange(linesWithHeader, 1, linesWithHeader.length);
         final ImportReport report = new ImportReport();
-        final ImporterUtil importerUtil = new ImporterUtil();
+        final ImporterUtil importerUtil = new ImporterUtil(publishNewItems);
 
         report.setImporter("CSV Importer");
         report.setPretend(pretend);

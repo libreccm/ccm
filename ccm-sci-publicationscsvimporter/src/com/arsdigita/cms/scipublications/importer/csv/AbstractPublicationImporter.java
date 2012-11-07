@@ -72,12 +72,13 @@ abstract class AbstractPublicationImporter<T extends Publication> {
             assignCategories(publication.getPublicationBundle());
 
             if (publishNewItems) {
-                final Calendar now = new GregorianCalendar();
-                final LifecycleDefinitionCollection lifecycles = publication.getContentSection().
-                        getLifecycleDefinitions();
-                lifecycles.next();
-                final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
-                publication.publish(lifecycleDef, now.getTime());
+                //final Calendar now = new GregorianCalendar();
+                //final LifecycleDefinitionCollection lifecycles = publication.getContentSection().
+                //        getLifecycleDefinitions();
+                //lifecycles.next();
+                //final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
+                //publication.publish(lifecycleDef, now.getTime());
+                importerUtil.publishItem(publication);
             }
         }
 

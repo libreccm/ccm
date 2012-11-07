@@ -1,5 +1,6 @@
 package com.arsdigita.cms.scipublications.importer.util;
 
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
@@ -17,6 +18,8 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.contenttypes.PublisherBundle;
 import com.arsdigita.cms.contenttypes.SciAuthor;
+import com.arsdigita.cms.lifecycle.LifecycleDefinition;
+import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.CollectedVolumeImportReport;
 import com.arsdigita.cms.scipublications.importer.report.JournalImportReport;
@@ -27,6 +30,8 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,11 +43,20 @@ import java.util.Set;
  */
 public class ImporterUtil {
 
-    private final Set<String> createdAuthors = new HashSet<String>();
-    private final Set<String> createdColVols = new HashSet<String>();
-    private final Set<String> createdJournals = new HashSet<String>();
-    private final Set<String> createdProcs = new HashSet<String>();
-    private final Set<String> createdPublishers = new HashSet<String>();
+    private final transient boolean publish;
+    private final transient Set<String> createdAuthors = new HashSet<String>();
+    private final transient Set<String> createdColVols = new HashSet<String>();
+    private final transient Set<String> createdJournals = new HashSet<String>();
+    private final transient Set<String> createdProcs = new HashSet<String>();
+    private final transient Set<String> createdPublishers = new HashSet<String>();
+
+    public ImporterUtil() {
+        publish = false;
+    }
+
+    public ImporterUtil(final boolean publish) {
+        this.publish = publish;
+    }
 
     public AuthorImportReport processAuthor(final Publication publication,
                                             final AuthorData authorData,
@@ -82,6 +96,10 @@ public class ImporterUtil {
                 bundle.save();
 
                 publication.addAuthor(author, authorData.isEditor());
+
+                if (publish) {
+                    publishItem(author);
+                }
             }
 
             report.setCreated(true);
@@ -144,6 +162,10 @@ public class ImporterUtil {
                 bundle.save();
 
                 publication.setPublisher(publisher);
+                
+                if (publish) {
+                    publishItem(publisher);
+                }
             }
 
             report.setCreated(true);
@@ -217,6 +239,10 @@ public class ImporterUtil {
 
                 collectedVolume.save();
                 article.setCollectedVolume(collectedVolume);
+                
+                if (publish) {
+                    publishItem(collectedVolume);
+                }
             }
 
             report.setCreated(true);
@@ -286,18 +312,22 @@ public class ImporterUtil {
                 int yearOfPub;
                 try {
                     yearOfPub = Integer.parseInt(year);
-                } catch(NumberFormatException ex ){
+                } catch (NumberFormatException ex) {
                     yearOfPub = 0;
                 }
                 proceedings.setYearOfPublication(yearOfPub);
                 for (AuthorData author : authors) {
                     report.addAuthor(processAuthor(proceedings, author, pretend));
                 }
-                               
+
                 report.setPublisher(processPublisher(proceedings, place, publisherName, pretend));
 
                 proceedings.save();
                 inProceedings.setProceedings(proceedings);
+                
+                if (publish) {
+                    publishItem(proceedings);
+                }
             }
 
             report.setCreated(true);
@@ -360,6 +390,10 @@ public class ImporterUtil {
                 bundle.save();
 
                 article.setJournal(journal);
+                
+                if (publish) {
+                    publishItem(journal);
+                }
             }
             report.setCreated(true);
 
@@ -382,6 +416,14 @@ public class ImporterUtil {
         return report;
     }
 
+    public void publishItem(final ContentItem item) {
+        final Calendar now = new GregorianCalendar();
+        final LifecycleDefinitionCollection lifecycles = item.getContentSection().getLifecycleDefinitions();
+        lifecycles.next();
+        final LifecycleDefinition lifecycleDef = lifecycles.getLifecycleDefinition();
+        item.publish(lifecycleDef, now.getTime());
+    }
+
     protected final String normalizeString(final String str) {
         if (str == null) {
             return "null";
@@ -393,5 +435,4 @@ public class ImporterUtil {
                 replace(" ", "-").
                 replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase().trim();
     }
-
 }
