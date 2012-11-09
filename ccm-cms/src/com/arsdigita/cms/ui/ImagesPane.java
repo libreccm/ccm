@@ -84,7 +84,6 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         final ImageLibraryComponent library = new ImageLibraryComponent(ImageComponent.ADMIN_IMAGES);
         library.getForm().addInitListener(m_adminListener);
         library.getForm().addProcessListener(m_adminListener);
-//        library.addUploadLink(m_adminListener);
         selectors.put(ImageComponent.LIBRARY, library);
         m_bodySegments.put(ImageComponent.LIBRARY, m_body.addSegment(
                 new Label(GlobalizationUtil.globalize("cms.ui.image_library")),
@@ -132,6 +131,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
     public final void setActiveImageComponent(PageState state, String activeComp) {
 
         Iterator<String> keys = m_bodySegments.keySet().iterator();
+        m_imageComponent.setSelectedKey(state, activeComp);
 
         while (keys.hasNext()) {
 
