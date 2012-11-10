@@ -135,3 +135,24 @@ alter table apm_packages  add  constraint apm_package_package_id_f_46may
 -- functionality and is removed.
 -- New, legacy free application works without a (dummy) Application table
 drop table sitemap_app ;
+
+delete from applications 
+    where application_type_id =
+        (select application_type_id from application_types 
+            where object_type like '%sitemap.SiteMap%');
+
+delete from object_container_map
+    where object_id = 
+        (select object_id from acs_objects
+            where object_type like '%sitemap.SiteMap%');
+
+delete from object_context
+    where object_id = 
+        (select object_id from acs_objects
+            where object_type like '%sitemap.SiteMap%');
+
+delete from acs_objects
+    where object_type like '%sitemap.SiteMap%';
+
+delete from application_types 
+    where object_type like '%sitemap.SiteMap%';
