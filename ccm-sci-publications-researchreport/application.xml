@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-sci-publications"
-  prettyName="OpenCCM Content Types"
-  version="6.6.3"
-  release="1"
-  webapp="ROOT">
+		 name="ccm-sci-publications-researchreport"
+		 prettyName="SciPublications ResearchReport"
+		 version="6.6.3"
+		 release="1"
+		 webapp="ROOT"> 
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.4" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.7" relation="ge"/>
+    <ccm:requires name="ccm-sci-publications" version="6.6.3" relation="ge"/>   
   </ccm:dependencies>
   <ccm:directories>
     <ccm:directory name="pdl"/>
@@ -19,6 +20,6 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    Content types and applications for publications.
+    Additional content type Research Report for the ccm-sci-publications module.
   </ccm:description>
 </ccm:application>

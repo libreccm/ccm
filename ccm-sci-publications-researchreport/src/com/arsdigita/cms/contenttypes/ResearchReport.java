@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
+ * Copyright (c) 2012 Jens Pelzetter,
  * ScientificCMS Team, http://www.scientificcms.org
  *
  * This library is free software; you can redistribute it and/or
@@ -25,40 +25,30 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author Jens Pelzetter
+ * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class WorkingPaper extends UnPublished {
-
-    //public static final String REVIEWED = "reviewed";
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.WorkingPaper";
-
-    public WorkingPaper() {
+public class ResearchReport extends UnPublished {
+    
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.ResearchReport";
+    
+    public ResearchReport() {
         this(BASE_DATA_OBJECT_TYPE);
     }
-
-    public WorkingPaper(BigDecimal id) {
+    
+    public ResearchReport(final BigDecimal id) {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
-
-    public WorkingPaper(OID oid) {
+    
+    public ResearchReport(final OID oid) {
         super(oid);
     }
-
-    public WorkingPaper(DataObject dataObject) {
+    
+    public ResearchReport(final DataObject dataObject) {
         super(dataObject);
     }
-
-    public WorkingPaper(String type) {
+    
+    public ResearchReport(final String type) {
         super(type);
-    }
-
-    /*public Boolean getReviewed() {
-        return (Boolean) get(REVIEWED);
-    }
-
-    public void setReviewed(Boolean reviewed) {
-        set(REVIEWED, reviewed);
-    }*/
+    }    
 }

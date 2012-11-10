@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+  <ctd:content-type
+      label="SciPublications/ResearchReport"
+      description="Base type for Research reports"
+      objectType="com.arsdigita.cms.contenttypes.ResearchReport"
+      classname="com.arsdigita.cms.contenttypes.ResearchReport">
+
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.UnPublishedCreate">
+      
+      <ctd:authoring-step
+	  labelKey="publications.ui.workingPaper_properties.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ui.ResearchReportResources"
+	  descriptionKey="publications.ui.researchreport.basic_properties.description"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.ResearchReportResources"
+	  component="com.arsdigita.cms.contenttypes.ui.ResearchReportPropertiesStep"
+	  ordering="1"/>
+
+      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
+    </ctd:authoring-kit>
+
+  </ctd:content-type>
+ 
+
+</ctd:content-types>

@@ -1,0 +1,18 @@
+<load>
+	<requires>
+		<table name="inits"/>
+		<table name="acs_objects"/>
+		<table name="cms_items"/>
+		<table name="ct_publications"/>
+		<initializer class="com.arsdigita.cms.Initializer"/>
+		<initializer class="com.arsdigita.cms.contenttypes.UnPublishedInitializer"/>		
+	</requires>
+	<provides>
+		<table name="ct_researchreport"/>
+		<initializer class="com.arsdigita.cms.contenttypes.ResearchReportInitializer"/>
+	</provides>
+	<scripts>
+		<schema directory="ccm-sci-publications-researchreport"/>
+		<data class="com.arsdigita.cms.contenttypes.ResearchReportLoader"/>
+	</scripts>
+</load>

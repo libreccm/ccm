@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2010 Jens Pelzetter,
- * for the Center of Social Politics of the University of Bremen
+ * ScientificCMS Team, http://www.scientificcms.org
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -33,6 +33,7 @@ import com.arsdigita.cms.contenttypes.WorkingPaper;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class WorkingPaperPropertyForm
         extends UnPublishedPropertyForm

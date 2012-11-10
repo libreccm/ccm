@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
+ * Copyright (c) 2012 Jens Pelzetter,
  * ScientificCMS Team, http://www.scientificcms.org
  *
  * This library is free software; you can redistribute it and/or
@@ -21,19 +21,22 @@ package com.arsdigita.cms.contenttypes;
 
 /**
  *
- * @author Jens Pelzetter
+ * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class WorkingPaperLoader extends AbstractContentTypeLoader {
-
-    private static final String[] TYPES = {"/WEB-INF/content-types/com/arsdigita/cms/contenttypes/WorkingPaper.xml"};
-
-    public WorkingPaperLoader() {
-        super();
+public class ResearchReportInitializer extends ContentTypeInitializer {
+    
+    public ResearchReportInitializer() {
+        super("ccm-sci-publications-researchreport.pdl.mf", ResearchReport.BASE_DATA_OBJECT_TYPE);        
     }
-
-    public String[] getTypes() {
-        return TYPES;
+    
+    @Override
+    public String[] getStylesheets() {
+        return new String[]{INTERNAL_THEME_TYPES_DIR + "sci/ResearchReport.xsl"};
     }
-
+    
+    @Override
+    public String getTraversalXML() {
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/ResearchReport.xml";
+    }
 }
