@@ -6,6 +6,8 @@ import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.contenttypes.CollectedVolumeBundle;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonBundle;
 import com.arsdigita.cms.contenttypes.InProceedings;
@@ -18,11 +20,13 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.contenttypes.PublisherBundle;
 import com.arsdigita.cms.contenttypes.SciAuthor;
+import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.CollectedVolumeImportReport;
 import com.arsdigita.cms.scipublications.importer.report.JournalImportReport;
+import com.arsdigita.cms.scipublications.importer.report.OrganizationalUnitImportReport;
 import com.arsdigita.cms.scipublications.importer.report.ProceedingsImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublisherImportReport;
 import com.arsdigita.kernel.Kernel;
@@ -49,6 +53,7 @@ public class ImporterUtil {
     private final transient Set<String> createdJournals = new HashSet<String>();
     private final transient Set<String> createdProcs = new HashSet<String>();
     private final transient Set<String> createdPublishers = new HashSet<String>();
+    private final transient Set<String> createdOrgas = new HashSet<String>();
 
     public ImporterUtil() {
         publish = false;
@@ -413,6 +418,67 @@ public class ImporterUtil {
         }
 
         collection.close();
+        return report;
+    }
+
+    public OrganizationalUnitImportReport processOrganization(final UnPublished publication,
+                                                              final String name,
+                                                              final boolean pretend) {
+        final OrganizationalUnitImportReport report = new OrganizationalUnitImportReport();
+
+        final Session session = SessionManager.getSession();
+        final DataCollection collection = session.retrieve(GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE);
+        collection.addEqualsFilter("title", name);
+        report.setName(name);
+        if (collection.isEmpty()) {
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultOrganizationsFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Error getting folder for organizations.");
+                }
+
+                final GenericOrganizationalUnit orga = new GenericOrganizationalUnit(Publication.getConfig().
+                        getOrganizationType());
+                orga.setTitle(name);
+                orga.setName(normalizeString(name));
+                orga.setContentSection(folder.getContentSection());
+                orga.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                orga.save();
+
+                final GenericOrganizationalUnitBundle bundle = new GenericOrganizationalUnitBundle(Publication.
+                        getConfig().getOrganizationBundleType());
+                bundle.setDefaultLanguage(orga.getLanguage());
+                bundle.setContentType(orga.getContentType());
+                bundle.addInstance(orga);                
+                bundle.setName(orga.getName());
+                bundle.save();
+                
+                publication.setOrganization(orga);
+                
+                if (publish) {
+                    publishItem(orga);
+                }
+            }
+            
+            report.setCreated(true);
+            
+            //Special handling for pretend mode
+            if (pretend && createdOrgas.contains(name)) {
+                report.setCreated(false);
+            } else {
+                createdOrgas.add(name);
+            }
+        } else {
+            if (!pretend) {
+                collection.next();
+                final GenericOrganizationalUnit orga = new GenericOrganizationalUnit(collection.getDataObject());
+                publication.setOrganization(orga);
+            }
+            report.setCreated(false);
+        }
+        
+        collection.close();        
         return report;
     }
 

@@ -6,6 +6,7 @@
 		 <table name="ct_publications"/>
 		 <initializer class="com.arsdigita.cms.Initializer"/>
 		 <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
+                 <initializer class="com.arsdigita.cms.contenttypes.ResearchReportInitializer"/>
 	</requires>
 
 	<provides>

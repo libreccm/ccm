@@ -2,6 +2,7 @@ package com.arsdigita.cms.scipublications.importer.csv;
 
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
+import com.arsdigita.cms.scipublications.importer.report.OrganizationalUnitImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 
@@ -33,6 +34,7 @@ abstract class AbstractUnPublishedImporter<T extends UnPublished> extends Abstra
         }
 
         processNumberOfPages(publication);
+        processOrganization(publication);
 
         return publication;
     }
@@ -49,6 +51,15 @@ abstract class AbstractUnPublishedImporter<T extends UnPublished> extends Abstra
                 getReport().addMessage(String.format("Failed to parse numberOfPages data in line %d.",
                                                      getData().getLineNumber()));
             }
+        }
+    }
+    
+    private void processOrganization(final T publication) {
+        if ((getData().getPublisher() != null) && !getData().getPublisher().isEmpty()) {
+            final OrganizationalUnitImportReport report = getImporterUtil().processOrganization(publication, 
+                                                                                               getData().getPublisher(), 
+                                                                                               isPretend());
+            getReport().addOrgaUnit(report);
         }
     }
 

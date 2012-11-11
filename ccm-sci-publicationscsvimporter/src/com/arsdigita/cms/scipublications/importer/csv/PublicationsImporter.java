@@ -28,6 +28,7 @@ import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Monograph;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.ResearchReport;
 import com.arsdigita.cms.contenttypes.Review;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
@@ -162,6 +163,8 @@ public class PublicationsImporter implements SciPublicationsImporter {
             processProceedings(publishNewItems, data, report, pretend, importerUtil);
         } else if (Review.class.getSimpleName().equals(data.getType())) {
             processReview(publishNewItems, data, report, pretend, importerUtil);
+        } else if(ResearchReport.class.getSimpleName().equals(data.getType()) || "Report".equals(data.getType())) {
+            processResearchReport(publishNewItems, data, report, pretend, importerUtil);
         } else if (WorkingPaper.class.getSimpleName().equals(data.getType())) {
             processWorkingPaper(publishNewItems, data, report, pretend, importerUtil);
         }
@@ -282,8 +285,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                     final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Proceedings.class.getSimpleName(), report)) {
             return;
-        }
-        System.err.println("Publication is not in database");
+        }      
 
         final ProceedingsImporter importer = new ProceedingsImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
@@ -301,6 +303,19 @@ public class PublicationsImporter implements SciPublicationsImporter {
         final ReviewImporter importer = new ReviewImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
 
+    }
+    
+    private void processResearchReport(final boolean publishNewItems,
+                               final CsvLine data,
+                               final PublicationImportReport report,
+                               final boolean pretend,
+                               final ImporterUtil importerUtil) {
+        if (isPublicationAlreadyInDatabase(data, ResearchReport.class.getSimpleName(), report)) {
+            return;
+        } 
+        
+        final ResearchReportImporter importer = new ResearchReportImporter(data, report, pretend, importerUtil);
+        importer.doImport(publishNewItems);
     }
 
     private void processWorkingPaper(final boolean publishNewItems,

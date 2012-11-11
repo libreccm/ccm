@@ -2,6 +2,7 @@ package com.arsdigita.cms.scipublications.importer.csv;
 
 import com.arsdigita.cms.contenttypes.GreyLiterature;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
+import com.arsdigita.cms.contenttypes.UnPublishedBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
@@ -72,7 +73,7 @@ class GreyLiteratureImporter extends AbstractUnPublishedImporter<GreyLiterature>
         if (isPretend()) {
             return null;
         } else {
-            return new PublicationBundle(greyLiterature);
+            return new UnPublishedBundle(greyLiterature);
         }
     }
 

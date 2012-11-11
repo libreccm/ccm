@@ -26,6 +26,8 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter defaultInProceedingsFolder;
     private final Parameter defaultArticlesInJournalFolder;
     private final Parameter defaultPublicationsFolder;
+    private final Parameter orgaType;
+    private final Parameter orgaBundleType;
 
     public PublicationsConfig() {
         attachOrgaUnitsStep =
@@ -95,6 +97,15 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.OPTIONAL,
                 null);
 
+        orgaType = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.organization_type",
+                Parameter.OPTIONAL,
+                Publisher.BASE_DATA_OBJECT_TYPE);      
+        orgaBundleType = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.organization_bundle_type",
+                Parameter.OPTIONAL,
+                PublisherBundle.BASE_DATA_OBJECT_TYPE); 
+
         register(attachOrgaUnitsStep);
         register(attachPublicationsStepTo);
         register(defaultAuthorsFolder);
@@ -108,6 +119,8 @@ public class PublicationsConfig extends AbstractConfig {
         register(defaultInProceedingsFolder);
         register(defaultArticlesInJournalFolder);
         register(defaultPublicationsFolder);
+        register(orgaType);
+        register(orgaBundleType);
 
         loadInfo();
     }
@@ -208,4 +221,11 @@ public class PublicationsConfig extends AbstractConfig {
         }
     }
 
+    public String getOrganizationType() {
+        return (String) get(orgaType);
+    }
+
+    public String getOrganizationBundleType() {
+        return (String) get(orgaBundleType);
+    }
 }
