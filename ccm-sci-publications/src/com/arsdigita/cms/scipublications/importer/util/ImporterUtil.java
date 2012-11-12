@@ -218,7 +218,12 @@ public class ImporterUtil {
 
                 final CollectedVolume collectedVolume = new CollectedVolume();
                 collectedVolume.setTitle(title);
-                collectedVolume.setName(normalizeString(title));
+                final String name = normalizeString(title);
+                if (name.length() < 200) {
+                    collectedVolume.setName(name);
+                } else {
+                    collectedVolume.setName(name.substring(0, 200));
+                }
                 collectedVolume.setContentSection(folder.getContentSection());
                 collectedVolume.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
                 collectedVolume.save();
@@ -450,19 +455,21 @@ public class ImporterUtil {
                         getConfig().getOrganizationBundleType());
                 bundle.setDefaultLanguage(orga.getLanguage());
                 bundle.setContentType(orga.getContentType());
-                bundle.addInstance(orga);                
+                bundle.addInstance(orga);
                 bundle.setName(orga.getName());
+                bundle.setParent(folder);
+                bundle.setContentSection(folder.getContentSection());
                 bundle.save();
-                
+
                 publication.setOrganization(orga);
-                
+
                 if (publish) {
                     publishItem(orga);
                 }
             }
-            
+
             report.setCreated(true);
-            
+
             //Special handling for pretend mode
             if (pretend && createdOrgas.contains(name)) {
                 report.setCreated(false);
@@ -477,8 +484,8 @@ public class ImporterUtil {
             }
             report.setCreated(false);
         }
-        
-        collection.close();        
+
+        collection.close();
         return report;
     }
 

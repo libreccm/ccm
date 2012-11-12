@@ -14,8 +14,8 @@ import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
  */
 class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<ArticleInCollectedVolume> {
 
-    public ArticleInCollectedVolumeImporter(final CsvLine data, 
-                                            final PublicationImportReport report, 
+    public ArticleInCollectedVolumeImporter(final CsvLine data,
+                                            final PublicationImportReport report,
                                             final boolean pretend,
                                             final ImporterUtil importerUtil) {
         super(data, report, pretend, importerUtil);
@@ -38,14 +38,16 @@ class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<Artic
             report.addField(new FieldImportReport("Chapter", data.getChapter()));
         }
 
-        report.setCollectedVolume(importerUtil.processCollectedVolume(
-                article,
-                data.getCollectedVolume(),
-                data.getYear(),
-                parseAuthors(data.getCollectedVolumeAuthors()),
-                data.getPublisher(),
-                data.getPlace(),
-                isPretend()));
+        if ((data.getCollectedVolume() != null) && !data.getCollectedVolume().isEmpty()) {
+            report.setCollectedVolume(importerUtil.processCollectedVolume(
+                    article,
+                    data.getCollectedVolume(),
+                    data.getYear(),
+                    parseAuthors(data.getCollectedVolumeAuthors()),
+                    data.getPublisher(),
+                    data.getPlace(),
+                    isPretend()));
+        }
 
 
         return article;

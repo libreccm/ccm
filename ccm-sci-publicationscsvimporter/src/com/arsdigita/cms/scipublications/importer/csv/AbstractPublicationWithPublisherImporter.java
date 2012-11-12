@@ -24,12 +24,17 @@ abstract class AbstractPublicationWithPublisherImporter<T extends PublicationWit
     protected T importPublication() {
         final T publication = super.importPublication();
         final CsvLine data = getData();
-
+        
         if ((data.getIsbn() != null) && !data.getIsbn().isEmpty()) {
-            if (!isPretend()) {
+            final String isbn = data.getIsbn().replace("-", "");            
+            if (!isPretend() && isbn.length() == 13) {
                 publication.setISBN(data.getIsbn());
             }
-            getReport().addField(new FieldImportReport("isbn", data.getIsbn()));
+            if (isbn.length() == 13) {
+            getReport().addField(new FieldImportReport("isbn", isbn));
+            } else {
+                getReport().addMessage(String.format("Invalid ISBN at line %d.", data.getLineNumber()));
+            }
         }
 
         processVolume(publication);

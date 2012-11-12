@@ -34,9 +34,9 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     private final boolean pretend;
     private final ImporterUtil importerUtil;
 
-    public AbstractPublicationImporter(final CsvLine data, 
-                                       final PublicationImportReport report, 
-                                       final boolean pretend, 
+    public AbstractPublicationImporter(final CsvLine data,
+                                       final PublicationImportReport report,
+                                       final boolean pretend,
                                        final ImporterUtil importerUtil) {
         this.data = data;
         this.report = report;
@@ -127,12 +127,20 @@ abstract class AbstractPublicationImporter<T extends Publication> {
 
             bundle.save();
 
-            publication.setAbstract(data.getAbstract());
-            publication.setMisc(data.getMisc());
-                        
+            if (data.getAbstract().length() < 4096) {
+                publication.setAbstract(data.getAbstract());
+            } else {
+                publication.setAbstract(data.getAbstract().substring(0, 4096));
+            }
+            if (data.getMisc().length() < 4096) {
+                publication.setMisc(data.getMisc());
+            } else {
+                publication.setMisc(data.getMisc().substring(0, 4096));
+            }
+
             publication.save();
         }
-        
+
         processAuthors(publication);
 
         return publication;
@@ -150,7 +158,11 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     private void processTitleAndName(final T publication) {
         if (!pretend) {
             publication.setTitle(data.getTitle());
-            publication.setName(normalizeString(data.getTitle()));
+            String name = normalizeString(data.getTitle());
+            if (name.length() > 200) {
+                name = name.substring(0, 200);
+            }
+            publication.setName(name);
         }
         report.setTitle(data.getTitle());
     }
