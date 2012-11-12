@@ -30,16 +30,18 @@ public class GenericPersonAliasDeleteForm
             final GenericPersonAliasPropertiesStep step) {
         super(ID, itemModel);
         addSaveCancelSection();
+        addProcessListener(this);        
     }
 
     @Override
     public void addWidgets() {
         add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.alias.delete.label").localize()));
+                "cms.contenttypes.ui.person.alias.delete.confirm").localize()));
     }
 
     @Override
     public void init(final FormSectionEvent fse) throws FormProcessException {
+        //Nothing
     }
 
     @Override
@@ -50,6 +52,11 @@ public class GenericPersonAliasDeleteForm
         if ((person != null) && (person.getAlias() != null)) {
             person.unsetAlias();
         }
+    }
+    
+    @Override
+    public void validate(final FormSectionEvent event) throws FormProcessException {
+        //Nothing
     }
 
     @Override
