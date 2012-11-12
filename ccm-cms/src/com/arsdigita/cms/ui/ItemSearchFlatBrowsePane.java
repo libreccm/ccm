@@ -182,6 +182,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
                 collection.set(state, session.retrieve(type.getClassName()));
             }
             ((DataCollection)collection.get(state)).addFilter("version = 'draft'");
+            ((DataCollection)collection.get(state)).addFilter("section is not null");
 
             final String query = (String) state.getValue(queryParam);
             if ((query != null) && !query.isEmpty()) {
