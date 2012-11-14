@@ -355,7 +355,7 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
             link.set(
                     GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER,
                     subOrgaUnits.get(
-                    GenericOrganizationalUnitSuperiorCollection.SUPERIOR_ORGAUNIT_ORDER));
+                    GenericOrganizationalUnitSuperiorCollection.LINK_SUPERIOR_ORGAUNIT_ORDER));
 
             link.save();
         }
