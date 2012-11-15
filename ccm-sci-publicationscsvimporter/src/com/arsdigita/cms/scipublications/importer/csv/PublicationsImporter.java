@@ -113,7 +113,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                                                          importerUtil);
                 report.addPublication(result);
             } catch (Exception ex) {
-                tctx.abortTxn();
+                tctx.abortTxn();                
                 throw new SciPublicationsImportException(ex);
             }
 

@@ -242,7 +242,9 @@ public class ImporterUtil {
 
                 collectedVolume.setYearOfPublication(yearOfPub);
                 for (AuthorData author : authors) {
-                    report.addAuthor(processAuthor(collectedVolume, author, pretend));
+                    if ((author.getSurname() != null) && !author.getSurname().isEmpty()) {
+                        report.addAuthor(processAuthor(collectedVolume, author, pretend));
+                    }
                 }
 
                 if ((publisherName != null) && !publisherName.isEmpty()) {
@@ -329,7 +331,9 @@ public class ImporterUtil {
                 }
                 proceedings.setYearOfPublication(yearOfPub);
                 for (AuthorData author : authors) {
-                    report.addAuthor(processAuthor(proceedings, author, pretend));
+                    if ((author.getSurname() != null) && !author.getSurname().isEmpty()) {
+                        report.addAuthor(processAuthor(proceedings, author, pretend));
+                    }
                 }
 
                 if ((publisherName != null) && !publisherName.isEmpty()) {

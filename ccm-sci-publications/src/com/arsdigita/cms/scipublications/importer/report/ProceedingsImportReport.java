@@ -73,7 +73,7 @@ public class ProceedingsImportReport {
     public void setPublisher(final PublisherImportReport publisher) {
         this.publisher = publisher;
     }
-        
+
     public boolean isCreated() {
         return created;
     }
@@ -87,7 +87,7 @@ public class ProceedingsImportReport {
         if (created) {
             final StringWriter strWriter = new StringWriter();
             final PrintWriter writer = new PrintWriter(strWriter);
-                        
+
             for (int i = 0; i < 40; i++) {
                 writer.append("- ");
             }
@@ -98,13 +98,15 @@ public class ProceedingsImportReport {
             //writer.printf("Date from of conference: %s\n", dateToOfConference.toString());
             //writer.printf("Date to of conference..: %s\n", dateToOfConference.toString());
             writer.print("Authors:\n");
-            for(AuthorImportReport author : authors) {
+            for (AuthorImportReport author : authors) {
                 writer.printf("%s\n", author.toString());
             }
-                        
-            writer.append(publisher.toString());
-            writer.append('\n');            
-            
+
+            if (publisher != null) {
+                writer.append(publisher.toString());
+            }
+            writer.append('\n');
+
             for (int i = 0; i < 40; i++) {
                 writer.append("- ");
             }
@@ -116,5 +118,4 @@ public class ProceedingsImportReport {
                                  proceedingsTitle);
         }
     }
-
 }
