@@ -10,28 +10,33 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileBundle;
+import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TooManyListenersException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class PublicPersonalProfilePropertyForm extends BasicPageForm implements FormProcessListener,
@@ -62,12 +67,57 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
         final ParameterModel ownerModel = new StringParameter(PublicPersonalProfileBundle.OWNER);
         final SingleSelect ownerSelect = new SingleSelect(ownerModel);
         ownerSelect.addValidationListener(new NotNullValidationListener());
-        
+        add(ownerSelect);
+
         try {
             ownerSelect.addPrintListener(new PrintListener() {
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect ownerSelect = (SingleSelect) event.getTarget();
+                    
+                    final PublicPersonalProfile profile = (PublicPersonalProfile) itemModel.getSelectedItem(event.
+                            getPageState());
+                    final GenericPerson owner = profile.getOwner();
+                    
+                    String personType = PublicPersonalProfiles.getConfig().getPersonType();
+                    if ((personType == null) || (personType.isEmpty())) {
+                        personType = "com.arsdigita.cms.contenttypes.GenericPerson";
+                    }
 
-                public void prepare(PrintEvent e) {
-                    throw new UnsupportedOperationException("Not supported yet.");
+                    ContentTypeCollection types = ContentType.getAllContentTypes();
+                    types.addFilter(String.format("className = '%s'", personType));
+                    if (types.size() == 0) {
+                        personType = "com.arsdigita.cms.contenttypes.GenericPerson";
+                    }
+                    DataCollection persons = SessionManager.getSession().retrieve(personType);
+                    //persons.addFilter("profile is null");
+                    persons.addFilter(String.format("version = '%s'", ContentItem.DRAFT));
+                    persons.addFilter(String.format("alias.id = '%s'", owner.getID().toString()));
+                    persons.addOrder("surname asc");
+                    persons.addOrder("givenname asc");
+                    persons.addOrder("language asc");
+
+
+//                    final GenericPerson owner = profile.getOwner();
+//                    final GenericPerson alias = owner.getAlias();
+
+                    ownerSelect.addOption(new Option(owner.getID().toString(), owner.getFullName()));
+                    
+                    if (!persons.isEmpty()) {
+                    final List<BigDecimal> processed = new ArrayList<BigDecimal>();
+                        while(persons.next()) {
+                            GenericPerson person = (GenericPerson) DomainObjectFactory.newInstance(persons.getDataObject());
+                            if (processed.contains(person.getParent().getID())) {
+                                continue;
+                            } else {
+                                if (person.getGenericPersonBundle().get("profile") == null) {
+                                    continue;
+                                } else {
+                                    ownerSelect.addOption(new Option(person.getID().toString(), person.getFullName()));
+                                    processed.add(person.getParent().getID());
+                                }
+                            }
+                        }                                                                        
+                    }
                 }
             });
         } catch (TooManyListenersException ex) {
@@ -82,7 +132,6 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
 
     @Override
     public void init(final FormSectionEvent fse) throws FormProcessException {
-        //final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
         final PublicPersonalProfile profile = (PublicPersonalProfile) super.initBasicWidgets(fse);
 
@@ -94,14 +143,15 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
         final PublicPersonalProfile profile = (PublicPersonalProfile) processBasicWidgets(fse);
         final FormData data = fse.getFormData();
         final PageState state = fse.getPageState();
-                
+
         if ((profile != null) && getSaveCancelSection().getSaveButton().isSelected(state)) {
-            
-            final String ownerId = (String)data.get(PublicPersonalProfileBundle.OWNER);                    
+
+            final String ownerId = (String) data.get(PublicPersonalProfileBundle.OWNER);
             if (!profile.getOwner().getID().equals(new BigDecimal(ownerId))) {
-                
-            }            
-            
+                final GenericPerson newOwner = new GenericPerson(new BigDecimal(ownerId));
+                profile.setOwner(newOwner);
+            }
+
             profile.setProfileUrl(((String) data.get(PublicPersonalProfile.PROFILE_URL)).toLowerCase());
 
             profile.save();
@@ -146,5 +196,4 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
             }
         }
     }
-
 }
