@@ -127,21 +127,23 @@ abstract class AbstractPublicationImporter<T extends Publication> {
 
             bundle.save();
 
-            if (data.getAbstract().length() < 4096) {
+            if (data.getAbstract().length() < 3975) {
                 publication.setAbstract(data.getAbstract());
             } else {
-                publication.setAbstract(data.getAbstract().substring(0, 4096));
+                publication.setAbstract(data.getAbstract().substring(0, 3975));
             }
-            if (data.getMisc().length() < 4096) {
+            if (data.getMisc().length() < 3975) {
                 publication.setMisc(data.getMisc());
             } else {
-                publication.setMisc(data.getMisc().substring(0, 4096));
+                publication.setMisc(data.getMisc().substring(0, 3975));
             }
 
             publication.save();
         }
 
-        processAuthors(publication);
+        if ((data.getAuthors() != null) && !data.getAuthors().isEmpty()) {
+            processAuthors(publication);
+        }
 
         return publication;
     }

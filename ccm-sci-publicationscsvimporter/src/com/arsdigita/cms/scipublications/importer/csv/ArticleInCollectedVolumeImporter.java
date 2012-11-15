@@ -69,15 +69,17 @@ class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<Artic
     }
 
     private void processPagesTo(final ArticleInCollectedVolume publication) {
-        try {
-            final int pagesTo = Integer.parseInt(getData().getPageTo());
-            if (!isPretend()) {
-                publication.setPagesTo(pagesTo);
+        if ((getData().getPageFrom() != null) && !getData().getPageFrom().isEmpty()) {
+            try {
+                final int pagesTo = Integer.parseInt(getData().getPageTo());
+                if (!isPretend()) {
+                    publication.setPagesTo(pagesTo);
+                }
+                getReport().addField(new FieldImportReport("Pages to", getData().getPageTo()));
+            } catch (NumberFormatException ex) {
+                getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
+                                                     getData().getLineNumber()));
             }
-            getReport().addField(new FieldImportReport("Pages to", getData().getPageTo()));
-        } catch (NumberFormatException ex) {
-            getReport().addMessage(String.format("Failed to parse pageTo data in line '%d'.",
-                                                 getData().getLineNumber()));
         }
     }
 

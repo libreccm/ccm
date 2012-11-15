@@ -98,28 +98,28 @@ public class PublicationsImporter implements SciPublicationsImporter {
 
         final Session session = SessionManager.getSession();
         final TransactionContext tctx = session.getTransactionContext();
-        tctx.beginTxn();
 
-        try {
-            int lineNumber = 2; //Because we are starting at line 2 of the CSV file (line 1 contains the column headers)
-            for (String line : lines) {
+        System.out.printf("Import publications...\n");
+        int lineNumber = 2; //Because we are starting at line 2 of the CSV file (line 1 contains the column headers)
+        for (String line : lines) {
+            tctx.beginTxn();
+
+            try {
+                System.out.printf("Processing publication %d...\n", lineNumber);
                 final PublicationImportReport result = importPublication(line,
                                                                          lineNumber,
                                                                          publishNewItems,
                                                                          pretend,
                                                                          importerUtil);
                 report.addPublication(result);
-                lineNumber++;
+            } catch (Exception ex) {
+                tctx.abortTxn();
+                throw new SciPublicationsImportException(ex);
             }
-        } catch (Exception ex) {
-            tctx.abortTxn();
-            throw new SciPublicationsImportException(ex);
-        }
 
-        if (pretend) {
-            tctx.abortTxn();
-        } else {
             tctx.commitTxn();
+
+            lineNumber++;
         }
 
         return report;
@@ -163,7 +163,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
             processProceedings(publishNewItems, data, report, pretend, importerUtil);
         } else if (Review.class.getSimpleName().equals(data.getType())) {
             processReview(publishNewItems, data, report, pretend, importerUtil);
-        } else if(ResearchReport.class.getSimpleName().equals(data.getType()) || "Report".equals(data.getType())) {
+        } else if (ResearchReport.class.getSimpleName().equals(data.getType()) || "Report".equals(data.getType())) {
             processResearchReport(publishNewItems, data, report, pretend, importerUtil);
         } else if (WorkingPaper.class.getSimpleName().equals(data.getType())) {
             processWorkingPaper(publishNewItems, data, report, pretend, importerUtil);
@@ -285,7 +285,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                     final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Proceedings.class.getSimpleName(), report)) {
             return;
-        }      
+        }
 
         final ProceedingsImporter importer = new ProceedingsImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
@@ -304,16 +304,16 @@ public class PublicationsImporter implements SciPublicationsImporter {
         importer.doImport(publishNewItems);
 
     }
-    
+
     private void processResearchReport(final boolean publishNewItems,
-                               final CsvLine data,
-                               final PublicationImportReport report,
-                               final boolean pretend,
-                               final ImporterUtil importerUtil) {
+                                       final CsvLine data,
+                                       final PublicationImportReport report,
+                                       final boolean pretend,
+                                       final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, ResearchReport.class.getSimpleName(), report)) {
             return;
-        } 
-        
+        }
+
         final ResearchReportImporter importer = new ResearchReportImporter(data, report, pretend, importerUtil);
         importer.doImport(publishNewItems);
     }

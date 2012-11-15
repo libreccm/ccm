@@ -15,7 +15,7 @@ abstract class AbstractPublicationWithPublisherImporter<T extends PublicationWit
 
     public AbstractPublicationWithPublisherImporter(final CsvLine data,
                                                     final PublicationImportReport report,
-                                                    final boolean pretend, 
+                                                    final boolean pretend,
                                                     final ImporterUtil importerUtil) {
         super(data, report, pretend, importerUtil);
     }
@@ -24,14 +24,14 @@ abstract class AbstractPublicationWithPublisherImporter<T extends PublicationWit
     protected T importPublication() {
         final T publication = super.importPublication();
         final CsvLine data = getData();
-        
+
         if ((data.getIsbn() != null) && !data.getIsbn().isEmpty()) {
-            final String isbn = data.getIsbn().replace("-", "");            
+            final String isbn = data.getIsbn().replace("-", "");
             if (!isPretend() && isbn.length() == 13) {
                 publication.setISBN(data.getIsbn());
             }
             if (isbn.length() == 13) {
-            getReport().addField(new FieldImportReport("isbn", isbn));
+                getReport().addField(new FieldImportReport("isbn", isbn));
             } else {
                 getReport().addMessage(String.format("Invalid ISBN at line %d.", data.getLineNumber()));
             }
@@ -47,7 +47,9 @@ abstract class AbstractPublicationWithPublisherImporter<T extends PublicationWit
             getReport().addField(new FieldImportReport("edition", data.getEdition()));
         }
 
-        getImporterUtil().processPublisher(publication, getData().getPlace(), getData().getPublisher(), isPretend());
+        if ((data.getPublisher() != null) && !data.getPublisher().isEmpty()) {
+            getImporterUtil().processPublisher(publication, getData().getPlace(), getData().getPublisher(), isPretend());
+        }
 
         return publication;
     }
@@ -96,4 +98,5 @@ abstract class AbstractPublicationWithPublisherImporter<T extends PublicationWit
             }
         }
     }
+
 }

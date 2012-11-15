@@ -12,11 +12,11 @@ import java.util.List;
  * @version $Id$
  */
 public class CollectedVolumeImportReport {
-    
+
     private String collectedVolumeTitle;
     private List<AuthorImportReport> authors = new ArrayList<AuthorImportReport>();
     private PublisherImportReport publisher;
-    private boolean created;    
+    private boolean created;
 
     public String getCollectedVolumeTitle() {
         return collectedVolumeTitle;
@@ -29,7 +29,7 @@ public class CollectedVolumeImportReport {
     public List<AuthorImportReport> getAuthors() {
         return Collections.unmodifiableList(authors);
     }
-    
+
     public void addAuthor(final AuthorImportReport author) {
         authors.add(author);
     }
@@ -37,11 +37,11 @@ public class CollectedVolumeImportReport {
     public void setAuthors(final List<AuthorImportReport> authors) {
         this.authors = authors;
     }
-    
+
     public PublisherImportReport getPublisher() {
         return publisher;
     }
-    
+
     public void setPublisher(final PublisherImportReport publisher) {
         this.publisher = publisher;
     }
@@ -53,35 +53,37 @@ public class CollectedVolumeImportReport {
     public void setCreated(final boolean created) {
         this.created = created;
     }
-    
+
     @Override
     public String toString() {
         if (created) {
             final StringWriter strWriter = new StringWriter();
             final PrintWriter writer = new PrintWriter(strWriter);
-                                    
-            for(int i = 0; i < 40; i++) {
+
+            for (int i = 0; i < 40; i++) {
                 writer.append("- ");
             }
             writer.append("\n");
-            
+
             writer.printf("Created collected volume '%s' and linked it with publication.\n", collectedVolumeTitle);
-            writer.print("Authors of collected volume:\n");            
-            for(AuthorImportReport author : authors) {
+            writer.print("Authors of collected volume:\n");
+            for (AuthorImportReport author : authors) {
                 writer.printf("%s\n", author.toString());
             }
-            
-            writer.append(publisher.toString());
+
+            if (publisher != null) {
+                writer.append(publisher.toString());
+            }
             writer.append('\n');
-            
-            for(int i = 0; i < 40; i++) {
+
+            for (int i = 0; i < 40; i++) {
                 writer.append("- ");
             }
-            
+
             return strWriter.toString();
         } else {
             return String.format("Found collected volume '%s' and linked it with publications.", collectedVolumeTitle);
-        }        
+        }
     }
-    
+
 }

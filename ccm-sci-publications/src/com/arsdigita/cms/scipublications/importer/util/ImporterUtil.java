@@ -245,7 +245,9 @@ public class ImporterUtil {
                     report.addAuthor(processAuthor(collectedVolume, author, pretend));
                 }
 
-                report.setPublisher(processPublisher(collectedVolume, place, publisherName, pretend));
+                if ((publisherName != null) && !publisherName.isEmpty()) {
+                    report.setPublisher(processPublisher(collectedVolume, place, publisherName, pretend));
+                }
 
                 collectedVolume.save();
                 article.setCollectedVolume(collectedVolume);
@@ -330,7 +332,9 @@ public class ImporterUtil {
                     report.addAuthor(processAuthor(proceedings, author, pretend));
                 }
 
-                report.setPublisher(processPublisher(proceedings, place, publisherName, pretend));
+                if ((publisherName != null) && !publisherName.isEmpty()) {
+                    report.setPublisher(processPublisher(proceedings, place, publisherName, pretend));
+                }
 
                 proceedings.save();
                 inProceedings.setProceedings(proceedings);
@@ -466,6 +470,8 @@ public class ImporterUtil {
                 if (publish) {
                     publishItem(orga);
                 }
+
+                report.setType(orga.getClass().getName());
             }
 
             report.setCreated(true);
@@ -477,11 +483,12 @@ public class ImporterUtil {
                 createdOrgas.add(name);
             }
         } else {
+            collection.next();
+            final GenericOrganizationalUnit orga = new GenericOrganizationalUnit(collection.getDataObject());
             if (!pretend) {
-                collection.next();
-                final GenericOrganizationalUnit orga = new GenericOrganizationalUnit(collection.getDataObject());
                 publication.setOrganization(orga);
             }
+            report.setType(orga.getClass().getName());
             report.setCreated(false);
         }
 

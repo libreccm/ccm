@@ -107,7 +107,7 @@ public class Publication extends ContentPage {
     public static PublicationsConfig getConfig() {
         return config;
     }
-    
+
     public PublicationBundle getPublicationBundle() {
         return (PublicationBundle) getContentBundle();
     }
@@ -202,7 +202,7 @@ public class Publication extends ContentPage {
         //link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
 
         //updateAuthorsStr();
-        
+
         getPublicationBundle().addAuthor(author, editor);
     }
 
@@ -216,7 +216,7 @@ public class Publication extends ContentPage {
         //remove(AUTHORS, author);
 
         //updateAuthorsStr();
-        getPublicationBundle().removeAuthor(author);        
+        getPublicationBundle().removeAuthor(author);
     }
 
     public void swapWithPreviousAuthor(final GenericPerson author) {
@@ -269,7 +269,7 @@ public class Publication extends ContentPage {
         //Assert.exists(series, Series.class);
 
         //remove(SERIES, series);
-        
+
         getPublicationBundle().removeSeries(series);
     }
 
@@ -287,7 +287,7 @@ public class Publication extends ContentPage {
         //Assert.exists(orgaunit, GenericOrganizationalUnit.class);
 
         //add(ORGAUNITS, orgaunit);
-        
+
         getPublicationBundle().addOrganizationalUnit(orgaunit);
     }
 
@@ -310,7 +310,7 @@ public class Publication extends ContentPage {
 
         //return new GenericOrganizationalUnitPublicationsCollection(
         //        dataCollection);
-        
+
         return PublicationBundle.getPublications(orgaunit);
     }
 
@@ -328,7 +328,7 @@ public class Publication extends ContentPage {
         //Assert.exists(publication);
 
         //orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);
-        PublicationBundle.removePublication(orgaunit, publication);        
+        PublicationBundle.removePublication(orgaunit, publication);
     }
 
     @Override
@@ -344,12 +344,15 @@ public class Publication extends ContentPage {
         generators.add(new PublicationExtraXmlGenerator());
         return generators;
     }
-    
+
     @Override
     public String getSearchSummary() {
-        return String.format("%s %s %s", 
-                             getTitle(),
-                             getAuthors(),
-                             getAbstract());
+        String summary = String.format("%s %s %s", getTitle(), getAuthors(), getAbstract());
+        if (summary.length() > 4000) {
+            summary = summary.substring(0, 4000);
+        }
+
+        return summary;
     }
+
 }
