@@ -178,6 +178,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                                  final boolean pretend,
                                                  final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, ArticleInCollectedVolume.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -194,6 +195,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                          final boolean pretend,
                                          final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, ArticleInJournal.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -207,6 +209,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                         final boolean pretend,
                                         final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, CollectedVolume.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -219,6 +222,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                   final boolean pretend,
                                   final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Expertise.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -232,6 +236,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                        final boolean pretend,
                                        final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, GreyLiterature.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -245,6 +250,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                       final boolean pretend,
                                       final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, InProceedings.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -258,6 +264,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                         final boolean pretend,
                                         final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, InternetArticle.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -271,6 +278,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                   final boolean pretend,
                                   final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Monograph.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -284,6 +292,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                     final boolean pretend,
                                     final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Proceedings.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -297,6 +306,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                final boolean pretend,
                                final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, Review.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -311,6 +321,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                        final boolean pretend,
                                        final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, ResearchReport.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -324,6 +335,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                      final boolean pretend,
                                      final ImporterUtil importerUtil) {
         if (isPublicationAlreadyInDatabase(data, WorkingPaper.class.getSimpleName(), report)) {
+            report.setSuccessful(true);
             return;
         }
 
@@ -331,18 +343,6 @@ public class PublicationsImporter implements SciPublicationsImporter {
         importer.doImport(publishNewItems);
     }
 
-//    private List<AuthorData> parseAuthors(final boolean publishNewItems, final String authorsStr, final PublicationImportReport report) {
-//        final List<AuthorData> authors = new ArrayList<AuthorData>();
-//
-//        final String[] tokens = authorsStr.split(AUTHORS_SEP);
-//        reportWriter.printf("Found %d authors...\n", tokens.length);
-//
-//        for (String token : tokens) {
-//            parseAuthor(token, authors, reportWriter);
-//        }
-//
-//        return authors;
-//    }
     private boolean isPublicationAlreadyInDatabase(final CsvLine data,
                                                    final String type,
                                                    final PublicationImportReport report) {

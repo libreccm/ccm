@@ -71,7 +71,9 @@ public class ImporterUtil {
 
         final DataCollection collection = session.retrieve(GenericPerson.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("surname", authorData.getSurname());
-        collection.addEqualsFilter("givenname", authorData.getGivenName());
+        if ((authorData.getGivenName() != null) && !authorData.getGivenName().isEmpty()) {
+            collection.addEqualsFilter("givenname", authorData.getGivenName());
+        }
 
         report.setSurname(authorData.getSurname());
         report.setGivenName(authorData.getGivenName());
@@ -140,7 +142,7 @@ public class ImporterUtil {
 
         final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(Publisher.BASE_DATA_OBJECT_TYPE);
-        collection.addEqualsFilter("title", publisherName);
+        collection.addEqualsFilter("publisherName", publisherName);
         collection.addEqualsFilter("place", place);
         report.setPublisherName(publisherName);
         report.setPlace(place);

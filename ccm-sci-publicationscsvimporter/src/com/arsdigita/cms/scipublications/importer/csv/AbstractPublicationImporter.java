@@ -4,8 +4,6 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
-import com.arsdigita.cms.lifecycle.LifecycleDefinition;
-import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
@@ -14,8 +12,6 @@ import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.kernel.Kernel;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +24,8 @@ abstract class AbstractPublicationImporter<T extends Publication> {
 
     private static final String AUTHORS_SEP = ";";
     private static final String AUTHOR_NAME_SEP = ",";
-    private static final String EDITOR_STR = "(Hrsg.)";
+    //private static final String EDITOR_STR = "(Hrsg.)";    
+    private static final String[] EDITOR_STRS = {"(Hrsg.)", "(Hg.)", "(Ed.)", "(ed.)"};
     private final CsvLine data;
     private final PublicationImportReport report;
     private final boolean pretend;
@@ -109,6 +106,7 @@ abstract class AbstractPublicationImporter<T extends Publication> {
         final T publication = createPublication();
 
         processTitleAndName(publication);
+        processYear(publication);
         processReviewed(publication);
 
         if (!pretend) {
@@ -169,6 +167,20 @@ abstract class AbstractPublicationImporter<T extends Publication> {
         report.setTitle(data.getTitle());
     }
 
+    private void processYear(final T publication) {
+        if (!pretend) {
+            final String year = data.getYear();
+            
+            try {
+                publication.setYearOfPublication(Integer.parseInt(year));
+            } catch(NumberFormatException ex) {
+                publication.setYearOfPublication(0);
+            }
+        }
+        
+        report.addField(new FieldImportReport("year", data.getYear()));
+    }
+    
     private void processReviewed(final T publication) {
         final String reviewedStr = data.getReviewed();
         final boolean reviewed;
@@ -233,29 +245,34 @@ abstract class AbstractPublicationImporter<T extends Publication> {
 
         if (nameTokens.length == 1) {
             final AuthorData author = new AuthorData();
-            author.setSurname(nameTokens[0]);
+            author.setSurname(checkForEditor(author, nameTokens[0]));
             authors.add(author);
         } else if (nameTokens.length == 2) {
             final AuthorData author = new AuthorData();
-            author.setSurname(nameTokens[0]);
-            if (nameTokens[1].endsWith(EDITOR_STR)) {
-                author.setEditor(true);
-                author.setGivenName(nameTokens[1].substring(0, nameTokens[1].length() - EDITOR_STR.length()));
-            } else {
-                author.setGivenName(nameTokens[1]);
-            }
+            
+            author.setSurname(checkForEditor(author, nameTokens[0]));            
+            author.setGivenName(checkForEditor(author, nameTokens[1]));
+                        
             authors.add(author);
         } else {
             final AuthorData author = new AuthorData();
-            author.setSurname(nameTokens[0]);
-            if (nameTokens[1].endsWith(EDITOR_STR)) {
-                author.setEditor(true);
-                author.setGivenName(nameTokens[1].substring(0, nameTokens[1].length() - EDITOR_STR.length()));
-            } else {
-                author.setGivenName(nameTokens[1]);
-            }
+            
+            author.setSurname(checkForEditor(author, nameTokens[0]));            
+            author.setGivenName(checkForEditor(author, nameTokens[1]));
+            
             authors.add(author);
         }
+    }    
+    
+    private String checkForEditor(final AuthorData author, final String token) {
+        for(String editorStr : EDITOR_STRS) {
+            if (token.endsWith(editorStr)) {
+                author.setEditor(true);
+                return token.substring(0, token.length() - editorStr.length()).trim();
+            }
+        }
+        
+        return token.trim();
     }
 
     private void assignCategories(final PublicationBundle publicationBundle) {

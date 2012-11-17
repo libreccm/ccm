@@ -57,9 +57,9 @@ public class CsvImporterConfig extends AbstractConfig {
 
     public Map<String, Category> getDepartmentCategories() {
         final String categoryIds = getDepartmentCategoryIds();
-                
+
         final Map<String, Category> categories = new HashMap<String, Category>();
-        
+
         if ((categoryIds == null) || categoryIds.isEmpty()) {
             return categories;
         }
