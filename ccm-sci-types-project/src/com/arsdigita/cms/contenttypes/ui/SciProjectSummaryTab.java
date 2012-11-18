@@ -195,10 +195,11 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final GenericOrganizationalUnitPersonCollection members = project.
                 getPersons();
         
-        while (members.next()) {
+        while (members.next()) {            
             generateMemberXml(members.getPerson(),
                               membersElem,
                               members.getRoleName(),
+                              members.getStatus(),
                               state);
         }
 
@@ -246,6 +247,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
     protected void generateMemberXml(final BigDecimal memberId,
                                      final Element parent,
                                      final String role,
+                                     final String status,
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final GenericPerson member = new GenericPerson(memberId);
@@ -253,18 +255,20 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                    + "in %d ms.",
                                    member.getFullName(),
                                    System.currentTimeMillis() - start));
-        generateMemberXml(member, parent, role, state);
+        generateMemberXml(member, parent, role, status, state);
     }
 
     protected void generateMemberXml(final GenericPerson member,
                                      final Element parent,
                                      final String role,
+                                     final String status,
                                      final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
         generator.setUseExtraXml(true);
         generator.setItemElemName("member", "");
         generator.addItemAttribute("role", role);
+        generator.addItemAttribute("status", status);
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for member '%s' in %d ms.",
                                    member.getFullName(),
