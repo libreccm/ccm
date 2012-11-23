@@ -179,11 +179,13 @@ public abstract class BasicItemForm
         add(new Label(getNameLabel()));
         TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
         nameWidget.addValidationListener(new NameValidationListener());
+        nameWidget.setMaxLength(190);
         nameWidget.setOnFocus("defaulting = false");
         nameWidget.setOnBlur(
                 "if (this.value == '') "
                 + "{ defaulting = true; this.value = urlize(this.form." + TITLE
                 + ".value) } " + " else { this.value = urlize(this.value); }");
+        nameWidget.addValidationListener(new NotNullValidationListener());        
         add(nameWidget);
 
     }

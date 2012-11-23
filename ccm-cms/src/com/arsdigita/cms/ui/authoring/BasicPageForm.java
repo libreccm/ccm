@@ -142,6 +142,8 @@ public abstract class BasicPageForm extends BasicItemForm {
 
     @Override
     public void validate(final FormSectionEvent fse) throws FormProcessException {
+        super.validate(fse);
+        
         final ContentItem item = getItemSelectionModel().getSelectedItem(fse.getPageState());
         ACSObject parent = item.getParent();
 
