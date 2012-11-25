@@ -2,6 +2,7 @@ package com.arsdigita.cms.scipublications.importer.csv;
 
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.contenttypes.CollectedVolumeBundle;
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
@@ -38,4 +39,8 @@ class CollectedVolumeImporter extends AbstractPublicationWithPublisherImporter<C
         }
     }
 
+     @Override
+    protected Integer getFolderId() {
+        return Publication.getConfig().getDefaultCollectedVolumesFolder();
+    }
 }

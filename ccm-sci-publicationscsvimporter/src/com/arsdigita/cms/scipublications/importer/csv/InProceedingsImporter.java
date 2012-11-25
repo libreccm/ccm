@@ -2,6 +2,7 @@ package com.arsdigita.cms.scipublications.importer.csv;
 
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.InProceedingsBundle;
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
@@ -88,6 +89,11 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
         } else {
             return new InProceedingsBundle(inProceedings);
         }
+    }
+    
+     @Override
+    protected Integer getFolderId() {
+        return Publication.getConfig().getDefaultInProceedingsFolder();
     }
 
 }

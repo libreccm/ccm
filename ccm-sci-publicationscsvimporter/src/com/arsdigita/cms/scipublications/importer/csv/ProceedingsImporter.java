@@ -2,6 +2,7 @@ package com.arsdigita.cms.scipublications.importer.csv;
 
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.ProceedingsBundle;
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
@@ -55,4 +56,8 @@ class ProceedingsImporter extends AbstractPublicationWithPublisherImporter<Proce
         }
     }
 
+     @Override
+    protected Integer getFolderId() {
+        return Publication.getConfig().getDefaultProceedingsFolder();
+    }
 }

@@ -1,6 +1,7 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
 import com.arsdigita.cms.contenttypes.Monograph;
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisherBundle;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
@@ -37,5 +38,5 @@ class MonographImporter extends AbstractPublicationWithPublisherImporter<Monogra
             return new PublicationWithPublisherBundle(monograph);
         }
     }
-
+         
 }

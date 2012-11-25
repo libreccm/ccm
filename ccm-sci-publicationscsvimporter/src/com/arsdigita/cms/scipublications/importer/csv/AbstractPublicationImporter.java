@@ -112,7 +112,7 @@ abstract class AbstractPublicationImporter<T extends Publication> {
         if (!pretend) {
             publication.save();
 
-            final Integer folderId = Publication.getConfig().getDefaultPublicationsFolder();
+            final Integer folderId = getFolderId();
             final Folder folder = new Folder(new BigDecimal(folderId));
             publication.setContentSection(folder.getContentSection());
             publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
@@ -155,6 +155,15 @@ abstract class AbstractPublicationImporter<T extends Publication> {
 
     protected abstract PublicationBundle createBundle(final T publication);
 
+    /**
+     * Overwrite this method to put a publication of specific type into a special folder.
+     * 
+     * @return
+     */
+    protected Integer getFolderId() {
+        return Publication.getConfig().getDefaultPublicationsFolder();
+    }
+    
     private void processTitleAndName(final T publication) {
         if (!pretend) {
             publication.setTitle(data.getTitle());
