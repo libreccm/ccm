@@ -234,7 +234,7 @@ public class PublicationBundle extends ContentBundle {
     public void removeAuthor(final GenericPerson author) {
         Assert.exists(author, GenericPerson.class);
 
-        remove(AUTHORS, author);
+        remove(AUTHORS, author.getContentBundle());
 
         updateAuthorsStr();
     }

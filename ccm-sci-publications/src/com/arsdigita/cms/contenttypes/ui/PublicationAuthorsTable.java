@@ -140,6 +140,7 @@ public class PublicationAuthorsTable
                         (Publication) m_itemModel.getSelectedObject(state);
             return new PublicationAuthorsTableModel(table, state, publication);
         }
+
     }
 
     private class PublicationAuthorsTableModel implements TableModel {
@@ -207,6 +208,7 @@ public class PublicationAuthorsTable
         public Object getKeyAt(int columnIndex) {
             return m_author.getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -267,6 +269,7 @@ public class PublicationAuthorsTable
                 return label;
             }
         }
+
     }
 
     private class EditAssocCellRenderer
@@ -282,7 +285,7 @@ public class PublicationAuthorsTable
                                       int row,
                                       int col) {
             SecurityManager securityManager =
-                           CMS.getSecurityManager(state);
+                            CMS.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
                     getSelectedObject(state);
 
@@ -299,6 +302,7 @@ public class PublicationAuthorsTable
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
@@ -335,6 +339,7 @@ public class PublicationAuthorsTable
                 return label;
             }
         }
+
     }
 
     private class UpCellRenderer
@@ -360,6 +365,7 @@ public class PublicationAuthorsTable
                 return link;
             }
         }
+
     }
 
     private class DownCellRenderer
@@ -390,6 +396,7 @@ public class PublicationAuthorsTable
                 return link;
             }
         }
+
     }
 
     @Override
@@ -398,20 +405,17 @@ public class PublicationAuthorsTable
 
         s_log.info("cellSelected!");
 
-        GenericPerson author =
-                      new GenericPerson(new BigDecimal(event.getRowKey().
-                toString()));
+        GenericPerson author = new GenericPerson(new BigDecimal(event.getRowKey().toString()));
 
-        Publication publication = (Publication) m_itemModel.getSelectedObject(
-                state);
+        Publication publication = (Publication) m_itemModel.getSelectedObject(state);
 
         AuthorshipCollection authors = publication.getAuthors();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-        } else if (column.getHeaderKey().toString().equals(
-                TABLE_COL_EDIT_ASSOC)) {
+            //Nothing
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT_ASSOC)) {
 
             while (authors.next()) {
                 if (authors.getAuthor().equals(author)) {
@@ -442,4 +446,5 @@ public class PublicationAuthorsTable
     public void headSelected(TableActionEvent event) {
         //Nothing to do here.
     }
+
 }
