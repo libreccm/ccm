@@ -6,7 +6,6 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -36,8 +35,7 @@ public class Paginator {
                      final int pageSize) {
         final String pageNumberStr = request.getParameter(PAGE_NUMBER);
         if (pageNumberStr == null) {
-            logger.debug("No pageNumber parameter in request setting page number"
-                         + " to 1.");
+            logger.debug("No pageNumber parameter in request setting page number to 1.");
             pageNumber = 1;
         } else {
             pageNumber = Integer.parseInt(pageNumberStr);
