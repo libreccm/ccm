@@ -13,7 +13,6 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,10 +67,7 @@ public class PersonalPublications implements ContentGenerator {
                                                        new LinkedHashMap<String, List<PublicationBundle>>();
 
             for (Map.Entry<String, List<String>> entry : groupsConfig.entrySet()) {
-                filterPublicationsByGroup(entry.getKey(),
-                                          entry.getValue(),
-                                          publications,
-                                          publicationsByGroup);
+                filterPublicationsByGroup(entry.getKey(), entry.getValue(), publications, publicationsByGroup);
             }
 
             final List<PublicationBundle> miscGroup = filterPublicationsForMiscGroup(publications, groupsConfig);
@@ -82,8 +78,7 @@ public class PersonalPublications implements ContentGenerator {
 
             if (overallSize < config.getGroupSplit()) {
                 publicationsElem.addAttribute("all", "all");
-                for (Map.Entry<String, List<PublicationBundle>> group :
-                     publicationsByGroup.entrySet()) {
+                for (Map.Entry<String, List<PublicationBundle>> group : publicationsByGroup.entrySet()) {
                     generateXmlForGroup(group.getKey(),
                                         availableGroupsElem,
                                         publicationsElem,
@@ -94,11 +89,10 @@ public class PersonalPublications implements ContentGenerator {
                 }
             } else {
                 final List<String> availableGroups = new LinkedList<String>();
-                for (Map.Entry<String, List<String>> entry : groupsConfig.
-                        entrySet()) {
-                    if (!(publicationsByGroup.get(entry.getKey()).isEmpty())) {
-                        generateAvailableForGroup(entry.getKey(),
-                                                  availableGroupsElem);
+                for (Map.Entry<String, List<String>> entry : groupsConfig.entrySet()) {
+                    if ((publicationsByGroup.get(entry.getKey()) != null)
+                        && !(publicationsByGroup.get(entry.getKey()).isEmpty())) {
+                        generateAvailableForGroup(entry.getKey(), availableGroupsElem);
                         availableGroups.add(entry.getKey());
                     }
                 }
@@ -109,9 +103,7 @@ public class PersonalPublications implements ContentGenerator {
                 }
 
                 final HttpServletRequest request = state.getRequest();
-                final String group = selectGroup(request,
-                                                 config.getDefaultGroup(),
-                                                 availableGroups);
+                final String group = selectGroup(request, config.getDefaultGroup(), availableGroups);
 
                 generateXmlForGroup(group,
                                     availableGroupsElem,
@@ -133,9 +125,7 @@ public class PersonalPublications implements ContentGenerator {
         }
     }
 
-    private List<PublicationBundle> collectPublications(
-            final GenericPerson author,
-            final String language) {
+    private List<PublicationBundle> collectPublications(final GenericPerson author, final String language) {
         final List<PublicationBundle> publications =
                                       new LinkedList<PublicationBundle>();
         //final List<BigDecimal> processed = new ArrayList<BigDecimal>();
@@ -228,25 +218,18 @@ public class PersonalPublications implements ContentGenerator {
         groupElem.addAttribute("name", groupName);
 
         if (withPaginator) {
-            final Paginator paginator = new Paginator(state.getRequest(),
-                                                      publications.size(),
-                                                      config.getPageSize());
-            publicationList = publicationList.subList(paginator.getBegin(),
-                                                      paginator.getEnd());
+            final Paginator paginator = new Paginator(state.getRequest(), publications.size(), config.getPageSize());
+            publicationList = publicationList.subList(paginator.getBegin(), paginator.getEnd());
             paginator.generateXml(groupElem);
         }
 
         for (PublicationBundle publication : publicationList) {
             generatePublicationXml(publication.getPublication(
-                    GlobalizationHelper.getNegotiatedLocale().getLanguage()),
-                                   groupElem,
-                                   state);
+                    GlobalizationHelper.getNegotiatedLocale().getLanguage()), groupElem, state);
         }
     }
 
-    private void generatePublicationXml(final Publication publication,
-                                        final Element parent,
-                                        final PageState state) {
+    private void generatePublicationXml(final Publication publication, final Element parent, final PageState state) {
         final PersonalPublications.XmlGenerator generator = new PersonalPublications.XmlGenerator(publication);
         generator.setItemElemName("publications", "");
         generator.setListMode(true);
@@ -273,9 +256,7 @@ public class PersonalPublications implements ContentGenerator {
                                final String defaultGroupConfig,
                                final List<String> availableGroups) {
         String group = request.getParameter("group");
-        if ((group == null)
-            || group.trim().isEmpty()
-            || !(availableGroups.contains(group))) {
+        if ((group == null) || group.trim().isEmpty() || !(availableGroups.contains(group))) {
             String defaultGroups[] = defaultGroupConfig.split(",");
 
             for (String defaultGroup : defaultGroups) {
@@ -337,8 +318,7 @@ public class PersonalPublications implements ContentGenerator {
         } else {
             final Boolean pubReviewed = ((Publication) publication.getPrimaryInstance()).getReviewed();
             if (publication.getContentType().getAssociatedObjectType().equals(type)
-                && (reviewed.equals(pubReviewed)
-                    || (pubReviewed == null))) {
+                && (reviewed.equals(pubReviewed) || (pubReviewed == null))) {
                 group.add(publication);
                 return true;
             }

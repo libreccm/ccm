@@ -123,7 +123,7 @@ public class Paginator {
 
     public int getBegin() {
         if (pageNumber == 1) {
-            return 1;
+            return 0;
         } else {
             return ((pageNumber - 1) * pageSize) + 1;
         }
