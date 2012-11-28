@@ -13,6 +13,8 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class PersonalPublications implements ContentGenerator {
                                 final GenericPerson person,
                                 final PageState state,
                                 final String language) {
-        final long start = System.currentTimeMillis();
+        //final long start = System.currentTimeMillis();
 
         final List<PublicationBundle> publications = collectPublications(person, language);
 
@@ -115,14 +117,14 @@ public class PersonalPublications implements ContentGenerator {
             }
         }
 
-        if (logger.isDebugEnabled()) {
+        /*if (logger.isDebugEnabled()) {
             logger.warn(String.format("Generated publications of %d publications "
                                       + "for '%s' (%s) in %d ms.",
                                       overallSize,
                                       person.getFullName(),
                                       person.getID().toString(),
                                       System.currentTimeMillis() - start));
-        }
+        }*/
     }
 
     private List<PublicationBundle> collectPublications(final GenericPerson author, final String language) {
@@ -205,6 +207,45 @@ public class PersonalPublications implements ContentGenerator {
                                      final boolean generateAvailable,
                                      final PageState state) {
         List<PublicationBundle> publicationList = publications;
+
+        Collections.sort(publicationList, new Comparator<PublicationBundle>() {
+            public int compare(final PublicationBundle bundle1, final PublicationBundle bundle2) {
+                final Publication publication1 = bundle1.getPublication(GlobalizationHelper.getNegotiatedLocale().
+                        getLanguage());
+                final Publication publication2 = bundle2.getPublication(GlobalizationHelper.getNegotiatedLocale().
+                        getLanguage());
+
+                final int year1;
+                final int year2;
+                if (publication1.getYearOfPublication() == null) {
+                    year1 = 0;
+                } else {
+                    year1 = publication1.getYearOfPublication();
+                }
+                if (publication2.getYearOfPublication() == null) {
+                    year2 = 0;
+                } else {
+                    year2 = publication2.getYearOfPublication();
+                }
+
+                if (year1 < year2) {
+                    return 1;
+                } else if (year1 > year2) {
+                    return -1;
+                }
+
+                final String authorsStr1 = (String) publication1.get("authorsStr");
+                final String authorsStr2 = (String) publication2.get("authorsStr");
+
+                if ((authorsStr1 != null) && (authorsStr2 != null) && (authorsStr1.compareTo(authorsStr2) != 0)) {
+                    return authorsStr1.compareTo(authorsStr2);
+                }
+
+                return publication1.getTitle().compareTo(publication2.getTitle());
+
+            }
+
+        });
 
         if ((publications == null) || publications.isEmpty()) {
             return;
