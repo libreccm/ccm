@@ -6,6 +6,7 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -97,6 +98,18 @@ public class Paginator {
                                    getEnd()));
         query.setRange(getBegin(), getEnd() + 1);
     }        
+    
+    public <T> List<T> applyListLimits(final List<T> list, final Class<T> type) {
+        int begin = getBegin() - 1;
+        if (begin < 0) {
+            begin = 0;
+        }
+        int end = getEnd() - 1;
+        if (end >= list.size()) {
+            end = list.size();
+        }
+        return list.subList(begin, end);
+    }
 
     public int getPageCount() {
         return (int) Math.ceil((double) objectCount / (double) pageSize);
@@ -123,7 +136,7 @@ public class Paginator {
 
     public int getBegin() {
         if (pageNumber == 1) {
-            return 0;
+            return 1;
         } else {
             return ((pageNumber - 1) * pageSize) + 1;
         }

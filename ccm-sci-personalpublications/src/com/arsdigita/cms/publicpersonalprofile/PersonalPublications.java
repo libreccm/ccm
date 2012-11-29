@@ -260,7 +260,8 @@ public class PersonalPublications implements ContentGenerator {
 
         if (withPaginator) {
             final Paginator paginator = new Paginator(state.getRequest(), publications.size(), config.getPageSize());
-            publicationList = publicationList.subList(paginator.getBegin(), paginator.getEnd());
+            //publicationList = publicationList.subList(paginator.getBegin() - 1, paginator.getEnd() - 1);
+            publicationList = paginator.applyListLimits(publicationList, PublicationBundle.class);
             paginator.generateXml(groupElem);
         }
 
