@@ -104,7 +104,7 @@ public class Paginator {
         if (begin < 0) {
             begin = 0;
         }
-        int end = getEnd() - 1;
+        int end = getEnd();
         if (end >= list.size()) {
             end = list.size();
         }
