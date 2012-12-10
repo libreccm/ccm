@@ -39,12 +39,12 @@
       objList.getDefinition().setObjectType("com.arsdigita.cms.contenttypes.Publication");
       objList.getDefinition().setDescendCategories(false);      
       objList.addTextFilter("title", "title");
-      objList.addTextFilter("authors.surname", "author");
+      objList.addTextFilter("authorsStr", "authorsStr");
       objList.addSelectFilter("yearOfPublication", "yearOfPublication", true, true, true, true);
       objList.addSortField("title", "title asc");     
       objList.addSortField("yearAsc", "yearOfPublication asc");
       objList.addSortField("yearDesc", "yearOfPublication desc");
-      objList.addSortField("authors", "authors.surname asc, authors.givenname asc");
+      objList.addSortField("authors", "authorsStr asc");
       objList.getDefinition().addOrder(objList.getOrder(request.getParameter("sort")));
 
       objList.getRenderer().setPageSize(20);
