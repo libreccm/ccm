@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
@@ -31,77 +32,63 @@ import com.arsdigita.cms.contenttypes.SeriesCollection;
  */
 public abstract class AbstractRisConverter implements RisConverter {
 
-    private RisBuilder risBuilder = new RisBuilder();
+    private final RisBuilder risBuilder = new RisBuilder();
 
     protected void convertAuthors(final Publication publication) {
-        AuthorshipCollection authors;
+        final AuthorshipCollection authors = publication.getAuthors();
 
-        authors = publication.getAuthors();
         if (authors != null) {
             while (authors.next()) {
                 if (authors.isEditor()) {
-                    getRisBuilder().addField(RisFields.ED,
-                                             String.format("%s,%s",
-                                                           authors.getAuthor().
-                            getSurname(),
-                                                           authors.getAuthor().
-                            getGivenName()));
+                    getRisBuilder().addField(RisField.ED, String.format("%s,%s",
+                                                                         authors.getAuthor().getSurname(),
+                                                                         authors.getAuthor().getGivenName()));
                 } else {
-                    getRisBuilder().addField(RisFields.AU,
-                                             String.format("%s,%s",
-                                                           authors.getAuthor().
-                            getSurname(),
-                                                           authors.getAuthor().
-                            getGivenName()));
+                    getRisBuilder().addField(RisField.AU, String.format("%s,%s",
+                                                                         authors.getAuthor().getSurname(),
+                                                                         authors.getAuthor().getGivenName()));
                 }
             }
         }
     }
 
     protected void convertTitle(final Publication publication) {
-        getRisBuilder().addField(RisFields.TI,
-                                 publication.getTitle());
+        getRisBuilder().addField(RisField.TI, publication.getTitle());
     }
 
     protected void convertYear(final Publication publication) {
-        getRisBuilder().addField(RisFields.PY,
-                                 String.format("%d///", publication.getYearOfPublication()));
+        getRisBuilder().addField(RisField.PY, String.format("%d///", publication.getYearOfPublication()));
     }
 
     protected void convertPublisher(final PublicationWithPublisher publication) {
-        convertPublisher(publication, RisFields.CY);
+        convertPublisher(publication, RisField.CY);
     }
 
-    protected void convertPublisher(final PublicationWithPublisher publication, final RisFields placeField) {
+    protected void convertPublisher(final PublicationWithPublisher publication, final RisField placeField) {
         if (publication.getPublisher() != null) {
-            if ((publication.getPublisher().getPlace() != null)
-                && !(publication.getPublisher().getPlace().isEmpty())) {
+            if ((publication.getPublisher().getPlace() != null) && !(publication.getPublisher().getPlace().isEmpty())) {
                 getRisBuilder().addField(placeField, publication.getPublisher().getPlace());
             }
 
-            getRisBuilder().addField(RisFields.PB,
-                                     publication.getPublisher().getTitle());
+            getRisBuilder().addField(RisField.PB, publication.getPublisher().getTitle());
         }
     }
 
     protected void convertISBN(final PublicationWithPublisher publication) {
         if (publication.getISBN() != null) {
-            getRisBuilder().addField(RisFields.SN,
-                                     publication.getISBN());
+            getRisBuilder().addField(RisField.SN, publication.getISBN());
         }
     }
 
     protected void convertVolume(final PublicationWithPublisher publication) {
         if (publication.getVolume() != null) {
-            getRisBuilder().addField(RisFields.VL,
-                                     publication.getVolume().toString());
+            getRisBuilder().addField(RisField.VL, publication.getVolume().toString());
         }
     }
 
     protected void convertEdition(final PublicationWithPublisher publication) {
         if (publication.getEdition() != null) {
-            getRisBuilder().addField(RisFields.ET,
-                                     publication.getEdition());
+            getRisBuilder().addField(RisField.ET, publication.getEdition());
         }
     }
 
@@ -111,8 +98,7 @@ public abstract class AbstractRisConverter implements RisConverter {
 
             seriesColl.next();
 
-            getRisBuilder().addField(RisFields.T3,
-                                     seriesColl.getSeries().getTitle());
+            getRisBuilder().addField(RisField.T3, seriesColl.getSeries().getTitle());
 
             seriesColl.close();
         }
@@ -121,4 +107,5 @@ public abstract class AbstractRisConverter implements RisConverter {
     protected RisBuilder getRisBuilder() {
         return risBuilder;
     }
+
 }

@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -47,7 +48,7 @@ public class CollectedVolumeConverter extends AbstractRisConverter {
 
         collectedVolume = (CollectedVolume) publication;
 
-        getRisBuilder().setType(RisTypes.EDBOOK);
+        getRisBuilder().setType(RisType.EDBOOK);
         convertAuthors(publication);
 
         convertTitle(publication);

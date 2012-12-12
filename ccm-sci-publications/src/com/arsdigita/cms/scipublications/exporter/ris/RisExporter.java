@@ -20,8 +20,8 @@
 package com.arsdigita.cms.scipublications.exporter.ris;
 
 import com.arsdigita.cms.contenttypes.Publication;
-import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
+import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import org.apache.log4j.Logger;

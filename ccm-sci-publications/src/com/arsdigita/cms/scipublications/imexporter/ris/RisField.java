@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.scipublications.exporter.ris;
+package com.arsdigita.cms.scipublications.imexporter.ris;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ package com.arsdigita.cms.scipublications.exporter.ris;
  *
  * @author Jens Pelzetter
  */
-public enum RisFields {
+public enum RisField {
 
     /**
      * Reference ID. According to the specification not used by reference
@@ -342,5 +342,13 @@ public enum RisFields {
     DA,
     C1,
     C2,
-    C3
+    C3,
+    /**
+     * Begin of a new reference. Value is the type of the reference.
+     */
+    TY,
+    /**
+     * End of reference. Last tag of a dataset. Has no value.
+     */
+    ER,
 }

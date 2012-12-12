@@ -1,4 +1,4 @@
-package com.arsdigita.cms.scipublications.exporter.ris;
+package com.arsdigita.cms.scipublications.imexporter.ris;
 
 /**
  *
@@ -7,22 +7,22 @@ package com.arsdigita.cms.scipublications.exporter.ris;
  */
 public class RisFieldValue {
 
-    private RisFields name;
+    private RisField name;
     private String value;
 
     public RisFieldValue() {
     }
 
-    public RisFieldValue(final RisFields name, final String value) {
+    public RisFieldValue(final RisField name, final String value) {
         this.name = name;
         this.value = value;
     }
 
-    public RisFields getName() {
+    public RisField getName() {
         return name;
     }
 
-    public void setName(final RisFields name) {
+    public void setName(final RisField name) {
         this.name = name;
     }
 

@@ -1,5 +1,7 @@
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.GreyLiterature;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -29,21 +31,21 @@ public class GreyLiteratureConverter extends AbstractRisConverter {
 
         greyLiterature = (GreyLiterature) publication;
 
-        getRisBuilder().setType(RisTypes.UNPB);
+        getRisBuilder().setType(RisType.UNPD);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
         
         if (greyLiterature.getPlace() != null) {
-            getRisBuilder().addField(RisFields.CY, greyLiterature.getPlace());
+            getRisBuilder().addField(RisField.CY, greyLiterature.getPlace());
         }
         
         if (greyLiterature.getNumber() != null) {
-            getRisBuilder().addField(RisFields.M1, greyLiterature.getNumber());
+            getRisBuilder().addField(RisField.M1, greyLiterature.getNumber());
         }
         
         if (greyLiterature.getOrganization() != null) {
-            getRisBuilder().addField(RisFields.PB, greyLiterature.getOrganization().getTitle());
+            getRisBuilder().addField(RisField.PB, greyLiterature.getOrganization().getTitle());
         }
 
         return getRisBuilder().toRis();

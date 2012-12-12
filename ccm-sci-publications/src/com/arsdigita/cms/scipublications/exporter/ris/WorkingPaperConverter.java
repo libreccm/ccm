@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
 
@@ -50,7 +51,7 @@ public class WorkingPaperConverter extends AbstractRisConverter {
 
         workingPaper = (WorkingPaper) publication;
 
-        getRisBuilder().setType(RisTypes.UNPB);
+        getRisBuilder().setType(RisType.UNPD);
 
         convertAuthors(publication);
         convertTitle(publication);

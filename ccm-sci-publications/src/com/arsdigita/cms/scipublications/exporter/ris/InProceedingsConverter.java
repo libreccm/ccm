@@ -19,6 +19,8 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
@@ -51,7 +53,7 @@ public class InProceedingsConverter extends AbstractRisConverter {
 
         inProceedings = (InProceedings) publication;
 
-        getRisBuilder().setType(RisTypes.CPAPER);
+        getRisBuilder().setType(RisType.CPAPER);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
@@ -59,7 +61,7 @@ public class InProceedingsConverter extends AbstractRisConverter {
         if (inProceedings.getProceedings() != null) {
             final Proceedings proceedings = inProceedings.getProceedings();
             if (proceedings.getPlaceOfConference() != null) {
-                getRisBuilder().addField(RisFields.CY, proceedings.getPlaceOfConference());
+                getRisBuilder().addField(RisField.CY, proceedings.getPlaceOfConference());
             }
             
             
@@ -67,11 +69,11 @@ public class InProceedingsConverter extends AbstractRisConverter {
         }
         
         if (inProceedings.getPagesFrom() != null) {
-            getRisBuilder().addField(RisFields.SP,
+            getRisBuilder().addField(RisField.SP,
                                      String.format("%d - %d", 
                                                    inProceedings.getPagesFrom(),
                                                    inProceedings.getPagesTo()));
-             /*getRisBuilder().addField(RisFields.EP,
+             /*getRisBuilder().addField(RisField.EP,
                     inProceedings.getPagesTo().toString());*/
         }
        

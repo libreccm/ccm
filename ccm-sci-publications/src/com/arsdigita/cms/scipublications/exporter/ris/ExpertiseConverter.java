@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.contenttypes.Expertise;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -50,7 +51,7 @@ public class ExpertiseConverter extends AbstractRisConverter {
 
         expertise = (Expertise) publication;
 
-        getRisBuilder().setType(RisTypes.GEN);
+        getRisBuilder().setType(RisType.GEN);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);

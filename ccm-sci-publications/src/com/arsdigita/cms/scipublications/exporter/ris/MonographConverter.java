@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.contenttypes.Monograph;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -48,7 +49,7 @@ public class MonographConverter extends AbstractRisConverter {
 
         monograph = (Monograph) publication;
 
-        getRisBuilder().setType(RisTypes.BOOK);
+        getRisBuilder().setType(RisType.BOOK);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);

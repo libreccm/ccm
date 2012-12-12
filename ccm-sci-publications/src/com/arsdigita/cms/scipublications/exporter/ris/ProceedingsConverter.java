@@ -19,6 +19,8 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -50,21 +52,21 @@ public class ProceedingsConverter extends AbstractRisConverter {
 
         proceedings = (Proceedings) publication;
 
-        getRisBuilder().setType(RisTypes.CONF);
+        getRisBuilder().setType(RisType.CONF);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
 
         convertVolume(proceedings);
         convertSeries(publication);
-        convertPublisher(proceedings, RisFields.C1);
+        convertPublisher(proceedings, RisField.C1);
         
         if (proceedings.getPlaceOfConference() != null) {
-            getRisBuilder().addField(RisFields.CY, proceedings.getPlaceOfConference());
+            getRisBuilder().addField(RisField.CY, proceedings.getPlaceOfConference());
         }
         
         if (proceedings.getNameOfConference() != null) {
-            getRisBuilder().addField(RisFields.T2, proceedings.getNameOfConference());
+            getRisBuilder().addField(RisField.T2, proceedings.getNameOfConference());
         }
         
         

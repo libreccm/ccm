@@ -19,6 +19,8 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -50,17 +52,17 @@ public class InternetArticleConverter extends AbstractRisConverter {
 
         article = (InternetArticle) publication;
 
-        getRisBuilder().setType(RisTypes.EJOUR);
+        getRisBuilder().setType(RisType.EJOUR);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
         
         if (article.getReviewed()) {
-            getRisBuilder().addField(RisFields.RI, "");
+            getRisBuilder().addField(RisField.RI, "");
         }
         
         if (article.getUrl() != null) {
-            getRisBuilder().addField(RisFields.UR, article.getUrl());
+            getRisBuilder().addField(RisField.UR, article.getUrl());
         }
 
         return getRisBuilder().toRis();

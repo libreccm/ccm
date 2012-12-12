@@ -19,6 +19,8 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -50,22 +52,22 @@ public class ArticleInCollectedVolumeConverter extends AbstractRisConverter {
 
         article = (ArticleInCollectedVolume) publication;
 
-        getRisBuilder().setType(RisTypes.CHAP);
+        getRisBuilder().setType(RisType.CHAP);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
 
         if (article.getCollectedVolume() != null) {
-            getRisBuilder().addField(RisFields.T2,
+            getRisBuilder().addField(RisField.T2,
                                      article.getCollectedVolume().getTitle());
 
         }
 
         if (article.getPagesFrom() != null) {
-            getRisBuilder().addField(RisFields.SP,
+            getRisBuilder().addField(RisField.SP,
                                      String.format("%d - %d", article.getPagesFrom(), article.getPagesTo()));
             /*if (article.getPagesTo() != null) {
-                getRisBuilder().addField(RisFields.EP,
+                getRisBuilder().addField(RisField.EP,
                                          article.getPagesTo().toString());
             }*/
         }

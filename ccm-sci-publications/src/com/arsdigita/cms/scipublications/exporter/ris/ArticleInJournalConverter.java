@@ -19,6 +19,8 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.Publication;
 
@@ -50,36 +52,36 @@ public class ArticleInJournalConverter extends AbstractRisConverter {
 
         article = (ArticleInJournal) publication;
 
-        getRisBuilder().setType(RisTypes.JOUR);
+        getRisBuilder().setType(RisType.JOUR);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);
 
         if (article.getJournal() != null) {
-            getRisBuilder().addField(RisFields.T2,
+            getRisBuilder().addField(RisField.T2,
                                      article.getJournal().getTitle());
         }
 
         if (article.getIssue() != null) {
-            getRisBuilder().addField(RisFields.M1, article.getIssue());
+            getRisBuilder().addField(RisField.M1, article.getIssue());
         }
 
         if (article.getVolume() != null) {
-            getRisBuilder().addField(RisFields.VL,
+            getRisBuilder().addField(RisField.VL,
                                      article.getVolume().toString());
         }
 
         if (article.getPagesFrom() != null) {
-            getRisBuilder().addField(RisFields.SP,
+            getRisBuilder().addField(RisField.SP,
                                      String.format("%d - %d", article.getPagesFrom(), article.getPagesTo()));
             /*
-             * getRisBuilder().addField(RisFields.EP,
+             * getRisBuilder().addField(RisField.EP,
                                      article.getPagesTo().toString());
              */
         }
         
         if (article.getReviewed()) {
-            getRisBuilder().addField(RisFields.RI, "");
+            getRisBuilder().addField(RisField.RI, "");
         }        
         
         return getRisBuilder().toRis();

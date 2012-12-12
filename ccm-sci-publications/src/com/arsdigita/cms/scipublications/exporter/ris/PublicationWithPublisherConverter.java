@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 
@@ -47,7 +48,7 @@ public class PublicationWithPublisherConverter extends AbstractRisConverter {
 
         _publication = (PublicationWithPublisher) publication;
 
-        getRisBuilder().setType(RisTypes.GEN);
+        getRisBuilder().setType(RisType.GEN);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);

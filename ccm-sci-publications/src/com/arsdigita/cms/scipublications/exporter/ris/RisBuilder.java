@@ -19,6 +19,9 @@
  */
 package com.arsdigita.cms.scipublications.exporter.ris;
 
+import com.arsdigita.cms.scipublications.imexporter.ris.RisFieldValue;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +36,13 @@ public class RisBuilder {
     /**
      * Type of the reference
      */
-    private RisTypes type;
+    private RisType type;
     /**
      * Fields of the reference.
      */
     private List<RisFieldValue> fields  =new ArrayList<RisFieldValue>();
     //private Map<RisFields, String> fields = new EnumMap<RisFields, String>(
-    //        RisFields.class);
+    //        RisField.class);
 
     public RisBuilder() {
     }
@@ -49,7 +52,7 @@ public class RisBuilder {
      *
      * @param type Valid RIS type
      */
-    public void setType(final RisTypes type) {
+    public void setType(final RisType type) {
         this.type = type;
     }
 
@@ -59,7 +62,7 @@ public class RisBuilder {
      * @param field The name of the field.
      * @param value The value of the field.
      */
-    public void addField(final RisFields field, final String value) {
+    public void addField(final RisField field, final String value) {
         //fields.put(field, value);
         fields.add(new RisFieldValue(field, value));
     }

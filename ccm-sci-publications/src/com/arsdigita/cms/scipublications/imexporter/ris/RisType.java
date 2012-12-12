@@ -17,14 +17,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.scipublications.exporter.ris;
+package com.arsdigita.cms.scipublications.imexporter.ris;
 
 /**
  * Reference types supported by the RIS format.
  *
  * @author Jens Pelzetter
  */
-public enum RisTypes {
+public enum RisType {
 
     /**
      * Abstract
@@ -173,7 +173,7 @@ public enum RisTypes {
     /**
      * Unpublished work
      */
-    UNPB,
+    UNPD,
     /**
      * Video recording
      */
