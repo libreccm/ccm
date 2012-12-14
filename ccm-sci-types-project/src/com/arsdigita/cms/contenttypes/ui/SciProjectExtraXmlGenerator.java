@@ -45,7 +45,8 @@ public class SciProjectExtraXmlGenerator
             while (members.next()) {
                 generateMemberXml(membersElem,
                                   members.getPerson(),
-                                  members.getRoleName());
+                                  members.getRoleName(),
+                                  members.getStatus());
             }
         }
     }
@@ -120,9 +121,11 @@ public class SciProjectExtraXmlGenerator
 
     private void generateMemberXml(final Element membersElem,
                                    final GenericPerson member,
-                                   final String roleName) {
+                                   final String roleName,
+                                   final String status) {
         final Element memberElem = membersElem.newChildElement("member");
         memberElem.addAttribute("role", roleName);
+        memberElem.addAttribute("status", status);
 
         final Element surnameElem = memberElem.newChildElement("surname");
         surnameElem.setText(member.getSurname());
