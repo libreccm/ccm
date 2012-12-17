@@ -21,8 +21,9 @@ public class PublicationImportReport {
     private PublisherImportReport publisher;
     private CollectedVolumeImportReport collectedVolume;
     private JournalImportReport journal;
-    private ProceedingsImportReport proceedings;
+    private ProceedingsImportReport proceedings;    
     private List<OrganizationalUnitImportReport> orgaUnits = new ArrayList<OrganizationalUnitImportReport>();
+    private SeriesImportReport series;
     private boolean successful;
     private List<String> messages = new ArrayList<String>();
 
@@ -118,6 +119,14 @@ public class PublicationImportReport {
         this.orgaUnits = orgaUnits;
     }
 
+    public SeriesImportReport getSeries() {
+        return series;
+    }
+    
+    public void setSeries(final SeriesImportReport series) {
+        this.series = series;
+    }
+    
     public boolean isSuccessful() {
         return successful;
     }

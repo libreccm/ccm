@@ -1,8 +1,8 @@
 package com.arsdigita.cms.scipublications.importer.ris;
 
-import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
-import com.arsdigita.cms.scipublications.importer.report.ImportReport;
+import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 
 /**
  * Interface for importing RisConverter.
@@ -18,10 +18,16 @@ public interface RisConverter {
      * {@code publishNewItems} is set to {@code true}. 
      * 
      * @param dataset
-     * @param report
-     * @return 
+     * @param importerUtil 
+     * @param pretend
+     * @param publishNewItems
+     * @return  
+     * 
      */
-    convert(RisDataset dataset, ImportReport report, boolean pretend, boolean publishNewItems);
+    PublicationImportReport convert(RisDataset dataset, 
+                                    ImporterUtil importerUtil, 
+                                    boolean pretend, 
+                                    boolean publishNewItems);
     
     /**
      * 

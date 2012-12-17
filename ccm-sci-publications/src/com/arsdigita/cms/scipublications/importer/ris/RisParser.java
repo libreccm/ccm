@@ -1,7 +1,7 @@
 package com.arsdigita.cms.scipublications.importer.ris;
 
-import com.arsdigita.cms.scipublications.imexporter.ris.RisFieldValue;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
+import com.arsdigita.cms.scipublications.imexporter.ris.RisFieldValue;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImportException;
 import java.util.ArrayList;
@@ -43,7 +43,15 @@ public class RisParser {
             } else if (RisField.ER.equals(field.getName())) {
                 openDataset = false;
             } else {
-                entries.get(entries.size() - 1).getValues().put(field.getName(), field.getValue());
+                final RisDataset currentDataset = entries.get(entries.size() - 1);
+                if (currentDataset.getValues().get(field.getName()) == null) {
+                    final List<String> data = new ArrayList<String>();
+                    data.add(field.getValue());
+                    currentDataset.getValues().put(field.getName(), data);
+                } else {
+                    final List<String> data = currentDataset.getValues().get(field.getName());
+                    data.add(field.getValue());
+                }
             }
         }
 

@@ -79,6 +79,14 @@ public enum RisType {
      */
     EDBOOK,
     /**
+     * Electronic book
+     */
+    EBOOK,
+    /**
+     * Electronic book section
+     */
+    ECHAP,
+    /**
      * Electronic citation
      */
     ELEC,

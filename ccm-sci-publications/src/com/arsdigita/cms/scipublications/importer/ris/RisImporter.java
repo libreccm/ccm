@@ -4,6 +4,8 @@ import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImportException;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImporter;
 import com.arsdigita.cms.scipublications.importer.report.ImportReport;
+import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import java.util.List;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
@@ -17,7 +19,7 @@ import org.apache.log4j.Logger;
 public class RisImporter implements SciPublicationsImporter {
 
     private static final Logger LOGGER = Logger.getLogger(RisImporter.class);
-    private final RisConverters converters = RisConverters.getInstance();
+    private final RisConverters converters = RisConverters.getInstance();  
 
     public PublicationFormat getSupportedFormat() {
         try {
@@ -43,19 +45,27 @@ public class RisImporter implements SciPublicationsImporter {
         report.setImporter("RIS Importer");
         report.setPretend(pretend);
 
-
+        final ImporterUtil importerUtil = new ImporterUtil(publishNewItems);
+        
         for (RisDataset dataset : datasets) {
-        converters.convert(dataset, importReport, pretend, publishNewItems);    
+           processPublication(dataset, report, importerUtil, pretend, publishNewItems);
         }
 
-        return ImportReport;
+        return report;
     }
 
-    private processPublication(final RisDataset dataset,
-                               final ImportReport importReport,
-                               final boolean pretend,
-                               final boolean publishNewItems) {
-                
+    private void processPublication(final RisDataset dataset,
+                                    final ImportReport report,
+                                    final ImporterUtil importerUtil,
+                                    final boolean pretend,
+                                    final boolean publishNewItems) {
+        try {
+            report.addPublication(converters.convert(dataset, importerUtil, pretend, publishNewItems));
+        } catch (RisConverterException ex) {
+            final PublicationImportReport importReport = new PublicationImportReport();
+            importReport.addMessage(String.format("Failed to create converter for RIS type '%s'.", 
+                                                  dataset.getType().toString()));
+        }
     }
 
 }

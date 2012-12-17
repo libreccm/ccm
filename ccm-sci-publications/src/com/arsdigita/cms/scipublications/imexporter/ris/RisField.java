@@ -344,6 +344,10 @@ public enum RisField {
     C2,
     C3,
     /**
+     * Number of volumes
+     */
+    NV,
+    /**
      * Begin of a new reference. Value is the type of the reference.
      */
     TY,

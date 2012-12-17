@@ -20,15 +20,19 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.contenttypes.PublisherBundle;
 import com.arsdigita.cms.contenttypes.SciAuthor;
+import com.arsdigita.cms.contenttypes.Series;
+import com.arsdigita.cms.contenttypes.SeriesBundle;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.CollectedVolumeImportReport;
+import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.JournalImportReport;
 import com.arsdigita.cms.scipublications.importer.report.OrganizationalUnitImportReport;
 import com.arsdigita.cms.scipublications.importer.report.ProceedingsImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublisherImportReport;
+import com.arsdigita.cms.scipublications.importer.report.SeriesImportReport;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
@@ -54,6 +58,7 @@ public class ImporterUtil {
     private final transient Set<String> createdProcs = new HashSet<String>();
     private final transient Set<String> createdPublishers = new HashSet<String>();
     private final transient Set<String> createdOrgas = new HashSet<String>();
+    private final transient Set<String> createdSeries = new HashSet<String>();
 
     public ImporterUtil() {
         publish = false;
@@ -499,6 +504,64 @@ public class ImporterUtil {
         }
 
         collection.close();
+        return report;
+    }
+
+    public SeriesImportReport processSeries(final Publication publication,
+                                           final String seriesTitle,
+                                           final boolean pretend) {
+        final SeriesImportReport report = new SeriesImportReport();
+        
+        final Session session = SessionManager.getSession();
+        final DataCollection collection = session.retrieve(Series.BASE_DATA_OBJECT_TYPE);
+        collection.addEqualsFilter("title", seriesTitle);
+        
+        report.setSeriesTitle(seriesTitle);
+        if (collection.isEmpty()) {
+          if (!pretend) {
+              final Integer folderId = Publication.getConfig().getDefaultSeriesFolder();
+              final Folder folder = new Folder(new BigDecimal(folderId));
+              if (folder == null) {
+                  throw new IllegalArgumentException("Error getting folder for series.");
+              }
+              
+              final Series series = new Series();
+              series.setName(normalizeString(seriesTitle));
+              series.setTitle(seriesTitle);
+              series.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+              series.setContentSection(folder.getContentSection());
+              series.save();
+              
+              final SeriesBundle bundle = new SeriesBundle(series);
+              bundle.setParent(folder);
+              bundle.setContentSection(folder.getContentSection());
+              bundle.save();
+              
+              publication.addSeries(series);
+              
+              if (publish) {
+              publishItem(series);
+              }
+          }
+          report.setCreated(true);
+          
+          //Special handling for pretend mode
+          if (pretend && createdSeries.contains(seriesTitle)) {
+              report.setCreated(false);
+          } else {
+              createdSeries.add(seriesTitle);
+          }
+        } else {
+            if (!pretend) {
+                collection.next();
+                final Series series = new Series(collection.getDataObject());
+                publication.addSeries(series);
+            }
+            report.setCreated(false);
+        }
+        
+        collection.close();
+        
         return report;
     }
 

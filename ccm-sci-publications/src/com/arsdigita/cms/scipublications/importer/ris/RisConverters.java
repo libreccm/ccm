@@ -4,6 +4,8 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImportException;
 import com.arsdigita.cms.scipublications.importer.report.ImportReport;
+import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
+import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -24,7 +26,7 @@ public class RisConverters {
      * The constructor loads all available implementations of the
      * {@link RisConverter} interface using the {@link ServiceLoader}.
      */
-    private RisConverts() {
+    private RisConverters() {
         LOGGER.debug("Loading RIS import converters...");
         final ServiceLoader<RisConverter> converterServices = ServiceLoader.load(RisConverter.class);
 
@@ -54,35 +56,33 @@ public class RisConverters {
 
     /**
      * 
-     * @param dataset
-     * @param report
+     * @param dataset     
+     * @param importerUtil 
      * @param pretend
      * @param publishNewItems
+     * @return 
      * @throws SciPublicationsImportException 
      */
-    public void convert(final RisDataset dataset, 
-                               final ImportReport report, 
-                               final boolean pretend,
-                               final boolean publishNewItems)
-            throws SciPublicationsImportException {
+    public PublicationImportReport convert(final RisDataset dataset,
+                                           final ImporterUtil importerUtil,
+                                           final boolean pretend,
+                                           final boolean publishNewItems) throws RisConverterException {
         try {
             LOGGER.debug(String.format("Trying to find converter for RIS type '%s'...", dataset.getType().toString()));
             RisConverter converter = converters.get(dataset.getType());
 
             if (converter == null) {
-                throw new SciPublicationsImportException(String.format("Failed to find a converter for RIS type '%s'.",
+                throw new RisConverterException(String.format("Failed to find a converter for RIS type '%s'.",
                                                                        dataset.getType().toString()));
             }
 
             converter = converter.getClass().newInstance();
 
-            converter.convert(dataset, report, pretend, publishNewItems);                                    
+            return converter.convert(dataset, importerUtil, pretend, publishNewItems);
         } catch (InstantiationException ex) {
-            logger.warn("Failed to instaniate RIS converter.", ex);
-            return null;
+           throw new RisConverterException("Converter instantiation failed.", ex);
         } catch (IllegalAccessException ex) {
-            logger.warn("Failed to instaniate RIS converter.", ex);
-            return null;
+            throw new RisConverterException("Converter instantiation failed.", ex);
         }
     }
 
