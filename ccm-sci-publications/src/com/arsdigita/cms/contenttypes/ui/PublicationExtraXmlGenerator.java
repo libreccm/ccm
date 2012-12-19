@@ -39,9 +39,9 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
         final Publication publication = (Publication) item;
         createAuthorsXml(publication, element, state);
+        createSeriesXml(publication, element, state);
         if (!listMode) {
-            createOrgaUnitsXml(publication, element, state);
-            createSeriesXml(publication, element, state);
+            createOrgaUnitsXml(publication, element, state);            
 
             final List<PublicationFormat> formats = SciPublicationsExporters.getInstance().getSupportedFormats();
 
@@ -130,6 +130,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                      final PageState state) {
         final XmlGenerator generator = new XmlGenerator(series);
         generator.setItemElemName("series", "");
+        generator.setListMode(listMode);
         generator.generateXML(state, seriesElem, "");
     }
 
