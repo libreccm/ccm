@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
- * for the Center of Social Politics of the University of Bremen
+ * Copyright (c) 2010 Jens Pelzetter, ScientificCMS.org Team
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -20,7 +19,9 @@
 package com.arsdigita.cms.contenttypes;
 
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 
 /**
@@ -34,8 +35,18 @@ public class PublicationCollection extends DomainCollection {
         m_dataCollection.addOrder("title asc");
     }
 
-    public Publication getPublication() {        
+    public Publication getPublicationBundle() {        
         return new Publication(m_dataCollection.getDataObject());
+    }
+    
+    public Publication getPublication() {        
+        final ContentBundle  bundle = (ContentBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (Publication) bundle.getPrimaryInstance();
+    }
+    
+    public Publication getPublication(final String language) {
+        final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        return (Publication) bundle.getInstance(language);
     }
 
 }

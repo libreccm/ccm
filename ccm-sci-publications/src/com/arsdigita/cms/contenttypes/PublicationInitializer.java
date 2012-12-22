@@ -21,6 +21,8 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitPublicationsStep;
+import com.arsdigita.cms.contenttypes.ui.OrganizationPublicationsStep;
+import com.arsdigita.cms.contenttypes.ui.PersonPublicationsStep;
 import com.arsdigita.cms.contenttypes.ui.PublicationGenericOrganizationalUnitsStep;
 import com.arsdigita.cms.contenttypes.ui.PublicationGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -28,20 +30,20 @@ import com.arsdigita.runtime.DomainInitEvent;
 import org.apache.log4j.Logger;
 
 /**
- * Executes at each system startup and initializes the Publication content type,
- * part of the ScientificCMS extension.
+ * Executes at each system startup and initializes the Publication content type, part of the ScientificCMS extension.
  * 
- * Defines the content type specific properties and just uses the super class
- * methods to register the content type with the (transient) content type store
- * (map). This is done by runtimeRuntime startup method which runs the init()
- * methods of all initializers (this one just using the parent implementation).
+ * Defines the content type specific properties and just uses the super class methods to register the content type with
+ * the (transient) content type store (map). This is done by runtimeRuntime startup method which runs the init() methods
+ * of all initializers (this one just using the parent implementation).
  *
  * @author Jens Pelzetter
  * @version $Id$
  */
 public class PublicationInitializer extends ContentTypeInitializer {
 
-    /** Private Logger instance for debugging purpose.                        */
+    /**
+     * Private Logger instance for debugging purpose.
+     */
     private final Logger logger = Logger.getLogger(PublicationInitializer.class);
 
     /**
@@ -66,10 +68,8 @@ public class PublicationInitializer extends ContentTypeInitializer {
             AuthoringKitWizard.registerAssetStep(
                     Publication.BASE_DATA_OBJECT_TYPE,
                     PublicationGenericOrganizationalUnitsStep.class,
-                    PublicationGlobalizationUtil.globalize(
-                    "publications.ui.orgaunits.title"),
-                    PublicationGlobalizationUtil.globalize(
-                    "publications.ui.orgaunits.description"),
+                    PublicationGlobalizationUtil.globalize("publications.ui.orgaunits.title"),
+                    PublicationGlobalizationUtil.globalize("publications.ui.orgaunits.description"),
                     10);
         }
 
@@ -93,18 +93,30 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     "genericorganizationalunit.ui.publications.description"),
                     10);
         }
+
+        AuthoringKitWizard.registerAssetStep(
+                GenericPerson.BASE_DATA_OBJECT_TYPE,
+                PersonPublicationsStep.class,
+                PublicationGlobalizationUtil.globalize("person.ui.publications.title"),
+                PublicationGlobalizationUtil.globalize("person.ui.publications.description"),
+                10);
+        
+        AuthoringKitWizard.registerAssetStep(
+                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE, 
+                OrganizationPublicationsStep.class, 
+                PublicationGlobalizationUtil.globalize("organization.ui.publications.title"), 
+                PublicationGlobalizationUtil.globalize("organization.ui.publications.description"), 
+                11);
     }
 
     /**
-     * Retrieve location of this content type's internal default theme 
-     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
-     * is engaged. 
+     * Retrieve location of this content type's internal default theme stylesheet(s) which concomitantly serve as a
+     * fallback if a custom theme is engaged.
      * 
-     * Custom themes usually will provide their own stylesheet(s) and their own
-     * access method, but may not support every content type.
+     * Custom themes usually will provide their own stylesheet(s) and their own access method, but may not support every
+     * content type.
      * 
-     * Overwrites parent method with AgendaItem specific value for use by the 
-     * parent class worker methods.
+     * Overwrites parent method with AgendaItem specific value for use by the parent class worker methods.
      * 
      * @return String array of XSL stylesheet files of the internal default theme
      */
@@ -116,6 +128,7 @@ public class PublicationInitializer extends ContentTypeInitializer {
 
     /**
      * Retrieves fully qualified traversal adapter file name.
+     *
      * @return 
      */
     @Override

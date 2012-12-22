@@ -19,6 +19,11 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.contenttypes.ui.PublicationGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.ui.PublisherPublicationsStep;
+import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+import com.arsdigita.runtime.DomainInitEvent;
+
 /**
  * Executes at each system startup and initializes the Publisher content type,
  * part of the ScientificCMS extension.
@@ -44,6 +49,18 @@ public class PublisherInitializer extends ContentTypeInitializer {
         super("empty.pdl.mf", Publisher.BASE_DATA_OBJECT_TYPE);
     }
 
+    @Override
+    public void init(final DomainInitEvent event) {
+        super.init(event);
+
+        AuthoringKitWizard.registerAssetStep(
+                Publisher.BASE_DATA_OBJECT_TYPE,
+                PublisherPublicationsStep.class,
+                PublicationGlobalizationUtil.globalize("publisher.ui.publications.title"),
+                PublicationGlobalizationUtil.globalize("publisher.ui.publications.description"),
+                10);
+    }
+
     /**
      * Retrieve location of this content type's internal default theme 
      * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
@@ -60,7 +77,7 @@ public class PublisherInitializer extends ContentTypeInitializer {
     @Override
     public String[] getStylesheets() {
         return new String[]{
-                    INTERNAL_THEME_TYPES_DIR + "sci/Publisher.xsl" };
+                    INTERNAL_THEME_TYPES_DIR + "sci/Publisher.xsl"};
     }
 
     /**

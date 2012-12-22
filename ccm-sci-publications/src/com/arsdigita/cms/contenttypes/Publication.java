@@ -303,6 +303,10 @@ public class Publication extends ContentPage {
         return !getOrganizationalUnits().isEmpty();
     }
 
+    public static PublicationBundleCollection getPublications(final GenericPerson person) {
+        return PublicationBundle.getPublications(person);
+    }
+    
     public static GenericOrganizationalUnitPublicationsCollection getPublications(
             final GenericOrganizationalUnit orgaunit) {
         //final DataCollection dataCollection = (DataCollection) orgaunit.get(

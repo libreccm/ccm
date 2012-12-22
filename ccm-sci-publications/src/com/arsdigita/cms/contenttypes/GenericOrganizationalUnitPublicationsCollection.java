@@ -1,12 +1,9 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataCollection;
-import java.math.BigDecimal;
 
 /**
  *

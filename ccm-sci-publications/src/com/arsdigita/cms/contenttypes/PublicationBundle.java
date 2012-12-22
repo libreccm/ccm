@@ -286,6 +286,14 @@ public class PublicationBundle extends ContentBundle {
         remove(ORGAUNITS, orgaunit);
     }
 
+    public static PublicationBundleCollection getPublications(final GenericPerson person) {
+        final GenericPersonBundle personBundle = person.getGenericPersonBundle();
+        
+        final DataCollection collection = (DataCollection) personBundle.get("publication");
+        
+        return new PublicationBundleCollection(collection);
+    }
+    
     public static GenericOrganizationalUnitPublicationsCollection getPublications(
             final GenericOrganizationalUnit orgaunit) {
         final GenericOrganizationalUnitBundle orgaunitBundle = orgaunit.

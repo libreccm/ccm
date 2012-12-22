@@ -21,7 +21,7 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter 
  */
-public class PublisherBundle extends ContentBundle {
+public class PublisherBundle extends GenericOrganizationalUnitBundle {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.PublisherBundle";
@@ -55,6 +55,12 @@ public class PublisherBundle extends ContentBundle {
     public PublisherBundle(final String type) {
         super(type);
     }
+    
+    public PublicationBundleCollection getPublications() {
+        return new PublicationBundleCollection((DataCollection) get("publication"));
+    }
+    
+    
 
     @Override
     public boolean copyProperty(final CustomCopy source,

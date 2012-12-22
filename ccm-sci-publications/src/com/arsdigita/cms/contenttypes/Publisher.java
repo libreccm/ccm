@@ -85,6 +85,10 @@ public class Publisher extends GenericOrganizationalUnit {
     public void setPlace(String place) {
         set(PLACE, place);
     }
+    
+    public PublicationBundleCollection getPublications() {
+        return getPublisherBundle().getPublications();
+    }
 
      // Create a ulr save version of the full name
     public static String urlSave(String in) {
