@@ -18,10 +18,10 @@
 
 package com.arsdigita.aplaws;
 
-import org.apache.log4j.Logger;
-import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.persistence.metadata.ObjectType;
+import com.arsdigita.persistence.metadata.Property;
 import java.util.HashSet;
+import org.apache.log4j.Logger;
 
 /**
  * This is a general purpose traversal adaptor

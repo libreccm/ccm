@@ -18,8 +18,6 @@
 
 package com.arsdigita.aplaws.ui;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -31,9 +29,11 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
 import com.arsdigita.london.terms.ui.TermWidget;
 
+import org.apache.log4j.Logger;
+
 /**
  * <p> cms specific Concrete implementation of 
- * <code>com.arsdigita.aplaws.ui.ACSObjectCategoryPicker</code>. </p>
+ * <code>com.arsdigita.london.terms.ui.ACSObjectCategoryPicker</code>. </p>
  * 
  *  
  * 
@@ -56,9 +56,9 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
 
 
     /*
-     * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getForm(
-                         com.arsdigita.bebop.parameters.BigDecimalParameter, 
-                         com.arsdigita.bebop.parameters.StringParameter)
+     * @see com.arsdigita.london.terms.ui.ACSObjectCategoryPicker#getForm(
+     *                   com.arsdigita.bebop.parameters.BigDecimalParameter, 
+     *                   com.arsdigita.bebop.parameters.StringParameter)
      */
     protected ACSObjectCategoryForm getForm(BigDecimalParameter root,
                                             StringParameter mode) {
@@ -68,7 +68,7 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
 
 
     /* 
-     * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getObject()
+     * @see com.arsdigita.london.terms.ui.ACSObjectCategoryPicker#getObject()
      */
     protected ACSObject getObject(PageState state) {
         ContentItem item = CMS.getContext().getContentItem();

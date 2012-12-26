@@ -120,7 +120,7 @@ public final class CMSConfig extends AbstractConfig {
             "/default/folder.jsp");
     /**
      * Path or the root folter for template folders. Path is relative to webapp
-     * root.
+     * root. Modify with care! Usually modified by developers only!
      */
     private final Parameter m_templateRootPath =
                             new StringParameter(

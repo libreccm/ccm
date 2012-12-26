@@ -19,9 +19,9 @@
 package com.arsdigita.dispatcher;
 
 import com.arsdigita.runtime.AbstractConfig;
+import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.StringParameter;
 import org.apache.log4j.Logger;
 
@@ -33,9 +33,9 @@ public final class DispatcherConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(DispatcherConfig.class);
 
-    private final Parameter m_staticURLPrefix;
     private final Parameter m_cachingActive;
     private final Parameter m_defaultExpiry;
+    private final Parameter m_staticURLPrefix;
 
     /** Default top-level container for all Bebop components and containersPage
      *  to use for dispatching Bebop pages. A custom installation may provide 
@@ -48,10 +48,6 @@ public final class DispatcherConfig extends AbstractConfig {
                             "com.arsdigita.bebop.Page");
 
     public DispatcherConfig() {
-        m_staticURLPrefix = new StringParameter
-            ("waf.dispatcher.static_url_prefix", Parameter.REQUIRED,
-             "/STATICII/");
-
         m_cachingActive = new BooleanParameter
             ("waf.dispatcher.is_caching_active", 
              Parameter.REQUIRED, Boolean.TRUE);
@@ -60,6 +56,10 @@ public final class DispatcherConfig extends AbstractConfig {
         m_defaultExpiry = new IntegerParameter
             ("waf.dispatcher.default_expiry", Parameter.REQUIRED,
              new Integer(259200));
+
+        m_staticURLPrefix = new StringParameter
+            ("waf.dispatcher.static_url_prefix", Parameter.REQUIRED,
+             "/STATICII/");
 
         register(m_staticURLPrefix);
         register(m_cachingActive);

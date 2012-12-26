@@ -30,7 +30,10 @@ import org.apache.log4j.Logger;
 
 /**
  * Generates a set of patterns corresponding to the current 
- * web application prefix
+ * web application prefix.
+ * 
+ * It is a slight modification of 
+ * {@see com.arsdigita.templating.WebAppPatternGenerator}
  */
 public class WebAppPatternGenerator implements PatternGenerator {
 
@@ -52,13 +55,14 @@ public class WebAppPatternGenerator implements PatternGenerator {
         if (app == null || 
             ctx == null ||
             "".equals(ctx)) {
-            return new String[] { Web.ROOT_WEBAPP };
+            return new String[] { Web.ROOT_WEBAPP }; 
         }
         
         if (ctx.startsWith("/")) {
             ctx = ctx.substring(1);
         }
         
-        return new String[] { ctx };
+        return new String[] { ctx };  // this version cuts ","+ Web.ROOT_WEBAPP
+                                      // as in c.a.templating.WebAppPatternGenerator
     }
 }

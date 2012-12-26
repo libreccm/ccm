@@ -18,8 +18,8 @@
 
 package com.arsdigita.aplaws;
 
-import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.persistence.metadata.ObjectType;
+import com.arsdigita.persistence.metadata.Property;
 
 // XXX this class is pretty similar to DomainObjectTraversal
 // and it would be nice to figure out a way to let them share

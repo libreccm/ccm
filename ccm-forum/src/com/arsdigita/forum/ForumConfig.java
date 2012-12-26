@@ -21,18 +21,15 @@ package com.arsdigita.forum;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.runtime.AbstractConfig;
-// import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.ResourceParameter;
+import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Web;
 
 import java.io.IOException;
 import java.io.InputStream;
-// import java.net.MalformedURLException;
-// import java.net.URL;
 
 import org.apache.log4j.Logger;
 

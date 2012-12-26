@@ -202,7 +202,8 @@ public final class WebConfig extends AbstractConfig {
      * the <code>com.arsdigita.web.cache_policy</code> system property
      * using one fo the following values: <code>user</code> for
      * per-user caching, <code>world</code> for globally enabled
-     * caching, and <code>disable</code> to always prevent caching.
+     * caching, <code>disable</code> to prevent HTTP header caching, and
+     * <code>none</code>to always prevent caching in any case.
      */
     public final CachePolicy getCachePolicy() {
         return (CachePolicy) get(m_policy);

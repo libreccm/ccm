@@ -23,12 +23,12 @@ import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.ui.SimplePage;
+import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.SingletonParameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.BooleanParameter;
 import org.apache.log4j.Logger;
 
 /**

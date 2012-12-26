@@ -21,9 +21,9 @@ package com.arsdigita.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.StringUtils;
-import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.StringArrayParameter;
+import com.arsdigita.util.parameter.StringParameter;
 
 import java.util.Arrays;
 import java.util.ArrayList;

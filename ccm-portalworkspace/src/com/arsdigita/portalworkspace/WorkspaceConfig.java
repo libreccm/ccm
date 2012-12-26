@@ -22,9 +22,9 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.ResourceParameter;
 
 import java.io.InputStream;
 import java.util.Arrays;

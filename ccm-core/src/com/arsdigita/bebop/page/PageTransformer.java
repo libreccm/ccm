@@ -19,14 +19,17 @@
 
 package com.arsdigita.bebop.page;
 
+import com.arsdigita.bebop.Bebop;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.globalization.Globalization;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.profiler.Profiler;
-import com.arsdigita.templating.Templating;
-import com.arsdigita.templating.XSLTemplate;
 import com.arsdigita.templating.PresentationManager;
+import com.arsdigita.templating.Templating;
+import com.arsdigita.templating.XSLParameterGenerator;
+import com.arsdigita.templating.XSLTemplate;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.CachePolicy;
@@ -34,34 +37,27 @@ import com.arsdigita.web.Debugger;
 import com.arsdigita.web.TransformationDebugger;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Document;
-import com.arsdigita.bebop.Bebop;
 
-import com.arsdigita.globalization.GlobalizationHelper;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-
-
 import java.text.SimpleDateFormat;
-
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import com.arsdigita.templating.XSLParameterGenerator;
 
-import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
@@ -322,9 +318,11 @@ public class PageTransformer implements PresentationManager {
 
                 // Get the stylesheet transformer object corresponding to the
                 // current request.
-                final XSLTemplate template = Templating.getTemplate(req,
-                                                                    fancyErrors, !Boolean.TRUE.
-                        equals(req.getAttribute(CACHE_XSL_NONE)));
+                final XSLTemplate template = Templating.getTemplate(
+                        req,
+                        fancyErrors, 
+                        !Boolean.TRUE.equals(req.getAttribute(CACHE_XSL_NONE))
+                                                                    );
 
                 DeveloperSupport.endStage("PresMgr get stylesheet");
 

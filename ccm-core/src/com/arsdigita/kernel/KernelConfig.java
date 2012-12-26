@@ -56,10 +56,10 @@ public final class KernelConfig extends AbstractConfig {
         return s_conf;
     }
 
-    /**  */
+    /**  TODO: should be renamed waf.kernel.debug"                           */
     private static Parameter m_debug = new BooleanParameter
             ("waf.debug", Parameter.REQUIRED, Boolean.FALSE);
-    /** Whether WEB development support should be activated (true) or not.   */
+    /** Whether WEB development support should be activated (true) or not. */
     // Handled in OLD initializer c.ad.webdevsupport.LegacyInitializer
     private static Parameter m_webdevSupport = new BooleanParameter
             ("waf.webdev_support", Parameter.REQUIRED, Boolean.FALSE);
@@ -70,10 +70,21 @@ public final class KernelConfig extends AbstractConfig {
     private final EnumerationParameter m_identifier = new EnumerationParameter
             ("waf.kernel.primary_user_identifier", Parameter.REQUIRED,
              "email");
-    private final Parameter m_SSO;
-    private final Parameter m_remember;
+    /** 
+     *                                                                        */
+    private final Parameter m_SSO = new BooleanParameter
+            ("waf.kernel.sso_login", Parameter.REQUIRED, Boolean.FALSE);
+
+    /** 
+     *                                                                        */
+    private final Parameter m_remember = new BooleanParameter
+            ("waf.kernel.remember_login", Parameter.REQUIRED, Boolean.TRUE);
+
+    /** 
+     *                                                                        */
     private final Parameter m_secureLogin = new BooleanParameter
         	("waf.kernel.secure_login", Parameter.REQUIRED, Boolean.FALSE);
+
     /** String containing the supported languages.
         The first one is considered default.                                 */
     private final Parameter m_supportedLanguages = new StringParameter
@@ -85,18 +96,15 @@ public final class KernelConfig extends AbstractConfig {
             ("waf.kernel.language_independent_code", Parameter.OPTIONAL,
              "--");
 
+    /**
+     * Constructor
+     */
     public KernelConfig() {
 
         // Add recognised Login user identification to enumeration parameter
         m_identifier.put("email", "email");
         m_identifier.put("screen_name", "screenName");
-        
-        m_SSO = new BooleanParameter
-            ("waf.kernel.sso_login", Parameter.REQUIRED, Boolean.FALSE); 
-
-        m_remember = new BooleanParameter
-            ("waf.kernel.remember_login", Parameter.REQUIRED, Boolean.TRUE);
-
+  
 
         register(m_debug);
         register(m_webdevSupport);
