@@ -94,6 +94,7 @@ public class PersonPublicationsTable extends Table {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 

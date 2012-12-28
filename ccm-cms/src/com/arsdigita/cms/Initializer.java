@@ -18,7 +18,10 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Link;
+import com.arsdigita.cms.contenttypes.ui.GenericPersonOrgaUnitsStep;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.AssetURLFinder;
 import com.arsdigita.cms.dispatcher.ItemDelegatedURLPatternGenerator;
 import com.arsdigita.cms.dispatcher.ItemTemplatePatternGenerator;
@@ -36,6 +39,7 @@ import com.arsdigita.cms.search.LastModifiedUserFilterType;
 import com.arsdigita.cms.search.LaunchDateFilterType;
 import com.arsdigita.cms.search.LuceneQueryEngine;
 import com.arsdigita.cms.search.VersionFilterType;
+import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.workflow.CMSEngine;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
@@ -93,7 +97,7 @@ public class Initializer extends CompoundInitializer {
 
     /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
-
+    /** Configuration object for the CMS module     */
     /** Configuration object for the CMS module     */
     private static final CMSConfig s_conf = CMSConfig.getInstance();
 
@@ -107,10 +111,8 @@ public class Initializer extends CompoundInitializer {
 
         s_log.debug("CMS.Initializer.(Constructor) invoked");
 
-        add(new PDLInitializer
-            (new ManifestSource
-             ("ccm-cms.pdl.mf",
-              new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
+        add(new PDLInitializer(new ManifestSource("ccm-cms.pdl.mf",
+                                                  new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
         add(new com.arsdigita.cms.contentsection.Initializer());
         add(new com.arsdigita.cms.publishToFile.Initializer());
@@ -131,27 +133,27 @@ public class Initializer extends CompoundInitializer {
         super.init(e);
 
         /* Register object instantiator for Workspace (Content Center)        */
-        e.getFactory().registerInstantiator
-            (Workspace.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(DataObject dobj) {
-                     return new Workspace(dobj);
-                 }
-             } );
+        e.getFactory().registerInstantiator(Workspace.BASE_DATA_OBJECT_TYPE,
+                                            new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dobj) {
+                return new Workspace(dobj);
+            }
+
+        });
 
         LanguageUtil.setSupportedLanguages(
-            Kernel.getConfig().getSupportedLanguages());
+                Kernel.getConfig().getSupportedLanguages());
 
         /* Register object instantiator for CMS Service         */
-        e.getFactory().registerInstantiator
-            (Service.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(DataObject dobj) {
-                     return new Service(dobj);
-                 }
-             } );
+        e.getFactory().registerInstantiator(Service.BASE_DATA_OBJECT_TYPE,
+                                            new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dobj) {
+                return new Service(dobj);
+            }
+
+        });
 
         URLService.registerFinder(ContentPage.BASE_DATA_OBJECT_TYPE,
                                   new ItemURLFinder());
@@ -163,38 +165,38 @@ public class Initializer extends CompoundInitializer {
                                   new AssetURLFinder());
 
         URLService.registerFinder(
-            Link.BASE_DATA_OBJECT_TYPE,
-            new URLFinder() {
-                public String find(OID oid, String context)
-                    throws NoValidURLException {
+                Link.BASE_DATA_OBJECT_TYPE,
+                new URLFinder() {
+                    public String find(OID oid, String context)
+                            throws NoValidURLException {
 
-                    return find(oid);
-                }
-                public String find( OID oid )
-                    throws NoValidURLException {
-
-                    Link link;
-                    try {
-                        link = (Link) DomainObjectFactory.newInstance( oid );
-                    } catch( DataObjectNotFoundException ex ) {
-                        throw new NoValidURLException
-                            ( "Cannot find an object with oid: " + oid );
+                        return find(oid);
                     }
 
-                    if (Link.EXTERNAL_LINK.equals(link.getTargetType())) {
-                        return link.getTargetURI();
-                    } else {
-                        ContentItem target = link.getTargetItem();
+                    public String find(OID oid)
+                            throws NoValidURLException {
 
+                        Link link;
                         try {
-                            return URLService.locate( target.getOID() );
-                        } catch( URLFinderNotFoundException ex ) {
-                            throw new UncheckedWrapperException( ex );
+                            link = (Link) DomainObjectFactory.newInstance(oid);
+                        } catch (DataObjectNotFoundException ex) {
+                            throw new NoValidURLException("Cannot find an object with oid: " + oid);
+                        }
+
+                        if (Link.EXTERNAL_LINK.equals(link.getTargetType())) {
+                            return link.getTargetURI();
+                        } else {
+                            ContentItem target = link.getTargetItem();
+
+                            try {
+                                return URLService.locate(target.getOID());
+                            } catch (URLFinderNotFoundException ex) {
+                                throw new UncheckedWrapperException(ex);
+                            }
                         }
                     }
-                }
-            }
-        );
+
+                });
 
         ImageSizerFactory.initialize();
         registerInstantiators(e.getFactory());
@@ -202,15 +204,15 @@ public class Initializer extends CompoundInitializer {
         registerLuceneEngine();
         registerIntermediaEngine();
         registerPatternGenerators();
-        
+
         // cg - register Task Retrieval engine
         Engine.registerEngine(CMSEngine.CMS_ENGINE_TYPE, new CMSEngine());
 
         // Setup Workspace tab to URL mapping
         final String workspaceURL = CMS.WORKSPACE_PACKAGE_KEY;
         final String contentCenterMap = s_conf.getContentCenterMap();
-        WorkspaceSetup workspaceSetup = new WorkspaceSetup( workspaceURL,
-                                                            contentCenterMap);
+        WorkspaceSetup workspaceSetup = new WorkspaceSetup(workspaceURL,
+                                                           contentCenterMap);
         workspaceSetup.run();
 
         // register item adapters
@@ -220,21 +222,25 @@ public class Initializer extends CompoundInitializer {
         // Just set the class implementing methods run when for publishing
         // or unpublishing to file. No initialisation of the class here.
         try {
-            QueueManager.setListener((PublishToFileListener)
-                                     ContentSection.getConfig()
-                                     .getPublishToFileClass().newInstance());
+            QueueManager.setListener((PublishToFileListener) ContentSection.getConfig()
+                    .getPublishToFileClass().newInstance());
         } catch (InstantiationException ex) {
-            throw new UncheckedWrapperException
-                ("Failed to instantiate the listener class", ex);
+            throw new UncheckedWrapperException("Failed to instantiate the listener class", ex);
         } catch (IllegalAccessException ex) {
-            throw new UncheckedWrapperException
-                ("Couldn't access the listener class", ex);
+            throw new UncheckedWrapperException("Couldn't access the listener class", ex);
         }
 
         MetadataProviderRegistry.registerAdapter(
-            FileAsset.BASE_DATA_OBJECT_TYPE,
-            new AssetMetadataProvider());
+                FileAsset.BASE_DATA_OBJECT_TYPE,
+                new AssetMetadataProvider());
 
+
+        AuthoringKitWizard.registerAssetStep(
+                GenericPerson.BASE_DATA_OBJECT_TYPE,
+                GenericPersonOrgaUnitsStep.class,
+                ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
+                ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
+                20);
 
         s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
     }    //  END init(DomainInitEvent e)
@@ -245,113 +251,112 @@ public class Initializer extends CompoundInitializer {
      */
     private void registerPatternGenerators() {
         PatternStylesheetResolver.registerPatternGenerator(
-            "item_template_oid",
-            new ItemTemplatePatternGenerator()
-        );
+                "item_template_oid",
+                new ItemTemplatePatternGenerator());
 
         PatternStylesheetResolver.registerPatternGenerator(
-            "item_delegated_url",
-            new ItemDelegatedURLPatternGenerator()
-        );
+                "item_delegated_url",
+                new ItemDelegatedURLPatternGenerator());
     }
 
 
     /**
      * Registers object instantiators
      */
-     private void registerInstantiators(DomainObjectFactory f) {
+    private void registerInstantiators(DomainObjectFactory f) {
 
         // Register the CMSTaskInstaniator
-         f.registerInstantiator
-             (CMSTask.BASE_DATA_OBJECT_TYPE,
-              new ACSObjectInstantiator() {
-                  @Override
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                      return new CMSTask(dataObject);
-                  }
-              });
-         f.registerInstantiator
-             (CMSTaskType.BASE_DATA_OBJECT_TYPE,
-              new DomainObjectInstantiator() {
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                      return new CMSTaskType(dataObject);
-                  }
-              });
-         f.registerInstantiator
-             (TaskEventURLGenerator.BASE_DATA_OBJECT_TYPE,
-              new DomainObjectInstantiator() {
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                      return new TaskEventURLGenerator(dataObject);
-                  }
-              });
-         
-         f.registerInstantiator
-             (Workflow.BASE_DATA_OBJECT_TYPE,
-              new ACSObjectInstantiator() {
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                      return new Workflow(dataObject);
-                  }
-              });
+        f.registerInstantiator(CMSTask.BASE_DATA_OBJECT_TYPE,
+                               new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new CMSTask(dataObject);
+            }
 
-         f.registerInstantiator
-             (WorkflowTemplate.BASE_DATA_OBJECT_TYPE,
-              new ACSObjectInstantiator() {
-                  @Override
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                      return new WorkflowTemplate(dataObject);
-                  }
-              });
+        });
+        f.registerInstantiator(CMSTaskType.BASE_DATA_OBJECT_TYPE,
+                               new DomainObjectInstantiator() {
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new CMSTaskType(dataObject);
+            }
 
-         f.registerInstantiator
-             (TemplateContext.BASE_DATA_OBJECT_TYPE,
-              new DomainObjectInstantiator() {
-                  public DomainObject doNewInstance(DataObject dataObject) {
-                      return new TemplateContext(dataObject);
-                  }
-                  @Override
-                  public DomainObjectInstantiator
-                      resolveInstantiator(DataObject obj) {
-                      return this;
-                  }
-              });
-     }
+        });
+        f.registerInstantiator(TaskEventURLGenerator.BASE_DATA_OBJECT_TYPE,
+                               new DomainObjectInstantiator() {
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new TaskEventURLGenerator(dataObject);
+            }
+
+        });
+
+        f.registerInstantiator(Workflow.BASE_DATA_OBJECT_TYPE,
+                               new ACSObjectInstantiator() {
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new Workflow(dataObject);
+            }
+
+        });
+
+        f.registerInstantiator(WorkflowTemplate.BASE_DATA_OBJECT_TYPE,
+                               new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new WorkflowTemplate(dataObject);
+            }
+
+        });
+
+        f.registerInstantiator(TemplateContext.BASE_DATA_OBJECT_TYPE,
+                               new DomainObjectInstantiator() {
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new TemplateContext(dataObject);
+            }
+
+            @Override
+            public DomainObjectInstantiator resolveInstantiator(DataObject obj) {
+                return this;
+            }
+
+        });
+    }
 
     private void registerLuceneEngine() {
 
         QueryEngineRegistry.registerEngine(IndexerType.LUCENE,
-                                           new FilterType[] {
-                                               new CategoryFilterType(),
-                                               new ContentSectionFilterType(),
-                                               new CMSContentSectionFilterType(),
-                                               new ContentTypeFilterType(),
-                                               new CreationDateFilterType(),
-                                               new CreationUserFilterType(),
-                                               new LastModifiedDateFilterType(),
-                                               new LastModifiedUserFilterType(),
-                                               new ObjectTypeFilterType(),
-                                               new PermissionFilterType(),
-                                               new VersionFilterType()
-                                           },
+                                           new FilterType[]{
+                    new CategoryFilterType(),
+                    new ContentSectionFilterType(),
+                    new CMSContentSectionFilterType(),
+                    new ContentTypeFilterType(),
+                    new CreationDateFilterType(),
+                    new CreationUserFilterType(),
+                    new LastModifiedDateFilterType(),
+                    new LastModifiedUserFilterType(),
+                    new ObjectTypeFilterType(),
+                    new PermissionFilterType(),
+                    new VersionFilterType()
+                },
                                            new LuceneQueryEngine());
     }
 
     private void registerIntermediaEngine() {
 
         QueryEngineRegistry.registerEngine(IndexerType.INTERMEDIA,
-                                           new FilterType[] {
-                                               new CategoryFilterType(),
-                                               new ContentSectionFilterType(),
-                                               new CMSContentSectionFilterType(),
-                                               new ContentTypeFilterType(),
-                                               new CreationDateFilterType(),
-                                               new CreationUserFilterType(),
-                                               new LastModifiedDateFilterType(),
-                                               new LastModifiedUserFilterType(),
-                                               new LaunchDateFilterType(),
-                                               new ObjectTypeFilterType(),
-                                               new PermissionFilterType(),
-                                               new VersionFilterType()
-                                           },
+                                           new FilterType[]{
+                    new CategoryFilterType(),
+                    new ContentSectionFilterType(),
+                    new CMSContentSectionFilterType(),
+                    new ContentTypeFilterType(),
+                    new CreationDateFilterType(),
+                    new CreationUserFilterType(),
+                    new LastModifiedDateFilterType(),
+                    new LastModifiedUserFilterType(),
+                    new LaunchDateFilterType(),
+                    new ObjectTypeFilterType(),
+                    new PermissionFilterType(),
+                    new VersionFilterType()
+                },
                                            new IntermediaQueryEngine());
     }
+
 }

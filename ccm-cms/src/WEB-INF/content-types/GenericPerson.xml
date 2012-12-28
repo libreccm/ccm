@@ -29,7 +29,7 @@
                 component="com.arsdigita.cms.contenttypes.ui.GenericPersonContactPropertiesStep"
                 ordering="2"/>
 
-            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>     
         </ctd:authoring-kit>
 
     </ctd:content-type>

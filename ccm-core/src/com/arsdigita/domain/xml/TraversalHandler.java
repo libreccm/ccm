@@ -66,8 +66,10 @@ public class TraversalHandler extends DefaultHandler {
         m_adapters = new HashMap();
     }
 
+    @Override
     public void characters(char[] ch, int start, int len) {}
 
+    @Override
     public void startElement(String uri, String localName, String qn,
                              Attributes attrs) {
         if (!XMLNS.equals(uri)) {

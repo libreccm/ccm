@@ -17,8 +17,8 @@ public class PublicationBundleCollection extends DomainCollection {
         m_dataCollection.addOrder("name asc");        
     }
     
-    public Publication getPublicationBundle() {
-        return new Publication(m_dataCollection.getDataObject());
+    public PublicationBundle getPublicationBundle() {
+        return new PublicationBundle(m_dataCollection.getDataObject());
     }
     
     public Publication getPublication() {
