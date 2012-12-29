@@ -69,6 +69,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>This class represents a single authoring kit.  The wizard
@@ -102,7 +103,8 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
         AuthoringKitWizard.class,
         ContentType.class
     };
-    private static final ArrayList s_assets = new ArrayList();
+    //private static final ArrayList s_assets = new ArrayList();
+    private static final java.util.List<AssetStepEntry> s_assets = new ArrayList<AssetStepEntry>();
     private final Object[] m_vals;
     private final ContentType m_type;
     private final AuthoringKit m_kit;
@@ -268,14 +270,19 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
                 s_log.debug("skip step " + it.next());
             }
         }
-        Iterator assets = s_assets.iterator();
+        //Iterator assets = s_assets.iterator();
+        Iterator<AssetStepEntry> assets = s_assets.iterator();
         while (assets.hasNext()) {
-            Object[] data = (Object[]) assets.next();
-            String baseObjectType = (String) data[0];
-            Class step = (Class) data[1];
+            //Object[] data = (Object[]) assets.next();
+            final AssetStepEntry data = assets.next();
+            //String baseObjectType = (String) data[0];
+            final String baseObjectType = data.getBaseDataObjectType();
+            //Class step = (Class) data[1];
+            Class step = data.getStep();
             s_log.debug("possibly adding asset step " + step.getName());
             if (!skipSteps.contains(step.getName())) {
-                GlobalizedMessage label = (GlobalizedMessage) data[2];
+                //GlobalizedMessage label = (GlobalizedMessage) data[2];
+                GlobalizedMessage label = data.getLabel();
 
                 if (!thisType.isSubtypeOf(baseObjectType)) {
                     continue;
@@ -425,11 +432,17 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
                 + " step class: "
                 + step.getName());
 
-        Iterator assets = s_assets.iterator();
+        //Iterator assets = s_assets.iterator();
+        Iterator<AssetStepEntry> assets = s_assets.iterator();
         while (assets.hasNext()) {
-            Object[] data = (Object[]) assets.next();
-            String thisObjectType = (String) data[0];
-            GlobalizedMessage thisLabel = (GlobalizedMessage) data[2];
+            //Object[] data = (Object[]) assets.next();
+            //String thisObjectType = (String) data[0];
+            //GlobalizedMessage thisLabel = (GlobalizedMessage) data[2];
+            
+            final AssetStepEntry data = assets.next();
+            String thisObjectType = data.getBaseDataObjectType();
+            GlobalizedMessage thisLabel = data.getLabel();
+            
             /**
              * jensp 2011-11-14: The code above was only testing for the same
              * label, but not for the same object type. I don't think that
@@ -447,9 +460,83 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
                 break;
             }
         }
-        s_assets.add(new Object[]{baseObjectType, step, label, description});
+        s_assets.add(new AssetStepEntry(baseObjectType, step, label, description, sortKey));
+        Collections.sort(s_assets);
+        //s_assets.add(new Object[]{baseObjectType, step, label, description});
     }
 
+    private static class AssetStepEntry implements Comparable<AssetStepEntry> {
+        private String baseDataObjectType;
+        private Class step;
+        private GlobalizedMessage label;
+        private GlobalizedMessage description;
+        private Integer sortKey;
+        
+        public AssetStepEntry() {
+            super();
+        }
+        
+        public AssetStepEntry(final String baseDataObjectType,
+                              final Class step,
+                              final GlobalizedMessage label,
+                              final GlobalizedMessage description,
+                              final Integer sortKey) {
+            this.baseDataObjectType = baseDataObjectType;
+            this.step = step;
+            this.label = label;
+            this.description = description;
+            this.sortKey = sortKey;
+        }
+
+        public String getBaseDataObjectType() {
+            return baseDataObjectType;
+        }
+
+        public void setBaseDataObjectType(final String baseDataObjectType) {
+            this.baseDataObjectType = baseDataObjectType;
+        }
+
+        public Class getStep() {
+            return step;
+        }
+
+        public void setStep(final Class step) {
+            this.step = step;
+        }
+
+        public GlobalizedMessage getLabel() {
+            return label;
+        }
+
+        public void setLabel(final GlobalizedMessage label) {
+            this.label = label;
+        }
+
+        public GlobalizedMessage getDescription() {
+            return description;
+        }
+
+        public void setDescription(final GlobalizedMessage description) {
+            this.description = description;
+        }
+
+        public Integer getSortKey() {
+            return sortKey;
+        }
+
+        public void setSortKey(final Integer sortKey) {
+            this.sortKey = sortKey;
+        }
+        
+        public int compareTo(final AssetStepEntry other) {
+            if (sortKey == other.getSortKey()) {
+                return step.getName().compareTo(other.getStep().getName());
+            } else {
+                return sortKey.compareTo(other.getSortKey());
+            }
+        }
+    }
+    
     /**
      * @return The content type handled by this wizard
      */
