@@ -124,6 +124,9 @@ public class ContentSection extends Application {
     protected static final String WF_TEMPLATES = "associatedWorkflowTemplates";
     private final static String ITEM_QUERY = "com.arsdigita.cms.ItemsInSection";
     private final static String SECTION_ID = "sectionId";
+    
+    private static final CMSConfig s_config = CMSConfig.getInstance();
+/*  DO NOT use CMSConfig constructor to instantiate !
     private static final CMSConfig s_config = new CMSConfig();
 
     static {
@@ -131,6 +134,7 @@ public class ContentSection extends Application {
         s_config.load();
         s_log.debug("Static initializer finished...");
     }
+*/ 
     // Cached properties
     PageResolver m_pageResolver = null;
     ItemResolver m_itemResolver = null;

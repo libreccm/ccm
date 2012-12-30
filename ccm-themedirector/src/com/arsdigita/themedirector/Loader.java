@@ -23,8 +23,8 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.runtime.ScriptContext;
-import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationType;
 
 import org.apache.log4j.Logger;
 

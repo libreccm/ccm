@@ -73,8 +73,7 @@ public final class CMSConfig extends AbstractConfig {
      * Returns the singleton configuration record for the content section
      * environment.
      *
-     * @return The
-     * <code>ContentSectionConfig</code> record; it cannot be null
+     * @return The <code>CMSConfig</code> record; it cannot be null
      */
     public static synchronized CMSConfig getInstance() {
         if (s_config == null) {

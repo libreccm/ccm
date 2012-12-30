@@ -28,9 +28,9 @@ import org.apache.log4j.Logger;
 
 //  IMPLEMENTATION NOTE
 //  Class is a result of migrating the old enterprise.init based 
-//  initialization process and not yet completed. Functionality is
-//  basically OK so far, but code urgently needs cleaning up and a
-//  check for useful bits.
+//  initialization process. Functionality is   basically OK so far, but
+//  code urgently needs cleaning up and a check for useful bits.
+
 /**
  * Container for various configuration parameters for ccm-cms package loader.
  *

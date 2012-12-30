@@ -36,7 +36,7 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.workflow.simple.TaskCollection;
+// import com.arsdigita.workflow.simple.TaskCollection;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
 import com.arsdigita.xml.XML;
 import java.io.BufferedReader;
