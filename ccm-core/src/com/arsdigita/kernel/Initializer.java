@@ -20,8 +20,8 @@ package com.arsdigita.kernel;
 
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.permissions.PermissionManager;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.runtime.ContextInitEvent;

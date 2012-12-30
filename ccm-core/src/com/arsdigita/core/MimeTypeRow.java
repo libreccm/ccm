@@ -16,12 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.loader;
+package com.arsdigita.core;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
-// deprecated: import com.arsdigita.util.parameter.ParameterRecord;
-// replaced by c.ad.rt.AbstractConfig, should be deleted after testing
 import com.arsdigita.util.parameter.StringParameter;
 import org.apache.log4j.Logger;
 

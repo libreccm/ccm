@@ -23,7 +23,6 @@ import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.kernel.ACSObjectInstantiator;
-import com.arsdigita.loader.CoreLoader;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Session;
@@ -35,25 +34,24 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.toolbox.CharsetEncodingProvider;
-import com.arsdigita.ui.admin.Admin;
-import com.arsdigita.util.URLRewriter;
-import com.arsdigita.xml.FactoriesSetup;
-import com.arsdigita.web.Host;
-// import com.arsdigita.web.WebApp;
-import com.arsdigita.web.ApplicationType;
-import com.arsdigita.workflow.simple.TaskComment;
 import com.arsdigita.search.converter.Converter;
 import com.arsdigita.search.converter.ConverterRegistry;
-import com.arsdigita.search.converter.PDFConverter;
 import com.arsdigita.search.converter.ExcelConverter;
 import com.arsdigita.search.converter.OOConverter;
-import com.arsdigita.search.converter.WordConverter;
+import com.arsdigita.search.converter.PDFConverter;
 import com.arsdigita.search.converter.TextConverter;
-
+import com.arsdigita.search.converter.WordConverter;
+import com.arsdigita.toolbox.CharsetEncodingProvider;
+import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.login.Login;
 import com.arsdigita.ui.permissions.Permissions;
+import com.arsdigita.util.URLRewriter;
+import com.arsdigita.web.ApplicationType;
+import com.arsdigita.web.Host;
 import com.arsdigita.webdevsupport.WebDevSupport;
+import com.arsdigita.workflow.simple.TaskComment;
+import com.arsdigita.xml.FactoriesSetup;
+
 import org.apache.log4j.Logger;
 
 
@@ -123,15 +121,6 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-/*      Status Experimental - not used anywhere in code base.
-        e.getFactory().registerInstantiator
-            (WebApp.BASE_DATA_OBJECT_TYPE,
-             new DomainObjectInstantiator() {
-                 public DomainObject doNewInstance(final DataObject data) {
-                     return new WebApp(data);
-                  }
-             });
-*/
         e.getFactory().registerInstantiator
             (TaskComment.BASE_DATA_OBJECT_TYPE,
              new DomainObjectInstantiator() {
@@ -233,7 +222,7 @@ public class Initializer extends CompoundInitializer {
         Session session = SessionManager.getSession();
         TransactionContext txn = session.getTransactionContext();
         txn.beginTxn();
-        CoreLoader.loadHost();
+        Loader.loadHost();
         txn.commitTxn();
 
         s_log.info("Core init(DomainInitEvent) done");

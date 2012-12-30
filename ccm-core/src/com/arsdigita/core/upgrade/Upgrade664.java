@@ -19,7 +19,7 @@
 
 package com.arsdigita.core.upgrade;
 
-import com.arsdigita.loader.CoreLoader;
+import com.arsdigita.core.Loader;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.util.cmd.Program;
@@ -90,28 +90,28 @@ public class Upgrade664 extends Program {
                 //  Previously login had been managed by a (virtual) root 
                 //  sitenode with login dispatcher associated.
                 //  Login application is newly created, old sitenote deactivated.
-                CoreLoader.loadLoginApp();
+                Loader.loadLoginApp();
 
 
                 //  Update core Admin application
                 //  Old style package type already removed by sql script.
                 //  Create a (new type, legacy free) web.ApplicationType type 
                 //  application
-                CoreLoader.loadAdminApp();
+                Loader.loadAdminApp();
 
 
                 //  Update core permission support
                 //  Old style package type already removed by sql script.
                 //  Create a (new type, legacy free) web.ApplicationType type 
                 //  application
-                CoreLoader.loadPermissionsApp();
+                Loader.loadPermissionsApp();
 
 
                 //  Update core WebDeveloperSupport
                 //  Old style package type already removed by sql script.
                 //  Create a (new type, legacy free) web.ApplicationType type 
                 //  application
-                CoreLoader.loadWebDev();
+                Loader.loadWebDev();
 
 
                 // Note: Old PackageType sitenode removed. It's useless now

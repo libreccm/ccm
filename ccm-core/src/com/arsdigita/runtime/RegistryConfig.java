@@ -40,6 +40,11 @@ import java.net.URL;
  */
 public class RegistryConfig extends AbstractConfig {
 
+    /**
+     * Helper method to unmarshal parameter values.
+     * @param str A String of comma separated values
+     * @return StringArray of the values
+     */
     private static String[] array(String str) {
         if (str == null) {
             return null;
@@ -48,19 +53,38 @@ public class RegistryConfig extends AbstractConfig {
         }
     }
 
+    /**
+     * List of installed packages.
+     * 
+     * Provided as a comma separated package-key list of installed packages.
+     * The parameter overwrites the default marshal and unmarshal methods to
+     * allow the String parameter to hold a list of values.
+     * 
+     * TODO: Replace the type String parameter by StringArray parameter which
+     * provides exactly the required functionality (doesn't it?).
+     */
     private Parameter m_packages = new StringParameter
         ("waf.config.packages", Parameter.OPTIONAL, new String[0]) {
+        @Override
         protected Object unmarshal(String value, ErrorList errs) {
             return array(value);
         }
 
+        @Override
         protected String marshal(Object obj) {
             return StringUtils.join((String[]) obj, ',');
         }
     };
 
+    /**
+     * List of parameter values, purpose currently unkown.
+     * 
+     * The parameter overwrites the default marshal and unmarshal methods to
+     * allow the String parameter to hold a list of values.
+     */
     private Parameter m_parents = new StringParameter
         ("waf.config.parents", Parameter.OPTIONAL, new URL[0]) {
+        @Override
         protected Object unmarshal(String value, ErrorList errs) {
             String[] strs = array(value);
             URL[] result = new URL[strs.length];
