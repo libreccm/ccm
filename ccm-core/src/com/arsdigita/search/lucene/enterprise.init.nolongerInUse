@@ -1,7 +1,0 @@
-// file: com.arsdigita.search.lucene.enterprise.init
-
-
-
-//  As of version 6.5.x still in use!
-init com.arsdigita.search.lucene.LegacyInitializer {}
-
