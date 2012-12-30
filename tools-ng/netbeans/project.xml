@@ -263,6 +263,18 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-atoz (Source)</label>
+                    <type>java</type>
+                    <location>ccm-atoz/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-atoz-siteproxy (Source)</label>
+                    <type>java</type>
+                    <location>ccm-atoz-siteproxy/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-auth-http (Source)</label>
                     <type>java</type>
                     <location>ccm-auth-http/src</location>
@@ -353,6 +365,12 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-portlet-collection (Source)</label>
+                    <type>java</type>
+                    <location>ccm-portlet-collection/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-portlet-latestnews (Source)</label>
                     <type>java</type>
                     <location>ccm-portlet-latestnews/src</location>
@@ -419,6 +437,12 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-ldn-atoz-siteproxy (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-atoz-siteproxy/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>ccm-ldn-dublin (Source)</label>
                     <type>java</type>
                     <location>ccm-ldn-dublin/src</location>
@@ -478,18 +502,56 @@
                     <location>ccm-ldn-util/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
+
                 <source-folder>
-                    <label>ccm-gen-aplaws (Source)</label>
+                    <label>ccm-lbc-aplaws (Source)</label>
                     <type>java</type>
-                    <location>ccm-gen-aplaws/src</location>
+                    <location>ccm-lbc-aplaws/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-gen-aplaws (Web)</label>
+                    <label>ccm-lbc-consultation (Source)</label>
                     <type>java</type>
-                    <location>ccm-gen-aplaws/web</location>
+                    <location>ccm-lbc-consultation/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
+                <source-folder>
+                    <label>ccm-lbc-contentcheck (Source)</label>
+                    <type>java</type>
+                    <location>ccm-lbc-contentcheck/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-lbc-decisiontree (Source)</label>
+                    <type>java</type>
+                    <location>ccm-lbc-decisiontree/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-lbc-eforms (Source)</label>
+                    <type>java</type>
+                    <location>ccm-lbc-eforms/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-lbc-foi (Source)</label>
+                    <type>java</type>
+                    <location>ccm-lbc-foi/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-lbc-retention (Source)</label>
+                    <type>java</type>
+                    <location>ccm-lbc-retention/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-lbc-wordxml (Source)</label>
+                    <type>java</type>
+                    <location>ccm-lbc-wordxml/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+
                 <source-folder>
                     <label>ccm-sci-bundle (Source)</label>
                     <type>java</type>
@@ -742,6 +804,14 @@
                         <location>ccm-cms-types-xmlfeed/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-atoz (Source)</label>
+                        <location>ccm-atoz/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-atoz-siteproxy (Source)</label>
+                        <location>ccm-atoz-siteproxy/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-auth-http (Source)</label>
                         <location>ccm-auth-http/src</location>
                     </source-folder>
@@ -800,6 +870,10 @@
                     <source-folder style="packages">
                         <label>ccm-portlet-bookmarks (Source)</label>
                         <location>ccm-portlet-bookmarks/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-portlet-collection (Source)</label>
+                        <location>ccm-portlet-collection/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-portlet-latestnews (Source)</label>
@@ -885,6 +959,40 @@
                         <label>ccm-ldn-util (Source)</label>
                         <location>ccm-ldn-util/src</location>
                     </source-folder>
+
+                    <source-folder style="packages">
+                        <label>ccm-lbc-aplaws (Source)</label>
+                        <location>ccm-lbc-aplaws/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lbc-consultation (Source)</label>
+                        <location>ccm-lbc-consultation/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lbc-contentcheck (Source)</label>
+                        <location>ccm-lbc-contentcheck/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lbc-decisiontree (Source)</label>
+                        <location>ccm-lbc-decisiontree/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lbc-eforms (Source)</label>
+                        <location>ccm-lbc-eforms/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lbc-foi (Source)</label>
+                        <location>ccm-lbc-foi/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lbc-retention (Source)</label>
+                        <location>ccm-lbc-retention/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lbc-wordxml (Source)</label>
+                        <location>ccm-lbc-wordxml/src</location>
+                    </source-folder>
+
                     <source-folder style="packages">
                         <label>ccm-sci-bundle (Source)</label>
                         <location>ccm-sci-bundle/src</location>
@@ -902,20 +1010,20 @@
                         <location>ccm-sci-publications/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-sci-type-departement (Source)</label>
-                        <location>ccm-sci-type-departement/src</location>
+                        <label>ccm-sci-types-department (Source)</label>
+                        <location>ccm-sci-types-department/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-sci-type-institute (Source)</label>
-                        <location>ccm-sci-type-institute/src</location>
+                        <label>ccm-sci-types-institute (Source)</label>
+                        <location>ccm-sci-types-institute/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-sci-type-member (Source)</label>
-                        <location>ccm-sci-type-member/src</location>
+                        <label>ccm-sci-types-member (Source)</label>
+                        <location>ccm-sci-types-member/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-sci-type-project (Source)</label>
-                        <location>ccm-sci-type-project/src</location>
+                        <label>ccm-sci-types-project (Source)</label>
+                        <location>ccm-sci-types-project/src</location>
                     </source-folder>
                     <source-file>
                         <location>build.xml</location>
@@ -975,6 +1083,8 @@
                 <package-root>ccm-cms-types-siteproxy/src</package-root>
                 <package-root>ccm-cms-types-survey/src</package-root>
                 <package-root>ccm-cms-types-xmlfeed/src</package-root>
+                <package-root>ccm-atoz/src</package-root>
+                <package-root>ccm-atoz-siteproxy/src</package-root>
                 <package-root>ccm-auth-http/src</package-root>
                 <package-root>ccm-bookmarks/src</package-root>
                 <package-root>ccm-bundle/src</package-root>
@@ -990,6 +1100,7 @@
                 <package-root>ccm-portalworkspace/src</package-root>
                 <package-root>ccm-portalworkspace-homepage/src</package-root>
                 <package-root>ccm-portlet-bookmarks/src</package-root>
+                <package-root>ccm-portlet-collection/src</package-root>
                 <package-root>ccm-portlet-latestnews/src</package-root>
                 <package-root>ccm-portlet-motd/src</package-root>
                 <package-root>ccm-rssfeed/src</package-root>
@@ -1011,15 +1122,24 @@
                 <package-root>ccm-ldn-types-esdservice/src</package-root>
                 <package-root>ccm-ldn-userpreferences/src</package-root>
                 <package-root>ccm-ldn-util/src</package-root>
+                <package-root>ccm-lbc-aplaws/src</package-root>
+                <package-root>ccm-lbc-consultation/src</package-root>
+                <package-root>ccm-lbc-contentcheck/src</package-root>
+                <package-root>ccm-lbc-decisiontree/src</package-root>
+                <package-root>ccm-lbc-eforms/src</package-root>
+                <package-root>ccm-lbc-foi/src</package-root>
+                <package-root>ccm-lbc-retention/src</package-root>
+                <package-root>ccm-lbc-wordxml/src</package-root>
                 <package-root>ccm-sci-bundle/src</package-root>
                 <package-root>ccm-sci-personalprojects/src</package-root>
                 <package-root>ccm-sci-personalpublications/src</package-root>
                 <package-root>ccm-sci-publications/src</package-root>
-                <package-root>ccm-sci-type-department/src</package-root>
-                <package-root>ccm-sci-type-institute/src</package-root>
-                <package-root>ccm-sci-type-member/src</package-root>
-                <package-root>ccm-sci-type-project/src</package-root>
-                <classpath mode="compile">ccm-core/lib/log4j.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/saxon.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/pdfbox-1.4.0.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/fop.jar:tools-ng/devel/lib/ccm-servlet-2.3.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/postgresql-jdbc.jar</classpath>
+                <package-root>ccm-sci-types-department/src</package-root>
+                <package-root>ccm-sci-types-institute/src</package-root>
+                <package-root>ccm-sci-types-member/src</package-root>
+                <package-root>ccm-sci-types-project/src</package-root>
+
+                <classpath mode="compile">ccm-core/lib/log4j.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-io-1.3.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/imgscalr-lib-4.2.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/saxon.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/pdfbox-1.4.0.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/fop.jar:tools-ng/devel/lib/ccm-servlet-2.3.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/postgresql-jdbc.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
