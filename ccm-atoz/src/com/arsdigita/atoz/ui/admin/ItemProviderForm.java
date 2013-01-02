@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.atoz.ItemProvider;
@@ -63,12 +62,12 @@ public class ItemProviderForm extends ProviderForm {
         super.addWidgets();
 
         m_loadPaths = new TextField(ItemProvider.LOAD_PATHS);
-        ((SimpleComponent)m_loadPaths).setMetaDataAttribute("label", "Attributes to retrieve");
+        ((SimpleComponent) m_loadPaths).setMetaDataAttribute("label", "Attributes to retrieve");
         add(m_loadPaths);
         m_loadPaths.addValidationListener(new StringInRangeValidationListener(0, 200));
         m_picker = new AllCategoryPicker("rootCategory");
-        ((SimpleComponent)m_picker).setMetaDataAttribute("label", "Category filter");
-        ((SingleSelect)m_picker).addValidationListener(new NotNullValidationListener());
+        ((SimpleComponent) m_picker).setMetaDataAttribute("label", "Category filter");
+        ((SingleSelect) m_picker).addValidationListener(new NotNullValidationListener());
         add(m_picker);
     }
 
@@ -77,10 +76,10 @@ public class ItemProviderForm extends ProviderForm {
                                   AtoZProvider provider) {
         super.processWidgets(state, provider);
 
-        ItemProvider myprovider = (ItemProvider)provider;
+        ItemProvider myprovider = (ItemProvider) provider;
 
         myprovider.setCategory(m_picker.getCategory(state));
-        myprovider.setLoadPaths( (String) m_loadPaths.getValue(state));
+        myprovider.setLoadPaths((String) m_loadPaths.getValue(state));
     }
 
     @Override
@@ -88,7 +87,7 @@ public class ItemProviderForm extends ProviderForm {
                                AtoZProvider provider) {
         super.initWidgets(state, provider);
 
-        ItemProvider myprovider = (ItemProvider)provider;
+        ItemProvider myprovider = (ItemProvider) provider;
         if (provider != null) {
             //m_compound.setValue(state, new Boolean(myprovider.isCompound()));
 
@@ -107,26 +106,23 @@ public class ItemProviderForm extends ProviderForm {
                                   SingleSelect target) {
             target.addOption(new Option(null, "-- pick one --"));
 
-            DataCollection domains = SessionManager.getSession()
-                .retrieve("com.arsdigita.london.terms.Domain");
+            DataCollection domains = SessionManager.getSession().retrieve("com.arsdigita.london.terms.Domain");
             domains.addPath("model.id");
             domains.addPath("model.objectType");
             domains.addOrder("title");
             while (domains.next()) {
-                Category rootCategory = (Category)
-                    DomainObjectFactory.newInstance( (DataObject) domains.get("model"));
+                Category rootCategory = (Category) DomainObjectFactory.newInstance((DataObject) domains.get("model"));
                 categorySubtreePath(target, rootCategory, " > ");
             }
         }
 
         private void categorySubtreePath(SingleSelect target, Category root, String join) {
             DomainCollection cats = new DomainCollection(
-                SessionManager.getSession().retrieve(Category.BASE_DATA_OBJECT_TYPE)
-            );
+                    SessionManager.getSession().retrieve(Category.BASE_DATA_OBJECT_TYPE));
             cats.addFilter("defaultAncestors like :ancestors")
-                .set("ancestors",
-                     ((String)DomainServiceInterfaceExposer
-                      .get(root, "defaultAncestors")) + "%");
+                    .set("ancestors",
+                         ((String) DomainServiceInterfaceExposer
+                          .get(root, "defaultAncestors")) + "%");
             cats.addEqualsFilter("parents.link.isDefault", Boolean.TRUE);
             cats.addOrder("defaultAncestors");
             cats.addPath("parents.id");
@@ -137,27 +133,27 @@ public class ItemProviderForm extends ProviderForm {
             path2cat.put(root.getName(), root);
             cat2path.put(root.getID(), root.getName());
             target.addOption(new Option(root.getOID().toString(),
-                    " +++++++++++++++++++++++++ "
-                    + root.getName()
-                    + " +++++++++++++++++++++++++ "));
+                                        " +++++++++++++++++++++++++ "
+                                        + root.getName()
+                                        + " +++++++++++++++++++++++++ "));
 
             while (cats.next()) {
-                Category cat = (Category)cats.getDomainObject();
-                BigDecimal parent = (BigDecimal)cats.get("parents.id");
+                Category cat = (Category) cats.getDomainObject();
+                BigDecimal parent = (BigDecimal) cats.get("parents.id");
 
                 if (parent == null) {
                     path2cat.put(cat.getName(), cat);
                     cat2path.put(cat.getID(), cat.getName());
                     target.addOption(new Option(cat.getOID().toString(), cat.getName()));
                 } else {
-                    String parentPath = (String)cat2path.get(parent);
+                    String parentPath = (String) cat2path.get(parent);
                     String path = parentPath + join + cat.getName();
                     path2cat.put(path, cat);
                     cat2path.put(cat.getID(), path);
                     //
                     int breakPos = 0;
                     String prefix = "---";
-                    while ((breakPos = 1+parentPath.indexOf(join, breakPos)) > 0) {
+                    while ((breakPos = 1 + parentPath.indexOf(join, breakPos)) > 0) {
                         prefix += "---";
                     }
                     target.addOption(new Option(cat.getOID().toString(), prefix + " " + cat.getName()));
@@ -166,5 +162,4 @@ public class ItemProviderForm extends ProviderForm {
         }
 
     }
-
 }

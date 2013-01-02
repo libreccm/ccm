@@ -260,6 +260,10 @@ public enum RisField {
      */
     A3,
     /**
+     * Used in GEN type
+     */
+    A4,
+    /**
      *  Abstract. This is a free text field and can contain alphanumeric
      * characters; there is no practical length limit to this field.
      */

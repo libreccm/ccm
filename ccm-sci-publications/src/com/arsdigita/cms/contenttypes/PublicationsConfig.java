@@ -14,7 +14,10 @@ import com.arsdigita.util.parameter.StringParameter;
 public class PublicationsConfig extends AbstractConfig {
 
     private final Parameter attachOrgaUnitsStep;
+    private final Parameter attachOrganizationPublicationsStep;
+    private final Parameter attachPersonPublicationsStep;
     private final Parameter attachPublicationsStepTo;
+    private final Parameter attachPublisherPublicationsStep;
     private final Parameter defaultAuthorsFolder;
     private final Parameter defaultSeriesFolder;
     private final Parameter defaultPublisherFolder;
@@ -36,11 +39,29 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.FALSE);
 
+        attachOrganizationPublicationsStep =
+        new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.publications.attach_organization_publications_step",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
+
+        attachPersonPublicationsStep =
+        new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.publications.attach_person_publications_step",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
+
         attachPublicationsStepTo =
         new StringParameter(
                 "com.arsdigita.cms.contenttypes.publications.attach_publications_step_to",
                 Parameter.REQUIRED,
                 "");
+
+        attachPublisherPublicationsStep =
+        new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.publications.attach_publisher_publications_step",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
 
         defaultAuthorsFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_authors_folder",
@@ -100,14 +121,17 @@ public class PublicationsConfig extends AbstractConfig {
         orgaType = new StringParameter(
                 "com.arsdigita.cms.contenttypes.publications.organization_type",
                 Parameter.OPTIONAL,
-                Publisher.BASE_DATA_OBJECT_TYPE);      
+                Publisher.BASE_DATA_OBJECT_TYPE);
         orgaBundleType = new StringParameter(
                 "com.arsdigita.cms.contenttypes.publications.organization_bundle_type",
                 Parameter.OPTIONAL,
-                PublisherBundle.BASE_DATA_OBJECT_TYPE); 
+                PublisherBundle.BASE_DATA_OBJECT_TYPE);
 
         register(attachOrgaUnitsStep);
+        register(attachOrganizationPublicationsStep);
+        register(attachPersonPublicationsStep);
         register(attachPublicationsStepTo);
+        register(attachPublisherPublicationsStep);
         register(defaultAuthorsFolder);
         register(defaultSeriesFolder);
         register(defaultPublisherFolder);
@@ -129,8 +153,20 @@ public class PublicationsConfig extends AbstractConfig {
         return (Boolean) get(attachOrgaUnitsStep);
     }
 
+    public Boolean getAttachOrganizationPublicationsStep() {
+        return (Boolean) get(attachOrganizationPublicationsStep);
+    }
+
+    public Boolean getAttachPersonPublicationsStep() {
+        return (Boolean) get(attachPersonPublicationsStep);
+    }
+
     public String getAttachPublicationsStepTo() {
         return (String) get(attachPublicationsStepTo);
+    }
+
+    public Boolean getPublisherPublicationsStep() {
+        return (Boolean) get(attachPublisherPublicationsStep);
     }
 
     public Integer getDefaultAuthorsFolder() {
@@ -228,4 +264,5 @@ public class PublicationsConfig extends AbstractConfig {
     public String getOrganizationBundleType() {
         return (String) get(orgaBundleType);
     }
+
 }

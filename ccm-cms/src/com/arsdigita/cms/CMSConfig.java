@@ -83,6 +83,7 @@ public final class CMSConfig extends AbstractConfig {
 
         return s_config;
     }
+
     /**
      * Storage (map) for method getAssetStepsToSkip(ContentType type) to store
      * mapping of steps that are deemed irrelevant for the passid in type.
@@ -550,7 +551,6 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.item_search.flat_browse_pane.page_size",
             Parameter.REQUIRED,
             20);
-
     /////////////////////////////////////////////
     // FolderBrowse
     /////////////////////////////////////////////
@@ -592,7 +592,6 @@ public final class CMSConfig extends AbstractConfig {
             "cms.arsdigita.cms.lifecycle.threaded_publishing.notify_on_error.to",
             Parameter.REQUIRED,
             "");
-
     /////////////////////////////////////////////////
     // ImageBrowser Parameter
     /////////////////////////////////////////////////
@@ -604,7 +603,6 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.image_browser.thumbnail_max_height",
             Parameter.REQUIRED,
             50);
-
     /////////////////////////////////////////////////
     // ImageCache Parameter
     /////////////////////////////////////////////////
@@ -624,7 +622,10 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.image_cache.max_age",
             Parameter.REQUIRED,
             300);
-
+    private final Parameter m_attachPersonOrgaUnitsStep = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.genericperson.attach_person_orgaunits_step",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
 
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -632,7 +633,6 @@ public final class CMSConfig extends AbstractConfig {
     // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
     // private final Parameter m_disableItemPfs;
     // private final Parameter m_publishToFileClass;
-
     /**
      * Constructor, but do NOT instantiate this class directly.
      *
@@ -732,6 +732,8 @@ public final class CMSConfig extends AbstractConfig {
 
 //        register(m_itemSearchFlatBrowsePaneEnable);
         register(m_itemSearchFlatBrowsePanePageSize);
+
+        register(m_attachPersonOrgaUnitsStep);
 
         loadInfo();
     }
@@ -934,6 +936,7 @@ public final class CMSConfig extends AbstractConfig {
         protected Object unmarshal(String value, ErrorList errors) {
             return DHTMLEditor.Config.valueOf(value);
         }
+
     }
     protected static HashMap extraXMLGenerators = new HashMap();
 
@@ -1200,9 +1203,12 @@ public final class CMSConfig extends AbstractConfig {
 //    public Boolean getItemSearchFlatBrowsePaneEnable() {
 //        return (Boolean) get(m_itemSearchFlatBrowsePaneEnable);
 //    }
-
     public Integer getItemSearchFlatBrowsePanePageSize() {
-         return (Integer) get(m_itemSearchFlatBrowsePanePageSize);
+        return (Integer) get(m_itemSearchFlatBrowsePanePageSize);
+    }
+
+    public Boolean getAttachPersonOrgaUnitsStep() {
+        return (Boolean) get(m_attachPersonOrgaUnitsStep);
     }
 
 }

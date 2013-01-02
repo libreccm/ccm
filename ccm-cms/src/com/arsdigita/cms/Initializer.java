@@ -83,7 +83,6 @@ import com.arsdigita.xml.XML;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * The main CMS initializer, executed recurringly at each system startup.
  *
@@ -119,7 +118,6 @@ public class Initializer extends CompoundInitializer {
 
         s_log.debug("CMS.Initializer.(Constructor) completed");
     }
-
 
     /**
      * Initializes domain-coupling machinery, usually consisting of
@@ -232,17 +230,17 @@ public class Initializer extends CompoundInitializer {
                 FileAsset.BASE_DATA_OBJECT_TYPE,
                 new AssetMetadataProvider());
 
-
-        AuthoringKitWizard.registerAssetStep(
-                GenericPerson.BASE_DATA_OBJECT_TYPE,
-                GenericPersonOrgaUnitsStep.class,
-                ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
-                ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
-                20);
+        if (s_conf.getAttachPersonOrgaUnitsStep()) {
+            AuthoringKitWizard.registerAssetStep(
+                    GenericPerson.BASE_DATA_OBJECT_TYPE,
+                    GenericPersonOrgaUnitsStep.class,
+                    ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
+                    ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
+                    20);
+        }
 
         s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
     }    //  END init(DomainInitEvent e)
-
 
     /**
      * Helper Method, registers stylesheet pattern generators
@@ -256,7 +254,6 @@ public class Initializer extends CompoundInitializer {
                 "item_delegated_url",
                 new ItemDelegatedURLPatternGenerator());
     }
-
 
     /**
      * Registers object instantiators

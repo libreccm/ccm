@@ -17,7 +17,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitPublicationsStep;
@@ -94,19 +93,23 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     10);
         }
 
-        AuthoringKitWizard.registerAssetStep(
-                GenericPerson.BASE_DATA_OBJECT_TYPE,
-                PersonPublicationsStep.class,
-                PublicationGlobalizationUtil.globalize("person.ui.publications.title"),
-                PublicationGlobalizationUtil.globalize("person.ui.publications.description"),
-                10);
-        
-        AuthoringKitWizard.registerAssetStep(
-                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE, 
-                OrganizationPublicationsStep.class, 
-                PublicationGlobalizationUtil.globalize("organization.ui.publications.title"), 
-                PublicationGlobalizationUtil.globalize("organization.ui.publications.description"), 
-                11);
+        if (config.getAttachPersonPublicationsStep()) {
+            AuthoringKitWizard.registerAssetStep(
+                    GenericPerson.BASE_DATA_OBJECT_TYPE,
+                    PersonPublicationsStep.class,
+                    PublicationGlobalizationUtil.globalize("person.ui.publications.title"),
+                    PublicationGlobalizationUtil.globalize("person.ui.publications.description"),
+                    10);
+        }
+
+        if (config.getAttachOrganizationPublicationsStep()) {
+            AuthoringKitWizard.registerAssetStep(
+                    GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE,
+                    OrganizationPublicationsStep.class,
+                    PublicationGlobalizationUtil.globalize("organization.ui.publications.title"),
+                    PublicationGlobalizationUtil.globalize("organization.ui.publications.description"),
+                    11);
+        }
     }
 
     /**
@@ -135,4 +138,5 @@ public class PublicationInitializer extends ContentTypeInitializer {
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Publication.xml";
     }
+
 }

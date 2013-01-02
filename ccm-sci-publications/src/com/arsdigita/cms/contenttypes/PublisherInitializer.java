@@ -53,12 +53,16 @@ public class PublisherInitializer extends ContentTypeInitializer {
     public void init(final DomainInitEvent event) {
         super.init(event);
 
-        AuthoringKitWizard.registerAssetStep(
-                Publisher.BASE_DATA_OBJECT_TYPE,
-                PublisherPublicationsStep.class,
-                PublicationGlobalizationUtil.globalize("publisher.ui.publications.title"),
-                PublicationGlobalizationUtil.globalize("publisher.ui.publications.description"),
-                10);
+        final PublicationsConfig config = Publication.getConfig();
+
+        if (config.getPublisherPublicationsStep()) {
+            AuthoringKitWizard.registerAssetStep(
+                    Publisher.BASE_DATA_OBJECT_TYPE,
+                    PublisherPublicationsStep.class,
+                    PublicationGlobalizationUtil.globalize("publisher.ui.publications.title"),
+                    PublicationGlobalizationUtil.globalize("publisher.ui.publications.description"),
+                    10);
+        }
     }
 
     /**
