@@ -14,7 +14,7 @@ import com.arsdigita.util.parameter.StringParameter;
 public class PublicationsConfig extends AbstractConfig {
 
     private final Parameter attachOrgaUnitsStep;
-    private final Parameter attachOrganizationPublicationsStep;
+    private final Parameter attachOrganizationPublicationsStepTo;
     private final Parameter attachPersonPublicationsStep;
     private final Parameter attachPublicationsStepTo;
     private final Parameter attachPublisherPublicationsStep;
@@ -39,11 +39,11 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.FALSE);
 
-        attachOrganizationPublicationsStep =
-        new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.publications.attach_organization_publications_step",
+        attachOrganizationPublicationsStepTo =
+        new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.attach_organization_publications_step_to",
                 Parameter.REQUIRED,
-                Boolean.TRUE);
+                "");
 
         attachPersonPublicationsStep =
         new BooleanParameter(
@@ -128,7 +128,7 @@ public class PublicationsConfig extends AbstractConfig {
                 PublisherBundle.BASE_DATA_OBJECT_TYPE);
 
         register(attachOrgaUnitsStep);
-        register(attachOrganizationPublicationsStep);
+        register(attachOrganizationPublicationsStepTo);
         register(attachPersonPublicationsStep);
         register(attachPublicationsStepTo);
         register(attachPublisherPublicationsStep);
@@ -153,8 +153,8 @@ public class PublicationsConfig extends AbstractConfig {
         return (Boolean) get(attachOrgaUnitsStep);
     }
 
-    public Boolean getAttachOrganizationPublicationsStep() {
-        return (Boolean) get(attachOrganizationPublicationsStep);
+    public String getAttachOrganizationPublicationsStepTo() {
+        return (String) get(attachOrganizationPublicationsStepTo);
     }
 
     public Boolean getAttachPersonPublicationsStep() {

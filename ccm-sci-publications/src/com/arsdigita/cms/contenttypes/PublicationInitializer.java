@@ -83,6 +83,7 @@ public class PublicationInitializer extends ContentTypeInitializer {
                 logger.info(String.format("Attaching publications step to: '%s'",
                                           attachTo));
             }
+
             AuthoringKitWizard.registerAssetStep(
                     attachTo,
                     GenericOrganizationalUnitPublicationsStep.class,
@@ -102,14 +103,25 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     10);
         }
 
-        if (config.getAttachOrganizationPublicationsStep()) {
+        final String attachOrgaPubStepTo = config.getAttachOrganizationPublicationsStepTo();
+        final String[] attachOrgaPubStepToCts = attachOrgaPubStepTo.split(";");
+        if (logger.isInfoEnabled()) {
+            logger.info(String.format("Attaching organization publications step to: %s",
+                                      attachOrgaPubStepTo));
+        }
+        for (String attachTo : attachOrgaPubStepToCts) {
+            if (logger.isInfoEnabled()) {
+                logger.info(String.format("Attaching publications step to: '%s'",
+                                          attachTo));
+            }
+
             AuthoringKitWizard.registerAssetStep(
-                    GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE,
+                    attachTo,
                     OrganizationPublicationsStep.class,
                     PublicationGlobalizationUtil.globalize("organization.ui.publications.title"),
                     PublicationGlobalizationUtil.globalize("organization.ui.publications.description"),
                     11);
-        }
+        }        
     }
 
     /**
