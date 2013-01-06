@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--  Purpose:
+      ANT script to perform the various administration and maintenance tasks,
+      i.e.:
+      -  Various LOAD steps to load the database
+         most prominent: load-bundle
+      -  UPGRADE tasks to run SQL upgrade scripts
+      -  RUN-CCM task to run various CLI utility classes 
+-->
+
 <!--  Already definded:
 		ccm.project.dir:		base dir of the development project
 		app.server.bundles.zip	name of the installation file

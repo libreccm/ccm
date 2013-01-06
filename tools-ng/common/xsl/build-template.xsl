@@ -1337,14 +1337,38 @@
             </fileset>
       </copy>
 
-      <copy todir="${{this.deploy.dir}}" overwrite="yes">
+      <!-- Copy subdirectories templates and themes to web, but exclude
+           special directories ROOT and ERROR, which must be processed
+           separately.                                                       -->
+      <copy todir="${{this.deploy.dir}}" overwrite="yes" >
             <fileset dir="${{resolved.bundle.source.dir}}" >
                 <include name="templates/" />
                 <include name="themes/" />
-                <exclude name="**placeholder.info**" />
-                <exclude name="**README**" />
+                <exclude name="themes/placeholder.info" />
+                <exclude name="templates/placeholder.info" />
+                <exclude name="templates/ROOT/" />
+                <exclude name="templates/ERROR/" />
             </fileset>
       </copy>
+
+      <!-- Process special directory templates/ERROR
+           copy files to [docroot]/error                                    -->
+      <copy todir="${{this.deploy.dir}}/error" overwrite="yes" failonerror="false" >
+            <fileset dir="${{resolved.bundle.source.dir}}/templates/ERROR/" >
+                <include name="*" />
+                <exclude name="placeholder.info" />
+            </fileset>
+      </copy>
+
+      <!-- Process special directory templates/ROOT
+           copy files to document root (context root).                      -->
+      <copy todir="${{this.deploy.dir}}" overwrite="yes" failonerror="false" >
+            <fileset dir="${{resolved.bundle.source.dir}}/templates/ROOT/" >
+                <include name="*" />
+                <exclude name="placeholder.info" />
+            </fileset>
+      </copy>
+      
       
       <!-- Autogenerate from project.xml a file containing a space delimited
            list of package keys included in this build. Used during
