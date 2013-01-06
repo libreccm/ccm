@@ -21,18 +21,16 @@ package com.arsdigita.navigation;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
+import com.arsdigita.navigation.portlet.ItemListPortlet;
+import com.arsdigita.navigation.portlet.NavigationTreePortlet;
+import com.arsdigita.navigation.portlet.ObjectListPortlet;
+import com.arsdigita.portal.PortletType;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
-
-import com.arsdigita.navigation.portlet.ObjectListPortlet;
-import com.arsdigita.navigation.portlet.ItemListPortlet;
-import com.arsdigita.navigation.portlet.NavigationTreePortlet;
-
-import com.arsdigita.portal.PortletType;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -44,7 +42,12 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Loader.
+ * Loader executes nonrecurring at install time and loads (installs and
+ * initializes) the Navigation module persistently into database.
+ *
+ * NOTE: Configuration parameters used at load time MUST be part of Loader 
+ * class and can not delegated to a Config object (derived from AbstractConfig).
+ * They will (and can) not be persisted into an registry object (file).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 2070 2010-01-28 08:47:41Z pboy $
@@ -60,7 +63,7 @@ public class Loader extends PackageLoader {
         "WEB-INF/navigation/templates.txt");
 
     /**
-     * Constructor
+     * Constructor, just registers parameters.
      */
     public Loader() {
         register( m_templatesFile );
@@ -83,8 +86,9 @@ public class Loader extends PackageLoader {
                 loadObjectListPortlet();
                 NavigationTreePortlet.loadPortletType();
 
+                String templatesFile = (String)get(m_templatesFile);
                 try {
-                    setupTemplates();
+                    setupTemplates(templatesFile);
                 } catch( IOException ex ) {
                     throw new UncheckedWrapperException( ex );
                 }
@@ -177,13 +181,20 @@ public class Loader extends PackageLoader {
         app.save();
     }
 
-    public void setupTemplates() throws IOException {
+    /**
+     * Processes a file with Navigation template specificatgions and
+     * registers JSP templates with Navigation.
+     * 
+     * @param templatesFile file containing templates specification
+     * @throws IOException 
+     */
+    public static void setupTemplates(String templatesFile) throws IOException {
         
-        String templatesFile = (String)get(m_templatesFile);
         InputStream file = Thread.currentThread().getContextClassLoader()
                                  .getResourceAsStream(templatesFile);
         if (file == null) {
-            throw new UncheckedWrapperException(String.format("Failed to open templates files %s.", templatesFile));
+            throw new UncheckedWrapperException(String.format(
+                         "Failed to open templates files %s.", templatesFile));
         }
         BufferedReader templates =
             new BufferedReader( new InputStreamReader( file ) );

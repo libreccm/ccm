@@ -18,8 +18,8 @@
 package com.arsdigita.aplaws;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.BooleanParameter;
+import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 
 import org.apache.log4j.Logger;

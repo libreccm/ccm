@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Specification file for additional checks during the
      installation process by the packaging tools
      (see com/arsdigita/packaging/Check.java for details) -->

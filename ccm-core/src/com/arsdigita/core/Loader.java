@@ -82,7 +82,12 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Core Loader
+ * Core Loader executes nonrecurring at install time and loads (installs
+ * and initializes) the Core packages persistently into database.
+ * 
+ * NOTE: Configuration parameters used at load time MUST be part of Loader 
+ * class and can not delegated to a Config object (derived from AbstractConfig).
+ * They will (and can) not be persisted into an registry object (file).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #15 $ $Date: 2004/08/16 $
@@ -90,7 +95,12 @@ import org.apache.log4j.Logger;
  */
 public class Loader extends PackageLoader {
 
+    /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Loader.class);
+
+// /////////////////////////////////////////////////////////////////////////////
+// Parameter Section
+// /////////////////////////////////////////////////////////////////////////////
 
     private EmailParameter m_email = new EmailParameter("waf.admin.email");
 
@@ -172,7 +182,17 @@ public class Loader extends PackageLoader {
                                  }
                     );
 
+// /////////////////////////////////////////////////////////////////////////////
+// Parameter Section END
+// /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Constructor, just registers parameters.
+     */
     public Loader() {
+
+        // Register defined parameters to the context by adding 
+        // the parameter to a map of parameters
         register(m_email);
         register(m_screen);
         register(m_given);
@@ -185,8 +205,14 @@ public class Loader extends PackageLoader {
         register(m_charsets);
         register(m_locales);
 
+        // Probably not used anyway, because Loader parameters are not
+        // persistent! (see note above)
         loadInfo();
     }
+
+// /////////////////////////////////////////////////////////////////////////////
+// Getter Section for Parameter Values
+// /////////////////////////////////////////////////////////////////////////////
 
     private String getEmail() {
         return ((InternetAddress) get(m_email)).toString();
@@ -257,6 +283,11 @@ public class Loader extends PackageLoader {
 
         }
     }
+
+// /////////////////////////////////////////////////////////////////////////////
+// Getter Section for Parameter Values END
+// /////////////////////////////////////////////////////////////////////////////
+
 
     public void run(final ScriptContext ctx) {
         s_log.debug("CoreLoader run method started.");

@@ -18,18 +18,18 @@
 
 package com.arsdigita.bundle;
 
-import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.importer.Parser;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.RootCategoryCollection;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ui.role.RoleFactory;
-import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.loader.PackageLoader;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.importer.Parser;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.parameter.Parameter;
@@ -63,6 +63,10 @@ public class Loader extends PackageLoader {
     /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Loader.class);
     
+
+// /////////////////////////////////////////////////////////////////////////////
+// Parameter Section
+// /////////////////////////////////////////////////////////////////////////////
     /**
      * List of comma separated sets of application instance specifications,
      * optionally used to create arbitrary custom application instances 
@@ -118,10 +122,13 @@ public class Loader extends PackageLoader {
                                                  "STD-NAV:/content/",
                                                  "STD-NAV:/portal/"      }
                 );
+// /////////////////////////////////////////////////////////////////////////////
+// Parameter Section END
+// /////////////////////////////////////////////////////////////////////////////
 
     
     /**
-     * Constructor
+     * Constructor, just registers parameters.
      */
     public Loader() {
 
