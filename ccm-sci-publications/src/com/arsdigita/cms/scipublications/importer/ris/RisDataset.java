@@ -16,13 +16,19 @@ public class RisDataset {
     
     private final RisType type;
     private final Map<RisField, List<String>> values = new EnumMap<RisField, List<String>>(RisField.class);
+    private final int firstLine;
     
-    public RisDataset(final RisType type) {
+    public RisDataset(final RisType type, final int firstLine) {
         this.type = type;
+        this.firstLine = firstLine;
     }
     
     public RisType getType() {
         return type;
+    }
+    
+    public int getFirstLine() {
+        return firstLine;
     }
     
     public Map<RisField, List<String>> getValues() {

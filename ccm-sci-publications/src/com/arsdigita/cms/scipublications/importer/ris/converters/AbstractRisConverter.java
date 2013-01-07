@@ -1,5 +1,6 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
+import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
@@ -18,6 +19,49 @@ import java.util.List;
  * @version $Id$
  */
 public abstract class AbstractRisConverter implements RisConverter {
+
+    protected void processField(final RisDataset dataset,
+                                final RisField field,
+                                final Publication publication,
+                                final String targetField,
+                                final PublicationImportReport report,
+                                final boolean pretend) {
+        final List<String> values = dataset.getValues().get(field);
+        if ((values != null) && !values.isEmpty()) {
+            publication.set(targetField, values.get(0));
+            report.addField(new FieldImportReport(targetField, values.get(0)));
+        }
+    }
+
+    protected void processIntField(final RisDataset dataset,
+                                   final RisField field,
+                                   final Publication publication,
+                                   final String targetField,
+                                   final PublicationImportReport report,
+                                   final boolean pretend) {
+        final List<String> values = dataset.getValues().get(field);
+        if ((values != null) && !values.isEmpty()) {
+            final String valueStr = values.get(0);
+            try {
+                final int value = Integer.parseInt(valueStr);
+                publication.set(targetField, value);
+                publication.set(targetField, valueStr);
+            } catch (NumberFormatException ex) {
+                report.addMessage(String.format("Failed to parse value of field '%s' into an integer for dataset "
+                                                + "starting on line %d.",
+                                                field,
+                                                dataset.getFirstLine()));
+            }
+        }
+    }
+
+    protected void processTitle(final RisDataset dataset,
+                                final Publication publication,
+                                final PublicationImportReport report,
+                                final boolean pretend) {
+        publication.setTitle(dataset.getValues().get(RisField.TI).get(0));
+        publication.setTitle(dataset.getValues().get(RisField.TI).get(0));
+    }
 
     protected void processAuthors(final RisDataset dataset,
                                   final RisField risField,
@@ -47,7 +91,13 @@ public abstract class AbstractRisConverter implements RisConverter {
         final List<String> authors = dataset.getValues().get(risField);
         if ((authors != null) && !authors.isEmpty()) {
             for (String authorStr : authors) {
-                processAuthorStr(authorStr, isEditors, importerUtil, publication, report, pretend);
+                processAuthorStr(authorStr,
+                                 isEditors,
+                                 importerUtil,
+                                 publication,
+                                 report,
+                                 dataset.getFirstLine(),
+                                 pretend);
             }
         }
     }
@@ -57,12 +107,14 @@ public abstract class AbstractRisConverter implements RisConverter {
                                   final ImporterUtil importerUtil,
                                   final Publication publication,
                                   final PublicationImportReport importReport,
+                                  final int firstLine,
                                   final boolean pretend) {
         final AuthorData authorData = new AuthorData();
 
         final String[] tokens = authorStr.split(",");
         if (tokens.length == 0) {
-            importReport.addMessage(String.format("Failed to parse author string '%s'.", authorStr));
+            importReport.addMessage(String.format("Failed to parse author string '%s' at dataset starting at line %d.",
+                                                  authorStr, firstLine));
             return;
         }
 
@@ -117,7 +169,8 @@ public abstract class AbstractRisConverter implements RisConverter {
                 publication.setNumberOfPages(value);
                 report.addField(new FieldImportReport("number of pages", numberOfPages.get(0)));
             } catch (NumberFormatException ex) {
-                report.addMessage("Failed to parse number of pages");
+                report.addMessage(String.format("Failed to parse number of pages at dataset starting at line %d",
+                                                dataset.getFirstLine()));
             }
         }
 
@@ -134,7 +187,8 @@ public abstract class AbstractRisConverter implements RisConverter {
                 publication.setNumberOfVolumes(value);
                 report.addField(new FieldImportReport("number of volumes", numberOfVols.get(0)));
             } catch (NumberFormatException ex) {
-                report.addMessage("Failed to parse number of volumes.");
+                report.addMessage(String.format("Failed to parse number of volumes at dataset starting at line %d.",
+                                                dataset.getFirstLine()));
             }
         }
     }
@@ -150,7 +204,8 @@ public abstract class AbstractRisConverter implements RisConverter {
                 publication.setVolume(value);
                 report.addField(new FieldImportReport("volume", volume.get(0)));
             } catch (NumberFormatException ex) {
-                report.addMessage("Failed to parse value of field 'volume'.");
+                report.addMessage(String.format("Failed to parse value of field 'volume' on dataset starting "
+                                                + "at line %d.", dataset.getFirstLine()));
             }
         }
     }
@@ -166,8 +221,76 @@ public abstract class AbstractRisConverter implements RisConverter {
             report.addField(new FieldImportReport("year", yearStr));
         } catch (NumberFormatException ex) {
             report.addMessage(String.format("Failed to convert year of publication value '%s' from RIS to"
-                                            + "integer value. Setting year of publication to 0"));
+                                            + "integer value on dataset starting at line %d. Setting year of "
+                                            + "publication to 0", dataset.getFirstLine()));
             publication.setYearOfPublication(0);
+        }
+    }
+
+    protected void processSeries(final RisDataset dataset,
+                                 final RisField field,
+                                 final Publication publication,
+                                 final ImporterUtil importerUtil,
+                                 final boolean pretend,
+                                 final PublicationImportReport report) {
+        final List<String> series = dataset.getValues().get(field);
+        if ((series != null) && !series.isEmpty()) {
+            report.setSeries(importerUtil.processSeries(publication, series.get(0), pretend));
+        }
+    }
+
+    protected void processJournal(final RisDataset dataset,
+                                  final RisField field,
+                                  final ArticleInJournal article,
+                                  final ImporterUtil importerUtil,
+                                  final boolean pretend,
+                                  final PublicationImportReport report) {
+        final List<String> journal = dataset.getValues().get(field);
+        if ((journal != null) && !journal.isEmpty()) {
+            report.setJournal(importerUtil.processJournal(article, journal.get(0), pretend));
+        }
+    }
+
+    protected void processPages(final RisDataset dataset,
+                                final RisField field,
+                                final Publication publication,
+                                final boolean pretend,
+                                final PublicationImportReport report) {
+        final List<String> values = dataset.getValues().get(field);
+        final String pages = values.get(0);
+
+        final String[] tokens = pages.split("-");
+        if (tokens.length == 2) {
+            try {
+                final int pagesFrom = Integer.parseInt(tokens[0]);
+                final int pagesTo = Integer.parseInt(tokens[1]);
+
+                publication.set("pagesFrom", pagesFrom);
+                publication.set("pagesTo", pagesTo);
+
+                report.addField(new FieldImportReport("pagesFrom", Integer.toString(pagesFrom)));
+                report.addField(new FieldImportReport("pagesTo", Integer.toString(pagesTo)));
+            } catch (NumberFormatException ex) {
+                report.addMessage(String.format("Failed to parse pages value in dataset starting at line %d. "
+                                                + "On of the values given is not an integer.",
+                                                dataset.getFirstLine()));
+            }
+        } else if (tokens.length == 1) {
+            try {
+                final int pagesFrom = Integer.parseInt(tokens[0]);
+
+                publication.set("pagesFrom", pagesFrom);
+
+                report.addField(new FieldImportReport("pagesFrom", Integer.toString(pagesFrom)));
+            } catch (NumberFormatException ex) {
+                report.addMessage(String.format("Failed to parse pages value in dataset starting at line %d. "
+                                                + "Value is not an integer.",
+                                                dataset.getFirstLine()));
+            }
+        } else if (tokens.length > 2) {
+            report.addMessage(String.format("Failed to parse pages value in dataset starting at line %d. "
+                                            + "Invalid format",
+                                            dataset.getFirstLine()));
         }
     }
 

@@ -34,7 +34,7 @@ public class RisParser {
                                           + "Aborting import.", i + 1));
                 } else {
                     try {
-                        entries.add(startDataset(field.getValue()));
+                        entries.add(startDataset(field.getValue(), i + 1));
                         openDataset = true;
                     } catch (IllegalArgumentException ex) {
                         throw new SciPublicationsImportException(String.format("Invalid type at line %d.", i + 1), ex);
@@ -58,9 +58,9 @@ public class RisParser {
         return Collections.unmodifiableList(entries);
     }
 
-    private RisDataset startDataset(final String type) {
+    private RisDataset startDataset(final String type, final int firstLine) {
         final RisType risType = RisType.valueOf(type);
-        return new RisDataset(risType);
+        return new RisDataset(risType, firstLine);
     }
 
     private RisFieldValue parseRisLine(final String line, final int index) throws SciPublicationsImportException {
