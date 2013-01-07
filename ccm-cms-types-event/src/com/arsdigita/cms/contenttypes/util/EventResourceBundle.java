@@ -18,17 +18,18 @@
  */
 package com.arsdigita.cms.contenttypes.util;
 
-import java.util.PropertyResourceBundle;
-import com.arsdigita.globalization.ChainedResourceBundle;
 import com.arsdigita.cms.CMSGlobalized;
+import com.arsdigita.globalization.ChainedResourceBundle;
+
+import java.util.PropertyResourceBundle;
 
 /**
  * Resource Bundle used in UI for Event ContentType.
  * 
- * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- * 
+ * @author Shashin Shinde (sshinde@redhat.com)
  */
-public class EventResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
+public class EventResourceBundle extends ChainedResourceBundle 
+                                   implements CMSGlobalized {
     
     public final static String EVENT_BUNDLE_NAME = 
         "com.arsdigita.cms.contenttypes.EventResources";

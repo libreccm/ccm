@@ -30,22 +30,24 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.form.Time;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.TimeParameter;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Event;
-import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.contenttypes.util.EventGlobalizationUtil;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
+import com.arsdigita.cms.ui.authoring.BasicPageForm;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Form to edit the basic properties of an <code>Event</code> object. Used by
- * <code>EventPropertiesStep</code> authoring kit step.
+ * Form to edit the basic properties of an <code>Event</code> object. 
+ * 
+ * Used by <code>EventPropertiesStep</code> authoring kit step.
  * <br />
  * This form can be extended to create forms for Event subclasses.
  **/
@@ -113,7 +115,7 @@ public class EventPropertyForm extends BasicPageForm
         super.addWidgets();
 
         /* Summary (lead) */
-        add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead").localize()));
+        add(new Label(EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead")) );
         ParameterModel leadParam = new StringParameter(LEAD);
         if(Event.getConfig().isLeadTextOptional()) {
             leadParam.addParameterListener(new NotNullValidationListener());
@@ -124,7 +126,7 @@ public class EventPropertyForm extends BasicPageForm
         add(lead);
         /* Start date and time */
         ParameterModel eventStartDateParam = new DateParameter(START_DATE);
-        add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_date").localize()));
+        add(new Label(EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_date")) );
         eventStartDateParam.addParameterListener(new NotNullValidationListener());
         // Use bebop date instead of java.util.date
         m_startDate = new com.arsdigita.bebop.form.Date(eventStartDateParam);
@@ -134,7 +136,7 @@ public class EventPropertyForm extends BasicPageForm
         add(m_startDate);
 
         ParameterModel eventStartTimeParam = new TimeParameter(START_TIME);
-        add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time").localize()));
+        add(new Label(EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time")) );
         if(Event.getConfig().isStartTimeOptional()) {
             eventStartTimeParam.addParameterListener(new NotNullValidationListener());
         }

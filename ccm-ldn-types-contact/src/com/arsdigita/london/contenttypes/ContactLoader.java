@@ -33,13 +33,21 @@ import com.arsdigita.runtime.ScriptContext;
  */
 public class ContactLoader extends AbstractContentTypeLoader {
 
-  private static final String[] TYPES = {
-      "/WEB-INF/content-types/com/arsdigita/london/contenttypes/Contact.xml"
-  };
+    /** Defines the xml file containing the Contact content types property 
+     * definitions.                                                          */
+    private static final String[] TYPES = {
+        "/WEB-INF/content-types/com/arsdigita/london/contenttypes/Contact.xml"
+    };
 
-  /**
-   * @see com.arsdigita.cms.contenttypes.AbstractContentTypeLoader#getTypes()
-   */
+    /**
+     * Provides the of Contact contenttype property definitions implementing
+     * the parent's class abstract method.
+     * 
+     * The file defines the types name as displayed in content center
+     * select box and the authoring steps. These are loaded into database.
+     * 
+     * @return String Atring Array of fully qualified file names 
+     */
   public String[] getTypes() {
       return TYPES;
   }

@@ -53,6 +53,12 @@ import org.apache.log4j.Logger;
  * This is the base loader that can be used by individual content types.
  * Specifically, it provides type loading functionality in the "run" method
  * that can be used by content types to reduce code duplication.
+ * 
+ * NOTE: Implementing clases may need to define and use configuration parameters
+ * to adjust things at load time. These MUST be part of Loader class 
+ * implementationand itself and can not be delegated to a Config object 
+ * (derived from AbstractConfig). They will (and can) not be persisted into an 
+ * registry object (file).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @authro Sören Bernstein (quasi@barkhof.uni-bremen.de)
@@ -134,6 +140,16 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
         ContentTypeWorkflowTemplate.updateWorkflowTemplate(section, type, wf);
     }
 
+    /**
+     * Provides a list of contenttype property definitions.
+     * 
+     * The file defines the types name as displayed in content center
+     * select box and the authoring steps. These are loaded into database.
+     * 
+     * Must be implemented by each content type loader to provide its 
+     * specific definition files.
+     * @return 
+     */
     protected abstract String[] getTypes();
 
     /*

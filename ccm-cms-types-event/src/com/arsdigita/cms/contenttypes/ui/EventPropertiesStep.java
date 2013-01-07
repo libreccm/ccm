@@ -24,14 +24,14 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Event;
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import com.arsdigita.cms.contenttypes.util.EventGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.cms.contenttypes.util.EventGlobalizationUtil;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -39,26 +39,36 @@ import java.util.Date;
 
 /**
  * Authoring step to view/edit the simple attributes of the Event content type (and
- * its subclasses). The attributes edited are 'name', 'title', 'lead', 
+ * its subclasses). 
+ * 
+ * The attributes edited are 'name', 'title', 'lead', 
  * 'start date', 'starttime', end date', 'end time','event date' (literal descr. of date),
  * 'location', 'main contributor', 'event type', 'map link', and
- * 'cost'. This authoring step replaces the
+ * 'cost'. 
+ * 
+ * This authoring step replaces the
  * <code>com.arsdigita.ui.authoring.PageEdit</code> step for this type.
- **/
+ */
 public class EventPropertiesStep extends SimpleEditStep {
 
     /** The name of the editing sheet added to this step */
     public static String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public EventPropertiesStep(ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+                                AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
         BasicPageForm editSheet;
 
         editSheet = new EventPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
+        add(EDIT_SHEET_NAME, "Edit", 
+                new WorkflowLockedComponentAccess(editSheet, itemModel),
                 editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getEventPropertySheet(itemModel));
@@ -76,9 +86,14 @@ public class EventPropertiesStep extends SimpleEditStep {
     public static Component getEventPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.name").localize(), Event.NAME);
-        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.title").localize(), Event.TITLE);
-        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead").localize(), Event.LEAD);
+        
+    //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.name").localize(), Event.NAME);
+    //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.title").localize(), Event.TITLE);
+    //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead").localize(), Event.LEAD);
+
+        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.name"), Event.NAME);
+        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.title"), Event.TITLE);
+        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead"), Event.LEAD);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(EventGlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
                     ContentPage.LAUNCH_DATE,
@@ -96,8 +111,9 @@ public class EventPropertiesStep extends SimpleEditStep {
                         }
                     });
         }
-        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time").localize(), Event.START_DATE,
-                new DomainObjectPropertySheet.AttributeFormatter() {
+//      sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time").localize(), Event.START_DATE,
+        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time"), Event.START_DATE,
+                   new DomainObjectPropertySheet.AttributeFormatter() {
 
                     public String format(DomainObject item,
                             String attribute,
@@ -121,7 +137,8 @@ public class EventPropertiesStep extends SimpleEditStep {
                     }
                 });
 
-        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time").localize(), Event.END_DATE,
+//      sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time").localize(), Event.END_DATE,
+        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time"), Event.END_DATE,
                 new DomainObjectPropertySheet.AttributeFormatter() {
 
                     public String format(DomainObject item,
@@ -145,21 +162,27 @@ public class EventPropertiesStep extends SimpleEditStep {
                     }
                 });
         if (!Event.getConfig().getHideDateDescription()) {
-            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.date_description").localize(), Event.EVENT_DATE);
+         // sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.date_description").localize(), Event.EVENT_DATE);
+            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.date_description"), Event.EVENT_DATE);
         }
-        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.location").localize(), Event.LOCATION);
+//      sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.location").localize(), Event.LOCATION);
+        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.location"), Event.LOCATION);
 
         if (!Event.getConfig().getHideMainContributor()) {
-            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.main_contributor").localize(), Event.MAIN_CONTRIBUTOR);
+        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.main_contributor").localize(), Event.MAIN_CONTRIBUTOR);
+            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.main_contributor"), Event.MAIN_CONTRIBUTOR);
         }
         if (!Event.getConfig().getHideEventType()) {
-            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.event_type").localize(), Event.EVENT_TYPE);
+        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.event_type").localize(), Event.EVENT_TYPE);
+            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.event_type"), Event.EVENT_TYPE);
         }
         if (!Event.getConfig().getHideLinkToMap()) {
-            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.link_to_map").localize(), Event.MAP_LINK);
+        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.link_to_map").localize(), Event.MAP_LINK);
+            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.link_to_map"), Event.MAP_LINK );
         }
         if (!Event.getConfig().getHideCost()) {
-            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.cost").localize(), Event.COST);
+        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.cost").localize(), Event.COST);
+            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.cost"), Event.COST );
         }
         return sheet;
     }

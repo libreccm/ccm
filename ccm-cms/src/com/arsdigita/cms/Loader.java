@@ -64,6 +64,10 @@ import org.apache.log4j.Logger;
  * processing, otherwise hardcoded default values take effect. After processing,
  * the installation values can not be modified anymore without a fresh
  * installation of the whole system.</p>
+ * 
+ * NOTE: Configuration parameters used at load time MUST be part of Loader 
+ * class and can not delegated to a Config object (derived from AbstractConfig).
+ * They will (and can) not be persisted into an registry object (file).
  *
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @since ccm-cms version 6.6.0
@@ -83,6 +87,7 @@ public class Loader extends PackageLoader {
      * time, the parameter must be relocated into this Loader class!
      */
     private static final LoaderConfig s_conf = LoaderConfig.getInstance();
+
     //  ///////////////////////////////////////////////////////////////////
     //  Configurable parameters during load step.
     //  ///////////////////////////////////////////////////////////////////
@@ -96,6 +101,10 @@ public class Loader extends PackageLoader {
             "com.arsdigita.cms.loader.section_names",
             Parameter.REQUIRED,
             new String[]{"content"});
+    //  ///////////////////////////////////////////////////////////////////
+    //  Configurable parameters during load step END.
+    //  ///////////////////////////////////////////////////////////////////
+
     /**
      * List of classnames of internal base content types (needed in every
      * section created), generated while loading those content types in

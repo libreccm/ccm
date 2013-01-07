@@ -22,20 +22,18 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.PropertySheet;
 import com.arsdigita.bebop.PropertySheetModel;
 import com.arsdigita.bebop.PropertySheetModelBuilder;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainService;
+import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.ui.DomainObjectSelectionModel;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.toolbox.util.GlobalizationUtil;
 import com.arsdigita.util.LockableImpl;
 
-import java.util.List;
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.StringTokenizer;
-
-import com.arsdigita.domain.DomainService;
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.kernel.ui.DomainObjectSelectionModel;
-
-import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.toolbox.util.GlobalizationUtil;
 
 
 /**
@@ -44,7 +42,8 @@ import com.arsdigita.toolbox.util.GlobalizationUtil;
  * <p>
  * Typical usage is
  * <blockquote><pre><code>
- * DomainObjectPropertySheet mySheet = new DomainObjectPropertySheet(myDomainObjectSelectionModel);
+ * DomainObjectPropertySheet mySheet = 
+ *         new DomainObjectPropertySheet(myDomainObjectSelectionModel);
  * mySheet.add("Name:", ContentPage.NAME);
  * mySheet.add("Title:", ContentPage.TITLE);
  * </code></pre></blockquote>
@@ -65,9 +64,9 @@ import com.arsdigita.toolbox.util.GlobalizationUtil;
  * Note that, by default, <code>DomainObjectPropertySheet</code> retrieves
  * the values for its properties directly from the underlying {@link DataObject}
  * of the {@link DomainObject}. This means that the Java <code>getXXX</code>
- * methods of the <code>DomainObject</code> will never be called. Of course, it
- * is always possible to create a custom {@link AttributeFormatter} that will call the
- * appropriate methods.
+ * methods of the <code>DomainObject</code> will never be called. Of course, 
+ * it is always possible to create a custom {@link AttributeFormatter} that 
+ * will call the appropriate methods.
  *
  * @author Stanislav Freidin
  * @version $Id: DomainObjectPropertySheet.java 287 2005-02-22 00:29:02Z sskracic $
@@ -75,8 +74,6 @@ import com.arsdigita.toolbox.util.GlobalizationUtil;
  */
 public class DomainObjectPropertySheet extends PropertySheet {
 
-    public static final String versionId =
-                               "$Id: DomainObjectPropertySheet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private List m_props;
     private DomainObjectSelectionModel m_objModel;
     private AttributeFormatter m_toStringFormatter;
@@ -157,7 +154,8 @@ public class DomainObjectPropertySheet extends PropertySheet {
      * @param label The label for the attribute
      * @param attribute The name for the attribute
      * @param formatter An instance of AttributeFormatter
-     * @deprecated Use add(GlobalizedMessage label, String attribute, AttributeFormatter f) instead
+     * @deprecated Use add(GlobalizedMessage label, String attribute, 
+     *                      AttributeFormatter f) instead
      */
     public void add(String label, String attribute, AttributeFormatter f) {
         add(GlobalizationUtil.globalize(label), attribute, f);
@@ -252,7 +250,7 @@ public class DomainObjectPropertySheet extends PropertySheet {
         private Iterator m_props;
         private Property m_current;
         private static String ERROR =
-                              "No current property. Make sure that nextRow() was called at least once.";
+            "No current property. Make sure that nextRow() was called at least once.";
 
         public DomainObjectPropertiesModel(
                 DomainObject obj, Iterator props, PageState state) {

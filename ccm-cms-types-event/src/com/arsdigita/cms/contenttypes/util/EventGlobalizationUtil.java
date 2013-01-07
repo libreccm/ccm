@@ -16,9 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.cms.contenttypes.util;
 
 import com.arsdigita.globalization.GlobalizedMessage;
+
 
 /**
  * <p>
@@ -28,9 +30,9 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author <a href="mailto:randyg@arsdigita.com">randyg@arsdigita.com</a>
  * @version $Revision: #4 $ $Date: 2004/08/17 $
  */
-
 public class EventGlobalizationUtil {
     
+    /** Name of the Java class to handle Event's globalisation.           */
     final public static String BUNDLE_NAME = 
         "com.arsdigita.cms.contenttypes.util.EventResourceBundle";
     

@@ -21,7 +21,11 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 
 /**
- * Loader. Just sets content type specific properties for use of the parent class.
+ * Loader executes nonrecurring once at install time and loads the Agenda 
+ * contenttype package persistently into database.
+ *
+ * It uses the base class to create the database schema and the required 
+ * table entries for the contenttype.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/17 $
@@ -29,10 +33,21 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  */
 public class AgendaLoader extends AbstractContentTypeLoader {
 
+    /** Defines the xml file containing the EForm content types property 
+     * definitions.                                                          */
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Agenda.xml"
     };
 
+   /**
+     * Provides the of Agenda contenttype property definitions implementing
+     * the parent's class abstract method.
+     * 
+     * The file defines the types name as displayed in content center
+     * select box and the authoring steps. These are loaded into database.
+     * 
+     * @return String Array of fully qualified file names 
+     */
     public String[] getTypes() {
         return TYPES;
     }

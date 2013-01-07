@@ -21,17 +21,32 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 
 /**
- * Loader.
+ * Loader executes nonrecurring once at install time and loads the 
+ * Bookmark contenttype package persistently into database.
+ *
+ * It uses the base class to create the database schema and the required 
+ * table entries for the contenttype.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: BookmarkLoader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class BookmarkLoader extends AbstractContentTypeLoader {
 
-    private static final String[] TYPES = {
+     /** Defines the xml file containing the Bookmark content types 
+      *  property definitions.                                               */
+   private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Bookmark.xml"
     };
 
+    /**
+     * Provides the of Bookmark contenttype property definitions implementing
+     * the parent's class abstract method.
+     * 
+     * The file defines the types name as displayed in content center
+     * select box and the authoring steps. These are loaded into database.
+     * 
+     * @return String Atring Array of fully qualified file names 
+     */
     public String[] getTypes() {
         return TYPES;
     }
