@@ -33,7 +33,7 @@
       classname="com.arsdigita.navigation.ui.RelatedItems"/>
 
     <define:component name="assignedTerms"
-      classname="com.arsdigita.bundle.ui.AssignedItemTerms"/>
+      classname="com.arsdigita.aplaws.ui.AssignedItemTerms"/>
   </define:page>
 
   <show:all/>
