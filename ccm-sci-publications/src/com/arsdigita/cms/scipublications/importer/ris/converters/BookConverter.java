@@ -3,11 +3,9 @@ package com.arsdigita.cms.scipublications.importer.ris.converters;
 import com.arsdigita.cms.contenttypes.Monograph;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
-import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import java.util.List;
 
 /**
  * Converter for the RIS type {@code BOOK} to the SciPublications type {@link Monograph}.

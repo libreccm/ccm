@@ -207,6 +207,7 @@ public class ImporterUtil {
                                                               final List<AuthorData> authors,
                                                               final String publisherName,
                                                               final String place,
+                                                              final String edition,
                                                               final boolean pretend) {
         final CollectedVolumeImportReport report = new CollectedVolumeImportReport();
 
@@ -256,6 +257,10 @@ public class ImporterUtil {
 
                 if ((publisherName != null) && !publisherName.isEmpty()) {
                     report.setPublisher(processPublisher(collectedVolume, place, publisherName, pretend));
+                }
+                
+                if ((edition != null) && !edition.isEmpty()) {
+                    collectedVolume.setEdition(edition);                   
                 }
 
                 collectedVolume.save();

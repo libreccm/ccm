@@ -1,5 +1,6 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
@@ -11,6 +12,7 @@ import com.arsdigita.cms.scipublications.importer.ris.RisConverter;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.util.AuthorData;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -251,6 +253,62 @@ public abstract class AbstractRisConverter implements RisConverter {
         }
     }
 
+    private AuthorData createAuthorData(final String[] tokens) {
+        final AuthorData authorData = new AuthorData();
+        
+        if (tokens.length == 0) {
+            throw new IllegalArgumentException("No author data tokens!");
+        } 
+        
+        if(tokens.length >= 1) {
+            authorData.setSurname(tokens[0]);
+        }
+        
+        if (tokens.length >= 2) {
+            authorData.setGivenName(tokens[1]);
+        }
+                
+        return authorData;
+    }
+    
+    protected void processCollectedVolume(final RisDataset dataset,
+                                          final RisField cvTitleField,
+                                          final RisField cvYearField,
+                                          final RisField cvEditorsField,
+                                          final RisField cvPlaceField,
+                                          final RisField cvPublisherField,
+                                          final RisField cvEditionField,
+                                          final ArticleInCollectedVolume article,
+                                          final ImporterUtil importerUtil,
+                                          final boolean pretend,
+                                          final PublicationImportReport report) {
+        final List<String> colVolTitle = dataset.getValues().get(cvTitleField);
+        final List<String> colVolYear = dataset.getValues().get(cvYearField);
+        final List<String> colVolPlace = dataset.getValues().get(cvPlaceField);
+        final List<String> colVolPublisher = dataset.getValues().get(cvPublisherField);
+        final List<String> colVolEdition = dataset.getValues().get(cvEditionField);
+        
+        final List<String> colVolEditors = dataset.getValues().get(cvEditorsField);
+        final List<AuthorData> colVolEditorData = new ArrayList<AuthorData>();
+        
+        for(String collVolEditor : colVolEditors) {
+            final String[] tokens = collVolEditor.split(",");
+            
+            colVolEditorData.add(createAuthorData(tokens));
+        }
+        
+        if ((colVolTitle != null) && !colVolTitle.isEmpty()) {
+            report.setCollectedVolume(importerUtil.processCollectedVolume(article, 
+                                                                          colVolTitle.get(0), 
+                                                                          colVolYear.get(0), 
+                                                                          colVolEditorData, 
+                                                                          colVolPublisher.get(0), 
+                                                                          colVolPlace.get(0), 
+                                                                          colVolEdition.get(0),
+                                                                          pretend));
+        }
+    }
+
     protected void processPages(final RisDataset dataset,
                                 final RisField field,
                                 final Publication publication,
@@ -293,5 +351,4 @@ public abstract class AbstractRisConverter implements RisConverter {
                                             dataset.getFirstLine()));
         }
     }
-
 }

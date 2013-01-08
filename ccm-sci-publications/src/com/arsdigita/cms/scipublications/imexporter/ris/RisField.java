@@ -354,6 +354,10 @@ public enum RisField {
      */
     NV,
     /**
+     * DOI
+     */
+    DO,
+    /**
      * Begin of a new reference. Value is the type of the reference.
      */
     TY,
