@@ -350,6 +350,10 @@ public enum RisField {
     C4,
     C5,
     /**
+     * Chapter
+     */
+    SE,
+    /**
      * Number of volumes
      */
     NV,

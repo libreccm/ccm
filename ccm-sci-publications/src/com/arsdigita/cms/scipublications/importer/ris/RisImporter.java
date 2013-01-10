@@ -35,7 +35,7 @@ public class RisImporter implements SciPublicationsImporter {
 
     public ImportReport importPublications(final String publications,
                                            final boolean pretend,
-                                           final boolean publishNewItems) throws SciPublicationsImportException {
+                                           final boolean publishNewItems) throws SciPublicationsImportException {        
         final String[] lines = publications.split("\r\n");
 
         final RisParser parser = new RisParser();
@@ -47,8 +47,12 @@ public class RisImporter implements SciPublicationsImporter {
 
         final ImporterUtil importerUtil = new ImporterUtil(publishNewItems);
         
+        try {
         for (RisDataset dataset : datasets) {
            processPublication(dataset, report, importerUtil, pretend, publishNewItems);
+        }
+        } catch(Exception ex) {
+            ex.printStackTrace(System.out);        
         }
 
         return report;

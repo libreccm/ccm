@@ -11,10 +11,10 @@ import com.arsdigita.kernel.Kernel;
 
 /**
  *
- * @author Jens Pelzetter
+ * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class ElecConverter extends AbstractRisConverter {
+public class BlogConverter extends AbstractRisConverter {
 
     public PublicationImportReport convert(final RisDataset dataset, 
                                            final ImporterUtil importerUtil, 
@@ -25,31 +25,31 @@ public class ElecConverter extends AbstractRisConverter {
         
         final InternetArticle article = new InternetArticle();
         article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final InternetArticleBundle bundle = new InternetArticleBundle(article);
-        
+        final InternetArticleBundle bundle = new InternetArticleBundle(article);                
+                
         processTitle(dataset, article, report, pretend);
         
         processYear(dataset, pretend, article, report);
         
         processAuthors(dataset, RisField.AU, importerUtil, article, report, pretend);
         
-        processField(dataset, RisField.AB, article, "abstract", report, pretend);
+        processEditors(dataset, RisField.A2, importerUtil, article, report, pretend);
         
-        processSeries(dataset, RisField.T2, article, importerUtil, pretend, report);
-        
-        processField(dataset, RisField.CY, article, "place", report, pretend);
-        
-        processField(dataset, RisField.DO, article, "doi", report, pretend);
-        
+        processField(dataset, RisField.AB, article, "abstract", report, pretend);        
+        processField(dataset, RisField.CY, article, "place", report, pretend);        
         processField(dataset, RisField.ET, article, "edition", report, pretend);
         
+        processOrganization(dataset, RisField.PB, pretend, article, importerUtil, report);
+        processOrganization(dataset, RisField.T3, pretend, article, importerUtil, report);
+        
         processField(dataset, RisField.UR, article, "url", report, pretend);
-                    
+        processDateField(dataset, RisField.Y2, article, "lastAccessed", report, pretend);
+        
         return report;
     }
 
     public RisType getRisType() {
-        return RisType.ELEC;
+       return RisType.BLOG;
     }
     
     

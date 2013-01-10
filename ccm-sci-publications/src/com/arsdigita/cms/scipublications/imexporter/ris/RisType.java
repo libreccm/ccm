@@ -43,6 +43,10 @@ public enum RisType {
      */
     BILL,
     /**
+     * BLOG
+     */
+    BLOG,
+    /**
      * Book, Whole
      */
     BOOK,
@@ -94,6 +98,10 @@ public enum RisType {
      * Eletronic Article
      */
     EJOUR,
+    /**
+     * Encylopdia
+     */
+    ENCYC,
     /**
      * Generic
      */

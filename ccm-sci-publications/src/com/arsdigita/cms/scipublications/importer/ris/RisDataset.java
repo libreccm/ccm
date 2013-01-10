@@ -35,4 +35,7 @@ public class RisDataset {
         return Collections.unmodifiableMap(values);
     }
     
+    public void addField(final RisField field, final List<String> value) {
+        values.put(field, value);
+    }
 }

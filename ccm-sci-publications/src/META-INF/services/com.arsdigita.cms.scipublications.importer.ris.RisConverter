@@ -1,2 +1,20 @@
-package com.arsdigita.cms.scipublications.importer.ris.converters.BookConverter
-package com.arsdigita.cms.scipublications.importer.ris.converters.EbookConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.AbstConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.BlogConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.BookConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.ChapConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.ConfConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.CpaperConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.EbookConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.EchapConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.EdbookConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.EjourConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.ElecConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.EncycConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.GenConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.InprConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.JfullConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.JourConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.MgznConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.RprtConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.ThesConverter
+com.arsdigita.cms.scipublications.importer.ris.converters.UnpbConverter

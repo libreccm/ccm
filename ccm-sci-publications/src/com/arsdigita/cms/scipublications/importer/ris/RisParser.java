@@ -22,6 +22,7 @@ public class RisParser {
     public List<RisDataset> parse(final String[] lines) throws SciPublicationsImportException {
         final List<RisDataset> entries = new ArrayList<RisDataset>();
         boolean openDataset = false;
+        RisField lastField = null;
 
         RisFieldValue field;
         for (int i = 0; i < lines.length; i++) {
@@ -42,16 +43,21 @@ public class RisParser {
                 }
             } else if (RisField.ER.equals(field.getName())) {
                 openDataset = false;
+            } else if(field.getName() == null) {
+                final RisDataset currentDataset = entries.get(entries.size() - 1);
+                final List<String> data = currentDataset.getValues().get(lastField);
+                data.set(data.size() - 1, data.get(data.size() - 1) + field.getValue());                                                
             } else {
                 final RisDataset currentDataset = entries.get(entries.size() - 1);
                 if (currentDataset.getValues().get(field.getName()) == null) {
                     final List<String> data = new ArrayList<String>();
                     data.add(field.getValue());
-                    currentDataset.getValues().put(field.getName(), data);
+                    currentDataset.addField(field.getName(), data);
                 } else {
                     final List<String> data = currentDataset.getValues().get(field.getName());
                     data.add(field.getValue());
                 }
+                lastField = field.getName();
             }
         }
 
@@ -75,12 +81,11 @@ public class RisParser {
                                                                        tokens[0], index + 1), ex);
             }
 
-            return new RisFieldValue(fieldName, line);
+            return new RisFieldValue(fieldName, tokens[1]);
         } else if ((tokens.length == 1) && RisField.ER.toString().equals(tokens[0])) {
             return new RisFieldValue(RisField.ER, "");
         } else {
-            throw new SciPublicationsImportException(String.format("Invalid RIS data in line %d. Aborting import.",
-                                                                   index + 1));
+            return new RisFieldValue(null, line);
         }
     }
 

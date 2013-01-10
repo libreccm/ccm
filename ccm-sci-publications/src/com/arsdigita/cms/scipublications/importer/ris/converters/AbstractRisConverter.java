@@ -1,9 +1,14 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.InProceedings;
+import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
+import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
@@ -13,6 +18,7 @@ import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.util.AuthorData;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -22,6 +28,17 @@ import java.util.List;
  */
 public abstract class AbstractRisConverter implements RisConverter {
 
+//    protected void setFolder(final Publication publication, final PublicationBundle bundle) {
+//        final Folder folder = new Folder(getFolderId());
+//        bundle.setParent(folder);
+//        bundle.setContentSection(folder.getContentSection());
+//        publication.setContentSection(folder.getContentSection());
+//    }
+    
+    protected void assignCategories(final PublicationBundle bundle) {
+       //ToDo
+    }
+    
     protected void processField(final RisDataset dataset,
                                 final RisField field,
                                 final Publication publication,
@@ -57,12 +74,65 @@ public abstract class AbstractRisConverter implements RisConverter {
         }
     }
 
+    protected void processDateField(final RisDataset dataset,
+                                    final RisField field,
+                                    final Publication publication,
+                                    final String targetField,
+                                    final PublicationImportReport report,
+                                    final boolean pretend) {
+        final List<String> values = dataset.getValues().get(field);
+        if ((values != null) && !values.isEmpty()) {
+            final String valueStr = values.get(0);
+            final String[] tokens = valueStr.split("/");
+            final Calendar calendar = Calendar.getInstance();
+            int year = 0;
+            int month = 1;
+            int day = 1;
+            try {
+                if (tokens.length >= 1) {
+                    year = Integer.parseInt(tokens[0]);
+                }
+
+                if (tokens.length >= 2) {
+                    month = Integer.parseInt(tokens[1]);
+                }
+
+                if (tokens.length >= 3) {
+                    day = Integer.parseInt(tokens[2]);
+                }
+
+                calendar.clear();
+                calendar.set(year, month - 1, day); // month - 1 because month values of the Calendar are starting with 0
+
+                publication.set(targetField, calendar.getTime());
+
+            } catch (NumberFormatException ex) {
+                report.addMessage(String.format("Failed to parse value of field '%s' into an date for dataset "
+                                                + "starting on line %d.",
+                                                field,
+                                                dataset.getFirstLine()));
+            }
+
+
+        }
+    }
+
     protected void processTitle(final RisDataset dataset,
                                 final Publication publication,
                                 final PublicationImportReport report,
                                 final boolean pretend) {
-        publication.setTitle(dataset.getValues().get(RisField.TI).get(0));
-        publication.setTitle(dataset.getValues().get(RisField.TI).get(0));
+        final String title;        
+        if ((dataset.getValues().get(RisField.TI) != null) && !dataset.getValues().get(RisField.TI).isEmpty()) {
+            title = dataset.getValues().get(RisField.TI).get(0);
+        } else if ((dataset.getValues().get(RisField.BT) != null) && !dataset.getValues().get(RisField.BT).isEmpty()) {
+            title = dataset.getValues().get(RisField.BT).get(0);
+        } else {
+            title = "Unknown";
+        }
+                
+        
+        publication.setTitle(title);
+        report.setTitle(title);
     }
 
     protected void processAuthors(final RisDataset dataset,
@@ -139,8 +209,18 @@ public abstract class AbstractRisConverter implements RisConverter {
                                     final PublicationWithPublisher publication,
                                     final ImporterUtil importerUtil,
                                     final PublicationImportReport report) {
-        final List<String> publisherList = dataset.getValues().get(RisField.PB);
-        final List<String> placeList = dataset.getValues().get(RisField.CY);
+        processPublisher(dataset, RisField.PB, RisField.CY, pretend, publication, importerUtil, report);
+    }
+    
+    protected void processPublisher(final RisDataset dataset,
+                                    final RisField publisherField,
+                                    final RisField placeField,
+                                    final boolean pretend,
+                                    final PublicationWithPublisher publication,
+                                    final ImporterUtil importerUtil,
+                                    final PublicationImportReport report) {
+        final List<String> publisherList = dataset.getValues().get(publisherField);
+        final List<String> placeList = dataset.getValues().get(placeField);
         final String publisherName;
         if ((publisherList == null) || publisherList.isEmpty()) {
             publisherName = null;
@@ -157,6 +237,46 @@ public abstract class AbstractRisConverter implements RisConverter {
 
         if (publisherName != null) {
             report.setPublisher(importerUtil.processPublisher(publication, place, publisherName, pretend));
+        }
+    }
+
+    protected void processOrganization(final RisDataset dataset,
+                                       final RisField field,
+                                       final boolean pretend,
+                                       final UnPublished publication,
+                                       final ImporterUtil importerUtil,
+                                       final PublicationImportReport report) {
+        final List<String> orgaList = dataset.getValues().get(field);
+
+        final String orgaName;
+        if ((orgaList == null) || orgaList.isEmpty()) {
+            orgaName = null;
+        } else {
+            orgaName = orgaList.get(0);
+        }
+
+        if (orgaName != null) {
+            report.addOrgaUnit(importerUtil.processOrganization(publication, orgaName, pretend));
+        }
+    }
+
+    protected void processOrganization(final RisDataset dataset,
+                                       final RisField field,
+                                       final boolean pretend,
+                                       final InternetArticle publication,
+                                       final ImporterUtil importerUtil,
+                                       final PublicationImportReport report) {
+        final List<String> orgaList = dataset.getValues().get(field);
+
+        final String orgaName;
+        if ((orgaList == null) || orgaList.isEmpty()) {
+            orgaName = null;
+        } else {
+            orgaName = orgaList.get(0);
+        }
+
+        if (orgaName != null) {
+            report.addOrgaUnit(importerUtil.processOrganization(publication, orgaName, pretend));
         }
     }
 
@@ -216,7 +336,15 @@ public abstract class AbstractRisConverter implements RisConverter {
                                final boolean pretend,
                                final Publication publication,
                                final PublicationImportReport report) {
-        final String yearStr = dataset.getValues().get(RisField.PY).get(0);
+        processYear(dataset, RisField.PY, pretend, publication, report);
+    }
+    
+    protected void processYear(final RisDataset dataset,
+                               final RisField field,
+                               final boolean pretend,
+                               final Publication publication,
+                               final PublicationImportReport report) {
+        final String yearStr = dataset.getValues().get(field).get(0);
         try {
             final int year = Integer.parseInt(yearStr);
             publication.setYearOfPublication(year);
@@ -255,22 +383,22 @@ public abstract class AbstractRisConverter implements RisConverter {
 
     private AuthorData createAuthorData(final String[] tokens) {
         final AuthorData authorData = new AuthorData();
-        
+
         if (tokens.length == 0) {
             throw new IllegalArgumentException("No author data tokens!");
-        } 
-        
-        if(tokens.length >= 1) {
+        }
+
+        if (tokens.length >= 1) {
             authorData.setSurname(tokens[0]);
         }
-        
+
         if (tokens.length >= 2) {
             authorData.setGivenName(tokens[1]);
         }
-                
+
         return authorData;
     }
-    
+
     protected void processCollectedVolume(final RisDataset dataset,
                                           final RisField cvTitleField,
                                           final RisField cvYearField,
@@ -287,25 +415,63 @@ public abstract class AbstractRisConverter implements RisConverter {
         final List<String> colVolPlace = dataset.getValues().get(cvPlaceField);
         final List<String> colVolPublisher = dataset.getValues().get(cvPublisherField);
         final List<String> colVolEdition = dataset.getValues().get(cvEditionField);
-        
+
         final List<String> colVolEditors = dataset.getValues().get(cvEditorsField);
         final List<AuthorData> colVolEditorData = new ArrayList<AuthorData>();
-        
-        for(String collVolEditor : colVolEditors) {
-            final String[] tokens = collVolEditor.split(",");
-            
+
+        for (String colVolEditor : colVolEditors) {
+            final String[] tokens = colVolEditor.split(",");
+
             colVolEditorData.add(createAuthorData(tokens));
         }
-        
+
         if ((colVolTitle != null) && !colVolTitle.isEmpty()) {
-            report.setCollectedVolume(importerUtil.processCollectedVolume(article, 
-                                                                          colVolTitle.get(0), 
-                                                                          colVolYear.get(0), 
-                                                                          colVolEditorData, 
-                                                                          colVolPublisher.get(0), 
-                                                                          colVolPlace.get(0), 
+            report.setCollectedVolume(importerUtil.processCollectedVolume(article,
+                                                                          colVolTitle.get(0),
+                                                                          colVolYear.get(0),
+                                                                          colVolEditorData,
+                                                                          colVolPublisher.get(0),
+                                                                          colVolPlace.get(0),
                                                                           colVolEdition.get(0),
                                                                           pretend));
+        }
+    }
+
+    protected void processProceedings(final RisDataset dataset,
+                                      final RisField procTitleField,
+                                      final RisField procYearField,
+                                      final RisField procConfNameField,
+                                      final RisField procEditorsField,
+                                      final RisField procPublisherField,
+                                      final RisField procPlaceField,
+                                      final InProceedings inProceedings,
+                                      final ImporterUtil importerUtil,
+                                      final boolean pretend,
+                                      final PublicationImportReport report) {
+        final List<String> procTitle = dataset.getValues().get(procTitleField);
+        final List<String> procYear = dataset.getValues().get(procYearField);
+        final List<String> procConfName = dataset.getValues().get(procConfNameField);
+        final List<String> procPublisher = dataset.getValues().get(procPublisherField);
+        final List<String> procPlace = dataset.getValues().get(procPlaceField);
+
+        final List<String> procEditors = dataset.getValues().get(procEditorsField);
+        final List<AuthorData> procEditorData = new ArrayList<AuthorData>();
+
+        for (String procEditor : procEditors) {
+            final String[] tokens = procEditor.split(", ");
+
+            procEditorData.add(createAuthorData(tokens));
+        }
+
+        if ((procTitle != null) && !procTitle.isEmpty()) {
+            report.setProceedings(importerUtil.processProceedings(inProceedings,
+                                                                  procTitle.get(0),
+                                                                  procYear.get(0),
+                                                                  procConfName.get(0),
+                                                                  procEditorData,
+                                                                  procPublisher.get(0),
+                                                                  procPlace.get(0),
+                                                                  pretend));
         }
     }
 
@@ -351,4 +517,5 @@ public abstract class AbstractRisConverter implements RisConverter {
                                             dataset.getFirstLine()));
         }
     }
+
 }

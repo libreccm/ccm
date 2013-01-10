@@ -3,6 +3,7 @@ package com.arsdigita.cms.scipublications.importer.ris;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
+import java.math.BigDecimal;
 
 /**
  * Interface for importing RisConverter.
@@ -34,5 +35,7 @@ public interface RisConverter {
      * @return The RIS type supported by the converter implementation.
      */
     RisType getRisType();
+    
+//    BigDecimal getFolderId();
     
 }

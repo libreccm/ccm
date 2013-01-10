@@ -11,6 +11,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericPersonBundle;
 import com.arsdigita.cms.contenttypes.InProceedings;
+import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.contenttypes.JournalBundle;
 import com.arsdigita.cms.contenttypes.Proceedings;
@@ -27,7 +28,6 @@ import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.CollectedVolumeImportReport;
-import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.JournalImportReport;
 import com.arsdigita.cms.scipublications.importer.report.OrganizationalUnitImportReport;
 import com.arsdigita.cms.scipublications.importer.report.ProceedingsImportReport;
@@ -512,6 +512,73 @@ public class ImporterUtil {
         return report;
     }
 
+    public OrganizationalUnitImportReport processOrganization(final InternetArticle publication,
+                                                              final String name,
+                                                              final boolean pretend) {
+        final OrganizationalUnitImportReport report = new OrganizationalUnitImportReport();
+
+        final Session session = SessionManager.getSession();
+        final DataCollection collection = session.retrieve(GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE);
+        collection.addEqualsFilter("title", name);
+        report.setName(name);
+        if (collection.isEmpty()) {
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultOrganizationsFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Error getting folder for organizations.");
+                }
+
+                final GenericOrganizationalUnit orga = new GenericOrganizationalUnit(Publication.getConfig().
+                        getOrganizationType());
+                orga.setTitle(name);
+                orga.setName(normalizeString(name));
+                orga.setContentSection(folder.getContentSection());
+                orga.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                orga.save();
+
+                final GenericOrganizationalUnitBundle bundle = new GenericOrganizationalUnitBundle(Publication.
+                        getConfig().getOrganizationBundleType());
+                bundle.setDefaultLanguage(orga.getLanguage());
+                bundle.setContentType(orga.getContentType());
+                bundle.addInstance(orga);
+                bundle.setName(orga.getName());
+                bundle.setParent(folder);
+                bundle.setContentSection(folder.getContentSection());
+                bundle.save();
+
+                publication.setOrganization(orga);
+
+                if (publish) {
+                    publishItem(orga);
+                }
+
+                report.setType(orga.getClass().getName());
+            }
+
+            report.setCreated(true);
+
+            //Special handling for pretend mode
+            if (pretend && createdOrgas.contains(name)) {
+                report.setCreated(false);
+            } else {
+                createdOrgas.add(name);
+            }
+        } else {
+            collection.next();
+            final GenericOrganizationalUnit orga = new GenericOrganizationalUnit(collection.getDataObject());
+            if (!pretend) {
+                publication.setOrganization(orga);
+            }
+            report.setType(orga.getClass().getName());
+            report.setCreated(false);
+        }
+
+        collection.close();
+        return report;
+    }
+
+    
     public SeriesImportReport processSeries(final Publication publication,
                                            final String seriesTitle,
                                            final boolean pretend) {

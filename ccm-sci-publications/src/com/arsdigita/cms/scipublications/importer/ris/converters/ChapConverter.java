@@ -1,11 +1,13 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
+import com.arsdigita.kernel.Kernel;
 
 /**
  * Converter for the RIS type {@code CHAP} to the SciPublications type {@link ArticleInCollectedVolume}.
@@ -23,6 +25,8 @@ public class ChapConverter extends AbstractRisConverter {
         report.setType(ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE);
 
         final ArticleInCollectedVolume article = new ArticleInCollectedVolume();
+        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+        final ArticleInCollectedVolumeBundle bundle = new ArticleInCollectedVolumeBundle(article);
 
         processTitle(dataset, article, report, pretend);
 
@@ -42,8 +46,9 @@ public class ChapConverter extends AbstractRisConverter {
                                pretend,
                                report);
 
+        processField(dataset, RisField.SE, article, "chapter", report, pretend);
         processField(dataset, RisField.AB, article, "abstract", report, pretend);  
-        processPages(dataset, RisField.ID, article, pretend, report);
+        processPages(dataset, RisField.SP, article, pretend, report);
 
         return report;
     }

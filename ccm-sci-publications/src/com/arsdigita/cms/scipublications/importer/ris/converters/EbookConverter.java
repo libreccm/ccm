@@ -1,11 +1,13 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
 import com.arsdigita.cms.contenttypes.Monograph;
+import com.arsdigita.cms.contenttypes.PublicationWithPublisherBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
+import com.arsdigita.kernel.Kernel;
 
 /**
  * Converter for the RIS type {@code EBOOK} to the SciPublications type {@link Monograph}.
@@ -23,6 +25,8 @@ public class EbookConverter extends AbstractRisConverter {
         report.setType(Monograph.BASE_DATA_OBJECT_TYPE);
 
         final Monograph monograph = new Monograph();
+        monograph.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+        final PublicationWithPublisherBundle bundle = new PublicationWithPublisherBundle(monograph);
 
         processTitle(dataset, monograph, report, pretend);
         

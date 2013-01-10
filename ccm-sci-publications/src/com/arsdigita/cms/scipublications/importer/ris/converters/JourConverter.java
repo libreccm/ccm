@@ -1,11 +1,13 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.ArticleInJournalBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -23,6 +25,8 @@ public class JourConverter extends AbstractRisConverter {
         report.setType(ArticleInJournal.BASE_DATA_OBJECT_TYPE);
 
         final ArticleInJournal article = new ArticleInJournal();
+        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+        final ArticleInJournalBundle bundle = new ArticleInJournalBundle(article);
 
         processTitle(dataset, article, report, pretend);
 
