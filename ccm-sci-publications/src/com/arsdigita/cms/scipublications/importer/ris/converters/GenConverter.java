@@ -7,8 +7,10 @@ import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  * Converter for the RIS type {@code GEN} to the SciPublications {@link GreyLiterature}
@@ -16,43 +18,58 @@ import com.arsdigita.kernel.Kernel;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class GenConverter extends AbstractRisConverter {
+public class GenConverter extends AbstractRisConverter<Monograph, PublicationWithPublisherBundle> { 
 
-    public PublicationImportReport convert(final RisDataset dataset,
-                                           final ImporterUtil importerUtil,
-                                           final boolean pretend,
-                                           final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();
-        report.setType(GreyLiterature.BASE_DATA_OBJECT_TYPE);
+    @Override
+    protected Monograph createPublication(final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new Monograph();
+        }
+    }
 
-        final Monograph publication = new Monograph();
-        publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final PublicationWithPublisherBundle bundle = new PublicationWithPublisherBundle(publication);
+    @Override
+    protected PublicationWithPublisherBundle createBundle(final Monograph publication, final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new PublicationWithPublisherBundle(publication);
+        }
+    }
 
-        processTitle(dataset, publication, report, pretend);
+    @Override
+    protected void processFields(final RisDataset dataset,
+                                 final Monograph publication,
+                                 final ImporterUtil importerUtil,
+                                 final PublicationImportReport importReport,
+                                 final boolean pretend) {
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
+        final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
 
-        processYear(dataset, pretend, publication, report);
+        fieldUtil.processTitle(dataset, publication, importReport);
 
-        processAuthors(dataset, RisField.AU, importerUtil, publication, report, pretend);
-        processAuthors(dataset, RisField.A2, importerUtil, publication, report, pretend);
-        processAuthors(dataset, RisField.A3, importerUtil, publication, report, pretend);
-        processAuthors(dataset, RisField.A4, importerUtil, publication, report, pretend);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
 
-        processPublisher(dataset, pretend, publication, importerUtil, report);
+        authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
+        authorUtil.processAuthors(dataset, RisField.A2, publication, importReport);
+        authorUtil.processAuthors(dataset, RisField.A3, publication, importReport);
+        authorUtil.processAuthors(dataset, RisField.A4, publication, importReport);
 
-        processField(dataset, RisField.AB, publication, "abstract", report, pretend);
+        orgaUtil.processPublisher(dataset, RisField.PY, RisField.CY, publication, importReport);
 
-        processField(dataset, RisField.ET, publication, "edition", report, pretend);
+        fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
 
-        processField(dataset, RisField.SN, publication, "isbn", report, pretend);
+        fieldUtil.processField(dataset, RisField.ET, publication, "edition", importReport);
 
-        processNumberOfPages(dataset, pretend, publication, report);
+        fieldUtil.processField(dataset, RisField.SN, publication, "isbn", importReport);
 
-        processNumberOfVolumes(dataset, pretend, publication, report);
-        
-        processVolume(dataset, pretend, publication, report);
+        fieldUtil.processIntField(dataset, RisField.SP, publication, "numberOfPages", importReport);
 
-        return report;
+        fieldUtil.processIntField(dataset, RisField.NV, publication, "numberOfVolumes", importReport);
+
+        fieldUtil.processIntField(dataset, RisField.VL, publication, "volume", importReport);
     }
 
     public RisType getRisType() {

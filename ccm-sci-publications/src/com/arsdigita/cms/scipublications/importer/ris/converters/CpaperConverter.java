@@ -6,41 +6,60 @@ import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisColVolUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class CpaperConverter extends AbstractRisConverter {
+public class CpaperConverter extends AbstractRisConverter<InProceedings, InProceedingsBundle> {
 
-    public PublicationImportReport convert(final RisDataset dataset,
-                                           final ImporterUtil importerUtil,
-                                           final boolean pretend,
-                                           final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();
-        report.setType(InProceedings.BASE_DATA_OBJECT_TYPE);
+    @Override
+    protected InProceedings createPublication(final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new InProceedings();
+        }
+    }
 
-        final InProceedings inProceedings = new InProceedings();
-        inProceedings.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final InProceedingsBundle bundle = new InProceedingsBundle(inProceedings);
+    @Override
+    protected InProceedingsBundle createBundle(final InProceedings publication,
+                                               final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new InProceedingsBundle(publication);
+        }
+    }
 
-        processTitle(dataset, inProceedings, report, pretend);
+    @Override
+    protected void processFields(final RisDataset dataset,
+                                 final InProceedings publication,
+                                 final ImporterUtil importerUtil,
+                                 final PublicationImportReport importReport,
+                                 final boolean pretend) {
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
+        final RisColVolUtil colVolUtil = new RisColVolUtil(importerUtil, pretend);
 
-        processYear(dataset, pretend, inProceedings, report);
+        fieldUtil.processTitle(dataset, publication, importReport);
 
-        processAuthors(dataset, RisField.AU, importerUtil, inProceedings, report, pretend);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
 
-        processProceedings(dataset, RisField.T2, RisField.PY, RisField.T2, RisField.A2, RisField.PB, RisField.C1,
-                           inProceedings, importerUtil, pretend, report);
-        
-        processField(dataset, RisField.AB, inProceedings, "abstract", report, pretend);
-        
-        processPages(dataset, RisField.SP, inProceedings, pretend, report);
+        authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 
-        return report;
+        colVolUtil.processProceedings(dataset, RisField.T2, RisField.PY, RisField.T2, RisField.A2, RisField.PB,
+                                      RisField.C1,
+                                      publication, importReport);
+
+        fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
+
+        fieldUtil.processPages(dataset, RisField.SP, publication, importReport);
     }
 
     public RisType getRisType() {

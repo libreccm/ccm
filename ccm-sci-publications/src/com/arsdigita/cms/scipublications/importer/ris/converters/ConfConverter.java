@@ -6,6 +6,10 @@ import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.kernel.Kernel;
 
@@ -14,42 +18,57 @@ import com.arsdigita.kernel.Kernel;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class ConfConverter extends AbstractRisConverter {
+public class ConfConverter extends AbstractRisConverter<Proceedings, ProceedingsBundle> {
+   
+    @Override
+    protected Proceedings createPublication(final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new Proceedings();
+        }
+    }
 
-    public PublicationImportReport convert(final RisDataset dataset,
-                                           final ImporterUtil importerUtil,
-                                           final boolean pretend,
-                                           final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();
-        report.setType(Proceedings.BASE_DATA_OBJECT_TYPE);
+    @Override
+    protected ProceedingsBundle createBundle(final Proceedings publication, final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new ProceedingsBundle(publication);
+        }
+    }
 
-        final Proceedings proceedings = new Proceedings();
-        proceedings.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final ProceedingsBundle bundle = new ProceedingsBundle(proceedings);        
+    @Override
+    protected void processFields(final RisDataset dataset,
+                                 final Proceedings publication,
+                                 final ImporterUtil importerUtil,
+                                 final PublicationImportReport importReport,
+                                 final boolean pretend) {
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
+        final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
+        final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);
 
-        processTitle(dataset, proceedings, report, pretend);
+        fieldUtil.processTitle(dataset, publication, importReport);
 
-        processYear(dataset, RisField.C2, pretend, proceedings, report);
+        fieldUtil.processIntField(dataset, RisField.C2, publication, "year", importReport);
 
-        processAuthors(dataset, RisField.AU, importerUtil, proceedings, report, pretend);
+        authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
+        authorUtil.processEditors(dataset, RisField.A2, publication, importReport);
 
-        processEditors(dataset, RisField.A2, importerUtil, proceedings, report, pretend);
+        seriesUtil.processSeries(dataset, RisField.T3, publication, importReport);
 
-        processSeries(dataset, RisField.T3, proceedings, importerUtil, pretend, report);
+        orgaUtil.processPublisher(dataset, RisField.PB, RisField.C1, publication, importReport);
 
-        processPublisher(dataset, RisField.PB, RisField.C1, pretend, proceedings, importerUtil, report);
-
-        processField(dataset, RisField.AB, proceedings, "abstract", report, pretend);
-        processField(dataset, RisField.CY, proceedings, "placeOfConference", report, pretend);
-        processDateField(dataset, RisField.DA, proceedings, "dateFromOfConference", report, pretend);
-        processField(dataset, RisField.ET, proceedings, "edition", report, pretend);
-        processNumberOfVolumes(dataset, pretend, proceedings, report);
-        processField(dataset, RisField.SN, proceedings, "isbn", report, pretend);
-        processNumberOfPages(dataset, pretend, proceedings, report);
-        processField(dataset, RisField.T2, proceedings, "nameOfConference", report, pretend);
-        processVolume(dataset, pretend, proceedings, report);
-
-        return report;
+        fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
+        fieldUtil.processField(dataset, RisField.CY, publication, "placeOfConference", importReport);
+        fieldUtil.processDateField(dataset, RisField.DA, publication, "dateFromOfConference", importReport);
+        fieldUtil.processField(dataset, RisField.ET, publication, "edition", importReport);
+        fieldUtil.processIntField(dataset, RisField.NV, publication, "numberOfVolumes", importReport);
+        fieldUtil.processField(dataset, RisField.SN, publication, "isbn", importReport);
+        fieldUtil.processIntField(dataset, RisField.SP, publication, "numberOfPages", importReport);
+        fieldUtil.processField(dataset, RisField.T2, publication, "nameOfConference", importReport);
+        fieldUtil.processIntField(dataset, RisField.VL, publication, "volume", importReport);
     }
 
     public RisType getRisType() {

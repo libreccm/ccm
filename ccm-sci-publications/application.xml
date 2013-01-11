@@ -12,6 +12,7 @@
   <ccm:directories>
     <ccm:directory name="pdl"/>
     <ccm:directory name="sql"/>
+    <ccm:directory name="lib"/>
     <ccm:directory name="src"/>
   </ccm:directories>
   <ccm:contacts>

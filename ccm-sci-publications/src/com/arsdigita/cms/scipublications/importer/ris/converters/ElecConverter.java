@@ -1,11 +1,15 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
+import com.arsdigita.cms.contenttypes.InProceedingsBundle;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.InternetArticleBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.kernel.Kernel;
 
@@ -14,44 +18,57 @@ import com.arsdigita.kernel.Kernel;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class ElecConverter extends AbstractRisConverter {
+public class ElecConverter extends AbstractRisConverter<InternetArticle, InternetArticleBundle> {
+   
+    @Override
+    protected InternetArticle createPublication(final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new InternetArticle();
+        }
+    }
 
-    public PublicationImportReport convert(final RisDataset dataset, 
-                                           final ImporterUtil importerUtil, 
-                                           final boolean pretend,
-                                           final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();
-        report.setType(InternetArticle.BASE_DATA_OBJECT_TYPE);
-        
-        final InternetArticle article = new InternetArticle();
-        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final InternetArticleBundle bundle = new InternetArticleBundle(article);
-        
-        processTitle(dataset, article, report, pretend);
-        
-        processYear(dataset, pretend, article, report);
-        
-        processAuthors(dataset, RisField.AU, importerUtil, article, report, pretend);
-        
-        processField(dataset, RisField.AB, article, "abstract", report, pretend);
-        
-        processSeries(dataset, RisField.T2, article, importerUtil, pretend, report);
-        
-        processField(dataset, RisField.CY, article, "place", report, pretend);
-        
-        processField(dataset, RisField.DO, article, "doi", report, pretend);
-        
-        processField(dataset, RisField.ET, article, "edition", report, pretend);
-        
-        processField(dataset, RisField.UR, article, "url", report, pretend);
-                    
-        return report;
+    @Override
+    protected InternetArticleBundle createBundle(final InternetArticle publication, final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new InternetArticleBundle(publication);
+        }
+    }
+
+    @Override
+    protected void processFields(final RisDataset dataset,
+                                 final InternetArticle publication,
+                                 final ImporterUtil importerUtil,
+                                 final PublicationImportReport importReport,
+                                 final boolean pretend) {
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
+        final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);
+
+        fieldUtil.processTitle(dataset, publication, importReport);
+
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+
+        authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
+
+        fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
+
+        seriesUtil.processSeries(dataset, RisField.T2, publication, importReport);
+
+        fieldUtil.processField(dataset, RisField.CY, publication, "place", importReport);
+
+        fieldUtil.processField(dataset, RisField.DO, publication, "doi", importReport);
+
+        fieldUtil.processField(dataset, RisField.ET, publication, "edition", importReport);
+
+        fieldUtil.processField(dataset, RisField.UR, publication, "url", importReport);
     }
 
     public RisType getRisType() {
         return RisType.ELEC;
     }
-    
-    
-    
+
 }

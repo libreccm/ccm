@@ -6,6 +6,9 @@ import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisJournalUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.kernel.Kernel;
 
@@ -14,39 +17,52 @@ import com.arsdigita.kernel.Kernel;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class JourConverter extends AbstractRisConverter {
+public class JourConverter extends AbstractRisConverter<ArticleInJournal, ArticleInJournalBundle> {  
 
     @Override
-    public PublicationImportReport convert(final RisDataset dataset,
-                                           final ImporterUtil importerUtil,
-                                           final boolean pretend,
-                                           final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();
-        report.setType(ArticleInJournal.BASE_DATA_OBJECT_TYPE);
+    protected ArticleInJournal createPublication(final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new ArticleInJournal();
+        }
+    }
 
-        final ArticleInJournal article = new ArticleInJournal();
-        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final ArticleInJournalBundle bundle = new ArticleInJournalBundle(article);
+    @Override
+    protected ArticleInJournalBundle createBundle(final ArticleInJournal publication, final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new ArticleInJournalBundle(publication);
+        }
+    }
 
-        processTitle(dataset, article, report, pretend);
+    @Override
+    protected void processFields(final RisDataset dataset,
+                                 final ArticleInJournal publication, final ImporterUtil importerUtil,
+                                 final PublicationImportReport importReport,
+                                 final boolean pretend) {
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
+        final RisJournalUtil journalUtil = new RisJournalUtil(importerUtil, pretend);
 
-        processYear(dataset, pretend, article, report);
+        fieldUtil.processTitle(dataset, publication, importReport);
 
-        processAuthors(dataset, RisField.AU, importerUtil, article, report, pretend);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
 
-        processField(dataset, RisField.AB, article, "abstract", report, pretend);
+        authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 
-        processJournal(dataset, RisField.T2, article, importerUtil, pretend, report);
+        fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
 
-        processField(dataset, RisField.M1, article, "issue", report, pretend);
+        journalUtil.processJournal(dataset, RisField.T2, publication, importReport);
 
-        processPages(dataset, RisField.SP, article, pretend, report);
+        fieldUtil.processField(dataset, RisField.M1, publication, "issue", importReport);
 
-        processField(dataset, RisField.VL, article, "volume", report, pretend);
+        fieldUtil.processPages(dataset, RisField.SP, publication, importReport);
 
-        processIntField(dataset, RisField.M2, article, "pagesFrom", report, pretend);
-                
-        return report;
+        fieldUtil.processField(dataset, RisField.VL, publication, "volume", importReport);
+
+        fieldUtil.processIntField(dataset, RisField.M2, publication, "pagesFrom", importReport);
     }
 
     @Override

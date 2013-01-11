@@ -19,7 +19,16 @@ import org.apache.log4j.Logger;
 public class RisImporter implements SciPublicationsImporter {
 
     private static final Logger LOGGER = Logger.getLogger(RisImporter.class);
-    private final RisConverters converters = RisConverters.getInstance();  
+    private static final RisImporterConfig CONFIG = new RisImporterConfig();
+    private final RisConverters converters = RisConverters.getInstance();
+   
+    static {
+        CONFIG.load();
+    }
+    
+    public static RisImporterConfig getConfig() {
+        return CONFIG;
+    }
 
     public PublicationFormat getSupportedFormat() {
         try {
@@ -27,15 +36,13 @@ public class RisImporter implements SciPublicationsImporter {
         } catch (MimeTypeParseException ex) {
             LOGGER.warn("Failed to create MimeType for PublicationFormat."
                         + "Using null mimetype instead. Cause: ", ex);
-            return new PublicationFormat("RIS",
-                                         null,
-                                         "RIS");
+            return new PublicationFormat("RIS", null, "RIS");
         }
     }
 
     public ImportReport importPublications(final String publications,
                                            final boolean pretend,
-                                           final boolean publishNewItems) throws SciPublicationsImportException {        
+                                           final boolean publishNewItems) throws SciPublicationsImportException {
         final String[] lines = publications.split("\r\n");
 
         final RisParser parser = new RisParser();
@@ -46,13 +53,13 @@ public class RisImporter implements SciPublicationsImporter {
         report.setPretend(pretend);
 
         final ImporterUtil importerUtil = new ImporterUtil(publishNewItems);
-        
+
         try {
-        for (RisDataset dataset : datasets) {
-           processPublication(dataset, report, importerUtil, pretend, publishNewItems);
-        }
-        } catch(Exception ex) {
-            ex.printStackTrace(System.out);        
+            for (RisDataset dataset : datasets) {
+                processPublication(dataset, report, importerUtil, pretend, publishNewItems);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
         }
 
         return report;
@@ -67,7 +74,7 @@ public class RisImporter implements SciPublicationsImporter {
             report.addPublication(converters.convert(dataset, importerUtil, pretend, publishNewItems));
         } catch (RisConverterException ex) {
             final PublicationImportReport importReport = new PublicationImportReport();
-            importReport.addMessage(String.format("Failed to create converter for RIS type '%s'.", 
+            importReport.addMessage(String.format("Failed to create converter for RIS type '%s'.",
                                                   dataset.getType().toString()));
         }
     }

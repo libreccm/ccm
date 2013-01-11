@@ -6,8 +6,10 @@ import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisColVolUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  * Converter for the RIS type {@code CHAP} to the SciPublications type {@link ArticleInCollectedVolume}.
@@ -15,45 +17,60 @@ import com.arsdigita.kernel.Kernel;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class ChapConverter extends AbstractRisConverter {
+public class ChapConverter extends AbstractRisConverter<ArticleInCollectedVolume, ArticleInCollectedVolumeBundle> {    
 
-    public PublicationImportReport convert(final RisDataset dataset,
-                                           final ImporterUtil importerUtil,
-                                           final boolean pretend,
-                                           final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();
-        report.setType(ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE);
+    @Override
+    protected ArticleInCollectedVolume createPublication(final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new ArticleInCollectedVolume();
+        }
+    }
 
-        final ArticleInCollectedVolume article = new ArticleInCollectedVolume();
-        article.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final ArticleInCollectedVolumeBundle bundle = new ArticleInCollectedVolumeBundle(article);
+    @Override
+    protected ArticleInCollectedVolumeBundle createBundle(final ArticleInCollectedVolume publication,
+                                                          final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new ArticleInCollectedVolumeBundle(publication);
+        }
+    }
 
-        processTitle(dataset, article, report, pretend);
+    @Override
+    protected void processFields(final RisDataset dataset,
+                                 final ArticleInCollectedVolume publication,
+                                 final ImporterUtil importerUtil,
+                                 final PublicationImportReport importReport,
+                                 final boolean pretend) {
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
+        final RisColVolUtil colVolUtil = new RisColVolUtil(importerUtil, pretend);
 
-        processYear(dataset, pretend, article, report);
+        fieldUtil.processTitle(dataset, publication, importReport);
 
-        processAuthors(dataset, RisField.AU, importerUtil, article, report, pretend);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
 
-        processCollectedVolume(dataset,
-                               RisField.T2,
-                               RisField.PY,
-                               RisField.A2,
-                               RisField.CY,
-                               RisField.PB,
-                               RisField.ET,
-                               article,
-                               importerUtil,
-                               pretend,
-                               report);
+        authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 
-        processField(dataset, RisField.SE, article, "chapter", report, pretend);
-        processField(dataset, RisField.AB, article, "abstract", report, pretend);  
-        processPages(dataset, RisField.SP, article, pretend, report);
+        colVolUtil.processCollectedVolume(dataset,
+                                          RisField.T2,
+                                          RisField.PY,
+                                          RisField.A2,
+                                          RisField.CY,
+                                          RisField.PB,
+                                          RisField.ET,
+                                          publication,
+                                          importReport);
 
-        return report;
+        fieldUtil.processField(dataset, RisField.SE, publication, "chapter", importReport);
+        fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
+        fieldUtil.processPages(dataset, RisField.SP, publication, importReport);
     }
 
     public RisType getRisType() {
         return RisType.CHAP;
     }
+
 }

@@ -6,6 +6,9 @@ import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.kernel.Kernel;
 
@@ -14,36 +17,51 @@ import com.arsdigita.kernel.Kernel;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class EdbookConverter extends AbstractRisConverter {
+public class EdbookConverter extends AbstractRisConverter<CollectedVolume, CollectedVolumeBundle> {    
 
-    public PublicationImportReport convert(final RisDataset dataset,
-                                           final ImporterUtil importerUtil,
-                                           final boolean pretend,
-                                           final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();
-        report.setType(CollectedVolume.BASE_DATA_OBJECT_TYPE);
+    @Override
+    protected CollectedVolume createPublication(final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new CollectedVolume();
+        }
+    }
 
-        final CollectedVolume collectedVolume = new CollectedVolume();
-        collectedVolume.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-        final CollectedVolumeBundle bundle = new CollectedVolumeBundle(collectedVolume);
+    @Override
+    protected CollectedVolumeBundle createBundle(final CollectedVolume publication,
+                                                 final boolean pretend) {
+        if (pretend) {
+            return null;
+        } else {
+            return new CollectedVolumeBundle(publication);
+        }
+    }
 
-        processTitle(dataset, collectedVolume, report, pretend);
+    @Override
+    protected void processFields(final RisDataset dataset,
+                                 final CollectedVolume publication,
+                                 final ImporterUtil importerUtil,
+                                 final PublicationImportReport importReport,
+                                 final boolean pretend) {
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
+        final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
 
-        processEditors(dataset, RisField.AU, importerUtil, collectedVolume, report, pretend);
+        fieldUtil.processTitle(dataset, publication, importReport);
 
-        processYear(dataset, pretend, collectedVolume, report);
+        authorUtil.processEditors(dataset, RisField.AU, publication, importReport);
 
-        processPublisher(dataset, pretend, collectedVolume, importerUtil, report);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
 
-        processField(dataset, RisField.AB, collectedVolume, "abstract", report, pretend);
-        processField(dataset, RisField.ET, collectedVolume, "edition", report, pretend);
-        processNumberOfVolumes(dataset, pretend, collectedVolume, report);
-        processField(dataset, RisField.SN, collectedVolume, "isbn", report, pretend);
-        processNumberOfPages(dataset, pretend, collectedVolume, report);
-        processVolume(dataset, pretend, collectedVolume, report);
+        orgaUtil.processPublisher(dataset, RisField.PB, RisField.CY, publication, importReport);
 
-
-        return report;
+        fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
+        fieldUtil.processField(dataset, RisField.ET, publication, "edition", importReport);
+        fieldUtil.processIntField(dataset, RisField.NV, publication, "numberOfVolumes", importReport);
+        fieldUtil.processField(dataset, RisField.SN, publication, "isbn", importReport);
+        fieldUtil.processIntField(dataset, RisField.SP, publication, "numberOfPages", importReport);
+        fieldUtil.processIntField(dataset, RisField.VL, publication, "volume", importReport);
     }
 
     public RisType getRisType() {
