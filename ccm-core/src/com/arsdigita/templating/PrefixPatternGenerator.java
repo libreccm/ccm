@@ -22,18 +22,27 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Generates a pattern for based on the request prefix,
+ * Generates a pattern for based on the request dispatcher prefix,
  * eg /print/content/myitem.jsp     -> { 'print' }
  *    /text-only/content/myitem.jsp -> { 'text-only' }
  */
 public class PrefixPatternGenerator implements PatternGenerator {
+
+    /**
+     * 
+     * @param key
+     * @param req
+     * @return 
+     */
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
         String value = DispatcherHelper.getDispatcherPrefix(req);
         if (value != null) {
             return new String[] { value.substring(1) };
         }
-        
-        return new String[] { };
+        else {
+            return new String[] { };
+        }
     }
+
 }

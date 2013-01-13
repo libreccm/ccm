@@ -48,18 +48,20 @@ public class RootCategoryPicker extends AbstractCategoryPicker {
      * @param state
      * @param target 
      */
-    protected void addOptions(PageState state,
-                              SingleSelect target) {
-        DataCollection domains = SessionManager.getSession()
-            .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
+    protected void addOptions( PageState state,
+                               SingleSelect target) {
+
+        DataCollection domains = SessionManager
+                                     .getSession()
+                                     .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
         domains.addPath("model.id");
         domains.addPath("model.objectType");
         domains.addOrder("title");
         
         target.addOption(new Option(null, "-- pick one --"));
         while (domains.next()) {
-            Domain domain = (Domain)
-                DomainObjectFactory.newInstance(domains.getDataObject());
+            Domain domain = (Domain) DomainObjectFactory
+                                         .newInstance(domains.getDataObject());
             
             target.addOption(
                 new Option(new OID((String)domains.get("model.objectType"),

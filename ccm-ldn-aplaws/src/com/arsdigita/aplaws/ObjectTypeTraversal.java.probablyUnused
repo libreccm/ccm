@@ -37,6 +37,7 @@ import org.apache.log4j.Logger;
 // At minimum the process for registering & looking up hierachical
 // adapters can be shared. Also the mangling of names / paths.
 
+// Currently just used by ObjectTypeSchemaGenerator
 
 /**
  * <p>This class provides a general purpose framework for iterating

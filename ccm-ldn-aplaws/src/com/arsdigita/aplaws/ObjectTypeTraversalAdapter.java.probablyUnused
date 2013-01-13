@@ -26,6 +26,9 @@ import com.arsdigita.persistence.metadata.Property;
 // some of their logic (provided it didn't cripple / obfuscate 
 // the API).
 
+// Currently just used by ObjectTypeTraversal and SimpleObjectTypeAdapter
+// of this package.
+
 /**
  * <p>This interface is used to control traversal of domain
  * objects. Whenever a property is encountered, the {@link

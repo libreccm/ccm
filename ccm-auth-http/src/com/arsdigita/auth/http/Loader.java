@@ -83,12 +83,6 @@ public class Loader extends PackageLoader {
      */
     private void setupHTTPAuth() {
 
-    //  ApplicationType type = ApplicationType
-    //      .createApplicationType("auth-http",
-    //                             "CCM HTTP Authentication Admin",
-    //                             HTTPAuth.BASE_DATA_OBJECT_TYPE);
-
-
         /* Create new type legacy free application type                 
          * NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.

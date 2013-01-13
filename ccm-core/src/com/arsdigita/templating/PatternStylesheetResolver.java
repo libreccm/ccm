@@ -78,9 +78,9 @@ import org.apache.log4j.Logger;
  * <table border="1">
  * <tr> <th> Pattern </th> <th> Meaning </th> <th> Examples </th> </tr>
  * <tr>
- *   <td> <code>::locale::</code> </td>
- *   <td> Current locale </td>
- *   <td> <code>fr_FR</code> </td>
+ *   <td> <code>::host::</code> </td>
+ *   <td> Host name </td>
+ *   <td> <code>www.aplaws.org</code> </td>
  * </tr>
  * <tr>
  *   <td> <code>::vhost::</code> </td>
@@ -88,6 +88,37 @@ import org.apache.log4j.Logger;
  *   <td> <code>business.camden.gov.uk</code> </td>
  * </tr>
  * <tr>
+ *   <td> <code>::webapp::</code> </td>
+ *   <td> Current web application name (ie. context or document root) </td>
+ *   <td> <code>ccm</code> </td>
+ * </tr>
+ * <tr>
+ *   <td> <code>::application::</code> </td>
+ *   <td> Current application name </td>
+ *   <td> <code>navigation</code> </td>
+ * </tr>
+ * <tr>
+ *   <td> <code>::url::</code> </td>
+ *   <td> URL stub  of the current applications name tree</td>
+ *   <td> <code>admin</code> </td>
+ * </tr>
+ * <tr>
+ *   <td> <code>::prefix::</code> </td>
+ *   <td> ??</td>
+ *   <td> <code>??</code> </td>
+ * </tr>
+ * <tr>
+ *   <td> <code>::outputtype::</code> </td>
+ *   <td> Output format. </td>
+ *   <td> <code>text_html</code> </td>
+ * </tr>
+ * <tr>
+ *   <td> <code>::locale::</code> </td>
+ *   <td> Current locale </td>
+ *   <td> <code>fr_FR</code> </td>
+ * </tr>
+ * <tr>clear 
+ * 
  *   <td> <code>::outputtype::</code> </td>
  *   <td> Output format. </td>
  *   <td> <code>text_html</code> </td>
@@ -109,6 +140,17 @@ import org.apache.log4j.Logger;
  * The resolver looks at each stylesheet in turn, and the first one which
  * actually exists on disk is returned.
  * </p>
+ * 
+ * Developer may customize the process by writing a custom pattern generator
+ * and add it in a custom integration package  Initializer (e.g. ccm-ldn-aplaws)
+ * by following code:
+ *      // Register additional PatternStyleSheetResolver for Web app.    
+ *      // With all modules installing in one context no longer required. 
+ *      PatternStylesheetResolver.registerPatternGenerator(
+ *          "[myKey]",
+ *          new [My]PatternGenerator()
+ *      );
+ * 
  *
  * @author Richard W.M. Jones
  */
@@ -147,7 +189,7 @@ public class PatternStylesheetResolver implements StylesheetResolver {
         registerPatternGenerator
             ("prefix", new PrefixPatternGenerator());
         registerPatternGenerator
-            ("webapps", new WebAppPatternGenerator());
+            ("webapp", new WebAppPatternGenerator());
         registerPatternGenerator
             ("host", new HostPatternGenerator());
         s_log.debug("Static initalizer finished.");

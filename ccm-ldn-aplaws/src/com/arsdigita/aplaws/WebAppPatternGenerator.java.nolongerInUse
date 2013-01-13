@@ -37,11 +37,13 @@ import org.apache.log4j.Logger;
  */
 public class WebAppPatternGenerator implements PatternGenerator {
 
+    /** Private Logger instance for debugging purpose.                     */
     private static final Logger s_log = 
          Logger.getLogger(WebAppPatternGenerator.class);
 
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
+
         Application app = Web.getContext().getApplication();
         String ctx = app == null ? null : app.getContextPath();
 

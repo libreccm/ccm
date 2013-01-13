@@ -18,11 +18,11 @@
 
 package com.arsdigita.aplaws;
 
-import com.arsdigita.categorization.Categorization;
-import com.arsdigita.london.terms.TermCategoryListener;
+//import com.arsdigita.categorization.Categorization;
+//import com.arsdigita.london.terms.TermCategoryListener;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.templating.PatternStylesheetResolver;
+//import com.arsdigita.templating.PatternStylesheetResolver;
 import org.apache.log4j.Logger;
 
 
@@ -46,11 +46,17 @@ public class Initializer extends CompoundInitializer {
     public void init(DomainInitEvent evt) {
         super.init(evt);
 
-        Categorization.addCategoryListener(new TermCategoryListener());
+    //  Moved to terms initializer because it is a central responsibility of
+    //  terms itself.
+    //  /* Create new term in the proper terms domain whenever a new category 
+    //   * is created through CMS interface, keeping both insync              */
+    //  Categorization.addCategoryListener(new TermCategoryListener());
 
-        PatternStylesheetResolver.registerPatternGenerator(
-            "webapp",
-            new WebAppPatternGenerator()
-        );
+     // /* Register additional PatternStyleSheetResolver for Web app.    
+     //  * With all modules installing in one context no longer required.    */
+     // PatternStylesheetResolver.registerPatternGenerator(
+     //     "webapp",
+     //     new WebAppPatternGenerator()
+     // );
     }
 }

@@ -27,6 +27,10 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 
+/**
+ * 
+ * 
+ */
 public class FlatCategoryPicker extends AbstractCategoryPicker {
     
     public FlatCategoryPicker(String name) {

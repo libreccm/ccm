@@ -69,11 +69,6 @@ public class Loader extends PackageLoader {
         s_log.debug("Creating an application type for shortcuts. " +
                     "Base Data Object Type: " + Shortcuts.BASE_DATA_OBJECT_TYPE);
 
-        /* Create legacy-campatible application type                          */
-/*      ApplicationType type = ApplicationType
-            .createApplicationType("shortcuts",
-                                   "CCM Shortcuts Admin",
-                                   Shortcuts.BASE_DATA_OBJECT_TYPE);          */
         /* Create legacy-free application type                               
          * NOTE: The wording in the title parameter of ApplicationType
          * determines the name of the subdirectory for the XSL stylesheets.

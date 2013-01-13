@@ -18,8 +18,6 @@
  */
 package com.arsdigita.london.terms;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.categorization.CategoryListener;
@@ -28,6 +26,8 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 
+import org.apache.log4j.Logger;
+
 /**
  * Attempts to create new term in the proper terms domain
  * whenever a new category is created through CMS interface.
@@ -35,7 +35,7 @@ import com.arsdigita.persistence.SessionManager;
 public class TermCategoryListener implements CategoryListener {
 
     private static final Logger s_log = Logger.getLogger(
-            TermCategoryListener.class);
+                                               TermCategoryListener.class);
 
     public void onDelete(Category cat) {
     }

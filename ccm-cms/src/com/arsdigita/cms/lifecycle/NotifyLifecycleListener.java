@@ -81,7 +81,8 @@ public class NotifyLifecycleListener implements LifecycleListener {
         final ContentSection section = item.getContentSection();
         if (s_log.isDebugEnabled()) {
             s_log.debug("item = " + (item == null ? "null" : item.toString()));
-            s_log.debug("section = "+ (section == null ? "null" : section.toString()));
+            s_log.debug("section = "+ (section == null ? "null" 
+                                                        : section.toString()));
         }
         
         Assert.exists(item);
@@ -206,11 +207,12 @@ public class NotifyLifecycleListener implements LifecycleListener {
         if (alertRole != null) {
             usersToAlert = alertRole.getContainedUsers();
             Filter pFilter = PermissionService
-                .getObjectFilterQuery(usersToAlert.getFilterFactory(),
-                                      "id",
-                                      PrivilegeDescriptor.
-                                      get(SecurityManager.CMS_EDIT_ITEM),
-                                      item.getDraftVersion().getParent().getOID()); // !! see above!!
+                .getObjectFilterQuery(
+                    usersToAlert.getFilterFactory(),
+                    "id",
+                    PrivilegeDescriptor.
+                    get(SecurityManager.CMS_EDIT_ITEM),
+                    item.getDraftVersion().getParent().getOID()); // see above!!
             usersToAlert.addFilter(pFilter);
         }
         return usersToAlert;
@@ -224,7 +226,7 @@ public class NotifyLifecycleListener implements LifecycleListener {
      *@return a Message concerning <tt>item</tt
      */
     protected Message createMessage(ContentItem item,
-                                   LifecycleEvent lc) {
+                                      LifecycleEvent lc) {
         Assert.exists(item);
         Message message = null;
         Party sender = UserTask.getAlertsSender();
@@ -245,20 +247,31 @@ public class NotifyLifecycleListener implements LifecycleListener {
             String subject = "Content Item " + name + " is about to expire";
 
 				
-			
-            String publicURL = URL.there(section.getSiteNode().getURL(DispatcherHelper.getWebappContext())
-                                         + ((ContentItem)item.getParent()).getPath(),
-                                         null).getURL();
+			// term section.getSiteNode below doesn't produce any meaningful
+            // value, because table sitenodes is empty since all apps are
+            // new style, legacy free apps. Term returns null.
+            
+            // section.getSiteNode() get the sigenote object for the current
+            // contentsection in use, getURL is a sitenode method to provide
+            // the corresponding URL as String.
+            // Modification NOT test yet!
+            String publicURL = URL.there( 
+                 // section.getSiteNode().getURL(DispatcherHelper.getWebappContext())
+                    section.getPath()
+                     + ((ContentItem)item.getParent()).getPath()
+                    ,null
+                    ).getURL();
 
             // link to the trunk version of the item, which can be edited.
             // the live item cannot!
-            //String adminURL = URL.there(ContentItemPage.getItemURL(item,ContentItemPage.AUTHORING_TAB), null).getURL();
+
             ContentItem adminItem = item.getDraftVersion();
             if (adminItem == null) {
                 adminItem = item;
             }
-            String adminURL = URL.there(ContentItemPage.getItemURL(adminItem,
-                                                                   ContentItemPage.AUTHORING_TAB)
+            String adminURL = URL.there(ContentItemPage
+                                         .getItemURL(adminItem,
+                                                     ContentItemPage.AUTHORING_TAB)
                                         , null).getURL();
 
             StringBuffer body = new StringBuffer(300);

@@ -28,7 +28,7 @@ package com.arsdigita.templating;
  * configuration registry.
  */
 /* NON Javadoc comment:
- * Used to be depracated in version 6.6.0. Reverted to non-deprecated in version
+ * Used to be deprecated in version 6.6.0. Reverted to non-deprecated in version
  * 6.6.0 release 3. Package templating provides the basic mechanism for CCM
  * templating system an should provide an implementation of the Presentation
  * Manager interface to be complete.  

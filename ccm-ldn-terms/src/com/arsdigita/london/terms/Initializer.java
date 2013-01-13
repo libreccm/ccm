@@ -18,6 +18,7 @@
 
 package com.arsdigita.london.terms;
 
+import com.arsdigita.categorization.Categorization;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
@@ -51,7 +52,9 @@ public class Initializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
+    @Override
     public void init(DomainInitEvent e) {
+
         DomainObjectFactory.registerInstantiator
             (Domain.BASE_DATA_OBJECT_TYPE,
              new DomainObjectInstantiator() {
@@ -63,6 +66,7 @@ public class Initializer extends CompoundInitializer {
         DomainObjectFactory.registerInstantiator
             (Term.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
+                 @Override
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new Term(dataObject);
                  }
@@ -71,6 +75,7 @@ public class Initializer extends CompoundInitializer {
         DomainObjectFactory.registerInstantiator
             (Terms.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
+                 @Override
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new Terms(dataObject);
                  }
@@ -124,5 +129,9 @@ public class Initializer extends CompoundInitializer {
 
         XML.parse(Terms.getConfig().getTraversalAdapters(),
                   new TraversalHandler());
+
+        /* Create new term in the proper terms domain whenever a new category 
+         * is created through CMS interface, keeping both insync              */
+        Categorization.addCategoryListener(new TermCategoryListener());
     }
 }

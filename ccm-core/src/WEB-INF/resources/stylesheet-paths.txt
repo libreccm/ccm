@@ -3,8 +3,8 @@
 # "PatternStylesheetResolver". Please read the Javadoc for that file for
 # the full story.
 
-http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
-http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::.xsl
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::.xsl
 
-http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
-http://::host::/resource/::webapps::/themes/heirloom/apps/::application::/xsl/::url::.xsl
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::.xsl

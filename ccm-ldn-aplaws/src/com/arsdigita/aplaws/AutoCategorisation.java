@@ -26,7 +26,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.arsdigita.aplaws.ui.ItemCategoryPicker;
+import com.arsdigita.london.terms.ui.ItemCategoryPicker;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;

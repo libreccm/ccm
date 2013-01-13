@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.aplaws.ui;
+package com.arsdigita.london.terms.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
@@ -31,19 +31,20 @@ import com.arsdigita.london.terms.ui.TermWidget;
 
 import org.apache.log4j.Logger;
 
+
 /**
- * <p> cms specific Concrete implementation of 
+ * Replacement for cms authoring ItemCategoryForm which replaces the 
+ * category widget with a terms based widget. 
+ * 
+ * Provides a cms specific concrete implementation of 
  * <code>com.arsdigita.london.terms.ui.ACSObjectCategoryPicker</code>. </p>
  * 
- *  
- * 
- * <p>Activated by pointing the parameter 
+ * <p> Is is activated / used by pointing the parameter 
  * <code>com.arsdigita.cms.category_authoring_add_form<</code> to it.</p>
  */
-
-
 public class ItemCategoryPicker extends ACSObjectCategoryPicker {
 
+    /** Private Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(ItemCategoryPicker.class);
 
    
@@ -71,6 +72,7 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
      * @see com.arsdigita.london.terms.ui.ACSObjectCategoryPicker#getObject()
      */
     protected ACSObject getObject(PageState state) {
+
         ContentItem item = CMS.getContext().getContentItem();
         return item.getParent();
 

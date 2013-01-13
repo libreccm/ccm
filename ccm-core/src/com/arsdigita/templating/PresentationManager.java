@@ -23,18 +23,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Interface for styling and serving XML documents to
- * the response output stream. The PresentationManager contains the
- * code that determines which XSLT transformer(s) are to be applied to
- * a given document. The default
- * BasePresentationManager should suffice for most cases. A custom
- * presentation manager is needed if an application needs to
+ * Interface for styling and serving XML documents to the response output
+ * stream. 
+ * 
+ * The PresentationManager contains the code that determines which 
+ * XSLT transformer(s) are to be applied to a given document. 
+ * 
+ * The (default) SimplePresentationManager just links to the bebop 
+ * implementation. It should suffice for most cases.
+ * 
+ * A custom presentation manager is needed if an application needs to
  * dynamically apply a set of templates to an XML document in a custom
  * way. Typically, this occurs if the template selection
  * depends on the outcome of some application-specific logic.
  * 
- * @see com.arsdigita.sitenode.SiteNodePresentationManager
- * @see com.arsdigita.sitenode.BasePresentationManager
+ * @see com.arsdigita.templating.SimplePresentationManager
  *
  * @author Bill Schneider
  * @version ACS 4.6

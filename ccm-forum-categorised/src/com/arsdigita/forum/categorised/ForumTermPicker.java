@@ -40,16 +40,20 @@ public class ForumTermPicker extends ACSObjectCategoryPicker {
    
     public ForumTermPicker(BigDecimalParameter root,
                               StringParameter mode) {
-                      super(root, mode);
-           s_log.debug("instantiating ForumCategoryPicker");
+
+        super(root, mode);
+        s_log.debug("instantiating ForumCategoryPicker");
         
     }
 
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getForm(com.arsdigita.bebop.parameters.BigDecimalParameter, com.arsdigita.bebop.parameters.StringParameter)
+	 * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getForm
+     *                   com.arsdigita.bebop.parameters.BigDecimalParameter, 
+     *                   com.arsdigita.bebop.parameters.StringParameter)
 	 */
-	protected ACSObjectCategoryForm getForm(BigDecimalParameter root, StringParameter mode) {
+	protected ACSObjectCategoryForm getForm(BigDecimalParameter root, 
+                                             StringParameter mode) {
 		s_log.debug("getForm");
 		return new ForumTermForm(root, mode, new TermWidget(mode, this));
 	}
