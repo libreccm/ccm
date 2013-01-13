@@ -48,7 +48,7 @@ public class JourConverter extends AbstractRisConverter<ArticleInJournal, Articl
 
         fieldUtil.processTitle(dataset, publication, importReport);
 
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 

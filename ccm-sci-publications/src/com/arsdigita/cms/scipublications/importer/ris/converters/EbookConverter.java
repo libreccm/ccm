@@ -11,7 +11,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldU
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  * Converter for the RIS type {@code EBOOK} to the SciPublications type {@link Monograph}.
@@ -20,7 +19,7 @@ import com.arsdigita.kernel.Kernel;
  * @version $Id$
  */
 public class EbookConverter extends AbstractRisConverter<Monograph, PublicationWithPublisherBundle> {
-   
+
     @Override
     protected Monograph createPublication(final boolean pretend) {
         if (pretend) {
@@ -46,9 +45,7 @@ public class EbookConverter extends AbstractRisConverter<Monograph, PublicationW
         final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
         final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
         authorUtil.processEditors(dataset, RisField.A3, publication, importReport);

@@ -47,9 +47,7 @@ public class BlogConverter extends AbstractRisConverter<InternetArticle, Interne
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
         final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
         authorUtil.processEditors(dataset, RisField.A2, publication, importReport);

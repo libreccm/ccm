@@ -47,9 +47,7 @@ public class CpaperConverter extends AbstractRisConverter<InProceedings, InProce
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
         final RisColVolUtil colVolUtil = new RisColVolUtil(importerUtil, pretend);
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 

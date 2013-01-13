@@ -23,7 +23,7 @@ public class BibTeXPublicationsImporter implements SciPublicationsImporter {
         } catch (MimeTypeParseException ex) {
             LOGGER.warn("Failed to create MimeType for PublicationFormat."
                         + "Using null mimetype instead. Cause: ", ex);
-            return new PublicationFormat("RIS", null, "RIS");
+            return new PublicationFormat("BibTeX", null, "bib");
         }
     }
 

@@ -82,7 +82,7 @@ public class RisParser {
             }
 
             return new RisFieldValue(fieldName, tokens[1]);
-        } else if ((tokens.length == 1) && RisField.ER.toString().equals(tokens[0])) {
+        } else if ((tokens.length == 1) && (tokens[0] != null) && tokens[0].startsWith(RisField.ER.toString())) {
             return new RisFieldValue(RisField.ER, "");
         } else {
             return new RisFieldValue(null, line);

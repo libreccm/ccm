@@ -2,6 +2,7 @@ package com.arsdigita.cms.scipublications.importer.ris.converters;
 
 import com.arsdigita.cms.contenttypes.Monograph;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
+import com.arsdigita.cms.contenttypes.PublicationWithPublisherBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
@@ -34,7 +35,7 @@ public class BookConverter extends AbstractRisConverter<Monograph, PublicationBu
         if (pretend) {
             return null;
         } else {
-            return new PublicationBundle(publication);
+            return new PublicationWithPublisherBundle(publication);
         }
     }
 
@@ -48,9 +49,8 @@ public class BookConverter extends AbstractRisConverter<Monograph, PublicationBu
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
         final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
         final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);
-
-        fieldUtil.processTitle(dataset, publication, importReport);
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
         authorUtil.processEditors(dataset, RisField.A3, publication, importReport);

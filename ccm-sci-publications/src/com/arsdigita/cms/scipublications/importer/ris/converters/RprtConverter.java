@@ -49,9 +49,7 @@ public class RprtConverter extends AbstractRisConverter<GreyLiterature, UnPublis
         final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
         final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 

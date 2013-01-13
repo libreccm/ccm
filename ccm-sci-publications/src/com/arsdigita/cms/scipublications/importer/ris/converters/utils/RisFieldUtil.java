@@ -39,10 +39,28 @@ public class RisFieldUtil {
 
         if (!pretend) {
             publication.setTitle(title);
+            String name = normalizeString(title);
+            if (name.length() > 200) {
+                name = name.substring(0, 200);
+            }
+            publication.setName(name);            
         }
 
         report.setTitle(title);
     }
+    
+     private String normalizeString(final String str) {
+        if (str == null) {
+            return "null";
+        }
+        return str.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").
+                replace(
+                "Ä", "Ae").replace("Ü", "Ue").replace("Ö", "Oe").replace("ß",
+                                                                         "ss").
+                replace(" ", "-").
+                replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase().trim();
+    }
+
 
     public void processField(final RisDataset dataset,
                              final RisField field,

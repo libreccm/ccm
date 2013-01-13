@@ -46,11 +46,9 @@ public class GenConverter extends AbstractRisConverter<Monograph, PublicationWit
                                  final boolean pretend) {
         final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
-        final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
+        final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);   
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
         authorUtil.processAuthors(dataset, RisField.A2, publication, importReport);

@@ -51,7 +51,7 @@ public class ConfConverter extends AbstractRisConverter<Proceedings, Proceedings
 
         fieldUtil.processTitle(dataset, publication, importReport);
 
-        fieldUtil.processIntField(dataset, RisField.C2, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.C2, publication, "yearPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
         authorUtil.processEditors(dataset, RisField.A2, publication, importReport);

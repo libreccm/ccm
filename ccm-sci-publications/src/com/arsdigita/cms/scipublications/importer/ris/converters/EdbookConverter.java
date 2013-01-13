@@ -10,7 +10,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthor
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -48,11 +47,9 @@ public class EdbookConverter extends AbstractRisConverter<CollectedVolume, Colle
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
         final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
         authorUtil.processEditors(dataset, RisField.AU, publication, importReport);
 
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         orgaUtil.processPublisher(dataset, RisField.PB, RisField.CY, publication, importReport);
 

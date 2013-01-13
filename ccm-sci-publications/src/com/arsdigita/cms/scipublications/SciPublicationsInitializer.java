@@ -35,13 +35,13 @@ public class SciPublicationsInitializer extends CompoundInitializer {
         super.init(e);
 
         DomainObjectFactory.registerInstantiator(
-                SciPublications.BASE_DATA_OBJECT_TYPE,
-                                                 new ACSObjectInstantiator() {
-
+                SciPublications.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator() {
             @Override
             public DomainObject doNewInstance(final DataObject dataObject) {
                 return new SciPublications(dataObject);
             }
+
         });
     }
+
 }

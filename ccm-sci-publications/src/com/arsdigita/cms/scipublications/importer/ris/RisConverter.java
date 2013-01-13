@@ -11,7 +11,7 @@ import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
  * @version $Id$
  */
 public interface RisConverter {
-    
+            
     /**
      * Converts a RIS dataset for a publiction of the type supported by the converter to an instance of SciPublication.
      * An implementation of this method is also responsible for publishing the publication item created (if 

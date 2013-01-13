@@ -5,13 +5,11 @@ import com.arsdigita.cms.contenttypes.ArticleInJournalBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
-import com.arsdigita.cms.scipublications.importer.ris.RisConverter;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthorUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisJournalUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  * Converter for the RIS {@code EJOUR} to the SciPublications type {@link ArticleInJournal}
@@ -50,9 +48,7 @@ public class EjourConverter extends AbstractRisConverter<ArticleInJournal, Artic
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
         final RisJournalUtil journalUtil = new RisJournalUtil(importerUtil, pretend);
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 

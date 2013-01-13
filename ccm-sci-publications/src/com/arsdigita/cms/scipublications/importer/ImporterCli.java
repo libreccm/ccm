@@ -67,6 +67,7 @@ public class ImporterCli extends Program {
 
     @Override
     protected void doRun(final CommandLine cmdLine) {
+        try {
         final PrintWriter writer = new PrintWriter(System.out);
         final PrintWriter errWriter = new PrintWriter(System.err);
 
@@ -100,6 +101,9 @@ public class ImporterCli extends Program {
 
         errWriter.flush();
         writer.flush();
+        } catch(Exception ex) {
+            ex.printStackTrace(System.err);
+        }
     }
 
     protected void importFile(final File file, final boolean pretend, final boolean publish) {
@@ -143,11 +147,12 @@ public class ImporterCli extends Program {
             try {
                 report = importer.importPublications(data, pretend, publish);
             } catch (SciPublicationsImportException ex) {
+
                 errWriter.printf("Import failed:\n");
-                errWriter.printf("%s: %s\n", ex.getClass().getName(), ex.getMessage());                
+                errWriter.printf("%s: %s\n", ex.getClass().getName(), ex.getMessage());
                 ex.printStackTrace(errWriter);
                 errWriter.flush();
-                writer.flush();                
+                writer.flush();
                 return;
             }
 

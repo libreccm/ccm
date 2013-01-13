@@ -1,12 +1,9 @@
 package com.arsdigita.cms.scipublications.importer.ris;
 
-import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
-import com.arsdigita.cms.scipublications.importer.SciPublicationsImportException;
-import com.arsdigita.cms.scipublications.importer.report.ImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 import org.apache.log4j.Logger;
@@ -20,7 +17,7 @@ import org.apache.log4j.Logger;
 public class RisConverters {
 
     private static final Logger LOGGER = Logger.getLogger(RisConverters.class);
-    private Map<RisType, RisConverter> converters = new HashMap<RisType, RisConverter>();
+    private Map<RisType, RisConverter> converters = new EnumMap<RisType, RisConverter>(RisType.class);
 
     /**
      * The constructor loads all available implementations of the
@@ -60,8 +57,8 @@ public class RisConverters {
      * @param importerUtil 
      * @param pretend
      * @param publishNewItems
-     * @return 
-     * @throws SciPublicationsImportException 
+     * @return
+     * @throws RisConverterException  
      */
     public PublicationImportReport convert(final RisDataset dataset,
                                            final ImporterUtil importerUtil,
@@ -77,13 +74,13 @@ public class RisConverters {
             }
 
             converter = converter.getClass().newInstance();
-
+                        
             return converter.convert(dataset, importerUtil, pretend, publishNewItems);
         } catch (InstantiationException ex) {
            throw new RisConverterException("Converter instantiation failed.", ex);
         } catch (IllegalAccessException ex) {
             throw new RisConverterException("Converter instantiation failed.", ex);
-        }
+        }       
     }
 
 }

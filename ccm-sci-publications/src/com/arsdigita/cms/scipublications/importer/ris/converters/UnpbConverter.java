@@ -1,8 +1,6 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
 import com.arsdigita.cms.contenttypes.GreyLiterature;
-import com.arsdigita.cms.contenttypes.Publication;
-import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.contenttypes.UnPublishedBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisType;
@@ -13,7 +11,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldU
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -49,11 +46,9 @@ public class UnpbConverter extends AbstractRisConverter<GreyLiterature, UnPublis
         final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
         final RisOrgaUtil orgaUtil = new RisOrgaUtil(importerUtil, pretend);
-        final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);
+        final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);      
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 

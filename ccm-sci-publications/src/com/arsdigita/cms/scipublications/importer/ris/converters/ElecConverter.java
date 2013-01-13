@@ -1,6 +1,5 @@
 package com.arsdigita.cms.scipublications.importer.ris.converters;
 
-import com.arsdigita.cms.contenttypes.InProceedingsBundle;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.InternetArticleBundle;
 import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
@@ -11,7 +10,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthor
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -48,9 +46,7 @@ public class ElecConverter extends AbstractRisConverter<InternetArticle, Interne
         final RisAuthorUtil authorUtil = new RisAuthorUtil(importerUtil, pretend);
         final RisSeriesUtil seriesUtil = new RisSeriesUtil(importerUtil, pretend);
 
-        fieldUtil.processTitle(dataset, publication, importReport);
-
-        fieldUtil.processIntField(dataset, RisField.PY, publication, "year", importReport);
+        fieldUtil.processIntField(dataset, RisField.PY, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
 

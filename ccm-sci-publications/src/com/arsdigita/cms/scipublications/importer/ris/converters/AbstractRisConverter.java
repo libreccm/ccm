@@ -8,6 +8,7 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
 import com.arsdigita.cms.scipublications.importer.ris.RisConverter;
 import com.arsdigita.cms.scipublications.importer.ris.RisDataset;
 import com.arsdigita.cms.scipublications.importer.ris.RisImporter;
+import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.kernel.Kernel;
 import java.math.BigDecimal;
@@ -38,6 +39,12 @@ public abstract class AbstractRisConverter<T extends Publication, B extends Publ
         final PublicationImportReport importReport = new PublicationImportReport();
 
         final T publication = createPublication(pretend);
+        final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
+        fieldUtil.processTitle(dataset, publication, importReport);
+        if (!pretend) {
+            publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+        }
+        final B bundle = createBundle(publication, pretend);
         importReport.setTitle(publication.BASE_DATA_OBJECT_TYPE);
 
         processFields(dataset, publication, importerUtil, importReport, pretend);
@@ -48,9 +55,7 @@ public abstract class AbstractRisConverter<T extends Publication, B extends Publ
             publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
 
             publication.save();
-
-            final B bundle = createBundle(publication, pretend);
-
+            
             assignFolder(publication, bundle);
             assignCategories(bundle);
 
