@@ -62,7 +62,7 @@ public class BookConverter extends AbstractRisConverter<Monograph, PublicationBu
         fieldUtil.processField(dataset, RisField.AB, publication, "abstract", importReport);
         fieldUtil.processField(dataset, RisField.ET, publication, "edition", importReport);
         fieldUtil.processIntField(dataset, RisField.NV, publication, "numberOfVolumes", importReport);
-        fieldUtil.processField(dataset, RisField.SN, publication, "isbn", importReport);
+        fieldUtil.processIsbn(dataset, RisField.SN, publication, importReport);
         fieldUtil.processIntField(dataset, RisField.SP, publication, "numberOfPages", importReport);
         fieldUtil.processIntField(dataset, RisField.VL, publication, "volume", importReport);
 

@@ -45,10 +45,12 @@ public class RisColVolUtil {
         final List<String> colVolEditors = dataset.getValues().get(cvEditorsField);
         final List<AuthorData> colVolEditorData = new ArrayList<AuthorData>();
 
-        for (String colVolEditor : colVolEditors) {
-            final String[] tokens = colVolEditor.split(",");
+        if ((colVolEditors != null) && !colVolEditors.isEmpty()) {
+            for (String colVolEditor : colVolEditors) {
+                final String[] tokens = colVolEditor.split(",");
 
-            colVolEditorData.add(createAuthorData(tokens));
+                colVolEditorData.add(createAuthorData(tokens));
+            }
         }
 
         if ((colVolTitle != null) && !colVolTitle.isEmpty()) {

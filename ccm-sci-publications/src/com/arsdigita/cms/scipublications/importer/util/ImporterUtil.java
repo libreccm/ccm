@@ -4,6 +4,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.contenttypes.CollectedVolumeBundle;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
@@ -258,9 +259,9 @@ public class ImporterUtil {
                 if ((publisherName != null) && !publisherName.isEmpty()) {
                     report.setPublisher(processPublisher(collectedVolume, place, publisherName, pretend));
                 }
-                
+
                 if ((edition != null) && !edition.isEmpty()) {
-                    collectedVolume.setEdition(edition);                   
+                    collectedVolume.setEdition(edition);
                 }
 
                 collectedVolume.save();
@@ -578,51 +579,50 @@ public class ImporterUtil {
         return report;
     }
 
-    
     public SeriesImportReport processSeries(final Publication publication,
-                                           final String seriesTitle,
-                                           final boolean pretend) {
+                                            final String seriesTitle,
+                                            final boolean pretend) {
         final SeriesImportReport report = new SeriesImportReport();
-        
+
         final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(Series.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("title", seriesTitle);
-        
+
         report.setSeriesTitle(seriesTitle);
         if (collection.isEmpty()) {
-          if (!pretend) {
-              final Integer folderId = Publication.getConfig().getDefaultSeriesFolder();
-              final Folder folder = new Folder(new BigDecimal(folderId));
-              if (folder == null) {
-                  throw new IllegalArgumentException("Error getting folder for series.");
-              }
-              
-              final Series series = new Series();
-              series.setName(normalizeString(seriesTitle));
-              series.setTitle(seriesTitle);
-              series.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
-              series.setContentSection(folder.getContentSection());
-              series.save();
-              
-              final SeriesBundle bundle = new SeriesBundle(series);
-              bundle.setParent(folder);
-              bundle.setContentSection(folder.getContentSection());
-              bundle.save();
-              
-              publication.addSeries(series);
-              
-              if (publish) {
-              publishItem(series);
-              }
-          }
-          report.setCreated(true);
-          
-          //Special handling for pretend mode
-          if (pretend && createdSeries.contains(seriesTitle)) {
-              report.setCreated(false);
-          } else {
-              createdSeries.add(seriesTitle);
-          }
+            if (!pretend) {
+                final Integer folderId = Publication.getConfig().getDefaultSeriesFolder();
+                final Folder folder = new Folder(new BigDecimal(folderId));
+                if (folder == null) {
+                    throw new IllegalArgumentException("Error getting folder for series.");
+                }
+
+                final Series series = new Series();
+                series.setName(normalizeString(seriesTitle));
+                series.setTitle(seriesTitle);
+                series.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
+                series.setContentSection(folder.getContentSection());
+                series.save();
+
+                final SeriesBundle bundle = new SeriesBundle(series);
+                bundle.setParent(folder);
+                bundle.setContentSection(folder.getContentSection());
+                bundle.save();
+
+                publication.addSeries(series);
+
+                if (publish) {
+                    publishItem(series);
+                }
+            }
+            report.setCreated(true);
+
+            //Special handling for pretend mode
+            if (pretend && createdSeries.contains(seriesTitle)) {
+                report.setCreated(false);
+            } else {
+                createdSeries.add(seriesTitle);
+            }
         } else {
             if (!pretend) {
                 collection.next();
@@ -631,9 +631,9 @@ public class ImporterUtil {
             }
             report.setCreated(false);
         }
-        
+
         collection.close();
-        
+
         return report;
     }
 

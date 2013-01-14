@@ -10,7 +10,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthor
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisJournalUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -60,7 +59,7 @@ public class JourConverter extends AbstractRisConverter<ArticleInJournal, Articl
 
         fieldUtil.processPages(dataset, RisField.SP, publication, importReport);
 
-        fieldUtil.processField(dataset, RisField.VL, publication, "volume", importReport);
+        fieldUtil.processIntField(dataset, RisField.VL, publication, "volume", importReport);
 
         fieldUtil.processIntField(dataset, RisField.M2, publication, "pagesFrom", importReport);
     }

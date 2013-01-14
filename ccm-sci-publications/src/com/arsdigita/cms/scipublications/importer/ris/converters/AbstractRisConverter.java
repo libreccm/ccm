@@ -40,12 +40,12 @@ public abstract class AbstractRisConverter<T extends Publication, B extends Publ
 
         final T publication = createPublication(pretend);
         final RisFieldUtil fieldUtil = new RisFieldUtil(pretend);
-        fieldUtil.processTitle(dataset, publication, importReport);
+        fieldUtil.processTitle(dataset, publication, importReport);        
         if (!pretend) {
             publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
         }
         final B bundle = createBundle(publication, pretend);
-        importReport.setTitle(publication.BASE_DATA_OBJECT_TYPE);
+        importReport.setType(publication.BASE_DATA_OBJECT_TYPE);
 
         processFields(dataset, publication, importerUtil, importReport, pretend);
 

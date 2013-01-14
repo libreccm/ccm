@@ -4,6 +4,7 @@ import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImportException;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImporter;
 import com.arsdigita.cms.scipublications.importer.report.ImportReport;
+import java.util.Map;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import org.apache.log4j.Logger;
@@ -28,6 +29,7 @@ public class BibTeXPublicationsImporter implements SciPublicationsImporter {
     }
 
     public ImportReport importPublications(final String publications,
+                                           final Map<String, String> importerParams,
                                            final boolean pretend,
                                            final boolean publishNewItems)
             throws SciPublicationsImportException {

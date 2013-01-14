@@ -23,8 +23,11 @@ import com.arsdigita.cms.scipublications.importer.report.ImportReport;
 import com.arsdigita.util.cmd.Program;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -43,7 +46,7 @@ public class ImporterCli extends Program {
     private static final String LIST = "list";
 
     public ImporterCli() {
-        super("ImporterCli", "1.0.0", "ImporterCli [--pretend] [--publish] file | dir OR ImporterCLI --list");
+        super("ImporterCli", "1.0.0", "ImporterCli [--pretend] [--publish] file | directory [parameters for importer] OR ImporterCLI --list");
 
         final Options options = getOptions();
 
@@ -58,55 +61,78 @@ public class ImporterCli extends Program {
         options.addOption(OptionBuilder
                 .withLongOpt(LIST)
                 .withDescription("List all available importers and exit")
-                .create());
+                .create());        
     }
 
     public static void main(final String args[]) {
         new ImporterCli().run(args);
     }
+    
+    @Override
+    public void help(final OutputStream stream) {
+        super.help(stream);
+        
+        final PrintWriter writer = new PrintWriter(stream);
+        writer.append("parameters for importer: Optional parameters for the importer, provided in the following format:");
+        writer.append("parameter1=value1;parameter2=value2;...");
+    }
 
     @Override
     protected void doRun(final CommandLine cmdLine) {
         try {
-        final PrintWriter writer = new PrintWriter(System.out);
-        final PrintWriter errWriter = new PrintWriter(System.err);
+            final PrintWriter writer = new PrintWriter(System.out);
+            final PrintWriter errWriter = new PrintWriter(System.err);
 
-        writer.printf("Publications Importer CLI tool.\n");
-        writer.flush();
-        if (cmdLine.hasOption(LIST)) {
-            final List<PublicationFormat> formats = SciPublicationsImporters.getInstance().getSupportedFormats();
-            writer.printf("Supported formats:\n");
-            for (PublicationFormat format : formats) {
-                writer.printf("%s, MIME type: %s, file extension: %s\n", format.getName(),
-                              format.getMimeType().toString(),
-                              format.getFileExtension());
-            }
+            writer.printf("Publications Importer CLI tool.\n");
             writer.flush();
-            return;
-        }
+            if (cmdLine.hasOption(LIST)) {
+                final List<PublicationFormat> formats = SciPublicationsImporters.getInstance().getSupportedFormats();
+                writer.printf("Supported formats:\n");
+                for (PublicationFormat format : formats) {
+                    writer.printf("%s, MIME type: %s, file extension: %s\n", format.getName(),
+                                  format.getMimeType().toString(),
+                                  format.getFileExtension());
+                }
+                writer.flush();
+                return;
+            }
 
-        final boolean pretend = cmdLine.hasOption(PRETEND);
-        final boolean publish = cmdLine.hasOption(PUBLISH);
+            final boolean pretend = cmdLine.hasOption(PRETEND);
+            final boolean publish = cmdLine.hasOption(PUBLISH);
 
-        if (cmdLine.getArgs().length != 1) {
-            errWriter.printf("Missing file/directory to import.\n");
+            if (cmdLine.getArgs().length < 1) {
+                errWriter.printf("Missing file/directory to import.\n");
+                errWriter.flush();
+                help(System.err);
+                return;
+            }
+
+            final String sourceName = cmdLine.getArgs()[0];
+            final Map<String, String> importerParams = new HashMap<String, String>();
+            if (cmdLine.getArgs().length >= 2) {
+                final String importerParamsStr = cmdLine.getArgs()[1];
+                final String[] tokens = importerParamsStr.split(";");
+                for(String token : tokens) {
+                    final String[] valueTokens = token.split("=");
+                    if (valueTokens.length == 2) {
+                        importerParams.put(valueTokens[0], valueTokens[1]);
+                    }
+                }
+            }
+            
+            final File source = new File(sourceName);
+            importFile(source, importerParams, pretend, publish);
+
             errWriter.flush();
-            help(System.err);
-            return;
-        }
-
-        final String sourceName = cmdLine.getArgs()[0];
-        final File source = new File(sourceName);
-        importFile(source, pretend, publish);
-
-        errWriter.flush();
-        writer.flush();
-        } catch(Exception ex) {
+            writer.flush();
+        } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
     }
 
-    protected void importFile(final File file, final boolean pretend, final boolean publish) {
+    protected void importFile(final File file, 
+                              final Map<String, String> importerParams, 
+                              final boolean pretend, final boolean publish) {
         final PrintWriter writer = new PrintWriter(System.out);
         final PrintWriter errWriter = new PrintWriter(System.err);
 
@@ -117,7 +143,7 @@ public class ImporterCli extends Program {
         if (file.isDirectory()) {
             final File[] files = file.listFiles();
             for (File f : files) {
-                importFile(f, pretend, publish);
+                importFile(f, importerParams, pretend, publish);
             }
         } else if (file.isFile()) {
             final String fileName = file.getName();
@@ -145,7 +171,7 @@ public class ImporterCli extends Program {
             writer.flush();
             final ImportReport report;
             try {
-                report = importer.importPublications(data, pretend, publish);
+                report = importer.importPublications(data, importerParams, pretend, publish);
             } catch (SciPublicationsImportException ex) {
 
                 errWriter.printf("Import failed:\n");

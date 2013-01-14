@@ -7,6 +7,7 @@ import com.arsdigita.cms.scipublications.importer.report.ImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import java.util.List;
+import java.util.Map;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import org.apache.log4j.Logger;
@@ -41,9 +42,16 @@ public class RisImporter implements SciPublicationsImporter {
     }
 
     public ImportReport importPublications(final String publications,
+                                           final Map<String, String> importerParams,
                                            final boolean pretend,
                                            final boolean publishNewItems) throws SciPublicationsImportException {
-        final String[] lines = publications.split("\r\n");
+        String lineBreak = "\r\n";
+        if (importerParams.containsKey("linebreak")) {
+            lineBreak = importerParams.get("linebreak");
+            LOGGER.warn("Using user provided linebreak sequence.");
+        }                
+        
+        final String[] lines = publications.split(lineBreak);
 
         final RisParser parser = new RisParser();
         final List<RisDataset> datasets = parser.parse(lines);

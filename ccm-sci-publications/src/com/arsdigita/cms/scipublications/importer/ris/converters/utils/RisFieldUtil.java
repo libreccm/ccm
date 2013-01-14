@@ -43,13 +43,13 @@ public class RisFieldUtil {
             if (name.length() > 200) {
                 name = name.substring(0, 200);
             }
-            publication.setName(name);            
+            publication.setName(name);
         }
 
         report.setTitle(title);
     }
-    
-     private String normalizeString(final String str) {
+
+    private String normalizeString(final String str) {
         if (str == null) {
             return "null";
         }
@@ -61,7 +61,6 @@ public class RisFieldUtil {
                 replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase().trim();
     }
 
-
     public void processField(final RisDataset dataset,
                              final RisField field,
                              final Publication publication,
@@ -70,9 +69,17 @@ public class RisFieldUtil {
         final List<String> values = dataset.getValues().get(field);
         if ((values != null) && !values.isEmpty()) {
             if (!pretend) {
-                publication.set(targetField, values.get(0));
+                if ((values.get(0) != null) && values.get(0).length() < 4096) {
+                    publication.set(targetField, values.get(0));
+                } else {
+                    publication.set(targetField, values.get(0).substring(0, 4096));
+                }
             }
-            report.addField(new FieldImportReport(targetField, values.get(0)));
+            if ((values.get(0) != null) && values.get(0).length() < 4096) {
+                report.addField(new FieldImportReport(targetField, values.get(0)));
+            } else {
+                report.addField(new FieldImportReport(targetField, values.get(0).substring(0, 4096)));
+            }
         }
     }
 
@@ -147,11 +154,16 @@ public class RisFieldUtil {
         }
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public void processPages(final RisDataset dataset,
                              final RisField field,
                              final Publication publication,
                              final PublicationImportReport report) {
         final List<String> values = dataset.getValues().get(field);
+        if ((values == null) || values.isEmpty()) {
+            return;
+        }
+
         final String pages = values.get(0);
         final String[] tokens = pages.split("-");
         if (tokens.length == 2) {
@@ -183,6 +195,27 @@ public class RisFieldUtil {
             report.addMessage(String.format("Failed to parse pages value in dataset starting at line %d. "
                                             + "Invalid format", dataset.getFirstLine()));
         }
+    }
+
+    public void processIsbn(final RisDataset dataset,
+                            final RisField field,
+                            final Publication publication,
+                            final PublicationImportReport report) {
+        final List<String> values = dataset.getValues().get(field);
+        if ((values == null) || values.isEmpty()) {
+            return;
+        }
+
+        String isbn = values.get(0);
+        isbn = isbn.replace("-", "");
+        if (isbn.length() > 17) {
+            isbn = isbn.substring(0, 17);
+        }
+
+        if (!pretend) {
+            publication.set("isbn", isbn);
+        }
+        report.addField(new FieldImportReport("ISBN", isbn));
     }
 
 }

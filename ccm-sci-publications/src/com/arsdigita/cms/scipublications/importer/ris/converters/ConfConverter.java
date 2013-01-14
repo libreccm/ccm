@@ -19,7 +19,7 @@ import com.arsdigita.kernel.Kernel;
  * @version $Id$
  */
 public class ConfConverter extends AbstractRisConverter<Proceedings, ProceedingsBundle> {
-   
+
     @Override
     protected Proceedings createPublication(final boolean pretend) {
         if (pretend) {
@@ -65,7 +65,7 @@ public class ConfConverter extends AbstractRisConverter<Proceedings, Proceedings
         fieldUtil.processDateField(dataset, RisField.DA, publication, "dateFromOfConference", importReport);
         fieldUtil.processField(dataset, RisField.ET, publication, "edition", importReport);
         fieldUtil.processIntField(dataset, RisField.NV, publication, "numberOfVolumes", importReport);
-        fieldUtil.processField(dataset, RisField.SN, publication, "isbn", importReport);
+        fieldUtil.processIsbn(dataset, RisField.SN, publication, importReport);
         fieldUtil.processIntField(dataset, RisField.SP, publication, "numberOfPages", importReport);
         fieldUtil.processField(dataset, RisField.T2, publication, "nameOfConference", importReport);
         fieldUtil.processIntField(dataset, RisField.VL, publication, "volume", importReport);

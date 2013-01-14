@@ -13,6 +13,7 @@ import java.util.List;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
+@SuppressWarnings("PMD.CyclomaticComplexity")
 public class RisParser {
 
     public RisParser() {
@@ -26,6 +27,11 @@ public class RisParser {
 
         RisFieldValue field;
         for (int i = 0; i < lines.length; i++) {
+
+            if ((lines[i] == null) || lines[i].isEmpty()) {
+                continue;
+            }
+
             field = parseRisLine(lines[i], i);
 
             if (RisField.TY.equals(field.getName())) {
@@ -43,10 +49,10 @@ public class RisParser {
                 }
             } else if (RisField.ER.equals(field.getName())) {
                 openDataset = false;
-            } else if(field.getName() == null) {
+            } else if (field.getName() == null) {
                 final RisDataset currentDataset = entries.get(entries.size() - 1);
                 final List<String> data = currentDataset.getValues().get(lastField);
-                data.set(data.size() - 1, data.get(data.size() - 1) + field.getValue());                                                
+                data.set(data.size() - 1, data.get(data.size() - 1) + field.getValue());
             } else {
                 final RisDataset currentDataset = entries.get(entries.size() - 1);
                 if (currentDataset.getValues().get(field.getName()) == null) {
@@ -70,7 +76,7 @@ public class RisParser {
     }
 
     private RisFieldValue parseRisLine(final String line, final int index) throws SciPublicationsImportException {
-        final String[] tokens = line.split("  - ");
+        final String[] tokens = skipBom(line).split("  - ");
 
         if (tokens.length == 2) {
             final RisField fieldName;
@@ -86,6 +92,28 @@ public class RisParser {
             return new RisFieldValue(RisField.ER, "");
         } else {
             return new RisFieldValue(null, line);
+        }
+    }
+
+    /**
+     * Skip possible UTF-8 BOM 
+     * 
+     * @param str
+     * @return 
+     */
+    private String skipBom(final String str) {
+        if ((str == null) || str.isEmpty()) {
+            return null;
+        }
+
+        final char firstChar = str.charAt(0);
+
+
+        // Hex value of BOM = EF BB BF  => int 65279        
+        if (firstChar == 65279) {
+            return str.substring(1);
+        } else {
+            return str;
         }
     }
 
