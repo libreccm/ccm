@@ -19,6 +19,11 @@ public interface BibTeXConverter<T extends Publication, B extends PublicationBun
     
     B createBundle(T publication, boolean pretend);
     
+    void processTitle(final BibTeXEntry bibTeXEntry,
+                      final T publication,
+                      final PublicationImportReport importReport,
+                      final boolean pretend);
+    
     void processFields(final BibTeXEntry bibTeXEntry,
                        final T publication,
                        final ImporterUtil importerUtil,
