@@ -1,0 +1,13 @@
+com.arsdigita.cms.scipublications.importer.bibtex.converters.ArticleConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.BookConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.BookletConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.InBookConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.InCollectionConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.InProceedingsConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.ManualConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.MasterThesisConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.MiscConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.PhdThesisConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.ProceedingsConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.TechReportConverter
+com.arsdigita.cms.scipublications.importer.bibtex.converters.UnPublishedConverter
