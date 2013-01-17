@@ -48,6 +48,8 @@ public class BookletConverter implements BibTeXConverter<Monograph, PublicationW
                               final boolean pretend) {
         final BibTeXUtil bibTeXUtil = new BibTeXUtil(importerUtil);
         final Key pubKey = bibTeXEntry.getKey();
+        
+        importReport.setType(Monograph.class.getName());
 
         bibTeXUtil.processAuthors(pubKey,
                                   bibTeXEntry.getField(BibTeXEntry.KEY_AUTHOR),

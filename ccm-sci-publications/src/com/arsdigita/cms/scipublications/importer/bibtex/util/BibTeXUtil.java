@@ -7,6 +7,7 @@ import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.UnPublished;
+import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
 import com.arsdigita.cms.scipublications.importer.report.FieldImportReport;
 import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport;
 import com.arsdigita.cms.scipublications.importer.util.AuthorData;
@@ -108,7 +109,10 @@ public class BibTeXUtil {
             final List<Author> authorList = authorListParser.parse(toPlainString(authors));
 
             for (Author author : authorList) {
-                importerUtil.processAuthor(publication, createAuthorData(author, editors), pretend);
+                final AuthorImportReport authorReport = importerUtil.processAuthor(publication,
+                                                                                   createAuthorData(author, editors),
+                                                                                   pretend);
+                importReport.addAuthor(authorReport);
             }
 
         } catch (IOException ex) {
@@ -144,9 +148,15 @@ public class BibTeXUtil {
 
         try {
             if (address == null) {
-                importerUtil.processPublisher(publication, "", toPlainString(publisher), pretend);
+                importReport.setPublisher(importerUtil.processPublisher(publication,
+                                                                        "",
+                                                                        toPlainString(publisher),
+                                                                        pretend));
             } else {
-                importerUtil.processPublisher(publication, toPlainString(address), toPlainString(publisher), pretend);
+                importReport.setPublisher(importerUtil.processPublisher(publication,
+                                                                        toPlainString(address),
+                                                                        toPlainString(publisher),
+                                                                        pretend));
             }
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse publisher for publication '%s'.", pubKey.getValue()),
@@ -157,7 +167,7 @@ public class BibTeXUtil {
                             ex,
                             importReport);
         }
-    }       
+    }
 
     public void processSeries(final Key pubKey,
                               final Value series,
@@ -169,7 +179,7 @@ public class BibTeXUtil {
         }
 
         try {
-            importerUtil.processSeries(publication, toPlainString(series), pretend);
+            importReport.setSeries(importerUtil.processSeries(publication, toPlainString(series), pretend));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse series for publication '%s'.", pubKey.getValue()),
                             ex,
@@ -190,7 +200,7 @@ public class BibTeXUtil {
             return;
         }
         try {
-            importerUtil.processJournal(article, toPlainString(journal), pretend);
+            importReport.setJournal(importerUtil.processJournal(article, toPlainString(journal), pretend));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse journal for article '%s'.", pubKey.getValue()),
                             ex,
@@ -226,14 +236,14 @@ public class BibTeXUtil {
                 authorData.add(createAuthorData(author, false));
             }
 
-            importerUtil.processCollectedVolume(article,
-                                                toPlainString(collectedVolume),
-                                                toPlainString(yearValue),
-                                                authorData,
-                                                toPlainString(publisherValue),
-                                                toPlainString(addressValue),
-                                                toPlainString(editonValue),
-                                                pretend);
+            importReport.setCollectedVolume(importerUtil.processCollectedVolume(article,
+                                                                                toPlainString(collectedVolume),
+                                                                                toPlainString(yearValue),
+                                                                                authorData,
+                                                                                toPlainString(publisherValue),
+                                                                                toPlainString(addressValue),
+                                                                                toPlainString(editonValue),
+                                                                                pretend));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse collected volume for article '%s'.",
                                           bibTeXEntry.getKey().getValue()),
@@ -270,14 +280,14 @@ public class BibTeXUtil {
                 authorData.add(createAuthorData(author, false));
             }
 
-            importerUtil.processProceedings(inProceedings,
-                                            toPlainString(proceedings),
-                                            toPlainString(yearValue),
-                                            "",
-                                            authorData,
-                                            toPlainString(publisherValue),
-                                            toPlainString(addressValue),
-                                            pretend);
+            importReport.setProceedings(importerUtil.processProceedings(inProceedings,
+                                                                        toPlainString(proceedings),
+                                                                        toPlainString(yearValue),
+                                                                        "",
+                                                                        authorData,
+                                                                        toPlainString(publisherValue),
+                                                                        toPlainString(addressValue),
+                                                                        pretend));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse proceedings for in proceedings '%s'.",
                                           bibTeXEntry.getKey().getValue()),
@@ -301,7 +311,9 @@ public class BibTeXUtil {
             return;
         }
         try {
-            importerUtil.processOrganization(publication, toPlainString(organization), pretend);
+            importReport.addOrgaUnit(importerUtil.processOrganization(publication,
+                                                                      toPlainString(organization),
+                                                                      pretend));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse organization for publication '%s'.", pubKey.getValue()),
                             ex,
@@ -323,7 +335,7 @@ public class BibTeXUtil {
             return;
         }
         try {
-            importerUtil.processOrganization(article, toPlainString(organization), pretend);
+            importReport.addOrgaUnit(importerUtil.processOrganization(article, toPlainString(organization), pretend));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse organization for publication '%s'.", pubKey.getValue()),
                             ex,
@@ -401,8 +413,11 @@ public class BibTeXUtil {
         try {
             final String str = toPlainString(value);
             final int intValue = Integer.parseInt(str);
-            publication.set(target, intValue);
 
+            if (!pretend) {
+                publication.set(target, intValue);
+            }
+            importReport.addField(new FieldImportReport(target, str));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse field '%s' for publication '%s'.",
                                           pubKey.getValue(),
@@ -437,7 +452,10 @@ public class BibTeXUtil {
         }
 
         try {
-            publication.set(target, toPlainString(value));
+            if (!pretend) {
+                publication.set(target, toPlainString(value));
+            }
+            importReport.addField(new FieldImportReport(target, toPlainString(value)));
         } catch (IOException ex) {
             addExceptionMsg(String.format("Failed to parse value of field '%s' for publication '%s'.",
                                           pubKey.getValue(),

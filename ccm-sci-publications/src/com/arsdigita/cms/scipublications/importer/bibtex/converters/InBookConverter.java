@@ -49,6 +49,8 @@ public class InBookConverter implements BibTeXConverter<ArticleInCollectedVolume
                               final boolean pretend) {
         final BibTeXUtil bibTeXUtil = new BibTeXUtil(importerUtil);
         final Key pubKey = bibTeXEntry.getKey();
+        
+        importReport.setType(ArticleInCollectedVolume.class.getName());
 
         bibTeXUtil.processAuthors(pubKey,
                                   bibTeXEntry.getField(BibTeXEntry.KEY_AUTHOR),

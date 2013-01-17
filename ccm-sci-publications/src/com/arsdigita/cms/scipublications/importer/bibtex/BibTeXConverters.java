@@ -57,7 +57,7 @@ public class BibTeXConverters {
         final PublicationImportReport report = new PublicationImportReport();
 
         BibTeXConverter<Publication, PublicationBundle> converter = converters.get(bibTeXEntry.
-                getType().getValue());
+                getType().getValue().toLowerCase());
 
         if (converter == null) {
             report.addMessage(String.format("No converter for BibTeX type '%s' available. Publication '%s' has not"
@@ -97,8 +97,7 @@ public class BibTeXConverters {
         if (!pretend) {
             publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
         }
-        final PublicationBundle bundle = converter.createBundle(publication, pretend);
-        report.setType(publication.BASE_DATA_OBJECT_TYPE);
+        final PublicationBundle bundle = converter.createBundle(publication, pretend);        
 
         converter.processFields(bibTeXEntry, publication, importerUtil, report, pretend);
 

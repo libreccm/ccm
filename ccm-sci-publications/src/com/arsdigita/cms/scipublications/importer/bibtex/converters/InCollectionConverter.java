@@ -50,6 +50,8 @@ public class InCollectionConverter implements BibTeXConverter<ArticleInCollected
         final BibTeXUtil bibTeXUtil = new BibTeXUtil(importerUtil);
         final Key pubKey = bibTeXEntry.getKey();
 
+        importReport.setType(ArticleInCollectedVolume.class.getName());
+        
         bibTeXUtil.processAuthors(pubKey,
                                   bibTeXEntry.getField(BibTeXEntry.KEY_AUTHOR),
                                   publication,

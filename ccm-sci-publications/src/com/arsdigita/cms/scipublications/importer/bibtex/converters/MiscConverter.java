@@ -48,6 +48,8 @@ public class MiscConverter implements BibTeXConverter<GreyLiterature, UnPublishe
                               final boolean pretend) {
         final BibTeXUtil bibTeXUtil = new BibTeXUtil(importerUtil);
         final Key pubKey = bibTeXEntry.getKey();
+        
+        importReport.setType(GreyLiterature.class.getName());
 
         bibTeXUtil.processIntField(pubKey,
                                    BibTeXEntry.KEY_YEAR,

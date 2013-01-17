@@ -49,6 +49,8 @@ public class MasterThesisConverter implements BibTeXConverter<GreyLiterature, Un
                               final boolean pretend) {
         final BibTeXUtil bibTeXUtil = new BibTeXUtil(importerUtil);
         final Key pubKey = bibTeXEntry.getKey();
+        
+        importReport.setType(GreyLiterature.class.getName());
 
         bibTeXUtil.processAuthors(pubKey,
                                   bibTeXEntry.getField(BibTeXEntry.KEY_AUTHOR),

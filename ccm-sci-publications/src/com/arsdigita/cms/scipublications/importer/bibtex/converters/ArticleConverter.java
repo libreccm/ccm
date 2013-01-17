@@ -48,6 +48,8 @@ public class ArticleConverter implements BibTeXConverter<ArticleInJournal, Artic
                               final boolean pretend) {
         final BibTeXUtil bibTeXUtil = new BibTeXUtil(importerUtil);
         final Key pubKey = bibTeXEntry.getKey();
+        
+        importReport.setType(ArticleInJournal.class.getName());
 
         bibTeXUtil.processAuthors(pubKey,
                                   bibTeXEntry.getField(BibTeXEntry.KEY_AUTHOR),

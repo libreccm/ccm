@@ -41,24 +41,16 @@ public class AuthorListParser {
             parseLastName(nameTokens[0], author);
         } else if (nameTokens.length == 1) {
             final String[] nameParts = nameTokens[0].split(" ");
-
             if (nameParts.length == 1) {
-                author.setLast(nameParts[0]);
-
-                return;
+                author.setLast(nameParts[0]);               
             } else if (nameParts.length == 2) {
                 author.setFirst(nameParts[0]);
                 author.setLast(nameParts[1]);
-
-                return;
             } else if (nameParts.length >= 3) {
                 author.setFirst(nameParts[0]);
                 author.setPreLast(nameParts[1]);
                 author.setLast(nameParts[2]);
-
-                return;
             }
-
         }
 
         authorList.add(author);

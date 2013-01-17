@@ -49,6 +49,8 @@ public class ProceedingsConverter implements BibTeXConverter<Proceedings, Procee
         final BibTeXUtil bibTeXUtil = new BibTeXUtil(importerUtil);
         final Key pubKey = bibTeXEntry.getKey();
 
+        importReport.setType(Proceedings.class.getName());
+        
         bibTeXUtil.processAuthors(pubKey,
                                   bibTeXEntry.getField(BibTeXEntry.KEY_EDITOR),
                                   publication,
