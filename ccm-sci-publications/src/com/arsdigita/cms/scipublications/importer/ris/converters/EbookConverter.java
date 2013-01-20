@@ -28,7 +28,7 @@ public class EbookConverter extends AbstractRisConverter<Monograph, PublicationW
             return new Monograph();
         }
     }
-    
+
     @Override
     protected String getTypeName() {
         return Monograph.class.getName();
@@ -37,7 +37,11 @@ public class EbookConverter extends AbstractRisConverter<Monograph, PublicationW
     @Override
     protected PublicationWithPublisherBundle createBundle(final Monograph publication,
                                                           final boolean pretend) {
-        return new PublicationWithPublisherBundle(publication);
+        if (pretend) {
+            return null;
+        } else {
+            return new PublicationWithPublisherBundle(publication);
+        }
     }
 
     @Override

@@ -11,7 +11,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldU
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import java.util.List;
 
 /**
  *
