@@ -67,7 +67,7 @@ public class RisImporter implements SciPublicationsImporter {
                 processPublication(dataset, report, importerUtil, pretend, publishNewItems);
             }
         } catch (Exception ex) {
-            ex.printStackTrace(System.out);
+            ex.printStackTrace(System.err);
         }
 
         return report;

@@ -27,6 +27,11 @@ public class EjourConverter extends AbstractRisConverter<ArticleInJournal, Artic
             return new ArticleInJournal();
         }
     }
+    
+    @Override
+    protected String getTypeName() {
+        return ArticleInJournal.class.getName();
+    }
 
     @Override
     protected ArticleInJournalBundle createBundle(final ArticleInJournal publication,
@@ -60,7 +65,7 @@ public class EjourConverter extends AbstractRisConverter<ArticleInJournal, Artic
 
         fieldUtil.processPages(dataset, RisField.SP, publication, importReport);
 
-        fieldUtil.processField(dataset, RisField.VL, publication, "volume", importReport);
+        fieldUtil.processIntField(dataset, RisField.VL, publication, "volume", importReport);
     }
 
     public RisType getRisType() {

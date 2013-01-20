@@ -28,6 +28,11 @@ public class ElecConverter extends AbstractRisConverter<InternetArticle, Interne
     }
 
     @Override
+    protected String getTypeName() {
+        return InternetArticle.class.getName();
+    }
+    
+    @Override
     protected InternetArticleBundle createBundle(final InternetArticle publication, final boolean pretend) {
         if (pretend) {
             return null;

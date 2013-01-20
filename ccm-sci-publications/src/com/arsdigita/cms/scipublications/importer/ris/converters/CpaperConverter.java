@@ -28,6 +28,11 @@ public class CpaperConverter extends AbstractRisConverter<InProceedings, InProce
     }
 
     @Override
+    protected String getTypeName() {
+        return InProceedings.class.getName();
+    }
+    
+    @Override
     protected InProceedingsBundle createBundle(final InProceedings publication,
                                                final boolean pretend) {
         if (pretend) {

@@ -28,6 +28,11 @@ public class EbookConverter extends AbstractRisConverter<Monograph, PublicationW
             return new Monograph();
         }
     }
+    
+    @Override
+    protected String getTypeName() {
+        return Monograph.class.getName();
+    }
 
     @Override
     protected PublicationWithPublisherBundle createBundle(final Monograph publication,

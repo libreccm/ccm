@@ -17,6 +17,8 @@ public interface BibTeXConverter<T extends Publication, B extends PublicationBun
 
     T createPublication(boolean pretend);
     
+    String getTypeName();
+    
     B createBundle(T publication, boolean pretend);
     
     void processTitle(final BibTeXEntry bibTeXEntry,

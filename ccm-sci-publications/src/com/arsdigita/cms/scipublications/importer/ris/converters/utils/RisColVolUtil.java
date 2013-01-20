@@ -36,11 +36,11 @@ public class RisColVolUtil {
                                        final RisField cvEditionField,
                                        final ArticleInCollectedVolume article,
                                        final PublicationImportReport report) {
-        final List<String> colVolTitle = dataset.getValues().get(cvTitleField);
-        final List<String> colVolYear = dataset.getValues().get(cvYearField);
-        final List<String> colVolPlace = dataset.getValues().get(cvPlaceField);
-        final List<String> colVolPublisher = dataset.getValues().get(cvPublisherField);
-        final List<String> colVolEdition = dataset.getValues().get(cvEditionField);
+        final List<String> colVolTitleValue = dataset.getValues().get(cvTitleField);
+        final List<String> colVolYearValue = dataset.getValues().get(cvYearField);
+        final List<String> colVolPlaceValue = dataset.getValues().get(cvPlaceField);
+        final List<String> colVolPublisherValue = dataset.getValues().get(cvPublisherField);
+        final List<String> colVolEditionValue = dataset.getValues().get(cvEditionField);
 
         final List<String> colVolEditors = dataset.getValues().get(cvEditorsField);
         final List<AuthorData> colVolEditorData = new ArrayList<AuthorData>();
@@ -53,14 +53,37 @@ public class RisColVolUtil {
             }
         }
 
-        if ((colVolTitle != null) && !colVolTitle.isEmpty()) {
+        if ((colVolTitleValue != null) && !colVolTitleValue.isEmpty()) {
+            final String colVolTitle = colVolTitleValue.get(0);
+            final String colVolYear = colVolYearValue.get(0);
+            final String colVolPlace;
+            final String colVolPublisher;
+            final String colVolEdition;
+            
+            if ((colVolPlaceValue == null) || colVolPlaceValue.isEmpty()) {
+                colVolPlace = "";
+            } else {
+                colVolPlace = colVolPlaceValue.get(0);
+            }
+            if ((colVolPublisherValue == null) || colVolPublisherValue.isEmpty()) {
+                colVolPublisher = "";
+            } else {
+                colVolPublisher = colVolPublisherValue.get(0);
+            }
+            if ((colVolEditionValue == null) || colVolEditionValue.isEmpty()) {
+                colVolEdition = "";
+            } else {
+                colVolEdition = colVolEditionValue.get(0);
+            }
+            
+            
             final CollectedVolumeImportReport colVolReport = importerUtil.processCollectedVolume(article,
-                                                                                                 colVolTitle.get(0),
-                                                                                                 colVolYear.get(0),
+                                                                                                 colVolTitle,
+                                                                                                 colVolYear,
                                                                                                  colVolEditorData,
-                                                                                                 colVolPublisher.get(0),
-                                                                                                 colVolPlace.get(0),
-                                                                                                 colVolEdition.get(0),
+                                                                                                 colVolPublisher,
+                                                                                                 colVolPlace,
+                                                                                                 colVolEdition,
                                                                                                  pretend);
             report.setCollectedVolume(colVolReport);
         }

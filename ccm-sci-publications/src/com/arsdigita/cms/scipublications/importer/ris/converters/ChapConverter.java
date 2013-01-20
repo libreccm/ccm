@@ -27,6 +27,11 @@ public class ChapConverter extends AbstractRisConverter<ArticleInCollectedVolume
             return new ArticleInCollectedVolume();
         }
     }
+    
+    @Override
+    protected String getTypeName() {
+        return ArticleInCollectedVolume.class.getName();
+    }
 
     @Override
     protected ArticleInCollectedVolumeBundle createBundle(final ArticleInCollectedVolume publication,

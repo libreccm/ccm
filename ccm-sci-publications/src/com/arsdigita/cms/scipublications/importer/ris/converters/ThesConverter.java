@@ -10,7 +10,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisAuthor
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -28,6 +27,11 @@ public class ThesConverter extends AbstractRisConverter<GreyLiterature, UnPublis
         }
     }
 
+    @Override
+    protected String getTypeName() {
+        return GreyLiterature.class.getName();
+    }
+    
     @Override
     protected UnPublishedBundle createBundle(final GreyLiterature publication, final boolean pretend) {
         if (pretend) {

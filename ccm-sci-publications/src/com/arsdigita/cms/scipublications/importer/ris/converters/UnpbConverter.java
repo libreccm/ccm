@@ -11,6 +11,7 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldU
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
+import java.util.List;
 
 /**
  *
@@ -27,6 +28,11 @@ public class UnpbConverter extends AbstractRisConverter<GreyLiterature, UnPublis
             return new GreyLiterature();
         }
     }
+    
+    @Override
+    public String getTypeName() {
+        return GreyLiterature.class.getName();
+    }
 
     @Override
     protected UnPublishedBundle createBundle(final GreyLiterature publication,
@@ -37,7 +43,7 @@ public class UnpbConverter extends AbstractRisConverter<GreyLiterature, UnPublis
             return new UnPublishedBundle(publication);
         }
     }
-
+    
     @Override
     protected void processFields(final RisDataset dataset,
                                  final GreyLiterature publication,

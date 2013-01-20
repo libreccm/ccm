@@ -25,6 +25,10 @@ public class PhdThesisConverter implements BibTeXConverter<Monograph, Publicatio
         }
     }
 
+    public String getTypeName() {
+        return Monograph.class.getName();
+    }
+    
     public PublicationWithPublisherBundle createBundle(final Monograph publication, final boolean pretend) {
         if (pretend) {
             return null;

@@ -26,6 +26,11 @@ public class EdbookConverter extends AbstractRisConverter<CollectedVolume, Colle
             return new CollectedVolume();
         }
     }
+    
+    @Override
+    protected String getTypeName() {
+        return CollectedVolume.class.getName();
+    }
 
     @Override
     protected CollectedVolumeBundle createBundle(final CollectedVolume publication,

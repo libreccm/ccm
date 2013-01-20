@@ -25,6 +25,10 @@ public class TechReportConverter implements BibTeXConverter<GreyLiterature, UnPu
             return new GreyLiterature();
         }
     }
+    
+    public String getTypeName() {
+        return GreyLiterature.class.getName();
+    }
 
     public UnPublishedBundle createBundle(final GreyLiterature publication, final boolean pretend) {
         if (pretend) {

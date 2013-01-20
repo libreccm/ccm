@@ -25,6 +25,10 @@ public class ManualConverter implements BibTeXConverter<Monograph, PublicationWi
             return new Monograph();
         }
     }
+    
+    public String getTypeName() {
+        return Monograph.class.getName();
+    }
 
     public PublicationWithPublisherBundle createBundle(final Monograph publication, final boolean pretend) {
         if (pretend) {

@@ -24,6 +24,10 @@ public class InCollectionConverter implements BibTeXConverter<ArticleInCollected
             return new ArticleInCollectedVolume();
         }
     }
+    
+    public String getTypeName() {
+        return ArticleInCollectedVolume.class.getName();
+    }
 
     public ArticleInCollectedVolumeBundle createBundle(final ArticleInCollectedVolume publication,
                                                        final boolean pretend) {

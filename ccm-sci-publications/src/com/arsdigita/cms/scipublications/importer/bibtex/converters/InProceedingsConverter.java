@@ -24,6 +24,10 @@ public class InProceedingsConverter implements BibTeXConverter<InProceedings, In
             return new InProceedings();
         }
     }
+    
+    public String getTypeName() {
+        return InProceedings.class.getName();
+    }
 
     public InProceedingsBundle createBundle(final InProceedings publication, final boolean pretend) {
         if (pretend) {

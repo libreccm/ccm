@@ -11,7 +11,6 @@ import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisFieldU
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisOrgaUtil;
 import com.arsdigita.cms.scipublications.importer.ris.converters.utils.RisSeriesUtil;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -29,6 +28,11 @@ public class ConfConverter extends AbstractRisConverter<Proceedings, Proceedings
         }
     }
 
+    @Override
+    protected String getTypeName() {
+        return Proceedings.class.getName();
+    }
+    
     @Override
     protected ProceedingsBundle createBundle(final Proceedings publication, final boolean pretend) {
         if (pretend) {
@@ -51,7 +55,7 @@ public class ConfConverter extends AbstractRisConverter<Proceedings, Proceedings
 
         fieldUtil.processTitle(dataset, publication, importReport);
 
-        fieldUtil.processIntField(dataset, RisField.C2, publication, "yearPublication", importReport);
+        fieldUtil.processIntField(dataset, RisField.C2, publication, "yearOfPublication", importReport);
 
         authorUtil.processAuthors(dataset, RisField.AU, publication, importReport);
         authorUtil.processEditors(dataset, RisField.A2, publication, importReport);

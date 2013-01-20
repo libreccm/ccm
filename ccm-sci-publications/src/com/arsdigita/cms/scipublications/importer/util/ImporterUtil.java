@@ -215,7 +215,13 @@ public class ImporterUtil {
         final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(CollectedVolume.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter("title", title);
-        collection.addEqualsFilter("yearOfPublication", year);
+        int yearOfPublication;
+        try {
+            yearOfPublication = Integer.parseInt(year);
+        } catch(NumberFormatException ex) {
+            yearOfPublication = 0;
+        }
+        collection.addEqualsFilter("yearOfPublication", yearOfPublication);
         report.setCollectedVolumeTitle(title);
         if (collection.isEmpty()) {
             if (!pretend) {

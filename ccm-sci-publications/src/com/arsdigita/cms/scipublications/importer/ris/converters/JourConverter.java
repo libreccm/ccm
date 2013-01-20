@@ -28,6 +28,11 @@ public class JourConverter extends AbstractRisConverter<ArticleInJournal, Articl
     }
 
     @Override
+    protected String getTypeName() {
+        return ArticleInJournal.class.getName();
+    }
+    
+    @Override
     protected ArticleInJournalBundle createBundle(final ArticleInJournal publication, final boolean pretend) {
         if (pretend) {
             return null;

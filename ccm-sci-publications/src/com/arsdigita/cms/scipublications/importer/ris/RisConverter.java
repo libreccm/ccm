@@ -28,7 +28,7 @@ public interface RisConverter {
                                     ImporterUtil importerUtil, 
                                     boolean pretend, 
                                     boolean publishNewItems);
-    
+            
     /**
      * 
      * @return The RIS type supported by the converter implementation.

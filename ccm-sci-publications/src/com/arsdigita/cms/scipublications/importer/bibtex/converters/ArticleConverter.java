@@ -24,6 +24,10 @@ public class ArticleConverter implements BibTeXConverter<ArticleInJournal, Artic
             return new ArticleInJournal();
         }
     }
+    
+    public String getTypeName() {
+        return ArticleInJournal.class.getName();
+    }
 
     public ArticleInJournalBundle createBundle(final ArticleInJournal publication, final boolean pretend) {
         if (pretend) {

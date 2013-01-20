@@ -28,11 +28,15 @@ public class RisParser {
         RisFieldValue field;
         for (int i = 0; i < lines.length; i++) {
 
-            if ((lines[i] == null) || lines[i].isEmpty()) {
+            if ((lines[i] == null) || (skipBom(lines[i]) == null) || skipBom(lines[i]).isEmpty()) {
                 continue;
             }
 
             field = parseRisLine(lines[i], i);
+            
+            if (field == null) {
+                continue;
+            }
 
             if (RisField.TY.equals(field.getName())) {
                 if (openDataset) {
@@ -83,8 +87,10 @@ public class RisParser {
             try {
                 fieldName = RisField.valueOf(tokens[0]);
             } catch (IllegalArgumentException ex) {
-                throw new SciPublicationsImportException(String.format("Unkwown tag '%s' in line %d. Aborting import.",
-                                                                       tokens[0], index + 1), ex);
+//                throw new SciPublicationsImportException(String.format("Unkwown tag '%s' in line %d. Aborting import.",
+//                                                                       tokens[0], index + 1), ex);
+                //Ignore unknown none standard fields
+                return null;
             }
 
             return new RisFieldValue(fieldName, tokens[1]);

@@ -28,6 +28,11 @@ public class GenConverter extends AbstractRisConverter<Monograph, PublicationWit
             return new Monograph();
         }
     }
+    
+    @Override
+    protected String getTypeName() {
+        return Monograph.class.getName();
+    }
 
     @Override
     protected PublicationWithPublisherBundle createBundle(final Monograph publication, final boolean pretend) {

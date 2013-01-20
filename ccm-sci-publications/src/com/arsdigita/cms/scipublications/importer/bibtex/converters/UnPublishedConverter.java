@@ -25,6 +25,10 @@ public class UnPublishedConverter implements BibTeXConverter<GreyLiterature, UnP
         }
     }
 
+    public String getTypeName() {
+        return GreyLiterature.class.getName();
+    }
+    
     public UnPublishedBundle createBundle(final GreyLiterature publication, final boolean pretend) {
         if (pretend) {
             return null;

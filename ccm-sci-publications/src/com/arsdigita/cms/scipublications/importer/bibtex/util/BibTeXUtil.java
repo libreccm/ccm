@@ -467,7 +467,7 @@ public class BibTeXUtil {
         }
     }
 
-    private String toPlainString(final Value value) throws IOException, ParseException {
+    public String toPlainString(final Value value) throws IOException, ParseException {
         return toPlainString(value.toUserString());
     }
 

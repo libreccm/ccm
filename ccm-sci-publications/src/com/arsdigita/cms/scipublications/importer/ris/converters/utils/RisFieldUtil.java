@@ -24,11 +24,9 @@ public class RisFieldUtil {
     }
 
     @SuppressWarnings("PMD.ConfusingTernary")
-    public void processTitle(final RisDataset dataset,
-                             final Publication publication,
-                             final PublicationImportReport report) {
+    public String getTitle(final RisDataset dataset) {
         final String title;
-
+                
         if ((dataset.getValues().get(RisField.TI) != null) && !dataset.getValues().get(RisField.TI).isEmpty()) {
             title = dataset.getValues().get(RisField.TI).get(0);
         } else if ((dataset.getValues().get(RisField.BT) != null) && !dataset.getValues().get(RisField.BT).isEmpty()) {
@@ -36,6 +34,15 @@ public class RisFieldUtil {
         } else {
             title = "Unknown";
         }
+        
+        return title;
+    }
+    
+    
+    public void processTitle(final RisDataset dataset,
+                             final Publication publication,
+                             final PublicationImportReport report) {
+        final String title = getTitle(dataset);        
 
         if (!pretend) {
             publication.setTitle(title);

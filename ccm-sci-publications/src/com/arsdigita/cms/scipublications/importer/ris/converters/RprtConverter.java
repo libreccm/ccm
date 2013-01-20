@@ -29,6 +29,11 @@ public class RprtConverter extends AbstractRisConverter<GreyLiterature, UnPublis
     }
 
     @Override
+    public String getTypeName() {
+        return GreyLiterature.class.getName();
+    }
+    
+    @Override
     protected UnPublishedBundle createBundle(final GreyLiterature publication,
                                              final boolean pretend) {
         if (pretend) {
