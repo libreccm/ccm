@@ -19,7 +19,6 @@
 package com.arsdigita.portalserver.pslogin;
 
 // import com.arsdigita.ui.login.SubsiteDispatcher;   DELETED!
-import com.arsdigita.kernel.security.Initializer;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.page.BebopMapDispatcher;
 import java.util.Map;
@@ -30,6 +29,8 @@ import java.util.Map;
 //  Uses methods in c.ad.kernel.security.Initializer which have been modified
 //  and moved to ui
 //
+//  And used to use com.arsdigita.ui.login.SubsiteDispatcher which is deleted.
+//
 //  CURRENTLY NOT WORKING
 //
 // /////////////////////////////////////////////////////////////////////////////
@@ -39,7 +40,13 @@ import java.util.Map;
  * This class extends com.arsdigita.ui.login.SubsiteDispatcher
  * It changes the subsite dispatcher behavior by
  * directing logged-in users to a personal portal
- * rather than the default system portal
+ * rather than the default system portal.
+ * 
+ * NOTE: Comment outdated! SubsiteDispatcher no longer exists. Logged in users
+ * are now redirected using a web.UI function. Class has to adjusted. 
+ * Specifically it may not be needed anymore, because the current redirection
+ * mechanism works without it at all.
+ * 
  * @author <a href="mailto:bryanche@arsdigita.com">Bryan Che</a>
  **/
 // public class PSSubsiteDispatcher extends SubsiteDispatcher {

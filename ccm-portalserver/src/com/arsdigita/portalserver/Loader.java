@@ -136,18 +136,6 @@ public class Loader extends PackageLoader {
      */
     private void loadPortalSiteApplicationType() {
 
-        /* First try: create a new style, legacy compatible application      */
-
-    //  ApplicationType type = ApplicationType.createApplicationType(
-    //                                        "portalsite",
-    //                                        "Portal Site",
-    //                                        PortalSite.BASE_DATA_OBJECT_TYPE);
-        // Current code requires an apps specific dispatcher class. Has to be
-        // modified to be able to create a legacy free app type.
-    //  type.setDispatcherClass
-    //          ("com.arsdigita.portalserver.ui.PortalDispatcher");
-
-        // Try: new style legacy free application
         ApplicationType type = new 
                                ApplicationType("Portal Site",  // title
                                                PortalSite.BASE_DATA_OBJECT_TYPE );
@@ -251,7 +239,14 @@ public class Loader extends PackageLoader {
     //    FORMERLY        ui.admin.Initializer
     /**
      * Creates a PortalCreator, another of the domain classes of the portalserver
-     * package, ApplicationType as a legacy-comp type of application type.
+     * package, ApplicationType as a legacy free type of application type.
+     * 
+     * NOTE: The wording in the title parameter of ApplicationType determines
+     * the name of the subdirectory for the XSL stylesheets.
+     * It gets "urlized", i.e. trimming leading and trailing blanks and replacing
+     * blanks between words and illegal characters with an hyphen and converted
+     * to lower case.
+     * Example: "Portal Creator" will become "portal-creator".
      *
      */
     private void loadPortalCreatorApplicationType() {

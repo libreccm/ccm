@@ -43,7 +43,7 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.simplesurvey.Survey;
 
 import com.arsdigita.simplesurvey.util.GlobalizationUtil;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import java.math.BigDecimal;
 
@@ -94,8 +94,9 @@ public class ResultsPane extends SimpleContainer {
             };
         
         m_user = new RequestLocal() {
+                @Override
                 public Object initialValue(PageState ps) {
-                    User user = KernelHelper.getCurrentUser(ps.getRequest());
+                    User user = (User)Kernel.getContext().getParty();
                     return user;
                 }
             };

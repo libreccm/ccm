@@ -19,39 +19,33 @@
 package com.arsdigita.simplesurvey.ui;
 
 
+import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
-
+import com.arsdigita.bebop.parameters.ParameterData;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.formbuilder.PersistentComponent;
 import com.arsdigita.formbuilder.PersistentForm;
 import com.arsdigita.formbuilder.PersistentLabel;
 import com.arsdigita.formbuilder.PersistentWidget;
-
-import com.arsdigita.kernel.KernelHelper;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.persistence.OID;
-import java.util.Map;
-import java.util.HashMap;
-import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.RequestLocal;
-
-import com.arsdigita.simplesurvey.Survey;
-import com.arsdigita.simplesurvey.Response;
-import com.arsdigita.bebop.RequestLocal;
-import com.arsdigita.simplesurvey.ui.Question;
-import com.arsdigita.bebop.parameters.ParameterData;
+import com.arsdigita.formbuilder.util.FormBuilderUtil;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataOperation;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
-import java.util.Iterator;
-
-import com.arsdigita.formbuilder.util.FormBuilderUtil;
-
-import com.arsdigita.kernel.User;
+import com.arsdigita.simplesurvey.Response;
+import com.arsdigita.simplesurvey.Survey;
 
 import java.math.BigDecimal;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -108,7 +102,7 @@ public class SurveyProcessListener
         m_persistentForm.set(ps, survey.getForm());
 
         // Get the responding user
-        User user = KernelHelper.getCurrentUser(ps.getRequest());
+        User user = (User)Kernel.getContext().getParty();
 
 	// Use the generic user "The Public" if the user is not registered
 	if ( user == null) {

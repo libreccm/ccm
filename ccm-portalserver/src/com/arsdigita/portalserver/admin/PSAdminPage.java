@@ -18,18 +18,14 @@
  */
 package com.arsdigita.portalserver.admin;
 
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationCollection;
-import com.arsdigita.bebop.table.*;
 import com.arsdigita.bebop.*;
-import com.arsdigita.dispatcher.*;
-import com.arsdigita.portalserver.*;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.portalserver.PortalPage;
-import com.arsdigita.toolbox.ui.*;
-import org.apache.log4j.Logger;
-
+import com.arsdigita.portalserver.PortalSite;
+import com.arsdigita.web.Application;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
+import org.apache.log4j.Logger;
 
 /**
  * PSAdminPage 
@@ -38,12 +34,9 @@ import com.arsdigita.xml.Element;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #8 $ $Date: 2004/08/17 $
+ * @version $ID:PSAdminPage.java, pboy $ 
  */
 class PSAdminPage extends PortalPage {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/admin/ui/AdminPage.java#8 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
 
     BoxPanel m_bpanel;
 
@@ -51,6 +44,7 @@ class PSAdminPage extends PortalPage {
         (PSAdminPage.class.getName());
 
     private RequestLocal m_children = new RequestLocal() {
+            @Override
             public Object initialValue(PageState ps) {
                 Application app = Application.getCurrentApplication
                     (DispatcherHelper.getRequest());
@@ -62,6 +56,7 @@ class PSAdminPage extends PortalPage {
        getHeader().setIdAttr("admin"); 
     }
 
+    @Override
     protected void buildContextBar() {
         DimensionalNavbar navbar = new DimensionalNavbar();
 
@@ -77,7 +72,7 @@ class PSAdminPage extends PortalPage {
     /**
      * This method outputs a list of links to admin functionality.
      */
-
+    @Override
     protected void buildBody(Container body) {
 
         m_bpanel = new BoxPanel();
@@ -98,11 +93,11 @@ class PSAdminPage extends PortalPage {
       * This method is called by the generateXML() method of the parent
       * class, and writes a CSS style block into the output.
       */
-
+    @Override
     public void addStyleBlock(PageState state, Document parent) {
         PortalSite psite = PortalSite.getCurrentPortalSite(state.getRequest());
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.append("<STYLE type=\"text/css\"> <!--");
 

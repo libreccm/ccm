@@ -24,7 +24,7 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.Role;
@@ -838,7 +838,7 @@ public class Workspace extends Application {
             }
         }.run();
         // check that the user is no longer system user
-        Party party = KernelHelper.getCurrentEffectiveParty();
+        Party party = Kernel.getContext().getEffectiveParty();
         s_log.debug("party after excurse is " + party.getDisplayName());
 
         Role admins = group.getRole("Administrators");

@@ -29,36 +29,51 @@ import com.arsdigita.bebop.event.ActionListener;
 
 import com.arsdigita.portalserver.ApplicationPage;
 import com.arsdigita.portalserver.PortalSite;
+import java.io.IOException;
 
+/**
+ * 
+ * @author pb
+ * @version $Id: PortalCreatePage.java#4 $
+ */
 class PortalCreatePage extends ApplicationPage {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/admin/PortalCreatePage.java#4 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
 
+    /**
+     * 
+     */
     public PortalCreatePage() {
         final RequestLocal portalsiteRL = new RequestLocal();
 
         // TODO: parent portal selection after basic properties entered
         final Component f = PortalCreateForm.
             create(new RequestLocal(), portalsiteRL, new ActionListener() {
-              public void actionPerformed(ActionEvent e) {
-                PageState ps = e.getPageState();
-                  try {
-                    com.arsdigita.dispatcher.DispatcherHelper.sendRedirect(
-                    ps.getRequest(), ps.getResponse(),
-                    ((PortalSite) portalsiteRL.get(ps)).getSiteNode().getURLNoContext() + "admin/");
-                           } catch (java.io.IOException ex) {
-                               throw
-                                   new com.arsdigita.util.UncheckedWrapperException(ex);
-                           }
-                       }
-                   });
+                public void actionPerformed(ActionEvent e) {
+                    PageState ps = e.getPageState();
+                    try {
+                        com.arsdigita.dispatcher.DispatcherHelper.sendRedirect(
+                                 ps.getRequest(), 
+                                 ps.getResponse(),
+                             //  ((PortalSite) portalsiteRL.get(ps)).getPath()
+                             //  .getSiteNode()
+                             //  .getURLNoContext() 
+                             // TODO: Test whether replacement works !!
+                             //        Compare with version 2.0.x release
+                                 ((PortalSite) portalsiteRL.get(ps)).getPath()
+                                 + "admin/");
+                    } catch (IOException ex) {
+                        throw  new com.arsdigita.util.UncheckedWrapperException(ex);
+                    }
+                }
+            });
 
         add(f);
 
     }
 
+    /**
+     * 
+     */
+    @Override
     protected void buildContextBar() {
         DimensionalNavbar navbar = new DimensionalNavbar();
         navbar.setClassAttr("portalNavbar");

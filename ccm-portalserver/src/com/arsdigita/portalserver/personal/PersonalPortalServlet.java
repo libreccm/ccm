@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2012-2013 University of Bremen. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -44,8 +44,11 @@ import org.apache.log4j.Logger;
 
 
 /**
- *
- * @author pb
+ * Provides the UI for the personal Portal for logged in users.
+ * 
+ * It replaces the former PersonalPortalDispatcher.
+ * 
+ * @author pb <pboy@barkhof.uni-bremen.de>
  * @version $Id: PersonalPortalServlet.java  pboy $
  */
 public class PersonalPortalServlet extends BaseApplicationServlet {

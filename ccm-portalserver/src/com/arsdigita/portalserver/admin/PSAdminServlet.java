@@ -50,7 +50,7 @@ public class PSAdminServlet extends BaseApplicationServlet {
 
 
     /**
-     * User extension point, initialize PortalCreator (index) page and add
+     * User extension point, initialize PortalAdmin (index) page and add
      * authentication check.
      * 
      * @throws ServletException 

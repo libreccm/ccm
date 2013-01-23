@@ -22,7 +22,7 @@ package com.arsdigita.simplesurvey.ui;
 import com.arsdigita.simplesurvey.util.GlobalizationUtil ; 
 
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
@@ -115,7 +115,7 @@ public class ViewPanel extends SimpleContainer {
 		    //s_log.warn("HEY responseID=" + responseID);
 		    if ( responseID == null ) {
 			
-			User user = KernelHelper.getCurrentUser(ps.getRequest());
+			User user = (User)Kernel.getContext().getParty();
 			if ( user == null) {
 			    try {
 				user = User.retrieve(THE_PUBLIC_USER);

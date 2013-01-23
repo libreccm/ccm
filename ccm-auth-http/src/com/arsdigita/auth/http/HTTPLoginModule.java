@@ -17,18 +17,14 @@
 package com.arsdigita.auth.http;
 
 import com.arsdigita.db.Sequences;
-import com.arsdigita.kernel.KernelHelper;
-import com.arsdigita.kernel.security.HTTPRequestCallback;
-import com.arsdigita.kernel.security.HTTPResponseCallback;
-import com.arsdigita.kernel.security.MappingLoginModule;
-import com.arsdigita.kernel.security.PasswordLoginModule;
-import com.arsdigita.kernel.security.UserLoginModule;
-import com.arsdigita.kernel.security.Util;
+import com.arsdigita.kernel.security.*;
 import com.arsdigita.persistence.DataOperation;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
+import com.arsdigita.web.Web;
+
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.URLEncoder;
@@ -38,6 +34,7 @@ import java.security.PublicKey;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
+
 import javax.crypto.Cipher;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
@@ -46,7 +43,9 @@ import javax.security.auth.login.LoginException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
+
 import sun.misc.BASE64Decoder;
 
 /**
@@ -302,7 +301,8 @@ public class HTTPLoginModule extends MappingLoginModule {
                 throw new UncheckedWrapperException( e );
             }
 
-            String returnURL = "http://" + KernelHelper.getHostName() + req.getRequestURI();
+            String returnURL = "http://" + Web.getConfig().getHost().getName()
+                                         + req.getRequestURI();
             if( req.getQueryString () != null ) {
                 returnURL = returnURL + "?" + req.getQueryString ();
             }

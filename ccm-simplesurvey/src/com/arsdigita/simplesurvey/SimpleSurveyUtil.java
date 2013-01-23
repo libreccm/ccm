@@ -24,7 +24,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.SiteNode;
 
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -46,40 +46,63 @@ import javax.servlet.http.HttpServletRequest;
 public class SimpleSurveyUtil {
 
 
+    /**
+     * 
+     * @param request
+     * @return 
+     */
     public static SiteNode getSiteNode(HttpServletRequest request) {
 
-	SiteNode siteNode;
-	try {
-	    siteNode = SiteNode.getSiteNode(request.getRequestURI().toString(), true);
-	} catch (com.arsdigita.domain.DataObjectNotFoundException e) {
-	    throw new com.arsdigita.util.UncheckedWrapperException(e);
-	}
+        SiteNode siteNode;
+        try {
+	        siteNode = SiteNode.getSiteNode(request.getRequestURI().toString(), true);
+	    } catch (com.arsdigita.domain.DataObjectNotFoundException e) {
+	        throw new com.arsdigita.util.UncheckedWrapperException(e);
+	    }
 
-	return siteNode;
+	    return siteNode;
     }
 
+    /**
+     * 
+     * @param pageState
+     * @return 
+     */
     public static SiteNode getSiteNode(PageState pageState) {
-	return getSiteNode(pageState.getRequest());
+        return getSiteNode(pageState.getRequest());
     }
+
+    /**
+     * 
+     * @param pageState
+     * @return 
+     */
     public static PackageInstance getPackageInstance(PageState pageState) {
-
-	return getSiteNode(pageState).getPackageInstance();
+        return getSiteNode(pageState).getPackageInstance();
     }
 
+    /**
+     * 
+     * @param pageState
+     * @return 
+     */
     public static boolean isUserAdmin(PageState pageState) {
-	boolean admin_p = false;
+        boolean admin_p = false;
 
-	User user = KernelHelper.getCurrentUser(pageState.getRequest());
-	
-	SiteNode siteNode = SimpleSurveyUtil.getSiteNode(pageState);
-	
-	PermissionDescriptor admin = new PermissionDescriptor
-	    (PrivilegeDescriptor.ADMIN, siteNode, user);
+        User user = (User)Kernel.getContext().getParty();
 
-	if (PermissionService.checkPermission(admin)) {
-	    admin_p = true;
-	}
+        SiteNode siteNode = SimpleSurveyUtil.getSiteNode(pageState);
 
-	return admin_p;
+        PermissionDescriptor admin = new PermissionDescriptor
+                                                 (PrivilegeDescriptor.ADMIN, 
+                                                  siteNode, 
+                                                  user);
+
+        if (PermissionService.checkPermission(admin)) {
+            admin_p = true;
+        }
+
+        return admin_p;
     }
+
 }

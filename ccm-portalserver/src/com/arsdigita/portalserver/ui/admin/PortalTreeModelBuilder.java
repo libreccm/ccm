@@ -235,7 +235,10 @@ public class PortalTreeModelBuilder
                 result.add(new ControlLink(l));
             }
 
-            String psURL = psite.getSiteNode().getURL();
+//          String psURL = psite.getSiteNode().getURL();
+            // TODO: Does replacement work??
+            //       Compare with version 2.0.x release
+            String psURL = psite.getPath();
             result.add(new Label(GlobalizationUtil.globalize("cw.workspace.ui.admin.")));
             Link viewLink = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.ui.admin.view")),  psURL);
             viewLink.setTargetFrame(Link.NEW_FRAME);

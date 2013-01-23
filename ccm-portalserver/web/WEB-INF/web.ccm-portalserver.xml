@@ -31,7 +31,7 @@
     </servlet>
 
     <servlet>
-        <servlet-name>portal-personalportal</servlet-name>
+        <servlet-name>portal-personalportalcreator</servlet-name>
         <servlet-class>com.arsdigita.portalserver.personal.PersonalPortalCreatorServlet</servlet-class>
     </servlet>
     <!-- module ccm-portalserver  -  servlet declarations END  -->
@@ -64,7 +64,7 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>portal-personalportal</servlet-name>
+        <servlet-name>portal-personalportalcreator</servlet-name>
         <url-pattern>/templates/servlet/personal-portal-creator/*</url-pattern>
     </servlet-mapping>
     <!-- module ccm-portalserver  -  servlet mappings END  -->
