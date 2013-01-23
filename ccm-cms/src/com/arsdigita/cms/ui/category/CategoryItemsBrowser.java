@@ -19,13 +19,7 @@
 package com.arsdigita.cms.ui.category;
 
 
-import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.Grid;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.RequestLocal;
-import com.arsdigita.bebop.Table;
+import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.CMS;
@@ -38,7 +32,7 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.DataObject;
@@ -135,7 +129,7 @@ public class CategoryItemsBrowser extends Grid {
             Category cat = (Category)m_sel.getSelectedObject(s);
 
             ContentSection section = CMS.getContext().getContentSection();
-            User user = KernelHelper.getCurrentUser( s.getRequest() );
+            User user = (User)Kernel.getContext().getParty();
             OID oid = null;
             if (user != null) {
                 oid = user.getOID();

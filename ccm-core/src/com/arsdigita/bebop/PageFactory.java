@@ -48,7 +48,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * <ol>
  *   <li>It is common for all pages on a site to have a particular
- *   structure. ie, header, footer, left sidebar & main content * area. </li>
+ *   structure. ie, header, footer, left sidebar & main content area. </li>
  *
  *   <li>It is desirable to customize page structure without making code changes
  *   to individual applications. </li>
@@ -83,7 +83,7 @@ import java.lang.reflect.InvocationTargetException;
  * import com.arsdigita.simplesurvey.ui.AdminPanel;
  * import com.arsdigita.simplesurvey.ui.SurveySelectionModel;
  * import com.arsdigita.bebop.BigDecimalParameter;
- * import com.arsdigita.bebop.BebopMapDispatcher;
+ * import com.arsdigita.bebop.page.BebopMapDispatcher;
  *
  * public class Dispatcher extends BebopMapDispatcher {
  *

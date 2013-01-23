@@ -543,9 +543,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param resp the current response
      * @param url the destination URL for redirect
      **/
-    public static void sendRedirect(HttpServletResponse resp,
-            String url)
-            throws IOException {
+    public static void sendRedirect( HttpServletResponse resp,
+                                     String url)
+                  throws IOException {
         sendExternalRedirect(resp, url);
     }
 
@@ -559,9 +559,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param url the destination URL for redirect
      **/
     public static void sendRedirect(HttpServletRequest req,
-            HttpServletResponse resp,
-            String url)
-            throws IOException {
+                                    HttpServletResponse resp,
+                                    String url)
+                  throws IOException {
         sendExternalRedirect(resp, url);
     }
 
@@ -572,9 +572,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param resp the current response
      * @param url the destination URL for redirect
      **/
-    public static void sendExternalRedirect(HttpServletResponse resp,
-            String url)
-            throws IOException {
+    public static void sendExternalRedirect( HttpServletResponse resp,
+                                             String url )
+                  throws IOException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Redirecting to URL '" + url + "'", new Throwable());
         }
@@ -1091,7 +1091,8 @@ public final class DispatcherHelper implements DispatcherConstants {
     public static Locale getNegotiatedLocale() {
         KernelConfig kernelConfig = Kernel.getConfig();
 
-        // Set the preferedLocale to the default locale (first entry in the config parameter list)
+        // Set the preferedLocale to the default locale (first entry in the 
+        // config parameter list)
         Locale preferedLocale = new Locale(kernelConfig.getDefaultLanguage(), "", "");
 
         // The ACCEPTED_LANGUAGES from the client

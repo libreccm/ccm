@@ -36,13 +36,22 @@ import org.apache.log4j.Logger;
  * @see CookieLoginModule
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: CookieManager.java 1477 2007-03-14 10:27:16Z chrisgilbert23 $
+ */
 public class CookieManager extends CredentialManager {
 
-    public static final String versionId = "$Id: CookieManager.java 1477 2007-03-14 10:27:16Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
-        Logger.getLogger(CookieManager.class.getName());
+                         Logger.getLogger(CookieManager.class.getName());
 
+    /**
+     * 
+     * @param module
+     * @param subject
+     * @param handler
+     * @param shared
+     * @param options 
+     */
+    @Override
     public void initialize(CredentialLoginModule module,
                            Subject subject,
                            CallbackHandler handler,
@@ -58,7 +67,7 @@ public class CookieManager extends CredentialManager {
      *
      * @return <code>true</code> if the credential is not set or has the
      * wrong value or should be renewed, <code>false</code> otherwise.
-     **/
+     */
     protected boolean shouldSetValue(String value)
         throws LoginException {
         if (getModule().requestIsExcluded()) {
@@ -80,7 +89,7 @@ public class CookieManager extends CredentialManager {
      * current request.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected final String getValue()
         throws LoginException {
         s_log.debug("START getValue");
@@ -100,7 +109,7 @@ public class CookieManager extends CredentialManager {
      * the given value.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected final void setValue(String value)
         throws LoginException {
         // now we don't automatically set the duration to getCookieMaxAge()
@@ -118,7 +127,7 @@ public class CookieManager extends CredentialManager {
      * <code>getModule().getCredentialName()</code>.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected final void deleteValue()
         throws LoginException {
         deleteCookie(getModule().getCredentialName());
@@ -126,7 +135,7 @@ public class CookieManager extends CredentialManager {
 
     /**
      * Deletes the named cookie.
-     **/
+     */
     private void deleteCookie(String name)
         throws LoginException {
         if (isCookieSet(name)) {
@@ -157,7 +166,7 @@ public class CookieManager extends CredentialManager {
 
     /**
      * Sets the named cookie to the given value.
-     **/
+     */
     private void setCookie(String name, String value, int maxAge)
         throws LoginException {
         Cookie cookie = new Cookie(name, value);
@@ -176,7 +185,7 @@ public class CookieManager extends CredentialManager {
     /**
      * Determines the lifespan of the cookie, using the setting
      * of the configuration, defaulting to getCookieMaxAge().
-     **/
+     */
     protected int getCookieAge() throws LoginException {
         Integer setting = Kernel.getSecurityConfig().getCookieDurationMinutes();
         return (setting == null ? getCookieMaxAge() : setting.intValue() * 60);
@@ -189,7 +198,7 @@ public class CookieManager extends CredentialManager {
      *
      * @return <code>FOREVER_SECS</code> if the user has requested permanent
      * login; -1 otherwise.
-     **/
+     */
     protected int getCookieMaxAge() throws LoginException {
         return getModule().getForever() ?
             (int)CredentialLoginModule.FOREVER_SECS : -1;

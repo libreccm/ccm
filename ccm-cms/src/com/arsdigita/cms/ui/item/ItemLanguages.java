@@ -42,7 +42,7 @@ import com.arsdigita.cms.ui.authoring.LanguageWidget;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.toolbox.ui.Section;
@@ -167,7 +167,7 @@ public class ItemLanguages extends LayoutPanel {
                 if ( template != null ) {
                     Workflow w = template.instantiateNewWorkflow();
                     w.setObjectID(item.getID());
-                    w.start(KernelHelper.getCurrentUser(state.getRequest()));
+                    w.start(Kernel.getContext().getUser());
                     w.save();
                 }
 

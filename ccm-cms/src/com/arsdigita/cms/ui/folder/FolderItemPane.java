@@ -18,25 +18,8 @@
  */
 package com.arsdigita.cms.ui.folder;
 
-import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.ParameterSingleSelectionModel;
-import com.arsdigita.bebop.Resettable;
-import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.bebop.SingleSelectionModel;
-import com.arsdigita.bebop.event.ActionEvent;
-import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.ChangeEvent;
-import com.arsdigita.bebop.event.ChangeListener;
-import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.*;
+import com.arsdigita.bebop.event.*;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
@@ -49,7 +32,7 @@ import com.arsdigita.cms.ui.permissions.CMSPermissionsPane;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.ObjectPermissionCollection;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -62,6 +45,7 @@ import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -314,7 +298,7 @@ public class FolderItemPane extends SegmentedPanel
 
         m_editFolderAction.setVisible(state, editItem);
 
-        User user = KernelHelper.getCurrentUser(state.getRequest());
+        User user = (User)Kernel.getContext().getParty();
         PermissionDescriptor perm =
             new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
                                      folder,

@@ -52,11 +52,10 @@ import org.apache.log4j.Logger;
  *
  * <p>This class also optionally initializes user-defined content types. </p>
  * <p>Additional user-defined content sections can be loaded and initilized
- * using the recurring
- * <pre>initializer</pre> at any startup.
+ * using the recurring <pre>initializer</pre> at any startup.
  *
  * <p>The tasks to perform are:</p> <ol> <li>create CMS package
- * type(content-section)</li> <li>create Workspace package type and
+ * type(content-section)</li> <li>create ContentCenter package type and
  * instance</li> <li>create CMS Service package type and instance</li>
  * <li>create CMS package (content-section) instance</li> </ol>
  *
@@ -134,9 +133,9 @@ public class Loader extends PackageLoader {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
-                // Step 1) Setup the CMS Workspace
-                ApplicationType appType = loadWorkspaceApplicationType();
-                setupDefaultWorkspaceApplicationInstance(appType);
+                // Step 1) Setup the CMS ContentCenter
+                ApplicationType appType = loadContentCenterApplicationType();
+                setupDefaultContentCenterApplicationInstance(appType);
 
                 // Step 2) Setup the CMS global services
                 appType = loadServiceApplicationType();
@@ -168,14 +167,14 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     * Loads the Workspace subpackage (content-center) into the database.
+     * Loads the ContentCenter subpackage (content-center) into the database.
      *
      * It is made public to be able to invoke it from the update script (e.g.
      * 6.6.1-6.6.2). We need separate steps for loading and instantiating
      * because update skript requires.
      */
-    public static ApplicationType loadWorkspaceApplicationType() {
-        s_log.debug("Creating CMS Workspace...");
+    public static ApplicationType loadContentCenterApplicationType() {
+        s_log.debug("Creating CMS ContentCenter...");
 
         /*
          * Create new type legacy free application type NOTE: The wording in the
@@ -185,18 +184,18 @@ public class Loader extends PackageLoader {
          * words and illegal characters with an hyphen and converted to lower
          * case. "Content Center" will become "content-center".
          */
-        ApplicationType type = new ApplicationType(Workspace.INSTANCE_NAME,
-                Workspace.BASE_DATA_OBJECT_TYPE);
+        ApplicationType type = new ApplicationType(ContentCenter.INSTANCE_NAME,
+                ContentCenter.BASE_DATA_OBJECT_TYPE);
 
         type.setDescription("The content center workspace for content creators.");
         type.save();
 
-        s_log.debug("CMS Workspace type created.");
+        s_log.debug("CMS ContentCenter type created.");
         return type;
     }
 
     /**
-     * Instantiates the Workspace subpackage (content-center) (in the database).
+     * Instantiates the ContentCenter subpackage (content-center) (in the database).
      *
      * It is made public to be able to invoke it from the update script (e.g.
      * 6.6.1-6.6.2). We need separate steps for loading and instantiating
@@ -204,25 +203,26 @@ public class Loader extends PackageLoader {
      *
      * @param workspaceType
      */
-    public static void setupDefaultWorkspaceApplicationInstance(
-            ApplicationType workspaceType) {
+    public static void setupDefaultContentCenterApplicationInstance(
+                               ApplicationType appType) {
 
         // create application instance 
         // Whether a legacy compatible or a legacy free application is
         // created depends on the type of ApplicationType above. No need to
         // modify anything here in the migration process
         // old-style package key used as url fragment where to install the instance
-        s_log.debug("Creating CMS Workspace instance ...");
-        Workspace app = (Workspace) Application.createApplication(
-                Workspace.BASE_DATA_OBJECT_TYPE, // type
-                Workspace.PACKAGE_KEY, // url fragment
-                Workspace.INSTANCE_NAME, // title
+        s_log.debug("Creating CMS ContentCenter instance ...");
+        ContentCenter app = (ContentCenter) Application.createApplication(
+                ContentCenter.BASE_DATA_OBJECT_TYPE, // type
+                ContentCenter.PACKAGE_KEY, // url fragment
+                ContentCenter.INSTANCE_NAME, // title
                 null);                      // parent
-        app.setDescription("The default CMS workspace instance.");
+        app.setDescription("The default CMS ContentCenter instance.");
         app.save();
 
-        s_log.debug("CMS Workspace instance " + Workspace.PACKAGE_KEY + " created.");
-        s_log.debug("Done loading CMS Workspace.");
+        s_log.debug("CMS ContentCenter instance " + ContentCenter.PACKAGE_KEY 
+                                                  + " created.");
+        s_log.debug("Done loading CMS ContentCenter.");
     }
 
     /**
@@ -319,15 +319,17 @@ public class Loader extends PackageLoader {
             ContentSectionConfig conf = new ContentSectionConfig();
             conf.load();
             
-            ContentSectionSetup.setupContentSectionAppInstance(sectionName,
-                                                               conf.getDefaultRoles(),
-                                                               conf.getDefaultWorkflows(),
-                                                               s_conf.isPubliclyViewable(),
-                                                               s_conf.getItemResolverClass(),
-                                                               s_conf.getTemplateResolverClass(),
-                                                               m_content_type_list,
-                                                               s_conf.getUseSectionCategories(),
-                                                               s_conf.getCategoryFileList());
+            ContentSectionSetup.setupContentSectionAppInstance(
+                                              sectionName,
+                                              conf.getDefaultRoles(),
+                                              conf.getDefaultWorkflows(),
+                                              s_conf.isPubliclyViewable(),
+                                              s_conf.getItemResolverClass(),
+                                              s_conf.getTemplateResolverClass(),
+                                              m_content_type_list,
+                                              s_conf.getUseSectionCategories(),
+                                              s_conf.getCategoryFileList()
+                                                              );
                     
         }
 

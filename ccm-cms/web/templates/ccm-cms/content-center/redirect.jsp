@@ -8,6 +8,7 @@
   <jsp:directive.page import="com.arsdigita.cms.ContentSectionCollection"/>
   <jsp:directive.page import="com.arsdigita.cms.SecurityManager"/>
   <jsp:directive.page import="com.arsdigita.cms.dispatcher.Utilities"/>
+  <jsp:directive.page import="com.arsdigita.cms.Workspace"/>
 
   <jsp:scriptlet>
     ContentSectionCollection sections = ContentSection.getAllSections();
@@ -24,7 +25,8 @@
 
     String url;
     if (hasAccess) {
-        url = Utilities.getWorkspaceURL();
+        // url = Utilities.getWorkspaceURL();
+        url = Workspace.getURL();
     } else {
         url = UI.getWorkspaceURL(request);
     }

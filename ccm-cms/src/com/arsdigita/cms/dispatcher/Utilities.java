@@ -25,8 +25,8 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.Service;
-import com.arsdigita.cms.Workspace;
-import com.arsdigita.cms.WorkspaceServlet;
+import com.arsdigita.cms.ContentCenter;
+import com.arsdigita.cms.ContentCenterServlet;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelContext;
@@ -62,13 +62,13 @@ public class Utilities {
     public static final Logger LOG = Logger.getLogger(Utilities.class);
 
     /**
-     * Fetch the location of the CMS Workspace package.
-     * @return The URL of the CMS Workspace package
-     * @deprecated use Workspace.getURL() instead
+     * Fetch the location of the CMS ContentCenter package.
+     * @return The URL of the CMS ContentCenter package
+     * @deprecated use ContentCenter.getURL() instead
      */
     public static String getWorkspaceURL() {
         
-            return Workspace.getURL();
+            return ContentCenter.getURL();
 
     }
 
@@ -271,8 +271,8 @@ public class Utilities {
         // OLD APPROACH: used in conjunction with CMSDispatcher.  This
         // shouldn't do any harm even if CMSDispatcher is not being used.
         CMSDispatcher.releaseResource(section, "admin/item");
-        WorkspaceServlet.releaseResource("");
-        WorkspaceServlet.releaseResource("index");
+        ContentCenterServlet.releaseResource("");
+        ContentCenterServlet.releaseResource("index");
         refreshAdminUI(state);
 
         // NEW APPROACH: used in conjunction with
@@ -296,8 +296,8 @@ public class Utilities {
         CMSDispatcher.releaseResource(section, "admin");
         CMSDispatcher.releaseResource(section, "admin/index");
         CMSDispatcher.releaseResource(section, "");
-        WorkspaceServlet.releaseResource("");
-        WorkspaceServlet.releaseResource("index");
+        ContentCenterServlet.releaseResource("");
+        ContentCenterServlet.releaseResource("index");
     }
 
     /**

@@ -31,11 +31,9 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionServlet;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.developersupport.DeveloperSupport;
-import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -54,6 +52,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+
+
+//  ////////////////////////////////////////////////////////////////////////////
+//
+//  Currently under development as a replacement for CMSPage without the
+//  dispatcher mechanism but a new application style "pure" bebop page
+//  served by an application servlet.
+//
+//  ////////////////////////////////////////////////////////////////////////////
+
 
 /**
  * <p>A <tt>CMSPage</tt> is a Bebop {@link com.arsdigita.bebop.Page}
@@ -329,20 +337,15 @@ public class CMSApplicationPage extends Page {
 
     @Override
     protected Element generateXMLHelper(PageState ps, Document parent) {
+
         Element page = super.generateXMLHelper(ps,parent);
-	User user = getCurrentUser(ps);
-	if ( user != null ) {
-	    page.addAttribute("name",user.getDisplayName());
-	}
 
-	return page;
+        User user = (User) Kernel.getContext().getParty();
+        if ( user != null ) {
+        page.addAttribute("name",user.getDisplayName());
+        }
+
+        return page;
     }
 
-    /**
-     * @deprecated Use Kernel.getContext().getParty() if possible and
-     * Web.getContext().getUser() if necessary.
-     */
-    public static User getCurrentUser(PageState state) {
-        return KernelHelper.getCurrentUser(state.getRequest());
-    }
 }

@@ -44,12 +44,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Phong Nguyen
  * @author Sameer Ajmani
  * @version 1.0
+ * @version $Id: UserAuthenticationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class UserAuthenticationListener implements RequestListener {
-    public static final String versionId =
-        "$Id: UserAuthenticationListener.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (UserAuthenticationListener.class);
@@ -67,6 +64,8 @@ public class UserAuthenticationListener implements RequestListener {
             throw new IllegalStateException("User is not logged in");
         }
 
+        // Note: aborts processing with an internal error if user not logged in!
+        //       Not suiteable just to check log in status.
         return Web.getUserContext().getUser();
     }
 

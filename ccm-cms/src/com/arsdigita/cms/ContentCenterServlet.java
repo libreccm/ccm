@@ -19,28 +19,31 @@
 
 package com.arsdigita.cms;
 
+import com.arsdigita.bebop.Page;
 import com.arsdigita.cms.dispatcher.ResourceHandler;
 import com.arsdigita.cms.dispatcher.SimpleCache;
+import com.arsdigita.cms.ui.contentcenter.MainPage;
 import com.arsdigita.developersupport.DeveloperSupport;
+import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.kernel.security.Util;
+import com.arsdigita.templating.PresentationManager;
+import com.arsdigita.templating.Templating;
 import com.arsdigita.ui.login.LoginHelper;
 import com.arsdigita.util.Assert;
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationFileResolver;
-import com.arsdigita.web.BaseApplicationServlet;
+import com.arsdigita.web.*;
+import com.arsdigita.xml.Document;
 
-import com.arsdigita.web.LoginSignal;
-import com.arsdigita.web.Web;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import javax.servlet.RequestDispatcher;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,38 +51,45 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * CMS Workspace (content-center) application servlet serves all request made 
- * within the Content Center application. 
+ * CMS ContentCenter (content-center) application servlet serves all request
+ * made within the Content Center application. 
  * 
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
- * @version $Id: WorkspaceServlet.java 2161 2011-02-02 00:16:13Z pboy $
+ * @version $Id: ContentCenterServlet.java 2161 2011-02-02 00:16:13Z pboy $
  */
-public class WorkspaceServlet extends BaseApplicationServlet {
+public class ContentCenterServlet extends BaseApplicationServlet {
 
-    /**Error logging    */
+    /** Logger instance for debugging  */
     private static Logger s_log = Logger
-                                  .getLogger(WorkspaceServlet.class.getName());
+                                  .getLogger(ContentCenterServlet.class.getName());
 
-    /** The path of the file that maps resources.     */
+//  DEPRECATED STUFF follows. Should be no longer used, deleted in future!
+    /** The path of the file that maps resources.                             */
     public final static String DEFAULT_MAP_FILE =
                                "/WEB-INF/resources/content-center-old-map.xml";
 
     /** Mapping between a relative URL and the class name of a ResourceHandler.*/
-    private static HashMap s_pageClasses = WorkspaceSetup.getURLToClassMap();
-    private static HashMap s_pageURLs = WorkspaceSetup.getClassToURLMap();
+    private static HashMap s_pageClasses = ContentCenterSetup.getURLToClassMap();
+    private static HashMap s_pageURLs = ContentCenterSetup.getClassToURLMap();
 
-    /**
-     * Instantiated ResourceHandlers cache. This allows for lazy loading.
-     */
+    /** Instantiated ResourceHandlers cache. This allows for lazy loading.    */
     private static SimpleCache s_pages = new SimpleCache();
 
-//     private Dispatcher m_notFoundHandler;
     private ArrayList m_trailingSlashList = new ArrayList();
 
+//  NEW STUFF here used to process the pages in this servlet
+
+    /** URL (pathinfo) -> Page object mapping. Based on it (and the http
+     *  request url) the doService method to selects a page to display        */
+    private final Map m_pages = new HashMap();
+    
+
+//  STUFF to use for JSP extension, i.e. jsp's to try for URLs which are not
+//  handled by the this servlet directly.
     /** Path to directory containg ccm-cms template files                    */
     private String m_templatePath;
 
-    /** Resolvers to find templages (JSP) and other stuff stored in file system.*/
+    /** Resolvers to find templates (JSP) and other stuff stored in file system.*/
     private ApplicationFileResolver m_resolver;
 
 
@@ -92,9 +102,22 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         if (s_log.isDebugEnabled()) {
             s_log.info("starting doInit method");
         }
+//      DEPRECATED STUFF for servlet internally process pages, maybe required
+//      for JSP extension.        
         m_trailingSlashList = new ArrayList();
         requireTrailingSlash("");
 
+//  NEW STUFF here used to process the pages in this servlet
+        // Addresses previously noted in WEB-INF/resources/content-center-map.xml
+        // Obviously not required.
+        addPage("/", new MainPage());     // index page at address ~/ds
+    //  addPage("/index/", new MainPage());     
+    //  addPage("/ItemSearchPage/", new CCItemSearchPage()); 
+    //  addPage("/SearchResultRedirector/", new CCSearchResultRedirector());
+
+
+//  STUFF to use for JSP extension, i.e. jsp's to try for URLs which are not
+//  handled by the this servlet directly.
         /** Set Template base path for JSP's                                  */
         // ToDo: Make it configurable by an appropriate config registry entry!
 //        m_templatePath = CMS.getConfig().getTemplateRoot();
@@ -111,7 +134,7 @@ public class WorkspaceServlet extends BaseApplicationServlet {
 
     /**
      * Implements the (abstract) doService method of BaseApplicationServlet to
-     * create the Workspace page.
+     * create the ContentCenter page.
      * 
      * @see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)
@@ -126,31 +149,75 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         }
         DeveloperSupport.startStage("ContentCenterServlet.doService");
 
-        Workspace workspace = (Workspace) app;
+        ContentCenter workspace = (ContentCenter) app;
 
+        /*
+         *       Check user and privilegies
+         */
+        if (Web.getContext().getUser() == null) {   // user not logged in
+            throw new LoginSignal(sreq);            // send to login page
+        }
+        // Check whether logged in user has access to at least one content section
+        ContentSectionCollection sections = ContentSection.getAllSections();
+        boolean hasAccess = false;
+        while (sections.next()) {
+            ContentSection section = sections.getContentSection();
+            SecurityManager sm = new SecurityManager(section);
+            if (sm.canAccess(sreq, SecurityManager.ADMIN_PAGES)) {
+                hasAccess = true;
+                break;
+            }
+        }
+        sections.close();
+        if (!hasAccess) {    // user has no access privilege 
+            throw new AccessDeniedException(
+                            "User is not entitled to access any content section");
+            // throw new LoginSignal(sreq);            // send to login page
+        }
+
+        
+        
         RequestContext ctx = DispatcherHelper.getRequestContext();        
         String url = ctx.getRemainingURLPart();  // here SiteNodeRequestContext
         String originalUrl = ctx.getOriginalURL();
+
         String requestUri = sreq.getRequestURI();
+
+        // New way to tetch the page
+        String pathInfo = sreq.getPathInfo();
+        Assert.exists(pathInfo, "String pathInfo");
+        if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
+            /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
+             * start with a '/' character. It currently carries a 
+             * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
+             * result of a servlet mapping. But Application requires url 
+             * NOT to end with a trailing '/' for legacy free applications.  */
+            pathInfo = pathInfo.substring(0, pathInfo.length()-1);
+        }
 
         // An empty remaining URL or a URL which doesn't end in trailing slash:
         // probably want to redirect.
+        // Probably DEPRECATED with new access method or only relevant for jsp
+        // extension
         if ( m_trailingSlashList.contains(url) && !originalUrl.endsWith("/") ) {
             DispatcherHelper.sendRedirect(sresp, originalUrl + "/");
             return;
         }
 
-        // Check user access.
-   //   checkUserAccess(sreq, sresp);
 
-        ResourceHandler page = getResource(url);
+        // ResourceHandler page = getResource(url);
+        final Page page = (Page) m_pages.get(pathInfo);
         if ( page != null ) {
 
             // Check user access.
             checkUserAccess(sreq, sresp);
             // Serve the page.
-            page.init();
-            page.dispatch(sreq, sresp, ctx);
+            final Document doc = page.buildDocument(sreq, sresp);
+            PresentationManager pm = Templating.getPresentationManager();
+            pm.servePage(doc, sreq, sresp);
+            // page.init();
+            // page.dispatch(sreq, sresp, ctx);
+
         } else {
             // Fall back on the JSP application dispatcher.
             // NOTE: The JSP must ensure the proper authentication and
@@ -178,8 +245,28 @@ public class WorkspaceServlet extends BaseApplicationServlet {
         if (s_log.isDebugEnabled()) {
             s_log.info("doService method completed");
         }
+    }    //  END doService()
+
+
+    /**
+     * Adds one pair of Url - Page to the internal hash map, used as a cache.
+     * 
+     * @param pathInfo url stub for a page to display
+     * @param page Page object to display
+     */
+    private void addPage(final String pathInfo, final Page page) {
+
+        Assert.exists(pathInfo, String.class);
+        Assert.exists(page, Page.class);
+        // Current Implementation requires pathInfo to start with a leading '/'
+        // SUN Servlet API specifies: "PathInfo *may be empty* or will start
+        // with a '/' character."
+        Assert.isTrue(pathInfo.startsWith("/"), "path starts not with '/'");
+
+        m_pages.put(pathInfo, page);
     }
 
+    
     /**
      * Service Method returns the URL stub for the class name,
      * can return null if not mapped

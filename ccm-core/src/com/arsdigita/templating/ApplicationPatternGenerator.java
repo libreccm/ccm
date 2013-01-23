@@ -19,9 +19,9 @@
 package com.arsdigita.templating;
 
 
-import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.sitenode.SiteNodeRequestContext;
-import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.dispatcher.DispatcherHelper;
+// import com.arsdigita.sitenode.SiteNodeRequestContext;
+// import com.arsdigita.kernel.SiteNode;
 
 import com.arsdigita.web.Web;
 import com.arsdigita.web.Application;
@@ -73,8 +73,11 @@ public class ApplicationPatternGenerator implements PatternGenerator {
         // redirects.
         s_log.debug("ApplicationType for >>" +key +
                     "<< not found. Trying SiteNodes instead.");
+
+        throw new IllegalArgumentException(
+                      "No ApplicationType found for type name " + key);
         
-        
+/*        
         SiteNodeRequestContext ctx = (SiteNodeRequestContext)
             DispatcherHelper.getRequestContext(req);
         
@@ -90,7 +93,7 @@ public class ApplicationPatternGenerator implements PatternGenerator {
 
         s_log.debug("ApplicationType for " +key +
                     " could not be found in SiteNodes either. Returning empty String[]");
-        
-        return new String[] {};
+*/        
+//      return new String[] {};
     }
 }

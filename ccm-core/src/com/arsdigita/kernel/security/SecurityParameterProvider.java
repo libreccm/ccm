@@ -19,7 +19,6 @@
 package com.arsdigita.kernel.security;
 
 import com.arsdigita.util.ParameterProvider;
-import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.KernelRequestContext;
 import java.util.Collections;
 import java.util.HashSet;
@@ -60,7 +59,7 @@ public class SecurityParameterProvider implements ParameterProvider {
     public Set getParams(HttpServletRequest req) {
         // get user and session info
         KernelRequestContext rctx =
-            KernelHelper.getKernelRequestContext(req);
+            KernelRequestContext.getKernelRequestContext(req);
 
         // Request context can be null e.g. if called in a request listener
         if ( rctx == null ) {

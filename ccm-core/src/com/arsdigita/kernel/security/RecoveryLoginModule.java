@@ -30,12 +30,12 @@ import org.apache.log4j.Logger;
  * authentication URL parameter.
  *
  * @author Sameer Ajmani
+ * @version $Id: RecoveryLoginModule.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class RecoveryLoginModule extends UserLoginModule {
 
-    public static final String versionId = "$Id: RecoveryLoginModule.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
-        Logger.getLogger(RecoveryLoginModule.class.getName());
+                         Logger.getLogger(RecoveryLoginModule.class.getName());
 
     private static final String URL_PARAM_NAME = "ad_user_recover";
 
@@ -50,7 +50,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      * credential value.  Overrides <code>URLManager.shouldSetValue()</code>
      * to return <code>false</code> so that the recover credential is never
      * propagated to future requests.
-     **/
+     */
     public RecoveryLoginModule() {
         super(new URLManager(java.util.Collections.EMPTY_SET) {
                 /**
@@ -59,6 +59,7 @@ public class RecoveryLoginModule extends UserLoginModule {
                  *
                  * @return false
                  **/
+                @Override
                 protected boolean shouldSetValue(String value)
                     throws LoginException {
                     return false;
@@ -67,6 +68,7 @@ public class RecoveryLoginModule extends UserLoginModule {
     }
 
     // implements LoginModule
+    @Override
     public void initialize(Subject subject,
                            CallbackHandler handler,
                            Map shared,
@@ -85,7 +87,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      * @return <code>super.commit()</code>.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     public boolean commit()
         throws LoginException {
         if (credentialIsSet()) {
@@ -101,7 +103,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      * @return <code>this.commit()</code>.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     public boolean abort()
         throws LoginException {
         return this.commit();
@@ -113,7 +115,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      * @return getParamName()
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected String getCredentialName()
         throws LoginException {
         return getParamName();
@@ -125,7 +127,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      * recovery credential is used check whether the user is recovering.
      *
      * @see #isRecovering(Subject)
-     **/
+     */
     private void setRecovering() {
         s_log.debug("setting recovery credential");
         m_subject.getPublicCredentials().add(getParamName());
@@ -137,7 +139,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      *
      * @return <code>true</code> if the Subject has the recovery credential,
      * <code>false</code> otherwise.
-     **/
+     */
     public static boolean isRecovering(Subject subject) {
         return subject.getPublicCredentials().contains(getParamName());
     }
@@ -150,7 +152,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      *
      * @return the name of the recovery login URL parameter.
      * @see #getParamValue(BigDecimal)
-     **/
+     */
     public static String getParamName() {
         return URL_PARAM_NAME;
     }
@@ -167,7 +169,7 @@ public class RecoveryLoginModule extends UserLoginModule {
      * @throws CredentialEncodingException if unable to create the value.
      *
      * @see #getParamName()
-     **/
+     */
     public static String getParamValue(BigDecimal userID)
         throws CredentialEncodingException {
         return Credential

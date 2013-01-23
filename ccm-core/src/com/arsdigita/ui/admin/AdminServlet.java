@@ -96,7 +96,7 @@ public class AdminServlet extends BaseApplicationServlet
 
         
         
-        // /////// Some preparational steps                     ///////////////
+        // ///////    Some preparational steps                   ///////////////
 
         /* Determine access privilege: only logged in users may access DS   */
         Party party = Kernel.getContext().getParty();
@@ -113,7 +113,7 @@ public class AdminServlet extends BaseApplicationServlet
         DispatcherHelper.cacheDisable(sresp);
 
 
-        // /////// Everything OK here - DO IT                   ///////////////
+        // ///////   Everything OK here - DO IT                  ///////////////
 
         String pathInfo = sreq.getPathInfo();
         Assert.exists(pathInfo, "String pathInfo");
@@ -145,7 +145,7 @@ public class AdminServlet extends BaseApplicationServlet
 
 
     /**
-     * Adds one Url-Page mapping to the internal mapping table.
+     * Adds one pair of Url - Page to the internal hash map, used as a cache.
      * 
      * @param pathInfo url stub for a page to display
      * @param page Page object to display
@@ -173,9 +173,7 @@ public class AdminServlet extends BaseApplicationServlet
         p.addGlobalStateParam(GROUP_ID_PARAM);
    //   p.addGlobalStateParam(APPLICATIONS_ID_PARAM);
 
-        /**
-         * Create User split panel.
-         */
+        /* Create User split panel. */
         AdminSplitPanel userSplitPanel =
             new AdminSplitPanel(USER_NAVBAR_TITLE);
 

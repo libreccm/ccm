@@ -24,7 +24,7 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.RequestContext;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -81,7 +81,7 @@ public abstract class ResourceHandlerImpl implements ResourceHandler {
                                 HttpServletResponse response,
                                 RequestContext actx,
                                 ContentItem item) {
-        User user = KernelHelper.getCurrentUser(request);
+        User user = (User)Kernel.getContext().getParty();
 
         PrivilegeDescriptor view = PrivilegeDescriptor.get
             (SecurityManager.CMS_READ_ITEM);

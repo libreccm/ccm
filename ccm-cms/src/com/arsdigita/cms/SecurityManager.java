@@ -25,7 +25,6 @@ import com.arsdigita.cms.workflow.CMSEngine;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -185,7 +184,7 @@ public class SecurityManager implements Security, SecurityConstants {
 
     public boolean canAccess(HttpServletRequest request, String action,
                              ContentItem item) {
-        User user = KernelHelper.getCurrentUser(request);
+        User user = (User)Kernel.getContext().getParty();
         boolean canAccess = canAccess(user, action, item);
         if (!canAccess) {
             canAccess = LocalRequestPassword.validLocalRequest(request);
@@ -498,7 +497,7 @@ public class SecurityManager implements Security, SecurityConstants {
                                      HttpServletResponse response)
         throws IOException, ServletException {
 
-        if (KernelHelper.getCurrentUser(request) != null) { return; }
+        if (Kernel.getContext().getParty() != null) { return; }
         String url = com.arsdigita.kernel.security.Util
             .getSecurityHelper().getLoginURL(request)
             + "?" + LoginHelper.RETURN_URL_PARAM_NAME

@@ -21,8 +21,7 @@ package com.arsdigita.kernel.security;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *  Provides methods for
- * determining security properties for a request.
+ * Provides methods for determining security properties for a request.
  *
  * @author Sameer Ajmani
  * @version $Id: SecurityHelper.java 287 2005-02-22 00:29:02Z sskracic $

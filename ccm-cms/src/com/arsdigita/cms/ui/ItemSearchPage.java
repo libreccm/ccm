@@ -28,25 +28,21 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.CMSConfig;
-import com.arsdigita.cms.CMSExcursion;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.*;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.OID;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
-import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.xml.Document;
-import com.arsdigita.web.Web;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.Web;
+import com.arsdigita.xml.Document;
+
 import java.io.IOException;
 import java.math.BigDecimal;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -184,20 +180,13 @@ public class ItemSearchPage extends CMSPage {
 //            }
 //
 //        });
-    }
+    }  // END constructor
 
-//    private void enableCreatePane(final PageState state) {
-//        final BigDecimal typeParam = (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
-//        if (typeParam == null) {
-//            m_tabbedPane.setTabVisible(state, m_create, false);
-//            m_create.setVisible(state, false);
-//        } else {
-//            m_tabbedPane.setTabVisible(state, m_create, true);
-//            m_create.setVisible(state, true);
-//        }
-//    }
+
     /**
-     * Creates, and then caches, the Browse pane. Overriding this method to return null will prevent this tab from
+     * Creates, and then caches, the Browse pane. 
+     * 
+     * Overriding this method to return null will prevent this tab from
      * appearing. Note: not implemented yet.
      */
     protected ItemSearchBrowsePane getBrowsePane() {
@@ -217,7 +206,8 @@ public class ItemSearchPage extends CMSPage {
     }
 
     /**
-     * Creates, and then caches, the Creation pane. Overriding this method to return null will prevent this tab from
+     * Creates, and then caches, the Creation pane. 
+     * Overriding this method to return null will prevent this tab from
      * appearing.
      */
     protected ItemSearchPopup getSearchPane() {
@@ -239,13 +229,15 @@ public class ItemSearchPage extends CMSPage {
     }
 
     /**
-     * Created the TabbedPane to use for this page. Sets the class attribute for this tabbed pane. The default
-     * implementation uses a
-     * {@link com.arsdigita.bebop.TabbedPane} and sets the class attribute to "CMS Admin." This implementation also adds
-     * tasks, content sections, and search panes.
+     * Created the TabbedPane to use for this page. 
+     * 
+     * Sets the class attribute for this tabbed pane. The default implementation 
+     * uses a {@link com.arsdigita.bebop.TabbedPane} and sets the class 
+     * attribute to "CMS Admin." This implementation also adds tasks, 
+     * content sections, and search panes.
      *
-     * Developers can override this method to add only the tabs they want, or to add additional tabs after the default
-     * CMS tabs are added.
+     * Developers can override this method to add only the tabs they want, 
+     * or to add additional tabs after the default CMS tabs are added.
      */
     protected TabbedPane createTabbedPane() {
         TabbedPane pane = new TabbedPane();
@@ -271,7 +263,8 @@ public class ItemSearchPage extends CMSPage {
     }
 
     /**
-     * Adds the specified component, with the specified tab name, to the tabbed pane only if it is not null.
+     * Adds the specified component, with the specified tab name, to the 
+     * tabbed pane only if it is not null.
      *
      * @param pane    The pane to which to add the tab
      * @param tabName The name of the tab if it's added
@@ -279,24 +272,16 @@ public class ItemSearchPage extends CMSPage {
      */
     protected void addToPane(TabbedPane pane, String tabName, Component comp) {
         if (comp != null) {
-            pane.addTab(GlobalizationUtil.globalize("cms.ui.item_search." + tabName).localize().toString(), comp);
+
+            pane.addTab(GlobalizationUtil
+                        .globalize("cms.ui.item_search." + tabName)
+                        .localize().toString() 
+                        ,comp);
+
         }
     }
 
-    /**
-     * When a new tab is selected, reset the state of the formerly-selected pane.
-     *
-     * @param event The event fired by selecting a tab
-     */
-    //public void actionPerformed(ActionEvent event) {
-    //PageState state = event.getPageState();
-    //Component pane = m_tabbedPane.getCurrentPane(state);
-    //if ( pane == m_browse ) {
-    // MP: reset tasks pane
-    //} else if ( pane == m_search ) {
-    //m_search.reset(state);
-    //}
-    //}
+
     /**
      * This strange voodoo from Dan. No idea what it does.
      */

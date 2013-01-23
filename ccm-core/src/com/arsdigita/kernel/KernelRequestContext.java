@@ -18,10 +18,12 @@
  */
 package com.arsdigita.kernel;
 
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.security.SessionContext;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.dispatcher.InitialRequestContext;
 import com.arsdigita.dispatcher.RequestContext;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,7 +33,7 @@ import org.apache.log4j.Logger;
 public class KernelRequestContext extends InitialRequestContext {
 
     private static final Logger s_cat =
-        Logger.getLogger(KernelRequestContext.class.getName());
+                         Logger.getLogger(KernelRequestContext.class.getName());
 
     private SessionContext m_session;
     private UserContext m_user;
@@ -42,6 +44,27 @@ public class KernelRequestContext extends InitialRequestContext {
         super(parent);
         m_session = session;
         m_user = user;
+    }
+
+    /**
+     * Extracts the KernelRequestContext from the given request.
+     *
+     * @return the KernelRequestContext.
+     * @throws IllegalStateException if the current request context does not
+     * subclass KernelRequestContext.
+     */
+    public static KernelRequestContext getKernelRequestContext
+                                                (HttpServletRequest req) {
+
+        RequestContext rctx = DispatcherHelper.getRequestContext(req);
+        try {
+            return (KernelRequestContext)rctx;
+        } catch (ClassCastException e) {
+            throw new IllegalStateException
+                ("Request context does not subclass KernelRequestContext: "
+                 + rctx.getClass().getName());
+        }
+
     }
 
     /**

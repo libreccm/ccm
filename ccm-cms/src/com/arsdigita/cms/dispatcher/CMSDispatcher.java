@@ -23,15 +23,10 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.publishToFile.LocalRequestPassword;
 import com.arsdigita.developersupport.DeveloperSupport;
-import com.arsdigita.dispatcher.ChainedDispatcher;
-import com.arsdigita.dispatcher.Dispatcher;
-import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.dispatcher.JSPApplicationDispatcher;
-import com.arsdigita.dispatcher.RedirectException;
-import com.arsdigita.dispatcher.RequestContext;
+import com.arsdigita.dispatcher.*;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.ACSObjectCache;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.KernelContext;
 import com.arsdigita.kernel.User;
 import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.URL;
@@ -366,7 +361,7 @@ public class CMSDispatcher implements Dispatcher, ChainedDispatcher {
                                    RequestContext actx)
         throws ServletException, AccessDeniedException {
 
-        User user = KernelHelper.getCurrentUser(request);
+        User user = KernelContext.getUser();
 
         ContentSection section = getContentSection(request);
         SecurityManager sm = getSecurityManager(section);

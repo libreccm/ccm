@@ -37,17 +37,17 @@ import org.apache.log4j.Logger;
  * username/password in shared data for use by other LoginModules.
  *
  * @author Sameer Ajmani
+ * @version $Id: PasswordLoginModule.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public abstract class PasswordLoginModule implements LoginModule {
 
-    public static final String versionId = "$Id: PasswordLoginModule.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
-        Logger.getLogger(PasswordLoginModule.class.getName());
+                         Logger.getLogger(PasswordLoginModule.class.getName());
 
-    /** Key for username in shared data map. **/
+    /** Key for username in shared data map. */
     public static final String NAME_KEY
         = "javax.security.auth.login.name";
-    /** Key for password in shared data map. **/
+    /** Key for password in shared data map. */
     public static final String PASSWORD_KEY
         = "javax.security.auth.login.password";
 
@@ -79,7 +79,7 @@ public abstract class PasswordLoginModule implements LoginModule {
      * thrown by the <code>checkPassword</code> method.
      *
      * @see #checkPassword(String, char[])
-     **/
+     */
     public boolean login() throws LoginException {
         s_log.debug("START login");
         checkPassword(getUsername(), getPassword());
@@ -94,7 +94,7 @@ public abstract class PasswordLoginModule implements LoginModule {
      * @return the username.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     private String getUsername() throws LoginException {
         // get name from shared data
         // TODO: only if *Pass option set
@@ -123,7 +123,7 @@ public abstract class PasswordLoginModule implements LoginModule {
      * @return the password.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     private char[] getPassword() throws LoginException {
         // get password from shared data
         // TODO: only if *Pass option set
@@ -157,7 +157,7 @@ public abstract class PasswordLoginModule implements LoginModule {
      * @throws AccountLockedException if the account is locked.
      * @throws FailedLoginException if the password is invalid.
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected abstract void checkPassword
         (String username, char[] password) throws LoginException;
 

@@ -215,7 +215,8 @@ public class Credential {
         final byte[] validator;
         final byte[] calculated;
         try {
-            validator = (new Base64()).decode(tok.nextToken().getBytes(Crypto.CHARACTER_ENCODING));
+            validator = (new Base64()).decode(tok.nextToken()
+                                      .getBytes(Crypto.CHARACTER_ENCODING));
             calculated = createValidator(value, expiration, mac);
         } catch (ValidatorException ex) {
             throw new CredentialParsingException(ex.getRootCause());

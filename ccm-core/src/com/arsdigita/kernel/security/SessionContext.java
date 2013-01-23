@@ -20,11 +20,11 @@ package com.arsdigita.kernel.security;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.login.LoginException;
 
 /**
  * Provide access to the JSESSIONID value as a BigDecimal.  This class

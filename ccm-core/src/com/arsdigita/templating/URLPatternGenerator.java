@@ -19,15 +19,11 @@
 package com.arsdigita.templating;
 
 
-import com.arsdigita.web.Web;
-import com.arsdigita.util.StringUtils;
-
-import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.kernel.SiteNode;
-import com.arsdigita.sitenode.SiteNodeRequestContext;
 import com.arsdigita.util.Assert;
-
+import com.arsdigita.util.StringUtils;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.Web;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -151,20 +147,12 @@ public class URLPatternGenerator implements PatternGenerator {
      * (i.e. application's PrimaryURL). If no application can be found or
      * no PrimaryURL can be determined ROOT ("/") is returned. 
      * 
-     * XXX fix me, why can't we get this from Web.getConfig.getRequestURL
+     * XXX fix me, why can't we get this from Web.getContext().getRequestURL
      * 
      * @return primary url of an application or ROOT
      */
     private String getBasePath() {
 
-//      OLD code using kernel.SiteNode etc which is deprecatged and no longer
-//      available
-    //  SiteNodeRequestContext ctx = (SiteNodeRequestContext)
-    //      DispatcherHelper.getRequestContext(Web.getRequest());        
-    //  SiteNode node = ctx.getSiteNode();
-    //  Assert.exists(node, SiteNode.class);
-    //  return node.getURL();
-        
         // retrieve the application of the request
         Application app = Web.getContext().getApplication();
         if (app == null) {
@@ -172,6 +160,7 @@ public class URLPatternGenerator implements PatternGenerator {
         } else {
             return app.getPrimaryURL();
         }
+
     }
 
 }

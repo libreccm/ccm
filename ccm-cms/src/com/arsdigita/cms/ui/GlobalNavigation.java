@@ -21,7 +21,7 @@ package com.arsdigita.cms.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.Workspace;
+import com.arsdigita.cms.ContentCenter;
 import com.arsdigita.ui.UI;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
@@ -35,7 +35,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: GlobalNavigation.java 1942 2009-05-29 07:53:23Z terry $
  */
-class GlobalNavigation extends SimpleComponent {
+// Made public (instead of unspecified, resulting in protected) in 6.6.8
+public class GlobalNavigation extends SimpleComponent {
 
     private static final Logger s_log = Logger.getLogger
         (GlobalNavigation.class);
@@ -45,13 +46,21 @@ class GlobalNavigation extends SimpleComponent {
     private final String m_signOutPath;
     private final String m_helpPath;
 
-    GlobalNavigation() {
-        m_centerPath = Workspace.getURL();
+    /**
+     * 
+     */
+    public GlobalNavigation() {
+        m_centerPath = ContentCenter.getURL();
         m_wspcPath = UI.getWorkspaceURL();
         m_signOutPath = UI.getLogoutPageURL();
         m_helpPath = "/nowhere"; // We don't have this yet XXX.
     }
 
+    /**
+     * 
+     * @param state
+     * @param parent 
+     */
     @Override
     public void generateXML(final PageState state, final Element parent) {
         if (isVisible(state)) {
@@ -72,6 +81,15 @@ class GlobalNavigation extends SimpleComponent {
         }
     }
 
+    /**
+     * 
+     * @param sreq
+     * @param parent
+     * @param name
+     * @param path
+     * @param title
+     * @return 
+     */
     private static Element link(final HttpServletRequest sreq,
                                 final Element parent,
                                 final String name,
@@ -85,6 +103,11 @@ class GlobalNavigation extends SimpleComponent {
         return link;
     }
 
+    /**
+     * 
+     * @param key
+     * @return 
+     */
     private static String lz(final String key) {
         return (String) ContentSectionPage.globalize(key).localize();
     }

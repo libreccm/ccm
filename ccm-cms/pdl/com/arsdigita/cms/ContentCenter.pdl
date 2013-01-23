@@ -21,7 +21,7 @@ model com.arsdigita.cms;
 import com.arsdigita.kernel.*;
 import com.arsdigita.web.Application;
 
-object type Workspace extends Application {
+object type ContentCenter extends Application {
     // nothing to persist yet
-    // reference key (cms_workspace.workspace_id);
+    // reference key (cms_contentcenter.contentcenter_id);
 }

@@ -34,7 +34,7 @@ import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelHelper;
+// import com.arsdigita.kernel.KernelContext;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -116,7 +116,8 @@ public class CMSPage extends Page implements ResourceHandler {
      * Builds the page.
      */
     protected void buildPage() {
-        // Set the class attribute.
+        // Set the class attribute value. May be overwritten by child class
+        // to hold a more specific value
         setClassAttr(PAGE_CLASS);
 
         // Global XML params.
@@ -126,6 +127,8 @@ public class CMSPage extends Page implements ResourceHandler {
 
         // MP: This is a hack to so that the XML params work with the newer
         //     version of Xalan.
+        // Sets attribute in SimpleComponent, attributes of the same name will
+        // be overweritten.
         setAttribute(ASSETS, Utilities.getGlobalAssetsURL());
 
         // Make sure the error display gets rendered.
@@ -193,7 +196,7 @@ public class CMSPage extends Page implements ResourceHandler {
      *             On the other hand, if deprecated, implementing ResourceHandler
      *             may not be required
      */
-   public ContentSection getContentSection(HttpServletRequest request) {
+    public ContentSection getContentSection(HttpServletRequest request) {
         // Resets all content sections associations.
      // return ContentSectionDispatcher.getContentSection(request);
         return ContentSectionServlet.getContentSection(request);
@@ -327,22 +330,29 @@ public class CMSPage extends Page implements ResourceHandler {
         }
     }
 
+    /**
+     * Overwrites bebop.Page#generateXMLHelper to add the name of the user
+     * logged in to the page (displayed as part of the header).
+     * @param ps
+     * @param parent
+     * @return 
+     */
     @Override
     protected Element generateXMLHelper(PageState ps, Document parent) {
         Element page = super.generateXMLHelper(ps,parent);
-	User user = getCurrentUser(ps);
-	if ( user != null ) {
-	    page.addAttribute("name",user.getDisplayName());
-	}
+        User user = (User) Kernel.getContext().getParty();
+        if ( user != null ) {
+            page.addAttribute("name",user.getDisplayName());
+        }
 
-	return page;
+        return page;
     }
 
-    /**
-     * @deprecated Use Kernel.getContext().getParty() if possible and
-     * Web.getContext().getUser() if necessary.
-     */
-    public static User getCurrentUser(PageState state) {
-        return KernelHelper.getCurrentUser(state.getRequest());
-    }
+//  /**
+//   * @deprecated Use Kernel.getContext().getParty() if possible and
+//   * Web.getContext().getUser() if necessary.
+//   */
+//   public static User getCurrentUser(PageState state) {
+//      return (User) Kernel.getContext().getParty();
+//  }
 }

@@ -206,6 +206,11 @@ public class UserLoginForm extends Form
         add(m_loginName);
     }
 
+    /**
+     * 
+     * @param event
+     * @throws FormProcessException 
+     */
     public void init(FormSectionEvent event)
             throws FormProcessException {
         s_log.info("In init");
@@ -234,6 +239,11 @@ public class UserLoginForm extends Form
         }
     }
 
+    /**
+     * 
+     * @param event
+     * @throws FormProcessException 
+     */
     public void validate(FormSectionEvent event)
             throws FormProcessException {
 
@@ -266,6 +276,11 @@ public class UserLoginForm extends Form
         }
     }
 
+    /**
+     * 
+     * @param event
+     * @throws FormProcessException 
+     */
     public void process(FormSectionEvent event) throws FormProcessException {
         s_log.debug("In process");
 
@@ -330,6 +345,12 @@ public class UserLoginForm extends Form
         // do nothing
     }
 
+    /**
+     * 
+     * @param event
+     * @param e
+     * @throws FormProcessException 
+     */
     protected void onBadPassword(FormSectionEvent event,
                                  FailedLoginException e)
             throws FormProcessException {

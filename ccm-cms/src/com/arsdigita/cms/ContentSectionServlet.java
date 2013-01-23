@@ -78,7 +78,7 @@ import org.apache.log4j.Logger;
  * In a process of refactoring from legacy compatible to legacy free applications.
  * TODO:
  * - replace url check using RequestContext which resolves to SiteNodeRequest
- *   implementation
+ *   implementation (due to SiteNodeRequest used in BaseApplicationServlet). 
  * - Refactor content item UI bebop ApplicationPage or PageFactory instead of
  *   legacy infected sitenode / package dispatchers.
  */

@@ -24,7 +24,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.Workspace;
+import com.arsdigita.cms.ContentCenter;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -246,7 +246,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         
         // Determine if we are under the admin UI.
         
-        if (url.startsWith(ADMIN_PREFIX) || url.startsWith(Workspace.getURL())) {
+        if (url.startsWith(ADMIN_PREFIX) || url.startsWith(ContentCenter.getURL())) {
             return ContentItem.DRAFT;
         } else {
             return ContentItem.LIVE;

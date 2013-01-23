@@ -42,8 +42,8 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.Workspace;
-import com.arsdigita.cms.WorkspaceServlet;
+import com.arsdigita.cms.ContentCenter;
+import com.arsdigita.cms.ContentCenterServlet;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -284,11 +284,11 @@ public class ItemSearchWidget extends FormSection
                     params.setParameter("defaultCreationFolder", m_defaultCreationFolder.getOID().toString());
                 }
 
-                String searchURL = WorkspaceServlet.getURLStubForClass(
+                String searchURL = ContentCenterServlet.getURLStubForClass(
                         ItemSearchPage.class.getName());
                 s_log.debug("Search URL stub is: " + searchURL);
 
-                searchURL = Workspace.getURL() + searchURL;
+                searchURL = ContentCenter.getURL() + searchURL;
 
                 // TODO Not sure what to do when you get a null here
 

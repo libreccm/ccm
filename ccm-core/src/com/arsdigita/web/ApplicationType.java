@@ -20,7 +20,7 @@ package com.arsdigita.web;
 
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.ResourceType;
-import com.arsdigita.kernel.PackageType;
+// import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -29,7 +29,7 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.PersistenceException;
-import com.arsdigita.domain.DataObjectNotFoundException;
+// import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.db.Sequences;
 import com.arsdigita.util.Assert;
@@ -62,8 +62,8 @@ public class ApplicationType extends ResourceType {
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.web.ApplicationType";
 
-    private PackageType m_packageType;
-    boolean m_legacyFree = false;
+//  private PackageType m_packageType;
+    boolean m_legacyFree = true;
 
     /**
      * Constructor creates a new ApplicationType instance to encapsulate a given
@@ -75,9 +75,9 @@ public class ApplicationType extends ResourceType {
      */
     public ApplicationType(DataObject dataObject) {
         super(dataObject);
-        if (this.getPackageType() == null) { // indicates a legacy free app
+    //  if (this.getPackageType() == null) { // indicates a legacy free app
             m_legacyFree = true;
-        }   // otherwise leave it on its default value of false
+    //  }   // otherwise leave it on its default value of false
     }
 
     protected ApplicationType(String dataObjectType) {
@@ -96,11 +96,11 @@ public class ApplicationType extends ResourceType {
                               final String applicationObjectType) {
         this(objectType, title, applicationObjectType, false);
     //  under some circumstances m_legacyFree is set correctly to true
-        if (m_legacyFree == false) {  //check if default value is correct!
-            if (this.getPackageType() == null) { // indicates a legacy free app
-                m_legacyFree = true;
-            }   // otherwise leave it on its default value of false
-        }
+    //  if (m_legacyFree == false) {  //check if default value is correct!
+    //      if (this.getPackageType() == null) { // indicates a legacy free app
+    //          m_legacyFree = true;
+    //      }   // otherwise leave it on its default value of false
+    //  }
 
     }
 
@@ -144,23 +144,23 @@ public class ApplicationType extends ResourceType {
     // circumstances)
     // Method overwrites a (overwritable) method provided by the super class to
     // process a created (empty) data object.
-    @Override
-    public void initialize() {
-        super.initialize();
-        s_log.debug("initialising application type "); 
-        if (!isNew() && getPackageType() == null) {
-            s_log.debug("legacy free type");
-            m_legacyFree = true;
-            
-        }
-    }
+//  @Override
+//  public void initialize() {
+//      super.initialize();
+//      s_log.debug("initialising application type "); 
+//      if (!isNew() && getPackageType() == null) {
+//          s_log.debug("legacy free type");
+//          m_legacyFree = true;
+//          
+//      }
+//  }
 
 
     private void setDefaults() {
         // Defaults for standalone applications.
-        setFullPageView(true);
-        setEmbeddedView(false);
-        setWorkspaceApplication(true);
+     // setFullPageView(true);
+     // setEmbeddedView(false);
+     // setWorkspaceApplication(true);
         setSingleton(false);
     }
 
@@ -175,142 +175,13 @@ public class ApplicationType extends ResourceType {
         this(BASE_DATA_OBJECT_TYPE, title, applicationObjectType);
     }
 
-    /**
-     * Creates a legacy-compatible application type.  Types created
-     * via this constructor use the passed in package type to back the
-     * new application type.
-     * @deprecated without direct replacement. Refactor to legacy free app.
-     */
-    protected ApplicationType(final String dataObjectType,
-                              final PackageType packageType,
-                              final String title,
-                              final String applicationObjectType) {
-        this(dataObjectType, packageType, title, applicationObjectType, false);
- 
-    }
 
     
     /**
-     * Legacy compatible application type
-     * @param dataObjectType
-     * @param packageType
-     * @param title
-     * @param applicationObjectType
-     * @param createContainerGroup
-     * @deprecated without direct replacement. Refactor to legacy free app.
-     */
-    protected ApplicationType(final String dataObjectType,
-                              final PackageType packageType,
-                              final String title,
-                              final String applicationObjectType,
-                              boolean createContainerGroup) {
-        this(dataObjectType);
-
-        Assert.exists(title, "title");
-        Assert.exists(applicationObjectType, "applicationObjectType");
-        Assert.exists(packageType, "packageType");
-
-        m_packageType = packageType;
-        setPackageType(m_packageType);
-
-        setTitle(title);
-        setApplicationObjectType(applicationObjectType);
-
-        setDefaults();
-        if (createContainerGroup) {
-            createGroup();
-        }
-    }
-
-    /**
-     * Creates a legacy-compatible application type using the passed
-     * in package type using an internal constructor (below).
-     * @deprecated without direct replacement. Refactor to legacy free app.
-     */
-    public static ApplicationType createApplicationType(PackageType packageType, 
-                                                        String title,
-                                                        String applicationObjectType) {
-        return new ApplicationType
-            (BASE_DATA_OBJECT_TYPE, packageType, title, applicationObjectType);
-    }
-
-    /**
-     * Creates a legacy-compatible application type.  The key
-     * parameter is used to create a legacy package type to back the
-     * new application type.
-     * This variant is applicatable if packageType does not already exist!
-     * @deprecated without direct replacement. Refactor to legacy free app.
-     */
-    protected ApplicationType(String dataObjectType, String key, String title,
-                              String applicationObjectType) {
-        this(dataObjectType, makePackageType(key, title), title,
-             applicationObjectType);
-    }
-
-    /**
-     * Helper method to create a packageType for a new legacy compatible 
-     * application type without an already existing (i.e. installed in db) legacy
-     * application.
      * 
-     * @param key of the package to be created
-     * @param title of the package to be created
-     * @return
-     * @deprecated without direct replacement. Refactor to legacy free app.
+     * @param id
+     * @return 
      */
-    private static PackageType makePackageType(String key, String title) {
-        PackageType packageType = new PackageType();
-
-        Assert.exists(key, "key");
-        Assert.exists(title, "title");
-
-        packageType.setKey(key);
-        packageType.setDisplayName(title);
-        packageType.setURI("http://arsdigita.com/" + key);
-
-        return packageType;
-    }
-
-    /**
-     * Creates a legacy-compatible application type.  The key
-     * parameter is used to create a legacy package type to back the
-     * new application type.
-     * @deprecated without direct replacement. Refactor to legacy free app.
-     */
-    public static ApplicationType createApplicationType(String key, String title,
-                                                        String applicationObjectType) {
-          	
-        return ApplicationType.createApplicationType(
-                                      key, title, applicationObjectType, false);
-         
-    }
-
-    /**
-     * Creates a legacy-compatible application type.  The key
-     * parameter is used to create a legacy package type to back the
-     * new application type.
-     * @deprecated without direct replacement. Refactor to legacy free app.
-     */
-    public static ApplicationType createApplicationType(
-                                  String key, String title,
-                                  String applicationObjectType,
-                                  boolean createContainerGroup) {
-        // See if the package type is already present.
-
-        PackageType packageType = null;
-
-        try {
-            packageType = PackageType.findByKey(key);
-
-            return new ApplicationType
-                (BASE_DATA_OBJECT_TYPE, packageType, title,
-                 applicationObjectType, createContainerGroup);
-        } catch (DataObjectNotFoundException nfe) {
-            return new ApplicationType
-                (BASE_DATA_OBJECT_TYPE, key, title, applicationObjectType);
-        }
-    }
-    
-    // Param
     public static ApplicationType retrieveApplicationType(BigDecimal id) {
         Assert.exists(id, "id");
 
@@ -372,65 +243,6 @@ public class ApplicationType extends ResourceType {
     }
 
     //
-    // Association properties (some by proxy)
-    //
-
-    /**
-     * Can return null.
-     * @return 
-     * @deprecated without direct replacement. Refactor to legacy free app.
-     */
-    public PackageType getPackageType() {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
-
-        final DataObject dataObject = (DataObject) get("packageType");
-
-        if (dataObject == null) {
-            return null;
-        } else {
-            return new PackageType(dataObject);
-        }
-    }
-
-    /**
-     * @deprecated with no replacement.
-     * @throws UnsupportedOperationException when this method is
-     * called for an application type without a corresponding package
-     * type.
-     */
-    protected void setPackageType(PackageType packageType) {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
-
-        Assert.exists(packageType, "packageType");
-        setAssociation("packageType", packageType);
-    }
-
-    /**
-     * @deprecated with no replacement.
-     * @throws UnsupportedOperationException when this method is
-     * called for an application type without a corresponding package
-     * type.
-     */
-    public void setDispatcherClass(String className) {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
-
-        if (m_packageType == null) {
-            m_packageType = getPackageType();
-        }
-
-        m_packageType.setDispatcherClass(className);
-    }
-
-    //
     // Member properties
     //
 
@@ -472,20 +284,20 @@ public class ApplicationType extends ResourceType {
         return result.booleanValue();
     }
 
-    /**
-     * @deprecated with no replacement.
-     * @throws UnsupportedOperationException when this method is
-     * called for an application type without a corresponding package
-     * type.
-     */
-    public void setWorkspaceApplication(boolean isWorkspaceApplication) {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
+//  /**
+//   * @deprecated with no replacement.
+//   * @throws UnsupportedOperationException when this method is
+//   * called for an application type without a corresponding package
+//   * type.
+//   */
+//  public void setWorkspaceApplication(boolean isWorkspaceApplication) {
+//      if (m_legacyFree == true) {
+//          throw new UnsupportedOperationException
+//              ("This method is only supported for legacy application types");
+//      }
 
-        set("isWorkspaceApplication", new Boolean(isWorkspaceApplication));
-    }
+//      set("isWorkspaceApplication", new Boolean(isWorkspaceApplication));
+//  }
 
     public boolean hasFullPageView() {
         final Boolean result = (Boolean) get("hasFullPageView");
@@ -495,46 +307,46 @@ public class ApplicationType extends ResourceType {
         return result.booleanValue();
     }
 
-    /**
-     * @deprecated with no replacement.
-     * @throws UnsupportedOperationException when this method is
-     * called for an application type without a corresponding package
-     * type.
-     */
-    protected void setFullPageView(boolean hasFullPageView) {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
+//  /**
+//   * @deprecated with no replacement.
+//   * @throws UnsupportedOperationException when this method is
+//   * called for an application type without a corresponding package
+//   * type.
+//   */
+//  protected void setFullPageView(boolean hasFullPageView) {
+//      if (m_legacyFree == true) {
+//          throw new UnsupportedOperationException
+//              ("This method is only supported for legacy application types");
+//      }
 
-        set("hasFullPageView", new Boolean(hasFullPageView));
-    }
+//      set("hasFullPageView", new Boolean(hasFullPageView));
+//  }
 
-    /**
-     * @deprecated with no replacement.
-     */
-    public boolean hasEmbeddedView() {
-        final Boolean result = (Boolean) get("hasEmbeddedView");
+//  /**
+//   * @deprecated with no replacement.
+//   */
+//  public boolean hasEmbeddedView() {
+//      final Boolean result = (Boolean) get("hasEmbeddedView");
 
-        Assert.exists(result, "Boolean result");
+//      Assert.exists(result, "Boolean result");
 
-        return result.booleanValue();
-    }
+//      return result.booleanValue();
+//  }
 
-    /**
-     * @deprecated with no replacement.
-     * @throws UnsupportedOperationException when this method is
-     * called for an application type without a corresponding package
-     * type.
-     */
-    protected void setEmbeddedView(boolean hasEmbeddedView) {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
+//  /**
+//   * @deprecated with no replacement.
+//   * @throws UnsupportedOperationException when this method is
+//   * called for an application type without a corresponding package
+//   * type.
+//   */
+//  protected void setEmbeddedView(boolean hasEmbeddedView) {
+//      if (m_legacyFree == true) {
+//          throw new UnsupportedOperationException
+//              ("This method is only supported for legacy application types");
+//      }
 
-        set("hasEmbeddedView", new Boolean(hasEmbeddedView));
-    }
+//      set("hasEmbeddedView", new Boolean(hasEmbeddedView));
+//  }
 
     // Can return null.
     public String getProfile() {
@@ -596,6 +408,7 @@ public class ApplicationType extends ResourceType {
      * <p>Remove an entry from the list of relevant privileges for
      * this ApplicationType.</p>
      */
+    @Override
     public void removeRelevantPrivilege(PrivilegeDescriptor privilege) {
         removeRelevantPrivilege(privilege.getName());
     }
@@ -604,6 +417,7 @@ public class ApplicationType extends ResourceType {
      * <p>Remove an entry from the list of relevant privileges for
      * this ApplicationType.</p>
      */
+    @Override
     public void removeRelevantPrivilege(String privilegeName) {
         OID privOID = new OID("com.arsdigita.kernel.permissions.Privilege",
                               privilegeName);
@@ -652,49 +466,49 @@ public class ApplicationType extends ResourceType {
     // the class name without leading package name.
     public String getName() {
 
-        if (m_legacyFree == true ) {
+     // if (m_legacyFree == true ) {
             s_log.debug("Expect XSL templates at " + StringUtils.urlize(getTitle()));
             return StringUtils.urlize(getTitle());
-        } else {
+     // } else {
             // m_legacyFree seems sometimes not set correctly! It's odd but the
             // goal is to get rid of legacy code so it should do it for the
-            // time beeing. We check getPackageType to see if m_legacyFree is
+            // time beeing. We svn rename check getPackageType to see if m_legacyFree is
             // really set correctly.
-            if (getPackageType() == null) { // indicates legacy free App
-                s_log.debug("Expect XSL templates at "
-                            + StringUtils.urlize(getTitle()));
-                m_legacyFree = true;   // correct m_legacyFree for future use
-                return StringUtils.urlize(getTitle());
-            } else {
-                return this.getPackageType().getKey();
-            }
+       //   if (getPackageType() == null) { // indicates legacy free App
+       //       s_log.debug("Expect XSL templates at "
+       //                   + StringUtils.urlize(getTitle()));
+       //       m_legacyFree = true;   // correct m_legacyFree for future use
+       //       return StringUtils.urlize(getTitle());
+       //   } else {
+       //       return this.getPackageType().getKey();
+       //   }
 
-        }
+     // }
     }
 
     /**
      * Declare this ApplicationType to be a singleton.  That is to
      * say, there ought to only ever be one Application of this type
      * directly under a given Workspace.
-     * @deprecated with no replacement.
-     * @throws UnsupportedOperationException when this method is
+     * @ deprecated with no replacement.
+     * @ throws UnsupportedOperationException when this method is
      * called for an application type without a corresponding package
      * type.
+     * Deprecated removed. Decided that also a new type app could be
+     * qualified as singleton. Specifically used in the planned app admin
+     * app.
      */
     public void setSingleton(boolean isSingleton) {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
 
         set("isSingleton", new Boolean(isSingleton));
     }
 
     /**
      * Tell whether this ApplicationType is a singleton.
-     * @deprecated with no replacement.
+     * @ deprecated with no replacement.
      */
     public boolean isSingleton() {
+
         final Boolean result = (Boolean) get("isSingleton");
 
         Assert.exists(result, "Boolean result");

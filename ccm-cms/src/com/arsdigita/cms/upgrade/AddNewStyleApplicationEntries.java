@@ -91,7 +91,7 @@ public class AddNewStyleApplicationEntries extends Program {
 
                 //  Update CMS Workspace
                 ApplicationType appType = null;
-                appType = Loader.loadWorkspaceApplicationType();
+                appType = Loader.loadContentCenterApplicationType();
                 // get corresponding package type
                 PackageType packageType = PackageType.findByKey("content-center");
                 // get all installed instances

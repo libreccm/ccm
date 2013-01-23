@@ -25,7 +25,7 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.PageLocations;
-import com.arsdigita.cms.Workspace;
+import com.arsdigita.cms.ContentCenter;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 
@@ -63,7 +63,7 @@ public class ContentItemNavbar extends CMSContainer {
         ContentType type = item.getContentType();
 
         final String url = URL.there(state.getRequest(),
-                                     Workspace.getURL()).toString();
+                                     ContentCenter.getURL()).toString();
 
         element.addAttribute("workspaceURL", url);
         element.addAttribute("sectionName", section.getName());

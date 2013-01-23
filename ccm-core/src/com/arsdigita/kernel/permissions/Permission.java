@@ -23,7 +23,6 @@ import com.arsdigita.web.Web;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 
@@ -69,6 +68,7 @@ class Permission extends DomainObject {
     static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.kernel.permissions.Permission";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -243,7 +243,7 @@ class Permission extends DomainObject {
                 RuntimeException("Permission entries cannot be modified");
         }
 
-        Party party = KernelHelper.getCurrentEffectiveParty();
+        Party party = Kernel.getContext().getEffectiveParty();
 
         if (party == null
                 || !party.getID().equals(Kernel.getSystemParty().getID())) {

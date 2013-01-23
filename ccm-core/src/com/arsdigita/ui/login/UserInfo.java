@@ -24,7 +24,6 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.kernel.User;
-import com.arsdigita.ui.UI;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.web.ApplicationType;
@@ -74,11 +73,11 @@ public class UserInfo extends SimpleContainer {
         // add list of links
         ListPanel list = new ListPanel(false);
         list.add(new DynamicLink("login.userInfo.logoutLink",
-                                 UI.getLogoutPageURL()));
+                                 LoginServlet.getLogoutPageURL()));
         list.add(new DynamicLink("login.userInfo.editProfileLink",
-                                 UI.getEditUserProfilePageURL()));
+                                 LoginServlet.getEditUserProfilePageURL()));
         list.add(new DynamicLink("login.userInfo.changePasswordLink",
-                                 UI.getRecoverPasswordPageURL()));
+                                 LoginServlet.getRecoverPasswordPageURL()));
         add(list);
 
         // add user info text
@@ -111,7 +110,7 @@ public class UserInfo extends SimpleContainer {
                         objectType = null; 
                     }
 
-                    // If application type CMS Workspace is installed:
+                    // If application type Content-Center (CMS Workspace) is installed:
                     if (objectType != null) {
                         // retrieve all packages of type content-center
                         // works because there may be only one.
@@ -120,7 +119,7 @@ public class UserInfo extends SimpleContainer {
 
                         // step through collection of instances of type Workspace
                         // generally there is only a single instance, but obviously
-                        // code takes care provided therfe is an instance for
+                        // code takes care provided there is an instance for
                         // each subsite.
                         while (workspaceInstances.next()) {
                             // retrieve one Workspace instance of collection

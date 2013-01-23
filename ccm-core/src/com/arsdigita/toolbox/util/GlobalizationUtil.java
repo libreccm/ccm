@@ -22,10 +22,8 @@ import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * <p>
- * .
- * Contains methods to simplify globalizing keys
- * </p>
+ * Utility class for package toolbox.ui, providing methods to simplify 
+ * globalizing keys.
  *
  * @version $Revision: #6 $ $Date: 2004/08/16 $
  */

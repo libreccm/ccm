@@ -301,6 +301,8 @@ public class Loader extends PackageLoader {
                 s_log.debug("CoreLoader: Going to execute loadHost().");
                 loadHost();
 
+                // Note: Loading of Subsite is currently required by Login
+                //       module otherwise Login doesn't work!
                 s_log.debug("CoreLoader: Going to execute loadSubsite().");
                 loadSubsite(loadKernel());
 
@@ -360,6 +362,9 @@ public class Loader extends PackageLoader {
     }
 
     /**
+     *   .
+     *   Note: Loading of Subsite is currently required by Login
+     *         module otherwise Login doesn't work!
      *
      * @param rootNode
      * @deprecated will be removed without replacement. Naot needed anymore

@@ -108,7 +108,10 @@ public class Initializer extends CompoundInitializer {
         s_log.debug("CMS.Initializer.(Constructor) invoked");
 
         add(new PDLInitializer(new ManifestSource("ccm-cms.pdl.mf",
-                                                  new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
+                                     new NameFilter(DbHelper
+                                                    .getDatabaseSuffix(database),
+                                     "pdl")))
+                              );
 
         add(new com.arsdigita.cms.contentsection.Initializer());
         add(new com.arsdigita.cms.publishToFile.Initializer());
@@ -127,12 +130,12 @@ public class Initializer extends CompoundInitializer {
         s_log.debug("CMS.Initializer.init(DomainInitEvent) invoked");
         super.init(e);
 
-        /* Register object instantiator for Workspace (Content Center)        */
-        e.getFactory().registerInstantiator(Workspace.BASE_DATA_OBJECT_TYPE,
+        /* Register object instantiator for ContentCenter (Content Center)    */
+        e.getFactory().registerInstantiator(ContentCenter.BASE_DATA_OBJECT_TYPE,
                                             new ACSObjectInstantiator() {
             @Override
             public DomainObject doNewInstance(DataObject dobj) {
-                return new Workspace(dobj);
+                return new ContentCenter(dobj);
             }
 
         });
@@ -203,10 +206,10 @@ public class Initializer extends CompoundInitializer {
         // cg - register Task Retrieval engine
         Engine.registerEngine(CMSEngine.CMS_ENGINE_TYPE, new CMSEngine());
 
-        // Setup Workspace tab to URL mapping
+        // Setup ContentCenter tab to URL mapping
         final String workspaceURL = CMS.WORKSPACE_PACKAGE_KEY;
         final String contentCenterMap = s_conf.getContentCenterMap();
-        WorkspaceSetup workspaceSetup = new WorkspaceSetup(workspaceURL,
+        ContentCenterSetup workspaceSetup = new ContentCenterSetup(workspaceURL,
                                                            contentCenterMap);
         workspaceSetup.run();
 

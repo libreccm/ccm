@@ -27,7 +27,6 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.sitenode.ServletErrorReport;
 import com.arsdigita.util.ResourceManager;
 
 import java.io.IOException;
@@ -168,9 +167,8 @@ public abstract class BaseServlet extends HttpServlet {
 
                     // Now we're ready to service the request.
 
-                    /* call flushAll on all non error paths so listeners
-                     * run in correct context (bug 108499)
-                     */
+                    /* call flushAll on all non error paths so listeners     *
+                     * run in correct context (bug 108499)                   */
 
                     try {
                         DeveloperSupport.startStage("BaseServlet.doService");
@@ -309,6 +307,13 @@ public abstract class BaseServlet extends HttpServlet {
         }
     }
 
+    /**
+     * 
+     * @param sresp
+     * @param transaction
+     * @param rs
+     * @throws IOException 
+     */
     private void redirect(final HttpServletResponse sresp,
                           final DatabaseTransaction transaction,
                           final RedirectSignal rs)
@@ -330,6 +335,12 @@ public abstract class BaseServlet extends HttpServlet {
         sresp.sendRedirect(url);
     }
 
+
+    /**
+     * 
+     * @param sreq
+     * @return 
+     */
     private URL getRequestURL(HttpServletRequest sreq) {
         URL url = (URL) sreq.getAttribute(REQUEST_URL_ATTRIBUTE);
 

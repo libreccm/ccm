@@ -398,14 +398,15 @@ public abstract class ACSObject extends ObservableDomainObject {
      * @throws PermissionException if the user does not have the privilege
      **/
     public final void assertPrivilege(PrivilegeDescriptor priv) {
-        Party party = KernelHelper.getCurrentEffectiveParty();
+        Party party = Kernel.getContext().getEffectiveParty();
         if (s_log.isDebugEnabled()) {
             s_log.debug("Check privilege " + priv.getName() + 
                         " on object " + getOID() + " against party " +
                         (party == null ? null : party.getOID()));
         }
-        PermissionService.assertPermission(
-                                           new PermissionDescriptor(priv, this, party));
+        PermissionService.assertPermission(new PermissionDescriptor(priv, 
+                                                                    this, 
+                                                                    party));
     }
 
 
@@ -419,9 +420,11 @@ public abstract class ACSObject extends ObservableDomainObject {
      * this object, false otherwise
      **/
     public final boolean checkPrivilege(PrivilegeDescriptor priv) {
-        Party party = KernelHelper.getCurrentEffectiveParty();
-        return PermissionService.checkPermission(
-                                                 new PermissionDescriptor(priv, this, party));
+        Party party = Kernel.getContext().getEffectiveParty();
+        return PermissionService.checkPermission(new PermissionDescriptor(priv, 
+                                                                          this, 
+                                                                          party)
+                                                 );
     }
 
 

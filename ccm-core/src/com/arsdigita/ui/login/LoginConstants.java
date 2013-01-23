@@ -73,11 +73,12 @@ public interface LoginConstants
     public final static String FORM_EMAIL =
         "emailAddress";
     public final static String FORM_SCREEN_NAME =
-	"screenName";
+        "screenName";
 
-    // Should not really be named email. Kept this way due to external tests depending on this value.
+    // Should not really be named email. Kept this way due to external tests 
+    // depending on this value.
     public final static String FORM_LOGIN =
-	"email";
+        "email";
 
     public final static String FORM_ADDITIONAL_EMAIL =
         "additional_email";

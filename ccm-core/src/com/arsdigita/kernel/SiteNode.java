@@ -108,6 +108,7 @@ public class SiteNode extends ACSObject {
     }
 
     @Override
+    @Deprecated
     protected void initialize() {
         super.initialize();
         if (isNew()) {
@@ -503,6 +504,7 @@ public class SiteNode extends ACSObject {
         return getSiteNode(path, false);
     }
 
+    @Deprecated
     public static SiteNode createSiteNode(String name) {
         return createSiteNode(name, getRootSiteNode());
     }
@@ -522,10 +524,12 @@ public class SiteNode extends ACSObject {
         super.beforeSave();
     }
 
+    @Deprecated
     public void afterDelete() {
         s_cache.scheduleRefresh();
     }
 
+    @Deprecated
     public static SiteNode createSiteNode(String name, SiteNode parent) {
         SiteNode siteNode = new SiteNode();
         siteNode.setName(name);
@@ -535,6 +539,7 @@ public class SiteNode extends ACSObject {
     }
 
     @Override
+    @Deprecated
     public String toString() {
         return "[url: " + getURL() + "]";
     }
@@ -590,6 +595,7 @@ public class SiteNode extends ACSObject {
         }
 
         @Override
+        @Deprecated
         public boolean equals(Object obj) {
             if (obj==null) { return false; }
 
@@ -599,11 +605,13 @@ public class SiteNode extends ACSObject {
         }
 
         @Override
+        @Deprecated
         public int hashCode() {
             return m_node.getID().hashCode() + m_node.getURL().hashCode();
         }
 
         @Override
+        @Deprecated
         public String toString() {
             return m_node.toString();
         }
@@ -611,13 +619,16 @@ public class SiteNode extends ACSObject {
 
     // Caching of Site Nodes
     // Stores the cached (url, siteNode) mappings.
+    @Deprecated
     private static class Cache extends PathMapCache {
 
+        @Deprecated
         public Cache() {
             super("SiteNodeCache");
         }
 
         // implements the PathMapCache interface
+        @Deprecated
         public String normalize(String path) {
             if ( path==null ) { throw new NullPointerException("path"); }
             if ( !path.startsWith("/") ) {
@@ -628,6 +639,7 @@ public class SiteNode extends ACSObject {
         }
 
         // implements the PathMapCache interface
+        @Deprecated
         public Object retrieve(String path) {
             DataCollection dc = SessionManager.getSession().retrieve
                 ("com.arsdigita.kernel.SiteNode");
@@ -650,14 +662,17 @@ public class SiteNode extends ACSObject {
         }
 
         // implements the PathMapCache interface
+        @Deprecated
         public void refresh() {
             clearAll();
         }
 
+        @Deprecated
         void scheduleRefresh() {
             super.refreshAfterCommit();
         }
 
+        @Deprecated
         synchronized SiteNode getNode(String path) {
             SiteNodeWrapper snw = (SiteNodeWrapper) super.get(path);
             return snw.m_node;

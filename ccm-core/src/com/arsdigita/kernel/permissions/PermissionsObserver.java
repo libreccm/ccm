@@ -22,7 +22,7 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.GlobalObserver;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.metadata.ObjectType;
@@ -93,7 +93,7 @@ public class PermissionsObserver implements GlobalObserver {
     }
 
     private boolean isKernelMode() {
-        Party currentParty = KernelHelper.getCurrentEffectiveParty();
+        Party currentParty = Kernel.getContext().getEffectiveParty();
 
         return (currentParty != null &&
                 currentParty.getID().equals(Kernel.getSystemParty().getID()));

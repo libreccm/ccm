@@ -58,7 +58,7 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.ObjectPermissionCollection;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -344,7 +344,7 @@ public class FlatItemList extends SegmentedPanel
 
         m_editFolderAction.setVisible(state, editItem);
 
-        User user = KernelHelper.getCurrentUser(state.getRequest());
+        User user = (User) Kernel.getContext().getParty();
         PermissionDescriptor perm =
             new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
                                      folder,

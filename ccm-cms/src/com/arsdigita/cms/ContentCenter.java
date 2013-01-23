@@ -21,10 +21,7 @@ package com.arsdigita.cms;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationCollection;
-import com.arsdigita.web.ApplicationType;
-import com.arsdigita.web.URL;
+import com.arsdigita.web.*;
 
 import java.math.BigDecimal;
 
@@ -35,15 +32,16 @@ import org.apache.log4j.Logger;
  * Application domain class for the CMS module user entry page (content-center)
  *
  * @author pb
- * @version $Id: Workspace.java $
+ * @version $Id: ContentCenter.java $
  */
-public class Workspace extends Application {
+public class ContentCenter extends Application {
 
+    /** A logger instance, primarily to assist debugging .                    */
     private static final Logger s_log = Logger.getLogger(ContentSection.class);
 
     // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.Workspace";
+                               "com.arsdigita.cms.ContentCenter";
 
     // general constants
     public static final String PACKAGE_KEY = "content-center";
@@ -57,7 +55,7 @@ public class Workspace extends Application {
      * @param oid the OID of the workspace (content-center)
      * @throws DataObjectNotFoundException
      */
-    public Workspace(OID oid) throws DataObjectNotFoundException {
+    public ContentCenter(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
@@ -68,14 +66,14 @@ public class Workspace extends Application {
      * @param id The <code>id</code> for the retrieved
      * <code>DataObject</code>.
      */
-    public Workspace(BigDecimal key)  throws DataObjectNotFoundException {
+    public ContentCenter(BigDecimal key)  throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
 
     /**
      * Constructs a repository from the underlying data object.
      */
-    public Workspace(DataObject dataObject) {
+    public ContentCenter(DataObject dataObject) {
         super(dataObject);
     }
 
@@ -92,12 +90,12 @@ public class Workspace extends Application {
     /**
      * This is called when the application is created.
      */
-    public static Workspace create(String urlName,
-                                   String title,
-                                   Application parent) {
+    public static ContentCenter create(String urlName,
+                                       String title,
+                                       Application parent) {
 
-        Workspace app =
-            (Workspace) Application.createApplication
+        ContentCenter app =
+            (ContentCenter) Application.createApplication
             (BASE_DATA_OBJECT_TYPE, urlName, title, parent);
 
         app.save();
@@ -105,39 +103,32 @@ public class Workspace extends Application {
         return app;
     }
 
-    /**
-     * Returns an instance of the Workspace application. There must not more
-     * than one instance exist. May return null.
-     */
-    public static Application getInstance() {
-        ApplicationType workspaceType = ApplicationType.
-            retrieveApplicationTypeForApplication(BASE_DATA_OBJECT_TYPE);
-        if ( workspaceType == null ) { return null; }
-
-        ApplicationCollection apps = Application.retrieveAllApplications();
-        apps.addEqualsFilter("resourceType.id", workspaceType.getID());
-        if ( !apps.next() ) { return null; }
-
-        Application result = apps.getApplication();
-        apps.close();
-        return result;
-    }
 
     /**
-     * Fetch the location (URL) of the CMS Workspace. There must not more than
-     * one instance exist. 
+     * Fetch the URL of the CMS ContentCenter. 
      * 
-     * @return The URL of the CMS Workspace (currently including trailing slash)
+     * Currently only one Content Center application installed is allowed!
+     * Therefore we simply may return the URL used to load and initialise the
+     * Content Center.
+     * 
+     * @return The URL of the CMS ContentCenter (currently including trailing slash)
      */
     public static String getURL() {
-        
-        Application app = Workspace.getInstance(); 
-        if (app == null) {
-            return null;
-        } else {
-            String url = (String) app.getPrimaryURL();
-            return url;
-        }
+        // quick 'nd dirty!
+        return "/"+PACKAGE_KEY;
+
+    //  Doesn't work as expected
+    //  see c.ad.ui.login.UserInfo for a working (hopefully) example.
+    //  ApplicationCollection apps = Application
+    //                               .retrieveAllApplications(BASE_DATA_OBJECT_TYPE);
+    //  if (apps.next()) {
+    //      // Note: Currently only one Content Center application is allowed!
+    //      s_log.error("Instance of ContentCenter found!");
+    //      return apps.getPrimaryURL();
+    //  } else {
+    //      s_log.error("No instance of ContentCenter could be found!");
+    //      return null;            
+    //  }
     }
 
     /**

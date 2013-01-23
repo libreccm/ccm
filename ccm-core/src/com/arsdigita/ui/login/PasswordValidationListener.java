@@ -55,6 +55,7 @@ public class PasswordValidationListener
      * Checks whether the string value of the parameter meets minimum-length
      * and composition requirements for strong passwords.
      */
+    @Override
     public void validate(ParameterEvent e) {
         super.validate(e);
 

@@ -1,0 +1,5 @@
+
+Version 6.6.8
+- Remove Dependency from SiteNodeRequestContext
+  (Starting with removal of SNRC in core web.BaseApplicationServlet) 
+  - Refactored content-center from dispatcher mechanism to bebop page

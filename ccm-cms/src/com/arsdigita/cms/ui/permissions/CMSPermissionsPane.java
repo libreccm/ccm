@@ -41,7 +41,7 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -389,7 +389,7 @@ public class CMSPermissionsPane extends SimpleContainer
 
             // Now check for object admin
             if (!canAccess) {
-                User user = KernelHelper.getCurrentUser();
+                User user = (User)Kernel.getContext().getParty();
                 PermissionDescriptor perm =
                     new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
                                              object, user);

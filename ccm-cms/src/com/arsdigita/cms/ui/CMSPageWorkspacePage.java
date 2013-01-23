@@ -20,29 +20,26 @@ package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.dispatcher.CMSPage;
-import com.arsdigita.cms.ui.workspace.TasksPanel;
+import com.arsdigita.cms.ui.contentcenter.TasksPanel;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.kernel.KernelHelper;
-import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.ui.DebugPanel;
 
 
 /**
- * <p>The Content Center page.</p>
+ * <p>The Content Center main page (index page). </p>
+ * 
+ * This class uses the dispatcher based page creation mechanism. 
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
@@ -66,6 +63,9 @@ public class CMSPageWorkspacePage extends CMSPage implements ActionListener {
      * Construct a new CMSPageWorkspacePage
      */
     public CMSPageWorkspacePage() {                          // Constructor Page
+        
+        /* specifically invokes PresentationManager / PageTransformer to create
+         * a page instantiation.                                              */
         super(new Label( GlobalizationUtil.globalize
                          ("cms.ui.content_center")),
               new SimpleContainer());
@@ -74,16 +74,16 @@ public class CMSPageWorkspacePage extends CMSPage implements ActionListener {
 
         BigDecimalParameter typeId = new BigDecimalParameter(CONTENT_TYPE);
         addGlobalStateParam(typeId);
-        m_typeSel = new ACSObjectSelectionModel
-            (ContentType.class.getName(), ContentType.BASE_DATA_OBJECT_TYPE, typeId);
+        m_typeSel = new ACSObjectSelectionModel(ContentType.class.getName(), 
+                                                ContentType.BASE_DATA_OBJECT_TYPE, 
+                                                typeId);
 
-        BigDecimalParameter sectionId = new BigDecimalParameter
-            (CONTENT_SECTION);
+        BigDecimalParameter sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(sectionId);
         m_sectionSel = new ACSObjectSelectionModel
-                               (ContentSection.class.getName(), 
-                                ContentSection.BASE_DATA_OBJECT_TYPE, 
-                                sectionId);
+                                              (ContentSection.class.getName(), 
+                                               ContentSection.BASE_DATA_OBJECT_TYPE, 
+                                               sectionId);
 
         add( new WorkspaceContextBar() );
         add( new GlobalNavigation()    );
@@ -101,7 +101,7 @@ public class CMSPageWorkspacePage extends CMSPage implements ActionListener {
     /**
      * Creates, and then caches, the Tasks pane. Overriding this
      * method to return null will prevent this tab from appearing.
-     **/
+     */
     protected TasksPanel getTasksPane(ACSObjectSelectionModel typeModel, 
                                       ACSObjectSelectionModel sectionModel) {
         if (m_tasks == null) {
@@ -122,7 +122,7 @@ public class CMSPageWorkspacePage extends CMSPage implements ActionListener {
         return m_search;
     }
 
-
+/*
     private SimpleContainer makeHeader() {
         PrintListener l = new PrintListener() {
                 public void prepare(PrintEvent event) {
@@ -145,21 +145,22 @@ public class CMSPageWorkspacePage extends CMSPage implements ActionListener {
         return sc;
 
     }
-
+*/
 
     /**
-     * Created the TabbedPane to use for this page. Sets the class
-     * attribute for this tabbed pane. The default implementation uses a
-     * {@link com.arsdigita.bebop.TabbedPane} and sets the class
+     * Created the TabbedPane to use for this page. 
+     * 
+     * This is the "index" page, displayed at the base address (content-center 
+     * by default).
+     * 
+     * Sets the class attribute for this tabbed pane. The default implementation 
+     * uses a {@link com.arsdigita.bebop.TabbedPane} and sets the class
      * attribute to "CMS Admin." This implementation also adds tasks,
      * content sections, and search panes.
      *
-     *<p>
-     *
-     * Developers can override this method to add only the tabs they
-     * want, or to add additional tabs after the default CMS tabs are
-     * added.
-     **/
+     * Developers can override this method to add only the tabs they want,
+     * or to add additional tabs after the default CMS tabs are added.
+     */
     protected TabbedPane createTabbedPane() {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);

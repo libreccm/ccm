@@ -23,7 +23,6 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
- *
  * <p>The entry point into all the global state that CCM code expects to
  * have available to it when running, e.g. the current user, the
  * current resource, etc.</p>
@@ -40,12 +39,9 @@ import org.apache.log4j.Logger;
  * @author Justin Ross
  * @see com.arsdigita.kernel.Kernel
  * @see com.arsdigita.kernel.KernelExcursion
+ * @version $Id: KernelContext.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class KernelContext {
-    public static final String versionId =
-        "$Id: KernelContext.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(KernelContext.class);
 
@@ -105,6 +101,20 @@ public final class KernelContext {
      */
     public final Party getParty() {
         return m_party;
+    }
+    /**
+     * Returns the current user.
+     * Backwards compatibility method which returns a user object. Developers
+     * should use getParty whenever possible (party is an abstraction of users
+     * as well as groups).
+     */
+    public static User getUser() {
+        KernelContext kernelContext = Kernel.getContext();
+        if ( kernelContext.getParty() instanceof User ) {
+            return (User) kernelContext.getParty();
+        } else {
+            return null;
+        }
     }
 
     final void setParty(Party party) {

@@ -43,6 +43,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class BaseJSP extends BaseServlet implements HttpJspPage {
 
+    /** A logger instance, primarily to assist debugging .                    */
     private static Logger s_log = Logger.getLogger(BaseJSP.class);
 
     /**
@@ -53,6 +54,7 @@ public abstract class BaseJSP extends BaseServlet implements HttpJspPage {
      * @see com.arsdigita.web.BaseServlet
      * @see com.arsdigita.web.BaseServlet#doService(HttpServletRequest,HttpServletResponse)
      */
+    @Override
     protected final void doService(final HttpServletRequest sreq,
                                    final HttpServletResponse sresp)
             throws ServletException, IOException {

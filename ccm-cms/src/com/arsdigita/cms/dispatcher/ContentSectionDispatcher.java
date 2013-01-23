@@ -27,8 +27,9 @@ import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelContext;
+import com.arsdigita.kernel.KernelRequestContext;
 import com.arsdigita.kernel.User;
-import com.arsdigita.sitenode.SiteNodeRequestContext;
+// import com.arsdigita.sitenode.SiteNodeRequestContext;
 import com.arsdigita.util.Assert;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -64,7 +65,8 @@ public class ContentSectionDispatcher implements Dispatcher {
                          RequestContext context)
         throws IOException, ServletException {
 
-        setContentSection(request, (SiteNodeRequestContext) context);
+//      setContentSection(request, (SiteNodeRequestContext) context);
+        setContentSection(request, (KernelRequestContext) context);
         dispatcherChain.dispatch(request, response, context);
     }
 
@@ -98,7 +100,8 @@ public class ContentSectionDispatcher implements Dispatcher {
      * @return The current Content Section
      */
     private void setContentSection(HttpServletRequest request,
-                                   SiteNodeRequestContext actx)
+                            //     SiteNodeRequestContext actx)
+                                   KernelRequestContext actx)
         throws ServletException {
 
         try {

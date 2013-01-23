@@ -20,20 +20,20 @@ package com.arsdigita.web;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.domain.DomainServiceInterfaceExposer;
+// import com.arsdigita.domain.DomainServiceInterfaceExposer;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.kernel.PackageInstance;
-import com.arsdigita.kernel.PackageType;
+// import com.arsdigita.kernel.KernelExcursion;
+// import com.arsdigita.kernel.PackageInstance;
+// import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.Resource;
-import com.arsdigita.kernel.SiteNode;
-import com.arsdigita.persistence.DataAssociation;
-import com.arsdigita.persistence.DataAssociationCursor;
+// import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.persistence.DataAssociation;
+// import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataQuery;
+// import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
@@ -47,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * <p>A base class for defining a web application.  An application has
- * three important aspects:</p>
- *
+ * <p>A base class for defining a web application. </p> 
+ * 
+ * An application has three important aspects:
  * <ol>
  *   <li><em>Each is a data partition.</em> An application is like a
  *   folder: it contains a user-driven subset of the objects in the
@@ -126,7 +126,7 @@ public class Application extends Resource {
         if (Assert.isEnabled()) {
             Assert.exists(type, ApplicationType.class);
             Assert.exists(title, String.class);
-            Assert.isTrue(type.m_legacyFree);
+         // Assert.isTrue(type.m_legacyFree);
         }
 
         return Application.make(type, null, title, null, createContainerGroup);
@@ -220,15 +220,15 @@ public class Application extends Resource {
             Assert.isTrue(!fragment.equals(""),
                          "The URL fragment must not be the empty string");
         }
-        s_log.debug("Application type legacy free: " + type.m_legacyFree );
-        if (type.m_legacyFree) {
+    //  s_log.debug("Application type legacy free: " + type.m_legacyFree );
+    //  if (type.m_legacyFree) {
             return Application.make(type,fragment,title,parent,
                                     createContainerGroup);
-        } else {
-            s_log.debug("Creating legacy compatible app");
-            return Application.legacyMake(type,fragment,title,parent,
-                                          createContainerGroup);
-        }
+    //  } else {
+    //      s_log.debug("Creating legacy compatible app");
+    //      return Application.legacyMake(type,fragment,title,parent,
+    //                                    createContainerGroup);
+    //  }
     }
 
     /** 
@@ -287,17 +287,17 @@ public class Application extends Resource {
         return app;
     }
 
-    /**
-     * Creates (makes) a legacy compatible application (using deprecated kernel
-     * packageType and sitenode stuff).
-     * @param type
-     * @param fragment
-     * @param title
-     * @param parent
-     * @param createContainerGroup
-     * @return
-     */
-    private static Application legacyMake(final ApplicationType type,
+//  /**
+//   * Creates (makes) a legacy compatible application (using deprecated kernel
+//   * packageType and sitenode stuff).
+//   * @param type
+//   * @param fragment
+//   * @param title
+//   * @param parent
+//   * @param createContainerGroup
+//   * @return
+//   */
+/*private static Application legacyMake(final ApplicationType type,
                                           final String fragment,
                                           final String title,
                                           final Application parent,
@@ -343,7 +343,7 @@ public class Application extends Resource {
         }
 
         return application;
-    }
+    }  */
 
     public static Application retrieveApplication(BigDecimal id) {
         OID oid = new OID(BASE_DATA_OBJECT_TYPE, id);
@@ -385,14 +385,14 @@ public class Application extends Resource {
         return (Application) result;
     }
 
-    /**
-     * 
-     * Can return null.
-     * @param siteNode
-     * @return
-     * @deprecated 
-     */
-    public static Application retrieveApplicationForSiteNode
+//  /**
+//   * 
+//   * Can return null.
+//   * @param siteNode
+//   * @return
+//   * @ deprecated 
+//   */
+/*  public static Application retrieveApplicationForSiteNode
         (SiteNode siteNode) {
         DataQuery query = SessionManager.getSession().retrieveQuery
             ("com.arsdigita.web.applicationForSiteNodeID");
@@ -409,7 +409,7 @@ public class Application extends Resource {
         query.close();
 
         return application;
-    }
+    }   */
 
     // Can return null.
     public static Application retrieveApplicationForPath(String path) {
@@ -452,13 +452,13 @@ public class Application extends Resource {
     }
 
     // COMPAT XXX
-    /**
-     * @deprecated refactor not using deprecated class PackageType. Use
-     * ApplicationType instead
-     */
-    public PackageType getPackageType() {
-        return getApplicationType().getPackageType();
-    }
+//  /**
+//   * @deprecated refactor not using deprecated class PackageType. Use
+//   * ApplicationType instead
+//   */
+//  public PackageType getPackageType() {
+//      return getApplicationType().getPackageType();
+//  }
 
     // Can return null.
     public Application getParentApplication() {
@@ -512,37 +512,37 @@ public class Application extends Resource {
         return children;
     }
 
-    /**
-     * 
-     * @return
-     * @deprecated refactor to use other methods of class aüpplication instead
-     */
-    private PackageInstance getPackageInstance() {
+//  /**
+//   * 
+//   * @return
+//   * @deprecated refactor to use other methods of class aüpplication instead
+//   */
+/*  private PackageInstance getPackageInstance() {
         DataObject dataObject = (DataObject) get("packageInstance");
 
         Assert.exists(dataObject, DataObject.class);
 
         return new PackageInstance(dataObject);
-    }
+    }  */
 
-    /**
-     * 
-     * @return
-     * @deprecated refactor to use other methods of class aüpplication instead
-     */
-    private void setPackageInstance(PackageInstance packageInstance) {
+//  /**
+//   * 
+//   * @return
+//   * @deprecated refactor to use other methods of class aüpplication instead
+//   */
+/*  private void setPackageInstance(PackageInstance packageInstance) {
         Assert.exists(packageInstance, PackageInstance.class);
 
         setAssociation("packageInstance", packageInstance);
-    }
+    }   */
 
-    /** 
-     * 
-     * Needs to be getSiteNodes instead.
-     * @return Can return null.
-     * @deprecated 
-     */
-    public SiteNode getSiteNode() {
+//  /** 
+//    * 
+//   * Needs to be getSiteNodes instead.
+//   * @return Can return null.
+//   * @deprecated 
+//   */
+/*  public SiteNode getSiteNode() {
         DataObject packageInstance = (DataObject)get("packageInstance");
 
         DataAssociation siteNodes = (DataAssociation)packageInstance.get
@@ -562,7 +562,7 @@ public class Application extends Resource {
         } else {
             return new SiteNode(siteNode);
         }
-    }
+    }    */
 
     // Can return null.
     /**
@@ -649,7 +649,7 @@ public class Application extends Resource {
  * in parallel we have to use a trailing slash for legacy free applications,
  * otherwise they will not be found by methods like retrieveApplicationForPath()
  * which is called by legacy compatible apps including a trailing slash. If 
- * legacy free apps are store without trailing slash the search will never match.  
+ * legacy free apps are stored without trailing slash the search will never match.  
  */
 //          Assert.isTrue
 //              (path.equals("") || (path.startsWith(SLASH)
@@ -722,7 +722,7 @@ public class Application extends Resource {
     //
     // To support ACSObject services
     //
-    private static SiteNode makeSiteNode(String urlName, Application parent) {
+/*  private static SiteNode makeSiteNode(String urlName, Application parent) {
         SiteNode siteNode;
 
         if (parent == null) {
@@ -738,7 +738,7 @@ public class Application extends Resource {
         Assert.exists(siteNode, SiteNode.class);
 
         return siteNode;
-    }
+    }  */
 
     /**
      * Returns a canonical application URL.  This is a utility method
@@ -814,10 +814,10 @@ public class Application extends Resource {
     @Override
     public void beforeDelete() {
         super.beforeDelete();
-        SiteNode node = getSiteNode();
-        if (node != null) {
-            node.delete();
-        }
+    //  SiteNode node = getSiteNode();
+    //  if (node != null) {
+    //      node.delete();
+    //  }
     }
 
     @Override
@@ -867,8 +867,13 @@ public class Application extends Resource {
     }
 
 
-	// if application name changes, change name of container group
-	
+    /**
+     * .
+     * 
+     * Note: If application name changes, change name of container group.
+     * 
+     * @param title 
+     */
     @Override
     public void setTitle (String title) {
 	super.setTitle(title);

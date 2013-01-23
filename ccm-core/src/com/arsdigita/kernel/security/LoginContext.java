@@ -38,11 +38,11 @@ import org.apache.log4j.Logger;
  * <code>Class.forName()</code>.  The JAAS bug will be fixed in JDK 1.4.
  *
  * @author Sameer Ajmani
+ * @version $Id: LoginContext.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class LoginContext {
 	private final static Logger s_log = Logger.getLogger( LoginContext.class );
 
-    public static final String versionId = "$Id: LoginContext.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private Subject m_subject;
     private CallbackHandler m_handler;
     private Map m_shared = new HashMap();
@@ -51,7 +51,7 @@ public class LoginContext {
 
     /**
      * See <code>javax.security.auth.login.LoginContext</code>.
-     **/
+     */
     public LoginContext(String name)
         throws LoginException {
         this(name, new Subject());
@@ -59,7 +59,7 @@ public class LoginContext {
 
     /**
      * See <code>javax.security.auth.login.LoginContext</code>.
-     **/
+     */
     public LoginContext(String name,
                         Subject subject)
         throws LoginException {
@@ -76,7 +76,7 @@ public class LoginContext {
 
     /**
      * See <code>javax.security.auth.login.LoginContext</code>.
-     **/
+     */
     public LoginContext(String name,
                         CallbackHandler handler)
         throws LoginException {
@@ -85,7 +85,7 @@ public class LoginContext {
 
     /**
      * See <code>javax.security.auth.login.LoginContext</code>.
-     **/
+     */
     public LoginContext(String name,
                         Subject subject,
                         CallbackHandler handler)
@@ -142,14 +142,14 @@ public class LoginContext {
 
     /**
      * See <code>javax.security.auth.login.LoginContext</code>.
-     **/
+     */
     public Subject getSubject() {
         return m_subject;
     }
 
     /**
      * See <code>javax.security.auth.login.LoginContext</code>.
-     **/
+     */
     public void login() throws LoginException {
         LoginException first = null;
         boolean gotFailure = false;
@@ -256,7 +256,7 @@ public class LoginContext {
 
     /**
      * See <code>javax.security.auth.login.LoginContext</code>.
-     **/
+     */
     public void logout() throws LoginException {
         LoginException first = null;
         // logout

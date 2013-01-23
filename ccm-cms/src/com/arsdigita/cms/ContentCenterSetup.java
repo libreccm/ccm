@@ -45,9 +45,9 @@ import org.xml.sax.SAXException;
  * @author Peter Boy <pboy@barkhof.uni-bremen.,de>
  * @version $Id:  $
  */
-public final class WorkspaceSetup {
+public final class ContentCenterSetup {
 
-    private static Logger s_log = Logger.getLogger(WorkspaceSetup.class);
+    private static Logger s_log = Logger.getLogger(ContentCenterSetup.class);
 
     /** URL to access the CMS Workspace, by default content-center  */
     final String m_workspaceURL;
@@ -69,7 +69,7 @@ public final class WorkspaceSetup {
      * @param workspaceURL
      * @param contentCenterMap
      */
-    public WorkspaceSetup( String workspaceURL,
+    public ContentCenterSetup( String workspaceURL,
                            String contentCenterMap) {
 
         m_workspaceURL = workspaceURL;

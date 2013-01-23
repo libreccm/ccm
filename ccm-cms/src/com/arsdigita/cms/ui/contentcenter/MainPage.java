@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,39 +15,43 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.ui;
+package com.arsdigita.cms.ui.contentcenter;
 
-import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.TabbedPane;
+import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.dispatcher.CMSPage;
-import com.arsdigita.cms.ui.workspace.TasksPanel;
+import com.arsdigita.cms.ui.GlobalNavigation;
+import com.arsdigita.cms.ui.ItemSearch;
+import com.arsdigita.cms.ui.WorkspaceContextBar;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.ui.DebugPanel;
+import com.arsdigita.web.Web;
+import com.arsdigita.xml.Document;
+import com.arsdigita.xml.Element;
+import org.apache.log4j.Logger;
 
 
 /**
- * <p>The Content Center page.</p>
+ * <p>The Content Center main page. </p>
+ * 
+ * The page contains the general header and footer, the breadcrumb, and the
+ * complete content page including the tab bar, the sections/tasks page, the
+ * search page, and the listener to switch between the tabs. 
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: WorkspacePage.java 2280 2012-03-10 23:55:04Z pboy $
+ * @author Peter Boy (pboy@barkhof.uni-bremen.de)
+ * @version $Id: MainPage.java pboy $
  */
-public class WorkspacePage extends CMSPage implements ActionListener {
+public class MainPage extends Page implements ActionListener {
+
+    private static final Logger s_log = Logger.getLogger(MainPage.class);
 
     private final static String XSL_CLASS = "CMS Admin";
 
@@ -63,27 +66,35 @@ public class WorkspacePage extends CMSPage implements ActionListener {
     public static final String CONTENT_SECTION = "section_id";
 
     /**
-     * Construct a new CMSPageWorkspacePage
+     * Construct a new MainPage.
+     * 
+     * Creates the complete page ready to be included in the page cache of
+     * ContentCenterServlet. 
      */
-    public WorkspacePage() {                          // Constructor Page
+    public MainPage() {
+        
         super(new Label( GlobalizationUtil.globalize
                          ("cms.ui.content_center")),
               new SimpleContainer());
 
+        /* Set the class attribute value (down in SimpleComponent).           */
         setClassAttr("cms-admin");
 
         BigDecimalParameter typeId = new BigDecimalParameter(CONTENT_TYPE);
         addGlobalStateParam(typeId);
-        m_typeSel = new ACSObjectSelectionModel
-            (ContentType.class.getName(), ContentType.BASE_DATA_OBJECT_TYPE, typeId);
+        m_typeSel = new ACSObjectSelectionModel(
+                                            ContentType.class.getName(), 
+                                            ContentType.BASE_DATA_OBJECT_TYPE, 
+                                            typeId
+                                               );
 
-        BigDecimalParameter sectionId = new BigDecimalParameter
-            (CONTENT_SECTION);
+        BigDecimalParameter sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(sectionId);
-        m_sectionSel = new ACSObjectSelectionModel
-                               (ContentSection.class.getName(), 
-                                ContentSection.BASE_DATA_OBJECT_TYPE, 
-                                sectionId);
+        m_sectionSel = new ACSObjectSelectionModel(
+                                          ContentSection.class.getName(), 
+                                          ContentSection.BASE_DATA_OBJECT_TYPE, 
+                                          sectionId
+                                                  );
 
         add( new WorkspaceContextBar() );
         add( new GlobalNavigation()    );
@@ -96,12 +107,15 @@ public class WorkspacePage extends CMSPage implements ActionListener {
         add(m_tabbedPane);
 
         add(new DebugPanel());
+        
+        /* Page complete, locked now.                                         */
+        lock();
     }
 
     /**
      * Creates, and then caches, the Tasks pane. Overriding this
      * method to return null will prevent this tab from appearing.
-     **/
+     */
     protected TasksPanel getTasksPane(ACSObjectSelectionModel typeModel, 
                                       ACSObjectSelectionModel sectionModel) {
         if (m_tasks == null) {
@@ -122,7 +136,7 @@ public class WorkspacePage extends CMSPage implements ActionListener {
         return m_search;
     }
 
-
+/*
     private SimpleContainer makeHeader() {
         PrintListener l = new PrintListener() {
                 public void prepare(PrintEvent event) {
@@ -145,7 +159,7 @@ public class WorkspacePage extends CMSPage implements ActionListener {
         return sc;
 
     }
-
+*/
 
     /**
      * Created the TabbedPane to use for this page. Sets the class
@@ -201,4 +215,32 @@ public class WorkspacePage extends CMSPage implements ActionListener {
             m_search.reset(state);
         }
     }
+
+    /**
+     * Overwrites bebop.Page#generateXMLHelper to add the name of the user
+     * logged in to the page (displayed as part of the header).
+     * @param ps
+     * @param parent
+     * @return 
+     */
+    // ToDo: This code fragment is used by several pages of CMS package. It
+    // should be factored out into a kind of CMSBasePage, as it had been in
+    // the deprecated CMSPage.
+    // Should be checked when refactoring the content section pages to work
+    // as bebop pages without dispatcher mechanism and in new style application.
+    @Override
+    protected Element generateXMLHelper(PageState ps, Document parent) {
+
+        /* Retain elements already included.                                  */
+        Element page = super.generateXMLHelper(ps,parent);
+
+        /* Add name of user logged in.                                        */
+        User user = Web.getContext().getUser();
+        if ( user != null ) {
+            page.addAttribute("name",user.getDisplayName());
+        }
+
+        return page;
+    }
+
 }

@@ -21,15 +21,15 @@ package com.arsdigita.web;
 import com.arsdigita.dispatcher.InitialRequestContext;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.domain.DataObjectNotFoundException;
+// import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.KernelRequestContext;
 import com.arsdigita.kernel.security.SessionContext;
 import com.arsdigita.kernel.security.UserContext;
-import com.arsdigita.sitenode.SiteNodeRequestContext;
+// import com.arsdigita.sitenode.SiteNodeRequestContext;
 import com.arsdigita.util.Assert;
-import com.arsdigita.util.UncheckedWrapperException;
+// import com.arsdigita.util.UncheckedWrapperException;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -206,33 +206,37 @@ public abstract class BaseApplicationServlet extends BaseServlet {
         sreq = DispatcherHelper.restoreOriginalRequest(sreq);
 
         final InitialRequestContext irc = new InitialRequestContext
-            (sreq, getServletContext());
+                                              (sreq, getServletContext());
         final SessionContext sc = uc.getSessionContext();
 
         final KernelRequestContext krc = new KernelRequestContext
-            (irc, sc, uc);
+                                             (irc, sc, uc);
 
+//      SiteNode node = null;
+        // Experimental:
+//      if (node == null) {
+//          return krc;            
+//      }
 
-        SiteNode node = null;
-        try {
-            node = SiteNode.getSiteNode(app.getPrimaryURL(),
-                                        true);
-        } catch (DataObjectNotFoundException ex) {
-            throw new UncheckedWrapperException("cannot find root sitenode");
-        }
+//      try {
+//          node = SiteNode.getSiteNode(app.getPrimaryURL(),
+//                                      true);
+//      } catch (DataObjectNotFoundException ex) {
+//          throw new UncheckedWrapperException("cannot find root sitenode");
+//      }
 
-        if (node == null) {
-            s_log.debug("There is no site node at this URL; storing a " +
-                        "KernelRequestContext");
+//      if (node == null) {
+//          s_log.debug("There is no site node at this URL; storing a " +
+//                      "KernelRequestContext");
 
             return krc;
-        } else {
-            s_log.debug("Creating a SiteNodeRequestContext");
+//      } else {
+//          s_log.debug("Creating a SiteNodeRequestContext");
 
-            final SiteNodeRequestContext snrc = new SiteNodeRequestContext
-                (sreq, krc, node, sreq.getServletPath() + "/");
+//          final SiteNodeRequestContext snrc = new SiteNodeRequestContext
+//              (sreq, krc, node, sreq.getServletPath() + "/");
 
-            return snrc;
-        }
+//          return snrc;
+//      } 
     }
 }

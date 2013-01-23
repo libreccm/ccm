@@ -68,19 +68,16 @@ public class LoginServlet extends BebopApplicationServlet {
     // Define various URLs to subpages of Login to manage administrative tasks.
     // ////////////////////////////////////////////////////////////////////////
 
-    /** PathInfo into the Login application to access the (optional) newUser
-     *  page. Ends with "/" because it is a servlet/directory
-     */
+    /** PathInfo into the Login application to access the (optional) newUser  *
+     *  page. Ends with "/" because it is a servlet/directory                 */
     public static final String EDIT_USER_PROFILE_PATH_INFO = "/edit-profile/";
 
-    /** PathInfo into the Login application to access the (optional) newUser
-     *  page. Ends with "/" because it is a servlet/directory
-     */
+    /** PathInfo into the Login application to access the (optional) newUser  *
+     *  page. Ends with "/" because it is a servlet/directory                 */
     public static final String NEW_USER_PATH_INFO = "/new-user/";
 
-    /** PathInfo into the Login application to access the (optional) newUser
-     *  page. Ends with "/" because it is a servlet/directory
-     */
+    /** PathInfo into the Login application to access the (optional) newUser  *
+     *  page. Ends with "/" because it is a servlet/directory                 */
     public static final String CHANGE_USER_PASSWORD_PATH_INFO = "/change-password/";
 
     /** PathInfo into the Login application to access the (optional) newUser

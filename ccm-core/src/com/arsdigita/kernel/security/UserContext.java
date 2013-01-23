@@ -527,7 +527,7 @@ public class UserContext {
     public void login(String username,
                       char[] password,
                       boolean forever)
-        throws LoginException {
+                throws LoginException {
         s_log.debug("START login(username, password, forever)");
         try {
             CallbackHandler handler = new LoginCallbackHandler

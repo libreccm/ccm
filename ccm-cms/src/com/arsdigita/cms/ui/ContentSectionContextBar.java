@@ -47,8 +47,13 @@ class ContentSectionContextBar extends WorkspaceContextBar {
     private static final Logger s_log = Logger.getLogger
         (ContentSectionContextBar.class);
 
+    @Override
     protected List entries(final PageState state) {
+
+        /* Include breadcrumb entries already set by content-center (i.e. the
+         * URL of the content center itself                                   */
         final List entries = super.entries(state);
+
         final ContentSection section = CMS.getContext().getContentSection();
         final Stack folderEntryStack = new Stack();
         String currentFolderLabel = null;

@@ -148,6 +148,7 @@ public class SiteNodeRequestContext extends KernelRequestContext {
 
     /**
      * @return the site node referenced by this request.
+     * @deprecated
      */
     public SiteNode getSiteNode() {
         return m_sn;
