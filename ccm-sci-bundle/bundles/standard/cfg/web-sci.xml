@@ -144,7 +144,7 @@
 
   <servlet>
     <servlet-name>content-center</servlet-name>
-    <servlet-class>com.arsdigita.cms.WorkspaceServlet</servlet-class>
+    <servlet-class>com.arsdigita.cms.ContentCenterServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -209,6 +209,15 @@
   <!-- module ccm-forum  -  servlet declarations END    -->  
 
   <servlet>
+    <servlet-name>portalworkspace-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-portalworkspace</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
     <servlet-name>navigation-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
     <init-param>
@@ -226,6 +235,21 @@
     <servlet-class>com.arsdigita.dispatcher.PortletTypeXSLServlet</servlet-class>
   </servlet>
  
+  <!-- module ccm-rssfeed  -  servlet declaration BEGIN   -->
+  <servlet>
+    <servlet-name>rssfeed-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-rssfeed</param-value>
+    </init-param>
+    <init-param>
+      <param-name>file-resolver</param-name>
+      <param-value>com.arsdigita.rssfeed.RSSFileResolver</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-rssfeed  -  servlet declaration END   -->
+
   <!-- module ccm-ldn-search  -  servlet declarations BEGIN   -->
   <servlet>
     <servlet-name>search-files</servlet-name>
@@ -310,6 +334,13 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
+  <!-- module ccm-forum  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>forum-main</servlet-name>
+    <url-pattern>/forum-main/main/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-forum  -  servlet mappings END    -->
+
   <servlet-mapping>
     <servlet-name>portlet-type-xsl</servlet-name>
     <url-pattern>/themes/servlet/portlet-type/*</url-pattern>
@@ -324,6 +355,13 @@
     <servlet-name>navigation-files</servlet-name>
     <url-pattern>/ccm-navigation/files/*</url-pattern>
   </servlet-mapping>
+
+  <!-- module ccm-rssfeed  -  servlet mappings  BEGIN   -->
+  <servlet-mapping>
+    <servlet-name>rssfeed-files</servlet-name>
+    <url-pattern>/ccm-rssfeed/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-rssfeed  -  servlet mappings  END   -->
 
   <!-- module ccm-ldn-search  -  servlet mappings BEGIN  -->
   <servlet-mapping>
