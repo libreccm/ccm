@@ -92,6 +92,7 @@
     <servlet-class>com.arsdigita.web.DispatcherServlet</servlet-class>
     <load-on-startup>2</load-on-startup>
   </servlet>
+  
   <servlet>
     <servlet-name>cache-manager</servlet-name>
     <servlet-class>com.arsdigita.caching.CacheServlet</servlet-class>
@@ -144,7 +145,7 @@
 
   <servlet>
     <servlet-name>content-center</servlet-name>
-    <servlet-class>com.arsdigita.cms.WorkspaceServlet</servlet-class>
+    <servlet-class>com.arsdigita.cms.ContentCenterServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -200,6 +201,16 @@
      MODULES SERVLET DECLARATIONS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+  <!-- module ccm-atoz  -  servlet definitions BEGIN   -->
+  <servlet>
+    <servlet-name>atoz-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-atoz</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-atoz  -  servlet definitions END  -->
 
   <!-- module ccm-forum  -  servlet declarations BEGIN  -->  
   <servlet>
@@ -333,6 +344,12 @@
      MODULES SERVLET MAPPINGS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+  <!-- module ccm-atoz  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>atoz-files</servlet-name>
+    <url-pattern>/ccm-atoz/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-atoz  -  servlet mappings END  -->
 
   <!-- module ccm-forum  -  servlet mappings BEGIN  -->
   <servlet-mapping>

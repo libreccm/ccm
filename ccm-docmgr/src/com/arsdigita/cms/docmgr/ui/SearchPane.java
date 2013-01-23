@@ -15,60 +15,18 @@
 
 package com.arsdigita.cms.docmgr.ui;
 
-import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.Container;
-import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.GridPanel;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
-import com.arsdigita.bebop.ModalContainer;
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.RequestLocal;
-import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.TabbedPane;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.OptionGroup;
-import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.form.Submit;
-import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.event.FormInitListener;
-import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormValidationListener;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.bebop.parameters.ArrayParameter;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.bebop.parameters.DateParameter;
-import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
-import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.bebop.parameters.TrimmedStringParameter;
-import com.arsdigita.bebop.Table;
-import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.bebop.tree.TreeNode;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.categorization.CategoryTreeModelLite;
-import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.dispatcher.ObjectNotFoundException;
+import com.arsdigita.bebop.*;
+import com.arsdigita.bebop.event.*;
+import com.arsdigita.bebop.form.*;
+import com.arsdigita.bebop.parameters.*;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.cms.docmgr.Document;
-import com.arsdigita.cms.docmgr.search.IntermediaSearcher;
 import com.arsdigita.cms.docmgr.search.LuceneSearcher;
 import com.arsdigita.cms.docmgr.search.SearchResults;
 import com.arsdigita.cms.docmgr.search.SearchUtils;
-import com.arsdigita.cms.docmgr.ui.DMConstants;
-import com.arsdigita.cms.FileAsset;
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ContentSectionCollection;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.kernel.ui.DataQueryTreeNode;
-import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -79,15 +37,9 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
-import org.apache.log4j.Logger;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.TooManyListenersException;
 
 /**
@@ -350,7 +302,7 @@ class SearchPane extends SimpleContainer implements DMConstants
             
                 //if (terms != null && !"".equals(terms)) {
                 // if form has been submitted, m_emptyLabel will not be visible
-                User user = KernelHelper.getCurrentUser(state.getRequest());
+                User user = (User)Kernel.getContext().getParty();
                 coln = SearchUtils.getAdvancedSearch(terms,
                                                      author,
                                                      mimeType,
@@ -376,32 +328,6 @@ class SearchPane extends SimpleContainer implements DMConstants
         }
 
     }
-
-    //private class EmptySearchPrintListener implements PrintListener {
-    //    private DocsSearchForm m_docsSearchForm;
-    //
-    //    public EmptySearchPrintListener(DocsSearchForm dsf) {
-    //        m_docsSearchForm = dsf;
-    //    }
-    //
-    //    public void prepare(PrintEvent e) {
-    //        PageState state = e.getPageState();
-    //        Label t= (Label) e.getTarget();
-    //
-    //        t.setLabel("");
-    //
-    //        //String terms = (String)state.getValue(m_termsParam);
-    //        //if (terms != null && terms.length() > 0) {
-    //        if(m_docsSearchForm.getSearchHits(state).getTotalSize() > 0) {
-    //            t.setLabel("Results");
-    //            s_log.debug("results");
-    //        } else {
-    //            t.setLabel("No items matched your search");
-    //            s_log.debug("no results");
-    //        }
-    //        //}
-    //    }
-    //}
 
 
     private class MimeTypesWidget extends SingleSelect {

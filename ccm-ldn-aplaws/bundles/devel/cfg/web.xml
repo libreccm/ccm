@@ -92,6 +92,7 @@
     <servlet-class>com.arsdigita.web.DispatcherServlet</servlet-class>
     <load-on-startup>2</load-on-startup>
   </servlet>
+  
   <servlet>
     <servlet-name>cache-manager</servlet-name>
     <servlet-class>com.arsdigita.caching.CacheServlet</servlet-class>
@@ -144,7 +145,7 @@
 
   <servlet>
     <servlet-name>content-center</servlet-name>
-    <servlet-class>com.arsdigita.cms.WorkspaceServlet</servlet-class>
+    <servlet-class>com.arsdigita.cms.ContentCenterServlet</servlet-class>
   </servlet>
 
   <servlet>

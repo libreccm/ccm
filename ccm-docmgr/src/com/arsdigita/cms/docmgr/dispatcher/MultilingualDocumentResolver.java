@@ -32,7 +32,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.Workspace;
+import com.arsdigita.cms.ContentCenter;
 import com.arsdigita.cms.dispatcher.AbstractItemResolver;
 import com.arsdigita.cms.dispatcher.CMSDispatcher;
 import com.arsdigita.cms.dispatcher.CMSPage;
@@ -68,7 +68,7 @@ public class MultilingualDocumentResolver extends AbstractItemResolver
 
     private static MasterPage s_masterP = null;
     private static final String ADMIN_PREFIX = "admin";
-    private static final String WORKSPACE_PREFIX = Workspace.getURL();
+    private static final String WORKSPACE_PREFIX = ContentCenter.getURL();
 
     /**
      * The string identifying an item's ID in the query string of a
