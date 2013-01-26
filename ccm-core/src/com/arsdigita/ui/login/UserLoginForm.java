@@ -68,6 +68,17 @@ import org.apache.log4j.Logger;
  * registration form, where a new user may register itself. LoginServlet has
  * to ensure that this page is created appropriately and is available.
  *
+ * According to documentation in r1230
+ * Simple SSO implementation: /ccm/register first tries to do SSO login,
+ * falling back to normal form-based login.
+ * Set waf.sso_login=true only after you make sure webapp can *only* be accessed
+ * through the frontend webserver doing the authentication.
+ *
+ * To make this work with Tomcat/mod_jk/Apache HTTPD:
+ * -  use latest mod_jk (tested with 1.2.15)
+ * -  add attribute Connector@tomcatAuthentication="false" to JK definition 
+ *    in server.xml 
+ * 
  * @author Roger Hsueh
  * @author Michael Bryzek
  * @author Sameer Ajmani

@@ -40,16 +40,16 @@ import org.apache.log4j.Logger;
  * Provides user authentication methods on a contained
  * User object.
  *
+ * @see com.arsdigita.kernel.User
+ *
  * @author Phong Nguyen
  * @version 1.0
- *
- * @see com.arsdigita.kernel.User
- **/
+ * @version $Id: UserAuthentication.java 1230 2006-06-22 11:50:59Z apevec $
+ */
 public class UserAuthentication extends DomainObject {
 
-    public static final String versionId = "$Id: UserAuthentication.java 1230 2006-06-22 11:50:59Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
-        Logger.getLogger(UserAuthentication.class.getName());
+                         Logger.getLogger(UserAuthentication.class.getName());
 
     private User m_user;
     public static final String BASE_DATA_OBJECT_TYPE =

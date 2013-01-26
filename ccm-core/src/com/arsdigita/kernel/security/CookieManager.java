@@ -40,6 +40,7 @@ import org.apache.log4j.Logger;
  */
 public class CookieManager extends CredentialManager {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log =
                          Logger.getLogger(CookieManager.class.getName());
 
@@ -69,13 +70,15 @@ public class CookieManager extends CredentialManager {
      * wrong value or should be renewed, <code>false</code> otherwise.
      */
     protected boolean shouldSetValue(String value)
-        throws LoginException {
+                      throws LoginException {
+
         if (getModule().requestIsExcluded()) {
             return false;
         }
         return !getModule().credentialIsSet()
             || !getModule().credentialHasValue(value)
             || getModule().credentialIsOld();
+
     }
 
     /**
@@ -90,18 +93,19 @@ public class CookieManager extends CredentialManager {
      *
      * @throws LoginException if an error occurs.
      */
-    protected final String getValue()
-        throws LoginException {
+    protected final String getValue()  throws LoginException {
         s_log.debug("START getValue");
-        String value = ServletUtils.getCookieValue
-            (getModule().getRequest(),
-             getModule().getCredentialName());
+
+        String value = ServletUtils.getCookieValue(
+                                              getModule().getRequest(),
+                                              getModule().getCredentialName());
         if (value == null) {
             s_log.debug("FAILURE getValue");
             throw new CredentialNotFoundException();
         }
         s_log.debug("SUCCESS getValue: "+value);
         return value;
+
     }
 
     /**
@@ -110,8 +114,7 @@ public class CookieManager extends CredentialManager {
      *
      * @throws LoginException if an error occurs.
      */
-    protected final void setValue(String value)
-        throws LoginException {
+    protected final void setValue(String value)  throws LoginException {
         // now we don't automatically set the duration to getCookieMaxAge()
         // setCookie(getModule().getCredentialName(), value, getCookieAge());
 	// yes we do - cookie age was correctly set to either forever, or 
@@ -168,7 +171,8 @@ public class CookieManager extends CredentialManager {
      * Sets the named cookie to the given value.
      */
     private void setCookie(String name, String value, int maxAge)
-        throws LoginException {
+                 throws LoginException {
+
         Cookie cookie = new Cookie(name, value);
         cookie.setMaxAge(maxAge);
         cookie.setPath("/");
@@ -180,6 +184,7 @@ public class CookieManager extends CredentialManager {
         }
         s_log.debug("Cookie set: domain - " + cookie.getDomain()
                     + " name - " + cookie.getName());
+
     }
 
     /**

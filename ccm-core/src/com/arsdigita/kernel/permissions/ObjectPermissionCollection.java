@@ -45,16 +45,15 @@ import java.math.BigDecimal;
  *
  * @author Oumi Mehrotra 
  * @version 1.0
- **/
+ * @version $Id: ObjectPermissionCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class ObjectPermissionCollection extends DomainQuery {
-
-    public static final String versionId = "$Id: ObjectPermissionCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Constructor.
      *
      * @see com.arsdigita.domain.DomainCollection#DomainCollection(DataCollection)
-     **/
+     */
     protected ObjectPermissionCollection(DataQuery query) {
         super(query);
     }

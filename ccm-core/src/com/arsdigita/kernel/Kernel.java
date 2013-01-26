@@ -48,19 +48,33 @@ public class Kernel {
     private static final Logger s_log = Logger.getLogger(Kernel.class);
 
     /** The ID of the user that represents "the public", i.e. a non-logged-in
-     *  user. Created by insert-users.sql (during load step)               . */
+     *  user. Created by insert-users.sql (during load step)                  */
     private static final BigDecimal PUBLIC_USER_ID = new BigDecimal(-200);
-    /** Public (i.e. a non-logged-in) User object (retrieved by PUBLIC_USER_ID)  */
+
+    /** Public (i.e. a non-logged-in) User object (retrieved by PUBLIC_USER_ID)*/
     private static User s_publicUser;
 
+    /* The Kernel Initial Context object                                      */
     private static KernelContext s_initialContext;
-    private static KernelConfig s_config;
-    private static SecurityConfig s_securityConfig;
+
+    /* The /actual) Kernel Context object                                     */
     private static ThreadLocal s_context;
 
+    /* The Kernel Configuration object                                        */
+    private static KernelConfig s_config;
+
+    /* The Kernel Security Configuration object                               */
+    private static SecurityConfig s_securityConfig;
+
+    /** Status flag wether the class is initialized or not.                   */ 
     private static boolean initialized = false;
 
+    /**
+     * Internal service routine used by varios methods to initialize the
+     * class.
+     */
     private static void init() {
+
         if (initialized) {
             return;
         }
@@ -73,6 +87,7 @@ public class Kernel {
         s_config.load();
         s_securityConfig.load();
         s_context = new ThreadLocal() {
+            @Override
             public Object initialValue() {
                 return s_initialContext;
             }
@@ -81,12 +96,20 @@ public class Kernel {
         initialized = true;
     }
 
-    public static final KernelConfig getConfig() {
+    /**
+     * Provides the Kernel Config object for client classes.
+     * @return  ConfigObject
+     */
+    public static KernelConfig getConfig() {
         init();
         return s_config;
     }
 
-    public static final SecurityConfig getSecurityConfig() {
+    /**
+     * Provides the Kernel Security Config object for client classes.
+     * @return SecurityConfigObject
+     */
+    public static SecurityConfig getSecurityConfig() {
         init();
         return s_securityConfig;
     }
@@ -103,12 +126,12 @@ public class Kernel {
      *
      * @post return != null
      */
-    public static final KernelContext getContext() {
+    public static KernelContext getContext() {
         init();
         return (KernelContext) s_context.get();
     }
 
-    static final void setContext(KernelContext context) {
+    static void setContext(KernelContext context) {
         init();
         if (s_log.isDebugEnabled()) {
             s_log.debug("Set context to " + context.getDebugInfo());
@@ -117,16 +140,17 @@ public class Kernel {
     }
 
     /**
-     * Get the system party, the agent of any work the system
-     * performs, as apart from what some user or group does. Returns
-     * null if the system party is not defined.
+     * Get the system party, the agent of any work the system performs,
+     * as apart from what some user or group does. 
+     * 
+     * Returns null if the system party is not defined.
      */
-    public static final Party getSystemParty() {
+    public static Party getSystemParty() {
         init();
         return s_systemParty;
     }
 
-    static final void setSystemParty(Party party) {
+    static void setSystemParty(Party party) {
         init();
         s_systemParty = party;
     }
@@ -134,8 +158,8 @@ public class Kernel {
     /**
      * Get the User that represents "the public", i.e. non-logged-in
      * users.
-     **/
-    public static final User getPublicUser() {
+     */
+    public static User getPublicUser() {
         init();
         if (s_publicUser == null) {
             // We could synchronize this method, but we don't really care if the

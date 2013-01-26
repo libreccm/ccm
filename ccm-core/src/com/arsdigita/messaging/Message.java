@@ -47,7 +47,6 @@ import org.apache.log4j.Logger;
  * @author David Dao 
  * @version $Id: Message.java 1503 2007-03-20 12:31:29Z chrisgilbert23 $
  */
-
 public class Message extends ACSObject implements MessageType
 {
 
@@ -81,18 +80,14 @@ public class Message extends ACSObject implements MessageType
 
     private Party m_sender = null;
 
-    /**
-     * Used for logging.
-     */
-
+    /** Private loggin instance to assist debugging.                       */
     private static final Logger s_log =
-        Logger.getLogger(Message.class);
+                         Logger.getLogger(Message.class);
 
     /**
-     * Creates a new message with the sentDate initialized to the
-     * current time, but leaves all other parameters null.
+     * Consructor, ceates a new message with the sentDate initialized to
+     * the current time, but leaves all other parameters null.
      */
-
     public Message() {
         this(BASE_DATA_OBJECT_TYPE);
     }
@@ -104,7 +99,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param type the DataObject type.
      */
-
     public Message(String type) {
         super(type);
         setSentDate(new Date());
@@ -116,7 +110,6 @@ public class Message extends ACSObject implements MessageType
      * @param f the party sending the message
      * @param s the subject of the message
      */
-
     public Message(Party f, String s) {
         this(f,s,null);
     }
@@ -128,7 +121,6 @@ public class Message extends ACSObject implements MessageType
      * @param s the subject of the message
      * @param b the plain-text body of the message
      */
-
     public Message(Party f, String s, String b) {
         this();
 
@@ -142,7 +134,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param dataObject the DataObject representing this message.
      */
-
     public Message(DataObject dataObject) {
         super(dataObject);
     }
@@ -153,9 +144,7 @@ public class Message extends ACSObject implements MessageType
      *
      * @param id the id of the message
      */
-
-    public Message(BigDecimal id)
-        throws DataObjectNotFoundException
+    public Message(BigDecimal id)  throws DataObjectNotFoundException
     {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
@@ -166,7 +155,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param oid the OID of the message
      */
-
     public Message(OID oid)
         throws DataObjectNotFoundException
     {
@@ -186,7 +174,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param msg the message to generate reply information from
      */
-
     protected void getReplyInfo(Message msg) {
 
         // Set inReplyTo
@@ -222,7 +209,6 @@ public class Message extends ACSObject implements MessageType
      * Gets a new message that is suitable for a reply to this
      * message.
      */
-
     public Message reply() throws MessagingException {
         Message reply = new Message();
         reply.getReplyInfo(this);
@@ -233,7 +219,6 @@ public class Message extends ACSObject implements MessageType
      * Gets the subject of the message.
      * @return the subject of the message.
      */
-
     public String getSubject() {
         return (String) get(SUBJECT);
     }
@@ -242,7 +227,6 @@ public class Message extends ACSObject implements MessageType
      * Sets the subject of the message.
      * @param s the subject
      */
-
     public void setSubject(String s) {
         set(SUBJECT, s);
     }
@@ -251,7 +235,6 @@ public class Message extends ACSObject implements MessageType
      * Sets the sender of the message.
      * @param f the party sending the message
      */
-
     public void setFrom(Party f) {
         m_sender = f;
         setAssociation(SENDER, f);
@@ -261,7 +244,6 @@ public class Message extends ACSObject implements MessageType
      * Gets the sender of the message.
      * @return the sender.
      */
-
     public Party getFrom() {
         if (m_sender == null) {
             DataObject senderData = (DataObject) get(SENDER);
@@ -298,7 +280,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @return the content of the message.
      */
-
     public String getBody() {
         return (String) get(BODY);
     }
@@ -327,7 +308,6 @@ public class Message extends ACSObject implements MessageType
      * @param body the body of the message
      * @param type the MIME type
      */
-
     public void setBody(String body, String type) {
         set(BODY, body);
         set(TYPE, type);
@@ -338,7 +318,6 @@ public class Message extends ACSObject implements MessageType
      * A convenience method that sets the body of the message to a
      * string with a MIME type of "text/plain".
      */
-
     public void setText(String text) {
         setBody(text, TEXT_PLAIN);
     }
@@ -350,7 +329,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @return the MIME type of the message body.
      */
-
     public String getBodyType() {
         return (String) get(TYPE);
     }
@@ -363,7 +341,6 @@ public class Message extends ACSObject implements MessageType
      * @return <code>true</code> if this message is of the specified
      * MIME type; <code>false</code> otherwise.
      */
-
     public boolean isMimeType(String mimeType) {
         String primary = getPrimaryType(mimeType);
         return primary.regionMatches
@@ -373,7 +350,6 @@ public class Message extends ACSObject implements MessageType
     /**
      * Returns the primary MIME type in a String
      */
-
     private static String getPrimaryType(String type) {
         StringTokenizer st = new StringTokenizer(type, " ;");
         return st.nextToken();
@@ -383,7 +359,6 @@ public class Message extends ACSObject implements MessageType
      * Returns the date this message was sent.
      * @return the date this message was sent.
      */
-
     public Date getSentDate() {
         return (Date) get(SENT);
     }
@@ -393,7 +368,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param sentDate the date the message was sent
      */
-
     public void setSentDate(Date sentDate) {
         set(SENT, sentDate);
     }
@@ -405,7 +379,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @return the ID of an ACSObject which this message refers to.
      */
-
     public BigDecimal getRefersTo() {
         return (BigDecimal) get(OBJECT_ID);
     }
@@ -415,7 +388,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param id the ID of the ACSObject this message refers to.
      */
-
     public void setRefersTo(BigDecimal id) {
         set(OBJECT_ID, id);
     }
@@ -425,7 +397,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param obj the ACSObject this message refers to.
      */
-
     public void setRefersTo(ACSObject obj) {
         setRefersTo(obj.getID());
     }
@@ -454,7 +425,6 @@ public class Message extends ACSObject implements MessageType
      * @param text the content of the attachment
      * @param name the name of the attachment
      */
-
     public void attach(String text,
                        String name) {
         attach(text,name,null,MessagePart.ATTACHMENT);
@@ -469,7 +439,6 @@ public class Message extends ACSObject implements MessageType
      * @param name the name of the attachment
      * @param description a description of the attachment
      */
-
     public void attach(String text,
                        String name,
                        String description) {
@@ -484,7 +453,6 @@ public class Message extends ACSObject implements MessageType
      * @param name the name of the attachment
      * @param description a description of the attachment
      */
-
     public void attach(String text,
                        String name,
                        String description,
@@ -504,7 +472,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @param part the MessagePart to attach
      */
-
     public void attach(MessagePart part) {
         addPart(part);
     }
@@ -513,7 +480,6 @@ public class Message extends ACSObject implements MessageType
      * Returns the number of items attached to this message.
      * @return the number of items attached to this message.
      */
-
     public int getAttachmentCount() {
         return getParts().size();
     }
@@ -522,7 +488,6 @@ public class Message extends ACSObject implements MessageType
      * Returns an iterator over the attachments for this message.
      * @return an iterator over the attachments for this message.
      */
-
     public ListIterator getAttachments() {
         return getParts().listIterator();
     }
@@ -532,7 +497,6 @@ public class Message extends ACSObject implements MessageType
      * parts and correctly maintain the association between the
      * message body and its attachments.
      */
-
     private void addPart(MessagePart part) {
         getParts().add(part);
         part.addToAssociation(getPartAssociation());
@@ -542,7 +506,6 @@ public class Message extends ACSObject implements MessageType
      * Get the DataAssociation between this message and its
      * attachments.
      */
-
     private DataAssociation getPartAssociation() {
         return (DataAssociation) get(MESSAGE_PART);
     }
@@ -552,7 +515,6 @@ public class Message extends ACSObject implements MessageType
      * has not been initialized, this will take care of initializing
      * it and loading any parts from the database.
      */
-
     private ArrayList getParts() {
 
         if (m_attachments == null) {
@@ -583,7 +545,6 @@ public class Message extends ACSObject implements MessageType
      *
      * @deprecated Use getID in place of getMessageID
      */
-
     public BigDecimal getMessageID() {
         return getID();
     }
@@ -607,6 +568,7 @@ public class Message extends ACSObject implements MessageType
         }
         return null;
     }
+
     /**
     * return the parent Message, or null if there is no parent
     */ 
@@ -629,7 +591,6 @@ public class Message extends ACSObject implements MessageType
     /**
      * @return true if the container for this Message has changed.
      */
-
     public boolean isContainerModified() {
         return isPropertyModified(OBJECT_ID);
     }
@@ -641,6 +602,9 @@ public class Message extends ACSObject implements MessageType
         return com.arsdigita.util.HtmlToText.generateHTMLText(text,  formatType);
     }
 
+    /**
+     * 
+     */
     protected void afterSave() {
         super.afterSave();
 

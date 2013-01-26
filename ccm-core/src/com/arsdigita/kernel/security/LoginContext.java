@@ -179,11 +179,11 @@ public class LoginContext {
 				}
 
                 if (m_flags[i] == AppConfigurationEntry
-                    .LoginModuleControlFlag.REQUIRED) {
+                                  .LoginModuleControlFlag.REQUIRED) {
                     // required module failed
                     gotFailure = true;
                 } else if (m_flags[i] == AppConfigurationEntry
-                           .LoginModuleControlFlag.REQUISITE) {
+                                         .LoginModuleControlFlag.REQUISITE) {
                     // requisite module failed
                     gotFailure = true;
                     break; // end login

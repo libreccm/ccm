@@ -24,11 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * <p>A class that provides request-framed control over a thread-local
+ * A class that provides request-framed control over a thread-local
  * value.  With such control, it is possible to safely reuse
  * thread-local data across requests.  For example, the following
- * <code>InternalRequestLocal</code> reuses a
- * <code>HashMap</code>.</p>
+ * <code>InternalRequestLocal</code> reuses a <code>HashMap</code>.
  *
  * <pre><blockquote>
  * class HashMapRequestLocal extends InternalRequestLocal {
@@ -76,12 +75,26 @@ import org.apache.log4j.Logger;
  */
 class InternalRequestLocal extends ThreadLocal {
 
-    private static final Logger s_log = Logger.getLogger
-        (InternalRequestLocal.class);
+    private static final Logger s_log = 
+                         Logger.getLogger(InternalRequestLocal.class);
 
     private static final ArrayList s_locals = new ArrayList();
 
-    static final void prepareAll(final HttpServletRequest sreq) {
+    /**
+     * <p>Constructs a new InternalRequestLocal and registers it to be
+     * initialized and cleared on each request.</p>
+     */
+    public InternalRequestLocal() {
+        super();
+
+        s_locals.add(this);
+    }
+
+    /**
+     * 
+     * @param sreq 
+     */
+    static void prepareAll(final HttpServletRequest sreq) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Initializing all request-local objects; there are " +
                         s_locals.size());
@@ -96,7 +109,10 @@ class InternalRequestLocal extends ThreadLocal {
         }
     }
 
-    static final void clearAll() {
+    /**
+     * 
+     */
+    static void clearAll() {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Clearing all request-local objects; there are " +
                         s_locals.size());
@@ -109,16 +125,6 @@ class InternalRequestLocal extends ThreadLocal {
 
             local.clearValue();
         }
-    }
-
-    /**
-     * <p>Constructs a new InternalRequestLocal and registers it to be
-     * initialized and cleared on each request.</p>
-     */
-    public InternalRequestLocal() {
-        super();
-
-        s_locals.add(this);
     }
 
     /**

@@ -29,16 +29,15 @@ import com.arsdigita.persistence.DataObject;
  *
  * @author Michael Bryzek
  * @version 1.0
+ * @version $Id: PermissionCollection.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 class PermissionCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: PermissionCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Constructor.
      *
      * @see com.arsdigita.domain.DomainCollection#DomainCollection(DataCollection)
-     **/
+     */
     PermissionCollection(DataCollection dataCollection) {
         super(dataCollection);
     }
@@ -48,7 +47,7 @@ class PermissionCollection extends DomainCollection {
      * the collection.
      *
      * @see com.arsdigita.domain.DomainObject#getDomainObject()
-     **/
+     */
     public DomainObject getDomainObject() {
         DataObject data = m_dataCollection.getDataObject();
         return new Permission(data);
@@ -63,7 +62,7 @@ class PermissionCollection extends DomainCollection {
      *
      * @see #getDomainObject()
      * @see ObjectPermission
-     **/
+     */
     public Permission getPermission() {
         return (Permission) getDomainObject();
     }

@@ -43,20 +43,22 @@ object type ACSObject {
     // aggressive load (container.id);
 }
 
-query PackageInstanceForObject {
-    PackageInstance packageInstance;
+// Used by GenericURLFinder
+// query PackageInstanceForObject {
+//     PackageInstance packageInstance;
+//
+//     do {
+//         SELECT ap.package_id, ap.pretty_name,
+//                o.object_type, o.display_name, o.default_domain_class
+//         FROM apm_packages ap, acs_objects o
+//         WHERE ap.package_id = o.object_id
+//         AND ap.package_id = package_id_for_object_id(:objectID)
+//     } map {
+//         packageInstance.id = ap.package_id;
+//         packageInstance.prettyName = ap.pretty_name;
+//         packageInstance.objectType = o.object_type;
+//         packageInstance.displayName = o.display_name;
+//         packageInstance.defaultDomainClass = o.default_domain_class;
+//     }
 
-    do {
-        SELECT ap.package_id, ap.pretty_name,
-               o.object_type, o.display_name, o.default_domain_class
-        FROM apm_packages ap, acs_objects o
-        WHERE ap.package_id = o.object_id
-        AND ap.package_id = package_id_for_object_id(:objectID)
-    } map {
-        packageInstance.id = ap.package_id;
-        packageInstance.prettyName = ap.pretty_name;
-        packageInstance.objectType = o.object_type;
-        packageInstance.displayName = o.display_name;
-        packageInstance.defaultDomainClass = o.default_domain_class;
-    }
-}
+// }

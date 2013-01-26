@@ -49,12 +49,9 @@ import org.apache.log4j.Logger;
  *
  * @author Phong Nguyen
  * @version 1.0
+ * @version $Id: Permission.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class Permission extends DomainObject {
-    public static final String versionId =
-        "$Id: Permission.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     // Get the category named the same as this class
     private static final Logger s_log = Logger.getLogger(Permission.class);
@@ -66,8 +63,11 @@ class Permission extends DomainObject {
     static final String PRIVILEGE = "privilege";
 
     static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.kernel.permissions.Permission";
+                        "com.arsdigita.kernel.permissions.Permission";
 
+    /**
+     * 
+     */
     @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -276,6 +276,9 @@ class Permission extends DomainObject {
         super.beforeSave();
     }
 
+    /**
+     * 
+     */
     private void setCreationInfo() {
         User user = Web.getContext().getUser();
         // The user may be null.

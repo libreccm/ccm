@@ -42,7 +42,6 @@ import java.util.Date;
  * @since 4.8.11
  * @version $Revision: 1.5 $ $DateTime: 2004/08/16 18:10:38 $
  */
-
 public class MessageThread extends ACSObject {
 
     public static final String BASE_DATA_OBJECT_TYPE =
@@ -127,8 +126,10 @@ public class MessageThread extends ACSObject {
      * The reason for the continued existance of this is thread safety
      */
     private void incrNumberOfReplies() {
-        DataOperation op = SessionManager.getSession().retrieveDataOperation(
-                                                                             "com.arsdigita.messaging.incrNumReplies");
+        DataOperation op = SessionManager
+                           .getSession()
+                           .retrieveDataOperation(
+                                    "com.arsdigita.messaging.incrNumReplies");
         op.setParameter("threadID", getID());
         op.execute();
     }
@@ -138,8 +139,10 @@ public class MessageThread extends ACSObject {
      * The reason for the continued existance of this is thread safety
      */
     private void decrNumberOfReplies() {
-        DataOperation op = SessionManager.getSession().retrieveDataOperation(
-                                                                             "com.arsdigita.messaging.decrNumReplies");
+        DataOperation op = SessionManager
+                            .getSession()
+                            .retrieveDataOperation(
+                                     "com.arsdigita.messaging.decrNumReplies");
         op.setParameter("threadID", getID());
         op.execute();
     }
@@ -158,10 +161,18 @@ public class MessageThread extends ACSObject {
         set(LAST_UPDATE, date);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getSubject() {
         return getRootMessage().getSubject();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getAuthorName() {
         DataObject author = (DataObject) get(AUTHOR);
         if (author == null) {
@@ -171,6 +182,9 @@ public class MessageThread extends ACSObject {
         }
     }
 
+    /**
+     * 
+     */
     public Party getAuthor() {
         if (m_author == null) {
             DataObject authorData = (DataObject) get(AUTHOR);
@@ -181,6 +195,10 @@ public class MessageThread extends ACSObject {
         return m_author;
     }
 
+    /**
+     * 
+     * @param author 
+     */
     private void setAuthor(Party author) {
         m_author = author;
         setAssociation(AUTHOR, author);

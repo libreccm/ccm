@@ -44,7 +44,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /**
- * default implementation of PermissionService.
+ * Default implementation of PermissionService.
  *
  * @author Oumi Mehrotra
  * @author Michael Bryzek
@@ -62,8 +62,8 @@ public class PermissionManager {
     public static final int SYSTEM_PARTY = -204;
 
     /**
-     * Checks the permission
-     * represented by the passed in {@link PermissionDescriptor}.
+     * Checks the permission represented by the passed in
+     * {@link PermissionDescriptor}.
      *
      * @param permission the {@link PermissionDescriptor} to
      * provide service to
@@ -72,7 +72,6 @@ public class PermissionManager {
      * specified permission; <code>false</code> otherwise.
      **/
     public boolean checkPermission(PermissionDescriptor permission) {
-
 
         // For performance, we use different queries depending on whether
         // the party (from the permission descriptor) is a user or a group.
@@ -92,10 +91,21 @@ public class PermissionManager {
         return doCheck(queryName, permission);
     }
 
+    /**
+     * 
+     * @param permission
+     * @return 
+     */
     boolean checkDirectPermission(PermissionDescriptor permission) {
         return checkDirectPermission(permission, true);
     }
 
+    /**
+     * 
+     * @param permission
+     * @param useImpliedPrivs
+     * @return 
+     */
     boolean checkDirectPermission(
         PermissionDescriptor permission,
         boolean useImpliedPrivs) {
@@ -126,13 +136,17 @@ public class PermissionManager {
     /**
      * Check a universal permission.  This will soon be optimized via
      * some sort of caching of universal permissions.
-     **/
-    private boolean
-        checkPermission(UniversalPermissionDescriptor permission)
-    {
+     */
+    private boolean checkPermission(UniversalPermissionDescriptor permission) {
             return doCheck("CheckUninheritedPermissionForParty",permission);
     }
 
+    /**
+     * 
+     * @param queryName
+     * @param permission
+     * @return 
+     */
     private boolean doCheck(String queryName,
                             PermissionDescriptor permission) {
         DataQuery query = getQuery("PermissionCheckPlaceholder");
@@ -225,7 +239,7 @@ public class PermissionManager {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     public DataObject getContext(OID oid) {
         ObjectContext objContext;
 
@@ -252,7 +266,7 @@ public class PermissionManager {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     public DataObject getContext(ACSObject acsObject) {
         return getContext(acsObject.getOID());
     }
@@ -387,7 +401,6 @@ public class PermissionManager {
     }
 
     /**
-     *
      * Returns the set of permissions that have been granted on
      * the specified object, including those inherited from
      * the object's permission context.  In the result set,
@@ -570,7 +583,7 @@ public class PermissionManager {
      * @param party the OID of the party that privileges are to be returned for
      *
      * @return an iterator of PrivilegeDescriptors.
-     **/
+     */
     public Iterator getPrivileges(OID object, OID party) {
 
         return getPrivilegeSet(object, party, false).iterator();
@@ -588,7 +601,7 @@ public class PermissionManager {
      * @return an iterator of PrivilegeDescriptors.
      *
      * @see #getPrivileges(OID, OID)
-     **/
+     */
     public Iterator getImpliedPrivileges(OID object, OID party) {
         return getPrivilegeSet(object, party, true).iterator();
     }
@@ -659,7 +672,7 @@ public class PermissionManager {
      * @see com.arsdigita.kernel.permissions.PermissionDescriptor
      * @see com.arsdigita.kernel.permissions.Permission
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     private OID createPermissionOID(PermissionDescriptor permission) {
         OID oid = new OID(Permission.BASE_DATA_OBJECT_TYPE);
         oid.set(Permission.OBJECT_ID,

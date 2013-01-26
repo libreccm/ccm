@@ -45,11 +45,9 @@ public abstract class PasswordLoginModule implements LoginModule {
                          Logger.getLogger(PasswordLoginModule.class.getName());
 
     /** Key for username in shared data map. */
-    public static final String NAME_KEY
-        = "javax.security.auth.login.name";
+    public static final String NAME_KEY = "javax.security.auth.login.name";
     /** Key for password in shared data map. */
-    public static final String PASSWORD_KEY
-        = "javax.security.auth.login.password";
+    public static final String PASSWORD_KEY = "javax.security.auth.login.password";
 
     // fields set by initialize()
     private Subject m_subject;
@@ -57,7 +55,14 @@ public abstract class PasswordLoginModule implements LoginModule {
     private Map m_shared;
     private Map m_options;
 
-    // implements LoginModule
+    /**
+     * Implements LoginModule.
+     * 
+     * @param subject
+     * @param handler
+     * @param shared
+     * @param options 
+     */
     public void initialize(Subject subject,
                            CallbackHandler handler,
                            Map shared,

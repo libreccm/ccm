@@ -584,12 +584,19 @@ public class UserContext {
     /**
      * Implements callbacks for interactive (register-based) login.
      */
-    private class LoginCallbackHandler
-        implements CallbackHandler {
+    private class LoginCallbackHandler implements CallbackHandler {
+
         private String m_username;
         private char[] m_password;
         private boolean m_forever;
 
+        /**
+         * Constructor.
+         * 
+         * @param username
+         * @param password
+         * @param forever 
+         */
         public LoginCallbackHandler(String username,
                                     char[] password,
                                     boolean forever) {
@@ -598,6 +605,12 @@ public class UserContext {
             m_forever  = forever;
         }
 
+        /**
+         * 
+         * @param callbacks
+         * @throws IOException
+         * @throws UnsupportedCallbackException 
+         */
         public void handle(Callback[] callbacks)
             throws IOException, UnsupportedCallbackException {
 
@@ -635,8 +648,9 @@ public class UserContext {
      * @throws LoginException if the user ID is not available.
      */
     private BigDecimal getUserID(Subject subject) throws LoginException {
-        Iterator principals = subject.getPrincipals
-            (PartyPrincipal.class).iterator();
+
+        Iterator principals = subject.getPrincipals(PartyPrincipal.class)
+                                     .iterator();
 
         if (!principals.hasNext()) {
             throw new FailedLoginException
@@ -652,15 +666,15 @@ public class UserContext {
      *
      * @throws LoginException if logout fails.
      */
-    public void logout()
-        throws LoginException {
+    public void logout()  throws LoginException {
         s_log.debug("START logout");
+
         CallbackHandler handler = new RequestCallbackHandler();
-        LoginContext context = new LoginContext
-            (REQUEST_LOGIN_CONTEXT, handler);
+        LoginContext context = new LoginContext(REQUEST_LOGIN_CONTEXT, handler);
         context.logout();
         clearValues();
         m_session.loadSessionID(handler);
+
         s_log.debug("SUCCESS logout");
     }
 
@@ -671,10 +685,9 @@ public class UserContext {
      * @throws UnsupportedCallbackException with appropriate error message
      */
     static void reportUnsupportedCallback(Callback cb)
-        throws UnsupportedCallbackException {
-        s_log.error
-            ("Unsupported callback: "
-             +(cb == null ? null : cb.getClass().getName()));
+                throws UnsupportedCallbackException {
+        s_log.error ("Unsupported callback: "
+                     +(cb == null ? null : cb.getClass().getName()));
         throw new UnsupportedCallbackException(cb);
     }
 }

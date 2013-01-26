@@ -44,9 +44,9 @@ public class PermissionDescriptor {
     private PrivilegeDescriptor m_privilege;    // not null
 
     /**
-     * Creates a new PermissionDescriptor object for the
-     * specified party, granting the specified privilege on the
-     * specified ACS object.
+     * Creates a new PermissionDescriptor object for the specified party,
+     * granting the specified privilege on the specified ACS object.
+     *
      *
      * @param privilege the privilege being granted
      *
@@ -77,8 +77,8 @@ public class PermissionDescriptor {
     }
 
     /**
-     * Creates a new PermissionDescriptor object for the party
-     * with the given OID, that grants the specified privilege on the
+     * Creates a new PermissionDescriptor object for the party with the
+     * given OID, that grants the specified privilege on the
      * ACS object with the given OID.
      *
      * @param privilege the privilege to be granted

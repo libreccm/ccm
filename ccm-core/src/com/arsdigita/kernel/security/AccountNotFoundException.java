@@ -22,22 +22,38 @@ package com.arsdigita.kernel.security;
  * Thrown when an account is not found.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: AccountNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class AccountNotFoundException extends AccountException {
 
-    public static final String versionId = "$Id: AccountNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    /**
+     * 
+     */
     public AccountNotFoundException() {
         super();
     }
 
+    /**
+     * 
+     * @param message 
+     */
     public AccountNotFoundException(String message) {
         super(message);
     }
 
+    /**
+     * 
+     * @param rootCause 
+     */
     public AccountNotFoundException(Throwable rootCause) {
         super(rootCause);
     }
 
+    /**
+     * 
+     * @param message
+     * @param rootCause 
+     */
     public AccountNotFoundException(String message, Throwable rootCause) {
         super(message, rootCause);
     }

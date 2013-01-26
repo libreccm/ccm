@@ -20,20 +20,12 @@ package com.arsdigita.web;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-// import com.arsdigita.domain.DomainServiceInterfaceExposer;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
-// import com.arsdigita.kernel.KernelExcursion;
-// import com.arsdigita.kernel.PackageInstance;
-// import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.Resource;
-// import com.arsdigita.kernel.SiteNode;
-// import com.arsdigita.persistence.DataAssociation;
-// import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-// import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
@@ -74,15 +66,22 @@ import org.apache.log4j.Logger;
  */
 public class Application extends Resource {
 
-    /** Logger instance for debugging  */
+    /** Logger instance for debugging.  */
     private static final Logger s_log = Logger.getLogger(Application.class);
     
-    public static final String PRIMARY_URL = "primaryURL";
-    private static final String SLASH = "/";
-
+    /** PDL property, basic object type for all applications of this type    */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.web.Application";
+    /** PDL property, the applications base URL.                            */
+    public static final String PRIMARY_URL = "primaryURL";
 
+    /** Internal String to denote a Path delimiter.                         */
+    private static final String SLASH = "/";
+
+
+    /** 
+     * Provides the base object type.
+     */
     @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -99,6 +98,11 @@ public class Application extends Resource {
         super(dataObject);
     }
 
+    /**
+     * 
+     * @param oid
+     * @throws DataObjectNotFoundException 
+     */
     protected Application(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -220,15 +224,8 @@ public class Application extends Resource {
             Assert.isTrue(!fragment.equals(""),
                          "The URL fragment must not be the empty string");
         }
-    //  s_log.debug("Application type legacy free: " + type.m_legacyFree );
-    //  if (type.m_legacyFree) {
-            return Application.make(type,fragment,title,parent,
-                                    createContainerGroup);
-    //  } else {
-    //      s_log.debug("Creating legacy compatible app");
-    //      return Application.legacyMake(type,fragment,title,parent,
-    //                                    createContainerGroup);
-    //  }
+        return Application.make(type,fragment,title,parent,
+                                createContainerGroup);
     }
 
     /** 
@@ -247,12 +244,12 @@ public class Application extends Resource {
                                     final Application parent,
                                     final boolean createContainerGroup) {
         
-	final Application app =	(Application) Resource.createResource(type, 
-                                                                  title, 
-                                                                  parent);
-	if (createContainerGroup) {
-	    app.createGroup();
-	}
+        final Application app = (Application) Resource.createResource(type, 
+                                                                       title, 
+                                                                       parent);
+        if (createContainerGroup) {
+            app.createGroup();
+        }
         if (Assert.isEnabled() && fragment != null) {
             Assert.isTrue(fragment.indexOf('/') == -1,
                          "The URL fragment must not contain " +
@@ -264,7 +261,8 @@ public class Application extends Resource {
          * Given the original code below the fragment appears in database as
          * "/[fragment]" but all of the other code expects "/[fragment]/" and
          * all other applications created as legacy compatible have a trailing
-         * slash!
+         * slash! Same is true as long as we mix old style dispatcher code with
+         * new style servlet code.
          * So I experimentally changed the code to have a trailing slash.
          * Because no other code uses legacy free applications I suppose the
          * original code here is less tested.
@@ -287,70 +285,23 @@ public class Application extends Resource {
         return app;
     }
 
-//  /**
-//   * Creates (makes) a legacy compatible application (using deprecated kernel
-//   * packageType and sitenode stuff).
-//   * @param type
-//   * @param fragment
-//   * @param title
-//   * @param parent
-//   * @param createContainerGroup
-//   * @return
-//   */
-/*private static Application legacyMake(final ApplicationType type,
-                                          final String fragment,
-                                          final String title,
-                                          final Application parent,
-                                          final boolean createContainerGroup) {
 
-	final Application application =	(Application) Resource.createResource(
-                                                           type, title, parent);
-        if (createContainerGroup) {
-            s_log.debug("Creating Group for application");
-            application.createGroup();
-        }
-        final DataObject dataObject =
-            DomainServiceInterfaceExposer.getDataObject(application);
-
-        final SiteNode[] siteNode = { null };
-
-        new KernelExcursion() {
-            protected void excurse() {
-                setParty(Kernel.getSystemParty());
-
-                PackageInstance packageInstance =
-                    type.getPackageType().createInstance
-                        (type.getTitle());
-                // createInstance shouldn't do a save, but it
-                // does. if we fix this at some point, we'll
-                // need this call:
-                //    packageInstance.save();
-
-		dataObject.set("packageInstance",
-                     DomainServiceInterfaceExposer.getDataObject
-                         (packageInstance));
-
-                if (fragment != null) {
-                    siteNode[0] = makeSiteNode(fragment, parent);
-                    siteNode[0].mountPackage(packageInstance);
-                    siteNode[0].save();
-                }
-            }
-        }.run();
-
-        if (siteNode[0] != null) {
-            application.setPrimaryURL(siteNode[0].getURL());
-        }
-
-        return application;
-    }  */
-
+    /**
+     * 
+     * @param id
+     * @return 
+     */
     public static Application retrieveApplication(BigDecimal id) {
         OID oid = new OID(BASE_DATA_OBJECT_TYPE, id);
 
         return Application.retrieveApplication(oid);
     }
 
+    /**
+     * 
+     * @param oid
+     * @return 
+     */
     public static Application retrieveApplication(OID oid) {
         DataObject dataObject = SessionManager.getSession().retrieve(oid);
 
@@ -361,6 +312,11 @@ public class Application extends Resource {
         return Application.retrieveApplication(dataObject);
     }
 
+    /**
+     * 
+     * @param dobj
+     * @return 
+     */
     public static Application retrieveApplication(DataObject dobj) {
         Assert.exists(dobj, DataObject.class);
 
@@ -373,7 +329,12 @@ public class Application extends Resource {
         }
     }
 
-    public static final Application getContainingApplication(ACSObject obj) {
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
+    public static Application getContainingApplication(ACSObject obj) {
         Assert.exists(obj, ACSObject.class);
         ACSObject result = obj.gimmeContainer();
 
@@ -385,33 +346,11 @@ public class Application extends Resource {
         return (Application) result;
     }
 
-//  /**
-//   * 
-//   * Can return null.
-//   * @param siteNode
-//   * @return
-//   * @ deprecated 
-//   */
-/*  public static Application retrieveApplicationForSiteNode
-        (SiteNode siteNode) {
-        DataQuery query = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.web.applicationForSiteNodeID");
-
-        query.setParameter("siteNodeID", siteNode.getID());
-
-        Application application = null;
-
-        if (query.next()) {
-            DataObject dataObject = (DataObject) query.get("application");
-            application = Application.retrieveApplication(dataObject);
-        }
-
-        query.close();
-
-        return application;
-    }   */
-
-    // Can return null.
+    /**
+     * 
+     * @param path
+     * @return  (Can return null.)
+     */
     public static Application retrieveApplicationForPath(String path) {
 
         s_log.debug("retrieveApplicationForPath: " + path);
@@ -430,11 +369,14 @@ public class Application extends Resource {
         }
     }
 
-    //
+    // ///////////////////////
     // Association properties
-    //
+    // ///////////////////////
 
-    // Cannot return null.
+    /**
+     * 
+     * @return   (Cannot return null.)
+     */
     public ApplicationType getApplicationType() {
         DataObject dataObject = (DataObject) get("resourceType");
 
@@ -451,21 +393,19 @@ public class Application extends Resource {
         setAssociation("resourceType", applicationType);
     }
 
-    // COMPAT XXX
-//  /**
-//   * @deprecated refactor not using deprecated class PackageType. Use
-//   * ApplicationType instead
-//   */
-//  public PackageType getPackageType() {
-//      return getApplicationType().getPackageType();
-//  }
-
-    // Can return null.
+    /**
+     * 
+     * @return   (Can return null.)
+     */
     public Application getParentApplication() {
         return (Application) getParentResource();
     }
 
-    // Ordered from most distant to closest ancestor.
+    /**
+     * .
+     * Ordered from most distant to closest ancestor.
+     * @return 
+     */
     public List getAncestorApplications() {
         // This is the stupid implementation.
 
@@ -512,57 +452,6 @@ public class Application extends Resource {
         return children;
     }
 
-//  /**
-//   * 
-//   * @return
-//   * @deprecated refactor to use other methods of class aüpplication instead
-//   */
-/*  private PackageInstance getPackageInstance() {
-        DataObject dataObject = (DataObject) get("packageInstance");
-
-        Assert.exists(dataObject, DataObject.class);
-
-        return new PackageInstance(dataObject);
-    }  */
-
-//  /**
-//   * 
-//   * @return
-//   * @deprecated refactor to use other methods of class aüpplication instead
-//   */
-/*  private void setPackageInstance(PackageInstance packageInstance) {
-        Assert.exists(packageInstance, PackageInstance.class);
-
-        setAssociation("packageInstance", packageInstance);
-    }   */
-
-//  /** 
-//    * 
-//   * Needs to be getSiteNodes instead.
-//   * @return Can return null.
-//   * @deprecated 
-//   */
-/*  public SiteNode getSiteNode() {
-        DataObject packageInstance = (DataObject)get("packageInstance");
-
-        DataAssociation siteNodes = (DataAssociation)packageInstance.get
-            ("mountPoint");
-        DataAssociationCursor siteNodesCursor = siteNodes.cursor();
-
-        DataObject siteNode = null;
-
-        if (siteNodesCursor.next()) {
-            siteNode = siteNodesCursor.getDataObject();
-        }
-
-        siteNodesCursor.close();
-
-        if (siteNode == null) {
-            return null;
-        } else {
-            return new SiteNode(siteNode);
-        }
-    }    */
 
     // Can return null.
     /**
@@ -579,9 +468,9 @@ public class Application extends Resource {
         }
     }
 
-    //
+    // //////////////////
     // Member properties
-    //
+    // //////////////////
 
     /**
      * Returns the path to this application through the dispatcher.
@@ -624,9 +513,6 @@ public class Application extends Resource {
         }
     }
 
-    // XXX primary URL doesn't keep in sync with sitenode hierarchy
-    // We need to use a trigger-like mechanism to keep the primaryURL
-    // denormalization correct.
     /**
      * @deprecated Use {@link #setPath(String)} instead
      */
@@ -649,7 +535,9 @@ public class Application extends Resource {
  * in parallel we have to use a trailing slash for legacy free applications,
  * otherwise they will not be found by methods like retrieveApplicationForPath()
  * which is called by legacy compatible apps including a trailing slash. If 
- * legacy free apps are stored without trailing slash the search will never match.  
+ * legacy free apps are stored without trailing slash the search will never match.
+ * The same is true as long as we mix old style dispatcher code with new style
+ * servlet code.
  */
 //          Assert.isTrue
 //              (path.equals("") || (path.startsWith(SLASH)
@@ -704,6 +592,12 @@ public class Application extends Resource {
         return apps;
     }
 
+    /**
+     * 
+     * @param applicationObjectType
+     * @param path
+     * @return 
+     */
     public static boolean isInstalled (String applicationObjectType,
                                        String path) {
         DataCollection dataCollection =
@@ -718,27 +612,6 @@ public class Application extends Resource {
             return false;
         }
     }
-
-    //
-    // To support ACSObject services
-    //
-/*  private static SiteNode makeSiteNode(String urlName, Application parent) {
-        SiteNode siteNode;
-
-        if (parent == null) {
-            siteNode = SiteNode.createSiteNode(urlName);
-        } else {
-            SiteNode parentSiteNode = parent.getSiteNode();
-
-            Assert.exists(parentSiteNode, Application.class);
-
-            siteNode = SiteNode.createSiteNode(urlName, parentSiteNode);
-        }
-
-        Assert.exists(siteNode, SiteNode.class);
-
-        return siteNode;
-    }  */
 
     /**
      * Returns a canonical application URL.  This is a utility method
@@ -759,6 +632,10 @@ public class Application extends Resource {
         return canonicalURL ;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getContextPath() {
         return "";
     }
@@ -801,6 +678,9 @@ public class Application extends Resource {
         return URL.SERVLET_DIR + "/legacy-adapter";
     }
 
+    /**
+     * 
+     */
     @Override
     protected void beforeSave() {
         if (isPropertyModified(PRIMARY_URL) || isNew()) {
@@ -810,6 +690,9 @@ public class Application extends Resource {
         super.beforeSave();
     }
 
+    /**
+     * 
+     */
     // This should be done through PDL
     @Override
     public void beforeDelete() {
@@ -820,17 +703,24 @@ public class Application extends Resource {
     //  }
     }
 
+    /** 
+     * 
+     */ 
     @Override
     public void afterDelete() {
         BaseDispatcher.scheduleRefresh();
     }
 
+    /**
+     * 
+     * @param group 
+     */
     public void setGroup(Group group) {
-	setAssociation("containerGroup", group);
-	Group parentGroup = getApplicationType().getGroup();
-	if (parentGroup != null) {
-	    parentGroup.addSubgroup(group);
-	}
+        setAssociation("containerGroup", group);
+        Group parentGroup = getApplicationType().getGroup();
+        if (parentGroup != null) {
+            parentGroup.addSubgroup(group);
+        }
     }
 
     // note group is  deleted if application is deleted
@@ -846,22 +736,22 @@ public class Application extends Resource {
      * 
      */
     public void createGroup() {
-	Assert.isEqual(getGroup(), null,
-			"Group has already been created for Application " + getTitle());
+        Assert.isEqual(getGroup(), null,
+              "Group has already been created for Application " + getTitle());
 
-	Group group = new Group();
-	group.setName(getTitle() + " Groups");
-	s_log.debug("created group " + group.getName());
-		
-	setAssociation("containerGroup", group);
-	Application parentApp = getParentApplication();
-	Group parentGroup = parentApp == null ? null : parentApp.getGroup();
-	if (parentGroup == null) {
-	    parentGroup = getApplicationType().getGroup();
-	}
-	if (parentGroup != null) {
-	    parentGroup.addSubgroup(group);
-	    s_log.debug("setting new group as subgroup of " + parentGroup.getName());
+        Group group = new Group();
+        group.setName(getTitle() + " Groups");
+        s_log.debug("created group " + group.getName());
+
+        setAssociation("containerGroup", group);
+        Application parentApp = getParentApplication();
+        Group parentGroup = parentApp == null ? null : parentApp.getGroup();
+        if (parentGroup == null) {
+            parentGroup = getApplicationType().getGroup();
+        }
+        if (parentGroup != null) {
+            parentGroup.addSubgroup(group);
+            s_log.debug("setting new group as subgroup of " + parentGroup.getName());
         }
 
     }
@@ -876,12 +766,13 @@ public class Application extends Resource {
      */
     @Override
     public void setTitle (String title) {
-	super.setTitle(title);
-	Group containerGroup = getGroup();
-	if (containerGroup != null) {
-	    containerGroup.setName(getTitle() + " Groups");
+        super.setTitle(title);
+        Group containerGroup = getGroup();
+        if (containerGroup != null) {
+            containerGroup.setName(getTitle() + " Groups");
         }
     }
+
     /**
      * Group associated with this application type. Usually
      * used as a container group to keep group admin tidy.
@@ -889,7 +780,8 @@ public class Application extends Resource {
      * @return null if no group is associated with this application type
      */
     public Group getGroup() {
-	return (Group) DomainObjectFactory.newInstance(
-			(DataObject) get("containerGroup"));
+        return (Group) DomainObjectFactory.newInstance(
+                                            (DataObject) get("containerGroup"));
     }
+
 }

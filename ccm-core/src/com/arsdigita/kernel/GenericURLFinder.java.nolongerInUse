@@ -102,6 +102,9 @@ import java.net.URLEncoder;
  *
  * @author Oumi Mehrotra
  * @version $Id: GenericURLFinder.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated without replacement. Current code depends solely on old style
+ * applications using SiteNode and Package / PackageType. Both are no longer
+ * in use. This class can not provide any useful information anymore (pb 2013-01)
  */
 public class GenericURLFinder implements URLFinder {
 

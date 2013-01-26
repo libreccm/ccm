@@ -26,10 +26,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Metadata Utilities:
+ * Metadata Utilities.
  * Package-private class containing utility/convenience methods for
  * accessing persistence metadata.
- **/
+ */
 class MDUtil {
 
     // map used to cache metadata lookups
@@ -38,6 +38,10 @@ class MDUtil {
     //     the ObjectType.
     private static HashMap s_composites = new HashMap();
 
+    /**
+     * @deprecated without direct replacement. PACKAGE_INSTANCE is old style
+     * application no longer in use. 
+     */
     static final String PACKAGE_INSTANCE = "packageInstance";
 
     static Property getCompositeRole(ObjectType type) {
@@ -68,14 +72,21 @@ class MDUtil {
     }
 
 
-    static boolean hasPackageInstanceRole(ObjectType o) {
+    /**
+     * 
+     * @param o
+     * @return 
+     * @ deprecated PACKAGE_INSTANCE is old style application no longer in use.
+     */
+/*  static boolean hasPackageInstanceRole(ObjectType o) {
+
         Property p = o.getProperty(PACKAGE_INSTANCE);
-        return
-            p != null &&
-            p.isRole() &&
-            ((ObjectType) p.getType()).isSubtypeOf(
-                getType(PackageInstance.BASE_DATA_OBJECT_TYPE));
-    }
+        return  p != null &&
+                p.isRole() &&
+                ((ObjectType) p.getType()).isSubtypeOf(
+                    getType(PackageInstance.BASE_DATA_OBJECT_TYPE));
+
+    }  */
 
 
     /**

@@ -19,21 +19,20 @@
 package com.arsdigita.web;
 
 
+import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
-
-import com.arsdigita.kernel.security.UserContext;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.ServletContext;
-import javax.servlet.RequestDispatcher;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
@@ -46,9 +45,9 @@ import org.apache.log4j.Logger;
  */
 public class Web {
 
-    public static final String ROOT_WEBAPP = "ROOT";
-
     private static final Logger s_log = Logger.getLogger(Web.class);
+
+    public static final String ROOT_WEBAPP = "ROOT";
 
     private static final ThreadLocal s_request =
                                      new InternalRequestLocal();
@@ -64,6 +63,9 @@ public class Web {
 
     private static WebConfig s_config;
 
+    /**
+     * 
+     */
     static void init(final HttpServletRequest sreq,
                      final ServletContext sc,
                      final UserContext uc) {

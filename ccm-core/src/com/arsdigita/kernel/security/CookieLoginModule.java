@@ -28,13 +28,14 @@ import org.apache.log4j.Logger;
  */
 public class CookieLoginModule extends UserLoginModule {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log =
-        Logger.getLogger(CookieLoginModule.class.getName());
+                         Logger.getLogger(CookieLoginModule.class.getName());
 
     /**
      * Creates a UserLoginModule that uses a CookieManager to manage the
      * credential value.
-     **/
+     */
     public CookieLoginModule() {
         super(new CookieManager());
     }

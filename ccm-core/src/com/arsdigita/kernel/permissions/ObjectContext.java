@@ -28,9 +28,9 @@ import com.arsdigita.persistence.OID;
 
 
 /**
- * A class that represents a context heiracrchy of
- * <code>ACSObject</code>s to other <code>ACSObject</code>s where the
- * context is used for security inheritance.
+ * A class that represents a context hierarchy of <code>ACSObject</code>s
+ * to other <code>ACSObject</code>s where the context is used for
+ * security inheritance.
  *
  * <p>
  * <font color="ff0000">
@@ -43,14 +43,17 @@ import com.arsdigita.persistence.OID;
  * @version 1.0
  *
  * @see com.arsdigita.kernel.ACSObject
- **/
+ * @version $Id: ObjectContext.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 final class ObjectContext extends DomainObject {
 
-    public static final String versionId = "$Id: ObjectContext.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.kernel.permissions.ObjectContext";
+                                "com.arsdigita.kernel.permissions.ObjectContext";
 
+    /**
+     * 
+     * @return 
+     */
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -63,7 +66,7 @@ final class ObjectContext extends DomainObject {
      * @see com.arsdigita.domain.DomainObject#DomainObject(String)
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.metadata.ObjectType
-     **/
+     */
     protected ObjectContext() {
         super(BASE_DATA_OBJECT_TYPE);
     }
@@ -79,7 +82,7 @@ final class ObjectContext extends DomainObject {
      * @see com.arsdigita.domain.DomainObject#DomainObject(OID)
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     protected ObjectContext(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -87,7 +90,7 @@ final class ObjectContext extends DomainObject {
     /**
      * Wrapper for {@link #ObjectContext(OID)} that uses the default
      * object type for object context.
-     **/
+     */
     protected ObjectContext(Object id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
@@ -104,7 +107,7 @@ final class ObjectContext extends DomainObject {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     protected DataObject getContext() {
         DataObject dataObj = (DataObject) get("context");
         return dataObj;
@@ -121,7 +124,7 @@ final class ObjectContext extends DomainObject {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     protected OID getContextOID() {
         DataObject dataObj = (DataObject) get("context");
         if (dataObj != null) {
@@ -138,7 +141,7 @@ final class ObjectContext extends DomainObject {
      * @param contextObject The <code>ACSObject</code> to use as the context.
      *
      * @see com.arsdigita.kernel.ACSObject
-     **/
+     */
     protected void setContext(ACSObject contextObject) {
         if (contextObject == null) {
             // hack to fix a bug in persistence.
@@ -158,7 +161,7 @@ final class ObjectContext extends DomainObject {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     protected void setContext(OID contextObjectOID) {
         if (contextObjectOID == null) {
             // hack to fix a bug in persistence.
@@ -180,7 +183,7 @@ final class ObjectContext extends DomainObject {
      * <code>ObjectContext</code>.
      *
      * @see com.arsdigita.kernel.ACSObject
-     **/
+     */
     protected void setObject(ACSObject acsObject) {
         if (isNew()) {
             set("objectId", acsObject.getID());
@@ -200,7 +203,7 @@ final class ObjectContext extends DomainObject {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     protected void setObject(OID objectOID) {
         if (isNew()) {
             set("objectId", objectOID.get("id"));

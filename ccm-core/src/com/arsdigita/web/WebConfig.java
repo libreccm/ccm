@@ -76,6 +76,7 @@ public final class WebConfig extends AbstractConfig {
 
         m_host = new HttpHostParameter
             ("waf.web.host", Parameter.OPTIONAL, null) {
+                @Override
                 public final Object getDefaultValue() {
                     return getServer();
                 }
@@ -83,6 +84,7 @@ public final class WebConfig extends AbstractConfig {
 
         m_site = new StringParameter
             ("waf.web.site_name", Parameter.OPTIONAL, null) {
+                @Override
                 public final Object getDefaultValue() {
                     final HttpHost host = getServer();
 

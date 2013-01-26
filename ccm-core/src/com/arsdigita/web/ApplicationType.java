@@ -18,27 +18,26 @@
  */
 package com.arsdigita.web;
 
+import com.arsdigita.db.Sequences;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.ResourceType;
-// import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
-// import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.db.Sequences;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 
-import java.util.LinkedList;
-import java.util.Collection;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.LinkedList;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -62,7 +61,6 @@ public class ApplicationType extends ResourceType {
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.web.ApplicationType";
 
-//  private PackageType m_packageType;
     boolean m_legacyFree = true;
 
     /**
@@ -75,9 +73,7 @@ public class ApplicationType extends ResourceType {
      */
     public ApplicationType(DataObject dataObject) {
         super(dataObject);
-    //  if (this.getPackageType() == null) { // indicates a legacy free app
             m_legacyFree = true;
-    //  }   // otherwise leave it on its default value of false
     }
 
     protected ApplicationType(String dataObjectType) {
@@ -94,13 +90,8 @@ public class ApplicationType extends ResourceType {
     protected ApplicationType(final String objectType,
                               final String title,
                               final String applicationObjectType) {
+
         this(objectType, title, applicationObjectType, false);
-    //  under some circumstances m_legacyFree is set correctly to true
-    //  if (m_legacyFree == false) {  //check if default value is correct!
-    //      if (this.getPackageType() == null) { // indicates a legacy free app
-    //          m_legacyFree = true;
-    //      }   // otherwise leave it on its default value of false
-    //  }
 
     }
 
@@ -129,31 +120,13 @@ public class ApplicationType extends ResourceType {
         if (createContainerGroup) {
             createGroup();
         }
-        m_legacyFree = true;
+
     }
 
     @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
-
-    // ensure legacy free instance variable is set correctly 
-    // previously only set on creation of application type 
-    // (to be honest I can't remember the problem that was 
-    // causing, but it did cause a problem in some 
-    // circumstances)
-    // Method overwrites a (overwritable) method provided by the super class to
-    // process a created (empty) data object.
-//  @Override
-//  public void initialize() {
-//      super.initialize();
-//      s_log.debug("initialising application type "); 
-//      if (!isNew() && getPackageType() == null) {
-//          s_log.debug("legacy free type");
-//          m_legacyFree = true;
-//          
-//      }
-//  }
 
 
     private void setDefaults() {
@@ -208,7 +181,12 @@ public class ApplicationType extends ResourceType {
         return new ApplicationType(dataObject);
     }
 
-    // Can return null.
+
+    /**
+     * 
+     * @param applicationObjectType
+     * @return Can return null.
+     */
     public static ApplicationType retrieveApplicationTypeForApplication
                                       (String applicationObjectType) {
 
@@ -231,6 +209,10 @@ public class ApplicationType extends ResourceType {
         return applicationType;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public static ApplicationTypeCollection retrieveAllApplicationTypes() {
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
@@ -246,6 +228,10 @@ public class ApplicationType extends ResourceType {
     // Member properties
     //
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getTitle() {
         String title = (String) get("title");
@@ -255,6 +241,10 @@ public class ApplicationType extends ResourceType {
         return title;
     }
 
+    /**
+     * 
+     * @param title 
+     */
     @Override
     public void setTitle(String title) {
         Assert.exists(title, "title");
@@ -262,7 +252,11 @@ public class ApplicationType extends ResourceType {
         set("title", title);
     }
 
-    // Can return null.
+
+    /**
+     * 
+     * @return Can return null.
+     */
     @Override
     public String getDescription() {
         final String description = (String) get("description");
@@ -466,24 +460,9 @@ public class ApplicationType extends ResourceType {
     // the class name without leading package name.
     public String getName() {
 
-     // if (m_legacyFree == true ) {
             s_log.debug("Expect XSL templates at " + StringUtils.urlize(getTitle()));
             return StringUtils.urlize(getTitle());
-     // } else {
-            // m_legacyFree seems sometimes not set correctly! It's odd but the
-            // goal is to get rid of legacy code so it should do it for the
-            // time beeing. We svn rename check getPackageType to see if m_legacyFree is
-            // really set correctly.
-       //   if (getPackageType() == null) { // indicates legacy free App
-       //       s_log.debug("Expect XSL templates at "
-       //                   + StringUtils.urlize(getTitle()));
-       //       m_legacyFree = true;   // correct m_legacyFree for future use
-       //       return StringUtils.urlize(getTitle());
-       //   } else {
-       //       return this.getPackageType().getKey();
-       //   }
 
-     // }
     }
 
     /**
@@ -510,9 +489,7 @@ public class ApplicationType extends ResourceType {
     public boolean isSingleton() {
 
         final Boolean result = (Boolean) get("isSingleton");
-
         Assert.exists(result, "Boolean result");
-
         return result.booleanValue();
     }
 
@@ -523,10 +500,9 @@ public class ApplicationType extends ResourceType {
      */
     @Override
     public BigDecimal getID() {
+
         BigDecimal id = (BigDecimal)get("id");
-
         Assert.exists(id, "id");
-
         return id;
     }
 

@@ -28,8 +28,10 @@ import org.apache.log4j.Logger;
 
 /**
  * Supports login as an aribtrary user by checking whether a user ID has
- * been set for the Subject.  If so, <code>login</code> succeeds, so
- * <code>commit</code> is called on all login modules to log the user in.
+ * been set for the Subject.  
+ * 
+ * If so, <code>login</code> succeeds, so <code>commit</code> is called
+ * on all login modules to log the user in.
  * If no user ID is set, <code>login</code> fails.  This module should
  * appear at the beginning of a login context with the "sufficient" control
  * flag.  Note that this module does not check the privileges of the current
@@ -42,11 +44,19 @@ import org.apache.log4j.Logger;
  */
 public class AdminLoginModule implements LoginModule {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log =
-        Logger.getLogger(AdminLoginModule.class.getName());
+                         Logger.getLogger(AdminLoginModule.class.getName());
 
     private Subject m_subject;
 
+    /**
+     * 
+     * @param subject
+     * @param handler
+     * @param shared
+     * @param options 
+     */
     public void initialize(Subject subject,
                            CallbackHandler handler,
                            Map shared,

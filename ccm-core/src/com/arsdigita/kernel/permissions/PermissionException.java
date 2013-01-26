@@ -30,11 +30,10 @@ import org.apache.log4j.Priority;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: PermissionException.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class PermissionException extends RuntimeException {
-
-    public final static String versionId = "$Id: PermissionException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private PermissionDescriptor m_permission;
     private String m_msg;
@@ -49,6 +48,10 @@ public class PermissionException extends RuntimeException {
         SecurityLogger.log(Priority.WARN, m_msg);
     }
 
+    /**
+     * 
+     * @param permission 
+     */
     public PermissionException(PermissionDescriptor permission) {
         m_permission = permission;
 
@@ -73,6 +76,12 @@ public class PermissionException extends RuntimeException {
         SecurityLogger.log(Priority.WARN, m_msg);
     }
 
+    /**
+     * 
+     * @param priv
+     * @param obj
+     * @param message 
+     */
     public PermissionException(PrivilegeDescriptor priv, 
                                ACSObject obj, 
                                String message) {
@@ -82,10 +91,18 @@ public class PermissionException extends RuntimeException {
         SecurityLogger.log(Priority.WARN, m_msg);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public PermissionDescriptor getPermission() {
         return m_permission;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getMessage() {
         return m_msg;
     }

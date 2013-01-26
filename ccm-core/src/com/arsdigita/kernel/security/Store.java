@@ -97,6 +97,9 @@ final class Store implements KeyStorage {
         dobj.save();
     }
 
+    /**
+     * 
+     */
     synchronized byte[] loadSecret() {
         if ( m_secret != null ) { return m_secret; }
 

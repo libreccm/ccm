@@ -18,13 +18,16 @@
  */
 package com.arsdigita.kernel.security;
 
-import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.kernel.UserAuthentication;
+
 import java.util.Map;
+
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.login.LoginException;
 import javax.security.auth.login.FailedLoginException;
+import javax.security.auth.login.LoginException;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -32,12 +35,12 @@ import org.apache.log4j.Logger;
  * <code>com.arsdigita.kernel.UserAuthentication</code>.
  *
  * @author Sameer Ajmani
+ * @version $Id: LocalLoginModule.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class LocalLoginModule extends PasswordLoginModule {
 
-    public static final String versionId = "$Id: LocalLoginModule.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
-        Logger.getLogger(LocalLoginModule.class.getName());
+                         Logger.getLogger(LocalLoginModule.class.getName());
 
     // fields set by initialize()
     private Subject m_subject;
@@ -46,6 +49,14 @@ public class LocalLoginModule extends PasswordLoginModule {
     private Map m_options;
 
     // implements LoginModule
+    /**
+     * 
+     * @param subject
+     * @param handler
+     * @param shared
+     * @param options 
+     */
+    @Override
     public void initialize(Subject subject,
                            CallbackHandler handler,
                            Map shared,
@@ -67,12 +78,12 @@ public class LocalLoginModule extends PasswordLoginModule {
      * @throws LoginException if an error occurs.
      **/
     protected void checkPassword(String username, char[] password)
-        throws LoginException {
-
+                   throws LoginException {
         s_log.debug("START checkPassword");
+
         UserAuthentication auth;
         try {
-            s_log.debug("retreiving UserAuthentication");
+            s_log.debug("retrieving UserAuthentication");
             auth = UserAuthentication.retrieveForLoginName(username);
         } catch (DataObjectNotFoundException e) {
             throw new AccountNotFoundException("no such user: "+username, e);

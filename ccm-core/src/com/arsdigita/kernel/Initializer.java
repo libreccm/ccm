@@ -127,8 +127,10 @@ public class Initializer extends GenericInitializer {
         // finders registered for them by other initializers (in UI packages).
         // For PackageInstance, urls are determined from the mount points on
         // the site map.
-        URLService.registerFinder(PackageInstance.BASE_DATA_OBJECT_TYPE,
-                                  new GenericURLFinder(""));
+   //   EXPERIMENTAL. This class relies on SiteNode / Package / PackageTye
+   //   and is not able to provide usefull information anymore. 
+   //   URLService.registerFinder(PackageInstance.BASE_DATA_OBJECT_TYPE,
+   //                             new GenericURLFinder(""));
 
         if (Kernel.getSystemParty() == null) {
             final DatabaseTransaction transaction = new DatabaseTransaction();

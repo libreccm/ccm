@@ -72,8 +72,9 @@ public class Credential {
      *
      * @return the String representation of this credential.
      **/
+    @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append(m_value).append(SEPARATOR);
         buf.append(m_expiration).append(SEPARATOR);
         buf.append(URLEncoder.encode(new String(new Base64().encode(m_validator))));
@@ -94,8 +95,7 @@ public class Credential {
      *
      * @return the expiration date of this credential.
      **/
-    public Date getExpiration()
-    {
+    public Date getExpiration() {
         return new Date(m_expiration);
         // NOTE: do not cache Date object (Date is mutable)
     }
@@ -140,7 +140,7 @@ public class Credential {
     static Credential create(String value,
                              long lifetimeMillis,
                              Mac mac)
-        throws CredentialEncodingException {
+                      throws CredentialEncodingException {
 
         if (value.indexOf(SEPARATOR) != -1) {
             throw new CredentialEncodingException
@@ -190,7 +190,8 @@ public class Credential {
 
     // intentionally package-scoped to make whitebox testing possible
     static Credential parse(String credential, Mac mac)
-        throws CredentialParsingException, CredentialExpiredException {
+                      throws CredentialParsingException, 
+                             CredentialExpiredException {
 
         // split string into value, expiration, and validator
         StringTokenizer tok = new StringTokenizer(URLDecoder.decode(credential),
@@ -208,8 +209,7 @@ public class Credential {
             throw new CredentialParsingException("Bad expiration", e);
         }
         if (expiration < System.currentTimeMillis()) {
-            throw new CredentialExpiredException
-                (new Date(expiration).toString());
+            throw new CredentialExpiredException(new Date(expiration).toString());
         }
 
         final byte[] validator;

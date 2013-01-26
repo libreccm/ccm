@@ -119,7 +119,10 @@ public final class PermissionCache {
         return s_instance;
     }
 
-    // Caching of permission lookups within the txn
+    /**
+     * Caching of permission lookups within the txn
+     * @return 
+     */
     private static CollectionTxnCache getPermissionsCache() {
         return getInstance().m_prTxnCache;
     }
@@ -135,7 +138,7 @@ public final class PermissionCache {
      *
      * @return <code>true</code> if the PermissionDescriptor's base object has the
      * specified permission; <code>false</code> otherwise.
-     **/
+     */
     public boolean checkPermission(PermissionDescriptor perm) {
         OID party = perm.getPartyOID();
         OID obj = perm.getACSObjectOID();
@@ -158,6 +161,12 @@ public final class PermissionCache {
         return lookupResult.booleanValue();
     }
 
+    /**
+     * 
+     * @param party
+     * @param obj
+     * @return 
+     */
     private static HashMap getPrivilegesFromDB(
         OID party,
         OID obj) {
@@ -207,21 +216,48 @@ public final class PermissionCache {
     
     
     
+    /**
+     * 
+     */
     private class CollectionTxnCache {
+
         private String m_prefix;
         
+        /**
+         * 
+         * @param prefix 
+         */
         public CollectionTxnCache(String prefix) {
             m_prefix = prefix;
         }
 
+        /**
+         * 
+         * @param party
+         * @param object
+         * @return 
+         */
         private String attributeName(OID party, OID object) {
             return m_prefix + ":" + party.get("id") + ":" + object.get("id");
         }
         
+        /**
+         * 
+         * @param party
+         * @param object
+         * @param privilegeMap 
+         */
         public void cache(OID party, OID object, HashMap privilegeMap) {
             getTxn().setAttribute(attributeName(party, object), privilegeMap);
         }
 
+        /**
+         * 
+         * @param party
+         * @param object
+         * @param privilege
+         * @return 
+         */
         public Boolean lookup(
             OID party,
             OID object,
@@ -243,6 +279,10 @@ public final class PermissionCache {
             }
         }
 
+        /**
+         * 
+         * @return 
+         */
         private TransactionContext getTxn() {
             TransactionContext txn =
                 SessionManager.getSession().getTransactionContext();

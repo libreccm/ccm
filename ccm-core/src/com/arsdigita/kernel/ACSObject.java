@@ -165,6 +165,7 @@ public abstract class ACSObject extends ObservableDomainObject {
     /**
      * Called from base class (DomainObject) constructors.
      */
+    @Override
     protected void initialize() {
         super.initialize();
 
@@ -264,10 +265,12 @@ public abstract class ACSObject extends ObservableDomainObject {
     }
 
     /**
-     * Returns the container for this object, or null if there is
-     * no container.  The container is produced by domain-specific
-     * logic based on any properties of the domain object.  The resulting
-     * container is denormalized internally by ACSObject.save().
+     * Returns the container for this object, or null if there is no
+     * container. 
+     * 
+     * The container is produced by domain-specific logic based on any
+     * properties of the domain object.  The resulting container is
+     * denormalized internally by ACSObject.save().
      * The denormalized container hierarchy is currently only used
      * for generically determining what package instance an object
      * belongs to.  In the future, other generic services may be
@@ -291,6 +294,9 @@ public abstract class ACSObject extends ObservableDomainObject {
      * of one File Storage application instance).
      *
      * @return this object's container.
+     * @deprecated without direct replacement. Method uses old app style
+     * PackageInstance no longer in use. Involing code has to be refactored
+     * to use new style application code.
      */
     protected ACSObject getContainer() {
         ObjectType specificType = MDUtil.getType(getSpecificObjectType());
@@ -301,10 +307,12 @@ public abstract class ACSObject extends ObservableDomainObject {
             containerData = (DataObject) get(p.getName());
         }
         if (containerData == null) {
-            if (MDUtil.hasPackageInstanceRole(specificType)) {
-                specializeDataObject(specificType);
-                containerData = (DataObject) get(MDUtil.PACKAGE_INSTANCE);
-            }
+            throw new IllegalArgumentException(
+                      "containerData is null, PackageInstance removed.");
+         // if (MDUtil.hasPackageInstanceRole(specificType)) {
+         //     specializeDataObject(specificType);
+         //     containerData = (DataObject) get(MDUtil.PACKAGE_INSTANCE);
+         // }
         }
 
         return (ACSObject) DomainObjectFactory.newInstance(containerData);
@@ -312,9 +320,10 @@ public abstract class ACSObject extends ObservableDomainObject {
 
     /**
      * Returns true if this object has been moved to a new container,
-     * or null if the container has not changed.  This methods is
-     * used by ACSObject.save() to determine when to denormalize
-     * the result of getContainer().
+     * or null if the container has not changed.  
+     * 
+     * This methods is used by ACSObject.save() to determine when to
+     * denormalize the result of getContainer().
      *
      * While this method is not abstract, the default implementation
      * "guesses" the container based on metadata about the object.
@@ -330,11 +339,14 @@ public abstract class ACSObject extends ObservableDomainObject {
      *
      * @return this object's container.
      *
+     * @deprecated
      * @see #getContainer()
      */
     protected boolean isContainerModified() {
+
         ObjectType specificType = MDUtil.getType(getSpecificObjectType());
         Property p = MDUtil.getCompositeRole(specificType);
+
         if (p != null) {
             specializeDataObject(specificType);
             if (isPropertyModified(p.getName())) {
@@ -348,10 +360,16 @@ public abstract class ACSObject extends ObservableDomainObject {
                 return false;
             }
         }
-        if (MDUtil.hasPackageInstanceRole(specificType)) {
-            specializeDataObject(specificType);
-            return isPropertyModified(MDUtil.PACKAGE_INSTANCE);
-        }
+
+   //  Removed. EXPERIMENTAL! (pboy 2013-01-26, r2049 hb)
+   //  Because package tyble is empty (there exist no old style nor new style
+   //  compatible applications anymore, everything is new style legacy free)
+   //  the argument in if should always return false.!
+   //   if (MDUtil.hasPackageInstanceRole(specificType)) {
+   //       specializeDataObject(specificType);
+   //       return isPropertyModified(MDUtil.PACKAGE_INSTANCE);
+   //   }
+
         return false;
     }
 
@@ -452,7 +470,8 @@ public abstract class ACSObject extends ObservableDomainObject {
              * container for everything in the system is immature
              * and not consistent.
              */
-            SecurityLogger.log(Priority.INFO, "No parent container for " + this.getOID() + ".");
+            SecurityLogger.log(Priority.INFO, "No parent container for " 
+                                               + this.getOID() + ".");
             return;
         }
     }
@@ -461,6 +480,7 @@ public abstract class ACSObject extends ObservableDomainObject {
         assertPrivilege(PrivilegeDescriptor.WRITE);
     }
 
+    @Override
     protected void beforeSave() {
         // set the display name property if necessary
         String displayName = getDisplayName();
