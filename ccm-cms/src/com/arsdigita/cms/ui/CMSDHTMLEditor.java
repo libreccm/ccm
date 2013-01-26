@@ -18,12 +18,16 @@
  */
 package com.arsdigita.cms.ui;
 
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.bebop.form.DHTMLEditor;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ContentSection;
 
 
+/**
+ * 
+ * 
+ */
 public class CMSDHTMLEditor extends DHTMLEditor {
 
     public CMSDHTMLEditor(String name) {

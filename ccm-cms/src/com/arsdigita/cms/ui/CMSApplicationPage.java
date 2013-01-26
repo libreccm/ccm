@@ -18,38 +18,18 @@
  */
 package com.arsdigita.cms.ui;
 
-import com.arsdigita.cms.dispatcher.*;
-import com.arsdigita.bebop.Bebop;
-import com.arsdigita.bebop.Container;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.page.PageTransformer;
-import com.arsdigita.cms.CMSExcursion;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ContentSectionServlet;
-import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.developersupport.DeveloperSupport;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.permissions.PermissionDescriptor;
-import com.arsdigita.kernel.permissions.PermissionService;
-import com.arsdigita.persistence.OID;
 import com.arsdigita.templating.PresentationManager;
-import com.arsdigita.util.Assert;
-import com.arsdigita.web.Application;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.HashMap;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -57,19 +37,18 @@ import org.apache.log4j.Logger;
 //  ////////////////////////////////////////////////////////////////////////////
 //
 //  Currently under development as a replacement for CMSPage without the
-//  dispatcher mechanism but a new application style "pure" bebop page
+//  dispatcher mechanism but a new application style "pure" bebop pageElement
 //  served by an application servlet.
 //
 //  ////////////////////////////////////////////////////////////////////////////
 
 
 /**
- * <p>A <tt>CMSPage</tt> is a Bebop {@link com.arsdigita.bebop.Page}
- * implementation of the {@link com.arsdigita.cms.dispatcher.ResourceHandler}
- * interface.</p>
+ * <p>A <tt>CMSApplicationPage</tt> is a Bebop {@link com.arsdigita.bebop.Page}
+ * implementation serving as a base for any CMS pageElement served by a servlet. </p>
  *
  * <p>It stores the current {@link com.arsdigita.cms.ContentSection} and, if
- * applicable, the {@link com.arsdigita.cms.ContentItem} in the page state as
+ * applicable, the {@link com.arsdigita.cms.ContentItem} in the pageElement state as
  * request local objects. Components that are part of the <tt>CMSPage</tt>
  * may access these objects by calling:</p>
  *     <blockquote><code><pre>
@@ -87,7 +66,7 @@ public class CMSApplicationPage extends Page {
     /** The global assets URL stub XML parameter name.    */
     public final static String ASSETS = "ASSETS";
 
-    /** The XML page class.     */
+    /** The XML pageElement class.     */
     public final static String PAGE_CLASS = "CMS";
 
     /** Map of XML parameters   */
@@ -122,10 +101,11 @@ public class CMSApplicationPage extends Page {
     }
 
     /**
-     * Builds the page.
+     * Builds the pageElement.
      */
-    protected void buildPage() {
-        // Set the class attribute.
+    private void buildPage() {
+
+        // Set the class attribute value (down in SimpleComponent).
         setClassAttr(PAGE_CLASS);
 
         // Global XML params.
@@ -151,10 +131,10 @@ public class CMSApplicationPage extends Page {
     }
 
     /**
-     * Finishes and locks the page. If the page is already locked, does nothing.
+     * Finishes and locks the pageElement. If the pageElement is already locked, does nothing.
      *
      * This method is called by the {@link com.arsdigita.dispatcher.Dispatcher}
-     * that initializes this page.
+     * that initializes this pageElement.
      */
     public synchronized void init() {
         s_log.debug("Initializing the page");
@@ -194,7 +174,7 @@ public class CMSApplicationPage extends Page {
      * @param request The HTTP request
      * @return The current content section
      *
-     * @deprecated use com.arsdigita.cms.CMS.getContext().getContentSection() 
+     * @ deprecated use com.arsdigita.cms.CMS.getContext().getContentSection() 
      *             instead
      *             Despite of being deprecated it can not be removed because it
      *             is required by the interface Resourcehandler which is
@@ -202,27 +182,27 @@ public class CMSApplicationPage extends Page {
      *             On the other hand, if deprecated, implementing ResourceHandler
      *             may not be required
      */
-   public ContentSection getContentSection(HttpServletRequest request) {
-        // Resets all content sections associations.
-     // return ContentSectionDispatcher.getContentSection(request);
-        return ContentSectionServlet.getContentSection(request);
-    }
+// public ContentSection getContentSection(HttpServletRequest request) {
+//      // Resets all content sections associations.
+//   // return ContentSectionDispatcher.getContentSection(request);
+//      return ContentSectionServlet.getContentSection(request);
+//  }
 
     /**
      * Fetch the request-local content section.
      *
-     * @param state The page state
+     * @param state The pageElement state
      * @return The current content section
      *
-     * @deprecated use com.arsdigita.cms.CMS.getContext().getContentSection()
+     * @ deprecated use com.arsdigita.cms.CMS.getContext().getContentSection()
      *             instead
      *             Despite of being deprecated it can not be removed because it
      *             is required by ContentItemPage which extends CMSPage and
      *             uses this method.
      */
-    public ContentSection getContentSection(PageState state) {
-        return getContentSection(state.getRequest());
-    }
+//  public ContentSection getContentSection(PageState state) {
+//      return getContentSection(state.getRequest());
+//  }
 
     /**
      * Fetch the request-local content item.
@@ -230,7 +210,7 @@ public class CMSApplicationPage extends Page {
      * @param request The HTTP request
      * @return The current content item
      *
-     * @deprecated use com.arsdigita.cms.CMS.getContext().getContentItem()
+     * @ deprecated use com.arsdigita.cms.CMS.getContext().getContentItem()
      *             instead
      *             Despite of being deprecated it can not be removed because it
      *             is required by the interface Resourcehandler which is
@@ -238,41 +218,41 @@ public class CMSApplicationPage extends Page {
      *             On the other hand, if deprecated, implementing ResourceHandler
      *             may not be required
      */
-    public ContentItem getContentItem(HttpServletRequest request) {
-        // resets all content item associations
-        return ContentSectionDispatcher.getContentItem(request);
-    }
+//  public ContentItem getContentItem(HttpServletRequest request) {
+//      // resets all content item associations
+//      return ContentSectionDispatcher.getContentItem(request);
+//  }
 
     /**
      * Fetch the request-local content item.
      *
-     * @param state The page state
+     * @param state The pageElement state
      * @return The current content item
-     * @deprecated use com.arsdigita.cms.CMS.getContext().getContentItem()
+     * @ deprecated use com.arsdigita.cms.CMS.getContext().getContentItem()
      *             instead.
      *             Despite of being deprecated it can not be removed because it
      *             is required by ContentItemPage which extends CMSPage and
      *             uses this method.
      */
-    public ContentItem getContentItem(PageState state) {
-        return getContentItem(state.getRequest());
-    }
+ //  public ContentItem getContentItem(PageState state) {
+ //     return getContentItem(state.getRequest());
+ // }
 
     /**
-     * Services the Bebop page.
+     * Services the Bebop pageElement.
      *
      * @param request The servlet request object
      * @param response the servlet response object
      *
      * @pre m_transformer != null
      */
-    public void dispatch(final HttpServletRequest request,
+/*  public void dispatch(final HttpServletRequest request,
                          final HttpServletResponse response // ,
                          // RequestContext actx
                         )
         throws IOException, ServletException {
 
-        DeveloperSupport.startStage("CMSPage.dispatch: serve page");
+        DeveloperSupport.startStage("CMSPage.dispatch: serve pageElement");
 
         CMSExcursion excursion = new CMSExcursion() {
                 public void excurse() throws IOException, ServletException {
@@ -331,21 +311,35 @@ public class CMSApplicationPage extends Page {
         try {
             excursion.run();
         } finally {
-            DeveloperSupport.endStage("CMSPage.dispatch: serve page");
+            DeveloperSupport.endStage("CMSPage.dispatch: serve pageElement");
         }
-    }
+    }  */
 
+    /**
+     * Overwrites bebop.Page#generateXMLHelper to add the name of the user
+     * logged in to the pageElement (displayed as part of the header).
+     * @param ps
+     * @param parent
+     * @return pageElement for use in generateXML
+     */
     @Override
     protected Element generateXMLHelper(PageState ps, Document parent) {
 
-        Element page = super.generateXMLHelper(ps,parent);
+        /* Retain elements already included.                                  */
+        Element pageElement = super.generateXMLHelper(ps,parent);
 
+        /* Add name of user logged in.                                        */
+        // Note: There are at least 2 ways in the API to determin the user
+        // TODO: Check for differences, determin the best / recommended way and
+        //       document it in the classes. Probably remove one ore the other
+        //       way from the API if possible.
         User user = (User) Kernel.getContext().getParty();
+        // User user = Web.getContext().getUser();
         if ( user != null ) {
-        page.addAttribute("name",user.getDisplayName());
+            pageElement.addAttribute("name",user.getDisplayName());
         }
 
-        return page;
+        return pageElement;
     }
 
 }

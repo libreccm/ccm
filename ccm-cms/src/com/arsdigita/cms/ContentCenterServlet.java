@@ -20,7 +20,7 @@
 package com.arsdigita.cms;
 
 import com.arsdigita.bebop.Page;
-import com.arsdigita.cms.dispatcher.ResourceHandler;
+import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.SimpleCache;
 import com.arsdigita.cms.ui.contentcenter.MainPage;
 import com.arsdigita.developersupport.DeveloperSupport;
@@ -37,7 +37,6 @@ import com.arsdigita.web.*;
 import com.arsdigita.xml.Document;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -69,7 +68,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
                                "/WEB-INF/resources/content-center-old-map.xml";
 
     /** Mapping between a relative URL and the class name of a ResourceHandler.*/
-    private static HashMap s_pageClasses = ContentCenterSetup.getURLToClassMap();
+    // private static HashMap s_pageClasses = ContentCenterSetup.getURLToClassMap();
     private static HashMap s_pageURLs = ContentCenterSetup.getClassToURLMap();
 
     /** Instantiated ResourceHandlers cache. This allows for lazy loading.    */
@@ -205,7 +204,6 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         }
 
 
-        // ResourceHandler page = getResource(url);
         final Page page = (Page) m_pages.get(pathInfo);
         if ( page != null ) {
 
@@ -271,6 +269,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
      * Service Method returns the URL stub for the class name,
      * can return null if not mapped
      */
+    // Currently still in use by c.ad.cms.ui.ItemSearchWidget
     public static String getURLStubForClass(String classname) {
         s_log.debug("Getting URL Stub for : " + classname);
         Iterator itr = s_pageURLs.keySet().iterator();
@@ -284,66 +283,12 @@ public class ContentCenterServlet extends BaseApplicationServlet {
     }
 
     /**
-     * Fetch a page based on the URL stub.
-     *
-     * @param url The URL stub following the site-node URL
-     * @return A ResourceHandler or null if none exists.
-     * @pre (url != null)
-     */
-    protected ResourceHandler getResource(String url) throws ServletException {
-
-        // First check the pages cache for existing pages.
-        ResourceHandler page = (ResourceHandler) s_pages.get(url);
-        if ( page == null ) {
-
-            // Next check if the URL maps to a page class.
-            String pageClassName = (String) s_pageClasses.get(url);
-            if ( pageClassName != null ) {
-
-                Class pageClass;
-                try {
-                    pageClass = Class.forName(pageClassName);
-                } catch (ClassNotFoundException e) {
-                    s_log.error("error fetching class for ResourceHandler", e);
-                    throw new ServletException(e);
-                }
-
-                // Try and instantiate the page.
-                try {
-                    page = (ResourceHandler) pageClass.newInstance();
-                } catch (InstantiationException e) {
-                    s_log.error("error instantiating a ResourceHandler", e);
-                    throw new ServletException(e);
-                } catch (IllegalAccessException e) {
-                    s_log.error("error instantiating a ResourceHandler", e);
-                    throw new ServletException(e);
-                }
-
-                page.init();
-                s_pages.put(url, page);
-            }
-        }
-        return page;
-    }
-
-    /**
-     * Map a page to a URL.
-     *
-     * @param url The URL
-     * @param className The name of the ResourceHandler class
-     * @pre (url != null && className != null)
-     */
-    protected void addResource(String url, String className) {
-        s_pageClasses.put(url, className);
-        s_pageURLs.put(className, url);
-    }
-
-    /**
      * Release the page at the specified URL.
      *
      * @param url The URL
      * @pre (url != null)
      */
+    // Currently still in use by c.ad.cms.dispatcher.Utilities
     public static void releaseResource(String url) {
         s_pages.remove(url);
     }

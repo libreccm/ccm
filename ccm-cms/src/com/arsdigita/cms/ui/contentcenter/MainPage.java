@@ -24,16 +24,14 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ui.CMSApplicationPage;
 import com.arsdigita.cms.ui.GlobalNavigation;
 import com.arsdigita.cms.ui.ItemSearch;
 import com.arsdigita.cms.ui.WorkspaceContextBar;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.ui.DebugPanel;
-import com.arsdigita.web.Web;
-import com.arsdigita.xml.Document;
-import com.arsdigita.xml.Element;
+
 import org.apache.log4j.Logger;
 
 
@@ -49,7 +47,7 @@ import org.apache.log4j.Logger;
  * @author Peter Boy (pboy@barkhof.uni-bremen.de)
  * @version $Id: MainPage.java pboy $
  */
-public class MainPage extends Page implements ActionListener {
+public class MainPage extends CMSApplicationPage implements ActionListener {
 
     private static final Logger s_log = Logger.getLogger(MainPage.class);
 
@@ -109,7 +107,8 @@ public class MainPage extends Page implements ActionListener {
         add(new DebugPanel());
         
         /* Page complete, locked now.                                         */
-        lock();
+        // lock();
+        init();
     }
 
     /**
@@ -168,11 +167,8 @@ public class MainPage extends Page implements ActionListener {
      * attribute to "CMS Admin." This implementation also adds tasks,
      * content sections, and search panes.
      *
-     *<p>
-     *
-     * Developers can override this method to add only the tabs they
-     * want, or to add additional tabs after the default CMS tabs are
-     * added.
+     * Developers can override this method to add only the tabs they want,
+     * or to add additional tabs after the default CMS tabs are added.
      **/
     protected TabbedPane createTabbedPane() {
         TabbedPane pane = new TabbedPane();
@@ -214,33 +210,6 @@ public class MainPage extends Page implements ActionListener {
         } else if ( pane == m_search ) {
             m_search.reset(state);
         }
-    }
-
-    /**
-     * Overwrites bebop.Page#generateXMLHelper to add the name of the user
-     * logged in to the page (displayed as part of the header).
-     * @param ps
-     * @param parent
-     * @return 
-     */
-    // ToDo: This code fragment is used by several pages of CMS package. It
-    // should be factored out into a kind of CMSBasePage, as it had been in
-    // the deprecated CMSPage.
-    // Should be checked when refactoring the content section pages to work
-    // as bebop pages without dispatcher mechanism and in new style application.
-    @Override
-    protected Element generateXMLHelper(PageState ps, Document parent) {
-
-        /* Retain elements already included.                                  */
-        Element page = super.generateXMLHelper(ps,parent);
-
-        /* Add name of user logged in.                                        */
-        User user = Web.getContext().getUser();
-        if ( user != null ) {
-            page.addAttribute("name",user.getDisplayName());
-        }
-
-        return page;
     }
 
 }
