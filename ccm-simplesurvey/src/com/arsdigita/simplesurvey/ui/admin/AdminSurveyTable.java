@@ -23,30 +23,23 @@ import com.arsdigita.simplesurvey.util.GlobalizationUtil ;
 
 
 // Every item in the Table will have links
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
-
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableCellRenderer;
-
-import com.arsdigita.simplesurvey.SimpleSurveyUtil;
-
+import com.arsdigita.formbuilder.PersistentForm;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.PackageInstance;
-
-import com.arsdigita.bebop.Component;
-
+// import com.arsdigita.simplesurvey.SimpleSurveyUtil;
 import com.arsdigita.simplesurvey.Survey;
 import com.arsdigita.simplesurvey.SurveyCollection;
-import com.arsdigita.formbuilder.PersistentForm;
+import com.arsdigita.util.LockableImpl;
 
 import org.apache.log4j.Logger;
 
-
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.util.LockableImpl;
 
 /**
  * Tables all Simple Surveys in the system.
@@ -71,38 +64,64 @@ public class AdminSurveyTable extends Table {
     public static final int COL_DELETE = 7;
   
 
+    /**
+     * Constructor. 
+     * 
+     * @param surveyClass 
+     */
     public AdminSurveyTable(Class surveyClass) {
+
         super(new AdminSurveyTableModelBuilder(surveyClass), 
-	      new String[] {"", "", "", "", "", "","", ""});
-        
-	m_surveyClass = surveyClass;
+              new String[] {"", "", "", "", "", "","", ""});
+        m_surveyClass = surveyClass;
 
         setDefaultCellRenderer(new AdminSurveyTableCellRenderer());
     }
 
-    private static class AdminSurveyTableModelBuilder extends LockableImpl 
-	implements TableModelBuilder {
-	
-	private Class m_surveyClass;
-	
-	public AdminSurveyTableModelBuilder(Class surveyClass) {
-	    m_surveyClass = surveyClass; 
-	}
+    /**
+     * 
+     */
+    private static class AdminSurveyTableModelBuilder 
+                         extends LockableImpl 
+                         implements TableModelBuilder {
 
-	public TableModel makeModel(Table l, PageState pageState) {
-	    PackageInstance pack = SimpleSurveyUtil.getPackageInstance(pageState);
-	    SurveyCollection surveys = 
-		Survey.retrieveAll();
+        private Class m_surveyClass;
+
+        /**
+         * 
+         * @param surveyClass 
+         */
+        public AdminSurveyTableModelBuilder(Class surveyClass) {
+            m_surveyClass = surveyClass; 
+        }
+
+        /**
+         * 
+         * @param l
+         * @param pageState
+         * @return 
+         */
+        public TableModel makeModel(Table l, PageState pageState) {
+
+            // PackageInstance no loger provides useful information. 
+            // Obviously not really used here.
+            // NOT TESTED yet!
+            // PackageInstance pack = SimpleSurveyUtil.getPackageInstance(pageState);
+
+            SurveyCollection surveys = Survey.retrieveAll();
 	    
-	    surveys.addEqualsFilter(ACSObject.DEFAULT_DOMAIN_CLASS, 
-				    m_surveyClass.getName());
-	    
-	    return new AdminSurveyTableModel(surveys);
-	}
+	        surveys.addEqualsFilter(ACSObject.DEFAULT_DOMAIN_CLASS, 
+                                    m_surveyClass.getName());
+            return new AdminSurveyTableModel(surveys);
+        }
     }
 
+    /**
+     * 
+     */
     private static class AdminSurveyTableCellRenderer implements TableCellRenderer {
-	    public Component getComponent(Table table, PageState state, Object value,
+
+        public Component getComponent(Table table, PageState state, Object value,
 				   boolean isSelected, Object key, 
 				   int row, int column) {
 		Survey survey = (Survey)value;

@@ -21,8 +21,8 @@ package com.arsdigita.simplesurvey;
 
 import com.arsdigita.bebop.PageState;
 
-import com.arsdigita.kernel.PackageInstance;
-import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.kernel.PackageInstance;
+// import com.arsdigita.kernel.SiteNode;
 
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
@@ -30,9 +30,8 @@ import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-
-
-import javax.servlet.http.HttpServletRequest;
+import com.arsdigita.web.Application;
+// import com.arsdigita.web.Web;
 
 
 /**
@@ -51,35 +50,35 @@ public class SimpleSurveyUtil {
      * @param request
      * @return 
      */
-    public static SiteNode getSiteNode(HttpServletRequest request) {
+//  public static SiteNode getSiteNode(HttpServletRequest request) {
 
-        SiteNode siteNode;
-        try {
-	        siteNode = SiteNode.getSiteNode(request.getRequestURI().toString(), true);
-	    } catch (com.arsdigita.domain.DataObjectNotFoundException e) {
-	        throw new com.arsdigita.util.UncheckedWrapperException(e);
-	    }
+//      SiteNode siteNode;
+//      try {
+//       siteNode = SiteNode.getSiteNode(request.getRequestURI().toString(), true);
+//	    } catch (com.arsdigita.domain.DataObjectNotFoundException e) {
+//	        throw new com.arsdigita.util.UncheckedWrapperException(e);
+//	    }
 
-	    return siteNode;
-    }
-
-    /**
-     * 
-     * @param pageState
-     * @return 
-     */
-    public static SiteNode getSiteNode(PageState pageState) {
-        return getSiteNode(pageState.getRequest());
-    }
+//	    return siteNode;
+//    }
 
     /**
      * 
      * @param pageState
      * @return 
      */
-    public static PackageInstance getPackageInstance(PageState pageState) {
-        return getSiteNode(pageState).getPackageInstance();
-    }
+//  public static SiteNode getSiteNode(PageState pageState) {
+//      return getSiteNode(pageState.getRequest());
+//  }
+
+    /**
+     * 
+     * @param pageState
+     * @return 
+     */
+//  public static PackageInstance getPackageInstance(PageState pageState) {
+//      return getSiteNode(pageState).getPackageInstance();
+//  }
 
     /**
      * 
@@ -87,15 +86,27 @@ public class SimpleSurveyUtil {
      * @return 
      */
     public static boolean isUserAdmin(PageState pageState) {
+
         boolean admin_p = false;
 
         User user = (User)Kernel.getContext().getParty();
 
-        SiteNode siteNode = SimpleSurveyUtil.getSiteNode(pageState);
+     // DEPRECATED! SiteNode is old style application an no longer used.
+     // Can not provide any useful information as no applicagtion is created
+     // as a SiteNode anymore.
+     // SiteNode siteNode = SimpleSurveyUtil.getSiteNode(pageState);
 
+     // PermissionDescriptor admin = new PermissionDescriptor
+     //                                          (PrivilegeDescriptor.ADMIN, 
+     //                                           siteNode, 
+     //                                           user);
+
+        // TODO: Replacement code not tested yet (both alternatives)!
+     // Application app = Web.getContext().getApplication();
+        Application app = (Application)Kernel.getContext().getResource();
         PermissionDescriptor admin = new PermissionDescriptor
                                                  (PrivilegeDescriptor.ADMIN, 
-                                                  siteNode, 
+                                                  app, 
                                                   user);
 
         if (PermissionService.checkPermission(admin)) {

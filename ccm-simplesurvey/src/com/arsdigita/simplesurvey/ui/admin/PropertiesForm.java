@@ -19,12 +19,10 @@
 package com.arsdigita.simplesurvey.ui.admin;
 
 
-import com.arsdigita.simplesurvey.util.GlobalizationUtil ; 
 
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormInitListener;
-
 import com.arsdigita.bebop.parameters.NotWhiteSpaceValidationListener;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
@@ -42,13 +40,18 @@ import com.arsdigita.formbuilder.PersistentForm;
 
 import com.arsdigita.simplesurvey.Survey;
 import com.arsdigita.simplesurvey.Poll;
-import com.arsdigita.simplesurvey.SimpleSurveyUtil;
+// import com.arsdigita.simplesurvey.SimpleSurveyUtil;
 import com.arsdigita.simplesurvey.ui.SurveySelectionModel;
+import com.arsdigita.simplesurvey.util.GlobalizationUtil ; 
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.lang.Boolean;
 
+
+/**
+ * 
+ * 
+ */
 public class PropertiesForm extends Form {
     
     private SurveySelectionModel m_survey;
@@ -117,82 +120,111 @@ public class PropertiesForm extends Form {
 
     }
     
-    private class SurveyInitListener implements FormInitListener {
-	public void init(FormSectionEvent e) 
-	    throws FormProcessException {
-	    PageState state = e.getPageState();
-	    
-	    if (m_survey.isSelected(state)) {
-		Survey survey = m_survey.getSelectedSurvey(state);
-		PersistentForm form = survey.getForm();
-		
-		m_surveyName.setValue(state, form.getAdminName());
-		m_description.setValue(state, form.getDescription());
-		m_startDate.setValue(state, survey.getStartDate());
-		m_endDate.setValue(state, survey.getEndDate());
-	        m_quizType.setValue(state, survey.getQuizType());
-		if ( survey.responsesArePublic() ) {
-		    m_responsesPublic.setValue(state, "true");
-		} else {
-		    m_responsesPublic.setValue(state,"false");
-		}
-	    } else {
-		m_surveyName.setValue(state, "");
-		m_description.setValue(state, "");
 
-		Calendar startCalendar = new GregorianCalendar();
-		startCalendar.add(Calendar.DATE, 0);
-		java.util.Date startDate = startCalendar.getTime();
-		Calendar endCalendar = new GregorianCalendar();        
-		endCalendar.add(Calendar.DATE, 15);
-		java.util.Date endDate = endCalendar.getTime();
-		
-		m_startDate.setValue(state, startDate);
-		m_endDate.setValue(state, endDate);
-		m_responsesPublic.setValue(state, "true");
-		m_quizType.setValue(state, "knowledge_test");
-	    }
-	}
+
+    /**
+     * 
+     */
+    private class SurveyInitListener implements FormInitListener {
+
+        /**
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        public void init(FormSectionEvent e)  throws FormProcessException {
+
+            PageState state = e.getPageState();
+
+            if (m_survey.isSelected(state)) {
+
+                Survey survey = m_survey.getSelectedSurvey(state);
+                PersistentForm form = survey.getForm();
+                m_surveyName.setValue(state, form.getAdminName());
+                m_description.setValue(state, form.getDescription());
+                m_startDate.setValue(state, survey.getStartDate());
+                m_endDate.setValue(state, survey.getEndDate());
+                m_quizType.setValue(state, survey.getQuizType());
+                if ( survey.responsesArePublic() ) {
+                    m_responsesPublic.setValue(state, "true");
+                } else {
+                    m_responsesPublic.setValue(state,"false");
+                }
+
+            } else {
+
+                m_surveyName.setValue(state, "");
+                m_description.setValue(state, "");
+                Calendar startCalendar = new GregorianCalendar();
+                startCalendar.add(Calendar.DATE, 0);
+                java.util.Date startDate = startCalendar.getTime();
+                Calendar endCalendar = new GregorianCalendar();        
+                endCalendar.add(Calendar.DATE, 15);
+                java.util.Date endDate = endCalendar.getTime();
+
+                m_startDate.setValue(state, startDate);
+                m_endDate.setValue(state, endDate);
+                m_responsesPublic.setValue(state, "true");
+                m_quizType.setValue(state, "knowledge_test");
+            }
+        }
     }
 
-    private class PropertiesFormProcessListener implements FormProcessListener {
-	public void process(FormSectionEvent e) 
-	    throws FormProcessException {
-	    PageState state = e.getPageState();
-	    
-	    Survey survey;
-	    PersistentForm form;
-	    
-	    if (m_survey.isSelected(state)) {
-		survey = m_survey.getSelectedSurvey(state);
-		form = survey.getForm();
-	    } else {
-		survey = m_type.equals(Survey.class) ? new Survey() : new Poll();
-		survey.setPackageInstance(SimpleSurveyUtil.getPackageInstance(state));
-		form = new PersistentForm();
-		survey.setForm(form);
-	    }
-	    
-	    form.setAdminName((String)m_surveyName.getValue(state));
-	    form.setHTMLName(getHTMLName((String)m_surveyName.getValue(state)));
-	    form.setDescription((String)m_description.getValue(state));
-	    form.save();
-	    
-	    survey.setStartDate((java.util.Date)m_startDate.getValue(state));
-	    survey.setEndDate((java.util.Date)m_endDate.getValue(state));
-	    survey.setResponsesPublic(new Boolean((String) m_responsesPublic.getValue(state)));
-	    survey.setQuizType((String) m_quizType.getValue(state));
-       	    survey.save();
-	}
 
-	private String getHTMLName(String surveyName) {
+
+    /**
+     * 
+     */
+    private class PropertiesFormProcessListener implements FormProcessListener {
+
+        /**
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        public void process(FormSectionEvent e) throws FormProcessException {
+
+            PageState state = e.getPageState();
+
+            Survey survey;
+            PersistentForm form;
 	    
-	    String htmlName = surveyName.trim().toLowerCase();
+            if (m_survey.isSelected(state)) {
+                survey = m_survey.getSelectedSurvey(state);
+                form = survey.getForm();
+            } else {
+                survey = m_type.equals(Survey.class) ? new Survey() : new Poll();
+
+                // PackageInstance is old style application, no longer used. 
+                // survey.setPackageInstance(SimpleSurveyUtil.getPackageInstance(state));
+
+                form = new PersistentForm();
+                survey.setForm(form);
+            }
 	    
-	    htmlName = htmlName.replace(' ', '_');
-	    
-	    return htmlName;
-	}
+            form.setAdminName((String)m_surveyName.getValue(state));
+            form.setHTMLName(getHTMLName((String)m_surveyName.getValue(state)));
+            form.setDescription((String)m_description.getValue(state));
+            form.save();
+
+            survey.setStartDate((java.util.Date)m_startDate.getValue(state));
+            survey.setEndDate((java.util.Date)m_endDate.getValue(state));
+            survey.setResponsesPublic(new Boolean((String) m_responsesPublic.getValue(state)));
+            survey.setQuizType((String) m_quizType.getValue(state));
+            survey.save();
+        }
+
+        /**
+         * 
+         * @param surveyName
+         * @return 
+         */
+        private String getHTMLName(String surveyName) {
+            String htmlName = surveyName.trim().toLowerCase();
+            htmlName = htmlName.replace(' ', '_');
+
+            return htmlName;
+        }
 
     }
 }

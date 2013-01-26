@@ -34,7 +34,7 @@ import com.arsdigita.formbuilder.PersistentForm;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.PackageInstance;
+// import com.arsdigita.kernel.PackageInstance;
 
 import java.util.Date;
 
@@ -196,10 +196,10 @@ public class Survey extends ACSObject {
 	       getEndDate().compareTo(currentDate) > 0;
     }
 
-    public void setPackageInstance(PackageInstance packageInstance) {
-
-	set(PACKAGE_INSTANCE, packageInstance);
-    }
+//  Mo longer useful. PackageInstance is old style app no longer used.  
+//  public void setPackageInstance(PackageInstance packageInstance) {
+//      set(PACKAGE_INSTANCE, packageInstance);
+//  }
 
     /*
      * Retrieves most recent survey that isn't completed
