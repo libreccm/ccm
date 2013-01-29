@@ -802,4 +802,70 @@ public class Folder extends ContentItem {
         }
         return folder;
     }
+    
+    /**
+     * Retrieves a folder by its path from a given content section.
+     * 
+     * @param section The content section from which the folder should be retrieved.
+     * @param path The path of the folder, relative to the content section.
+     * @return The folder with the given path from the provided content section. If there is no such folder, 
+     * {@code null} is returned. It is up to the caller to check the returned value for {@code null} and take 
+     * appropriate actions.
+     */
+    public static Folder retrieveFolder(final ContentSection section, final String path) {
+        if (section == null) {
+            throw new IllegalArgumentException("No content section provided.");
+        }
+        
+        if ((path == null) || path.isEmpty()) {
+            throw new IllegalArgumentException("No path provided.");
+        }
+        
+        if (path.charAt(0) != '/') {
+            throw new IllegalArgumentException("Provided path is not an absolute path (starting with '/').");
+        }
+        
+        final String[] pathTokens = path.split("/");
+        
+        final Folder rootFolder = section.getRootFolder();
+        
+        Folder folder = rootFolder;
+        for(String token : pathTokens) {
+            if ((token == null) || token.isEmpty() || "/".equals(token)) {
+                continue;
+            }
+            
+            folder = getSubFolder(token, folder);
+            
+            if (folder == null) {
+                break;
+            }
+        }
+        
+        return folder;
+    }
+    
+    private static Folder getSubFolder(final String name, final Folder fromFolder) {
+        final ItemCollection items = fromFolder.getItems();
+        items.addFolderFilter(true);
+        items.addNameFilter(name);
+        
+        if (items.next()) {
+            return (Folder) items.getDomainObject();
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Retrieves a folder of the current content section by its path. The path is given in a UNIX like synatax and must
+     * be an absolute path starting with '/'.
+     * 
+     * @param path The path of the folder to retrieve relative to the current content section.
+     * @return The folder with the given path from the content section. If there is no such folder, {@code null} is 
+     * returned. It is up to the caller to check the returned value for {@code null} and take appropriate actions.
+     */
+    public static Folder retrieveFolder(final String path) {
+        return retrieveFolder(CMS.getContext().getContentSection(), path);
+    }
 }
