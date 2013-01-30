@@ -18,5 +18,5 @@
 -- $Id: index-application_types.sql 287 2005-02-22 00:29:02Z sskracic $
 -- $DateTime: 2004/08/16 18:10:38 $
 
-create index appli_typ_package_type_id_idx on application_types(package_type_id);
+-- (pb) create index appli_typ_package_type_id_idx on application_types(package_type_id);
 create index appli_typ_provider_id_idx on application_types(provider_id);

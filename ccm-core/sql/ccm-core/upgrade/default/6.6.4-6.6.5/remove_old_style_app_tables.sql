@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+-- Copyright (C) 2013 Peter Boy. All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,8 +15,17 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: index-acs_stylesheet_node_map.sql 287 2005-02-22 00:29:02Z sskracic $
--- $DateTime: 2004/08/16 18:10:38 $
+-- $Id: remove_old_style_app_tables.sql  $
 
-create index acs_stylesheet_node_node_idx on acs_stylesheet_node_map(node_id);
-create index acs_stylesheet_node_sheet_idx on acs_stylesheet_node_map(stylesheet_id);
+-- Old style application code in kernel.Packages etc and kernel.SiteNode
+-- is no longer used and the corresponding tables are to be removed.
+-- This update must be executed AFTER all applications are migrated to new
+-- style.
+
+
+-- drop tables
+drop table apm_package_type_listener_map ;
+drop table apm_listeners ;
+drop table site_nodes;
+drop table apm_packages CASCADE;
+drop table apm_package_types CASCADE;

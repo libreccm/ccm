@@ -19,13 +19,13 @@
 -- $DateTime: 2004/08/16 18:10:38 $
 
 create table cat_object_root_category_map (
-       root_category_id           integer
+       root_category_id          integer
                                  constraint cat_obj_root_map_fk
                                  references cat_categories on delete cascade,
-       package_id                integer
-                                 constraint cat_obj_package_id_fk
-                                 references apm_packages 
-                                 on delete cascade,
+--(pb) package_id                integer
+--(pb)                           constraint cat_obj_package_id_fk
+--(pb)                           references apm_packages 
+--(pb)                           on delete cascade,
        -- most of the time the object_id is actually going to
        -- be a user_id and used for personalizing categories
        -- hierarchies within a package

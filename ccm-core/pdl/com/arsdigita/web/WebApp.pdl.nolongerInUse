@@ -26,10 +26,10 @@ model com.arsdigita.web;
 
 // Class WebApp seems to be quit unfinisched work and is commented out.
 // So we need no table for it.
-// We leave igt hefre vofr further reference. 
+// We leave it here for further reference. 
 // pboy April 2011
-object type WebApp {
+// object type WebApp {
 //  String[1..1] name = webapps.name VARCHAR(200);
-
+//
 //  object key (name);
-}
+// }

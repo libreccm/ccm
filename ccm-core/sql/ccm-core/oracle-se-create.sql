@@ -125,19 +125,19 @@
 @@ default/kernel/insert-groups.sql
 @@ default/kernel/insert-permissions.sql
 
-@@ default/kernel/index-site_nodes.sql
-@@ default/kernel/index-apm_packages.sql
-@@ default/kernel/index-apm_package_type_listener_map.sql
-@@ default/kernel/view-object_package_map.sql
+-- (pb) @@ default/kernel/index-site_nodes.sql
+-- (pb) @@ default/kernel/index-apm_packages.sql
+-- (pb) @@ default/kernel/index-apm_package_type_listener_map.sql
+-- (pb) @@ default/kernel/view-object_package_map.sql
 
 -- @@ default/kernel/index-acs_stylesheets.sql
 -- @@ default/kernel/index-acs_stylesheet_type_map.sql
 -- @@ default/kernel/index-acs_stylesheet_node_map.sql
-@@ default/kernel/function-package_id_for_object_id.sql
+-- (pb) @@ default/kernel/function-package_id_for_object_id.sql
 
 @@ default/kernel/constraint-email_addresses.sql
 @@ default/kernel/constraint-group_subgroup_map.sql
-@@ default/kernel/constraint-site_nodes.sql
+-- (pb) @@ default/kernel/constraint-site_nodes.sql
 @@ default/kernel/constraint-roles.sql
 
 @@ default/categorization/index-cat_cat_deflt_ancestors.sql

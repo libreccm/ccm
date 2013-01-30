@@ -19,5 +19,5 @@
 -- $DateTime: 2004/08/16 18:10:38 $
 
 create index applicati_applicati_typ_id_idx on applications(application_type_id);
-create index applicati_package_id_idx on applications(package_id);
+-- (pb) create index applicati_package_id_idx on applications(package_id);
 create index applicati_parent_app_id_idx on applications(parent_application_id);

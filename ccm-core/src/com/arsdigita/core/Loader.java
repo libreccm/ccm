@@ -26,10 +26,10 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.kernel.PackageInstance;
-import com.arsdigita.kernel.PackageType;
+// import com.arsdigita.kernel.PackageInstance;
+// import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.ResourceType;
-import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -301,10 +301,11 @@ public class Loader extends PackageLoader {
                 s_log.debug("CoreLoader: Going to execute loadHost().");
                 loadHost();
 
-                // Note: Loading of Subsite is currently required by Login
-                //       module otherwise Login doesn't work!
-                s_log.debug("CoreLoader: Going to execute loadSubsite().");
-                loadSubsite(loadKernel());
+            //  s_log.debug("CoreLoader: Going to execute loadSubsite().");
+            //  loadSubsite(loadKernel());
+
+                s_log.debug("CoreLoader: Going to create System Administrator.");
+                createSystemAdministrator();
 
                 s_log.debug("CoreLoader: Going to execute loadLoginApp().");
                 loadLoginApp();
@@ -367,9 +368,9 @@ public class Loader extends PackageLoader {
      *         module otherwise Login doesn't work!
      *
      * @param rootNode
-     * @deprecated will be removed without replacement. Naot needed anymore
+//   * @deprecated will be removed without replacement. Naot needed anymore
      */
-    private void loadSubsite(SiteNode rootNode) {
+/*  private void loadSubsite(SiteNode rootNode) {
         s_log.debug("CoreLoader: Going to execute method loadSubsite().");
         String sDispatcher = "";
 
@@ -392,20 +393,18 @@ public class Loader extends PackageLoader {
 
         // Set subsite dispatcher class.
         subsite.setDispatcherClass(getDispatcher());
-    }
+    }  */
 
-    /**
-     * Create Root Site Node for loadSubsite()
-     * @return root node
-     * @deprecated will be removed without replacement. Naot needed anymore
-     */
-    private SiteNode loadKernel() {
+//  /**
+//   * Create Root Site Node for loadSubsite()
+//   * @return root node
+//   * @deprecated will be removed without replacement. Naot needed anymore
+//   */
+/*  private SiteNode loadKernel() {
         // Create Root Site Node
         s_log.debug("CoreLoader: Going to execute method loadKernel().");
 
         final SiteNode rootNode = SiteNode.createSiteNode(null, null);
-        s_log.debug("loadKernel: creating system administrator.");
-        createSystemAdministrator();
 
         // Create Package Types and Instances
         s_log.debug("loadKernel: creating Package Types and Instances.");
@@ -420,7 +419,7 @@ public class Loader extends PackageLoader {
 
         s_log.debug("CoreLoader: Going to complete method loadKernel().");
         return rootNode;
-    }
+    } */
 
 
 

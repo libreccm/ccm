@@ -26,9 +26,9 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.page.BebopApplicationServlet;
-import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.page.BebopApplicationServlet;
 import com.arsdigita.dispatcher.DispatcherConfig;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
@@ -36,8 +36,8 @@ import com.arsdigita.ui.UI;
 import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.web.URL;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 

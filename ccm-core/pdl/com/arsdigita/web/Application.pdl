@@ -19,8 +19,8 @@
 // $DateTime: 2004/08/16 18:10:38 $
 model com.arsdigita.web;
 
-import com.arsdigita.kernel.PackageInstance;
-import com.arsdigita.kernel.PackageType;
+// import com.arsdigita.kernel.PackageInstance;
+// import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.Resource;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.kernel.permissions.Privilege;
@@ -49,14 +49,14 @@ association {
             to application_types.provider_id;
 }
 
-association {
-    PackageType[0..1] packageType =
-        join application_types.package_type_id
-            to apm_package_types.package_type_id;
-    ApplicationType[0..n] applicationType =
-        join apm_package_types.package_type_id
-            to application_types.package_type_id;
-}
+// association {
+//     PackageType[0..1] packageType =
+//         join application_types.package_type_id
+//             to apm_package_types.package_type_id;
+//     ApplicationType[0..n] applicationType =
+//         join apm_package_types.package_type_id
+//             to application_types.package_type_id;
+// }
 
 object type Application extends Resource {
     String primaryURL = applications.primary_url VARCHAR(4000);
@@ -64,47 +64,47 @@ object type Application extends Resource {
 }
 
 
-association {
-    PackageInstance[0..1] packageInstance =
-        join applications.package_id to apm_packages.package_id;
-    Application[0..1] application =
-        join apm_packages.package_id to applications.package_id;
-}
+// association {
+//     PackageInstance[0..1] packageInstance =
+//         join applications.package_id to apm_packages.package_id;
+//     Application[0..1] application =
+//         join apm_packages.package_id to applications.package_id;
+// }
 
-query applicationForSiteNodeID {
-    Application application;
-
-    do {
-        select
-          acs_objects.object_id,
-          acs_objects.object_type,
-          acs_objects.display_name,
-          acs_objects.default_domain_class,
-          applications.parent_application_id,
-          applications.package_id,
-          applications.title,
-          applications.description,
-          applications.primary_url
-        from
-          site_nodes,
-          apm_packages,
-          applications,
-          acs_objects
-        where
-          site_nodes.node_id = :siteNodeID
-          -- joins
-          and site_nodes.object_id = apm_packages.package_id
-          and apm_packages.package_id = applications.package_id
-          and applications.application_id = acs_objects.object_id
-    } map {
-        application.id = acs_objects.object_id;
-        application.objectType = acs_objects.object_type;
-        application.displayName = acs_objects.display_name;
-        application.defaultDomainClass = acs_objects.default_domain_class;
-        application.parentResource.id = applications.parent_application_id;
-        application.packageInstance.id = applications.package_id;
-        application.title = applications.title;
-        application.description = applications.description;
-        application.primaryURL = applications.primary_url;
-    }
-}
+// query applicationForSiteNodeID {
+//     Application application;
+// 
+//     do {
+//         select
+//           acs_objects.object_id,
+//           acs_objects.object_type,
+//           acs_objects.display_name,
+//           acs_objects.default_domain_class,
+//           applications.parent_application_id,
+//           applications.package_id,
+//           applications.title,
+//           applications.description,
+//           applications.primary_url
+//         from
+//           site_nodes,
+//           apm_packages,
+//           applications,
+//           acs_objects
+//         where
+//           site_nodes.node_id = :siteNodeID
+//           -- joins
+//           and site_nodes.object_id = apm_packages.package_id
+//           and apm_packages.package_id = applications.package_id
+//           and applications.application_id = acs_objects.object_id
+//     } map {
+//         application.id = acs_objects.object_id;
+//         application.objectType = acs_objects.object_type;
+//         application.displayName = acs_objects.display_name;
+//         application.defaultDomainClass = acs_objects.default_domain_class;
+//         application.parentResource.id = applications.parent_application_id;
+//         application.packageInstance.id = applications.package_id;
+//         application.title = applications.title;
+//         application.description = applications.description;
+//         application.primaryURL = applications.primary_url;
+//     }
+// }

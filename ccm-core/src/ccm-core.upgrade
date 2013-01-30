@@ -54,4 +54,8 @@
     <!-- Second:reinstall WebDS as a new style legacy free app  -->
     <script class="com.arsdigita.core.upgrade.Upgrade664"/>
   </version>
+  <version from="6.6.4" to="6.6.5">
+    <!-- Remove old style application code (SiteNode/Packages)  -->
+    <script sql="ccm-core/upgrade/::database::-6.6.4-6.6.5.sql"/> 
+  </version>
 </upgrade>

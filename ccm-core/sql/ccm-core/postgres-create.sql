@@ -63,7 +63,7 @@ begin;
 \i default/kernel/index-party_email_map.sql
 \i default/kernel/index-users.sql
 \i default/kernel/index-user_authentication.sql
-\i default/kernel/index-apm_package_type_listener_map.sql
+--   \i default/kernel/index-apm_package_type_listener_map.sql
 
 \i default/kernel/index-group_member_map_group_id_idx.sql
 \i default/kernel/index-group_subgroup_map_grp_id_idx.sql
@@ -120,7 +120,7 @@ begin;
 \i postgres/kernel/function-package_id_for_object_id.sql
 \i default/kernel/constraint-email_addresses.sql
 \i default/kernel/constraint-group_subgroup_map.sql
-\i default/kernel/constraint-site_nodes.sql
+--  \i default/kernel/constraint-site_nodes.sql
 \i default/kernel/constraint-roles.sql
 
 -- XXX
