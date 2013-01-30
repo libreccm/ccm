@@ -86,7 +86,7 @@ query childWorkspacesForApplicationID {
         workspace.displayName = acs_objects.display_name;
         workspace.defaultDomainClass = acs_objects.default_domain_class;
         workspace.parentResource.id = applications.parent_application_id;
-        workspace.packageInstance.id = applications.package_id;
+//      workspace.packageInstance.id = applications.package_id; (Old stype app code removed in 6.6.5)
         workspace.title = applications.title;
         workspace.description = applications.description;
         workspace.primaryURL = applications.primary_url;
@@ -106,7 +106,7 @@ query rootWorkspaces {
           acs_objects.display_name,
           acs_objects.default_domain_class,
           applications.parent_application_id,
-          applications.package_id,
+//        applications.package_id,
           applications.title,
           applications.description,
           applications.primary_url,
@@ -129,7 +129,7 @@ query rootWorkspaces {
         workspace.displayName = acs_objects.display_name;
         workspace.defaultDomainClass = acs_objects.default_domain_class;
         workspace.parentResource.id = applications.parent_application_id;
-        workspace.packageInstance.id = applications.package_id;
+//      workspace.packageInstance.id = applications.package_id;
         workspace.title = applications.title;
         workspace.description = applications.description;
         workspace.primaryURL = applications.primary_url;
@@ -139,49 +139,49 @@ query rootWorkspaces {
     }
 }
 
-query workspaceForSiteNodeID {
-    Workspace workspace;
-
-    do {
-        select
-          acs_objects.object_id,
-          acs_objects.object_type,
-          acs_objects.display_name,
-          acs_objects.default_domain_class,
-          applications.parent_application_id,
-          applications.package_id,
-          applications.title,
-          applications.description,
-          applications.primary_url,
-          ps_workspaces.ready_p,
-          ps_workspaces.mission
-        from
-          site_nodes,
-          apm_packages,
-          applications,
-          acs_objects,
-          ps_workspaces
-        where
-          site_nodes.node_id = :siteNodeID
-          -- joins
-          and site_nodes.object_id = apm_packages.package_id
-          and apm_packages.package_id = applications.package_id
-          and applications.application_id = acs_objects.object_id
-          and applications.application_id = ps_workspaces.workspace_id
-    } map {
-        workspace.id = acs_objects.object_id;
-        workspace.objectType = acs_objects.object_type;
-        workspace.displayName = acs_objects.display_name;
-        workspace.defaultDomainClass = acs_objects.default_domain_class;
-        workspace.parentResource.id = applications.parent_application_id;
-        workspace.packageInstance.id = applications.package_id;
-        workspace.title = applications.title;
-        workspace.description = applications.description;
-        workspace.primaryURL = applications.primary_url;
-        workspace.isReady = ps_workspaces.ready_p;
-        workspace.mission = ps_workspaces.mission;
-    }
-}
+// (pb) query workspaceForSiteNodeID {
+// (pb)     Workspace workspace;
+// (pb) 
+// (pb)     do {
+// (pb)         select
+// (pb)           acs_objects.object_id,
+// (pb)           acs_objects.object_type,
+// (pb)           acs_objects.display_name,
+// (pb)           acs_objects.default_domain_class,
+// (pb)           applications.parent_application_id,
+// (pb)           applications.package_id,
+// (pb)           applications.title,
+// (pb)           applications.description,
+// (pb)           applications.primary_url,
+// (pb)           ps_workspaces.ready_p,
+// (pb)           ps_workspaces.mission
+// (pb)         from
+// (pb)           site_nodes,
+// (pb)           apm_packages,
+// (pb)           applications,
+// (pb)           acs_objects,
+// (pb)           ps_workspaces
+// (pb)         where
+// (pb)           site_nodes.node_id = :siteNodeID
+// (pb)           -- joins
+// (pb)           and site_nodes.object_id = apm_packages.package_id
+// (pb)           and apm_packages.package_id = applications.package_id
+// (pb)           and applications.application_id = acs_objects.object_id
+// (pb)           and applications.application_id = ps_workspaces.workspace_id
+// (pb)     } map {
+// (pb)         workspace.id = acs_objects.object_id;
+// (pb)         workspace.objectType = acs_objects.object_type;
+// (pb)         workspace.displayName = acs_objects.display_name;
+// (pb)         workspace.defaultDomainClass = acs_objects.default_domain_class;
+// (pb)         workspace.parentResource.id = applications.parent_application_id;
+// (pb)         workspace.packageInstance.id = applications.package_id;
+// (pb)         workspace.title = applications.title;
+// (pb)         workspace.description = applications.description;
+// (pb)         workspace.primaryURL = applications.primary_url;
+// (pb)         workspace.isReady = ps_workspaces.ready_p;
+// (pb)         workspace.mission = ps_workspaces.mission;
+// (pb)     }
+// (pb) }
 
 query RolesForUser {
     BigDecimal groupID;

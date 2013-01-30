@@ -74,7 +74,7 @@ query childWorkspacesForApplicationID {
         workspace.displayName = acs_objects.display_name;
         workspace.defaultDomainClass = acs_objects.default_domain_class;
         workspace.parentResource.id = applications.parent_application_id;
-        workspace.packageInstance.id = applications.package_id;
+//      workspace.packageInstance.id = applications.package_id;  (Old style app code removed)
         workspace.title = applications.title;
         workspace.primaryURL = applications.primary_url;
         workspace.description = applications.description;
