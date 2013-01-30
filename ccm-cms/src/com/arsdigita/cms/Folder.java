@@ -48,21 +48,15 @@ import java.util.Date;
 import java.util.Iterator;
 
 /**
- * This class represents folders for which to organize items in a tree
- * hierarchy.
+ * This class represents folders for which to organize items in a tree hierarchy.
  *
- * Folders will only ever exist as draft or live versions. There
- * should never be any folders that are pending. The pending versions
- * of ordinary content items are stored in the live version of
- * folders.
+ * Folders will only ever exist as draft or live versions. There should never be any folders that are pending. The
+ * pending versions of ordinary content items are stored in the live version of folders.
  *
- * Folders cannot have their own lifecycles. The methods to get or set
- * lifecycles are no-ops.
+ * Folders cannot have their own lifecycles. The methods to get or set lifecycles are no-ops.
  *
- * You should never call {@link #publish} or {@link #unpublish} on a
- * folder; at present, these methods only log a warning when they are
- * called. In the future, these warnings may be turned into actual
- * errors.
+ * You should never call {@link #publish} or {@link #unpublish} on a folder; at present, these methods only log a
+ * warning when they are called. In the future, these warnings may be turned into actual errors.
  *
  * @author Jack Chung
  * @author Michael Pih
@@ -72,24 +66,20 @@ import java.util.Iterator;
 public class Folder extends ContentItem {
 
     private static final Logger s_log = Logger.getLogger(Folder.class);
-
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.Folder";
-
+                               "com.arsdigita.cms.Folder";
     public static final String INDEX = "index";
     public static final String HOME_FOLDER = "homeFolder";
     public static final String HOME_SECTION = "homeSection";
-
     private static final String ITEMS_QUERY = "com.arsdigita.cms.ItemsInFolder";
     private static final String PRIMARY_INSTANCES_QUERY =
-        "com.arsdigita.cms.PrimaryInstancesInFolder";
+                                "com.arsdigita.cms.PrimaryInstancesInFolder";
     private static final String ITEM_QUERY = "com.arsdigita.cms.ItemInFolder";
     private static final String FOLDER_QUERY = "com.arsdigita.cms.FolderInFolder";
     private static final String LABEL = "label";
     private static final String NAME = "name";
     private final static String ITEM = "item";
     private boolean m_wasNew;
-
     protected static final String ITEMS = "items";
 
     /**
@@ -100,25 +90,24 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <cod>oid</code>.
+     * Constructor. The contained
+     * <code>DataObject</code> is retrieved from the persistent storage mechanism with an
+     * <code>OID</code> specified by <cod>oid</code>.
      *
-     * @param oid The <code>OID</code> for the retrieved
-     * <code>DataObject</code>.
+     * @param oid The <code>OID</code> for the retrieved <code>DataObject</code>.
      */
     public Folder(final OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <code>id</code> and
+     * Constructor. The contained
+     * <code>DataObject</code> is retrieved from the persistent storage mechanism with an
+     * <code>OID</code> specified by
+     * <code>id</code> and
      * <code>Folder.BASE_DATA_OBJECT_TYPE</code>.
      *
-     * @param id The <code>id</code> for the retrieved
-     * <code>DataObject</code>
+     * @param id The <code>id</code> for the retrieved <code>DataObject</code>
      */
     public Folder(final BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
@@ -145,9 +134,10 @@ public class Folder extends ContentItem {
             item.copy(this, true);
         }
     }
+
     /**
-     * @return the base PDL object type for this item. Child classes
-     * should override this method to return the correct value
+     * @return the base PDL object type for this item. Child classes should override this method to return the correct
+     * value
      */
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -162,18 +152,16 @@ public class Folder extends ContentItem {
         s_log.debug("Deleting folder");
 
         if (!isEmpty()) {
-            throw new IllegalStateException
-                ("Attempt to delete non-empty folder " + getOID() + "; " +
-                 "only empty folders can be deleted");
+            throw new IllegalStateException("Attempt to delete non-empty folder " + getOID() + "; "
+                                            + "only empty folders can be deleted");
         }
 
         super.delete();
     }
 
     protected void beforeDelete() {
-        DataCollection maps = SessionManager.getSession().retrieve
-            (UserHomeFolderMap.BASE_DATA_OBJECT_TYPE);
-        maps.addEqualsFilter(HOME_FOLDER + "." + ID,getID());
+        DataCollection maps = SessionManager.getSession().retrieve(UserHomeFolderMap.BASE_DATA_OBJECT_TYPE);
+        maps.addEqualsFilter(HOME_FOLDER + "." + ID, getID());
         while (maps.next()) {
             maps.getDataObject().delete();
         }
@@ -207,9 +195,8 @@ public class Folder extends ContentItem {
 
                 final ContentSection section = getContentSection();
 
-                if (section != null &&
-                    (this.equals(section.getRootFolder()) ||
-                     this.equals(section.getTemplatesFolder()))) {
+                if (section != null && (this.equals(section.getRootFolder()) || this.
+                                        equals(section.getTemplatesFolder()))) {
                     PermissionService.setContext(this, section);
                 }
             }
@@ -225,9 +212,8 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Fetches the child items of this folder. The returned collection
-     * provides methods to filter by various criteria, for example by
-     * name or by whether items are folders or not.
+     * Fetches the child items of this folder. The returned collection provides methods to filter by various criteria,
+     * for example by name or by whether items are folders or not.
      *
      * @param bSort whether to sort the collection by isFolder and ID
      * @return child items of this folder
@@ -243,10 +229,9 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Fetches the child items of this folder. The returned collection
-     * provides methods to filter by various criteria, for example by
-     * name or by whether items are folders or not.  The items returned
-     * by this method are sorted by isFolder and ID
+     * Fetches the child items of this folder. The returned collection provides methods to filter by various criteria,
+     * for example by name or by whether items are folders or not. The items returned by this method are sorted by
+     * isFolder and ID
      *
      * @return child items of this folder, sorted by isFolder and ID
      */
@@ -254,14 +239,11 @@ public class Folder extends ContentItem {
         return getItems(true);
     }
 
-
     /**
-     * Returns collection of primary language instances for bundles in
-     * this folder.
+     * Returns collection of primary language instances for bundles in this folder.
      */
     public ItemCollection getPrimaryInstances() {
-        final DataQuery query = SessionManager.getSession().retrieveQuery
-            (PRIMARY_INSTANCES_QUERY);
+        final DataQuery query = SessionManager.getSession().retrieveQuery(PRIMARY_INSTANCES_QUERY);
         query.setParameter(PARENT, getID());
 
         Assert.isNotEqual(PENDING, getVersion());
@@ -272,14 +254,11 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Returns a child content item in this folder (which could itself
-     * be a folder) with the specified name.
+     * Returns a child content item in this folder (which could itself be a folder) with the specified name.
      *
      * @param name The name of the item
-     * @param isFolder If true, only return a subfolder. Otherwise,
-     * return any subitem
-     * @return The item with the given name, or null if no such item
-     * exists in the folder
+     * @param isFolder If true, only return a subfolder. Otherwise, return any subitem
+     * @return The item with the given name, or null if no such item exists in the folder
      */
     public ContentItem getItem(final String name,
                                final boolean isFolder) {
@@ -299,14 +278,13 @@ public class Folder extends ContentItem {
 
         if (items.next()) {
             DataObject dataObj = items.getDataObject();
-            ContentItem result = (ContentItem)DomainObjectFactory
-                .newInstance(dataObj);
+            ContentItem result = (ContentItem) DomainObjectFactory
+                    .newInstance(dataObj);
 
             if (items.next()) {
-                s_log.warn("Item in folder has a duplicate name; one " +
-                           "is " + result + " and one is " +
-                           (ContentItem)DomainObjectFactory
-                           .newInstance(items.getDataObject()));
+                s_log.warn("Item in folder has a duplicate name; one " + "is " + result + " and one is "
+                           + (ContentItem) DomainObjectFactory
+                        .newInstance(items.getDataObject()));
                 throw new IllegalStateException();
             }
 
@@ -334,7 +312,6 @@ public class Folder extends ContentItem {
         }
     }
 
-
     /**
      * Fetches the label of the folder.
      */
@@ -354,12 +331,10 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Set the version of the folder. An attempt to set the version to
-     * pending will result in the folder's version being set to live. We will
-     * never have any pending versions of folders, only live or draft.
+     * Set the version of the folder. An attempt to set the version to pending will result in the folder's version being
+     * set to live. We will never have any pending versions of folders, only live or draft.
      *
-     * Pending versions of items are stored in the live version of a
-     * folder.
+     * Pending versions of items are stored in the live version of a folder.
      */
     protected void setVersion(String version) {
         if (ContentItem.PENDING.equals(version)) {
@@ -372,7 +347,6 @@ public class Folder extends ContentItem {
     //
     // Publish/unpublish stuff
     //
-
     public void unpublish() {
         if (s_log.isInfoEnabled()) {
             s_log.info("Unpublishing folder " + this);
@@ -393,9 +367,9 @@ public class Folder extends ContentItem {
     //
     // Lifecycle stuff
     //
-
     /**
-     * Always returns <code>null</code>, as folders do not have lifecycles.
+     * Always returns
+     * <code>null</code>, as folders do not have lifecycles.
      *
      * @return a <code>Lifecycle</code> value
      */
@@ -435,16 +409,12 @@ public class Folder extends ContentItem {
     //
     // Index item
     //
-
     /**
-     * Get the (special) index item for the folder. The index item is
-     * what carries all the user-editable attributes of the
-     * folder. The index item is what should be published when a index
-     * page for a folder is desired.
+     * Get the (special) index item for the folder. The index item is what carries all the user-editable attributes of
+     * the folder. The index item is what should be published when a index page for a folder is desired.
      *
-     * The index item is an ordinary item in every respect, i.e., it
-     * is part of the collection returned by <code>getItems()</code>,
-     * you cannot delete a folder if it still has an index item etc.
+     * The index item is an ordinary item in every respect, i.e., it is part of the collection returned by
+     * <code>getItems()</code>, you cannot delete a folder if it still has an index item etc.
      */
     public ContentBundle getIndexItem() {
         // BECAUSE INDEX ITEM MIGHT NOT BE UPDATED FOR PUBLISHED
@@ -453,7 +423,7 @@ public class Folder extends ContentItem {
 
         if (getVersion().compareTo(ContentItem.LIVE) == 0) {
             final ContentItem indexItem =
-                ((Folder) getWorkingVersion()).getIndexItem();
+                              ((Folder) getWorkingVersion()).getIndexItem();
 
             if (indexItem == null) {
                 return null;
@@ -478,8 +448,7 @@ public class Folder extends ContentItem {
     /**
      * Sets the index item. This also adds the item to the folder.
      *
-     * @param item The index item with the folder's user-editable
-     * attributes
+     * @param item The index item with the folder's user-editable attributes
      */
     public final void setIndexItem(final ContentBundle item) {
         setAssociation(INDEX, item);
@@ -495,15 +464,15 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Returns <code>true</code> if the folder is empty.
+     * Returns
+     * <code>true</code> if the folder is empty.
      *
      * @return <code>true</code> if the folder is empty
      */
     public boolean isEmpty() {
         final Session session = SessionManager.getSession();
 
-        final DataQuery query = session.retrieveQuery
-            ("com.arsdigita.cms.folderNotEmpty");
+        final DataQuery query = session.retrieveQuery("com.arsdigita.cms.folderNotEmpty");
         query.setParameter("id", getID());
 
         final boolean result = !query.next();
@@ -514,17 +483,17 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Returns <code>true</code> if the folder contains at least one
-     * folder, <code>false</code> if the folder does not contain any
-     * folders, but is either empty or contains only ordinary items.
+     * Returns
+     * <code>true</code> if the folder contains at least one folder,
+     * <code>false</code> if the folder does not contain any folders, but is either empty or contains only ordinary
+     * items.
      *
      * @return <code>true</code> if the folder contains other folders.
      */
     public boolean containsFolders() {
         final Session session = SessionManager.getSession();
 
-        final DataQuery query = session.retrieveQuery
-            ("com.arsdigita.cms.folderHasNoSubFolders");
+        final DataQuery query = session.retrieveQuery("com.arsdigita.cms.folderHasNoSubFolders");
         query.setParameter("id", getID());
 
         final boolean result = !query.next();
@@ -535,25 +504,23 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Copy the specified property (attribute or association) from the specified
-     * source folder. This method almost completely overrides the
-     * metadata-driven methods in <code>ObjectCopier</code>. If the property in
-     * question is an association to <code>ContentItem</code>(s), this method
-     * should <em>only</em> call <code>FooContentItem newChild =
-     * copier.copyItem(originalChild)</code>.  An attempt to call any other
-     * method in order to copy the child will most likely have disastrous
-     * consequences.
+     * Copy the specified property (attribute or association) from the specified source folder. This method almost
+     * completely overrides the metadata-driven methods in
+     * <code>ObjectCopier</code>. If the property in question is an association to
+     * <code>ContentItem</code>(s), this method should <em>only</em> call
+     * <code>FooContentItem newChild =
+     * copier.copyItem(originalChild)</code>. An attempt to call any other method in order to copy the child will most
+     * likely have disastrous consequences.
      *
      * If a child class overrides this method, it should return
-     * <code>super.copyProperty</code> in order to indicate that it is
-     * not interested in handling the property in any special way.
+     * <code>super.copyProperty</code> in order to indicate that it is not interested in handling the property in any
+     * special way.
      *
      * @param srcItem the source item
      * @param property the property to copy
      * @param copier the ItemCopier
-     * @return true if the property was copied, false to indicate that
-     * regular metadata-driven methods should be used to copy the
-     * property
+     * @return true if the property was copied, false to indicate that regular metadata-driven methods should be used to
+     * copy the property
      */
     public boolean copyProperty(final CustomCopy srcItem,
                                 final Property property,
@@ -575,42 +542,41 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * A collection of items that can be filtered to return only folders or
-     * only nonfolders.
+     * A collection of items that can be filtered to return only folders or only nonfolders.
      */
     public static class ItemCollection
-        extends com.arsdigita.cms.ItemCollection {
+            extends com.arsdigita.cms.ItemCollection {
+
         private final static String IS_FOLDER = "isFolder";
         private final static String HAS_CHILDREN = "hasChildren";
         private final static String ITEM = "item";
         private final static String HAS_LIVE_VERSION = "hasLiveVersion";
         private final static String TYPE_LABEL = "type.label";
-        private final static String AUDIT_TRAIL="item.auditing";
-
+        private final static String AUDIT_TRAIL = "item.auditing";
         private DataQuery m_query;
-
 
         /**
          * Constructor
-         * @param adapter an adapter constructed using the query name rather than a
-         * DataQuery object. This constructor must be used if there is any
-         * intention to permission filter the results as only a DataQueryDataCollectionAdapter
-         * constructed using query name has the bug fix to allow permission filtering
+         *
+         * @param adapter an adapter constructed using the query name rather than a DataQuery object. This constructor
+         * must be used if there is any intention to permission filter the results as only a
+         * DataQueryDataCollectionAdapter constructed using query name has the bug fix to allow permission filtering
          *
          * @param bSort whether to sort the collection by isFolder and ID
          */
-        public ItemCollection (DataQueryDataCollectionAdapter adapter, boolean bSort) {
+        public ItemCollection(DataQueryDataCollectionAdapter adapter, boolean bSort) {
             super(adapter);
             doAlias(adapter);
             init(adapter, bSort);
         }
 
-        public ItemCollection (DataQueryDataCollectionAdapter adapter) {
+        public ItemCollection(DataQueryDataCollectionAdapter adapter) {
             this(adapter, true);
         }
 
         /**
          * Constructor
+         *
          * @param query the Data Query to use to retrieve the collection
          * @param bSort whether to sort the collection by isFolder and ID
          */
@@ -623,14 +589,12 @@ public class Folder extends ContentItem {
         }
 
         /**
-         * Convenience Constructor that always sorts the collection
-         * by isFolder and ID
-         * 
-         * jensp 2011-06: I changed this because this silly sorting affects
-         * the ItemSearchWidget and makes it pretty useless... I've not noticed
-         * any negative effects, so it seams no problem. Sorting is now set by
-         * the caller/user of the {@code ItemCollection}.
-         * 
+         * Convenience Constructor that always sorts the collection by isFolder and ID
+         *
+         * jensp 2011-06: I changed this because this silly sorting affects the ItemSearchWidget and makes it pretty
+         * useless... I've not noticed any negative effects, so it seams no problem. Sorting is now set by the
+         * caller/user of the {@code ItemCollection}.
+         *
          * @param query the Data Query to use to retrieve the collection
          */
         public ItemCollection(DataQuery query) {
@@ -656,8 +620,7 @@ public class Folder extends ContentItem {
         }
 
         /**
-         * Sets the range of the dataquery. This is used by the
-         * paginator.
+         * Sets the range of the dataquery. This is used by the paginator.
          *
          * @param beginIndex The start index
          * @param endIndex The end index
@@ -672,14 +635,12 @@ public class Folder extends ContentItem {
         }
 
         /**
-         * For performance reaons, override superclass methods and
-         * try to get the audit info without instantiating a content item.
-         * We know this can help because the getPrimaryInstances
-         * query retrieves the audit info directly
+         * For performance reaons, override superclass methods and try to get the audit info without instantiating a
+         * content item. We know this can help because the getPrimaryInstances query retrieves the audit info directly
          */
         public Date getCreationDate() {
             DataObject dobj = (DataObject) get(AUDIT_TRAIL);
-            if (dobj != null){
+            if (dobj != null) {
                 BasicAuditTrail audit = new BasicAuditTrail(dobj);
                 return audit.getCreationDate();
             } else {
@@ -689,7 +650,7 @@ public class Folder extends ContentItem {
 
         public Date getLastModifiedDate() {
             DataObject dobj = (DataObject) get(AUDIT_TRAIL);
-            if (dobj != null){
+            if (dobj != null) {
                 BasicAuditTrail audit = new BasicAuditTrail(dobj);
                 return audit.getLastModifiedDate();
             } else {
@@ -698,9 +659,8 @@ public class Folder extends ContentItem {
         }
 
         /**
-         * Return the pretty name of the content type of the current item. If
-         * the current item is a folder, the string <tt>Folder</tt> is
-         * returned, otherwise the label of the item's content type.
+         * Return the pretty name of the content type of the current item. If the current item is a folder, the string
+         * <tt>Folder</tt> is returned, otherwise the label of the item's content type.
          *
          * @return the pretty name of the content type of the current item.
          */
@@ -708,16 +668,15 @@ public class Folder extends ContentItem {
             if (isFolder()) {
                 return "Folder";
             } else {
-                return  (String) get(TYPE_LABEL);
+                return (String) get(TYPE_LABEL);
             }
         }
 
         /**
          * Filter the collection by whether items are folders or not.
          *
-         * @param v <code>true</code> if the data query should only list folders,
-         * <code>false</code> if the data query should only list non-folder
-         * items.
+         * @param v <code>true</code> if the data query should only list folders, <code>false</code> if the data query
+         * should only list non-folder items.
          *
          */
         public void addFolderFilter(final boolean v) {
@@ -725,11 +684,10 @@ public class Folder extends ContentItem {
         }
 
         /**
-         * Return <code>true</code> if the current item in the collection is a
-         * folder.
+         * Return
+         * <code>true</code> if the current item in the collection is a folder.
          *
-         * @return <code>true</code> if the current item in the collection is a
-         * folder.
+         * @return <code>true</code> if the current item in the collection is a folder.
          */
         public boolean isFolder() {
             Boolean result = (Boolean) m_query.get(IS_FOLDER);
@@ -743,7 +701,7 @@ public class Folder extends ContentItem {
 
         public boolean isLive() {
             String version = (String) get(ContentItem.VERSION);
-            if (ContentItem.LIVE.equals(version) ) {
+            if (ContentItem.LIVE.equals(version)) {
                 return true;
             }
             Boolean hasLive = (Boolean) m_query.get(HAS_LIVE_VERSION);
@@ -763,12 +721,11 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Called by <code>VersionCopier</code> to determine whether to
-     * publish associated items when an item goes live. This will only
-     * have an effect for non-component associations where the item is
-     * not yet published. Override default for <code>Folder</code>s
-     * since they don't have their own lifecycles and a folder must be
-     * published when an item in it goes live.
+     * Called by
+     * <code>VersionCopier</code> to determine whether to publish associated items when an item goes live. This will
+     * only have an effect for non-component associations where the item is not yet published. Override default for
+     * <code>Folder</code>s since they don't have their own lifecycles and a folder must be published when an item in it
+     * goes live.
      *
      * @return whether to publish this item
      */
@@ -776,18 +733,18 @@ public class Folder extends ContentItem {
         return true;
     }
 
-    public static void setUserHomeFolder(User user,Folder folder) {
-        UserHomeFolderMap map = UserHomeFolderMap.findOrCreateUserHomeFolderMap(user,folder.getContentSection());
+    public static void setUserHomeFolder(User user, Folder folder) {
+        UserHomeFolderMap map = UserHomeFolderMap.findOrCreateUserHomeFolderMap(user, folder.getContentSection());
         map.setHomeFolder(folder);
         map.save();
     }
 
-    public static Folder getUserHomeFolder(User user,ContentSection section) {
+    public static Folder getUserHomeFolder(User user, ContentSection section) {
         Folder folder = null;
-        UserHomeFolderMap map = UserHomeFolderMap.findUserHomeFolderMap(user,section);
-        if ( map != null ) {
+        UserHomeFolderMap map = UserHomeFolderMap.findUserHomeFolderMap(user, section);
+        if (map != null) {
             folder = map.getHomeFolder();
-            if ( folder != null ) {
+            if (folder != null) {
                 CMSContext context = CMS.getContext();
                 SecurityManager sm;
                 if (context.hasSecurityManager()) {
@@ -795,77 +752,106 @@ public class Folder extends ContentItem {
                 } else {
                     sm = new SecurityManager(section);
                 }
-                if ( !sm.canAccess(user,SecurityConstants.PREVIEW_PAGES,folder) ) {
+                if (!sm.canAccess(user, SecurityConstants.PREVIEW_PAGES, folder)) {
                     folder = null;
                 }
             }
         }
         return folder;
     }
-    
+
     /**
      * Retrieves a folder by its path from a given content section.
-     * 
+     *
      * @param section The content section from which the folder should be retrieved.
      * @param path The path of the folder, relative to the content section.
-     * @return The folder with the given path from the provided content section. If there is no such folder, 
-     * {@code null} is returned. It is up to the caller to check the returned value for {@code null} and take 
+     * @return The folder with the given path from the provided content section. If there is no such folder,
+     * {@code null} is returned. It is up to the caller to check the returned value for {@code null} and take
      * appropriate actions.
      */
     public static Folder retrieveFolder(final ContentSection section, final String path) {
         if (section == null) {
             throw new IllegalArgumentException("No content section provided.");
         }
-        
+
         if ((path == null) || path.isEmpty()) {
             throw new IllegalArgumentException("No path provided.");
         }
-        
+
         if (path.charAt(0) != '/') {
             throw new IllegalArgumentException("Provided path is not an absolute path (starting with '/').");
         }
-        
+
         final String[] pathTokens = path.split("/");
-        
+
         final Folder rootFolder = section.getRootFolder();
-        
+
         Folder folder = rootFolder;
-        for(String token : pathTokens) {
+        for (String token : pathTokens) {
             if ((token == null) || token.isEmpty() || "/".equals(token)) {
                 continue;
             }
-            
+
             folder = getSubFolder(token, folder);
-            
+
             if (folder == null) {
                 break;
             }
         }
-        
+
         return folder;
     }
-    
+
     private static Folder getSubFolder(final String name, final Folder fromFolder) {
         final ItemCollection items = fromFolder.getItems();
         items.addFolderFilter(true);
         items.addNameFilter(name);
-        
+
         if (items.next()) {
             return (Folder) items.getDomainObject();
         } else {
             return null;
         }
     }
-    
+
     /**
      * Retrieves a folder of the current content section by its path. The path is given in a UNIX like synatax and must
-     * be an absolute path starting with '/'.
+     * be an absolute path starting with '/'. The path may be precceded with the name of content section, separated by
+     * ':'. If a content section if given, the path is relative to this content section. If the no content section is
+     * given, the current content section returned by {@code CMS.getContext().getContentSection()}. Please note that
+     * {@code CMS.getContext().getContentSection()} may return null.
      * 
+     * Examples for valid paths:
+     * 
+     * <pre>
+     * /persons/members
+     * content:/persons/members
+     * publications:/monographs
+     * </pre>
+     *
      * @param path The path of the folder to retrieve relative to the current content section.
-     * @return The folder with the given path from the content section. If there is no such folder, {@code null} is 
+     * @return The folder with the given path from the content section. If there is no such folder, {@code null} is
      * returned. It is up to the caller to check the returned value for {@code null} and take appropriate actions.
      */
     public static Folder retrieveFolder(final String path) {
-        return retrieveFolder(CMS.getContext().getContentSection(), path);
+        final String[] tokens = path.split(":");
+
+        if (tokens.length == 1) {
+            return retrieveFolder(CMS.getContext().getContentSection(), path);
+        } else if (tokens.length == 2) {
+            final ContentSectionCollection sections = ContentSection.getAllSections();
+            sections.addEqualsFilter("label", tokens[0]);
+            
+            if (sections.isEmpty()) {
+                return null;
+            } else {
+                sections.next();
+                final ContentSection section = sections.getContentSection();
+                return retrieveFolder(section, tokens[1]);
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid path syntax. Valid syntax: "
+                                               + "[contentsection:]/path/to/folder'");
+        }        
     }
 }
