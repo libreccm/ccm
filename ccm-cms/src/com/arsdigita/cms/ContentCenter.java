@@ -27,7 +27,6 @@ import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Application domain class for the CMS module user entry page (content-center)
  *
@@ -38,11 +37,9 @@ public class ContentCenter extends Application {
 
     /** A logger instance, primarily to assist debugging .                    */
     private static final Logger s_log = Logger.getLogger(ContentSection.class);
-
     // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.ContentCenter";
-
     // general constants
     public static final String PACKAGE_KEY = "content-center";
     public static final String INSTANCE_NAME = "Content Center";
@@ -66,7 +63,7 @@ public class ContentCenter extends Application {
      * @param id The <code>id</code> for the retrieved
      * <code>DataObject</code>.
      */
-    public ContentCenter(BigDecimal key)  throws DataObjectNotFoundException {
+    public ContentCenter(BigDecimal key) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
 
@@ -95,14 +92,12 @@ public class ContentCenter extends Application {
                                        Application parent) {
 
         ContentCenter app =
-            (ContentCenter) Application.createApplication
-            (BASE_DATA_OBJECT_TYPE, urlName, title, parent);
+                      (ContentCenter) Application.createApplication(BASE_DATA_OBJECT_TYPE, urlName, title, parent);
 
         app.save();
 
         return app;
     }
-
 
     /**
      * Fetch the URL of the CMS ContentCenter. 
@@ -115,20 +110,20 @@ public class ContentCenter extends Application {
      */
     public static String getURL() {
         // quick 'nd dirty!
-        return "/"+PACKAGE_KEY;
+        return "/" + PACKAGE_KEY + "/";
 
-    //  Doesn't work as expected
-    //  see c.ad.ui.login.UserInfo for a working (hopefully) example.
-    //  ApplicationCollection apps = Application
-    //                               .retrieveAllApplications(BASE_DATA_OBJECT_TYPE);
-    //  if (apps.next()) {
-    //      // Note: Currently only one Content Center application is allowed!
-    //      s_log.error("Instance of ContentCenter found!");
-    //      return apps.getPrimaryURL();
-    //  } else {
-    //      s_log.error("No instance of ContentCenter could be found!");
-    //      return null;            
-    //  }
+        //  Doesn't work as expected
+        //  see c.ad.ui.login.UserInfo for a working (hopefully) example.
+        //  ApplicationCollection apps = Application
+        //                               .retrieveAllApplications(BASE_DATA_OBJECT_TYPE);
+        //  if (apps.next()) {
+        //      // Note: Currently only one Content Center application is allowed!
+        //      s_log.error("Instance of ContentCenter found!");
+        //      return apps.getPrimaryURL();
+        //  } else {
+        //      s_log.error("No instance of ContentCenter could be found!");
+        //      return null;            
+        //  }
     }
 
     /**

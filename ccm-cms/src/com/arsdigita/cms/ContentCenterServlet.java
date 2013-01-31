@@ -16,12 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms;
 
 import com.arsdigita.bebop.Page;
-import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.SimpleCache;
+import com.arsdigita.cms.ui.ItemSearchPage;
 import com.arsdigita.cms.ui.contentcenter.MainPage;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.dispatcher.AccessDeniedException;
@@ -60,37 +60,27 @@ public class ContentCenterServlet extends BaseApplicationServlet {
 
     /** Logger instance for debugging  */
     private static Logger s_log = Logger
-                                  .getLogger(ContentCenterServlet.class.getName());
-
+            .getLogger(ContentCenterServlet.class.getName());
 //  DEPRECATED STUFF follows. Should be no longer used, deleted in future!
     /** The path of the file that maps resources.                             */
     public final static String DEFAULT_MAP_FILE =
                                "/WEB-INF/resources/content-center-old-map.xml";
-
     /** Mapping between a relative URL and the class name of a ResourceHandler.*/
     // private static HashMap s_pageClasses = ContentCenterSetup.getURLToClassMap();
     private static HashMap s_pageURLs = ContentCenterSetup.getClassToURLMap();
-
     /** Instantiated ResourceHandlers cache. This allows for lazy loading.    */
     private static SimpleCache s_pages = new SimpleCache();
-
     private ArrayList m_trailingSlashList = new ArrayList();
-
 //  NEW STUFF here used to process the pages in this servlet
-
     /** URL (pathinfo) -> Page object mapping. Based on it (and the http
      *  request url) the doService method to selects a page to display        */
     private final Map m_pages = new HashMap();
-    
-
 //  STUFF to use for JSP extension, i.e. jsp's to try for URLs which are not
 //  handled by the this servlet directly.
     /** Path to directory containg ccm-cms template files                    */
     private String m_templatePath;
-
     /** Resolvers to find templates (JSP) and other stuff stored in file system.*/
     private ApplicationFileResolver m_resolver;
-
 
     /**
      * Use parent's class initialization extension point to perform additional
@@ -110,9 +100,10 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         // Addresses previously noted in WEB-INF/resources/content-center-map.xml
         // Obviously not required.
         addPage("/", new MainPage());     // index page at address ~/ds
-    //  addPage("/index/", new MainPage());     
-    //  addPage("/ItemSearchPage/", new CCItemSearchPage()); 
-    //  addPage("/SearchResultRedirector/", new CCSearchResultRedirector());
+        //  addPage("/index/", new MainPage());     
+        //addPage("/ItemSearchPage/", new ItemSearchPage());
+        addPage("/item-search", new ItemSearchPage());
+        //  addPage("/SearchResultRedirector/", new CCSearchResultRedirector());
 
 
 //  STUFF to use for JSP extension, i.e. jsp's to try for URLs which are not
@@ -123,13 +114,12 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         m_templatePath = "/templates/ccm-cms/content-center";
         Assert.exists(m_templatePath, String.class);
         Assert.isTrue(m_templatePath.startsWith("/"),
-                     "template-path must start with '/'");
+                      "template-path must start with '/'");
         Assert.isTrue(!m_templatePath.endsWith("/"),
-                     "template-path must not end with '/'");
+                      "template-path must not end with '/'");
         /** Set TemplateResolver class                                        */
         m_resolver = Web.getConfig().getApplicationFileResolver();
     }
-
 
     /**
      * Implements the (abstract) doService method of BaseApplicationServlet to
@@ -138,10 +128,10 @@ public class ContentCenterServlet extends BaseApplicationServlet {
      * @see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)
      */
-    protected void doService( HttpServletRequest sreq, 
-                              HttpServletResponse sresp, 
-                              Application app)
-                   throws ServletException, IOException {
+    protected void doService(HttpServletRequest sreq,
+                             HttpServletResponse sresp,
+                             Application app)
+            throws ServletException, IOException {
 
         if (s_log.isDebugEnabled()) {
             s_log.info("starting doService method");
@@ -170,13 +160,13 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         sections.close();
         if (!hasAccess) {    // user has no access privilege 
             throw new AccessDeniedException(
-                            "User is not entitled to access any content section");
+                    "User is not entitled to access any content section");
             // throw new LoginSignal(sreq);            // send to login page
         }
 
-        
-        
-        RequestContext ctx = DispatcherHelper.getRequestContext();        
+
+
+        RequestContext ctx = DispatcherHelper.getRequestContext();
         String url = ctx.getRemainingURLPart();  // here SiteNodeRequestContext
         String originalUrl = ctx.getOriginalURL();
 
@@ -191,30 +181,38 @@ public class ContentCenterServlet extends BaseApplicationServlet {
              * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
              * result of a servlet mapping. But Application requires url 
              * NOT to end with a trailing '/' for legacy free applications.  */
-            pathInfo = pathInfo.substring(0, pathInfo.length()-1);
+            pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
         }
 
         // An empty remaining URL or a URL which doesn't end in trailing slash:
         // probably want to redirect.
         // Probably DEPRECATED with new access method or only relevant for jsp
         // extension
-        if ( m_trailingSlashList.contains(url) && !originalUrl.endsWith("/") ) {
+        if (m_trailingSlashList.contains(url) && !originalUrl.endsWith("/")) {
             DispatcherHelper.sendRedirect(sresp, originalUrl + "/");
             return;
         }
 
 
         final Page page = (Page) m_pages.get(pathInfo);
-        if ( page != null ) {
+        if (page != null) {
 
             // Check user access.
             checkUserAccess(sreq, sresp);
-            // Serve the page.
-            final Document doc = page.buildDocument(sreq, sresp);
-            PresentationManager pm = Templating.getPresentationManager();
-            pm.servePage(doc, sreq, sresp);
-            // page.init();
-            // page.dispatch(sreq, sresp, ctx);
+            //Lock the page
+
+            if (page instanceof CMSPage) {
+                final CMSPage cmsPage = (CMSPage) page;
+                cmsPage.init();
+                cmsPage.dispatch(sreq, sresp, ctx);
+            } else {
+                page.lock();
+                // Serve the page.            
+                final Document doc = page.buildDocument(sreq, sresp);
+
+                PresentationManager pm = Templating.getPresentationManager();
+                pm.servePage(doc, sreq, sresp);
+            }
 
         } else {
             // Fall back on the JSP application dispatcher.
@@ -223,7 +221,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
             if (s_log.isInfoEnabled()) {
                 s_log.info("NO page registered to serve the requst url.");
             }
-            
+
             RequestDispatcher rd = m_resolver.resolve(m_templatePath,
                                                       sreq, sresp, app);
             if (rd != null) {
@@ -231,20 +229,19 @@ public class ContentCenterServlet extends BaseApplicationServlet {
                     s_log.debug("Got dispatcher " + rd);
                 }
                 sreq = DispatcherHelper.restoreOriginalRequest(sreq);
-                rd.forward(sreq,sresp);
+                rd.forward(sreq, sresp);
             } else {
                 sresp.sendError(404, requestUri + " not found on this server.");
             }
 
         }
 
-        
+
         DeveloperSupport.endStage("ContentCenterServlet.doService");
         if (s_log.isDebugEnabled()) {
             s_log.info("doService method completed");
         }
     }    //  END doService()
-
 
     /**
      * Adds one pair of Url - Page to the internal hash map, used as a cache.
@@ -264,7 +261,6 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         m_pages.put(pathInfo, page);
     }
 
-    
     /**
      * Service Method returns the URL stub for the class name,
      * can return null if not mapped
@@ -274,11 +270,10 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         s_log.debug("Getting URL Stub for : " + classname);
         Iterator itr = s_pageURLs.keySet().iterator();
         while (itr.hasNext()) {
-            String classname2 = (String)itr.next();
-            s_log.debug("key: " + classname + " value: " +
-                        (String)s_pageURLs.get(classname2));
+            String classname2 = (String) itr.next();
+            s_log.debug("key: " + classname + " value: " + (String) s_pageURLs.get(classname2));
         }
-        String url = (String)s_pageURLs.get(classname);
+        String url = (String) s_pageURLs.get(classname);
         return url;
     }
 
@@ -293,7 +288,6 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         s_pages.remove(url);
     }
 
-    
     /**
      * Verify that the user is logged in and is able to view the
      * page. Subclasses can override this method if they need to, but
@@ -305,10 +299,10 @@ public class ContentCenterServlet extends BaseApplicationServlet {
      **/
     protected void checkUserAccess(final HttpServletRequest request,
                                    final HttpServletResponse response //,
-///                                 final RequestContext actx
-                                  )
-                   throws ServletException {
-        
+            ///                                 final RequestContext actx
+            )
+            throws ServletException {
+
         if (!Web.getUserContext().isLoggedIn()) {
             throw new LoginSignal(request);
 
@@ -324,11 +318,11 @@ public class ContentCenterServlet extends BaseApplicationServlet {
      **/
     protected void redirectToLoginPage(HttpServletRequest req,
                                        HttpServletResponse resp)
-        throws ServletException {
+            throws ServletException {
         String url = Util.getSecurityHelper()
-                         .getLoginURL(req)
-                         +"?"+LoginHelper.RETURN_URL_PARAM_NAME
-                         +"="+UserContext.encodeReturnURL(req);
+                .getLoginURL(req)
+                     + "?" + LoginHelper.RETURN_URL_PARAM_NAME
+                     + "=" + UserContext.encodeReturnURL(req);
         try {
             LoginHelper.sendRedirect(req, resp, url);
         } catch (IOException e) {
