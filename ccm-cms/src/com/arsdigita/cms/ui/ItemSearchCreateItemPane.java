@@ -1,7 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2011-2013 University of Bremen. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
+
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.BoxPanel;
@@ -41,50 +56,101 @@ import java.math.BigDecimal;
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
-                                                               FormProcessListener,
-                                                               FormSubmissionListener {
+class ItemSearchCreateItemPane extends CMSContainer 
+                               implements FormInitListener,
+                                          FormProcessListener,
+                                          FormSubmissionListener {
 
     public static final String WIDGET_PARAM = "widget";
     public static final String SEARCHWIDGET_PARAM = "searchWidget";
     public static final String PUBLISHWIDGET_PARAM = "publishWidget";
+
     private static final String CONTENT_TYPE_ID = "ct";
     private static final String FOLDER_ID = "folder_id";
     private static final String FLAT_FOLDER = "flatFolder";
-    private final NewItemForm m_newItem;
+
     private final SingleSelectionModel m_typeSel;
-    private final FlatFolderPicker m_folderPicker;
-    private final SingleSelectionModel m_model;
-    private final FolderSelectionModel m_folderSel; // To support legacy UI code    
     private String defaultFolder;
     private boolean editAfterCreate = true;
-    private final CreationSelector m_creator;
     private final ContentItemRequestLocal m_contentItem = new ContentItemRequestLocal() {
     };
+
     //private final Link m_selectCloseLink;
     //private final Link m_selectEditLink;
-    private final Link m_fallBackLink;
-    private final SegmentedPanel m_segPanel;
-    private final Segment m_creationSeg;
-    private final Segment m_newItemSeg;
-    private final Segment m_linkSeg;
+    // private final Link m_fallBackLink;
 
+    private Link m_fallBackLink;
+    // private final SegmentedPanel m_segPanel;
+    private SegmentedPanel m_segPanel;
+    // private final Segment m_creationSeg;
+    private Segment m_creationSeg;
+    // private final Segment m_newItemSeg;
+    private Segment m_newItemSeg;
+    private final Segment m_linkSeg =  new Segment();
+    private final NewItemForm m_newItem = new SectionNewItemForm("newItem");
+    // private final SingleSelectionModel m_model;
+    private SingleSelectionModel m_model;
+    private final FolderSelectionModel m_folderSel; // To support legacy UI code    
+    // private FolderSelectionModel m_folderSel; // To support legacy UI code    
+    // private final CreationSelector m_creator;
+    private CreationSelector m_creator;
+    private final FlatFolderPicker m_folderPicker = new FlatFolderPicker(FLAT_FOLDER);
+
+    // ////////////////////////////////////////////////////////////////////////
+    //
+    // Quick 'nd Dirty interims solution
+    // 
+    // While migrating the CMS pages from legacy dispatcher code to
+    // to new style, legacy free, servlet based pages we need two constructors.
+    // As soon as the migration is completed, the legacy tainted constructor
+    // has to be removed and the init() code can be part of the constructor
+    // again.
+    //
+    // ////////////////////////////////////////////////////////////////////////
+    
+    
+    /**
+     * 
+     * @param parent 
+     */
     public ItemSearchCreateItemPane(final ItemSearchPage parent) {
         super();
+        m_folderSel = new FolderSelectionModel(m_model);
+        m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
+        init();
+    }
 
+    /**
+     * 
+     * @param parent 
+     */
+    public ItemSearchCreateItemPane(final CMSItemSearchPage parent) {
+        super();
+        m_folderSel = new FolderSelectionModel(m_model);
+        m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
+        init();
+    }
+
+    /**
+     * Private service method to initialize all the instance properties. 
+     * Used by constructors as a temporarly measure to be able to provide
+     * two constructors.
+     * Should be removed when migration completed (cf. note above).
+     */
+    private  void init() {
         m_segPanel = new SegmentedPanel("itemSearchCreate");
         m_creationSeg = new Segment();
         m_newItemSeg = new Segment();
-        m_linkSeg = new Segment();
+        // m_linkSeg = new Segment();
 
-        m_newItem = new SectionNewItemForm("newItem");
+        // m_newItem = new SectionNewItemForm("newItem");
 
         m_model = new ParameterSingleSelectionModel(new BigDecimalParameter(FOLDER_ID));
-        m_folderSel = new FolderSelectionModel(m_model);
+        // m_folderSel = new FolderSelectionModel(m_model);
 
         this.setIdAttr("folder-new-item");
 
-        m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
+        // m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
 
         m_creator = new CreationSelector(m_typeSel, m_folderSel) {
             @Override
@@ -101,8 +167,9 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
         m_creationSeg.add(new Label("<br/>", false));
 
         final BoxPanel folderRow = new BoxPanel(BoxPanel.HORIZONTAL);
-        folderRow.add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.create.folder_select")));
-        m_folderPicker = new FlatFolderPicker(FLAT_FOLDER);
+        folderRow.add(new Label(GlobalizationUtil.globalize(
+                                 "cms.ui.item_search.create.folder_select")));
+        // m_folderPicker = new FlatFolderPicker(FLAT_FOLDER);
         folderRow.add(m_folderPicker);
         m_newItem.add(folderRow);
         m_newItemSeg.add(m_newItem);
@@ -298,8 +365,12 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
 
         m_segPanel.add(m_linkSeg);
 
-    }
+    }   // init 
 
+    /**
+     * 
+     * @param page 
+     */
     @Override
     public void register(final Page page) {
         super.register(page);
@@ -312,6 +383,11 @@ class ItemSearchCreateItemPane extends CMSContainer implements FormInitListener,
         page.addComponentStateParam(this, m_folderSel.getStateParameter());
     }
 
+    /**
+     * 
+     * @param fse
+     * @throws FormProcessException 
+     */
     public void init(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();

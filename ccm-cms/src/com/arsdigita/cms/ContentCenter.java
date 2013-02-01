@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.cms;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -28,14 +29,15 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * Application domain class for the CMS module user entry page (content-center)
+ * Application domain class for the CMS module user entry page 
+ * (content-center)
  *
  * @author pb
  * @version $Id: ContentCenter.java $
  */
 public class ContentCenter extends Application {
 
-    /** A logger instance, primarily to assist debugging .                    */
+    /** A logger instance, primarily to assist debugging.                  */
     private static final Logger s_log = Logger.getLogger(ContentSection.class);
     // pdl stuff (constants)
     public static final String BASE_DATA_OBJECT_TYPE =
@@ -43,8 +45,6 @@ public class ContentCenter extends Application {
     // general constants
     public static final String PACKAGE_KEY = "content-center";
     public static final String INSTANCE_NAME = "Content Center";
-//  public static final String DISPATCHER_CLASS =
-//                             "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
 
     /**
      * Constructor retrieving a workspace from the database usings its OID.
@@ -57,8 +57,9 @@ public class ContentCenter extends Application {
     }
 
     /**
-     * Constructor retrieving the contained <code>DataObject</code> from the
-     * persistent storage mechanism with an <code>OID</code> specified by id.
+     * Constructor retrieving the contained <code>DataObject</code> from 
+     * the persistent storage mechanism with an <code>OID</code> specified 
+     * by id.
      *
      * @param id The <code>id</code> for the retrieved
      * <code>DataObject</code>.
@@ -91,8 +92,9 @@ public class ContentCenter extends Application {
                                        String title,
                                        Application parent) {
 
-        ContentCenter app =
-                      (ContentCenter) Application.createApplication(BASE_DATA_OBJECT_TYPE, urlName, title, parent);
+        ContentCenter app = (ContentCenter) Application
+                                     .createApplication(BASE_DATA_OBJECT_TYPE, 
+                                                        urlName, title, parent);
 
         app.save();
 
@@ -106,7 +108,8 @@ public class ContentCenter extends Application {
      * Therefore we simply may return the URL used to load and initialise the
      * Content Center.
      * 
-     * @return The URL of the CMS ContentCenter (currently including trailing slash)
+     * @return The URL of the CMS ContentCenter (currently including trailing 
+     *          slash)
      */
     public static String getURL() {
         // quick 'nd dirty!

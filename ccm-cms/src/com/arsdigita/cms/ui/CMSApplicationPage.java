@@ -26,10 +26,13 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.templating.PresentationManager;
+import com.arsdigita.web.Application;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 
 import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -44,20 +47,21 @@ import org.apache.log4j.Logger;
 
 
 /**
- * <p>A <tt>CMSApplicationPage</tt> is a Bebop {@link com.arsdigita.bebop.Page}
- * implementation serving as a base for any CMS pageElement served by a servlet. </p>
+ * A <tt>CMSApplicationPage</tt> is a Bebop {@link com.arsdigita.bebop.Page}
+ * implementation serving as a base for any CMS pageElement served by a 
+ * servlet. 
  *
- * <p>It stores the current {@link com.arsdigita.cms.ContentSection} and, if
- * applicable, the {@link com.arsdigita.cms.ContentItem} in the pageElement state as
- * request local objects. Components that are part of the <tt>CMSPage</tt>
- * may access these objects by calling:</p>
+ * It stores the current {@link com.arsdigita.cms.ContentSection} and, if
+ * applicable, the {@link com.arsdigita.cms.ContentItem} in the pageElement 
+ * state as request local objects. Components that are part of the 
+ * <tt>CMSPage</tt> may access these objects by calling:
  *     <blockquote><code><pre>
  *     getContentSection(PageState state);
  *     </pre></code></blockquote>
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Id: CMSPage.java 2140 2011-01-16 12:04:20Z pboy $
+ * @version $Id: CMSApplicationPage.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class CMSApplicationPage extends Page {
 
@@ -131,12 +135,18 @@ public class CMSApplicationPage extends Page {
     }
 
     /**
-     * Finishes and locks the pageElement. If the pageElement is already locked, does nothing.
+     * Finishes and locks the pageElement. If the pageElement is already 
+     * locked, does nothing.
+     * 
+     * Client classes may overwrite this method to add context specific bits
+     * to the page before it is locked.
      *
-     * This method is called by the {@link com.arsdigita.dispatcher.Dispatcher}
-     * that initializes this pageElement.
+     * This method is called by the various servlets serving the various pages
+     * of the CMS package, before serving and displaying the page.
      */
-    public synchronized void init() {
+    public synchronized void init(HttpServletRequest sreq,
+                                  HttpServletResponse sresp,
+                                  Application app) {
         s_log.debug("Initializing the page");
 
         if (!isLocked()) {

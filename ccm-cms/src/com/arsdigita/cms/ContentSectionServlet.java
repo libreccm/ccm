@@ -18,13 +18,16 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.bebop.Page;
 import com.arsdigita.caching.CacheTable;
 import com.arsdigita.cms.dispatcher.CMSDispatcher;
+import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.ContentItemDispatcher;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.TemplateResolver;
 import com.arsdigita.cms.publishToFile.LocalRequestPassword;
 import com.arsdigita.cms.lifecycle.Lifecycle;
+import com.arsdigita.cms.ui.CMSApplicationPage;
 import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
@@ -41,6 +44,8 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.templating.PresentationManager;
+import com.arsdigita.templating.Templating;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.Classes;
 import com.arsdigita.versioning.Versions;
@@ -49,6 +54,7 @@ import com.arsdigita.web.ApplicationFileResolver;
 import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.Web;
+import com.arsdigita.xml.Document;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -130,8 +136,14 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     private static Map s_itemURLCacheMap = null;
     private static boolean s_cacheItems = true;
 
-    /** Path to directory containg ccm-cms template files                    */
+    //  NEW STUFF here used to process the pages in this servlet
+    /** URL (pathinfo) -> Page object mapping. Based on it (and the http
+     *  request url) the doService method selects a page to display          */
+    private final Map m_pages = new HashMap();
+
+    /** Path to directory containg ccm-cms template (jsp) files             */
     private String m_templatePath;
+    // Probably compatibility stuff, based on dispatcher
     /** Resolvers to find templages (JSP) and other stuff stored in file system.*/
     private ApplicationFileResolver m_resolver;
 
@@ -172,6 +184,12 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             s_log.debug("Template path is " + m_templatePath +
                         " with resolver " + m_resolver.getClass().getName());
         }
+
+        //  NEW STUFF here used to process the pages in this servlet
+   //   addPage("/admin", new MainPage());     // index page at address ~/cs
+   //   addPage("/admin/index.jsp", new MainPage());     
+   //   addPage("/admin/item.jsp", new MainPage());     
+
     }
 
     /**
@@ -183,30 +201,74 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      *      (HttpServletRequest, HttpServletResponse, Application)}
      */
     protected void doService( HttpServletRequest sreq, 
-                              HttpServletResponse sresp, 
-                              Application app)
+                               HttpServletResponse sresp, 
+                               Application app)
                    throws ServletException, IOException {
 
         ContentSection section = (ContentSection) app;
         
-        String requestUri = sreq.getRequestURI();
+        // ////////////////////////////////////////////////////////////////////
+        // Prepare OLD style dispatcher based page service
+        // ////////////////////////////////////////////////////////////////////
         /*
          * NOTE:
          * Resolves currently to SiteNodeRequestContext which will be removed.
+         * NOTE 2:
+         * SiteNodeRequestContext removed, resolves currently to 
+         * KernelRequestContext which will be removed as well.
          */
         RequestContext ctx = DispatcherHelper.getRequestContext();        
-        String url = ctx.getRemainingURLPart();  // here SiteNodeRequestContext
-
+        String url = ctx.getRemainingURLPart();  // here KernelRequestContext now
         if (s_log.isInfoEnabled()) {
             s_log.info("Resolving item URL " + url);
         }
-
-        //TODO: need to do a check for public page
-
         final ItemResolver itemResolver = getItemResolver(section);
         final ContentItem item = getItem(section, url, itemResolver);
 
-        if (item != null) {
+        
+        // ////////////////////////////////////////////////////////////////////
+        // Prepare NEW style servlet based bebpo page service
+        // ////////////////////////////////////////////////////////////////////
+        String pathInfo = sreq.getPathInfo();
+        Assert.exists(pathInfo, "String pathInfo");
+        if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
+            /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
+             * start with a '/' character. It currently carries a 
+             * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
+             * result of a servlet mapping. But Application requires url 
+             * NOT to end with a trailing '/' for legacy free applications.  */
+            pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
+        }
+        final Page page = (Page) m_pages.get(pathInfo);
+
+
+        // ////////////////////////////////////////////////////////////////////
+        // Serve the page
+        // ////////////////////////////////////////////////////////////////////
+        /* FIRST try new style servlet based service */
+        if (page != null) {
+
+            // Check user access.
+            // checkUserAccess(sreq, sresp);  // done in individual pages ??
+
+            if (page instanceof CMSPage) {
+                // backwards compatibility fix until migration completed
+                final CMSPage cmsPage = (CMSPage) page;
+            //  final RequestContext ctx = DispatcherHelper.getRequestContext();
+                cmsPage.init();
+                cmsPage.dispatch(sreq, sresp, ctx);
+            } else {
+                final CMSApplicationPage cmsAppPage = (CMSApplicationPage) page;
+                cmsAppPage.init(sreq,sresp,app);
+                // Serve the page.            
+                final Document doc = cmsAppPage.buildDocument(sreq, sresp);
+
+                PresentationManager pm = Templating.getPresentationManager();
+                pm.servePage(doc, sreq, sresp);
+            }
+
+        /* SECONDLY try if we have to serve an item (old style dispatcher based */
+        } else if (item != null) {
             
             /* We have to serve an item here                                 */
             String param = sreq.getParameter("transID");
@@ -229,15 +291,16 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
             serveItem(sreq, sresp, section, item);
             
+        /* OTHERWISE delegate to a JSP in file system */
         } else {
-            
+
             /* We have to deal with a content-section, folder or an other bit*/
             if (s_log.isInfoEnabled()) {
                 s_log.info("NOT serving content item");
             }
-            
+
             /* Store content section in http request to make it available
-             * or admin index,jsp                                             */
+             * for admin index,jsp                                            */
             sreq.setAttribute(CONTENT_SECTION, section);
 
             RequestDispatcher rd = m_resolver.resolve(m_templatePath,
@@ -250,10 +313,12 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 rd.forward(sreq,sresp);
             } else {
             //  sresp.sendError(404, packageURL + " not found on this server.");
+                String requestUri = sreq.getRequestURI(); // same as ctx.getRemainingURLPart()
                 sresp.sendError(404, requestUri + " not found on this server.");
             }
         }
-    }
+    }   // END doService
+
 
     /** 
      * 
@@ -333,6 +398,25 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
         //use ContentItemDispatcher
         m_disp.dispatch(sreq,sresp,ctx);
+    }
+
+    /**
+     * Internal service method, adds one pair of Url - Page to the internal 
+     * hash map, used as a cache.
+     * 
+     * @param pathInfo url stub for a page to display
+     * @param page Page object to display
+     */
+    private void addPage(final String pathInfo, final Page page) {
+
+        Assert.exists(pathInfo, String.class);
+        Assert.exists(page, Page.class);
+        // Current Implementation requires pathInfo to start with a leading '/'
+        // SUN Servlet API specifies: "PathInfo *may be empty* or will start
+        // with a '/' character."
+        Assert.isTrue(pathInfo.startsWith("/"), "path starts not with '/'");
+
+        m_pages.put(pathInfo, page);
     }
     
     /**

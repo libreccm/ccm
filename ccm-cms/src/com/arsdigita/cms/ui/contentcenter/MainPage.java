@@ -106,9 +106,6 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
 
         add(new DebugPanel());
         
-        /* Page complete, locked now.                                         */
-        // lock();
-        init();
     }
 
     /**
@@ -134,31 +131,6 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
 
         return m_search;
     }
-
-/*
-    private SimpleContainer makeHeader() {
-        PrintListener l = new PrintListener() {
-                public void prepare(PrintEvent event) {
-                    PageState state = event.getPageState();
-                    Link link = (Link) event.getTarget();
-
-                    User user = KernelHelper.getCurrentUser(state.getRequest());
-
-                    link.setChild(new Label(user.getName()));
-                    link.setTarget("/pvt/");
-                }
-            };
-
-        SimpleContainer sc = new SimpleContainer();
-        Label welcomeLabel = new Label(GlobalizationUtil.globalize("cms.ui.welcome"));
-        Link nameLink = new Link(l);
-
-        sc.add(welcomeLabel);
-        sc.add(nameLink);
-        return sc;
-
-    }
-*/
 
     /**
      * Created the TabbedPane to use for this page. Sets the class

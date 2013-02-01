@@ -30,19 +30,21 @@ import com.arsdigita.cms.Template;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
-import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Stack;
 
+import org.apache.log4j.Logger;
+
 /**
- * <p>The context bar of the content section UI.</p>
+ * The context bar of the content section UI.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: ContentSectionContextBar.java 287 2005-02-22 00:29:02Z sskracic $
  */
-class ContentSectionContextBar extends WorkspaceContextBar {
+// class ContentSectionContextBar extends WorkspaceContextBar {
+public class ContentSectionContextBar extends WorkspaceContextBar {
 
     private static final Logger s_log = Logger.getLogger
         (ContentSectionContextBar.class);
@@ -66,10 +68,12 @@ class ContentSectionContextBar extends WorkspaceContextBar {
             if (item == null) {
                 s_log.warn("item is null");
             } else if(item.getContentType() == null) {
-                s_log.warn("item.getContentType() returns null. item.class.getName(): " + item.getClass().getName());
+                s_log.warn("item.getContentType() returns null. item.class.getName(): " 
+                           + item.getClass().getName());
             }
             isTemplate = 
-                item.getContentType().equals(ContentType.findByAssociatedObjectType(Template.BASE_DATA_OBJECT_TYPE));
+                item.getContentType().equals(ContentType
+                    .findByAssociatedObjectType(Template.BASE_DATA_OBJECT_TYPE));
             if (isTemplate) {
                 templateID = item.getID();
             }
@@ -104,7 +108,8 @@ class ContentSectionContextBar extends WorkspaceContextBar {
 
                         parent = folder.getParent();
                         currentFolderLabel = folder.getLabel();
-                        if (parent != null || folder.equals(section.getRootFolder())) {
+                        if (parent != null || folder.equals(section
+                                                            .getRootFolder())) {
                             params.setParameter
                                 (ContentSectionPage.SET_FOLDER, folder.getID());
                         }
@@ -120,10 +125,12 @@ class ContentSectionContextBar extends WorkspaceContextBar {
 
         if (isTemplate) {
             params.setParameter
-                (ContentSectionPage.SET_TAB, new BigDecimal(ContentSectionPage.CONTENTTYPES_TAB));
+                ( ContentSectionPage.SET_TAB, 
+                  new BigDecimal(ContentSectionPage.CONTENTTYPES_TAB) );
             params.setParameter(ContentSectionPage.SET_TEMPLATE, templateID);
         }
-        // add section-level entry. if this is for an item page, the URL will be for the root folder.
+        // add section-level entry. if this is for an item page, the URL 
+        // will be for the root folder.
         final URL url = URL.there
             (state.getRequest(),
              section.getPath() + "/" + PageLocations.SECTION_PAGE,

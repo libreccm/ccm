@@ -38,6 +38,7 @@ import org.apache.log4j.Logger;
  **/
 
 public abstract class Completable implements Component {
+
     private final static Logger s_log = Logger.getLogger(Completable.class);
 
     public Completable() {

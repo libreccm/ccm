@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.ui;
+package com.arsdigita.cms.ui.contentsection;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
@@ -31,9 +31,10 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionServlet;
 import com.arsdigita.cms.PageLocations;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.CMSPage;
+import com.arsdigita.cms.ui.*;
 import com.arsdigita.cms.ui.category.CategoryAdminPane;
 import com.arsdigita.cms.ui.cse.ContentSoonExpiredPane;
 import com.arsdigita.cms.ui.folder.FolderAdminPane;
@@ -53,6 +54,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+
+// ////////////////////////////////////////////////////////////////////////////
+// WORK IN PROGRESS - UNDER DEVELOPMENT!
+//
+// Migration of the Content Section main page from old style dispatcher based
+// UI to new style, legacy free UI based on servlet.
+// ////////////////////////////////////////////////////////////////////////////
+
+
 /**
  * Contains the entire admin UI for a content section.
  *
@@ -60,9 +70,10 @@ import org.apache.log4j.Logger;
  * @author Michael Pih
  * @author Xixi D'Moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Peter Boy (pboy@barkhof.uni-bremen.de)
  * @version $Id: ContentSectionPage.java 2224 2011-08-01 07:45:23Z pboy $
  */
-public class ContentSectionPage extends CMSPage implements ActionListener {
+public class MainPage extends CMSApplicationPage implements ActionListener {
 
     private static final Logger s_log = Logger.getLogger
         (ContentSectionPage.class);
@@ -91,41 +102,28 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      */
     public static final String SET_TAB = "set_tab";
 
-    /**
-     * Index of the search tab
-     */
+    /** Index of the search tab     */
     public static final int SEARCH_TAB = 0;
 
-    /**
-     * Index of the browse tab
-     */
+    /** Index of the browse tab     */
     public static final int BROWSE_TAB = 1;
 
-    /**
-     * Index of the roles tab
-     */
+    /** Index of the roles tab     */
     public static final int ROLES_TAB = 2;
 
-    /**
-     * Index of the workflows tab
-     */
+    /** Index of the workflows tab     */
     public static final int WORKFLOW_TAB = 3;
 
-    /**
-     * Index of the lifecycles tab
-     */
+    /** Index of the lifecycles tab     */
     public static final int LIFECYCLES_TAB = 4;
 
-    /**
-     * Index of the categories tab
-     */
+    /** Index of the categories tab     */
     public static final int CATEGORIES_TAB = 5;
 
-    /**
-     * Index of the content types tab
-     */
+    /** Index of the content types tab     */
     public static final int CONTENTTYPES_TAB = 6;
 
+    /** Index of the user administration tab     */
     public static final int USER_ADMIN_TAB = 7;
 
     private TabbedPane m_tabbedPane;
@@ -152,9 +150,10 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Contains the UI for administering a content section.
+     * Constructor, creates the complete UI for administering a 
+     * content section.
      */
-    public ContentSectionPage() {
+    public MainPage() {
         super(new Label(new TitlePrinter()), new SimpleContainer());
 
         setClassAttr("cms-admin");
@@ -183,36 +182,43 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         add(m_tabbedPane);
 
         addActionListener(new ActionListener() {
-                public final void actionPerformed(ActionEvent e) {
-                    final PageState state = e.getPageState();
+            public final void actionPerformed(ActionEvent e) {
+                final PageState state = e.getPageState();
 
-                    final String tab = state.getRequest().getParameter
-                        (SET_TAB);
+                final String tab = state.getRequest().getParameter(SET_TAB);
 
-                    if (tab != null) {
-                        m_tabbedPane.setSelectedIndex
-                            (state, Integer.valueOf(tab).intValue());
-                    }
+                if (tab != null) {
+                    m_tabbedPane.setSelectedIndex(state, 
+                                                  Integer.valueOf(tab).intValue());
+                }
 
-		    SecurityManager sm = CMS.getContext().getSecurityManager();
-		    User user = Web.getContext().getUser();
-		    m_tabbedPane.setTabVisible(state, m_userAdminPane, sm.canAccess(user,SecurityConstants.STAFF_ADMIN));
+                SecurityManager sm = CMS.getContext().getSecurityManager();
+                User user = Web.getContext().getUser();
+                m_tabbedPane.setTabVisible(state, 
+                                       m_userAdminPane, 
+                                       sm.canAccess(user,
+                                                    SecurityConstants.STAFF_ADMIN)
+                                      );
 
-		    if ( ContentSection.getConfig().getHideAdminTabs() ) {
-			m_tabbedPane.setTabVisible(state, m_workflowPane, sm.canAccess(user,SecurityConstants.WORKFLOW_ADMIN));
-			m_tabbedPane.setTabVisible(state, m_categoryPane, sm.canAccess(user,SecurityConstants.CATEGORY_ADMIN));
-			m_tabbedPane.setTabVisible(state, m_lifecyclePane, sm.canAccess(user,SecurityConstants.LIFECYCLE_ADMIN));
-			m_tabbedPane.setTabVisible(state, m_typePane, sm.canAccess(user,SecurityConstants.CONTENT_TYPE_ADMIN));
-			m_tabbedPane.setTabVisible(state, m_rolePane, sm.canAccess(user,SecurityConstants.STAFF_ADMIN));
-            // csePane: should check permission
-            m_tabbedPane.setTabVisible(state, m_csePane, true);
-            // TODO Check for reportPane as well
-		    }
-		}
-            });
+                if ( ContentSection.getConfig().getHideAdminTabs() ) {
+                    m_tabbedPane
+                        .setTabVisible(state, 
+                                   m_workflowPane, 
+                                   sm.canAccess(user,
+                                                SecurityConstants.WORKFLOW_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_categoryPane, sm.canAccess(user,SecurityConstants.CATEGORY_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_lifecyclePane, sm.canAccess(user,SecurityConstants.LIFECYCLE_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_typePane, sm.canAccess(user,SecurityConstants.CONTENT_TYPE_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_rolePane, sm.canAccess(user,SecurityConstants.STAFF_ADMIN));
+                    // csePane: should check permission
+                    m_tabbedPane.setTabVisible(state, m_csePane, true);
+                    // TODO Check for reportPane as well
+                }
+            }
+        });
 
         add(new DebugPanel());
-    }
+    }   // END constructor
 
     /**
      * Creates, and then caches, the browse pane. Overriding this
@@ -396,7 +402,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      */
     public ContentSection getContentSection(HttpServletRequest request) {
         // Resets all content sections associations.
-        ContentSection section = super.getContentSection(request);
+        // ContentSection section = super.getContentSection(request);
+        ContentSection section = ContentSectionServlet.getContentSection(request);
         Assert.exists(section);
         return section;
     }
