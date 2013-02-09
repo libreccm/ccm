@@ -24,12 +24,12 @@ import com.arsdigita.portalworkspace.ui.PersistentPortal;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.xml.Element;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
+import com.arsdigita.portalworkspace.WorkspacePage;
 
 import org.apache.log4j.Logger;
 
@@ -55,7 +55,7 @@ public class HomepageWorkspace extends SimpleContainer {
     private String m_name;
     
     public HomepageWorkspace() {
-        super("portal:homepageWorkspace", PortalConstants.PORTAL_XML_NS);
+        super("portal:homepageWorkspace", WorkspacePage.PORTAL_XML_NS);
         m_customizable = false;
 
         if (s_log.isDebugEnabled()) {
@@ -93,10 +93,10 @@ public class HomepageWorkspace extends SimpleContainer {
 
         m_browser = new PersistentPortal(m_model,
                                          m_name,
-                                         PortalConstants.MODE_DISPLAY);
+                                         WorkspacePage.MODE_DISPLAY);
         m_editor = new PersistentPortal(m_model,
                                         m_name,
-                                        PortalConstants.MODE_EDITOR);
+                                        WorkspacePage.MODE_EDITOR);
         
         m_edit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

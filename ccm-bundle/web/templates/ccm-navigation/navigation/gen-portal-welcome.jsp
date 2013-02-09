@@ -4,7 +4,9 @@
   xmlns:show="/WEB-INF/bebop-show.tld"
   version="1.2">
 
-  <!-- JSP template to use a portal page as index page in navigation  -->
+  <!-- JSP template to use a portal page as index page in navigation  
+        Currently the same as gen-portal.jsp, may change in future to
+        support special features of a site's start page (home page)      -->
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>

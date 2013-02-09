@@ -80,10 +80,12 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Assets   -->
+<!--    
         <ccm:application name="ccm-cms-assets-fileattachment"/>
         <ccm:application name="ccm-cms-assets-imagestep"/>
         <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
+-->
 
 <!--  CMS Content Types  -->
 <!--    
@@ -125,7 +127,9 @@
 -->
 <!--
         <ccm:application name="ccm-portalserver"/>
+-->
         <ccm:application name="ccm-portalworkspace-homepage"/>
+<!--
         <ccm:application name="ccm-weblog"/>
         <ccm:application name="ccm-webpage"/>
 -->
