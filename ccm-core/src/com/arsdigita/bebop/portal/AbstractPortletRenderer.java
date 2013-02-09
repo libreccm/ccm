@@ -28,10 +28,9 @@ import java.util.Iterator;
 import java.util.Date;
 
 /**
- *  <p>An abstract
- * implementation of {@link PortletRenderer} meant to capture default
- * behavior for portlets defined by users of the {@link Portal}
- * component.</p>
+ * An abstract implementation of {@link PortletRenderer} meant to capture 
+ * default behavior for portlets defined by users of the {@link Portal}
+ * component. 
  *
  * <p>The {@link #generateXML} method in this class provides a default
  * XML dressing around a portlet. This dressing is used by Portal's

@@ -104,9 +104,9 @@ public class ApplicationType extends ResourceType {
      * @param createContainerGroup
      */
     protected ApplicationType(final String objectType,
-                              final String title,
-                              final String applicationObjectType,
-                              final boolean createContainerGroup) {
+                               final String title,
+                               final String applicationObjectType,
+                               final boolean createContainerGroup) {
         this(objectType);  // creates and returns an empty data object
 
         Assert.exists(title, "String title");
@@ -129,11 +129,50 @@ public class ApplicationType extends ResourceType {
     }
 
 
+    /**
+     * Set defaults for an apoplication type during its initial creation.
+     * May be modified later during the process of loading an application 
+     * (which currently includes portlets).
+     */
     private void setDefaults() {
-        // Defaults for standalone applications.
-     // setFullPageView(true);
-     // setEmbeddedView(false);
-     // setWorkspaceApplication(true);
+
+        /* Property fullPageMode (field has_full_page_view_p) is currently used 
+         * to distinguish between "real" standalone applications and portlets.
+         * Portlets are also stored as types in table applications_types and
+         * method retrieveAllApplicationTypes is not meant to include portlets
+         * and therefore uses a filter on this property.
+         * The methods to modify this property had been deprecated for new
+         * style legacy free applications and had been used for old stype
+         * package type applications and legacy compatible applications. But we
+         * can't remove the property itself until we found another way to
+         * distinguish the two types of application.
+         * The methods for modification are nevertheless removed (commented out)
+         * in this class because they are not used anywhere else. The Portal
+         * classes obviously uses their own methods for modification.
+         */
+        // setFullPageView(true);                   // Use direct setting
+        set("hasFullPageView", new Boolean(true)); // instead of public method
+
+
+        /* Same is true for property embeddedView (field has_embedded_view_p)
+         * although it is nowhere used in this class. But portal / portlet
+         * classes set this property and may relay in some way on this value.
+         * The methods for modification are nevertheless removed (commented 
+         * out) in this class because they are not used anywhere else.       */
+        // setEmbeddedView(false);
+        set("hasEmbeddedView", new Boolean(false));
+
+        /* Property workspaceApplication (workspace_application_p) has been
+         * deprecated as well, and this property is obviously not used 
+         * anywhere in the context of application and application type 
+         * nor used by portal / portlet code. We leave it unset for now.     */
+        // setWorkspaceApplication(true);
+
+
+        /* Had been deprecated as well but revived in version 6.6 in order
+         * to separated multi-instance applications from single instance 
+         * applications for which we have to prevent the creation of 
+         * additional instances (eg. content-center or shortcuts) in the GUI.*/
         setSingleton(false);
     }
 
@@ -175,9 +214,8 @@ public class ApplicationType extends ResourceType {
 
     // Param dataObject cannot be null.  Can return null?
     public static ApplicationType retrieveApplicationType
-        (DataObject dataObject) {
+                                                     (DataObject dataObject) {
         Assert.exists(dataObject, "dataObject");
-
         return new ApplicationType(dataObject);
     }
 
@@ -219,6 +257,11 @@ public class ApplicationType extends ResourceType {
 
         Assert.exists(collection, "collection");
 
+        /* Currently used to exclude portlet types from the list of application
+         * types in order to get just "real" or full standalone applications. 
+         * Conceptually and API wise this property had been marked deprecated
+         * for new style applications, but needed nevertheless. Se comment 
+         * below for method setFullPageView.                                 */
         collection.addEqualsFilter("hasFullPageView", Boolean.TRUE);
 
         return new ApplicationTypeCollection(collection);
@@ -270,13 +313,13 @@ public class ApplicationType extends ResourceType {
         set("description", description);
     }
 
-    public boolean isWorkspaceApplication() {
-        final Boolean result = (Boolean) get("isWorkspaceApplication");
-
-        Assert.exists(result, "Boolean result");
-
-        return result.booleanValue();
-    }
+//  public boolean isWorkspaceApplication() {
+//      final Boolean result = (Boolean) get("isWorkspaceApplication");
+//
+//      Assert.exists(result, "Boolean result");
+//
+//      return result.booleanValue();
+//  }
 
 //  /**
 //   * @deprecated with no replacement.
@@ -293,13 +336,14 @@ public class ApplicationType extends ResourceType {
 //      set("isWorkspaceApplication", new Boolean(isWorkspaceApplication));
 //  }
 
-    public boolean hasFullPageView() {
-        final Boolean result = (Boolean) get("hasFullPageView");
-
-        Assert.exists(result, "Boolean result");
-
-        return result.booleanValue();
-    }
+//  Deprecated in the context of ApplicationType, see comment above!
+//  public boolean hasFullPageView() {
+//      final Boolean result = (Boolean) get("hasFullPageView");
+//
+//      Assert.exists(result, "Boolean result");
+//
+//      return result.booleanValue();
+//  }
 
 //  /**
 //   * @deprecated with no replacement.
@@ -312,7 +356,7 @@ public class ApplicationType extends ResourceType {
 //          throw new UnsupportedOperationException
 //              ("This method is only supported for legacy application types");
 //      }
-
+//
 //      set("hasFullPageView", new Boolean(hasFullPageView));
 //  }
 
