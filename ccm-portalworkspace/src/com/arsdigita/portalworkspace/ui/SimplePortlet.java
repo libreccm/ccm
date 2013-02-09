@@ -18,6 +18,7 @@ package com.arsdigita.portalworkspace.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 
@@ -36,7 +37,7 @@ public class SimplePortlet extends AbstractPortletRenderer {
 
 	protected void generateBodyXML(PageState state, Element parent) {
 		Element content = parent.newChildElement("portlet:simple",
-				PortalConstants.PORTLET_XML_NS);
+				WorkspacePage.PORTLET_XML_NS);
 		m_contents.generateXML(state, content);
 	}
 }

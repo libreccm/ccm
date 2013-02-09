@@ -18,15 +18,15 @@
 
 package com.arsdigita.portalworkspace.ui.admin;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.web.Application;
+
+import org.apache.log4j.Logger;
 
 /**
  * Entry page for Application administration as part of ccm portal. Invocation
@@ -38,21 +38,21 @@ import com.arsdigita.web.Application;
  */
 public class SiteMapPane extends SimpleContainer {
 
+    /** Private Logger instance  */
+    private static final Logger s_log = Logger.getLogger(SiteMapPane.class);
+
     private ApplicationSelectionModel m_app;
 
     private ApplicationList m_appList;
 
     private ApplicationPane m_appPane;
 
-    /** Private Logger instance  */
-    private static final Logger s_log = Logger.getLogger(SiteMapPane.class);
-
     /**
      * Constructor  creates a new application admin pane instance
      */
     public SiteMapPane() {
         setTag("portal:sitemap");
-        setNamespace(PortalConstants.PORTAL_XML_NS);
+        setNamespace(WorkspacePage.PORTAL_XML_NS);
 
         m_app = new ApplicationSelectionModel("application", false);
         m_app.addChangeListener(new ApplicationEditListener());
@@ -69,6 +69,7 @@ public class SiteMapPane extends SimpleContainer {
      * 
      * @param p
      */
+    @Override
     public void register(Page p) {
 		super.register(p);
 

@@ -38,6 +38,10 @@ public class WorkspacePage extends Portal {
 
 	public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.portalworkspace.WorkspacePage";
+    public static final String MODE_EDITOR = "editor";
+    public static final String PORTAL_XML_NS = "http://www.uk.arsdigita.com/portal/1.0";
+    public static final String PORTLET_XML_NS = "http://www.uk.arsdigita.com/portlet/1.0";
+    public static final String MODE_DISPLAY = "display";
 
 	public WorkspacePage() {
 		this(BASE_DATA_OBJECT_TYPE);
@@ -55,16 +59,23 @@ public class WorkspacePage extends Portal {
 		super(oid);
 	}
 
-	static WorkspacePage create(String title, String description,
-			PageLayout layout, Workspace workspace, int sortKey) {
-		WorkspacePage page = (WorkspacePage) Resource.createResource(
-				WorkspacePage.BASE_DATA_OBJECT_TYPE, title, null);
-		page.setup(description, layout, workspace, sortKey);
-		return page;
-	}
+    static WorkspacePage create(String title, 
+                                String description,
+                                PageLayout layout, 
+                                Workspace workspace, 
+                                int sortKey) {
+        WorkspacePage page = (WorkspacePage) Resource
+                        .createResource(WorkspacePage.BASE_DATA_OBJECT_TYPE, 
+                                        title, 
+                                        null);
+        page.setup(description, layout, workspace, sortKey);
+        return page;
+    }
 
-	protected void setup(String description, PageLayout layout,
-			Workspace workspace, int sortKey) {
+	protected void setup(String description, 
+                          PageLayout layout,
+			              Workspace workspace, 
+                          int sortKey) {
 		setDescription(description);
 		setLayout(layout);
 		setWorkspace(workspace);

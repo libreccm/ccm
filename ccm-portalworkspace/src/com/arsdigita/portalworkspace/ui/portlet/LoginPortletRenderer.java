@@ -33,10 +33,10 @@ import com.arsdigita.kernel.permissions.UniversalPermissionDescriptor;
 import com.arsdigita.kernel.security.Credential;
 import com.arsdigita.kernel.security.CredentialEncodingException;
 import com.arsdigita.portalworkspace.portlet.LoginPortlet;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.ui.UI;
 import com.arsdigita.ui.login.LoginConstants;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -63,7 +63,7 @@ public class LoginPortletRenderer extends AbstractPortletRenderer {
      */
     public void generateBodyXML(PageState state, Element parent) {
 		Element login = parent.newChildElement("portlet:login",
-				PortalConstants.PORTLET_XML_NS);
+				WorkspacePage.PORTLET_XML_NS);
 
 		Party party = Kernel.getContext().getParty();
 		if (party == null) {
@@ -81,7 +81,7 @@ public class LoginPortletRenderer extends AbstractPortletRenderer {
 			}
 
 			Element content = login.newChildElement("portlet:loginform",
-					PortalConstants.PORTLET_XML_NS);
+					WorkspacePage.PORTLET_XML_NS);
 
             //  content.addAttribute("url", LegacyInitializer
             //                       .getURL(LegacyInitializer.LOGIN_PAGE_KEY));
@@ -90,7 +90,7 @@ public class LoginPortletRenderer extends AbstractPortletRenderer {
 		} else {
 			User user = (User) party;
 			Element content = login.newChildElement("portlet:loginuser",
-					PortalConstants.PORTLET_XML_NS);
+					WorkspacePage.PORTLET_XML_NS);
 			content.addAttribute("email", user.getPrimaryEmail().toString());
 			content.addAttribute("givenName", user.getPersonName()
 					.getGivenName());

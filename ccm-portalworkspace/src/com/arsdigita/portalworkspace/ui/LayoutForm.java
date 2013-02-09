@@ -70,7 +70,7 @@ public class LayoutForm extends Form implements FormProcessListener,
 	public LayoutForm(WorkspaceSelectionModel workspace,
 			PortalSelectionModel portal) {
 		super("editLayout", new SimpleContainer("portal:editLayout",
-				PortalConstants.PORTAL_XML_NS));
+				WorkspacePage.PORTAL_XML_NS));
 
 		m_workspace = workspace;
 		m_portal = portal;

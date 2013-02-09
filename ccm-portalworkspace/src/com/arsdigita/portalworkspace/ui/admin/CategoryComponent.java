@@ -33,10 +33,10 @@ import com.arsdigita.categorization.CategoryTreeModelLite;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.portalworkspace.Workspace;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.web.Application;
@@ -64,14 +64,18 @@ public class CategoryComponent extends SimpleContainer {
 
 	private static final Category m_root = Category.getRootForObject(m_app);
 
-	public CategoryComponent(ApplicationSelectionModel appModel) {
+	/**
+     * 
+     * @param appModel 
+     */
+    public CategoryComponent(ApplicationSelectionModel appModel) {
 		// this model means that the server needs a restart
 		// if you want to map a category to this personal portal
 		// AND vice versa - if you remove a domain mapping you need to
 		// restart the server otherwise you will get an exception next time
 		// this Component is viewed.
 		if (m_root != null) {
-			setNamespace(PortalConstants.PORTAL_XML_NS);
+			setNamespace(WorkspacePage.PORTAL_XML_NS);
 			setTag("portal:categoryPanel");
 
 			m_appModel = appModel;
@@ -87,7 +91,10 @@ public class CategoryComponent extends SimpleContainer {
 		}
 	}
 
-	private class CategoryTree extends Tree {
+	/**
+     * 
+     */
+    private class CategoryTree extends Tree {
 		public CategoryTree(ACSObjectSelectionModel categoryModel) {
 			super(new SectionTreeModelBuilder());
 			setSelectionModel(categoryModel);
@@ -96,7 +103,10 @@ public class CategoryComponent extends SimpleContainer {
 
 	}
 
-	private class CategoryTreeActionListener implements ActionListener {
+	/**
+     * 
+     */
+    private class CategoryTreeActionListener implements ActionListener {
 		private ACSObjectSelectionModel m_catModel;
 
 		public CategoryTreeActionListener(ACSObjectSelectionModel catModel) {

@@ -26,11 +26,8 @@ import com.arsdigita.portalworkspace.portlet.ApplicationDirectoryPortlet;
 import com.arsdigita.portalworkspace.portlet.ContentDirectoryPortlet;
 import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
 import com.arsdigita.portalworkspace.portlet.LoginPortlet;
-import com.arsdigita.portalworkspace.portlet.MyWorkspacesPortlet ;
 import com.arsdigita.portalworkspace.portlet.RSSFeedPortlet;
 // import com.arsdigita.portlet.TimeOfDayPortlet;
-import com.arsdigita.portalworkspace.portlet.WorkspaceNavigatorPortlet;
-import com.arsdigita.portalworkspace.portlet.WorkspaceSummaryPortlet;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.Assert;
@@ -111,11 +108,8 @@ public class Loader extends PackageLoader {
                 loadContentDirectoryPortlet();
                 loadFreeformHTMLPortlet();
                 loadLoginPortlet();
-                loadMyWorkspacesPortlet();
                 loadRSSFeedPortlet();
 //              loadTimeOfDayPortlet();
-                loadWorkspaceNavigatorPortlet();
-                loadWorkspaceSummaryPortlet();
             }
         }.run();
     }
@@ -225,13 +219,13 @@ public class Loader extends PackageLoader {
      */
     private void loadApplicationDirectoryPortlet() {
 		PortletType type = PortletType.createPortletType(
-				"Application Directory", PortletType.WIDE_PROFILE,
+				"PW Application Directory", PortletType.WIDE_PROFILE,
 				ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
 		type.setDescription("Displays a list of portal workspace applications");
 	}
 
 	private void loadContentDirectoryPortlet() {
-		PortletType type = PortletType.createPortletType("Content Directory",
+		PortletType type = PortletType.createPortletType("PW Content Directory",
 				PortletType.WIDE_PROFILE,
 				ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
 		type.setDescription("Displays the content directory categories");
@@ -250,12 +244,6 @@ public class Loader extends PackageLoader {
 		type.setDescription("Display a login form or user details");
 	}
 
-	private void loadMyWorkspacesPortlet() {
-		PortletType type = PortletType.createPortletType("My Workspaces",
-				PortletType.WIDE_PROFILE, MyWorkspacesPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("MyWorkspaces: Display ????");
-	}
-
 	private void loadRSSFeedPortlet() {
 		PortletType type = PortletType.createPortletType("RSS Feed",
 				PortletType.WIDE_PROFILE, RSSFeedPortlet.BASE_DATA_OBJECT_TYPE);
@@ -271,19 +259,5 @@ public class Loader extends PackageLoader {
 //		TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE);
 //      type.setDescription("Displays the current date and time");
 //  }
-
-    private void loadWorkspaceNavigatorPortlet() {
-		PortletType type = PortletType.createPortletType(
-				"Workspace Navigator Portlet", PortletType.WIDE_PROFILE,
-				WorkspaceNavigatorPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays ??");
-	}
-
-    private void loadWorkspaceSummaryPortlet() {
-		PortletType type = PortletType.createPortletType(
-				"Workspace Summary Portlet", PortletType.WIDE_PROFILE,
-				WorkspaceSummaryPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays ???");
-	}
 
 }

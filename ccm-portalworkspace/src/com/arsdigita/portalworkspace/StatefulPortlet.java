@@ -21,7 +21,6 @@ import java.util.Map;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.Portlet;
 import com.arsdigita.xml.Element;
@@ -192,12 +191,13 @@ public abstract class StatefulPortlet extends Portlet {
 	 * the portletrenderer is contained within a SimplePortlet which is not stateful
 	 * 
 	 */
+    @Override
 	protected final AbstractPortletRenderer doGetPortletRenderer() {
 		return new AbstractPortletRenderer() {
 			protected void generateBodyXML(PageState state, Element document) {
 				document.newChildElement(
 					"portlet:stateful-portlet-in-edit-mode",
-						PortalConstants.PORTLET_XML_NS);
+						WorkspacePage.PORTLET_XML_NS);
 			}
 		};
 

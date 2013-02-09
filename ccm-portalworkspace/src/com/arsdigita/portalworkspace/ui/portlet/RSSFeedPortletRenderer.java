@@ -17,9 +17,9 @@ package com.arsdigita.portalworkspace.ui.portlet;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portalworkspace.portlet.RSSFeedPortlet;
 import com.arsdigita.portalworkspace.portlet.RSSFeedPortletHelper;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.xml.Element;
 
 public class RSSFeedPortletRenderer extends AbstractPortletRenderer {
@@ -31,7 +31,7 @@ public class RSSFeedPortletRenderer extends AbstractPortletRenderer {
 
 	public void generateBodyXML(PageState state, Element parent) {
 		Element content = parent.newChildElement("portlet:RSSFeed",
-				PortalConstants.PORTLET_XML_NS);
+				WorkspacePage.PORTLET_XML_NS);
 
 		String feed = m_portlet.getURL();
 
@@ -41,7 +41,7 @@ public class RSSFeedPortletRenderer extends AbstractPortletRenderer {
 				content.addContent(data);
 			} else {
 				Element error = content.newChildElement("portlet:RSSFeedError",
-						PortalConstants.PORTLET_XML_NS);
+						WorkspacePage.PORTLET_XML_NS);
 				error.setText("There was an error fetching this content feed");
 			}
 		}

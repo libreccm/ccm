@@ -14,45 +14,28 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
+package com.arsdigita.portalworkspace.ui.jsp;
 
-package com.arsdigita.portalworkspace.ui;
-
+import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.Party;
 import com.arsdigita.portalworkspace.Workspace;
 
-/** 
+/**
  * 
- * Used by the jsp, specified in web.xml and used to construct a personal
- * homepage for an loggedIn user
+ * 
  */
-public class DefaultWorkspaceSelectionModel extends WorkspaceSelectionModel {
+public class PackageWorkspaceSelectionModel extends WorkspaceSelectionModel {
 
     /**
-     *
+     * 
      * @param state
      * @return
      */
     protected Workspace getDefaultWorkspace(PageState state) {
-
-        Workspace workspace = (Workspace) Kernel.getContext().getResource();
-        Party party = Kernel.getContext().getParty();
-
-        if (party != null) {  // the visitor is logged in
-            try {
-                 workspace = workspace.retrieveSubworkspaceForParty(party);
-
-            } catch (DataObjectNotFoundException ex) {
-                // fall through
-                // pboy: i.e. a generell default workspace initialized at the
-                // beginning is provided.
-            }
-        }
-
-        return workspace;
-
+        return (Workspace) Kernel.getContext().getResource();
     }
+
 }

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui;
+package com.arsdigita.portalworkspace.ui.jsp;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
@@ -33,6 +33,7 @@ import com.arsdigita.portalworkspace.WorkspacePageCollection;
 import com.arsdigita.london.util.DomainObjectCopier;
 import com.arsdigita.portal.Portlet;
 import com.arsdigita.portal.PortletCollection;
+import com.arsdigita.portalworkspace.ui.WorkspaceComponent;
 import com.arsdigita.web.LoginSignal;
 
 import java.math.BigDecimal;
@@ -42,13 +43,14 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Another specific entry point into a portal workspace page, here based upon
- * WorkspaceComponent (as an alternative to AbstractWorkspaceComponent.
+ * Another specific entry point into a portal workspace page, here based
+ * upon WorkspaceComponent (as an alternative to be based on 
+ * AbstractWorkspaceComponent).
  * Presumably intended to construct a (personal) homepage / startpage when a
  * user logs in / is logged in.
  */
 // As of APLAWS 1.0.4 / CCM 6.6.x this class may never have been used and is
-// propably unfinished work or undinished port from ccm-portalserver module.
+// propably unfinished work or unfinished port from ccm-portalserver module.
 // As with WorkspaceViewer it should be invoked  by a jsp. It is not directly
 // used by any java code.
 public class DefaultWorkspace extends WorkspaceComponent 

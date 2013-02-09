@@ -26,8 +26,8 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
@@ -50,15 +50,17 @@ public class ApplicationList extends SimpleContainer {
      * @param app
      */
     public ApplicationList(ApplicationSelectionModel app) {
-		super("portal:applicationList", PortalConstants.PORTAL_XML_NS);
 
+        super("portal:applicationList", WorkspacePage.PORTAL_XML_NS);
 		m_app = app;
-	}
+
+    }
 
 	/**
      * 
      * @param state
      */
+    @Override
     public void respond(PageState state) {
 		String key = state.getControlEventName();
 		String value = state.getControlEventValue();
@@ -75,12 +77,13 @@ public class ApplicationList extends SimpleContainer {
 	}
 
     /**
-     * Retrieves a list of installed applications and creates the xml to show
-     * a listing.
+     * Retrieves a list of installed applications and creates the xml 
+     * to show a listing.
      * 
      * @param state
      * @param parent
      */
+    @Override
     public void generateXML(PageState state, Element parent) {
 
         Element content = generateParent(parent);
@@ -92,7 +95,7 @@ public class ApplicationList extends SimpleContainer {
             Application app = (Application) apps.getDomainObject();
 
             Element appEl = content.newChildElement("portal:application",
-                                                    PortalConstants.PORTAL_XML_NS);
+                                                    WorkspacePage.PORTAL_XML_NS);
             try {
                 state.setControlEvent(this, SELECT, app.getOID().toString());
                 appEl.addAttribute("appClass", app.getClass().getName());

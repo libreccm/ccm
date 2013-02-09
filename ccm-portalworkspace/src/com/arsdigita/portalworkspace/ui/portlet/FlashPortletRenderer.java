@@ -23,8 +23,8 @@ import java.util.Map;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portalworkspace.portlet.FlashPortlet;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.xml.Element;
 
 /**
@@ -51,7 +51,7 @@ public class FlashPortletRenderer extends AbstractPortletRenderer
      */
     public void generateBodyXML(PageState state, Element parentElement)
     {
-        Element portletElement = parentElement.newChildElement("portlet:flash", PortalConstants.PORTLET_XML_NS);
+        Element portletElement = parentElement.newChildElement("portlet:flash", WorkspacePage.PORTLET_XML_NS);
 
         portletElement.addAttribute(FlashPortlet.BACKGROUND_COLOUR, m_portlet.getBackgroundColour());
         portletElement.addAttribute(FlashPortlet.DETECT_KEY, m_portlet.getDetectKey());
@@ -67,13 +67,13 @@ public class FlashPortletRenderer extends AbstractPortletRenderer
         if (!parameters.isEmpty())
         {
             Element parametersElement = portletElement.newChildElement("portlet:parameters",
-                    PortalConstants.PORTLET_XML_NS);
+                    WorkspacePage.PORTLET_XML_NS);
             for (Iterator i = parameters.keySet().iterator(); i.hasNext();)
             {
                 String key = (String) i.next();
                 String value = (String) parameters.get(key);
                 Element parameterElement = parametersElement.newChildElement("portlet:parameter",
-                        PortalConstants.PORTLET_XML_NS);
+                        WorkspacePage.PORTLET_XML_NS);
                 parameterElement.addAttribute("name", key);
                 parameterElement.addAttribute("value", value);
             }
@@ -82,13 +82,13 @@ public class FlashPortletRenderer extends AbstractPortletRenderer
         if (!variables.isEmpty())
         {
             Element variablesElement = portletElement.newChildElement("portlet:variables",
-                    PortalConstants.PORTLET_XML_NS);
+                    WorkspacePage.PORTLET_XML_NS);
             for (Iterator i = variables.keySet().iterator(); i.hasNext();)
             {
                 String key = (String) i.next();
                 String value = (String) variables.get(key);
                 Element variableElement = variablesElement.newChildElement("portlet:variable",
-                        PortalConstants.PORTLET_XML_NS);
+                        WorkspacePage.PORTLET_XML_NS);
                 variableElement.addAttribute("name", key);
                 variableElement.addAttribute("value", value);
             }

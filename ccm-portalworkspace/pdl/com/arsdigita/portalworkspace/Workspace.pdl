@@ -24,7 +24,7 @@ object type Workspace extends Application {
                                             to pw_workspace_pages.workspace_id;
     PageLayout[1..1] defaultLayout = join pw_workspaces.default_layout_id
                                        to pw_workspace_page_layouts.layout_id;
-    WorkspaceTheme[0..1] theme = join pw_workspaces.theme_id to pw_workspace_themes.theme_id;
+ // WorkspaceTheme[0..1] theme = join pw_workspaces.theme_id to pw_workspace_themes.theme_id;
     User[0..1] owner = join pw_workspaces.owner_id to users.user_id;
 
     Workspace[0..n] relatedWorkspace =
@@ -55,7 +55,7 @@ query childWorkspacesForApplicationID {
           acs_objects.display_name,
           acs_objects.default_domain_class,
           applications.parent_application_id,
-          applications.package_id,
+     //   applications.package_id,
           applications.title,
           applications.primary_url,
           applications.description

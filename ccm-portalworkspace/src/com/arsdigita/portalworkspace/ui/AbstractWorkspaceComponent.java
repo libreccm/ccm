@@ -23,6 +23,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.portalworkspace.Workspace;
+import com.arsdigita.portalworkspace.WorkspacePage;
 
 /**
  * 
@@ -42,8 +43,8 @@ public abstract class AbstractWorkspaceComponent extends SimpleContainer {
 
     /**
      * Default constructor creates a new, empty
-     * <code>AbstractWorkspaceComponent</code> using parents (SimpleContainer)
-     * default constructor.
+     * <code>AbstractWorkspaceComponent</code> using parents
+     * (SimpleContainer) default constructor.
      */
     public AbstractWorkspaceComponent() {
         this(null);
@@ -57,7 +58,7 @@ public abstract class AbstractWorkspaceComponent extends SimpleContainer {
 
         /* Creates a WorkspaceComponent (SimpleContainer) that will wrap its
          * children in the specified tag.                                     */
-        super("portal:workspace", PortalConstants.PORTAL_XML_NS);
+        super("portal:workspace", WorkspacePage.PORTAL_XML_NS);
 
         m_workspace = workspace;
         m_details = new WorkspaceDetails(m_workspace);

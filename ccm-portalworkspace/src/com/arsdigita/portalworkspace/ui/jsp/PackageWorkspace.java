@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui;
+package com.arsdigita.portalworkspace.ui.jsp;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Container;
@@ -28,6 +28,8 @@ import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.portalworkspace.Workspace;
+import com.arsdigita.portalworkspace.ui.PortalHelper;
+import com.arsdigita.portalworkspace.ui.WorkspaceComponent;
 import com.arsdigita.toolbox.ui.SecurityContainer;
 import com.arsdigita.web.LoginSignal;
 

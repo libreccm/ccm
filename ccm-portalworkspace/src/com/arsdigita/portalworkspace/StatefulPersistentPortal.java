@@ -28,32 +28,24 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.bebop.PageState;
-// import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.SimpleContainer;
-// import com.arsdigita.bebop.SingleSelectionModel;
-// import com.arsdigita.bebop.parameters.IntegerParameter;
-// import com.arsdigita.bebop.portal.Portal;
 import com.arsdigita.bebop.portal.PortalModel;
 import com.arsdigita.bebop.portal.PortalModelBuilder;
 import com.arsdigita.bebop.portal.PortletRenderer;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
 import com.arsdigita.portalworkspace.ui.PortletSelectionModel;
-// import com.arsdigita.portalworkspace.ui.PortletTypeSelectionModel;
 import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
-// import com.arsdigita.persistence.metadata.ObjectType;
-// import com.arsdigita.portal.Portlet;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.portal.PortletTypeCollection;
 import com.arsdigita.xml.Element;
 
 
 /**
- * Dynamically render the portlets for the current portal. If any portlets are
- * stateful, retrieve a renderer from cache so that the page can manage the
- * state of the portlet. 
+ * Dynamically render the portlets for the current portal. If any portlets 
+ * are stateful, retrieve a renderer from cache so that the page can manage
+ * the state of the portlet. 
  * 
  * ONLY VALID FOR BROWSE MODE, use com.arsdigita.portal.ui.PersistentPortal 
  * for edit mode!
@@ -66,8 +58,8 @@ public class StatefulPersistentPortal extends SimpleContainer {
     private static final Logger s_log =
                                 Logger.getLogger(StatefulPersistentPortal.class);
 
-    private WorkspaceSelectionModel m_workspace;
-    private PortletSelectionModel m_portlet;
+    // private WorkspaceSelectionModel m_workspace;
+    // private PortletSelectionModel m_portlet;
     private PortalModelBuilder m_portalModelBuilder;
     private PortalSelectionModel m_portal;
 
@@ -96,7 +88,7 @@ public class StatefulPersistentPortal extends SimpleContainer {
 
         m_portal = portal;
         setTag("portal:portal");
-        setNamespace(PortalConstants.PORTAL_XML_NS);
+        setNamespace(WorkspacePage.PORTAL_XML_NS);
 
         // retrieve empty renderers for any stateful portlets and add them
         // to the component hierarchy

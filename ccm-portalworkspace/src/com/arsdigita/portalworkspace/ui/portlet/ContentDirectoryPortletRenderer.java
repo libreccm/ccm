@@ -28,8 +28,8 @@ import com.arsdigita.bebop.portal.AbstractPortletRenderer;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.portalworkspace.portlet.ContentDirectoryPortlet;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
@@ -58,7 +58,7 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
      */
     public void generateBodyXML(PageState state, Element parent) {
 		Element element = parent.newChildElement("portlet:contentDirectory",
-				PortalConstants.PORTLET_XML_NS);
+				WorkspacePage.PORTLET_XML_NS);
 		element.addAttribute("id", getIdAttr());
 		element.addAttribute("layout", m_portlet.getLayout());
 
@@ -134,7 +134,7 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
 			BigDecimal childSortKey) {
 		Element el = new Element(depth == 1 ? "portlet:contentDirectoryEntry"
 				: "portlet:contentDirectorySubentry",
-				PortalConstants.PORTLET_XML_NS);
+				WorkspacePage.PORTLET_XML_NS);
 
 		el.addAttribute("id", XML.format(cat.getID()));
 		el.addAttribute("name", cat.getName());

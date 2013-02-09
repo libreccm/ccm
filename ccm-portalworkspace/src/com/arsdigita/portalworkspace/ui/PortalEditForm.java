@@ -71,7 +71,7 @@ public class PortalEditForm extends Form implements FormProcessListener,
                           PortalSelectionModel portal) {
 
         super("editPortal", new SimpleContainer("portal:editPortal",
-                                                PortalConstants.PORTAL_XML_NS));
+                                                WorkspacePage.PORTAL_XML_NS));
 
         m_workspace = workspace;
         m_portal = portal;

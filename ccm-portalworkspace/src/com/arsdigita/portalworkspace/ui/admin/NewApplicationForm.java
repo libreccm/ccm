@@ -29,8 +29,8 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.ApplicationTypeCollection;
@@ -41,7 +41,7 @@ public class NewApplicationForm extends Form {
 
 	public NewApplicationForm() {
 		super("newApp", new SimpleContainer("portal:newApplication",
-				PortalConstants.PORTAL_XML_NS));
+				WorkspacePage.PORTAL_XML_NS));
 
 		m_app = new SingleSelect(new OIDParameter("app"));
 		ApplicationTypeCollection types = ApplicationType

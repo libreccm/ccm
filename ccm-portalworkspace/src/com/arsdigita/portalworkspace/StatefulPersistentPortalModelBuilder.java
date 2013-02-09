@@ -16,6 +16,15 @@
 
 package com.arsdigita.portalworkspace;
 
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.portal.PortalModel;
+import com.arsdigita.bebop.portal.PortalModelBuilder;
+import com.arsdigita.bebop.portal.PortletRenderer;
+import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
+import com.arsdigita.portal.Portal;
+import com.arsdigita.portal.PortletCollection;
+import com.arsdigita.util.LockableImpl;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,20 +33,9 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-// import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.portal.PortalModel;
-import com.arsdigita.bebop.portal.PortalModelBuilder;
-import com.arsdigita.bebop.portal.PortletRenderer;
-import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
-// import com.arsdigita.portalworkspace.ui.SimplePortlet;
-import com.arsdigita.portal.Portal;
-import com.arsdigita.portal.PortletCollection;
-import com.arsdigita.util.LockableImpl;
-
 /**
- * Portal Model Builder that should only be applied to portal in browse mode,
- * as it does not allow for editing.
+ * Portal Model Builder that should only be applied to portal in
+ * browse mode, as it does not allow for editing.
  * Portal in edit mode should have a
  * com.arsdigita.london.portal.ui.PersistentPortalModelBuilder.
  * 

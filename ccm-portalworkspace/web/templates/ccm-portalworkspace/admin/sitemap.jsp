@@ -11,11 +11,13 @@
       DispatcherHelper.cacheDisable(response);
     </jsp:scriptlet>
 
-    <define:page name="sitemapPage" application="portal" title="Workspace Admin Sitemap" cache="true">
+    <define:page name="sitemapPage"              application="portal" 
+                 title="Workspace Admin Sitemap"        cache="true">
       <jsp:scriptlet>
          sitemapPage.addRequestListener(new ApplicationAuthenticationListener());
       </jsp:scriptlet>
-      <define:component name="admin" classname="com.arsdigita.portalworkspace.ui.admin.SiteMapPane" />
+      <define:component name="admin" 
+                    classname="com.arsdigita.portalworkspace.ui.admin.SiteMapPane" />
     </define:page>
 
     <show:all/>

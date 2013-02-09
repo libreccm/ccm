@@ -14,27 +14,24 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
  */
-package com.arsdigita.portalworkspace.ui;
 
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.kernel.Kernel;
-import com.arsdigita.portalworkspace.Workspace;
+package com.arsdigita.portalworkspace.ui.personalws;
+
+import com.arsdigita.portalworkspace.ui.WorkspaceComponent;
 
 /**
- * 
- * 
+ * Another specific entry point into a portal workspace page, here based upon
+ * WorkspaceComponent (as an alternative to AbstractWorkspaceComponent.
  */
-public class PackageWorkspaceSelectionModel extends WorkspaceSelectionModel {
+// As of APLAWS 1.0.4 / CCM 6.6.x this class may never have been used and is
+// propably unfinished work or undinished port from ccm-portalserver module.
+// As with WorkspaceViewer it should be invoked  by a jsp. It is not directly
+// used by any java code.
+public class UserWorkspace extends WorkspaceComponent {
 
-    /**
-     * 
-     * @param state
-     * @return
-     */
-    protected Workspace getDefaultWorkspace(PageState state) {
-        return (Workspace) Kernel.getContext().getResource();
+    public UserWorkspace() {
+        super(new UserWorkspaceSelectionModel());
     }
 
 }

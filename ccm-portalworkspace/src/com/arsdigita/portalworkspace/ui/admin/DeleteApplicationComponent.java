@@ -12,7 +12,7 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 import com.arsdigita.categorization.Category;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.RedirectSignal;
@@ -133,7 +133,7 @@ public class DeleteApplicationComponent extends SimpleContainer {
 			ApplicationSelectionModel applicationSelectionModel) {
 		s_log.debug("DeleteApplicationComponent instantiated");
 
-		setNamespace(PortalConstants.PORTAL_XML_NS);
+		setNamespace(WorkspacePage.PORTAL_XML_NS);
 		setTag("portal:workspaceDelete");
 		m_appModel = applicationSelectionModel;
 		if (m_delete == null)

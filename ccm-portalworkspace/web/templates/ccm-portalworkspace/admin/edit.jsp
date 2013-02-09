@@ -12,13 +12,15 @@
       DispatcherHelper.cacheDisable(response);
     </jsp:scriptlet>
 
-    <define:page name="adminPage" application="portal" title="Workspace Admin" cache="true">
+    <define:page name="adminPage"        application="portal" 
+                 title="Workspace Admin"        cache="true">
 
       <jsp:scriptlet>
          adminPage.addRequestListener(new ApplicationAuthenticationListener());
       </jsp:scriptlet>
 
-      <define:component name="admin" classname="com.arsdigita.portalworkspace.ui.admin.PeoplePane" />
+      <define:component name="admin" 
+                     classname="com.arsdigita.portalworkspace.ui.admin.PeoplePane" />
 
       <jsp:scriptlet>
         StringParameter action = new StringParameter("action");
@@ -29,4 +31,3 @@
     </define:page>
 
     <show:all/>
-</jsp:root>

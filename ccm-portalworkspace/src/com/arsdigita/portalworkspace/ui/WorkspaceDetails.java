@@ -27,6 +27,7 @@ import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.portalworkspace.Workspace;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
@@ -50,11 +51,12 @@ public class WorkspaceDetails extends SimpleComponent {
 		return m_workspace.getSelectedWorkspace(state);
 	}
 
+    @Override
 	public void generateXML(PageState state, Element parent) {
 		Workspace workspace = getSelectedWorkspace(state);
 
 		Element content = new Element("portal:workspaceDetails",
-				PortalConstants.PORTAL_XML_NS);
+				WorkspacePage.PORTAL_XML_NS);
 		exportAttributes(content);
 
 		generateWorkspaceXML(state, content, workspace);

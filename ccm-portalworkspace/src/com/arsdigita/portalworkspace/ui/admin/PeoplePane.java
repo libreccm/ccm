@@ -67,11 +67,11 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.ui.ParticipantBrowsePane;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.london.util.ui.DomainObjectSelectionModel;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.portalworkspace.WorkspacePage;
 //?
-import com.arsdigita.toolbox.ui.ACSObjectCollectionListModel;
+// import com.arsdigita.toolbox.ui.ACSObjectCollectionListModel;
 import com.arsdigita.toolbox.ui.IteratorListModel;
 
 import java.util.ArrayList;
@@ -94,12 +94,13 @@ public class PeoplePane extends SimpleContainer {
 
     public PeoplePane() {
 		setTag("portal:admin");
-		setNamespace(PortalConstants.PORTAL_XML_NS);
+		setNamespace(WorkspacePage.PORTAL_XML_NS);
     }
 
     public void init(StringParameter sp) {
 
         m_workspaceRL = new RequestLocal() {
+                @Override
                 protected Object initialValue(PageState ps) {
                     return Kernel.getContext().getResource();
                 }
@@ -188,6 +189,7 @@ public class PeoplePane extends SimpleContainer {
 
         final DomainObjectSelectionModel selectionModel =
             new DomainObjectSelectionModel("selectedRole") {
+                @Override
                 public void setSelectedKey(PageState state,
                                            Object key) {
                     if (key != null) {
@@ -210,6 +212,7 @@ public class PeoplePane extends SimpleContainer {
                         al.add(r.getOID());
                     }
                     return new IteratorListModel(al.iterator()) {
+                            @Override
                             public Object getElement() {
                                 OID oid = (OID) super.getElement();
                                 Role r = (Role) new Role(oid);
@@ -231,6 +234,7 @@ public class PeoplePane extends SimpleContainer {
                     return true;
                 }
             }) {
+                @Override
                 public Object getSelectedKey(PageState state) {
                     Object key = super.getSelectedKey(state);
                     if (key != null) {
@@ -254,6 +258,7 @@ public class PeoplePane extends SimpleContainer {
             ("Workspace Roles", rList, selectionModel, "Add a role", new Label(""));
 
         final RequestLocal role = new RequestLocal() {
+                @Override
                 public Object initialValue(PageState ps) {
                     return (Role) selectionModel.getSelectedObject(ps);
                 }
@@ -338,6 +343,7 @@ public class PeoplePane extends SimpleContainer {
         properties.add(new Label(GlobalizationUtil.globalize("cw.workspace.ui.admin.role_name")));
 
         final TextField roleNameEntry = new TextField("roleName") {
+                @Override
                 public boolean isVisible(PageState ps) {
                     Role r = (Role)roleRL.get(ps);
                     return ((r != null) && !isSystem(r));
@@ -346,6 +352,7 @@ public class PeoplePane extends SimpleContainer {
         roleNameEntry.addValidationListener(new NotEmptyValidationListener());
 
         final Label roleNameDisplay = new Label(GlobalizationUtil.globalize("cw.workspace.ui.admin.null_role")) {
+                @Override
                 public boolean isVisible(PageState ps) {
                     Role r = (Role)roleRL.get(ps);
                     return !roleNameEntry.isVisible(ps);
@@ -400,6 +407,7 @@ public class PeoplePane extends SimpleContainer {
 
         properties.add(new Label());
         properties.add(new Submit("Update Role") {
+                @Override
                 public boolean isVisible(PageState ps) {
                     return roleNameEntry.isVisible(ps);
                 }
@@ -430,6 +438,7 @@ public class PeoplePane extends SimpleContainer {
         result.add(properties);
 
         final ActionLink deleteRole = new ActionLink( (String) GlobalizationUtil.globalize("cw.workspace.ui.admin.delete_role").localize()) {
+                @Override
                 public boolean isVisible(PageState ps) {
                     Role r = (Role) roleRL.get(ps);
                     return !isSystem(r);

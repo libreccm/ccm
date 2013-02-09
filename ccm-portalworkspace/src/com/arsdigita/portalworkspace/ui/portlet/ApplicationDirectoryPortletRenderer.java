@@ -22,8 +22,8 @@ import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.Resource;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portalworkspace.portlet.ApplicationDirectoryPortlet;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.web.URL;
@@ -41,7 +41,7 @@ public class ApplicationDirectoryPortletRenderer extends
 
 	public void generateBodyXML(PageState state, Element parent) {
 		Element content = parent.newChildElement(
-				"portlet:applicationDirectory", PortalConstants.PORTLET_XML_NS);
+				"portlet:applicationDirectory", WorkspacePage.PORTLET_XML_NS);
 
 		Application current = Web.getContext().getApplication();
 		Party party = Kernel.getContext().getParty();
@@ -55,7 +55,7 @@ public class ApplicationDirectoryPortletRenderer extends
 			Application app = apps.getApplication();
 			Element child = content.newChildElement(
 					"portlet:applicationDirectoryEntry",
-					PortalConstants.PORTLET_XML_NS);
+					WorkspacePage.PORTLET_XML_NS);
 
 			child.addAttribute("title", app.getTitle());
 			child.addAttribute("description", app.getDescription());

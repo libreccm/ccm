@@ -13,8 +13,9 @@
  *
  */
 
-package com.arsdigita.portalworkspace.ui;
+package com.arsdigita.portalworkspace.ui.personalws;
 
+import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;

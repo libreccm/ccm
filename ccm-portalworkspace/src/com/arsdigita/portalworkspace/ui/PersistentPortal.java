@@ -141,7 +141,7 @@ public class PersistentPortal extends SimpleContainer {
                             String mode) {
         
         setTag("portal:portal");
-        setNamespace(PortalConstants.PORTAL_XML_NS);
+        setNamespace(WorkspacePage.PORTAL_XML_NS);
 
         s_log.debug("IN constructor" + name + " " + mode);
         m_adders = new PortletTypeForm[MAX_COLUMNS];
@@ -151,7 +151,7 @@ public class PersistentPortal extends SimpleContainer {
         m_column = new ParameterSingleSelectionModel(new IntegerParameter("column"));
 
 
-        if (m_mode.equals(PortalConstants.MODE_EDITOR)) {
+        if (m_mode.equals(WorkspacePage.MODE_EDITOR)) {
             for (int i = 0; i < m_adders.length; i++) {
                 m_adders[i] = new PortletTypeForm("add" + name + i);
                 m_adders[i].setRedirecting(true);
@@ -440,7 +440,7 @@ public class PersistentPortal extends SimpleContainer {
                                   BigDecimal portlet,
                                   String name) {
 		Element action = parent.newChildElement("portlet:action",
-				PortalConstants.PORTLET_XML_NS);
+				WorkspacePage.PORTLET_XML_NS);
 		try {
             state.setControlEvent(this,
                                   name, 
@@ -457,7 +457,7 @@ public class PersistentPortal extends SimpleContainer {
 	public void respond(PageState state) {
 		WorkspacePage portal = m_portal.getSelectedPortal(state);
 
-		if (m_mode.equals(PortalConstants.MODE_EDITOR)) {
+		if (m_mode.equals(WorkspacePage.MODE_EDITOR)) {
 
 			// check permission on Workspace, not WorkspacePage,
 			// as this is where the permissiones/groups are set

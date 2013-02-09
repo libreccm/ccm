@@ -73,7 +73,7 @@ public class WorkspaceComponent extends SimpleContainer {
 
 	public WorkspaceComponent(WorkspaceSelectionModel workspace) {
 		setTag("portal:workspace");
-		setNamespace(PortalConstants.PORTAL_XML_NS);
+		setNamespace(WorkspacePage.PORTAL_XML_NS);
 
 		m_multiPortal = true;
 
@@ -85,8 +85,8 @@ public class WorkspaceComponent extends SimpleContainer {
 		m_portals_edit = new PortalListEditor(workspace, m_portal);
 		m_portals_view = new PortalListViewer(workspace, m_portal);
 
-		m_display = new PersistentPortal(m_portal, PortalConstants.MODE_DISPLAY);
-		m_editor = new PersistentPortal(m_portal, PortalConstants.MODE_EDITOR);
+		m_display = new PersistentPortal(m_portal, WorkspacePage.MODE_DISPLAY);
+		m_editor = new PersistentPortal(m_portal, WorkspacePage.MODE_EDITOR);
 
 		m_add = new ActionLink("add pane");
 		m_add.setClassAttr("actionLink");

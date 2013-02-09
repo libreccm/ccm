@@ -63,7 +63,7 @@ public abstract class PortalList extends SimpleContainer {
      */
     public PortalList(WorkspaceSelectionModel workspace,
                       PortalSelectionModel portal) {
-        super("portal:portalList", PortalConstants.PORTAL_XML_NS);
+        super("portal:portalList", WorkspacePage.PORTAL_XML_NS);
 
         m_workspace = workspace;
         m_portal = portal;
@@ -134,7 +134,7 @@ public abstract class PortalList extends SimpleContainer {
         pages.addOrder(WorkspacePage.SORT_KEY);
         while (pages.next()) {
             Element pageEl = new Element("portal:portalDetails",
-                                         PortalConstants.PORTAL_XML_NS);
+                                         WorkspacePage.PORTAL_XML_NS);
             WorkspacePage page = pages.getPage();
             generatePageXML(state, pageEl, page);
 

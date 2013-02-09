@@ -22,7 +22,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Group;
-import com.arsdigita.kernel.Kernel;
+// import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
@@ -34,8 +34,7 @@ import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionManager;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.portalworkspace.ui.PersonalPortalPage;
-import com.arsdigita.portalworkspace.ui.WorkspaceTheme;
+import com.arsdigita.portalworkspace.ui.personalws.PersonalPortalPage;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
@@ -59,8 +58,8 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Class <b>Workspace</b> is the main domain class (extending Application) for
- * the portalworkspace module.
+ * Class <b>Workspace</b> is the main domain class (extending Application) 
+ * for the portalworkspace module.
  *
  * A (portal)workspace represents an area containing 0...n portals each arranged
  * as a pane of page. Each portal (or pane) manages a number of portlets. So a
@@ -721,23 +720,6 @@ public class Workspace extends Application {
     public WorkspacePage addPage(String title, String description,
                                  PageLayout layout, int sortKey) {
         return WorkspacePage.create(title, description, layout, this, sortKey);
-    }
-
-    public void setTheme(WorkspaceTheme theme) {
-        set("theme", theme);
-    }
-
-    public WorkspaceTheme getTheme() {
-        DataObject dobj;
-
-        dobj = (DataObject) get("theme");
-
-        if (dobj == null) {
-            return null;
-        } else {
-            WorkspaceTheme theme = new WorkspaceTheme(dobj);
-            return theme;
-        }
     }
 
     public static Workspace getCurrentlySelectedWorkspace() {

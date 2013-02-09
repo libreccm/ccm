@@ -17,8 +17,8 @@ package com.arsdigita.portalworkspace.ui.portlet;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.xml.Element;
 
 public class FreeformHTMLPortletRenderer extends AbstractPortletRenderer {
@@ -30,7 +30,7 @@ public class FreeformHTMLPortletRenderer extends AbstractPortletRenderer {
 
 	public void generateBodyXML(PageState state, Element parent) {
 		Element content = parent.newChildElement("portlet:freeformHTML",
-				PortalConstants.PORTLET_XML_NS);
+				WorkspacePage.PORTLET_XML_NS);
 		content.setText(m_portlet.getContent());
 	}
 }

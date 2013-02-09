@@ -26,10 +26,9 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
 
 /**
- * This selection model adds an (optional?) default value which will be returned
- * when nothing is selected.
+ * This selection model adds an (optional?) default value which will be 
+ * returned when nothing is selected.
  */
-
 public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 
 	public static final String DEFAULT_PARAM_NAME = "app_id";

@@ -37,9 +37,6 @@ import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
 import com.arsdigita.portalworkspace.portlet.LoginPortlet;
 import com.arsdigita.portalworkspace.portlet.RSSFeedPortlet;
 // import com.arsdigita.portlet.TimeOfDayPortlet;
-import com.arsdigita.portalworkspace.portlet.MyWorkspacesPortlet;
-import com.arsdigita.portalworkspace.portlet.WorkspaceNavigatorPortlet;
-import com.arsdigita.portalworkspace.portlet.WorkspaceSummaryPortlet;
 import com.arsdigita.portalworkspace.ui.admin.WorkspaceConfigFormSection;
 import com.arsdigita.portalworkspace.ui.portlet.ContentDirectoryPortletEditor;
 import com.arsdigita.portalworkspace.ui.portlet.FreeformHTMLPortletEditor;
@@ -152,15 +149,6 @@ public class Initializer extends CompoundInitializer {
                 });
 
         e.getFactory().registerInstantiator(
-                MyWorkspacesPortlet.BASE_DATA_OBJECT_TYPE,
-                new ACSObjectInstantiator() {
-                    @Override
-                    public DomainObject doNewInstance(DataObject dataObject) {
-                        return new MyWorkspacesPortlet(dataObject);
-                    }
-                });
-
-        e.getFactory().registerInstantiator(
                 RSSFeedPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
                     @Override
@@ -178,33 +166,6 @@ public class Initializer extends CompoundInitializer {
                    }
                 });
          */
-
-//     WorkspaceDirectoryPortlet,  imports ccm-ldn-rss
-//      e.getFactory().registerInstantiator(
-//              WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
-//              new ACSObjectInstantiator() {
-//                  public DomainObject doNewInstance(DataObject dataObject) {
-//                      return new WorkspaceDirectoryPortlet(dataObject);
-//                  }
-//              });
-
-        e.getFactory().registerInstantiator(
-                WorkspaceNavigatorPortlet.BASE_DATA_OBJECT_TYPE,
-                new ACSObjectInstantiator() {
-                    @Override
-                    public DomainObject doNewInstance(DataObject dataObject) {
-                        return new WorkspaceNavigatorPortlet(dataObject);
-                    }
-                });
-
-        e.getFactory().registerInstantiator(
-                WorkspaceSummaryPortlet.BASE_DATA_OBJECT_TYPE,
-                new ACSObjectInstantiator() {
-                    @Override
-                    public DomainObject doNewInstance(DataObject dataObject) {
-                        return new WorkspaceSummaryPortlet(dataObject);
-                    }
-                });
 
         new ResourceTypeConfig(Workspace.BASE_DATA_OBJECT_TYPE) {
                 @Override

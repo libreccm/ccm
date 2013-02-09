@@ -32,8 +32,8 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.kernel.Resource;
 import com.arsdigita.kernel.ui.ResourceConfigComponent;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.ApplicationTypeCollection;
@@ -52,7 +52,7 @@ public class ApplicationPane extends SimpleContainer {
      * @param app
      */
     public ApplicationPane(ApplicationSelectionModel app) {
-        super("portal:applicationPane", PortalConstants.PORTAL_XML_NS);
+        super("portal:applicationPane", WorkspacePage.PORTAL_XML_NS);
 
         m_app = app;
 
@@ -71,6 +71,7 @@ public class ApplicationPane extends SimpleContainer {
         add(m_newApp);
 
         final RequestLocal appRL = new RequestLocal() {
+            @Override
             public Object initialValue(PageState state) {
                 return m_app.getSelectedObject(state);
             }
@@ -78,7 +79,7 @@ public class ApplicationPane extends SimpleContainer {
         };
 
         ApplicationTypeCollection types = ApplicationType
-                .retrieveAllApplicationTypes();
+                                          .retrieveAllApplicationTypes();
         while (types.next()) {
             ApplicationType type = types.getApplicationType();
 
@@ -97,6 +98,7 @@ public class ApplicationPane extends SimpleContainer {
 
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
 

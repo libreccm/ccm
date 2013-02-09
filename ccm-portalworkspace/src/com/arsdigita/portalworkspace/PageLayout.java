@@ -37,6 +37,9 @@ import com.arsdigita.util.UncheckedWrapperException;
  */
 public class PageLayout extends DomainObject {
 
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.portalworkspace.PageLayout";
+
     public static final String ID = "id";
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
@@ -45,8 +48,6 @@ public class PageLayout extends DomainObject {
     public static final String FORMAT_TWO_COLUMNS = "50%,50%";
     public static final String FORMAT_THREE_COLUMNS = "30%,40%,30%";
     public static final String FORMAT_FOUR_COLUMNS = "25%,25%,25%,25%";
-    public static final String BASE_DATA_OBJECT_TYPE = 
-                               "com.arsdigita.portalworkspace.PageLayout";
 
     public PageLayout() {
         this(BASE_DATA_OBJECT_TYPE);

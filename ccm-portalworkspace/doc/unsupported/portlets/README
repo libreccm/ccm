@@ -1,0 +1,22 @@
+MyWorkspacePortlet:
+   Code is broken and aborts program flow unrecoverable.
+   No documentation at all, seems to create a list of personaö Workspaces.
+   Not usefule for PortalWorkspace, as it is meant as a system wide frontpage
+   or as leaf for navigation. No option for personal homepages here.
+   May be useful for PortalServer and its personal homepages.
+
+WorkspaceNavigatorPortlet
+   Code is broken, no documentation at all. Seems to provide a list of child
+   Workspaces and related Workspaces. Not useful for PortalWorkspace because
+   it is not meant to form a interwoven system of portal pages.
+   Portlet of the same name is part of PortalServer where it should be useful.
+
+WorkspaceSummaryPortlet
+   Code is broken, no documentation at all. Seems to provide a list of objects,
+   probably participants.
+
+All 3 portlets have internal classes to provide a PortletRenderer. XML files
+are missing, but the tags may be part of the PortalWorkspace applications XML.
+Not checked.
+
+

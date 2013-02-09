@@ -38,8 +38,8 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 
 /**
- * Builds the logic to modify (edit) a portal pane (remember: 0..n portal panes
- * make up a workspace, see com.arsdigita.portalworkspace.Workspace).
+ * Builds the logic to modify (edit) a portal pane (remember: 0..n portal 
+ * panes make up a workspace, see com.arsdigita.portalworkspace.Workspace).
  *
  * It collects the portlets belonging to a portal, determines whether a portlet
  * is currently (request wise) to be edited or not and constructs the

@@ -15,8 +15,6 @@
 
 package com.arsdigita.portalworkspace.ui.admin;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
@@ -24,9 +22,19 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Role;
 import com.arsdigita.portalworkspace.Workspace;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
+import com.arsdigita.portalworkspace.WorkspacePage;
 
+import org.apache.log4j.Logger;
+
+
+
+/**
+ * 
+ * @author
+ */
 public class AdminPane extends SimpleContainer {
+
+	private static final Logger s_log = Logger.getLogger(AdminPane.class);
 
 	private ApplicationSelectionModel m_app;
 
@@ -34,23 +42,31 @@ public class AdminPane extends SimpleContainer {
 
 	private DeleteApplicationComponent m_deleteApplicationComponent;
 
-	private static final Logger s_log = Logger.getLogger(AdminPane.class);
+	/**
+     * 
+     */
+    public AdminPane() {
 
-	public AdminPane() {
-		setTag("portal:admin");
-		setNamespace(PortalConstants.PORTAL_XML_NS);
+        setTag("portal:admin");
+		setNamespace(WorkspacePage.PORTAL_XML_NS);
 
 		m_app = new ApplicationSelectionModel("application", true);
 
-		m_catComponent = new CategoryComponent(m_app);
+
+        /* Add component to select a Navigatgion Category for this portal    */
+        m_catComponent = new CategoryComponent(m_app);
 		m_catComponent.setIdAttr("categoryComponent");
 		add(m_catComponent);
 
+
+        /* Add component "Extrem Action": Delete this portal                 */
 		m_deleteApplicationComponent = new DeleteApplicationComponent(m_app,
 				m_app.getDefaultApplication().getApplicationType());
 		m_deleteApplicationComponent.setIdAttr("deleteComponent");
 		add(m_deleteApplicationComponent);
 
+
+        /* Add component to manage Members group members for this portal     */
 		GroupMemberDisplay members = new GroupMemberDisplay() {
 			public Group getGroup(PageState state) {
 				Workspace workspace = (Workspace) Kernel.getContext()
@@ -62,7 +78,7 @@ public class AdminPane extends SimpleContainer {
 		add(members);
 
 		Form form = new Form("userPicker", new SimpleContainer(
-				"portal:memberPicker", PortalConstants.PORTAL_XML_NS));
+				"portal:memberPicker", WorkspacePage.PORTAL_XML_NS));
 		form.add(new GroupMemberPicker() {
 			public Group getGroup(PageState state) {
 				Workspace workspace = (Workspace) Kernel.getContext()
@@ -73,6 +89,8 @@ public class AdminPane extends SimpleContainer {
 		form.setIdAttr("memberUserPicker");
 		add(form);
 
+
+        /* Add component to manage Admins group members for this portal       */
 		GroupMemberDisplay admins = new GroupMemberDisplay() {
 			public Group getGroup(PageState state) {
 				Workspace workspace = (Workspace) Kernel.getContext()
@@ -90,7 +108,7 @@ public class AdminPane extends SimpleContainer {
 		add(admins);
 
 		Form adminForm = new Form("adminPicker", new SimpleContainer(
-				"portal:adminPicker", PortalConstants.PORTAL_XML_NS));
+				"portal:adminPicker", WorkspacePage.PORTAL_XML_NS));
 		adminForm.add(new GroupMemberPicker() {
 			public Group getGroup(PageState state) {
 				Workspace workspace = (Workspace) Kernel.getContext()

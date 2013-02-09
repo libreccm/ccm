@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
-import com.arsdigita.portalworkspace.ui.PortalConstants;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.web.Application;
 import com.arsdigita.xml.Element;
 
@@ -34,11 +34,17 @@ public class ApplicationDetails extends SimpleContainer {
 	private ApplicationSelectionModel m_app;
 
 	public ApplicationDetails(ApplicationSelectionModel app) {
-		super("portal:applicationDetails", PortalConstants.PORTAL_XML_NS);
+		super("portal:applicationDetails", WorkspacePage.PORTAL_XML_NS);
 
 		m_app = app;
 	}
 
+    /**
+     * 
+     * @param state
+     * @param parent 
+     */
+    @Override
 	public void generateXML(PageState state, Element parent) {
 		Element content = generateParent(parent);
 
