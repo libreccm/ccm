@@ -16,22 +16,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.admin;
-
-import java.io.IOException;
-
-import org.apache.log4j.Logger;
+package com.arsdigita.portalworkspace.ui.sitemap;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.xml.Element;
+
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
 
 /** 
  * 

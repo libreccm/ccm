@@ -21,6 +21,7 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Role;
+import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspacePage;
 
@@ -29,8 +30,14 @@ import org.apache.log4j.Logger;
 
 
 /**
+ * Entry page for PortalWorkspace administration. 
  * 
- * @author
+ * Invocation by (web)/templates/ccm-portalworkspace/admin/index.jsp
+ *
+ * Provides a list of participants (administrators and members) and functionaliy
+ * to add and remove members, provides a way to assign a category for use as an
+ * index page in navigation, and provides a link to delete this portal instance
+ * at all.
  */
 public class AdminPane extends SimpleContainer {
 
@@ -53,7 +60,7 @@ public class AdminPane extends SimpleContainer {
 		m_app = new ApplicationSelectionModel("application", true);
 
 
-        /* Add component to select a Navigatgion Category for this portal    */
+        /* Add component to select a Navigation Category for this portal    */
         m_catComponent = new CategoryComponent(m_app);
 		m_catComponent.setIdAttr("categoryComponent");
 		add(m_catComponent);

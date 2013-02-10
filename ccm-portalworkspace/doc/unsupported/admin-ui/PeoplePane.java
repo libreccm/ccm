@@ -78,6 +78,15 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Category;
 
+
+// Entry Point for jsp, currently: /template/ccm-portalworkspace/admin/edit.jsp
+// Does nothing but display some title. 
+// No other java code relies on this class.
+//
+// No documentation available what this class really does or is intended to do.
+// Code refers to roles which are not part or portalworkspace. Probably an
+// unfinished import from portalserver.
+
 /**
  * PeoplePane.
  *
@@ -92,11 +101,17 @@ public class PeoplePane extends SimpleContainer {
     private RequestLocal m_workspaceRL;
     private StringParameter m_action;
 
+    /**
+     * Default Constructor. 
+     */
     public PeoplePane() {
 		setTag("portal:admin");
 		setNamespace(WorkspacePage.PORTAL_XML_NS);
     }
 
+    /**
+     * 
+     */
     public void init(StringParameter sp) {
 
         m_workspaceRL = new RequestLocal() {

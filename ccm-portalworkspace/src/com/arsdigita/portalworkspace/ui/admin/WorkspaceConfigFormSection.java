@@ -41,6 +41,17 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ui.ApplicationConfigFormSection;
 
+
+// Referenced in Initializer.
+// No other referebce found.
+// TODO: What happens if omitted?
+// (2013-02-10pb)
+
+
+/**
+ * 
+ * 
+ */
 public class WorkspaceConfigFormSection extends ApplicationConfigFormSection {
 
 	private SingleSelect m_layout;

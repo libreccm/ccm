@@ -44,7 +44,11 @@ import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 
 /**
+ * Purpose?.
  * 
+ * As of version 6.6 not really used. References from UserWorkspace, 
+ * DefaultWorkspace, and PackageWorkspace, none of those referenced anymore
+ * (all are meant as JSP entry points, but not used from  any JSP.)
  * 
  */
 public class WorkspaceComponent extends SimpleContainer {

@@ -15,6 +15,7 @@
 
 package com.arsdigita.portalworkspace.ui.admin;
 
+import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;

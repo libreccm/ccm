@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.portalworkspace.ui.admin;
+package com.arsdigita.portalworkspace.ui;
 
 import org.apache.log4j.Logger;
 
@@ -28,16 +28,18 @@ import com.arsdigita.web.Web;
 /**
  * This selection model adds an (optional?) default value which will be 
  * returned when nothing is selected.
+ * 
+ * Used by packages admin and sitemap 
  */
 public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 
-	public static final String DEFAULT_PARAM_NAME = "app_id";
+    public static final String DEFAULT_PARAM_NAME = "app_id";
 
-	private boolean m_hasDefaultValue;
+    private boolean m_hasDefaultValue;
 
     /** Creates a s_logging category with name = full name of class */
-	private static final Logger s_log = Logger
-			                    .getLogger(ApplicationSelectionModel.class);
+    private static final Logger s_log = Logger
+                                    .getLogger(ApplicationSelectionModel.class);
 
     /**
      * Constructor 
@@ -129,7 +131,7 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 		}
 
 		return super.getSelectedObject(state);
-	}
+    }
 
 	/**
      * 
@@ -138,24 +140,24 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
      */
     @Override
     public Object getSelectedKey(PageState state) {
-		if (m_hasDefaultValue && !super.isSelected(state)) {
-			return getDefaultApplication();
-		}
-		return super.getSelectedKey(state);
-	}
+        if (m_hasDefaultValue && !super.isSelected(state)) {
+            return getDefaultApplication();
+        }
+        return super.getSelectedKey(state);
+    }
 
-	/** Utility methods */
-	public Application getSelectedApplication(PageState state) {
-		return (Application) getSelectedObject(state);
-	}
+    /** Utility methods */
+    public Application getSelectedApplication(PageState state) {
+        return (Application) getSelectedObject(state);
+    }
 
-	/**
+    /**
      * Utility method
      * 
      * @param state
      * @param Application
      */
     public void setSelectedApplication(PageState state, Application Application) {
-		setSelectedObject(state, Application);
-	}
+        setSelectedObject(state, Application);
+    }
 }

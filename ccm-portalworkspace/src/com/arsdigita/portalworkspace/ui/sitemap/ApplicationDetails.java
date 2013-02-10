@@ -16,28 +16,36 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.admin;
-
-import org.apache.log4j.Logger;
+package com.arsdigita.portalworkspace.ui.sitemap;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.portalworkspace.WorkspacePage;
+import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import com.arsdigita.web.Application;
 import com.arsdigita.xml.Element;
 
+import org.apache.log4j.Logger;
+
+/**
+ * 
+ * 
+ */
 public class ApplicationDetails extends SimpleContainer {
 
-	private static final Logger s_log = Logger.getLogger(ApplicationList.class);
+    private static final Logger s_log = Logger.getLogger(ApplicationList.class);
 
-	private ApplicationSelectionModel m_app;
+    private ApplicationSelectionModel m_app;
 
-	public ApplicationDetails(ApplicationSelectionModel app) {
-		super("portal:applicationDetails", WorkspacePage.PORTAL_XML_NS);
-
-		m_app = app;
-	}
+    /**
+     * Constructor
+     * @param app 
+     */
+    public ApplicationDetails(ApplicationSelectionModel app) {
+        super("portal:applicationDetails", WorkspacePage.PORTAL_XML_NS);
+        m_app = app;
+    }
 
     /**
      * 
@@ -45,17 +53,18 @@ public class ApplicationDetails extends SimpleContainer {
      * @param parent 
      */
     @Override
-	public void generateXML(PageState state, Element parent) {
-		Element content = generateParent(parent);
+    public void generateXML(PageState state, Element parent) {
 
-		Application app = (Application) m_app.getSelectedObject(state);
+        Element content = generateParent(parent);
 
-		DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(content);
-		xr.setWrapRoot(false);
-		xr.setWrapAttributes(true);
-		xr.setWrapObjects(false);
+        Application app = (Application) m_app.getSelectedObject(state);
 
-		xr.walk(app, ApplicationDetails.class.getName());
-	}
+        DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(content);
+        xr.setWrapRoot(false);
+        xr.setWrapAttributes(true);
+        xr.setWrapObjects(false);
+
+        xr.walk(app, ApplicationDetails.class.getName());
+    }
 
 }

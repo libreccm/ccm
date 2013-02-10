@@ -18,6 +18,7 @@
 
 package com.arsdigita.portalworkspace.ui.admin;
 
+import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.bebop.Label;

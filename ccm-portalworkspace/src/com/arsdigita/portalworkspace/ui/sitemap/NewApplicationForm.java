@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.admin;
+package com.arsdigita.portalworkspace.ui.sitemap;
 
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
@@ -35,41 +35,53 @@ import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.ApplicationTypeCollection;
 
+/**
+ * 
+ */
 public class NewApplicationForm extends Form {
 
-	private SingleSelect m_app;
+    private SingleSelect m_app;
 
-	public NewApplicationForm() {
-		super("newApp", new SimpleContainer("portal:newApplication",
-				WorkspacePage.PORTAL_XML_NS));
+    /**
+     * Constructor.
+     */
+    public NewApplicationForm() {
 
-		m_app = new SingleSelect(new OIDParameter("app"));
-		ApplicationTypeCollection types = ApplicationType
-				.retrieveAllApplicationTypes();
-		types.addFilter("not(lower(title) like 'admin')");
-		types.addOrder("title");
-		m_app.addOption(new Option(null, "-- select application --"));
-		while (types.next()) {
-			ApplicationType type = types.getApplicationType();
-			m_app.addOption(new Option(type.getOID().toString(), type
-					.getTitle()));
-		}
-		m_app.addValidationListener(new NotNullValidationListener());
-		add(m_app);
+        super("newApp", new SimpleContainer("portal:newApplication",
+                                            WorkspacePage.PORTAL_XML_NS));
 
-		add(new Submit("Create"));
+        m_app = new SingleSelect(new OIDParameter("app"));
+        ApplicationTypeCollection types = ApplicationType
+                                          .retrieveAllApplicationTypes();
+        types.addFilter("not(lower(title) like 'admin')");
+        types.addOrder("title");
+        m_app.addOption(new Option(null, "-- select application --"));
+        while (types.next()) {
+            ApplicationType type = types.getApplicationType();
+            m_app.addOption(new Option(type.getOID().toString(), type
+                                                                 .getTitle()));
+        }
+        m_app.addValidationListener(new NotNullValidationListener());
+        add(m_app);
 
-		addProcessListener(new FormProcessListener() {
-			public void process(FormSectionEvent ev)
-					throws FormProcessException {
+        add(new Submit("Create"));
 
-				fireCompletionEvent(ev.getPageState());
-			}
-		});
-	}
+        addProcessListener(new FormProcessListener() {
+            public void process(FormSectionEvent ev)
+                        throws FormProcessException {
 
-	public ApplicationType getApplicationType(PageState state) {
-		OID app = (OID) m_app.getValue(state);
-		return (ApplicationType) DomainObjectFactory.newInstance(app);
-	}
+                fireCompletionEvent(ev.getPageState());
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param state
+     * @return 
+     */
+    public ApplicationType getApplicationType(PageState state) {
+        OID app = (OID) m_app.getValue(state);
+        return (ApplicationType) DomainObjectFactory.newInstance(app);
+    }
 }
