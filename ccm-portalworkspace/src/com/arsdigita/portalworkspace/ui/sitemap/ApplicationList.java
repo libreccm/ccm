@@ -23,7 +23,6 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;

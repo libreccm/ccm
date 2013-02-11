@@ -16,18 +16,33 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.portalworkspace.ui.jsp;
+package com.arsdigita.portalworkspace.ui;
 
-import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
+import com.arsdigita.portalworkspace.ui.WorkspaceSelectionAbstractModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.portalworkspace.Workspace;
 
+
 /**
+ * Intended usage undocumented.
  * 
+ * Seems to provides a lighter version if WorkspaceSelectionDefaultModel
+ * which takes not into account whether to jump to a personal workspace 
+ * or not.
+ * 
+ * In order to makle use of it the portalworkspace JSP must be modified, 
+ * selecting this WorkspaceSelectionModel, eg.
+ * 
+ * instead of:
+ *     ((AbstractWorkspaceComponent)edit).setWorkspaceModel(
+ *                                       new WorkspaceSelectionDefaultModel());
+ * use
+ *     ((AbstractWorkspaceComponent)edit).setWorkspaceModel(
+ *                                       new WorkspaceSelectionPackageModel());
  * 
  */
-public class PackageWorkspaceSelectionModel extends WorkspaceSelectionModel {
+public class WorkspaceSelectionPackageModel extends WorkspaceSelectionAbstractModel {
 
     /**
      * 

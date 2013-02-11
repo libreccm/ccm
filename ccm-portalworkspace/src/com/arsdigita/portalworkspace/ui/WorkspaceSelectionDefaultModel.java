@@ -16,9 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.jsp;
+package com.arsdigita.portalworkspace.ui;
 
-import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
@@ -26,11 +25,19 @@ import com.arsdigita.kernel.Party;
 import com.arsdigita.portalworkspace.Workspace;
 
 /** 
+ * Default Implementation of abstract class WorkspaceSelectionAbstractModel which
+ * provides a default implementation of the (abstract) getDefaultWorkspace
+ * method.
  * 
- * Used by the jsp, specified in web.xml and used to construct a personal
- * homepage for an loggedIn user
+ * This Implementation checks whether a user workspace has to be served and
+ * otherwise returns a default workspace.
+ * 
+ * Used by the the portal workspace JSP's (access path specified in web.xml)
+ * used to construct a workspace in either view (index.jsp) or edit (edit.jsp)
+ * mode
+ * 
  */
-public class DefaultWorkspaceSelectionModel extends WorkspaceSelectionModel {
+public class WorkspaceSelectionDefaultModel extends WorkspaceSelectionAbstractModel {
 
     /**
      *

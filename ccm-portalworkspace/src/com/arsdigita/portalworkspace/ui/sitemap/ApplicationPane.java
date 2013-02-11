@@ -34,7 +34,6 @@ import com.arsdigita.kernel.Resource;
 import com.arsdigita.kernel.ui.ResourceConfigComponent;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.portalworkspace.WorkspacePage;
-import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.ApplicationTypeCollection;

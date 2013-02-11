@@ -34,7 +34,7 @@ import com.arsdigita.bebop.portal.PortalModelBuilder;
 import com.arsdigita.bebop.portal.PortletRenderer;
 import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
 import com.arsdigita.portalworkspace.ui.PortletSelectionModel;
-import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
+import com.arsdigita.portalworkspace.ui.WorkspaceSelectionAbstractModel;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.portal.PortletType;
@@ -58,7 +58,7 @@ public class StatefulPersistentPortal extends SimpleContainer {
     private static final Logger s_log =
                                 Logger.getLogger(StatefulPersistentPortal.class);
 
-    // private WorkspaceSelectionModel m_workspace;
+    // private WorkspaceSelectionAbstractModel m_workspace;
     // private PortletSelectionModel m_portlet;
     private PortalModelBuilder m_portalModelBuilder;
     private PortalSelectionModel m_portal;

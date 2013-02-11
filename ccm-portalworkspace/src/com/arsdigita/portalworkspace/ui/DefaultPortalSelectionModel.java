@@ -36,7 +36,7 @@ import java.math.BigDecimal;
 public class DefaultPortalSelectionModel extends ACSObjectSelectionModel
 		                         implements PortalSelectionModel {
 
-    private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionAbstractModel m_workspace;
 
     /**
      *
@@ -46,7 +46,7 @@ public class DefaultPortalSelectionModel extends ACSObjectSelectionModel
         this(null, param);
     }
 
-    public DefaultPortalSelectionModel(WorkspaceSelectionModel workspace,
+    public DefaultPortalSelectionModel(WorkspaceSelectionAbstractModel workspace,
                                        BigDecimalParameter param) {
         super(WorkspacePage.class.getName(),
               WorkspacePage.BASE_DATA_OBJECT_TYPE, param);
@@ -58,7 +58,7 @@ public class DefaultPortalSelectionModel extends ACSObjectSelectionModel
      *
      * @param workspace
      */
-    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+    public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
         m_workspace = workspace;
     }
 

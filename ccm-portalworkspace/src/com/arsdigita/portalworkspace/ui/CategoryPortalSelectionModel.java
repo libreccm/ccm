@@ -35,7 +35,7 @@ import com.arsdigita.util.Assert;
  * the inclusion of a portal workspace as a leaf page into a navigation tree.
  * 
  */
-public class CategoryPortalSelectionModel extends WorkspaceSelectionModel {
+public class CategoryPortalSelectionModel extends WorkspaceSelectionAbstractModel {
 
     /**
      * 

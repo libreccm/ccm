@@ -16,9 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.jsp;
+package com.arsdigita.portalworkspace.ui;
 
-import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
@@ -39,21 +38,15 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspacePage;
-import com.arsdigita.portalworkspace.ui.AbstractWorkspaceComponent;
-import com.arsdigita.portalworkspace.ui.PersistentPortal;
-import com.arsdigita.portalworkspace.ui.PortalHelper;
-import com.arsdigita.portalworkspace.ui.PortalList;
-import com.arsdigita.portalworkspace.ui.PortalListEditor;
-import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
 import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 
 import org.apache.log4j.Logger;
 
 
 /**
- * Another entry point into a standard portal workspace page where the
- * page is constructed in "edit" mode to allow configuration and 
- * modification by an authorized participant.
+ * Entry point into a standard (public or access restricted) portal workspace 
+ * page where the page is constructed in "edit" mode to allow configuration 
+ * and modification by an authorized participant.
  *
  * It is used via a jsp page which is invoked at the applications url.
  *
@@ -95,7 +88,7 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
      * 
      * @param workspace
      */
-    public WorkspaceEditor(WorkspaceSelectionModel workspace) {
+    public WorkspaceEditor(WorkspaceSelectionAbstractModel workspace) {
 
         super(workspace);
         s_log.debug("WorkspaceEditor constructed");

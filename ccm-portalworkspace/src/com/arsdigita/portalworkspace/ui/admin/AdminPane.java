@@ -21,7 +21,7 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Role;
-import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
+import com.arsdigita.portalworkspace.ui.sitemap.ApplicationSelectionModel;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspacePage;
 

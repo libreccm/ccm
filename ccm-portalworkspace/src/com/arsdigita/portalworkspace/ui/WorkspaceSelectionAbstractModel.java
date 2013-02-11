@@ -24,10 +24,15 @@ import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.portalworkspace.Workspace;
 
 /**
+ * Basic methods to select a workspace (portal application type instance) 
+ * to either display in view mode (eg using WorkspaceViewer class) or in 
+ * edit mode (eg using WorkspaceEdit class). 
  * 
- * 
+ * Child classes are specifically required to overwrite the abstract method 
+ * getDefaultWorkspace and adapt the selection procedure to specific 
+ * application / usage requirements.
  */
-public abstract class WorkspaceSelectionModel {
+public abstract class WorkspaceSelectionAbstractModel {
 
     /** Workspace. Bound to the current HTTP request. */
     private RequestLocal m_workspace;
@@ -35,7 +40,7 @@ public abstract class WorkspaceSelectionModel {
     /**
      * Constructor.
      */
-    public WorkspaceSelectionModel() {
+    public WorkspaceSelectionAbstractModel() {
         m_workspace = new RequestLocal() {
             @Override
             public Object initialValue(PageState state) {

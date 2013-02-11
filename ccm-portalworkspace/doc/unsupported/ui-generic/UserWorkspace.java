@@ -16,9 +16,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.personalws;
+package com.arsdigita.portalworkspace.ui.personal;
 
 import com.arsdigita.portalworkspace.ui.WorkspaceComponent;
+
+
+
+// Intended usage undocumented, class actually not referenced by any code.
+// Probably an experimental alternativ implementation to create a portal page
+// based on / derived from WorkspaceComponent (which in turn derived from 
+// SimpleComponent).
+// Altermnative to WorkspaceEditor / WorkspaceViewer, derived from 
+// class AbstractWorkspaceComponent (which in turn derived form SimpleComponent
+// as well).
+// Seems to use the same WorkspaceSelectionModel process to fetch the actual
+// instance to serve.
+
+
 
 /**
  * Another specific entry point into a portal workspace page, here based upon

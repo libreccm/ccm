@@ -42,7 +42,7 @@ public class PortalListEditor extends PortalListViewer {
 		this(null, portal);
 	}
 
-	public PortalListEditor(WorkspaceSelectionModel workspace,
+	public PortalListEditor(WorkspaceSelectionAbstractModel workspace,
 			PortalSelectionModel portal) {
 		super(workspace, portal);
 
@@ -118,7 +118,7 @@ public class PortalListEditor extends PortalListViewer {
 		});
 	}
 
-	public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+	public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
 		super.setWorkspaceModel(workspace);
 		m_edit.setWorkspaceModel(workspace);
 		m_layout.setWorkspaceModel(workspace);

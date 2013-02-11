@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.portalworkspace.ui;
+package com.arsdigita.portalworkspace.ui.sitemap;
 
 import org.apache.log4j.Logger;
 
@@ -26,20 +26,27 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
 
 /**
- * This selection model adds an (optional?) default value which will be 
- * returned when nothing is selected.
+ * Selection model for applications, specifically used by portalworkspace
+ * admin task to select an application instance to delete or to assign a 
+ * category.
+ * 
+ * This is a generic task as part of application management. A workspace is a 
+ * special case of this generic task. 
+ * 
+ * This selection model adds an (optional?) default value to the parent class 
+ * which will be returned when nothing is selected.
  * 
  * Used by packages admin and sitemap 
  */
 public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 
-    public static final String DEFAULT_PARAM_NAME = "app_id";
-
-    private boolean m_hasDefaultValue;
-
     /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger
                                     .getLogger(ApplicationSelectionModel.class);
+
+    public static final String DEFAULT_PARAM_NAME = "app_id";
+
+    private boolean m_hasDefaultValue;
 
     /**
      * Constructor 
@@ -48,10 +55,11 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
      * @param hasDefaultValue
      */
     public ApplicationSelectionModel(BigDecimalParameter param,
-                                     boolean hasDefaultValue) {
-        super(param);
+                                       boolean hasDefaultValue) {
 
+        super(param);
         m_hasDefaultValue = hasDefaultValue;
+
     }
 
     /**

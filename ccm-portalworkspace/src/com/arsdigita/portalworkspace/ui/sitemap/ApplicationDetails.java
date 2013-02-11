@@ -22,7 +22,6 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.portalworkspace.WorkspacePage;
-import com.arsdigita.portalworkspace.ui.ApplicationSelectionModel;
 import com.arsdigita.web.Application;
 import com.arsdigita.xml.Element;
 

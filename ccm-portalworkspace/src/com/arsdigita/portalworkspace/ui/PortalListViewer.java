@@ -47,7 +47,7 @@ public class PortalListViewer extends PortalList {
         this(null, portal);
     }
 
-    public PortalListViewer(WorkspaceSelectionModel workspace,
+    public PortalListViewer(WorkspaceSelectionAbstractModel workspace,
                             PortalSelectionModel portal) {
 
         super(workspace, portal);

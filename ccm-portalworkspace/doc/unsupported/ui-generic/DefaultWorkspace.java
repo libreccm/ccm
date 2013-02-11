@@ -16,8 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.jsp;
+package com.arsdigita.portalworkspace.ui.personal;
 
+import com.arsdigita.portalworkspace.ui.DefaultWorkspaceSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
@@ -39,6 +40,18 @@ import com.arsdigita.web.LoginSignal;
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
+
+
+
+// Intended usage undocumented, class actually not referenced by any code.
+// Probably an experimental alternativ implementation to create a portal page
+// based on / derived from WorkspaceComponent (which in turn derived from 
+// SimpleComponent).
+// Altermnative to WorkspaceEditor / WorkspaceViewer, derived from 
+// class AbstractWorkspaceComponent (which in turn derived form SimpleComponent
+// as well).
+// Seems to use the same WorkspaceSelectionModel process to fetch the actual
+// instance to serve.
 
 
 

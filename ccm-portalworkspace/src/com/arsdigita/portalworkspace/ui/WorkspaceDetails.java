@@ -37,13 +37,13 @@ import com.arsdigita.xml.XML;
  */
 public class WorkspaceDetails extends SimpleComponent {
 
-	private WorkspaceSelectionModel m_workspace;
+	private WorkspaceSelectionAbstractModel m_workspace;
 
-	public WorkspaceDetails(WorkspaceSelectionModel workspace) {
+	public WorkspaceDetails(WorkspaceSelectionAbstractModel workspace) {
 		m_workspace = workspace;
 	}
 
-	public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+	public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
 		m_workspace = workspace;
 	}
 

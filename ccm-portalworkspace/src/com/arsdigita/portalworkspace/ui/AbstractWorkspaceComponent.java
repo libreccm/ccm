@@ -31,7 +31,7 @@ import com.arsdigita.portalworkspace.WorkspacePage;
  */
 public abstract class AbstractWorkspaceComponent extends SimpleContainer {
 
-    private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionAbstractModel m_workspace;
 
     private DefaultPortalSelectionModel m_portal;
 
@@ -54,7 +54,7 @@ public abstract class AbstractWorkspaceComponent extends SimpleContainer {
      * 
      * @param workspace
      */
-    public AbstractWorkspaceComponent(WorkspaceSelectionModel workspace) {
+    public AbstractWorkspaceComponent(WorkspaceSelectionAbstractModel workspace) {
 
         /* Creates a WorkspaceComponent (SimpleContainer) that will wrap its
          * children in the specified tag.                                     */
@@ -75,7 +75,7 @@ public abstract class AbstractWorkspaceComponent extends SimpleContainer {
     /**
      *
      */
-    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+    public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
         m_workspace = workspace;
         m_details.setWorkspaceModel(workspace);
         m_portalList.setWorkspaceModel(workspace);

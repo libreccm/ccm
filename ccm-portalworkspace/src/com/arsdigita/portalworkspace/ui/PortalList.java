@@ -41,7 +41,7 @@ import com.arsdigita.xml.XML;
  */
 public abstract class PortalList extends SimpleContainer {
 
-    private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionAbstractModel m_workspace;
     private PortalSelectionModel m_portal;
 
     private Map m_actions = new HashMap();
@@ -61,7 +61,7 @@ public abstract class PortalList extends SimpleContainer {
      * @param workspace
      * @param portal
      */
-    public PortalList(WorkspaceSelectionModel workspace,
+    public PortalList(WorkspaceSelectionAbstractModel workspace,
                       PortalSelectionModel portal) {
         super("portal:portalList", WorkspacePage.PORTAL_XML_NS);
 
@@ -69,7 +69,7 @@ public abstract class PortalList extends SimpleContainer {
         m_portal = portal;
     }
 
-    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+    public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
         m_workspace = workspace;
     }
 

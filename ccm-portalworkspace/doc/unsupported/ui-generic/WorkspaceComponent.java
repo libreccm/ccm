@@ -43,6 +43,15 @@ import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 
+
+
+// Intended usage undocumented. Seems to be an experiomental alternativ to
+// AbstractWorkspaceComponent (which is derived from SimpleContainer as well)
+// as a parent class to classses which create protal pages.
+// Nevertheless: Wild guess!
+
+
+
 /**
  * Purpose?.
  * 

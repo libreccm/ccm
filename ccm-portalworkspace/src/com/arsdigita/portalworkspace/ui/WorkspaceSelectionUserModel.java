@@ -13,9 +13,9 @@
  *
  */
 
-package com.arsdigita.portalworkspace.ui.personalws;
+package com.arsdigita.portalworkspace.ui;
 
-import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
+import com.arsdigita.portalworkspace.ui.WorkspaceSelectionAbstractModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
@@ -24,10 +24,29 @@ import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.LoginSignal;
 
-public class UserWorkspaceSelectionModel extends WorkspaceSelectionModel {
+
+/**
+ * Intended usage undocumented.
+ * 
+ * Seems to provides a lighter version if WorkspaceSelectionDefaultModel
+ * which requires a user logged-in and a user specific workspace. 
+ * Probably useful for non-public sites.
+ * 
+ * In order to makle use of it the portalworkspace JSP must be modified, 
+ * selecting this WorkspaceSelectionModel, eg.
+ * 
+ * instead of:
+ *     ((AbstractWorkspaceComponent)edit).setWorkspaceModel(
+ *                                       new WorkspaceSelectionDefaultModel());
+ * use
+ *     ((AbstractWorkspaceComponent)edit).setWorkspaceModel(
+ *                                       new WorkspaceSelectionUserModel());
+ * 
+ */
+public class WorkspaceSelectionUserModel extends WorkspaceSelectionAbstractModel {
 
     /**
-     *
+     * 
      * @param state
      * @return
      */

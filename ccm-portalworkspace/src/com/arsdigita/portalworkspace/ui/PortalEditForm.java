@@ -47,7 +47,7 @@ import com.arsdigita.util.Assert;
 public class PortalEditForm extends Form implements FormProcessListener,
 		FormInitListener {
 
-    private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionAbstractModel m_workspace;
     private PortalSelectionModel m_portal;
     private TextField m_title;
     private Submit m_save;
@@ -67,7 +67,7 @@ public class PortalEditForm extends Form implements FormProcessListener,
      * @param workspace
      * @param portal
      */
-    public PortalEditForm(WorkspaceSelectionModel workspace,
+    public PortalEditForm(WorkspaceSelectionAbstractModel workspace,
                           PortalSelectionModel portal) {
 
         super("editPortal", new SimpleContainer("portal:editPortal",
@@ -93,7 +93,7 @@ public class PortalEditForm extends Form implements FormProcessListener,
      *
      * @param workspace
      */
-    public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+    public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
         m_workspace = workspace;
     }
 

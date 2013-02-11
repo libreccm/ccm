@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.jsp;
+package com.arsdigita.portalworkspace.ui.personal;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Container;
@@ -34,12 +34,25 @@ import com.arsdigita.toolbox.ui.SecurityContainer;
 import com.arsdigita.web.LoginSignal;
 
 
+
+// Intended usage undocumented, class actually not referenced by any code.
+// Probably an experimental alternativ implementation to create a portal page
+// based on / derived from WorkspaceComponent (which in turn derived from 
+// SimpleComponent).
+// Altermnative to WorkspaceEditor / WorkspaceViewer, derived from 
+// class AbstractWorkspaceComponent (which in turn derived form SimpleComponent
+// as well).
+// Seems to use the same WorkspaceSelectionModel process to fetch the actual
+// instance to serve.
+
+
+
 /**
  * Another specific entry point into a portal workspace page, here based upon
  * WorkspaceComponent (as an alternative to AbstractWorkspaceComponent.
  */
 // As of APLAWS 1.0.4 / CCM 6.6.x this class may never have been used and is
-// propably unfinished work or undinished port from ccm-portalserver module.
+// propably unfinished work or unfinished port from ccm-portalserver module.
 // As with WorkspaceViewer it should be invoked  by a jsp. It is not directly
 // used by any java code.
 public class PackageWorkspace extends WorkspaceComponent {
@@ -47,7 +60,7 @@ public class PackageWorkspace extends WorkspaceComponent {
     private RequestLocal m_isAdmin = new RequestLocal();
     
     /**
-     * 
+     * Constructor. 
      */
     public PackageWorkspace() {
         super(new PackageWorkspaceSelectionModel());
@@ -59,6 +72,7 @@ public class PackageWorkspace extends WorkspaceComponent {
      * @param parent
      * @param child
      */
+    @Override
     protected void addCustomizeLinks(Container parent, Component child) {
         Container secure = new WorkspaceSecurityContainer(child);
         super.addCustomizeLinks(parent, secure);

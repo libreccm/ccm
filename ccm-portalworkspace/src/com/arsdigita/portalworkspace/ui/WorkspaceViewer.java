@@ -16,19 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.portalworkspace.ui.jsp;
+package com.arsdigita.portalworkspace.ui;
 
 import com.arsdigita.portalworkspace.WorkspacePage;
-import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
-import com.arsdigita.portalworkspace.ui.AbstractWorkspaceComponent;
-import com.arsdigita.portalworkspace.ui.PersistentPortal;
-import com.arsdigita.portalworkspace.ui.PortalList;
-import com.arsdigita.portalworkspace.ui.PortalListViewer;
-import com.arsdigita.portalworkspace.ui.PortalSelectionModel;
+
 
 /**
- * Main (default) entry point into a standard portal workspace page where the
- * page is constructed in "view" mode to present information to a visitor.
+ * Main (default) entry point into a standard (public or access restricted) 
+ * portal workspace page where the page is constructed in "view" mode to 
+ * present information to a visitor.
  *
  * It is used via a jsp page which is invoked at the applications url.
  *
@@ -57,11 +53,11 @@ public class WorkspaceViewer extends AbstractWorkspaceComponent {
 
     /**
      * Constructor instantiates a WorkspaceViewer for a specific workspace
-     * object and sets the xml tags accordingly.
+     * object (instance) and sets the xml tags accordingly.
      *
      * @param workspace
      */
-    public WorkspaceViewer(WorkspaceSelectionModel workspace) {
+    public WorkspaceViewer(WorkspaceSelectionAbstractModel workspace) {
         super(workspace);
     }
 

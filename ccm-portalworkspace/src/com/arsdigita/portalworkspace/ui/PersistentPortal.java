@@ -94,7 +94,7 @@ public class PersistentPortal extends SimpleContainer {
 
     public static final String ACTION_DELETE = "delete";
 
-    private WorkspaceSelectionModel m_workspace;
+    private WorkspaceSelectionAbstractModel m_workspace;
     private PortalSelectionModel m_portal;
     private PortletTypeSelectionModel m_portletType;
     private PortletSelectionModel m_portlet;

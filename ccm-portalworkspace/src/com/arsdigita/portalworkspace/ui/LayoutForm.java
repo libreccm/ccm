@@ -55,7 +55,7 @@ import com.arsdigita.util.UncheckedWrapperException;
 public class LayoutForm extends Form implements FormProcessListener,
 		FormInitListener {
 
-	private WorkspaceSelectionModel m_workspace;
+	private WorkspaceSelectionAbstractModel m_workspace;
 
 	private PortalSelectionModel m_portal;
 
@@ -67,7 +67,7 @@ public class LayoutForm extends Form implements FormProcessListener,
 		this(null, portal);
 	}
 
-	public LayoutForm(WorkspaceSelectionModel workspace,
+	public LayoutForm(WorkspaceSelectionAbstractModel workspace,
 			PortalSelectionModel portal) {
 		super("editLayout", new SimpleContainer("portal:editLayout",
 				WorkspacePage.PORTAL_XML_NS));
@@ -104,7 +104,7 @@ public class LayoutForm extends Form implements FormProcessListener,
 		addInitListener(this);
 	}
 
-	public void setWorkspaceModel(WorkspaceSelectionModel workspace) {
+	public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
 		m_workspace = workspace;
 	}
 

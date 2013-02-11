@@ -17,7 +17,7 @@
          sitemapPage.addRequestListener(new ApplicationAuthenticationListener());
       </jsp:scriptlet>
       <define:component name="admin" 
-                    classname="com.arsdigita.portalworkspace.ui.admin.SiteMapPane" />
+                    classname="com.arsdigita.portalworkspace.ui.sitemap.SiteMapPane" />
     </define:page>
 
     <show:all/>
