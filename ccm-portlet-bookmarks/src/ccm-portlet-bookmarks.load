@@ -1,0 +1,15 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    </requires>
+  <provides>
+    <table name="portlet_bookmarks"/>
+    <initializer class="com.arsdigita.portlet.bookmarks.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-portlet-bookmarks"/>
+    <data class="com.arsdigita.portlet.bookmarks.Loader"/>
+  </scripts>
+</load>

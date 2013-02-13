@@ -1,0 +1,81 @@
+// author chris gilbert
+// model for a portlet that holds a list of bookmark links
+
+model uk.gov.westsussex.portlet;
+
+import com.arsdigita.portal.Portlet;
+import com.arsdigita.cms.contenttypes.Link;
+
+object type BookmarksPortlet extends Portlet {
+	
+}
+
+
+object type Bookmark extends Link {
+	
+}
+
+
+association {
+
+
+	component Bookmark[0..n] bookmarks = join portlets.portlet_id to portlet_bookmarks.portlet_id,
+							join portlet_bookmarks.target_id to cms_links.link_id;
+	BookmarksPortlet[0..1] portlet =  join cms_links.link_id to portlet_bookmarks.target_id,
+							join portlet_bookmarks.portlet_id to portlets.portlet_id;
+							
+							
+	
+}
+ 
+data operation swapRelatedLinkWithNextInGroup {
+    do {
+        update cms_links
+        set link_order = CASE WHEN (link_order = :linkOrder) THEN
+                                 (:nextLinkOrder)
+                            ELSE
+                                 (:linkOrder)
+                       END
+        where (link_order = :linkOrder or link_order = :nextLinkOrder)
+        and (select portlet_id from portlet_bookmarks where target_id=link_id) = :ownerID
+        and 2 = (select count(*) from cms_links l, portlet_bookmarks b
+                 where l.link_id=b.target_id 
+	         and (link_order = :linkOrder or link_order = :nextLinkOrder)
+                 and portlet_id = :ownerID)
+    }
+}
+
+query minRelatedLinkOrderForPortlet {
+    Integer linkOrder;
+
+    options {
+        WRAP_QUERIES = false;
+    }
+
+    do {
+        select min(link_order) as link_order from cms_links l, portlet_bookmarks b
+        where b.portlet_id = :ownerID and l.link_id = b.target_id
+    } map {
+        linkOrder = link_order;
+    }
+}
+
+query maxRelatedLinkOrderForPortlet {
+    Integer linkOrder;
+
+    options {
+        WRAP_QUERIES = false;
+    }
+
+    do {
+        select max(link_order) as link_order from cms_links l, portlet_bookmarks b
+        where b.portlet_id = :ownerID and l.link_id = b.target_id
+    } map {
+        linkOrder = link_order;
+    }
+}
+
+
+
+
+

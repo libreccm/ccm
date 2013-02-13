@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ccm:application name="ccm-portlet-bookmarks"
+  prettyName="Bookmarks Portlet"
+  version="6.6.0"
+  release="1"
+  webapp="ROOT"
+  xmlns:ccm="http://ccm.redhat.com/ccm-project">
+
+  <ccm:dependencies>
+     <ccm:requires name="ccm-core" version="6.6.0"/>    
+     <ccm:requires name="ccm-cms" version="6.6.0"/>    
+     <!--
+     <ccm:requires name="ccm-ldn-portal" version="1.4.2"/>    
+     -->
+   </ccm:dependencies>
+
+ 
+  <ccm:contacts>
+    <ccm:contact uri="http://wsgfl.westsussex.gov.uk" type="website"/>
+    <ccm:contact uri="mailto:chris.gilbert@westsussex.gov.uk" type="support"/>
+  </ccm:contacts>
+
+  <ccm:description>
+    Portlet that allows users to store internal and external links.
+    
+    Ported from West Sussex contribution: ccm-wsx-bookmarks-portlet, created by
+    Chris Gilbert.
+  </ccm:description>
+</ccm:application>
