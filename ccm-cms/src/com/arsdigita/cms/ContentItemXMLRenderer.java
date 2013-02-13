@@ -34,7 +34,7 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
     private String m_keyName = "";
     private String m_relationAttribute = "";
 
-    public ContentItemXMLRenderer(Element root) {
+    public ContentItemXMLRenderer(final Element root) {
         super(root);
     }
 
@@ -49,37 +49,32 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
                         final String context,
                         final DomainObject linkObject) {
         //final long start = System.nanoTime();
-        
+
         DomainObject nObj = obj;
 
         if (nObj instanceof ContentBundle) {
 
-            nObj = ((ContentBundle) obj).
-                    getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
+            nObj = ((ContentBundle) obj).getInstance(GlobalizationHelper.getNegotiatedLocale(), true);
         }
 
         super.walk(adapter, nObj, path, context, linkObject);
-        
+
         //System.out.printf("Walked object in %d ms\n", (System.nanoTime() - start) / 1000000);
     }
 
     @Override
-    protected void handleAttribute(DomainObject obj,
-                                   String path,
-                                   Property property) {
-
-        String propertyName = property.getName();
+    protected void handleAttribute(final DomainObject obj, final String path, final Property property) {
+        final String propertyName = property.getName();
 
         // Special handling for the isoCountryCode field in GenericAddress
-        if (obj instanceof GenericAddress) {
-            if (propertyName.equals("isoCountryCode")) {
-                super.handleAttribute(obj, path, property);
+        if (obj instanceof GenericAddress && "isoCountryCode".equals(propertyName)) {
+            //if (propertyName.equals("isoCountryCode")) {            
+            super.handleAttribute(obj, path, property);
 
-                Element element = newElement(m_element, "country");
-                element.setText(GenericAddress.getCountryNameFromIsoCode(((GenericAddress) obj).
-                        getIsoCountryCode()));
-                return;
-            }
+            final Element element = newElement(m_element, "country");
+            element.setText(GenericAddress.getCountryNameFromIsoCode(((GenericAddress) obj).getIsoCountryCode()));
+            return;
+
         }
 
         // Special handling for the relation attribute keys
@@ -91,8 +86,7 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
                 && ((RelationAttributeInterface) obj).
                     hasRelationAttributeProperty(propertyName)) {
 
-                RelationAttributeInterface relationAttributeObject =
-                                           (RelationAttributeInterface) obj;
+                final RelationAttributeInterface relationAttributeObject = (RelationAttributeInterface) obj;
                 key = relationAttributeObject.getRelationAttributeKey(
                         propertyName);
 
@@ -102,25 +96,23 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
             if (obj instanceof LinkDomainObject
                 && propertyName.equals(m_keyName)) {
                 key = (String) ((LinkDomainObject) obj).get(m_keyName);
-
             }
 
             // Replace value of the property defined in RELATION_ATTRIBUTES string
             // of the primary domain object with the localized String.
             if (!key.isEmpty()) {
-                logger.debug(String.format(
-                        "Getting relation attribute value for key '%s' of relation attribute '%s'",
-                                           key, m_relationAttribute));
-                RelationAttributeCollection relationAttributeCollection =
-                                            new RelationAttributeCollection(
+//                logger.debug(String.format(
+//                        "Getting relation attribute value for key '%s' of relation attribute '%s'",
+//                        key, m_relationAttribute));
+                final RelationAttributeCollection relationAttributeCollection = new RelationAttributeCollection(
                         m_relationAttribute, key);
                 relationAttributeCollection.addLanguageFilter(GlobalizationHelper.
                         getNegotiatedLocale().getLanguage());
-                if (relationAttributeCollection.size() > 0) {
+                if (!relationAttributeCollection.isEmpty()) {
                     relationAttributeCollection.next();
-                    Element element = newElement(m_element, m_keyName);                    
+                    final Element element = newElement(m_element, m_keyName);
                     element.setText(relationAttributeCollection.getName());
-                    Element elementId = newElement(m_element, m_keyName + "Id");
+                    final Element elementId = newElement(m_element, m_keyName + "Id");
                     elementId.setText(relationAttributeCollection.getKey());
                     relationAttributeCollection.close();
                 }
@@ -132,31 +124,26 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
     }
 
     @Override
-    protected void beginAssociation(DomainObject obj, String path,
-                                    Property property) {
+    protected void beginAssociation(final DomainObject obj, final String path, final Property property) {
         super.beginAssociation(obj, path, property);
 
-        String propertyName = property.getName();
+        final String propertyName = property.getName();
 
         if (obj instanceof RelationAttributeInterface
             && ((RelationAttributeInterface) obj).hasRelationAttributeProperty(
                 propertyName)) {
 
-            RelationAttributeInterface relationAttributeObject =
-                                       (RelationAttributeInterface) obj;
+            final RelationAttributeInterface relationAttributeObject = (RelationAttributeInterface) obj;
 
             m_propertyName = propertyName;
-            m_keyName = relationAttributeObject.getRelationAttributeKeyName(
-                    propertyName);
-            m_relationAttribute = relationAttributeObject.
-                    getRelationAttributeName(propertyName);
+            m_keyName = relationAttributeObject.getRelationAttributeKeyName(propertyName);
+            m_relationAttribute = relationAttributeObject.getRelationAttributeName(propertyName);
 
         }
     }
 
     @Override
-    protected void endAssociation(DomainObject obj, String path,
-                                  Property property) {
+    protected void endAssociation(final DomainObject obj, final String path, final Property property) {
 
         m_propertyName = "";
         m_keyName = "";
@@ -164,4 +151,5 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
 
         super.endAssociation(obj, path, property);
     }
+
 }

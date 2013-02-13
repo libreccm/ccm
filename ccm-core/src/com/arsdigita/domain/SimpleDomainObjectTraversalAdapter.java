@@ -21,6 +21,7 @@ package com.arsdigita.domain;
 import org.apache.log4j.Logger;
 import com.arsdigita.persistence.metadata.Property;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This is a general purpose traversal adaptor
@@ -157,7 +158,7 @@ public class SimpleDomainObjectTraversalAdapter
      * @param prop full path of the property to remove
      */
     public void removeAssociationProperty(String prop) {
-        s_log.debug(String.format("Removing association property '%s'", prop));
+        //s_log.debug(String.format("Removing association property '%s'", prop));
         m_assoc.remove(prop);
     }
 

@@ -28,11 +28,15 @@ public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
         }       
 
         final GenericPerson person = (GenericPerson) item;
+        //final long start = System.nanoTime();
         final GenericPersonContactCollection contacts = person.getContacts();        
+        //System.out.printf("Got contacts in %d ms\n", (System.nanoTime() - start) / 1000000);
 
         final Element contactsElem = element.newChildElement("contacts");
         while (contacts.next()) {            
+            //final long start2 = System.nanoTime();
             final GenericContact contact = contacts.getContact(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            //System.err.printf("Got contact in %d ms from collection\n", (System.nanoTime() - start2) / 1000000);
             generateContactXml(
                     contactsElem,                    
                     contact,
@@ -43,10 +47,12 @@ public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
     private void generateContactXml(final Element contactsElem,
                                     final GenericContact contact,
                                     final PageState state) {
+        //final long start = System.nanoTime();
         final XmlGenerator generator = new XmlGenerator(contact);
         generator.setItemElemName("contact", "");
         generator.addItemAttribute("contactType", contact.getContactType());
         generator.generateXML(state, contactsElem, "");
+        //System.err.printf("Generated XML for a contact in %d ms\n", (System.nanoTime() - start)  / 1000000);
     }
 
     public void addGlobalStateParams(final Page page) {

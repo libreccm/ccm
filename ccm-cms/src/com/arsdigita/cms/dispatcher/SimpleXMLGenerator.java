@@ -18,12 +18,10 @@
  */
 package com.arsdigita.cms.dispatcher;
 
-import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.UserDefinedContentItem;
@@ -42,6 +40,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
+import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
@@ -57,10 +56,8 @@ import java.util.Map;
  */
 public class SimpleXMLGenerator implements XMLGenerator {
 
-    private static final Logger s_log =
-                                Logger.getLogger(SimpleXMLGenerator.class);
-    public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.
-            getName();
+    private static final Logger s_log = Logger.getLogger(SimpleXMLGenerator.class);
+    public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.getName();
     /**
      * jensp 2011-10-23: Sometimes the extra XML is not needed, for example 
      * when embedding the XML of a content item into the XML output of another
@@ -79,20 +76,20 @@ public class SimpleXMLGenerator implements XMLGenerator {
     /**
      * Extra attributes for the cms:item element.
      */
-    private Map<String, String> itemAttributes =
-                                new LinkedHashMap<String, String>();
+    private final Map<String, String> itemAttributes = new LinkedHashMap<String, String>();
     /**
      * Allows to overwrite the name and the namespace of the XML element
      * used to wrap the rendered item. 
      */
     private String itemElemName = "cms:item";
     private String itemElemNs = CMS.CMS_XML_NS;
+    private static final Map<OID, Element> cache = new HashMap<OID, Element>();
+    private static final boolean USE_CACHE = false;
 
     // Register general purpose adaptor for all content items
     static {
         s_log.debug("Static initializer starting...");
-        SimpleDomainObjectTraversalAdapter adapter =
-                                           new SimpleDomainObjectTraversalAdapter();
+        final SimpleDomainObjectTraversalAdapter adapter = new SimpleDomainObjectTraversalAdapter();
         adapter.addAssociationProperty("/object/type");
         adapter.addAssociationProperty("/object/categories");
 
@@ -104,6 +101,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
     }
 
     public SimpleXMLGenerator() {
+        super();
     }
 
     public void setUseExtraXml(final boolean useExtraXml) {
@@ -113,14 +111,12 @@ public class SimpleXMLGenerator implements XMLGenerator {
     public void setListMode(final boolean listMode) {
         this.listMode = listMode;
     }
-    
-    public void addItemAttribute(final String name,
-                                 final String value) {
+
+    public void addItemAttribute(final String name, final String value) {
         itemAttributes.put(name, value);
     }
 
-    public void setItemElemName(final String itemElemName,
-                                final String itemElemNs) {
+    public void setItemElemName(final String itemElemName, final String itemElemNs) {
         this.itemElemName = itemElemName;
         this.itemElemNs = itemElemNs;
     }
@@ -132,14 +128,12 @@ public class SimpleXMLGenerator implements XMLGenerator {
      * @param parent The parent DOM element
      * @param useContext The use context
      */
-    public void generateXML(PageState state, Element parent, String useContext) {
+    public void generateXML(final PageState state, final Element parent, final String useContext) {
         final long start = System.nanoTime();
-        
+
         //ContentSection section = CMS.getContext().getContentSection();
         ContentItem item = getContentItem(state);
 
-        System.out.printf("After getting contentitem: %d ms\n", (System.nanoTime() - start) / 1000000);
-        
         s_log.info("Generate XML for item " + item.getOID());
 
         Party currentParty = Kernel.getContext().getParty();
@@ -152,29 +146,24 @@ public class SimpleXMLGenerator implements XMLGenerator {
         // Note that the xml that is generated is only of use if you DO NOT CACHE content pages.
         // cg.
 
-        PermissionDescriptor edit =
-                             new PermissionDescriptor(PrivilegeDescriptor.get(
-                SecurityManager.CMS_EDIT_ITEM), item, currentParty);
+        final PermissionDescriptor edit = new PermissionDescriptor(
+                PrivilegeDescriptor.get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
         if (PermissionService.checkPermission(edit)) {
             parent.addAttribute("canEdit", "true");
         }
-        PermissionDescriptor publish =
-                             new PermissionDescriptor(PrivilegeDescriptor.get(
-                SecurityManager.CMS_PUBLISH), item, currentParty);
+        final PermissionDescriptor publish = new PermissionDescriptor(
+                PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
         if (PermissionService.checkPermission(publish)) {
             parent.addAttribute("canPublish", "true");
         }
-        String className = item.getDefaultDomainClass();
+        final String className = item.getDefaultDomainClass();
 
-        System.out.printf("After creating permission attributes: %d ms\n", (System.nanoTime() - start) / 1000000);
-        
         // Ensure correct subtype of ContentItem is instantiated
         if (!item.getClass().getName().equals(className)) {
             s_log.info("Specializing item");
             try {
-                item =
-                (ContentItem) DomainObjectFactory.newInstance(new OID(item.
-                        getObjectType().getQualifiedName(), item.getID()));
+                item = (ContentItem) DomainObjectFactory.newInstance(
+                        new OID(item.getObjectType().getQualifiedName(), item.getID()));
             } catch (DataObjectNotFoundException ex) {
                 throw new UncheckedWrapperException(
                         (String) GlobalizationUtil.globalize(
@@ -182,56 +171,72 @@ public class SimpleXMLGenerator implements XMLGenerator {
                         ex);
             }
         }
-        
-        System.out.printf("After checking type: %d ms\n", (System.nanoTime() - start) / 1000000);
 
         // Implementing XMLGenerator directly is now deprecated
         if (item instanceof XMLGenerator) {
             s_log.info("Item implements XMLGenerator interface");
-            XMLGenerator xitem = (XMLGenerator) item;
+            final XMLGenerator xitem = (XMLGenerator) item;
             xitem.generateXML(state, parent, useContext);
 
-        } else if (className.equals("com.arsdigita.cms.UserDefinedContentItem")) {
+        } else if ("com.arsdigita.cms.UserDefinedContentItem".equals(className)) {
             s_log.info("Item is a user defined content item");
-            UserDefinedContentItem UDItem = (UserDefinedContentItem) item;
+            final UserDefinedContentItem UDItem = (UserDefinedContentItem) item;
             generateUDItemXML(UDItem, state, parent, useContext);
 
         } else {
             s_log.info("Item is using DomainObjectXMLRenderer");
 
             // This is the preferred method
-            Element content = startElement(useContext, parent);
+            //final Element content = startElement(useContext, parent);
+            final Element content;
+            if (USE_CACHE && cache.containsKey(item.getOID())) {
+                content = cache.get(item.getOID());
+            } else {
 
-            ContentItemXMLRenderer renderer =
-                                   new ContentItemXMLRenderer(content);
+                content = startElement(useContext);                
 
-            renderer.setWrapAttributes(true);
-            renderer.setWrapRoot(false);
-            renderer.setWrapObjects(false);
-            renderer.setRevisitFullObject(true);
+                final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(content);
 
-            renderer.walk(item, ADAPTER_CONTEXT);
-            
-            System.out.printf("After getting rendering standard item xml: %d ms\n", (System.nanoTime() - start) / 1000000);
+                renderer.setWrapAttributes(true);
+                renderer.setWrapRoot(false);
+                renderer.setWrapObjects(false);
+                renderer.setRevisitFullObject(true);
 
-            //parent.addContent(content);
+                System.out.printf("Prepared renderer in %d ms\n", (System.nanoTime() - start)
+                                                                  / 1000000);
 
-            /*
-             * 2011-08-27 jensp: Introduced to remove the annoying special templates
-             * for MultiPartArticle, SiteProxy and others. The method called
-             * here was already definied but not used. 
-             * 
-             * 2011-10-23 jensp: It is now possible to disable the use of
-             * extra XML.
-             */
-            if (useExtraXml) {
-                for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
-                    generator.setListMode(listMode);
-                    generator.generateXML(item, content, state);
+                renderer.walk(item, ADAPTER_CONTEXT);
+
+                System.out.printf("Rendered standard item xml in %d ms\n", (System.nanoTime() - start)
+                                                                           / 1000000);
+
+                //parent.addContent(content);
+
+                /*
+                 * 2011-08-27 jensp: Introduced to remove the annoying special templates
+                 * for MultiPartArticle, SiteProxy and others. The method called
+                 * here was already definied but not used. 
+                 * 
+                 * 2011-10-23 jensp: It is now possible to disable the use of
+                 * extra XML.
+                 */
+                final long extraXMLStart = System.nanoTime();
+                if (useExtraXml) {
+                    for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
+                        generator.setListMode(listMode);
+                        generator.generateXML(item, content, state);
+                    }
                 }
+                System.out.
+                        printf("Rendered ExtraXML in          %d ms\n", (System.nanoTime() - extraXMLStart) / 1000000);
+                System.out.printf("                              -----\n");
+                
+                cache.put(item.getOID(), content);                
             }
             
-            System.out.printf("After rendering extra xml: %d ms\n", (System.nanoTime() - start) / 1000000);
+            parent.addContent(content);
+
+            System.out.printf("Rendered item in              %d ms\n\n", (System.nanoTime() - start) / 1000000);
         }
     }
 
@@ -244,22 +249,22 @@ public class SimpleXMLGenerator implements XMLGenerator {
      * @param state The page state
      * @return A content item
      */
-    protected ContentItem getContentItem(PageState state) {
+    protected ContentItem getContentItem(final PageState state) {
         if (CMS.getContext().hasContentItem()) {
             return CMS.getContext().getContentItem();
         } else {
-            CMSPage page = (CMSPage) state.getPage();
+            final CMSPage page = (CMSPage) state.getPage();
             return page.getContentItem(state);
         }
     }
 
-    protected void generateUDItemXML(UserDefinedContentItem UDItem,
-                                     PageState state,
-                                     Element parent,
-                                     String useContext) {
+    protected void generateUDItemXML(final UserDefinedContentItem UDItem,
+                                     final PageState state,
+                                     final Element parent,
+                                     final String useContext) {
 
-        Element element = startElement(useContext, parent);
-        Element additionalAttrs = UDItemElement(useContext);
+        final Element element = startElement(useContext, parent);
+        final Element additionalAttrs = UDItemElement(useContext);
 
         element.addAttribute("type", UDItem.getContentType().getLabel());
         element.addAttribute("id", UDItem.getID().toString());
@@ -267,12 +272,11 @@ public class SimpleXMLGenerator implements XMLGenerator {
         element.addAttribute("title", UDItem.getTitle());
         element.addAttribute("javaClass", UDItem.getContentType().getClassName());
 
-        DynamicObjectType dot = new DynamicObjectType(
-                UDItem.getSpecificObjectType());
-        Iterator declaredProperties =
-                 dot.getObjectType().getDeclaredProperties();
-        Property currentProperty = null;
-        Object value = null;
+        final DynamicObjectType dot = new DynamicObjectType(UDItem.getSpecificObjectType());
+        final Iterator declaredProperties =
+                       dot.getObjectType().getDeclaredProperties();
+        Property currentProperty;
+        Object value;
         while (declaredProperties.hasNext()) {
             currentProperty = (Property) declaredProperties.next();
             value = (Object) UDItem.get(currentProperty.getName());
@@ -292,11 +296,10 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
     }
 
-    private Element startElement(String useContext, Element parent) {
+    private Element startElement(final String useContext, final Element parent) {
         //Element element = new Element("cms:item", CMS.CMS_XML_NS);
-        //final Element element = new Element(itemElemName, itemElemNs);
-        final Element element = parent.newChildElement(itemElemName, 
-                                                       itemElemNs);
+        //final Element element = new Element(itemElemName, itemElemNs);       
+        final Element element = parent.newChildElement(itemElemName, itemElemNs);
         if (useContext != null) {
             element.addAttribute("useContext", useContext);
         }
@@ -308,20 +311,35 @@ public class SimpleXMLGenerator implements XMLGenerator {
         return element;
     }
 
-    private Element UDItemElement(String useContext) {
-        Element element = new Element("cms:UDItemAttributes", CMS.CMS_XML_NS);
-        /*
-        if ( useContext != null ) {
-        element.addAttribute("useContext", useContext);
+    private Element startElement(final String useContext) {
+        final Element element = new Element(itemElemName, itemElemNs);
+
+        if (useContext != null) {
+            element.addAttribute("useContext", useContext);
         }
+
+        for (Map.Entry<String, String> attr : itemAttributes.entrySet()) {
+            element.addAttribute(attr.getKey(), attr.getValue());
+        }
+
+        return element;
+    }
+
+    private Element UDItemElement(final String useContext) {
+        final Element element = new Element("cms:UDItemAttributes", CMS.CMS_XML_NS);
+        /*
+         if ( useContext != null ) {
+         element.addAttribute("useContext", useContext);
+         }
          */
         return element;
     }
 
-    private Element UDItemAttrElement(String name, String value) {
-        Element element = new Element("cms:UDItemAttribute", CMS.CMS_XML_NS);
+    private Element UDItemAttrElement(final String name, final String value) {
+        final Element element = new Element("cms:UDItemAttribute", CMS.CMS_XML_NS);
         element.addAttribute("UDItemAttrName", name);
         element.addAttribute("UDItemAttrValue", value);
         return element;
     }
+
 }
