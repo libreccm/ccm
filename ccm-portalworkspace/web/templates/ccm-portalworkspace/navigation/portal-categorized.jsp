@@ -27,7 +27,7 @@
     <define:component name="categoryMenu"
       classname="com.arsdigita.navigation.ui.category.Menu"/>
     <define:component name="portalWorkspace"
-      classname="com.arsdigita.portalworkspace.ui.jsp.WorkspaceViewer"/>
+      classname="com.arsdigita.portalworkspace.ui.WorkspaceViewer"/>
     <jsp:scriptlet>
       ((com.arsdigita.portalworkspace.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
     </jsp:scriptlet>

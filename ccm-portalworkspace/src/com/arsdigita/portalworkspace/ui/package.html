@@ -7,7 +7,7 @@
 
 <p>
     Classes to compose the PortalWorkspaceuser interface for 
-    their  visitors .
+    their  visitors.
 </p>
 
 <p>
@@ -26,14 +26,17 @@
 <p>
     The class WorkspaceViewer is the jsp's entry point in view
     mode for readers.
-</p>
 
-<p>
     The class WorkspaceEditor is the jsp's entry point for users
     permitted to style the portal page (add, delete, and modify
     portlets).
 </p>
 
+<p>
+    In either mode a subclass of WorkspaceSelectionAbstractModel
+    determines which workspace (instance of type portalworkspace)
+    is displayed.
+</p>
 <p>
     Package <code>com/arsdigita/portalworkspace/ui/admin</code>
     contains classes for additional administrative tasks (add and
