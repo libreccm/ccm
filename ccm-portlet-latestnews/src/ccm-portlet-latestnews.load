@@ -1,0 +1,24 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+    <initializer class="com.arsdigita.portalworkspace.Initializer"/>
+<!--
+    <initializer class="uk.gov.westsussex.authentication.Initializer"/>
+-->
+    <initializer class="com.arsdigita.cms.contenttypes.NewsItemInitializer"/>
+    <initializer class="com.arsdigita.navigation.Initializer"/>
+    
+  </requires>
+  <provides>
+    <table name="portlet_news"/>
+    <initializer class="com.arsdigita.portlet.news.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-portlet-latestnews"/>
+    <data class="com.arsdigita.portlet.news.Loader"/>
+  </scripts>
+</load>

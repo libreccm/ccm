@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ccm:application name="ccm-wsx-news-portlet"
+  prettyName="Personalised News Portlet"
+  version="1.0.1"
+  release="1"
+  webapp="ROOT"
+  xmlns:ccm="http://ccm.redhat.com/ccm-project">
+
+  <ccm:dependencies>
+     <ccm:requires name="ccm-cms-types-newsitem" version="6.1.0"/>
+<!--
+     <ccm:requires name="ccm-ldn-portal" version="1.4.2"/>
+     <ccm:requires name="ccm-wsx-authentication" version="1.0.1"/>
+-->
+  </ccm:dependencies>
+
+ 
+  <ccm:contacts>
+    <ccm:contact uri="http://wsgfl.westsussex.gov.uk" type="website"/>
+    <ccm:contact uri="mailto:chris.gilbert@westsussex.gov.uk" type="support"/>
+  </ccm:contacts>
+
+  <ccm:description>
+    Portlet either displays the latest news content, or the latest personalised items
+  </ccm:description>
+</ccm:application>
