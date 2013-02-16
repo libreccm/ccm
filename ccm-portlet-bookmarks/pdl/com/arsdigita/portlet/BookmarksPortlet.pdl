@@ -1,7 +1,8 @@
 // author chris gilbert
 // model for a portlet that holds a list of bookmark links
 
-model uk.gov.westsussex.portlet;
+// model uk.gov.westsussex.portlet;
+model com.arsdigita.portlet;
 
 import com.arsdigita.portal.Portlet;
 import com.arsdigita.cms.contenttypes.Link;

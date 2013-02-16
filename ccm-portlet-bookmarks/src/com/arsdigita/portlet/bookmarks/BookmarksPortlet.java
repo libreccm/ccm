@@ -55,7 +55,7 @@ public class BookmarksPortlet extends Portlet implements BookmarkConstants {
     public static final Logger s_log = Logger.getLogger(BookmarksPortlet.class);
 
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "uk.gov.westsussex.portlet.BookmarksPortlet";
+                               "com.arsdigita.portlet.BookmarksPortlet";
 
     private static BookmarksPortletConfig s_config =
 		new BookmarksPortletConfig();
@@ -103,15 +103,15 @@ public class BookmarksPortlet extends Portlet implements BookmarkConstants {
 
 	}
 
-	/**
-	 * Return a url for an internal or external link - used for displaying 
+    /**
+     * Return a url for an internal or external link - used for displaying 
      * the link in edit view (we don't want to just display an item id 
      * when the link is internal as that doesn't mean anything to non authors)
      * 
-	 * @param link
-	 * @param state
-	 * @return
-	 */
+     * @param link
+     * @param state
+     * @return
+     */
     public static String getURIForBookmark(Bookmark bookmark, PageState state) {
 
         String url = null;

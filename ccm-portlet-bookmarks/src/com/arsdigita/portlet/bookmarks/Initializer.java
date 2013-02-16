@@ -57,7 +57,7 @@ public class Initializer extends CompoundInitializer {
 		add(
 			new PDLInitializer(
 				new ManifestSource(
-					"ccm-wsx-bookmarks-portlet.pdl.mf",
+					"ccm-portlet-bookmarks.pdl.mf",
 					new NameFilter(
 						DbHelper.getDatabaseSuffix(database),
 						"pdl"))));
@@ -110,14 +110,14 @@ public class Initializer extends CompoundInitializer {
                 return config;
             }
         };
-		
-		
-		/**
-		 * implementation of framework that allows portlets to be bundled up 
-         * as discrete applications
-		 */
-		PortletType.registerXSLFile(BookmarksPortlet.BASE_DATA_OBJECT_TYPE, 
-                   "/packages/westsussex-portlets/xsl/bookmarks-portlet.xsl");
 
+
+    /**
+     * implementation of framework that allows portlets to be bundled up 
+     * as discrete applications
+     */
+    PortletType.registerXSLFile(BookmarksPortlet.BASE_DATA_OBJECT_TYPE, 
+        "/packages/westsussex-portlets/xsl/bookmarks-portlet.xsl");
     }
+
 }

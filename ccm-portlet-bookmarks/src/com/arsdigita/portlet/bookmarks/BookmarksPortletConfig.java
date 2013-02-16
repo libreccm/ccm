@@ -32,9 +32,9 @@ import com.arsdigita.util.parameter.Parameter;
  */
 public class BookmarksPortletConfig extends AbstractConfig {
 
-	private BooleanParameter checkPermissions = new BooleanParameter(
-			"uk.gov.westsussex.portlet.bookmarks.checkPermissions",
-			Parameter.REQUIRED, new Boolean(false));
+    private BooleanParameter checkPermissions = new BooleanParameter(
+            "com.arsdigita.portlet.bookmarks.checkPermissions",
+            Parameter.REQUIRED, new Boolean(false));
 
 	public BookmarksPortletConfig() {
 

@@ -37,54 +37,52 @@ import org.apache.log4j.Logger;
 
 
 /**
- *
+ * Provides configuration pane for NewsPortlet.
  *
  * @author Chris Gilbert (cgyg9330) &lt;chris.gilbert@westsussex.gov.uk&gt;
  * @version $Id: NewsPortletEditor.java 2005/03/07 13:48:49 cgyg9330 Exp $
  */
 public class NewsPortletEditor extends PortletConfigFormSection {
-    
-	private TextField m_itemCount;
-	private static final Logger s_log =	Logger.getLogger(NewsPortletEditor.class);
+
+    private static final Logger s_log = Logger.getLogger(NewsPortletEditor.class);
+
+    private TextField m_itemCount;
 
 
-	/**
+    /**
      * Constructor
      * 
      * @param resType
      * @param parentAppRL 
      */
     public NewsPortletEditor(ResourceType resType, RequestLocal parentAppRL) {
-		super(resType, parentAppRL);
-	}
+        super(resType, parentAppRL);
+    }
 
-	/**
+    /**
      * Constructor
      * 
      * @param application 
      */
     public NewsPortletEditor(RequestLocal application) {
-		super(application);
-	}
+        super(application);
+    }
 
 
     /**
-     * 
+     * Add widgets to the form containing the configuration options.
      */
     @Override
-	protected void addWidgets() {
-		super.addWidgets();
+    protected void addWidgets() {
+        super.addWidgets();
 
-		m_itemCount =
-			new TextField(new StringParameter(NewsPortlet.ITEM_COUNT));
+       /* Define the number of news item to display */
+        m_itemCount = new TextField(new StringParameter(NewsPortlet.ITEM_COUNT));
+        add(new Label("Number of items:", Label.BOLD), ColumnPanel.RIGHT);
+        m_itemCount.addValidationListener(new IntegerValidationListener());
+        add(m_itemCount);
 
-		add(new Label("Number of items:", Label.BOLD), ColumnPanel.RIGHT);
-
-		m_itemCount.addValidationListener(new IntegerValidationListener());
-
-		add(m_itemCount);
-
-	}
+    }
 
 
     /**
@@ -96,16 +94,16 @@ public class NewsPortletEditor extends PortletConfigFormSection {
      * TODO: add validation or set up drop down list with contents of Static folder?
      */
     @Override
-	protected void initWidgets(PageState state, Portlet portlet)
-		throws FormProcessException {
-		super.initWidgets(state, portlet);
+    protected void initWidgets(PageState state, Portlet portlet)
+                   throws FormProcessException {
+        super.initWidgets(state, portlet);
 
-		if (portlet != null) {
-			NewsPortlet myportlet = (NewsPortlet) portlet;
+        if (portlet != null) {
+            NewsPortlet myportlet = (NewsPortlet) portlet;
+            m_itemCount.setValue(state, myportlet.getItemCount()+ "");
+        }
 
-			m_itemCount.setValue(state, myportlet.getItemCount()+ "");
-		}
-	}
+    }
 
 
     /**
@@ -115,14 +113,15 @@ public class NewsPortletEditor extends PortletConfigFormSection {
      * @throws FormProcessException 
      */
     @Override
-	protected void processWidgets(PageState state, Portlet portlet)
-		throws FormProcessException {
-		s_log.debug("START processWidgets");
-		super.processWidgets(state, portlet);
+    protected void processWidgets(PageState state, Portlet portlet)
+                   throws FormProcessException {
+        s_log.debug("START processWidgets");
+        super.processWidgets(state, portlet);
 
-		NewsPortlet myportlet = (NewsPortlet) portlet;
-		myportlet.setItemCount(new Integer(
-				(String) m_itemCount.getValue(state)).intValue());
-		s_log.debug("END processWidgets");
-	}
+        NewsPortlet myportlet = (NewsPortlet) portlet;
+        myportlet.setItemCount(new Integer(
+                               (String) m_itemCount.getValue(state)).intValue());
+        s_log.debug("END processWidgets");
+    }
+
 }

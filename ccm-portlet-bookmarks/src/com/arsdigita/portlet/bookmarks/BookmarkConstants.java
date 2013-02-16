@@ -18,7 +18,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
  
 public interface BookmarkConstants {
 	
-	public static final String BUNDLE_NAME = "uk.gov.westsussex.portlet.bookmarks.ui.BookmarkResources";
+	public static final String BUNDLE_NAME = "com.arsdigita.portlet.bookmarks.ui.BookmarkResources";
    		
 	
 	// bookmark portlet attributes

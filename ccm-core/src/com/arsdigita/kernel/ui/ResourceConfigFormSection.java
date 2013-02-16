@@ -34,13 +34,11 @@ import org.apache.log4j.Logger;
  * @see com.arsdigita.kernel.Resource
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
  * @author Eric Lorenzo
+ * @version $Id: ResourceConfigFormSection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class ResourceConfigFormSection extends FormSection {
-    public static final String versionId =
-        "$Id: ResourceConfigFormSection.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger
         (ResourceConfigFormSection.class);
 

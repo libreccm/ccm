@@ -34,8 +34,6 @@ import com.arsdigita.cms.ui.authoring.TextAssetBody.PageTextForm;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.portlet.FreeformHTMLPortlet;
-// @deprecated use com.arsdigita.bebop.portal.PortletConfigFormSection
-// import com.arsdigita.london.portal.ui.PortletConfigFormSection;
 import com.arsdigita.portal.Portlet;
 
 public class FreeformHTMLPortletEditor extends PortletConfigFormSection {

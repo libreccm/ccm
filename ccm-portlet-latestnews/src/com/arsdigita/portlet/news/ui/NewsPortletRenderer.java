@@ -58,15 +58,17 @@ import org.apache.log4j.Logger;
  * @version $Id: NewsPortletRenderer.java 2005/03/07 13:48:49 cgyg9330 Exp $
  */
 public class NewsPortletRenderer  extends AbstractPortletRenderer
-	                              implements NewsConstants {
+                                  implements NewsConstants {
 
-	private static final Logger s_log =
-		Logger.getLogger(NewsPortletRenderer.class);
+    /** Private logger instance for debugging purpose  */
+    private static final Logger s_log =
+                         Logger.getLogger(NewsPortletRenderer.class);
 
-	private NewsPortlet m_portlet;
+    private NewsPortlet m_portlet;
 
 
-	/**
+    /**
+     * Constructor.
      * 
      * @param portlet 
      */
@@ -74,48 +76,50 @@ public class NewsPortletRenderer  extends AbstractPortletRenderer
         m_portlet = portlet;
     }
 
-	/* (non-Javadoc)
-	 * @see 
+    /* (non-Javadoc)
+     * @see 
      * com.arsdigita.bebop.portal.AbstractPortletRenderer#generateBodyXML(
      *         com.arsdigita.bebop.PageState, 
      *         com.arsdigita.xml.Element)
-	 */
+     */
     protected void generateBodyXML(PageState state, Element parent) {
         s_log.debug("START - generateBodyXML");
 
-        Element newsPortlet = parent.newChildElement( MAIN_PORTLET_ELEMENT,
-				                                      PortletType.PORTLET_XML_NS);
+        Element newsPortlet = parent.newChildElement(MAIN_PORTLET_ELEMENT,
+                                                     PortletType.PORTLET_XML_NS);
         DateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+
         User thisUser = (User) Kernel.getContext().getParty();
         if (null == thisUser) {
             thisUser = Kernel.getPublicUser();
         }
 
-//		Object customUser = ExternalUserFactory.getCustomUserObject(thisUser);
-//		if (customUser instanceof PersonalisedNewsTarget) {
-//			newsPortlet.addAttribute(PERSONALISED_ATTRIBUTE, "true");
-//			getPersonalisedNews(
-//				state,
-//				newsPortlet,
-//				(PersonalisedNewsTarget) customUser,
-//				formatter);
+//      Object customUser = ExternalUserFactory.getCustomUserObject(thisUser);
+//      if (customUser instanceof PersonalisedNewsTarget) {
+//          newsPortlet.addAttribute(PERSONALISED_ATTRIBUTE, "true");
+//          getPersonalisedNews(state,
+//                              newsPortlet,
+//                              (PersonalisedNewsTarget) customUser,
+//                              formatter);
 //
-//		} else {
-			newsPortlet.addAttribute(PERSONALISED_ATTRIBUTE, "false");
-			getGeneralNews(newsPortlet, formatter);
+//      } else {
 
-//		}
+            newsPortlet.addAttribute(PERSONALISED_ATTRIBUTE, "false");
+            getGeneralNews(newsPortlet, formatter);
 
-		newsPortlet.addAttribute(NEWS_ROOM_ATTRIBUTE,
-			                     NewsPortlet.getConfig().getNewsroomShortcut());
+//      }
 
-		s_log.debug("FINISH - generateBodyXML");
-	}
+        newsPortlet.addAttribute(NEWS_ROOM_ATTRIBUTE,
+                                 NewsPortlet.getConfig().getNewsroomShortcut());
 
-	/**
-	 * @param newsPortlet
-	 * @param profiledUser
-	 */
+        s_log.debug("FINISH - generateBodyXML");
+    }
+
+    /**
+     * 
+     * @param newsPortlet
+     * @param profiledUser
+     */
 /*  CURRENTLY NOT AVAILABLE
     private void getPersonalisedNews( PageState state,
                                       Element main,
@@ -124,24 +128,24 @@ public class NewsPortletRenderer  extends AbstractPortletRenderer
         s_log.debug("START - getPersonalisedNews");
 
         DomainCollection myNews = profiledUser.getMyNews();
-		if (myNews == null) {
-			// method in personalised user class has been implemented to just return null
-			getGeneralNews(main, formatter);
-			return;
-		}
+        if (myNews == null) {
+            // method in personalised user class has been implemented to just return null
+            getGeneralNews(main, formatter);
+            return;
+        }
 
-		myNews.addOrder(ContentPage.LAUNCH_DATE + " desc");
+        myNews.addOrder(ContentPage.LAUNCH_DATE + " desc");
 
-		PermissionService.filterObjects(
+        PermissionService.filterObjects(
 			myNews,
 			PrivilegeDescriptor.get(SecurityManager.CMS_READ_ITEM),
 			Kernel.getContext().getParty().getOID());
 
-		myNews.setRange(
+        myNews.setRange(
 			new Integer(1),
 			new Integer(m_portlet.getItemCount() + 1));
 
-		while (myNews.next()) {
+        while (myNews.next()) {
 			ContentPage page = (ContentPage) myNews.getDomainObject();
 
 			Element item = main.newChildElement(NEWS_ITEM_ELEMENT, XML_NEWS_NS);
@@ -155,57 +159,55 @@ public class NewsPortletRenderer  extends AbstractPortletRenderer
 				URL_ATTRIBUTE,
 				Navigation.redirectURL(page.getOID()));
 
-		}
-		s_log.debug("END - getPersonalisedNews");
+        }
+        s_log.debug("END - getPersonalisedNews");
 
-	}
+    }
 */
-    
-    
+
+
     private void getGeneralNews(Element main, DateFormat formatter) {
         s_log.debug("START - getGeneralNews");
-        
-		// this is the default key - maybe should parametrise
-		Domain rss = Domain.retrieve("APLAWS-RSS");
-		DomainCollection rssRoots = rss.getRootTerms();
-		rssRoots.addEqualsFilter(Term.NAME, "News");
-		Term newsTerm = null;
-		while (rssRoots.next()) {
-			newsTerm = (Term) rssRoots.getDomainObject();
-			s_log.debug("found the news rss feed term");
-			Category cat = newsTerm.getModel();
-			DataCollection newsItems = SessionManager.getSession()
-                                       .retrieve(ContentPage.BASE_DATA_OBJECT_TYPE);
-			newsItems.addEqualsFilter("parent.categories.id", 
-								cat.getID());
-			
+
+        // this is the default key - maybe should parametrise
+        Domain rss = Domain.retrieve("APLAWS-RSS");
+        DomainCollection rssRoots = rss.getRootTerms();
+        rssRoots.addEqualsFilter(Term.NAME, "News");
+        Term newsTerm = null;
+
+        while (rssRoots.next()) {
+            newsTerm = (Term) rssRoots.getDomainObject();
+            s_log.debug("found the news rss feed term");
+            Category cat = newsTerm.getModel();
+            DataCollection newsItems = SessionManager.getSession()
+                                   .retrieve(ContentPage.BASE_DATA_OBJECT_TYPE);
+            newsItems.addEqualsFilter("parent.categories.id",cat.getID());
+
             newsItems.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
-			newsItems.addOrder(ContentPage.LAUNCH_DATE + " desc");
+            newsItems.addOrder(ContentPage.LAUNCH_DATE + " desc");
 			
-		//	CategorizedCollection newsItems =
-		//		cat.getObjects(ContentPage.BASE_DATA_OBJECT_TYPE);
-			s_log.debug("total items = " + newsItems.size());
-			newsItems.setRange(
-				new Integer(1),
-				new Integer(m_portlet.getItemCount() + 1));
+            //  CategorizedCollection newsItems =
+            //                   cat.getObjects(ContentPage.BASE_DATA_OBJECT_TYPE);
+            s_log.debug("total items = " + newsItems.size());
+            newsItems.setRange(new Integer(1),
+                               new Integer(m_portlet.getItemCount() + 1));
 
-			ContentPage newsItem = null;
+            ContentPage newsItem = null;
             while (newsItems.next()) {
-				Element item =
-					main.newChildElement(NEWS_ITEM_ELEMENT, XML_NEWS_NS);
-				//newsItem = (ContentPage) newsItems.getDomainObject();
-				newsItem = (ContentPage)DomainObjectFactory
-                                        .newInstance(newsItems.getDataObject());
-                Date d = newsItem.getLaunchDate();
-				String date = (d != null) ? formatter.format(d) : "";
-				item.addAttribute(DATE_ATTRIBUTE, date);
+                Element item = main.newChildElement(NEWS_ITEM_ELEMENT, XML_NEWS_NS);
+                //newsItem = (ContentPage) newsItems.getDomainObject();
+                newsItem = (ContentPage)DomainObjectFactory
+                                    .newInstance(newsItems.getDataObject());
 
-				item.addAttribute(TITLE_ATTRIBUTE, newsItem.getTitle());
+                Date d = newsItem.getLaunchDate();
+                String date = (d != null) ? formatter.format(d) : "";
+                item.addAttribute(DATE_ATTRIBUTE, date);
+
+                item.addAttribute(TITLE_ATTRIBUTE, newsItem.getTitle());
 
                 item.addAttribute(LEAD_ATTRIBUTE, newsItem.getSearchSummary());
-				item.addAttribute(
-					URL_ATTRIBUTE,
-					Navigation.redirectURL(newsItem.getOID()));
+                item.addAttribute(URL_ATTRIBUTE,
+                              Navigation.redirectURL(newsItem.getOID()));
 
             }
         }
@@ -213,40 +215,35 @@ public class NewsPortletRenderer  extends AbstractPortletRenderer
         s_log.debug("END - getGeneralNews");
     }
 
-    
-		/*
-		public Object getCacheKey() {
-			
-			if (getProfiledUser() == null) {
-				return GENERAL_NEWS_CACHE_KEY;
-			} else {
-				
-			
-			return m_portlet.getID();
-			}
-		}
-		
-		// is dirty if edited, as this means the number of entries has changed. 
-        // For non personalised news, dirty if homepage
-		// newsitems are added or edited. 
-        // For personalised, dirty if pushed items added or edited.
-		
-		public boolean isDirty() {
-			
-			
-		// has it been edited? - add in this condition when response 
+
+/*
+    public Object getCacheKey() {
+
+        if (getProfiledUser() == null) {
+            return GENERAL_NEWS_CACHE_KEY;
+        } else {
+            return m_portlet.getID();
+        }
+    }
+
+
+    // is dirty if edited, as this means the number of entries has changed. 
+    // For non personalised news, dirty if homepage
+    // newsitems are added or edited. 
+    // For personalised, dirty if pushed items added or edited.
+    public boolean isDirty() {
+        // has it been edited? - add in this condition when response 
         // from Redhat about AbstractPortletRenderer
-		
-				// if not has news changed
-				if (getCacheKey().equals(GENERAL_NEWS_CACHE_KEY)) {
-					isDirty = m_portlet.isNewNews();
-					s_log.debug("general news: dirty? " + isDirty);
-		
-				} else {
-					// implement later
-					isDirty = true;
-				}
-			}
-			return isDirty;
-		*/
-	}
+        // if not has news changed
+        if (getCacheKey().equals(GENERAL_NEWS_CACHE_KEY)) {
+            isDirty = m_portlet.isNewNews();
+            s_log.debug("general news: dirty? " + isDirty);
+        } else {
+            // implement later
+            isDirty = true;
+        }
+    }
+    return isDirty;
+*/
+
+}

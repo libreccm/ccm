@@ -92,283 +92,266 @@ public class BookmarksPortletEditor
     }
 
 	
-	/**
-	 * store item in requestlocal for access by various methods
-	 * 
-	 * code copied from content item portlet - > may be problems when items 
-	 * unpublished - check
-	 */
-	private RequestLocal contentItem = new RequestLocal() {
+    /**
+     * store item in requestlocal for access by various methods
+     * 
+     * code copied from content item portlet - > may be problems when items 
+     * unpublished - check
+     */
+    private RequestLocal contentItem = new RequestLocal() {
         @Override
-		protected Object initialValue(PageState ps) {
-			String userURL = (String) m_url.getValue(ps);
-			java.net.URL contextURL;
-			try {
-				contextURL =
-					new java.net.URL(
-						Web.getRequest().getRequestURL().toString());
-			} catch (MalformedURLException ex) {
-				throw new UncheckedWrapperException(ex);
-			}
+        protected Object initialValue(PageState ps) {
+            String userURL = (String) m_url.getValue(ps);
 
-			java.net.URL url;
-			try {
-				url = new java.net.URL(contextURL, userURL);
-			} catch (MalformedURLException ex) {
-				s_log.info("Malformed URL " + userURL);
-				return null;
-			}
+            java.net.URL contextURL;
+            try {
+                contextURL = new java.net.URL(Web.getRequest().getRequestURL()
+                                                              .toString());
+            } catch (MalformedURLException ex) {
+                throw new UncheckedWrapperException(ex);
+            }
 
-			String dp = URL.getDispatcherPath();
-			String path = url.getPath();
-			if (path.startsWith(dp)) {
-				path = path.substring(dp.length());
-			}
+            java.net.URL url;
+            try {
+                url = new java.net.URL(contextURL, userURL);
+            } catch (MalformedURLException ex) {
+                s_log.info("Malformed URL " + userURL);
+                return null;
+            }
 
-			StringTokenizer tok = new StringTokenizer(path, "/");
-			if (!tok.hasMoreTokens()) {
-				s_log.info(
-					"Couldn't find a content section for "
-						+ path
-						+ " in "
-						+ userURL);
-				return null;
-			}
+            String dp = URL.getDispatcherPath();
+            String path = url.getPath();
+            if (path.startsWith(dp)) {
+                path = path.substring(dp.length());
+            }
 
-			String sectionPath = '/' + tok.nextToken() + '/';
+            StringTokenizer tok = new StringTokenizer(path, "/");
+            if (!tok.hasMoreTokens()) {
+                s_log.info("Couldn't find a content section for "
+                            + path + " in " + userURL);
+                return null;
+            }
 
-			String context = ContentItem.LIVE;
-			if (tok.hasMoreTokens()
-				&& CMSDispatcher.PREVIEW.equals(tok.nextToken())) {
+            String sectionPath = '/' + tok.nextToken() + '/';
 
-				context = CMSDispatcher.PREVIEW;
-			}
+            String context = ContentItem.LIVE;
+            if (tok.hasMoreTokens()
+                && CMSDispatcher.PREVIEW.equals(tok.nextToken())) {
 
-			ContentSectionCollection sections = ContentSection.getAllSections();
-			sections.addEqualsFilter(Application.PRIMARY_URL, sectionPath);
+                context = CMSDispatcher.PREVIEW;
+            }
 
-			ContentSection section;
-			if (sections.next()) {
-				section = sections.getContentSection();
-				sections.close();
-			} else {
-				s_log.info(
-					"Content section "
-						+ sectionPath
-						+ " in "
-						+ userURL
-						+ " doesn't exist.");
-				return null;
-			}
+            ContentSectionCollection sections = ContentSection.getAllSections();
+            sections.addEqualsFilter(Application.PRIMARY_URL, sectionPath);
 
-			ItemResolver resolver = section.getItemResolver();
+            ContentSection section;
+            if (sections.next()) {
+                section = sections.getContentSection();
+                sections.close();
+            } else {
+                s_log.info("Content section " + sectionPath + " in "
+                           + userURL + " doesn't exist.");
+                return null;
+            }
 
-			path = path.substring(sectionPath.length());
+            ItemResolver resolver = section.getItemResolver();
 
-			if (path.endsWith(".jsp")) {
-				path = path.substring(0, path.length() - 4);
-			}
+            path = path.substring(sectionPath.length());
 
-			ContentItem item = resolver.getItem(section, path, context);
-			if (item == null) {
-				s_log.debug("Couldn't resolve item " + path);
-				return null;
-			}
+            if (path.endsWith(".jsp")) {
+                path = path.substring(0, path.length() - 4);
+            }
 
-			SecurityManager sm = new SecurityManager(item.getContentSection());
+            ContentItem item = resolver.getItem(section, path, context);
+            if (item == null) {
+                s_log.debug("Couldn't resolve item " + path);
+                return null;
+            }
 
-			boolean canRead =
-				sm.canAccess(
-					ps.getRequest(),
-					SecurityManager.PUBLIC_PAGES,
-					item);
-			if (!canRead) {
-				s_log.debug("User not allowed access to item");
-				return null;
+            SecurityManager sm = new SecurityManager(item.getContentSection());
 
-			}
+            boolean canRead = sm.canAccess(ps.getRequest(),
+                                           SecurityManager.PUBLIC_PAGES,
+                                           item);
+            if (!canRead) {
+                s_log.debug("User not allowed access to item");
+                return null;
+            }
 
-			return item.getDraftVersion();
-		}
-	};
+            return item.getDraftVersion();
+        }
+    };
 
 
-	/**
-	 * register the parameter that records the current selected bookmark
-	 */
+    /**
+     * register the parameter that records the current selected bookmark
+     */
     @Override
-	public void register (Page p) {
-		super.register(p);
-		p.addComponentStateParam(this, m_selectedBookmark);
-		p.addComponentStateParam(this, m_selectedPortlet);
-	}
+    public void register (Page p) {
+        super.register(p);
+        p.addComponentStateParam(this, m_selectedBookmark);
+        p.addComponentStateParam(this, m_selectedPortlet);
+    }
 	
     /**
      * 
      */
     @Override
-	protected void addWidgets() {
-		// create widgets
-		m_url = new TextField(new StringParameter(Link.TARGET_URI));
-		m_url.addValidationListener(new NotNullValidationListener());
-		
-		m_title = new TextField(new StringParameter(Link.DISPLAY_NAME));
-		m_title.addValidationListener(new NotNullValidationListener());
-		
-		m_description = new TextField(new StringParameter(Link.DESCRIPTION));
-		
-		m_newWindow = new CheckboxGroup(Link.TARGET_WINDOW);
-		m_newWindow.addOption(new Option(NEW_WINDOW_YES, NEW_WINDOW));
-		
-		try {
-			m_newWindow.addPrintListener(new PrintListener() {
-			
-				public void prepare(PrintEvent e) {
-					PageState state = e.getPageState();
-					CheckboxGroup newWindow = (CheckboxGroup)e.getTarget();
-					if (m_bookmarkSelectionModel.isSelected(state)) {
-						Link link = m_bookmarkSelectionModel.getSelectedLink(state);
-						newWindow.setValue(state, link.getTargetWindow());
-						
-					}
-					
-				}
-			});
-		} catch (IllegalArgumentException e) {
-			s_log.warn("exception when trying to set checkbox value", e);
-		} catch (TooManyListenersException e) {
-			s_log.warn("exception when trying to set checkbox value", e);
-		}
-		
-		
-		m_selectedPortlet = new BigDecimalParameter("bookmark_portlet");
-		m_portletSelectionModel = new PortletSelectionModel(m_selectedPortlet);
-		m_selectedBookmark = new BigDecimalParameter("bookmark");
-		m_bookmarkSelectionModel = new BookmarkSelectionModel(
-                            "uk.gov.westsussex.portlet.bookmarks.Bookmark", 
+    protected void addWidgets() {
+        // create widgets
+        m_url = new TextField(new StringParameter(Link.TARGET_URI));
+        m_url.addValidationListener(new NotNullValidationListener());
+
+        m_title = new TextField(new StringParameter(Link.DISPLAY_NAME));
+        m_title.addValidationListener(new NotNullValidationListener());
+
+        m_description = new TextField(new StringParameter(Link.DESCRIPTION));
+
+        m_newWindow = new CheckboxGroup(Link.TARGET_WINDOW);
+        m_newWindow.addOption(new Option(NEW_WINDOW_YES, NEW_WINDOW));
+        try {
+             m_newWindow.addPrintListener(new PrintListener() {
+
+                 public void prepare(PrintEvent e) {
+                     PageState state = e.getPageState();
+                     CheckboxGroup newWindow = (CheckboxGroup)e.getTarget();
+                     if (m_bookmarkSelectionModel.isSelected(state)) {
+                         Link link = m_bookmarkSelectionModel.getSelectedLink(state);
+                         newWindow.setValue(state, link.getTargetWindow());
+                     }
+
+                 }
+        });
+        } catch (IllegalArgumentException e) {
+            s_log.warn("exception when trying to set checkbox value", e);
+        } catch (TooManyListenersException e) {
+            s_log.warn("exception when trying to set checkbox value", e);
+        }
+
+
+        m_selectedPortlet = new BigDecimalParameter("bookmark_portlet");
+        m_portletSelectionModel = new PortletSelectionModel(m_selectedPortlet);
+        m_selectedBookmark = new BigDecimalParameter("bookmark");
+        m_bookmarkSelectionModel = new BookmarkSelectionModel(
+                            "com.arsdigita.portlet.bookmarks.Bookmark", 
                             Bookmark.BASE_DATA_OBJECT_TYPE, m_selectedBookmark);
-		m_existingBookmarks = new BookmarksTable(m_bookmarkSelectionModel, 
-                                                  m_portletSelectionModel);
-				
-		super.addWidgets();
-		
-		add(new HorizontalLine(), ColumnPanel.FULL_WIDTH);
+        m_existingBookmarks = new BookmarksTable(m_bookmarkSelectionModel, 
+                                                 m_portletSelectionModel);
 
-	
-		add(m_existingBookmarks, ColumnPanel.FULL_WIDTH);
-		add(new HorizontalLine(), ColumnPanel.FULL_WIDTH);
+        super.addWidgets();
 
-		add(ADD_NEW_BOOKMARK_LABEL, ColumnPanel.FULL_WIDTH);
-		add(TITLE_LABEL, ColumnPanel.RIGHT);
-		add(m_title);
-		add(DESCRIPTION_LABEL, ColumnPanel.RIGHT);
-		add(m_description);
-		
-		
-		add(URL_LABEL, ColumnPanel.RIGHT);
-		add(m_url);
-		add(new Label("")); // fill up the left hand column
-		add(m_newWindow);
+        add(new HorizontalLine(), ColumnPanel.FULL_WIDTH);
 
-	}
 
-	/**
-	 * specify current portlet for reference by table 
-	 * 
-	 * fill in values if user has selected edit on an existing bookmark
-	 */
+        add(m_existingBookmarks, ColumnPanel.FULL_WIDTH);
+        add(new HorizontalLine(), ColumnPanel.FULL_WIDTH);
+
+        add(ADD_NEW_BOOKMARK_LABEL, ColumnPanel.FULL_WIDTH);
+        add(TITLE_LABEL, ColumnPanel.RIGHT);
+        add(m_title);
+        add(DESCRIPTION_LABEL, ColumnPanel.RIGHT);
+        add(m_description);
+
+
+        add(URL_LABEL, ColumnPanel.RIGHT);
+        add(m_url);
+        add(new Label("")); // fill up the left hand column
+        add(m_newWindow);
+
+    }
+
+    /**
+     * specify current portlet for reference by table 
+     * 
+     * fill in values if user has selected edit on an existing bookmark
+     */
     @Override
-	protected void initWidgets(PageState state, Portlet portlet)
-		throws FormProcessException {
-		s_log.debug("init widgets - set selected portlet to " + portlet.getOID());
-		// set cached version as dirty here rather than during process 
+    protected void initWidgets(PageState state, Portlet portlet)
+                   throws FormProcessException {
+        s_log.debug("init widgets - set selected portlet to " + portlet.getOID());
+        // set cached version as dirty here rather than during process 
         // in case an action link is pressed (eg to move links up/down)
-		portlet.getPortletRenderer().invalidateCachedVersion(state);
-		m_portletSelectionModel.setSelectedObject(state, portlet);
-		super.initWidgets(state, portlet);
-		if (m_bookmarkSelectionModel.isSelected(state)) {
-			Bookmark link = m_bookmarkSelectionModel.getSelectedLink(state);
-			m_url.setValue(state, BookmarksPortlet.getURIForBookmark(link, state));
-			m_description.setValue(state, link.getDescription());
-			m_title.setValue(state, link.getTitle());
-			
-		}
-			}
+        portlet.getPortletRenderer().invalidateCachedVersion(state);
+        m_portletSelectionModel.setSelectedObject(state, portlet);
+        super.initWidgets(state, portlet);
 
-	/**
-	 * Validates url if it looks like it is trying to be a content item 
+        if (m_bookmarkSelectionModel.isSelected(state)) {
+            Bookmark link = m_bookmarkSelectionModel.getSelectedLink(state);
+            m_url.setValue(state, BookmarksPortlet.getURIForBookmark(link, state));
+            m_description.setValue(state, link.getDescription());
+            m_title.setValue(state, link.getTitle());
+        }
+    }
+
+    /**
+     * Validates url if it looks like it is trying to be a content item 
      * but is failing
-	 */
+     */
     @Override
-	public void validateWidgets(PageState state, Portlet portlet)
-		throws FormProcessException {
-	//	m_selectedPortlet.set(state, portlet);
-		super.validateWidgets(state, portlet);
+    public void validateWidgets(PageState state, Portlet portlet)
+                throws FormProcessException {
+        // m_selectedPortlet.set(state, portlet);
+        super.validateWidgets(state, portlet);
 
-		String fullUrl = (String) m_url.getValue(state);
-		s_log.debug("fullURL = " + fullUrl);
-				
-		Object item = contentItem.get(state);
-		URL here = URL.here(state.getRequest(), null);
-		String thisSite = here.getServerURI();
-		s_log.debug("This site is " + thisSite);
+        String fullUrl = (String) m_url.getValue(state);
+        s_log.debug("fullURL = " + fullUrl);
+
+        Object item = contentItem.get(state);
+        URL here = URL.here(state.getRequest(), null);
+        String thisSite = here.getServerURI();
+        s_log.debug("This site is " + thisSite);
         if (item == null && fullUrl.indexOf(thisSite) != -1 
                          && fullUrl.indexOf("/ccm/") != -1 
                          && fullUrl.indexOf("/content/") != -1 ) {
             // not watertight, but is reasonable check that user is trying 
             // to specify a content item on this site
-			throw new FormProcessException(CONTENT_ITEM_NOT_FOUND);
-		}
+            throw new FormProcessException(CONTENT_ITEM_NOT_FOUND);
+        }
 
-	}
-	/**
-	 * add new bookmark to portlet, or amend existing one if we are editing 
+    }
+
+    /**
+     * add new bookmark to portlet, or amend existing one if we are editing 
      * a selected bookmark
-	 */
+     */
     @Override
-	protected void processWidgets(PageState state, Portlet portlet)
-		throws FormProcessException {
-		s_log.debug("START processWidgets");
-		super.processWidgets(state, portlet);
-		
-	
-		BookmarksPortlet myportlet = (BookmarksPortlet) portlet;
-		
-		String titleText = (String) m_title.getValue(state);
-		String urlText = (String) m_url.getValue(state);
-		String descriptionText = (String)m_description.getValue(state);
+    protected void processWidgets(PageState state, Portlet portlet)
+                   throws FormProcessException {
+        s_log.debug("START processWidgets");
+        super.processWidgets(state, portlet);
 
-		ContentItem item = (ContentItem) contentItem.get(state);
-		String[] newWindowValue = (String[]) m_newWindow.getValue(state);
-		String newWindow =
-			newWindowValue == null ? NEW_WINDOW_NO : NEW_WINDOW_YES;
+        BookmarksPortlet myportlet = (BookmarksPortlet) portlet;
 		
-		Bookmark newBookmark;
-		
-		if (m_bookmarkSelectionModel.isSelected(state)) {
-			newBookmark = m_bookmarkSelectionModel.getSelectedLink(state);
-			
-		} else {
-			newBookmark = new Bookmark();
-			myportlet.addBookmark(newBookmark);
-		
-		}
-		newBookmark.setTitle(titleText);
-		newBookmark.setDescription(descriptionText);	
-		newBookmark.setTargetWindow(newWindow);
-		if (item == null) {
-			newBookmark.setTargetType(Link.EXTERNAL_LINK);
-			newBookmark.setTargetURI(urlText);
-			
-		} else {
-			newBookmark.setTargetType(Link.INTERNAL_LINK);
-			newBookmark.setTargetItem(item);
-		}
-		
-		
-		m_bookmarkSelectionModel.clearSelection(state);
-		s_log.debug("END processWidgets");
-	}
+        String titleText = (String) m_title.getValue(state);
+        String urlText = (String) m_url.getValue(state);
+        String descriptionText = (String)m_description.getValue(state);
 
-	
+        ContentItem item = (ContentItem) contentItem.get(state);
+        String[] newWindowValue = (String[]) m_newWindow.getValue(state);
+        String newWindow = newWindowValue == null ? NEW_WINDOW_NO 
+                                                  : NEW_WINDOW_YES;
+
+        Bookmark newBookmark;
+        if (m_bookmarkSelectionModel.isSelected(state)) {
+            newBookmark = m_bookmarkSelectionModel.getSelectedLink(state);
+        } else {
+            newBookmark = new Bookmark();
+            myportlet.addBookmark(newBookmark);
+        }
+        newBookmark.setTitle(titleText);
+        newBookmark.setDescription(descriptionText);	
+        newBookmark.setTargetWindow(newWindow);
+        if (item == null) {
+            newBookmark.setTargetType(Link.EXTERNAL_LINK);
+            newBookmark.setTargetURI(urlText);
+        } else {
+            newBookmark.setTargetType(Link.INTERNAL_LINK);
+            newBookmark.setTargetItem(item);
+        }
+
+        m_bookmarkSelectionModel.clearSelection(state);
+        s_log.debug("END processWidgets");
+
+    }
+
 }

@@ -28,13 +28,11 @@ import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.portalworkspace.portlet.RSSFeedPortlet;
-// @deprecated use com.arsdigita.bebop.portal.PortletConfigFormSection
-// import com.arsdigita.london.portal.ui.PortletConfigFormSection;
 import com.arsdigita.portal.Portlet;
 
 /**
  * 
- * @author pb
+ * @author
  */
 public class RSSFeedPortletEditorForm extends PortletConfigFormSection {
 
