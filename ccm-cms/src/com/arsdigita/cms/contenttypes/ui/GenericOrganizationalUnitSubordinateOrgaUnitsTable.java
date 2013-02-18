@@ -195,8 +195,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
                     subordinateOrgaUnit);
 
             if (canEdit) {
-                final ContentSection section = CMS.getContext().
-                        getContentSection();
+                final ContentSection section = subordinateOrgaUnit.getContentSection();//CMS.getContext().getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link =
                            new Link(value.toString(),

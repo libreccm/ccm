@@ -165,7 +165,7 @@ public class ProceedingsOrganizerSheet
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = organizer.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(value.toString(),

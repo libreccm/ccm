@@ -211,7 +211,7 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = volume.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(String.format("%s",

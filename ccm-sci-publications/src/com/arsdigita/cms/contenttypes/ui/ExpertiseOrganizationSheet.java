@@ -162,7 +162,7 @@ public class ExpertiseOrganizationSheet
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = orga.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(String.format("%s (%s)",

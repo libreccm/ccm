@@ -129,7 +129,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
      * @param useContext The use context
      */
     public void generateXML(final PageState state, final Element parent, final String useContext) {
-        final long start = System.nanoTime();
+        //final long start = System.nanoTime();
 
         //ContentSection section = CMS.getContext().getContentSection();
         ContentItem item = getContentItem(state);
@@ -193,7 +193,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
                 content = cache.get(item.getOID());
             } else {
 
-                content = startElement(useContext);                
+                content = startElement(useContext);
 
                 final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(content);
 
@@ -202,13 +202,13 @@ public class SimpleXMLGenerator implements XMLGenerator {
                 renderer.setWrapObjects(false);
                 renderer.setRevisitFullObject(true);
 
-                System.out.printf("Prepared renderer in %d ms\n", (System.nanoTime() - start)
-                                                                  / 1000000);
+                //System.out.printf("Prepared renderer in %d ms\n", (System.nanoTime() - start)
+                //                                                  / 1000000);
 
                 renderer.walk(item, ADAPTER_CONTEXT);
 
-                System.out.printf("Rendered standard item xml in %d ms\n", (System.nanoTime() - start)
-                                                                           / 1000000);
+                //System.out.printf("Rendered standard item xml in %d ms\n", (System.nanoTime() - start)
+                //                                                           / 1000000);
 
                 //parent.addContent(content);
 
@@ -220,23 +220,25 @@ public class SimpleXMLGenerator implements XMLGenerator {
                  * 2011-10-23 jensp: It is now possible to disable the use of
                  * extra XML.
                  */
-                final long extraXMLStart = System.nanoTime();
+                //final long extraXMLStart = System.nanoTime();
                 if (useExtraXml) {
                     for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
                         generator.setListMode(listMode);
                         generator.generateXML(item, content, state);
                     }
                 }
-                System.out.
-                        printf("Rendered ExtraXML in          %d ms\n", (System.nanoTime() - extraXMLStart) / 1000000);
-                System.out.printf("                              -----\n");
-                
-                cache.put(item.getOID(), content);                
+//                System.out.
+//                        printf("Rendered ExtraXML in          %d ms\n", (System.nanoTime() - extraXMLStart) / 1000000);
+//                System.out.printf("                              -----\n");
+
+                if (USE_CACHE) {
+                    cache.put(item.getOID(), content);
+                }
             }
-            
+
             parent.addContent(content);
 
-            System.out.printf("Rendered item in              %d ms\n\n", (System.nanoTime() - start) / 1000000);
+            //System.out.printf("Rendered item in              %d ms\n\n", (System.nanoTime() - start) / 1000000);
         }
     }
 

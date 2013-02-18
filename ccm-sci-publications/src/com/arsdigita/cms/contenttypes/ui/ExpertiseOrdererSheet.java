@@ -161,7 +161,7 @@ public class ExpertiseOrdererSheet
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = orderer.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(String.format("%s (%s)",

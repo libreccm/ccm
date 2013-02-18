@@ -380,7 +380,7 @@ public abstract class DomainObjectTraversal {
                                  final String path,
                                  final String context,
                                  final OID oid) {
-        final long start = System.nanoTime();
+        //final long start = System.nanoTime();
         final String propName = prop.getName();
         //System.out.printf("Processing property %30s...\n", propName);
 
@@ -478,7 +478,7 @@ public abstract class DomainObjectTraversal {
             //System.out.printf("\tProcssed assoc in %3d ms.\n ", (System.nanoTime() - assocStart) / 1000000);
         }
 
-        System.out.printf("Processed property %30s in %3d ms.\n", propName, (System.nanoTime() - start) / 1000000);
+        //System.out.printf("Processed property %30s in %3d ms.\n", propName, (System.nanoTime() - start) / 1000000);
     }
 
     protected void walkDataAssociations(final DomainObjectTraversalAdapter adapter,

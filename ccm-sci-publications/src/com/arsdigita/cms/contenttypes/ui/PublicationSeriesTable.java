@@ -194,7 +194,7 @@ public class PublicationSeriesTable
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = series.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(String.format("%s (%s)",

@@ -145,7 +145,7 @@ public class PersonPublicationsTable extends Table {
 //                                                              publication);
 
             //if (canEdit) {
-            final ContentSection section = CMS.getContext().getContentSection();
+            final ContentSection section = publication.getContentSection();//CMS.getContext().getContentSection();
             final ItemResolver resolver = section.getItemResolver();
             final Link link = new Link(value.toString(),
                                        resolver.generateItemURL(state,

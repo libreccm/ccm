@@ -136,7 +136,7 @@ public class GenericPersonOrgaUnitsTable extends Table {
             //final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
             final GenericOrganizationalUnit orgaUnit = new GenericOrganizationalUnit((BigDecimal) key);
 
-            final ContentSection section = CMS.getContext().getContentSection();
+            final ContentSection section = orgaUnit.getContentSection();//CMS.getContext().getContentSection();
             final ItemResolver resolver = section.getItemResolver();
             final Link link = new Link(value.toString(),
                                        resolver.generateItemURL(state,

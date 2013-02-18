@@ -88,6 +88,7 @@ public class GenericOrganizationalUnitPublicationsTable
 
             return new Model(table, state, orgaunit);
         }
+
     }
 
     private class Model implements TableModel {
@@ -137,6 +138,7 @@ public class GenericOrganizationalUnitPublicationsTable
         public Object getKeyAt(int columnIndex) {
             return publications.getPublication().getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -160,8 +162,7 @@ public class GenericOrganizationalUnitPublicationsTable
                     publication);
 
             if (canEdit) {
-                final ContentSection section = CMS.getContext().
-                        getContentSection();
+                final ContentSection section = publication.getContentSection();//CMS.getContext().getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link = new Link(value.toString(),
                                            resolver.generateItemURL(
@@ -175,6 +176,7 @@ public class GenericOrganizationalUnitPublicationsTable
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
@@ -211,6 +213,7 @@ public class GenericOrganizationalUnitPublicationsTable
                 return label;
             }
         }
+
     }
 
     private class ActionListener implements TableActionListener {
@@ -238,5 +241,6 @@ public class GenericOrganizationalUnitPublicationsTable
         public void headSelected(final TableActionEvent event) {
             //Nothing
         }
+
     }
 }

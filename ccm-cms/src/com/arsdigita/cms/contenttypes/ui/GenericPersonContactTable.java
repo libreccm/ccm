@@ -257,7 +257,7 @@ public class GenericPersonContactTable extends Table implements
                 } catch (DataObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = contact.getContentSection(); //CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(String.format("%s (%s)", 

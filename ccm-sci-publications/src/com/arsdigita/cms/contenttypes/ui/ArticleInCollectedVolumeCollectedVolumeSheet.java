@@ -112,6 +112,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                                                                          article);
 
         }
+
     }
 
     private class ArticleInCollectedVolumeCollectedVolumeSheetModel
@@ -166,6 +167,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
         public Object getKeyAt(int columnIndex) {
             return collectedVolume.getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -197,8 +199,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
-                ContentSection section =
-                               CMS.getContext().getContentSection();
+                ContentSection section = collectedVolume.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link = new Link(value.toString(),
                                      resolver.generateItemURL(state,
@@ -219,6 +220,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
@@ -255,6 +257,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                 return label;
             }
         }
+
     }
 
     @Override
@@ -276,4 +279,5 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
     public void headSelected(TableActionEvent event) {
         //Nothing to do
     }
+
 }

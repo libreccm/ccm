@@ -189,7 +189,7 @@ public class GenericContactPersonSheet
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = person.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
 
                 return new Link(value.toString(), resolver.generateItemURL(state, person, section, person.getVersion()));

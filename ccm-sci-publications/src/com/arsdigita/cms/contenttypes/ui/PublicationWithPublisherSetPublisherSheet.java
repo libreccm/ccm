@@ -171,7 +171,7 @@ public class PublicationWithPublisherSetPublisherSheet
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = publisher.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(value.toString(),

@@ -105,7 +105,14 @@ public class GenericArticleBody extends TextAssetBody {
     protected TextAsset createTextAsset(PageState s) {
         GenericArticle item = getGenericArticle(s);
         TextAsset t = new TextAsset();
+        final int nameLen = item.getName().length();
+        final int idLen = item.getID().toString().length();
+        final int len = nameLen + 6 + idLen;
+        if (len < 200) {
         t.setName(item.getName() + "_text_" + item.getID());
+        } else {
+            t.setName(item.getName().substring(0, 200 - (len - 200)) + "_text_" + item.getID());
+        }
         // no need - cg. Text doesn't need a security context,
         // and ownership of text is recorded in text_pages
         // t.setParent(item);

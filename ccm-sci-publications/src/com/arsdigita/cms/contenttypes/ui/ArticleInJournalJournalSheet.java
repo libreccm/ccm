@@ -183,7 +183,7 @@ public class ArticleInJournalJournalSheet
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = journal.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(journal.getTitle(),

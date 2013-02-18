@@ -217,7 +217,7 @@ public class ProceedingsPapersTable
                     return new Label(value.toString());
                 }
 
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = inProceedings.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link = new Link(String.format("%s (%s)",
                                                    value.toString(),

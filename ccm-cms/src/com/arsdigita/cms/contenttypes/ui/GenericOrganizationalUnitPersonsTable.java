@@ -244,7 +244,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                                ex);
                     return new Label(value.toString());
                 }
-                ContentSection section = CMS.getContext().getContentSection();
+                ContentSection section = person.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
                 Link link =
                      new Link(String.format("%s",

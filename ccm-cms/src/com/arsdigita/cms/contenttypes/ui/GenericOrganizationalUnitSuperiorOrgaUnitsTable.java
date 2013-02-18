@@ -182,8 +182,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                     superiorOrgaUnit);
 
             if (canEdit) {
-                final ContentSection section = CMS.getContext().
-                        getContentSection();
+                final ContentSection section = superiorOrgaUnit.getContentSection();//CMS.getContext().getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link = new Link(value.toString(),
                                            resolver.generateItemURL(state,

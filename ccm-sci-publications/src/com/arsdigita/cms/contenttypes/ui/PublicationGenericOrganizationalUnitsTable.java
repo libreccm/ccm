@@ -81,6 +81,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                     getSelectedObject(state);
             return new Model(table, state, publication);
         }
+
     }
 
     private class Model implements TableModel {
@@ -127,6 +128,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
         public Object getKeyAt(final int columnIndex) {
             return orgaunits.getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -152,8 +154,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                     com.arsdigita.cms.SecurityManager.EDIT_ITEM,
                     orgaunit);
             if (canEdit) {
-                final ContentSection section = CMS.getContext().
-                        getContentSection();
+                final ContentSection section = orgaunit.getContentSection();//CMS.getContext().getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link = new Link(
                         String.format("%s (%s)",
@@ -172,6 +173,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
@@ -208,6 +210,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                 return label;
             }
         }
+
     }
 
     private class ActionListener implements TableActionListener {
@@ -239,5 +242,6 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
         public void headSelected(final TableActionEvent event) {
             //Nothing yet
         }
+
     }
 }
