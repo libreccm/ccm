@@ -83,12 +83,21 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                 "publications.ui.publication.misc"),
                   Publication.MISC);
 
+        if (Publication.getConfig().getEnableFirstPublishedProperty()) {
+            sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.publication.first_published"),
+                                                             Publication.FIRST_PUBLISHED);
+        }
+
+        if (Publication.getConfig().getEnableLanguageProperty()) {
+            sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.publication.language"),
+                                                             Publication.LANG);
+        }
+
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(ContenttypesGlobalizationUtil.globalize(
                     "cms.ui.authoring.page_launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
-
                 public String format(DomainObject item,
                                      String attribute,
                                      PageState state) {
@@ -101,6 +110,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                                 "cms.ui.unknown").localize();
                     }
                 }
+
             });
         }
 
@@ -165,5 +175,6 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                 return String.format("<pre>%s</pre>", str);
             }
         }
+
     }
 }

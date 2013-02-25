@@ -75,6 +75,8 @@ public class Publication extends ContentPage {
     public final static String ORGAUNITS = "orgaunits";
     public final static String ORGAUNIT_PUBLICATIONS = "publications";
     public static final String REVIEWED = "reviewed";
+    public static final String FIRST_PUBLISHED = "yearFirstPublished";
+    public static final String LANG = "languageOfPublication";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Publication";
     private final static PublicationsConfig config = new PublicationsConfig();
@@ -333,6 +335,32 @@ public class Publication extends ContentPage {
 
         //orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);
         PublicationBundle.removePublication(orgaunit, publication);
+    }
+    
+    /**
+     * The year when the first edition of the publication was published.
+     * 
+     * @return 
+     */
+    public Integer getYearFirstPublished() {
+        return (Integer) get(FIRST_PUBLISHED);
+    }
+        
+    public void setYearFirstPublished(final Integer value) {
+        set(FIRST_PUBLISHED, value);
+    }
+    
+    /**
+     * The language the publication is written in.
+     * 
+     * @return 
+     */
+    public String getLanguageOfPublication() {
+        return (String) get(LANG);
+    }
+    
+    public void setLanguageOfPublication(final String value) {
+        set(LANG, value);
     }
 
     @Override

@@ -41,6 +41,10 @@ object type Publication extends ContentPage {
        //(ordering by publications by their authors requires joins or subqueries
        //without this field)
        String[0..1] authorsStr = ct_publications.authors VARCHAR(2048);
+       //Year on which the publication was first published 
+       Integer[0..1] yearFirstPublished = ct_publications.firstPublished INTEGER;
+       //The language of the publication 
+       String[0..1] languageOfPublication = ct_publications.lang VARCHAR(128);
 
        reference key (ct_publications.publication_id);
 }

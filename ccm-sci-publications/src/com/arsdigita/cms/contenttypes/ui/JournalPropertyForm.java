@@ -34,9 +34,11 @@ import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
@@ -49,17 +51,15 @@ public class JournalPropertyForm
                    FormInitListener,
                    FormSubmissionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(JournalPropertyForm.class);
-    private JournalPropertiesStep m_step;
+    private static final Logger s_log = Logger.getLogger(JournalPropertyForm.class);
+    private final JournalPropertiesStep m_step;
     public static final String ID = "JournalEdit";
 
-    public JournalPropertyForm(ItemSelectionModel itemModel) {
+    public JournalPropertyForm(final ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
-    public JournalPropertyForm(ItemSelectionModel itemModel,
-                               JournalPropertiesStep step) {
+    public JournalPropertyForm(final ItemSelectionModel itemModel, final JournalPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -69,15 +69,18 @@ public class JournalPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
+        add(new Label((String) PublicationGlobalizationUtil.globalize("publications.ui.journal.symbol").localize()));
+        final ParameterModel symbolModel = new StringParameter(Journal.SYMBOL);
+        final TextField symbol = new TextField(symbolModel);
+        add(symbol);
+
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.issn").localize()));
-        ParameterModel issnParam = new StringParameter(Journal.ISSN);
-        TextField issn = new TextField(issnParam);
+        final ParameterModel issnParam = new StringParameter(Journal.ISSN);
+        final TextField issn = new TextField(issnParam);
         issn.addValidationListener(new ParameterListener() {
-
-            public void validate(ParameterEvent event) throws
-                    FormProcessException {
-                ParameterData data = event.getParameterData();
+            public void validate(final ParameterEvent event) throws FormProcessException {
+                final ParameterData data = event.getParameterData();
                 String value = (String) data.getValue();
 
                 if (value.isEmpty()) {
@@ -88,83 +91,113 @@ public class JournalPropertyForm
 
                 if (value.length() != 8) {
                     data.invalidate();
-                    data.addError(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.invalid_issn"));
+                    data.addError(PublicationGlobalizationUtil.globalize("publications.ui.invalid_issn"));
                 }
 
                 try {
-                    Long num = Long.parseLong(value);
+                    final Long num = Long.parseLong(value);
                 } catch (NumberFormatException ex) {
                     data.invalidate();
-                    data.addError(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.invalid_issn"));
+                    data.addError(PublicationGlobalizationUtil.globalize("publications.ui.invalid_issn"));
                 }
             }
+
         });
         add(issn);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.firstYearOfPublication").localize()));
-        ParameterModel firstYearParam = new IntegerParameter(Journal.FIRST_YEAR);
-        TextField firstYear = new TextField(firstYearParam);
+        final ParameterModel firstYearParam = new IntegerParameter(Journal.FIRST_YEAR);
+        final TextField firstYear = new TextField(firstYearParam);
         add(firstYear);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.lastYearOfPublication").localize()));
-        ParameterModel lastYearParam = new IntegerParameter(Journal.LAST_YEAR);
-        TextField lastYear = new TextField(lastYearParam);
+        final ParameterModel lastYearParam = new IntegerParameter(Journal.LAST_YEAR);
+        final TextField lastYear = new TextField(lastYearParam);
         add(lastYear);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.abstract").localize()));
-        ParameterModel abstractParam = new StringParameter(Journal.ABSTRACT);
-        TextArea abstractArea = new TextArea(abstractParam);
+        final ParameterModel abstractParam = new StringParameter(Journal.ABSTRACT);
+        final TextArea abstractArea = new TextArea(abstractParam);
         abstractArea.setCols(60);
         abstractArea.setRows(18);
         add(abstractArea);
     }
 
     @Override
-    public void init(FormSectionEvent fse) throws FormProcessException {
-        FormData data = fse.getFormData();
-        Journal journal = (Journal) super.initBasicWidgets(fse);
+    public void init(final FormSectionEvent fse) throws FormProcessException {
+        final FormData data = fse.getFormData();
 
+        //Can' use basic initBasicWidgets for journal because we are doing some magic with the title to make it possible
+        //to filter for the symbol of the journal
+        //final Journal journal = (Journal) super.initBasicWidgets(fse);
+
+        final Journal journal = (Journal) getItemSelectionModel().getSelectedObject(fse.getPageState());
+
+        data.put(CONTENT_ITEM_ID, journal.getID().toString());
+        data.put(NAME, journal.getName());
+        data.put(TITLE, journal.getTitle());
+        data.put(Journal.SYMBOL, journal.getSymbol());
         data.put(Journal.ISSN, journal.getISSN());
         data.put(Journal.FIRST_YEAR, journal.getFirstYear());
         data.put(Journal.LAST_YEAR, journal.getLastYear());
         data.put(Journal.ABSTRACT, journal.getAbstract());
+
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            data.put(LAUNCH_DATE, journal.getLaunchDate());
+            // if launch date is required, help user by suggesting today's date
+            if (ContentSection.getConfig().getRequireLaunchDate() && journal.getLaunchDate() == null) {
+                data.put(LAUNCH_DATE, new Date());
+            }
+        }
     }
 
     @Override
-    public void process(FormSectionEvent fse) throws FormProcessException {
-        FormData data = fse.getFormData();
-        Journal journal = (Journal) super.processBasicWidgets(fse);
+    public void process(final FormSectionEvent fse) throws FormProcessException {
+        final FormData data = fse.getFormData();
+        //final Journal journal = (Journal) super.processBasicWidgets(fse);
 
-        if ((journal != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
+        final Journal journal = (Journal) getItemSelectionModel().getSelectedObject(fse.getPageState());
+
+        if ((journal != null) && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+
+            final String name = (String) data.get(NAME);
+            journal.setName(name);
+
+            final String title = (String) data.get(TITLE);
+            journal.setTitle(title);
+
+            final String symbol = (String) data.get(Journal.SYMBOL);
+            journal.setSymbol(symbol);
 
             String issn = (String) data.get(Journal.ISSN);
             issn = issn.replace("-", "");
             journal.setISSN(issn);
 
-            Integer firstYear = (Integer) data.get(Journal.FIRST_YEAR);
+            final Integer firstYear = (Integer) data.get(Journal.FIRST_YEAR);
             journal.setFirstYear(firstYear);
 
-            Integer lastYear = (Integer) data.get(Journal.LAST_YEAR);
+            final Integer lastYear = (Integer) data.get(Journal.LAST_YEAR);
             journal.setLastYear(lastYear);
-            
-            String abstractStr = (String) data.get(Journal.ABSTRACT);
+
+            final String abstractStr = (String) data.get(Journal.ABSTRACT);
             journal.setAbstract(abstractStr);
+
+            if (!ContentSection.getConfig().getHideLaunchDate()) {
+                journal.setLaunchDate((Date) data.get(LAUNCH_DATE));
+            }
 
             journal.save();
         }
     }
 
     @Override
-    public void submitted(FormSectionEvent fse) throws FormProcessException {
-        if ((m_step != null) && getSaveCancelSection().getCancelButton().
-                isSelected(fse.getPageState())) {
+    public void submitted(final FormSectionEvent fse) throws FormProcessException {
+        if ((m_step != null) && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
+
 }

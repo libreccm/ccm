@@ -31,6 +31,8 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter defaultPublicationsFolder;
     private final Parameter orgaType;
     private final Parameter orgaBundleType;
+    private final Parameter enableFirstPublishedProperty;
+    private final Parameter enableLanguageProperty;
 
     public PublicationsConfig() {
         attachOrgaUnitsStep =
@@ -127,6 +129,16 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.OPTIONAL,
                 PublisherBundle.BASE_DATA_OBJECT_TYPE);
 
+        enableFirstPublishedProperty = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.publications.enable_first_published_property",
+                                                            Parameter.REQUIRED,
+                                                            true);
+        
+        enableLanguageProperty = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.publications.enable_language_property",
+                                                            Parameter.REQUIRED,
+                                                            true);
+
         register(attachOrgaUnitsStep);
         register(attachOrganizationPublicationsStepTo);
         register(attachPersonPublicationsStep);
@@ -145,6 +157,8 @@ public class PublicationsConfig extends AbstractConfig {
         register(defaultPublicationsFolder);
         register(orgaType);
         register(orgaBundleType);
+        register(enableFirstPublishedProperty);
+        register(enableLanguageProperty);
 
         loadInfo();
     }
@@ -263,6 +277,14 @@ public class PublicationsConfig extends AbstractConfig {
 
     public String getOrganizationBundleType() {
         return (String) get(orgaBundleType);
+    }
+    
+    public Boolean getEnableFirstPublishedProperty() {
+        return (Boolean) get(enableFirstPublishedProperty);
+    }
+    
+    public Boolean getEnableLanguageProperty() {
+        return (Boolean) get(enableLanguageProperty);
     }
 
 }

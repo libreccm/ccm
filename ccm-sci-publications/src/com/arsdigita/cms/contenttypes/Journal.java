@@ -40,9 +40,9 @@ public class Journal extends ContentPage {
     public static final String LAST_YEAR = "lastYear";
     public static final String ABSTRACT = "abstract";
     public static final String ARTICLES = "articles";
-    public static final String ARTICLE_ORDER = "articleOrder";
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.Journal";
+    public static final String ARTICLE_ORDER = "articleOrder";   
+    public static final String SYMBOL = "symbol";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Journal";
 
     public Journal() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -63,11 +63,11 @@ public class Journal extends ContentPage {
     public Journal(final String type) {
         super(type);
     }
-    
+
     public JournalBundle getJournalBundle() {
         return (JournalBundle) getContentBundle();
-    }
-      
+    }       
+    
     public String getISSN() {
         return (String) get(ISSN);
     }
@@ -75,11 +75,11 @@ public class Journal extends ContentPage {
     public void setISSN(final String issn) {
         set(ISSN, issn);
     }
-    
+
     public Integer getFirstYear() {
         return (Integer) get(FIRST_YEAR);
     }
-    
+
     public void setFirstYear(final Integer firstYear) {
         set(FIRST_YEAR, firstYear);
     }
@@ -88,18 +88,18 @@ public class Journal extends ContentPage {
         return (Integer) get(LAST_YEAR);
     }
 
-    public void setLastYear(final Integer lastYear)  {
+    public void setLastYear(final Integer lastYear) {
         set(LAST_YEAR, lastYear);
     }
 
     public String getAbstract() {
         return (String) get(ABSTRACT);
     }
-    
+
     public void setAbstract(final String abstractStr) {
         set(ABSTRACT, abstractStr);
     }
-    
+
     public ArticleInJournalCollection getArticles() {
         //return new ArticleInJournalCollection((DataCollection) get(ARTICLES));
         return getJournalBundle().getArticles();
@@ -111,32 +111,46 @@ public class Journal extends ContentPage {
         //DataObject link = add(ARTICLES, article);
 
         //link.set(ARTICLE_ORDER, Integer.valueOf((int) getArticles().size()));
-        
+
         getJournalBundle().addArticle(article);
     }
 
-    public void removeArticle(ArticleInJournal article) {
+    public void removeArticle(final ArticleInJournal article) {
         //Assert.exists(article, ArticleInCollectedVolume.class);
         //remove(ARTICLES, article);
-        
-        getJournalBundle().removeArticle(article);        
+
+        getJournalBundle().removeArticle(article);
     }
 
     public boolean hasArticles() {
         return !this.getArticles().isEmpty();
     }
-    
+
+    /**
+     * The symbol used commonly used for referencing the journal (german: Kürzel).
+     * 
+     * @return 
+     */
+    public String getSymbol() {
+        return (String) get(SYMBOL);
+    }
+
+    public void setSymbol(final String symbol) {
+        set(SYMBOL, symbol);        
+    }
+
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
         generators.add(new JournalExtraXmlGenerator());
         return generators;
     }
-    
-     @Override
+
+    @Override
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
         generators.add(new JournalExtraXmlGenerator());
         return generators;
     }
+
 }

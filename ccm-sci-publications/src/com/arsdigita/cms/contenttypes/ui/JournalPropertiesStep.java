@@ -68,10 +68,7 @@ public class JournalPropertiesStep extends SimpleEditStep {
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.name"),
-                  Publication.NAME);
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.title"),
-                  Publication.TITLE);
+                  Publication.NAME);        
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.journal.issn"),
@@ -89,6 +86,9 @@ public class JournalPropertiesStep extends SimpleEditStep {
                 "publications.ui.journal.abstract"),
                   Journal.ABSTRACT);
 
+        sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.journal.symbol"), Journal.SYMBOL);
+        
+        
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(ContenttypesGlobalizationUtil.globalize(
                     "cms.ui.authoring.page_launch_date"),

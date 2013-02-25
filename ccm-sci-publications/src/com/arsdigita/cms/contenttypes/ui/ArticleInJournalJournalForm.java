@@ -71,6 +71,7 @@ public class ArticleInJournalJournalForm
             itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultJournalsFolder())));
         }
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setQueryField("symbol");
         add(itemSearch);
     }
 
