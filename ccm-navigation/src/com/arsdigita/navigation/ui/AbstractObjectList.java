@@ -69,7 +69,7 @@ public abstract class AbstractObjectList
      * @return the object list or null 
      */
     protected DataCollection getObjects(HttpServletRequest request,
-            HttpServletResponse response) {
+                                        HttpServletResponse response) {
 
         // Stop here, if the set object type is invalid a.k.a. not installed
         if (m_definition.hasInvalidObjectType()) {
@@ -92,7 +92,7 @@ public abstract class AbstractObjectList
     }
 
     public Element generateObjectListXML(HttpServletRequest request,
-            HttpServletResponse response) {
+                                         HttpServletResponse response) {
         Assert.isLocked(this);
 
         String pageNumberValue = request.getParameter("pageNumber");
@@ -116,17 +116,22 @@ public abstract class AbstractObjectList
             if (Kernel.getConfig().languageIndependentItems()) {
                 FilterFactory ff = objects.getFilterFactory();
                 Filter filter = ff.or().
-                        addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())).
-                        addFilter(ff.and().
-                            addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                            addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                        addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.
+                        getNegotiatedLocale().getLanguage())).
+                        addFilter(
+                        ff.and().
+                        addFilter(ff.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
+                        addFilter(ff.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set(
+                        "language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage())));
                 objects.addFilter(filter);
             } else {
-                objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale().getLanguage());
+                objects.addEqualsFilter("language", com.arsdigita.globalization.GlobalizationHelper.
+                        getNegotiatedLocale().getLanguage());
             }
         }
         // Quasimodo: End
 
         return m_renderer.generateXML(objects, pageNumber.intValue());
     }
+
 }

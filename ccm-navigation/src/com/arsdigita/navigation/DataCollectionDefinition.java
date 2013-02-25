@@ -283,6 +283,7 @@ public class DataCollectionDefinition extends LockableImpl {
                         getCategorizedObjectPath("id"),
                         "com.arsdigita.categorization.objectIDsInSubtree");
                 children.set("categoryID", cat.getID());
+                
                 if (m_excludeIndexObjects) {
                     Filter moreChildren =
                            objects.addNotInSubqueryFilter(
@@ -294,6 +295,7 @@ public class DataCollectionDefinition extends LockableImpl {
                 objects.addEqualsFilter(
                         getCategorizedObjectPath("categories.id"),
                         cat.getID());
+                
                 if (m_excludeIndexObjects) {
                     Filter moreChildren =
                            objects.addNotInSubqueryFilter(
