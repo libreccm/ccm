@@ -39,6 +39,8 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -54,6 +56,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
     private final Table resultsTable;
     private final Paginator paginator;
     private final StringParameter queryParam;
+    private final List<String> queryFields = new ArrayList<String>();
     private final Submit submit;
     private final static CMSConfig CMS_CONFIG = CMSConfig.getInstance();
 
@@ -61,14 +64,14 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         super(name);
 
         setIdAttr("itemSearchFlatBrowse");
-        
+
         final BoxPanel mainPanel = new BoxPanel(BoxPanel.VERTICAL);
 
         queryParam = new StringParameter(QUERY_PARAM);
 
-        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);        
+        final BoxPanel boxPanel = new BoxPanel(BoxPanel.HORIZONTAL);
         boxPanel.add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.filter")));
-        final TextField filter = new TextField(new StringParameter(QUERY_PARAM));        
+        final TextField filter = new TextField(new StringParameter(QUERY_PARAM));
         boxPanel.add(filter);
         submit = new Submit(FILTER_SUBMIT, GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit"));
         boxPanel.add(submit);
@@ -79,8 +82,8 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
                                   CMS_CONFIG.getItemSearchFlatBrowsePanePageSize());
         mainPanel.add(paginator);
 
-        mainPanel.add(resultsTable);       
-        
+        mainPanel.add(resultsTable);
+
         add(mainPanel);
 
         addInitListener(this);
@@ -101,7 +104,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
         if ((query == null) || query.isEmpty()) {
             data.setParameter(QUERY_PARAM,
                               new ParameterData(queryParam, state.getValue(new StringParameter(ItemSearchPopup.QUERY))));
-            state.setValue(queryParam, data.getParameter(QUERY_PARAM).getValue());            
+            state.setValue(queryParam, data.getParameter(QUERY_PARAM).getValue());
         }
     }
 
@@ -111,6 +114,10 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
 
         state.setValue(queryParam, data.get(QUERY_PARAM));
         state.setValue(new StringParameter(ItemSearchPopup.QUERY), data.get(QUERY_PARAM));
+    }
+
+    public void addQueryField(final String queryField) {
+        queryFields.add(queryField);
     }
 
     private class ResultsTable extends Table {
@@ -181,15 +188,26 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
                 final ContentType type = new ContentType(typeId);
                 collection.set(state, session.retrieve(type.getClassName()));
             }
-            ((DataCollection)collection.get(state)).addFilter("version = 'draft'");
-            ((DataCollection)collection.get(state)).addFilter("section is not null");
+            ((DataCollection) collection.get(state)).addFilter("version = 'draft'");
+            ((DataCollection) collection.get(state)).addFilter("section is not null");
 
             final String query = (String) state.getValue(queryParam);
             if ((query != null) && !query.isEmpty()) {
-                ((DataCollection) collection.get(state)).addFilter(String.format(
-                        "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%')))",
+                final StringBuffer buffer = new StringBuffer(String.format(
+                        "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
                         ContentItem.NAME, query,
-                        ContentPage.TITLE, query));               
+                        ContentPage.TITLE, query));
+                for (String field : queryFields) {
+                    buffer.append(String.format(" or (lower(%s) like lower('%%%s%%'))", field, query));
+                }
+                buffer.append(')');
+
+                ((DataCollection) collection.get(state)).addFilter(buffer.toString());
+
+//                ((DataCollection) collection.get(state)).addFilter(String.format(
+//                        "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%')))",
+//                        ContentItem.NAME, query,
+//                        ContentPage.TITLE, query));
             }
 
             ((DataCollection) collection.get(state)).addOrder("title asc, name asc");
@@ -306,9 +324,11 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
 
             return link;
         }
+
     }
-    
+
     protected Submit getSubmit() {
         return submit;
     }
+
 }

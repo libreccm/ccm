@@ -115,6 +115,7 @@ class ItemSearchCreateItemPane extends CMSContainer
      */
     public ItemSearchCreateItemPane(final ItemSearchPage parent) {
         super();
+        m_model = new ParameterSingleSelectionModel(new BigDecimalParameter(FOLDER_ID));
         m_folderSel = new FolderSelectionModel(m_model);
         m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
         init();
@@ -126,6 +127,7 @@ class ItemSearchCreateItemPane extends CMSContainer
      */
     public ItemSearchCreateItemPane(final CMSItemSearchPage parent) {
         super();
+        m_model = new ParameterSingleSelectionModel(new BigDecimalParameter(FOLDER_ID));
         m_folderSel = new FolderSelectionModel(m_model);
         m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
         init();
@@ -145,7 +147,7 @@ class ItemSearchCreateItemPane extends CMSContainer
 
         // m_newItem = new SectionNewItemForm("newItem");
 
-        m_model = new ParameterSingleSelectionModel(new BigDecimalParameter(FOLDER_ID));
+        //m_model = new ParameterSingleSelectionModel(new BigDecimalParameter(FOLDER_ID));
         // m_folderSel = new FolderSelectionModel(m_model);
 
         this.setIdAttr("folder-new-item");

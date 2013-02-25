@@ -78,6 +78,7 @@ public class ItemSearchWidget extends FormSection
     private String m_searchName;
     private String m_clearName;
     private Folder m_defaultCreationFolder;
+    private String m_queryField;
     private ParameterModel m_model;
     private ParameterModel m_searchModel;
     private boolean disableCreatePane = false;
@@ -282,6 +283,10 @@ public class ItemSearchWidget extends FormSection
 
                 if (m_defaultCreationFolder != null) {
                     params.setParameter("defaultCreationFolder", m_defaultCreationFolder.getOID().toString());
+                }
+                
+                if (m_queryField != null) {
+                    params.setParameter("queryField", m_queryField);
                 }
 
                 String searchURL = ContentCenterServlet.getURLStubForClass(
@@ -507,6 +512,10 @@ public class ItemSearchWidget extends FormSection
         m_defaultCreationFolder = folder;
     }
 
+    public void setQueryField(final String queryField) {
+        m_queryField = queryField;
+    }
+    
     public void publishCreatedItem(final FormData data, final ContentItem item) {
         final String publishStr = data.getString(ItemSearchWidget.PUBLISH);
         final Boolean publish = Boolean.valueOf(publishStr);

@@ -22,9 +22,7 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.SimpleCache;
 import com.arsdigita.cms.ui.CMSApplicationPage;
-import com.arsdigita.cms.ui.CMSItemSearchPage;
 import com.arsdigita.cms.ui.CMSSearchResultRedirector;
-// Old version (dispatcher based) of CMSItemSearchPage
 import com.arsdigita.cms.ui.ItemSearchPage;
 import com.arsdigita.cms.ui.contentcenter.MainPage;
 import com.arsdigita.developersupport.DeveloperSupport;
@@ -37,21 +35,21 @@ import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
 import com.arsdigita.ui.login.LoginHelper;
 import com.arsdigita.util.Assert;
-import com.arsdigita.web.*;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationFileResolver;
+import com.arsdigita.web.BaseApplicationServlet;
+import com.arsdigita.web.LoginSignal;
+import com.arsdigita.web.Web;
 import com.arsdigita.xml.Document;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -97,27 +95,27 @@ public class ContentCenterServlet extends BaseApplicationServlet {
             s_log.info("starting doInit method");
         }
 
-        //      DEPRECATED STUFF for servlet internally process pages, maybe required
-//      for JSP extension.        
-   //   m_trailingSlashList = new ArrayList();
-   //   requireTrailingSlash("");
+        // DEPRECATED STUFF for servlet internally process pages, maybe required
+        //  for JSP extension.        
+        //   m_trailingSlashList = new ArrayList();
+        //   requireTrailingSlash("");
 
-//  NEW STUFF here used to process the pages in this servlet
+        // NEW STUFF here used to process the pages in this servlet
         // Addresses previously noted in WEB-INF/resources/content-center-map.xml
         // Obviously not required.
         addPage("/", new MainPage());     // index page at address ~/cc
-        addPage("/index", new MainPage());     
+        addPage("/index", new MainPage());
         // addPage("/item-search", new CMSItemSearchPage()); 
         //  Old style
         addPage("/item-search", new ItemSearchPage());
         addPage("/searchredirect", new CMSSearchResultRedirector());
 
 
-//  STUFF to use for JSP extension, i.e. jsp's to try for URLs which are not
-//  handled by the this servlet directly.
+        //  STUFF to use for JSP extension, i.e. jsp's to try for URLs which are not
+        //  handled by the this servlet directly.
         /** Set Template base path for JSP's                                  */
         // ToDo: Make it configurable by an appropriate config registry entry!
-//        m_templatePath = CMS.getConfig().getTemplateRoot();
+        //        m_templatePath = CMS.getConfig().getTemplateRoot();
         m_templatePath = "/templates/ccm-cms/content-center";
         Assert.exists(m_templatePath, String.class);
         Assert.isTrue(m_templatePath.startsWith("/"),
@@ -136,16 +134,16 @@ public class ContentCenterServlet extends BaseApplicationServlet {
      *      (HttpServletRequest, HttpServletResponse, Application)
      */
     protected void doService(HttpServletRequest sreq,
-                              HttpServletResponse sresp,
-                              Application app)
-                   throws ServletException, IOException {
+                             HttpServletResponse sresp,
+                             Application app)
+            throws ServletException, IOException {
 
         if (s_log.isDebugEnabled()) {
             s_log.info("starting doService method");
         }
         DeveloperSupport.startStage("ContentCenterServlet.doService");
 
-   //   ContentCenter workspace = (ContentCenter) app;
+        //   ContentCenter workspace = (ContentCenter) app;
 
         /*       Check user and privilegies                                   */
         if (Web.getContext().getUser() == null) {   // user not logged in
@@ -186,10 +184,10 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         // probably want to redirect.
         // Probably DEPRECATED with new access method or only relevant for jsp
         // extension
-    //  if (m_trailingSlashList.contains(url) && !originalUrl.endsWith("/")) {
-    //      DispatcherHelper.sendRedirect(sresp, originalUrl + "/");
-    //      return;
-    //  }
+        //  if (m_trailingSlashList.contains(url) && !originalUrl.endsWith("/")) {
+        //      DispatcherHelper.sendRedirect(sresp, originalUrl + "/");
+        //      return;
+        //  }
 
 
         final Page page = (Page) m_pages.get(pathInfo);
@@ -206,7 +204,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
                 cmsPage.dispatch(sreq, sresp, ctx);
             } else {
                 final CMSApplicationPage cmsAppPage = (CMSApplicationPage) page;
-                cmsAppPage.init(sreq,sresp,app);
+                cmsAppPage.init(sreq, sresp, app);
                 // Serve the page.            
                 final Document doc = cmsAppPage.buildDocument(sreq, sresp);
 
@@ -232,8 +230,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
                 rd.forward(sreq, sresp);
             } else {
                 // String requestUri = sreq.getRequestURI();
-                sresp.sendError(404, sreq.getRequestURI() + 
-                                      " not found on this server.");
+                sresp.sendError(404, sreq.getRequestURI() + " not found on this server.");
             }
 
         }
@@ -274,8 +271,8 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         Iterator itr = s_pageURLs.keySet().iterator();
         while (itr.hasNext()) {
             String classname2 = (String) itr.next();
-            s_log.debug("key: " + classname + " value: "  
-                                + (String) s_pageURLs.get(classname2));
+            s_log.debug("key: " + classname + " value: "
+                        + (String) s_pageURLs.get(classname2));
         }
         String url = (String) s_pageURLs.get(classname);
         return url;
@@ -302,7 +299,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
      * @param actx     The request context
      **/
     protected void checkUserAccess(final HttpServletRequest request,
-                                    final HttpServletResponse response //,
+                                   final HttpServletResponse response //,
             ///                                 final RequestContext actx
             )
             throws ServletException {
@@ -320,8 +317,8 @@ public class ContentCenterServlet extends BaseApplicationServlet {
      * trying to redirect, wrap that exception in a ServletException
      **/
     protected void redirectToLoginPage(HttpServletRequest req,
-                                         HttpServletResponse resp)
-                   throws ServletException {
+                                       HttpServletResponse resp)
+            throws ServletException {
         String url = Util.getSecurityHelper()
                 .getLoginURL(req)
                      + "?" + LoginHelper.RETURN_URL_PARAM_NAME

@@ -84,6 +84,7 @@ public class ItemSearchPage extends CMSPage {
         addGlobalStateParam(new IntegerParameter("lastTab"));
         addGlobalStateParam(new BooleanParameter("disableCreatePane"));
         addGlobalStateParam(new BooleanParameter("editAfterCreate"));
+        addGlobalStateParam(new StringParameter("queryField"));        
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
         addGlobalStateParam(m_sectionId);
 
@@ -134,6 +135,10 @@ public class ItemSearchPage extends CMSPage {
                 
                 if (state.getValue(new BooleanParameter("editAfterCreate")) != null) {
                     m_create.setEditAfterCreate((Boolean) state.getValue(new BooleanParameter("editAfterCreate")));
+                }
+                
+                if (state.getValue(new StringParameter("queryField")) != null) {
+                    m_flatBrowse.addQueryField((String) state.getValue(new StringParameter("queryField")));
                 }
 
 //                if (m_lastTab != m_tabbedPane.getSelectedIndex(state)) {

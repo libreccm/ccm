@@ -88,7 +88,6 @@ import org.apache.log4j.Logger;
  * - Refactor content item UI bebop ApplicationPage or PageFactory instead of
  *   legacy infected sitenode / package dispatchers.
  */
-
 /**
  * Content Section's Application Servlet according CCM core web application
  * structure {@see com.arsdigita.web.Application}  implements the content
@@ -101,15 +100,13 @@ import org.apache.log4j.Logger;
  * @author Sören Bernstein <sbernstein@quasiweb.de>
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  */
-
 public class ContentSectionServlet extends BaseApplicationServlet {
 
     /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log =
                                 Logger.getLogger(ContentSectionServlet.class);
-
     /** Stringarray of file name patterns for index files.                   */
-    private static final String[] WELCOME_FILES = new String[] {
+    private static final String[] WELCOME_FILES = new String[]{
         "index.jsp", "index.html"
     };
     /** The context (in url) for previewing items                            */
@@ -124,23 +121,17 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     public static final String XML_SUFFIX = ".xml";
     public static final String XML_MODE = "xmlMode";
     public static final String MEDIA_TYPE = "templateContext";
-    
     private static final String CACHE_KEY_DELIMITER = "%";
-
-
     private ContentItemDispatcher m_disp = new ContentItemDispatcher();
-
     public static Map s_itemResolverCache = Collections
-                                            .synchronizedMap(new HashMap());
+            .synchronizedMap(new HashMap());
     /** cache the content items                                              */
     private static Map s_itemURLCacheMap = null;
     private static boolean s_cacheItems = true;
-
     //  NEW STUFF here used to process the pages in this servlet
     /** URL (pathinfo) -> Page object mapping. Based on it (and the http
      *  request url) the doService method selects a page to display          */
     private final Map m_pages = new HashMap();
-
     /** Path to directory containg ccm-cms template (jsp) files             */
     private String m_templatePath;
     // Probably compatibility stuff, based on dispatcher
@@ -153,7 +144,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * If not specified system wide defaults are used.
      */
     @Override
-    public void init(ServletConfig config)  throws ServletException {
+    public void init(ServletConfig config) throws ServletException {
 
         super.init(config);
 
@@ -168,27 +159,26 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
         Assert.exists(m_templatePath, String.class);
         Assert.isTrue(m_templatePath.startsWith("/"),
-                     "template-path must start with '/'");
+                      "template-path must start with '/'");
         Assert.isTrue(!m_templatePath.endsWith("/"),
-                     "template-path must not end with '/'");
+                      "template-path must not end with '/'");
 
-        
+
         // optional init-param named file-resolver from ~/WEB-INF/web.xml
         String resolverName = config.getInitParameter("file-resolver");
         if (resolverName == null) {
             m_resolver = Web.getConfig().getApplicationFileResolver();
         } else {
-            m_resolver = (ApplicationFileResolver)Classes.newInstance(resolverName);
+            m_resolver = (ApplicationFileResolver) Classes.newInstance(resolverName);
         }
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Template path is " + m_templatePath +
-                        " with resolver " + m_resolver.getClass().getName());
+            s_log.debug("Template path is " + m_templatePath + " with resolver " + m_resolver.getClass().getName());
         }
 
         //  NEW STUFF here used to process the pages in this servlet
-   //   addPage("/admin", new MainPage());     // index page at address ~/cs
-   //   addPage("/admin/index.jsp", new MainPage());     
-   //   addPage("/admin/item.jsp", new MainPage());     
+        //   addPage("/admin", new MainPage());     // index page at address ~/cs
+        //   addPage("/admin/index.jsp", new MainPage());     
+        //   addPage("/admin/item.jsp", new MainPage());     
 
     }
 
@@ -200,13 +190,13 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * {@see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)}
      */
-    protected void doService( HttpServletRequest sreq, 
-                               HttpServletResponse sresp, 
-                               Application app)
-                   throws ServletException, IOException {
+    protected void doService(HttpServletRequest sreq,
+                             HttpServletResponse sresp,
+                             Application app)
+            throws ServletException, IOException {
 
         ContentSection section = (ContentSection) app;
-        
+
         // ////////////////////////////////////////////////////////////////////
         // Prepare OLD style dispatcher based page service
         // ////////////////////////////////////////////////////////////////////
@@ -217,19 +207,20 @@ public class ContentSectionServlet extends BaseApplicationServlet {
          * SiteNodeRequestContext removed, resolves currently to 
          * KernelRequestContext which will be removed as well.
          */
-        RequestContext ctx = DispatcherHelper.getRequestContext();        
+        RequestContext ctx = DispatcherHelper.getRequestContext();
         String url = ctx.getRemainingURLPart();  // here KernelRequestContext now
         if (s_log.isInfoEnabled()) {
             s_log.info("Resolving item URL " + url);
         }
         final ItemResolver itemResolver = getItemResolver(section);
-        final ContentItem item = getItem(section, url, itemResolver);
 
-        
         // ////////////////////////////////////////////////////////////////////
         // Prepare NEW style servlet based bebpo page service
         // ////////////////////////////////////////////////////////////////////
         String pathInfo = sreq.getPathInfo();
+
+        final ContentItem item = getItem(section, pathInfo, itemResolver);
+
         Assert.exists(pathInfo, "String pathInfo");
         if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
             /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
@@ -254,12 +245,12 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             if (page instanceof CMSPage) {
                 // backwards compatibility fix until migration completed
                 final CMSPage cmsPage = (CMSPage) page;
-            //  final RequestContext ctx = DispatcherHelper.getRequestContext();
+                //  final RequestContext ctx = DispatcherHelper.getRequestContext();
                 cmsPage.init();
                 cmsPage.dispatch(sreq, sresp, ctx);
             } else {
                 final CMSApplicationPage cmsAppPage = (CMSApplicationPage) page;
-                cmsAppPage.init(sreq,sresp,app);
+                cmsAppPage.init(sreq, sresp, app);
                 // Serve the page.            
                 final Document doc = cmsAppPage.buildDocument(sreq, sresp);
 
@@ -267,9 +258,9 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 pm.servePage(doc, sreq, sresp);
             }
 
-        /* SECONDLY try if we have to serve an item (old style dispatcher based */
+            /* SECONDLY try if we have to serve an item (old style dispatcher based */
         } else if (item != null) {
-            
+
             /* We have to serve an item here                                 */
             String param = sreq.getParameter("transID");
 
@@ -281,6 +272,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                     public void beforeCommit(TransactionContext txn) {
                         Assert.fail("uncommittable transaction");
                     }
+
                 });
 
                 Kernel.getContext().getTransaction().setCommitRequested(false);
@@ -290,8 +282,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             }
 
             serveItem(sreq, sresp, section, item);
-            
-        /* OTHERWISE delegate to a JSP in file system */
+
+            /* OTHERWISE delegate to a JSP in file system */
         } else {
 
             /* We have to deal with a content-section, folder or an other bit*/
@@ -310,15 +302,14 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                     s_log.debug("Got dispatcher " + rd);
                 }
                 sreq = DispatcherHelper.restoreOriginalRequest(sreq);
-                rd.forward(sreq,sresp);
+                rd.forward(sreq, sresp);
             } else {
-            //  sresp.sendError(404, packageURL + " not found on this server.");
+                //  sresp.sendError(404, packageURL + " not found on this server.");
                 String requestUri = sreq.getRequestURI(); // same as ctx.getRemainingURLPart()
                 sresp.sendError(404, requestUri + " not found on this server.");
             }
         }
     }   // END doService
-
 
     /** 
      * 
@@ -333,7 +324,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                            HttpServletResponse sresp,
                            ContentSection section,
                            ContentItem item)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         //this is a content item, so use ContentItemDispatcher
         if (s_log.isInfoEnabled()) {
             s_log.info("serving content item");
@@ -350,14 +341,14 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
         //set the template context
         TemplateResolver templateResolver =
-            m_disp.getTemplateResolver(section);
+                         m_disp.getTemplateResolver(section);
         String templateURL = url;
         if (!templateURL.startsWith("/")) {
-            templateURL = "/" + templateURL; 
+            templateURL = "/" + templateURL;
         }
         if (templateURL.startsWith(PREVIEW)) {
             templateURL = templateURL.substring(PREVIEW.length());
-        } 
+        }
 
         String sTemplateContext = itemResolver.getTemplateFromURL(templateURL);
         if (s_log.isDebugEnabled()) {
@@ -373,8 +364,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             Date endDate = cycle.getEndDate();
 
             if (endDate != null) {
-                int maxAge = (int) ((endDate.getTime() - 
-                                     System.currentTimeMillis()) / 1000l);
+                int maxAge = (int) ((endDate.getTime() - System.currentTimeMillis()) / 1000l);
                 if (maxAge < expires) {
                     expires = maxAge;
                 }
@@ -386,8 +376,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         // this page to be publically cached
         if (s_cacheItems && item.isLiveVersion()) {
             SecurityManager sm = new SecurityManager(section);
-            if (sm.canAccess
-                ((User) null, SecurityManager.PUBLIC_PAGES, item)) {
+            if (sm.canAccess((User) null, SecurityManager.PUBLIC_PAGES, item)) {
                 DispatcherHelper.cacheForWorld(sresp, expires);
             } else {
                 DispatcherHelper.cacheForUser(sresp, expires);
@@ -397,7 +386,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         }
 
         //use ContentItemDispatcher
-        m_disp.dispatch(sreq,sresp,ctx);
+        m_disp.dispatch(sreq, sresp, ctx);
     }
 
     /**
@@ -418,7 +407,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
         m_pages.put(pathInfo, page);
     }
-    
+
     /**
      * Fetches the content section from the request attributes.
      *
@@ -441,7 +430,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         String path = section.getPath();
         ItemResolver ir = (ItemResolver) s_itemResolverCache.get(path);
 
-        if ( ir == null ) {
+        if (ir == null) {
             ir = section.getItemResolver();
             s_itemResolverCache.put(path, ir);
         }
@@ -467,7 +456,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         //first sanitize the url
         if (url.endsWith(XML_SUFFIX)) {
             request.setAttribute(XML_MODE, Boolean.TRUE);
-            s_log.debug ("StraightXML Requested");
+            s_log.debug("StraightXML Requested");
             url = "/" + url.substring(0, url.length() - XML_SUFFIX.length());
         } else {
             request.setAttribute(XML_MODE, Boolean.FALSE);
@@ -502,8 +491,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
             item = itemResolver.getItem(section, url, CMSDispatcher.PREVIEW);
             if (item != null) {
-                hasPermission = sm.canAccess
-                    (request, SecurityManager.PREVIEW_PAGES, item);
+                hasPermission = sm.canAccess(request, SecurityManager.PREVIEW_PAGES, item);
             }
         } else {
             if (s_log.isInfoEnabled()) {
@@ -513,21 +501,18 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             //check if this item is in the cache
             //we only cache live items
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Trying to get content item for URL " + url +
-                            " from cache");
+                s_log.debug("Trying to get content item for URL " + url + " from cache");
             }
-            
+
             // Get the negotiated locale
             String lang = GlobalizationHelper.getNegotiatedLocale().getLanguage();
-            
+
             item = itemURLCacheGet(section, url, lang);
             item = null;
 
             if (item == null) {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug
-                        ("Did not find content item in cache, so trying " +
-                         "to retrieve and cache...");
+                    s_log.debug("Did not find content item in cache, so trying " + "to retrieve and cache...");
                 }
                 //item not cached, so retreive it and cache it
                 item = itemResolver.getItem(section, url, ContentItem.LIVE);
@@ -537,8 +522,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             }
 
             if (s_log.isDebugEnabled() && item != null) {
-                s_log.debug
-                    ("Sanity check: item.getPath() is " + item.getPath());
+                s_log.debug("Sanity check: item.getPath() is " + item.getPath());
             }
 
             if (item != null) {
@@ -551,7 +535,6 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                                              item);
 
                 if (hasPermission) {
-                    
                 }
             }
         }
@@ -577,8 +560,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             }
         }
 
-        if (!hasPermission &&
-            !LocalRequestPassword.validLocalRequest(request)) {
+        if (!hasPermission && !LocalRequestPassword.validLocalRequest(request)) {
 
             // first, check if the user is logged-in
             // if he isn't, give him a chance to do so...
@@ -600,12 +582,11 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     }
 
     //  synchronize access to the item-url cache
-
-    private static synchronized void itemURLCachePut(ContentSection section, 
+    private static synchronized void itemURLCachePut(ContentSection section,
                                                      String sURL,
                                                      String lang,
                                                      BigDecimal itemID) {
-        
+
         getItemURLCache(section).put(sURL + CACHE_KEY_DELIMITER + lang, itemID);
     }
 
@@ -615,7 +596,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * @param sURL the URL at which the content item s published
      * @param item the content item at the URL
      */
-    public static synchronized void itemURLCachePut(ContentSection section, 
+    public static synchronized void itemURLCachePut(ContentSection section,
                                                     String sURL,
                                                     String lang,
                                                     ContentItem item) {
@@ -634,7 +615,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * @param section the content section in which to remove the key
      * @param sURL the cache entry key to remove
      */
-    public static synchronized void itemURLCacheRemove(ContentSection section, 
+    public static synchronized void itemURLCacheRemove(ContentSection section,
                                                        String sURL,
                                                        String lang) {
         if (s_log.isDebugEnabled()) {
@@ -649,7 +630,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * @param sURL the URL for the item to fetch
      * @return the ContentItem in the cache, or null
      */
-    public static ContentItem itemURLCacheGet(ContentSection section, 
+    public static ContentItem itemURLCacheGet(ContentSection section,
                                               final String sURL,
                                               final String lang) {
         final BigDecimal itemID = (BigDecimal) getItemURLCache(section)
@@ -659,8 +640,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             return null;
         } else {
             try {
-                return (ContentItem) DomainObjectFactory.newInstance
-                    (new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemID));
+                return (ContentItem) DomainObjectFactory.newInstance(new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemID));
             } catch (DataObjectNotFoundException donfe) {
                 return null;
             }
@@ -683,9 +663,9 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             String idStr = section.getID().toString();
             String path = section.getPath();
             CacheTable itemURLCache =
-                new CacheTable("ContentSectionServletItemURLCache" + idStr);
+                       new CacheTable("ContentSectionServletItemURLCache" + idStr);
             s_itemURLCacheMap.put(path, itemURLCache);
-            
+
         }
     }
 
@@ -695,15 +675,15 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     public static boolean checkAdminAccess(HttpServletRequest request,
                                            ContentSection section) {
 
-        User user ;
+        User user;
         KernelContext kernelContext = Kernel.getContext();
-        if ( kernelContext.getParty() instanceof User ) {
+        if (kernelContext.getParty() instanceof User) {
             user = (User) kernelContext.getParty();
         } else {
             // Should not happen, at this stage the user has to be logged in.
             return false;
         }
-        
+
         SecurityManager sm = new SecurityManager(section);
 
         return sm.canAccess(user, SecurityManager.ADMIN_PAGES);
