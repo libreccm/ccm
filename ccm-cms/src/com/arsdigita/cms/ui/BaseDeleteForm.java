@@ -53,6 +53,7 @@ public abstract class BaseDeleteForm extends BaseForm
         this(new Label(message));
     }
 
+    @Override
     public final boolean isCancelled(final PageState state) {
         return m_cancel.isSelected(state);
     }

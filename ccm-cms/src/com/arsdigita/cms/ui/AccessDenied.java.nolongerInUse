@@ -23,6 +23,14 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
+
+//
+// As of version 6.6.8 no longer used anywhere in code.
+// Nevertheless, access privilegies are to be handled by kernel in a central
+// manner for all modules in the same way.
+//
+
+
 /**
  * <p>Access Denied page</p>
  *
@@ -35,7 +43,8 @@ public class AccessDenied extends CMSPage {
         super("Access Denied");
         setClassAttr("AccessDenied");
 
-        add(new Label(GlobalizationUtil.globalize("cms.ui.you_do_not_have_sufficient_privileges_to_access_this_page")));
+        add(new Label(GlobalizationUtil.globalize(
+                "cms.ui.you_do_not_have_sufficient_privileges_to_access_this_page")));
         init();
     }
 }

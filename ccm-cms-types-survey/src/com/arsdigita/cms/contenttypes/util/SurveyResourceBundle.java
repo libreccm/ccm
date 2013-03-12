@@ -2,7 +2,7 @@ package com.arsdigita.cms.contenttypes.util;
 
 import java.util.PropertyResourceBundle;
 import com.arsdigita.globalization.ChainedResourceBundle;
-import com.arsdigita.cms.CMSGlobalized;
+import com.arsdigita.cms.util.CMSGlobalized;
 
 public class SurveyResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
 

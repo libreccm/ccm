@@ -18,7 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes.util;
 
-import com.arsdigita.cms.CMSGlobalized;
+import com.arsdigita.cms.util.CMSGlobalized;
 import com.arsdigita.globalization.ChainedResourceBundle;
 
 import java.util.PropertyResourceBundle;

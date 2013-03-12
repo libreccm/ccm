@@ -21,7 +21,7 @@ package com.arsdigita.cms.contenttypes.util;
 
 import java.util.PropertyResourceBundle;
 import com.arsdigita.globalization.ChainedResourceBundle;
-import com.arsdigita.cms.CMSGlobalized;
+import com.arsdigita.cms.util.CMSGlobalized;
 
 public class ContenttypesResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
     public static final String MEMBER_BUNDLE_NAME =

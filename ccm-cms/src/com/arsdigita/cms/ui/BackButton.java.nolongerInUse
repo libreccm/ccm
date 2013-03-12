@@ -29,12 +29,17 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import javax.servlet.ServletException;
 
 
+// As of version 6.6.8 not used anywhere in CMS. By design deprecated! E.g. an
+// image is part of the theme and should not be hardcoded in java. 
+
+
 /**
  * Sticks a back button in the upper right hand corner of the component.
  * Just override the back(PageState s) method to use.
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Id: BackButton.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated without replacement
  */
 public class BackButton extends ColumnPanel {
 

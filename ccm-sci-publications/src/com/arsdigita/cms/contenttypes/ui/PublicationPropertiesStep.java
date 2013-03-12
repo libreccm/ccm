@@ -23,7 +23,7 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.cms.CMSGlobalized;
+import com.arsdigita.cms.util.CMSGlobalized;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;

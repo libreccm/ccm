@@ -29,10 +29,11 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author <a href="mailto:yon@arsdigita.com">yon@arsdigita.com</a>
  * @version $Revision: #7 $ $Date: 2004/08/17 $
  */
-
 public class GlobalizationUtil {
 
-	public static String s_bundleName = "com.arsdigita.cms.util.CMSResourceBundle";
+    /** */	
+    public static String s_bundleName = 
+                         "com.arsdigita.cms.util.CMSResourceBundle";
 
 	public static GlobalizedMessage globalize(String key) {
 		return new GlobalizedMessage(key, getBundleName());
@@ -40,6 +41,10 @@ public class GlobalizationUtil {
 
 	public static GlobalizedMessage globalize(String key, Object[] args) {
 		return new GlobalizedMessage(key, getBundleName(), args);
+	}
+	
+	public static String getBundleName() {
+		return s_bundleName;
 	}
 
 	/*
@@ -49,10 +54,6 @@ public class GlobalizationUtil {
 	 */
 	public static void internalSetBundleName(String bundleName) {
 		s_bundleName = bundleName;
-	}
-	
-	public static String getBundleName() {
-		return s_bundleName;
 	}
 	
 }

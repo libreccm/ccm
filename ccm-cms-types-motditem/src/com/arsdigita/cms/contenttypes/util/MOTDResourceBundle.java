@@ -20,7 +20,7 @@ package com.arsdigita.cms.contenttypes.util;
 
 import java.util.PropertyResourceBundle;
 import com.arsdigita.globalization.ChainedResourceBundle;
-import com.arsdigita.cms.CMSGlobalized;
+import com.arsdigita.cms.util.CMSGlobalized;
 
 /**
  * Form to edit the basic properties of an motd. This form can be extended to

@@ -29,7 +29,6 @@ import com.arsdigita.globalization.GlobalizedMessage;
  *
  * @version $Revision: #6 $ $Date: 2004/08/16 $
  */
-
 public class GlobalizationUtil implements Globalized {
     
     private static final String BUNDLE_NAME = "com.arsdigita.ui.UIResources";
