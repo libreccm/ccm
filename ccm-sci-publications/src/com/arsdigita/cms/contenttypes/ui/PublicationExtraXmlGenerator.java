@@ -41,7 +41,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         createAuthorsXml(publication, element, state);
         createSeriesXml(publication, element, state);
         if (!listMode) {
-            createOrgaUnitsXml(publication, element, state);            
+            createOrgaUnitsXml(publication, element, state);
 
             final List<PublicationFormat> formats = SciPublicationsExporters.getInstance().getSupportedFormats();
 
@@ -120,16 +120,21 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         final Element seriesElem = parent.newChildElement("series");
         while (series.next()) {
             createSeriesElemXml(series.getSeries(GlobalizationHelper.getNegotiatedLocale().getLanguage()),
+                                series.getVolumeOfSeries(),
                                 seriesElem,
                                 state);
         }
     }
 
     private void createSeriesElemXml(final Series series,
+                                     final Integer volumeOfSeries,
                                      final Element seriesElem,
                                      final PageState state) {
         final XmlGenerator generator = new XmlGenerator(series);
         generator.setItemElemName("series", "");
+        if (volumeOfSeries != null) {
+            generator.addItemAttribute("volume", volumeOfSeries.toString());
+        }
         generator.setListMode(listMode);
         generator.generateXML(state, seriesElem, "");
     }
