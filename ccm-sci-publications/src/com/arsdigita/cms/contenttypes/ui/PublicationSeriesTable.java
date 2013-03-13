@@ -44,6 +44,7 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
+import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
@@ -54,38 +55,40 @@ public class PublicationSeriesTable
         extends Table
         implements TableActionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(PublicationSeriesTable.class);
-    private final String TABLE_COL_EDIT = "table_col_edit";
-    private final String TABLE_COL_DEL = "table_col_del";
-    private ItemSelectionModel m_itemModel;
+    private static final Logger LOGGER = Logger.getLogger(PublicationSeriesTable.class);
+    private final static String TABLE_COL_EDIT = "table_col_edit";
+    private final static String TABLE_COL_NUMBER = "table_col_edit";
+    private final static String TABLE_COL_DEL = "table_col_del";
+    private final ItemSelectionModel m_itemModel;
 
-    public PublicationSeriesTable(ItemSelectionModel itemModel) {
+    public PublicationSeriesTable(final ItemSelectionModel itemModel) {
         super();
         m_itemModel = itemModel;
 
-        setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.none")));
+        setEmptyView(new Label(PublicationGlobalizationUtil.globalize("publications.ui.series.none")));
 
-        TableColumnModel colModel = getColumnModel();
+        final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.title").localize(),
+                PublicationGlobalizationUtil.globalize("publications.ui.series.title").localize(),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.remove").localize(),
+                PublicationGlobalizationUtil.globalize("publications.ui.series.number").localize(),
+                TABLE_COL_NUMBER));
+        colModel.add(new TableColumn(
+                2,
+                PublicationGlobalizationUtil.globalize("publications.ui.series.remove").localize(),
                 TABLE_COL_DEL));
 
         setModelBuilder(
                 new PublicationSeriesTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
-        colModel.get(1).setCellRenderer(new DeleteCellRenderer());
+        colModel.get(1).setCellRenderer(new NumberCellRenderer());
+        colModel.get(2).setCellRenderer(new DeleteCellRenderer());
 
-        s_log.info("Adding table action listener...");
+        LOGGER.info("Adding table action listener...");
         addTableActionListener(this);
     }
 
@@ -93,7 +96,7 @@ public class PublicationSeriesTable
             extends LockableImpl
             implements TableModelBuilder {
 
-        private ItemSelectionModel m_itemModel;
+        private final ItemSelectionModel m_itemModel;
 
         public PublicationSeriesTableModelBuilder(
                 ItemSelectionModel itemModel) {
@@ -107,6 +110,7 @@ public class PublicationSeriesTable
                     getSelectedObject(state);
             return new PublicationSeriesTableModel(table, state, publication);
         }
+
     }
 
     private class PublicationSeriesTableModel implements TableModel {
@@ -148,6 +152,8 @@ public class PublicationSeriesTable
                 case 0:
                     return m_series.getTitle();
                 case 1:
+                    return m_series.getTitle();
+                case 2:
                     return PublicationGlobalizationUtil.globalize(
                             "publications.ui.series.remove").localize();
                 default:
@@ -159,6 +165,7 @@ public class PublicationSeriesTable
         public Object getKeyAt(int columnIndex) {
             return m_series.getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -188,9 +195,9 @@ public class PublicationSeriesTable
                 try {
                     series = new Series((BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
-                    s_log.warn(String.format("No object with key '%s' found.",
-                                             key),
-                               ex);
+                    LOGGER.warn(String.format("No object with key '%s' found.",
+                                              key),
+                                ex);
                     return new Label(value.toString());
                 }
 
@@ -211,18 +218,51 @@ public class PublicationSeriesTable
                 try {
                     series = new Series((BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
-                    s_log.warn(String.format("No object with key '%s' found.",
-                                             key),
-                               ex);
+                    LOGGER.warn(String.format("No object with key '%s' found.",
+                                              key),
+                                ex);
                     return new Label(value.toString());
                 }
-                
-                Label label = new Label(String.format("%s (%s)", 
+
+                Label label = new Label(String.format("%s (%s)",
                                                       value.toString(),
                                                       series.getLanguage()));
                 return label;
             }
         }
+    }
+    
+    private class NumberCellRenderer extends LockableImpl implements TableCellRenderer {
+
+        public Component getComponent(final Table table, 
+                                      final PageState state, 
+                                      final Object value, 
+                                      final boolean isSelected, 
+                                      final Object key,
+                                      final int row, 
+                                      final int column) {
+            final Publication publication = (Publication) m_itemModel.getSelectedObject(state);
+            
+            final BigDecimal seriesId = (BigDecimal) key;
+            
+            final SeriesCollection seriesCol = publication.getSeries();            
+            
+            Integer volumeOfSeries = null;            
+            while(seriesCol.next()) {
+                if (seriesId.equals(seriesCol.getSeries().getID())) {
+                    volumeOfSeries = seriesCol.getVolumeOfSeries();
+                    break;
+                }
+            }            
+            seriesCol.close();
+            
+            if (volumeOfSeries == null) {
+                return new Label("");
+            } else {
+                return new Label(volumeOfSeries.toString());
+            }
+        }
+        
     }
 
     private class DeleteCellRenderer
@@ -259,13 +299,14 @@ public class PublicationSeriesTable
                 return label;
             }
         }
+
     }
 
     @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        s_log.info("cellSelected!");
+        LOGGER.info("cellSelected!");
 
         Series series =
                new Series(new BigDecimal(event.getRowKey().
@@ -288,4 +329,5 @@ public class PublicationSeriesTable
     public void headSelected(TableActionEvent event) {
         //Nothing to do here.
     }
+
 }

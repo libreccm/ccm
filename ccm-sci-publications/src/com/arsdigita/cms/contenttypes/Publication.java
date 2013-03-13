@@ -260,11 +260,11 @@ public class Publication extends ContentPage {
         return getPublicationBundle().getSeries();
     }
 
-    public void addSeries(final Series series) {
+    public void addSeries(final Series series, final Integer volumeOfSeries) {
         //Assert.exists(series, Series.class);
 
         //add(SERIES, series);
-        getPublicationBundle().addSeries(series);
+        getPublicationBundle().addSeries(series, volumeOfSeries);
     }
 
     public void removeSeries(final Series series) {

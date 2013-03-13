@@ -333,10 +333,11 @@ public class PublicationBundle extends ContentBundle {
         return new SeriesCollection((DataCollection) get(SERIES));
     }
     
-    public void addSeries(final Series series) {
+    public void addSeries(final Series series, final Integer volumeOfSeries) {
         Assert.exists(series, Series.class);
         
-        add(SERIES, series.getSeriesBundle());
+        final DataObject link = add(SERIES, series.getSeriesBundle());
+        link.set(SeriesBundle.VOLUME_OF_SERIES, volumeOfSeries);
     }
     
     public void removeSeries(final Series series) {

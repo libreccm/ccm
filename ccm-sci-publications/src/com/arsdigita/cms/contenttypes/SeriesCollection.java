@@ -23,15 +23,30 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class SeriesCollection extends DomainCollection {
 
+    public static final String LINK_VOLUME_OF_SERIES = "link.volumeOfSeries";
+    public static final String VOLUME_OF_SERIES = "volumeOfSeries";
+
     public SeriesCollection(DataCollection dataCollection) {
         super(dataCollection);
+    }
+
+    public Integer getVolumeOfSeries() {
+        return (Integer) m_dataCollection.get(LINK_VOLUME_OF_SERIES);
+    }
+
+    public void setVolumeOfSeries(Integer volumeOfSeries) {
+        DataObject link = (DataObject) this.get("link");
+
+        link.set(VOLUME_OF_SERIES, volumeOfSeries);
     }
 
     public Series getSeries() {
@@ -47,4 +62,5 @@ public class SeriesCollection extends DomainCollection {
 
         return (Series) bundle.getInstance(language);
     }
+
 }

@@ -26,6 +26,9 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -33,6 +36,7 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.contenttypes.SeriesCollection;
+import com.arsdigita.cms.contenttypes.VolumeInSeriesCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
@@ -55,12 +59,12 @@ public class PublicationSeriesAddForm
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "series";
     private ItemSelectionModel m_itemModel;
-      private final static PublicationsConfig config = new PublicationsConfig();
+    private TextField volumeOfSeries;
+    private final static PublicationsConfig config = new PublicationsConfig();
 
     static {
         config.load();
     }
-
 
     public PublicationSeriesAddForm(ItemSelectionModel itemModel) {
         super("SeriesEntryForm", itemModel);
@@ -78,6 +82,13 @@ public class PublicationSeriesAddForm
             m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultSeriesFolder())));
         }
         add(m_itemSearch);
+
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.volume_of_series").localize()));
+        ParameterModel volumeOfSeriesParam = new IntegerParameter(
+                VolumeInSeriesCollection.VOLUME_OF_SERIES);
+        volumeOfSeries = new TextField(volumeOfSeriesParam);
+        add(volumeOfSeries);
     }
 
     @Override
@@ -101,7 +112,7 @@ public class PublicationSeriesAddForm
             series = (Series) series.getContentBundle().getInstance(publication.
                     getLanguage());
 
-            publication.addSeries(series);
+            publication.addSeries(series, (Integer) data.get(VolumeInSeriesCollection.VOLUME_OF_SERIES));
             m_itemSearch.publishCreatedItem(data, series);
         }
 
@@ -142,4 +153,5 @@ public class PublicationSeriesAddForm
 
         seriesColl.close();
     }
+
 }
