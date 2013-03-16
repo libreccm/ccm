@@ -32,8 +32,10 @@ import com.arsdigita.globalization.GlobalizedMessage;
 public class GlobalizationUtil {
 
     /** */	
+//    public static String s_bundleName = 
+//                         "com.arsdigita.cms.util.CMSResourceBundle";
     public static String s_bundleName = 
-                         "com.arsdigita.cms.util.CMSResourceBundle";
+                         "com.arsdigita.cms.CMSResources";
 
 	public static GlobalizedMessage globalize(String key) {
 		return new GlobalizedMessage(key, getBundleName());

@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.contentcenter;
 
-
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -89,29 +88,24 @@ import com.arsdigita.xml.Element;
 public class TasksPanel extends CMSContainer {
 
     private static Logger s_log =
-        Logger.getLogger(TasksPanel.class);
-
+                          Logger.getLogger(TasksPanel.class);
     // The default number of rows to show
     private static final int DEFAULT_MAX_ROWS = 15;
-
     // Number of tasks to show
     private final int m_maxRows;
-
     private TaskList m_taskList;
     private ActionLink m_viewAllLink;
     private ActionLink m_viewShortLink;
     private Paginator m_paginator;
-    private ActionLink m_viewLockLink,m_viewUnlockLink,m_viewAllLockLink;
-    private Label m_viewLockLabel,m_viewUnlockLabel,m_viewAllLockLabel;
+    private ActionLink m_viewLockLink, m_viewUnlockLink, m_viewAllLockLink;
+    private Label m_viewLockLabel, m_viewUnlockLabel, m_viewAllLockLabel;
     private StringParameter m_sortDirectionParam;
     private StringParameter m_sortTypeParam;
     private StringParameter m_lockFilterParam;
-
     // control link variable
     private static final String TASK_ACTION = "taskAction";
     private static final String SORT_DOWN = "sortActionUp";
     private static final String SORT_UP = "sortActionDown";
-
     private static final String LOCK_FILTER_TYPE = "lockFilterType";
     private static final String SORT_TYPE = "sortType";
     private static final String SORT_DIRECTION = "sortDirection";
@@ -121,13 +115,11 @@ public class TasksPanel extends CMSContainer {
     private static final String SORT_TITLE = "title";
     private static final String SORT_USER = "user";
     private static final String SORT_WORKFLOW = "workflow";
-
     // IMAGES
-    public static final String UP_ARROW_IMAGE = 
+    public static final String UP_ARROW_IMAGE =
                                "/themes/heirfloom/images/gray-triangle-up.gif";
-    public static final String DOWN_ARROW_IMAGE = 
+    public static final String DOWN_ARROW_IMAGE =
                                "/themes/heirfloom/images/gray-triangle-down.gif";
-
     // CREATION PANE CONSTANTS
     private Label m_selectorLabel;
     private CreationSelector m_selector;
@@ -143,7 +135,7 @@ public class TasksPanel extends CMSContainer {
      **/
     public TasksPanel(ACSObjectSelectionModel typeModel,
                       ACSObjectSelectionModel sectionModel) {
-        this(DEFAULT_MAX_ROWS,typeModel,sectionModel);
+        this(DEFAULT_MAX_ROWS, typeModel, sectionModel);
     }
 
     /**
@@ -154,11 +146,11 @@ public class TasksPanel extends CMSContainer {
      *
      * @pre maxRows != null
      **/
-    public TasksPanel(int maxRows,ACSObjectSelectionModel typeModel,
+    public TasksPanel(int maxRows, ACSObjectSelectionModel typeModel,
                       ACSObjectSelectionModel sectionModel) {
         super();
         m_maxRows = maxRows;
-	
+
         m_typeSel = typeModel;
         m_sectionSel = sectionModel;
 
@@ -168,114 +160,115 @@ public class TasksPanel extends CMSContainer {
         addComponents();
     }
 
-
     /**
      * Adds the components to this tasks panel
      **/
 //  protected void addComponents() {
     private void addComponents() {
         m_creationPane = new BoxPanel(BoxPanel.VERTICAL);
-	
+
         // A label that says "Create $content_type in $section"
         m_selectorLabel = new Label(new PrintListener() {
-                public void prepare(PrintEvent e) {
-                    PageState s = e.getPageState();
-                    Label t = (Label)e.getTarget();
-		    
-                    ContentType type = (ContentType) m_typeSel.getSelectedObject(s);
-                    ContentSection sec =
-                        (ContentSection) m_sectionSel.getSelectedObject(s);
-		    
-                    StringBuffer buf = new StringBuffer(
-                                           GlobalizationUtil
-                                           .globalize("cms.ui.create").localize() + " ");
-                    buf.append(type.getLabel());
-                    buf.append(" in ");
-                    buf.append(sec.getName());
-		    
-                    t.setLabel(buf.toString());
-                    t.setFontWeight(Label.BOLD);
-                    t.setClassAttr("creationLabel");
-                }
-            });
+            public void prepare(PrintEvent e) {
+                PageState s = e.getPageState();
+                Label t = (Label) e.getTarget();
+
+                ContentType type = (ContentType) m_typeSel.getSelectedObject(s);
+                ContentSection sec =
+                               (ContentSection) m_sectionSel.getSelectedObject(s);
+
+                StringBuffer buf = new StringBuffer(
+                        GlobalizationUtil
+                        .globalize("cms.ui.create").localize() + " ");
+                buf.append(type.getLabel());
+                buf.append(" in ");
+                buf.append(sec.getName());
+
+                t.setLabel(buf.toString());
+                t.setFontWeight(Label.BOLD);
+                t.setClassAttr("creationLabel");
+            }
+
+        });
         m_selectorLabel.setClassAttr("creationLabel");
         m_creationPane.add(m_selectorLabel);
-	
+
         m_folderSel = new RootFolderSelectionModel(m_sectionSel);
         m_selector = new CreationSelector(m_typeSel, m_folderSel);
         m_creationPane.add(m_selector);
-	
+
         m_creationPane.setClassAttr("itemCreationPane");
         add(m_creationPane);
-	
+
         // The section list UIx
         m_sections = new ContentSectionContainer(m_typeSel, m_sectionSel);
         add(m_sections);
-	
+
         // When a new type is selected, show the creation UI.
         // When the selection is cleared, return to section list
         m_typeSel.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent e) {
-                    PageState s = e.getPageState();
-                    boolean isSelected = m_typeSel.isSelected(s);
-		    
-                    m_sections.setVisible(s, !isSelected);
-                    m_creationPane.setVisible(s, isSelected);
-                }
-            });
-       	
-        m_viewLockLink = new ActionLink(new 
-                             Label(GlobalizationUtil
-                                   .globalize("cms.ui.workflow.task.view_locked")));
+            public void stateChanged(ChangeEvent e) {
+                PageState s = e.getPageState();
+                boolean isSelected = m_typeSel.isSelected(s);
+
+                m_sections.setVisible(s, !isSelected);
+                m_creationPane.setVisible(s, isSelected);
+            }
+
+        });
+
+        m_viewLockLink = new ActionLink(new Label(GlobalizationUtil
+                .globalize("cms.ui.workflow.task.view_locked")));
         m_viewLockLink.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    PageState ps = e.getPageState();
-                    ps.setValue(m_lockFilterParam, "lock");
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                PageState ps = e.getPageState();
+                ps.setValue(m_lockFilterParam, "lock");
+            }
 
-        m_viewUnlockLink = new ActionLink(new 
-                               Label(GlobalizationUtil
-                                     .globalize("cms.ui.workflow.task.view_unlocked")));
+        });
+
+        m_viewUnlockLink = new ActionLink(new Label(GlobalizationUtil
+                .globalize("cms.ui.workflow.task.view_unlocked")));
         m_viewUnlockLink.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    PageState ps = e.getPageState();
-                    ps.setValue(m_lockFilterParam, "unlock");
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                PageState ps = e.getPageState();
+                ps.setValue(m_lockFilterParam, "unlock");
+            }
 
-        m_viewAllLockLink = new ActionLink(new 
-                                Label(GlobalizationUtil
-                                      .globalize("cms.ui.workflow.task.view_all")));
+        });
+
+        m_viewAllLockLink = new ActionLink(new Label(GlobalizationUtil
+                .globalize("cms.ui.workflow.task.view_all")));
         m_viewAllLockLink.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    PageState ps = e.getPageState();
-                    ps.setValue(m_lockFilterParam, "all");
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                PageState ps = e.getPageState();
+                ps.setValue(m_lockFilterParam, "all");
+            }
+
+        });
 
         m_viewLockLabel = new Label(GlobalizationUtil
-                                   .globalize("cms.ui.workflow.task.view_locked"));
+                .globalize("cms.ui.workflow.task.view_locked"));
         m_viewLockLabel.setFontWeight(Label.BOLD);
         m_viewUnlockLabel = new Label(GlobalizationUtil
-                                      .globalize("cms.ui.workflow.task.view_unlocked"));
+                .globalize("cms.ui.workflow.task.view_unlocked"));
         m_viewUnlockLabel.setFontWeight(Label.BOLD);
         m_viewAllLockLabel = new Label(GlobalizationUtil
-                                       .globalize("cms.ui.workflow.task.view_all"));
+                .globalize("cms.ui.workflow.task.view_all"));
         m_viewAllLockLabel.setFontWeight(Label.BOLD);
 
-        add(new Label("<br />",false));
+        add(new Label("<br />", false));
         add(m_viewLockLink);
         add(m_viewLockLabel);
-        add(new Label("&nbsp;",false));
+        add(new Label("&nbsp;", false));
         add(m_viewUnlockLink);
         add(m_viewUnlockLabel);
-        add(new Label("&nbsp;",false));
+        add(new Label("&nbsp;", false));
         add(m_viewAllLockLink);
         add(m_viewAllLockLabel);
-        add(new Label("<br />",false));
-        add(new Label("<br />",false));
-    
+        add(new Label("<br />", false));
+        add(new Label("<br />", false));
+
         add(getTasksList());
         add(getPaginator());
 
@@ -303,50 +296,50 @@ public class TasksPanel extends CMSContainer {
         p.setVisibleDefault(m_viewAllLockLink, false);
 
         p.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    final PageState state = e.getPageState();
+            public void actionPerformed(ActionEvent e) {
+                final PageState state = e.getPageState();
 
-                    String lockFilterType = getLockFilterType(state);
+                String lockFilterType = getLockFilterType(state);
 
-                    if ( lockFilterType.equals("lock") ) {
-                        m_viewLockLabel.setVisible(state,true);
-                        m_viewLockLink.setVisible(state,false);
-                        m_viewUnlockLabel.setVisible(state,false);
-                        m_viewUnlockLink.setVisible(state,true);
-                        m_viewAllLockLabel.setVisible(state,false);
-                        m_viewAllLockLink.setVisible(state,true);
-                    } else if ( lockFilterType.equals("unlock") ) {
-                        m_viewLockLabel.setVisible(state,false);
-                        m_viewLockLink.setVisible(state,true);
-                        m_viewUnlockLabel.setVisible(state,true);
-                        m_viewUnlockLink.setVisible(state,false);
-                        m_viewAllLockLabel.setVisible(state,false);
-                        m_viewAllLockLink.setVisible(state,true);
-                    } else {
-                        m_viewLockLabel.setVisible(state,false);
-                        m_viewLockLink.setVisible(state,true);
-                        m_viewUnlockLabel.setVisible(state,false);
-                        m_viewUnlockLink.setVisible(state,true);
-                        m_viewAllLockLabel.setVisible(state,true);
-                        m_viewAllLockLink.setVisible(state,false);
-                    }
+                if (lockFilterType.equals("lock")) {
+                    m_viewLockLabel.setVisible(state, true);
+                    m_viewLockLink.setVisible(state, false);
+                    m_viewUnlockLabel.setVisible(state, false);
+                    m_viewUnlockLink.setVisible(state, true);
+                    m_viewAllLockLabel.setVisible(state, false);
+                    m_viewAllLockLink.setVisible(state, true);
+                } else if (lockFilterType.equals("unlock")) {
+                    m_viewLockLabel.setVisible(state, false);
+                    m_viewLockLink.setVisible(state, true);
+                    m_viewUnlockLabel.setVisible(state, true);
+                    m_viewUnlockLink.setVisible(state, false);
+                    m_viewAllLockLabel.setVisible(state, false);
+                    m_viewAllLockLink.setVisible(state, true);
+                } else {
+                    m_viewLockLabel.setVisible(state, false);
+                    m_viewLockLink.setVisible(state, true);
+                    m_viewUnlockLabel.setVisible(state, false);
+                    m_viewUnlockLink.setVisible(state, true);
+                    m_viewAllLockLabel.setVisible(state, true);
+                    m_viewAllLockLink.setVisible(state, false);
                 }
-            });
+            }
+
+        });
     }
-    
+
     public void reset(PageState state) {
         m_typeSel.clearSelection(state);
         m_sectionSel.clearSelection(state);
     }
-    
+
     protected Paginator getPaginator() {
         if (m_paginator == null) {
-            m_paginator = new Paginator(new TasksPaginationModelBuilder(), 
+            m_paginator = new Paginator(new TasksPaginationModelBuilder(),
                                         m_maxRows);
         }
         return m_paginator;
     }
-
 
     /**
      * Returns the bebop List component to display the tasks
@@ -366,24 +359,24 @@ public class TasksPanel extends CMSContainer {
     }
 
     protected String getSortType(PageState state) {
-        String sortType = (String)state.getValue(m_sortTypeParam);
-        if ( sortType == null ) {
+        String sortType = (String) state.getValue(m_sortTypeParam);
+        if (sortType == null) {
             sortType = SORT_DATE;
         }
         return sortType;
     }
 
     protected String getSortDirection(PageState state) {
-        String sortDirection = (String)state.getValue(m_sortDirectionParam);
-        if ( sortDirection == null ) {
+        String sortDirection = (String) state.getValue(m_sortDirectionParam);
+        if (sortDirection == null) {
             sortDirection = SORT_UP;
         }
         return sortDirection;
     }
 
     protected String getLockFilterType(PageState state) {
-        String lockFilterType = (String)state.getValue(m_lockFilterParam);
-        if ( lockFilterType == null || lockFilterType.equals("") ) {
+        String lockFilterType = (String) state.getValue(m_lockFilterParam);
+        if (lockFilterType == null || lockFilterType.equals("")) {
             lockFilterType = "lock";
         }
         return lockFilterType;
@@ -392,47 +385,48 @@ public class TasksPanel extends CMSContainer {
     /*
      * Adds filters to the task query
      */
-    protected void addQueryFilters(DataQuery query,Party party,PageState state){
+    protected void addQueryFilters(DataQuery query, Party party, PageState state) {
         query.setParameter("userId", party.getID());
 
-	    FilterFactory ff = query.getFilterFactory();
+        FilterFactory ff = query.getFilterFactory();
 
         // TODO: remove this hard coding of "Author", "Edit", and "Deploy"
-		// TODO: remove this hard coding of "Author", "Edit", and "Deploy"
-	    CompoundFilter authorFilter = ff.and();
-	   //cg query changed to refer to task type id
-	   authorFilter.addFilter(ff.equals("taskType",CMSTaskType.AUTHOR));
-	   authorFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.AUTHOR), 
-                                            party, ff));
-
-	    CompoundFilter approveFilter = ff.and();
-	   approveFilter.addFilter(ff.equals("taskType",CMSTaskType.EDIT));
-	   approveFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.EDIT), 
+        // TODO: remove this hard coding of "Author", "Edit", and "Deploy"
+        CompoundFilter authorFilter = ff.and();
+        //cg query changed to refer to task type id
+        authorFilter.addFilter(ff.equals("taskType", CMSTaskType.AUTHOR));
+        authorFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.AUTHOR),
                                              party, ff));
 
-	    CompoundFilter deployFilter = ff.and();
-	   deployFilter.addFilter(ff.equals("taskType",CMSTaskType.DEPLOY));
-	   deployFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.DEPLOY), 
-                                            party, ff));
+        CompoundFilter approveFilter = ff.and();
+        approveFilter.addFilter(ff.equals("taskType", CMSTaskType.EDIT));
+        approveFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.EDIT),
+                                              party, ff));
 
-	    CompoundFilter permissionFilter = ff.or();
-	    permissionFilter.addFilter(authorFilter);
-	    permissionFilter.addFilter(approveFilter);
-	    permissionFilter.addFilter(deployFilter);
+        CompoundFilter deployFilter = ff.and();
+        deployFilter.addFilter(ff.equals("taskType", CMSTaskType.DEPLOY));
+        deployFilter.addFilter(getTaskFilter(CMSTaskType.retrieve(CMSTaskType.DEPLOY),
+                                             party, ff));
 
-	    query.addFilter(permissionFilter);
+        CompoundFilter permissionFilter = ff.or();
+        permissionFilter.addFilter(authorFilter);
+        permissionFilter.addFilter(approveFilter);
+        permissionFilter.addFilter(deployFilter);
 
-	    String lockFilterType = getLockFilterType(state);
-	    if ( lockFilterType.equals("lock") ) {
-            query.addEqualsFilter("isLocked","t");
-            query.addEqualsFilter("status","1");
-	    } else if ( lockFilterType.equals("unlock") ) {
-            query.addEqualsFilter("isLocked","f");
-	    } // else show all
+        query.addFilter(permissionFilter);
+
+        String lockFilterType = getLockFilterType(state);
+        if (lockFilterType.equals("lock")) {
+            query.addEqualsFilter("isLocked", "t");
+            query.addEqualsFilter("status", "1");
+        } else if (lockFilterType.equals("unlock")) {
+            query.addEqualsFilter("isLocked", "f");
+        } // else show all
     }
 
     private static class RootFolderSelectionModel
-        extends FolderSelectionModel {
+            extends FolderSelectionModel {
+
         ACSObjectSelectionModel m_sectionSel;
 
         public RootFolderSelectionModel(ACSObjectSelectionModel sectionSel) {
@@ -445,18 +439,20 @@ public class TasksPanel extends CMSContainer {
             ContentSection sec = (ContentSection) m_sectionSel.getSelectedObject(s);
             Assert.exists(sec);
 
-           User user = Web.getContext().getUser();
-            if ( user != null ) {
-                Folder folder = Folder.getUserHomeFolder(user,sec);
-                if ( folder != null ) {
+            User user = Web.getContext().getUser();
+            if (user != null) {
+                Folder folder = Folder.getUserHomeFolder(user, sec);
+                if (folder != null) {
                     return folder.getID();
                 }
             }
             return sec.getRootFolder().getID();
         }
+
     }
 
     private class TasksPaginationModelBuilder implements PaginationModelBuilder {
+
         public int getTotalSize(Paginator paginator,
                                 PageState state) {
             return numberTasksForUser(state);
@@ -465,13 +461,13 @@ public class TasksPanel extends CMSContainer {
         public boolean isVisible(PageState state) {
             return numberTasksForUser(state) > m_maxRows;
         }
+
     }
 
     private class TaskList extends SimpleComponent {
 
         private final static String QUERY_NAME =
-            "com.arsdigita.cms.workflow.getEnabledUserTasks";
-
+                                    "com.arsdigita.cms.workflow.getEnabledUserTasks";
         private boolean m_paginate = false;
 
         public TaskList(boolean paginate) {
@@ -479,11 +475,11 @@ public class TasksPanel extends CMSContainer {
         }
 
         private DataQuery makeQuery(PageState state) {
-            User user = (User)Kernel.getContext().getParty();
+            User user = (User) Kernel.getContext().getParty();
 
             DataQuery query = SessionManager.getSession()
-            	.retrieveQuery(QUERY_NAME);
-            addQueryFilters(query,user,state);
+                    .retrieveQuery(QUERY_NAME);
+            addQueryFilters(query, user, state);
 
             return query;
         }
@@ -498,6 +494,7 @@ public class TasksPanel extends CMSContainer {
                 DataQuery query = makeQuery(state);
                 return new Long(query.size());
             }
+
         };
 
         @Override
@@ -509,7 +506,7 @@ public class TasksPanel extends CMSContainer {
             DataQuery query = makeQuery(state);
 
             String lockFilterType = getLockFilterType(state);
-            content.addAttribute("lockFilterType",lockFilterType);
+            content.addAttribute("lockFilterType", lockFilterType);
 
             if (m_paginate) {
                 query.setRange(new Integer(m_paginator.getFirst(state)),
@@ -522,44 +519,35 @@ public class TasksPanel extends CMSContainer {
             if (sortDirection.equals(SORT_DOWN)) {
                 sortPostfix = " desc";
             }
-            
-            if ( sortKey.equals(SORT_TITLE) ) {
-                query.setOrder("lower(pageTitle) " + sortPostfix + 
-                               ", lower(status) asc, dueDate desc");
-            } else if ( sortKey.equals(SORT_DATE) ) {
-                query.setOrder("dueDate " + sortPostfix + 
-                               ", lower(status) asc, lower(pageTitle) asc");
-            } else if ( sortKey.equals(SORT_USER) ) {
-                query.setOrder("lockingUserID " + sortPostfix +
-                               ", lower(status) asc, dueDate desc " + 
-                               ", lower(pageTitle) asc");
-            } else if ( sortKey.equals(SORT_STATUS) ) {
-                query.setOrder("lower(status) " + sortPostfix +
-                               ", dueDate desc " + 
-                               ", lower(pageTitle) asc");
 
-            } else if ( sortKey.equals(SORT_ACTION) ) {
-                query.setOrder("taskType " + sortPostfix +
-                        ", lower(status) asc, dueDate desc " + 
-                		", lower(pageTitle) asc"
-                        );
-            } else if ( sortKey.equals(SORT_WORKFLOW) ) {
-                query.setOrder("processLabel " + sortPostfix +
-                        ", lower(status) asc, dueDate desc " + 
-                		", lower(pageTitle) asc"
-                        );
+            if (sortKey.equals(SORT_TITLE)) {
+                query.setOrder("lower(pageTitle) " + sortPostfix + ", lower(status) asc, dueDate desc");
+            } else if (sortKey.equals(SORT_DATE)) {
+                query.setOrder("dueDate " + sortPostfix + ", lower(status) asc, lower(pageTitle) asc");
+            } else if (sortKey.equals(SORT_USER)) {
+                query.setOrder("lockingUserID " + sortPostfix + ", lower(status) asc, dueDate desc "
+                               + ", lower(pageTitle) asc");
+            } else if (sortKey.equals(SORT_STATUS)) {
+                query.setOrder("lower(status) " + sortPostfix + ", dueDate desc " + ", lower(pageTitle) asc");
+
+            } else if (sortKey.equals(SORT_ACTION)) {
+                query.setOrder("taskType " + sortPostfix + ", lower(status) asc, dueDate desc "
+                               + ", lower(pageTitle) asc");
+            } else if (sortKey.equals(SORT_WORKFLOW)) {
+                query.setOrder("processLabel " + sortPostfix + ", lower(status) asc, dueDate desc "
+                               + ", lower(pageTitle) asc");
             }
 
             HashMap sections = new HashMap();
 
             while (query.next()) {
-                BigDecimal sectionID = (BigDecimal)query.get("sectionID");
-                String sectionPath = (String)sections.get(sectionID);
+                BigDecimal sectionID = (BigDecimal) query.get("sectionID");
+                String sectionPath = (String) sections.get(sectionID);
                 if (sectionPath == null) {
                     try {
-                        ContentSection section = (ContentSection)DomainObjectFactory
-                            .newInstance(new OID(ContentSection.BASE_DATA_OBJECT_TYPE,
-                                                 sectionID));
+                        ContentSection section = (ContentSection) DomainObjectFactory
+                                .newInstance(new OID(ContentSection.BASE_DATA_OBJECT_TYPE,
+                                                     sectionID));
                         sectionPath = section.getPath();
                     } catch (DataObjectNotFoundException ex) {
                         throw new UncheckedWrapperException("cannot find content section", ex);
@@ -567,22 +555,22 @@ public class TasksPanel extends CMSContainer {
                     sections.put(sectionID, sectionPath);
                 }
 
-                Element task = content.newChildElement("cms:tasksPanelTask", 
+                Element task = content.newChildElement("cms:tasksPanelTask",
                                                        CMS.CMS_XML_NS);
 
-                BigDecimal itemID = (BigDecimal)query.get("itemID");
-                String taskType = (String)query.get("taskType");
-                
+                BigDecimal itemID = (BigDecimal) query.get("itemID");
+                String taskType = (String) query.get("taskType");
+
                 task.addAttribute("taskID", query.get("taskID").toString());
                 task.addAttribute("processID", query.get("processID").toString());
-                task.addAttribute("taskLabel", (String)query.get("taskLabel"));
-                task.addAttribute("taskDescription", (String)query.get("taskDescription"));
-                task.addAttribute("processLabel", (String)query.get("processLabel"));
+                task.addAttribute("taskLabel", (String) query.get("taskLabel"));
+                task.addAttribute("taskDescription", (String) query.get("taskDescription"));
+                task.addAttribute("processLabel", (String) query.get("processLabel"));
 
-                String isLocked = (String)query.get("isLocked");
+                String isLocked = (String) query.get("isLocked");
                 task.addAttribute("isLocked", isLocked);
                 if (query.get("dueDate") != null) {
-                    java.util.Date d = (java.util.Date)query.get("dueDate");
+                    java.util.Date d = (java.util.Date) query.get("dueDate");
                     SimpleDateFormat df = new SimpleDateFormat("EEE, MMM d, yyyy");
 
                     task.addAttribute("dueDate", df.format(d));
@@ -591,21 +579,21 @@ public class TasksPanel extends CMSContainer {
                 task.addAttribute("itemID", itemID.toString());
                 task.addAttribute("sectionID", query.get("sectionID").toString());
                 task.addAttribute("sectionPath", sectionPath);
-                task.addAttribute("pageName", (String)query.get("pageName"));
-                task.addAttribute("pageTitle", (String)query.get("pageTitle"));
+                task.addAttribute("pageName", (String) query.get("pageName"));
+                task.addAttribute("pageTitle", (String) query.get("pageTitle"));
 
-                BigDecimal lockingUserID = (BigDecimal)query.get("lockingUserID");
+                BigDecimal lockingUserID = (BigDecimal) query.get("lockingUserID");
                 if (lockingUserID != null) {
                     task.addAttribute("lockingUserID", lockingUserID.toString());
-                    if ( !"f".equals(isLocked) ) {
+                    if (!"f".equals(isLocked)) {
                         User lockingUser = User.retrieve(lockingUserID);
-                        if ( lockingUser != null ) {
-                            task.addAttribute("assignee",lockingUser.getDisplayName());
+                        if (lockingUser != null) {
+                            task.addAttribute("assignee", lockingUser.getDisplayName());
                         }
                     }
                 }
                 task.addAttribute("taskType", taskType);
-                task.addAttribute("taskTypeClass", (String)query.get("taskTypeClass"));
+                task.addAttribute("taskTypeClass", (String) query.get("taskTypeClass"));
                 task.addAttribute("status", query.get("status").toString());
 
                 // control event for locking a task
@@ -618,24 +606,23 @@ public class TasksPanel extends CMSContainer {
                 }
 
                 if ("Deploy".equals(taskType)) {
-                    task.addAttribute("editTabNumber", 
+                    task.addAttribute("editTabNumber",
                                       String.valueOf(ContentItemPage.PUBLISHING_TAB));
                 } else {
-                    task.addAttribute("editTabNumber", 
+                    task.addAttribute("editTabNumber",
                                       String.valueOf(ContentItemPage.AUTHORING_TAB));
                 }
             }
 
             // m_actionLabel.generateXML(state, content);
 
-            String[][] sortableHeaders = 
-                {{SORT_TITLE, "cms.ui.workflow.task.item_title"},
-                 {SORT_ACTION, "cms.ui.action"},
-                 {SORT_DATE, "cms.ui.tasks_due_date"},
-                 {SORT_STATUS, "cms.ui.tasks_status_no_colon"},
-                 {SORT_USER, "cms.ui.workflow.task.locking_user"},
-                 {SORT_WORKFLOW, "cms.ui.workflow"}};
-            for (int i=0;i<sortableHeaders.length;i++) {
+            String[][] sortableHeaders = {{SORT_TITLE, "cms.ui.workflow.task.item_title"},
+                                          {SORT_ACTION, "cms.ui.action"},
+                                          {SORT_DATE, "cms.ui.tasks_due_date"},
+                                          {SORT_STATUS, "cms.ui.tasks_status_no_colon"},
+                                          {SORT_USER, "cms.ui.workflow.task.locking_user"},
+                                          {SORT_WORKFLOW, "cms.ui.workflow"}};
+            for (int i = 0; i < sortableHeaders.length; i++) {
                 String header = sortableHeaders[i][0];
                 String labelKey = sortableHeaders[i][1];
                 if (sortDirection.equals(SORT_UP) && header.equals(sortKey)) {
@@ -644,7 +631,7 @@ public class TasksPanel extends CMSContainer {
                     state.setControlEvent(this, SORT_UP, header);
                 }
                 SimpleContainer container = new SimpleContainer();
-                container.add(new Label(GlobalizationUtil.globalize(labelKey)));
+                container.add(new Label((String)GlobalizationUtil.globalize(labelKey).localize()));
                 if (header.equals(sortKey)) {
                     String imageURLStub = null;
                     if (SORT_UP.equals(sortDirection)) {
@@ -664,21 +651,20 @@ public class TasksPanel extends CMSContainer {
             }
         }
 
-
         @Override
         public void respond(PageState state) throws ServletException {
             String key = state.getControlEventName();
             String value = state.getControlEventValue();
             if (TASK_ACTION.equals(key)) {
                 BigDecimal itemID = new BigDecimal(value);
-		
+
                 try {
                     ContentItem item = new ContentItem(itemID);
                     Workflow wf = Workflow.getObjectWorkflow(item);
                     int tabNumber = ContentItemPage.AUTHORING_TAB;
                     String sectionPath = item.getContentSection().getPath();
 
-                    if ( wf != null ) {
+                    if (wf != null) {
                         User user = Web.getContext().getUser();
                         Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
                         Iterator i = engine.getEnabledTasks(user, wf.getID()).iterator();
@@ -686,25 +672,25 @@ public class TasksPanel extends CMSContainer {
                             CMSTask task = (CMSTask) i.next();
                             Integer taskType = task.getTaskType().getID();
 
-                            if (taskType.equals(CMSTaskType.DEPLOY) ) {
+                            if (taskType.equals(CMSTaskType.DEPLOY)) {
                                 tabNumber = ContentItemPage.PUBLISHING_TAB;
                             } else {
                                 // see if item is locked; if not, lock
-                                if ( !task.isLocked() ) {
+                                if (!task.isLocked()) {
                                     task.lock(user);
                                 }
                             }
                         }
                     }
-			
-                    String redirectURL = Web.getConfig().getDispatcherServletPath() 
-                                         + sectionPath + "/admin/item.jsp?item_id=" 
+
+                    String redirectURL = Web.getConfig().getDispatcherServletPath()
+                                         + sectionPath + "/admin/item.jsp?item_id="
                                          + itemID + "&set_tab=" + tabNumber;
-                    throw new RedirectSignal(redirectURL,true);
+                    throw new RedirectSignal(redirectURL, true);
                 } catch (DataObjectNotFoundException ex) {
                     throw new ServletException("Unknown content ID" + itemID);
                 }
-            } else if ( SORT_UP.equals(key) || SORT_DOWN.equals(key)) {
+            } else if (SORT_UP.equals(key) || SORT_DOWN.equals(key)) {
                 state.setValue(m_sortTypeParam, value);
                 if (SORT_DOWN.equals(key)) {
                     state.setValue(m_sortDirectionParam, SORT_DOWN);
@@ -715,17 +701,17 @@ public class TasksPanel extends CMSContainer {
                 throw new ServletException("Unknown control event: " + key);
             }
         }
-    }    
 
-    private static Filter getTaskFilter(CMSTaskType taskType
-                                        , Party party, FilterFactory factory) {
+    }
+
+    private static Filter getTaskFilter(CMSTaskType taskType, Party party, FilterFactory factory) {
         PrivilegeDescriptor privilege;
         String queryName;
         String queryType;
         OID partyOID = party.getOID();
         privilege = taskType.getPrivilege();
 
-	return PermissionService.getFilterQuery(factory,"itemID",privilege,partyOID);
+        return PermissionService.getFilterQuery(factory, "itemID", privilege, partyOID);
     }
-}
 
+}

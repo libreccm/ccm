@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui;
 
-
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
@@ -92,34 +91,27 @@ public class FlatItemList extends SegmentedPanel
     private static final String CMS_PRIVILEGES = "com.arsdigita.cms.getPrivileges";
     private static final String PRIVILEGE = "privilege";
     private static final String PRIVILEGE_NAME = "prettyName";
-
     // The folder selectors
     private FolderSelectionModel m_folderSel;
     private FolderRequestLocal m_folder;
-
     private NewItemForm m_newItem;
     private SingleSelectionModel m_typeSel;
     private CreationSelector m_selector;
     private FolderManipulator m_folderManip;
-
     private FolderCreator m_folderCreator;
     private ActionLink m_setHomeFolderAction;
     private ActionLink m_createFolderAction;
     private ActionLink m_togglePrivateAction;
     private Label m_homeFolderLabel;
-    
     private Segment m_browseSeg;
     private Segment m_newItemSeg;
     private Segment m_newFolderSeg;
     private Segment m_editFolderSeg;
     private Segment m_permissionsSeg;
     private CMSPermissionsPane m_permPane;
-
     // Folder edit/rename functionality.
     private ActionLink m_editFolderAction;
     private FolderEditor m_folderEditor;
-
-
     private Label m_contentLabel;
     private ItemPath m_itemPath;
     private Label m_chooseLabel;
@@ -135,11 +127,12 @@ public class FlatItemList extends SegmentedPanel
         m_folder = folder;
         m_folderSel = model;
         m_folderSel.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent e) {
-                    PageState s = e.getPageState();
-                    reset(s);
-                }
-            });
+            public void stateChanged(ChangeEvent e) {
+                PageState s = e.getPageState();
+                reset(s);
+            }
+
+        });
 
         setIdAttr("flat-item-list");
 
@@ -189,26 +182,34 @@ public class FlatItemList extends SegmentedPanel
         m_editFolderAction.addActionListener(this);
         browseActions.addAction(m_editFolderAction);
 
-        m_setHomeFolderAction = new ActionLink(new Label("Set as home folder"));
+        m_setHomeFolderAction = new ActionLink(new Label(globalize("cms.ui.set_home_folder")));
         m_setHomeFolderAction.addActionListener(this);
         browseActions.addAction(m_setHomeFolderAction);
 
-	m_homeFolderLabel = new Label(new PrintListener() {
-		public final void prepare(final PrintEvent e) {
-		    Label label = (Label)e.getTarget();
-		    User user = Web.getContext().getUser();
+        m_homeFolderLabel = new Label(new PrintListener() {
+            public final void prepare(final PrintEvent e) {
+                Label label = (Label) e.getTarget();
+                User user = Web.getContext().getUser();
 
-		    Folder folder = Folder.getUserHomeFolder(user,CMS.getContext().getContentSection());
-		    if ( folder != null ) {
-			String url = folder.getContentSection().getURL() + PageLocations.SECTION_PAGE + "?" + ContentSectionPage.SET_FOLDER + "=" + folder.getID();
-			label.setLabel("Go to home folder: <a href=\"" + url + "\">" + folder.getLabel() + "</a>");
-		    } else {
-			label.setLabel("<font color=\"red\">No home folder selected</font>");
-		    }
-		    label.setOutputEscaping(false);
+                Folder folder = Folder.getUserHomeFolder(user, CMS.getContext().getContentSection());
+                if (folder != null) {
+                    String url = folder.getContentSection().getURL() + PageLocations.SECTION_PAGE + "?"
+                                 + ContentSectionPage.SET_FOLDER + "=" + folder.getID();
+                    //label.setLabel("Go to home folder: <a href=\"" + url + "\">" + folder.getLabel() + "</a>");
+                    label.setLabel(String.format("%s: <a href=\"%s\">%s</a>",
+                                                 (String) globalize("cms.ui.go_to_home_folder").localize(),
+                                                 url,
+                                                 folder.getLabel()));                                      
+                } else {
+                    //label.setLabel("<font color=\"red\">No home folder selected</font>");
+                    label.setLabel(String.format("<span style=\"color: red\">%s</span>",
+                                                  (String)globalize("cms.ui.no_home_folder_selected").localize()));
                 }
-	    });
-	browseActions.addAction(m_homeFolderLabel);
+                label.setOutputEscaping(false);
+            }
+
+        });
+        browseActions.addAction(m_homeFolderLabel);
 
         m_newItem = new SectionNewItemForm("newItem");
         m_newItem.addProcessListener(this);
@@ -236,29 +237,30 @@ public class FlatItemList extends SegmentedPanel
         }
         query.close();
 
-        m_permPane = new CMSPermissionsPane
-            ((PrivilegeDescriptor[]) privs.toArray
-                 (new PrivilegeDescriptor[privs.size()]),
-             privNameMap,
-             m_folderSel);
+        m_permPane =
+        new CMSPermissionsPane((PrivilegeDescriptor[]) privs.toArray(new PrivilegeDescriptor[privs.size()]),
+                               privNameMap,
+                               m_folderSel);
         permActions.setSubject(m_permPane);
 
         // An action
 
         m_togglePrivateAction = new ActionLink(new Label(new PrintListener() {
-                public void prepare(PrintEvent e) {
-                    PageState state = e.getPageState();
-                    Label target = (Label) e.getTarget();
-                    Folder currentFolder = m_folder.getFolder(state);
-                    // ACSObject parent = currentFolder.getParent();
-                    DataObject context = PermissionService.getContext(currentFolder);
-                    if (context == null) {
-                        target.setLabel( (String) GlobalizationUtil.globalize("cms.ui.restore_default_permissions").localize());
-                    } else {
-                        target.setLabel( (String) GlobalizationUtil.globalize("cms.ui.use_custom_permissions").localize());
-                    }
+            public void prepare(PrintEvent e) {
+                PageState state = e.getPageState();
+                Label target = (Label) e.getTarget();
+                Folder currentFolder = m_folder.getFolder(state);
+                // ACSObject parent = currentFolder.getParent();
+                DataObject context = PermissionService.getContext(currentFolder);
+                if (context == null) {
+                    target.setLabel((String) GlobalizationUtil.globalize("cms.ui.restore_default_permissions").
+                            localize());
+                } else {
+                    target.setLabel((String) GlobalizationUtil.globalize("cms.ui.use_custom_permissions").localize());
                 }
-            }));
+            }
+
+        }));
         m_togglePrivateAction.addActionListener(this);
         permActions.addAction(m_togglePrivateAction);
 
@@ -286,8 +288,8 @@ public class FlatItemList extends SegmentedPanel
         m_folderEditor.addSubmissionListener(this);
         m_folderEditor.addProcessListener(this);
 
-        Form folderEditorForm = new Form( "fedit_form" );
-        folderEditorForm.add( m_folderEditor );
+        Form folderEditorForm = new Form("fedit_form");
+        folderEditorForm.add(m_folderEditor);
         m_editFolderSeg.add(folderEditorForm);
         m_editFolderSeg.add(new Label("<br/>", false));
     }
@@ -304,14 +306,15 @@ public class FlatItemList extends SegmentedPanel
         p.addComponentStateParam(this, m_typeSel.getStateParameter());
 
         p.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    final PageState state = e.getPageState();
+            public void actionPerformed(ActionEvent e) {
+                final PageState state = e.getPageState();
 
-                    if (state.isVisibleOnPage(FlatItemList.this)) {
-                        showHideSegments(state);
-                    }
+                if (state.isVisibleOnPage(FlatItemList.this)) {
+                    showHideSegments(state);
                 }
-            });
+            }
+
+        });
     }
 
     /**
@@ -328,9 +331,9 @@ public class FlatItemList extends SegmentedPanel
         // MP: This should be checked on the current folder instead of just
         //     the content section.
         boolean newItem =
-            sm.canAccess(state.getRequest(),
-                         SecurityManager.NEW_ITEM,
-                         folder);
+                sm.canAccess(state.getRequest(),
+                             SecurityManager.NEW_ITEM,
+                             folder);
 
         if (!newItem) {
             browseMode(state);
@@ -346,9 +349,9 @@ public class FlatItemList extends SegmentedPanel
 
         User user = (User) Kernel.getContext().getParty();
         PermissionDescriptor perm =
-            new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
-                                     folder,
-                                     user);
+                             new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
+                                                      folder,
+                                                      user);
 
         if (PermissionService.checkPermission(perm)) {
             m_permissionsSeg.setVisible(state, true);
@@ -381,19 +384,19 @@ public class FlatItemList extends SegmentedPanel
     }
 
     public void submitted(FormSectionEvent e)
-        throws FormProcessException {
+            throws FormProcessException {
         PageState s = e.getPageState();
-        if ( e.getSource() == m_folderCreator
-             && m_folderCreator.isCancelled(s) ) {
+        if (e.getSource() == m_folderCreator
+            && m_folderCreator.isCancelled(s)) {
             browseMode(s);
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
+            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
         } else if (e.getSource() == m_folderEditor && m_folderEditor.isCancelled(s)) {
             browseMode(s);
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
-        } else if ( e.getSource() == m_folderManip.getTargetSelector() ) {
+            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
+        } else if (e.getSource() == m_folderManip.getTargetSelector()) {
             // This only works if this submission listener is run
             // after the target selector's one
-            if ( ! m_folderManip.getTargetSelector().isVisible(s) ) {
+            if (!m_folderManip.getTargetSelector().isVisible(s)) {
                 browseMode(s);
             }
         }
@@ -421,8 +424,8 @@ public class FlatItemList extends SegmentedPanel
 
     public void stateChanged(ChangeEvent e) {
         PageState s = e.getPageState();
-        if ( e.getSource().equals(m_typeSel) ) {
-            if ( ! m_typeSel.isSelected(s) ) {
+        if (e.getSource().equals(m_typeSel)) {
+            if (!m_typeSel.isSelected(s)) {
                 browseMode(s);
             }
         }
@@ -431,20 +434,19 @@ public class FlatItemList extends SegmentedPanel
     public void actionPerformed(ActionEvent e) {
         PageState s = e.getPageState();
         Object source = e.getSource();
-        if ( source == m_createFolderAction ) {
+        if (source == m_createFolderAction) {
             newFolderMode(s);
         } else if (source == m_editFolderAction) {
             m_permissionsSeg.setVisible(s, false);
             m_editFolderSeg.setVisible(s, true);
-        }
-        else if (source == m_togglePrivateAction) {
+        } else if (source == m_togglePrivateAction) {
             togglePermissions(s);
-        } else if ( source == m_setHomeFolderAction ) {
-	    User user = Web.getContext().getUser();
-	    Folder folder = m_folder.getFolder(s);
-	    user = (User)DomainObjectFactory.newInstance(user.getOID());
-	    Folder.setUserHomeFolder(user,folder);
-	}
+        } else if (source == m_setHomeFolderAction) {
+            User user = Web.getContext().getUser();
+            Folder folder = m_folder.getFolder(s);
+            user = (User) DomainObjectFactory.newInstance(user.getOID());
+            Folder.setUserHomeFolder(user, folder);
+        }
     }
 
     private void togglePermissions(PageState state) {
@@ -470,8 +472,8 @@ public class FlatItemList extends SegmentedPanel
                 if (section != null) {
                     PermissionService.setContext(currentFolder, section);
                 } else {
-                    throw new IllegalStateException("Cannot set the context for a folder with " +
-                                                    "no parent and no Content Section");
+                    throw new IllegalStateException("Cannot set the context for a folder with "
+                                                    + "no parent and no Content Section");
                 }
             }
 
@@ -485,8 +487,8 @@ public class FlatItemList extends SegmentedPanel
                     if (liveSection != null) {
                         PermissionService.setContext(liveVersion, liveSection);
                     } else {
-                        throw new IllegalStateException("Cannot set the context for a folder with " +
-                                                        "no parent and no Content Section");
+                        throw new IllegalStateException("Cannot set the context for a folder with "
+                                                        + "no parent and no Content Section");
                     }
                 }
             }
@@ -505,7 +507,8 @@ public class FlatItemList extends SegmentedPanel
                 ObjectPermissionCollection livePerms = PermissionService.getGrantedPermissions(liveVersion.getOID());
                 while (livePerms.next()) {
                     if (!livePerms.isInherited()) {
-                        PermissionDescriptor desc2 = new PermissionDescriptor(livePerms.getPrivilege(), liveVersion.getOID(),
+                        PermissionDescriptor desc2 = new PermissionDescriptor(livePerms.getPrivilege(), liveVersion.
+                                getOID(),
                                                                               livePerms.getGranteeOID());
                         PermissionService.revokePermission(desc2);
                     }
@@ -535,7 +538,7 @@ public class FlatItemList extends SegmentedPanel
 
     public void setPermissionLinkVis(PageState state) {
         if (!Utilities.getSecurityManager(state).
-            canAccess(state.getRequest(), SecurityManager.STAFF_ADMIN)) {
+                canAccess(state.getRequest(), SecurityManager.STAFF_ADMIN)) {
             m_togglePrivateAction.setVisible(state, false);
         }
     }
@@ -549,6 +552,7 @@ public class FlatItemList extends SegmentedPanel
         public ContentSection getContentSection(PageState s) {
             return CMS.getContext().getContentSection();
         }
+
     }
 
     /**

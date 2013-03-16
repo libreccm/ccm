@@ -291,7 +291,11 @@ public class ContentSectionContainer extends CMSContainer {
             // add columns to the table
             TableColumnModel columnModel = getColumnModel();
             
-            TableColumn contentSectionColumn = new TableColumn(colNo, COLUMN_SECTION);
+            //TableColumn contentSectionColumn = new TableColumn(colNo, COLUMN_SECTION);
+            TableColumn contentSectionColumn = new TableColumn(
+                    colNo, 
+                    (String)GlobalizationUtil.globalize("cms.ui.contentcenter.section").localize(), 
+                    COLUMN_SECTION);
             contentSectionColumn.setCellRenderer(new AdminURLTableCellRenderer());
             columnModel.add(contentSectionColumn);
 
@@ -302,7 +306,10 @@ public class ContentSectionContainer extends CMSContainer {
                 columnModel.add(locationColumn);
             }
 
-            TableColumn actionColumn = new TableColumn(colNo ++, COLUMN_ACTION);
+            TableColumn actionColumn = new TableColumn(
+                    colNo++, 
+                    (String)GlobalizationUtil.globalize("cms.ui.contentcenter.action").localize(),
+                    COLUMN_ACTION);
             actionColumn.setCellRenderer(new ActionTableCellRenderer());
             columnModel.add(actionColumn);
 

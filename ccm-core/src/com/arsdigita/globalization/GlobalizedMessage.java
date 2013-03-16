@@ -44,8 +44,7 @@ import org.apache.log4j.Logger;
  */
 public class GlobalizedMessage {
 
-    private static final Logger s_cat =
-            Logger.getLogger(GlobalizedMessage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GlobalizedMessage.class.getName());
     private String m_key = "";
     private String m_bundleName = "";
     private Object[] m_args = null;
@@ -60,7 +59,7 @@ public class GlobalizedMessage {
      *
      * @param key The key to use to look up a message in the ResourceBundle.
      */
-    public GlobalizedMessage(String key) {
+    public GlobalizedMessage(final String key) {
         setKey(key);
         setBundleName();
     }
@@ -74,7 +73,7 @@ public class GlobalizedMessage {
      * @param key The key to use to look up a message in the ResourceBundle.
      * @param bundleName The base name of the target ResourceBundle.
      */
-    public GlobalizedMessage(String key, String bundleName) {
+    public GlobalizedMessage(final String key, final String bundleName) {
         setKey(key);
         setBundleName(bundleName);
     }
@@ -92,7 +91,7 @@ public class GlobalizedMessage {
      * @param args An Object[] of arguments to interpolate into the retrieved
      *             message.
      */
-    public GlobalizedMessage(String key, Object[] args) {
+    public GlobalizedMessage(final String key, final Object[] args) {
         this(key);
         setArgs(args);
     }
@@ -109,7 +108,7 @@ public class GlobalizedMessage {
      * @param args An Object[] of arguments to interpolate into the retrieved
      *             message.
      */
-    public GlobalizedMessage(String key, String bundleName, Object[] args) {
+    public GlobalizedMessage(final String key, final String bundleName, final Object[] args) {
         this(key, bundleName);
         setArgs(args);
     }
@@ -129,7 +128,7 @@ public class GlobalizedMessage {
      * 
      * @param key
      */
-    private void setKey(String key) {
+    private void setKey(final String key) {
         if (key == null || key.length() == 0) {
             throw new IllegalArgumentException("key cannot be empty.");
         }
@@ -146,7 +145,7 @@ public class GlobalizedMessage {
         setBundleName("com.arsdigita.dummy.DummyResources");
     }
 
-    private void setBundleName(String bundleName) {
+    private void setBundleName(final String bundleName) {
         if (bundleName == null || bundleName.length() == 0) {
             throw new IllegalArgumentException("bundleName cannot be empty.");
         }
@@ -154,7 +153,7 @@ public class GlobalizedMessage {
         m_bundleName = bundleName;
     }
 
-    private void setArgs(Object[] args) {
+    private void setArgs(final Object[] args) {
         m_args = args;
     }
 
@@ -192,7 +191,7 @@ public class GlobalizedMessage {
      * java.text.MessageFormat class.
      * </p>
      *
-     * @param req The current running request.
+     * @param request The current running request.
      *
      * @return Object Represents the localized version of this
      *                message. The reason this method returns an Object and
@@ -201,7 +200,7 @@ public class GlobalizedMessage {
      *                bites. Maybe this class should have been called
      *                GlobalizedObject?
      */
-    public Object localize(HttpServletRequest request) {
+    public Object localize(final HttpServletRequest request) {
         return localize(com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale());
     }
 
@@ -226,34 +225,54 @@ public class GlobalizedMessage {
      *                bites. Maybe this class should have been called
      *                GlobalizedObject?
      */
-    public Object localize(Locale locale) {
+    public Object localize(final Locale locale) {
         Object message = getKey();
-        ResourceBundle rb = null;
+        ResourceBundle resourceBundle = null;
 
         if (locale == null) {
             throw new IllegalArgumentException("locale cannot be null.");
         }
 
-        try {
-            rb = ResourceBundle.getBundle(getBundleName(), locale);
+        try {            
+            // jensp 2013-03-16: 
+            // Previously, ResourceBundle#getBundle(String, Locale) was called here. That was causing problems under 
+            // specific circumstances:
+            // - The browser of the user is set the english (britain), languge code en_GB
+            // - The system language of the server running CCM is set to german (de_DE).
+            // In this case, the ResourceBundle.getBundle method first tries to find a ResourceBundle for en_GB, than
+            // for en. Usally, both attempts will fail because the english labels are in the default bundle 
+            // (no language code). The standard search algorithm of ResourceBundle#getBundle than falls back to the 
+            // system language (the language of the SERVER), which is German is this case. Therefore the content center
+            // was shown with german texts...
+            // Luckily, there is a simple solution: The search algorithm is implemented in the inner class 
+            // ResourceBundle.Control. There are also variants of the getBundle method which allow it to pass an 
+            // custom implementation of ResouceBundle.Control. Also ResourceBundle.Control has a factory method which
+            // offers an implementation of ResourceBundle.Control which does not use the system language. 
+            // Therefore, all what was to do was to change the call of getBundle here from 
+            // ResourceBundle#getBundle(String, Locale) to ResourceBundle#getBundle(String, Locale, ResourceControl)
+            // with ResourceBundle.Control.getNoFallbackControl(List<String>).
+            resourceBundle = ResourceBundle.getBundle(
+                    getBundleName(),
+                    locale,
+                    ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
         } catch (MissingResourceException e) {
-            if (s_cat.isDebugEnabled()) {
-                s_cat.debug(
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(
                         "ResourceBundle " + getBundleName() + " was not found.");
             }
         }
 
         try {
-            if (rb != null) {
-                message = rb.getObject(getKey());
-            } else {
-                if (s_cat.isDebugEnabled()) {
-                    s_cat.debug("No ResourceBundle available");
+            if (resourceBundle == null) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("No ResourceBundle available");
                 }
+            } else {
+                message = resourceBundle.getObject(getKey());
             }
         } catch (MissingResourceException e2) {
-            if (s_cat.isDebugEnabled()) {
-                s_cat.debug(getKey() + " was not found in the ResourceBundle.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(getKey() + " was not found in the ResourceBundle.");
             }
         }
 
@@ -282,7 +301,9 @@ public class GlobalizedMessage {
      *
      * @return The contents in String form for debugging.
      */
+    @Override
     public String toString() {
         return getBundleName() + "#" + getKey();
     }
+
 }
