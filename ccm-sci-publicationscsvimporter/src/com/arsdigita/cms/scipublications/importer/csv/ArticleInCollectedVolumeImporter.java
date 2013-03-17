@@ -47,6 +47,7 @@ class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<Artic
                     parseAuthors(data.getCollectedVolumeAuthors()),
                     data.getPublisher(),
                     data.getPlace(),
+                    null,
                     isPretend()));
         }
 

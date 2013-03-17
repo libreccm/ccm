@@ -13,8 +13,8 @@ class CsvLine {
     private final int lineNumber;
 
     public CsvLine(final String[] cols, final int lineNumber) {
-        if (cols.length != 30) {
-            throw new IllegalArgumentException(String.format("Unexpected number of columns. Expected 30 columns, "
+        if (cols.length != 37) {
+            throw new IllegalArgumentException(String.format("Unexpected number of columns. Expected 37 columns, "
                                                              + "but provided array has %d entries.", cols.length));
         }
         this.cols = Arrays.copyOf(cols, cols.length);
@@ -93,55 +93,83 @@ class CsvLine {
         return cols[16].trim();
     }
     
-    public String getIssue() {
+    public String getVolumeOfJournal() {
         return cols[17].trim();
     }
     
-    public String getPublicationDate() {
+    public String getIssue() {
         return cols[18].trim();
     }
     
-    public String getJournal() {
+    public String getPublicationDate() {
         return cols[19].trim();
     }
     
-    public String getCollectedVolume() {
+    public String getJournal() {
         return cols[20].trim();
     }
     
-    public String getCollectedVolumeAuthors() {
+    public String getJournalSymbol() {
         return cols[21].trim();
     }
     
-    public String getIsbn() {
+    public String getCollectedVolume() {
         return cols[22].trim();
     }
     
-    public String getIssn() {
+    public String getCollectedVolumeAuthors() {
         return cols[23].trim();
     }
     
-    public String getLastAccess() {
+    public String getSeriesTitle() {
         return cols[24].trim();
     }
     
-    public String getUrl() {
+    public String getVolumeOfSeries() {
         return cols[25].trim();
     }
     
-    public String getUrn() {
+    public String getEditorOfSeries() {
         return cols[26].trim();
     }
     
-    public String getDoi() {
+    public String getOrganization() {
         return cols[27].trim();
     }
     
-    public String getConference() {
+    public String getUrl() {
         return cols[28].trim();
     }
     
-    public String getScope() {
+    public String getLinkname() {
         return cols[29].trim();
+    }
+            
+    public String getIsbn() {
+        return cols[30].trim();
+    }
+    
+    public String getIssn() {
+        return cols[31].trim();
+    }
+    
+    public String getLastAccess() {
+        return cols[32].trim();
+    }
+        
+    public String getUrn() {
+        return cols[33].trim();
+    }
+    
+    public String getDoi() {
+        return cols[34].trim();
+    }
+    
+    public String getConference() {
+        return cols[35].trim();
+    }
+    
+    public String getScope() {
+        return cols[36].trim();
     }
 }

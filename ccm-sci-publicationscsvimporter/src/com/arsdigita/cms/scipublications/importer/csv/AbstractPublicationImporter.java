@@ -2,6 +2,8 @@ package com.arsdigita.cms.scipublications.importer.csv;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.contentassets.RelatedLink;
+import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.cms.scipublications.importer.report.AuthorImportReport;
@@ -136,11 +138,19 @@ abstract class AbstractPublicationImporter<T extends Publication> {
                 publication.setMisc(data.getMisc().substring(0, 3975));
             }
 
+            if ((data.getUrl() != null) && !data.getUrl().isEmpty()) {
+                processUrl(publication);
+            }
+
             publication.save();
         }
 
         if ((data.getAuthors() != null) && !data.getAuthors().isEmpty()) {
             processAuthors(publication);
+        }
+
+        if ((data.getSeriesTitle() != null) && !data.getSeriesTitle().isEmpty()) {
+            importerUtil.processSeries(publication, data.getSeriesTitle(), pretend);
         }
 
         return publication;
@@ -163,7 +173,7 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     protected Integer getFolderId() {
         return Publication.getConfig().getDefaultPublicationsFolder();
     }
-    
+
     private void processTitleAndName(final T publication) {
         if (!pretend) {
             publication.setTitle(data.getTitle());
@@ -179,17 +189,17 @@ abstract class AbstractPublicationImporter<T extends Publication> {
     private void processYear(final T publication) {
         if (!pretend) {
             final String year = data.getYear();
-            
+
             try {
                 publication.setYearOfPublication(Integer.parseInt(year));
-            } catch(NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 publication.setYearOfPublication(0);
             }
         }
-        
+
         report.addField(new FieldImportReport("year", data.getYear()));
     }
-    
+
     private void processReviewed(final T publication) {
         final String reviewedStr = data.getReviewed();
         final boolean reviewed;
@@ -258,29 +268,29 @@ abstract class AbstractPublicationImporter<T extends Publication> {
             authors.add(author);
         } else if (nameTokens.length == 2) {
             final AuthorData author = new AuthorData();
-            
-            author.setSurname(checkForEditor(author, nameTokens[0]));            
+
+            author.setSurname(checkForEditor(author, nameTokens[0]));
             author.setGivenName(checkForEditor(author, nameTokens[1]));
-                        
+
             authors.add(author);
         } else {
             final AuthorData author = new AuthorData();
-            
-            author.setSurname(checkForEditor(author, nameTokens[0]));            
+
+            author.setSurname(checkForEditor(author, nameTokens[0]));
             author.setGivenName(checkForEditor(author, nameTokens[1]));
-            
+
             authors.add(author);
         }
-    }    
-    
+    }
+
     private String checkForEditor(final AuthorData author, final String token) {
-        for(String editorStr : EDITOR_STRS) {
+        for (String editorStr : EDITOR_STRS) {
             if (token.endsWith(editorStr)) {
                 author.setEditor(true);
                 return token.substring(0, token.length() - editorStr.length()).trim();
             }
         }
-        
+
         return token.trim();
     }
 
@@ -304,6 +314,31 @@ abstract class AbstractPublicationImporter<T extends Publication> {
             if (category != null) {
                 category.addChild(publicationBundle);
             }
+        }
+    }
+
+    protected void processUrl(final Publication publication) {
+        if (!pretend) {
+            final RelatedLink link = new RelatedLink();
+            link.setLinkOwner(publication);
+            link.setLinkListName("NONE");
+            link.setTargetItem(null);
+            link.setTargetURI(getData().getUrl());
+            link.setTargetType(Link.EXTERNAL_LINK);
+            link.setTargetWindow("");
+            if ((getData().getLinkname() == null) || getData().getLinkname().isEmpty()) {
+                link.setTitle(getData().getUrl());
+            } else {
+                link.setTitle(getData().getLinkname());
+            }
+
+            link.save();
+        }
+        
+        
+        report.addField(new FieldImportReport("url", getData().getUrl()));
+        if ((getData().getLinkname() != null) && !getData().getLinkname().isEmpty()) {
+            report.addField(new FieldImportReport("linkname", getData().getLinkname()));                    
         }
     }
 

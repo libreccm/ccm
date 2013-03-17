@@ -56,13 +56,13 @@ class ArticleInJournalImporter extends AbstractPublicationImporter<ArticleInJour
     }
 
     private void processVolume(final ArticleInJournal article) {
-        if ((getData().getVolume() != null) && !getData().getVolume().isEmpty()) {
+        if ((getData().getVolumeOfJournal() != null) && !getData().getVolumeOfJournal().isEmpty()) {
             try {
-                final int volume = Integer.parseInt(getData().getVolume());
+                final int volume = Integer.parseInt(getData().getVolumeOfJournal());
                 if (!isPretend()) {
                     article.setVolume(volume);
                 }
-                getReport().addField(new FieldImportReport("Volume", getData().getVolume()));
+                getReport().addField(new FieldImportReport("Volume", getData().getVolumeOfJournal()));
             } catch (NumberFormatException ex) {
                 getReport().addMessage(String.format("Failed to parse volume data in line '%d'.",
                                                      getData().getLineNumber()));

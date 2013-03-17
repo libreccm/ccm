@@ -28,7 +28,7 @@ import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Monograph;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
-import com.arsdigita.cms.contenttypes.ResearchReport;
+//import com.arsdigita.cms.contenttypes.ResearchReport;
 import com.arsdigita.cms.contenttypes.Review;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
@@ -45,6 +45,7 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import java.util.Arrays;
+import java.util.Map;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import org.apache.log4j.Logger;
@@ -85,6 +86,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
 
     @Override
     public ImportReport importPublications(final String publications,
+                                           final Map<String, String> params,
                                            final boolean pretend,
                                            final boolean publishNewItems)
             throws SciPublicationsImportException {
@@ -113,7 +115,7 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                                                          importerUtil);
                 report.addPublication(result);
             } catch (Exception ex) {
-                tctx.abortTxn();                
+                tctx.abortTxn();
                 throw new SciPublicationsImportException(ex);
             }
 
@@ -132,11 +134,11 @@ public class PublicationsImporter implements SciPublicationsImporter {
                                                       final ImporterUtil importerUtil) {
         final PublicationImportReport report = new PublicationImportReport();
 
-        final String[] cols = line.split(COL_SEP, -30);
+        final String[] cols = line.split(COL_SEP, -37);
         //Check number of cols          
-        if (cols.length != 30) {
+        if (cols.length != 37) {
             report.setSuccessful(false);
-            report.addMessage(String.format("!!! Wrong number of columns. Exepcted 30 columns but found %d columns. "
+            report.addMessage(String.format("!!! Wrong number of columns. Exepcted 37 columns but found %d columns. "
                                             + "Skiping line %d!\n", cols.length, lineNumber));
             return report;
         }
@@ -163,8 +165,8 @@ public class PublicationsImporter implements SciPublicationsImporter {
             processProceedings(publishNewItems, data, report, pretend, importerUtil);
         } else if (Review.class.getSimpleName().equals(data.getType())) {
             processReview(publishNewItems, data, report, pretend, importerUtil);
-        } else if (ResearchReport.class.getSimpleName().equals(data.getType()) || "Report".equals(data.getType())) {
-            processResearchReport(publishNewItems, data, report, pretend, importerUtil);
+//        } else if (ResearchReport.class.getSimpleName().equals(data.getType()) || "Report".equals(data.getType())) {
+//            processResearchReport(publishNewItems, data, report, pretend, importerUtil);
         } else if (WorkingPaper.class.getSimpleName().equals(data.getType())) {
             processWorkingPaper(publishNewItems, data, report, pretend, importerUtil);
         }
@@ -315,20 +317,19 @@ public class PublicationsImporter implements SciPublicationsImporter {
 
     }
 
-    private void processResearchReport(final boolean publishNewItems,
-                                       final CsvLine data,
-                                       final PublicationImportReport report,
-                                       final boolean pretend,
-                                       final ImporterUtil importerUtil) {
-        if (isPublicationAlreadyInDatabase(data, ResearchReport.class.getSimpleName(), report)) {
-            report.setSuccessful(true);
-            return;
-        }
-
-        final ResearchReportImporter importer = new ResearchReportImporter(data, report, pretend, importerUtil);
-        importer.doImport(publishNewItems);
-    }
-
+//    private void processResearchReport(final boolean publishNewItems,
+//                                       final CsvLine data,
+//                                       final PublicationImportReport report,
+//                                       final boolean pretend,
+//                                       final ImporterUtil importerUtil) {
+//        if (isPublicationAlreadyInDatabase(data, ResearchReport.class.getSimpleName(), report)) {
+//            report.setSuccessful(true);
+//            return;
+//        }
+//
+//        final ResearchReportImporter importer = new ResearchReportImporter(data, report, pretend, importerUtil);
+//        importer.doImport(publishNewItems);
+//    }
     private void processWorkingPaper(final boolean publishNewItems,
                                      final CsvLine data,
                                      final PublicationImportReport report,
