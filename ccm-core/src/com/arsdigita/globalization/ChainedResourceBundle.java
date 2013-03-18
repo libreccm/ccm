@@ -105,8 +105,10 @@ public class ChainedResourceBundle extends ResourceBundle {
      *  Because this particular bundle is just a wrapper around other bundles,
      *  this method will return null so that the ResourceBundle can then
      *  examine the values returned by the chained parents
+     * @param key
+     * @return  
      */
-    public Object handleGetObject(String key) {
+    public Object handleGetObject(final String key) {
         Iterator iter = m_bundles.iterator();
         Object object = null;
         while (iter.hasNext() && object == null) {

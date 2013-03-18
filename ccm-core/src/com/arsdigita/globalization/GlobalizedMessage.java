@@ -233,7 +233,7 @@ public class GlobalizedMessage {
             throw new IllegalArgumentException("locale cannot be null.");
         }
 
-        try {            
+        try {
             // jensp 2013-03-16: 
             // Previously, ResourceBundle#getBundle(String, Locale) was called here. That was causing problems under 
             // specific circumstances:
@@ -253,8 +253,8 @@ public class GlobalizedMessage {
             // with ResourceBundle.Control.getNoFallbackControl(List<String>).
             resourceBundle = ResourceBundle.getBundle(
                     getBundleName(),
-                    locale,
-                    ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
+                    locale, 
+                    ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_DEFAULT));
         } catch (MissingResourceException e) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(
