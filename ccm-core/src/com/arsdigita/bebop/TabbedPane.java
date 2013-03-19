@@ -18,20 +18,17 @@
  */
 package com.arsdigita.bebop;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-
-import java.io.IOException;
-
-
-import javax.servlet.ServletException;
-
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.util.Assert;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.xml.Element;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
 

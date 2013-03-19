@@ -86,6 +86,7 @@ public class BrowsePane extends LayoutPanel implements Resettable {
             (new SubmissionListener());
     }
 
+    @Override
     public final void register(Page page) {
         super.register(page);
 
@@ -93,6 +94,7 @@ public class BrowsePane extends LayoutPanel implements Resettable {
         page.addActionListener(new TreeListener());
     }
 
+    @Override
     public final void reset(PageState state) {
         super.reset(state);
 

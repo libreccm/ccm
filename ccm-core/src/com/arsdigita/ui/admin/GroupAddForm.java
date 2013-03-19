@@ -74,7 +74,6 @@ class GroupAddForm extends GroupForm implements AdminConstants,
                 // Parent group does not exist.
                 // This is normal behavior with the new group
                 // been add with no parent.
-
             }
         }
 

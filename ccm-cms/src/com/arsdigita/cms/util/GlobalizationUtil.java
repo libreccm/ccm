@@ -31,31 +31,45 @@ import com.arsdigita.globalization.GlobalizedMessage;
  */
 public class GlobalizationUtil {
 
-    /** */	
+    /**  Name of the Java class to handle CMS's globalisation.  */	
 //    public static String s_bundleName = 
 //                         "com.arsdigita.cms.util.CMSResourceBundle";
     public static String s_bundleName = 
                          "com.arsdigita.cms.CMSResources";
 
-	public static GlobalizedMessage globalize(String key) {
-		return new GlobalizedMessage(key, getBundleName());
-	}
+    /**
+     *  This returns a globalized message using the package specific bundle,
+     *  provided by method getBundleName() 
+     */
+    public static GlobalizedMessage globalize(String key) {
+        return new GlobalizedMessage(key, getBundleName());
+    }
 
-	public static GlobalizedMessage globalize(String key, Object[] args) {
-		return new GlobalizedMessage(key, getBundleName(), args);
-	}
-	
-	public static String getBundleName() {
-		return s_bundleName;
-	}
+    /**
+     * Returns a globalized message object, using the package specific bundle,
+     * provided by method getBundleName(). Also takes in an Object[] of 
+     * arguments to interpolate into the retrieved message using the 
+     * MessageFormat class. 
+     */
+    public static GlobalizedMessage globalize(String key, Object[] args) {
+        return new GlobalizedMessage(key, getBundleName(), args);
+    }
 
-	/*
-	 * Not a part of API. Otherwise it would need to be properly synchronized.
-	 * Only meant be used to override resource keys in CMSResources
-	 * by a custom application, in Initializer.
-	 */
-	public static void internalSetBundleName(String bundleName) {
-		s_bundleName = bundleName;
-	}
+    /**
+     * Returns the name of the package specific resource bundle.
+     * @return 
+     */
+    public static String getBundleName() {
+        return s_bundleName;
+    }
+
+    /*
+     * Not a part of API. Otherwise it would need to be properly synchronized.
+     * Only meant be used to override resource keys in CMSResources
+     * by a custom application, in Initializer.
+     */
+    public static void internalSetBundleName(String bundleName) {
+        s_bundleName = bundleName;
+    }
 	
 }

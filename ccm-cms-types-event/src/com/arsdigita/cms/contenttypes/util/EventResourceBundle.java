@@ -29,7 +29,7 @@ import java.util.PropertyResourceBundle;
  * @author Shashin Shinde (sshinde@redhat.com)
  */
 public class EventResourceBundle extends ChainedResourceBundle 
-                                   implements CMSGlobalized {
+                                 implements CMSGlobalized {
     
     public final static String EVENT_BUNDLE_NAME = 
         "com.arsdigita.cms.contenttypes.EventResources";

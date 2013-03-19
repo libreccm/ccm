@@ -394,6 +394,7 @@ class GroupAdministrationTab extends BoxPanel
     private Component buildMemberListPanel(SegmentedPanel main) {
 
         BoxPanel body = new BoxPanel() {
+                @Override
                 public void register(Page p) {
                     p.setVisibleDefault(m_subMemberSearch, false);
                 }

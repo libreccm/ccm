@@ -250,7 +250,8 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
         if (m_searchPane == null) {
             m_searchPane = new LayoutPanel();
             m_searchPane.setLeft(new SimpleComponent());
-            m_searchPane.setBody(new ItemSearch(ContentItem.DRAFT, CMS.getConfig().limitToContentSection()));
+            m_searchPane.setBody(new ItemSearch(ContentItem.DRAFT, 
+                                                CMS.getConfig().limitToContentSection()));
         }
         return m_searchPane;
     }
@@ -356,6 +357,12 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
         }
     }
 
+    /**
+     * 
+     * @param pane
+     * @param key
+     * @param tab 
+     */
     private void tab(final TabbedPane pane,
                      final String key,
                      final Component tab) {

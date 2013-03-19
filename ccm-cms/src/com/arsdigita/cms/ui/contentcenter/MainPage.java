@@ -143,30 +143,50 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
      * or to add additional tabs after the default CMS tabs are added.
      **/
     protected TabbedPane createTabbedPane() {
-        TabbedPane pane = new TabbedPane();
-        pane.setClassAttr(XSL_CLASS);
-        //addToPane(pane, "Tasks/Sections", getTasksPane(m_typeSel, m_sectionSel));
-        //addToPane(pane, "Search", getSearchPane());
-        addToPane(pane, 
-                  (String)GlobalizationUtil.globalize("cms.ui.contentcenter.mainpage.taskssections").localize(), 
+        TabbedPane tabbedPane = new TabbedPane();
+        tabbedPane.setClassAttr(XSL_CLASS);
+        Label taskLabel = new Label(GlobalizationUtil
+                                    .globalize("cms.ui.contentcenter.mainpage.taskssections"));
+        Label searchLabel = new Label(GlobalizationUtil
+                                    .globalize("cms.ui.contentcenter.mainpage.search"));
+        addToPane(tabbedPane, 
+                  taskLabel,
                   getTasksPane(m_typeSel, m_sectionSel));
-        addToPane(pane, 
-                  (String)GlobalizationUtil.globalize("cms.ui.contentcenter.mainpage.search").localize(), 
+        addToPane(tabbedPane, 
+        //        searchLabel, 
+                  new Label(GlobalizationUtil.globalize(
+                            "cms.ui.contentcenter.mainpage.search")),
                   getSearchPane());
-        pane.addActionListener(this);
-        return pane;
+        tabbedPane.addActionListener(this);
+        return tabbedPane;
     }
 
 
+//  /**
+//   * Adds the specified component, with the specified tab name, to the
+//   * tabbed pane only if it is not null.
+//   *
+//   * @param pane The pane to which to add the tab
+//   * @param tabName The name of the tab if it's added
+//   * @param comp The component to add to the pane
+//   * @deprecated  refactor to use addToPane(Label, Component) instead to
+//   *              enable localized tab strips.
+//   */
+//  protected void addToPane(TabbedPane pane, String tabName, Component comp) {
+//      if (comp != null) {
+//          pane.addTab(tabName, comp);
+//      }
+//  }
+
     /**
-     * Adds the specified component, with the specified tab name, to the
-     * tabbed pane only if it is not null.
+     * Adds the specified component, with the specified Label as tab name, 
+     * to the tabbed pane only if it is not null.
      *
      * @param pane The pane to which to add the tab
      * @param tabName The name of the tab if it's added
      * @param comp The component to add to the pane
-     **/
-    protected void addToPane(TabbedPane pane, String tabName, Component comp) {
+     */
+    protected void addToPane(TabbedPane pane, Label tabName, Component comp) {
         if (comp != null) {
             pane.addTab(tabName, comp);
         }

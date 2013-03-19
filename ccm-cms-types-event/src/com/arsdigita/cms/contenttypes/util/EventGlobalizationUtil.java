@@ -35,7 +35,6 @@ public class EventGlobalizationUtil {
     /** Name of the Java class to handle Event's globalisation.           */
     final public static String BUNDLE_NAME = 
         "com.arsdigita.cms.contenttypes.util.EventResourceBundle";
-    
 
     /**
      *  This returns a globalized message using the type specific bundle,

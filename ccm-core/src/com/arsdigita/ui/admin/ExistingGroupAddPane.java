@@ -16,153 +16,178 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Group;
-import com.arsdigita.ui.admin.GroupAdministrationTab;
 
 /**
  * Series of screens required for adding existing groups as subgroups - 
- * based on existing functionality for adding permissions to a folder in content/admin
- * @version $Id: ExistingGroupAddPane.java,v 1.4 2004/06/21 11:34:03 cgyg9330 Exp $ by $Author: cgyg9330 $
+ * based on existing functionality for adding permissions to a folder in 
+ * content/admin
+ * @version $Id: ExistingGroupAddPane.java,v 1.4 2004/06/21 11:34:03 cgyg9330 Exp $
  */
 public class ExistingGroupAddPane extends SimpleContainer implements AdminConstants  {
 
-	private static final Logger s_log = Logger.getLogger(ExistingGroupAddPane.class);
-	
-	private ParameterModel searchString = new StringParameter(SEARCH_QUERY);
-    
-	
-	private GroupSearchForm groupSearchForm;
-	private SimpleContainer selectGroupsPanel;
-	private SimpleContainer noResultsPanel;
-	private Tree groupTree;
-	private GroupAdministrationTab parentPage;
-	
-	private RequestLocal parentGroup = new RequestLocal() {
-				protected Object initialValue(PageState ps) {
-					String key = (String) groupTree.getSelectedKey(ps);
+    private static final Logger s_log = Logger.getLogger(ExistingGroupAddPane.class);
 
-					Group group = null;
-
-					if (key != null) {
-						BigDecimal id = new BigDecimal(key);
-
-						try {
-							group = new Group(id);
-						} catch (DataObjectNotFoundException exc) {
-							// Silently ignore if group does not
-							// exist.
-						}
-					}
-					return group;
-				}
-			};
-
-	
-	
-	public ExistingGroupAddPane(Tree groupTree, GroupAdministrationTab parentPage) {
-		this.groupTree = groupTree;
-		this.parentPage = parentPage;
-
-	}
+    private ParameterModel searchString = new StringParameter(SEARCH_QUERY);
 
 
-	public void register(Page p) {
-			super.register(p);
-			add(getGroupSearchForm());
-			add(getSelectGroupsPanel());
-			add(getNoSearchResultPanel());
+    private GroupSearchForm groupSearchForm;
+    private SimpleContainer selectGroupsPanel;
+    private SimpleContainer noResultsPanel;
+    private Tree groupTree;
+    private GroupAdministrationTab parentPage;
 
-			// set initial visibility of components
-			p.setVisibleDefault(getGroupSearchForm(), true);
-			p.setVisibleDefault(getSelectGroupsPanel(), false);
-			p.setVisibleDefault(getNoSearchResultPanel(),false);
+    /**
+     * 
+     */
+    private RequestLocal parentGroup = new RequestLocal() {
+            @Override
+            protected Object initialValue(PageState ps) {
+                String key = (String) groupTree.getSelectedKey(ps);
 
-		p.addGlobalStateParam(searchString);
+                Group group = null;
+
+                if (key != null) {
+                    BigDecimal id = new BigDecimal(key);
+
+                    try {
+                        group = new Group(id);
+                    } catch (DataObjectNotFoundException exc) {
+                        // Silently ignore if group does not
+                        // exist.
+                    }
+                }
+                return group;
+            }
+    };
+
+
+
+    /**
+     * Constructor.
+     * @param groupTree
+     * @param parentPage 
+     */
+    public ExistingGroupAddPane(Tree groupTree, GroupAdministrationTab parentPage) {
+        this.groupTree = groupTree;
+        this.parentPage = parentPage;
+    }
+
+
+    /**
+     * 
+     * @param p 
+     */
+    @Override
+    public void register(Page p) {
+        super.register(p);
+        add(getGroupSearchForm());
+        add(getSelectGroupsPanel());
+        add(getNoSearchResultPanel());
+
+        // set initial visibility of components
+        p.setVisibleDefault(getGroupSearchForm(), true);
+        p.setVisibleDefault(getSelectGroupsPanel(), false);
+        p.setVisibleDefault(getNoSearchResultPanel(),false);
+
+        p.addGlobalStateParam(searchString);
         
-	}
+    }
 
 
 
-	
+
+    /**
+     * 
+     * @return 
+     */
+    public GroupSearchForm getGroupSearchForm() {
+
+        if (groupSearchForm==null) {
+            groupSearchForm = new GroupSearchForm(this);
+        }
+        return groupSearchForm;
+    }
+
+    /**
+     * Returns a panel with a set of checkboxes for groups 
+     * fulfilling search criteria
+     */
+    public SimpleContainer getSelectGroupsPanel() {
+        if (selectGroupsPanel==null) {
+            SelectGroups selectGroups = new SelectGroups(this, getGroupSearchForm());
+            selectGroupsPanel =  selectGroups.getPanel();
+        }
+        return  selectGroupsPanel;
+    }
+
+    /**
+     * Returns a bebop panel indicating that the user search
+     * yielded no results.
+     */
+    public SimpleContainer getNoSearchResultPanel() {
+        if (noResultsPanel==null) {
+            Label errorMsg = GROUP_NO_RESULTS;
+            errorMsg.setClassAttr("errorBullet");
+            BoxPanel bp = new BoxPanel();
+            bp.add(errorMsg);
+            bp.add(new GroupSearchForm(this));
+            noResultsPanel = new SegmentedPanel().addSegment(new Label(" "),bp);
+        }
+        return noResultsPanel;
+    }
 
 
-	public GroupSearchForm getGroupSearchForm() {
-			if (groupSearchForm==null) {
-				groupSearchForm = new GroupSearchForm(this);
-			}
-			return groupSearchForm;
-		}
+    /**
+     *  Shows panel with no results to user search.
+     */
+    public void showNoResults(PageState s) {
+        getGroupSearchForm().setVisible(s, false);
+        getSelectGroupsPanel().setVisible(s,false);
+        getNoSearchResultPanel().setVisible(s, true);
+    }
 
-		/**
-		 * Returns a panel with a set of checkboxes for groups 
-		 * fulfilling search criteria
-		 */
-		public SimpleContainer getSelectGroupsPanel() {
-			if (selectGroupsPanel==null) {
-				SelectGroups selectGroups = new SelectGroups(this, getGroupSearchForm());
-				selectGroupsPanel =  selectGroups.getPanel();
-			}
-			return  selectGroupsPanel;
-		}
+    /**
+     * Show the select groups to add as subgroups panel
+     */
+    public void showGroups(PageState s) {
+        getGroupSearchForm().setVisible(s, false);
+        getSelectGroupsPanel().setVisible(s,true);
+        getNoSearchResultPanel().setVisible(s, false);
+    }
 
-		
-		/**
-		 * Returns a bebop panel indicating that the user search
-		 * yielded no results.
-		 */
+    /**
+     * 
+     * show the search form
+     */
+    public void showSearch(PageState s) {
+        getGroupSearchForm().setVisible(s, true);
+        getSelectGroupsPanel().setVisible(s,false);
+        getNoSearchResultPanel().setVisible(s, false);
+    }
 
-		public SimpleContainer getNoSearchResultPanel() {
-			if (noResultsPanel==null) {
-				Label errorMsg = GROUP_NO_RESULTS;
-				errorMsg.setClassAttr("errorBullet");
-				BoxPanel bp = new BoxPanel();
-				bp.add(errorMsg);
-				bp.add(new GroupSearchForm(this));
-				noResultsPanel = new SegmentedPanel().addSegment(new Label(" "),bp);
-			}
-			return noResultsPanel;
-		}
+    /**
+     * 
+     * @return 
+     */
+    public ParameterModel getSearchString() {
+        return searchString;
+    }
 
+    /**
+     * 
+     * @return 
+     */
+    public GroupAdministrationTab getParentPage() {
+        return parentPage;
+    }
 
-		/**
-		*  Shows panel with no results to user search.
-		*/
-
-	   public void showNoResults(PageState s) {
-		   getGroupSearchForm().setVisible(s, false);
-		   getSelectGroupsPanel().setVisible(s,false);
-		   getNoSearchResultPanel().setVisible(s, true);
-	   }
-
-	   /**
-		* Show the select groups to add as subgroups panel
-		*/
-
-	   public void showGroups(PageState s) {
-		getGroupSearchForm().setVisible(s, false);
-		 getSelectGroupsPanel().setVisible(s,true);
-		 getNoSearchResultPanel().setVisible(s, false);
-	   }
-	   /**
-	    * 
-	    * show the search form
-	    */
-	public void showSearch(PageState s) {
-		   getGroupSearchForm().setVisible(s, true);
-			getSelectGroupsPanel().setVisible(s,false);
-			getNoSearchResultPanel().setVisible(s, false);
-		  }
-
-	public ParameterModel getSearchString() {
-			return searchString;
-		}
-		
-		public GroupAdministrationTab getParentPage() {
-			return parentPage;
-		}
-		
-	public Group getParentGroup(PageState ps) {
-		return (Group) parentGroup.get(ps);
-	}
-	
+    /**
+     * 
+     * @param ps
+     * @return 
+     */
+    public Group getParentGroup(PageState ps) {
+        return (Group) parentGroup.get(ps);
+    }
 
 }

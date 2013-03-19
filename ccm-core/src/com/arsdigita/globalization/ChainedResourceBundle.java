@@ -18,32 +18,30 @@
  */
 package com.arsdigita.globalization;
 
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.PropertyResourceBundle;
 import java.util.ListResourceBundle;
-import java.util.Enumeration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 /**
- *  This is a ResourceBundle that allows the developer to add additional
- *  ChainableResourceBundles to it.  Then, when the bundle is asked for
- *  a key, it checks the ChainableResourceBundles in the order that they
- *  were added.  A typical use would be something like this
- *  <pre><code>
- *  public class EventResourceBundle extends ChainedResourceBundle {
- *    public EventResourceBundle() {
- *        super();
- *        addBundle((PropertyResourceBundle)getBundle("EVENT_BUNDLE_NAME"));
- *        addBundle((PropertyResourceBundle)getBundle("DEFAULT_BUNDLE_NAME"));
- *    }
- *  }
- *
- *  </code></pre>
- **/
+ * This is a ResourceBundle that allows the developer to add additional
+ * ChainableResourceBundles to it.  Then, when the bundle is asked for
+ * a key, it checks the ChainableResourceBundles in the order that they
+ * were added.  A typical use would be something like this
+ * <pre><code>
+ * public class EventResourceBundle extends ChainedResourceBundle {
+ *   public EventResourceBundle() {
+ *       super();
+ *       addBundle((PropertyResourceBundle)getBundle("EVENT_BUNDLE_NAME"));
+ *       addBundle((PropertyResourceBundle)getBundle("DEFAULT_BUNDLE_NAME"));
+ *   }
+ * }
+ * </code></pre>
+ */
 public class ChainedResourceBundle extends ResourceBundle {
     
     private List m_bundles;
@@ -92,7 +90,7 @@ public class ChainedResourceBundle extends ResourceBundle {
     }
 
     private void putBundle(ChainableResourceBundle bundle) {
-    	m_bundles.add(0,bundle);
+        m_bundles.add(0,bundle);
         Enumeration enu = bundle.getKeys();
         List bundleKeys = new LinkedList();
         while (enu.hasMoreElements()) {
@@ -129,7 +127,8 @@ public class ChainedResourceBundle extends ResourceBundle {
      *  an internal PropertyResourceBundle.
      */
     private class ChainablePropertyResourceBundle
-        implements ChainableResourceBundle {
+                  implements ChainableResourceBundle {
+
         private PropertyResourceBundle m_wrappedBundle = null;
 
         /**
@@ -159,7 +158,8 @@ public class ChainedResourceBundle extends ResourceBundle {
      *  an internal PropertyResourceBundle.
      */
     private class ChainableListResourceBundle
-        implements ChainableResourceBundle {
+                  implements ChainableResourceBundle {
+
         private ListResourceBundle m_wrappedBundle = null;
 
         /**
