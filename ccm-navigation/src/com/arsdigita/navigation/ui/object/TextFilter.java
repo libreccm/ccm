@@ -1,11 +1,6 @@
 package com.arsdigita.navigation.ui.object;
 
 import com.arsdigita.xml.Element;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * <p>

@@ -4,11 +4,9 @@ import com.arsdigita.globalization.Globalization;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.xml.Element;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
@@ -215,6 +213,35 @@ public class CustomizableObjectList extends ComplexObjectList {
     protected DataCollection getObjects(final HttpServletRequest request,
                                         final HttpServletResponse response) {
         //Set filters (using the SQL)
+//        final StringBuilder sqlFilters = new StringBuilder();
+//        for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
+//            if ((filterEntry.getValue().getFilter() == null)
+//                || (filterEntry.getValue().getFilter().isEmpty())) {
+//                continue;
+//            }
+//
+//            if (sqlFilters.length() > 0) {
+//                sqlFilters.append(" AND ");
+//            }
+//            sqlFilters.append(filterEntry.getValue().getFilter());
+//        }
+//
+//        logger.debug(String.format("filters: %s", sqlFilters));
+//        if (sqlFilters.length() > 0) {
+//            setSQLFilter(sqlFilters.toString());
+//        }
+        
+        final String filterSql = getFilterSql();
+        if (filterSql.length() > 0) {
+            setSQLFilter(filterSql);
+        }        
+
+        final DataCollection objects = super.getObjects(request, response);
+
+        return objects;
+    }
+
+    public String getFilterSql() {
         final StringBuilder sqlFilters = new StringBuilder();
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             if ((filterEntry.getValue().getFilter() == null)
@@ -233,9 +260,7 @@ public class CustomizableObjectList extends ComplexObjectList {
             setSQLFilter(sqlFilters.toString());
         }
 
-        final DataCollection objects = super.getObjects(request, response);
-
-        return objects;
+        return sqlFilters.toString();
     }
 
     /**
@@ -309,8 +334,7 @@ public class CustomizableObjectList extends ComplexObjectList {
             final Element sortFieldElems = controls.newChildElement("sortFields");
             sortFieldElems.addAttribute("sortBy", sortByKey);
             for (Map.Entry<String, String> sortField : sortFields.entrySet()) {
-                final Element sortFieldElem = sortFieldElems.newChildElement(
-                        "sortField");
+                final Element sortFieldElem = sortFieldElems.newChildElement("sortField");
                 sortFieldElem.addAttribute("label", sortField.getKey());
             }
         }
@@ -320,4 +344,5 @@ public class CustomizableObjectList extends ComplexObjectList {
 
         return content;
     }
+
 }

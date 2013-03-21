@@ -1,0 +1,15 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>
+        <table name="cms_items"/>
+        <table name="ct_publications"/>        
+        <initalizer class="com.arsdigita.cms.Initializer"/>
+        <initalizer class="com.arsdigita.cms.contenttypes.PublicationInitalizer"/>
+        <initalizer class="com.arsdigita.cms.scipublications.SciPublicationsInitalizer"/>
+        <initalizer class="com.arsdigita.navigation.Initalizer"/>
+    </requires>
+    <provides>
+        <initalizer class="com.arsdigita.cms.scipublications.PublicationExportLinksInitalizer"/>        
+    </provides>    
+</load>

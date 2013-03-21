@@ -154,6 +154,10 @@ public class DataCollectionDefinition extends LockableImpl {
         m_filterCategory = filterCategory;
     }
 
+    public final boolean getDescendCategories() {
+        return m_descendCategories;
+    }
+    
     public final void setDescendCategories(boolean descendCategories) {
         Assert.isUnlocked(this);
         m_descendCategories = descendCategories;
