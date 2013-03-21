@@ -9,20 +9,31 @@ import com.arsdigita.xml.Element;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * This component creates export links for all publications in a category. The export works with the descendCategories
+ * parameter set to true and false. Filters from a {@link CustomizableObjectList} are also supported. To add the 
+ * component add the following to your JSP template:
+ * 
+ * <pre>
+ * <define:component name="publicationExportLinks"
+ *                        classname="com.arsdigita.cms.scipublications.ui.PublicationExportLinks"/>     
+ *  <jsp:scriptlet>     
+ *  ((com.arsdigita.cms.scipublications.ui.PublicationExportLinks)publicationExportLinks).setObjList(objList);
+ *  </jsp:scriptlet>
+ * </pre>
+ * 
+ * {@code objList} is to be supposed the name of variable for the object list in the template.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
 public class PublicationExportLinks extends AbstractComponent {
 
     private CustomizableObjectList objList;
-    
+
     public Element generateXML(final HttpServletRequest request,
                                final HttpServletResponse response) {
 
@@ -41,7 +52,7 @@ public class PublicationExportLinks extends AbstractComponent {
     public void setObjList(final CustomizableObjectList objList) {
         this.objList = objList;
     }
-    
+
     private void createExportLink(final PublicationFormat format,
                                   final Element parent,
                                   final Category category) {
@@ -59,7 +70,7 @@ public class PublicationExportLinks extends AbstractComponent {
             filterSqlElem.setText("");
         }
         final Element desCatsElem = exportLinkElem.newChildElement("descendCategories");
-        if (objList.getDefinition().getDescendCategories()) {            
+        if (objList.getDefinition().getDescendCategories()) {
             desCatsElem.setText("true");
         } else {
             desCatsElem.setText("false");
