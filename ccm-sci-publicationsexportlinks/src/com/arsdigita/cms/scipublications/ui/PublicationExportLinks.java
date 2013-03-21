@@ -6,7 +6,11 @@ import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.navigation.ui.AbstractComponent;
 import com.arsdigita.navigation.ui.object.CustomizableObjectList;
 import com.arsdigita.xml.Element;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,7 +53,11 @@ public class PublicationExportLinks extends AbstractComponent {
         final Element categoryIdElem = exportLinkElem.newChildElement("categoryId");
         categoryIdElem.setText(category.getID().toString());
         final Element filterSqlElem = exportLinkElem.newChildElement("filterSql");
-        filterSqlElem.setText(objList.getFilterSql());
+        try {
+            filterSqlElem.setText(URLEncoder.encode(objList.getFilterSql(), "UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            filterSqlElem.setText("");
+        }
         final Element desCatsElem = exportLinkElem.newChildElement("descendCategories");
         if (objList.getDefinition().getDescendCategories()) {            
             desCatsElem.setText("true");
