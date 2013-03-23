@@ -33,6 +33,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.dispatcher.DefaultTemplateResolver;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.MultilingualItemResolver;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.dispatcher.TemplateResolver;
 import com.arsdigita.cms.lifecycle.PublishLifecycleListener;
 import com.arsdigita.cms.publishToFile.PublishToFileConfig;
@@ -622,10 +623,36 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.image_cache.max_age",
             Parameter.REQUIRED,
             300);
+    /**
+     * Enable the PersonOrgaUnitsStep?
+     */
     private final Parameter m_attachPersonOrgaUnitsStep = new BooleanParameter(
             "com.arsdigita.cms.contenttypes.genericperson.attach_person_orgaunits_step",
             Parameter.REQUIRED,
             Boolean.TRUE);
+    /**
+     * Enable or disable the XML cache in {@link SimpleXMLGenerator}
+     */
+    private final Parameter m_enableXmlCache = new BooleanParameter(
+            "com.arsdigita.cms.xml.cache.enable",
+            Parameter.REQUIRED,
+            Boolean.FALSE);
+    /**
+     * Maximum number of items stored in the XML cache
+     * 
+     */
+    private final Parameter m_xmlCacheSize = new IntegerParameter(
+            "com.arsdigita.cms.xml.cache.size",
+            Parameter.REQUIRED,
+            2500);
+    /**
+     * Maximum age of cache entry for the XML cache 
+     * 
+     */
+    private final Parameter m_xmlCacheAge = new IntegerParameter(
+            "com.arsdigita.cms.xml.cache.age",
+            Parameter.REQUIRED,
+            60 * 60 * 24);
 
     // ///////////////////////////////////////////
     // publishToFile package related parameter
@@ -734,6 +761,10 @@ public final class CMSConfig extends AbstractConfig {
         register(m_itemSearchFlatBrowsePanePageSize);
 
         register(m_attachPersonOrgaUnitsStep);
+        
+        register(m_enableXmlCache);
+        register(m_xmlCacheSize);
+        register(m_xmlCacheAge);
 
         loadInfo();
     }
@@ -1209,6 +1240,18 @@ public final class CMSConfig extends AbstractConfig {
 
     public Boolean getAttachPersonOrgaUnitsStep() {
         return (Boolean) get(m_attachPersonOrgaUnitsStep);
+    }
+    
+    public Boolean getEnableXmlCache() {
+        return (Boolean) get(m_enableXmlCache);
+    }
+    
+    public Integer getXmlCacheSize() {
+        return (Integer) get(m_xmlCacheSize);
+    }
+    
+    public Integer getXmlCacheAge() {
+        return (Integer) get(m_xmlCacheAge);
     }
 
 }

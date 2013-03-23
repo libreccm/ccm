@@ -21,6 +21,7 @@ package com.arsdigita.cms.util;
 import com.arsdigita.globalization.ChainedResourceBundle;
 
 import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 /**
  * Main ResourceBundle for CMS UI.
@@ -29,11 +30,13 @@ import java.util.PropertyResourceBundle;
  * - putBundle - to override keys already in CMSResources e.g. to customize
  *               notification email text
  */
-public class CMSResourceBundle extends ChainedResourceBundle 
-                               implements CMSGlobalized {
-    
+public class CMSResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
+
     public CMSResourceBundle() {
         super();
-        addBundle((PropertyResourceBundle)getBundle(BUNDLE_NAME));
+        addBundle((PropertyResourceBundle) getBundle(BUNDLE_NAME,
+                                                     ResourceBundle.Control.getNoFallbackControl(
+                ResourceBundle.Control.FORMAT_DEFAULT)));
     }
+
 }

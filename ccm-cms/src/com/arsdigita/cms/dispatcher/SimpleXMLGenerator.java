@@ -19,7 +19,9 @@
 package com.arsdigita.cms.dispatcher;
 
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.caching.CacheTable;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ExtraXMLGenerator;
@@ -40,11 +42,11 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
-import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,8 +85,13 @@ public class SimpleXMLGenerator implements XMLGenerator {
      */
     private String itemElemName = "cms:item";
     private String itemElemNs = CMS.CMS_XML_NS;
-    private static final Map<OID, Element> cache = new HashMap<OID, Element>();
-    private static final boolean USE_CACHE = false;
+    private static final CacheTable CACHE = new CacheTable(
+            SimpleXMLGenerator.class.getName() + "Cache",
+            CMSConfig.getInstance().getXmlCacheSize(),
+            CMSConfig.getInstance().getXmlCacheAge(),
+            true);
+    //private static final Map<OID, Element> cache = new HashMap<OID, Element>();
+    //private static final boolean USE_CACHE = false;
 
     // Register general purpose adaptor for all content items
     static {
@@ -189,8 +196,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
             // This is the preferred method
             //final Element content = startElement(useContext, parent);
             final Element content;
-            if (USE_CACHE && cache.containsKey(item.getOID())) {
-                content = cache.get(item.getOID());
+            if (CMSConfig.getInstance().getEnableXmlCache() && (CACHE.get(item.getOID().toString()) != null)) {
+                content = (Element) CACHE.get(item.getOID().toString());
             } else {
 
                 content = startElement(useContext);
@@ -212,7 +219,23 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
                 //parent.addContent(content);
 
-                /*
+                //Only cache published items
+//                if (item.isLiveVersion()) {
+//                    final Element cachedElem = startElement(useContext);
+//                    final Iterator entries = content.getAttributes().entrySet().iterator();
+//                    Map.Entry entry;
+//                    while (entries.hasNext()) {
+//                        entry = (Map.Entry) entries.next();
+//                        cachedElem.addAttribute((String) entry.getKey(), (String) entry.getValue());
+//                    }
+//                    final Iterator childs = content.getChildren().iterator();
+//                    while (childs.hasNext()) {
+//                        cachedElem.newChildElement((Element) childs.next());
+//                    }
+//                    CACHE.put(item.getOID().toString(), cachedElem);                    
+//                }
+                //}
+            /*
                  * 2011-08-27 jensp: Introduced to remove the annoying special templates
                  * for MultiPartArticle, SiteProxy and others. The method called
                  * here was already definied but not used. 
@@ -229,10 +252,21 @@ public class SimpleXMLGenerator implements XMLGenerator {
                 }
 //                System.out.
 //                        printf("Rendered ExtraXML in          %d ms\n", (System.nanoTime() - extraXMLStart) / 1000000);
-//                System.out.printf("                              -----\n");
+//                System.out.printf("                              -----\n");            
 
-                if (USE_CACHE) {
-                    cache.put(item.getOID(), content);
+                if (CMSConfig.getInstance().getEnableXmlCache() && item.isLiveVersion()) {
+                    final Element cachedElem = startElement(useContext);
+                    final Iterator entries = content.getAttributes().entrySet().iterator();
+                    Map.Entry entry;
+                    while (entries.hasNext()) {
+                        entry = (Map.Entry) entries.next();
+                        cachedElem.addAttribute((String) entry.getKey(), (String) entry.getValue());
+                    }
+                    final Iterator childs = content.getChildren().iterator();
+                    while (childs.hasNext()) {
+                        cachedElem.newChildElement((Element) childs.next());
+                    }
+                    CACHE.put(item.getOID().toString(), cachedElem);
                 }
             }
 

@@ -31,11 +31,9 @@ import com.arsdigita.globalization.GlobalizedMessage;
  */
 public class GlobalizationUtil {
 
-    /**  Name of the Java class to handle CMS's globalisation.  */	
-//    public static String s_bundleName = 
-//                         "com.arsdigita.cms.util.CMSResourceBundle";
-    public static String s_bundleName = 
-                         "com.arsdigita.cms.CMSResources";
+    /**  Name of the Java class to handle CMS's globalisation.  */
+    //public static String s_bundleName = "com.arsdigita.cms.util.CMSResourceBundle";
+    public static String s_bundleName = "com.arsdigita.cms.CMSResources";
 
     /**
      *  This returns a globalized message using the package specific bundle,
@@ -71,5 +69,5 @@ public class GlobalizationUtil {
     public static void internalSetBundleName(String bundleName) {
         s_bundleName = bundleName;
     }
-	
+
 }

@@ -85,7 +85,7 @@ public abstract class NewItemForm extends Form {
         m_emptyLabel.setIdAttr("empty_label");
         panel.add(m_emptyLabel);
 
-        m_createLabel = new Label((String)globalize("cms.ui.authoring.create_new").localize(), false);
+        m_createLabel = new Label(globalize("cms.ui.authoring.create_new"), false);
         m_createLabel.setIdAttr("create_label");
         panel.add(m_createLabel);
 
