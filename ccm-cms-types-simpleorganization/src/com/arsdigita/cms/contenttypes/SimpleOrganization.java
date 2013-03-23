@@ -1,9 +1,12 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.ui.SimpleOrganizationExtraXmlGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -34,4 +37,17 @@ public class SimpleOrganization extends GenericOrganizationalUnit {
         super(type);
     }
     
+    @Override
+    public List<ExtraXMLGenerator> getExtraXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        generators.add(new SimpleOrganizationExtraXmlGenerator());
+        return generators;
+    }
+    
+    @Override
+    public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
+        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        generators.add(new SimpleOrganizationExtraXmlGenerator());
+        return generators;
+    }
 }
