@@ -21,6 +21,10 @@ package com.arsdigita.portlet.news;
 
 import com.arsdigita.domain.DomainCollection;
 
+// Following code it part of 'personalized news' tree which is disabled for now
+// because we currently (6.6) have no user preferences of something like that
+// in the trunk code. West Sussex used to have a specialized module.
+
 /**
  * Service is used by news portlet to display potentially useful articles 
  * to the user.

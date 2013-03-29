@@ -7,7 +7,7 @@
   <jsp:directive.page import="com.arsdigita.kernel.permissions.PrivilegeDescriptor"/>
   <jsp:directive.page import="com.arsdigita.portalworkspace.Workspace"/>
   <jsp:directive.page import="com.arsdigita.portalworkspace.ui.AbstractWorkspaceComponent"/>
-  <jsp:directive.page import="com.arsdigita.portalworkspace.ui.DefaultWorkspaceSelectionModel"/>
+  <jsp:directive.page import="com.arsdigita.portalworkspace.ui.WorkspaceSelectionDefaultModel"/>
   <jsp:directive.page import="com.arsdigita.toolbox.ui.ApplicationAuthenticationListener"/>
 
   <jsp:scriptlet>
@@ -27,7 +27,7 @@
                    classname="com.arsdigita.portalworkspace.ui.WorkspaceViewer" />
     <jsp:scriptlet>
       ((AbstractWorkspaceComponent) view).setWorkspaceModel(
-                                          new DefaultWorkspaceSelectionModel());
+                                          new WorkspaceSelectionDefaultModel());
     </jsp:scriptlet>
   </define:page>
 

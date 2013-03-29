@@ -91,36 +91,34 @@ public class NewsPortlet extends Portlet implements NewsConstants {
 		set(ITEM_COUNT, new Integer(count));
 	}
 
-	/**
-	 * 
-	 * @return whether any homepage news items have been added or edited since last checked.
-	 * If news has been updated, the stored value of the last update is changed. Note 
-	 * deleted news items do not cause true to be returned.
-	 * 
-	 */
-	/*
-	 * 
-	 * starting to look doubtful whether this would actually save any time
-	 * 
-	 * will recheck when more data on database 
-	 public boolean isNewNews() {
-		NewsItem latest = NewsItem.getMostRecentNewsItem();
-		
-		if (!latest.getID().equals(s_latestNews)) {
-			s_latestNews = latest.getID();
-			return true;
-		}
-		DataCollection news = SessionManager.getSession().retrieve(NewsItem.BASE_DATA_OBJECT_TYPE);
-		news.addEqualsFilter(NewsItem.IS_HOMEPAGE, new Boolean(true));
-		long newsCount = news.size();
-		if (newsCount != s_newsCount) {
-			s_newsCount = newsCount;
-			return true;
-		}
-		return false;
-		
-		
-		
-	}*/
+// Following code it part of 'personalized news' tree which is disabled for
+// because we currently (6.6) have no user preferences of something like that.
+    /**
+     * 
+     * @return whether any homepage news items have been added or edited since last checked.
+     * If news has been updated, the stored value of the last update is changed. Note 
+     * deleted news items do not cause true to be returned.
+     * 
+     */
+/*   * starting to look doubtful whether this would actually save any time
+     * will recheck when more data on database 
+    public boolean isNewNews() {
+        NewsItem latest = NewsItem.getMostRecentNewsItem();
+
+        if (!latest.getID().equals(s_latestNews)) {
+            s_latestNews = latest.getID();
+            return true;
+        }
+        DataCollection news = SessionManager.getSession().retrieve(NewsItem.BASE_DATA_OBJECT_TYPE);
+        news.addEqualsFilter(NewsItem.IS_HOMEPAGE, new Boolean(true));
+        long newsCount = news.size();
+        if (newsCount != s_newsCount) {
+            s_newsCount = newsCount;
+            return true;
+        }
+        return false;
+
+    }
+*/
 
 }

@@ -42,7 +42,7 @@ public class Loader extends PackageLoader {
 
 	private StringParameter typeName = new StringParameter
 			("uk.gov.westsussex.portlet.news.name", 
-			 Parameter.REQUIRED, "News");
+			 Parameter.REQUIRED, "Latest News");
 
 	public Loader() {
 			register(typeName);
@@ -56,7 +56,7 @@ public class Loader extends PackageLoader {
 		   .createPortletType((String)get(typeName), 
 							  PortletType.WIDE_PROFILE,
 							  NewsPortlet.BASE_DATA_OBJECT_TYPE);
-	   type.setDescription("See your personalised news");
+	   type.setDescription("Displays the latest news.");
             }
         }.run();
     }

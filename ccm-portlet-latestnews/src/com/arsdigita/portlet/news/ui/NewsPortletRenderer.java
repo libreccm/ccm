@@ -19,9 +19,6 @@
 package com.arsdigita.portlet.news.ui;
 
 //import uk.gov.westsussex.authentication.ExternalUserFactory;
-import com.arsdigita.portlet.news.NewsConstants;
-import com.arsdigita.portlet.news.NewsPortlet;
-import com.arsdigita.portlet.news.PersonalisedNewsTarget;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
@@ -42,6 +39,9 @@ import com.arsdigita.london.terms.Term;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.portal.PortletType;
+import com.arsdigita.portlet.news.NewsConstants;
+import com.arsdigita.portlet.news.NewsPortlet;
+import com.arsdigita.portlet.news.PersonalisedNewsTarget;
 import com.arsdigita.xml.Element;
 
 import java.text.DateFormat;
@@ -52,13 +52,13 @@ import org.apache.log4j.Logger;
 
 
 /**
- *
+ * Class selects the news to display and generates the xml.
  *
  * @author Chris Gilbert (cgyg9330) &lt;chris.gilbert@westsussex.gov.uk&gt;
  * @version $Id: NewsPortletRenderer.java 2005/03/07 13:48:49 cgyg9330 Exp $
  */
 public class NewsPortletRenderer  extends AbstractPortletRenderer
-                                  implements NewsConstants {
+                                    implements NewsConstants {
 
     /** Private logger instance for debugging purpose  */
     private static final Logger s_log =
@@ -94,6 +94,10 @@ public class NewsPortletRenderer  extends AbstractPortletRenderer
             thisUser = Kernel.getPublicUser();
         }
 
+// Following code it part of 'personalized news' tree which is disabled for now
+// because we currently (6.6) have no user preferences of something like that
+// in the trunk code. West Sussex used to have a specialized module.
+//
 //      Object customUser = ExternalUserFactory.getCustomUserObject(thisUser);
 //      if (customUser instanceof PersonalisedNewsTarget) {
 //          newsPortlet.addAttribute(PERSONALISED_ATTRIBUTE, "true");
@@ -115,11 +119,14 @@ public class NewsPortletRenderer  extends AbstractPortletRenderer
         s_log.debug("FINISH - generateBodyXML");
     }
 
-    /**
-     * 
-     * @param newsPortlet
-     * @param profiledUser
-     */
+// Following code it part of 'personalized news' tree which is disabled for now
+// because we currently (6.6) have no user preferences of something like that
+// in the trunk code. West Sussex used to have a specialized module.
+//  /**
+//   * 
+//   * @param newsPortlet
+//   * @param profiledUser
+//   */
 /*  CURRENTLY NOT AVAILABLE
     private void getPersonalisedNews( PageState state,
                                       Element main,

@@ -6,7 +6,7 @@
 
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
     <jsp:directive.page import="com.arsdigita.portalworkspace.ui.AbstractWorkspaceComponent"/>
-    <jsp:directive.page import="com.arsdigita.portalworkspace.ui.DefaultWorkspaceSelectionModel"/>
+    <jsp:directive.page import="com.arsdigita.portalworkspace.ui.WorkspaceSelectionDefaultModel"/>
 
     <jsp:scriptlet>
       DispatcherHelper.cacheDisable(response);
@@ -18,7 +18,7 @@
                    classname="com.arsdigita.portalworkspace.ui.WorkspaceEditor" />
       <jsp:scriptlet>
       ((AbstractWorkspaceComponent)edit).setWorkspaceModel(
-                                             new DefaultWorkspaceSelectionModel());
+                                             new WorkspaceSelectionDefaultModel());
       </jsp:scriptlet>
     </define:page>
 
