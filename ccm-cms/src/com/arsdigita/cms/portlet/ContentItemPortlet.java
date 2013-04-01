@@ -50,6 +50,7 @@ public class ContentItemPortlet extends Portlet {
         super(dataObject);
     }
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -63,6 +64,7 @@ public class ContentItemPortlet extends Portlet {
         setAssociation(ITEM, item);
     }
 
+    @Override
     public AbstractPortletRenderer doGetPortletRenderer() {
         return new ContentItemPortletRenderer(this);
     }

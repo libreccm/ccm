@@ -88,7 +88,6 @@
 
 <!--   LDN extension  -->
 <!--    temporarily excluded because configuration issues have to be resolved
-        <ccm:application name="ccm-ldn-rss"/>                        
         <ccm:application name="ccm-rssfeed"/>                        
 -->
 
