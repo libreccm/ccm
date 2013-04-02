@@ -112,17 +112,14 @@ public class ItemSearchPopup extends ItemSearch {
 
             element.addAttribute("class", "jsButton");
 
-            String widget = (String) state.getValue(
-                    new StringParameter(WIDGET_PARAM));
+            String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
             String searchWidget = (String) state.getValue(new StringParameter("searchWidget"));
 
-            boolean useURL = "true".equals(
-                    state.getValue(new StringParameter(URL_PARAM)));
+            boolean useURL = "true".equals(state.getValue(new StringParameter(URL_PARAM)));
 
             String fillString = useURL
                                 ? getItemURL(state.getRequest(), doc.getOID())
-                                : doc.getOID().get("id").toString()
-                                  + " (" + doc.getTitle() + ")";
+                                : doc.getOID().get("id").toString();
             String title = doc.getTitle();
 
             Element jsLabel = Search.newElement("jsAction");
@@ -140,7 +137,7 @@ public class ItemSearchPopup extends ItemSearch {
                    + " <!-- \n"
                    + " function fillItem" + id + "() { \n"
                    + " window.opener.document." + widget + ".value=\"" + fill + "\";\n"
-                   + " window.opener.document." + searchWidget + ".value=\"" + title + "\";\n"
+                   + " window.opener.document." + searchWidget + ".value=\"" + title.replace("\"", "\\\"") + "\";\n"
                    + " self.close(); \n"
                    + " return false; \n"
                    + " } \n"

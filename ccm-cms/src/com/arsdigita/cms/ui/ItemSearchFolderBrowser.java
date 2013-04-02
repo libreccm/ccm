@@ -119,12 +119,12 @@ public class ItemSearchFolderBrowser extends Table {
         p.addComponentStateParam(this, m_currentFolder.getStateParameter());
 
         p.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent event) {
                 // MP: This action listener should only be called when the
                 //      folder browser is visible.
                 showHideFolderActions(event.getPageState());
             }
+
         });
     }
 
@@ -146,7 +146,6 @@ public class ItemSearchFolderBrowser extends Table {
             extends AbstractTableModelBuilder implements PaginationModelBuilder {
 
         private RequestLocal m_size = new RequestLocal() {
-
             @Override
             protected Object initialValue(PageState state) {
                 Folder.ItemCollection itemColl = getItemCollection(state);
@@ -156,9 +155,9 @@ public class ItemSearchFolderBrowser extends Table {
                 }
                 return new Integer((int) itemColl.size());
             }
+
         };
         private RequestLocal m_itemColl = new RequestLocal() {
-
             @Override
             protected Object initialValue(PageState state) {
                 Folder.ItemCollection itemColl = getItemCollection(state);
@@ -169,6 +168,7 @@ public class ItemSearchFolderBrowser extends Table {
 
                 return itemColl;
             }
+
         };
 
         public TableModel makeModel(Table t, PageState s) {
@@ -228,24 +228,24 @@ public class ItemSearchFolderBrowser extends Table {
                  */
                 createSiblingFilter(or, ff, singleTypeID);
                 /*try {
-                ContentType ct = new ContentType(singleTypeID);
+                 ContentType ct = new ContentType(singleTypeID);
                 
-                StringTokenizer strTok = new StringTokenizer(ct.
-                getDescendants(), "/");
-                while (strTok.hasMoreElements()) {
-                or.addFilter(ff.equals(ContentItem.CONTENT_TYPE + "."
-                + ContentType.ID,
-                (String) strTok.nextElement()));
-                }
-                } catch (Exception ex) {
-                // WTF? The selected content type does not exist in the table???
-                s_log.error(String.format(
-                "Something is very wrong here, the ContentType '%s' "
-                + "seems not to exist. Ignoring for now, but please "
-                + "make your checks.",
-                singleTypeID.toString()),
-                ex);
-                }*/
+                 StringTokenizer strTok = new StringTokenizer(ct.
+                 getDescendants(), "/");
+                 while (strTok.hasMoreElements()) {
+                 or.addFilter(ff.equals(ContentItem.CONTENT_TYPE + "."
+                 + ContentType.ID,
+                 (String) strTok.nextElement()));
+                 }
+                 } catch (Exception ex) {
+                 // WTF? The selected content type does not exist in the table???
+                 s_log.error(String.format(
+                 "Something is very wrong here, the ContentType '%s' "
+                 + "seems not to exist. Ignoring for now, but please "
+                 + "make your checks.",
+                 singleTypeID.toString()),
+                 ex);
+                 }*/
 
                 itemColl.addFilter(or);
 
@@ -309,6 +309,7 @@ public class ItemSearchFolderBrowser extends Table {
                    && (size
                        > ContentSection.getConfig().getFolderBrowseListSize());
         }
+
     }
 
     /**
@@ -354,12 +355,9 @@ public class ItemSearchFolderBrowser extends Table {
                             ItemSearchPopup.URL_PARAM)));
 
                     String fillString = useURL
-                                        ? ItemSearchPopup.getItemURL(state.
-                            getRequest(),
-                                                                     coll.
-                            getDomainObject().getOID())
-                                        : id
-                                          + " (" + name + ")";
+                                        ? ItemSearchPopup.getItemURL(
+                            state.getRequest(),
+                            coll.getDomainObject().getOID()) : id + " (" + name + ")";
                     String title = ((ContentPage) coll.getDomainObject()).getTitle();
 
                     Label js = new Label(generateJSLabel(id, widget, searchWidget, fillString, title),
@@ -382,10 +380,11 @@ public class ItemSearchFolderBrowser extends Table {
         private String generateJSLabel(BigDecimal id, String widget, String searchWidget, String fill, String title) {
             StringBuilder buffer = new StringBuilder();
             buffer.append(" <script language=javascript> ");
-                          buffer.append( " <!-- \n");
-                          buffer.append(" function fillItem").append(id).append("() { \n");                          
-                          buffer.append(" window.opener.document.").append(widget).append(".value=\"").append(fill).append("\";\n");
-                          buffer.append(" window.opener.document.").append(searchWidget).append(".value=\"").append(title).append("\";\n");
+            buffer.append(" <!-- \n");
+            buffer.append(" function fillItem").append(id).append("() { \n");
+            buffer.append(" window.opener.document.").append(widget).append(".value=\"").append(fill).append("\";\n");
+            buffer.append(" window.opener.document.").append(searchWidget).append(".value=\"").append(title.
+                    replace("\"", "\\\"")).append("\";\n");
             // set protocol to 'other' in FCKEditor, else relative url prepended by http://
             if (Bebop.getConfig().getDHTMLEditor().equals(
                     BebopConstants.BEBOP_FCKEDITOR)) {
@@ -404,6 +403,7 @@ public class ItemSearchFolderBrowser extends Table {
 
             return buffer.toString();
         }
+
     }
 
     /**
@@ -448,6 +448,7 @@ public class ItemSearchFolderBrowser extends Table {
             return (m_itemColl.isFolder()) ? m_itemColl.getID().negate()
                    : m_itemColl.getID();
         }
+
     }
 
     private class FolderChanger extends TableActionAdapter {
@@ -467,6 +468,7 @@ public class ItemSearchFolderBrowser extends Table {
                 m_paginator.reset(s);
             }
         }
+
     }
 
     /**
@@ -478,4 +480,5 @@ public class ItemSearchFolderBrowser extends Table {
     private static GlobalizedMessage globalize(String key) {
         return FolderManipulator.globalize(key);
     }
+
 }

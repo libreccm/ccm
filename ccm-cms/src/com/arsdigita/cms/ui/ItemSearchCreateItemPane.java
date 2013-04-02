@@ -228,7 +228,7 @@ class ItemSearchCreateItemPane extends CMSContainer
                                                         widget,
                                                         item.getID().toString(),
                                                         searchWidget,
-                                                        title,
+                                                        title.replace("\"", "\\\""),
                                                         publishWidget,
                                                         Boolean.TRUE.toString(),
                                                         scriptAction));

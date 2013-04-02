@@ -320,7 +320,7 @@ public class ItemSearchFlatBrowsePane extends Form implements FormInitListener, 
                     widget,
                     key.toString(),
                     searchWidget,
-                    page.getTitle()));
+                    page.getTitle().replace("\"", "\\\"")));
 
             return link;
         }
