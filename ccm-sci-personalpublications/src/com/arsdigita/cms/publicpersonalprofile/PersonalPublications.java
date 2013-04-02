@@ -132,6 +132,7 @@ public class PersonalPublications implements ContentGenerator {
                                       new LinkedList<PublicationBundle>();
         //final List<BigDecimal> processed = new ArrayList<BigDecimal>();
         final DataCollection collection = (DataCollection) author.getGenericPersonBundle().get("publication");
+        collection.addEqualsFilter("version", "live");
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
@@ -152,6 +153,7 @@ public class PersonalPublications implements ContentGenerator {
                                      final List<PublicationBundle> publications,
                                      final String language) {
         final DataCollection collection = (DataCollection) alias.getGenericPersonBundle().get("publication");
+        collection.addEqualsFilter("version", "live");
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());

@@ -73,11 +73,11 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
             ownerSelect.addPrintListener(new PrintListener() {
                 public void prepare(final PrintEvent event) {
                     final SingleSelect ownerSelect = (SingleSelect) event.getTarget();
-                    
+
                     final PublicPersonalProfile profile = (PublicPersonalProfile) itemModel.getSelectedItem(event.
                             getPageState());
                     final GenericPerson owner = profile.getOwner();
-                    
+
                     String personType = PublicPersonalProfiles.getConfig().getPersonType();
                     if ((personType == null) || (personType.isEmpty())) {
                         personType = "com.arsdigita.cms.contenttypes.GenericPerson";
@@ -100,12 +100,15 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
 //                    final GenericPerson owner = profile.getOwner();
 //                    final GenericPerson alias = owner.getAlias();
 
-                    ownerSelect.addOption(new Option(owner.getID().toString(), owner.getFullName()));
-                    
+                    if (owner != null) {
+                        ownerSelect.addOption(new Option(owner.getID().toString(), owner.getFullName()));
+                    }
+
                     if (!persons.isEmpty()) {
-                    final List<BigDecimal> processed = new ArrayList<BigDecimal>();
-                        while(persons.next()) {
-                            GenericPerson person = (GenericPerson) DomainObjectFactory.newInstance(persons.getDataObject());
+                        final List<BigDecimal> processed = new ArrayList<BigDecimal>();
+                        while (persons.next()) {
+                            GenericPerson person = (GenericPerson) DomainObjectFactory.newInstance(persons.
+                                    getDataObject());
                             if (processed.contains(person.getParent().getID())) {
                                 continue;
                             } else {
@@ -116,7 +119,7 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
                                     processed.add(person.getParent().getID());
                                 }
                             }
-                        }                                                                        
+                        }
                     }
                 }
             });
@@ -147,7 +150,7 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
         if ((profile != null) && getSaveCancelSection().getSaveButton().isSelected(state)) {
 
             final String ownerId = (String) data.get(PublicPersonalProfileBundle.OWNER);
-            if (!profile.getOwner().getID().equals(new BigDecimal(ownerId))) {
+            if ((profile.getOwner() != null) && !profile.getOwner().getID().equals(new BigDecimal(ownerId))) {
                 final GenericPerson newOwner = new GenericPerson(new BigDecimal(ownerId));
                 profile.setOwner(newOwner);
             }

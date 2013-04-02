@@ -24,8 +24,7 @@ import javax.servlet.ServletException;
  * Generates the extra XML output for a profile for the embedded view.
  *
  * @author Jens Pelzetter
- * @version $Id: PublicPersonalProfileExtraXmlGenerator.java 1466 2012-01-23
- * 12:59:16Z jensp $
+ * @version $Id$
  */
 public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator {
 
@@ -77,23 +76,25 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
 
             final GenericPerson owner = profile.getOwner();
 
-            final PublicPersonalProfileXmlGenerator generator =
-                                                    new PublicPersonalProfileXmlGenerator(
-                    owner);
-            generator.setItemElemName("owner", "");
-            generator.generateXML(state, profileOwner, "");
+            if (owner != null) {
+                final PublicPersonalProfileXmlGenerator generator =
+                                                        new PublicPersonalProfileXmlGenerator(
+                        owner);
+                generator.setItemElemName("owner", "");
+                generator.generateXML(state, profileOwner, "");
 
-            final Element contactsElem =
-                          profileOwner.newChildElement("contacts");
-            final GenericPersonContactCollection contacts = owner.getContacts();
-            while (contacts.next()) {
-                PublicPersonalProfileXmlGenerator cGenerator =
-                                                  new PublicPersonalProfileXmlGenerator(
-                        contacts.getContact());
-                cGenerator.setItemElemName("contact", "");
-                cGenerator.addItemAttribute("contactType", 
-                                            contacts.getContactType());
-                cGenerator.generateXML(state, contactsElem, "");
+                final Element contactsElem =
+                              profileOwner.newChildElement("contacts");
+                final GenericPersonContactCollection contacts = owner.getContacts();
+                while (contacts.next()) {
+                    PublicPersonalProfileXmlGenerator cGenerator =
+                                                      new PublicPersonalProfileXmlGenerator(
+                            contacts.getContact());
+                    cGenerator.setItemElemName("contact", "");
+                    cGenerator.addItemAttribute("contactType",
+                                                contacts.getContactType());
+                    cGenerator.generateXML(state, contactsElem, "");
+                }
             }
 
         } else {
@@ -118,15 +119,14 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
                 navItems.addKeyFilter(showItem);
                 navItems.next();
 
-                if (navItems.getNavItem().getGeneratorClass()
-                    != null) {
+                if (navItems.getNavItem().getGeneratorClass() != null) {
                     try {
                         Object generatorObj =
                                Class.forName(navItems.getNavItem().
                                 getGeneratorClass()).getConstructor().
                                 newInstance();
 
-                        if (generatorObj instanceof ContentGenerator) {
+                        if ((generatorObj instanceof ContentGenerator) && profile.getOwner() != null) {
                             final ContentGenerator generator =
                                                    (ContentGenerator) generatorObj;
 
@@ -189,9 +189,12 @@ public class PublicPersonalProfileExtraXmlGenerator implements ExtraXMLGenerator
     public void setListMode(final boolean listMode) {
         //nothing
     }
-    
+
     private String getProfileUrl(final PublicPersonalProfile profile) {
         final GenericPerson owner = profile.getOwner();
+        if (owner == null) {
+            return null;            
+        }        
         final GenericPersonContactCollection contacts = owner.getContacts();
 
         String homepage = null;

@@ -91,7 +91,7 @@ public class PublicPersonalProfile
 
     /**
      *
-     * @return The owner of the profile.
+     * @return The owner of the profile. May be {@code null} if no owner is assigned to the profile.
      */
     public GenericPerson getOwner() {
         /*
@@ -110,8 +110,12 @@ public class PublicPersonalProfile
          * return (GenericPerson) DomainObjectFactory.newInstance(dobj);
         }
          */
-        return (GenericPerson) getPublicPersonalProfileBundle().getOwner().
-                getPrimaryInstance();
+        final GenericPersonBundle bundle = getPublicPersonalProfileBundle().getOwner();
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericPerson) bundle.getPrimaryInstance();
+        }                
     }
 
     /**

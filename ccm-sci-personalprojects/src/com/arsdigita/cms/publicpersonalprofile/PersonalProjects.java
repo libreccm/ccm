@@ -94,7 +94,8 @@ public class PersonalProjects implements ContentGenerator {
         final List<SciProjectBundle> projects =
                                      new LinkedList<SciProjectBundle>();
         final DataCollection collection = (DataCollection) person.
-                getGenericPersonBundle().get("organizationalunits");               
+                getGenericPersonBundle().get("organizationalunits");     
+        collection.addEqualsFilter("version", "live");
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());
@@ -114,7 +115,8 @@ public class PersonalProjects implements ContentGenerator {
                                  final List<SciProjectBundle> projects,
                                  final String language) {
         final DataCollection collection = (DataCollection) alias.
-                getGenericPersonBundle().get("organizationalunits");        
+                getGenericPersonBundle().get("organizationalunits");    
+        collection.addEqualsFilter("version", "live");
         DomainObject obj;
         while (collection.next()) {
             obj = DomainObjectFactory.newInstance(collection.getDataObject());

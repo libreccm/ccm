@@ -153,7 +153,11 @@ public class PublicPersonalProfileXmlUtil {
         profileElem.addAttribute("url", String.format("%s/%s",
                                                       appUrl,
                                                       profile.getProfileUrl()));
+        if (profile.getOwner() == null) {
+            profileElem.addAttribute("title", String.format("Profile %s", profile.getOID().toString()));
+        }  else {
         profileElem.addAttribute("title", profile.getOwner().getFullName());
+        }
 
         //Get the related links of the profile
         final DataCollection links =

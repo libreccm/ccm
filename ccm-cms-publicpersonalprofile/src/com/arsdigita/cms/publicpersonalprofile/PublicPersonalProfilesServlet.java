@@ -790,6 +790,10 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     private void generateProfileOwnerXml(final Element profileElem,
                                          final GenericPerson owner,
                                          final PageState state) {
+        if (owner == null) {
+            return;
+        }
+        
         Element profileOwnerElem = profileElem.newChildElement(
                 "profileOwner");
         if ((owner.getSurname() != null)
