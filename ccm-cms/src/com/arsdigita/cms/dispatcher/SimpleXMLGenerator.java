@@ -152,11 +152,12 @@ public class SimpleXMLGenerator implements XMLGenerator {
         //
         // Note that the xml that is generated is only of use if you DO NOT CACHE content pages.
         // cg.
-
         final PermissionDescriptor edit = new PermissionDescriptor(
                 PrivilegeDescriptor.get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
         if (PermissionService.checkPermission(edit)) {
             parent.addAttribute("canEdit", "true");
+            final Element canEditElem = parent.newChildElement("canEdit");
+            canEditElem.setText("true");
         }
         final PermissionDescriptor publish = new PermissionDescriptor(
                 PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);

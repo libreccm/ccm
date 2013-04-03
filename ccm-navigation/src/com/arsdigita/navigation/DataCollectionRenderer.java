@@ -22,6 +22,11 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
@@ -69,16 +74,16 @@ public class DataCollectionRenderer extends LockableImpl {
         Assert.isUnlocked(this);
         m_attributes.add(name);
     }
-       
+
     public void addProperty(final DataCollectionPropertyRenderer pr) {
         Assert.isUnlocked(this);
         m_properties.add(pr);
     }
-       
+
     protected int getPageSize() {
         return m_pageSize;
     }
-    
+
     public void setPageSize(final int pageSize) {
         Assert.isUnlocked(this);
         m_pageSize = pageSize;
@@ -87,7 +92,7 @@ public class DataCollectionRenderer extends LockableImpl {
     protected boolean getNavItems() {
         return m_navItems;
     }
-    
+
     /**
      * Specify whether to include the items for navigation that are within
      * same category.
@@ -96,7 +101,7 @@ public class DataCollectionRenderer extends LockableImpl {
     public void setNavItems(final boolean navItems) {
         m_navItems = navItems;
     }
-    
+
     protected boolean isSpecializeObjects() {
         return m_specializeObjects;
     }
@@ -129,7 +134,7 @@ public class DataCollectionRenderer extends LockableImpl {
     public List getAttributes() {
         return m_attributes;
     }
-    
+
     public List getProperties() {
         return m_properties;
     }
@@ -232,7 +237,27 @@ public class DataCollectionRenderer extends LockableImpl {
             }
             final Element item = Navigation.newElement(content, "item");
 
-            final Iterator attributes = m_attributes.iterator();
+            // Create a canEdit link if the current user is permitted to edit the item. 
+            // Note: Works only when list specializes the object because an ACSObject instance is needed for creating
+            // the PermissionDescriptor.
+            Party currentParty = Kernel.getContext().getParty();
+            if (currentParty == null) {
+                currentParty = Kernel.getPublicUser();
+            }
+            final PermissionDescriptor edit;
+            if (!m_specializeObjects || object == null) {
+                edit = new PermissionDescriptor(PrivilegeDescriptor.get(
+                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), dobj.getOID(), currentParty.getOID());
+            } else {
+                edit = new PermissionDescriptor(PrivilegeDescriptor.get(
+                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), object, currentParty);                
+            }
+            if (PermissionService.checkPermission(edit)) {
+                item.addAttribute("canEdit", "true");
+            }
+
+            final Iterator attributes = m_attributes.
+                    iterator();
             while (attributes.hasNext()) {
                 final String name = (String) attributes.next();
                 final String[] paths = StringUtils.split(name, '.');
@@ -248,7 +273,7 @@ public class DataCollectionRenderer extends LockableImpl {
             final Element path = Navigation.newElement(item, "path");
             path.setText(getStableURL(dobj, object));
             //item.addContent(path);
-                        
+
             generateItemXML(item, dobj, object, index);
 
             index++;
@@ -264,10 +289,10 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     protected void outputValue(final Element item,
-                             final Object value,
-                             final String name,
-                             final String[] paths,
-                             final int depth) {
+                               final Object value,
+                               final String name,
+                               final String[] paths,
+                               final int depth) {
         if (null == value) {
             return;
         }
@@ -343,7 +368,6 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     protected void generateItemXML(final Element item, final DataObject dobj, final ACSObject obj, final int index) {
-        
     }
 
 }
