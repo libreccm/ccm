@@ -17,8 +17,11 @@
  */
 package com.arsdigita.navigation;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Categorization;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
@@ -247,10 +250,20 @@ public class DataCollectionRenderer extends LockableImpl {
             final PermissionDescriptor edit;
             if (!m_specializeObjects || object == null) {
                 edit = new PermissionDescriptor(PrivilegeDescriptor.get(
-                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), dobj.getOID(), currentParty.getOID());
+                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), dobj.getOID(), currentParty.getOID());                
             } else {
                 edit = new PermissionDescriptor(PrivilegeDescriptor.get(
-                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), object, currentParty);                
+                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), object, currentParty);
+                if (PermissionService.checkPermission(edit) && (object instanceof ContentItem)) {                    
+                    final ContentItem contentItem = (ContentItem) object;
+                    final ItemResolver resolver = contentItem.getContentSection().getItemResolver();
+                    final Element editLinkElem = item.newChildElement("editLink");
+                    final ContentItem draftItem = contentItem.getDraftVersion();
+                    editLinkElem.setText(resolver.generateItemURL(PageState.getPageState(),
+                                                                  draftItem,
+                                                                  contentItem.getContentSection(),
+                                                                  draftItem.getVersion()));
+                }
             }
             if (PermissionService.checkPermission(edit)) {
                 item.addAttribute("canEdit", "true");

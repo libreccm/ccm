@@ -30,6 +30,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
@@ -59,7 +60,7 @@ public class GreetingItem extends AbstractComponent {
     private static final Logger s_log = Logger.getLogger(GreetingItem.class);
 
     public Element generateXML(HttpServletRequest request,
-                               HttpServletResponse response) {        
+                               HttpServletResponse response) {
         ContentItem item = (ContentItem) getObject();
         if (null == item || !item.isLive()) {
             return null;
@@ -108,7 +109,7 @@ public class GreetingItem extends AbstractComponent {
         }
 
         ContentBundle bundle = (ContentBundle) item;
-        
+
         /* Fix by Jens Pelzetter, 2009-08-28
          * bundle.getPrimaryInstance() does not care about the preferred
          * languages
@@ -132,24 +133,34 @@ public class GreetingItem extends AbstractComponent {
         //Moved to seperate method generateGreetingItemXml to make to
         //XML generation extendable (use another renderer etc.)
         /*ContentItemXMLRenderer renderer =
-        new ContentItemXMLRenderer(itemEl);
+         new ContentItemXMLRenderer(itemEl);
         
-        renderer.setWrapAttributes(true);
-        renderer.setWrapRoot(false);
-        renderer.setWrapObjects(false);
+         renderer.setWrapAttributes(true);
+         renderer.setWrapRoot(false);
+         renderer.setWrapObjects(false);
         
-        renderer.walk(baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT);*/
+         renderer.walk(baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT);*/
 
         generateGreetingItemXml(itemEl, baseItem);
 
         for (ExtraXMLGenerator generator : baseItem.getExtraXMLGenerators()) {
             try {
                 generator.generateXML(baseItem, itemEl, new PageState(null,
-                                                                       request,
-                                                                       response));
+                                                                      request,
+                                                                      response));
             } catch (ServletException ex) {
                 s_log.error(ex);
             }
+        }
+
+        if (PermissionService.checkPermission(edit)) {
+            final ItemResolver resolver = baseItem.getContentSection().getItemResolver();
+            final Element editLinkElem = itemEl.newChildElement("editLink");
+            final ContentItem draftItem = baseItem.getDraftVersion();
+            editLinkElem.setText(resolver.generateItemURL(PageState.getPageState(),
+                                                          draftItem,
+                                                          baseItem.getContentSection(),
+                                                          draftItem.getVersion()));
         }
 
         return content;
@@ -169,4 +180,5 @@ public class GreetingItem extends AbstractComponent {
 
         renderer.walk(item, SimpleXMLGenerator.ADAPTER_CONTEXT);
     }
+
 }

@@ -17,11 +17,18 @@
  */
 package com.arsdigita.navigation.cms;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.navigation.DataCollectionRenderer;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.persistence.DataObject;
@@ -29,9 +36,9 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
 
 public class CMSDataCollectionRenderer extends DataCollectionRenderer {
-    
+
     private boolean useExtraXml = true;
-    
+
     public CMSDataCollectionRenderer() {
         addAttribute("masterVersion.id");
     }
@@ -39,11 +46,11 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
     public boolean getUseExtraXml() {
         return useExtraXml;
     }
-    
+
     public void setUseExtraXml(final boolean useExtraXml) {
         this.useExtraXml = useExtraXml;
     }
-    
+
     protected String getStableURL(DataObject dobj,
                                   ACSObject obj) {
         if (obj == null) {
@@ -73,18 +80,34 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
              * the object in the detail view and the list view. It is now 
              * possible to set the adapter context used from a JSP template, 
              * using DataCollectionRenderer#setSpecializeObjectsContext(String).
-             */          
+             */
             renderer.walk(obj, getSpecializeObjectsContext());
-            
+
             if ((obj instanceof ContentItem) && useExtraXml) {
                 final ContentItem contentItem = (ContentItem) obj;
-                
-                for(ExtraXMLGenerator generator : contentItem.getExtraListXMLGenerators()) {
+
+                for (ExtraXMLGenerator generator : contentItem.getExtraListXMLGenerators()) {
                     generator.setListMode(true);
                     generator.generateXML(contentItem, item, null);
                 }
-                 
+
+                Party currentParty = Kernel.getContext().getParty();
+                if (currentParty == null) {
+                    currentParty = Kernel.getPublicUser();
+                }
+                final PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.get(
+                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), contentItem, currentParty);
+                if (PermissionService.checkPermission(edit)) {
+                    final ItemResolver resolver = contentItem.getContentSection().getItemResolver();
+                    final Element editLinkElem = item.newChildElement("editLink");
+                    final ContentItem draftItem = contentItem.getDraftVersion();
+                    editLinkElem.setText(resolver.generateItemURL(PageState.getPageState(),
+                                                                  draftItem,
+                                                                  contentItem.getContentSection(),
+                                                                  draftItem.getVersion()));
+                }
             }
         }
     }
+
 }

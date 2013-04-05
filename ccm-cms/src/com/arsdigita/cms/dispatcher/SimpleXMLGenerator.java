@@ -158,6 +158,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
             parent.addAttribute("canEdit", "true");
             final Element canEditElem = parent.newChildElement("canEdit");
             canEditElem.setText("true");
+            
         }
         final PermissionDescriptor publish = new PermissionDescriptor(
                 PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
@@ -271,6 +272,16 @@ public class SimpleXMLGenerator implements XMLGenerator {
                 }
             }
 
+            if (PermissionService.checkPermission(edit)) {
+                final ItemResolver resolver = item.getContentSection().getItemResolver();
+                final Element editLinkElem = content.newChildElement("editLink");
+                final ContentItem draftItem = item.getDraftVersion();
+                editLinkElem.setText(resolver.generateItemURL(state, 
+                                                              draftItem, 
+                                                              item.getContentSection(), 
+                                                              draftItem.getVersion()));
+            }
+            
             parent.addContent(content);
 
             //System.out.printf("Rendered item in              %d ms\n\n", (System.nanoTime() - start) / 1000000);
