@@ -55,8 +55,14 @@ final class CategoryAddForm extends BaseCategoryForm {
     }
 
     private final class ProcessListener implements FormProcessListener {
+
+        /**
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
         public final void process(final FormSectionEvent e)
-                throws FormProcessException {
+                     throws FormProcessException {
             s_log.debug("Adding a category");
 
             final PageState state = e.getPageState();
@@ -64,8 +70,8 @@ final class CategoryAddForm extends BaseCategoryForm {
             final Category parent = m_parent.getCategory(state);
             final String name = (String) m_name.getValue(state);
             final String description = (String) m_description.getValue(state);
-	    final String url = (String) m_url.getValue(state);
-	    final String isAbstract = (String) m_isAbstract.getValue(state);
+            final String url = (String) m_url.getValue(state);
+            final String isAbstract = (String) m_isAbstract.getValue(state);
 
             Assert.exists(parent, "Category parent");
 
@@ -76,14 +82,14 @@ final class CategoryAddForm extends BaseCategoryForm {
 
             if (parent.canEdit()) {
                 final Category category = new Category(name, description, url);
-		// this seems anti-intuitive but the question is "can you place
-		// items in this category.  If the user says "yes" then the
-		// category is not abstract
-		if ("yes".equals(isAbstract)) {
-		    category.setAbstract(false);
-		} else if ("no".equals(isAbstract)) {
-		    category.setAbstract(true);
-		}
+                // this seems anti-intuitive but the question is "can you place
+                // items in this category.  If the user says "yes" then the
+                // category is not abstract
+                if ("yes".equals(isAbstract)) {
+                    category.setAbstract(false);
+                } else if ("no".equals(isAbstract)) {
+                    category.setAbstract(true);
+                }
                 category.save(); // XXX this is necessary?
 
                 parent.addChild(category);

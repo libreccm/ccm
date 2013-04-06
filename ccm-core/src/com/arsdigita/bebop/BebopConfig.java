@@ -38,7 +38,30 @@ import org.apache.log4j.Logger;
  */
 public final class BebopConfig extends AbstractConfig {
 
+    /** A logger instance to assist debugging.                               */
     private static final Logger s_log = Logger.getLogger(BebopConfig.class);
+    
+    /** Singleton config object.                                             */
+    private static BebopConfig s_config;
+
+    /**
+     * Gain a BebopConfig object.
+     *
+     * Singleton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized BebopConfig getInstance() {
+        if (s_config == null) {
+            s_config = new BebopConfig();
+            s_config.load();
+        }
+
+        return s_config;
+    }
+
+    // set of configuration parameters
+    // /////////////////////////////////////////////////////////////////
 
     /**
      * 
@@ -81,6 +104,9 @@ public final class BebopConfig extends AbstractConfig {
             ("waf.bebop.show_class_name", Parameter.OPTIONAL, Boolean.FALSE);
 
     /** 
+     * Constructor.
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly! Use getConfig() instead.
      * 
      */
     public BebopConfig() {

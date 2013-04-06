@@ -29,19 +29,12 @@ public final class Bebop {
 
     private static final Logger s_log = Logger.getLogger(Bebop.class);
 
-    private static BebopConfig s_config;
+    private static BebopConfig s_config = BebopConfig.getInstance();
 
     /**
      * Gets the <code>BebopConfig</code> object.
      */
-    public static final BebopConfig getConfig() {
-        if (s_config == null) {
-            s_config = new BebopConfig();
-            // deprecated, use load() instead, load the default config db,
-            // which is ccm-core /bebop.properties for BebogConfig by definition
-            // s_config.load("ccm-core/bebop.properties");
-            s_config.load();
-        }
+    public static BebopConfig getConfig() {
         return s_config;
     }
 }

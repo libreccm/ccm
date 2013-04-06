@@ -27,9 +27,9 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.Lockable;
 
 /**
- * A standard implementation of <code>SingleSelectionModel</code> and <code>Lockable</code>.  Those
- * wishing to define a SingleSelectionModel will ordinarily want to extend
- * this class.
+ * A standard implementation of <code>SingleSelectionModel</code> and 
+ * <code>Lockable</code>.  Those wishing to define a SingleSelectionModel 
+ * will ordinarily want to extend this class.
  *
  * @version $Id: AbstractSingleSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
