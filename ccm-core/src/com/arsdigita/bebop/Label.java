@@ -219,6 +219,8 @@ public class Label extends BlockStylable implements Cloneable {
      * current ResourceBundle if possible, or displayed literally.
      * @param state the page state
      * @pre state == null implies !isLocked()
+     * @deprecated refactor to use @see setLabel(GlobalizedMessage, PageState)
+     *             instead!
      */
     public void setLabel(String label, PageState state) {
         if (label == null || label.length() == 0) {

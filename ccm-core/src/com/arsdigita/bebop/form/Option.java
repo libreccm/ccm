@@ -70,7 +70,7 @@ public class Option extends BlockStylable {
     /**
      *  If the component is a Label (which most of the time it is)
      *  then this returns the value of the label.  This assumes
-     *  that the Component is a lable
+     *  that the Component is a label
      *
      *  @exception ClassCastException is thrown if the component is not
      *             a label
@@ -208,6 +208,7 @@ public class Option extends BlockStylable {
     /**
      * Generate XML depending on what OptionGroup we belong to.
      */
+    @Override
     public void generateXML(PageState s, Element e) {
         Element option = e.newChildElement(m_group.m_xmlElement, BEBOP_XML_NS);
         if ( ! m_isSelectOption ) {

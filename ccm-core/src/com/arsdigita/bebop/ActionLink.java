@@ -18,6 +18,8 @@
  */
 package com.arsdigita.bebop;
 
+import com.arsdigita.globalization.GlobalizedMessage;
+
 
 
 /**
@@ -62,6 +64,16 @@ public class ActionLink extends ControlLink {
      * Constructs a new ActionLink with the given string label.
      *
      * @param label the string label for the link
+     */
+    public ActionLink(GlobalizedMessage label) {
+        this(new Label(label));
+    }
+
+    /**
+     * Constructs a new ActionLink with the given string label.
+     *
+     * @param label the string label for the link
+     * @deprecated refactor to use @see ActionLink(GlobalizedMessage label)
      */
     public ActionLink(String label) {
         this(new Label(label));
