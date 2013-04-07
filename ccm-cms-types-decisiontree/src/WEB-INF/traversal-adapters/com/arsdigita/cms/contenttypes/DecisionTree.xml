@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+<!-- No need to list all the content types here. Only
+       need to list a type if is adds associations that
+       were not in the parent type, or to remove attributes
+   -->
+
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.DecisionTree"
+        extends="com.arsdigita.cms.ContentPage"
+        traversalClass="com.arsdigita.cms.contenttypes.DecisionTreeTraversalAdapter">
+      <xrd:associations rule="include">
+    	<xrd:property name="/object/sections"></xrd:property>
+    	<xrd:property name="/object/sections/instructions"></xrd:property>
+    	<xrd:property name="/object/sections/sectionOptions"></xrd:property>
+    	<xrd:property name="/object/sections/sectionOptions/optionTarget"></xrd:property>
+      </xrd:associations>
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/name"/>
+        <xrd:property name="/object/language"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/sections/version"/>
+        <xrd:property name="/object/sections/name"/>
+        <xrd:property name="/object/sections/language"/>
+        <xrd:property name="/object/sections/ancestors"/>
+        <xrd:property name="/object/sections/isDeleted"/>
+        <xrd:property name="/object/sections/id"/>
+        <xrd:property name="/object/sections/objectType"/>
+        <xrd:property name="/object/sections/displayName"/>
+        <xrd:property name="/object/sections/defaultDomainClass"/>
+        <xrd:property name="/object/sections/instructions/version"/>
+        <xrd:property name="/object/sections/instructions/name"/>
+        <xrd:property name="/object/sections/instructions/language"/>
+        <xrd:property name="/object/sections/instructions/ancestors"/>
+        <xrd:property name="/object/sections/instructions/isDeleted"/>
+        <xrd:property name="/object/sections/instructions/id"/>
+        <xrd:property name="/object/sections/instructions/objectType"/>
+        <xrd:property name="/object/sections/instructions/displayName"/>
+        <xrd:property name="/object/sections/instructions/defaultDomainClass"/>
+        <xrd:property name="/object/sections/sectionOptions/version"/>
+        <xrd:property name="/object/sections/sectionOptions/name"/>
+        <xrd:property name="/object/sections/sectionOptions/ancestors"/>
+        <xrd:property name="/object/sections/sectionOptions/isDeleted"/>
+        <xrd:property name="/object/sections/sectionOptions/id"/>
+        <xrd:property name="/object/sections/sectionOptions/objectType"/>
+        <xrd:property name="/object/sections/sectionOptions/displayName"/>
+        <xrd:property name="/object/sections/sectionOptions/defaultDomainClass"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/version"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/name"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/ancestors"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/isDeleted"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/id"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/objectType"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/displayName"/>
+        <xrd:property name="/object/sections/sectionOptions/optionTarget/defaultDomainClass"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+    <xrd:adapter
+        objectType="com.arsdigita.cms.contenttypes.DecisionTree"
+        traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:associations rule="include">
+        <xrd:property name="/object/sections"></xrd:property>
+        <xrd:property name="/object/sections/instructions"></xrd:property>
+    	<xrd:property name="/object/sections/sectionOptions"></xrd:property>
+    	<xrd:property name="/object/sections/sectionOptions/optionTarget"></xrd:property>
+      </xrd:associations>
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/name"/>
+        <xrd:property name="/object/language"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+	<xrd:property name="/object/sections/version"/>
+	<xrd:property name="/object/sections/name"/>
+	<xrd:property name="/object/sections/language"/>
+	<xrd:property name="/object/sections/ancestors"/>
+	<xrd:property name="/object/sections/isDeleted"/>
+	<xrd:property name="/object/sections/id"/>
+	<xrd:property name="/object/sections/objectType"/>
+	<xrd:property name="/object/sections/displayName"/>
+	<xrd:property name="/object/sections/defaultDomainClass"/>
+	<xrd:property name="/object/sections/instructions/version"/>
+	<xrd:property name="/object/sections/instructions/name"/>
+	<xrd:property name="/object/sections/instructions/language"/>
+	<xrd:property name="/object/sections/instructions/ancestors"/>
+	<xrd:property name="/object/sections/instructions/isDeleted"/>
+	<xrd:property name="/object/sections/instructions/id"/>
+	<xrd:property name="/object/sections/instructions/objectType"/>
+	<xrd:property name="/object/sections/instructions/displayName"/>
+	<xrd:property name="/object/sections/instructions/defaultDomainClass"/>
+	<xrd:property name="/object/sections/sectionOptions/version"/>
+	<xrd:property name="/object/sections/sectionOptions/name"/>
+	<xrd:property name="/object/sections/sectionOptions/ancestors"/>
+	<xrd:property name="/object/sections/sectionOptions/isDeleted"/>
+	<xrd:property name="/object/sections/sectionOptions/id"/>
+	<xrd:property name="/object/sections/sectionOptions/objectType"/>
+	<xrd:property name="/object/sections/sectionOptions/displayName"/>
+	<xrd:property name="/object/sections/sectionOptions/defaultDomainClass"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/version"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/name"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/ancestors"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/isDeleted"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/id"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/objectType"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/displayName"/>
+	<xrd:property name="/object/sections/sectionOptions/optionTarget/defaultDomainClass"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>

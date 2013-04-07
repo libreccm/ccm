@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="cam_decision_trees"/>
+    <initializer class="com.arsdigita.cms.contenttypes.DecisionTreeInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-decisiontree"/>
+    <data class="com.arsdigita.cms.contenttypes.DecisionTreeLoader"/>
+  </scripts>
+</load>

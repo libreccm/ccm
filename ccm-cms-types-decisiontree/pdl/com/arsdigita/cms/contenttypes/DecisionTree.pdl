@@ -1,0 +1,97 @@
+//
+// Copyright (C) 2007 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id$
+
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.*;
+
+object type DecisionTree extends ContentPage {
+
+    String[0..1] cancelURL = ct_decisiontrees.cancel_url;
+    DecisionTreeSection[0..1] firstSection =
+    	join ct_decisiontrees.first_section to ct_decisiontree_sections.section_id;
+
+    reference key (ct_decisiontrees.tree_id);
+  
+}
+
+object type DecisionTreeSection extends ContentPage {
+
+    String[1..1] parameterName = ct_decisiontree_sections.parameter_name;
+    component TextAsset[0..1] instructions =
+        join ct_decisiontree_sections.instructions to cms_text.text_id;
+
+    reference key (ct_decisiontree_sections.section_id);
+    
+}
+
+association {
+    // Association between a tree and its sections
+
+    DecisionTree[1..1] tree =
+    	join ct_decisiontree_sections.tree_id to ct_decisiontrees.tree_id;
+    component DecisionTreeSection[0..n] sections =
+    	join ct_decisiontrees.tree_id to ct_decisiontree_sections.tree_id;
+    	
+}
+
+object type DecisionTreeSectionOption extends ContentItem {
+
+    Integer[1..1] rank	= ct_decisiontree_section_options.rank;
+    String[1..1] label	= ct_decisiontree_section_options.label;
+    String[1..1] value	= ct_decisiontree_section_options.value;
+
+    reference key (ct_decisiontree_section_options.option_id);
+
+}
+
+association {
+    // Association between a section and its options
+
+    composite DecisionTreeSection[1..1] treeSection =
+    	join ct_decisiontree_section_options.section_id 
+             to ct_decisiontree_sections.section_id;
+    component DecisionTreeSectionOption[0..n] sectionOptions =
+    	join ct_decisiontree_sections.section_id 
+             to ct_decisiontree_section_options.section_id;
+    	
+}
+
+object type DecisionTreeOptionTarget extends ContentItem {
+
+    String[0..1] targetURL	= ct_decisiontree_option_targets.target_url;
+    DecisionTreeSection[0..1] targetSection =
+    	join ct_decisiontree_option_targets.target_section 
+             to ct_decisiontree_sections.section_id;
+ 
+    reference key (ct_decisiontree_option_targets.target_id);
+
+}
+
+association {
+    // Association between an option and its target
+
+    composite DecisionTreeSectionOption[1..1] matchOption =
+    	join ct_decisiontree_option_targets.match_option 
+             to ct_decisiontree_section_options.option_id;
+    component DecisionTreeOptionTarget[0..1] optionTarget =
+    	join ct_decisiontree_section_options.option_id 
+             to ct_decisiontree_option_targets.match_option;
+    	
+}
