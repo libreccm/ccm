@@ -23,7 +23,6 @@ import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
-import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
@@ -32,11 +31,12 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporters;
 import com.arsdigita.domain.DataObjectNotFoundException;
-
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
@@ -85,21 +85,18 @@ import org.apache.log4j.Logger;
 public class SciPublicationsServlet extends BaseApplicationServlet {
 
     private static final long serialVersionUID = -632365939651657874L;
-    private static final Logger logger = Logger.getLogger(
-            SciPublicationsServlet.class);
+    private static final Logger LOGGER = Logger.getLogger(SciPublicationsServlet.class);
 
     @Override
-    protected void doService(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Application app) throws ServletException,
-                                                     IOException {
+    protected void doService(final HttpServletRequest request,
+                             final HttpServletResponse response,
+                             final Application app) throws ServletException, IOException {
         String path = "";
 
-        logger.debug("SciPublicationsServlet is starting...");
-        logger.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
+        LOGGER.debug("SciPublicationsServlet is starting...");
+        LOGGER.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
 
-        logger.debug("Extracting path from pathInfo by removing leading and "
-                     + "trailing slashes...");
+        LOGGER.debug("Extracting path from pathInfo by removing leading and trailing slashes...");
         if (request.getPathInfo() != null) {
             if ("/".equals(request.getPathInfo())) {
                 path = "";
@@ -117,17 +114,18 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             }
         }
 
-        logger.debug(String.format("path = %s", path));
+        LOGGER.debug(String.format("path = %s", path));
 
         //Displays a text/plain page with a message.
         if (path.isEmpty()) {
-            logger.debug("pathInfo is null, responding with default...");
+            LOGGER.debug("pathInfo is null, responding with default...");
 
             response.setContentType("text/plain");
             response.getWriter().append("Please choose an application.");
 
             //ToDo: Show a menu?
         } else if ("hellobebop".equals(path)) {
+            //This is just for testing
             Page page;
             Form form;
             Label label;
@@ -142,12 +140,11 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
             page.lock();
 
-            Document document = page.buildDocument(request, response);
-            PresentationManager presentationManager = Templating.
-                    getPresentationManager();
-            presentationManager.servePage(document, request, response);
+            final Document document = page.buildDocument(request, response);
+            final PresentationManager presenter = Templating.getPresentationManager();
+            presenter.servePage(document, request, response);
         } else if ("export".equals(path)) {
-            logger.debug("Export a publication");
+            LOGGER.debug("Export a publication");
 
             Map<String, String[]> parameters;
             String format;
@@ -159,7 +156,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 if (parameters.get("format").length == 1) {
                     format = parameters.get("format")[0];
                 } else {
-                    logger.warn("Query parameter 'format' contains no value"
+                    LOGGER.warn("Query parameter 'format' contains no value"
                                 + "or more than one value. It is expected that "
                                 + "'format' contains excactly one value. Responding"
                                 + "with BAD_REQUEST status.");
@@ -170,7 +167,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                     return;
                 }
             } else {
-                logger.warn("Missing query parameter 'format'. "
+                LOGGER.warn("Missing query parameter 'format'. "
                             + "Responsding with BAD_REQUEST status code.");
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return;
@@ -186,15 +183,14 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 String categoryIdStr;
                 BigDecimal categoryId;
                 Category category;
-                CategorizedCollection objects;
+                //CategorizedCollection objects;
+                DataCollection objects;
 
-                logger.debug("Found parameter 'category'...");
+                LOGGER.debug("Found parameter 'category'...");
                 if (parameters.get("category").length != 1) {
-                    logger.error("The parameter 'category' is expected to"
-                                 + "have exactly one parameter.");
-                    response.sendError(response.SC_BAD_REQUEST,
-                                       "The parameter 'category' is expected to"
-                                       + "have exactly one pareameter.");
+                    LOGGER.error("The parameter 'category' is expected to appear only once.");
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                                       "The parameter 'category' is expected to appear only once.");
                     return;
                 }
 
@@ -202,83 +198,99 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 try {
                     categoryId = new BigDecimal(categoryIdStr);
                 } catch (NumberFormatException ex) {
-                    logger.error("The category id could not be converted to"
-                                 + "an BigDecimal value.",
-                                 ex);
-                    response.sendError(response.SC_BAD_REQUEST,
-                                       "The category id could not be converted to"
-                                       + "an BigDecimal value.");
+                    LOGGER.error("The category id could not be converted to an BigDecimal value.", ex);
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                                       "The category id could not be converted to an BigDecimal value.");
                     return;
                 }
 
                 try {
                     category = new Category(categoryId);
                 } catch (DataObjectNotFoundException ex) {
-                    logger.error(String.format("No category with the provided "
+                    LOGGER.error(String.format("No category with the provided "
                                                + "id '%s' found.",
                                                categoryIdStr),
                                  ex);
-                    response.sendError(response.SC_BAD_REQUEST,
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                                        String.format("No category with the provided "
                                                      + "id '%s' found.",
                                                      categoryIdStr));
                     return;
                 }
 
-                logger.debug(String.format("Category: %s", category.getName()));
+                LOGGER.debug(String.format("Category: %s", category.getName()));
 
                 //Get the exporter for the specified format.
-                exporter = SciPublicationsExporters.getInstance().
-                        getExporterForFormat(
-                        format);
+                exporter = SciPublicationsExporters.getInstance().getExporterForFormat(format);
                 if (exporter == null) {
-                    logger.warn(String.format(
-                            "The requested export format '%s' is not supported yet.",
-                            format));
+                    LOGGER.warn(String.format("The requested export format '%s' is not supported yet.",
+                                              format));
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                                       String.format(
-                            "The requested export format '%s' is not supported yet.",
-                            format));
+                                       String.format("The requested export format '%s' is not supported yet.",
+                                                     format));
                     return;
                 }
 
                 //Get the category.
-                objects = category.getObjects(ACSObject.BASE_DATA_OBJECT_TYPE);
-                logger.debug(String.format("Category contains %d objects.",
-                                           objects.size()));
-                ContentBundle bundle;
-                ACSObject object;
+                //objects = category.getObjects(ACSObject.BASE_DATA_OBJECT_TYPE);
+                objects = SessionManager.getSession().retrieve(Publication.BASE_DATA_OBJECT_TYPE);
+                boolean descendCategories = false;
+                if (parameters.containsKey("descendCategories") 
+                    && (parameters.get("descendCategories").length >= 1))  {
+                    descendCategories = "true".equals(parameters.get("descendCategories")[0]);
+                }
+                
+                if (descendCategories) {
+                    final Filter filter = objects.addInSubqueryFilter(
+                            "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
+                    filter.set("categoryID", category.getID());
+                    
+                } else {
+                    objects.addEqualsFilter("parent.categories.id", category.getID());
+                }
+                
+                if (parameters.containsKey("filter") && (parameters.get("filter").length >= 1)) {
+                    final String filter = parameters.get("filter")[0];
+
+                    if ((filter != null) && !filter.isEmpty()) {
+                        objects.addFilter(filter);
+                    }
+                }
+
+                LOGGER.debug(String.format("Category contains %d objects.", objects.size()));
+//                ContentBundle bundle;
+//                ACSObject object;
                 while (objects.next()) {
 
                     //Get the bundle
-                    bundle = (ContentBundle) objects.getACSObject();
+                    //bundle = (ContentBundle) objects.getACSObject();
+                    final DataObject dobj = objects.getDataObject();
+                    //bundle = (ContentBundle) DomainObjectFactory.newInstance(dobj);
                     //Get the default instance of the bundle
-                    object = bundle.getInstance(bundle.getDefaultLanguage());
+                    //object = bundle.getInstance(bundle.getDefaultLanguage());
+                    publication = (Publication) DomainObjectFactory.newInstance(dobj);
 
                     //Ignore object if it is not an publication
-                    if (object instanceof Publication) {
-                        publication = (Publication) object;
-                    } else {
-                        logger.debug("Object is not a publication, ignoring it.");
-                        continue;
-                    }
+//                    if (object instanceof Publication) {
+//                        publication = (Publication) object;
+//                    } else {
+//                        LOGGER.debug("Object is not a publication, ignoring it.");
+//                        continue;
+//                    }
 
                     //Ignore none live versions.
                     if (!publication.isLiveVersion()) {
-                        logger.debug("Object is no a published version, "
-                                     + "ignoring it.");
+                        LOGGER.debug("Object is no a published version, ignoring it.");
                         continue;
                     }
 
                     //Write the exported publication to the response.
-                    response.getWriter().append(exporter.exportPublication(
-                            publication));
+                    response.getWriter().append(exporter.exportPublication(publication));
                     //response.getWriter().append('\n');
                 }
 
                 //Set the MimeType of the response
-                response.setContentType(exporter.getSupportedFormat().
-                        getMimeType().getBaseType());
+                response.setContentType(exporter.getSupportedFormat().getMimeType().getBaseType());
                 //Force the browser to display an download dialog, and set
                 //the filename for the downloaded file to the name of the
                 //selected category.
@@ -296,7 +308,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 publications = parameters.get("publication");
 
                 if (publications.length < 1) {
-                    logger.warn("Parameter 'publications' has no value(s). "
+                    LOGGER.warn("Parameter 'publications' has no value(s). "
                                 + "Responding with status BAD_REQUEST.");
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                                        "Parameter 'publication' has no "
@@ -312,7 +324,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                     try {
                         publicationId = new BigDecimal(publications[i]);
                     } catch (NumberFormatException ex) {
-                        logger.warn(String.format(
+                        LOGGER.warn(String.format(
                                 "Can't convert publication id "
                                 + "'%s' on index %d to a BigDecimal.",
                                 publications[i], i));
@@ -367,18 +379,18 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                                                               parameters.get(
                             "year")[0]));
                 }
-                
+
                 if (Kernel.getConfig().languageIndependentItems()) {
-                    FilterFactory ff = publicationsQuery.getFilterFactory();
-                    Filter filter = ff.or().
-                            addFilter(ff.equals("language", GlobalizationHelper.
+                    final FilterFactory filterFactory = publicationsQuery.getFilterFactory();
+                    final Filter filter = filterFactory.or().
+                            addFilter(filterFactory.equals("language", GlobalizationHelper.
                             getNegotiatedLocale().getLanguage())).
-                            addFilter(ff.and().
+                            addFilter(filterFactory.and().
                             addFilter(
-                            ff.equals("language",
-                                      GlobalizationHelper.LANG_INDEPENDENT)).
-                            addFilter(ff.notIn("parent",
-                                               "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                            filterFactory.equals("language",
+                                                 GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(filterFactory.notIn("parent",
+                                                          "com.arsdigita.navigation.getParentIDsOfMatchedItems").
                             set("language", GlobalizationHelper.
                             getNegotiatedLocale().getLanguage())));
                     publicationsQuery.addFilter(filter);
@@ -403,13 +415,11 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                                 SessionManager.getSession().retrieveQuery(
                         "com.arsdigita.cms.contenttypes.getPublicationsForAuthor");
 
-                final BigDecimal authorId = new BigDecimal(parameters.get(
-                        "authorId")[0]);
+                final BigDecimal authorId = new BigDecimal(parameters.get("authorId")[0]);
                 final GenericPerson author = new GenericPerson(authorId);
                 final StringBuilder authorFilterBuilder = new StringBuilder();
                 authorFilterBuilder.append('(');
-                authorFilterBuilder.append(String.format("authorId = %s",
-                                                         authorId.toString()));
+                authorFilterBuilder.append(String.format("authorId = %s", authorId.toString()));
 
                 if (author.getAlias() != null) {
                     addAuthorAliasToFilter(authorFilterBuilder,
@@ -421,22 +431,20 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 publicationsQuery.addFilter(authorFilterBuilder.toString());
 
                 if (parameters.containsKey("year")) {
-                    publicationsQuery.addFilter(String.format("yearOfPublication = %s",
-                                                              parameters.get(
-                            "year")[0]));
+                    publicationsQuery.addFilter(String.format("yearOfPublication = %s", parameters.get("year")[0]));
                 }
 
                 if (Kernel.getConfig().languageIndependentItems()) {
-                    FilterFactory ff = publicationsQuery.getFilterFactory();
-                    Filter filter = ff.or().
-                            addFilter(ff.equals("language", GlobalizationHelper.
+                    final FilterFactory filterFactory = publicationsQuery.getFilterFactory();
+                    final Filter filter = filterFactory.or().
+                            addFilter(filterFactory.equals("language", GlobalizationHelper.
                             getNegotiatedLocale().getLanguage())).
-                            addFilter(ff.and().
+                            addFilter(filterFactory.and().
                             addFilter(
-                            ff.equals("language",
-                                      GlobalizationHelper.LANG_INDEPENDENT)).
-                            addFilter(ff.notIn("parent",
-                                               "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                            filterFactory.equals("language",
+                                                 GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(filterFactory.notIn("parent",
+                                                          "com.arsdigita.navigation.getParentIDsOfMatchedItems").
                             set("language", GlobalizationHelper.
                             getNegotiatedLocale().getLanguage())));
                     publicationsQuery.addFilter(filter);
@@ -457,7 +465,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 exportPublications(format, publicationIds, response);
 
             } else {
-                logger.warn("Export action needs either a publication id or a "
+                LOGGER.warn("Export action needs either a publication id or a "
                             + "term id. Neither was found in the query parameters."
                             + "Responding with BAD_REQUEST status.");
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST,
@@ -467,7 +475,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
         } else {
             //Respond with 404 when the requested action is unknown.
-            logger.warn(String.format("Unknown pathinfo '%s', "
+            LOGGER.warn(String.format("Unknown pathinfo '%s', "
                                       + "responding with 404...",
                                       path));
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
@@ -495,7 +503,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
 
         if (exporter == null) {
-            logger.warn(String.format(
+            LOGGER.warn(String.format(
                     "The requested export format '%s' is not supported yet.",
                     format));
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
@@ -513,20 +521,20 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
         Publication publication = null;
         String publicationName = "publication";
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
 
         for (BigDecimal publicationId : publicationIds) {
             try {
                 //Get  the publication
                 publication = new Publication(publicationId);
-                logger.debug(String.format("OID of publication: %s",
+                LOGGER.debug(String.format("OID of publication: %s",
                                            publication.getOID()));
                 //Specialize the publication
                 publication =
                 (Publication) DomainObjectFactory.newInstance(
                         publication.getOID());
             } catch (DataObjectNotFoundException ex) {
-                logger.warn(String.format("No publication found for id '%s'.",
+                LOGGER.warn(String.format("No publication found for id '%s'.",
                                           publicationId.toPlainString()), ex);
                 response.sendError(HttpServletResponse.SC_NOT_FOUND,
                                    String.format(
@@ -536,7 +544,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
             }
 
-            logger.debug(String.format("Publication is of type: %s",
+            LOGGER.debug(String.format("Publication is of type: %s",
                                        publication.getClass().getName()));
 
             //Write the exported publication data to the response.
@@ -567,7 +575,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                     getFileExtension()));
 
         }
-        
+
         result.append(result.toString());
     }
 
@@ -580,4 +588,5 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             addAuthorAliasToFilter(builder, alias.getAlias());
         }
     }
+
 }

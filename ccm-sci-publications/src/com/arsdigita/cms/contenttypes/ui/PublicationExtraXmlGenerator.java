@@ -45,7 +45,6 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
             final List<PublicationFormat> formats = SciPublicationsExporters.getInstance().getSupportedFormats();
 
-
             for (PublicationFormat format : formats) {
                 createExportLink(format, element, (Publication) item, state);
             }

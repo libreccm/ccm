@@ -615,7 +615,7 @@ public class ImporterUtil {
                 bundle.setContentSection(folder.getContentSection());
                 bundle.save();
 
-                publication.addSeries(series);
+                publication.addSeries(series, 1);
 
                 if (publish) {
                     publishItem(series);
@@ -633,7 +633,7 @@ public class ImporterUtil {
             if (!pretend) {
                 collection.next();
                 final Series series = new Series(collection.getDataObject());
-                publication.addSeries(series);
+                publication.addSeries(series, 1);
             }
             report.setCreated(false);
         }
