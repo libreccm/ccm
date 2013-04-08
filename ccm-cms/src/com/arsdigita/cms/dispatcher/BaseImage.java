@@ -43,7 +43,7 @@ import org.apache.log4j.Logger;
  * A resource handler which streams out a blob from the database.
  * This class can use a special image cache to speed up image dispatching. Also,
  * during dispatch this class will create server-side resized images depending
- * on the URL parameter. Resizing is done by ImageScalr. The image cahce can be
+ * on the URL parameter. Resizing is done by ImageScalr. The image cache can be
  * activated and configured by com.arsdigita.cms.image_cache.* parameters.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
