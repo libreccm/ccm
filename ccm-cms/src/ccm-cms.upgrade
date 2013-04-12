@@ -62,4 +62,8 @@
     <!-- CMS Workspace&Service now loaded as legacy free application  -->
     <script sql="ccm-cms/upgrade/::database::-6.6.6-6.6.7.sql"/>    
   </version>
+  <version from="6.6.7" to="6.6.8">
+    <!-- Rename com.arsdigita.cms.Workspace to com.arsdigita.cms.ContentCenter -->
+    <script sql="ccm-cms/upgrade/::database::-6.6.7-6.6.8.sql"/>
+  </version>
 </upgrade>

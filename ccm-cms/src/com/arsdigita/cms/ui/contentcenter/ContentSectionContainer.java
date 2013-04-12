@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.contentcenter;
 
-
 import java.math.BigDecimal;
 
 import com.arsdigita.bebop.Component;
@@ -34,6 +33,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
@@ -77,7 +77,6 @@ public class ContentSectionContainer extends CMSContainer {
 
     private ContentSectionTable m_table;
     private FormContainer m_formContainer;
-
     private SingleSelectionModel m_typeSel;
     private SingleSelectionModel m_sectionSel;
 
@@ -102,8 +101,8 @@ public class ContentSectionContainer extends CMSContainer {
         m_typeSel = typeSel;
         m_sectionSel = sectionSel;
 
-      	m_formContainer = new FormContainer();
-       	add(m_formContainer);
+        m_formContainer = new FormContainer();
+        add(m_formContainer);
         m_table = new ContentSectionTable();
         add(m_table);
     }
@@ -111,7 +110,7 @@ public class ContentSectionContainer extends CMSContainer {
     @Override
     public void register(Page p) {
         super.register(p);
-       	p.setVisibleDefault(m_formContainer, false);
+        p.setVisibleDefault(m_formContainer, false);
     }
 
     /**
@@ -128,33 +127,34 @@ public class ContentSectionContainer extends CMSContainer {
             m_form = new StaticNewItemForm(m_sectionIdParam);
 
             m_form.addSubmissionListener(new FormSubmissionListener() {
-                    /**
-                     * Cancels the form if the user lacks the "create new items" privilege.
-                     */
-                    public void submitted(FormSectionEvent event)
+                /**
+                 * Cancels the form if the user lacks the "create new items" privilege.
+                 */
+                public void submitted(FormSectionEvent event)
                         throws FormProcessException {
-                        PageState state = event.getPageState();
-                        StaticNewItemForm form = (StaticNewItemForm) event.getSource();
+                    PageState state = event.getPageState();
+                    StaticNewItemForm form = (StaticNewItemForm) event.getSource();
 
-                        ContentSection section = form.getContentSection(state);
-                        SecurityManager sm = new SecurityManager(section);
-                        Folder folder = null;
-                        User user = Web.getContext().getUser();
-                        if ( user != null ) {
-                            folder = Folder.getUserHomeFolder(user,section);
-                        }
-                        if ( folder == null ) {
-                            folder = section.getRootFolder();
-                        }
-
-                        if (! sm.canAccess(state.getRequest(), 
-                                           SecurityManager.NEW_ITEM, folder)) {
-                            throw new FormProcessException( 
-                                  (String) GlobalizationUtil.globalize(
-                                  "cms.ui.insufficient_privileges").localize());
-                        }
+                    ContentSection section = form.getContentSection(state);
+                    SecurityManager sm = new SecurityManager(section);
+                    Folder folder = null;
+                    User user = Web.getContext().getUser();
+                    if (user != null) {
+                        folder = Folder.getUserHomeFolder(user, section);
                     }
-                });
+                    if (folder == null) {
+                        folder = section.getRootFolder();
+                    }
+
+                    if (!sm.canAccess(state.getRequest(),
+                                      SecurityManager.NEW_ITEM, folder)) {
+                        throw new FormProcessException(
+                                (String) GlobalizationUtil.globalize(
+                                "cms.ui.insufficient_privileges").localize());
+                    }
+                }
+
+            });
 
             m_form.addProcessListener(new FormProcessListener() {
                 /**
@@ -165,12 +165,13 @@ public class ContentSectionContainer extends CMSContainer {
                     PageState state = e.getPageState();
 
                     BigDecimal typeId = form.getTypeID(state);
-                    if( typeId != null ) {
+                    if (typeId != null) {
                         BigDecimal sectionId = form.getContentSectionID(state);
                         m_sectionSel.setSelectedKey(state, sectionId);
                         m_typeSel.setSelectedKey(state, typeId);
                     }
                 }
+
             });
 
             add(m_form);
@@ -185,6 +186,7 @@ public class ContentSectionContainer extends CMSContainer {
         public StaticNewItemForm getNewItemForm() {
             return m_form;
         }
+
     }
 
     private static class StaticNewItemForm extends NewItemForm {
@@ -197,7 +199,6 @@ public class ContentSectionContainer extends CMSContainer {
             add(m_sectionIDParamWidget);
             setProcessInvisible(true);
         }
-
 
         /**
          * Sets the id of the content section in this form. This ID is
@@ -214,7 +215,6 @@ public class ContentSectionContainer extends CMSContainer {
             Assert.exists(id);
             m_sectionIDParamWidget.setValue(state, id);
         }
-
 
         /**
          * Retrieves the content section for this form given the specified
@@ -239,7 +239,6 @@ public class ContentSectionContainer extends CMSContainer {
             return section;
         }
 
-
         /**
          * Retrieves the ID of the content section for this form given the
          * specified page state. This method will return null if no
@@ -256,7 +255,6 @@ public class ContentSectionContainer extends CMSContainer {
         }
 
     }
-
 
     /**
      * A table that displays all content sections, with links to their
@@ -278,11 +276,10 @@ public class ContentSectionContainer extends CMSContainer {
          **/
         private ContentSectionTable() {
             super();
-            
+
             Integer colNo = 0;
 
-            Label emptyView = new Label
-                ("There are currently no content sections installed.");
+            Label emptyView = new Label("There are currently no content sections installed.");
             emptyView.setFontWeight(Label.ITALIC);
             setEmptyView(emptyView);
 
@@ -290,25 +287,25 @@ public class ContentSectionContainer extends CMSContainer {
 
             // add columns to the table
             TableColumnModel columnModel = getColumnModel();
-            
+
             //TableColumn contentSectionColumn = new TableColumn(colNo, COLUMN_SECTION);
             TableColumn contentSectionColumn = new TableColumn(
-                    colNo, 
-                    (String)GlobalizationUtil.globalize("cms.ui.contentcenter.section").localize(), 
-                    COLUMN_SECTION);
+                    colNo,
+                    (String) GlobalizationUtil.globalize("cms.ui.contentcenter.section").localize(),                    
+                    COLUMN_SECTION);            
             contentSectionColumn.setCellRenderer(new AdminURLTableCellRenderer());
             columnModel.add(contentSectionColumn);
 
-            if( !ContentSection.getConfig().getHideLegacyPublicSiteLink() )  {
-                TableColumn locationColumn = new TableColumn(colNo ++, 
+            if (!ContentSection.getConfig().getHideLegacyPublicSiteLink()) {
+                TableColumn locationColumn = new TableColumn(colNo++,
                                                              COLUMN_LOCATION);
                 locationColumn.setCellRenderer(new URLTableCellRenderer());
                 columnModel.add(locationColumn);
             }
 
             TableColumn actionColumn = new TableColumn(
-                    colNo++, 
-                    (String)GlobalizationUtil.globalize("cms.ui.contentcenter.action").localize(),
+                    colNo++,
+                    (String) GlobalizationUtil.globalize("cms.ui.contentcenter.action").localize(),
                     COLUMN_ACTION);
             actionColumn.setCellRenderer(new ActionTableCellRenderer());
             columnModel.add(actionColumn);
@@ -316,21 +313,20 @@ public class ContentSectionContainer extends CMSContainer {
             setModelBuilder(new ContentSectionTableModelBuilder());
         }
 
-
         /**
          * An ContentSections table model builder
          *
          * @author <a href="mailto:mbryzek@arsdigita.com">Michael Bryzek</a>
          **/
         private class ContentSectionTableModelBuilder extends LockableImpl
-            implements TableModelBuilder {
+                implements TableModelBuilder {
 
             public TableModel makeModel(Table table, PageState state) {
                 table.getRowSelectionModel().clearSelection(state);
                 return new ContentSectionTableModel((ContentSectionTable) table, state);
             }
-        }
 
+        }
 
         /**
          * An ContentSections table model
@@ -342,7 +338,6 @@ public class ContentSectionContainer extends CMSContainer {
             private ContentSectionTable m_table;
             private TableColumnModel m_columnModel;
             private PageState m_state;
-
             private ContentSectionCollection m_contentSections;
             private ContentSection m_section;
 
@@ -358,7 +353,6 @@ public class ContentSectionContainer extends CMSContainer {
                                                 PrivilegeDescriptor.READ,
                                                 Kernel.getContext().getParty().getOID());
             }
-
 
             /**
              * Returns a collection of ContentSections to display in this
@@ -391,7 +385,7 @@ public class ContentSectionContainer extends CMSContainer {
              * @param columnIndex The index of the current column
              **/
             public Object getElementAt(int columnIndex) {
-                if(m_columnModel == null || m_section == null) {
+                if (m_columnModel == null || m_section == null) {
                     return null;
                 }
 
@@ -399,9 +393,8 @@ public class ContentSectionContainer extends CMSContainer {
                 String columnName = (String) tc.getHeaderValue();
 
                 Object result = m_section;
-                if (columnName.equals(COLUMN_SECTION) ||
-                    columnName.equals(COLUMN_LOCATION) ||
-                    columnName.equals(COLUMN_ACTION)) {
+                if (columnName.equals(COLUMN_SECTION) || columnName.equals(COLUMN_LOCATION) || columnName.equals(
+                        COLUMN_ACTION)) {
                     result = m_section;
                 }
                 return result;
@@ -424,8 +417,8 @@ public class ContentSectionContainer extends CMSContainer {
             protected PageState getPageState() {
                 return m_state;
             }
-        }
 
+        }
 
         /**
          * Sets the hidden parameter in the form containers form to
@@ -436,29 +429,29 @@ public class ContentSectionContainer extends CMSContainer {
          * @author <a href="mailto:mbryzek@arsdigita.com">Michael Bryzek</a>
          **/
         private class ActionTableCellRenderer implements TableCellRenderer {
+
             public Component getComponent(Table table, PageState state, Object value,
                                           boolean isSelected, Object key,
                                           int row, int column) {
                 ContentSection section = (ContentSection) value;
                 Folder folder = null;
                 User user = Web.getContext().getUser();
-                if ( user != null ) {
-                    folder = Folder.getUserHomeFolder(user,section);
+                if (user != null) {
+                    folder = Folder.getUserHomeFolder(user, section);
                 }
-                if ( folder == null ) {
+                if (folder == null) {
                     folder = section.getRootFolder();
                 }
                 // If the user has no access, return an empty Label
                 SecurityManager sm = new SecurityManager(section);
 
-                if (! sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder) 
-                    || !ContentSection.getConfig().getAllowContentCreateInSectionListing()
-                   ) {
-                    return new Label("&nbsp;&nbsp;&nbsp;-&nbsp;-&nbsp;&nbsp;&nbsp;"+
-                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ 
-                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ 
-                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ 
-                                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", 
+                if (!sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder)
+                    || !ContentSection.getConfig().getAllowContentCreateInSectionListing()) {
+                    return new Label("&nbsp;&nbsp;&nbsp;-&nbsp;-&nbsp;&nbsp;&nbsp;"
+                                     + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                     + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                     + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                     + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
                                      false);
                 } else {
                     // set the value of the sectionIdParameter in the form
@@ -467,9 +460,9 @@ public class ContentSectionContainer extends CMSContainer {
                     return m_formContainer.getNewItemForm();
                 }
             }
+
         }
     }
-
 
     /**
      * Generates the correct URL to the public pages for a content
@@ -489,35 +482,33 @@ public class ContentSectionContainer extends CMSContainer {
          *         or a Label if current use does not habe acces priviledge
          *         for the content section
          */
-        public Component getComponent(Table table, 
-                                      PageState state, 
+        public Component getComponent(Table table,
+                                      PageState state,
                                       Object value,
-                                      boolean isSelected, 
+                                      boolean isSelected,
                                       Object key,
-                                      int row, 
+                                      int row,
                                       int column) {
 
             /* cast to ContentSection for further processing                  */
             ContentSection section = (ContentSection) value;
             String name = section.getName();
-            String path = section.getPath() ; // from Application
-            
+            String path = section.getPath(); // from Application
+
 
             // If the user has no access, return a Label instead of a Link
             SecurityManager sm = new SecurityManager(section);
 
             if (sm.canAccess(state.getRequest(), SecurityManager.PUBLIC_PAGES)
-                && !ContentSection.getConfig().getHideLegacyPublicSiteLink() 
-               ) {
-                
-                return new Link("/"+name+"/", path+"/");
+                && !ContentSection.getConfig().getHideLegacyPublicSiteLink()) {
+
+                return new Link("/" + name + "/", path + "/");
             } else {
-                return new Label("/"+name+"/", false);
+                return new Label("/" + name + "/", false);
             }
         }
 
     }
-
 
     /**
      * Generates the correct URL to the admin pages for a content
@@ -556,6 +547,6 @@ public class ContentSectionContainer extends CMSContainer {
         protected String generateURL(String prefix) {
             return prefix + PageLocations.SECTION_PAGE;
         }
-    }
 
+    }
 }
