@@ -44,7 +44,6 @@ import com.arsdigita.cms.ui.workflow.WorkflowAdminPane;
 import com.arsdigita.cms.util.SecurityConstants;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.User;
-import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.ui.DebugPanel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.Web;
@@ -132,7 +131,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
 
     private FolderAdminPane m_folderPane;
     private BrowsePane m_browsePane;
-    private LayoutPanel m_searchPane;
+    private ItemSearch m_searchPane;
     private ImagesPane m_imagesPane;
     private RoleAdminPane m_rolePane;
     private WorkflowAdminPane m_workflowPane;
@@ -240,11 +239,9 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      * Creates, and then caches, the search pane. Overriding this
      * method to return null will prevent this tab from appearing.
      */
-    protected LayoutPanel getSearchPane() {
+    protected ItemSearch getSearchPane() {
         if (m_searchPane == null) {
-            m_searchPane = new LayoutPanel();
-            m_searchPane.setLeft(new SimpleComponent());
-            m_searchPane.setBody(new ItemSearch(ContentItem.DRAFT, CMS.getConfig().limitToContentSection()));
+            m_searchPane = new ItemSearch(ContentItem.DRAFT, CMS.getConfig().limitToContentSection());
         }
         return m_searchPane;
     }
@@ -254,8 +251,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
             m_imagesPane = new ImagesPane();
         }
         return m_imagesPane;
-    } 
-    
+    }
+
     protected RoleAdminPane getRoleAdminPane() {
         if (m_rolePane == null) {
             m_rolePane = new RoleAdminPane();

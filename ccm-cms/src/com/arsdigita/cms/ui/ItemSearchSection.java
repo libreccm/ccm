@@ -35,6 +35,7 @@ import com.arsdigita.cms.ui.search.ItemQueryComponent;
 import com.arsdigita.search.ui.ResultsPane;
 import com.arsdigita.search.ui.QueryGenerator;
 import com.arsdigita.search.QuerySpecification;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 
 /**
  * Contains a form for specifying search parameters, as well as a
@@ -98,8 +99,14 @@ public class ItemSearchSection extends FormSection
         }
         m_results = createResultsPane(m_query);
 
-        addQueryGenerator(this);
-        addResultsPane(this);
+
+        LayoutPanel searchPanel = new LayoutPanel();
+        searchPanel.setLeft(m_query);
+        searchPanel.setBody(m_results);
+        this.add(searchPanel);
+        
+//        addQueryGenerator(this);
+//        addResultsPane(this);
         addFormListener();
 
         setClassAttr("itemSearch");
@@ -121,7 +128,7 @@ public class ItemSearchSection extends FormSection
                                                       boolean limitToContentSection) {
         return new ItemQueryComponent(context, limitToContentSection);
     }
-    
+
     protected ItemQueryComponent createQueryGenerator(String context,
                                                       boolean limitToContentSection,
                                                       ContentType type) {
@@ -156,7 +163,7 @@ public class ItemSearchSection extends FormSection
         p.setVisibleDefault(m_results, false);
         p.addGlobalStateParam(new BigDecimalParameter(SINGLE_TYPE_PARAM));
     }
-        
+
     /**
      * Displays the "keywords" and "content types" widgets
      */
