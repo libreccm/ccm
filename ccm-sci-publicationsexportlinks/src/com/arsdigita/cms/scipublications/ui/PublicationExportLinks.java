@@ -34,6 +34,7 @@ public class PublicationExportLinks extends AbstractComponent {
 
     private CustomizableObjectList objList;
 
+    @Override
     public Element generateXML(final HttpServletRequest request,
                                final HttpServletResponse response) {
 
