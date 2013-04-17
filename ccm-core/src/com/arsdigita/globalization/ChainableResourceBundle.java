@@ -32,6 +32,9 @@ public interface ChainableResourceBundle {
      *  which normally has protected access.  If you have a PropertyResourceBundle
      *  or a ListResourceBundle, this will simply delegate to the
      *  handleGetObject(String key) method.
+     * 
+     * @param key
+     * @return  
      */
     public Object handleGetObject(String key);
 
@@ -40,6 +43,8 @@ public interface ChainableResourceBundle {
      *  which normally has protected access.  If you have a PropertyResourceBundle
      *  or a ListResourceBundle, this will simply delegate to the
      *  getKeys() method.
+     * 
+     * @return 
      */
-    public Enumeration getKeys();
+    public Enumeration<String> getKeys();
 }

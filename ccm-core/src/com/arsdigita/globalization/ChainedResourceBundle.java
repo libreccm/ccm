@@ -43,29 +43,33 @@ import java.util.ResourceBundle;
  * </code></pre>
  */
 public class ChainedResourceBundle extends ResourceBundle {
-    
-    private List m_bundles;
-    private List m_keys;
+
+    private final List<ChainableResourceBundle> bundles;
+    private final List<String> keys;
 
     public ChainedResourceBundle() {
         super();
-        m_bundles = new LinkedList();
-        m_keys = new LinkedList();
+        bundles = new LinkedList<ChainableResourceBundle>();
+        keys = new LinkedList<String>();
     }
 
     /**
      *  this wraps the PropertyResourceBundle in a ChainableResourceBundle
      *  and then delegates to addBundle(ChainableResourceBundle bundle);
+     * 
+     * @param bundle 
      */
-    public void addBundle(PropertyResourceBundle bundle) {
+    public void addBundle(final PropertyResourceBundle bundle) {
         addBundle(new ChainablePropertyResourceBundle(bundle));
     }
 
     /**
      *  this wraps the PropertyResourceBundle in a ChainableResourceBundle
      *  and then delegates to addBundle(ChainableResourceBundle bundle);
+     * 
+     * @param bundle 
      */
-    public void addBundle(ListResourceBundle bundle) {
+    public void addBundle(final ListResourceBundle bundle) {
         addBundle(new ChainableListResourceBundle(bundle));
     }
 
@@ -73,32 +77,32 @@ public class ChainedResourceBundle extends ResourceBundle {
      *  This adds bundles to this chained resource.  The bundles
      *  are examined for the key in the order that they are added.
      */
-    private void addBundle(ChainableResourceBundle bundle) {
-        m_bundles.add(bundle);
-        Enumeration enu = bundle.getKeys();
+    private void addBundle(final ChainableResourceBundle bundle) {
+        bundles.add(bundle);
+        final Enumeration<String> enu = bundle.getKeys();
         while (enu.hasMoreElements()) {
-            m_keys.add(enu.nextElement());
+            keys.add(enu.nextElement());
         }
     }
-        
-    public void putBundle(PropertyResourceBundle bundle) {
-    	putBundle(new ChainablePropertyResourceBundle(bundle));
-    }
-    
-    public void putBundle(ListResourceBundle bundle) {
-    	putBundle(new ChainableListResourceBundle(bundle));
+
+    public void putBundle(final PropertyResourceBundle bundle) {
+        putBundle(new ChainablePropertyResourceBundle(bundle));
     }
 
-    private void putBundle(ChainableResourceBundle bundle) {
-        m_bundles.add(0,bundle);
-        Enumeration enu = bundle.getKeys();
-        List bundleKeys = new LinkedList();
+    public void putBundle(final ListResourceBundle bundle) {
+        putBundle(new ChainableListResourceBundle(bundle));
+    }
+
+    private void putBundle(final ChainableResourceBundle bundle) {
+        bundles.add(0, bundle);
+        final Enumeration<String> enu = bundle.getKeys();
+        final List<String> bundleKeys = new LinkedList<String>();
         while (enu.hasMoreElements()) {
             bundleKeys.add(enu.nextElement());
         }
-        m_keys.addAll(0, bundleKeys);
+        keys.addAll(0, bundleKeys);
     }
-    
+
     /**
      *  Because this particular bundle is just a wrapper around other bundles,
      *  this method will return null so that the ResourceBundle can then
@@ -106,19 +110,23 @@ public class ChainedResourceBundle extends ResourceBundle {
      * @param key
      * @return  
      */
+    @Override
     public Object handleGetObject(final String key) {
-        Iterator iter = m_bundles.iterator();
+        final Iterator<ChainableResourceBundle> iter = bundles.iterator();
         Object object = null;
-        while (iter.hasNext() && object == null) {
-            object = ((ChainableResourceBundle)iter.next()).handleGetObject(key);
-        }
+        ChainableResourceBundle bundle;
+        while (iter.hasNext() && object == null) {        
+            bundle = iter.next();
+            object = bundle.handleGetObject(key);
+            //object = iter.next().handleGetObject(key);
+        }        
         return object;
     }
 
-    public Enumeration getKeys() {
-        return Collections.enumeration(m_keys);
+    @Override
+    public Enumeration<String> getKeys() {
+        return Collections.enumeration(keys);
     }
-
 
     /**
      *  This is basically a way to allow us to set the parent.  The javadoc
@@ -127,29 +135,31 @@ public class ChainedResourceBundle extends ResourceBundle {
      *  an internal PropertyResourceBundle.
      */
     private class ChainablePropertyResourceBundle
-                  implements ChainableResourceBundle {
+            implements ChainableResourceBundle {
 
-        private PropertyResourceBundle m_wrappedBundle = null;
+        private final PropertyResourceBundle wrappedBundle;
 
         /**
          *  This creates a new Bundle that delegates everything to the
          *  passed in bundle and sets the parent of the passed in bundle
          *  to the passed in ResourceBundle
          */
-        public ChainablePropertyResourceBundle(PropertyResourceBundle bundle) {
+        public ChainablePropertyResourceBundle(final PropertyResourceBundle bundle) {
             super();
-            m_wrappedBundle = bundle;
-        }
-        
-        public Object handleGetObject(String key) {
-            return m_wrappedBundle.handleGetObject(key);
+            wrappedBundle = bundle;
         }
 
-        public Enumeration getKeys() {
-            return m_wrappedBundle.getKeys();
+        @Override
+        public Object handleGetObject(final String key) {
+            return wrappedBundle.handleGetObject(key);
         }
+
+        @Override
+        public Enumeration<String> getKeys() {
+            return wrappedBundle.getKeys();
+        }
+
     }
-
 
     /**
      *  This is basically a way to allow us to set the parent.  The javadoc
@@ -157,27 +167,27 @@ public class ChainedResourceBundle extends ResourceBundle {
      *  PropertyResourceBundle since this delegate everything to 
      *  an internal PropertyResourceBundle.
      */
-    private class ChainableListResourceBundle
-                  implements ChainableResourceBundle {
+    private class ChainableListResourceBundle implements ChainableResourceBundle {
 
-        private ListResourceBundle m_wrappedBundle = null;
+        private final ListResourceBundle m_wrappedBundle;
 
         /**
          *  This creates a new Bundle that delegates everything to the
          *  passed in bundle and sets the parent of the passed in bundle
          *  to the passed in ResourceBundle
          */
-        public ChainableListResourceBundle(ListResourceBundle bundle) {
+        public ChainableListResourceBundle(final ListResourceBundle bundle) {
             super();
             m_wrappedBundle = bundle;
         }
-        
-        public Object handleGetObject(String key) {
+
+        public Object handleGetObject(final String key) {
             return m_wrappedBundle.handleGetObject(key);
         }
 
-        public Enumeration getKeys() {
+        public Enumeration<String> getKeys() {
             return m_wrappedBundle.getKeys();
         }
+
     }
 }
