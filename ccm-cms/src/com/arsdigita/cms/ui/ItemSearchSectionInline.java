@@ -62,6 +62,8 @@ public class ItemSearchSectionInline extends ItemSearchSection {
         super(name, context, limitToContentSection);
         m_name = name;
         m_item = new OIDParameter(name + "_itemOID");
+        //addQueryGenerator(this);
+        addResultsPane(this);
     }
     
      public ItemSearchSectionInline(String name, String context,
@@ -70,6 +72,8 @@ public class ItemSearchSectionInline extends ItemSearchSection {
         super(name, context, limitToContentSection, type);
         m_name = name;
         m_item = new OIDParameter(name + "_itemOID");
+        //addQueryGenerator(this);
+        addResultsPane(this);
     }
 
     @Override
