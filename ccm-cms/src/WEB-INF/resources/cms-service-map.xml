@@ -4,19 +4,19 @@
     <page-class>com.arsdigita.cms.ui.Logout</page-class>
   </url-mapping>
   <url-mapping>
-    <url>stream/image/</url>
+    <url>/templates/servlet/cms-service/stream/image/</url>
     <page-class>com.arsdigita.cms.dispatcher.StreamImage</page-class>
   </url-mapping>
   <url-mapping>
-    <url>download/image/</url>
+    <url>/templates/servlet/cms-service/download/image/</url>
     <page-class>com.arsdigita.cms.dispatcher.DownloadImage</page-class>
   </url-mapping>
   <url-mapping>
-    <url>stream/asset/</url>
+    <url>/templates/servlet/cms-service/stream/asset/</url>
     <page-class>com.arsdigita.cms.dispatcher.StreamAsset</page-class>
   </url-mapping>
   <url-mapping>
-    <url>download/asset/</url>
+    <url>/templates/servlet/cms-service/download/asset/</url>
     <page-class>com.arsdigita.cms.dispatcher.DownloadAsset</page-class>
   </url-mapping>
 </dispatcher-configuration>
