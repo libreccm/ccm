@@ -25,8 +25,8 @@ import com.arsdigita.formbuilder.*;
 object type Survey extends ACSObject {
     component FormSection[1..1] formSection = join ss_surveys.form_id 
                                        to bebop_form_sections.form_section_id;
-    PackageInstance[1..1] packageInstance = join ss_surveys.package_id
-                                              to apm_packages.package_id;
+    //PackageInstance[1..1] packageInstance = join ss_surveys.package_id
+    //                                          to apm_packages.package_id;
     Date[0..1] startDate = ss_surveys.start_date DATE;
     Date[0..1] endDate = ss_surveys.end_date DATE;
     String[0..1] quizType = ss_surveys.quiz_type VARCHAR(50);
