@@ -179,10 +179,10 @@ public class PublicPersonalProfileXmlUtil {
                 continue;
             }
 
-            final ContentItem targetItem = link.getTargetItem();
-            System.out.printf("targetItem.getClass.getName: %s\n", targetItem.getClass().getName());
+            final ContentItem targetItem = link.getTargetItem();                                    
+            //System.out.printf("targetItem.getClass.getName: %s\n", targetItem.getClass().getName());
             if ((targetItem instanceof PublicPersonalProfile)
-                || (targetItem instanceof ContentPage)) {
+                || (targetItem instanceof ContentPage)) {                
                 final ContentPage targetPage = (ContentPage) targetItem;
 
                 if (!(targetPage.getContentBundle().hasInstance(profile.getLanguage(),

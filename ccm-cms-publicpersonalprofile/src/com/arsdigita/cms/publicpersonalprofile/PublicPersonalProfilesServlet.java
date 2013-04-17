@@ -125,7 +125,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             final Element root = document.getRootElement();
 
             final Session session = SessionManager.getSession();
-           
+
             PublicPersonalProfile profile = getProfile(
                     session,
                     path.getProfileOwner(),
@@ -213,8 +213,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             }
 
             if (config.getEmbedded()) {
-                final ContentSection section =
-                                     profile.getContentSection();
+                final ContentSection section = profile.getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
 
                 String context;
@@ -661,12 +660,13 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                     if (item instanceof ContentPage) {
                                         ContentPage contentPage =
                                                     (ContentPage) item;
-                                        logger.error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
-                                                     + contentPage.
-                                                getContentBundle().
-                                                hasInstance(GlobalizationHelper.
-                                                getNegotiatedLocale().
-                                                getLanguage()));
+                                        logger.
+                                                     error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+                                                           + contentPage.
+                                                     getContentBundle().
+                                                     hasInstance(GlobalizationHelper.
+                                                     getNegotiatedLocale().
+                                                     getLanguage()));
                                         if (contentPage.getContentBundle().
                                                 hasInstance(GlobalizationHelper.
                                                 getNegotiatedLocale().
@@ -680,7 +680,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                             item = (ContentItem) contentPage;
                                         } else {
                                             logger.error(
-                                                    String.format(
+                                                    String.
+                                                    format(
                                                     "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
                                                     itemPath,
                                                     GlobalizationHelper.
@@ -723,10 +724,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                                 if (item instanceof ContentPage) {
                                     ContentPage contentPage = (ContentPage) item;
-                                    logger.error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
-                                                 + contentPage.getContentBundle().
-                                            hasInstance(GlobalizationHelper.
-                                            getNegotiatedLocale().getLanguage()));
+                                    logger.
+                                                 error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+                                                       + contentPage.getContentBundle().
+                                                 hasInstance(GlobalizationHelper.
+                                                 getNegotiatedLocale().getLanguage()));
                                     if (contentPage.getContentBundle().
                                             hasInstance(GlobalizationHelper.
                                             getNegotiatedLocale().getLanguage())) {
@@ -737,7 +739,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                         item = (ContentItem) contentPage;
                                     } else {
                                         logger.error(
-                                                String.format(
+                                                String.
+                                                format(
                                                 "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
                                                 itemPath,
                                                 GlobalizationHelper.
@@ -1171,32 +1174,32 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final DataCollection profiles =
                              session.retrieve(
                 com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
-                
-        final FilterFactory filterFactory = profiles.getFilterFactory();                
+
+        final FilterFactory filterFactory = profiles.getFilterFactory();
         final Filter urlFilter = filterFactory.simple(String.format(
                 "profileUrl = '%s'",
                 profileOwner));
         final Filter versionFilter;
         if (preview) {
             versionFilter = filterFactory.simple(String.format("version = '%s'",
-                                                             ContentItem.DRAFT));
+                                                               ContentItem.DRAFT));
         } else {
             versionFilter = filterFactory.simple(String.format("version = '%s'",
-                                                             ContentItem.LIVE));
+                                                               ContentItem.LIVE));
         }
 
         final Filter langFilter = filterFactory.simple(String.format(
                 "language = '%s'", language));
-        
+
         profiles.addFilter(urlFilter);
         profiles.addFilter(versionFilter);
         profiles.addFilter(langFilter);
-        
+
         if (profiles.isEmpty()) {
             profiles.reset();
             profiles.addFilter(urlFilter);
             profiles.addFilter(versionFilter);
-            profiles.addFilter(String.format("language = '%s'", 
+            profiles.addFilter(String.format("language = '%s'",
                                              GlobalizationHelper.LANG_INDEPENDENT));
         }
 
@@ -1345,5 +1348,6 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         public String getItemPath() {
             return itemPath;
         }
+
     }
 }

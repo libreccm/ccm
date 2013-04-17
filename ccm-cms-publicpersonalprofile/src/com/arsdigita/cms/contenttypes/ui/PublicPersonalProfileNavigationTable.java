@@ -106,6 +106,7 @@ public class PublicPersonalProfileNavigationTable
             return new PublicPersonalProfileNavigationTableModel(
                     table, state, profile);
         }
+
     }
 
     private class PublicPersonalProfileNavigationTableModel
@@ -150,8 +151,7 @@ public class PublicPersonalProfileNavigationTable
                     getNegotiatedLocale().getLanguage());
             navItems.reset();
             if ((navItem == null) && (Kernel.getConfig().languageIndependentItems())) {
-                navItem = navItems.getNavItem(key, GlobalizationHelper.
-                    LANG_INDEPENDENT);
+                navItem = navItems.getNavItem(key, GlobalizationHelper.LANG_INDEPENDENT);
             }
             navItems.reset();
 
@@ -165,10 +165,10 @@ public class PublicPersonalProfileNavigationTable
                     }
                 case 1:
                     /*if (navItem.getGeneratorClass() == null) {
-                    return targetItem;
-                    } else {
-                    return null;
-                    }*/
+                     return targetItem;
+                     } else {
+                     return null;
+                     }*/
                     if (targetItem instanceof PublicPersonalProfile) {
                         return null;
                     } else {
@@ -187,6 +187,7 @@ public class PublicPersonalProfileNavigationTable
             RelatedLink link = new RelatedLink(linkCollection.getDataObject());
             return link.getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -205,6 +206,7 @@ public class PublicPersonalProfileNavigationTable
 
             return new Label((String) value);
         }
+
     }
 
     private class TargetCellRenderer
@@ -232,8 +234,7 @@ public class PublicPersonalProfileNavigationTable
                         item);
 
                 if (canEdit) {
-                    final ContentSection section = CMS.getContext().
-                            getContentSection();
+                    final ContentSection section = item.getContentSection();//CMS.getContext().getContentSection();
                     ItemResolver resolver = section.getItemResolver();
 
                     Link link = new Link(item.getTitle(),
@@ -246,6 +247,7 @@ public class PublicPersonalProfileNavigationTable
                 }
             }
         }
+
     }
 
     private class DeleteCellRenderer
@@ -282,6 +284,7 @@ public class PublicPersonalProfileNavigationTable
                 return label;
             }
         }
+
     }
 
     @Override
@@ -306,4 +309,5 @@ public class PublicPersonalProfileNavigationTable
     public void headSelected(TableActionEvent event) {
         //Nothing to do here.
     }
+
 }

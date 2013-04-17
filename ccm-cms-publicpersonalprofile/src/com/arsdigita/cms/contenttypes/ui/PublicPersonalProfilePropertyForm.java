@@ -91,7 +91,9 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
                     DataCollection persons = SessionManager.getSession().retrieve(personType);
                     //persons.addFilter("profile is null");
                     persons.addFilter(String.format("version = '%s'", ContentItem.DRAFT));
-                    persons.addFilter(String.format("alias.id = '%s'", owner.getID().toString()));
+                    if (owner != null) {
+                        persons.addFilter(String.format("alias.id = '%s'", owner.getID().toString()));
+                    }
                     persons.addOrder("surname asc");
                     persons.addOrder("givenname asc");
                     persons.addOrder("language asc");
@@ -122,6 +124,7 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
                         }
                     }
                 }
+
             });
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException(ex);
@@ -199,4 +202,5 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
             }
         }
     }
+
 }
