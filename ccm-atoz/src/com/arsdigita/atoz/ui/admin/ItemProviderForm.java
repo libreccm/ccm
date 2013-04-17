@@ -17,10 +17,11 @@
  */
 package com.arsdigita.atoz.ui.admin;
 
-import com.arsdigita.atoz.ItemProvider;
 import com.arsdigita.atoz.AtoZProvider;
+import com.arsdigita.atoz.ItemProvider;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
@@ -36,7 +37,6 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,12 +46,12 @@ import java.util.TreeMap;
  * 
  * 
  */
-public class ItemProviderForm extends ProviderForm {
+public class ItemProviderForm extends AbstractProviderForm {
 
-    private CategoryPicker m_picker;
-    private TextField m_loadPaths;
+    private CategoryPicker picker;
+    private TextField loadPaths;
 
-    public ItemProviderForm(ACSObjectSelectionModel provider) {
+    public ItemProviderForm(final ACSObjectSelectionModel provider) {
         super("itemProvider", ItemProvider.class, provider);
 
         setMetaDataAttribute("title", "Item provider properties");
@@ -61,63 +61,65 @@ public class ItemProviderForm extends ProviderForm {
     protected void addWidgets() {
         super.addWidgets();
 
-        m_loadPaths = new TextField(ItemProvider.LOAD_PATHS);
-        ((SimpleComponent) m_loadPaths).setMetaDataAttribute("label", "Attributes to retrieve");
-        add(m_loadPaths);
-        m_loadPaths.addValidationListener(new StringInRangeValidationListener(0, 200));
-        m_picker = new AllCategoryPicker("rootCategory");
-        ((SimpleComponent) m_picker).setMetaDataAttribute("label", "Category filter");
-        ((SingleSelect) m_picker).addValidationListener(new NotNullValidationListener());
-        add(m_picker);
+        loadPaths = new TextField(ItemProvider.LOAD_PATHS);
+        //((SimpleComponent) loadPaths).setMetaDataAttribute("label", "Attributes to retrieve");        
+        loadPaths.addValidationListener(new StringInRangeValidationListener(0, 200));
+
+        picker = new AllCategoryPicker("rootCategory");
+        //((SimpleComponent) picker).setMetaDataAttribute("label", "Category filter");
+        ((SingleSelect) picker).addValidationListener(new NotNullValidationListener());
+
+        add(new Label(AtoZGlobalizationUtil.globalize("atoz.ui.load_paths")));
+        add(loadPaths);
+        add(new Label(AtoZGlobalizationUtil.globalize("atoz.ui.category_filter")));
+        add(picker);
     }
 
     @Override
-    protected void processWidgets(PageState state,
-                                  AtoZProvider provider) {
+    protected void processWidgets(final PageState state, final AtoZProvider provider) {
         super.processWidgets(state, provider);
 
-        ItemProvider myprovider = (ItemProvider) provider;
+        final ItemProvider myprovider = (ItemProvider) provider;
 
-        myprovider.setCategory(m_picker.getCategory(state));
-        myprovider.setLoadPaths((String) m_loadPaths.getValue(state));
+        myprovider.setCategory(picker.getCategory(state));
+        myprovider.setLoadPaths((String) loadPaths.getValue(state));
     }
 
     @Override
-    protected void initWidgets(PageState state,
-                               AtoZProvider provider) {
+    protected void initWidgets(final PageState state, final AtoZProvider provider) {
         super.initWidgets(state, provider);
 
-        ItemProvider myprovider = (ItemProvider) provider;
+        final ItemProvider myprovider = (ItemProvider) provider;
         if (provider != null) {
             //m_compound.setValue(state, new Boolean(myprovider.isCompound()));
 
-            m_picker.setCategory(state, myprovider.getCategory());
-            m_loadPaths.setValue(state, myprovider.getLoadPaths());
+            picker.setCategory(state, myprovider.getCategory());
+            loadPaths.setValue(state, myprovider.getLoadPaths());
         }
     }
 
     private class AllCategoryPicker extends AbstractCategoryPicker {
 
-        public AllCategoryPicker(String name) {
+        public AllCategoryPicker(final String name) {
             super(name);
         }
 
-        protected void addOptions(PageState state,
-                                  SingleSelect target) {
+        protected void addOptions(final PageState state, final SingleSelect target) {
             target.addOption(new Option(null, "-- pick one --"));
 
-            DataCollection domains = SessionManager.getSession().retrieve("com.arsdigita.london.terms.Domain");
+            final DataCollection domains = SessionManager.getSession().retrieve("com.arsdigita.london.terms.Domain");
             domains.addPath("model.id");
             domains.addPath("model.objectType");
             domains.addOrder("title");
             while (domains.next()) {
-                Category rootCategory = (Category) DomainObjectFactory.newInstance((DataObject) domains.get("model"));
+                final Category rootCategory = (Category) DomainObjectFactory.newInstance((DataObject) domains.get(
+                        "model"));
                 categorySubtreePath(target, rootCategory, " > ");
             }
         }
 
-        private void categorySubtreePath(SingleSelect target, Category root, String join) {
-            DomainCollection cats = new DomainCollection(
+        private void categorySubtreePath(final SingleSelect target, final Category root, final String join) {
+            final DomainCollection cats = new DomainCollection(
                     SessionManager.getSession().retrieve(Category.BASE_DATA_OBJECT_TYPE));
             cats.addFilter("defaultAncestors like :ancestors")
                     .set("ancestors",
@@ -127,8 +129,8 @@ public class ItemProviderForm extends ProviderForm {
             cats.addOrder("defaultAncestors");
             cats.addPath("parents.id");
 
-            Map path2cat = new TreeMap();
-            Map cat2path = new HashMap();
+            final Map path2cat = new TreeMap();
+            final Map cat2path = new HashMap();
 
             path2cat.put(root.getName(), root);
             cat2path.put(root.getID(), root.getName());
@@ -138,8 +140,8 @@ public class ItemProviderForm extends ProviderForm {
                                         + " +++++++++++++++++++++++++ "));
 
             while (cats.next()) {
-                Category cat = (Category) cats.getDomainObject();
-                BigDecimal parent = (BigDecimal) cats.get("parents.id");
+                final Category cat = (Category) cats.getDomainObject();
+                final BigDecimal parent = (BigDecimal) cats.get("parents.id");
 
                 if (parent == null) {
                     path2cat.put(cat.getName(), cat);

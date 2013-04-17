@@ -15,37 +15,35 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.atoz.CategoryProvider;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
-import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.util.Classes;
 
-
 /**
  * 
  * 
  */
-public class CategoryProviderForm extends ProviderForm {
+public class CategoryProviderForm extends AbstractProviderForm {
 
-    private CheckboxGroup m_compound;
-    private CategoryPicker m_rootCategory;
+    //private CheckboxGroup m_compound;
+    private CategoryPicker rootCategory;
 
-    public CategoryProviderForm(ACSObjectSelectionModel provider) {
-        super("categoryProvider", 
-              CategoryProvider.class, provider);
+    public CategoryProviderForm(final ACSObjectSelectionModel provider) {
+        super("categoryProvider", CategoryProvider.class, provider);
 
         setMetaDataAttribute("title", "Category provider properties");
     }
-        
+
     @Override
     protected void addWidgets() {
         super.addWidgets();
@@ -54,39 +52,39 @@ public class CategoryProviderForm extends ProviderForm {
         //m_compound = new CheckboxGroup("compound");
         //m_compound.addOption(new Option(Boolean.TRUE.toString(), "yes"));
         //add(m_compound);
-        
-        m_rootCategory = (CategoryPicker)Classes.newInstance(
-            AtoZ.getConfig().getRootCategoryPicker(),
-            new Class[] { String.class },
-            new Object[] { "rootCategory" });
-        ((SimpleComponent)m_rootCategory).setMetaDataAttribute("label", "Root category");
-        add(m_rootCategory);
+
+        rootCategory = (CategoryPicker) Classes.newInstance(
+                AtoZ.getConfig().getRootCategoryPicker(),
+                new Class[]{String.class},
+                new Object[]{"rootCategory"});
+        ((SimpleComponent) rootCategory).setMetaDataAttribute("label", "Root category");
+
+        add(new Label(AtoZGlobalizationUtil.globalize("atoz.ui.category_picker.root_category")));
+        add(rootCategory);
     }
-    
+
     @Override
-    protected void processWidgets(PageState state,
-                                  AtoZProvider provider) {
+    protected void processWidgets(final PageState state, final AtoZProvider provider) {
         super.processWidgets(state, provider);
-        
-        CategoryProvider myprovider = (CategoryProvider)provider;
+
+        final CategoryProvider myprovider = (CategoryProvider) provider;
         myprovider.setCompound(false);
         //myprovider.setCompound(Boolean.TRUE.equals(m_compound.getValue(state)));
-        
-        Category root = m_rootCategory.getCategory(state);
+
+        final Category root = rootCategory.getCategory(state);
         myprovider.setRootCategory(root);
     }
-   
+
     @Override
-    protected void initWidgets(PageState state,
-                               AtoZProvider provider) {
+    protected void initWidgets(final PageState state, final AtoZProvider provider) {
         super.initWidgets(state, provider);
 
-        CategoryProvider myprovider = (CategoryProvider)provider;
+        final CategoryProvider myprovider = (CategoryProvider) provider;
         if (provider != null) {
             //m_compound.setValue(state, new Boolean(myprovider.isCompound()));
-            
-            Category root = myprovider.getRootCategory();
-            m_rootCategory.setCategory(state, root);
+
+            final Category root = myprovider.getRootCategory();
+            rootCategory.setCategory(state, root);
         }
     }
 

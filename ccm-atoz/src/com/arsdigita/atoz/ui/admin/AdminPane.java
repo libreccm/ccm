@@ -15,9 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz.ui.admin;
-
 
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Component;
@@ -43,14 +41,12 @@ import java.util.Iterator;
 
 public class AdminPane extends SimpleContainer {
 
-    private static final String XMLNS =
-        "http://xmlns.redhat.com/atoz/1.0";
-
+    private static final String XMLNS = "http://xmlns.redhat.com/atoz/1.0";
     private ACSObjectSelectionModel m_provider;
-
     private Map m_providerCreateMap;
     private Map m_providerAdminMap;
-    private ProviderList m_providerList;
+    //private ProviderList m_providerList;
+    private AtoZProviderTable m_providerTable;
     private ProviderCreateForm m_createForm;
 
     public AdminPane(BigDecimalParameter provider) {
@@ -59,8 +55,11 @@ public class AdminPane extends SimpleContainer {
         m_provider = new ACSObjectSelectionModel(provider);
         m_provider.addChangeListener(new ProviderEditStart());
 
-        m_providerList = new ProviderList(m_provider);
-        add(m_providerList);
+//        m_providerList = new ProviderList(m_provider);
+//        add(m_providerList);
+
+        m_providerTable = new AtoZProviderTable(m_provider);
+        add(m_providerTable);
 
         m_createForm = new ProviderCreateForm();
         m_createForm.addCompletionListener(new ProviderCreateComplete());
@@ -70,17 +69,15 @@ public class AdminPane extends SimpleContainer {
         m_providerCreateMap = new HashMap();
         m_providerAdminMap = new HashMap();
 
-        for (int i = 0 ; i < providers.length ; i++) {
+        for (int i = 0; i < providers.length; i++) {
             ProviderAdmin admin = providers[i].createProviderAdmin(m_provider);
             admin.addCompletionListener(new ProviderAdminComplete(admin));
-            m_providerAdminMap.put(providers[i].getProvider(),
-                                  admin);
+            m_providerAdminMap.put(providers[i].getProvider(), admin);
             add(admin);
 
-            ProviderForm create = providers[i].createProviderCreate(m_provider);
+            AbstractProviderForm create = providers[i].createProviderCreate(m_provider);
             create.addCompletionListener(new ProviderAdminComplete(create));
-            m_providerCreateMap.put(providers[i].getProvider(),
-                                    create);
+            m_providerCreateMap.put(providers[i].getProvider(), create);
             add(create);
         }
     }
@@ -88,58 +85,63 @@ public class AdminPane extends SimpleContainer {
     @Override
     public void register(Page p) {
         super.register(p);
-        
+
         Iterator providers = m_providerAdminMap.values().iterator();
         while (providers.hasNext()) {
-            ProviderAdmin admin = (ProviderAdmin)providers.next();
+            ProviderAdmin admin = (ProviderAdmin) providers.next();
             p.setVisibleDefault(admin, false);
         }
 
         providers = m_providerCreateMap.values().iterator();
         while (providers.hasNext()) {
-            ProviderForm create = (ProviderForm)providers.next();
+            AbstractProviderForm create = (AbstractProviderForm) providers.next();
             p.setVisibleDefault(create, false);
         }
     }
-    
-    private class ProviderEditStart implements ChangeListener {
-        public void stateChanged(ChangeEvent e) {
-            PageState state  = e.getPageState();
 
-            AtoZProvider provider = (AtoZProvider)
-                m_provider.getSelectedObject(state);
-            
+    private class ProviderEditStart implements ChangeListener {
+
+        public void stateChanged(ChangeEvent e) {
+            PageState state = e.getPageState();
+
+            AtoZProvider provider = (AtoZProvider) m_provider.getSelectedObject(state);
+
             if (provider == null) {
                 return;
             }
-            
-            ProviderAdmin admin = (ProviderAdmin)
-                m_providerAdminMap.get(provider.getClass());
+
+            ProviderAdmin admin = (ProviderAdmin) m_providerAdminMap.get(provider.getClass());
             Assert.exists(admin, ProviderAdmin.class);
-                
+
             admin.setVisible(state, true);
             m_createForm.setVisible(state, false);
-            m_providerList.setVisible(state, false);
+            //m_providerList.setVisible(state, false);
+            m_providerTable.setVisible(state, false);
         }
+
     }
 
     private class ProviderCreateComplete implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
-            PageState state  = e.getPageState();
-            
+            PageState state = e.getPageState();
+
             Class provider = m_createForm.getProviderType(state);
             Assert.exists(provider, Class.class);
 
-            ProviderForm create = (ProviderForm)m_providerCreateMap.get(provider);
-            Assert.exists(create, ProviderForm.class);
-                
+            AbstractProviderForm create = (AbstractProviderForm) m_providerCreateMap.get(provider);
+            Assert.exists(create, AbstractProviderForm.class);
+
             create.setVisible(state, true);
             m_createForm.setVisible(state, false);
-            m_providerList.setVisible(state, false);
+            //m_providerList.setVisible(state, false);
+            m_providerTable.setVisible(state, false);
         }
+
     }
 
-    private class ProviderAdminComplete implements ActionListener {        
+    private class ProviderAdminComplete implements ActionListener {
+
         private Component m_admin;
 
         public ProviderAdminComplete(Component admin) {
@@ -150,8 +152,10 @@ public class AdminPane extends SimpleContainer {
             PageState state = e.getPageState();
             m_admin.setVisible(state, false);
             m_createForm.setVisible(state, true);
-            m_providerList.setVisible(state, true);
+            //m_providerList.setVisible(state, true);
+            m_providerTable.setVisible(state, true);
             m_provider.clearSelection(state);
         }
+
     }
 }

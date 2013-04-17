@@ -19,7 +19,7 @@
 package com.arsdigita.london.atoz.ui;
 
 import com.arsdigita.atoz.AtoZProvider;
-import com.arsdigita.atoz.ui.admin.ProviderForm;
+import com.arsdigita.atoz.ui.admin.AbstractProviderForm;
 import com.arsdigita.london.atoz.DomainProvider;
 import com.arsdigita.london.terms.Domain;
 
@@ -40,7 +40,7 @@ import java.util.TooManyListenersException;
 /**
  * 
  */
-public class DomainProviderForm extends ProviderForm {
+public class DomainProviderForm extends AbstractProviderForm {
 
     private SingleSelect m_domain;
 

@@ -18,7 +18,7 @@
 
 package com.arsdigita.atoz.siteproxy.ui.admin;
 
-import com.arsdigita.atoz.ui.admin.ProviderForm;
+import com.arsdigita.atoz.ui.admin.AbstractProviderForm;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
@@ -26,11 +26,10 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.atoz.siteproxy.SiteProxyProvider;
-import com.arsdigita.atoz.ui.admin.ProviderForm;
 import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.util.Classes;
 
-public class SiteProxyProviderForm extends ProviderForm {
+public class SiteProxyProviderForm extends AbstractProviderForm {
 
     private CategoryPicker m_category_picker;
 

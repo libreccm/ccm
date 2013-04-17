@@ -15,45 +15,85 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
+import com.arsdigita.bebop.ColumnPanel;
+import com.arsdigita.bebop.Label;
 
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 
 import com.arsdigita.xml.Element;
 
-
 public class ProviderDetails extends SimpleComponent {
-    
-    private ACSObjectSelectionModel m_provider;
-    
-    public ProviderDetails(ACSObjectSelectionModel provider) {
+
+    private final ACSObjectSelectionModel m_provider;
+    private final ColumnPanel panel;
+
+    public ProviderDetails(final ACSObjectSelectionModel provider) {
         m_provider = provider;
+
+        panel = new ColumnPanel(2);
+
+        panel.add(new Label(AtoZGlobalizationUtil.globalize("atoz.ui.provider_details.title")));
+        final Label titleLabel = new Label();
+        titleLabel.addPrintListener(new PrintListener() {
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+
+                final AtoZProvider provider = (AtoZProvider) m_provider.getSelectedObject(state);
+
+                final Label target = (Label) event.getTarget();
+                target.setLabel(provider.getTitle());
+            }
+
+        });
+        panel.add(titleLabel);
+
+        panel.add(new Label(AtoZGlobalizationUtil.globalize("atoz.ui.provider_details.description")));
+        final Label descLabel = new Label();
+        descLabel.addPrintListener(new PrintListener() {
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+
+                final AtoZProvider provider = (AtoZProvider) m_provider.getSelectedObject(state);
+
+                final Label target = (Label) event.getTarget();
+                target.setLabel(provider.getDescription());
+            }
+
+        });
+        panel.add(descLabel);
     }
 
-    public void generateXML(PageState state,
-                            Element parent) {
-        Element content = AtoZ.newElement("providerDetails");
-        exportAttributes(content);
+    @Override
+    public void generateXML(final PageState state, final Element parent) {
 
-        AtoZProvider provider = (AtoZProvider)
-            m_provider.getSelectedObject(state);
-        
-        DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(content);
-        xr.setWrapRoot(false);
-        xr.setWrapAttributes(true);
-        xr.setWrapObjects(false);
-        
-        xr.walk(provider, ProviderDetails.class.getName());
+        panel.generateXML(state, parent);
 
-        parent.addContent(content);
+//        Element content = AtoZ.newElement("providerDetails");
+//        exportAttributes(content);
+//
+//        AtoZProvider provider = (AtoZProvider)
+//            m_provider.getSelectedObject(state);
+//        
+//        DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(content);
+//        xr.setWrapRoot(false);
+//        xr.setWrapAttributes(true);
+//        xr.setWrapObjects(false);
+//        
+//        xr.walk(provider, ProviderDetails.class.getName());
+//
+//        parent.addContent(content);
     }
+
 }

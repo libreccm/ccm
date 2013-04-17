@@ -15,13 +15,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProviderType;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
 
 import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 
@@ -38,14 +39,13 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.Assert;
 
-
 public class ProviderCreateForm extends Form {
-    
+
     private OptionGroup m_providerType;
-    
+
     public ProviderCreateForm() {
         super("providerCreate", new SimpleContainer());
-        
+
         setRedirecting(true);
 
         m_providerType = new SingleSelect("providers");
@@ -53,22 +53,21 @@ public class ProviderCreateForm extends Form {
         m_providerType.addOption(new Option(null, "--Select one--"));
 
         AtoZProviderType[] providers = AtoZ.getProviderTypes();
-        for (int i = 0 ; i < providers.length ; i++) {
+        for (int i = 0; i < providers.length; i++) {
             m_providerType.addOption(
-                new Option(providers[i].getProvider().getName(),
-                           providers[i].getTitle())
-            );
+                    new Option(providers[i].getProvider().getName(),
+                               providers[i].getTitle()));
         }
 
+        add(new Label(AtoZGlobalizationUtil.globalize("atoz.ui.create_provider")));
         add(m_providerType);
-        add(new Submit("create", "Create"));
+        add(new Submit("create", (String) AtoZGlobalizationUtil.globalize("atoz.ui.provider.create").localize()));
         addProcessListener(new ProviderCreateProcess());
     }
 
     public Class getProviderType(PageState state) {
-        String providerName = (String)m_providerType.getValue(state);
-        if (providerName != null &&
-            !"".equals(providerName)) {
+        String providerName = (String) m_providerType.getValue(state);
+        if (providerName != null && !"".equals(providerName)) {
             Class provider = Classes.loadClass(providerName);
             Assert.exists(provider, Class.class);
             return provider;
@@ -77,12 +76,14 @@ public class ProviderCreateForm extends Form {
     }
 
     private class ProviderCreateProcess implements FormProcessListener {
+
         public void process(FormSectionEvent e) {
-            PageState state  = e.getPageState();
-            
+            PageState state = e.getPageState();
+
             if (getProviderType(state) != null) {
                 fireCompletionEvent(state);
             }
         }
+
     }
 }

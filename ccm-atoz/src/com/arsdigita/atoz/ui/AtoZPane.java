@@ -18,19 +18,15 @@
 
 package com.arsdigita.atoz.ui;
 
+import com.arsdigita.atoz.AtoZ;
+import com.arsdigita.atoz.AtoZAtomicEntry;
+import com.arsdigita.atoz.AtoZCompoundEntry;
+import com.arsdigita.atoz.AtoZEntry;
+import com.arsdigita.atoz.AtoZGenerator;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.parameters.StringParameter;
-// import com.arsdigita.cms.dispatcher.SiteProxyPanel;
-
 import com.arsdigita.kernel.Kernel;
-
-import com.arsdigita.atoz.AtoZ;
-import com.arsdigita.atoz.AtoZEntry;
-import com.arsdigita.atoz.AtoZAtomicEntry;
-import com.arsdigita.atoz.AtoZCompoundEntry;
-import com.arsdigita.atoz.AtoZGenerator;
-
 import com.arsdigita.xml.Element;
 
 public class AtoZPane extends SimpleContainer {

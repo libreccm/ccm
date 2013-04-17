@@ -19,7 +19,7 @@
 package com.arsdigita.atoz;
 
 
-import com.arsdigita.atoz.ui.admin.ProviderForm;
+import com.arsdigita.atoz.ui.admin.AbstractProviderForm;
 import com.arsdigita.atoz.ui.admin.ProviderAdmin;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
@@ -47,7 +47,7 @@ public class AtoZProviderType {
                      "provider is a subclass of AtoZProvider");
         Assert.isTrue(ProviderAdmin.class.isAssignableFrom(providerAdmin),
                      "providerAdmin is a subclass of ProviderAdmin");
-        Assert.isTrue(ProviderForm.class.isAssignableFrom(providerCreate),
+        Assert.isTrue(AbstractProviderForm.class.isAssignableFrom(providerCreate),
                      "providerCreate is a subclass of ProviderForm");
 
         m_title = title;
@@ -81,8 +81,8 @@ public class AtoZProviderType {
         return (AtoZProvider)Classes.newInstance(m_provider);
     }
 
-    public ProviderForm createProviderCreate(ACSObjectSelectionModel provider) {
-        return (ProviderForm)Classes
+    public AbstractProviderForm createProviderCreate(ACSObjectSelectionModel provider) {
+        return (AbstractProviderForm)Classes
             .newInstance(m_providerCreate,
                          new Class[] { ACSObjectSelectionModel.class },
                          new Object[] { provider });
