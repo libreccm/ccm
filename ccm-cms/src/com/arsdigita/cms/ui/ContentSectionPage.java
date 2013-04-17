@@ -44,6 +44,7 @@ import com.arsdigita.cms.ui.workflow.WorkflowAdminPane;
 import com.arsdigita.cms.util.SecurityConstants;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.User;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.ui.DebugPanel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.Web;
