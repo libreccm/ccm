@@ -54,6 +54,12 @@
 
       <define:component name="assignedTerms"	
                         classname="com.arsdigita.navigation.ui.CategoryIndexAssignedTerms"/>
+      
+      <define:component name="publicationExportLinks"
+                        classname="com.arsdigita.cms.scipublications.ui.PublicationExportLinks"/>     
+      <jsp:scriptlet>     
+      ((com.arsdigita.cms.scipublications.ui.PublicationExportLinks)publicationExportLinks).setObjList(objList);
+      </jsp:scriptlet>
 		 
     </define:page> 
     <show:all/>
