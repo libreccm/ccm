@@ -62,4 +62,5 @@ public class ArticleInCollectedVolumeCollectedVolumeStep
                 itemModel);
         setDisplayComponent(sheet);
     }    
+    
 }

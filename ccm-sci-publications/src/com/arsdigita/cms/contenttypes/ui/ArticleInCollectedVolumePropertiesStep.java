@@ -61,7 +61,7 @@ public class ArticleInCollectedVolumePropertiesStep
                 "publications.ui.article_in_collected_volume.chapter"),
                   ArticleInCollectedVolume.CHAPTER);
 
-         sheet.add(PublicationGlobalizationUtil.globalize(
+        sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleInCollectedVolume.reviewed"),
                   ArticleInCollectedVolume.REVIEWED, new ReviewedFormatter());
 
@@ -102,13 +102,13 @@ public class ArticleInCollectedVolumePropertiesStep
 
         addStep(new ArticleInCollectedVolumeCollectedVolumeStep(itemModel,
                                                                 parent),
-                (String)PublicationGlobalizationUtil.globalize(
+                (String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleInCollectedVolume.collectedVolume").
                 localize());
 
     }
 
-     private static class ReviewedFormatter
+    private static class ReviewedFormatter
             extends DomainService
             implements DomainObjectPropertySheet.AttributeFormatter {
 
@@ -127,5 +127,10 @@ public class ArticleInCollectedVolumePropertiesStep
                         "publications.ui.articleInCollectedVolume.reviewed.no").localize();
             }
         }
+    }
+
+    @Override
+    protected boolean isSeriesStepEnabled() {
+        return false;
     }
 }

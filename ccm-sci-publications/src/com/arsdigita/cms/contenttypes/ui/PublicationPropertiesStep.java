@@ -42,6 +42,7 @@ import java.text.DateFormat;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class PublicationPropertiesStep extends SimpleEditStep {
 
@@ -85,12 +86,12 @@ public class PublicationPropertiesStep extends SimpleEditStep {
 
         if (Publication.getConfig().getEnableFirstPublishedProperty()) {
             sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.publication.first_published"),
-                                                             Publication.FIRST_PUBLISHED);
+                      Publication.FIRST_PUBLISHED);
         }
 
         if (Publication.getConfig().getEnableLanguageProperty()) {
             sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.publication.language"),
-                                                             Publication.LANG);
+                      Publication.LANG);
         }
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
@@ -110,7 +111,6 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                                 "cms.ui.unknown").localize();
                     }
                 }
-
             });
         }
 
@@ -147,8 +147,10 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                             AuthoringKitWizard parent) {
         addStep(new PublicationAuthorsPropertyStep(itemModel, parent),
                 "publications.ui.publication.authors");
-        addStep(new PublicationSeriesPropertyStep(itemModel, parent),
-                "publications.ui.publication.series");
+        if (isSeriesStepEnabled()) {
+            addStep(new PublicationSeriesPropertyStep(itemModel, parent),
+                    "publications.ui.publication.series");
+        }
     }
 
     protected void addStep(SimpleEditStep step, String labelKey) {
@@ -156,6 +158,10 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                 new Label((String) PublicationGlobalizationUtil.globalize(
                 labelKey).localize()),
                 step);
+    }
+
+    protected boolean isSeriesStepEnabled() {
+        return true;
     }
 
     protected static class PreFormattedTextFormatter
@@ -175,6 +181,5 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                 return String.format("<pre>%s</pre>", str);
             }
         }
-
     }
 }
