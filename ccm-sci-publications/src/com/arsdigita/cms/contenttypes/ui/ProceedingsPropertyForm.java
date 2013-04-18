@@ -35,12 +35,15 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.ProceedingsConfig;
+import com.arsdigita.cms.contenttypes.Publication;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class ProceedingsPropertyForm
         extends PublicationWithPublisherPropertyForm
@@ -48,17 +51,17 @@ public class ProceedingsPropertyForm
                    FormInitListener,
                    FormSubmissionListener {
 
-    private ProceedingsPropertiesStep m_step;
+    //private ProceedingsPropertiesStep m_step;
     public static final String ID = "proceedingsEdit";
 
-    public ProceedingsPropertyForm(ItemSelectionModel itemModel) {
+    public ProceedingsPropertyForm(final ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
-    public ProceedingsPropertyForm(ItemSelectionModel itemModel,
-                                   ProceedingsPropertiesStep step) {
+    public ProceedingsPropertyForm(final ItemSelectionModel itemModel,
+                                   final ProceedingsPropertiesStep step) {
         super(itemModel, step);
-        m_step = step;
+        //m_step = step;
         addSubmissionListener(this);
     }
 
@@ -66,53 +69,61 @@ public class ProceedingsPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
+        final ProceedingsConfig proceedingsConfig = Proceedings.getProceedingsConfig();
+
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.name_of_conference")));
-        ParameterModel nameOfConfParam = new StringParameter(
+        final ParameterModel nameOfConfParam = new StringParameter(
                 Proceedings.NAME_OF_CONFERENCE);
-        TextField nameOfConf = new TextField(nameOfConfParam);
+        final TextField nameOfConf = new TextField(nameOfConfParam);
         nameOfConf.addValidationListener(new NotNullValidationListener());
         nameOfConf.addValidationListener(new NotEmptyValidationListener());
         add(nameOfConf);
 
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.place_of_conference")));
-        ParameterModel placeOfConfParam = new StringParameter(
+        final ParameterModel placeOfConfParam = new StringParameter(
                 Proceedings.PLACE_OF_CONFERENCE);
-        TextField placeOfConf = new TextField(placeOfConfParam);
-        placeOfConf.addValidationListener(new NotNullValidationListener());
-        placeOfConf.addValidationListener(new NotEmptyValidationListener());
+        final TextField placeOfConf = new TextField(placeOfConfParam);
+        if (proceedingsConfig.isPlaceOfConferenceMandatory()) {
+            placeOfConf.addValidationListener(new NotNullValidationListener());
+            placeOfConf.addValidationListener(new NotEmptyValidationListener());
+        }
         add(placeOfConf);
 
-        Calendar today = new GregorianCalendar();
+        final Calendar today = new GregorianCalendar();
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.date_from_of_conference")));
-        ParameterModel dateFromParam = new DateParameter(
+        final ParameterModel dateFromParam = new DateParameter(
                 Proceedings.DATE_FROM_OF_CONFERENCE);
-        Date dateFrom = new Date(dateFromParam);
+        final Date dateFrom = new Date(dateFromParam);
         dateFrom.setYearRange(1900, today.get(Calendar.YEAR) + 3);
-        dateFrom.addValidationListener(new NotNullValidationListener());
-        dateFrom.addValidationListener(new NotEmptyValidationListener());
+        if (proceedingsConfig.isBeginOfConferenceMandatory()) {
+            dateFrom.addValidationListener(new NotNullValidationListener());
+            dateFrom.addValidationListener(new NotEmptyValidationListener());
+        }
         add(dateFrom);
 
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.date_to_of_conference")));
-        ParameterModel dateToParam = new DateParameter(
+        final ParameterModel dateToParam = new DateParameter(
                 Proceedings.DATE_TO_OF_CONFERENCE);
-        Date dateTo = new Date(dateToParam);
+        final Date dateTo = new Date(dateToParam);
         dateTo.setYearRange(1900, today.get(Calendar.YEAR) + 3);
-        dateTo.addValidationListener(new NotNullValidationListener());
-        dateTo.addValidationListener(new NotEmptyValidationListener());
+        if (proceedingsConfig.isEndOfConferenceMandatory()) {
+            dateTo.addValidationListener(new NotNullValidationListener());
+            dateTo.addValidationListener(new NotEmptyValidationListener());
+        }
         add(dateTo);
     }
 
     @Override
-    public void init(FormSectionEvent fse) throws FormProcessException {
+    public void init(final FormSectionEvent fse) throws FormProcessException {
 
         super.init(fse);
 
-        FormData data = fse.getFormData();
-        Proceedings proceedings = (Proceedings) super.initBasicWidgets(fse);
+        final FormData data = fse.getFormData();
+        final Proceedings proceedings = (Proceedings) super.initBasicWidgets(fse);
 
         data.put(Proceedings.NAME_OF_CONFERENCE,
                  proceedings.getNameOfConference());
@@ -125,11 +136,11 @@ public class ProceedingsPropertyForm
     }
 
     @Override
-    public void process(FormSectionEvent fse) throws FormProcessException {
+    public void process(final FormSectionEvent fse) throws FormProcessException {
         super.process(fse);
 
-        FormData data = fse.getFormData();
-        Proceedings proceedings = (Proceedings) super.processBasicWidgets(fse);
+        final FormData data = fse.getFormData();
+        final Proceedings proceedings = (Proceedings) super.processBasicWidgets(fse);
 
 
         if ((proceedings != null) && getSaveCancelSection().getSaveButton().

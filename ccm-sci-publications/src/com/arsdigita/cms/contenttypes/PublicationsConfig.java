@@ -32,7 +32,7 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter orgaType;
     private final Parameter orgaBundleType;
     private final Parameter enableFirstPublishedProperty;
-    private final Parameter enableLanguageProperty;
+    private final Parameter enableLanguageProperty;    
 
     public PublicationsConfig() {
         attachOrgaUnitsStep =
