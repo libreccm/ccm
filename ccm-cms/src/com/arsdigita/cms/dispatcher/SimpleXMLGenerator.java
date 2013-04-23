@@ -43,10 +43,8 @@ import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
-
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,7 +55,7 @@ import java.util.Map;
  * @version $Id: SimpleXMLGenerator.java 2167 2011-06-19 21:12:12Z pboy $
  */
 public class SimpleXMLGenerator implements XMLGenerator {
-
+   
     private static final Logger s_log = Logger.getLogger(SimpleXMLGenerator.class);
     public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.getName();
     /**
@@ -135,6 +133,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
      * @param parent The parent DOM element
      * @param useContext The use context
      */
+    @Override
     public void generateXML(final PageState state, final Element parent, final String useContext) {
         //final long start = System.nanoTime();
 
@@ -158,7 +157,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
             parent.addAttribute("canEdit", "true");
             final Element canEditElem = parent.newChildElement("canEdit");
             canEditElem.setText("true");
-            
+
         }
         final PermissionDescriptor publish = new PermissionDescriptor(
                 PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
@@ -199,9 +198,25 @@ public class SimpleXMLGenerator implements XMLGenerator {
             //final Element content = startElement(useContext, parent);
             final Element content;
             if (CMSConfig.getInstance().getEnableXmlCache() && (CACHE.get(item.getOID().toString()) != null)) {
-                content = (Element) CACHE.get(item.getOID().toString());
+                s_log.debug("Item found in cache, using cached XML");
+                final Element cached = (Element) CACHE.get(item.getOID().toString());
+                //parent.importElement(content);
+                cached.syncDocs();
+                
+                content = startElement(useContext);
+                final Iterator entries = cached.getAttributes().entrySet().iterator();
+                Map.Entry entry;
+                while(entries.hasNext()) {
+                    entry = (Map.Entry) entries.next();
+                    content.addAttribute((String) entry.getKey(), (String) entry.getValue());                    
+                }
+                final Iterator childs = cached.getChildren().iterator();
+                while(childs.hasNext()) {
+                    copyElement(content, (Element) childs.next());                    
+                }
             } else {
-
+                s_log.debug("Item is not in cache, generating item.");
+                
                 content = startElement(useContext);
 
                 final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(content);
@@ -221,8 +236,53 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
                 //parent.addContent(content);
 
-                //Only cache published items
-//                if (item.isLiveVersion()) {
+                //Only published items
+                //Only the XML of the item itself, no extra XML
+                if (item.isLiveVersion()) {
+                    s_log.debug("Putting item item into the cache.");
+                    final Element cachedElem = startCachedElement(useContext);                    
+                    final Iterator entries = content.getAttributes().entrySet().iterator();
+                    Map.Entry entry;
+                    while (entries.hasNext()) {
+                        entry = (Map.Entry) entries.next();
+                        cachedElem.addAttribute((String) entry.getKey(), (String) entry.getValue());
+                    }
+                    final Iterator childs = content.getChildren().iterator();
+                    while (childs.hasNext()) {
+                        //cachedElem.newChildElement((Element) childs.next());
+                        copyElement(cachedElem, (Element) childs.next());
+                    }
+                    CACHE.put(item.getOID().toString(), cachedElem);                    
+                }
+            }
+            //Only item XML Cache End
+            
+//            s_log.debug("Content elem content: ");
+//            logElementTree(content);
+//            s_log.debug("Content elem content end -- ");
+            
+            
+            /*
+             * 2011-08-27 jensp: Introduced to remove the annoying special templates
+             * for MultiPartArticle, SiteProxy and others. The method called
+             * here was already definied but not used. 
+             * 
+             * 2011-10-23 jensp: It is now possible to disable the use of
+             * extra XML.
+             */
+            //final long extraXMLStart = System.nanoTime();
+            if (useExtraXml) {
+                for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
+                    generator.setListMode(listMode);
+                    generator.generateXML(item, content, state);
+                }
+            }
+//                System.out.
+//                        printf("Rendered ExtraXML in          %d ms\n", (System.nanoTime() - extraXMLStart) / 1000000);
+//                System.out.printf("                              -----\n");            
+
+            //Complete cache begin
+//                if (CMSConfig.getInstance().getEnableXmlCache() && item.isLiveVersion()) {
 //                    final Element cachedElem = startElement(useContext);
 //                    final Iterator entries = content.getAttributes().entrySet().iterator();
 //                    Map.Entry entry;
@@ -234,54 +294,21 @@ public class SimpleXMLGenerator implements XMLGenerator {
 //                    while (childs.hasNext()) {
 //                        cachedElem.newChildElement((Element) childs.next());
 //                    }
-//                    CACHE.put(item.getOID().toString(), cachedElem);                    
+//                    CACHE.put(item.getOID().toString(), cachedElem);
 //                }
-                //}
-            /*
-                 * 2011-08-27 jensp: Introduced to remove the annoying special templates
-                 * for MultiPartArticle, SiteProxy and others. The method called
-                 * here was already definied but not used. 
-                 * 
-                 * 2011-10-23 jensp: It is now possible to disable the use of
-                 * extra XML.
-                 */
-                //final long extraXMLStart = System.nanoTime();
-                if (useExtraXml) {
-                    for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
-                        generator.setListMode(listMode);
-                        generator.generateXML(item, content, state);
-                    }
-                }
-//                System.out.
-//                        printf("Rendered ExtraXML in          %d ms\n", (System.nanoTime() - extraXMLStart) / 1000000);
-//                System.out.printf("                              -----\n");            
-
-                if (CMSConfig.getInstance().getEnableXmlCache() && item.isLiveVersion()) {
-                    final Element cachedElem = startElement(useContext);
-                    final Iterator entries = content.getAttributes().entrySet().iterator();
-                    Map.Entry entry;
-                    while (entries.hasNext()) {
-                        entry = (Map.Entry) entries.next();
-                        cachedElem.addAttribute((String) entry.getKey(), (String) entry.getValue());
-                    }
-                    final Iterator childs = content.getChildren().iterator();
-                    while (childs.hasNext()) {
-                        cachedElem.newChildElement((Element) childs.next());
-                    }
-                    CACHE.put(item.getOID().toString(), cachedElem);
-                }
-            }
+//            }
+            //complete cache end
 
             if (PermissionService.checkPermission(edit)) {
                 final ItemResolver resolver = item.getContentSection().getItemResolver();
                 final Element editLinkElem = content.newChildElement("editLink");
                 final ContentItem draftItem = item.getDraftVersion();
-                editLinkElem.setText(resolver.generateItemURL(state, 
-                                                              draftItem, 
-                                                              item.getContentSection(), 
+                editLinkElem.setText(resolver.generateItemURL(state,
+                                                              draftItem,
+                                                              item.getContentSection(),
                                                               draftItem.getVersion()));
-            }
-            
+            }                        
+
             parent.addContent(content);
 
             //System.out.printf("Rendered item in              %d ms\n\n", (System.nanoTime() - start) / 1000000);
@@ -372,6 +399,62 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
         return element;
     }
+    
+    private Element startCachedElement(final String useContext) {
+        final Element element = new Element(itemElemName, itemElemNs) {
+            @Override
+            public Element newChildElement(Element copyFrom) {
+                s_log.debug("Copy of element added to cached elem.");
+                return super.newChildElement(copyFrom);
+            }
+            
+            @Override
+            public Element newChildElement(String name, Element copyFrom) {
+                s_log.debug("Copy of element added to cached elem.");
+                return super.newChildElement(name, copyFrom);
+            }
+            
+            @Override
+            public Element addContent(final Element newContent) {
+                s_log.debug("Content added to cached element");
+                return super.addContent(newContent);
+            }
+        };
+        
+         if (useContext != null) {
+            element.addAttribute("useContext", useContext);
+        }
+
+        for (Map.Entry<String, String> attr : itemAttributes.entrySet()) {
+            element.addAttribute(attr.getKey(), attr.getValue());
+        }
+        
+        return element;
+    }
+   
+    private void copyElement(final Element parent, final Element element) {
+        final Element copy = parent.newChildElement(element.getName());        
+        final Iterator attrs = element.getAttributes().entrySet().iterator();
+        Map.Entry attr;
+        while (attrs.hasNext()) {
+            attr = (Map.Entry) attrs.next();
+            copy.addAttribute((String) attr.getKey(), (String) attr.getValue());
+        }
+
+        final Iterator childs = element.getChildren().iterator();
+        while (childs.hasNext()) {
+            copyElement(copy, (Element) childs.next());
+        }
+
+        if (element.getText() != null) {
+            copy.setText(element.getText());
+        }
+
+        if (element.getCDATASection() != null) {
+            copy.setCDATASection(element.getCDATASection());
+        }
+
+    }
 
     private Element UDItemElement(final String useContext) {
         final Element element = new Element("cms:UDItemAttributes", CMS.CMS_XML_NS);
@@ -388,6 +471,29 @@ public class SimpleXMLGenerator implements XMLGenerator {
         element.addAttribute("UDItemAttrName", name);
         element.addAttribute("UDItemAttrValue", value);
         return element;
+    }
+    
+    private void logElementTree(final Element element) {
+        s_log.debug("Tree of element" + element.getName() + ":\n");
+        s_log.debug("\n" + logElementTree(element, new StringBuilder(), 0));
+    }
+    
+    private String logElementTree(final Element element, final StringBuilder builder, final int depth) {
+        for(int i = 0; i < depth; i++) {
+            builder.append('\t');
+        }
+        builder.append('<').append(element.getName()).append(">\n");        
+                
+        for(Object childObj : element.getChildren()) {
+            final Element child = (Element) childObj;
+            logElementTree(child, builder, depth + 1);
+        }
+        
+        for(int i = 0; i < depth; i++) {
+            builder.append('\t');
+        }
+        builder.append("</").append(element.getName()).append(">\n");
+        return builder.toString();
     }
 
 }
