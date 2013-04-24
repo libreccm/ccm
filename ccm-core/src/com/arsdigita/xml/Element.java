@@ -42,35 +42,52 @@ import org.w3c.dom.Attr;
  */
 public class Element {
 
-    private static final Logger s_log = Logger.getLogger
-        (Element.class.getName());
-
+    private static final Logger s_log = Logger.getLogger(Element.class.getName());
     protected org.w3c.dom.Element m_element;
     /* DOM element that is being wrapped */
-
     /**
      * owner document
      */
     private org.w3c.dom.Document m_doc;
-
     private static ThreadLocal s_localDocument = new ThreadLocal() {
         @Override
-            public Object initialValue() {
-                try {
-                    DocumentBuilderFactory builder =
-                        DocumentBuilderFactory.newInstance();
-                    builder.setNamespaceAware(true);
-                    return builder.newDocumentBuilder().newDocument();
-                } catch ( ParserConfigurationException e ) {
-                    s_log.error(e);
-                    throw new UncheckedWrapperException
-                        ("INTERNAL: Could not create thread local DOM document.", e);
-                }
+        public Object initialValue() {
+            try {
+                DocumentBuilderFactory builder =
+                                       DocumentBuilderFactory.newInstance();
+                builder.setNamespaceAware(true);
+                return builder.newDocumentBuilder().newDocument();
+            } catch (ParserConfigurationException e) {
+                s_log.error(e);
+                throw new UncheckedWrapperException("INTERNAL: Could not create thread local DOM document.", e);
             }
-        };
+        }
+
+    };
 
     private static org.w3c.dom.Document getDocument() {
         return (org.w3c.dom.Document) s_localDocument.get();
+    }
+
+//    public org.w3c.dom.Document getOwnerDocument() {
+//        if (null == m_doc) {
+//            m_doc = (org.w3c.dom.Document) s_localDocument.get();
+//        }
+//        
+//        return m_doc;
+//    }
+//    public void importElement(final Element element) {
+//        element.m_element = (org.w3c.dom.Element) this.m_element.getOwnerDocument().importNode(element.m_element, true);
+//    }
+
+    public void syncDocs() {
+        if (m_doc == null) {
+            m_doc = (org.w3c.dom.Document) s_localDocument.get();
+        }
+
+        if (!m_element.getOwnerDocument().equals(m_doc)) {
+            m_element = (org.w3c.dom.Element) m_doc.importNode(m_element, true);
+        }
     }
 
     /**
@@ -86,7 +103,7 @@ public class Element {
      *
      * @param name the name of the element
      */
-    public Element( String name ) {
+    public Element(String name) {
         this();
         Assert.exists(name, String.class);
 
@@ -101,11 +118,11 @@ public class Element {
      * @param name the name of the element
      * @param uri the URI for the namespace definition
      */
-    public Element( String name, String uri ) {
+    public Element(String name, String uri) {
         Assert.exists(name, String.class);
         Assert.exists(uri, String.class);
 
-        m_element = getDocument().createElementNS( uri, name );
+        m_element = getDocument().createElementNS(uri, name);
     }
 
     /**
@@ -175,8 +192,7 @@ public class Element {
         }
 
         Element copyTo = new Element();
-        copyTo.m_element = m_doc.createElementNS
-            (copyFrom.m_element.getNamespaceURI(), copyFrom.getName());
+        copyTo.m_element = m_doc.createElementNS(copyFrom.m_element.getNamespaceURI(), copyFrom.getName());
         this.m_element.appendChild(copyTo.m_element);
         newChildElementHelper(copyFrom, copyTo);
         return copyTo;
@@ -235,6 +251,7 @@ public class Element {
         }
 
     }
+
     /**
      * Adds an attribute to the element.
      *
@@ -242,15 +259,15 @@ public class Element {
      * @param value the value of the attribute
      * @return this element.
      */
-    public Element addAttribute( String name, String value ) {
+    public Element addAttribute(String name, String value) {
         Assert.exists(name, String.class);
 
-        m_element.setAttribute( name, value );
+        m_element.setAttribute(name, value);
 
         return this;
     }
 
-    public Element addAttribute(String name, 
+    public Element addAttribute(String name,
                                 String value,
                                 String ns) {
         Assert.exists(name, String.class);
@@ -267,7 +284,7 @@ public class Element {
      * @param newContent the new child element
      * @return this element.
      */
-    public Element addContent( Element newContent ) {
+    public Element addContent(Element newContent) {
         Assert.exists(newContent, Element.class);
 
         newContent.importInto(m_element.getOwnerDocument());
@@ -284,7 +301,7 @@ public class Element {
      * @param text the text to include
      * @return this element.
      */
-    public Element setText( String text ) {
+    public Element setText(String text) {
         if (text == null) {
             // This converts the null to the empty string because
             // org.w3c.dom does not like null and HTML does not
@@ -293,7 +310,7 @@ public class Element {
             text = "";
         }
         org.w3c.dom.Text textElem =
-            m_element.getOwnerDocument().createTextNode(text);
+                         m_element.getOwnerDocument().createTextNode(text);
         m_element.appendChild(textElem);
 
         return this;
@@ -327,7 +344,7 @@ public class Element {
         }
 
         org.w3c.dom.CDATASection cdataSection =
-            m_element.getOwnerDocument().createCDATASection(cdata);
+                                 m_element.getOwnerDocument().createCDATASection(cdata);
 
         m_element.appendChild(cdataSection);
 
@@ -381,18 +398,17 @@ public class Element {
             org.w3c.dom.Node n = nl.item(i);
             if (n instanceof org.w3c.dom.Element) {
                 Element elt = new Element();
-                elt.m_element = (org.w3c.dom.Element)n;
+                elt.m_element = (org.w3c.dom.Element) n;
                 retval.add(elt);
             }
         }
         return retval;
     }
 
-
     public java.util.Map getAttributes() {
         // Retrieve the attributes of the DOM Element
         org.w3c.dom.NamedNodeMap attributeNodeMap =
-            m_element.getAttributes();
+                                 m_element.getAttributes();
 
         // Create the HashMap that we will return the attributes
         // in
@@ -431,7 +447,6 @@ public class Element {
         return m_element.getTagName();
     }
 
-
     /**
      * Functions to allow this class to interact appropriately with the
      * Document class (for example, allows nodes to be moved around,
@@ -439,7 +454,7 @@ public class Element {
      *
      * @return the internal DOM Element.
      */
-    protected final org.w3c.dom.Element getInternalElement( ) {
+    protected final org.w3c.dom.Element getInternalElement() {
         return m_element;
     }
 
@@ -450,15 +465,15 @@ public class Element {
      *
      * @param doc the org.w3c.dom.Document to import into
      */
-    protected void importInto( org.w3c.dom.Document doc ) {
+    protected void importInto(org.w3c.dom.Document doc) {
         /*
-          Exception e = new Exception();
-          java.io.StringWriter sw = new java.io.StringWriter();
-          e.printStackTrace(new java.io.PrintWriter(sw));
-          System.out.println(sw.toString().substring(0, 300));
-        */
+         Exception e = new Exception();
+         java.io.StringWriter sw = new java.io.StringWriter();
+         e.printStackTrace(new java.io.PrintWriter(sw));
+         System.out.println(sw.toString().substring(0, 300));
+         */
 
-        m_element = (org.w3c.dom.Element)doc.importNode(m_element, true);
+        m_element = (org.w3c.dom.Element) doc.importNode(m_element, true);
     }
 
     /**
@@ -476,13 +491,13 @@ public class Element {
         org.w3c.dom.NamedNodeMap nnm = node.getAttributes();
         if (nnm != null) {
             for (int i = 0; i < nnm.getLength(); i++) {
-                org.w3c.dom.Attr attr = (org.w3c.dom.Attr)nnm.item(i);
+                org.w3c.dom.Attr attr = (org.w3c.dom.Attr) nnm.item(i);
                 attr.getValue();
             }
         }
         org.w3c.dom.NodeList nl = node.getChildNodes();
         if (nl != null) {
-            for (int i = 0; i < nl.getLength() ; i++) {
+            for (int i = 0; i < nl.getLength(); i++) {
                 visitAllAttributes(nl.item(i));
             }
         }
@@ -540,36 +555,36 @@ public class Element {
 
     @Override
     public int hashCode() {
-                Date start = new Date();
-                String hashString = getXMLHashString();
-                s_log.debug(
-                        "hashCode: getXMLString took "
-                                + (new Date().getTime() - start.getTime())
-                                + " millisecs");
+        Date start = new Date();
+        String hashString = getXMLHashString();
+        s_log.debug(
+                "hashCode: getXMLString took "
+                + (new Date().getTime() - start.getTime())
+                + " millisecs");
 
-                return hashString.hashCode();
+        return hashString.hashCode();
 
     }
 
     @Override
-	 public boolean equals(Object other) {
-                s_log.debug("equals invoked");
-                Date start = new Date();
-                if (other == null) {
-                        return false;
-                }
-                if (!other.getClass().equals(Element.class)) {
-                        return false;
-                }
-                Element otherElement = (Element) other;
-                String thisXML = getXMLHashString();
-                String otherXML = otherElement.getXMLHashString();
-                s_log.debug(
-                        "Equals: getXMLString twice took "
-                                + (new Date().getTime() - start.getTime())
-                                + " millisecs");
-                return thisXML.equals(otherXML);
-
+    public boolean equals(Object other) {
+        s_log.debug("equals invoked");
+        Date start = new Date();
+        if (other == null) {
+            return false;
         }
+        if (!other.getClass().equals(Element.class)) {
+            return false;
+        }
+        Element otherElement = (Element) other;
+        String thisXML = getXMLHashString();
+        String otherXML = otherElement.getXMLHashString();
+        s_log.debug(
+                "Equals: getXMLString twice took "
+                + (new Date().getTime() - start.getTime())
+                + " millisecs");
+        return thisXML.equals(otherXML);
+
+    }
 
 }

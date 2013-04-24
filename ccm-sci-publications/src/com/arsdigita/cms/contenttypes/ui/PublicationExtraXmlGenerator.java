@@ -27,6 +27,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
     private boolean listMode;
 
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
