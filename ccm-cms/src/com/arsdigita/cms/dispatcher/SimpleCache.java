@@ -53,6 +53,7 @@ public class SimpleCache extends Hashtable{
      * @param key The object key
      * @return The cached object, null if there is none
      */
+    @Override
     public Object get(Object key) {
         return super.get(key);
     }
@@ -64,6 +65,7 @@ public class SimpleCache extends Hashtable{
      * @param value The object to be cached
      * @return The cached object
      */
+    @Override
     public Object put(Object key, Object value) {
         return super.put(key, value);
     }
@@ -74,6 +76,7 @@ public class SimpleCache extends Hashtable{
      * @param key The object key
      * @return The formerly-cached object
      */
+    @Override
     public Object remove(Object key) {
         return super.remove(key);
     }

@@ -52,15 +52,6 @@ class BaseAsset extends ResourceHandlerImpl {
     private static final BigDecimalParameter s_assetId = new BigDecimalParameter(ASSET_ID);
     private static final OIDParameter s_oid = new OIDParameter(OID_PARAM);
 
-    /*
-     * jensp 2011-02-11: No need for static initalizer block here. Moved
-     * to variable declaration (see above).
-     */
-    /*static {        
-    s_assetId = new BigDecimalParameter(ASSET_ID);
-    s_oid = new OIDParameter(OID_PARAM);
-    //s_assetId.addParameterListener(new NotNullValidationListener());
-    }*/
     private final boolean m_download;
     private String m_disposition;
 
@@ -79,7 +70,7 @@ class BaseAsset extends ResourceHandlerImpl {
      * Content-Disposition in HTTP.
      */
     protected void setFilenameHeader(HttpServletResponse response,
-            BinaryAsset asset) {
+                                     BinaryAsset asset) {
         String filename = asset.getName();
         if (filename == null) {
             filename = s_defaultName;
@@ -95,7 +86,7 @@ class BaseAsset extends ResourceHandlerImpl {
     }
 
     private void setHeaders(HttpServletResponse response,
-            BinaryAsset asset) {
+                            BinaryAsset asset) {
         setFilenameHeader(response, asset);
 
         Long contentLength = new Long(asset.getSize());
@@ -121,7 +112,8 @@ class BaseAsset extends ResourceHandlerImpl {
     }
 
     private void send(HttpServletResponse response,
-            BinaryAsset asset) throws IOException {
+                      BinaryAsset asset) 
+                 throws IOException {
         // Stream the blob.
         OutputStream out = response.getOutputStream();
         try {
@@ -131,11 +123,22 @@ class BaseAsset extends ResourceHandlerImpl {
         }
     }
 
+
+    /**
+     * 
+     * @param request HTTP request
+     * @param response HTTP response
+     * @param actx (legacy) context, not used in this method but required by
+     *             parent implementation's interface
+     *             maybe required in future when access privilege is checked.
+     * @throws IOException
+     * @throws ServletException 
+     */
     @Override
     public final void dispatch(HttpServletRequest request,
-            HttpServletResponse response,
-            RequestContext actx)
-            throws IOException, ServletException {
+                               HttpServletResponse response,
+                               RequestContext actx)
+                      throws IOException, ServletException {
 
         // Fetch and validate the asset ID
         OID oid = null;

@@ -90,7 +90,7 @@ public class BaseImage extends ResourceHandlerImpl {
     }
 
     /**
-     * Sets RFC2183 governed Contnet-Disposition header to supply filename to
+     * Sets RFC2183 governed Content-Disposition header to supply filename to
      * client. See section 19.5.1 of RFC2616 for interpretation of
      * Content-Disposition in HTTP.
      */

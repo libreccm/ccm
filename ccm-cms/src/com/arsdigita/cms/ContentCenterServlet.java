@@ -229,7 +229,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
                 sreq = DispatcherHelper.restoreOriginalRequest(sreq);
                 rd.forward(sreq, sresp);
             } else {
-                // String requestUri = sreq.getRequestURI();
+
                 sresp.sendError(404, sreq.getRequestURI() + " not found on this server.");
             }
 

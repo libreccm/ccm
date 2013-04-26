@@ -33,7 +33,6 @@ import com.arsdigita.web.Web;
 import com.arsdigita.xml.XML;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
@@ -44,9 +43,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.xml.sax.helpers.DefaultHandler;
 
+// Developer's Note:
+// Class is currently in a transistory state. ServiceServlet itself does process
+// the request following the new legacy free web application model (i.e. as a
+// servlet based on BaseApplicationSerevlet / HTTPServlet).
+// The methods used to invoke the service classes follow the legacy dispatcher
+// model as set up by BaseApplicationServlet (see #makeLegacyContext). They 
+// should be refactored to work without LegacyContext, probably as a servlet 
+// as well or a legacy free dispatcher / ResourceHandler.
+
 /**
  * CMS Service application servlet serves all request made for the CMS 
  * service application. 
+ * 
+ * In many cases a service will open a (Web) page, e.g. the download page for
+ * files of a page to provide details or feedback/results of the service. But
+ * a service may also work without any visual output.
  * 
  * URLs of the available services are stored in a XML file which is processed
  * into a cache of services on a request by request basis (lazy loading).
@@ -55,7 +67,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * ServiceServlet is associated with a request URL.
  * 
  * The CMS Service determines whether a <tt>Page</tt> has been registered to
- * the URL and if so passes the request to that page.
+ * the URL and if so passes the request to that serviceResource.
  *
  * If no <tt>Page</tt> is registered to the URL, then the CMS Service hands 
  * the request to the TemplateResolver to find an appropriate JSP file.
@@ -74,18 +86,15 @@ public class ServiceServlet extends BaseApplicationServlet {
      *  class names).                                                         */
     private final static String MAP_FILE = "WEB-INF/resources/cms-service-map.xml";
 
-    /** Mapping between a relative URL and the class name of a ResourceHandler.*/
-    private static HashMap s_pageClasses = new HashMap();
+    /** Mapping between a relative URL and the class name of a service.       */
+    private static HashMap s_serviceClasses = new HashMap();
 
-    /** Instantiated ResourceHandler cache. This allows for lazy loading.    */
-    private static SimpleCache s_pages = new SimpleCache();
+    /** Instantiated services cache. This allows for lazy loading of the class
+     *  (i.e. irs ResourceHandler) for each service.                          */
+    private static SimpleCache s_services = new SimpleCache();
 
-    /** List of URLs which require a trailing slash. These are required for
-     * creating virtual directories, so that relative URLs and redirects
-     * work.                                                                  */
-    private ArrayList m_trailingSlashList = new ArrayList();
-
-    /** Path to directory containg ccm-cms template files                    */
+    /** Path to directory containg ccm-cms template files, used in case of fall
+     *  back, when no service class is found in s_serviceClasses rsp. MAP_FILE */
     private String m_templatePath;
 
     /** Resolvers to find templages (JSP) and other stuff stored in file system.*/
@@ -102,11 +111,7 @@ public class ServiceServlet extends BaseApplicationServlet {
             s_log.info("starting doInit method");
         }
 
-        /* Initialize List with an empty URL. Later URL's are added which are
-         * provided w/o trailing slash rsp. file extension.                   */
-        requireTrailingSlash("");
-
-        /* Process mapping file.                                              */
+        /* Process mapping file and fill up s_serviceClasses.                 */
         readFromFile(MAP_FILE);
 
         /** Set Template base path for JSP's                                  */
@@ -141,42 +146,38 @@ public class ServiceServlet extends BaseApplicationServlet {
         }
         DeveloperSupport.startStage("ServiceServlet.doService");
 
-        Service service = (Service) app;
-
+        /* Developer's Note:
+         * Legacy context, established by BaseApplicationServlet, currently
+         * KernelContext. Not used in ServiceServlet, but required to invoke
+         * the Resource to provide the service by interface definition. 
+         * Cuurently (version 6.6.8) not used in any service class.
+         */
         RequestContext ctx = DispatcherHelper.getRequestContext();        
-        String url = ctx.getRemainingURLPart();  // here SiteNodeRequestContext
-        String originalUrl = ctx.getOriginalURL();
-        String requestUri = sreq.getRequestURI();
 
-        // An empty remaining URL or a URL which doesn't end in trailing slash:
-        // probably want to redirect.
-        if ( m_trailingSlashList.contains(url) && !originalUrl.endsWith("/") ) {
-            DispatcherHelper.sendRedirect(sreq, sresp, originalUrl + "/");
-            return;
+        /* Get the service being requested, i.e. the remaining URL following
+         * the servlet address ( ccm/cms-service by default)                  */
+        String url = sreq.getPathInfo();
+        if (url.length() > 1 && url.endsWith("/")) {
+            /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
+             * start with a '/' character. It currently carries a 
+             * trailing '/' if a "virtual" serviceResource, i.e. not a real jsp, but 
+             * result of a servlet mapping. But Application requires url 
+             * NOT to end with a trailing '/' for legacy free applications.  
+             * The service classes are currently not real applications, so no
+             * adaptation required here.                                      */
+            // url = url.substring(0, url.length() - 1);
         }
 
-        // Check user access.
-        // Deprecated and here implemented as a No-OP method!
-        /* checkUserAccess(request, response, actx);     */
+        // User access can not be checked here, but has to be checked by each
+        // service!
 
-        ResourceHandler page = getResource(url);
+        /* Determine the service requested by url                             */
+        ResourceHandler serviceResource = getResource(url);
         
-        if (page == null) {
-            //Retry without last part
-            final String[] tokens = url.split("/");
-            
-            final StringBuilder altUrlBuilder = new StringBuilder('/');
-            for(int i = 0; i < tokens.length - 1; i++) {
-                altUrlBuilder.append(tokens[i]);
-                altUrlBuilder.append('/');
-            }
-            page = getResource(altUrlBuilder.toString());
-        }
-        
-        if ( page != null ) {
-            // Serve the page.
-            page.init();
-            page.dispatch(sreq, sresp, ctx);
+        if ( serviceResource != null ) {
+            // Serve the serviceResource.
+            serviceResource.init();
+            serviceResource.dispatch(sreq, sresp, ctx);
         } else {
             // Fall back on the JSP application dispatcher.
             if (s_log.isInfoEnabled()) {
@@ -192,7 +193,7 @@ public class ServiceServlet extends BaseApplicationServlet {
                 sreq = DispatcherHelper.restoreOriginalRequest(sreq);
                 rd.forward(sreq,sresp);
             } else {
-                sresp.sendError(404, requestUri + " not found on this server.");
+                sresp.sendError(404, sreq.getRequestURI() + " not found on this server.");
             }
 
         }
@@ -206,20 +207,24 @@ public class ServiceServlet extends BaseApplicationServlet {
 
 
     /**
-     * Fetch a page based on the URL stub.
+     * Determines the Resource (ie class) to serve a requested service based
+     * on its url.
      *
+     * Returns a RecourceHandler for the requested service if it could be found,
+     * i.e. a dispatcher class whose dispatch method invokes the service.
+     * 
      * @param url The URL stub following the site-node URL
      * @return A ResourceHandler or null if none exists.
      * @pre (url != null)
      */
-    protected ResourceHandler getResource(String url) throws ServletException {
+    private ResourceHandler getResource(String url) throws ServletException {
 
         // First check the pages cache for existing pages.
-        ResourceHandler page = (ResourceHandler) s_pages.get(url);
+        ResourceHandler page = (ResourceHandler) s_services.get(url);
         if ( page == null ) {
 
-            // Next check if the URL maps to a page class.
-            String pageClassName = (String) s_pageClasses.get(url);
+            // Next check if the URL maps to a serviceResource class.
+            String pageClassName = (String) s_serviceClasses.get(url);
             if ( pageClassName != null ) {
 
                 Class pageClass;
@@ -230,7 +235,7 @@ public class ServiceServlet extends BaseApplicationServlet {
                     throw new ServletException(e);
                 }
 
-                // Try and instantiate the page.
+                // Try and instantiate the serviceResource.
                 try {
                     page = (ResourceHandler) pageClass.newInstance();
                 } catch (InstantiationException e) {
@@ -242,7 +247,7 @@ public class ServiceServlet extends BaseApplicationServlet {
                 }
 
                 page.init();
-                s_pages.put(url, page);
+                s_services.put(url, page);
             }
         }
         return page;
@@ -251,48 +256,24 @@ public class ServiceServlet extends BaseApplicationServlet {
 
     /**
      *
-     * Initializes URL-to-Page/Dispatcher/Servlet mappings from a file.
+     * Initializes URL-to-Page (class) mappings from a file.
      *
      * Format of the file is XML:
      * <pre>
      * &lt;dispatcher-configuration>
      *   &lt;url-mapping
-     *     &lt;url>my-page&lt;/url>
-     *     OR &lt;page-class>com.arsdigita.Page.class&lt;/page-class>
+     *     &lt;url>my-serviceResource&lt;/url>
+     *     OR &lt;serviceResource-class>com.arsdigita.Page&lt;/page-class>
      *   &lt;url-mapping
      * &lt;/dispatcher-configuration>
      * </pre>
      */
     private void readFromFile(final String file) {
 
-    //  XML.parseResource(file, newParseConfigHandler(s_pageClasses));
-        XML.parseResource(file, new PageClassConfigHandler(s_pageClasses));
+        XML.parseResource(file, new PageClassConfigHandler(s_serviceClasses));
 
     }
 
-    /**
-     * Adds a URL to the list of URLs that are required to have trailing
-     * slashes.  A request for url will be redirected to url + "/"
-     * if the original URL request (what you see in your browser)
-     * doesn't include a trailing slash.  This is required for
-     * creating virtual directories, so that relative URLs and redirects
-     * work.
-     */
-    public void requireTrailingSlash(String url) {
-        m_trailingSlashList.add(url);
-    }
-
-
-    /**
-     * Returns a SAX event handler object for setting up a MapDispatcher
-     * using an XML config file.
-     * @param map A map to configure
-     * @return a SAX DefaultHandler object for handling SAX events
-     * @pre md.m_map != null
-     */
-//  protected DefaultHandler newParseConfigHandler(Map map) {
-//      return new PageClassConfigHandler(map);
-//  }
 
 
     /**
