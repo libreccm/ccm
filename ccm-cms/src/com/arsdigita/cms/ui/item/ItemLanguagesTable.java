@@ -42,7 +42,7 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * Displays a list of all language instances of an item.
+ * Displays a list of all language instances of an item. 
  *
  */
 public class ItemLanguagesTable extends DataTable {

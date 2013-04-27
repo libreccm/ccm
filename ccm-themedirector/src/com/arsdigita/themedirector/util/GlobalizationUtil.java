@@ -21,21 +21,33 @@ package com.arsdigita.themedirector.util;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * Methods to simplify globalizing keys
+ * Compilation of methods to simplify the handling of globalizing keys.
+ * Basically it adds the name of package's resource bundle files to the
+ * globalize methods and forwards to GlobalizedMessage, shortening the
+ * method invocation in the various application classes.
  *
  * @author <a href="mailto:yon@arsdigita.com">yon@arsdigita.com</a>
  * @version $Revision: #1 $ $Date: 2003/11/18 $
  */
-
 public class GlobalizationUtil {
     
+    /**  Name of resource files to handle themedirector's globalisation.  */
     public static final String BUNDLE_NAME = 
         "com.arsdigita.themedirector.ThemeDirectorResources";
     
+    /**
+     *  This returns a globalized message using the package specific bundle,
+     *  provided by BUNDLE_NAME. 
+     */
     public static GlobalizedMessage globalize(String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);
     }
 
+    /**
+     * Returns a globalized message object, using the package specific bundle,
+     * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
+     * interpolate into the retrieved message using the  MessageFormat class.
+     */
     public static GlobalizedMessage globalize(String key, Object[] args) {
         return new GlobalizedMessage(key, BUNDLE_NAME, args);
     }

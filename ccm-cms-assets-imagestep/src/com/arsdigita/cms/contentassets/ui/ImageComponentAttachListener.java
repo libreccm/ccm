@@ -1,7 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2004-2012 Sören Bernstein, Universität Bremen. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
+
 package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.MapComponentSelectionModel;
@@ -24,15 +39,20 @@ import org.apache.log4j.Logger;
 public class ImageComponentAttachListener extends ImageComponentAbstractListener {
 
     private final ImageStep m_imageStep;
-    private static final Logger s_log = Logger.getLogger(ImageComponentAttachListener.class);
+    private static final Logger s_log = Logger.getLogger(
+                                        ImageComponentAttachListener.class);
 
-    public ImageComponentAttachListener(MapComponentSelectionModel imageComponent, ImageStep imageStep) {
+    public ImageComponentAttachListener(MapComponentSelectionModel imageComponent, 
+                                        ImageStep imageStep) {
         super(imageComponent);
         m_imageStep = imageStep;
     }
 
     @Override
-    protected void processImage(FormSectionEvent event, PageState ps, ImageComponent component, ReusableImageAsset image) {
+    protected void processImage(FormSectionEvent event, 
+                                PageState ps, 
+                                ImageComponent component, 
+                                ReusableImageAsset image) {
         ContentItem item = m_imageStep.getItem(ps);
         if (null == item) {
             s_log.error("No item selected in ImageStepEdit",

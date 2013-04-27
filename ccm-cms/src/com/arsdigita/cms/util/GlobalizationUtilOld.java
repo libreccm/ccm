@@ -16,53 +16,66 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.util;
 
-import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
 
+
+// Developers Note:
+// Counterpart to CMSResourceBundle java class.
+// No longer used because we couldn't find a way to make proper localization
+// work.
+// Retained for easy reference to further develop localization infrastructure.
+
+
 /**
- * Compilation of methods to simplify the handling of globalizing keys.
- * Basically it adds the name of package's resource bundle files to the
- * globalize methods and forwards to GlobalizedMessage, shortening the
- * method invocation in the various application classes.
- * 
+ * <p>
+ * .
+ * Contains methods to simplify globalizing keys
+ * </p>
+ *
  * @author <a href="mailto:yon@arsdigita.com">yon@arsdigita.com</a>
  * @version $Revision: #7 $ $Date: 2004/08/17 $
  */
-public class GlobalizationUtil implements Globalized {
+public class GlobalizationUtilOld {
 
-    /**  Name of Java resource files to handle CMS's globalisation.  */
-	private static final String BUNDLE_NAME = "com.arsdigita.cms.CMSResources";
+    /**  Name of the Java class to handle CMS's globalisation.  */
+    //public static String s_bundleName = "com.arsdigita.cms.util.CMSResourceBundle";
+    public static String s_bundleName = "com.arsdigita.cms.CMSResources";
 
     /**
-     * Returns a globalized message using the package specific bundle,
-     * provided by BUNDLE_NAME. 
+     *  This returns a globalized message using the package specific bundle,
+     *  provided by method getBundleName() 
      */
     public static GlobalizedMessage globalize(String key) {
-        return new GlobalizedMessage(key, BUNDLE_NAME);
+        return new GlobalizedMessage(key, getBundleName());
     }
 
     /**
      * Returns a globalized message object, using the package specific bundle,
-     * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
-     * interpolate into the retrieved message using the  MessageFormat class.
+     * provided by method getBundleName(). Also takes in an Object[] of 
+     * arguments to interpolate into the retrieved message using the 
+     * MessageFormat class. 
      */
     public static GlobalizedMessage globalize(String key, Object[] args) {
-        return new GlobalizedMessage(key, BUNDLE_NAME, args);
+        return new GlobalizedMessage(key, getBundleName(), args);
     }
 
     /**
      * Returns the name of the package specific resource bundle.
-     * 
-     * Used e.g. by com.arsdigita.cms.ui.item.ItemLanguageTable to get the
-     * bundle tp pass to DataTable.
-     * 
-     * @return Name of resource bundle as String
+     * @return 
      */
     public static String getBundleName() {
-        return BUNDLE_NAME;
+        return s_bundleName;
+    }
+
+    /*
+     * Not a part of API. Otherwise it would need to be properly synchronized.
+     * Only meant be used to override resource keys in CMSResources
+     * by a custom application, in Initializer.
+     */
+    public static void internalSetBundleName(String bundleName) {
+        s_bundleName = bundleName;
     }
 
 }

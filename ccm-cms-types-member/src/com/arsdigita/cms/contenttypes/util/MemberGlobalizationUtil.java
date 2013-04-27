@@ -19,11 +19,21 @@
 
 package com.arsdigita.cms.contenttypes.util;
 
+import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
 
-public class MemberGlobalizationUtil {
+/**
+ * Compilation of methods to simplify the handling of globalizing keys.
+ * Basically it adds the name of package's resource bundle files to the
+ * globalize methods and forwards to GlobalizedMessage, shortening the
+ * method invocation in the various application classes.
+ * 
+ */
+public class MemberGlobalizationUtil implements Globalized {
+
+    /**  Name of Java resource files to handle Member's globalisation.  */
     final public static String BUNDLE_NAME = 
-	"com.arsdigita.cms.contenttypes.util.MemberResourceBundle";
+                               "com.arsdigita.cms.contenttypes.MemberResources";
 
     public static GlobalizedMessage globalize (String key) {
 	return new GlobalizedMessage(key, BUNDLE_NAME);

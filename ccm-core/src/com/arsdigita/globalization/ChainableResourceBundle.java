@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.globalization;
 
 import java.util.Enumeration;
@@ -39,10 +40,9 @@ public interface ChainableResourceBundle {
     public Object handleGetObject(String key);
 
     /**
-     *  This is the public version of ResourceBundle.getKeys()
-     *  which normally has protected access.  If you have a PropertyResourceBundle
-     *  or a ListResourceBundle, this will simply delegate to the
-     *  getKeys() method.
+     * This is the public version of ResourceBundle.getKeys() which normally has
+     * protected access.  If you have a PropertyResourceBundle or a
+     * ListResourceBundle, this will simply delegate to the getKeys() method.
      * 
      * @return 
      */

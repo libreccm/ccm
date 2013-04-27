@@ -44,7 +44,6 @@ import org.apache.log4j.Logger;
  * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
  */
-
 public class ImageStep extends SecurityPropertyEditor {
     private static final Logger s_log = Logger.getLogger(ImageStep.class);
 

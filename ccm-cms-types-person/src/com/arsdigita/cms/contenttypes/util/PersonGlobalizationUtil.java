@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Jens Pelzetter, for the Center of Social Politics of the University of Bremen
+ * Copyright (C) 2009 Jens Pelzetter, Center of Social Politic Research, University of Bremen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,17 +19,36 @@
 
 package com.arsdigita.cms.contenttypes.util;
 
+import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
 
-public class PersonGlobalizationUtil {
-    final public static String BUNDLE_NAME = 
-	"com.arsdigita.cms.contenttypes.util.PersonResourceBundle";
+/**
+ * Compilation of methods to simplify the handling of globalizing keys.
+ * Basically it adds the name of package's resource bundle files to the
+ * globalize methods and forwards to GlobalizedMessage, shortening the
+ * method invocation in the various application classes.
+ * 
+ */
+public class PersonGlobalizationUtil implements Globalized {
 
+    /**  Name of Java resource files to handle CMS's globalisation.  */
+    final public static String BUNDLE_NAME = 
+                               "com.arsdigita.cms.contenttypes.PersonResources";
+
+    /**
+     * Returns a globalized message using the package specific bundle,
+     * provided by BUNDLE_NAME. 
+     */
     public static GlobalizedMessage globalize (String key) {
-	return new GlobalizedMessage(key, BUNDLE_NAME);
+        return new GlobalizedMessage(key, BUNDLE_NAME);
     }
 
+    /**
+     * Returns a globalized message object, using the package specific bundle,
+     * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
+     * interpolate into the retrieved message using the  MessageFormat class.
+     */
     public static GlobalizedMessage globalize (String key, Object[] args) {
-	return new GlobalizedMessage(key, BUNDLE_NAME, args);
+        return new GlobalizedMessage(key, BUNDLE_NAME, args);
     }
 }

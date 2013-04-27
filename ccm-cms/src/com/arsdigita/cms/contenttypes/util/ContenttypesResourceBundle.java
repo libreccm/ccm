@@ -23,6 +23,15 @@ import java.util.PropertyResourceBundle;
 import com.arsdigita.globalization.ChainedResourceBundle;
 import com.arsdigita.cms.util.CMSGlobalized;
 
+
+
+// Developers Note (2013-04):
+// No longer used because we found no way to make localization work properly.
+// Back to use plain property files as of 2013-04 (version 6.6.8)
+// Retained for easy reference to further develop localization infrastructure.
+
+
+
 public class ContenttypesResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
     public static final String MEMBER_BUNDLE_NAME =
 	"com.arsdigita.cms.contenttypes.ContenttypesResources";

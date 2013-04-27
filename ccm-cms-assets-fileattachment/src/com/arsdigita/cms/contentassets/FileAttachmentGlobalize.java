@@ -18,7 +18,7 @@ package com.arsdigita.cms.contentassets;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * Service routine tp provide localized versions of key strings for the
+ * Service routine to provide localized versions of key strings for the
  * FileAttachment UI and messages.
  *
  * @author pb

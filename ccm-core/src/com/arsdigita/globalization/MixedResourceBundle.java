@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.globalization;
 
 import java.io.File;
@@ -32,10 +33,7 @@ import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 /**
- * <p>
  * Extends java.util.ResourceBundle to have it do two things:
- * </p>
- * <p>
  *   <ul>
  *     <li>
  *       If there is a PropertyResourceBundle with the same name as this one
@@ -46,8 +44,20 @@ import org.apache.log4j.Logger;
  *       have the same resource bundle name as this one.
  *     </li>
  *   </ul>
- * </p>
  *
+ * How to use (rough reconstruction from code)
+ * - for each *.properties file create a child of this class with the same(!) name
+ *   in the same package (subdirecgory)
+ * - for each language-specific *.proerties file create a child of this class
+ *   with the same(1) name
+ * - Example: 
+ *   <ul> <li>HelloWorldResources.class</li>
+ *        <li>HelloWorldResources.properties</li>
+ *        <li>HelloWorldResources_es.class</li>
+ *        <li>HelloWorldResources_es.properties</li>
+ *        <li>HelloWorldResources_es_CO.class</li>
+ *        <li>HelloWorldResources_es_CO.properties</li> </ul>
+ * 
  * @version $Revision: #10 $ $Date: 2004/08/16 $
  * @version $Id: MixedResourceBundle.java 287 2005-02-22 00:29:02Z sskracic $
  */
@@ -61,10 +71,8 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     private Date m_lastModified = null;
 
     /**
-     * <p>
      * Implement ResourceBundle.handleGetObject(). Reloads if contents have
      * changed.
-     * </p>
      *
      * @param key The key to the object to retrieve.
      *
@@ -78,9 +86,7 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     }
 
     /**
-     * <p>
      * Implement ResourceBundle.getKeys(). Reloads if contents have changed.
-     * </p>
      *
      * @return Enumeration of keys.
      */
@@ -134,12 +140,11 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     }
 
     /**
-     * <p>
      * Mix all static (PropertiesResourceBundle) and dynamic (MessageCatalog)
      * resources into one two dimensional array of key, value pairs.
-     * </p>
      */
     private void loadContents() {
+
         Map contents = new HashMap();
 
         setLastLoaded();
@@ -157,25 +162,20 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     }
 
     /**
-     * <p>
      * Look for a ".properties" file with the same name as the class instance
      * that extends this class (MixedResourceBundle). If we find one, then:
-     * </p>
-     * <p>
      *   <ul>
      *     <li>load it from disk</li>
      *     <li>return it as a map of key, value pairs.</li>
      *   </ul>
-     * </p>
      *
      * @return Map A map representing all the entries from the properties file.
      */
     private Map loadPropertyResources() {
         Map contents = new HashMap();
         String className = getClassName().replace('.', '/');
-        URL propertiesURL = getClass().getClassLoader().getResource(
-                                                                    className + ".properties"
-                                                                    );
+        URL propertiesURL = getClass().getClassLoader()
+                                      .getResource(className + ".properties");
 
         if (s_cat.isDebugEnabled()) {
             s_cat.debug("Starting to load static resources.");
@@ -234,16 +234,12 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     }
 
     /**
-     * </p>
      * Look for a MessageCatalog with the same name as the class instance
      * that extends this class (MixedResourceBundle). If we find one, then:
-     * </p>
-     * <p>
      *   <ul>
      *     <li>load it</li>
      *     <li>return it as a map of key, value pairs.</li>
      *   </ul>
-     * </p>
      *
      * @return Map A map representing all the entries from the MessageCatalog.
      */
@@ -286,26 +282,49 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
         return contents;
     }
 
+    /**
+     * 
+     * @return 
+     */
     private boolean isModified() {
         return lastModified().compareTo(lastLoaded()) > 0 ? true : false;
     }
 
+    /**
+     * 
+     * @return 
+     */
     private Date lastLoaded() {
         return m_lastLoaded;
     }
 
+    /**
+     * 
+     */
     private void setLastLoaded() {
         m_lastLoaded = new Date();
     }
 
+    /**
+     * 
+     * @param date 
+     */
     private void setLastLoaded(Date date) {
         m_lastLoaded = date;
     }
 
+    /**
+     * 
+     * @return 
+     */
     private Date lastModified() {
         return m_lastModified;
     }
 
+    /**
+     * 
+     * @param date 
+     */
     private void setLastModified(Date date) {
         if (
             m_lastModified == null ||
@@ -316,9 +335,7 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     }
 
     /**
-     * <p>
      * Get the name of the instantiating class.
-     * </p>
      *
      * @return String representing the instantiating class
      */
@@ -334,14 +351,11 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     }
 
     /**
-     * <p>
      * Parse the instantiating class' name and return the name of the
      * ResourceBundle/MessageCatalog that we are looking for. Note that we
      * assume that the class name will not contain any underscores ("_")
      * except for those that are used to denote the associated Locale. For
      * example, all the following are valid:
-     * </p>
-     * <p>
      *   <ul>
      *     <li>HelloWorldResources.class</li>
      *     <li>HelloWorldResources.properties</li>
@@ -350,19 +364,15 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
      *     <li>HelloWorldResources_es_CO.class</li>
      *     <li>HelloWorldResources_es_CO.properties</li>
      *   </ul>
-     * </p>
-     * <p>
+     * 
      * while the follwing examples will cause this code to fail and are
      * therefore not allowed (by convention):
-     * </p>
-     * <p>
      *   <ul>
      *     <li>Hello_World_Resources.class</li>
      *     <li>Hello_World_Resources.properties</li>
      *     <li>Hello_World_Resources_es.class</li>
      *     <li>Hello_World_Resources_es.properties</li>
      *   </ul>
-     * </p>
      *
      * @param className representing the instantiating class
      *
@@ -384,14 +394,11 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
     }
 
     /**
-     * <p>
      * Parse the instantiating class's name and return the Locale associated
      * with the ResourceBundle/MessageCatalog we are looking for. Note that we
      * assume that the class name will not contain any underscores ("_")
      * except for those that are used to denote the associated Locale. For
      * example, all the following are valid:
-     * </p>
-     * <p>
      *   <ul>
      *     <li>HelloWorldResources.class</li>
      *     <li>HelloWorldResources.properties</li>
@@ -400,19 +407,15 @@ public abstract class MixedResourceBundle extends java.util.ResourceBundle {
      *     <li>HelloWorldResources_es_CO.class</li>
      *     <li>HelloWorldResources_es_CO.properties</li>
      *   </ul>
-     * </p>
-     * <p>
+     *
      * while the follwing examples will cause this code to fail and are
      * therefore not allowed (by convention):
-     * </p>
-     * <p>
      *   <ul>
      *     <li>Hello_World_Resources.class</li>
      *     <li>Hello_World_Resources.properties</li>
      *     <li>Hello_World_Resources_es.class</li>
      *     <li>Hello_World_Resources_es.properties</li>
      *   </ul>
-     * </p>
      *
      * @param className representing the instantiating class
      *

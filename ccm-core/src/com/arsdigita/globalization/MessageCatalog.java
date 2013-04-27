@@ -37,18 +37,34 @@ import java.util.Date;
 import java.util.Map;
 import org.apache.log4j.Logger;
 
+// Most of the documentation reconstructed from code by pboy (2013-04)
 /**
- * <p>
- * MessageCatalog DomainObject comprised of:
- * </p>
- * <p>
+ * MessageCatalog DomainObject. It is comprised of:
  *   <ul>
  *     <li>name</li>
  *     <li>locale</li>
  *     <li>catalog</li>
  *   </ul>
- * </p>
  *
+ * (pboy): 
+ * A MessageCatalog object is a complete representation of the well known
+ * property file for a resource bundle.
+ * <ul> 
+ *   <li> name     is analog to the (base) name of a property file for resource  
+ *                 bundles. If used in conjunction with MixedResourceBundle 
+ *                 (which might be the only intended use) name will be the 
+ *                 class name of a child of MixedResourceBundle. </li>
+ *   <li> locale   is analog to locale part of the property file name </li>
+ *   <li> catalog  is a complete map of key/value pairs, analog to the content
+ *                 of a property file. </li>
+ * </ul>
+ * Each MessageCatalog object is stored in one row in a database table with
+ * catalog as a BLOB field.
+ * 
+ * The MessageCatalog is a pure storage backend for a java resource bundle
+ * class (like MixedResourceBundle) as an alternative or supplement to a set
+ * of property files (where each proerty file is a row in the database table).
+ * 
  * @version $Revision: #14 $ $Date: 2004/08/16 $
  * @version $Id: MessageCatalog.java 287 2005-02-22 00:29:02Z sskracic $
  */
@@ -59,16 +75,13 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
         Logger.getLogger(MessageCatalog.class.getName());
 
     public final static String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.globalization.MessageCatalog";
+                               "com.arsdigita.globalization.MessageCatalog";
     private boolean m_isReadOnly = true;
 
     /**
-     * <p>
      * Constructor for a new root MessageCatalog.
-     * </p>
      *
      * @param name The name for this new MessageCatalog
-     *
      */
     public MessageCatalog(String name) {
         super(BASE_DATA_OBJECT_TYPE);
@@ -77,14 +90,11 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Constructor for a new MessageCatalog associated with a particular
      * Locale.
-     * </p>
      *
      * @param name The name for this new MessageCatalog
      * @param locale The locale associated with this MessageCatalog
-     *
      */
     public MessageCatalog(String name, java.util.Locale locale)
         throws GlobalizationException {
@@ -94,18 +104,16 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Constructor for retrieving a MessageCatalog.
-     * </p>
      *
      * @param dataObject The dataObject for this MessageCatalog
-     *
      */
     private MessageCatalog(DataObject dataObject) {
         super(dataObject);
     }
 
 
+    @Override
     protected void initialize() {
         super.initialize();
         if (isNew() && getID() == null) {
@@ -119,11 +127,9 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Returns the appropriate object type for a MessageCatalog so that the
      * proper type validation can take place when retrieving MessageCatalogs
      * by OID.
-     * </p>
      *
      * @return String The fully qualified name of the base data object type
      *         for the MessageCatalog DataObject.
@@ -133,9 +139,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Return ID.
-     * </p>
      *
      * @return BigDecimal The ID of this DataObject
      */
@@ -144,9 +148,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Get the date that this MessageCatalog was last modified.
-     * </p>
      *
      * @return Date representing the date this MessageCatalog was last
      *         modified.
@@ -156,26 +158,22 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Set the date this MessageCatalog was last modified.
-     * </p>
      */
     private void setLastModified() throws GlobalizationException {
         if (!isReadOnly()) {
             set("lastModified", new Date());
         } else {
             throw new GlobalizationException(
-                                             "MessageCatalog is in read-only mode. You must use the " +
-                                             "MessageCatalog.retrieveForEdit() static method to edit " +
-                                             "a MessageCatalog."
-                                             );
+                      "MessageCatalog is in read-only mode. You must use the " +
+                      "MessageCatalog.retrieveForEdit() static method to edit " +
+                      "a MessageCatalog."
+                      );
         }
     }
 
     /**
-     * <p>
      * Get the locale associated with this MessageCatalog.
-     * </p>
      *
      * @return java.util.Locale representing the language, country,
      *         and variant associated with this MessageCatalog
@@ -195,9 +193,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Set the locale associated with this MessageCatalog.
-     * </p>
      *
      * @param locale java.util.Locale representing the language, country,
      *        and variant associated with this MessageCatalog.
@@ -211,8 +207,8 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
 
                 if (localeObject == null) {
                     throw new GlobalizationException(
-                                                     "Locale " + locale.toString() + " is not supported."
-                                                     );
+                              "Locale " + locale.toString() + " is not supported."
+                              );
                 }
 
                 setLocale(localeObject);
@@ -221,17 +217,15 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
             }
         } else {
             throw new GlobalizationException(
-                                             "MessageCatalog is in read-only mode. You must use the " +
-                                             "MessageCatalog.retrieveForEdit() static method to edit " +
-                                             "a MessageCatalog."
-                                             );
+                      "MessageCatalog is in read-only mode. You must use the " +
+                      "MessageCatalog.retrieveForEdit() static method to edit " +
+                      "a MessageCatalog."
+                      );
         }
     }
 
     /**
-     * <p>
      * Set the locale associated with this MessageCatalog.
-     * </p>
      *
      * @param locale representing the language, country, and variant
      *        associated with this MessageCatalog.
@@ -241,18 +235,14 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Clear the locale associated with this MessageCatalog.
-     * </p>
      */
     private void clearLocale() {
         setAssociation("locale", null);
     }
 
     /**
-     * <p>
      * De-serialize the MessageCatalog from the database into a Map object.
-     * </p>
      *
      * @return Map representing the MessageCatalog
      */
@@ -275,7 +265,8 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
                                                       );
                 } catch (SQLException sqle) {
                     s_cat.error("SQL Exception", sqle);
-                    throw new UncheckedWrapperException("SQLException: " + sqle.getMessage(), sqle);
+                    throw new UncheckedWrapperException("SQLException: " + 
+                                                        sqle.getMessage(), sqle);
                 }
             } else {
                 throw new RuntimeException("Was not able to determine BLOB type.");
@@ -312,9 +303,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Serialize the MessageCatalog to the database from a Map object.
-     * </p>
      *
      * @param catalog representing the MessageCatalog
      */
@@ -343,17 +332,15 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
             set("catalog", baos.toByteArray());
         } else {
             throw new GlobalizationException(
-                                             "MessageCatalog is in read-only mode. You must use the " +
-                                             "MessageCatalog.retrieveForEdit() static method to edit " +
-                                             "a MessageCatalog."
-                                             );
+                      "MessageCatalog is in read-only mode. You must use the " +
+                      "MessageCatalog.retrieveForEdit() static method to edit " +
+                      "a MessageCatalog."
+                      );
         }
     }
 
     /**
-     * <p>
      * Get the name of this MessageCatalog.
-     * </p>
      *
      * @return String representing the MessageCatalog's name
      */
@@ -362,9 +349,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Set the name of this MessageCatalog.
-     * </p>
      *
      * @param name representing the MessageCatalog's name
      */
@@ -376,9 +361,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Check whether or not this MessageCatalog is read-only or not.
-     * </p>
      *
      * @return boolean true if it is read-only
      */
@@ -387,34 +370,28 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Toggle read/write-ability of this MessageCatalog.
-     * </p>
      */
     private void setReadWrite() {
         m_isReadOnly = false;
     }
 
     /**
-     * <p>
      * Retrieve a MessageCatalog object from persistent storage.
-     * </p>
      *
      * @param name The name of the MessageCatalog to retrieve.
      *
      * @return DataObject MessageCatalog
      */
     private static DataObject load(String name)
-        throws GlobalizationException {
+                   throws GlobalizationException {
 
         Locale locale = null;
         return load(name, locale);
     }
 
     /**
-     * <p>
      * Retrieve a MessageCatalog object from persistent storage.
-     * </p>
      *
      * @param name The name of the MessageCatalog to retrieve.
      * @param locale The locale of the MessageCatalog to retrieve.
@@ -422,7 +399,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
      * @return DataObject MessageCatalog
      */
     private static DataObject load(String name, java.util.Locale locale)
-        throws GlobalizationException {
+                   throws GlobalizationException {
 
         Locale localeObject = null;
 
@@ -434,9 +411,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Retrieve a MessageCatalog object from persistent storage.
-     * </p>
      *
      * @param name The name of the MessageCatalog to retrieve.
      * @param locale The locale of the MessageCatalog to retrieve.
@@ -444,7 +419,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
      * @return DataObject MessageCatalog
      */
     private static DataObject load(String name, Locale locale)
-        throws GlobalizationException {
+                   throws GlobalizationException {
 
         Session s = SessionManager.getSession();
         DataCollection catalogs = s.retrieve(BASE_DATA_OBJECT_TYPE);
@@ -471,24 +446,20 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Retrieve the MessageCatalog from persistent storage.
-     * </p>
      *
      * @param name The name of the MessageCatalog to retrieve.
      *
      * @return MessageCatalog
      */
     public static MessageCatalog retrieve(String name)
-        throws GlobalizationException {
+                  throws GlobalizationException {
 
         return new MessageCatalog(load(name));
     }
 
     /**
-     * <p>
-     * Retrieve the MessageCatalog from persistent storage.
-     * </p>
+     * Retrieve the MessageCatalog for a specific locale from persistent storage.
      *
      * @param name The name of the MessageCatalog to retrieve.
      * @param locale The locale of the MessageCatalog to retrieve.
@@ -496,22 +467,20 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
      * @return MessageCatalog
      */
     public static MessageCatalog retrieve(String name, java.util.Locale locale)
-        throws GlobalizationException {
+                  throws GlobalizationException {
 
         return new MessageCatalog(load(name, locale));
     }
 
     /**
-     * <p>
      * Retrieve the MessageCatalog from persistent storage for edit.
-     * </p>
      *
      * @param name The name of the MessageCatalog to retrieve.
      *
      * @return MessageCatalog
      */
     public static MessageCatalog retrieveForEdit(String name)
-        throws GlobalizationException {
+                  throws GlobalizationException {
 
         MessageCatalog mc = new MessageCatalog(load(name));
         mc.setReadWrite();
@@ -519,23 +488,22 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
     /**
-     * <p>
      * Retrieve the MessageCatalog from persistent storage for edit.
-     * </p>
      *
      * @param name The name of the MessageCatalog to retrieve.
      * @param locale The locale of the MessageCatalog to retrieve.
      *
      * @return MessageCatalog
      */
-    public static MessageCatalog retrieveForEdit(
-                                                 String name, java.util.Locale locale
-                                                 ) throws GlobalizationException {
+    public static MessageCatalog retrieveForEdit(String name, 
+                                                 java.util.Locale locale)
+                  throws GlobalizationException {
         MessageCatalog mc = new MessageCatalog(load(name, locale));
         mc.setReadWrite();
         return mc;
     }
 
+    @Override
     protected void beforeSave() {
         try {
             setLastModified();

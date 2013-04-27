@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.globalization;
 
 import java.util.Collections;
@@ -26,6 +27,14 @@ import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+
+
+// Developers Note (2013-04):
+// No longer used because we found no way to make localization work properly.
+// Back to use plain property files as of 2013-04 (version 6.6.8)
+// Retained for easy reference to further develop localization infrastructure.
+// Should be completely removed in the future.
+
 
 /**
  * This is a ResourceBundle that allows the developer to add additional
@@ -47,6 +56,9 @@ public class ChainedResourceBundle extends ResourceBundle {
     private final List<ChainableResourceBundle> bundles;
     private final List<String> keys;
 
+    /**
+     * Constructor to create a new ChainedResourceBundle.
+     */
     public ChainedResourceBundle() {
         super();
         bundles = new LinkedList<ChainableResourceBundle>();

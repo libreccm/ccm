@@ -18,35 +18,36 @@
  */
 package com.arsdigita.cms.contenttypes.util;
 
+import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * <p>
- * Contains methods to simplify globalizing keys related to SiteProxy
- * ContentType object.
- * </p>
+ * Compilation of methods to simplify the handling of globalizing keys.
+ * Basically it adds the name of package's resource bundle files to the
+ * globalize methods and forwards to GlobalizedMessage, shortening the
+ * method invocation in the various application classes.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: SiteProxyGlobalizationUtil.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
-public class SiteProxyGlobalizationUtil {
+public class SiteProxyGlobalizationUtil implements Globalized {
 
+    /**  Name of Java resource files to handle CMS's globalisation.  */
 	final public static String BUNDLE_NAME =
-		"com.arsdigita.cms.contenttypes.util.SiteProxyResourceBundle";
+                        "com.arsdigita.cms.contenttypes.SiteProxyResources";
 
 	/**
-	 *  This returns a globalized message using the type specific bundle,
-	 *  BUNDLE_NAME
+     * Returns a globalized message using the package specific bundle,
+     * provided by BUNDLE_NAME. 
 	 */
 	public static GlobalizedMessage globalize(String key) {
 		return new GlobalizedMessage(key, BUNDLE_NAME);
 	}
 
 	/**
-	 *  This returns a globalized message using the type specific bundle,
-	 *  BUNDLE_NAME
+     * Returns a globalized message object, using the package specific bundle,
+     * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
+     * interpolate into the retrieved message using the  MessageFormat class.
 	 */
 	public static GlobalizedMessage globalize(String key, Object[] args) {
 		return new GlobalizedMessage(key, BUNDLE_NAME, args);

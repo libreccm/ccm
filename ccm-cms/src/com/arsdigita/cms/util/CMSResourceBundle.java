@@ -23,6 +23,13 @@ import com.arsdigita.globalization.ChainedResourceBundle;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+
+// Developers Note (2013-04):
+// No longer used because we found no way to make localization work properly.
+// Back to use plain property files as of 2013-04 (version 6.6.8)
+// Retained for easy reference to further develop localization infrastructure.
+
+
 /**
  * Main ResourceBundle for CMS UI.
  * Can be extended using:
@@ -34,6 +41,9 @@ public class CMSResourceBundle extends ChainedResourceBundle implements CMSGloba
 
     public CMSResourceBundle() {
         super();
+        // addBundle((PropertyResourceBundle) getBundle(BUNDLE_NAME));
+        
+        // try to make proper localisation work, no success, ne regression either
         addBundle((PropertyResourceBundle) getBundle(BUNDLE_NAME,
                                                      ResourceBundle.Control.getNoFallbackControl(
                 ResourceBundle.Control.FORMAT_DEFAULT)));
