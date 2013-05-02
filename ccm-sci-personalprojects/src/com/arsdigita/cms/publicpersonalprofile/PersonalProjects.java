@@ -226,7 +226,7 @@ public class PersonalProjects implements ContentGenerator {
         }
 
     }
-
+        
     private void generateProjectsGroupXml(final Element projectsElem,
                                           final String groupName,
                                           final List<SciProjectBundle> projects,
@@ -239,13 +239,24 @@ public class PersonalProjects implements ContentGenerator {
         groupElem.addAttribute("name", groupName);
 
         for (SciProjectBundle project : projects) {
-            generateProjectXml(groupElem, project, state);
+            generateProjectXml(groupElem, 
+                               project.getProject(GlobalizationHelper.getNegotiatedLocale().getLanguage()), 
+                               state);
         }
     }
 
     private void generateProjectXml(final Element projectGroupElem,
+                                    final SciProject project,
+                                    final PageState state ) {
+        final XmlGenerator generator = new XmlGenerator(project);
+        generator.setItemElemName("project", "");
+        generator.setListMode(true);
+        generator.generateXML(state, projectGroupElem, "");
+    }
+    
+    private void generateProjectXml(final Element projectGroupElem,
                                     final SciProjectBundle projectBundle,
-                                    final PageState state) {
+                                    final PageState state) {                        
         final SciProject project = projectBundle.getProject(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
        
