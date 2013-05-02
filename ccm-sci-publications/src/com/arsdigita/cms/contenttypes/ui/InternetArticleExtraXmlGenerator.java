@@ -18,7 +18,7 @@ import com.arsdigita.xml.Element;
 public class InternetArticleExtraXmlGenerator implements ExtraXMLGenerator {
 
     private boolean listMode = false;
-    
+
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
@@ -41,7 +41,7 @@ public class InternetArticleExtraXmlGenerator implements ExtraXMLGenerator {
     public void setListMode(final boolean listMode) {
         this.listMode = true;
     }
-    
+
     private void createOrganizationXml(final InternetArticle internetArticle,
                                        final Element parent,
                                        final PageState state) {
@@ -49,10 +49,10 @@ public class InternetArticleExtraXmlGenerator implements ExtraXMLGenerator {
                                         internetArticle.getOrganization(GlobalizationHelper.
                 getNegotiatedLocale().getLanguage());
         if (orga != null) {
-            final Element orgaElem = parent.newChildElement("organization");
             final XmlGenerator generator = new XmlGenerator(orga);
+            generator.setItemElemName("organization", "");
             generator.setListMode(listMode);
-            generator.generateXML(state, orgaElem, "");
+            generator.generateXML(state, parent, "");
         }
     }
 
@@ -69,5 +69,6 @@ public class InternetArticleExtraXmlGenerator implements ExtraXMLGenerator {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }
