@@ -154,7 +154,8 @@
         <ccm:application name="ccm-user-preferences"/>               -->
 
 <!--   LDN extension  -->
-<!--    Conflicts with ccm-sci-bundle (this package)                 -->
+<!--    Conflicts with ccm-bundle (this package)                     -->
+<!--    and includes very ldn specific (esd) meta tags               -->
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
         <ccm:application name="ccm-ldn-atoz"/>  

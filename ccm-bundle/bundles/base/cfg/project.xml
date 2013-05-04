@@ -127,8 +127,8 @@
 -->
 <!--
         <ccm:application name="ccm-portalserver"/>
--->
         <ccm:application name="ccm-portalworkspace-homepage"/>
+-->
 <!--
         <ccm:application name="ccm-weblog"/>
         <ccm:application name="ccm-webpage"/>
@@ -164,6 +164,7 @@
 
 <!--   LDN extension  -->
 <!--    Conflicts with ccm-sci-bundle (this package)                 -->
+<!--    and contains very ldn specific (esd) meta tags               -->
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
         <ccm:application name="ccm-ldn-atoz"/>  
