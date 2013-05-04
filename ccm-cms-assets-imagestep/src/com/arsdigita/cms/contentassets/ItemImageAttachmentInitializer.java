@@ -29,14 +29,23 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.DomainInitEvent;
 
 /**
+ * Initializes the imagestep content item asset.
+ * 
  * @version $Id: ItemImageAttachmentInitializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
 
+    /**
+     * Constructor, sets its specific manifest file and delegates to super class.
+     */
     public ItemImageAttachmentInitializer() {
         super("ccm-cms-assets-imagestep.pdl.mf");
     }
 
+    /**
+     * 
+     * @param ev 
+     */
     @Override
     public void init( DomainInitEvent ev ) {
 
@@ -55,74 +64,61 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
             }
         );
 
-//        removeDeprecatedImageSteps();
+    }
+
+
+
+    /**
+     * The base type against which the asset is defined,
+     * typically com.arsdigita.cms.ContentPage
+     */
+    public String getBaseType() {
+        return ContentPage.BASE_DATA_OBJECT_TYPE;
     }
 
     /**
-     * 
+     * Returns the path to the XML file defintions for the asset, eg:
+     * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
-//    private void removeDeprecatedImageSteps() {
-//        DataCollection steps = SessionManager.getSession().retrieve
-//            ( AuthoringStep.BASE_DATA_OBJECT_TYPE );
-//
-//        // Don't use defined constant to reduce dependency on GenericArticle
-//        steps.addEqualsFilter( "component",
-//                               "com.arsdigita.cms.ui.authoring.ArticleImage" );
-//
-//        while( steps.next() ) {
-//            DataObject step = steps.getDataObject();
-//
-//            DataCollection kits = SessionManager.getSession().retrieve
-//                ( AuthoringKitStepAssociation.BASE_DATA_OBJECT_TYPE );
-//            kits.addEqualsFilter( "stepId", step.get( "id" ) );
-//
-//            while( kits.next() ) {
-//                DataObject kitStep = kits.getDataObject();
-//                AuthoringKitStepAssociation kitStepAsso = new AuthoringKitStepAssociation(kitStep);
-//                // Check whether the content type is (persistence-wise) subtype
-//                // of com.ad.cms.GenericArticle.  This is lame, but I couldn't find a better API to do this:
-//                AuthoringKit kit = new AuthoringKit (kitStepAsso.getKitID());
-//                try {
-//                    ObjectType.verifySubtype(GenericArticle.BASE_DATA_OBJECT_TYPE,
-//                                             kit.getContentType().getAssociatedObjectType());
-//                    kitStepAsso.delete();
-//                } catch (PersistenceException pe) {
-//                    // Do nothing, the content type is not subtyping com.arsdigita.cms.GenericArticle
-//                }
-//            }
-//
-//            // DomainObjectFactory.newInstance( step ).delete();
-//        }
-//    }
-
-
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/" +
             "cms/contentassets/ItemImageAttachment.xml";
     }
 
+    /**
+     * The name of the association between the item
+     * and the asset, eg 'fileAttachments'.
+     */
     public String getProperty() {
         return "imageAttachments";
     }
 
-    public String getBaseType() {
-        return ContentPage.BASE_DATA_OBJECT_TYPE;
-    }
-
+    /**
+     * The class of the authoring kit step
+     */
     public Class getAuthoringStep() {
         return ImageStep.class;
     }
 
+    /**
+     * The label for the authoring step
+     */
     public GlobalizedMessage getAuthoringStepLabel() {
         return new GlobalizedMessage("com.arsdigita.cms.contentassets.image_step_label",
                                      "com.arsdigita.cms.contentassets.ImageStepResources");
     }
 
+    /**
+     * The description for the authoring step
+     */
     public GlobalizedMessage getAuthoringStepDescription() {
         return new GlobalizedMessage("com.arsdigita.cms.contentassets.image_step_description",
                                      "com.arsdigita.cms.contentassets.ImageStepResources");
     }
 
+    /**
+     * The sort key for the authoring step
+     */
     public int getAuthoringStepSortKey() {
         return 1; // XXX config param please
     }

@@ -47,13 +47,8 @@ public class FileAttachment extends FileAsset {
     public static final String FILE_ATTACHMENTS  = "fileAttachments";
     public static final String FILE_ORDER        = "fileOrder";
 
-    private static final FileAttachmentConfig s_config = new FileAttachmentConfig();
-    
-    static {
-        s_log.debug("Static initalizer starting...");
-        s_config.load();
-        s_log.debug("Static initalizer finished.");
-    }
+    private static final FileAttachmentConfig 
+                         s_config = FileAttachmentConfig.instanceOf();
 
 
     public FileAttachment() {

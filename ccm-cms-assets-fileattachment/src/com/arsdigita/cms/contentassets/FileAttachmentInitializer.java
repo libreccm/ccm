@@ -124,24 +124,16 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
 
     /**
      * The label for the authoring step
-     * @deprecated has to be replaced to provide LabelKey, see ContentAssetInitializer
      */
     public GlobalizedMessage getAuthoringStepLabel() {
         return FileAttachmentGlobalize.AuthoringStepLabel();
-    //  return new GlobalizedMessage(
-    //      "com.arsdigita.cms.contentassets.file_attachment_label",
-    //      "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
 
     /**
      * The description for the authoring step
-     * @deprecated has to be replaced to provide DesciptionKey, see ContentAssetInitializer
      */
     public GlobalizedMessage getAuthoringStepDescription() {
         return FileAttachmentGlobalize.AuthoringStepDescription();
-    //  return new GlobalizedMessage(
-    //      "com.arsdigita.cms.contentassets.file_attachment_description",
-    //      "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
 
     /**

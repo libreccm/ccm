@@ -36,8 +36,8 @@ import org.apache.log4j.Logger;
  * This content type represents a Link content type for linking
  * ContentItems and external links.
  *
- * @version $Revision: #4 $ $Date: 2004/03/30 $
  * @author Scott Seago (sseago@redhat.com)
+ * @version $Revision: #4 $ $Date: 2004/03/30 $
  */
 public class RelatedLink extends Link {
 

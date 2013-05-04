@@ -20,61 +20,80 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * Initializer
+ * Initializes the RelatedLink content item asset at each system startup.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #4 $ $Date: 2004/03/30 $
  * @version $Id: RelatedLinkInitializer.java 287 2005-02-22 00:29:02Z sskracic $
- **/
-
+ */
 public class RelatedLinkInitializer extends ContentAssetInitializer {
 
-    protected RelatedLinkInitializer(final String manifestFile) {
-        super(manifestFile);
-    }
-    
     /**
-     * 
+     * Default constructor, sets its specific manifest file and delegates to 
+     * super class.
      */
     public RelatedLinkInitializer() {
         super("ccm-cms-assets-relatedlink.pdl.mf");
     }
+    
+    /**
+     * Constructor.
+     */
+    protected RelatedLinkInitializer(final String manifestFile) {
+        super(manifestFile);
+    }
+
 
     /**
-     * 
-     * @return
+     * The base type against which the asset is defined,
+     * typically com.arsdigita.cms.ContentPage
      */
-    public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/" + 
-            "cms/contentassets/RelatedLink.xml";
+    public String getBaseType() {
+        return ContentPage.BASE_DATA_OBJECT_TYPE;
     }
 
     /**
-     * 
-     * @return
+     * Returns the path to the XML file defintions for the asset, eg:
+     * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
+     */
+    public String getTraversalXML() {
+        return TRAVERSAL_ADAPTER_BASE_DIR + "RelatedLink.xml";
+    }
+
+    /**
+     * The name of the association between the item
+     * and the asset, eg 'fileAttachments'.
      */
     public String getProperty() {
         return "links";
     }
 
-    public String getBaseType() {
-        return ContentPage.BASE_DATA_OBJECT_TYPE;
-    }
-
+    /**
+     * The class of the authoring kit step
+     */
     public Class getAuthoringStep() {
         return RelatedLinkPropertiesStep.class;
     }
 
+    /**
+     * The label for the authoring step
+     */
     public GlobalizedMessage getAuthoringStepLabel() {
         return new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_label",
                                      "com.arsdigita.cms.contentassets.RelatedLinkResources");
     }
 
+    /**
+     * The description for the authoring step
+     */
     public GlobalizedMessage getAuthoringStepDescription() {
         return new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_description",
                                      "com.arsdigita.cms.contentassets.RelatedLinkResources");
     }
 
+    /**
+     * The sort key for the authoring step
+     */
     public int getAuthoringStepSortKey() {
         return 1; // XXX config param please
     }

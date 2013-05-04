@@ -38,7 +38,32 @@ import org.apache.log4j.Logger;
  */
 public final class ItemImageAttachmentConfig extends AbstractConfig {
 
+    /** A logger instance to assist debugging.                                */
     private static final Logger s_log = Logger.getLogger(ItemImageAttachmentConfig.class);
+
+    /** Singelton config object.  */
+    private static ItemImageAttachmentConfig s_conf;
+
+    /**
+     * Gain a DublinCoreConfig object.
+     *
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized ItemImageAttachmentConfig instanceOf() {
+        if (s_conf == null) {
+            s_conf = new ItemImageAttachmentConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+
+    // ///////////////////////////////////////////////////////////////////////
+    //
+    // set of configuration parameters
 
 	// Are the description and title properties available for
 	// display/editing.  These properties are used by the 

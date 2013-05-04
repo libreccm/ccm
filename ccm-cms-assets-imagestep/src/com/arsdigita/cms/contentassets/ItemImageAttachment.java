@@ -53,11 +53,9 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contentassets.ItemImageAttachment";
     private static final Logger s_log = Logger.getLogger(ItemImageAttachment.class);
-    private static final ItemImageAttachmentConfig s_config = new ItemImageAttachmentConfig();
 
-    static {
-        s_config.load();
-    }
+    private static final ItemImageAttachmentConfig 
+                         s_config = ItemImageAttachmentConfig.instanceOf();
 
     private ItemImageAttachment() {
         this(BASE_DATA_OBJECT_TYPE);

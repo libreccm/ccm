@@ -18,56 +18,37 @@ package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.contentassets.ui.NotesStep;
+import com.arsdigita.cms.contentassets.ui.NotesSummary;
 import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.domain.DomainObjectTraversal;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.cms.contentassets.ui.NotesStep;
-import com.arsdigita.cms.contentassets.ui.NotesSummary;
 import com.arsdigita.runtime.DomainInitEvent;
 
+/**
+ * Initializes the Notes content item asset at each system startup.
+ * 
+ * The class just implements all abstract methods of the super class and
+ * provides some additions to the init(DomainInitEvent) part of the super
+ * initializer.
+ */
 public class NotesInitializer extends ContentAssetInitializer {
+
+    /**
+     * Default constructor, sets its specific manifest file and delegates to 
+     * super class.
+     */
     public NotesInitializer() {
         super( "ccm-cms-assets-notes.pdl.mf" );
     }
 
-    public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/Notes.xml";
-    }
-
-    public String getProperty() {
-        return Note.NOTES;
-    }
-
-    public String getBaseType() {
-        return ContentPage.BASE_DATA_OBJECT_TYPE;
-    }
-
-    public Class getAuthoringStep() {
-        return NotesStep.class;
-    }
-
-    public GlobalizedMessage getAuthoringStepLabel() {
-        return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.notes_authoring_step_label",
-            "com.arsdigita.cms.contentassets.NotesResources"
-        );
-    }
-
-    public GlobalizedMessage getAuthoringStepDescription() {
-        return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.notes_authoring_step_description",
-            "com.arsdigita.cms.contentassets.NotesResources"
-        );
-    }
-
-    public int getAuthoringStepSortKey() {
-        return 3;
-    }
-
-    // public void init( LegacyInitEvent ev ) {
+    /**
+     * 
+     * @param ev 
+     */
     @Override
     public void init( DomainInitEvent ev ) {
         super.init( ev );
@@ -80,5 +61,63 @@ public class NotesInitializer extends ContentAssetInitializer {
                         new SimpleDomainObjectTraversalAdapter(),
                         SimpleXMLGenerator.ADAPTER_CONTEXT );
         SimpleEditStep.addAdditionalDisplayComponent(new NotesSummary());
+    }
+
+    /**
+     * The base type against which the asset is defined,
+     * typically com.arsdigita.cms.ContentPage
+     */
+    public String getBaseType() {
+        return ContentPage.BASE_DATA_OBJECT_TYPE;
+    }
+
+    /**
+     * Returns the path to the XML file defintions for the asset, eg:
+     * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
+     */
+    public String getTraversalXML() {
+        return TRAVERSAL_ADAPTER_BASE_DIR + "Notes.xml";
+    }
+
+    /**
+     * The name of the association between the item
+     * and the asset, eg 'fileAttachments'.
+     */
+    public String getProperty() {
+        return Note.NOTES;
+    }
+
+    /**
+     * The class of the authoring kit step
+     */
+    public Class getAuthoringStep() {
+        return NotesStep.class;
+    }
+
+    /**
+     * The label for the authoring step
+     */
+    public GlobalizedMessage getAuthoringStepLabel() {
+        return new GlobalizedMessage(
+            "com.arsdigita.cms.contentassets.notes_authoring_step_label",
+            "com.arsdigita.cms.contentassets.NotesResources"
+        );
+    }
+
+    /**
+     * The description for the authoring step
+     */
+    public GlobalizedMessage getAuthoringStepDescription() {
+        return new GlobalizedMessage(
+            "com.arsdigita.cms.contentassets.notes_authoring_step_description",
+            "com.arsdigita.cms.contentassets.NotesResources"
+        );
+    }
+
+    /**
+     * The sort key for the authoring step
+     */
+    public int getAuthoringStepSortKey() {
+        return 3;
     }
 }
