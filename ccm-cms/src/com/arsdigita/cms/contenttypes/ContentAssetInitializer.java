@@ -45,6 +45,9 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
 
     /** Logger object for this class  */
     private static Logger s_log = Logger.getLogger(ContentAssetInitializer.class);
+    /** Directory holding the assets traversal adapter file(s)                */
+    public static final String TRAVERSAL_ADAPTER_BASE_DIR = 
+                  "/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/";
 
     /**
      * Constructor, sets specific manifest file and initializes PDL.
@@ -72,7 +75,6 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
     @Override
     public void init(DomainInitEvent evt) {
         s_log.info("ContentAssetInitializer init running...");
-        // System.err.println("ContentAssetInitializer init running...");
         
         super.init(evt);
 
@@ -114,28 +116,13 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
      */
     public abstract Class getAuthoringStep();
 
-// DEPRECATED - API Change  (pb - 2010-05-23) - will be removed asap
-// Initializer is meant to execute once at startup to set basic features for
-// operation. AuthoringStepLabel and AuthoringStepDescription are part of the UI
-// and have to be localized, i.e. determined each time a user invokes the UI.
-// This is contrary to the concept of an initializer.
-//
-// Accordingly in AuthoringStep setLabel is set deprecated and replaced by
-// setLabelKey to identify an Authoring Step.
-//
-// As an temporary measure Label / Description from FSIglobalize will be used
-// by registerAssetStep method (see above).
-// XXX todo: Replace label by labelKey overall in the appropriate code!
-//
     /**
      * The label for the authoring step
-     * @deprecated   (see above)
      */
     public abstract GlobalizedMessage getAuthoringStepLabel();
 
     /**
      * The description for the authoring step
-     * @deprecated (see above)
      */
     public abstract GlobalizedMessage getAuthoringStepDescription();
 

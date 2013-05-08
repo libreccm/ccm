@@ -64,6 +64,9 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
     /** Directory holding the internal base theme                             */
     public static final String INTERNAL_THEME_TYPES_DIR = INTERNAL_THEME_DIR 
                                                           + "contenttypes/";
+    /** Directory holding the content types traversal adapter file(s)         */
+    public static final String TRAVERSAL_ADAPTER_BASE_DIR = 
+                  "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/";
 
     /**
      * Constructor, sets specific manifest file and object type.
@@ -127,48 +130,6 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
 
     }
 
-    // Up to version 6.5 ContentTypeInitilizer used init(LegacyInitEvent) for
-    // initialization, even though it actually initializes the domain coupling
-    // machinery which is the domain of init(DomainInitEvent). It even didn't
-    // use any of the legacy initialization features (enterprise.init file).
-    // Switched to domain init because legacy init is deprecated and we will get
-    // rid of it. Retained here commented out for documentation purpose during
-    // transition of contributed content types.
-/*  public void init(LegacyInitEvent evt) {
-        super.init(evt);
-
-        final String traversal = getTraversalXML();
-        if (!StringUtils.emptyString(traversal)) {
-            XML.parseResource
-                (traversal,
-                 new TraversalHandler());
-        }
-
-        try {
-
-            ContentType type = ContentType.findByAssociatedObjectType(m_objectType);
-
-            MetadataProviderRegistry.registerAdapter(
-                m_objectType,
-                new ContentPageMetadataProvider());
-
-            final String[] stylesheets = getStylesheets();
-            for (int i = 0; i < stylesheets.length; i++) {
-                String stylesheet = stylesheets[i];
-                ContentType.registerXSLFile(type, stylesheet);
-
-            }
-        } catch (com.arsdigita.domain.DataObjectNotFoundException e) {
-            s_log.debug("Unable to register the stylesheet for " +
-                        m_objectType +
-                        " because the content type was not found. " + 
-                        "This is normal during the load script but " +
-                        "should not appear during server startup.");
-        }
-
-    }
-*/
-    
     /**
      * Retrieves the content types traversal adapter.
      * Has to be overwritten by each specific content type to provide its

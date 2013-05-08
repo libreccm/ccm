@@ -18,27 +18,22 @@
  */
 package com.arsdigita.cms.ui.authoring;
 
-import com.arsdigita.bebop.Label;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.PrintEvent;
-import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.RequestEvent;
 import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.toolbox.ui.ComponentAccess;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -47,7 +42,6 @@ import org.apache.log4j.Logger;
  * Extends {@link SecurityPropertyEditor} and provides authoring kit
  * integration. See the authoring kit documentation for more
  * info.
- * <p>
  *
  * Child classes should
  * a). call setDisplayComponent()
@@ -57,7 +51,7 @@ import org.apache.log4j.Logger;
  * @version $Id: SimpleEditStep.java 2185 2011-06-20 21:16:02Z pboy $
  */
 public class SimpleEditStep extends SecurityPropertyEditor 
-    implements AuthoringStepComponent, RequestListener {
+                            implements AuthoringStepComponent, RequestListener {
 
     private static final Logger s_log =
         Logger.getLogger( SimpleEditStep.class );
@@ -113,13 +107,16 @@ public class SimpleEditStep extends SecurityPropertyEditor
      * @param paramSuffix Additional global parameter name suffix if
      * there are multiple SimpleEditStep instances in an authoring kit.
      */
-    public SimpleEditStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String paramSuffix) {
+    public SimpleEditStep(ItemSelectionModel itemModel, 
+                          AuthoringKitWizard parent, 
+                          String paramSuffix) {
         super();
         m_parent = parent;
         m_itemModel = itemModel;
 
         m_streamlinedCreationParam = 
-            new StringParameter(parent.getContentType().getAssociatedObjectType() + "_properties_done" + paramSuffix);
+            new StringParameter(parent.getContentType().getAssociatedObjectType() 
+                               + "_properties_done" + paramSuffix);
         
             
         parent.getList().addActionListener(new ActionListener() {
@@ -141,7 +138,7 @@ public class SimpleEditStep extends SecurityPropertyEditor
     }
 
     /** 
-     * Registers globa state param for cancelling streamlined
+     * Registers global state param for cancelling streamlined
      * creation
      */
     @Override
