@@ -18,9 +18,11 @@
 package com.arsdigita.navigation.cms;
 
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.XMLDeliveryCache;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
@@ -69,45 +71,79 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                                    ACSObject obj,
                                    int index) {
         if (obj != null) {
-            ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(item);
-            renderer.setRevisitFullObject(false);
-            renderer.setWrapAttributes(true);
-            renderer.setWrapRoot(false);
-            renderer.setWrapObjects(false);
-            //renderer.walk(obj, SimpleXMLGenerator.ADAPTER_CONTEXT);
+            if (CMSConfig.getInstance().getEnableXmlCache()
+                && (obj instanceof ContentItem)
+                && XMLDeliveryCache.getInstance().isCached(obj.getOID())) {
+
+                XMLDeliveryCache.getInstance().retrieveFromCache(item, obj.getOID());
+                
+                createEditLink(item, (ContentItem) obj);
+
+            } else {
+
+                ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(item);
+                renderer.setRevisitFullObject(false);
+                renderer.setWrapAttributes(true);
+                renderer.setWrapRoot(false);
+                renderer.setWrapObjects(false);
+                //renderer.walk(obj, SimpleXMLGenerator.ADAPTER_CONTEXT);
             /* jensp 2011-01-03: 
-             * I needed the option to use different traversal adapters for
-             * the object in the detail view and the list view. It is now 
-             * possible to set the adapter context used from a JSP template, 
-             * using DataCollectionRenderer#setSpecializeObjectsContext(String).
-             */
-            renderer.walk(obj, getSpecializeObjectsContext());
+                 * I needed the option to use different traversal adapters for
+                 * the object in the detail view and the list view. It is now 
+                 * possible to set the adapter context used from a JSP template, 
+                 * using DataCollectionRenderer#setSpecializeObjectsContext(String).
+                 */
+                renderer.walk(obj, getSpecializeObjectsContext());
 
-            if ((obj instanceof ContentItem) && useExtraXml) {
-                final ContentItem contentItem = (ContentItem) obj;
+                if ((obj instanceof ContentItem) && useExtraXml) {
+                    final ContentItem contentItem = (ContentItem) obj;
 
-                for (ExtraXMLGenerator generator : contentItem.getExtraListXMLGenerators()) {
-                    generator.setListMode(true);
-                    generator.generateXML(contentItem, item, null);
-                }
+                    for (ExtraXMLGenerator generator : contentItem.getExtraListXMLGenerators()) {
+                        generator.setListMode(true);
+                        generator.generateXML(contentItem, item, null);
+                    }
+                    
+                    XMLDeliveryCache.getInstance().cache(contentItem.getOID(), contentItem, item, "", false);
 
-                Party currentParty = Kernel.getContext().getParty();
-                if (currentParty == null) {
-                    currentParty = Kernel.getPublicUser();
-                }
-                final PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.get(
-                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), contentItem, currentParty);
-                if (PermissionService.checkPermission(edit)) {
-                    final ItemResolver resolver = contentItem.getContentSection().getItemResolver();
-                    final Element editLinkElem = item.newChildElement("editLink");
-                    final ContentItem draftItem = contentItem.getDraftVersion();
-                    editLinkElem.setText(resolver.generateItemURL(PageState.getPageState(),
-                                                                  draftItem,
-                                                                  contentItem.getContentSection(),
-                                                                  draftItem.getVersion()));
+                    createEditLink(item, contentItem);
+                    
+//                    Party currentParty = Kernel.getContext().getParty();
+//                    if (currentParty == null) {
+//                        currentParty = Kernel.getPublicUser();
+//                    }
+//
+//                    final PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.get(
+//                            com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), contentItem, currentParty);
+//                    if (PermissionService.checkPermission(edit)) {
+//                        final ItemResolver resolver = contentItem.getContentSection().getItemResolver();
+//                        final Element editLinkElem = item.newChildElement("editLink");
+//                        final ContentItem draftItem = contentItem.getDraftVersion();
+//                        editLinkElem.setText(resolver.generateItemURL(PageState.getPageState(),
+//                                                                      draftItem,
+//                                                                      contentItem.getContentSection(),
+//                                                                      draftItem.getVersion()));
+//                    }
                 }
             }
         }
     }
 
+    private void createEditLink(final Element item, final ContentItem contentItem) {
+        Party currentParty = Kernel.getContext().getParty();
+        if (currentParty == null) {
+            currentParty = Kernel.getPublicUser();
+        }
+
+        final PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.get(
+                com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), contentItem, currentParty);
+        if (PermissionService.checkPermission(edit)) {
+            final ItemResolver resolver = contentItem.getContentSection().getItemResolver();
+            final Element editLinkElem = item.newChildElement("editLink");
+            final ContentItem draftItem = contentItem.getDraftVersion();
+            editLinkElem.setText(resolver.generateItemURL(PageState.getPageState(),
+                                                          draftItem,
+                                                          contentItem.getContentSection(),
+                                                          draftItem.getVersion()));
+        }
+    }
 }

@@ -31,6 +31,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
+        final long start = System.nanoTime();
         if (!(item instanceof Publication)) {
             throw new IllegalArgumentException(String.format(
                     "ExtraXMLGenerator '%s' only supports items of type '%s'.",
@@ -40,7 +41,13 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
         final Publication publication = (Publication) item;
         createAuthorsXml(publication, element, state);
+        System.out.printf("[%s] Created authors XML in %d ms\n",
+                          PublicationExtraXmlGenerator.class.getName(),
+                          (System.nanoTime() - start) / 1000000);
         createSeriesXml(publication, element, state);
+        System.out.printf("[%s] Created series XML in %d ms\n",
+                          PublicationExtraXmlGenerator.class.getName(),
+                          (System.nanoTime() - start) / 1000000);
         if (!listMode) {
             createOrgaUnitsXml(publication, element, state);
 
@@ -50,15 +57,22 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                 createExportLink(format, element, (Publication) item, state);
             }
         }
+        System.out.printf("[%s] Created extra XML in %d ms\n",
+                          PublicationExtraXmlGenerator.class.getName(),
+                          (System.nanoTime() - start) / 1000000);
     }
 
     private void createAuthorsXml(final Publication publication,
                                   final Element parent,
                                   final PageState state) {
+        final long start = System.nanoTime();
         final AuthorshipCollection authors = publication.getAuthors();
         if ((authors == null) || authors.isEmpty()) {
             return;
         }
+        System.out.printf("[%s#createAuthorsXML] Got authors in %d ms\n",
+                          PublicationExtraXmlGenerator.class.getName(),
+                          (System.nanoTime() - start) / 1000000);
 
         final Element authorsElem = parent.newChildElement("authors");
         while (authors.next()) {
@@ -68,6 +82,9 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                             authorsElem,
                             state);
         }
+        System.out.printf("[%s#createAuthorsXML] Created XML for authors in %d ms\n",
+                          PublicationExtraXmlGenerator.class.getName(),
+                          (System.nanoTime() - start) / 1000000);
     }
 
     private void createAuthorXml(final GenericPerson author,
@@ -75,12 +92,17 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                  final Integer order,
                                  final Element authorsElem,
                                  final PageState state) {
+        final long start = System.nanoTime();
         final XmlGenerator generator = new XmlGenerator(author);
         generator.setItemElemName("author", "");
         generator.addItemAttribute("isEditor", isAuthor.toString());
         generator.addItemAttribute("order", order.toString());
         generator.setListMode(listMode);
         generator.generateXML(state, authorsElem, "");
+        System.out.printf("[%s] Created XML for author %s in %d ms\n",
+                          PublicationExtraXmlGenerator.class.getName(),
+                          author.getTitle(),
+                          (System.nanoTime() - start) / 1000000);
     }
 
     private void createOrgaUnitsXml(final Publication publication,

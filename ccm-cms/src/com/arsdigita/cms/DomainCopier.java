@@ -46,11 +46,11 @@ import java.util.Iterator;
  */
 class DomainCopier extends DomainService {
 
-    private static Logger s_log = Logger.getLogger(DomainCopier.class);
+    private static final Logger s_log = Logger.getLogger(DomainCopier.class);
     // A map of OID => DomainObject
     private final HashMap m_copied;
     protected final TraversedSet m_traversed;
-    final Tracer m_trace;
+    protected final Tracer m_trace;
 
     /**
      * Constructs a new <code>DomainCopier</code>
@@ -127,7 +127,7 @@ class DomainCopier extends DomainService {
         }
     }
 
-    protected void copyData(final DomainObject source, DomainObject target) {
+    protected void copyData(final DomainObject source, final DomainObject target) {
         final ObjectType type = source.getObjectType();
 
         if (s_log.isDebugEnabled()) {
@@ -295,11 +295,12 @@ class DomainCopier extends DomainService {
             } else if (prop.isRequired()) {
                 s_log.debug("The property is a 1..1 association");
 
-                final DataObject data = (DataObject) get(source, name);
+                final DataObject data = (DataObject) get(source, name);                
 
                 Assert.exists(data, DataObject.class);
 
                 final DomainObject domain = domain(data);
+                checkXmlCache(domain);
 
                 m_traversed.add(domain, prop.getAssociatedProperty());
 
@@ -307,12 +308,13 @@ class DomainCopier extends DomainService {
             } else if (prop.isNullable()) {
                 s_log.debug("The property is a 0..1 association");
 
-                final DataObject data = (DataObject) get(source, name);
+                final DataObject data = (DataObject) get(source, name);                
 
                 if (data == null) {
                     set(target, name, null);
                 } else {
                     final DomainObject domain = domain(data);
+                    checkXmlCache(domain);
 
                     m_traversed.add(domain, prop.getAssociatedProperty());
 
@@ -362,6 +364,7 @@ class DomainCopier extends DomainService {
             m_traversed.add(selem, reverse);
 
             final DomainObject telem = copy(source, target, selem, prop);
+            checkXmlCache(telem);            
 
             DataObject tgtLink = null;
 
@@ -469,16 +472,31 @@ class DomainCopier extends DomainService {
 
             return contains(object.getOID() + "." + prop.getName());
         }
+
     }
 
     protected final class WrapperDomainObject extends DomainObject {
 
-        public WrapperDomainObject(DataObject dobj) {
+        public WrapperDomainObject(final DataObject dobj) {
             super(dobj);
         }
 
-        public WrapperDomainObject(OID oid) {
+        public WrapperDomainObject(final OID oid) {
             super(oid);
         }
+
     }
+
+    /**
+     * Helper method for invalidating the cached XML of associated objects when an item is (re-)published.
+     * 
+     * @param dobj 
+     */
+    private void checkXmlCache(final DomainObject dobj) {
+        if ((dobj instanceof ContentItem) && CMSConfig.getInstance().getEnableXmlCache()) {
+            final ContentItem item = (ContentItem) dobj;
+            XMLDeliveryCache.getInstance().removeFromCache(item.getOID());
+        }
+    }
+
 }

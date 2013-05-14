@@ -1320,6 +1320,11 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
         Assert.isTrue(isLive(), "Attempt to republish non live item " + getOID());
 
+        //ToDo Remove item from cache
+        if (CMSConfig.getInstance().getEnableXmlCache()) {
+            XMLDeliveryCache.getInstance().removeFromCache(getOID());
+        }
+        
         Lifecycle cycle = getLifecycle();
         Assert.exists(cycle, Lifecycle.class);
         //resets lifecycle if opted

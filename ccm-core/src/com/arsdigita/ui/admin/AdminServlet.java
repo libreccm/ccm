@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.ui.admin;
 
 import com.arsdigita.bebop.Page;
@@ -47,55 +46,55 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-
 /**
- * Web Developer Support Application Servlet class, central entry point  to 
- * create and process the applications UI.
- * 
- * We should have subclassed BebopApplicationServlet but couldn't overwrite
- * doService() method to add permission checking. So we use our own page
- * mapping. The general logic is the same as for BebopApplicationServlet.
- * {@see com.arsdigita.bebop.page.BebopApplicationServlet}
- * 
+ * Web Developer Support Application Servlet class, central entry point to create and process the applications UI.
+ *
+ * We should have subclassed BebopApplicationServlet but couldn't overwrite doService() method to add permission
+ * checking. So we use our own page mapping. The general logic is the same as for BebopApplicationServlet.
+ * {
+ *
+ * @see com.arsdigita.bebop.page.BebopApplicationServlet}
+ *
  * @author pb
  */
-public class AdminServlet extends BaseApplicationServlet 
-                       implements AdminConstants{
+public class AdminServlet extends BaseApplicationServlet
+        implements AdminConstants {
 
-    /** Logger instance for debugging  */
+    /**
+     * Logger instance for debugging
+     */
     private static final Logger s_log = Logger.getLogger(
-                                        AdminServlet.class.getName());
-
-    /** URL (pathinfo) -> Page object mapping. Based on it (and the http
-     * request url) the doService method to selects a page to display        */
+            AdminServlet.class.getName());
+    /**
+     * URL (pathinfo) -> Page object mapping. Based on it (and the http request url) the doService method to selects a
+     * page to display
+     */
     private final Map m_pages = new HashMap();
-
 
     /**
      * User extension point, overwrite this method to setup a URL - page mapping
-     * 
-     * @throws ServletException 
+     *
+     * @throws ServletException
      */
     @Override
     public void doInit() throws ServletException {
 
         addPage("/", buildAdminIndexPage());     // index page at address ~/ds
-    //  addPage("/index.jsp", buildIndexPage()); // index page at address ~/ds
+        //  addPage("/index.jsp", buildIndexPage()); // index page at address ~/ds
 
     }
 
-
     /**
-     * Central service method, checks for required permission, determines the
-     * requested page and passes the page object to PresentationManager.
+     * Central service method, checks for required permission, determines the requested page and passes the page object
+     * to PresentationManager.
      */
     public final void doService(HttpServletRequest sreq,
                                 HttpServletResponse sresp,
                                 Application app)
-                      throws ServletException, IOException {
+            throws ServletException, IOException {
 
-        
-        
+
+
         // ///////    Some preparational steps                   ///////////////
 
         /* Determine access privilege: only logged in users may access DS   */
@@ -104,8 +103,7 @@ public class AdminServlet extends BaseApplicationServlet
             throw new LoginSignal(sreq);
         }
         /* Determine access privilege: Admin privileges must be granted     */
-        PermissionDescriptor admin = new PermissionDescriptor
-            (PrivilegeDescriptor.ADMIN, app, party);
+        PermissionDescriptor admin = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, app, party);
         if (!PermissionService.checkPermission(admin)) {
             throw new AccessDeniedException("User is not an administrator");
         }
@@ -123,7 +121,7 @@ public class AdminServlet extends BaseApplicationServlet
              * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
              * result of a servlet mapping. But Application requires url 
              * NOT to end with a trailing '/' for legacy free applications.  */
-            pathInfo = pathInfo.substring(0, pathInfo.length()-1);
+            pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
         }
 
         final Page page = (Page) m_pages.get(pathInfo);
@@ -140,13 +138,12 @@ public class AdminServlet extends BaseApplicationServlet
             sresp.sendError(404, "No such page for path " + pathInfo);
 
         }
-        
-    }
 
+    }
 
     /**
      * Adds one pair of Url - Page to the internal hash map, used as a cache.
-     * 
+     *
      * @param pathInfo url stub for a page to display
      * @param page Page object to display
      */
@@ -171,11 +168,11 @@ public class AdminServlet extends BaseApplicationServlet
 
         p.addGlobalStateParam(USER_ID_PARAM);
         p.addGlobalStateParam(GROUP_ID_PARAM);
-   //   p.addGlobalStateParam(APPLICATIONS_ID_PARAM);
+        p.addGlobalStateParam(APPLICATIONS_ID_PARAM);
 
         /* Create User split panel. */
         AdminSplitPanel userSplitPanel =
-            new AdminSplitPanel(USER_NAVBAR_TITLE);
+                        new AdminSplitPanel(USER_NAVBAR_TITLE);
 
         UserBrowsePane browsePane = new UserBrowsePane();
 
@@ -187,19 +184,19 @@ public class AdminServlet extends BaseApplicationServlet
                               new UserSearchPane(userSplitPanel, browsePane));
         userSplitPanel.addTab(USER_TAB_CREATE_USER,
                               new CreateUserPane(userSplitPanel));
-   
-               
+
+
         /*
          * Create group administration panel
          */
-        GroupAdministrationTab groupAdministrationTab = 
+        GroupAdministrationTab groupAdministrationTab =
                                new GroupAdministrationTab();
-               
+
         /*
          * Create group administration panel
          */
-  //    ApplicationsAdministrationTab appsAdministrationTab = 
-  //                             new ApplicationsAdministrationTab();
+            ApplicationsAdministrationTab appsAdministrationTab = 
+                                     new ApplicationsAdministrationTab();
 
         // Create the Admin's page tab bar, currently 2 elements: user & groups
         TabbedPane tb = new TabbedPane();
@@ -207,19 +204,15 @@ public class AdminServlet extends BaseApplicationServlet
 
         tb.addTab(USER_TAB_TITLE, userSplitPanel);
         tb.addTab(GROUP_TAB_TITLE, groupAdministrationTab);
-   //   tb.addTab(APPLICATIONS_TAB_TITLE, appsAdministrationTab);
+        tb.addTab(APPLICATIONS_TAB_TITLE, appsAdministrationTab);
 
         browsePane.setTabbedPane(tb);
         browsePane.setGroupAdministrationTab(groupAdministrationTab);
-   //   browsePane.setAppsAdministrationTab(appsAdministrationTab);
+        //browsePane.setAppsAdministrationTab(appsAdministrationTab);
 
         p.add(tb);
         p.lock();
 
         return p;
     }
-
-
-
 }
-

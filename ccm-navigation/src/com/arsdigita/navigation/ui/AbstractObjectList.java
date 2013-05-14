@@ -93,6 +93,7 @@ public abstract class AbstractObjectList
 
     public Element generateObjectListXML(HttpServletRequest request,
                                          HttpServletResponse response) {
+        final long start = System.nanoTime();
         Assert.isLocked(this);
 
         String pageNumberValue = request.getParameter("pageNumber");
@@ -107,9 +108,13 @@ public abstract class AbstractObjectList
             throw new UncheckedWrapperException(
                     "cannot parse page number " + pageNumber, ex);
         }
-
+        
+        final long loadObjectsStart = System.nanoTime();
         DataCollection objects = getObjects(request, response);
+        ////System.out.printf("Got objects for list in %d ms\n", (System.nanoTime() - loadObjectsStart) / 1000000);
 
+        ////System.out.printf("(100) Needed %d ms until here...\n", (System.nanoTime() - start) / 1000000);
+        
         // Quasimodo: Begin
         // Limit list to objects in the negotiated language and language invariant items
         if (objects != null && objects.size() > 0) {
@@ -130,8 +135,15 @@ public abstract class AbstractObjectList
             }
         }
         // Quasimodo: End
+        ////System.out.printf("(200) Needed %d ms until here...\n", (System.nanoTime() - start) / 1000000);
 
-        return m_renderer.generateXML(objects, pageNumber.intValue());
+        //final long renderStart = System.nanoTime();
+        final Element listXML =  m_renderer.generateXML(objects, pageNumber.intValue());
+        //System.out.printf("Rendered items of list in %d ms\n", (System.nanoTime() - renderStart) / 1000000);        
+        
+        //System.out.printf("Generated object list in %d ms\n", (System.nanoTime() - start) / 1000000);
+        
+        return listXML;
     }
 
 }

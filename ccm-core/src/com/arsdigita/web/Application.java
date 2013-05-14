@@ -68,16 +68,13 @@ public class Application extends Resource {
 
     /** Logger instance for debugging.  */
     private static final Logger s_log = Logger.getLogger(Application.class);
-    
     /** PDL property, basic object type for all applications of this type    */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.web.Application";
     /** PDL property, the applications base URL.                            */
     public static final String PRIMARY_URL = "primaryURL";
-
     /** Internal String to denote a Path delimiter.                         */
     private static final String SLASH = "/";
-
 
     /** 
      * Provides the base object type.
@@ -124,13 +121,13 @@ public class Application extends Resource {
      * without parent and without an explicit URL fragment
      */
     public static Application createRootApplication(
-                                           final ApplicationType type,
-                                           final String title,
-                                           final boolean createContainerGroup) {
+            final ApplicationType type,
+            final String title,
+            final boolean createContainerGroup) {
         if (Assert.isEnabled()) {
             Assert.exists(type, ApplicationType.class);
             Assert.exists(title, String.class);
-         // Assert.isTrue(type.m_legacyFree);
+            // Assert.isTrue(type.m_legacyFree);
         }
 
         return Application.make(type, null, title, null, createContainerGroup);
@@ -151,7 +148,7 @@ public class Application extends Resource {
                                                 final String title,
                                                 final Application parent) {
         s_log.debug("Create Application");
-        return Application.createApplication(type,fragment,title,parent,false);
+        return Application.createApplication(type, fragment, title, parent, false);
     }
 
     // For convenience.
@@ -168,7 +165,7 @@ public class Application extends Resource {
                                                 final String title,
                                                 final Application parent) {
 
-        return Application.createApplication(typeName,fragment,title,parent,false);
+        return Application.createApplication(typeName, fragment, title, parent, false);
     }
 
     /** 
@@ -181,20 +178,20 @@ public class Application extends Resource {
      * @return
      */
     public static Application createApplication(
-                                  final String typeName,
-                                  final String fragment,
-                                  final String title,
-                                  final Application parent,
-                                  final boolean createContainerGroup) {
+            final String typeName,
+            final String fragment,
+            final String title,
+            final Application parent,
+            final boolean createContainerGroup) {
         final ApplicationType type = ApplicationType
-                                     .retrieveApplicationTypeForApplication(
-                                                                      typeName);
+                .retrieveApplicationTypeForApplication(
+                typeName);
         if (type == null) {
             throw new IllegalArgumentException(
-                      "No ApplicationType found for type name " + typeName);
+                    "No ApplicationType found for type name " + typeName);
         }
-        return Application.createApplication(type,fragment,
-                                             title,parent,createContainerGroup);
+        return Application.createApplication(type, fragment,
+                                             title, parent, createContainerGroup);
     }
 
     /**
@@ -211,20 +208,20 @@ public class Application extends Resource {
      * @return
      */
     public static Application createApplication(
-                                        final ApplicationType type,
-                                        final String fragment,
-                                        final String title,
-                                        final Application parent,
-                                        final boolean createContainerGroup) {
+            final ApplicationType type,
+            final String fragment,
+            final String title,
+            final Application parent,
+            final boolean createContainerGroup) {
 
         if (Assert.isEnabled()) {
             Assert.exists(type, ApplicationType.class);
             Assert.exists(fragment, String.class);
             Assert.exists(title, String.class);
             Assert.isTrue(!fragment.equals(""),
-                         "The URL fragment must not be the empty string");
+                          "The URL fragment must not be the empty string");
         }
-        return Application.make(type,fragment,title,parent,
+        return Application.make(type, fragment, title, parent,
                                 createContainerGroup);
     }
 
@@ -243,17 +240,16 @@ public class Application extends Resource {
                                     final String title,
                                     final Application parent,
                                     final boolean createContainerGroup) {
-        
-        final Application app = (Application) Resource.createResource(type, 
-                                                                       title, 
-                                                                       parent);
+
+        final Application app = (Application) Resource.createResource(type,
+                                                                      title,
+                                                                      parent);
         if (createContainerGroup) {
             app.createGroup();
         }
         if (Assert.isEnabled() && fragment != null) {
             Assert.isTrue(fragment.indexOf('/') == -1,
-                         "The URL fragment must not contain " +
-                         "slashes; I got '" + fragment + "'");
+                          "The URL fragment must not contain " + "slashes; I got '" + fragment + "'");
         }
 
         /* Problem with "slash or not slash"
@@ -284,7 +280,6 @@ public class Application extends Resource {
 
         return app;
     }
-
 
     /**
      * 
@@ -338,8 +333,7 @@ public class Application extends Resource {
         Assert.exists(obj, ACSObject.class);
         ACSObject result = obj.gimmeContainer();
 
-        while (result != null &&
-               !(result instanceof Application)) {
+        while (result != null && !(result instanceof Application)) {
             result = result.gimmeContainer();
         }
 
@@ -355,7 +349,7 @@ public class Application extends Resource {
 
         s_log.debug("retrieveApplicationForPath: " + path);
         DataCollection dataCollection =
-            SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+                       SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
         dataCollection.addEqualsFilter(PRIMARY_URL, path);
 
@@ -364,7 +358,7 @@ public class Application extends Resource {
             dataCollection.close();
             return Application.retrieveApplication(dataObject);
         } else {
-        s_log.debug("retrieveApplicationForPath: No application found on " + path);
+            s_log.debug("retrieveApplicationForPath: No application found on " + path);
             return null;
         }
     }
@@ -372,7 +366,6 @@ public class Application extends Resource {
     // ///////////////////////
     // Association properties
     // ///////////////////////
-
     /**
      * 
      * @return   (Cannot return null.)
@@ -445,13 +438,11 @@ public class Application extends Resource {
      * @param applicationType
      * @return 
      */
-    public ApplicationCollection getChildApplicationsForType
-                                                    (String applicationType) {
+    public ApplicationCollection getChildApplicationsForType(String applicationType) {
         ApplicationCollection children = getChildApplications();
         children.addEqualsFilter("objectType", applicationType);
         return children;
     }
-
 
     // Can return null.
     /**
@@ -471,7 +462,6 @@ public class Application extends Resource {
     // //////////////////
     // Member properties
     // //////////////////
-
     /**
      * Returns the path to this application through the dispatcher.
      * This path ends in a slash. Returns <code>null</code> if the
@@ -526,26 +516,26 @@ public class Application extends Resource {
     public final void setPath(String path) {
         if (Assert.isEnabled()) {
             Assert.exists(path, String.class);
-/* Modified by pboy April 2011
- * This Assert statement prevents a trailing slash. setPath is currently called 
- * only by Applicatiom#make which creates a LEGACY FREE application.
- * Legacy compatible applications are currently created WITH a trailing slash
- * (see e.g. SiteNode#setURL oder SiteNode#getURLFromParent.) Therefore for the
- * time beeing if we must support legacy free and legacy compatible applications
- * in parallel we have to use a trailing slash for legacy free applications,
- * otherwise they will not be found by methods like retrieveApplicationForPath()
- * which is called by legacy compatible apps including a trailing slash. If 
- * legacy free apps are stored without trailing slash the search will never match.
- * The same is true as long as we mix old style dispatcher code with new style
- * servlet code.
- */
+            /* Modified by pboy April 2011
+             * This Assert statement prevents a trailing slash. setPath is currently called 
+             * only by Applicatiom#make which creates a LEGACY FREE application.
+             * Legacy compatible applications are currently created WITH a trailing slash
+             * (see e.g. SiteNode#setURL oder SiteNode#getURLFromParent.) Therefore for the
+             * time beeing if we must support legacy free and legacy compatible applications
+             * in parallel we have to use a trailing slash for legacy free applications,
+             * otherwise they will not be found by methods like retrieveApplicationForPath()
+             * which is called by legacy compatible apps including a trailing slash. If 
+             * legacy free apps are stored without trailing slash the search will never match.
+             * The same is true as long as we mix old style dispatcher code with new style
+             * servlet code.
+             */
 //          Assert.isTrue
 //              (path.equals("") || (path.startsWith(SLASH)
 //                                   && !path.endsWith(SLASH)),
 //               "The path must either be the empty string (for the " +
 //               "default application) or it must start with '/' and *not* " +
 //               "end in '/'; I got '" + path + "'");
-      }
+        }
 
         set(PRIMARY_URL, path);
     }
@@ -560,33 +550,30 @@ public class Application extends Resource {
      */
     public static ApplicationCollection retrieveAllApplications() {
         DataCollection dataCollection =
-            SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+                       SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
         // exclude all portlets (no application at all) and portal panes
         // (no application but sort of "sub-application").
-        dataCollection.addEqualsFilter
-            ("resourceType.hasFullPageView", Boolean.TRUE);
-             
-        ApplicationCollection apps = new ApplicationCollection
-            (dataCollection);
+        dataCollection.addEqualsFilter("resourceType.hasFullPageView", Boolean.TRUE);
+
+        ApplicationCollection apps = new ApplicationCollection(dataCollection);
 
         return apps;
     }
+
     /**
      * Retrieve all installed applications (portlets excluded).
      * @return a collection of installed 
      */
-    public static ApplicationCollection retrieveAllApplications(String 
-                                                                applicationType) {
+    public static ApplicationCollection retrieveAllApplications(String applicationType) {
         DataCollection dataCollection = SessionManager.getSession()
-                                        .retrieve(BASE_DATA_OBJECT_TYPE);
+                .retrieve(BASE_DATA_OBJECT_TYPE);
 
         // exclude all portlets (no application at all) and portal panes
         // (no application but sort of "sub-application").
-        dataCollection.addEqualsFilter
-            ("resourceType.hasFullPageView", Boolean.TRUE);
+        dataCollection.addEqualsFilter("resourceType.hasFullPageView", Boolean.TRUE);
         dataCollection.addEqualsFilter("objectType", applicationType);
-             
+
         ApplicationCollection apps = new ApplicationCollection(dataCollection);
 
         return apps;
@@ -598,10 +585,10 @@ public class Application extends Resource {
      * @param path
      * @return 
      */
-    public static boolean isInstalled (String applicationObjectType,
-                                       String path) {
+    public static boolean isInstalled(String applicationObjectType,
+                                      String path) {
         DataCollection dataCollection =
-            SessionManager.getSession().retrieve(applicationObjectType);
+                       SessionManager.getSession().retrieve(applicationObjectType);
 
         dataCollection.addEqualsFilter(PRIMARY_URL, path);
 
@@ -621,7 +608,7 @@ public class Application extends Resource {
      *
      */
     public static String getCanonicalURL(String url) {
-        
+
         String canonicalURL;
         url = url.trim();  // Remove whitespace
 
@@ -629,7 +616,7 @@ public class Application extends Resource {
         canonicalURL = url.startsWith(SLASH) ? url : (SLASH + url);
         canonicalURL = url.endsWith(SLASH) ? canonicalURL : (canonicalURL + SLASH);
 
-        return canonicalURL ;
+        return canonicalURL;
     }
 
     /**
@@ -697,15 +684,15 @@ public class Application extends Resource {
     @Override
     public void beforeDelete() {
         super.beforeDelete();
-    //  SiteNode node = getSiteNode();
-    //  if (node != null) {
-    //      node.delete();
-    //  }
+        //  SiteNode node = getSiteNode();
+        //  if (node != null) {
+        //      node.delete();
+        //  }
     }
 
     /** 
      * 
-     */ 
+     */
     @Override
     public void afterDelete() {
         BaseDispatcher.scheduleRefresh();
@@ -737,7 +724,7 @@ public class Application extends Resource {
      */
     public void createGroup() {
         Assert.isEqual(getGroup(), null,
-              "Group has already been created for Application " + getTitle());
+                       "Group has already been created for Application " + getTitle());
 
         Group group = new Group();
         group.setName(getTitle() + " Groups");
@@ -756,7 +743,6 @@ public class Application extends Resource {
 
     }
 
-
     /**
      * .
      * 
@@ -765,7 +751,7 @@ public class Application extends Resource {
      * @param title 
      */
     @Override
-    public void setTitle (String title) {
+    public void setTitle(String title) {
         super.setTitle(title);
         Group containerGroup = getGroup();
         if (containerGroup != null) {
@@ -781,7 +767,7 @@ public class Application extends Resource {
      */
     public Group getGroup() {
         return (Group) DomainObjectFactory.newInstance(
-                                            (DataObject) get("containerGroup"));
+                (DataObject) get("containerGroup"));
     }
 
 }

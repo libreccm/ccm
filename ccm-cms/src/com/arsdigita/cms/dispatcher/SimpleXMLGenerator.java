@@ -19,7 +19,6 @@
 package com.arsdigita.cms.dispatcher;
 
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.caching.CacheTable;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
@@ -27,6 +26,7 @@ import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.UserDefinedContentItem;
+import com.arsdigita.cms.XMLDeliveryCache;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -42,7 +42,6 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
-import java.util.HashMap;
 import org.apache.log4j.Logger;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -84,17 +83,6 @@ public class SimpleXMLGenerator implements XMLGenerator {
      */
     private String itemElemName = "cms:item";
     private String itemElemNs = CMS.CMS_XML_NS;
-    //Cache for generated XML
-    private static final CacheTable CACHE = new CacheTable(
-            SimpleXMLGenerator.class.getName() + "Cache",
-            CMSConfig.getInstance().getXmlCacheSize(),
-            CMSConfig.getInstance().getXmlCacheAge(),
-            true);
-    //Stores the master ID of the cached items and the ID of cached version. Used to delete obsolete entries in the
-    //cash after republishing
-    private static final Map<String, String> CACHED_ITEMS = new HashMap<String, String>();
-    //private static final Map<OID, Element> cache = new HashMap<OID, Element>();
-    //private static final boolean USE_CACHE = false;
 
     // Register general purpose adaptor for all content items
     static {
@@ -201,29 +189,14 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
             // This is the preferred method
             //final Element content = startElement(useContext, parent);
-            final Element content;
-            if (CMSConfig.getInstance().getEnableXmlCache() && (CACHE.get(item.getOID().toString()) != null)) {
-                s_log.debug("Item found in cache, using cached XML");
-                final Element cached = (Element) CACHE.get(item.getOID().toString());
-                //parent.importElement(content);
-                cached.syncDocs();
+            final Element content = startElement(useContext);
+            s_log.debug("Item is not in cache, generating item.");
 
-                content = startElement(useContext);
-                final Iterator entries = cached.getAttributes().entrySet().iterator();
-                Map.Entry entry;
-                while (entries.hasNext()) {
-                    entry = (Map.Entry) entries.next();
-                    content.addAttribute((String) entry.getKey(), (String) entry.getValue());
-                }
-                final Iterator childs = cached.getChildren().iterator();
-                while (childs.hasNext()) {
-                    copyElement(content, (Element) childs.next());
-                }
+            final XMLDeliveryCache xmlCache = XMLDeliveryCache.getInstance();
+
+            if (CMSConfig.getInstance().getEnableXmlCache() && xmlCache.isCached(item.getOID(), useContext, listMode)) {
+                xmlCache.retrieveFromCache(content, item.getOID(), useContext, listMode);
             } else {
-                s_log.debug("Item is not in cache, generating item.");
-
-                content = startElement(useContext);
-
                 final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(content);
 
                 renderer.setWrapAttributes(true);
@@ -241,72 +214,35 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
                 //parent.addContent(content);
 
-                if (CMSConfig.getInstance().getEnableXmlCache()) {
-                    validateCache(item);
-                }
-
-                //Only published items
-                //Only the XML of the item itself, no extra XML
-                if (CMSConfig.getInstance().getEnableXmlCache() && item.isLiveVersion()) {
-                    s_log.debug("Putting item item into the cache.");
-                    final Element cachedElem = startCachedElement(useContext);
-                    final Iterator entries = content.getAttributes().entrySet().iterator();
-                    Map.Entry entry;
-                    while (entries.hasNext()) {
-                        entry = (Map.Entry) entries.next();
-                        cachedElem.addAttribute((String) entry.getKey(), (String) entry.getValue());
-                    }
-                    final Iterator childs = content.getChildren().iterator();
-                    while (childs.hasNext()) {
-                        //cachedElem.newChildElement((Element) childs.next());
-                        copyElement(cachedElem, (Element) childs.next());
-                    }
-                    CACHE.put(item.getOID().toString(), cachedElem);
-                }
-            }
-            //Only item XML Cache End
+                //Only item XML Cache End
 
 //            s_log.debug("Content elem content: ");
 //            logElementTree(content);
 //            s_log.debug("Content elem content end -- ");
 
 
-            /*
-             * 2011-08-27 jensp: Introduced to remove the annoying special templates
-             * for MultiPartArticle, SiteProxy and others. The method called
-             * here was already definied but not used. 
-             * 
-             * 2011-10-23 jensp: It is now possible to disable the use of
-             * extra XML.
-             */
-            //final long extraXMLStart = System.nanoTime();
-            if (useExtraXml) {
-                for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
-                    generator.setListMode(listMode);
-                    generator.generateXML(item, content, state);
+                /*
+                 * 2011-08-27 jensp: Introduced to remove the annoying special templates
+                 * for MultiPartArticle, SiteProxy and others. The method called
+                 * here was already definied but not used. 
+                 * 
+                 * 2011-10-23 jensp: It is now possible to disable the use of
+                 * extra XML.
+                 */
+                //final long extraXMLStart = System.nanoTime();
+                if (useExtraXml) {
+                    for (ExtraXMLGenerator generator : item.getExtraXMLGenerators()) {
+                        generator.setListMode(listMode);
+                        generator.generateXML(item, content, state);
+                    }
+                }
+
+                //Only published items
+                //Only the XML of the item itself, no extra XML
+                if (CMSConfig.getInstance().getEnableXmlCache() && item.isLiveVersion()) {
+                    xmlCache.cache(item.getOID(), item, content, useContext, listMode);
                 }
             }
-//                System.out.
-//                        printf("Rendered ExtraXML in          %d ms\n", (System.nanoTime() - extraXMLStart) / 1000000);
-//                System.out.printf("                              -----\n");            
-
-            //Complete cache begin
-//                if (CMSConfig.getInstance().getEnableXmlCache() && item.isLiveVersion()) {
-//                    final Element cachedElem = startElement(useContext);
-//                    final Iterator entries = content.getAttributes().entrySet().iterator();
-//                    Map.Entry entry;
-//                    while (entries.hasNext()) {
-//                        entry = (Map.Entry) entries.next();
-//                        cachedElem.addAttribute((String) entry.getKey(), (String) entry.getValue());
-//                    }
-//                    final Iterator childs = content.getChildren().iterator();
-//                    while (childs.hasNext()) {
-//                        cachedElem.newChildElement((Element) childs.next());
-//                    }
-//                    CACHE.put(item.getOID().toString(), cachedElem);
-//                }
-//            }
-            //complete cache end
 
             if (PermissionService.checkPermission(edit)) {
                 final ItemResolver resolver = item.getContentSection().getItemResolver();
@@ -504,22 +440,6 @@ public class SimpleXMLGenerator implements XMLGenerator {
         }
         builder.append("</").append(element.getName()).append(">\n");
         return builder.toString();
-    }
-
-    private void validateCache(final ContentItem item) {
-        if (item.isDraftVersion()) {
-            //Draft version are not cached
-            return;
-        }
-        final String itemId = item.getOID().toString();
-        final String masterId = item.getDraftVersion().getOID().toString();
-
-        final String cachedId = CACHED_ITEMS.get(masterId);
-        if ((cachedId != null)
-            && !cachedId.equals(itemId)) {
-            CACHE.remove(cachedId);
-        }
-
     }
 
 }

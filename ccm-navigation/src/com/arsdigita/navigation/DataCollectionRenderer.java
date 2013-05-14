@@ -152,11 +152,14 @@ public class DataCollectionRenderer extends LockableImpl {
         Assert.isLocked(this);
 
         int pageNumber = pageNum;
+        
+        final long objectCount = objects.size();
 
         // Quasimodo: Begin
         // If objects is null or empty, do not insert objectList-element
         // but do insert noContent-element and return immediately
-        if (objects == null || objects.isEmpty()) {
+        //if (objects == null || objects.isEmpty()) {
+        if (objects == null || (objectCount == 0)) {
             return Navigation.newElement("noContent");
         }
         // Quasimodo: End
@@ -171,7 +174,7 @@ public class DataCollectionRenderer extends LockableImpl {
             return content;
         }
 
-        final long objectCount = objects.size();
+        
         final int pageCount = (int) Math.ceil((double) objectCount / (double) m_pageSize);
 
         if (pageNumber < 1) {

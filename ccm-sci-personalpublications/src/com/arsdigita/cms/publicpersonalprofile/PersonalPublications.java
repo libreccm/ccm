@@ -211,6 +211,7 @@ public class PersonalPublications implements ContentGenerator {
         List<PublicationBundle> publicationList = publications;
 
         Collections.sort(publicationList, new Comparator<PublicationBundle>() {
+            @Override
             public int compare(final PublicationBundle bundle1, final PublicationBundle bundle2) {
                 final Publication publication1 = bundle1.getPublication(GlobalizationHelper.getNegotiatedLocale().
                         getLanguage());
