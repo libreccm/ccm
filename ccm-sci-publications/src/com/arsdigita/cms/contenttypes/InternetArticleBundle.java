@@ -3,6 +3,7 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
+import com.arsdigita.cms.XMLDeliveryCache;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -145,6 +146,8 @@ public class InternetArticleBundle extends PublicationBundle {
             link.set("orgaOrder", 1);
 
             link.save();
+            
+            XMLDeliveryCache.getInstance().removeFromCache(liveInternetArticle.getOID());
         }
     }
 

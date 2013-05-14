@@ -4,6 +4,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
+import com.arsdigita.cms.XMLDeliveryCache;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -199,6 +200,8 @@ public class SeriesBundle extends ContentBundle {
             link.set(EDITOR_ORDER, series.get("link." + EDITOR_ORDER));
 
             link.save();
+            
+            XMLDeliveryCache.getInstance().removeFromCache(liveSeries.getOID());
         }
     }
 

@@ -5,6 +5,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.ItemCopier;
+import com.arsdigita.cms.XMLDeliveryCache;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -190,9 +191,11 @@ public class PublicationBundle extends ContentBundle {
 
             link.set(EDITOR, publications.get(AuthorshipCollection.LINKEDITOR));
             link.set(AUTHOR_ORDER, publications.get(
-                    AuthorshipCollection.LINKORDER));
+                    AuthorshipCollection.LINKORDER));                        
 
             link.save();
+            
+            XMLDeliveryCache.getInstance().removeFromCache(livePublication.getOID());
         }
     }
 
@@ -213,6 +216,8 @@ public class PublicationBundle extends ContentBundle {
             link.set(ORGAUNIT_ORDER, publications.get("link." + ORGAUNIT_ORDER));
 
             link.save();
+            
+            XMLDeliveryCache.getInstance().removeFromCache(livePublication.getOID());
         }
     }
 

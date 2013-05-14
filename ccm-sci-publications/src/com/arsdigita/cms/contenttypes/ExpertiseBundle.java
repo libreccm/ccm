@@ -3,6 +3,7 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
+import com.arsdigita.cms.XMLDeliveryCache;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -182,6 +183,8 @@ public class ExpertiseBundle extends PublicationBundle {
             link.set("orgaOrder", expertises.get("link.orderOrder"));
 
             link.save();
+            
+            XMLDeliveryCache.getInstance().removeFromCache(liveExpertise.getOID());
         }
     }
 
@@ -200,6 +203,8 @@ public class ExpertiseBundle extends PublicationBundle {
             link.set("ordererOrder", expertises.get("link.ordererOrder"));
 
             link.save();
+            
+            XMLDeliveryCache.getInstance().removeFromCache(liveExpertise.getOID());
         }
     }
     

@@ -3,6 +3,7 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
+import com.arsdigita.cms.XMLDeliveryCache;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -169,6 +170,8 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
             link.set("organizerOrder", 1);
             
             link.save();
+            
+            XMLDeliveryCache.getInstance().removeFromCache(liveProceedings.getOID());
         }
     }
     
