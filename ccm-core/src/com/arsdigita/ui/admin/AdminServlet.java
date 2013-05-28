@@ -50,8 +50,7 @@ import org.apache.log4j.Logger;
  * Web Developer Support Application Servlet class, central entry point to create and process the applications UI.
  *
  * We should have subclassed BebopApplicationServlet but couldn't overwrite doService() method to add permission
- * checking. So we use our own page mapping. The general logic is the same as for BebopApplicationServlet.
- * {
+ * checking. So we use our own page mapping. The general logic is the same as for BebopApplicationServlet. {
  *
  * @see com.arsdigita.bebop.page.BebopApplicationServlet}
  *
@@ -193,10 +192,13 @@ public class AdminServlet extends BaseApplicationServlet
                                new GroupAdministrationTab();
 
         /*
-         * Create group administration panel
+         * Create application administration panel
          */
             ApplicationsAdministrationTab appsAdministrationTab = 
                                      new ApplicationsAdministrationTab();
+        
+        SettingsTab settingsTab = new SettingsTab();
+        
 
         // Create the Admin's page tab bar, currently 2 elements: user & groups
         TabbedPane tb = new TabbedPane();
@@ -205,6 +207,7 @@ public class AdminServlet extends BaseApplicationServlet
         tb.addTab(USER_TAB_TITLE, userSplitPanel);
         tb.addTab(GROUP_TAB_TITLE, groupAdministrationTab);
         tb.addTab(APPLICATIONS_TAB_TITLE, appsAdministrationTab);
+        tb.addTab("Settings", settingsTab);
 
         browsePane.setTabbedPane(tb);
         browsePane.setGroupAdministrationTab(groupAdministrationTab);

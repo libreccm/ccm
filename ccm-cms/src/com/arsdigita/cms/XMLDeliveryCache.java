@@ -25,7 +25,7 @@ public final class XMLDeliveryCache {
      */
     private CacheTable cache = new CacheTable(XMLDeliveryCache.class.getName(),
                                               CMSConfig.getInstance().getXmlCacheSize(),
-                                              CMSConfig.getInstance().getXmlCacheSize(),
+                                              CMSConfig.getInstance().getXmlCacheAge(),
                                               true);
     /**
      * Maps from the OID of the master version of an item in the cache to the OID of the item in the cache.
@@ -56,22 +56,22 @@ public final class XMLDeliveryCache {
      * @param listMode Is the XML cached for list mode or normal mode.
      * @return
      */
-    public boolean isCached(final OID oid, final String context, final boolean listMode) {                
+    public boolean isCached(final OID oid, final String context, final boolean listMode) {
         final CachedItem cachedItem = (CachedItem) cache.get(oid.toString());
         if (cachedItem == null) {
             return false;
         }
-        
+
         final CachedXml cachedXml = cachedItem.get(context);
         if (cachedXml == null) {
             return false;
         }
-        
+
         if (listMode) {
             return (cachedXml.getCachedXml(Mode.LIST_MODE) != null);
         } else {
             return (cachedXml.getCachedXml(Mode.DEFAULT) != null);
-        }        
+        }
     }
 
     /**
@@ -127,14 +127,18 @@ public final class XMLDeliveryCache {
                     context));
         }
 
-        Element cacheElem;
+        //Element cacheElem;
+        String cached;
         if (listMode) {
-            cacheElem = cachedXml.getCachedXml(Mode.LIST_MODE);
+            //cacheElem = cachedXml.getCachedXml(Mode.LIST_MODE);
+            cached = cachedXml.getCachedXml(Mode.LIST_MODE);
         } else {
-            cacheElem = cachedXml.getCachedXml(Mode.DEFAULT);
+            //cacheElem = cachedXml.getCachedXml(Mode.DEFAULT);
+            cached = cachedXml.getCachedXml(Mode.LIST_MODE);
         }
 
-        if (cacheElem == null) {
+        //if (cacheElem == null) {
+        if (cached == null) {
             if (listMode) {
                 throw new IllegalArgumentException(String.format(
                         "The item with the OID '%s' is not cached for context '%s' in list mode",
@@ -150,18 +154,33 @@ public final class XMLDeliveryCache {
             }
         }
 
-        cacheElem.syncDocs();
+        //cacheElem.syncDocs();
 
-        final Iterator<Map.Entry<String, String>> attrs = cacheElem.getAttributes().entrySet().iterator();
-        Map.Entry<String, String> attr;
-        while (attrs.hasNext()) {
-            attr = attrs.next();
-            parent.addAttribute(attr.getKey(), attr.getValue());
+        Map<String, String> cachedAttributes;
+        if (listMode) {
+            cachedAttributes = cachedXml.getCachedAttributes(Mode.LIST_MODE);
+        } else {
+            cachedAttributes = cachedXml.getCachedAttributes(Mode.DEFAULT);
         }
-        final Iterator<Element> childs = cacheElem.getChildren().iterator();
-        while (childs.hasNext()) {
-            copyElement(parent, childs.next());
+
+        if (cachedAttributes != null) {
+            for (Map.Entry<String, String> attribute : cachedAttributes.entrySet()) {
+                parent.addAttribute(attribute.getKey(), attribute.getValue());
+            }
         }
+
+        parent.setText(cached);
+
+//        final Iterator<Map.Entry<String, String>> attrs = cacheElem.getAttributes().entrySet().iterator();
+//        Map.Entry<String, String> attr;
+//        while (attrs.hasNext()) {
+//            attr = attrs.next();
+//            parent.addAttribute(attr.getKey(), attr.getValue());
+//        }
+//        final Iterator<Element> childs = cacheElem.getChildren().iterator();
+//        while (childs.hasNext()) {
+//            copyElement(parent, childs.next());
+//        }
     }
 
     /**
@@ -202,10 +221,10 @@ public final class XMLDeliveryCache {
      * @param context The context of the XML output.
      * @param listMode If the XML is for the list mode.
      */
-    public void cache(final OID oid, 
-                      final ContentItem item, 
-                      final Element parent, 
-                      final String context, 
+    public void cache(final OID oid,
+                      final ContentItem item,
+                      final Element parent,
+                      final String context,
                       final boolean listMode) {
         CachedItem cachedItem = (CachedItem) cache.get(oid.toString());
         if (cachedItem == null) {
@@ -219,28 +238,40 @@ public final class XMLDeliveryCache {
             cachedItem.put(context, cachedXml);
         }
 
-        final Element cacheElem = new Element("cachedItem");
-        final Iterator<Map.Entry<String, String>> attrs = parent.getAttributes().entrySet().iterator();
-        Map.Entry<String, String> attr;
-        while (attrs.hasNext()) {
-            attr = attrs.next();
-            cacheElem.addAttribute(attr.getKey(), attr.getValue());
-        }
-        final Iterator<Element> childs = parent.getChildren().iterator();
-        while (childs.hasNext()) {
-            copyElement(cacheElem, childs.next());
+//        final Element cacheElem = new Element("cachedItem");
+//        final Iterator<Map.Entry<String, String>> attrs = parent.getAttributes().entrySet().iterator();
+//        Map.Entry<String, String> attr;
+//        while (attrs.hasNext()) {
+//            attr = attrs.next();
+//            cacheElem.addAttribute(attr.getKey(), attr.getValue());
+//        }
+//        final Iterator<Element> childs = parent.getChildren().iterator();
+//        while (childs.hasNext()) {
+//            copyElement(cacheElem, childs.next());
+//        }
+
+        final Mode mode;
+        if (listMode) {
+            mode = Mode.LIST_MODE;
+        } else {
+            mode = Mode.DEFAULT;
         }
 
-        if (listMode) {
-            cachedXml.putCachedXml(Mode.LIST_MODE, cacheElem);
-        } else {
-            cachedXml.putCachedXml(Mode.DEFAULT, cacheElem);
+        final Iterator<Map.Entry<String, String>> attrs = parent.getAttributes().entrySet().iterator();
+        Map.Entry<String, String> attr;
+        final Map<String, String> attributes = new HashMap<String, String>();
+        while (attrs.hasNext()) {
+            attr = attrs.next();
+            attributes.put(attr.getKey(), attr.getValue());
         }
-        
+
+        cachedXml.putCachedXml(mode, parent.toString());
+        cachedXml.pubCachedAttributes(mode, attributes);
+
         if (item.getDraftVersion() != null) {
             cachedItems.put(item.getDraftVersion().getOID().toString(), oid.toString());
         }
-        
+
         if ((item instanceof ContentPage) && (((ContentPage) item).getContentBundle() != null)) {
             cachedItems.put(((ContentPage) item).getContentBundle().getOID().toString(), oid.toString());
         }
@@ -261,29 +292,29 @@ public final class XMLDeliveryCache {
         }
     }
 
-    private void copyElement(final Element parent, final Element element) {
-        final Element copy = parent.newChildElement(element.getName());
-        final Iterator attrs = element.getAttributes().entrySet().iterator();
-        Map.Entry attr;
-        while (attrs.hasNext()) {
-            attr = (Map.Entry) attrs.next();
-            copy.addAttribute((String) attr.getKey(), (String) attr.getValue());
-        }
-
-        final Iterator childs = element.getChildren().iterator();
-        while (childs.hasNext()) {
-            copyElement(copy, (Element) childs.next());
-        }
-
-        if (element.getText() != null) {
-            copy.setText(element.getText());
-        }
-
-        if (element.getCDATASection() != null) {
-            copy.setCDATASection(element.getCDATASection());
-        }
-
-    }
+//    private void copyElement(final Element parent, final Element element) {
+//        final Element copy = parent.newChildElement(element.getName());
+//        final Iterator attrs = element.getAttributes().entrySet().iterator();
+//        Map.Entry attr;
+//        while (attrs.hasNext()) {
+//            attr = (Map.Entry) attrs.next();
+//            copy.addAttribute((String) attr.getKey(), (String) attr.getValue());
+//        }
+//
+//        final Iterator childs = element.getChildren().iterator();
+//        while (childs.hasNext()) {
+//            copyElement(copy, (Element) childs.next());
+//        }
+//
+//        if (element.getText() != null) {
+//            copy.setText(element.getText());
+//        }
+//
+//        if (element.getCDATASection() != null) {
+//            copy.setCDATASection(element.getCDATASection());
+//        }
+//
+//    }
 
     private class CachedItem {
 
@@ -300,27 +331,47 @@ public final class XMLDeliveryCache {
         public void put(final String context, final CachedXml cachedXml) {
             this.cachedXml.put(context, cachedXml);
         }
+
     }
 
     private class CachedXml {
 
-        private final Map<Mode, Element> cachedXml = new EnumMap<Mode, Element>(Mode.class);
+        //private final Map<Mode, Element> cachedXml = new EnumMap<Mode, Element>(Mode.class);
+        private final Map<Mode, String> cachedXml = new EnumMap<Mode, String>(Mode.class);
+        private final Map<Mode, Map<String, String>> cachedAttributes = new EnumMap<Mode, Map<String, String>>(
+                Mode.class);
 
         public CachedXml() {
             //Nothing
         }
 
-        public Element getCachedXml(final Mode mode) {
+//        public Element getCachedXml(final Mode mode) {
+//            return cachedXml.get(mode);
+//        }
+        public String getCachedXml(final Mode mode) {
             return cachedXml.get(mode);
         }
 
-        public void putCachedXml(final Mode mode, final Element element) {
+        public Map<String, String> getCachedAttributes(final Mode mode) {
+            return cachedAttributes.get(mode);
+        }
+
+//        public void putCachedXml(final Mode mode, final Element element) {
+//            cachedXml.put(mode, element);
+//        }
+        public void pubCachedAttributes(final Mode mode, final Map<String, String> attributes) {
+            cachedAttributes.put(mode, attributes);
+        }
+
+        public void putCachedXml(final Mode mode, final String element) {
             cachedXml.put(mode, element);
         }
+
     }
 
     private enum Mode {
 
         DEFAULT,
-        LIST_MODE,}
+        LIST_MODE,
+    }
 }
