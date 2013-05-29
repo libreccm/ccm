@@ -242,7 +242,7 @@ public class SeriesBundle extends ContentBundle {
     }
 
     public void addVolume(final Publication publication,
-                          final Integer volume) {
+                          final String volume) {
         Assert.exists(publication, Publication.class);
 
         DataObject link = add(PUBLICATIONS, publication.getPublicationBundle());

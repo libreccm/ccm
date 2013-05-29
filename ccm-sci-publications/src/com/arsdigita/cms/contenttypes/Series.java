@@ -108,7 +108,7 @@ public class Series extends ContentPage {
         return getSeriesBundle().getVolumes();
     }
 
-    public void addVolume(final Publication publication, final Integer volume) {
+    public void addVolume(final Publication publication, final String volume) {
         getSeriesBundle().addVolume(publication, volume);
     }
 

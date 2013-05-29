@@ -73,5 +73,5 @@ association {
 					           join ct_publications_volume_in_series.publication_id
 					             to ct_publication_bundles.bundle_id;
             // Additional attributes
-	    Integer[0..1] volumeOfSeries = ct_publications_volume_in_series.volumeOfSeries INTEGER;
+	    String[0..1] volumeOfSeries = ct_publications_volume_in_series.volumeOfSeries VARCHAR(128);
 }

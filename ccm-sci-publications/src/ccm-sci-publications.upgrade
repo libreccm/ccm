@@ -11,4 +11,8 @@
     <version from="6.6.3" to="6.6.4">
         <script sql="ccm-sci-publications/upgrade/::database::-6.6.3-6.6.4.sql" />       
     </version>
+    <!-- Upgrade to version 6.6.5, included in ScientificCMS 2.1.0 -->
+    <version from="6.6.4" to="6.6.5">
+        <script sql="ccm-sci-publications/upgrade/::database::-6.6.4-6.6.5.sql" />       
+    </version>
 </upgrade>

@@ -39,11 +39,11 @@ public class SeriesCollection extends DomainCollection {
         super(dataCollection);
     }
 
-    public Integer getVolumeOfSeries() {
-        return (Integer) m_dataCollection.get(LINK_VOLUME_OF_SERIES);
+    public String getVolumeOfSeries() {
+        return (String) m_dataCollection.get(LINK_VOLUME_OF_SERIES);
     }
 
-    public void setVolumeOfSeries(Integer volumeOfSeries) {
+    public void setVolumeOfSeries(String volumeOfSeries) {
         DataObject link = (DataObject) this.get("link");
 
         link.set(VOLUME_OF_SERIES, volumeOfSeries);
