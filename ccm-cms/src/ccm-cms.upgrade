@@ -64,6 +64,9 @@
   </version>
   <version from="6.6.7" to="6.6.8">
     <!-- Rename com.arsdigita.cms.Workspace to com.arsdigita.cms.ContentCenter -->
+    <!-- Add column to GenericOrganizationalUnit for filtering -->
     <script sql="ccm-cms/upgrade/::database::-6.6.7-6.6.8.sql"/>
+    <!-- Fill the personsstr column -->
+    <script class="com.arsdigita.cms.upgrade.PersonsStrColumn"/>
   </version>
 </upgrade>

@@ -15,15 +15,8 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime$
 -- $Id$
 
--- Update: Rename com.arsdigta.cms.Workspace to com.arsdigita.cms.ContentCenter
-\echo Red Hat Enterprise CMS 6.6.7 -> 6.6.8 Upgrade Script (PostgreSQL)
+-- adds to personsstr column (used for filtering organization by their members)
 
-begin;
-
-\i ../default/upgrade/6.6.7-6.6.8/rename_workspace_to_contentcenter.sql
-\i ../default/upgrade/6.6.7-6.6.8/add_personsstr_column.sql
-
-commit;
+ALTER TABLE cms_organizationalunits ADD COLUMN personsstr TEXT;

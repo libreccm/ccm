@@ -46,6 +46,7 @@ public class GenericOrganizationalUnit extends ContentPage {
     public final static String ADDENDUM = "addendum";
     public final static String CONTACTS = "contacts";
     public final static String PERSONS = "persons";
+    protected final static String PERSONS_STR = "personsStr";
     public final static String SUPERIOR_ORGAUNITS = "superiorOrgaunits";
     public final static String SUBORDINATE_ORGAUNITS = "subordinateOrgaunits";
     public final static String BASE_DATA_OBJECT_TYPE =

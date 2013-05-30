@@ -27,6 +27,8 @@ import com.arsdigita.kernel.ACSObject;
 object type GenericOrganizationalUnit extends ContentPage {
     String[0..1] addendum = cms_organizationalunits.addendum VARCHAR(512);
 
+    String[0..1] personsStr = cms_organizationalunits.personsstr CLOB;
+
     reference key (cms_organizationalunits.organizationalunit_id);
 }
 

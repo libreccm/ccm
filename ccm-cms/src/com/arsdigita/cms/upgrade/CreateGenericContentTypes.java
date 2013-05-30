@@ -18,27 +18,20 @@
  */
 package com.arsdigita.cms.upgrade;
 
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
-import com.arsdigita.cms.ContentTypeLifecycleDefinition;
-import com.arsdigita.cms.ContentTypeWorkflowTemplate;
 import com.arsdigita.cms.contenttypes.XMLContentTypeHandler;
-import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import org.apache.commons.cli.CommandLine;
-import org.apache.log4j.Logger;
-
-import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.workflow.simple.WorkflowTemplate;
+import com.arsdigita.util.cmd.Program;
 import com.arsdigita.xml.XML;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.StringTokenizer;
+import org.apache.commons.cli.CommandLine;
+import org.apache.log4j.Logger;
 
 /**
  *

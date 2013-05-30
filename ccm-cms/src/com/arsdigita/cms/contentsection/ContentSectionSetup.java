@@ -96,14 +96,14 @@ public final class ContentSectionSetup {
      * }
      */
     public static ContentSection setupContentSectionAppInstance(String name,
-            List defaultRoles,
-            List defaultWorkflows,
-            Boolean isPubliclyViewable,
-            String itemResolverClassName,
-            String templateResolverClassName,
-            List sectionContentTypes,
-            Boolean useSectionCategories,
-            List categoryFileList) {
+                                                                List defaultRoles,
+                                                                List defaultWorkflows,
+                                                                Boolean isPubliclyViewable,
+                                                                String itemResolverClassName,
+                                                                String templateResolverClassName,
+                                                                List sectionContentTypes,
+                                                                Boolean useSectionCategories,
+                                                                List categoryFileList) {
 
         s_log.info("Creating content section on /" + name);
 
@@ -179,18 +179,18 @@ public final class ContentSectionSetup {
             s_log.info("Granting privilege cms_" + priv);
 
             role.grantPermission(m_section,
-                    PrivilegeDescriptor.get("cms_" + priv));
+                                 PrivilegeDescriptor.get("cms_" + priv));
 
             if (priv.equals(SecurityManager.CATEGORY_ADMIN)
-                    || priv.equals(SecurityManager.CATEGORIZE_ITEMS)) {
+                || priv.equals(SecurityManager.CATEGORIZE_ITEMS)) {
                 RootCategoryCollection coll = Category.getRootCategories(m_section);
                 while (coll.next()) {
                     if (priv.equals(SecurityManager.CATEGORY_ADMIN)) {
                         role.grantPermission(coll.getCategory(),
-                                PrivilegeDescriptor.ADMIN);
+                                             PrivilegeDescriptor.ADMIN);
                     } else {
                         role.grantPermission(coll.getCategory(),
-                                Category.MAP_DESCRIPTOR);
+                                             Category.MAP_DESCRIPTOR);
                     }
                 }
             }
@@ -201,11 +201,11 @@ public final class ContentSectionSetup {
         // FIXME: String for Site-wide Admininistrators is hardcoded because 
         //        this group in inserted via sql-command during setup
         partyColl.filter("Site-wide Administrators");
-        if(partyColl.next()) {
+        if (partyColl.next()) {
             role.add(partyColl.getParty());
         }
         partyColl.close();
-        
+
         return role;
     }
 
@@ -225,10 +225,10 @@ public final class ContentSectionSetup {
 
         // XXX  Shouldn't  read permission granted depending on pub=true?
         viewers.grantPermission(m_section,
-                PrivilegeDescriptor.get("cms_read_item"));
+                                PrivilegeDescriptor.get("cms_read_item"));
 
         String email = Boolean.TRUE.equals(pub) ? "public@nullhost"
-                : "registered@nullhost";
+                       : "registered@nullhost";
 
         Party viewer = retrieveParty(email);
         if (viewer == null) {
@@ -268,27 +268,27 @@ public final class ContentSectionSetup {
      * @param templateResolverClassName
      */
     public void registerResolvers(String itemResolverClassName,
-            String templateResolverClassName) {
+                                  String templateResolverClassName) {
 
         if (itemResolverClassName != null
-                && itemResolverClassName.length() > 0) {
+            && itemResolverClassName.length() > 0) {
             m_section.setItemResolverClass(itemResolverClassName);
             s_log.info("Registering " + itemResolverClassName
-                    + " as the item resolver class");
+                       + " as the item resolver class");
         } else {
             m_section.setItemResolverClass(ContentSection.getConfig().getDefaultItemResolverClass().getName());
             s_log.info("Registering " + itemResolverClassName
-                    + " as the item resolver class");
+                       + " as the item resolver class");
         }
         if (templateResolverClassName != null
-                && templateResolverClassName.length() > 0) {
+            && templateResolverClassName.length() > 0) {
             m_section.setTemplateResolverClass(templateResolverClassName);
             s_log.info("Registering " + templateResolverClassName
-                    + " as the template resolver class");
+                       + " as the template resolver class");
         } else {
             m_section.setTemplateResolverClass(ContentSection.getConfig().getDefaultTemplateResolverClass().getName());
             s_log.info("Registering " + templateResolverClassName
-                    + " as the template resolver class");
+                       + " as the template resolver class");
         }
 
         m_section.save();
@@ -392,14 +392,14 @@ public final class ContentSectionSetup {
 
             // Save workflow
             wf.save();
-            
+
             // Add Workflow to current section
             m_section.addWorkflowTemplate(wf);
             m_section.save();
-            
+
             // If this workflow should be the default or is the first one
             // save it for easy access in registerContentType
-            if(m_wf == null || (workflow.containsKey("isDefault") && workflow.get("isDefault").equals("true"))) {
+            if (m_wf == null || (workflow.containsKey("isDefault") && workflow.get("isDefault").equals("true"))) {
                 m_section.setDefaultWorkflowTemplate(wf);
                 m_wf = wf;
             }
@@ -469,12 +469,12 @@ public final class ContentSectionSetup {
         m_section.addContentType(type);
 
         s_log.info("Setting the default lifecycle for "
-                + name + " to " + m_lcd.getLabel());
+                   + name + " to " + m_lcd.getLabel());
         ContentTypeLifecycleDefinition.updateLifecycleDefinition(m_section, type, m_lcd);
         m_lcd.save();
 
         s_log.info("Setting the default workflow template for " + name
-                + " to " + m_wf.getLabel());
+                   + " to " + m_wf.getLabel());
         ContentTypeWorkflowTemplate.updateWorkflowTemplate(m_section, type, m_wf);
         m_wf.save();
 
@@ -643,7 +643,7 @@ public final class ContentSectionSetup {
 
         @Override
         public void startElement(String uri, String local,
-                String qName, Attributes attrs) {
+                                 String qName, Attributes attrs) {
             if ("categories".equals(qName)) {
                 String name = attrs.getValue("name");
                 if (name == null) {
@@ -653,7 +653,7 @@ public final class ContentSectionSetup {
                 String context = attrs.getValue("context");
 
                 Category root = Category.getRootForObject(m_section,
-                        context);
+                                                          context);
                 if (root == null) {
                     root = new Category();
                 }
@@ -662,8 +662,8 @@ public final class ContentSectionSetup {
 
                 if (root.isNew()) {
                     Category.setRootForObject(m_section,
-                            root,
-                            context);
+                                              root,
+                                              context);
                 }
                 m_cats.push(root);
                 PermissionService.setContext(root, m_section);
@@ -705,5 +705,6 @@ public final class ContentSectionSetup {
                 m_cats.pop();
             }
         }
+
     }  // END private class CategoryHandler
 }

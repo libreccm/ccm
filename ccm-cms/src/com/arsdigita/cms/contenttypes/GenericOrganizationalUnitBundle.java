@@ -3,6 +3,7 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.CustomCopy;
+import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.ItemCopier;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -74,18 +75,45 @@ public class GenericOrganizationalUnitBundle extends ContentBundle {
         link.set(GenericOrganizationalUnitPersonCollection.PERSON_ROLE, role);
         link.set(GenericOrganizationalUnitPersonCollection.STATUS, status);
         link.save();
+        
+        updatePersonsStr();
     }
 
     public void removePerson(final GenericPerson person) {
         Assert.exists(person, GenericPerson.class);
 
         remove(PERSONS, person.getContentBundle());
+        
+        updatePersonsStr();
     }
 
     public boolean hasPersons() {
         return !getPersons().isEmpty();
     }
 
+    protected void updatePersonsStr() {
+        final GenericOrganizationalUnitPersonCollection persons = getPersons();
+        final StringBuilder builder = new StringBuilder();
+        while(persons.next()) {
+            if (builder.length() > 0) {
+                builder.append("; ");
+            }
+            builder.append(persons.getSurname());
+            builder.append(", ");
+            builder.append(persons.getGivenName());
+        }
+        
+        final String personsStr = builder.toString();
+        
+        final ItemCollection instances = getInstances();
+        
+        GenericOrganizationalUnit orgaunit;
+        while(instances.next()) {
+            orgaunit = (GenericOrganizationalUnit) instances.getDomainObject();
+            orgaunit.set(GenericOrganizationalUnit.PERSONS_STR, personsStr);
+        }
+    }
+    
     public GenericOrganizationalUnitContactCollection getContacts() {
         return new GenericOrganizationalUnitContactCollection((DataCollection) get(
                 CONTACTS));
