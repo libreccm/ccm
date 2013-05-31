@@ -79,6 +79,7 @@ public class Loader extends PackageLoader {
         ApplicationType type = new ApplicationType( 
                                        "Shortcuts",
                                         Shortcuts.BASE_DATA_OBJECT_TYPE );
+        type.setSingleton(true);
         type.setDescription("CCM Shortcuts Administration instance");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");

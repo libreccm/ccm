@@ -31,6 +31,7 @@ public class PublicPersonalProfilesLoader extends PackageLoader {
                 final ApplicationType type = new ApplicationType(
                         "PublicPersonalProfile",
                         PublicPersonalProfiles.BASE_DATA_OBJECT_TYPE);
+                type.setSingleton(true);
                 type.setDescription("PublicPersonalProfile Viewer");
 
                 Application.createApplication(

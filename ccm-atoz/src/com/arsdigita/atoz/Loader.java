@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz;
 
 import com.arsdigita.kernel.Kernel;
@@ -37,41 +36,43 @@ public class Loader extends PackageLoader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+    @Override
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
+            @Override
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
                 setupAtoZ();
             }
+
         }.run();
     }
 
-
     private void setupAtoZ() {
         s_log.debug("Creating AtoZ application...");
-        
+
 //  The old ApplicationSetup code is retained here as an example for
 //  developers how to migrate existing legacy code. See release notes 2.0
 //  Should be removed in subsequent releases.
 
-/*
-        ApplicationSetup setup = new ApplicationSetup(s_log);
+        /*
+         ApplicationSetup setup = new ApplicationSetup(s_log);
 
-        setup.setApplicationObjectType(AtoZ.BASE_DATA_OBJECT_TYPE);
-        setup.setKey("atoz");
-        setup.setTitle("A-Z");
-        setup.setDescription("A-Z of content");
-        setup.setSingleton(true);
-        // setInstantiator is a task of the initalizer now!
-        setup.setInstantiator(new ACSObjectInstantiator() {
-                public DomainObject doNewInstance(DataObject dataObject) {
-                    return new AtoZ(dataObject);
-                }
-            });
-        ApplicationType type = setup.run();
-        type.save();
-*/
+         setup.setApplicationObjectType(AtoZ.BASE_DATA_OBJECT_TYPE);
+         setup.setKey("atoz");
+         setup.setTitle("A-Z");
+         setup.setDescription("A-Z of content");
+         setup.setSingleton(true);
+         // setInstantiator is a task of the initalizer now!
+         setup.setInstantiator(new ACSObjectInstantiator() {
+         public DomainObject doNewInstance(DataObject dataObject) {
+         return new AtoZ(dataObject);
+         }
+         });
+         ApplicationType type = setup.run();
+         type.save();
+         */
 
         /* Create new type legacy free application type                 
          * NOTE: The wording in the title parameter of ApplicationType
@@ -80,20 +81,21 @@ public class Loader extends PackageLoader {
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
          * "AtoZ" will become "atoz".                   */
-        ApplicationType type = new ApplicationType("AtoZ",
-                                                   AtoZ.BASE_DATA_OBJECT_TYPE );
+        final ApplicationType type = new ApplicationType("AtoZ",
+                                                         AtoZ.BASE_DATA_OBJECT_TYPE);        
         type.setDescription("A-Z of content.");
-        // type.setSingleton(true);  // For later use
+        type.setSingleton(true); 
         type.save();
 
         if (!Application.isInstalled(AtoZ.BASE_DATA_OBJECT_TYPE,
                                      "/atoz/")) {
-            Application app = Application.createApplication(type,
-                                                            "atoz",
-                                                            "AtoZ",
-                                                            null);
+            final Application app = Application.createApplication(type,
+                                                                  "atoz",
+                                                                  "AtoZ",
+                                                                  null);
             app.save();
         }
         s_log.debug("AtoZ application type created.");
     }
+
 }

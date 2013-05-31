@@ -149,13 +149,13 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
     }
 
     private void createSeriesElemXml(final Series series,
-                                     final Integer volumeOfSeries,
+                                     final String volumeOfSeries,
                                      final Element seriesElem,
                                      final PageState state) {
         final XmlGenerator generator = new XmlGenerator(series);
         generator.setItemElemName("series", "");
         if (volumeOfSeries != null) {
-            generator.addItemAttribute("volume", volumeOfSeries.toString());
+            generator.addItemAttribute("volume", volumeOfSeries);
         }
         generator.setListMode(listMode);
         generator.generateXML(state, seriesElem, "");

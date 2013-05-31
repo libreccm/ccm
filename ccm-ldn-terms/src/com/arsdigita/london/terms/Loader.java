@@ -52,7 +52,7 @@ public class Loader extends PackageLoader {
         ApplicationType type =
                 new ApplicationType( "Terms",
                                      Terms.BASE_DATA_OBJECT_TYPE );
-
+        type.setSingleton(true);
         type.setDescription("CCM Terms administration");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");

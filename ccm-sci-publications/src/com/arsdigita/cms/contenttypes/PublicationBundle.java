@@ -246,7 +246,7 @@ public class PublicationBundle extends ContentBundle {
 
     protected void updateAuthorsStr() {
         final AuthorshipCollection authors = getAuthors();
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         while (authors.next()) {
             if (builder.length() > 0) {
                 builder.append("; ");

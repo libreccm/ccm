@@ -188,6 +188,7 @@ public class Loader extends PackageLoader {
                 ContentCenter.BASE_DATA_OBJECT_TYPE);
 
         type.setDescription("The content center workspace for content creators.");
+        type.setSingleton(true);
         type.save();
 
         s_log.debug("CMS ContentCenter type created.");
@@ -244,6 +245,7 @@ public class Loader extends PackageLoader {
         ApplicationType type = new ApplicationType("CMS Service",
                 Service.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Services to store global resources and assets.");
+        type.setSingleton(true);
         type.save();
 
         return type;

@@ -77,7 +77,7 @@ public class Loader extends PackageLoader {
         /* Try: legacy free */
         ApplicationType type = new  ApplicationType("Search",
                                                     Search.BASE_DATA_OBJECT_TYPE );
-
+        type.setSingleton(true);
         type.setDescription("Public search");
         type.save();
         

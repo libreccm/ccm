@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-atoz"
   prettyName="A-Z"
-  version="6.6.2"
+  version="6.6.3"
   release="1"
   webapp="ROOT">
 

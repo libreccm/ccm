@@ -18,31 +18,27 @@
  */
 package com.arsdigita.kernel.ui;
 
-import com.arsdigita.web.Application;
-import com.arsdigita.kernel.Resource;
-import com.arsdigita.kernel.ResourceType;
-import com.arsdigita.kernel.ui.Globalized;
-import com.arsdigita.globalization.GlobalizedMessage;
-
-import java.math.BigDecimal;
-
-import com.arsdigita.util.Assert;
-
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.metadata.ObjectType;
+import com.arsdigita.bebop.Label;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
+import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.Resource;
+import com.arsdigita.kernel.ResourceType;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.metadata.ObjectType;
+import com.arsdigita.util.Assert;
+import com.arsdigita.web.Application;
+import java.math.BigDecimal;
 
 public class BasicResourceConfigFormSection
         extends ResourceConfigFormSection implements Globalized {
+    
     private BigDecimal m_resourceTypeID;
     private RequestLocal m_parentResourceRL;
 

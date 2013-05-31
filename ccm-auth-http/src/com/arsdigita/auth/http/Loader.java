@@ -94,6 +94,7 @@ public class Loader extends PackageLoader {
                                                     HTTPAuth.BASE_DATA_OBJECT_TYPE );
 
         type.setDescription("CCM HTTP authentication administration");
+        type.setSingleton(true);
         type.save();
 
         Application admin = Application.retrieveApplicationForPath("/admin/");

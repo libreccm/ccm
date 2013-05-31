@@ -247,7 +247,7 @@ public class PublicationSeriesTable
             
             final SeriesCollection seriesCol = publication.getSeries();            
             
-            Integer volumeOfSeries = null;            
+            String volumeOfSeries = null;            
             while(seriesCol.next()) {
                 if (seriesId.equals(seriesCol.getSeries().getID())) {
                     volumeOfSeries = seriesCol.getVolumeOfSeries();
@@ -259,7 +259,7 @@ public class PublicationSeriesTable
             if (volumeOfSeries == null) {
                 return new Label("");
             } else {
-                return new Label(volumeOfSeries.toString());
+                return new Label(volumeOfSeries);
             }
         }
         

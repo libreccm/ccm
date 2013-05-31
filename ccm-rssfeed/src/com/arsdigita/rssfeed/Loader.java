@@ -99,6 +99,7 @@ public class Loader extends PackageLoader {
         ApplicationType type = new ApplicationType( 
                                        "RSS Feed",
                                         RSSFeed.BASE_DATA_OBJECT_TYPE );
+        type.setSingleton(true);
         type.setDescription("Provides RSS feed service");
       
         if (!Application.isInstalled(RSSFeed.BASE_DATA_OBJECT_TYPE,

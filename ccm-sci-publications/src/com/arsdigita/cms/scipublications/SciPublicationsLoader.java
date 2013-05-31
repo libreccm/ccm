@@ -29,6 +29,7 @@ public class SciPublicationsLoader extends PackageLoader {
                 final ApplicationType type = new ApplicationType(
                         "SciPublications",
                         SciPublications.BASE_DATA_OBJECT_TYPE);
+                type.setSingleton(true);
                 type.setDescription("Publications Import and Export");
                 
                 Application.createApplication(

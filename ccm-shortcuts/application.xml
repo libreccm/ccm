@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-shortcuts"
   prettyName="Shortcuts"
-  version="6.6.1"
+  version="6.6.2"
   release="1" 
   webapp="ROOT">
   <ccm:dependencies>

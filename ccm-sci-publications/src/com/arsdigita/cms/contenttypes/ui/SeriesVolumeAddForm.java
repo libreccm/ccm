@@ -60,7 +60,7 @@ public class SeriesVolumeAddForm extends BasicItemForm {
                                SimpleEditStep editStep) {
         super("VolumesEntryForm", itemModel);
         m_itemModel = itemModel;
-        this.editStep = editStep;        
+        this.editStep = editStep;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class SeriesVolumeAddForm extends BasicItemForm {
             }
 
             m_itemSearch.setVisible(state, false);
-            selectedVolumeLabel.setLabel(publication.getTitle(), state);
+            selectedVolumeLabel.setLabel(publication.getTitle());
             selectedVolumeLabel.setVisible(state, true);
         }
 
@@ -140,9 +140,7 @@ public class SeriesVolumeAddForm extends BasicItemForm {
                 volume = (Publication) volume.getContentBundle().getInstance(series.
                         getLanguage());
 
-                series.addVolume(volume,
-                                 (Integer) data.get(
-                        VolumeInSeriesCollection.VOLUME_OF_SERIES));
+                series.addVolume(volume, (String) data.get(VolumeInSeriesCollection.VOLUME_OF_SERIES));
             } else {
                 VolumeInSeriesCollection volumes = series.getVolumes();
 
@@ -198,4 +196,5 @@ public class SeriesVolumeAddForm extends BasicItemForm {
             volumes.close();
         }
     }
+
 }

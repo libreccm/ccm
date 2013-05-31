@@ -80,7 +80,6 @@ import javax.mail.internet.InternetAddress;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Core Loader executes nonrecurring at install time and loads (installs
  * and initializes) the Core packages persistently into database.
@@ -97,15 +96,11 @@ public class Loader extends PackageLoader {
 
     /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Loader.class);
-
 // /////////////////////////////////////////////////////////////////////////////
 // Parameter Section
 // /////////////////////////////////////////////////////////////////////////////
-
     private EmailParameter m_email = new EmailParameter("waf.admin.email");
-
-    private StringParameter m_screen = new StringParameter
-        ("waf.admin.name.screen", Parameter.OPTIONAL, null) {
+    private StringParameter m_screen = new StringParameter("waf.admin.name.screen", Parameter.OPTIONAL, null) {
         @Override
         public Object getDefaultValue() {
             String email = getEmail();
@@ -120,44 +115,28 @@ public class Loader extends PackageLoader {
                 }
             }
         }
+
     };
-
-    private StringParameter m_given = new StringParameter
-        ("waf.admin.name.given", Parameter.REQUIRED, null);
-
-    private StringParameter m_family = new StringParameter
-        ("waf.admin.name.family", Parameter.REQUIRED, null);
-
-    private StringParameter m_password = new StringParameter
-        ("waf.admin.password", Parameter.REQUIRED, null);
-
-    private StringParameter m_question = new StringParameter
-        ("waf.admin.password.question", Parameter.REQUIRED, null);
-
-    private StringParameter m_answer = new StringParameter
-        ("waf.admin.password.answer", Parameter.REQUIRED, null);
-
-    private StringParameter m_dispatcher = new StringParameter
-        ("waf.login.dispatcher", Parameter.OPTIONAL,
-         "com.arsdigita.ui.login.DummyDispatcher");
-     //  "com.arsdigita.ui.login.SubsiteDispatcher");
-
-    private StringParameter m_resource = new StringParameter
-        ("waf.mime.resource", Parameter.OPTIONAL,
-         "com/arsdigita/core/mimetypes.properties");
-
+    private StringParameter m_given = new StringParameter("waf.admin.name.given", Parameter.REQUIRED, null);
+    private StringParameter m_family = new StringParameter("waf.admin.name.family", Parameter.REQUIRED, null);
+    private StringParameter m_password = new StringParameter("waf.admin.password", Parameter.REQUIRED, null);
+    private StringParameter m_question = new StringParameter("waf.admin.password.question", Parameter.REQUIRED, null);
+    private StringParameter m_answer = new StringParameter("waf.admin.password.answer", Parameter.REQUIRED, null);
+    private StringParameter m_dispatcher = new StringParameter("waf.login.dispatcher", Parameter.OPTIONAL,
+                                                               "com.arsdigita.ui.login.DummyDispatcher");
+    //  "com.arsdigita.ui.login.SubsiteDispatcher");
+    private StringParameter m_resource = new StringParameter("waf.mime.resource", Parameter.OPTIONAL,
+                                                             "com/arsdigita/core/mimetypes.properties");
     /**
      * Recognized character sets
      */
     // In Old Initializer: CHARSETS as List.class
     //     charsets = {"ISO-8859-1","UTF-8"};
     private final Parameter m_charsets =
-            new StringArrayParameter(
-                    "waf.globalization.charsets",
-                    Parameter.REQUIRED,
-                    new String[] { "ISO-8859-1","UTF-8" }
-                );
-
+                            new StringArrayParameter(
+            "waf.globalization.charsets",
+            Parameter.REQUIRED,
+            new String[]{"ISO-8859-1", "UTF-8"});
     /**
      * Each entry in the "locales" list is a 4-tuple of the form
      *   {language, country, variant, charset}
@@ -170,22 +149,17 @@ public class Loader extends PackageLoader {
      */
     // In OLD Initializer: LOCALES as List.class
     private final Parameter m_locales =
-            new StringArrayParameter(
-                    "waf.globalization.locales",
-                    Parameter.REQUIRED,
-                    new String[] {"en: : :UTF-8","en:GB: :UTF-8","en:US: :UTF-8"
-                                 ,"es: : :UTF-8","es:ES: :UTF-8"
-                                 ,"da: : :UTF-8","da:DK: :UTF-8"
-                                 ,"de: : :UTF-8","de:DE: :UTF-8"
-                                 ,"fr: : :UTF-8","fr:FR: :UTF-8"
-                                 ,"ru: : :UTF-8"
-                                 }
-                    );
+                            new StringArrayParameter(
+            "waf.globalization.locales",
+            Parameter.REQUIRED,
+            new String[]{"en: : :UTF-8", "en:GB: :UTF-8", "en:US: :UTF-8", "es: : :UTF-8", "es:ES: :UTF-8",
+                         "da: : :UTF-8", "da:DK: :UTF-8", "de: : :UTF-8", "de:DE: :UTF-8", "fr: : :UTF-8",
+                         "fr:FR: :UTF-8", "ru: : :UTF-8"
+    });
 
 // /////////////////////////////////////////////////////////////////////////////
 // Parameter Section END
 // /////////////////////////////////////////////////////////////////////////////
-
     /**
      * Constructor, just registers parameters.
      */
@@ -213,7 +187,6 @@ public class Loader extends PackageLoader {
 // /////////////////////////////////////////////////////////////////////////////
 // Getter Section for Parameter Values
 // /////////////////////////////////////////////////////////////////////////////
-
     private String getEmail() {
         return ((InternetAddress) get(m_email)).toString();
     }
@@ -256,8 +229,8 @@ public class Loader extends PackageLoader {
      * @return List of recognized character sets.
      */
     private List getCharsets() {
-        String[] charsets =  (String[]) get(m_charsets) ;
-        return (List) Arrays.asList(charsets) ;
+        String[] charsets = (String[]) get(m_charsets);
+        return (List) Arrays.asList(charsets);
     }
 
     /**
@@ -267,13 +240,13 @@ public class Loader extends PackageLoader {
     private List getLocales() {
 
         /** Value of the locales parameter, a string array of
-            4-tuple of locale values (see above)                             */
-        String[] locales = (String[]) get(m_locales) ;
+         4-tuple of locale values (see above)                             */
+        String[] locales = (String[]) get(m_locales);
 
         if (locales != null) {
             ArrayList localeTupel = new ArrayList();
-            for (int i = 0; i < locales.length ; ++i) {
-                String[] localeSet = StringUtils.split(locales[i],':');
+            for (int i = 0; i < locales.length; ++i) {
+                String[] localeSet = StringUtils.split(locales[i], ':');
                 localeTupel.add(Arrays.asList(localeSet));
             }
             return localeTupel;
@@ -287,8 +260,6 @@ public class Loader extends PackageLoader {
 // /////////////////////////////////////////////////////////////////////////////
 // Getter Section for Parameter Values END
 // /////////////////////////////////////////////////////////////////////////////
-
-
     public void run(final ScriptContext ctx) {
         s_log.debug("CoreLoader run method started.");
         new KernelExcursion() {
@@ -301,8 +272,8 @@ public class Loader extends PackageLoader {
                 s_log.debug("CoreLoader: Going to execute loadHost().");
                 loadHost();
 
-            //  s_log.debug("CoreLoader: Going to execute loadSubsite().");
-            //  loadSubsite(loadKernel());
+                //  s_log.debug("CoreLoader: Going to execute loadSubsite().");
+                //  loadSubsite(loadKernel());
 
                 s_log.debug("CoreLoader: Going to create System Administrator.");
                 createSystemAdministrator();
@@ -329,6 +300,7 @@ public class Loader extends PackageLoader {
                 loadGlobalization();
 
             }
+
         }.run();
         s_log.debug("CoreLoader run method completed.");
     }
@@ -368,61 +340,57 @@ public class Loader extends PackageLoader {
      *         module otherwise Login doesn't work!
      *
      * @param rootNode
-//   * @deprecated will be removed without replacement. Naot needed anymore
+     //   * @deprecated will be removed without replacement. Naot needed anymore
      */
-/*  private void loadSubsite(SiteNode rootNode) {
-        s_log.debug("CoreLoader: Going to execute method loadSubsite().");
-        String sDispatcher = "";
+    /*  private void loadSubsite(SiteNode rootNode) {
+     s_log.debug("CoreLoader: Going to execute method loadSubsite().");
+     String sDispatcher = "";
 
-        PackageInstance packageInstance = rootNode.getPackageInstance();
-        if (packageInstance == null) {
-            throw new IllegalStateException
-                ("No package instance mounted at the root node");
-        }
-        PackageType subsite = packageInstance.getType();
+     PackageInstance packageInstance = rootNode.getPackageInstance();
+     if (packageInstance == null) {
+     throw new IllegalStateException
+     ("No package instance mounted at the root node");
+     }
+     PackageType subsite = packageInstance.getType();
 
-        // getType() returns a disconnected object.  To get a connected object
-        // we do a findByKey(key).
-        String packageKey = subsite.getKey();
-        try {
-            subsite = PackageType.findByKey(packageKey);
-        } catch (DataObjectNotFoundException e) {
-            throw new IllegalStateException
-                ("Package Type with key \"" + packageKey + "\" was not found.\n");
-        }
+     // getType() returns a disconnected object.  To get a connected object
+     // we do a findByKey(key).
+     String packageKey = subsite.getKey();
+     try {
+     subsite = PackageType.findByKey(packageKey);
+     } catch (DataObjectNotFoundException e) {
+     throw new IllegalStateException
+     ("Package Type with key \"" + packageKey + "\" was not found.\n");
+     }
 
-        // Set subsite dispatcher class.
-        subsite.setDispatcherClass(getDispatcher());
-    }  */
-
+     // Set subsite dispatcher class.
+     subsite.setDispatcherClass(getDispatcher());
+     }  */
 //  /**
 //   * Create Root Site Node for loadSubsite()
 //   * @return root node
 //   * @deprecated will be removed without replacement. Naot needed anymore
 //   */
 /*  private SiteNode loadKernel() {
-        // Create Root Site Node
-        s_log.debug("CoreLoader: Going to execute method loadKernel().");
+     // Create Root Site Node
+     s_log.debug("CoreLoader: Going to execute method loadKernel().");
 
-        final SiteNode rootNode = SiteNode.createSiteNode(null, null);
+     final SiteNode rootNode = SiteNode.createSiteNode(null, null);
 
-        // Create Package Types and Instances
-        s_log.debug("loadKernel: creating Package Types and Instances.");
-        PackageType subsite = PackageType.create
-            ("acs-subsite", "ACS Subsite", "ACS Subsites",
-             "http://arsdigita.com/acs-subsite/");
-        PackageInstance subsiteInstance = subsite.createInstance("Main Site");
+     // Create Package Types and Instances
+     s_log.debug("loadKernel: creating Package Types and Instances.");
+     PackageType subsite = PackageType.create
+     ("acs-subsite", "ACS Subsite", "ACS Subsites",
+     "http://arsdigita.com/acs-subsite/");
+     PackageInstance subsiteInstance = subsite.createInstance("Main Site");
 
-        // Mount instances.
-        s_log.debug("loadKernel: mount Instances.");
-        rootNode.mountPackage(subsiteInstance);
+     // Mount instances.
+     s_log.debug("loadKernel: mount Instances.");
+     rootNode.mountPackage(subsiteInstance);
 
-        s_log.debug("CoreLoader: Going to complete method loadKernel().");
-        return rootNode;
-    } */
-
-
-
+     s_log.debug("CoreLoader: Going to complete method loadKernel().");
+     return rootNode;
+     } */
     /**
      * Ensure that at least one User with universal "admin" permission exists
      * after installation.
@@ -438,9 +406,8 @@ public class Loader extends PackageLoader {
         String password = getPassword();
         String passwordQuestion = getQuestion();
         String passwordAnswer = getAnswer();
-        s_log.debug("createSystemAdministrator: EmailAddr: " + emailAddress +
-                    "\n screenName: " + screenName +
-                    "\n givenName: " + givenName );
+        s_log.debug("createSystemAdministrator: EmailAddr: " + emailAddress + "\n screenName: " + screenName
+                    + "\n givenName: " + givenName);
 
         // Allow not creating system administrator account.
         // (Specified by setting parameter
@@ -461,8 +428,7 @@ public class Loader extends PackageLoader {
         s_log.debug("createSystemAdministrator(): going to create new User.");
         User sa = new User();
         sa.setPrimaryEmail(new EmailAddress(emailAddress));
-        if (screenName != null &&
-            screenName.length() > 0) {
+        if (screenName != null && screenName.length() > 0) {
             sa.setScreenName(screenName);
         }
         sa.getPersonName().setGivenName(givenName);
@@ -478,22 +444,19 @@ public class Loader extends PackageLoader {
         // Grant the system administrator universal "admin" permission.
 
         s_log.debug("createSystemAdministrator(): going to grant admin perms.");
-        PermissionService.grantPermission
-            (new UniversalPermissionDescriptor
-             (PrivilegeDescriptor.ADMIN, sa));
+        PermissionService.grantPermission(new UniversalPermissionDescriptor(PrivilegeDescriptor.ADMIN, sa));
 
         // Add system administrator to site-wide administrator group
         GroupCollection groupColl = Group.retrieveAll();
         // FIXME: String for Site-wide Admininistrators is hardcoded because
         //        this group in inserted via sql-command during setup
         groupColl.filter("Site-wide Administrators");
-        if(groupColl.next()) {
+        if (groupColl.next()) {
             groupColl.getGroup().addMember(sa);
-        }        
+        }
         groupColl.close();
 
-        s_log.debug("Adding administrator: \"" + givenName + " " +
-                   familyName + "\" <" + emailAddress + ">");
+        s_log.debug("Adding administrator: \"" + givenName + " " + familyName + "\" <" + emailAddress + ">");
         s_log.debug("CoreLoader: method createSystemAdministrator() completed.");
 
     }
@@ -507,9 +470,10 @@ public class Loader extends PackageLoader {
     public static void loadLoginApp() {
 
         ApplicationType loginType =
-                new ApplicationType("login",
-                                    Login.BASE_DATA_OBJECT_TYPE );
+                        new ApplicationType("login",
+                                            Login.BASE_DATA_OBJECT_TYPE);
         loginType.setDescription("CCM user login application");
+        loginType.setSingleton(true);
         loginType.save();
 
 
@@ -521,7 +485,6 @@ public class Loader extends PackageLoader {
 
     }
 
-
     /**
      * Setup core Admin application. Loads type into database and instances the
      * single default instance.
@@ -530,9 +493,10 @@ public class Loader extends PackageLoader {
     public static void loadAdminApp() {
 
         ApplicationType adminType =
-                new ApplicationType("admin",
-                                    Admin.BASE_DATA_OBJECT_TYPE );
+                        new ApplicationType("admin",
+                                            Admin.BASE_DATA_OBJECT_TYPE);
         adminType.setDescription("CCM user and group administration");
+        adminType.setSingleton(true);
         adminType.save();
 
 
@@ -560,9 +524,10 @@ public class Loader extends PackageLoader {
          * Example: "Permissions" will become "permissions".
          */
         ApplicationType type =
-                new ApplicationType("Permissions",
-                                    Permissions.BASE_DATA_OBJECT_TYPE );
+                        new ApplicationType("Permissions",
+                                            Permissions.BASE_DATA_OBJECT_TYPE);
         type.setDescription("CCM permissions administration");
+        type.setSingleton(true);
         type.save();
 
         Application app = Application.createApplication(type,
@@ -585,9 +550,10 @@ public class Loader extends PackageLoader {
     public static void loadWebDev() {
 
         ApplicationType webDevType =
-                new ApplicationType("WebDev Support",
-                                    WebDevSupport.BASE_DATA_OBJECT_TYPE );
+                        new ApplicationType("WebDev Support",
+                                            WebDevSupport.BASE_DATA_OBJECT_TYPE);
         webDevType.setDescription("WebDeveloper Support application");
+        webDevType.setSingleton(true);
         webDevType.save();
 
         Application webDev = Application.createApplication(webDevType,
@@ -606,8 +572,7 @@ public class Loader extends PackageLoader {
         // ResourceType manages the entries in table application_types and
         // therefore actually creates a sort of new style legacy free
         // application type
-        ResourceType type = ResourceType.createResourceType
-                                         ("Portal", Portal.BASE_DATA_OBJECT_TYPE);
+        ResourceType type = ResourceType.createResourceType("Portal", Portal.BASE_DATA_OBJECT_TYPE);
         type.setDescription("A Portal!");
     }
 
@@ -627,64 +592,61 @@ public class Loader extends PackageLoader {
 
         try {
             MimeTypeRow row = new MimeTypeRow();
-            CSVParameterReader loader = new CSVParameterReader
-                (new InputStreamReader(is), row.getParameters());
+            CSVParameterReader loader = new CSVParameterReader(new InputStreamReader(is), row.getParameters());
 
             while (loader.next()) {
 
                 row.load(loader);
 
-                s_log.info("Adding mimetype: " + row.getType() + " (" +
-                           row.getLabel() + ")");
-                MimeType mime = MimeType.createMimeType
-                    (row.getType(), row.getJavaClass(), row.getObjectType());
+                s_log.info("Adding mimetype: " + row.getType() + " (" + row.getLabel() + ")");
+                MimeType mime = MimeType.createMimeType(row.getType(), row.getJavaClass(), row.getObjectType());
                 mime.setLabel(row.getLabel());
                 mime.setFileExtension(row.getDefaultExtension());
 
                 if (mime instanceof TextMimeType) {
-                    ((TextMimeType) mime).setAllowINSOConvert
-                        ("1".equals(row.getSizerOrINSO()));
+                    ((TextMimeType) mime).setAllowINSOConvert("1".equals(row.getSizerOrINSO()));
                 }
                 if (mime instanceof ImageMimeType) {
                     ((ImageMimeType) mime).setImageSizer(row.getSizerOrINSO());
                 }
                 String[] extensions =
-                    StringUtils.split(row.getExtensions(), ',');
+                         StringUtils.split(row.getExtensions(), ',');
                 for (int i = 0; i < extensions.length; i++) {
                     MimeTypeExtension ext =
-                        MimeTypeExtension.create(extensions[i],
-                                                 mime.getMimeType());
+                                      MimeTypeExtension.create(extensions[i],
+                                                               mime.getMimeType());
                     ext.save();
                 }
             }
         } finally {
-            try { is.close(); }
-            catch (IOException e) { throw new UncheckedWrapperException(e); }
+            try {
+                is.close();
+            } catch (IOException e) {
+                throw new UncheckedWrapperException(e);
+            }
         }
     }
 
     private void loadGlobalization() throws ConfigError {
         List charsets = (List) getCharsets();
-        if ( charsets == null ) {
-            throw new ConfigError
-                ("You must specify at least one charset in the m_charsets " +
-                 "parameter of the core loader parameter section. " +
-                 "UTF-8 would be a good first choice.");
+        if (charsets == null) {
+            throw new ConfigError("You must specify at least one charset in the m_charsets "
+                                  + "parameter of the core loader parameter section. "
+                                  + "UTF-8 would be a good first choice.");
         }
 
         Map charsetMap = new HashMap();
 
-        for (Iterator i=charsets.iterator(); i.hasNext(); ) {
+        for (Iterator i = charsets.iterator(); i.hasNext();) {
             String charsetName = (String) i.next();
-            s_log.debug("Dealing with charset name: " + charsetName );
+            s_log.debug("Dealing with charset name: " + charsetName);
 
             // Check if this is a valid charset.  Is there a better way to do
             // this? - vadimn@redhat.com, Mon 2002-07-29 14:47:41 -0400
             try {
                 new OutputStreamWriter(new ByteArrayOutputStream(), charsetName);
             } catch (UnsupportedEncodingException ex) {
-                throw new ConfigError
-                    (charsetName + " is not a supported charset");
+                throw new ConfigError(charsetName + " is not a supported charset");
             }
             Charset charset = new Charset();
             charset.setCharset(charsetName);
@@ -694,27 +656,24 @@ public class Loader extends PackageLoader {
 
         List locales = (List) getLocales();
 
-        if ( locales == null ) {
-            throw new ConfigError
-                ("You must specify at least one locale in the m_locales " +
-                 "parameter of core loader parameter section. " +
-                 "The \"en\" locale is probably required.");
+        if (locales == null) {
+            throw new ConfigError("You must specify at least one locale in the m_locales "
+                                  + "parameter of core loader parameter section. "
+                                  + "The \"en\" locale is probably required.");
         }
 
-        for (Iterator i=locales.iterator(); i.hasNext(); ) {
+        for (Iterator i = locales.iterator(); i.hasNext();) {
             List localeData = (List) i.next();
-            String language    = (String) localeData.get(0);
-            String country     = (String) localeData.get(1);
-            String variant     = (String) localeData.get(2);
+            String language = (String) localeData.get(0);
+            String country = (String) localeData.get(1);
+            String variant = (String) localeData.get(2);
             String charsetName = (String) localeData.get(3);
             Locale locale = new Locale(language, country, variant);
 
             Charset defaultCharset = (Charset) charsetMap.get(charsetName);
-            if ( defaultCharset == null ) {
-                throw new ConfigError
-                    ("You must list " + charsetName + " in the \"m_charsets\" " +
-                     "parameter before using it in the \"m_locales\" " +
-                     "\" parameter.");
+            if (defaultCharset == null) {
+                throw new ConfigError("You must list " + charsetName + " in the \"m_charsets\" "
+                                      + "parameter before using it in the \"m_locales\" " + "\" parameter.");
             }
             locale.setDefaultCharset(defaultCharset);
             locale.save();

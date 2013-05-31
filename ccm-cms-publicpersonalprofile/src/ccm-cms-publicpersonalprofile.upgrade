@@ -7,4 +7,7 @@
     <version from="6.6.2" to="6.6.3">
         <script class="com.arsdigita.cms.contenttypes.upgrades.PublicPersonalProfileUpgrade662to563"/>        
     </version>
+    <version from="6.6.3" to="6.6.4">
+        <script sql="ccm-cms-publicpersonalprofile/upgrade/::database::-6.6.2-6.6.3.sql"/>        
+    </version>   
 </upgrade>

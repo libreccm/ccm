@@ -76,6 +76,7 @@ public class Loader extends PackageLoader {
         ApplicationType type = new ApplicationType
                                        ("Subsite",
                                         Subsite.BASE_DATA_OBJECT_TYPE);
+        type.setSingleton(true);
         type.setDescription("CCM subsite administration");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");

@@ -67,7 +67,7 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
         ApplicationType type =
                 new ApplicationType(  "Theme Director",
                                       ThemeDirector.BASE_DATA_OBJECT_TYPE );
-
+        type.setSingleton(true);
         type.setDescription("CCM themes administration");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");

@@ -513,13 +513,14 @@ public class ApplicationType extends ResourceType {
      * Declare this ApplicationType to be a singleton.  That is to
      * say, there ought to only ever be one Application of this type
      * directly under a given Workspace.
-     * @ deprecated with no replacement.
-     * @ throws UnsupportedOperationException when this method is
-     * called for an application type without a corresponding package
-     * type.
+     * 
      * Deprecated removed. Decided that also a new type app could be
      * qualified as singleton. Specifically used in the planned app admin
      * app.
+     * 
+     * @ throws UnsupportedOperationException when this method is
+     * called for an application type without a corresponding package
+     * type.     
      */
     public void setSingleton(boolean isSingleton) {
 
@@ -527,8 +528,7 @@ public class ApplicationType extends ResourceType {
     }
 
     /**
-     * Tell whether this ApplicationType is a singleton.
-     * @ deprecated with no replacement.
+     * Tell whether this ApplicationType is a singleton.     
      */
     public boolean isSingleton() {
 
