@@ -1,0 +1,11 @@
+<upgrade>
+  <version from="1.4.2" to="1.4.3">
+    <script sql="ccm-cms-assets-dublincore/upgrade/::database::-1.4.2-1.4.3.sql"/>
+  </version>
+  <version from="6.3.0" to="6.3.1">
+    <script sql="ccm-cms-assets-dublincore/upgrade/::database::-6.3.0-6.3.1.sql"/>
+  </version>
+  <version from="6.6.0" to="6.6.1">
+    <script sql="ccm-cms-assets-dublincore/upgrade/::database::-6.6.0-6.6.1.sql"/>
+  </version>
+</upgrade>

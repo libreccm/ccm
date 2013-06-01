@@ -1,0 +1,133 @@
+//
+// Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+//
+// The contents of this file are subject to the Open Software License v2.1
+// (the "License"); you may not use this file except in compliance with the
+// License. You may obtain a copy of the License at
+// http://rhea.redhat.com/licenses/osl2.1.html.
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.cms.contentassets;
+
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
+
+
+object type DublinCoreES extends ContentItem {
+  String dcContributor = ca_dublincore_dces.contributor VARCHAR(4000);
+  String dcCoverage = ca_dublincore_dces.coverage VARCHAR(300);
+  String dcCreator = ca_dublincore_dces.creator VARCHAR(300);
+  String dcDate = ca_dublincore_dces.date VARCHAR(100);
+  String dcDescription = ca_dublincore_dces.description VARCHAR(4000);
+  String dcIdentifier = ca_dublincore_dces.identifier VARCHAR(4000);
+  String dcLanguage = ca_dublincore_dces.language VARCHAR(3);
+  String dcPublisher = ca_dublincore_dces.publisher VARCHAR(4000);
+  String dcRelation = ca_dublincore_dces.relation VARCHAR(4000);
+  String dcRights = ca_dublincore_dces.rights VARCHAR(4000);
+  String dcSource = ca_dublincore_dces.source VARCHAR(4000);
+  String dcSubject = ldn_dublin_core_items.subject VARCHAR(4000);
+  String dcType = ca_dublincore_dces.type VARCHAR(4000);
+
+  reference key(ca_dublincore_dces.dces_id);
+}
+
+association {
+  composite ContentItem[1..1] dcesOwner = join ca_dublincore_dces.item_id
+                                          to cms_items.item_id;
+  component DublinCoreES[0..1] dublinCore = join cms_items.item_id
+                                                to ca_dublincore_dces.item_id;
+}
+
+
+// This query returns related items with an exact, or subcategory match.
+query AllRelatedItems {
+   BigDecimal itemID;
+   String title;
+   String type;
+   String objectType;
+
+   do {
+       select distinct i.item_id, 
+              p.title, 
+              t.label,
+	      o.object_type
+         from cms_items i, 
+	      acs_objects o,
+              cms_pages p, 
+              content_types t,
+              cat_object_category_map ocm1,
+              cat_object_category_map ocm2,
+              cat_cat_subcat_trans_index ccs1,
+              cat_cat_subcat_trans_index ccs2,
+              cat_category_purpose_map m
+        where i.version = 'live'
+          and i.item_id <> :itemID
+          and p.item_id = i.item_id
+	  and i.item_id = o.object_id
+          and t.type_id = i.type_id
+          and ocm1.object_id = i.item_id
+          and ocm1.category_id = ccs2.subcategory_id
+          and ocm2.object_id = :itemID
+          and ocm2.category_id = ccs1.subcategory_id
+          and m.purpose_id = :purposeID
+          and ccs1.category_id = m.category_id
+          and ccs2.category_id = ocm2.category_id
+   } map {
+       itemID = i.item_id;
+       title = p.title;
+       type = t.label;
+       objectType = o.object_type;
+   }
+}
+
+// The above query is not entirely clear since I've
+// removed the nested queries in favour of joins
+//
+// The basic plan is:
+//  Get all live content items
+//     with a 'Subject' category matching
+//     a subject category assigned to item foo
+// 
+// The complication is that it needs to treat
+// subject categories heirarchically.
+
+// To do this we pull out all 'subject' categories,
+// then restrict it by those that are assigned to the
+// current item.
+
+// This query should be equivalent to the one above
+// select i.item_id, 
+//         p.title, 
+//         t.label
+//    from cms_items i, 
+//         cms_pages p, 
+//         content_types t,
+//         cat_object_category_map ocm1
+//   where i.version = 'live'
+//     and i.item_id <> 734036
+//     and p.item_id = i.item_id
+//     and t.type_id = i.type_id
+//     and ocm1.object_id = i.item_id
+//     and ocm1.category_id in (
+//         -- Get all categories with the specified
+//         -- category purpose
+//         select ccs1.subcategory_id
+//           from cat_cat_subcat_trans_index ccs1,
+//                cat_category_purpose_map m
+//          where m.purpose_id = 9909
+//            and ccs1.category_id = m.category_id
+//            and ccs.subcategory_id in (
+//                -- Get all categories & children for item
+//                select ccs2.subcategory_id
+//                  from cat_object_category_map ocm2,
+//                       cat_cat_subcat_trans_index ccs2
+//                 where ocm2.object_id = 734036
+//                   and ocm2.category_id = ccs2.category_id
+//                )
+//         );
+//

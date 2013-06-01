@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <!-- First off the adapters for ContentItemPanel -->
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <!-- Individual article sections -->
+    <xrd:adapter objectType="com.arsdigita.london.cms.dublin.DublinCoreItem">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+    <!-- Individual article sections -->
+    <xrd:adapter objectType="com.arsdigita.london.cms.dublin.DublinCoreItem">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>
