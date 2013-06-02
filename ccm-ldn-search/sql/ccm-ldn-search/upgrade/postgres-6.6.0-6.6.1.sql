@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012 Peter Boy All Rights Reserved.
+-- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -17,11 +17,20 @@
 --
 -- $DateTime: 2010/11/10 23:15:09 $
 
-\echo Red Hat Enterprise ccm-ldn-search 6.6.1 -> 6.6.2 Upgrade Script (PostgreSQL)
+\echo Red Hat Enterprise ccm-ldn-search 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
 
 begin;
 
 -- drop table search_app - not needed anyway
-\i default/6.6.1-6.6.2/set_singleton.sql
+\i default/6.6.0-6.6.1/drop_app_table.sql
+
+-- remove legacy compatible bits
+\i default/6.6.0-6.6.1/remove_legacy_entries.sql
+
+-- rename application from london.subsite to subsite
+-- \i default/6.6.0-6.6.1/upd_system_tables.sql
+
+-- adjust class name in content_sections table
+-- \i default/6.6.0-6.6.1/upd_cms_tables.sql
 
 commit;
