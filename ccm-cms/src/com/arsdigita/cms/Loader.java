@@ -99,7 +99,7 @@ public class Loader extends PackageLoader {
     private final Parameter m_contentSectionNames = new StringArrayParameter(
             "com.arsdigita.cms.loader.section_names",
             Parameter.REQUIRED,
-            new String[]{"content"});
+            new String[]{"main"});
     //  ///////////////////////////////////////////////////////////////////
     //  Configurable parameters during load step END.
     //  ///////////////////////////////////////////////////////////////////
