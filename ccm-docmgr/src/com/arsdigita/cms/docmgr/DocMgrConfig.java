@@ -55,7 +55,7 @@ public final class DocMgrConfig extends AbstractConfig {
     private Parameter m_contentSection = new StringParameter
             ("com.arsdigita.cms.docmgr.content_section", 
              Parameter.REQUIRED, 
-             "content");
+             "main");
     private Parameter m_legacyFolderName = new StringParameter
             ("com.arsdigita.cms.docmgr.legacy_folder_name", 
              Parameter.REQUIRED, 

@@ -49,7 +49,7 @@ public final class WebpageConfig extends AbstractConfig {
         m_contentSection = new StringParameter(
             "com.arsdigita.cms.webpage.content_section",
             Parameter.OPTIONAL,
-            "content");   // TODO: remove hardcoded value
+            "main");   // TODO: remove hardcoded value
         
         //m_internalGroupID = new BigDecimalParameter(
         //    "com.arsdigita.cms.webpage.internal_group_id",
