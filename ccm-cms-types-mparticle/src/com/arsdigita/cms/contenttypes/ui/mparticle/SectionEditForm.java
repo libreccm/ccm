@@ -357,11 +357,11 @@ public class SectionEditForm extends Form {
         PageState state = event.getPageState();
         FormData data = event.getFormData();
 
-
         ArticleSection section = new ArticleSection();
 
         section.setTitle((String)data.get(TITLE));
         section.setName(article.getName() + ": " + (String)data.get(TITLE));
+        section.setContentSection(article.getContentSection());
 
         return section;
     }
