@@ -82,6 +82,7 @@
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-person"/>
+	<ccm:application name="ccm-cms-types-simpleorganization"/>
 
 <!--   Standard Bundle's Applications   -->
         <ccm:application name="ccm-portalworkspace-homepage"/>
