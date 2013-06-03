@@ -316,6 +316,9 @@ public final class XMLDeliveryCache {
 //
 //    }
 
+    /**
+     * Helper class, containing the XML for different contexts.
+     */
     private class CachedItem {
 
         private final Map<String, CachedXml> cachedXml = new HashMap<String, CachedXml>();
