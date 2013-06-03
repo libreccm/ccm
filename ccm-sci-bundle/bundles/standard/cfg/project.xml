@@ -92,8 +92,8 @@
         <ccm:application name="ccm-sci-personalpublications"/>
         <ccm:application name="ccm-sci-publications"/>
 
-        <ccm:application name="ccm-sci-types-department"/>
-        <ccm:application name="ccm-sci-types-institute"/>
+        <!--<ccm:application name="ccm-sci-types-department"/>
+        <ccm:application name="ccm-sci-types-institute"/>-->
         <ccm:application name="ccm-sci-types-member"/>
         <ccm:application name="ccm-sci-types-project"/>
 
