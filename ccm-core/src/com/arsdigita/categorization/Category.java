@@ -173,6 +173,7 @@ public class Category extends ACSObject {
      * An attribute name for the underlying data object.
      */
     public static final String IS_ENABLED = "isEnabled";
+    public static final String IS_VISIBLE = "isVisible";
     /**
      * An attribute name for the underlying data object.
      */
@@ -213,6 +214,7 @@ public class Category extends ACSObject {
     /**
      * Returns the model name of {@link #BASE_DATA_OBJECT_TYPE}.
      *
+     * @return 
      */
     public static String getBaseDataObjectPackage() {
         return BASE_DATA_OBJECT_PACKAGE;
@@ -290,6 +292,8 @@ public class Category extends ACSObject {
      * storage mechanism. This method is just a wrapper for the {@link
      * #Category(OID)} constructor.
      *
+     * @param id 
+     * 
      * @throws DataObjectNotFoundException
      */
     public Category(BigDecimal id) {
@@ -389,6 +393,7 @@ public class Category extends ACSObject {
                 setName("name me");
             }
             setEnabled(true);
+            setVisible(true);
             setAbstract(false);
             //by default do not ignore the parent index item
             setIgnoreParentIndexItem(false);
@@ -807,6 +812,14 @@ public class Category extends ACSObject {
         set(IS_ENABLED, isEnabled);
     }
 
+    public boolean isVisible() {
+        return ((Boolean) get(IS_VISIBLE)).booleanValue();
+    }
+    
+    public void setVisible(final boolean visible) {
+        set(IS_VISIBLE, visible);
+    }
+    
     /**
      * An abstract category cannot have any child objects, but it can have child
      * categories.

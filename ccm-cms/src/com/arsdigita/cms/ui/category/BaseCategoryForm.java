@@ -38,7 +38,6 @@ import com.arsdigita.xml.Element;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * A form which creates a new category. Extends the edit form for
  * convenience.
@@ -49,25 +48,23 @@ import org.apache.log4j.Logger;
  * @version $Id: BaseCategoryForm.java 1951 2009-06-30 04:35:04Z terry $
  */
 class BaseCategoryForm extends BaseForm {
-    private static final Logger s_log = Logger.getLogger
-        (BaseCategoryForm.class);
 
+    private static final Logger s_log = Logger.getLogger(BaseCategoryForm.class);
     final CategoryRequestLocal m_parent;
     final TextField m_name;
     final TextArea m_description;
     final TextField m_url;
     final RadioGroup m_isAbstract;
+    final RadioGroup m_isVisible;
     final RadioGroup m_isEnabled;
-	private Label m_script = new Label(
-        "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
+    private Label m_script = new Label(
+            "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
             false);
-	
-
-
-    private final static String NAME        = "name";
+    private final static String NAME = "name";
     private final static String DESCRIPTION = "description";
-    private final static String URL         = "url";
+    private final static String URL = "url";
     private final static String IS_ABSTRACT = "isAbstract";
+    private final static String IS_VISIBLE = "isVisible";
     private final static String IS_ENABLED = "isEnabled";
 
     /**
@@ -86,27 +83,30 @@ class BaseCategoryForm extends BaseForm {
         m_name.setSize(30);
         m_name.setMaxLength(200);
         m_name.addValidationListener(new NotNullValidationListener());
-        m_name.setOnFocus("if (this.form." + URL + ".value == '') { " +
-                          " defaulting = true; this.form." + URL +
-                          ".value = urlize(this.value); }");
-        m_name.setOnKeyUp("if (defaulting) { this.form." + URL +
-                          ".value = urlize(this.value) }");
+        m_name.setOnFocus("if (this.form." + URL + ".value == '') { " + " defaulting = true; this.form." + URL
+                          + ".value = urlize(this.value); }");
+        m_name.setOnKeyUp("if (defaulting) { this.form." + URL + ".value = urlize(this.value) }");
 
         // is abstract?
         m_isAbstract = new RadioGroup(IS_ABSTRACT);
         m_isAbstract.addOption(new Option("no", new Label(gz("cms.ui.no"))));
         m_isAbstract.addOption(new Option("yes", new Label(gz("cms.ui.yes"))));
-        addField(gz("cms.ui.category.is_not_abstract"),m_isAbstract);
+        addField(gz("cms.ui.category.is_not_abstract"), m_isAbstract);
+
+        // is visible
+        m_isVisible = new RadioGroup(IS_VISIBLE);
+        m_isVisible.addOption(new Option("no", new Label(gz("cms.ui.no"))));
+        m_isVisible.addOption(new Option("yes", new Label(gz("cms.ui.yes"))));
+        addField(gz("cms.ui.category.is_visible"), m_isVisible);
 
         // is enabled?
         m_isEnabled = new RadioGroup(IS_ENABLED);
         m_isEnabled.addOption(new Option("no", new Label(gz("cms.ui.no"))));
         m_isEnabled.addOption(new Option("yes", new Label(gz("cms.ui.yes"))));
-        addField(gz("cms.ui.category.is_enabled"),m_isEnabled);
+        addField(gz("cms.ui.category.is_enabled"), m_isEnabled);
 
 
-        m_description = new TextArea
-            (new TrimmedStringParameter(DESCRIPTION));
+        m_description = new TextArea(new TrimmedStringParameter(DESCRIPTION));
         addField(gz("cms.ui.description"), m_description);
 
         m_description.setWrap(TextArea.SOFT);
@@ -130,11 +130,9 @@ class BaseCategoryForm extends BaseForm {
         m_url.setMaxLength(200);
         m_url.addValidationListener(new NotNullValidationListener());
         m_url.setOnFocus("defaulting = false");
-        m_url.setOnBlur("if (this.value == '') " +
-                        "{ defaulting = true; this.value = urlize(this.form." + NAME +
-                        ".value) } " +
-                        "else { this.value = urlize(this.value); }");
-        addField(gz("cms.ui.category.url"),m_url);
+        m_url.setOnBlur("if (this.value == '') " + "{ defaulting = true; this.value = urlize(this.form." + NAME
+                        + ".value) } " + "else { this.value = urlize(this.value); }");
+        addField(gz("cms.ui.category.url"), m_url);
 
         addAction(new Finish());
         addAction(new Cancel());
@@ -146,6 +144,7 @@ class BaseCategoryForm extends BaseForm {
     }
 
     class NameUniqueListener implements ParameterListener {
+
         private final CategoryRequestLocal m_category;
         private final Widget m_widget;
         private final int m_type;
@@ -153,8 +152,9 @@ class BaseCategoryForm extends BaseForm {
         public final static int URL_FIELD = 2;
 
         NameUniqueListener(final CategoryRequestLocal category) {
-            this(category,m_name,NAME_FIELD);
+            this(category, m_name, NAME_FIELD);
         }
+
         NameUniqueListener(final CategoryRequestLocal category,
                            Widget widget, int type) {
             m_category = category;
@@ -174,14 +174,14 @@ class BaseCategoryForm extends BaseForm {
             while (children.next()) {
                 final Category child = children.getCategory();
                 String compField =
-                    (m_type == URL_FIELD) ? child.getURL() : child.getName();
+                       (m_type == URL_FIELD) ? child.getURL() : child.getName();
                 if (compField.equalsIgnoreCase(title)
-                        && (m_category == null
-                            || !m_category.getCategory(state).equals(child))) {
-                    throw new FormProcessException
-                        (lz("cms.ui.category.name_not_unique"));
+                    && (m_category == null
+                        || !m_category.getCategory(state).equals(child))) {
+                    throw new FormProcessException(lz("cms.ui.category.name_not_unique"));
                 }
             }
         }
+
     }
 }

@@ -35,9 +35,9 @@ import org.apache.log4j.Logger;
  */
 final class CategoryEditForm extends BaseCategoryForm {
 
-    private static final Logger s_log = Logger.getLogger
-        (CategoryEditForm.class);
-
+    private static final Logger s_log = Logger.getLogger(CategoryEditForm.class);
+    private static final String NO = "no";
+    private static final String YES = "yes";
     private final CategoryRequestLocal m_category;
 
     public CategoryEditForm(final CategoryRequestLocal parent,
@@ -54,8 +54,10 @@ final class CategoryEditForm extends BaseCategoryForm {
     }
 
     private class InitListener implements FormInitListener {
+
+        @Override
         public final void init(final FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             final PageState state = e.getPageState();
             final Category category = m_category.getCategory(state);
 
@@ -70,22 +72,32 @@ final class CategoryEditForm extends BaseCategoryForm {
             // items in this category.  If the user says "yes" then the
             // category is not abstract
             if (category.isAbstract()) {
-                m_isAbstract.setValue(state, "no");
+                m_isAbstract.setValue(state, NO);
             } else {
-                m_isAbstract.setValue(state, "yes");
+                m_isAbstract.setValue(state, YES);
             }
 
-            if (category.isEnabled("")) {
-                m_isEnabled.setValue(state, "yes");
+            if (category.isVisible()) {
+                m_isVisible.setValue(state, YES);
             } else {
-                m_isEnabled.setValue(state, "no");
+                m_isVisible.setValue(state, NO);
+            }
+
+
+            if (category.isEnabled("")) {
+                m_isEnabled.setValue(state, YES);
+            } else {
+                m_isEnabled.setValue(state, NO);
             }
         }
+
     }
 
     private class ProcessListener implements FormProcessListener {
+
+        @Override
         public final void process(final FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             final PageState state = e.getPageState();
             final Category category = m_category.getCategory(state);
 
@@ -93,20 +105,28 @@ final class CategoryEditForm extends BaseCategoryForm {
                 category.setName((String) m_name.getValue(state));
                 category.setDescription((String) m_description.getValue(state));
                 category.setURL((String) m_url.getValue(state));
-                String isAbstract = (String)m_isAbstract.getValue(state);
+                
+                final String isAbstract = (String) m_isAbstract.getValue(state);
                 // this seems anti-intuitive but the question is "can you place
                 // items in this category.  If the user says "yes" then the
                 // category is not abstract
-                if ("yes".equals(isAbstract)) {
+                if (YES.equals(isAbstract)) {
                     category.setAbstract(false);
-                } else if ("no".equals(isAbstract)) {
+                } else if (NO.equals(isAbstract)) {
                     category.setAbstract(true);
                 }
 
-                String isEnabled = (String)m_isEnabled.getValue(state);
-                if ("yes".equals(isEnabled)) {
+                final String isVisible = (String) m_isVisible.getValue(state);
+                if (YES.equals(isVisible)) {
+                    category.setVisible(true);
+                } else {
+                    category.setVisible(false);
+                }
+
+                final String isEnabled = (String) m_isEnabled.getValue(state);
+                if (YES.equals(isEnabled)) {
                     category.setEnabled(true);
-                } else if ("no".equals(isEnabled)) {
+                } else if (NO.equals(isEnabled)) {
                     category.setEnabled(false);
                 }
 
@@ -115,5 +135,6 @@ final class CategoryEditForm extends BaseCategoryForm {
                 throw new AccessDeniedException();
             }
         }
+
     }
 }

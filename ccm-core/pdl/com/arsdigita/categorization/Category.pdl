@@ -28,7 +28,7 @@ object type Category extends ACSObject {
     String[1..1] name = cat_categories.name VARCHAR(200);
     String[0..1] url = cat_categories.url VARCHAR(200);
     Boolean[1..1] isEnabled = cat_categories.enabled_p CHAR(1);
-
+    Boolean[1..1] isVisible = cat_categories.visible_p CHAR(1);
     Boolean[1..1] isAbstract = cat_categories.abstract_p CHAR(1);
     String[1..1] defaultAncestors = cat_categories.default_ancestors VARCHAR(3209);
     Boolean[1..1] ignoreParentIndexItem = cat_categories.ignore_parent_index_p CHAR(1);

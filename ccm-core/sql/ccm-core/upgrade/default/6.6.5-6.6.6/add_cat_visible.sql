@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
+-- Copyright (C) 2013 Jens Pelzetter. All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,16 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $$
+-- $Id$
 
-\echo Red Hat Enterprise CORE 6.6.5-> 6.6.6 Upgrade Script (PostgreSQL)
-
--- 
--- 
-
-begin;
-
-\i default/6.6.5-6.6.6/set_singleton.sql
-\i default/6.6.5-6.6.6/add_cat_visible.sql
-
-commit;
+ALTER TABLE cat_categories ADD COLUMN visible_p CHAR(1);
+UPDATE cat_categories SET visible_p = 1;

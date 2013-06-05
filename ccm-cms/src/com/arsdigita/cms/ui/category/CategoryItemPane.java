@@ -86,10 +86,10 @@ class CategoryItemPane extends BaseItemPane {
     private final SimpleContainer m_detailPane;
 
     public CategoryItemPane(final SingleSelectionModel model,
-            final CategoryRequestLocal category,
-            final ActionLink addLink,
-            final ActionLink editLink,
-            final ActionLink deleteLink) {
+                            final CategoryRequestLocal category,
+                            final ActionLink addLink,
+                            final ActionLink editLink,
+                            final ActionLink deleteLink) {
         m_model = model;
         m_category = category;
 
@@ -106,12 +106,14 @@ class CategoryItemPane extends BaseItemPane {
                 if (!super.isVisible(state)) {
                     return false;
                 }
-                CategorizedCollection items = m_category.getCategory(state).getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
+                CategorizedCollection items = m_category.getCategory(state).
+                        getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
                 items.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
                 boolean canOrder = items.size() > 1;
                 items.close();
                 return canOrder;
             }
+
         };
 
 
@@ -133,7 +135,7 @@ class CategoryItemPane extends BaseItemPane {
 
         // Summary
         m_detailPane.add(new SummarySection(editLink, deleteLink, indexLink,
-                viewIndexLink, editIndexLink, orderItemsLink));
+                                            viewIndexLink, editIndexLink, orderItemsLink));
 
         // Quasimodo: BEGIN
         // Localizations
@@ -145,20 +147,21 @@ class CategoryItemPane extends BaseItemPane {
                 int countSupportedLanguages = (Kernel.getConfig()).getSupportedLanguagesTokenizer()
                         .countTokens();
                 long countLanguages =
-                        m_category.getCategory(state)
+                     m_category.getCategory(state)
                         .getCategoryLocalizationCollection().size();
 
                 if (m_category.getCategory(state).canEdit()
-                        && countLanguages < countSupportedLanguages) {
+                    && countLanguages < countSupportedLanguages) {
                     return true;
                 } else {
                     return false;
                 }
             }
+
         };
 
         CategoryLocalizationAddForm addCategoryLocalizationForm =
-                new CategoryLocalizationAddForm(m_category);
+                                    new CategoryLocalizationAddForm(m_category);
         m_detailPane.add(new CategoryLocalizationSection(addCategoryLocalizationLink));
         add(addCategoryLocalizationForm);
         connect(addCategoryLocalizationLink, addCategoryLocalizationForm);
@@ -203,6 +206,7 @@ class CategoryItemPane extends BaseItemPane {
         public boolean hasPermission(PageState ps) {
             return m_category.getCategory(ps).canEdit();
         }
+
     }
 
     private class AdminVisible extends VisibilityComponent {
@@ -215,14 +219,15 @@ class CategoryItemPane extends BaseItemPane {
         public boolean hasPermission(PageState ps) {
             return m_category.getCategory(ps).canAdmin();
         }
+
     }
 
     private class SummarySection extends Section {
 
         SummarySection(final ActionLink editLink,
-                final ActionLink deleteLink,
-                final ActionLink indexLink,
-                final ActionLink orderItemsLink) {
+                       final ActionLink deleteLink,
+                       final ActionLink indexLink,
+                       final ActionLink orderItemsLink) {
             setHeading(new Label(gz("cms.ui.category.details")));
 
             final ActionGroup group = new ActionGroup();
@@ -241,11 +246,11 @@ class CategoryItemPane extends BaseItemPane {
          * the user to view and edit the content index item.
          */
         SummarySection(final ActionLink editLink,
-                final ActionLink deleteLink,
-                final ActionLink indexLink,
-                final BaseLink viewIndexItem,
-                final BaseLink editIndexItem,
-                final ActionLink orderItemsLink) {
+                       final ActionLink deleteLink,
+                       final ActionLink indexLink,
+                       final BaseLink viewIndexItem,
+                       final BaseLink editIndexItem,
+                       final ActionLink orderItemsLink) {
             setHeading(new Label(gz("cms.ui.category.details")));
 
             final ActionGroup group = new ActionGroup();
@@ -274,14 +279,14 @@ class CategoryItemPane extends BaseItemPane {
                 if (item != null) {
                     itemTitle = item.getDisplayName();
                 } else if (!category.ignoreParentIndexItem()
-                        && category.getParentCategoryCount() > 0) {
+                           && category.getParentCategoryCount() > 0) {
                     Category ancestor = findParentCategoryWithNonInheritedIndexItem(category);
                     if (ancestor != null) {
                         if (ancestor.getIndexObject() != null) {
                             itemTitle = ancestor.getIndexObject().getDisplayName();
                         }
                         itemTitle += " (Inherited from "
-                                + ancestor.getDisplayName() + ")";
+                                     + ancestor.getDisplayName() + ")";
                     } else {
                         // The complete hierarchy is set to inherit.
                         // Just leave the itemTitle as None.
@@ -289,24 +294,29 @@ class CategoryItemPane extends BaseItemPane {
                 }
 
                 props.add(new Property(gz("cms.ui.name"),
-                        category.getName("")));
+                                       category.getName("")));
                 props.add(new Property(gz("cms.ui.description"),
-                        category.getDescription("")));
+                                       category.getDescription("")));
                 props.add(new Property(gz("cms.ui.category.url"),
-                        category.getURL("")));
+                                       category.getURL("")));
                 props.add(new Property(gz("cms.ui.category.is_not_abstract"),
-                        category.isAbstract()
-                        ? gz("cms.ui.no")
-                        : gz("cms.ui.yes")));
+                                       category.isAbstract()
+                                       ? gz("cms.ui.no")
+                                       : gz("cms.ui.yes")));
+                props.add(new Property(gz("cms.ui.cateogry.is_visible"),
+                                       category.isVisible()
+                                       ? gz("cms.ui.yes")
+                                       : gz("cms.ui.no")));
                 props.add(new Property(gz("cms.ui.category.is_enabled"),
-                        category.isEnabled("")
-                        ? gz("cms.ui.yes")
-                        : gz("cms.ui.no")));
+                                       category.isEnabled("")
+                                       ? gz("cms.ui.yes")
+                                       : gz("cms.ui.no")));
                 props.add(new Property(gz("cms.ui.category.index_item"),
-                        itemTitle));
+                                       itemTitle));
 
                 return props;
             }
+
         }
     }
 
@@ -362,6 +372,7 @@ class CategoryItemPane extends BaseItemPane {
             super.register(page);
             page.addComponentStateParam(m_editCategoryLocalizationForm, m_catLocaleParam);
         }
+
     }
 
     private class SubcategorySection extends Section {
@@ -375,6 +386,7 @@ class CategoryItemPane extends BaseItemPane {
             group.setSubject(new SubcategoryList(m_category, m_model));
             group.addAction(new AdminVisible(addLink), ActionGroup.ADD);
         }
+
     }
 
     private class LinkedCategorySection extends Section {
@@ -393,6 +405,7 @@ class CategoryItemPane extends BaseItemPane {
         public final boolean isVisible(final PageState state) {
             return !m_category.getCategory(state).isRoot();
         }
+
     }
 
     private class CategoryTemplateSection extends Section {
@@ -407,6 +420,7 @@ class CategoryItemPane extends BaseItemPane {
             // XXX secvis
             //group.addAction(link);
         }
+
     }
 
     private class PermissionsSection extends Section {
@@ -436,7 +450,8 @@ class CategoryItemPane extends BaseItemPane {
             privMap.put(Category.MAP_DESCRIPTOR.getName(), "Categorize Items");
             privMap.put("admin", "Admin");
 
-            final CMSPermissionsPane permPane = new CMSPermissionsPane(privs, privMap, new ACSObjectSelectionModel(m_model)) {
+            final CMSPermissionsPane permPane = new CMSPermissionsPane(privs, privMap, new ACSObjectSelectionModel(
+                    m_model)) {
                 @Override
                 public void showAdmin(PageState ps) {
                     Assert.exists(m_model.getSelectedKey(ps));
@@ -444,6 +459,7 @@ class CategoryItemPane extends BaseItemPane {
                     super.showAdmin(ps);
                     getAdminListingPanel().setVisible(ps, false);
                 }
+
             };
 
             final ActionLink restoreDefault = new ActionLink(new Label(gz(
@@ -453,6 +469,7 @@ class CategoryItemPane extends BaseItemPane {
                     Category cat = m_category.getCategory(ps);
                     return PermissionService.getContext(cat) == null;
                 }
+
             };
 
             final ActionLink useCustom = new ActionLink(new Label(gz(
@@ -462,6 +479,7 @@ class CategoryItemPane extends BaseItemPane {
                     Category cat = m_category.getCategory(ps);
                     return PermissionService.getContext(cat) != null;
                 }
+
             };
 
             ActionListener al = new ActionListener() {
@@ -489,7 +507,7 @@ class CategoryItemPane extends BaseItemPane {
                         // revoke all direct permissions so category will only
                         // have inherited permissions
                         ObjectPermissionCollection perms =
-                                PermissionService.getDirectGrantedPermissions(
+                                                   PermissionService.getDirectGrantedPermissions(
                                 cat.getOID());
                         while (perms.next()) {
                             PermissionService.revokePermission(
@@ -500,6 +518,7 @@ class CategoryItemPane extends BaseItemPane {
                     }
                     permPane.reset(state);
                 }
+
             };
 
             restoreDefault.addActionListener(al);
@@ -516,8 +535,10 @@ class CategoryItemPane extends BaseItemPane {
                 public void stateChanged(ChangeEvent e) {
                     PageState ps = e.getPageState();
                 }
+
             });
         }
+
     }
 
     private static class OrderItemsForm extends CMSForm {
@@ -532,6 +553,7 @@ class CategoryItemPane extends BaseItemPane {
             add(new Submit("Done"));
 
         }
+
     }
 
     /*
@@ -549,7 +571,7 @@ class CategoryItemPane extends BaseItemPane {
         protected String prepareURL(final PageState state, String location) {
 
             ContentItem indexItem = ((ContentBundle) (m_category.getCategory(state)
-                    .getDirectIndexObject()))
+                                                      .getDirectIndexObject()))
                     .getPrimaryInstance();
             if (indexItem == null) {
                 return "";
@@ -571,6 +593,7 @@ class CategoryItemPane extends BaseItemPane {
                 return true;
             }
         }
+
     };
 
     private class EditItemLink extends Link {
@@ -588,7 +611,7 @@ class CategoryItemPane extends BaseItemPane {
         protected String prepareURL(final PageState state, String location) {
             boolean canEdit = false;
             ContentItem indexItem = ((ContentBundle) (m_category.getCategory(state)
-                    .getDirectIndexObject()))
+                                                      .getDirectIndexObject()))
                     .getPrimaryInstance();
             if (indexItem == null) {
                 return "";
@@ -598,7 +621,7 @@ class CategoryItemPane extends BaseItemPane {
             } else {
                 BigDecimal draftID = indexItem.getDraftVersion().getID();
                 return "item.jsp?item_id=" + draftID + "&set_tab="
-                        + ContentItemPage.AUTHORING_TAB;
+                       + ContentItemPage.AUTHORING_TAB;
             }
         }
 
@@ -636,17 +659,18 @@ class CategoryItemPane extends BaseItemPane {
             BigDecimal id = item.getID();
             User user = Web.getContext().getUser();
             ContentItem ci = new ContentItem(new OID(ContentItem.class.getName(),
-                    Integer.parseInt(id.toString())));
+                                                     Integer.parseInt(id.toString())));
             Iterator permissions = PermissionService.getImpliedPrivileges(
                     ci.getOID(), user.getOID());
             while (permissions.hasNext()) {
                 PrivilegeDescriptor permission = (PrivilegeDescriptor) permissions.next();
                 if (permission.equals(PrivilegeDescriptor.ADMIN)
-                        || permission.equals(PrivilegeDescriptor.EDIT)) {
+                    || permission.equals(PrivilegeDescriptor.EDIT)) {
                     return true;
                 }
             }
             return false;
         }
+
     };
 }
