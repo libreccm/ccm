@@ -411,7 +411,8 @@ public class TabbedPane extends SimpleContainer {
                     //TODO cat.error("cannot get stateAsURL from "+data);
                 }
             }
-            tab.addAttribute("key", ((Label) pane.getLabel()).getGlobalizedMessage().getKey());
+            String key = ((Label) pane.getLabel()).getGlobalizedMessage().getKey();
+            tab.addAttribute("key", key.substring(key.lastIndexOf(".") + 1));
             pane.getLabel().generateXML(data, tab);
         }
         data.clearControlEvent();
