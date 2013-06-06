@@ -31,7 +31,7 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.Initializer;
 import com.arsdigita.runtime.Script;
 import com.arsdigita.runtime.ScriptContext;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.ParameterReader;
@@ -141,7 +141,7 @@ class Loader {
             s_log.info("Running initializer " + init);
             ini.add((Initializer) Classes.newInstance(init));
         }
-        Startup.run(ssn, ini);
+        Runtime.startup(ssn, ini);
 
         TransactionContext txn = ssn.getTransactionContext();
         txn.beginTxn();

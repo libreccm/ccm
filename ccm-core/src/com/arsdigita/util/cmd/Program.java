@@ -15,7 +15,7 @@
 
 package com.arsdigita.util.cmd;
 
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.HelpFormatter;
@@ -263,8 +263,7 @@ public abstract class Program {
                 
         try {
             if (m_startup) {
-                Startup startup = new Startup();
-                startup.run();
+                new Runtime().startup();
             }
 
             doRun(cmdLine);

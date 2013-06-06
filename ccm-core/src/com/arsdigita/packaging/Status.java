@@ -22,7 +22,7 @@ import com.arsdigita.runtime.RegistryConfig;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.runtime.ScriptContext;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 
 /**
  * Status
@@ -69,7 +69,7 @@ class Status extends Command {
         }
         if (!passed) { return false; }
 
-        new Startup().run();
+        new Runtime().startup();
         Session ssn = SessionManager.getSession();
 
         for (int i = 0; i < checks.length; i++) {

@@ -28,7 +28,7 @@ import com.arsdigita.runtime.AbstractScript;
 import com.arsdigita.runtime.InteractiveParameterReader;
 import com.arsdigita.runtime.Script;
 import com.arsdigita.runtime.ScriptContext;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
@@ -70,7 +70,7 @@ public final class HostLoader extends AbstractScript {
     }
 
     public static final void main(final String[] args) {
-	new Startup().run();
+	new Runtime().startup();
 
 	final Session session = SessionManager.getSession();
 	// final ParameterLoader loader = new InteractiveParameterLoader

@@ -27,7 +27,7 @@ import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.Script;
 import com.arsdigita.runtime.ScriptContext;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.jdbc.Connections;
 import java.sql.Connection;
@@ -57,9 +57,9 @@ public class Loader extends PackageLoader {
 
         load(conn, "ccm-ldn-freeform/" + dir + "-create.sql");
 
-        final Startup startup = new Startup();
-        startup.add(new Initializer());
-        startup.run();
+        final Runtime runtime = new Runtime();
+        runtime.add(new Initializer());
+        runtime.startup();
 
         final Session session = SessionManager.getSession();
         final TransactionContext txn = session.getTransactionContext();

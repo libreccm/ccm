@@ -5,7 +5,7 @@ import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 import com.arsdigita.xml.XML;
 
 public class SiteProxyUpgrade630to631 {
@@ -13,7 +13,7 @@ public class SiteProxyUpgrade630to631 {
     private final static String SITE_PROXY = "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SiteProxy.xml";
 
     public static void main(String[] args) {
-        new Startup().run();
+        new Runtime().startup();
         final Session session = SessionManager.getSession();
         final TransactionContext tc = session.getTransactionContext();
         try {

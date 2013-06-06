@@ -30,7 +30,7 @@ import com.arsdigita.runtime.InteractiveParameterReader;
 import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.runtime.RegistryConfig;
 import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.jdbc.Connections;
@@ -457,7 +457,7 @@ class Load extends Command {
 
                 if (all || line.hasOption("data")) {
                     if (ssn == null) {
-                        new Startup().run();
+                        new Runtime().startup();
                         ssn = SessionManager.getSession();
                     }
 
@@ -477,7 +477,7 @@ class Load extends Command {
             }
             if (all || line.hasOption("init")) {
                 if (ssn == null) {
-                    new Startup().run();
+                    new Runtime().startup();
                     ssn = SessionManager.getSession();
                 }
                 for (int i = 0; i < sorted.length; i++) {

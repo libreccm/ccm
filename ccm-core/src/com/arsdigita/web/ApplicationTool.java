@@ -21,7 +21,7 @@ package com.arsdigita.web;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.Runtime;
 import org.apache.log4j.Logger;
 
 /**
@@ -41,7 +41,7 @@ public final class ApplicationTool {
             System.exit(1);
         }
 
-	new Startup().run();
+	new Runtime().startup();
 
 	final Session session = SessionManager.getSession();
 	final TransactionContext transaction = session.getTransactionContext();
