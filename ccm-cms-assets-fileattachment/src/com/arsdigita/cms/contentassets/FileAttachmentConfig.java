@@ -5,22 +5,20 @@ import com.arsdigita.bebop.FormSection;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.BooleanParameter;
+import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 
 import org.apache.log4j.Logger;
 
 public class FileAttachmentConfig extends AbstractConfig {
-    
+
     /** A logger instance to assist debugging.  */
     private static final Logger s_log = Logger.getLogger(FileAttachmentConfig.class);
-
     /** Singelton config object.  */
     private static FileAttachmentConfig s_conf;
 
     /**
-     * Gain a DublinCoreConfig object.
-     *
-     * Singelton pattern, don't instantiate a config object using the
+     * Singleton pattern, don't instantiate a config object using the
      * constructor directly!
      * @return
      */
@@ -33,47 +31,58 @@ public class FileAttachmentConfig extends AbstractConfig {
         return s_conf;
     }
 
-
     // ///////////////////////////////////////////////////////////////////////
     //
     // set of configuration parameters
-
     /**
      * A form which should be used for editing file asset properties.
      * Default implementation edits Assets.description property.
      */
-    Parameter editFormClass = new SpecificClassParameter(
-                            "com.arsdigita.cms.contentassets.file_edit_form",
-                            Parameter.REQUIRED,
-                            FileDescriptionForm.class,
-                            FormSection.class
-                            );
+    private final Parameter editFormClass =
+                            new SpecificClassParameter(
+            "com.arsdigita.cms.contentassets.file_edit_form",
+            Parameter.REQUIRED,
+            FileDescriptionForm.class,
+            FormSection.class);
     /**
      * Optional parameter if set to TRUE will disply the asset URL instead of
      * the description on AttachFile Authroing step. Default: FALSE
      */
-    Parameter showAssetID = new BooleanParameter(
-                          "com.arsdigita.cms.contentassets.file_show_asset_id",
-        		  Parameter.OPTIONAL,
-        		  Boolean.FALSE
-        		  );
-    
+    private final Parameter showAssetID =
+                            new BooleanParameter(
+            "com.arsdigita.cms.contentassets.file_show_asset_id",
+            Parameter.OPTIONAL,
+            Boolean.FALSE);
+    private final Parameter fileAttachmentStepSortKey =
+                            new IntegerParameter(
+            "com.arsdigita.cms.contentassets.file_attchment_step_sort_key",
+            Parameter.REQUIRED,
+            2);
+
     /**
      * Constructor, don't use it directly!
      */
-    public FileAttachmentConfig() {
-                        
+    protected FileAttachmentConfig() {
+
+        super();
+        
         register(editFormClass);
         register(showAssetID);
+        register(fileAttachmentStepSortKey);
+        
         loadInfo();
     }
 
     public Class getEditFormClass() {
         return (Class) get(editFormClass);
     }
+
+    public boolean isShowAssetIDEnabled() {
+        return get(showAssetID).equals(Boolean.TRUE);
+    }
     
-    public boolean isShowAssetIDEnabled(){
-    	return get(showAssetID).equals(Boolean.TRUE);
+    public Integer getFileAttachmentStepSortKey() {
+        return (Integer) get(fileAttachmentStepSortKey);
     }
 
 }

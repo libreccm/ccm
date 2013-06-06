@@ -17,7 +17,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
@@ -64,10 +63,8 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
         final SciInstituteConfig config = SciInstitute.getConfig();
 
         //Add the authoring steps for departments if the department type is installed
-        final ContentTypeCollection contentTypes = ContentType.
-                getAllContentTypes();
-        contentTypes.addFilter(
-                "associatedObjectType = 'com.arsdigita.cms.contenttypes.SciDepartment'");
+        final ContentTypeCollection contentTypes = ContentType.getAllContentTypes();
+        contentTypes.addFilter("associatedObjectType = 'com.arsdigita.cms.contenttypes.SciDepartment'");
 
         if (contentTypes.size() > 0) {
             if (config.getEnableDepartmentsStep()) {
@@ -78,7 +75,7 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
                         "sciinstitute.ui.departments.title"),
                         SciInstituteGlobalizationUtil.globalize(
                         "sciinstitute.ui.departments.description"),
-                        10);
+                        config.getDepartmentsStepSortKey());
             }
 
             if (config.getEnableDepartmentInstitutesStep()) {
@@ -89,15 +86,14 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
                         "scidepartment.ui.institutes.title"),
                         SciInstituteGlobalizationUtil.globalize(
                         "scidepartment.ui.institutes.description"),
-                        20);
+                        config.getDepartmentInstitutesStepSortKey());
             }
         }
 
         contentTypes.reset();
 
         //Add the authoring steps for projects if the project type is installed
-        contentTypes.addFilter(
-                "associatedObjectType = 'com.arsdigita.cms.contenttypes.SciProject'");
+        contentTypes.addFilter("associatedObjectType = 'com.arsdigita.cms.contenttypes.SciProject'");
 
         if (contentTypes.size() > 0) {
             if (config.getEnableProjectsStep()) {
@@ -108,7 +104,7 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
                         "sciinstitute.ui.projects.title"),
                         SciInstituteGlobalizationUtil.globalize(
                         "sciinstitute.ui.projects.description"),
-                        30);
+                        config.getProjectsStepSortKey());
             }
 
             if (config.getEnableProjectInstitutesStep()) {
@@ -120,7 +116,7 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
                             "sciproject.ui.institutes.title"),
                             SciInstituteGlobalizationUtil.globalize(
                             "sciproject.ui.institutes.description"),
-                            40);
+                            config.getProjectInstitutesStepSortKey());
                 }
             }
         }
@@ -142,8 +138,8 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
     @Override
     public String[] getStylesheets() {
         return new String[]{
-                    INTERNAL_THEME_TYPES_DIR + "sci/SciInstitute.xsl"
-                };
+            INTERNAL_THEME_TYPES_DIR + "sci/SciInstitute.xsl"
+        };
     }
 
     /**
@@ -152,7 +148,7 @@ public class SciInstituteInitializer extends ContentTypeInitializer {
      */
     @Override
     public String getTraversalXML() {
-        return 
-        "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/SciInstitute.xml";
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/SciInstitute.xml";
     }
+
 }

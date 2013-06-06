@@ -14,10 +14,15 @@ import com.arsdigita.util.parameter.StringParameter;
 public class PublicationsConfig extends AbstractConfig {
 
     private final Parameter attachOrgaUnitsStep;
+    private final Parameter orgaUnitsStepSortKey;
     private final Parameter attachOrganizationPublicationsStepTo;
+    private final Parameter organizationPublicationsStepSortKey;
     private final Parameter attachPersonPublicationsStep;
+    private final Parameter personPublicationsStepSortKey;
     private final Parameter attachPublicationsStepTo;
+    private final Parameter publicationsStepSortKey;
     private final Parameter attachPublisherPublicationsStep;
+    private final Parameter publisherPublicationsStepSortKey;
     private final Parameter defaultAuthorsFolder;
     private final Parameter defaultSeriesFolder;
     private final Parameter defaultPublisherFolder;
@@ -32,7 +37,7 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter orgaType;
     private final Parameter orgaBundleType;
     private final Parameter enableFirstPublishedProperty;
-    private final Parameter enableLanguageProperty;    
+    private final Parameter enableLanguageProperty;
 
     public PublicationsConfig() {
         attachOrgaUnitsStep =
@@ -41,11 +46,23 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.FALSE);
 
+        orgaUnitsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.orgaunits_step_sort_key",
+                Parameter.REQUIRED,
+                10);
+
         attachOrganizationPublicationsStepTo =
         new StringParameter(
                 "com.arsdigita.cms.contenttypes.publications.attach_organization_publications_step_to",
                 Parameter.REQUIRED,
                 "");
+
+        organizationPublicationsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.organization_publications_step_sort_key",
+                Parameter.REQUIRED,
+                10);
 
         attachPersonPublicationsStep =
         new BooleanParameter(
@@ -53,17 +70,35 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.TRUE);
 
+        personPublicationsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.person_publications_step_sort_key",
+                Parameter.REQUIRED,
+                10);
+
         attachPublicationsStepTo =
         new StringParameter(
                 "com.arsdigita.cms.contenttypes.publications.attach_publications_step_to",
                 Parameter.REQUIRED,
                 "");
 
+        publicationsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.publications_step_sort_key",
+                Parameter.REQUIRED,
+                11);
+
         attachPublisherPublicationsStep =
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.publications.attach_publisher_publications_step",
                 Parameter.REQUIRED,
                 Boolean.TRUE);
+        
+        publisherPublicationsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.publisher_publications_step_sort_key",
+                Parameter.REQUIRED,
+                10);
 
         defaultAuthorsFolder = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.default_authors_folder",
@@ -131,19 +166,24 @@ public class PublicationsConfig extends AbstractConfig {
 
         enableFirstPublishedProperty = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.publications.enable_first_published_property",
-                                                            Parameter.REQUIRED,
-                                                            true);
-        
+                Parameter.REQUIRED,
+                true);
+
         enableLanguageProperty = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.publications.enable_language_property",
-                                                            Parameter.REQUIRED,
-                                                            true);
+                Parameter.REQUIRED,
+                true);
 
         register(attachOrgaUnitsStep);
+        register(orgaUnitsStepSortKey);
         register(attachOrganizationPublicationsStepTo);
+        register(organizationPublicationsStepSortKey);
         register(attachPersonPublicationsStep);
+        register(personPublicationsStepSortKey);
         register(attachPublicationsStepTo);
+        register(publicationsStepSortKey);
         register(attachPublisherPublicationsStep);
+        register(publisherPublicationsStepSortKey);        
         register(defaultAuthorsFolder);
         register(defaultSeriesFolder);
         register(defaultPublisherFolder);
@@ -166,21 +206,41 @@ public class PublicationsConfig extends AbstractConfig {
     public Boolean getAttachOrgaUnitsStep() {
         return (Boolean) get(attachOrgaUnitsStep);
     }
+    
+    public Integer getOrgaUnitsStepSortKey() {
+        return (Integer) get(orgaUnitsStepSortKey);
+    }
 
     public String getAttachOrganizationPublicationsStepTo() {
         return (String) get(attachOrganizationPublicationsStepTo);
     }
+    
+    public Integer getOrganizationPublicationsStepSortKey() {
+        return (Integer) get(organizationPublicationsStepSortKey);
+    }
 
     public Boolean getAttachPersonPublicationsStep() {
         return (Boolean) get(attachPersonPublicationsStep);
+    }
+    
+    public Integer getPersonPublicationsStepSortKey() {
+        return (Integer) get(personPublicationsStepSortKey);
     }
 
     public String getAttachPublicationsStepTo() {
         return (String) get(attachPublicationsStepTo);
     }
 
+    public Integer getPublicationsStepSortKey() {
+        return (Integer) get(publicationsStepSortKey);
+    }
+    
     public Boolean getPublisherPublicationsStep() {
         return (Boolean) get(attachPublisherPublicationsStep);
+    }
+    
+    public Integer getPublisherPublicationsStepSortKey() {
+        return (Integer) get(publisherPublicationsStepSortKey);
     }
 
     public Integer getDefaultAuthorsFolder() {
@@ -278,11 +338,11 @@ public class PublicationsConfig extends AbstractConfig {
     public String getOrganizationBundleType() {
         return (String) get(orgaBundleType);
     }
-    
+
     public Boolean getEnableFirstPublishedProperty() {
         return (Boolean) get(enableFirstPublishedProperty);
     }
-    
+
     public Boolean getEnableLanguageProperty() {
         return (Boolean) get(enableLanguageProperty);
     }

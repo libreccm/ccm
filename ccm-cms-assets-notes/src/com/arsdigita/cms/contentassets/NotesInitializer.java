@@ -118,6 +118,6 @@ public class NotesInitializer extends ContentAssetInitializer {
      * The sort key for the authoring step
      */
     public int getAuthoringStepSortKey() {
-        return 3;
+        return NotesConfig.getInstance().getAssetStepSortKey();
     }
 }

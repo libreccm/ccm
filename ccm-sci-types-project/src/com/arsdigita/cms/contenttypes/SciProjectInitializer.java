@@ -73,7 +73,7 @@ public class SciProjectInitializer extends ContentTypeInitializer {
                     "sciproject.ui.subprojects.title"),
                     SciProjectGlobalizationUtil.globalize(
                     "sciproject.ui.subprojects.description"),
-                    10);
+                    config.getSubProjectsStepSortKey());
         }
 
         if (config.getEnableSuperProjectsStep()) {
@@ -84,7 +84,7 @@ public class SciProjectInitializer extends ContentTypeInitializer {
                     "sciproject.ui.superprojects.title"),
                     SciProjectGlobalizationUtil.globalize(
                     "sciproject.ui.superprojects.description"),
-                    20);
+                    config.getSuperProjectsStepSortKey());
         }
 
         if (config.getEnableInvolvedOrgasStep()) {
@@ -95,7 +95,7 @@ public class SciProjectInitializer extends ContentTypeInitializer {
                     "sciproject.ui.involved_orgas.title"),
                     SciProjectGlobalizationUtil.globalize(
                     "sciproject.ui.involved_orgas.description"),
-                    30);
+                    config.getInvolvedOrgasStepSortKey());
         }
     }
 

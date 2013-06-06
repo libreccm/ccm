@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.runtime.AbstractConfig;
@@ -29,10 +28,9 @@ import org.apache.log4j.Logger;
  *  Configuration object for the DublinCore asset.
  */
 public class DublinCoreConfig extends AbstractConfig {
-    
+
     /** A logger instance to assist debugging.  */
     private static final Logger s_log = Logger.getLogger(DublinCoreConfig.class);
-
     /** Singelton config object.  */
     private static DublinCoreConfig s_conf;
 
@@ -52,11 +50,9 @@ public class DublinCoreConfig extends AbstractConfig {
         return s_conf;
     }
 
-
     // ///////////////////////////////////////////////////////////////////////
     //
     // set of configuration parameters
-
     /** Default Audience Domain Key preset in the authoring step ui           */
     private Parameter m_audience = new StringParameter(
             "com.arsdigita.cms.contentassets.dublincore.audience_domain",
@@ -102,7 +98,12 @@ public class DublinCoreConfig extends AbstractConfig {
             "com.arsdigita.cms.contentassets.dublincore.related_items_subject_domain",
             Parameter.OPTIONAL,
             null);
-    
+    private Parameter m_assetStepSortKey =
+                      new IntegerParameter(
+            "com.arsdigita.cms.contentassets.dublincore.asset_step_sortkey",
+            Parameter.Optional,
+            3);
+
     /**
      * Constructor just registers and loads the parameter.
      */
@@ -117,52 +118,58 @@ public class DublinCoreConfig extends AbstractConfig {
         register(m_publisher);
         register(m_use_ccn_portal);
         register(m_relatedItemsSubjectDomain);
+        register(m_assetStepSortKey);
 
         loadInfo();
     }
-    
+
     /**
      * 
      * @return 
      */
     public String getAudienceDomain() {
-        return (String)get(m_audience);
+        return (String) get(m_audience);
     }
-    
+
     public String getCoverageSpatialDomain() {
-        return (String)get(m_coverageSpatial);
+        return (String) get(m_coverageSpatial);
     }
-    
+
     public String getCoverageUnitDomain() {
-        return (String)get(m_coverageUnit);
+        return (String) get(m_coverageUnit);
     }
-    
+
     public String getOwnerDefault() {
-        return (String)get(m_owner);
+        return (String) get(m_owner);
     }
 
     public String getRightsDefault() {
-        return (String)get(m_rights);
+        return (String) get(m_rights);
     }
 
     public String getPublisherDefault() {
-        return (String)get(m_publisher);
+        return (String) get(m_publisher);
     }
 
     public boolean getUseCCNPortalMetadata() {
-        return ((Boolean)get(m_use_ccn_portal)).booleanValue();
+        return ((Boolean) get(m_use_ccn_portal)).booleanValue();
     }
 
     public String getRelatedItemsSubjectDomain() {
-        return (String)get(m_relatedItemsSubjectDomain);
+        return (String) get(m_relatedItemsSubjectDomain);
     }
 
     public String getOwnerContactDefault() {
-	return (String)get(m_owner_contact);
+        return (String) get(m_owner_contact);
+    }
+    
+    public Integer getAssetStepSortKey() {
+        return (Integer) get(m_assetStepSortKey);
     }
 
     // Only for test suites
     void setRelatedItemsSubjectDomain(String domain) {
         set(m_relatedItemsSubjectDomain, domain);
     }
+
 }

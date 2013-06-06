@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentPage;
@@ -47,26 +46,25 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
      * @param ev 
      */
     @Override
-    public void init( DomainInitEvent ev ) {
+    public void init(DomainInitEvent ev) {
 
         super.init(ev);
 
         DomainObjectFactory.registerInstantiator(
-            ItemImageAttachment.BASE_DATA_OBJECT_TYPE,
-            new DomainObjectInstantiator() {
-                protected DomainObject doNewInstance( DataObject obj ) {
-                    return new ItemImageAttachment( obj );
-                }
-                @Override
-                public DomainObjectInstantiator resolveInstantiator( DataObject obj ) {
-                    return this;
-                }
+                ItemImageAttachment.BASE_DATA_OBJECT_TYPE,
+                new DomainObjectInstantiator() {
+            protected DomainObject doNewInstance(DataObject obj) {
+                return new ItemImageAttachment(obj);
             }
-        );
+
+            @Override
+            public DomainObjectInstantiator resolveInstantiator(DataObject obj) {
+                return this;
+            }
+
+        });
 
     }
-
-
 
     /**
      * The base type against which the asset is defined,
@@ -81,8 +79,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
      * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/" +
-            "cms/contentassets/ItemImageAttachment.xml";
+        return "/WEB-INF/traversal-adapters/com/arsdigita/" + "cms/contentassets/ItemImageAttachment.xml";
     }
 
     /**
@@ -120,6 +117,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
      * The sort key for the authoring step
      */
     public int getAuthoringStepSortKey() {
-        return 1; // XXX config param please
+        return ItemImageAttachmentConfig.instanceOf().getImageStepSortKey();
     }
+
 }

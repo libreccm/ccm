@@ -95,6 +95,6 @@ public class RelatedLinkInitializer extends ContentAssetInitializer {
      * The sort key for the authoring step
      */
     public int getAuthoringStepSortKey() {
-        return 1; // XXX config param please
+        return RelatedLinkConfig.getInstance().getAssetStepSortKey();
     }
 }

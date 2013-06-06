@@ -20,10 +20,10 @@ package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
+import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 
 import org.apache.log4j.Logger;
-
 
 /**
  * A record containing server-session scoped configuration properties.
@@ -40,7 +40,6 @@ public final class ItemImageAttachmentConfig extends AbstractConfig {
 
     /** A logger instance to assist debugging.                                */
     private static final Logger s_log = Logger.getLogger(ItemImageAttachmentConfig.class);
-
     /** Singelton config object.  */
     private static ItemImageAttachmentConfig s_conf;
 
@@ -60,15 +59,14 @@ public final class ItemImageAttachmentConfig extends AbstractConfig {
         return s_conf;
     }
 
-
     // ///////////////////////////////////////////////////////////////////////
     //
     // set of configuration parameters
-
-	// Are the description and title properties available for
-	// display/editing.  These properties are used by the 
-	// ImageGallery content type.
+    // Are the description and title properties available for
+    // display/editing.  These properties are used by the 
+    // ImageGallery content type.
     private final Parameter m_isImageStepDescriptionAndTitleShown;
+    private final Parameter m_imageStepSortKey;
 
     /**
      * Do not instantiate this class directly.
@@ -77,17 +75,29 @@ public final class ItemImageAttachmentConfig extends AbstractConfig {
      **/
     public ItemImageAttachmentConfig() {
 
-		m_isImageStepDescriptionAndTitleShown = new BooleanParameter
-            ("com.arsdigita.cms.m_is_image_step_description_and_title_shown",
-             Parameter.REQUIRED, new Boolean(false));
-       
-        
+        m_isImageStepDescriptionAndTitleShown =
+        new BooleanParameter(
+                "com.arsdigita.cms.m_is_image_step_description_and_title_shown",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
+
+        m_imageStepSortKey = new IntegerParameter(
+                "com.arsdigita.cms.image_step_sortkey",
+                Parameter.REQUIRED,
+                1);
+
         register(m_isImageStepDescriptionAndTitleShown);
-       
+        register(m_imageStepSortKey);
+
         loadInfo();
     }
 
     public final boolean getIsImageStepDescriptionAndTitleShown() {
         return ((Boolean) get(m_isImageStepDescriptionAndTitleShown)).booleanValue();
     }
+    
+    public final Integer getImageStepSortKey() {
+        return (Integer) get(m_imageStepSortKey);
+    }
+
 }

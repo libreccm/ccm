@@ -140,7 +140,7 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
      * The sort key for the authoring step
      */
     public int getAuthoringStepSortKey() {
-        return 2; // XXX config param please
+        return FileAttachmentConfig.instanceOf().getFileAttachmentStepSortKey();
     }
 
 }

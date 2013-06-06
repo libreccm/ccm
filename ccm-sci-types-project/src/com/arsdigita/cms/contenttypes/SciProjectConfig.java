@@ -15,8 +15,11 @@ import com.arsdigita.util.parameter.StringParameter;
 public class SciProjectConfig extends AbstractConfig {
 
     private final Parameter enableSubProjectsStep;
+    private final Parameter subProjectsStepSortKey;
     private final Parameter enableSuperProjectsStep;
+    private final Parameter superProjectsStepSortKey;
     private final Parameter enableInvolvedOrgasStep;
+    private final Parameter involvedOrgasStepSortKey;
     private final Parameter shortDescMaxLength;
     private final Parameter enableDescriptionDhtml;
     private final Parameter enableMembersAllInOne;
@@ -29,12 +32,18 @@ public class SciProjectConfig extends AbstractConfig {
     private final Parameter tabs;
 
     public SciProjectConfig() {
-        
+
         enableSubProjectsStep =
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_sub_projects_step",
                 Parameter.REQUIRED,
                 Boolean.TRUE);
+
+        subProjectsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.sub_projects_step_sortkey",
+                Parameter.REQUIRED,
+                10);
 
         enableSuperProjectsStep =
         new BooleanParameter(
@@ -42,11 +51,23 @@ public class SciProjectConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.TRUE);
 
+        superProjectsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.super_projects_step_sortkey",
+                Parameter.REQUIRED,
+                20);
+
         enableInvolvedOrgasStep =
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_involved_orgas_step",
-                             Parameter.REQUIRED,
-                             Boolean.TRUE);
+                Parameter.REQUIRED,
+                Boolean.TRUE);
+
+        involvedOrgasStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.involved_orgas_step",
+                Parameter.REQUIRED,
+                30);
 
         shortDescMaxLength = new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.shortdesc.max_length",
@@ -105,8 +126,11 @@ public class SciProjectConfig extends AbstractConfig {
                 "summary:com.arsdigita.cms.contenttypes.ui.SciProjectSummaryTab;desc:com.arsdigita.cms.contenttypes.ui.SciProjectDescTab");
 
         register(enableSubProjectsStep);
+        register(subProjectsStepSortKey);
         register(enableSuperProjectsStep);
+        register(superProjectsStepSortKey);
         register(enableInvolvedOrgasStep);
+        register(involvedOrgasStepSortKey);
         register(shortDescMaxLength);
         register(enableDescriptionDhtml);
         register(enableMembersAllInOne);
@@ -124,15 +148,27 @@ public class SciProjectConfig extends AbstractConfig {
     public final boolean getEnableSubProjectsStep() {
         return (Boolean) get(enableSubProjectsStep);
     }
+    
+    public final Integer getSubProjectsStepSortKey() {
+        return (Integer) get(subProjectsStepSortKey);
+    }
 
     public final boolean getEnableSuperProjectsStep() {
         return (Boolean) get(enableSuperProjectsStep);
+    }
+    
+    public final Integer getSuperProjectsStepSortKey() {
+        return (Integer) get(subProjectsStepSortKey);
     }
 
     public final boolean getEnableInvolvedOrgasStep() {
         return (Boolean) get(enableInvolvedOrgasStep);
     }
     
+    public final Integer getInvolvedOrgasStepSortKey() {
+        return (Integer) get(subProjectsStepSortKey);
+    }
+
     public final int getShortDescMaxLength() {
         return (Integer) get(shortDescMaxLength);
     }
@@ -174,4 +210,5 @@ public class SciProjectConfig extends AbstractConfig {
     public final String getTabs() {
         return (String) get(tabs);
     }
+
 }

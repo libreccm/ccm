@@ -71,7 +71,7 @@ public class SciDepartmentInitializer extends ContentTypeInitializer {
                     "scidepartment.ui.subdepartments.title"),
                     SciDepartmentGlobalizationUtil.globalize(
                     "scidepartment.ui.subdepartments.description"),
-                    10);
+                    config.getSubDepartmentsStepSortKey());
         }
 
         if (config.getEnableSuperDepartmentsStep()) {
@@ -82,7 +82,7 @@ public class SciDepartmentInitializer extends ContentTypeInitializer {
                     "scidepartment.ui.superdepartments.title"),
                     SciDepartmentGlobalizationUtil.globalize(
                     "scidepartment.ui.superdepartments.description"),
-                    20);
+                    config.getSuperDepartmentsStepSortKey());
         }
 
         final ContentTypeCollection contentTypes = ContentType.
@@ -100,7 +100,7 @@ public class SciDepartmentInitializer extends ContentTypeInitializer {
                         "scidepartment.ui.projects.title"),
                         SciDepartmentGlobalizationUtil.globalize(
                         "scidepartment.ui.projects.description"),
-                        30);
+                        config.getProjectsStepSortKey());
             }
 
             if (config.getEnableProjectDepartmentsStep()) {
@@ -111,7 +111,7 @@ public class SciDepartmentInitializer extends ContentTypeInitializer {
                         "sciproject.ui.departments.title"),
                         SciDepartmentGlobalizationUtil.globalize(
                         "sciproject.ui.departments.description"),
-                        40);
+                        config.getProjectDepartmentsStepSortKey());
             }
         }
     }

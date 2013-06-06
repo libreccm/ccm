@@ -630,6 +630,12 @@ public final class CMSConfig extends AbstractConfig {
             "com.arsdigita.cms.contenttypes.genericperson.attach_person_orgaunits_step",
             Parameter.REQUIRED,
             Boolean.TRUE);
+    
+    private final Parameter m_personOrgaUnitsStepSortKey = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.genericperson.person_orgaunits_step_sortkey",
+            Parameter.REQUIRED,
+            20);
+    
     /**
      * Enable or disable the XML cache in {@link SimpleXMLGenerator}
      */
@@ -761,6 +767,7 @@ public final class CMSConfig extends AbstractConfig {
         register(m_itemSearchFlatBrowsePanePageSize);
 
         register(m_attachPersonOrgaUnitsStep);
+        register(m_personOrgaUnitsStepSortKey);
         
         register(m_enableXmlCache);
         register(m_xmlCacheSize);
@@ -1240,6 +1247,10 @@ public final class CMSConfig extends AbstractConfig {
 
     public Boolean getAttachPersonOrgaUnitsStep() {
         return (Boolean) get(m_attachPersonOrgaUnitsStep);
+    }
+    
+    public Integer getPersonOrgaUnitsStepSortKey() {
+        return (Integer) get(m_personOrgaUnitsStepSortKey);
     }
     
     public Boolean getEnableXmlCache() {

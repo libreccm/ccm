@@ -49,7 +49,6 @@ import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
-
 /**
  * abstract class for displaying the categories assigned to an object under one or 
  * more root nodes. Subclasses should retrieve the object to be assigned and 
@@ -62,11 +61,9 @@ import com.arsdigita.xml.XML;
 public abstract class ACSObjectCategorySummary extends SimpleComponent {
 
     private static final Logger s_log = Logger.getLogger(ACSObjectCategorySummary.class);
-
     public static final String ACTION_DELETE = "delete";
     public static final String ACTION_ADD = "add";
     public static final String ACTION_ADD_JS = "addJS";
-
     private Map m_listeners = new HashMap();
 
     public ACSObjectCategorySummary() {
@@ -75,7 +72,7 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
     }
 
     public void registerAction(String name,
-                                  ActionListener listener) {
+                               ActionListener listener) {
         m_listeners.put(name, listener);
     }
 
@@ -85,7 +82,7 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
         Assert.isTrue(canEdit(state), "User can edit object");
 
         String name = state.getControlEventName();
-        ActionListener listener = (ActionListener)m_listeners.get(name);
+        ActionListener listener = (ActionListener) m_listeners.get(name);
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Got event " + name + " listener " + listener);
@@ -96,53 +93,49 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
         }
     }
 
-	/**
-	 * default behaviour is to check for edit access on the current resource.
-	 * as defined by getCategorizedObject.
-	 * This can be overridden by subclasses, if for instance a specific 
-	 * privilege should be checked
-	 * @param state
-	 * @return
-	 */
+    /**
+     * default behaviour is to check for edit access on the current resource.
+     * as defined by getCategorizedObject.
+     * This can be overridden by subclasses, if for instance a specific 
+     * privilege should be checked
+     * @param state
+     * @return
+     */
     protected boolean canEdit(PageState state) {
-    	
-    	Party party = Kernel.getContext().getParty();
-    	if (party == null) {
-    		party = Kernel.getPublicUser();
-    	}
-    	
-    	PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.EDIT, getObject(state), party);
+
+        Party party = Kernel.getContext().getParty();
+        if (party == null) {
+            party = Kernel.getPublicUser();
+        }
+
+        PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.EDIT, getObject(state), party);
         return PermissionService.checkPermission(edit);
     }
-    
-    
 
-	
-	protected abstract ACSObject getObject(PageState state);
-	
-	protected abstract String getXMLPrefix();
-	
-	protected abstract String getXMLNameSpace();
-	
-	protected abstract RootCategoryCollection getRootCategories(PageState state);
-	
-	
+    protected abstract ACSObject getObject(PageState state);
+
+    protected abstract String getXMLPrefix();
+
+    protected abstract String getXMLNameSpace();
+
+    protected abstract RootCategoryCollection getRootCategories(PageState state);
+
     public void generateXML(PageState state,
                             Element parent) {
-        
+
         boolean canEdit = canEdit(state);
-		
+
         Element content = parent.newChildElement(getXMLPrefix() + ":categoryStepSummary",
                                                  getXMLNameSpace());
         exportAttributes(content);
 
         Element rootCats = content.newChildElement(getXMLPrefix() + ":categoryRoots",
-		getXMLNameSpace());
+                                                   getXMLNameSpace());
 
         RootCategoryCollection roots = getRootCategories(state);
         while (roots.next()) {
             Element root = rootCats.newChildElement(getXMLPrefix() + ":categoryRoot",
-			getXMLNameSpace());
+                                                    getXMLNameSpace());
 
             root.addAttribute("name", roots.getName());
             root.addAttribute("description", roots.getDescription());
@@ -171,10 +164,10 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
         }
 
         Element itemCats = content.newChildElement(getXMLPrefix() + ":itemCategories",
-		getXMLNameSpace());
+                                                   getXMLNameSpace());
         CategoryCollection cats = new CategorizedObject(getObject(state)).getParents();
         while (cats.next()) {
-            Category cat = (Category)cats.getCategory();
+            Category cat = (Category) cats.getCategory();
 
 
             // This is lame, but there is no way to get full path
@@ -184,7 +177,7 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
             parents.addOrder(Category.DEFAULT_ANCESTORS);
 
             while (parents.next()) {
-                Category par = (Category)parents.getCategory();
+                Category par = (Category) parents.getCategory();
                 if (path.length() != 0) {
                     path.append(" -> ");
                 }
@@ -192,7 +185,7 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
             }
 
             Element el = itemCats.newChildElement(getXMLPrefix() + ":itemCategory",
-			getXMLNameSpace());
+                                                  getXMLNameSpace());
             el.addAttribute("name", cat.getName());
             el.addAttribute("description", cat.getDescription());
             el.addAttribute("path", XML.format(path));
@@ -212,23 +205,24 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
     }
 
     private class DeleteActionListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             String value = state.getControlEventValue();
 
-            Category cat = (Category)DomainObjectFactory
-                .newInstance(new OID(Category.BASE_DATA_OBJECT_TYPE,
-                                     new BigDecimal(value)));
+            Category cat = (Category) DomainObjectFactory
+                    .newInstance(new OID(Category.BASE_DATA_OBJECT_TYPE,
+                                         new BigDecimal(value)));
             ACSObject object = getObject(state);
-            
+
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Removing category " + cat + " from "  + object
-                            );
+                s_log.debug("Removing category " + cat + " from " + object);
             }
             cat.removeChild(object);
 
             state.clearControlEvent();
             throw new RedirectSignal(state.toURL(), true);
         }
+
     }
 }

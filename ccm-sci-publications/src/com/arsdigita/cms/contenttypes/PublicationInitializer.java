@@ -69,7 +69,7 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     PublicationGenericOrganizationalUnitsStep.class,
                     PublicationGlobalizationUtil.globalize("publications.ui.orgaunits.title"),
                     PublicationGlobalizationUtil.globalize("publications.ui.orgaunits.description"),
-                    10);
+                    config.getOrgaUnitsStepSortKey());
         }
 
         final String attachToStr = config.getAttachPublicationsStepTo();
@@ -91,7 +91,7 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     "genericorganizationalunit.ui.publications.title"),
                     PublicationGlobalizationUtil.globalize(
                     "genericorganizationalunit.ui.publications.description"),
-                    10);
+                    config.getPublicationsStepSortKey());
         }
 
         if (config.getAttachPersonPublicationsStep()) {
@@ -100,7 +100,7 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     PersonPublicationsStep.class,
                     PublicationGlobalizationUtil.globalize("person.ui.publications.title"),
                     PublicationGlobalizationUtil.globalize("person.ui.publications.description"),
-                    10);
+                    config.getPersonPublicationsStepSortKey());
         }
 
         final String attachOrgaPubStepTo = config.getAttachOrganizationPublicationsStepTo();
@@ -120,7 +120,7 @@ public class PublicationInitializer extends ContentTypeInitializer {
                     OrganizationPublicationsStep.class,
                     PublicationGlobalizationUtil.globalize("organization.ui.publications.title"),
                     PublicationGlobalizationUtil.globalize("organization.ui.publications.description"),
-                    11);
+                    config.getOrganizationPublicationsStepSortKey());
         }        
     }
 

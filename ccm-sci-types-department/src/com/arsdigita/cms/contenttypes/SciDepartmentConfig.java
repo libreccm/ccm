@@ -14,9 +14,13 @@ import com.arsdigita.util.parameter.StringParameter;
 public class SciDepartmentConfig extends AbstractConfig {
 
     private final Parameter enableSubDepartmentsStep;
+    private final Parameter subDepartmentsStepSortKey;
     private final Parameter enableSuperDepartmentsStep;
+    private final Parameter superDepartmentsStepSortKey;
     private final Parameter enableProjectsStep;
+    private final Parameter projectsStepSortKey;
     private final Parameter enableProjectDepartmentsStep;
+    private final Parameter projectDepartmentsStepSortKey;
     private final Parameter shortDescMaxLength;
     private final Parameter enableDescriptionDhtml;
     private final Parameter permittedPersonType;
@@ -30,11 +34,23 @@ public class SciDepartmentConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.TRUE);
 
+        subDepartmentsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.scidepartment.subdepartments_step_sortkey",
+                Parameter.REQUIRED,
+                10);
+
         enableSuperDepartmentsStep =
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.enable.super_departments_step",
                 Parameter.REQUIRED,
                 Boolean.TRUE);
+
+        superDepartmentsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.scidepartment.superdepartments_step_sortkey",
+                Parameter.REQUIRED,
+                20);
 
         enableProjectsStep =
         new BooleanParameter(
@@ -42,11 +58,23 @@ public class SciDepartmentConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.TRUE);
 
+        projectsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.scidepartment.projects_step_sortkey",
+                Parameter.REQUIRED,
+                30);
+
         enableProjectDepartmentsStep =
         new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.enable.project_departments_step",
                 Parameter.REQUIRED,
                 Boolean.TRUE);
+
+        projectDepartmentsStepSortKey =
+        new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.scidepartment.project_departments_step_sortkey",
+                Parameter.REQUIRED,
+                40);
 
         shortDescMaxLength =
         new IntegerParameter(
@@ -73,9 +101,13 @@ public class SciDepartmentConfig extends AbstractConfig {
                 "summary:com.arsdigita.cms.contenttypes.ui.SciDepartmentSummaryTab;desc:com.arsdigita.cms.contenttypes.ui.SciDepartmentDescTab;members:com.arsdigita.cms.contenttypes.ui.SciDepartmentMembersTab;projects:com.arsdigita.cms.contenttypes.ui.SciDepartmentProjectsTab;publications:com.arsdigita.cms.contenttypes.ui.SciDepartmentPublicationsTab");
 
         register(enableSubDepartmentsStep);
+        register(subDepartmentsStepSortKey);
         register(enableSuperDepartmentsStep);
+        register(superDepartmentsStepSortKey);
         register(enableProjectsStep);
+        register(projectsStepSortKey);
         register(enableProjectDepartmentsStep);
+        register(projectDepartmentsStepSortKey);
         register(shortDescMaxLength);
         register(enableDescriptionDhtml);
         register(permittedPersonType);
@@ -88,16 +120,32 @@ public class SciDepartmentConfig extends AbstractConfig {
         return (Boolean) get(enableSubDepartmentsStep);
     }
 
+    public Integer getSubDepartmentsStepSortKey() {
+        return (Integer) get(subDepartmentsStepSortKey);
+    }
+
     public final Boolean getEnableSuperDepartmentsStep() {
         return (Boolean) get(enableSuperDepartmentsStep);
     }
-    
+
+    public Integer getSuperDepartmentsStepSortKey() {
+        return (Integer) get(superDepartmentsStepSortKey);
+    }
+
     public final Boolean getEnableProjectsStep() {
         return (Boolean) get(enableProjectsStep);
     }
-    
-     public final Boolean getEnableProjectDepartmentsStep() {
+
+    public Integer getProjectsStepSortKey() {
+        return (Integer) get(projectsStepSortKey);
+    }
+
+    public final Boolean getEnableProjectDepartmentsStep() {
         return (Boolean) get(enableProjectDepartmentsStep);
+    }
+
+    public Integer getProjectDepartmentsStepSortKey() {
+        return (Integer) get(projectDepartmentsStepSortKey);
     }
 
     public Integer getShortDescMaxLength() {
@@ -115,4 +163,5 @@ public class SciDepartmentConfig extends AbstractConfig {
     public final String getTabs() {
         return (String) get(tabs);
     }
+
 }

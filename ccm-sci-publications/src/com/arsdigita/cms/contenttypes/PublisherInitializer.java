@@ -61,7 +61,7 @@ public class PublisherInitializer extends ContentTypeInitializer {
                     PublisherPublicationsStep.class,
                     PublicationGlobalizationUtil.globalize("publisher.ui.publications.title"),
                     PublicationGlobalizationUtil.globalize("publisher.ui.publications.description"),
-                    10);
+                    config.getPublisherPublicationsStepSortKey());
         }
     }
 

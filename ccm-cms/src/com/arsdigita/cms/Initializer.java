@@ -238,7 +238,7 @@ public class Initializer extends CompoundInitializer {
                     GenericPersonOrgaUnitsStep.class,
                     ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
                     ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
-                    20);
+                    s_conf.getPersonOrgaUnitsStepSortKey());
         }
 
         s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
