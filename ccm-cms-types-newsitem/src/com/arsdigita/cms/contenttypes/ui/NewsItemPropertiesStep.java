@@ -57,7 +57,8 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new NewsItemPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
+        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet,
+                                                                       itemModel),
                 editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getNewsDomainObjectPropertySheet(itemModel));
@@ -75,61 +76,83 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
     public static Component getNewsDomainObjectPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.title").localize(), NewsItem.TITLE);
-        sheet.add((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.newsitem.name").localize(), NewsItem.NAME);
-        sheet.add((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.newsitem.lead").localize(), NewsItem.LEAD);
-        if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
-                    ContentPage.LAUNCH_DATE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
+        sheet.add(NewsItemGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"), NewsItem.TITLE);
+        sheet.add(NewsItemGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.newsitem.name"), NewsItem.NAME);
+        sheet.add(NewsItemGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.newsitem.lead"), NewsItem.LEAD);
 
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            ContentPage page = (ContentPage) item;
-                            if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale()).format(page.getLaunchDate());
-                            } else {
-                                return (String) NewsItemGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                            }
-                        }
-                    });
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(NewsItemGlobalizationUtil.globalize(
+                                                "cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new DomainObjectPropertySheet.AttributeFormatter() {
+
+                public String format(DomainObject item,
+                                     String attribute,
+                                     PageState state) {
+                    ContentPage page = (ContentPage) item;
+                    if (page.getLaunchDate() != null) {
+                         return DateFormat.getDateInstance(
+                                   DateFormat.LONG, 
+                                   GlobalizationHelper.getNegotiatedLocale())
+                                   .format(page.getLaunchDate());
+                    } else {
+                        return (String) NewsItemGlobalizationUtil
+                               .globalize("cms.contenttypes.ui.newsitem.unknown")
+                               .localize();
+                    }
+                }
+            });
         }
 
         // Show news item on homepage?
         if (!NewsItem.getConfig().getHideHomepageField()) {
-            sheet.add((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.newsitem.homepage").localize(),
-                    NewsItem.IS_HOMEPAGE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
+            sheet.add(NewsItemGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.newsitem.homepage"),
+                      NewsItem.IS_HOMEPAGE,
+                      new DomainObjectPropertySheet.AttributeFormatter() {
 
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            NewsItem pr = (NewsItem) item;
+                public String format(DomainObject item,
+                                     String attribute,
+                                     PageState state) {
+                    NewsItem pr = (NewsItem) item;
 
-                            if (pr.isHomepage().booleanValue()) {
-                                return (String) NewsItemGlobalizationUtil.globalize("cms.ui.yes").localize();
-                            }
+                    if (pr.isHomepage().booleanValue()) {
+                        return (String) NewsItemGlobalizationUtil
+                                .globalize("cms.contenttypes.ui.newsitem.yes")
+                                .localize();
+                    }
 
-                            return (String) NewsItemGlobalizationUtil.globalize("cms.ui.no").localize();
-                        }
-                    });
+                    return (String) NewsItemGlobalizationUtil
+                            .globalize("cms.contenttypes.ui.newsitem.no")
+                            .localize();
+                }
+            });
         }
 
-        sheet.add((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.newsitem.news_date").localize(), NewsItem.NEWS_DATE,
-                new DomainObjectPropertySheet.AttributeFormatter() {
+        sheet.add(NewsItemGlobalizationUtil.globalize(
+                                           "cms.contenttypes.ui.newsitem.news_date"), 
+                  NewsItem.NEWS_DATE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
 
-                    public String format(DomainObject item,
-                            String attribute,
-                            PageState state) {
-                        NewsItem pr = (NewsItem) item;
-                        if (pr.getNewsDate() != null) {
-                            return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale()).format(pr.getNewsDate());
-                        } else {
-                            return (String) NewsItemGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                        }
-                    }
-                });
+            public String format(DomainObject item,
+                                 String attribute,
+                                 PageState state) {
+                NewsItem pr = (NewsItem) item;
+                if (pr.getNewsDate() != null) {
+                    return DateFormat.getDateInstance(
+                               DateFormat.LONG, 
+                               GlobalizationHelper.getNegotiatedLocale())
+                                                  .format(pr.getNewsDate());
+                } else {
+                    return (String) NewsItemGlobalizationUtil
+                            .globalize("cms.contenttypes.ui.newsitem.unknown")
+                            .localize();
+                }
+            }
+        });
 
         return sheet;
     }

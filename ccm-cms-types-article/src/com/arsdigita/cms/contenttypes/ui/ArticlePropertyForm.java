@@ -64,7 +64,8 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
      *    Article to work on
      * @param step The ArticlePropertiesStep which controls this form.
      */
-    public ArticlePropertyForm(ItemSelectionModel itemModel, ArticlePropertiesStep step) {
+    public ArticlePropertyForm(ItemSelectionModel itemModel, 
+                               ArticlePropertiesStep step) {
         super(itemModel, step);
         m_step = step;
         addSubmissionListener(this);
@@ -88,7 +89,8 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
         }
         //leadParam
         //    .addParameterListener( new NotNullValidationListener() );
-        leadParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
+        leadParam.addParameterListener(new StringInRangeValidationListener(0, 
+                                                                           1000));
         TextArea lead = new TextArea(leadParam);
         lead.setCols(40);
         lead.setRows(5);
@@ -113,8 +115,8 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
     /** Cancels streamlined editing. */
     @Override
     public void submitted(FormSectionEvent fse) {
-        if (m_step != null
-                && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+        if (m_step != null && getSaveCancelSection().getCancelButton()
+                              .isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
@@ -128,7 +130,8 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
 
         // save only if save button was pressed
         if (article != null
-                && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+                && getSaveCancelSection().getSaveButton()
+                                         .isSelected(fse.getPageState())) {
 
             article.setLead((String) data.get(LEAD));
             article.save();

@@ -78,14 +78,14 @@ public class AgendaPropertiesStep extends SimpleEditStep {
                                                    itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.name").localize(),  Agenda.NAME );
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.title").localize(), Agenda.TITLE);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"), Agenda.TITLE);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"),  Agenda.NAME );
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add((String) AgendaGlobalizationUtil
-                      .globalize("cms.ui.authoring.page_launch_date").localize(),
+            sheet.add(AgendaGlobalizationUtil
+                      .globalize("cms.ui.authoring.page_launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
                           public String format(DomainObject item,
@@ -93,7 +93,9 @@ public class AgendaPropertiesStep extends SimpleEditStep {
                                                PageState state) {
                               ContentPage page = (ContentPage) item;
                               if(page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale())
+                                  return DateFormat.getDateInstance
+                                          (DateFormat.LONG, 
+                                          GlobalizationHelper.getNegotiatedLocale())
                                       .format(page.getLaunchDate());
                               } else {
                                   return (String)AgendaGlobalizationUtil.globalize("cms.ui.unknown").localize();
@@ -101,20 +103,20 @@ public class AgendaPropertiesStep extends SimpleEditStep {
                           }
                       });
         }
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.summary").localize(),              Agenda.SUMMARY);
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.agenda.agenda_date").localize(),   Agenda.AGENDA_DATE);
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.agenda.location").localize(),      Agenda.LOCATION);
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.agenda.attendees").localize(),     Agenda.ATTENDEES);
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.agenda.subject_items").localize(), Agenda.SUBJECT_ITEMS);
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.agenda.contact_info").localize(),  Agenda.CONTACT_INFO);
-        sheet.add((String) AgendaGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.agenda.creation_date").localize(),
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.summary"),              Agenda.SUMMARY);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.agenda.agenda_date"),   Agenda.AGENDA_DATE);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.agenda.location"),      Agenda.LOCATION);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.agenda.attendees"),     Agenda.ATTENDEES);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.agenda.subject_items"), Agenda.SUBJECT_ITEMS);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.agenda.contact_info"),  Agenda.CONTACT_INFO);
+        sheet.add(AgendaGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.agenda.creation_date"),
                   Agenda.AGENDA_DATE,
                   new DomainObjectPropertySheet.AttributeFormatter() {
                       public String format(DomainObject item,
@@ -122,10 +124,13 @@ public class AgendaPropertiesStep extends SimpleEditStep {
                                            PageState state) {
                           Agenda agenda = (Agenda) item;
                           if(agenda.getCreationDate() != null) {
-                              return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale())
+                              return DateFormat.getDateInstance(
+                                      DateFormat.LONG, 
+                                      GlobalizationHelper.getNegotiatedLocale())
                                   .format(agenda.getCreationDate());
                           } else {
-                              return (String)AgendaGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                              return (String)AgendaGlobalizationUtil
+                                     .globalize("cms.ui.unknown").localize();
                           }
                       }
                   });

@@ -18,15 +18,17 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.cms.contenttypes.Bookmark;
 
 import com.arsdigita.bebop.Component;
-import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.contenttypes.Bookmark;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 
 /**
@@ -65,10 +67,19 @@ public class BookmarkPropertiesStep
                                                      itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add( "Name (URL):", Bookmark.NAME );
-        sheet.add( "Page Title:", Bookmark.TITLE );
-        sheet.add( "Description:", Bookmark.DESCRIPTION );
-        sheet.add( "URL:", Bookmark.URL );
+     // sheet.add( "Page Title:", Bookmark.TITLE );
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"),  Bookmark.TITLE );
+     // sheet.add( "Name (URL):", Bookmark.NAME );
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"),  Bookmark.NAME );
+     // sheet.add( "Description:", Bookmark.DESCRIPTION );
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.summary"), Bookmark.DESCRIPTION );
+     // sheet.add( "URL:", Bookmark.URL );
+        sheet.add(new GlobalizedMessage
+                  ("cms.contenttypes.ui.bookmark.url",Bookmark.RESOURCES), 
+                  Bookmark.URL );
 
         return sheet;
     }

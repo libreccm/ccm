@@ -27,10 +27,11 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 
 /**
@@ -64,7 +65,8 @@ public class BookmarkPropertyForm
     protected void addWidgets() {
         super.addWidgets();
         
-        add( new Label( "Description:" ) );
+        add( new Label( GlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.summary") ) );
         ParameterModel descriptionParam
             = new StringParameter( DESCRIPTION );
         TextArea description = new TextArea( descriptionParam );
@@ -72,7 +74,9 @@ public class BookmarkPropertyForm
         description.setRows(5);
         add( description );
         
-        add( new Label( "Url:" ) );
+//      add( new Label( "Url:" ) );
+        add( new Label( new GlobalizedMessage
+                        ("cms.contenttypes.ui.bookmark.url",Bookmark.RESOURCES) ) );
         ParameterModel urlParam
             = new StringParameter( URL );
         TextField url = new TextField( urlParam );

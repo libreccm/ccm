@@ -35,7 +35,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.NewsItem;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.contenttypes.util.NewsItemGlobalizationUtil;
-import java.util.Calendar;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -79,7 +79,8 @@ public class NewsItemPropertyForm extends BasicPageForm
      *    NewsItem to work on
      * @param step The NewsItemPropertiesStep which controls this form.
      */
-    public NewsItemPropertyForm(ItemSelectionModel itemModel, NewsItemPropertiesStep step) {
+    public NewsItemPropertyForm(ItemSelectionModel itemModel, 
+                                NewsItemPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -88,11 +89,13 @@ public class NewsItemPropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
         // summary  (lead)
-        add(new Label((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.newsitem.lead").localize()));
+        add(new Label(NewsItemGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.newsitem.lead")));
         ParameterModel leadParam = new StringParameter(LEAD);
         //leadParam
         //    .addParameterListener(new NotNullValidationListener());
@@ -105,21 +108,26 @@ public class NewsItemPropertyForm extends BasicPageForm
         if (!NewsItem.getConfig().getHideHomepageField()) {
             RadioGroup homepageWidget = new RadioGroup(IS_HOMEPAGE);
             homepageWidget.addOption(new Option("true",
-                    new Label((String) NewsItemGlobalizationUtil.globalize("cms.ui.yes").localize())));
+                    new Label(NewsItemGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.newsitem.yes"))));
             homepageWidget.addOption(new Option("false",
-                    new Label((String) NewsItemGlobalizationUtil.globalize("cms.ui.no").localize())));
+                    new Label(NewsItemGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.newsitem.no"))));
 
-            add(new Label((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.newsitem.homepage").localize()));
+            add(new Label(NewsItemGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.newsitem.homepage")));
             add(homepageWidget);
         }
 
         // publication date
-        add(new Label((String) NewsItemGlobalizationUtil.globalize("cms.contenttypes.ui.newsitem.date").localize()));
+        add(new Label(NewsItemGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.newsitem.date")));
         ParameterModel newsDateParam = new DateParameter(NEWS_DATE);
         newsDateParam.addParameterListener(new NotNullValidationListener());
         m_newsDate = new com.arsdigita.bebop.form.Date(newsDateParam);
         m_newsDate.setYearRange(NewsItem.getConfig().getStartYear(),
-                               GregorianCalendar.getInstance().get(Calendar.YEAR) + NewsItem.getConfig().getEndYearDelta());
+                               GregorianCalendar.getInstance().get(Calendar.YEAR) 
+                               + NewsItem.getConfig().getEndYearDelta());
         add(m_newsDate);
     }
 
@@ -146,7 +154,8 @@ public class NewsItemPropertyForm extends BasicPageForm
     /** Cancels streamlined editing. */
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
-                && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+                && getSaveCancelSection().getCancelButton()
+                                         .isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
@@ -159,7 +168,8 @@ public class NewsItemPropertyForm extends BasicPageForm
 
         // save only if save button was newsed
         if (item != null
-                && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+                && getSaveCancelSection().getSaveButton()
+                                         .isSelected(fse.getPageState())) {
 
             item.setNewsDate((java.util.Date) data.get(NEWS_DATE));
             item.setLead((String) data.get(LEAD));

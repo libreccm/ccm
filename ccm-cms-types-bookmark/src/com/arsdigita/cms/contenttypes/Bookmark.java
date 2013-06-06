@@ -44,6 +44,10 @@ public class Bookmark extends ContentPage {
     public static final String BASE_DATA_OBJECT_TYPE
         = "com.arsdigita.cms.contenttypes.Bookmark";
 
+    /** Path and filename of Bookmarks Resource Bundle file                   */
+    public static final String RESOURCES = 
+                               "com.arsdigita.cms.contenttypes.BookmarkResources";
+
     public Bookmark() {
         this( BASE_DATA_OBJECT_TYPE );
     }

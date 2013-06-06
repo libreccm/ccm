@@ -39,7 +39,8 @@ public class ArticlePropertiesStep extends GenericArticlePropertiesStep {
     /** The name of the editing sheet added to this step */
     public static String EDIT_SHEET_NAME = "edit";
 
-    public ArticlePropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public ArticlePropertiesStep(ItemSelectionModel itemModel, 
+                                 AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
@@ -47,7 +48,10 @@ public class ArticlePropertiesStep extends GenericArticlePropertiesStep {
     protected void createEditSheet(ItemSelectionModel itemModel) {
         BasicPageForm editSheet;
         editSheet = new ArticlePropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel), 
+            editSheet.getSaveCancelSection().getCancelButton());
     }
 
     @Override
@@ -64,9 +68,11 @@ public class ArticlePropertiesStep extends GenericArticlePropertiesStep {
      *  of the release
      */
     public static Component getArticlePropertySheet(ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) getGenericArticlePropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) 
+                                          getGenericArticlePropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"), Article.LEAD);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"), 
+                  Article.LEAD);
 
         return sheet;
     }

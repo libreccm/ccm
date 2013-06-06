@@ -103,7 +103,7 @@ public class AgendaPropertyForm extends BasicPageForm
         ParameterModel summaryParam = new StringParameter(SUMMARY);
         //summaryParam
         //    .addParameterListener(new NotNullValidationListener());
-	summaryParam.addParameterListener(new StringInRangeValidationListener(0, 4000));
+        summaryParam.addParameterListener(new StringInRangeValidationListener(0, 4000));
         TextArea summary = new TextArea(summaryParam);
         summary.setCols(40);
         summary.setRows(5);
@@ -120,7 +120,7 @@ public class AgendaPropertyForm extends BasicPageForm
         ParameterModel locationParam = new StringParameter(LOCATION);
         //locationParam
         //    .addParameterListener(new NotNullValidationListener());
-	locationParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
+        locationParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea location = new TextArea(locationParam);
         location.setCols(40);
         location.setRows(3);
@@ -130,7 +130,7 @@ public class AgendaPropertyForm extends BasicPageForm
         ParameterModel attendeesParam = new StringParameter(ATTENDEES);
         //attendeesParam
         //    .addParameterListener(new NotNullValidationListener());
-	attendeesParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
+        attendeesParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea attendees = new TextArea(attendeesParam);
         attendees.setCols(40);
         attendees.setRows(3);
@@ -140,7 +140,7 @@ public class AgendaPropertyForm extends BasicPageForm
         ParameterModel subjectItemsParam = new StringParameter(SUBJECT_ITEMS);
         //subjectItemsParam
         //    .addParameterListener(new NotNullValidationListener());
-	subjectItemsParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
+        subjectItemsParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea subjectItems = new TextArea(subjectItemsParam);
         subjectItems.setCols(40);
         subjectItems.setRows(3);
@@ -150,7 +150,7 @@ public class AgendaPropertyForm extends BasicPageForm
         ParameterModel contactInfoParam = new StringParameter(CONTACT_INFO);
         //contactInfoParam
         //    .addParameterListener(new NotNullValidationListener());
-	contactInfoParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
+        contactInfoParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea contactInfo = new TextArea(contactInfoParam);
         contactInfo.setCols(40);
         contactInfo.setRows(3);
