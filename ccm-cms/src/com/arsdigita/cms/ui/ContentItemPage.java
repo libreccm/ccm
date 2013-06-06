@@ -220,7 +220,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         m_tabbedPane.addTab(new Label(gz("cms.ui.item.summary")), m_summaryPane);
         m_tabbedPane.addTab(new Label(gz("cms.ui.item.authoring")), m_wizardPane);
         m_tabbedPane.addTab(new Label(gz("cms.ui.item.languages")),
-                            m_languagesPane);
+                                                               m_languagesPane);
         m_tabbedPane.addTab(new Label(gz("cms.ui.item.workflow")),
                             m_workflowPane);
         m_tabbedPane.addTab(new Label(gz("cms.ui.item.lifecycles")),
@@ -300,6 +300,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
      * @param request The HTTP request
      * @return The current content section
      */
+    @Override
     public ContentSection getContentSection(HttpServletRequest request) {
         // Resets all content sections associations.
         ContentSection section = super.getContentSection(request);
@@ -315,6 +316,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
      * @param state The page state
      * @return The current content item, null if there is none
      */
+    @Override
     public ContentItem getContentItem(PageState state) {
         return (ContentItem) m_itemModel.getSelectedObject(state);
     }
@@ -486,6 +488,12 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         }
     }
 
+    /**
+     * 
+     * @param state
+     * @param item
+     * @return 
+     */
     private String getDefaultPreviewLink(final PageState state,
                                          final ContentItem item) {
         final ContentSection section = CMS.getContext().getContentSection();

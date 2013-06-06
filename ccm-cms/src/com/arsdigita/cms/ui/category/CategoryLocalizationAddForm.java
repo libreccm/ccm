@@ -73,8 +73,8 @@ public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
 
             // Select one entry
             m_locale.addOption(new Option("",
-                    new Label((String) GlobalizationUtil.globalize(
-                    "cms.ui.select_one").localize())), state);
+                    new Label(GlobalizationUtil.globalize(
+                              "cms.ui.select_one"))), state);
 
             // all supported languages (by registry entry)
             KernelConfig kernelConfig = Kernel.getConfig();

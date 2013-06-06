@@ -21,7 +21,6 @@ package com.arsdigita.cms.ui.authoring;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
@@ -48,9 +47,9 @@ import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 
 /**
- * A form which displays a select box of all content types available
- * under the given content section, and forwards to the item creation
- * UI when the user selects a content type to instantiate.
+ * A form which displays a select box of all content types available under the
+ * given content section, and forwards to the item creation UI when the user
+ * selects a content type to instantiate.
  *
  * @author Stanislav Freidin (sfreidin@arsdigtia.com)
  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
@@ -59,9 +58,8 @@ import java.math.BigDecimal;
 public abstract class NewItemForm extends Form {
 
     public static final String RESOURCE_BUNDLE =
-            "com.arsdigita.cms.ui.authoring.AuthoringResources";
-    public static String DP_TYPE_PREFIX =
-            "com.arsdigita.dp.";
+                               "com.arsdigita.cms.ui.authoring.AuthoringResources";
+    public static String DP_TYPE_PREFIX = "com.arsdigita.dp.";
     private SingleSelect m_typeWidget;
     private Submit m_submit;
     private Label m_emptyLabel;
@@ -183,6 +181,7 @@ public abstract class NewItemForm extends Form {
     }
 
     // Generate XML - show/hide labels/widgets
+    @Override
     public void generateXML(PageState state, Element parent) {
 
         if (isVisible(state)) {

@@ -44,11 +44,14 @@ import javax.servlet.ServletException;
 import java.util.Date;
 
 /**
- * A form for editing subclasses of ContentPage. This is just a convenience class.
+ * A form for editing subclasses of ContentPage. 
+ * 
+ * This is just a convenience class. It uses parent class to construct the form
+ * including basic widgets (i.e. title and name/url as well as save/cancel 
+ * buttons) and adds optional Lunchdate
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #22 $ $DateTime: 2004/08/17 23:15:09 $
- *
  */
 public abstract class BasicPageForm extends BasicItemForm {
 
@@ -85,19 +88,17 @@ public abstract class BasicPageForm extends BasicItemForm {
      */
     @Override
     protected void addWidgets() {
+        
+        /* Add basic widgets title/name which are part of any content item    */
         super.addWidgets();
 
-//        add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_description")));
-//        ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
-//        TextArea description = new TextArea(descriptionParam);
-//        description.setCols(50);
-//        description.setRows(5);
-//        add(description);
-//
+        /* Optionally add Lunchdate                                           */
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date")));
+            add(new Label(GlobalizationUtil
+                          .globalize("cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
-            com.arsdigita.bebop.form.Date launchDate = new com.arsdigita.bebop.form.Date(launchDateParam);
+            com.arsdigita.bebop.form.Date launchDate = 
+                          new com.arsdigita.bebop.form.Date(launchDateParam);
             if (ContentSection.getConfig().getRequireLaunchDate()) {
                 launchDate.addValidationListener(new LaunchDateValidationListener());
                 // if launch date is required, help user by suggesting today's date
@@ -108,7 +109,8 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * Utility method to initialize the name/title widgets. Child classes may call this method from the init listener
+     * Utility method to initialize the name/title widgets. Child classes may 
+     * call this method from the init listener
      *
      * @param e the {@link FormSectionEvent} which was passed to the init listener
      * @return the ContentPage instance which was extracted from the ItemSelectionModel
@@ -118,15 +120,14 @@ public abstract class BasicPageForm extends BasicItemForm {
 
         FormData data = e.getFormData();
         PageState state = e.getPageState();
-        ContentPage item =
-                    (ContentPage) getItemSelectionModel().getSelectedObject(state);
+        ContentPage item = (ContentPage) 
+                           getItemSelectionModel().getSelectedObject(state);
 
         if (item != null) {
             // Preset fields
             data.put(CONTENT_ITEM_ID, item.getID().toString());
             data.put(NAME, item.getName());
             data.put(TITLE, item.getTitle());
-//            data.put(DESCRIPTION, item.getDescription());
             if (!ContentSection.getConfig().getHideLaunchDate()) {
                 data.put(LAUNCH_DATE, item.getLaunchDate());
                 // if launch date is required, help user by suggesting today's date
@@ -140,11 +141,17 @@ public abstract class BasicPageForm extends BasicItemForm {
         return item;
     }
 
+    /**
+     * 
+     * @param fse
+     * @throws FormProcessException 
+     */
     @Override
     public void validate(final FormSectionEvent fse) throws FormProcessException {
         super.validate(fse);
         
-        final ContentItem item = getItemSelectionModel().getSelectedItem(fse.getPageState());
+        final ContentItem item = getItemSelectionModel()
+                                 .getSelectedItem(fse.getPageState());
         ACSObject parent = item.getParent();
 
 
@@ -163,7 +170,8 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * Utility method to process the name/title widgets. Child classes may call this method from the process listener.
+     * Utility method to process the name/title widgets. Child classes may call 
+     * this method from the process listener.
      *
      * @param e the {@link FormSectionEvent} which was passed to the process listener
      * @return  
@@ -180,7 +188,6 @@ public abstract class BasicPageForm extends BasicItemForm {
             // Update attributes
             item.setName((String) data.get(NAME));
             item.setTitle((String) data.get(TITLE));
-//            item.setDescription((String)data.get(DESCRIPTION));
             if (!ContentSection.getConfig().getHideLaunchDate()) {
                 item.setLaunchDate((Date) data.get(LAUNCH_DATE));
             }
@@ -190,8 +197,11 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * A utility method that will create a new item and tell the selection model to select the new item. Creation
-     * components may call this method in the process listener of their form. See {@link PageCreate} for an example.
+     * A utility method that will create a new item and tell the selection model 
+     * to select the new item. 
+     * 
+     * Creation components may call this method in the process listener of their 
+     * form. See {@link PageCreate} for an example.
      *
      * @param state the current page state
      * @return the new content item (or a proper subclass thereof) @pre state != null @post return != null

@@ -37,15 +37,21 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
- * A form which will create a new ContentPage or one of its
- * subclasses.
+ * A form which will create a new ContentPage or one of its subclasses.
+ * 
+ * Used to create a new document / content item. Creates widgets to select the
+ * workflow, type of content item, and language. Super class adds additional
+ * widgets (title and name/url) to complete the form.
+ * 
+ * It's a pane which is part of a more complex page, additionally containing
+ * folder structure, content items in the folder, permissions, etc.
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: PageCreate.java 2140 2011-01-16 12:04:20Z pboy $
  */
 public class PageCreate extends BasicPageForm
-        implements FormSubmissionListener, CreationComponent {
+                        implements FormSubmissionListener, CreationComponent {
   
     protected final CreationSelector m_parent;
     protected ApplyWorkflowFormSection m_workflowSection;
@@ -75,21 +81,29 @@ public class PageCreate extends BasicPageForm
         m_workflowSection.setCreationSelector(m_parent);
         addSubmissionListener(this);
 
-        getSaveCancelSection().getSaveButton().setButtonLabel("Create");
+        getSaveCancelSection().getSaveButton()
+                              .setButtonLabel(GlobalizationUtil.globalize(
+                                              "cms.ui.create"));
     }
 
     /**
      * Add various widgets to the form. Child classes should override
      * this method to perform all their widget-adding needs.
      */
+    @Override
     protected void addWidgets() {
+
+        /* Add workflow selection  */
         ContentType type = getItemSelectionModel().getContentType();
         m_workflowSection = new ApplyWorkflowFormSection(type);
         add(m_workflowSection, ColumnPanel.INSERT);
+        /* content type */
         add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.content_type")));
         add(new Label(type.getLabel()));
+        /* language selection   */
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
+        /* Additional widgets from super type: title and name (url)   */
         super.addWidgets();
     }
 
@@ -126,9 +140,10 @@ public class PageCreate extends BasicPageForm
     }
 
     /**
-     * Validate inputs to ensure name uniqueness. Note: We can't call {@code super.validate(FormSectionEvent)} here
-     * because the super method {@link BasicPageForm#validate(com.arsdigita.bebop.event.FormSectionEvent)} tries
-     * to access things which on existing yet.
+     * Validate inputs to ensure name uniqueness. Note: We can't call 
+     * {@code super.validate(FormSectionEvent)} here because the  super method
+     * {@link BasicPageForm#validate(com.arsdigita.bebop.event.FormSectionEvent)} 
+     * tries to access things which on existing yet.
      * 
      * @param event 
      */

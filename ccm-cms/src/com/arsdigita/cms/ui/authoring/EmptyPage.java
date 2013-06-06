@@ -19,6 +19,7 @@ public class EmptyPage extends Page {
         super("", new SimpleContainer());
     }
 
+    @Override
     public void generateXML(PageState state, Document parent) {
         Element page = parent.createRootElement("cms:emptyPage", CMS.CMS_XML_NS);
         page.addAttribute("title", getTitle().getGlobalizedMessage().getKey());

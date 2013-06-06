@@ -57,11 +57,10 @@ import java.util.Collection;
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
  **/
-public abstract class BasicItemForm
-        extends FormSection
-        implements FormInitListener,
-                   FormProcessListener,
-                   FormValidationListener {
+public abstract class BasicItemForm extends FormSection
+                                    implements FormInitListener,
+                                               FormProcessListener,
+                                               FormValidationListener {
 
     private static final Logger s_log = Logger.getLogger(BasicItemForm.class);
     private final ItemSelectionModel m_itemModel;
@@ -73,7 +72,11 @@ public abstract class BasicItemForm
     public static final String LANGUAGE = ContentItem.LANGUAGE;
 
     /**
-     * Construct a new BasicItemForm
+     * Construct a new BasicItemForm with 2 ColumnPanels and add basic content.
+     * 
+     * The left Panel is used for Labels, the right Panel for values.
+     * 
+     * 
      *
      * @param formName the name of this form
      * @param itemModel The {@link ItemSelectionModel} which will
@@ -81,11 +84,13 @@ public abstract class BasicItemForm
      */
     public BasicItemForm(String formName, ItemSelectionModel itemModel) {
         super(new ColumnPanel(2));
-        //super(formName, new ColumnPanel(2));
+
         m_widgetSection = new FormSection(new ColumnPanel(2, true));
+
         super.add(m_widgetSection, ColumnPanel.INSERT);
         m_itemModel = itemModel;
 
+        /* Prepare Panel design                                               */
         ColumnPanel panel = (ColumnPanel) getPanel();
         panel.setBorder(false);
         panel.setPadColor("#FFFFFF");
@@ -93,6 +98,7 @@ public abstract class BasicItemForm
         panel.setColumnWidth(2, "80%");
         panel.setWidth("100%");
 
+        /* Add basic contents */
         addWidgets();
 
         m_saveCancelSection = new SaveCancelSection();
@@ -104,7 +110,8 @@ public abstract class BasicItemForm
     }
     
     /**
-     * Construct a new BasicItemForm with nothing on it
+     * Construct a new BasicItemForm with a specified number of ColumnPanels
+     * and without any content
      *
      * @param formName the name of this form
      * @param columnPanel the columnpanel of the form
@@ -115,9 +122,9 @@ public abstract class BasicItemForm
                          ColumnPanel columnPanel,
                          ItemSelectionModel itemModel) {
         super(columnPanel);
-        //super(formName, columnPanel);
-        m_widgetSection =
-        new FormSection(new ColumnPanel(columnPanel.getNumCols(), true));
+        
+        m_widgetSection = new FormSection(new ColumnPanel(columnPanel.getNumCols(), 
+                                          true));
         super.add(m_widgetSection, ColumnPanel.INSERT);
         m_itemModel = itemModel;
     }
@@ -129,13 +136,21 @@ public abstract class BasicItemForm
         m_saveCancelSection = new SaveCancelSection();
         super.add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
     }
-    private Label m_script = new Label(
-            "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
-            false);
+
 
     /**
-     * Add various widgets to the form. Child classes should override
-     * this method to perform all their widget-adding needs
+     *                                                                        */
+    private Label m_script = new Label(
+        "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
+        false);
+
+    /**
+     * Add basic widgets to the form. 
+     * 
+     * Widgets added are 'title' and 'name (url)' which are part of any content
+     * item. 
+     * Child classes will override this method to perform all their widget-adding 
+     * needs but may use super() to add the basic widgets.
      */
     protected void addWidgets() {
         //add(new FormErrorDisplay(this), ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);

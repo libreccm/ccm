@@ -94,8 +94,8 @@ public class TasksPanel extends CMSContainer {
     // Number of tasks to show
     private final int m_maxRows;
     private TaskList m_taskList;
-    private ActionLink m_viewAllLink;
-    private ActionLink m_viewShortLink;
+    // private ActionLink m_viewAllLink;
+    // private ActionLink m_viewShortLink;
     private Paginator m_paginator;
     private ActionLink m_viewLockLink, m_viewUnlockLink, m_viewAllLockLink;
     private Label m_viewLockLabel, m_viewUnlockLabel, m_viewAllLockLabel;
@@ -631,7 +631,7 @@ public class TasksPanel extends CMSContainer {
                     state.setControlEvent(this, SORT_UP, header);
                 }
                 SimpleContainer container = new SimpleContainer();
-                container.add(new Label((String)GlobalizationUtil.globalize(labelKey).localize()));
+                container.add(new Label(GlobalizationUtil.globalize(labelKey)));
                 if (header.equals(sortKey)) {
                     String imageURLStub = null;
                     if (SORT_UP.equals(sortDirection)) {

@@ -179,9 +179,9 @@ public class CreationSelector extends MetaForm {
         } catch (Exception e) {
             s_log.error("Instantiation failure", e);
             throw new UncheckedWrapperException (
-                                                 "Failed to instantiate creation component " +
-                                                 kit.getCreateComponent() + ": " + e.getMessage(),
-                                                 e);
+                          "Failed to instantiate creation component " +
+                          kit.getCreateComponent() + ": " + e.getMessage(),
+                          e);
         }
     }
 

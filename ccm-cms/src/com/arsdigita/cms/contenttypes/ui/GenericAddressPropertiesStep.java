@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Jens Pelzetter, for the Center of Social Politics of the University of Bremen
+ * Copyright (C) 2009 Jens Pelzetter, for the University of Bremen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -52,20 +52,34 @@ public class GenericAddressPropertiesStep extends SimpleEditStep {
     protected void createEditSheet(ItemSelectionModel itemModel) {
         BasicPageForm editSheet;
         editSheet = new GenericAddressPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel), 
+            editSheet.getSaveCancelSection().getCancelButton());
     }
 
     public static Component getAddressPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) GlobalizationUtil.globalize("cms.contenttypes.ui.name").localize(), GenericAddress.NAME);
-        sheet.add((String) GlobalizationUtil.globalize("cms.contenttypes.ui.title").localize(), GenericAddress.TITLE);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.address").localize(), GenericAddress.ADDRESS);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.postal_code").localize(), GenericAddress.POSTAL_CODE);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.city").localize(), GenericAddress.CITY);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.state").localize(), GenericAddress.STATE);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"), GenericAddress.NAME);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"), GenericAddress.TITLE);
+        sheet.add(ContenttypesGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.address.address"), 
+                  GenericAddress.ADDRESS);
+        sheet.add(ContenttypesGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.address.postal_code"), 
+                  GenericAddress.POSTAL_CODE);
+        sheet.add(ContenttypesGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.address.city"), 
+                  GenericAddress.CITY);
+        sheet.add(ContenttypesGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.address.state"), 
+                  GenericAddress.STATE);
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.iso_country_code").localize(),
+        sheet.add(ContenttypesGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.address.iso_country_code"),
                 GenericAddress.ISO_COUNTRY_CODE,
                 new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -74,15 +88,19 @@ public class GenericAddressPropertiesStep extends SimpleEditStep {
                             PageState state) {
                         GenericAddress address = (GenericAddress) item;
                         if (address != null && address.getIsoCountryCode() != null) {
-                            return GenericAddress.getCountryNameFromIsoCode(address.getIsoCountryCode());
+                            return GenericAddress
+                                   .getCountryNameFromIsoCode(address.getIsoCountryCode());
                         } else {
-                            return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                            return (String) GlobalizationUtil
+                                            .globalize("cms.ui.unknown")
+                                            .localize();
                         }
                     }
                 });
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add((String) GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.ui.authoring.page_launch_date"),
                     ContentPage.LAUNCH_DATE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -91,9 +109,13 @@ public class GenericAddressPropertiesStep extends SimpleEditStep {
                                 PageState state) {
                             ContentPage page = (ContentPage) item;
                             if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
+                                return DateFormat
+                                       .getDateInstance(DateFormat.LONG)
+                                       .format(page.getLaunchDate());
                             } else {
-                                return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                return (String) GlobalizationUtil
+                                                .globalize("cms.ui.unknown")
+                                                .localize();
                             }
                         }
                     });
