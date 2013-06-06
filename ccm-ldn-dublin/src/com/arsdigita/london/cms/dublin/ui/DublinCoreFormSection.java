@@ -41,7 +41,8 @@ public abstract class DublinCoreFormSection extends FormSection
 
     private Widget m_ccn_portal_instance;
 
-    // private TextField m_contributor;
+    // private TextField m_contributor; // obviously not used anywhere, nevertheless
+                                        // a db field! Not part of the UI
     private Widget m_coverageSpatial;
 
     private TextField m_coveragePostcode;
@@ -229,9 +230,8 @@ public abstract class DublinCoreFormSection extends FormSection
     
     protected Widget createControlledList(String name, String key) {
         if (s_log.isDebugEnabled()) {
-            s_log
-                    .debug("Creating controlled list with " + name + " key "
-                            + key);
+            s_log.debug("Creating controlled list with " + name + " key "
+                        + key);
         }
         Domain domain = null;
         if (key != null) {

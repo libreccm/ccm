@@ -78,7 +78,9 @@ public class DublinCoreItem extends ContentItem {
     }
 
     // DataObject field constants
-    public static final String DC_OWNER = "dcOwner";
+
+    /* Constant for the content item this dc object is owned by (associated with) */
+    public static final String DCMI_OWNER = "dcOwner";
 
     public static final String DC_AUDIENCE = "dcAudience";
     public static final String DC_CONTRIBUTOR = "dcContributor";
@@ -140,6 +142,14 @@ public class DublinCoreItem extends ContentItem {
     }
 
 
+    /**
+     * Create a new empty Dublin Core meta data object and associate it with
+     * the given content item.
+     * 
+     * @param  owner content item object to associate the new DCES object with
+     * @return the new DCMI object, associated with the given content item 
+     *         object but otherwise empty.
+     */
     public static DublinCoreItem create(ContentItem owner) {
         DublinCoreItem item = new DublinCoreItem();
         item.setOwner(owner);
@@ -148,10 +158,17 @@ public class DublinCoreItem extends ContentItem {
     }
     
     
+    /**
+     * Retrieve a Dublin Core meta data object by its owner (a content item)
+     * from the database and instantiate a new Dublin Core object.
+     * 
+     * @param owner the content item object for which we look for meta data 
+     * @return a DublinCoreItem object
+     */
     public static DublinCoreItem findByOwner(ContentItem owner) {
         DataCollection items = SessionManager.getSession()
             .retrieve(BASE_DATA_OBJECT_TYPE);
-        items.addEqualsFilter(DC_OWNER + "." + ACSObject.ID, 
+        items.addEqualsFilter(DCMI_OWNER + "." + ACSObject.ID, 
                               owner.getID());
         
         if (items.next()) {
@@ -163,11 +180,11 @@ public class DublinCoreItem extends ContentItem {
     }
 
     protected void setOwner(ContentItem owner) {
-        setAssociation(DC_OWNER, owner);
+        setAssociation(DCMI_OWNER, owner);
     }
     
     public ContentItem getOwner() {
-        DataObject dobj = (DataObject)get(DC_OWNER);
+        DataObject dobj = (DataObject)get(DCMI_OWNER);
         Assert.exists(dobj, DataObject.class);
         return (ContentItem)DomainObjectFactory.newInstance(dobj);
     } 

@@ -15,27 +15,36 @@
 
 package com.arsdigita.london.cms.dublin.ui;
 
-import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 /***
- *
+ * Dublin Core authoring kit editing step.
+ * 
+ * Main entry point into authoring functionality as defined in 
+ * DublinCoreInitializer. It just overwrites the constructor to create a page
+ * to display the current values and a page to edit the modifiable properties.
  * DublinCoreAddform
- *
- * @author slater@arsdigita.com
- *
- * Form for editing/adding a dublinCoreItem's information
- *
  *
  * must call setDisplayComponent();
  * must call addComponent() 0 or more times;
+ *
+ * @author slater@arsdigita.com
  */
 public class DublinCoreEdit extends SimpleEditStep {
 
+    /**
+     * Constructor, invokes super class and creates two page elements to display
+     * all properties and another one to edit the modifiable ones.
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public DublinCoreEdit(ItemSelectionModel itemModel, 
                           AuthoringKitWizard parent) {    
+
         super(itemModel, parent);
 
         
@@ -43,8 +52,10 @@ public class DublinCoreEdit extends SimpleEditStep {
         DublinCoreSummary display = new DublinCoreSummary(itemModel);
         
         setDisplayComponent(display);
-        add("edit", "edit", 
-        new WorkflowLockedComponentAccess(edit, itemModel),
-            edit.getCancelButton());
+        add("edit", 
+            "edit", 
+            new WorkflowLockedComponentAccess(edit, itemModel),
+            edit.getCancelButton()
+           );
     }
 }

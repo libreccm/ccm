@@ -26,7 +26,6 @@ import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
-import com.arsdigita.bebop.event.FormCancelListener;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -41,6 +40,7 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
@@ -157,10 +157,10 @@ public abstract class BasicItemForm
         // it breaks URLs & potentially overwrites the user's
         // customizations.
 
-        //jensp 2011-01-28: For some content types it is maybe useful to change
-        //the label of this field to something other than 'title'. This can now
-        //be done by overwriting the getTitleLabel() method.
-        //add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_title")));
+        // For some content types it is maybe useful to change the label of the
+        // title field to something different than 'title'.
+        // This can nowbe done by overwriting the getTitleLabel() method.
+        // (jensp 2011-01-28)
         add(new Label(getTitleLabel()));
         TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotNullValidationListener());
@@ -172,10 +172,10 @@ public abstract class BasicItemForm
                 + ".value = urlize(this.value) }");
         add(titleWidget);
 
-        //jensp 2011-01-28: For some content types it is maybe useful to change
-        //the label of this field to something other than 'title'. This can now
-        //be done by overwriting the getNameLabel() method.
-        //add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.name_url")));
+        // For some content types it is maybe useful to change the label of 
+        // the name (or URL) field to something different than 'name (url)'.
+        //  This can now be accomplished by overwriting the getNameLabel() method.
+        // (jensp 2011-01-28)
         add(new Label(getNameLabel()));
         TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
         nameWidget.addValidationListener(new NameValidationListener());
@@ -409,10 +409,8 @@ public abstract class BasicItemForm
      *
      * @return (Content for the) Label for the title field as string
      */
-    protected String getTitleLabel() {
-        return (String) GlobalizationUtil.globalize(
-                "cms.ui.authoring.page_title").
-                localize();
+    protected GlobalizedMessage getTitleLabel() {
+        return GlobalizationUtil.globalize("cms.contenttypes.ui.title");  
     }
 
     /**
@@ -422,8 +420,7 @@ public abstract class BasicItemForm
      *
      * @return (Content for the) Label for the name field as string
      */
-    protected String getNameLabel() {
-        return (String) GlobalizationUtil.globalize("cms.ui.authoring.name_url").
-                localize();
+    protected GlobalizedMessage getNameLabel() {
+        return GlobalizationUtil.globalize("cms.contenttypes.ui.name"); 
     }
 }

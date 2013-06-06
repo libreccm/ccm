@@ -113,6 +113,9 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
     }
 
 
+    /**
+     * 
+     */
     @Override
     protected void initialize() {
         super.initialize();
@@ -134,6 +137,7 @@ public class MessageCatalog extends DomainObject implements java.io.Serializable
      * @return String The fully qualified name of the base data object type
      *         for the MessageCatalog DataObject.
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

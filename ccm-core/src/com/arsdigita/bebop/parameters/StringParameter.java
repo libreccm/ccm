@@ -55,10 +55,12 @@ public class StringParameter extends ParameterModel {
         return transformSingleValue(request);
     }
 
+    @Override
     public Object unmarshal(String encoded) {
         return encoded;
     }
 
+    @Override
     public Class getValueClass() {
         return String.class;
     }

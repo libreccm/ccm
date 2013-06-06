@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
  * How to use (rough reconstruction from code)
  * - for each *.properties file create a child of this class with the same(!) name
  *   in the same package (subdirecgory)
- * - for each language-specific *.proerties file create a child of this class
+ * - for each language-specific *.properties file create a child of this class
  *   with the same(1) name
  * - Example: 
  *   <ul> <li>HelloWorldResources.class</li>

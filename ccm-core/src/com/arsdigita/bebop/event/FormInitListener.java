@@ -31,7 +31,6 @@ import java.util.EventListener;
  * @author Uday Mathur 
  * @version $Id: FormInitListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 public interface FormInitListener extends EventListener {
 
     /**
