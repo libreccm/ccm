@@ -43,11 +43,16 @@
       ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(30);
       ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("objectType");
       ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("title");
-      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("eventDate");
-      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("launchDate");
-      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("startDate");
-      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("endDate");
-      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("newsDate");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "definition");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "summary");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "lead");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "description");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "eventDate");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "startDate" );
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "endDate");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "newsDate");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "imageAttachments.caption");
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "imageAttachments.image.id");
     </jsp:scriptlet>
     <define:component name="eventList"
       classname="com.arsdigita.navigation.ui.object.ComplexObjectList"/>
@@ -85,6 +90,8 @@
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("launchDate");
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("startDate");
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("endDate");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute( "imageAttachments.caption");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute( "imageAttachments.image.id");
     </jsp:scriptlet>
     <define:component name="newsList"
       classname="com.arsdigita.navigation.ui.object.ComplexObjectList"/>
@@ -111,6 +118,8 @@
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) newsList).getRenderer().addAttribute("title");
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) newsList).getRenderer().addAttribute("lead");
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) newsList).getRenderer().addAttribute("newsDate");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) newsList).getRenderer().addAttribute( "imageAttachments.caption");
+      ((com.arsdigita.navigation.ui.object.ComplexObjectList) newsList).getRenderer().addAttribute( "imageAttachments.image.id");
     </jsp:scriptlet>
 
     <define:component name="assignedTerms"
