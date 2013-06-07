@@ -404,7 +404,9 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         return url.toString();
     }
 
-    @deprecated use getItemURL(BigDecimal itemId, int tab) instead
+    /**
+    * @deprecated Use getItemURL instead
+    */
     public static String getRelativeItemURL(BigDecimal itemId, int tab) {
         StringBuffer url = new StringBuffer();
         url.append(PageLocations.ITEM_PAGE).append("?").append(ITEM_ID).append("=").append(itemId.
