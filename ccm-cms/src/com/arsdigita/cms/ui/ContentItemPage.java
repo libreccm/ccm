@@ -411,7 +411,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
 
     public static String getRelativeItemURL(BigDecimal itemId, int tab) {
         StringBuffer url = new StringBuffer();
-        url.append("item.jsp").append("?").append(ITEM_ID).append("=").append(itemId.
+        url.append(PageLocations.ITEM_PAGE).append("?").append(ITEM_ID).append("=").append(itemId.
                 toString()).append("&").append(SET_TAB).append("=").append(tab);
         return url.toString();
     }
