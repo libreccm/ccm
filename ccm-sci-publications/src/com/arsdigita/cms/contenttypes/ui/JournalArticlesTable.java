@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
- * for the Center of Social Politics of the University of Bremen
+ * Copyright (c) 2010 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -32,7 +31,6 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
@@ -41,7 +39,6 @@ import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;

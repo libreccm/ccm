@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
- * for the Center of Social Politics of the University of Bremen
+ * Copyright (c) 2010 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -30,9 +29,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.ui.ItemSearchWidget;
