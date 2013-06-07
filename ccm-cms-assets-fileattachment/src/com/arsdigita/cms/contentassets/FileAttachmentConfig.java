@@ -62,7 +62,7 @@ public class FileAttachmentConfig extends AbstractConfig {
     /**
      * Constructor, don't use it directly!
      */
-    protected FileAttachmentConfig() {
+    public FileAttachmentConfig() {
 
         super();
         

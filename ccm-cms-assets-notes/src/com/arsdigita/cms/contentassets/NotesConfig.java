@@ -11,33 +11,32 @@ import com.arsdigita.util.parameter.Parameter;
  */
 public class NotesConfig extends AbstractConfig {
 
-    private static final NotesConfig INSTANCE = new NotesConfig();
-
-    static {
-        INSTANCE.load();
-    }
-
+    private static NotesConfig INSTANCE;
+    
     private final Parameter assetStepSortKey = new IntegerParameter(
             "com.arsdigita.cms.contentassets.notes.asset_step_sortkey",
             Parameter.REQUIRED,
             3);
 
-    protected NotesConfig() {
-        
+    public NotesConfig() {
+
         super();
-        
+
         register(assetStepSortKey);
-        
+
         loadInfo();
-        
+
     }
-    
+
     public static final NotesConfig getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new NotesConfig();
+            INSTANCE.load();
+        }
         return INSTANCE;
     }
-    
+
     public Integer getAssetStepSortKey() {
         return (Integer) get(assetStepSortKey);
     }
-
 }

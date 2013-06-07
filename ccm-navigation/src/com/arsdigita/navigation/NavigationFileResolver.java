@@ -17,7 +17,6 @@
  */
 package com.arsdigita.navigation;
 
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,22 +45,20 @@ import com.arsdigita.web.Web;
 
 /**
  * Manages the processing of URLs in the Navigation application.
- * 
+ *
  */
 public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
-    private static final Logger s_log = 
-        Logger.getLogger(NavigationFileResolver.class);
+    private static final Logger s_log =
+                                Logger.getLogger(NavigationFileResolver.class);
+    private static final String CATEGORY_PATH_ATTR =
+                                NavigationFileResolver.class + ".categoryPath";
+    // path is set in a cookie, which navigation models may use if they wish
+    public static final String PATH_COOKIE_NAME = "ad_path";
+    public static final char PATH_COOKIE_SEPARATOR = '|';
 
-    private static final String CATEGORY_PATH_ATTR = 
-        NavigationFileResolver.class + ".categoryPath";
-
-	// path is set in a cookie, which navigation models may use if they wish
-	public static final String PATH_COOKIE_NAME = "ad_path";
-	public static final char PATH_COOKIE_SEPARATOR = '|';
-	
     /**
-     * 
+     *
      */
     @Override
     public RequestDispatcher resolve(String templatePath,
@@ -74,8 +71,8 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         }
 
         if (path.equals("/category.jsp")) {
-            Navigation nav = (Navigation)Web.getContext().getApplication();
-            
+            Navigation nav = (Navigation) Web.getContext().getApplication();
+
             String id = sreq.getParameter("categoryID");
             if (s_log.isDebugEnabled()) {
                 s_log.debug("dispatching to category " + id);
@@ -83,9 +80,9 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
             String useContext = sreq.getParameter("useContext");
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Using use context " + useContext );
+                s_log.debug("Using use context " + useContext);
             }
-            if ( null == useContext ) {
+            if (null == useContext) {
                 useContext = Template.DEFAULT_USE_CONTEXT;
             }
             Category cat = null;
@@ -94,7 +91,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             try {
                 cat = new Category(new BigDecimal(id));
             } catch (Exception e) {
-                s_log.warn("Could not load category for id "+id);
+                s_log.warn("Could not load category for id " + id);
                 return null;
             }
 
@@ -107,7 +104,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             // check that the category is in the tree of categories
             Category root = null;
             DataCollection objs = SessionManager.getSession()
-                .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
+                    .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
             objs.addEqualsFilter("model.ownerUseContext.categoryOwner.id", nav.getID());
             String dispatcherContext = null;
             TemplateContext tc = Navigation.getContext().getTemplateContext();
@@ -143,43 +140,42 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
                 cats.add(parents.getCategory());
             }
 
-            Category[] catsArray = (Category[])
-                cats.toArray(new Category[cats.size()]);
-            
+            Category[] catsArray = (Category[]) cats.toArray(new Category[cats.size()]);
+
             sreq.setAttribute(CATEGORY_PATH_ATTR,
                               catsArray);
             setPathCookie(sresp, catsArray);
-            return resolveTemplate(catsArray[catsArray.length-1], useContext);
+            return resolveTemplate(catsArray[catsArray.length - 1], useContext);
         } else {
             String useContext = Template.DEFAULT_USE_CONTEXT;
-            if (path.endsWith( ".jsp" )) {
-                int lastSlash = path.lastIndexOf( '/' );
+            if (path.endsWith(".jsp")) {
+                int lastSlash = path.lastIndexOf('/');
 
-                useContext = path.substring( lastSlash + 1, path.length() - 4 );
-                path = path.substring( 0, lastSlash );
+                useContext = path.substring(lastSlash + 1, path.length() - 4);
+                path = path.substring(0, lastSlash);
 
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug( "useContext=" + useContext + ",path=" + path );
+                    s_log.debug("useContext=" + useContext + ",path=" + path);
                 }
             }
 
             Category root = getRootCategory();
             Category[] cats = resolvePath(root, path);
-            
+
             if (cats == null || cats.length == 0) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("No category found");
                 }
                 sreq.setAttribute(CATEGORY_PATH_ATTR,
-                                  new Category[] { root });
-				setPathCookie(sresp, new Category[] { root });
+                                  new Category[]{root});
+                setPathCookie(sresp, new Category[]{root});
                 return super.resolve(templatePath, sreq, sresp, app);
             } else {
-                Category cat = cats[cats.length-1];
+                Category cat = cats[cats.length - 1];
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Got cat " + cat);
                 }
-				setPathCookie(sresp, cats);
+                setPathCookie(sresp, cats);
                 sreq.setAttribute(CATEGORY_PATH_ATTR,
                                   cats);
                 RequestDispatcher rd = resolveTemplate(cat, useContext);
@@ -190,50 +186,46 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             }
         }
     }
-        
+
     /**
      * sets current path in a cookie
      *
      * @param catsArray
      */
     private void setPathCookie(HttpServletResponse resp, Category[] catsArray) {
-		
-	// 1st part of cookie value is website - if cookie domain covers several Aplaws sites, 
-	// and the navigation model retains the cookie for more than one request, 
-	// we could potentially link to one site with a path relating to another site. A check on this part
-	// of the cookie will prevent problems
-	StringBuffer path = new StringBuffer(Web.getConfig().getSiteName());
-		
-	// 2nd part of cookie value is the application that set it. Again may be used if a navigation model
-	// retains the cookie. If we link to another application, it's navigation model may 
-	// use this when deciding whether to trust the given path
-		
-	path.append(PATH_COOKIE_SEPARATOR + Kernel.getContext().getResource().getID().toString());
-	for (int i = 0; i < catsArray.length; i ++) {
-	    Category cat = catsArray[i];
-	    path.append(PATH_COOKIE_SEPARATOR + cat.getID().toString());
-	}
-	Cookie cookie = new Cookie(PATH_COOKIE_NAME, path.toString());
-	s_log.debug("setting cookie with value: " + path);
-	cookie.setMaxAge(-1);
-	cookie.setPath("/");
-	String domain = Kernel.getSecurityConfig().getCookieDomain();
-	if (domain != null) {
-	    cookie.setDomain(domain);
-	}
-	resp.addCookie(cookie);
-		
-		
+
+        // 1st part of cookie value is website - if cookie domain covers several Aplaws sites, 
+        // and the navigation model retains the cookie for more than one request, 
+        // we could potentially link to one site with a path relating to another site. A check on this part
+        // of the cookie will prevent problems
+        StringBuffer path = new StringBuffer(Web.getConfig().getSiteName());
+
+        // 2nd part of cookie value is the application that set it. Again may be used if a navigation model
+        // retains the cookie. If we link to another application, it's navigation model may 
+        // use this when deciding whether to trust the given path
+
+        path.append(PATH_COOKIE_SEPARATOR + Kernel.getContext().getResource().getID().toString());
+        for (int i = 0; i < catsArray.length; i++) {
+            Category cat = catsArray[i];
+            path.append(PATH_COOKIE_SEPARATOR + cat.getID().toString());
+        }
+        Cookie cookie = new Cookie(PATH_COOKIE_NAME, path.toString());
+        s_log.debug("setting cookie with value: " + path);
+        cookie.setMaxAge(-1);
+        cookie.setPath("/");
+        String domain = Kernel.getSecurityConfig().getCookieDomain();
+        if (domain != null) {
+            cookie.setDomain(domain);
+        }
+        resp.addCookie(cookie);
+
+
     }
-	
-	
-	
-	
 
     public static Category[] getCategoryPath(HttpServletRequest req) {
-        return (Category[])req.getAttribute(CATEGORY_PATH_ATTR);
+        return (Category[]) req.getAttribute(CATEGORY_PATH_ATTR);
     }
-    
+
     private String getTemplateContext() {
         TemplateContext ctx = Navigation.getContext().getTemplateContext();
         if (ctx == null) {
@@ -244,26 +236,23 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     }
 
     private RequestDispatcher resolveTemplate(Category cat, String useContext) {
-	Template template = null;
+        Template template = null;
         if (Navigation.getConfig().inheritTemplates()) {
-	    template = Template.matchBest(cat,
-            getTemplateContext(),
-	    useContext);
+            template = Template.matchBest(cat,
+                                          getTemplateContext(),
+                                          useContext);
         } else {
             template = Template.matchExact(cat,
-            getTemplateContext(),
-            useContext);
+                                           getTemplateContext(),
+                                           useContext);
         }
         // If there's an explicit use context which doesn't exist, give a 404
-        if (!Template.DEFAULT_USE_CONTEXT.equals( useContext ) && 
-            null == template) {
-            s_log.debug("No template found in context " + 
-                        getTemplateContext() + " for category " +
-                        cat.getID() + " with use context " + 
-                        useContext );
+        if (!Template.DEFAULT_USE_CONTEXT.equals(useContext) && null == template) {
+            s_log.debug("No template found in context " + getTemplateContext() + " for category " + cat.getID()
+                        + " with use context " + useContext);
             return null;
         }
-        
+
         String path = null;
         if (template == null) {
             if (s_log.isDebugEnabled()) {
@@ -274,20 +263,20 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             path = template.getURL();
         }
         RequestDispatcher rd = Web.findResourceDispatcher(
-            new String[] { "ROOT"} ,
-            path);
-            
+                new String[]{"ROOT"},
+                path);
+
         if (s_log.isDebugEnabled()) {
             s_log.debug("Got dispatcher " + rd);
-        } 
-        
+        }
+
         return rd;
     }
 
     private Category getRootCategory() {
-        Navigation nav = (Navigation)Web.getContext().getApplication();
+        Navigation nav = (Navigation) Web.getContext().getApplication();
         TemplateContext ctx = Navigation.getContext().getTemplateContext();
-        
+
         if (s_log.isDebugEnabled()) {
             s_log.debug("Finding root for " + nav + " in context " + ctx);
         }
@@ -296,12 +285,12 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
         Category root = Category.getRootForObject(nav,
                                                   dispatcherContext);
-        
+
         if (root == null && dispatcherContext != null) {
             s_log.debug("No specific root found, trying generic context");
             root = Category.getRootForObject(nav, null);
         }
-        
+
         Assert.exists(root, Category.class);
         if (s_log.isDebugEnabled()) {
             s_log.debug("Got root category " + root);
@@ -309,42 +298,36 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         return root;
     }
 
-
     /**
-     * 
-     * category resolution retained as an instance method to 
-     * allow it to be overridden. Default functionality 
-     * contained in static resolveCategory method
+     *
+     * category resolution retained as an instance method to allow it to be overridden. Default functionality contained
+     * in static resolveCategory method
+     *
      * @param root
      * @param path
      * @return
      */
-    protected Category[] resolvePath (Category root, String path) {
-	return NavigationFileResolver.resolveCategory(root, path);	
+    protected Category[] resolvePath(Category root, String path) {
+        return NavigationFileResolver.resolveCategory(root, path);
     }
-	
 
     /**
-     * Match a URL with the category tree and return the requested
-     * category if exists.
+     * Match a URL with the category tree and return the requested category if exists.
      *
-     * Quasimodo:
-     * Originally addEqualsFilter has been used to filter the 
-     * appropriate category directly inside the SQL query. This is
-     * possible anymore due to the localised URLs of the new 
-     * localised categories (or at least: not found it).
-     * Therefore we do the filtering in Java now. 
+     * Quasimodo: Originally addEqualsFilter has been used to filter the appropriate category directly inside the SQL
+     * query. This is possible anymore due to the localised URLs of the new localised categories (or at least: not found
+     * it). Therefore we do the filtering in Java now.
      *
      */
     public static Category[] resolveCategory(Category root,
-                                       String path) {
+                                             String path) {
         String[] bits = StringUtils.split(path, '/');
-                
+
         List cats = new ArrayList();
         cats.add(root);
 
         Category cat = root;
-        for (int i = 0 ; i < bits.length ; i++) {
+        for (int i = 0; i < bits.length; i++) {
             if ("".equals(bits[i])) {
                 continue;
             }
@@ -359,7 +342,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             boolean found = false;
             while (children.next()) {
                 cat = children.getCategory();
-                if(cat.getURL().equals(bits[i]) && cat.isEnabled() == true) {
+                if (cat.getURL().equals(bits[i]) && cat.isEnabled() == true) {
                     if (s_log.isDebugEnabled()) {
                         s_log.debug("Got category " + cat);
                     }
@@ -370,14 +353,14 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
                 }
             }
 //            } else {
-            if(found == false) {
+            if (found == false) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("No category found ");
                 }
                 return null;
             }
         }
-        
-        return (Category[])cats.toArray(new Category[cats.size()]);
+
+        return (Category[]) cats.toArray(new Category[cats.size()]);
     }
 }
