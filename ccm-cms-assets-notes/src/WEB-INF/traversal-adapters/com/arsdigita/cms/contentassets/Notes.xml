@@ -14,28 +14,28 @@
         <xrd:property name="/object/displayName"/>
       </xrd:attributes>
       
--->  
-      <xrd:attributes rule="include">
-        <xrd:property name="/object/rank"/>
-        <xrd:property name="/object/content"/>
-     </xrd:attributes>  
-    </xrd:adapter>
-  </xrd:context>
+            -->  
+            <xrd:attributes rule="include">
+                <xrd:property name="/object/rank"/>
+                <xrd:property name="/object/content"/>
+            </xrd:attributes>  
+        </xrd:adapter>
+    </xrd:context>
 
 
-  <!-- Adapter for search -->
-  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
-    <xrd:adapter objectType="com.arsdigita.cms.contentassets.Note">
-  <!--     <xrd:attributes rule="exclude">
-        <xrd:property name="/object/id"/>
-        <xrd:property name="/object/defaultDomainClass"/>
-        <xrd:property name="/object/displayName"/>
-        <xrd:property name="/object/rank"/>
-      	</xrd:attributes> -->
-      	<xrd:attributes rule="include">
-      </xrd:attributes>
+    <!-- Adapter for search -->
+    <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+        <xrd:adapter objectType="com.arsdigita.cms.contentassets.Note">
+            <!--     <xrd:attributes rule="exclude">
+            <xrd:property name="/object/id"/>
+            <xrd:property name="/object/defaultDomainClass"/>
+            <xrd:property name="/object/displayName"/>
+            <xrd:property name="/object/rank"/>
+            </xrd:attributes> -->
+            <xrd:attributes rule="include">
+            </xrd:attributes>
       	
-    </xrd:adapter>
-  </xrd:context>
+        </xrd:adapter>
+    </xrd:context>
 
 </xrd:adapters>

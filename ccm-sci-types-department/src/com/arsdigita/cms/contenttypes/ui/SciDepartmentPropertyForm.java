@@ -15,6 +15,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciDepartmentConfig;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  *
@@ -90,8 +91,7 @@ public class SciDepartmentPropertyForm
     }
 
     @Override
-    public String getTitleLabel() {
-        return (String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.title").localize();
+    public GlobalizedMessage getTitleLabel() {
+        return SciDepartmentGlobalizationUtil.globalize("scidepartment.ui.title");
     }
 }

@@ -19,6 +19,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.contenttypes.SciProjectConfig;
+import com.arsdigita.globalization.GlobalizedMessage;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -63,11 +64,11 @@ public class SciProjectPropertyForm
         add(new Label(SciProjectGlobalizationUtil.globalize(
                 "sciproject.ui.begin")));
         final IncompleteDateParameter beginParam =
-                             new IncompleteDateParameter(SciProject.BEGIN);
+                                      new IncompleteDateParameter(SciProject.BEGIN);
         beginParam.allowSkipMonth(true);
-        beginParam.allowSkipDay(true);                
+        beginParam.allowSkipDay(true);
         final Calendar today = new GregorianCalendar();
-        final Date begin = new Date(beginParam);        
+        final Date begin = new Date(beginParam);
         begin.setAutoCurrentYear(false);
         begin.setYearRange(1970, (today.get(Calendar.YEAR) + 2));
         add(begin);
@@ -138,13 +139,13 @@ public class SciProjectPropertyForm
             project.setBeginSkipDay(
                     ((IncompleteDateParameter) data.getParameter(
                      SciProject.BEGIN).getModel()).isDaySkipped());
-            project.setBegin((java.util.Date) data.get(SciProject.BEGIN));            
+            project.setBegin((java.util.Date) data.get(SciProject.BEGIN));
             project.setEndSkipMonth(
                     ((IncompleteDateParameter) data.getParameter(
                      SciProject.END).getModel()).isMonthSkipped());
             project.setEndSkipDay(((IncompleteDateParameter) data.getParameter(
                                    SciProject.END).getModel()).isDaySkipped());
-            project.setEnd((java.util.Date) data.get(SciProject.END));                        
+            project.setEnd((java.util.Date) data.get(SciProject.END));
             project.setProjectShortDescription((String) data.get(
                     SciProject.PROJECT_SHORT_DESCRIPTION));
 
@@ -155,8 +156,8 @@ public class SciProjectPropertyForm
     }
 
     @Override
-    public String getTitleLabel() {
-        return (String) SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.title").localize();
+    public GlobalizedMessage getTitleLabel() {
+        return SciProjectGlobalizationUtil.globalize("sciproject.ui.title");
     }
+
 }

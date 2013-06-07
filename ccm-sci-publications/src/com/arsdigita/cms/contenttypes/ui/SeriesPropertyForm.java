@@ -32,6 +32,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.globalization.GlobalizedMessage;
 import org.apache.log4j.Logger;
 
 /**
@@ -103,8 +104,7 @@ public class SeriesPropertyForm
     }
 
     @Override
-    protected String getTitleLabel() {
-        return (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.title").localize();
+    protected GlobalizedMessage getTitleLabel() {
+        return PublicationGlobalizationUtil.globalize("publications.ui.series.title");
     }
 }

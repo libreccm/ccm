@@ -36,6 +36,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.globalization.GlobalizedMessage;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Locale;
@@ -160,9 +161,8 @@ public class PublicationPropertyForm
     }
 
     @Override
-    protected String getTitleLabel() {
-        return (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.title").localize();
+    protected GlobalizedMessage getTitleLabel() {
+        return PublicationGlobalizationUtil.globalize("publications.ui.publication.title");
     }
 
 }
