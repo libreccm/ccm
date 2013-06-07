@@ -140,7 +140,7 @@ public class ItemLanguagesTable extends DataTable {
                     classes.append("primaryInstance");
                 }
 
-                String target = ContentItemPage.getRelativeItemURL(id, ContentItemPage.AUTHORING_TAB);
+                String target = ContentItemPage.getItemURL(cp, ContentItemPage.AUTHORING_TAB);
                 Label langLabel = new Label(LanguageUtil.getLangFull((String) value));
 
                 langLabel.setFontWeight(fontWeight.toString().trim());

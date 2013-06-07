@@ -214,7 +214,8 @@ public class ContentSoonExpiredPane extends SimpleContainer {
 	    }
 
             Link l = (Link) threadLocal.get();
-            l.setTarget(ContentItemPage.getRelativeItemURL(ContentSoonExpiredPane.getItemDraft(id.toString()), ContentItemPage.AUTHORING_TAB));
+//            l.setTarget(ContentItemPage.getRelativeItemURL(ContentSoonExpiredPane.getItemDraft(id.toString()), ContentItemPage.AUTHORING_TAB));
+            l.setTarget(ContentItemPage.getItemURL(ContentSoonExpiredPane.getItemFromIdString(id.toString()), ContentItemPage.AUTHORING_TAB));
             ((Label) l.getChild()).setLabel(GlobalizationUtil.globalize("cms.ui.cse.editLink"));
 
 	    return l;
