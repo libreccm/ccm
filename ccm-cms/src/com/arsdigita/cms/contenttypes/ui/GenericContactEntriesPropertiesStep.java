@@ -38,15 +38,35 @@ public class GenericContactEntriesPropertiesStep extends SimpleEditStep {
   /** The name of the editing sheet added to this step */
   private static String ADD_CONTACT_ENTRY_SHEET_NAME = "addContactEntry";
 
-  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+  /**
+   * 
+   * @param itemModel
+   * @param parent 
+   */
+  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel, 
+                                             AuthoringKitWizard parent) {
       this(itemModel, parent, null);
   }
   
-  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
+  /**
+   * 
+   * @param itemModel
+   * @param parent
+   * @param prefix 
+   */
+  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel, 
+                                             AuthoringKitWizard parent, 
+                                             String prefix) {
     super(itemModel, parent, prefix);
 
     BasicItemForm addContactEntrySheet = new GenericContactEntryAddForm(itemModel);
-    add(ADD_CONTACT_ENTRY_SHEET_NAME, (String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.add_contactEntry").localize(), new WorkflowLockedComponentAccess(addContactEntrySheet, itemModel), addContactEntrySheet.getSaveCancelSection().getCancelButton());
+    add(ADD_CONTACT_ENTRY_SHEET_NAME, 
+        (String)ContenttypesGlobalizationUtil
+                .globalize("cms.contenttypes.ui.contact.add_contactEntry")
+                .localize(), 
+        new WorkflowLockedComponentAccess(addContactEntrySheet, 
+                                          itemModel), 
+        addContactEntrySheet.getSaveCancelSection().getCancelButton());
 
     GenericContactEntriesTable contactEntriesTable = new GenericContactEntriesTable(itemModel);
     setDisplayComponent(contactEntriesTable);

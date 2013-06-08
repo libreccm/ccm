@@ -33,20 +33,25 @@ public class GenericContactTypePropertiesStep extends SimpleEditStep {
     /** The name of the editing sheet added to this step */
     private static String ADD_CONTACT_SHEET_NAME = "addContactType";
 
-    public GenericContactTypePropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public GenericContactTypePropertiesStep(ItemSelectionModel itemModel, 
+                                            AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
-    public GenericContactTypePropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
+    public GenericContactTypePropertiesStep(ItemSelectionModel itemModel, 
+                                            AuthoringKitWizard parent, 
+                                            String prefix) {
         super(itemModel, parent, prefix);
 
         BasicItemForm addContactTypeSheet = new GenericContactTypeAddForm(itemModel);
         add(ADD_CONTACT_SHEET_NAME,
-                (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.add_contacttype").localize(),
+                (String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.add_contacttype").localize(),
                 new WorkflowLockedComponentAccess(addContactTypeSheet, itemModel),
                 addContactTypeSheet.getSaveCancelSection().getCancelButton());
 
-        GenericContactTypeTable contacttypesTable = new GenericContactTypeTable(itemModel);
+        GenericContactTypeTable contacttypesTable = new 
+                                GenericContactTypeTable(itemModel);
         setDisplayComponent(contacttypesTable);
 
     }

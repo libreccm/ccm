@@ -28,7 +28,6 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
@@ -36,7 +35,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundleCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.util.LockableImpl;
@@ -59,16 +57,19 @@ public class GenericPersonOrgaUnitsTable extends Table {
 
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize("person.ui.orgaunits.none")));
+        setEmptyView(new Label(ContenttypesGlobalizationUtil
+                               .globalize("person.ui.orgaunits.none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                ContenttypesGlobalizationUtil.globalize("person.ui.orgaunits.columns.name").localize(),
+                ContenttypesGlobalizationUtil
+                .globalize("person.ui.orgaunits.columns.name").localize(),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 2,
-                ContenttypesGlobalizationUtil.globalize("person.ui.orgaunits.columns.type").localize(),
+                ContenttypesGlobalizationUtil
+                .globalize("person.ui.orgaunits.columns.type").localize(),
                 TABLE_COL_TYPE));
 
         setModelBuilder(new ModelBuilder(itemModel));

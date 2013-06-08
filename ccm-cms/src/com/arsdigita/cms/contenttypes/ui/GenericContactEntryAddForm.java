@@ -58,7 +58,8 @@ public class GenericContactEntryAddForm extends BasicItemForm {
     protected void addWidgets() {
         
         // Key field
-        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.key")));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contact.contactEntry.key")));
         ParameterModel contactEntryKeyParam = new StringParameter(GenericContactEntry.KEY);
         SingleSelect contactEntryKey = new SingleSelect(contactEntryKeyParam);
         contactEntryKey.addValidationListener(new NotNullValidationListener());
@@ -75,14 +76,16 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         add(contactEntryKey);
         
         // Value field
-        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.value")));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contact.contactEntry.value")));
         ParameterModel contactEntryValueParam = new StringParameter(GenericContactEntry.VALUE);
         TextField contactEntryValue = new TextField(contactEntryValueParam);
         contactEntryValue.addValidationListener(new NotNullValidationListener());
         add(contactEntryValue);
         
         // Description field, only for internal usage
-        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.description")));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contact.contactEntry.description")));
         ParameterModel contactEntryDescriptionParam = new StringParameter(GenericContactEntry.DESCRIPTION);
         TextField contactEntryDescription = new TextField(contactEntryDescriptionParam);
         add(contactEntryDescription);

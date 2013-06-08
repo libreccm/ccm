@@ -70,18 +70,18 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         this.personSelector = personSelector;
 
         setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.none")));
+                         "cms.contenttypes.ui.genericorgaunit.persons.none")));
         TableColumnModel tabModel = getColumnModel();
 
         tabModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.name").localize(),
+                "cms.contenttypes.ui.genericorgaunit.persons.name"),
                 TABLE_COL_EDIT));
         tabModel.add(new TableColumn(
                 1,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.role").localize()));
+                "cms.contenttypes.ui.genericorgaunit.persons.role")));
         tabModel.add(
                 new TableColumn(
                 2,

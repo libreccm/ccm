@@ -305,9 +305,8 @@ public class GenericPersonContactTable extends Table implements
                                              person);
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) ContenttypesGlobalizationUtil.
-                        globalize("cms.contenttypes.ui.person.confirm_delete").
-                        localize());
+                link.setConfirmation(ContenttypesGlobalizationUtil.
+                        globalize("cms.contenttypes.ui.person.confirm_delete"));
                 return link;
             } else {
                 return new Label(value.toString());

@@ -76,14 +76,16 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         super.addWidgets();
         mandatoryFieldWidgets(this);
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.birthdate").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.birthdate")));
         ParameterModel birthdateParam = new DateParameter(BIRTHDATE);
         com.arsdigita.bebop.form.Date birthdate = new com.arsdigita.bebop.form.Date(birthdateParam);
         Calendar today = new GregorianCalendar();
         birthdate.setYearRange(1900, today.get(Calendar.YEAR));
         add(birthdate);
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.gender")));
         ParameterModel genderParam = new StringParameter(GENDER);
         SingleSelect gender  = new SingleSelect(genderParam);
         gender.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
@@ -91,7 +93,8 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         gender.addOption(new Option("m", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender.m").localize())));
         add(gender);
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.description").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.description")));
         ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
         TextArea description = new TextArea(descriptionParam);
         description.setCols(50);
@@ -101,23 +104,27 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
     }
 
     public static void mandatoryFieldWidgets(FormSection form) {
-        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
+        form.add(new Label(ContenttypesGlobalizationUtil
+                           .globalize("cms.contenttypes.ui.person.titlepre")));
         ParameterModel titlepreParam = new StringParameter(TITLEPRE);
         TextField titlepre = new TextField(titlepreParam);
         form.add(titlepre);
 
-        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
+        form.add(new Label(ContenttypesGlobalizationUtil
+                           .globalize("cms.contenttypes.ui.person.surname")));
         ParameterModel surnameParam = new StringParameter(SURNAME);
         surnameParam.addParameterListener(new NotNullValidationListener());
         TextField surname = new TextField(surnameParam);
         form.add(surname);
 
-        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize()));
+        form.add(new Label(ContenttypesGlobalizationUtil
+                           .globalize("cms.contenttypes.ui.person.givenname")));
         ParameterModel givennameParam = new StringParameter(GIVENNAME);
         TextField givenname = new TextField(givennameParam);
         form.add(givenname);
 
-        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize()));
+        form.add(new Label(ContenttypesGlobalizationUtil
+                           .globalize("cms.contenttypes.ui.person.titlepost")));
         ParameterModel titlepostParam = new StringParameter(TITLEPOST);
         TextField titlepost = new TextField(titlepostParam);
         form.add(titlepost);

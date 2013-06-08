@@ -72,8 +72,8 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.contact.select_address").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.contact.select_address")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericAddress"));
@@ -130,15 +130,13 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
                     Submit target = (Submit) e.getTarget();
 
                     if (contact.getAddress() != null) {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                        target.setButtonLabel(ContenttypesGlobalizationUtil.
                                 globalize(
-                                "cms.contenttypes.ui.contact.select_address.change").
-                                localize());
+                                "cms.contenttypes.ui.contact.select_address.change"));
                     } else {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                        target.setButtonLabel(ContenttypesGlobalizationUtil.
                                 globalize(
-                                "cms.contenttypes.ui.contact.select_address.add").
-                                localize());
+                                "cms.contenttypes.ui.contact.select_address.add"));
                     }
                 }
             });

@@ -76,8 +76,8 @@ public class GenericOrganizationalUnitPropertyForm
         add(name);*/
 
         add(new Label(
-                (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.addendum").localize()));
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.addendum")));
         ParameterModel addendumParam = new StringParameter(ADDENDUM);
         TextField addendum = new TextField(addendumParam);
         add(addendum);

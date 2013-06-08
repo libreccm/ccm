@@ -78,13 +78,15 @@ public class ContentGroupPropertyForm extends BasicItemForm {
      * Adds widgets to the form.
      */
     protected void addWidgets() {
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.content_group_name")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.content_group_name")));
         TextField nameWidget = 
             new TextField(new TrimmedStringParameter(ContentGroup.NAME));
         nameWidget.addValidationListener(new NotNullValidationListener());
         add(nameWidget);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.content_group_current_items")) {
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.content_group_current_items")) {
                 public boolean isVisible(PageState state) {
                     ContentGroupContainer item = 
                         (ContentGroupContainer) getItemSelectionModel()
@@ -106,7 +108,8 @@ public class ContentGroupPropertyForm extends BasicItemForm {
             };
         add(m_checkboxGroup);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.content_group_new_item")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.content_group_new_item")));
         try {
             add(new ItemSearchWidget(RELATED_ITEM, getSearchContentType()));
         } catch (DataObjectNotFoundException de) {

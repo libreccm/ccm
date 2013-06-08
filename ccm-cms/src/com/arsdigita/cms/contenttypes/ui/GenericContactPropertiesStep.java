@@ -25,7 +25,8 @@ import org.apache.log4j.Logger;
  */
 public class GenericContactPropertiesStep extends SimpleEditStep {
 
-    private static final Logger logger = Logger.getLogger(GenericContactPropertiesStep.class);
+    private static final Logger logger = Logger.getLogger(
+                                         GenericContactPropertiesStep.class);
     /**
      * Name of the this edit sheet (Don't know if this this really needed.
      * It has the same value in almost all PropertiesStep classes)
@@ -38,7 +39,8 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
      * @param itemModel
      * @param parent
      */
-    public GenericContactPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public GenericContactPropertiesStep(ItemSelectionModel itemModel, 
+                                        AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_BASIC_SHEET_NAME);
@@ -48,42 +50,75 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         setDisplayComponent(segmentedPanel);
     }
 
-    protected SegmentedPanel createEditSheet(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    /**
+     * 
+     * @param itemModel
+     * @param parent
+     * @return 
+     */
+    protected SegmentedPanel createEditSheet(ItemSelectionModel itemModel, 
+                                             AuthoringKitWizard parent) {
         /* Use a Segmented Panel for the multiple parts of data */
         SegmentedPanel segmentedPanel = new SegmentedPanel();
 
-        /* The different parts of information are displayed in seperated segments each containing a SimpleEditStep */
+        /* The different parts of information are displayed in seperated 
+         * segments each containing a SimpleEditStep */
         /* Well, not so simple anymore... */
         /* A new SimpleEditStep */
-        SimpleEditStep basicProperties = new SimpleEditStep(itemModel, parent, EDIT_BASIC_SHEET_NAME);
+        SimpleEditStep basicProperties = new SimpleEditStep(itemModel, 
+                                                            parent, 
+                                                            EDIT_BASIC_SHEET_NAME);
 
         /* Create the edit component for this SimpleEditStep and the corresponding link */
         BasicPageForm editBasicSheet = new GenericContactPropertyForm(itemModel, this);
-        basicProperties.add(EDIT_BASIC_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
+        basicProperties.add(
+                EDIT_BASIC_SHEET_NAME, 
+                (String) ContenttypesGlobalizationUtil
+                .globalize("cms.contenttypes.ui.contact.edit_basic_properties")
+                .localize(), 
+                new WorkflowLockedComponentAccess(
+                        editBasicSheet, 
+                        itemModel), 
+                        editBasicSheet.getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
         basicProperties.setDisplayComponent(getContactPropertySheet(itemModel));
 
         /* Add the SimpleEditStep to the segmented panel */
-        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.basic_properties").localize()), basicProperties);
+        segmentedPanel
+            .addSegment(new Label(ContenttypesGlobalizationUtil
+                        .globalize("cms.contenttypes.ui.contact.basic_properties")),
+                        basicProperties);
 
         // If not disabled via registry, add the ui for attaching a person
         if (!GenericContact.getConfig().getHidePerson()) {
 
-            GenericContactPersonPropertiesStep personProperties = new GenericContactPersonPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.person").localize()), personProperties);
+            GenericContactPersonPropertiesStep personProperties = new 
+                    GenericContactPersonPropertiesStep(itemModel, parent);
+            segmentedPanel
+                .addSegment(new Label(ContenttypesGlobalizationUtil
+                            .globalize("cms.contenttypes.ui.contact.person")), 
+                            personProperties);
 
         }
 
         if (!GenericContact.getConfig().getHideAddress()) {
 
-            GenericContactAddressPropertiesStep addressProperties = new GenericContactAddressPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.address").localize()), addressProperties);
+            GenericContactAddressPropertiesStep addressProperties = new 
+                    GenericContactAddressPropertiesStep(itemModel, parent);
+            segmentedPanel
+                .addSegment(new Label(ContenttypesGlobalizationUtil
+                            .globalize("cms.contenttypes.ui.contact.address")), 
+                            addressProperties);
 
         }
 
-        GenericContactEntriesPropertiesStep contactEntries = new GenericContactEntriesPropertiesStep(itemModel, parent);
-        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry").localize()), contactEntries);
+        GenericContactEntriesPropertiesStep contactEntries = new 
+                GenericContactEntriesPropertiesStep(itemModel, parent);
+        segmentedPanel
+            .addSegment(new Label(ContenttypesGlobalizationUtil
+                        .globalize("cms.contenttypes.ui.contact.contactEntry")), 
+                        contactEntries);
 
         return segmentedPanel;
     }
@@ -105,7 +140,10 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), "title");
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {
+
+            sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), 
+                      ContentPage.LAUNCH_DATE, 
+                      new DomainObjectPropertySheet.AttributeFormatter() {
 
                 public String format(DomainObject obj, String attribute, PageState state) {
                     ContentPage page = (ContentPage) obj;

@@ -82,8 +82,8 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.contact.select_person").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.contact.select_person")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericPerson"));
@@ -97,8 +97,8 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("",
-                                         new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.ui.select_one").localize())));
+                                         new Label(ContenttypesGlobalizationUtil
+                                                  .globalize("cms.ui.select_one"))));
 
         // Add the Options to the SingleSelect widget
         GenericContactTypeCollection contacttypes =
@@ -160,15 +160,13 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
                     Submit target = (Submit) e.getTarget();
 
                     if (contact.getPerson() != null) {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                        target.setButtonLabel(ContenttypesGlobalizationUtil.
                                 globalize(
-                                "cms.contenttypes.ui.contact.select_person.change").
-                                localize());
+                                "cms.contenttypes.ui.contact.select_person.change"));
                     } else {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                        target.setButtonLabel(ContenttypesGlobalizationUtil.
                                 globalize(
-                                "cms.contenttypes.ui.contact.select_person.add").
-                                localize());
+                                "cms.contenttypes.ui.contact.select_person.add"));
                     }
                 }
             });

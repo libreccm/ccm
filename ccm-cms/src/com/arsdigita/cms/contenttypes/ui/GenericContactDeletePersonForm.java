@@ -27,14 +27,16 @@ import com.arsdigita.util.UncheckedWrapperException;
  *
  * @author quasi
  */
-public class GenericContactDeletePersonForm extends BasicPageForm implements FormProcessListener {
+public class GenericContactDeletePersonForm extends BasicPageForm 
+                                            implements FormProcessListener {
     
     /**
      * ID of the form
      */
     public static final String ID = "ContactDeletePerson";
 
-    GenericContactDeletePersonForm(ItemSelectionModel itemModel, GenericContactPersonPropertiesStep step) {
+    GenericContactDeletePersonForm(ItemSelectionModel itemModel, 
+                                   GenericContactPersonPropertiesStep step) {
         super(ID, itemModel);
         addSaveCancelSection();
     }
@@ -45,7 +47,8 @@ public class GenericContactDeletePersonForm extends BasicPageForm implements For
     
     @Override
     public void addWidgets() {
-        add(new Label((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_person.label").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contact.delete_person.label")));
     }
     
     /**
@@ -54,12 +57,16 @@ public class GenericContactDeletePersonForm extends BasicPageForm implements For
     @Override
     public void addSaveCancelSection() {
         try {
-            getSaveCancelSection().getSaveButton().addPrintListener(new PrintListener() {
+            getSaveCancelSection().getSaveButton()
+                                  .addPrintListener(new PrintListener() {
 
                 public void prepare(PrintEvent e) {
-                    GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(e.getPageState());
+                    GenericContact contact = (GenericContact)
+                                             getItemSelectionModel()
+                                             .getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
-                        target.setButtonLabel((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_person").localize());
+                        target.setButtonLabel(ContenttypesGlobalizationUtil
+                            .globalize("cms.contenttypes.ui.contact.delete_person"));
                 }
             });
         } catch (Exception ex) {
@@ -70,7 +77,8 @@ public class GenericContactDeletePersonForm extends BasicPageForm implements For
     public final void process(final FormSectionEvent fse) throws FormProcessException {
         
         final PageState state = fse.getPageState();
-        final GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(state);
+        final GenericContact contact = (GenericContact)getItemSelectionModel()
+                                       .getSelectedObject(state);
         
         if (contact != null && contact.getPerson() != null) {
             contact.unsetPerson();

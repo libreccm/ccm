@@ -35,13 +35,10 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitBundle;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSuperiorCollection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
-import com.arsdigita.persistence.OID;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 

@@ -74,8 +74,8 @@ public class GenericOrganizationalUnitPersonAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.select_person").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.select_person")));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(getPersonType()));
         /*m_itemSearch.getItemField().addValidationListener(
@@ -95,8 +95,8 @@ public class GenericOrganizationalUnitPersonAddForm
         roleSelect.addValidationListener(new NotNullValidationListener());
         roleSelect.addOption(
                 new Option("",
-                           new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.ui.select_one").localize())));
+                           new Label(ContenttypesGlobalizationUtil
+                                     .globalize("cms.ui.select_one"))));
         RelationAttributeCollection roles = new RelationAttributeCollection(
                 getRoleAttributeName());
         roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
@@ -116,8 +116,8 @@ public class GenericOrganizationalUnitPersonAddForm
         SingleSelect statusSelect = new SingleSelect(statusModel);
         statusSelect.addValidationListener(new NotNullValidationListener());
         statusSelect.addOption(new Option("",
-                                          new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.ui.select_one").localize())));
+                                          new Label(ContenttypesGlobalizationUtil.
+                                              globalize("cms.ui.select_one"))));
         RelationAttributeCollection statusColl =
                                     new RelationAttributeCollection(
                 getStatusAttributeName());

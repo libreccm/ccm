@@ -53,8 +53,8 @@ public class GenericPersonAliasDeleteForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.alias.delete.confirm").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.alias.delete.confirm")));
     }
 
     @Override
@@ -65,7 +65,8 @@ public class GenericPersonAliasDeleteForm
     @Override
     public void process(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
-        final GenericPerson person = (GenericPerson) getItemSelectionModel().getSelectedObject(state);
+        final GenericPerson person = (GenericPerson) getItemSelectionModel()
+                                                     .getSelectedObject(state);
         
         if ((person != null) && (person.getAlias() != null)) {
             person.unsetAlias();
@@ -87,10 +88,9 @@ public class GenericPersonAliasDeleteForm
                                    (GenericPerson) getItemSelectionModel().
                             getSelectedObject(event.getPageState());
                     Submit target = (Submit) event.getTarget();
-                    target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                    target.setButtonLabel(ContenttypesGlobalizationUtil.
                             globalize(
-                            "cms.contenttypes.ui.person.alias.delete.label").
-                            localize());
+                            "cms.contenttypes.ui.person.alias.delete.label"));
                 }
             });
         } catch (Exception ex) {

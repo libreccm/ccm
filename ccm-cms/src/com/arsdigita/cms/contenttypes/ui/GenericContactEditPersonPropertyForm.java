@@ -65,12 +65,14 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
     }
 
     /**
-     * Constrctor taking an ItemSelectionModel and an instance of ContactPropertiesStep.
+     * Constructor taking an ItemSelectionModel and an instance of 
+     * ContactPropertiesStep.
      * 
      * @param itemModel
      * @param step
      */
-    public GenericContactEditPersonPropertyForm(ItemSelectionModel itemModel, GenericContactPersonPropertiesStep step) {
+    public GenericContactEditPersonPropertyForm(ItemSelectionModel itemModel, 
+                                                GenericContactPersonPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -78,42 +80,51 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.surname")));
         ParameterModel surnameParam = new StringParameter(SURNAME);
         surnameParam.addParameterListener(new NotNullValidationListener());
         surnameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField surname = new TextField(surnameParam);
         add(surname);
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.givenname")));
         ParameterModel givennameParam = new StringParameter(GIVENNAME);
         givennameParam.addParameterListener(new NotNullValidationListener());
         givennameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField givenname = new TextField(givennameParam);
         add(givenname);
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.titlepre")));
         ParameterModel titlepreParam = new StringParameter(TITLEPRE);
         titlepreParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField titlepre = new TextField(titlepreParam);
         add(titlepre);
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.titlepost")));
         ParameterModel titlepostParam = new StringParameter(TITLEPOST);
         titlepostParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField titlepost = new TextField(titlepostParam);
         add(titlepost);
 
         // GenericContact type field
-        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact.type")));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.person.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactType.addOption(new 
+                Option("", 
+                       new Label(ContenttypesGlobalizationUtil
+                                 .globalize("cms.ui.select_one"))));
 
         // Add the Options to the SingleSelect widget
         GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
-        contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        contacttypes.addLanguageFilter(GlobalizationHelper
+                                       .getNegotiatedLocale().getLanguage());
 
         while (contacttypes.next()) {
             RelationAttribute ct = contacttypes.getRelationAttribute();
@@ -126,7 +137,8 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
+        GenericContact contact = (GenericContact) getItemSelectionModel()
+                                                  .getSelectedObject(state);
 
         if (contact.getPerson() != null) {
             data.put(SURNAME, contact.getPerson().getSurname());
@@ -147,7 +159,8 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
+        GenericContact contact = (GenericContact) getItemSelectionModel()
+                                                  .getSelectedObject(state);
 
         if (getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 

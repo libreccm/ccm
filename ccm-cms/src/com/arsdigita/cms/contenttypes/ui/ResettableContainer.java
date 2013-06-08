@@ -33,19 +33,13 @@ import java.util.Iterator;
  *
  * @author <a href="mailto:phong@arsdigita.com">Phong Nguyen</a>
  * @version $Revision: #7 $
- **/
+ */
 public class ResettableContainer extends SimpleContainer implements Resettable {
 
-    // $Source: /cvsroot/content-types/apps/content-types/src/ui/ResettableContainer.java,v $
-    // $Revision: #7 $
-    // $Date: 2004/08/17 $
-    // $Author: sskracic $
-
-
-    // A list of all resettable components in this container
+    /** A list of all resettable components in this container   */
     private ArrayList m_resettableComponents = new ArrayList();
 
-    // A list of all components that are not visible by default
+    /** A list of all components that are not visible by default  */
     private ArrayList m_componentsNotVisibleByDefault = new ArrayList();
 
 

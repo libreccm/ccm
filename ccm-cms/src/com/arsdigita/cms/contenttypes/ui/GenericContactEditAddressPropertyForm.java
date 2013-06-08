@@ -78,7 +78,8 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.address").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.address.address")));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener(new NotNullValidationListener());
         addressParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
@@ -88,33 +89,40 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
         add(address);
 
         if (!GenericContact.getConfig().getHideAddressPostalCode()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.postal_code").localize()));
+            add(new Label(ContenttypesGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.address.postal_code")));
             ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
             TextField postalCode = new TextField(postalCodeParam);
             /* XXX NumberListener ?*/
             add(postalCode);
         }
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.city").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.address.city")));
         ParameterModel cityParam = new StringParameter(CITY);
         TextField city = new TextField(cityParam);
         add(city);
 
         if (!GenericContact.getConfig().getHideAddressState()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.state").localize()));
+            add(new Label(ContenttypesGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.address.state")));
             ParameterModel stateParam = new StringParameter(STATE);
             TextField state = new TextField(stateParam);
             add(state);
         }
 
         if (!GenericContact.getConfig().getHideAddressCountry()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.iso_country_code").localize()));
+            add(new Label(ContenttypesGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.address.iso_country_code")));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
 
             SingleSelect country = new SingleSelect(countryParam);
 
-            country.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+            country.addOption(new 
+                    Option("", 
+                           new Label(ContenttypesGlobalizationUtil
+                                     .globalize("cms.ui.select_one"))));
 
             Iterator countries = GenericAddress.getSortedListOfCountries(null).entrySet().iterator();
             while (countries.hasNext()) {
@@ -126,14 +134,16 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
                     new ParameterListener() {
 
                 @Override
-                        public void validate(ParameterEvent e) throws FormProcessException {
-                            ParameterData data = e.getParameterData();
-                            String isoCode = (String) data.getValue();
-                            if (isoCode == null || isoCode.length() == 0) {
-                                data.addError((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.error_iso_country").localize());
-                            }
-                        }
-                    });
+                public void validate(ParameterEvent e) throws FormProcessException {
+                    ParameterData data = e.getParameterData();
+                    String isoCode = (String) data.getValue();
+                    if (isoCode == null || isoCode.length() == 0) {
+                        data.addError((String) ContenttypesGlobalizationUtil
+                                .globalize("cms.contenttypes.ui.address.error_iso_country")
+                                .localize());
+                    }
+                }
+            });
 
             add(country);
         }

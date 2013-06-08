@@ -72,7 +72,8 @@ public abstract class ContentGroupPropertiesStep extends SimpleEditStep {
      */
     public Component getPropertySheet(ItemSelectionModel itemModel) {
         GridPanel panel = new GridPanel(2);
-        panel.add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.content_group_name")));
+        panel.add(new Label(GlobalizationUtil
+                            .globalize("cms.contenttypes.ui.content_group_name")));
         panel.add(new Label(new PrintListener() {
                 public void prepare(PrintEvent e) {
                     Label label = (Label)e.getTarget();
@@ -82,7 +83,9 @@ public abstract class ContentGroupPropertiesStep extends SimpleEditStep {
                     ContentGroup group = 
                         item.getContentGroup(getMainAttributeName());
                     if (group == null) {
-                        label.setLabel("None", e.getPageState());
+                        label.setLabel(GlobalizationUtil.globalize(
+                                       "cms.contenttypes.ui.content_group_name"), 
+                                       e.getPageState());
                         label.setFontWeight(Label.ITALIC);
                     } else {
                         label.setLabel(group.getName(), e.getPageState());

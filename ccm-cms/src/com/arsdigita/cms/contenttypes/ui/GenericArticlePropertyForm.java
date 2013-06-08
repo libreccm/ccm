@@ -56,7 +56,8 @@ public class GenericArticlePropertyForm extends BasicPageForm
      *    GenericArticle to work on
      * @param step The GenericArticlePropertiesStep which controls this form.
      */
-    public GenericArticlePropertyForm(ItemSelectionModel itemModel, GenericArticlePropertiesStep step) {
+    public GenericArticlePropertyForm(ItemSelectionModel itemModel, 
+                                      GenericArticlePropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);

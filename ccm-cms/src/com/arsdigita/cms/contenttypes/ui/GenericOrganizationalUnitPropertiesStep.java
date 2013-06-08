@@ -123,9 +123,8 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
                 itemModel));
 
         segmentedPanel.addSegment(
-                new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorganunit.basic_properties").
-                localize()),
+                new Label(ContenttypesGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.genericorganunit.basic_properties")),
                 basicProperties);
     }
 

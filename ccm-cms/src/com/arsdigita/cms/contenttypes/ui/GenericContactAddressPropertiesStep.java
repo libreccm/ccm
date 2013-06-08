@@ -91,26 +91,26 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(
                 itemModel);
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.address.address").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.address.address"),
                   "address." + GenericAddress.ADDRESS);
         if (!GenericContact.getConfig().getHideAddressPostalCode()) {
-            sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.address.postal_code").localize(),
+            sheet.add(ContenttypesGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.address.postal_code"),
                       "address." + GenericAddress.POSTAL_CODE);
         }
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.address.city").localize(),
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.address.city"),
                   "address." + GenericAddress.CITY);
         if (!GenericContact.getConfig().getHideAddressState()) {
-            sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.address.state").localize(),
+            sheet.add(ContenttypesGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.address.state"),
                       "address." + GenericAddress.STATE);
         }
 
         if (!GenericContact.getConfig().getHideAddressCountry()) {
-            sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.address.iso_country_code").localize(),
+            sheet.add(ContenttypesGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.address.iso_country_code"),
                       "address." + GenericAddress.ISO_COUNTRY_CODE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -138,11 +138,12 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
     public static Component getEmptyBaseAddressPropertySheet(
             ItemSelectionModel itemModel) {
         return new Label(
-                ((String) ContenttypesGlobalizationUtil.globalize(
-                 "cms.contenttypes.ui.contact.emptyAddress").localize()));
+                (ContenttypesGlobalizationUtil.globalize(
+                 "cms.contenttypes.ui.contact.emptyAddress")));
     }
 
-    private class EditAddressWorkflowLockedComponentAccess extends WorkflowLockedComponentAccess {
+    private class EditAddressWorkflowLockedComponentAccess 
+                  extends WorkflowLockedComponentAccess {
 
         public EditAddressWorkflowLockedComponentAccess(Component c,
                                                         ItemSelectionModel i) {

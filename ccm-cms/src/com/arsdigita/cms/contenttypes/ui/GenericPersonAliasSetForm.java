@@ -69,8 +69,8 @@ public class GenericPersonAliasSetForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.alias.select").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.alias.select")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericPerson"));      
@@ -125,15 +125,13 @@ public class GenericPersonAliasSetForm
                     Submit target = (Submit) event.getTarget();
 
                     if (person.getAlias() != null) {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                        target.setButtonLabel(ContenttypesGlobalizationUtil.
                                 globalize(
-                                "cms.contenttypes.ui.contact.alias.select.change").
-                                localize());
+                                "cms.contenttypes.ui.contact.alias.select.change"));
                     } else {
-                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.
+                        target.setButtonLabel(ContenttypesGlobalizationUtil.
                                 globalize(
-                                "cms.contenttypes.ui.contact.alias.select.add").
-                                localize());
+                                "cms.contenttypes.ui.contact.alias.select.add"));
                     }
                 }
             });

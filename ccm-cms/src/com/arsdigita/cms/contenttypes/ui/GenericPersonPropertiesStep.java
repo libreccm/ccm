@@ -69,9 +69,10 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                 itemModel));
 
         /* Add the SimpleEditStep to the segmented panel */
-        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.contenttypes.ui.person.basic_properties").
-                localize()), basicProperties);
+        segmentedPanel.addSegment(new 
+                Label(ContenttypesGlobalizationUtil
+                    .globalize("cms.contenttypes.ui.person.basic_properties")), 
+                basicProperties);
 
 
 //        GenericPersonContactPropertiesStep contactProperties = new GenericPersonContactPropertiesStep(itemModel, parent);
@@ -80,8 +81,8 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         GenericPersonAliasPropertiesStep aliasStep =
                                          new GenericPersonAliasPropertiesStep(
                 itemModel, parent);
-        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.contenttypes.ui.person.alias").localize()),
+        segmentedPanel.addSegment(new Label(ContenttypesGlobalizationUtil.
+                globalize("cms.contenttypes.ui.person.alias")),
                                   aliasStep);
 
         /* Sets the composed segmentedPanel as display component */

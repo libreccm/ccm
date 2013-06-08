@@ -151,7 +151,7 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
             final List<GenericPerson> persons,
             final PageState state) {
         final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
-                                                             orgaunit.getSubordinateOrgaUnits();
+                                       orgaunit.getSubordinateOrgaUnits();
         final StringBuffer assocTypeFilter = new StringBuffer();
         for (String assocType : getAssocTypesToMerge()) {
             if (assocTypeFilter.length() > 0) {

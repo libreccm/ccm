@@ -73,8 +73,8 @@ public class GenericOrganizationalUnitContactAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.select_contact").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.select_contact")));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericContact.class.getName()));
         m_itemSearch.setDisableCreatePane(false);
@@ -90,8 +90,8 @@ public class GenericOrganizationalUnitContactAddForm
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("",
-                                         new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.ui.select_one").localize())));
+                                         new Label(ContenttypesGlobalizationUtil.
+                                             globalize("cms.ui.select_one"))));
 
         GenericContactTypeCollection contacttypes =
                                      new GenericContactTypeCollection();
@@ -197,7 +197,7 @@ public class GenericOrganizationalUnitContactAddForm
         if ((editStep.getSelectedContact() == null)
             && (data.get(ITEM_SEARCH) == null)) {
             data.addError(
-                    "cms.contenttypes.ui.genericorgaunit.select_contact.no_contact_selected");
+                 "cms.contenttypes.ui.genericorgaunit.select_contact.no_contact_selected");
 
             return;
         }

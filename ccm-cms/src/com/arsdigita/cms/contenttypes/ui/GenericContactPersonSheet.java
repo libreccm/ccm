@@ -67,7 +67,8 @@ public class GenericContactPersonSheet
         colModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.contact.person").localize(),
+           //   "cms.contenttypes.ui.contact.person").localize(),
+                "cms.contenttypes.ui.contact.person"),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
@@ -97,7 +98,8 @@ public class GenericContactPersonSheet
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
+            GenericContact contact = (GenericContact) 
+                                     m_itemModel.getSelectedObject(state);
             return new GenericContactPersonSheetModel(table,
                     state,
                     contact);
@@ -145,8 +147,9 @@ public class GenericContactPersonSheet
                     return m_person.getFullName();
                 case 1:
                     return ContenttypesGlobalizationUtil.globalize(
-                            "cms.contenttypes.ui.contact.delete_person").
-                            localize();
+                            "cms.contenttypes.ui.contact.delete_person")
+                      //    .localize();
+                            ;
                 default:
                     return null;
             }
@@ -170,8 +173,10 @@ public class GenericContactPersonSheet
                 int row,
                 int column) {
 
-            com.arsdigita.cms.SecurityManager securityManager = Utilities.getSecurityManager(state);
-            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
+            com.arsdigita.cms.SecurityManager securityManager = 
+                                              Utilities.getSecurityManager(state);
+            GenericContact contact = (GenericContact) 
+                                     m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
@@ -190,7 +195,11 @@ public class GenericContactPersonSheet
                 ContentSection section = person.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
 
-                return new Link(value.toString(), resolver.generateItemURL(state, person, section, person.getVersion()));
+                return new Link(value.toString(), 
+                                resolver.generateItemURL(state, 
+                                                         person, 
+                                                         section, 
+                                                         person.getVersion()));
 
             } else {
 
@@ -224,10 +233,10 @@ public class GenericContactPersonSheet
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) ContenttypesGlobalizationUtil.globalize(
+                link.setConfirmation(ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.contact.person"
-                        + ".confirm_remove").
-                        localize());
+                        + ".confirm_remove")
+                        );
                 return link;
             } else {
                 Label label = new Label(value.toString());

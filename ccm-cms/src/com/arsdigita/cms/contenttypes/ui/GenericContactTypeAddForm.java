@@ -52,10 +52,12 @@ import org.apache.log4j.Logger;
  */
 public class GenericContactTypeAddForm extends BasicItemForm {
 
+    private static final Logger s_log = Logger.getLogger(
+                                        GenericContactTypeAddForm.class);
+
     public final static String KEY = RelationAttribute.KEY;
     public final static String LANGUAGE = RelationAttribute.LANGUAGE;
     public final static String NAME = RelationAttribute.NAME;
-    private static final Logger s_log = Logger.getLogger(GenericContactTypeAddForm.class);
     private GenericPersonPropertiesStep m_step;
     private SaveCancelSection m_saveCancelSection;
     private ItemSelectionModel m_itemModel;
@@ -72,7 +74,8 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     @Override
     protected void addWidgets() {
         // Key
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttypes.key").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contacttypes.key")));
         ParameterModel keyParam = new StringParameter(KEY);
         keyParam.addParameterListener(new NotNullValidationListener());
         keyParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
@@ -80,14 +83,16 @@ public class GenericContactTypeAddForm extends BasicItemForm {
         add(key);
 
         // Language
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttypes.language").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contacttypes.language")));
         ParameterModel languageParam = new StringParameter(LANGUAGE);
         language = new SingleSelect(languageParam);
         language.addValidationListener(new NotNullValidationListener());
         language.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
 
         // Name
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttypes.name").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contacttypes.name")));
         ParameterModel nameParam = new StringParameter(NAME);
         nameParam.addParameterListener(new NotNullValidationListener());
         nameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
@@ -100,8 +105,11 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        RelationAttribute contacttype = (RelationAttribute) getItemSelectionModel().getSelectedObject(state);
-        GenericContactTypeCollection contacttypeCollection = new GenericContactTypeCollection(contacttype.getKey());
+        RelationAttribute contacttype = (RelationAttribute) 
+                                        getItemSelectionModel()
+                                        .getSelectedObject(state);
+        GenericContactTypeCollection contacttypeCollection = new 
+                GenericContactTypeCollection(contacttype.getKey());
 
         // all supported languages (by registry entry)
         KernelConfig kernelConfig = Kernel.getConfig();
@@ -113,7 +121,10 @@ public class GenericContactTypeAddForm extends BasicItemForm {
 
             // If lanuage exists, remove it from the selection list
             if (!contacttypeCollection.hasLanguage(code)) {
-                language.addOption(new Option(code, new Locale(code).getDisplayLanguage()), state);
+                language.addOption(new 
+                        Option(code, 
+                               new Locale(code).getDisplayLanguage()), 
+                               state);
             }
         }
 
@@ -127,7 +138,9 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        RelationAttribute contacttype = (RelationAttribute) getItemSelectionModel().getSelectedObject(state);
+        RelationAttribute contacttype = (RelationAttribute) 
+                                        getItemSelectionModel()
+                                        .getSelectedObject(state);
 
         //
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {

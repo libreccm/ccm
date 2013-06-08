@@ -64,9 +64,26 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         TableColumnModel tab_model = getColumnModel();
 
         // define columns
-        tab_model.add(new TableColumn(0, ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttypes.key").localize(), TABLE_COL_EDIT));
-        tab_model.add(new TableColumn(1, ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttypes.title").localize()));
-        tab_model.add(new TableColumn(2, ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttypes.action").localize(), TABLE_COL_DEL));
+        tab_model.add(new TableColumn(
+                0, 
+                ContenttypesGlobalizationUtil
+                .globalize("cms.contenttypes.ui.contacttypes.key")
+             // .localize()
+                , 
+                TABLE_COL_EDIT));
+        tab_model.add(new TableColumn(
+                1, 
+                ContenttypesGlobalizationUtil
+                .globalize("cms.contenttypes.ui.contacttypes.title")
+              //.localize()
+                ));
+        tab_model.add(new TableColumn(
+                2, 
+                ContenttypesGlobalizationUtil
+                .globalize("cms.contenttypes.ui.contacttypes.action")
+                .localize()
+                , 
+                TABLE_COL_DEL));
 
         setModelBuilder(new GenericContactTypeTableModelBuilder(itemModel));
 
@@ -81,7 +98,8 @@ public class GenericContactTypeTable extends Table implements TableActionListene
      * XXXX
      *
      */
-    private class GenericContactTypeTableModelBuilder extends LockableImpl implements TableModelBuilder {
+    private class GenericContactTypeTableModelBuilder extends LockableImpl 
+                                                      implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
@@ -105,12 +123,16 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         final private int MAX_DESC_LENGTH = 25;
         private Table m_table;
         private RelationAttribute m_contacttype;
-        private GenericContactTypeCollection m_contacttypeCollection = new GenericContactTypeCollection();
+        private GenericContactTypeCollection m_contacttypeCollection = new 
+                GenericContactTypeCollection();
 
-        private GenericContactTypeTableModel(Table t, PageState ps, RelationAttribute contacttype) {
+        private GenericContactTypeTableModel(Table t, 
+                                             PageState ps, 
+                                             RelationAttribute contacttype) {
             m_table = t;
             m_contacttype = contacttype;
-//            m_contacttypeCollection.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+//            m_contacttypeCollection.addLanguageFilter(
+//                   DispatcherHelper.getNegotiatedLocale().getLanguage());
         }
 
         public int getColumnCount() {
@@ -147,7 +169,9 @@ public class GenericContactTypeTable extends Table implements TableActionListene
                 case 1:
                     return m_contacttypeCollection.getName();
                 case 2:
-                    return GlobalizationUtil.globalize("cms.ui.delete").localize();
+                    return GlobalizationUtil.globalize("cms.ui.delete")
+                          //.localize()
+                            ;
                 default:
                     return null;
             }
@@ -173,7 +197,8 @@ public class GenericContactTypeTable extends Table implements TableActionListene
                 int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
-            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) 
+                                             m_itemModel.getSelectedObject(state);
 
 //            boolean canEdit = sm.canAccess(state.getRequest(),
 //                    SecurityManager.EDIT_ITEM,
@@ -198,14 +223,18 @@ public class GenericContactTypeTable extends Table implements TableActionListene
                 int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
-            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) 
+                                            m_itemModel.getSelectedObject(state);
 
 //            boolean canDelete = sm.canAccess(state.getRequest(),
 //                    SecurityManager.DELETE_ITEM,
 //                    contacttype);
 //            if (canDelete) {
             ControlLink link = new ControlLink(value.toString());
-            link.setConfirmation((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttype.confirm_delete").localize());
+            link.setConfirmation(ContenttypesGlobalizationUtil
+                                 .globalize(
+                                 "cms.contenttypes.ui.contacttype.confirm_delete")
+                                  );
             return link;
 //            } else {
 //                return new Label(value.toString());
@@ -223,7 +252,8 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         PageState state = evt.getPageState();
 
         // Get selected GenericContactType
-        RelationAttribute contacttype = new RelationAttribute(new BigDecimal(evt.getRowKey().toString()));
+        RelationAttribute contacttype = new RelationAttribute(new 
+                                        BigDecimal(evt.getRowKey().toString()));
 
         // Get selected column
         TableColumn col = getColumnModel().get(evt.getColumn().intValue());

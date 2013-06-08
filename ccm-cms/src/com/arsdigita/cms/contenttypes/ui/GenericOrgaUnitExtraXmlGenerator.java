@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * jensp $
  */
 public abstract class GenericOrgaUnitExtraXmlGenerator
-        implements ExtraXMLGenerator {
+                implements ExtraXMLGenerator {
 
     private final static Logger logger =
                                 Logger.getLogger(

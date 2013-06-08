@@ -83,11 +83,11 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         tabModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.contact.type").localize()));
+                "cms.contenttypes.ui.genericorgaunit.contact.type")));
         tabModel.add(new TableColumn(
                 1,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.contact.title").localize(),
+                "cms.contenttypes.ui.genericorgaunit.contact.title"),
                 TABLE_COL_EDIT));
         tabModel.add(new TableColumn(
                 2,

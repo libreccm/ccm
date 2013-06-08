@@ -15,9 +15,13 @@ import org.apache.log4j.Logger;
 /**
  * Form for editing the basic properties of a basic contact.
  */
-public class GenericContactPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class GenericContactPropertyForm extends BasicPageForm 
+                                        implements FormProcessListener, 
+                                                   FormInitListener, 
+                                                   FormSubmissionListener {
 
-    private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
+    private static final Logger logger = Logger.getLogger(
+                                         GenericContactPropertyForm.class);
 
     private GenericContactPropertiesStep m_step;
 
@@ -40,23 +44,30 @@ public class GenericContactPropertyForm extends BasicPageForm implements FormPro
     }
 
     /**
-     * Constrctor taking an ItemSelectionModel and an instance of BaseContactPropertiesStep.
+     * Constructor taking an ItemSelectionModel and an instance of 
+     * BaseContactPropertiesStep.
      * 
      * @param itemModel
      * @param step
      */
-    public GenericContactPropertyForm(ItemSelectionModel itemModel, GenericContactPropertiesStep step) {
+    public GenericContactPropertyForm(ItemSelectionModel itemModel, 
+                                      GenericContactPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
     }
 
+    /**
+     * 
+     */
     @Override
     public void addWidgets() {
         super.addWidgets();
 
 /*
-        add(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.contact.basic_properties.description").localize())));
+        add(new Label(BaseContactGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.contact.basic_properties.description")
+                      )));
         TextArea description = new TextArea(DESCRIPTION);
         description.setRows(5);
         description.setCols(30);
@@ -78,9 +89,9 @@ public class GenericContactPropertyForm extends BasicPageForm implements FormPro
 
         GenericContact contact = (GenericContact)super.processBasicWidgets(e);
 
-        if((contact != null) && (getSaveCancelSection().getSaveButton().isSelected(e.getPageState()))) {
+        if((contact != null) 
+           && (getSaveCancelSection().getSaveButton().isSelected(e.getPageState()))) {
 //            contact.setDescription((String)data.get(DESCRIPTION));
-
             contact.save();
         }
 
@@ -90,7 +101,8 @@ public class GenericContactPropertyForm extends BasicPageForm implements FormPro
     }
 
     public void submitted(FormSectionEvent e) throws FormProcessException {
-        if((m_step != null) && (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
+        if((m_step != null) 
+           && (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
             m_step.cancelStreamlinedCreation(e.getPageState());
         }
     }

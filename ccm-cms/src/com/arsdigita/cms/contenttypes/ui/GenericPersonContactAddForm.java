@@ -76,8 +76,8 @@ public class GenericPersonContactAddForm extends BasicItemForm {
     protected void addWidgets() {
 
         // Attach a GenericContact object
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.select_contact").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.select_contact")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericContact"));
@@ -92,8 +92,8 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("",
-                                         new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.ui.select_one").localize())));
+                                         new Label(ContenttypesGlobalizationUtil.
+                                             globalize("cms.ui.select_one"))));
 
         // Add the Options to the SingleSelect widget
         GenericContactTypeCollection contacttypes =

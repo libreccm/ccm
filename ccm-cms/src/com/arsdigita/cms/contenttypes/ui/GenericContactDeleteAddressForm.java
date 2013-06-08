@@ -43,7 +43,8 @@ public class GenericContactDeleteAddressForm extends BasicPageForm implements Fo
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_address.label").localize()));
+        add(new Label(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contact.delete_address.label")));
     }
 
     /**
@@ -55,9 +56,13 @@ public class GenericContactDeleteAddressForm extends BasicPageForm implements Fo
             getSaveCancelSection().getSaveButton().addPrintListener(new PrintListener() {
 
                 public void prepare(PrintEvent e) {
-                    GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(e.getPageState());
+                    GenericContact contact = (GenericContact) 
+                                             getItemSelectionModel()
+                                             .getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
-                    target.setButtonLabel((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_address.button_label").localize());
+                    target.setButtonLabel(ContenttypesGlobalizationUtil
+                        .globalize(
+                        "cms.contenttypes.ui.contact.delete_address.button_label"));
                 }
             });
         } catch (Exception ex) {
@@ -68,7 +73,8 @@ public class GenericContactDeleteAddressForm extends BasicPageForm implements Fo
     public final void process(final FormSectionEvent fse) throws FormProcessException {
 
         final PageState state = fse.getPageState();
-        final GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
+        final GenericContact contact = (GenericContact) getItemSelectionModel()
+                                       .getSelectedObject(state);
 
         if (contact != null && contact.getAddress() != null) {
             contact.unsetAddress();

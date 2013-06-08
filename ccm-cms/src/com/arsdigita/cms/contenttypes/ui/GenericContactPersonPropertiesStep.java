@@ -34,16 +34,25 @@ public class GenericContactPersonPropertiesStep extends SimpleEditStep {
     /**
      * Creates a new instance of GenericContactPersonPropertiesStep
      */
-    public GenericContactPersonPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public GenericContactPersonPropertiesStep(ItemSelectionModel itemModel, 
+                                              AuthoringKitWizard parent) {
         this(itemModel, parent, "");
     }
 
-    public GenericContactPersonPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
+    public GenericContactPersonPropertiesStep(ItemSelectionModel itemModel, 
+                                              AuthoringKitWizard parent, 
+                                              String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicPageForm addPersonSheet = new GenericContactAttachPersonPropertyForm(itemModel, this);
+        BasicPageForm addPersonSheet = new 
+                      GenericContactAttachPersonPropertyForm(itemModel, this);
         addPerson = new WorkflowLockedComponentAccess(addPersonSheet, itemModel);
-        add(ADD_PERSON_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.attach_person").localize(), addPerson, addPersonSheet.getSaveCancelSection().getCancelButton());
+        add(ADD_PERSON_SHEET_NAME, 
+            (String) ContenttypesGlobalizationUtil
+                     .globalize("cms.contenttypes.ui.contact.attach_person")
+                     .localize(), 
+            addPerson, 
+            addPersonSheet.getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
         setDisplayComponent(getPersonPropertySheet(itemModel));
