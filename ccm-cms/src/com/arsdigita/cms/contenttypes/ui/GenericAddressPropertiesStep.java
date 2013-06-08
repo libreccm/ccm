@@ -35,12 +35,21 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 
 import java.text.DateFormat;
 
+/**
+ * 
+ * 
+ */
 public class GenericAddressPropertiesStep extends SimpleEditStep {
 
     public static final String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public GenericAddressPropertiesStep(ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+                                        AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
@@ -62,9 +71,9 @@ public class GenericAddressPropertiesStep extends SimpleEditStep {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
         sheet.add(GlobalizationUtil
-                  .globalize("cms.contenttypes.ui.name"), GenericAddress.NAME);
-        sheet.add(GlobalizationUtil
                   .globalize("cms.contenttypes.ui.title"), GenericAddress.TITLE);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"), GenericAddress.NAME);
         sheet.add(ContenttypesGlobalizationUtil
                   .globalize("cms.contenttypes.ui.address.address"), 
                   GenericAddress.ADDRESS);

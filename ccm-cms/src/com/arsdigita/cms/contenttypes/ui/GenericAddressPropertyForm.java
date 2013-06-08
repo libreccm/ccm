@@ -40,6 +40,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericAddress;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import java.util.Iterator;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -50,7 +51,10 @@ import org.apache.log4j.Logger;
  * @author: Jens Pelzetter
  * @author: Sören Bernstein
  */
-public class GenericAddressPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class GenericAddressPropertyForm extends BasicPageForm 
+                                        implements FormProcessListener, 
+                                                   FormInitListener, 
+                                                   FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(GenericAddressPropertyForm.class);
     private GenericAddressPropertiesStep m_step;
@@ -113,7 +117,7 @@ public class GenericAddressPropertyForm extends BasicPageForm implements FormPro
             SingleSelect country = new SingleSelect(countryParam);
 
             country.addOption(new Option("", 
-                                         new Label(ContenttypesGlobalizationUtil
+                                         new Label(GlobalizationUtil
                                                    .globalize("cms.ui.select_one"))));
 
             Iterator countries = GenericAddress.getSortedListOfCountries(null)
@@ -125,27 +129,30 @@ public class GenericAddressPropertyForm extends BasicPageForm implements FormPro
                                              elem.getKey().toString()));
             }
 
-            country.addValidationListener(
-                    new ParameterListener() {
+            country.addValidationListener(new ParameterListener() {
 
-                        public void validate(ParameterEvent e) 
-                               throws FormProcessException {
-                            ParameterData data = e.getParameterData();
-                            String isoCode = (String) data.getValue();
-                            s_log.debug("ISO code is : " + isoCode);
-                            if (isoCode == null || isoCode.length() == 0) {
-                                data.addError((String) ContenttypesGlobalizationUtil
-                                        .globalize("cms.contenttypes.ui.address.error_iso_country")
-                                        .localize());
-                            }
-                        }
-                    });
+                public void validate(ParameterEvent e) 
+                            throws FormProcessException {
+                    ParameterData data = e.getParameterData();
+                    String isoCode = (String) data.getValue();
+                    s_log.debug("ISO code is : " + isoCode);
+                    if (isoCode == null || isoCode.length() == 0) {
+                        data.addError((String) ContenttypesGlobalizationUtil
+                                      .globalize("cms.contenttypes.ui.address.error_iso_country")
+                                      .localize());
+                    }
+                }
+            });
 
             add(country);
         }
 
     }
 
+    /**
+     * 
+     * @param fse 
+     */
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         GenericAddress address = (GenericAddress) super.initBasicWidgets(fse);
@@ -159,6 +166,10 @@ public class GenericAddressPropertyForm extends BasicPageForm implements FormPro
         }
     }
 
+    /**
+     * 
+     * @param fse 
+     */
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
                 && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
@@ -166,6 +177,10 @@ public class GenericAddressPropertyForm extends BasicPageForm implements FormPro
         }
     }
 
+    /**
+     * 
+     * @param fse 
+     */
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

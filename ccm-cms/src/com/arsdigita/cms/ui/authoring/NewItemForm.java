@@ -34,8 +34,8 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ui.ItemSearch;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -57,8 +57,6 @@ import java.math.BigDecimal;
  */
 public abstract class NewItemForm extends Form {
 
-    public static final String RESOURCE_BUNDLE =
-                               "com.arsdigita.cms.ui.authoring.AuthoringResources";
     public static String DP_TYPE_PREFIX = "com.arsdigita.dp.";
     private SingleSelect m_typeWidget;
     private Submit m_submit;
@@ -79,11 +77,15 @@ public abstract class NewItemForm extends Form {
         panel.setWidth("2%");
         panel.setBorder(0);
 
-        m_emptyLabel = new Label(globalize("cms.ui.authoring.no_types_registered"), false);
+        m_emptyLabel = new Label(GlobalizationUtil
+                                 .globalize("cms.ui.authoring.no_types_registered"), 
+                                 false);
         m_emptyLabel.setIdAttr("empty_label");
         panel.add(m_emptyLabel);
 
-        m_createLabel = new Label(globalize("cms.ui.authoring.create_new"), false);
+        m_createLabel = new Label(GlobalizationUtil
+                                      .globalize("cms.ui.authoring.create_new"), 
+                                  false);
         m_createLabel.setIdAttr("create_label");
         panel.add(m_createLabel);
 
@@ -99,7 +101,10 @@ public abstract class NewItemForm extends Form {
                     ContentSection section = getContentSection(state);
                     ContentType parentType = null;
                     ContentTypeCollection typesCollection = null;
-                    BigDecimal singleTypeID = (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+                    BigDecimal singleTypeID = (BigDecimal) 
+                                              state.getValue(new 
+                                                BigDecimalParameter(
+                                                  ItemSearch.SINGLE_TYPE_PARAM));
 
                     if (singleTypeID != null) {
                         try {
@@ -147,7 +152,7 @@ public abstract class NewItemForm extends Form {
                                 String l = type.getLabel();
                                 if (cn.startsWith(DP_TYPE_PREFIX, 0)) {
                                     o.addOption(new Option(type.getID().toString(),
-                                            new Label(globalize(l.replace(' ', '_')))));
+                                            new Label(GlobalizationUtil.globalize(l.replace(' ', '_')))));
                                 } else {
                                     o.addOption(new Option(type.getID().toString(), type.getLabel()));
                                 }
@@ -164,7 +169,8 @@ public abstract class NewItemForm extends Form {
 
         panel.add(m_typeWidget);
 
-        m_submit = new Submit("new", globalize("cms.ui.authoring.go"));
+        m_submit = new Submit("new", GlobalizationUtil.globalize(
+                                                       "cms.ui.authoring.go"));
         panel.add(m_submit);
         
         add(panel);
@@ -198,15 +204,5 @@ public abstract class NewItemForm extends Form {
 
             super.generateXML(state, parent);
         }
-    }
-
-    /**
-     * Getting the GlobalizedMessage using a CMS Class targetBundle.
-     *
-     * @param key The resource key
-     * @pre ( key != null )
-     */
-    public static GlobalizedMessage globalize(String key) {
-        return new GlobalizedMessage(key, RESOURCE_BUNDLE);
     }
 }

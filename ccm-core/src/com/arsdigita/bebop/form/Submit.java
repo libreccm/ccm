@@ -136,6 +136,7 @@ public class Submit extends Widget {
      * </p>
      *
      * @param buttonLabel The label that shows up on the button.
+     * @deprecated Refactor to use setButtonLabel(GlobalizedMessage) instead
      */
     public void setButtonLabel(String buttonLabel) {
         setButtonLabel(new GlobalizedMessage(buttonLabel));

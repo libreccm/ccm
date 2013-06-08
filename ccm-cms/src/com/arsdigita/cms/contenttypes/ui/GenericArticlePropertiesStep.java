@@ -46,7 +46,8 @@ public class GenericArticlePropertiesStep extends SimpleEditStep {
     public static String EDIT_SHEET_NAME = "edit";
     DomainObjectPropertySheet get;
 
-    public GenericArticlePropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public GenericArticlePropertiesStep(ItemSelectionModel itemModel, 
+                                        AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
@@ -58,7 +59,10 @@ public class GenericArticlePropertiesStep extends SimpleEditStep {
     protected void createEditSheet(ItemSelectionModel itemModel) {
         BasicPageForm editSheet;
         editSheet = new GenericArticlePropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel), 
+            editSheet.getSaveCancelSection().getCancelButton());
     }
 
     protected void setDisplayComponent(ItemSelectionModel itemModel) {
@@ -76,8 +80,10 @@ public class GenericArticlePropertiesStep extends SimpleEditStep {
     public static Component getGenericArticlePropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), GenericArticle.NAME);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), GenericArticle.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), 
+                  GenericArticle.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), 
+                  GenericArticle.NAME);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
                     ContentPage.LAUNCH_DATE,
@@ -88,9 +94,11 @@ public class GenericArticlePropertiesStep extends SimpleEditStep {
                                 PageState state) {
                             ContentPage page = (ContentPage) item;
                             if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
+                                return DateFormat.getDateInstance(DateFormat.LONG)
+                                                 .format(page.getLaunchDate());
                             } else {
-                                return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                return (String) GlobalizationUtil.globalize(
+                                        "cms.ui.unknown").localize();
                             }
                         }
                     });

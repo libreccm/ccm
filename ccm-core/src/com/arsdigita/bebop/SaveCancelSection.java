@@ -18,9 +18,6 @@
  */
 package com.arsdigita.bebop;
 
-import com.arsdigita.bebop.FormSection;
-import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.Container;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 

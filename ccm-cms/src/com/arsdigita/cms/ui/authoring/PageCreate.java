@@ -93,8 +93,9 @@ public class PageCreate extends BasicPageForm
     @Override
     protected void addWidgets() {
 
-        /* Add workflow selection  */
+        /* Retrieve Content Type  */
         ContentType type = getItemSelectionModel().getContentType();
+        /* Add workflow selection based on configured Content Type            */
         m_workflowSection = new ApplyWorkflowFormSection(type);
         add(m_workflowSection, ColumnPanel.INSERT);
         /* content type */
