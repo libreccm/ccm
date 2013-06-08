@@ -32,8 +32,6 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-// replaced by AgendaGlobalizationUtil
-// import com.arsdigita.cms.util.GlobalizationUtil; 
 
 import com.arsdigita.globalization.GlobalizationHelper;
 

@@ -18,21 +18,20 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.cms.contenttypes.FileStorageItem;
-import com.arsdigita.cms.contenttypes.ui.authoring.FileStorageItemPropertiesStep;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.cms.ui.CMSDHTMLEditor;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.contenttypes.FileStorageItem;
+import com.arsdigita.cms.contenttypes.ui.authoring.FileStorageItemPropertiesStep;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.ui.CMSDHTMLEditor;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 
 /**
@@ -76,10 +75,11 @@ public class FileStorageItemPropertyForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
-        add( new Label( FileStorageItem.DESCRIPTION_LABEL ) );
+        add( new Label( GlobalizationUtil.globalize("cms.contenttypes.ui.lead") ) );
         ParameterModel descriptionParam
             = new StringParameter( FileStorageItem.DESCRIPTION );
 //        descriptionParam.addParameterListener( new NotNullValidationListener() );

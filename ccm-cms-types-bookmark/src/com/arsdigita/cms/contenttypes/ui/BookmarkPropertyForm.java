@@ -74,7 +74,6 @@ public class BookmarkPropertyForm
         description.setRows(5);
         add( description );
         
-//      add( new Label( "Url:" ) );
         add( new Label( new GlobalizedMessage
                         ("cms.contenttypes.ui.bookmark.url",Bookmark.RESOURCES) ) );
         ParameterModel urlParam

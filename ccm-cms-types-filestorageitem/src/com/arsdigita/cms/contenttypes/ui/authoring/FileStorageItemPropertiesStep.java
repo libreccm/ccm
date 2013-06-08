@@ -70,9 +70,12 @@ public class FileStorageItemPropertiesStep
                                                              itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.name"), FileStorageItem.NAME );
-        sheet.add( GlobalizationUtil.globalize("cms.ui.authoring.title"), FileStorageItem.TITLE );
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.summary"), FileStorageItem.DESCRIPTION );
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.ui.authoring.name"), FileStorageItem.NAME );
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.ui.authoring.title"), FileStorageItem.TITLE );
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.summary"), FileStorageItem.DESCRIPTION );
 
         return sheet;
     }

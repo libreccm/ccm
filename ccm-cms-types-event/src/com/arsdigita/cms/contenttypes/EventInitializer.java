@@ -68,7 +68,7 @@ public class EventInitializer extends ContentTypeInitializer {
      */
     @Override
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Event.xml";
+        return TRAVERSAL_ADAPTER_BASE_DIR + "Event.xml";
     }
 
 }

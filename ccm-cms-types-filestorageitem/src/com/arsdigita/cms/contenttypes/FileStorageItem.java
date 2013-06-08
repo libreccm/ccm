@@ -44,12 +44,6 @@ public class FileStorageItem extends ContentPage {
     /** PDL property name for file */
     public static final String FILE = "file";
 
-    /** Labels to avoid duplicated hard-coded strings anywhere in the content
-     * type files */
-    public static final String DESCRIPTION_LABEL = "Description: ";
-    public static final String ITEM_LABEL = "FileStorageItem";
-    public static final String DESCRIPTION_TYPE = "An FileStorageItem type.";
-
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE
         = "com.arsdigita.cms.contenttypes.FileStorageItem";

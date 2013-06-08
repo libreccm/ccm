@@ -79,7 +79,7 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
         sheet.add(NewsItemGlobalizationUtil
                   .globalize("cms.contenttypes.ui.title"), NewsItem.TITLE);
         sheet.add(NewsItemGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.newsitem.name"), NewsItem.NAME);
+                  .globalize("cms.contenttypes.ui.name"), NewsItem.NAME);
         sheet.add(NewsItemGlobalizationUtil
                   .globalize("cms.contenttypes.ui.newsitem.lead"), NewsItem.LEAD);
 

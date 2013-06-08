@@ -70,6 +70,7 @@ public class Bookmark extends ContentPage {
         super( type );
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         
@@ -78,10 +79,12 @@ public class Bookmark extends ContentPage {
 
 
     /* accessors *****************************************************/
+    @Override
     public String getDescription() {
         return (String) get( DESCRIPTION );
     }
 
+    @Override
     public void setDescription( String description ) {
         set( DESCRIPTION, description );
     }
@@ -95,6 +98,7 @@ public class Bookmark extends ContentPage {
     }
 
     // Search stuff to allow the content type to be searchable
+    @Override
     public String getSearchSummary() {
         return getDescription();
     }

@@ -37,19 +37,30 @@ public class NewsItemGlobalizationUtil implements Globalized {
     final public static String BUNDLE_NAME = 
                         "com.arsdigita.cms.contenttypes.NewsItemResources";
     
+    /**  Name of Java resource files to handle CMS globalisation.  */
+    final public static String ALTERNATE_BUNDLE_NAME = 
+                        "com.arsdigita.cms.CMSResources";
+    
 
     /**
-     * This returns a globalized message using the package specific bundle,
-     * provided by BUNDLE_NAME. 
+     * Returns a globalized message using the appropriate bundle. 
+     * If the key string contains the modules name newsitem the package specific
+     * bundle is used, otherwise the CMS ResourceBundle.
      */
     public static GlobalizedMessage globalize(String key) {
-        return new GlobalizedMessage(key, BUNDLE_NAME);
+        if (key.indexOf(".newsitem.") > 0) { 
+            return new GlobalizedMessage(key, BUNDLE_NAME);
+        } else {
+            return new GlobalizedMessage(key, ALTERNATE_BUNDLE_NAME);            
+        }
     }
 
     /**
-     * Returns a globalized message object, using the package specific bundle,
-     * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
-     * interpolate into the retrieved message using the  MessageFormat class.
+     * Returns a globalized message object, using the appropriate bundle,
+     * takeing in an Object[] of arguments to interpolate into the retrieved 
+     * message using the  MessageFormat class.
+     * If the key string contains the modules name newsitem the package specific
+     * bundle is used, otherwise the CMS ResourceBundle.
      */
     public static GlobalizedMessage globalize(String key, Object[] args) {
         return new GlobalizedMessage(key, BUNDLE_NAME, args);

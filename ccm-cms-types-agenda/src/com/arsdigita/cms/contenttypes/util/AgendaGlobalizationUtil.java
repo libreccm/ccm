@@ -41,9 +41,9 @@ public class AgendaGlobalizationUtil implements Globalized {
                         "com.arsdigita.cms.CMSResources";
 
     /**
-     * This returns a globalized message using the type specific bundle,
-     * BUNDLE_NAME if the key string contains the modules name agenda, 
-     * otherwise the CMS ResourceBundle is used.
+     * Returns a globalized message using the appropriate bundle.
+     * If the key string contains the modules name agenda the package specific
+     * bundle is used, otherwise the CMS ResourceBundle.
      */
     public static GlobalizedMessage globalize(String key) {
         if (key.indexOf(".agenda.") > 0) { 
@@ -54,9 +54,11 @@ public class AgendaGlobalizationUtil implements Globalized {
     }
 
     /**
-     * Returns a globalized message object, using the package specific bundle,
-     * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
-     * interpolate into the retrieved message using the  MessageFormat class.
+     * Returns a globalized message object, using the approprate bundle,
+     * takeing in an Object[] of arguments to interpolate into the retrieved 
+     * message using the  MessageFormat class.
+     * If the key string contains the modules name agenda the package specific
+     * bundle is used, otherwise the CMS ResourceBundle.
      */
     public static GlobalizedMessage globalize(String key, Object[] args) {
         if (key.indexOf(".agenda.") > 0) { 

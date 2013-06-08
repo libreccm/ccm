@@ -39,6 +39,12 @@ public class ArticlePropertiesStep extends GenericArticlePropertiesStep {
     /** The name of the editing sheet added to this step */
     public static String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * Constructor.
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public ArticlePropertiesStep(ItemSelectionModel itemModel, 
                                  AuthoringKitWizard parent) {
         super(itemModel, parent);

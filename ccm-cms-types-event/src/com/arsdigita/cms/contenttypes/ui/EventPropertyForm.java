@@ -52,7 +52,9 @@ import java.util.GregorianCalendar;
  * This form can be extended to create forms for Event subclasses.
  **/
 public class EventPropertyForm extends BasicPageForm
-        implements FormProcessListener, FormInitListener, FormSubmissionListener {
+                               implements FormProcessListener, 
+                                          FormInitListener, 
+                                          FormSubmissionListener {
 
     /** Name of this form */
     public static final String ID = "event_edit";
@@ -115,7 +117,8 @@ public class EventPropertyForm extends BasicPageForm
         super.addWidgets();
 
         /* Summary (lead) */
-        add(new Label(EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead")) );
+        add(new Label(EventGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.event.lead")) );
         ParameterModel leadParam = new StringParameter(LEAD);
         if(Event.getConfig().isLeadTextOptional()) {
             leadParam.addParameterListener(new NotNullValidationListener());
@@ -126,7 +129,8 @@ public class EventPropertyForm extends BasicPageForm
         add(lead);
         /* Start date and time */
         ParameterModel eventStartDateParam = new DateParameter(START_DATE);
-        add(new Label(EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_date")) );
+        add(new Label(EventGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.event.start_date")) );
         eventStartDateParam.addParameterListener(new NotNullValidationListener());
         // Use bebop date instead of java.util.date
         m_startDate = new com.arsdigita.bebop.form.Date(eventStartDateParam);
@@ -136,7 +140,8 @@ public class EventPropertyForm extends BasicPageForm
         add(m_startDate);
 
         ParameterModel eventStartTimeParam = new TimeParameter(START_TIME);
-        add(new Label(EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time")) );
+        add(new Label(EventGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.event.start_time")) );
         if(Event.getConfig().isStartTimeOptional()) {
             eventStartTimeParam.addParameterListener(new NotNullValidationListener());
         }
@@ -145,7 +150,8 @@ public class EventPropertyForm extends BasicPageForm
 
         /* End date and time */
         ParameterModel eventEndDateParam = new DateParameter(END_DATE);
-        add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_date").localize()));
+        add(new Label(EventGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.event.end_date")));
         // Use bebop date instead of java.util.date
         m_endDate = new com.arsdigita.bebop.form.Date(eventEndDateParam);
         m_endDate.setYearRange(Event.getConfig().getStartYear(),
@@ -153,14 +159,16 @@ public class EventPropertyForm extends BasicPageForm
         add(m_endDate);
 
         ParameterModel eventEndTimeParam = new TimeParameter(END_TIME);
-        add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time").localize()));
+        add(new Label(EventGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.event.end_time")));
         Time endTime = new Time(eventEndTimeParam);
         add(endTime);
 
 
         /* optional additional / literal date description */
         if (!Event.getConfig().getHideDateDescription()) {
-            add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.date_description").localize()));
+            add(new Label(EventGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.event.date_description")));
             ParameterModel eventDateParam = new StringParameter(EVENT_DATE);
             //eventDateParam
             //    .addParameterListener(new NotNullValidationListener());
@@ -180,7 +188,8 @@ public class EventPropertyForm extends BasicPageForm
 
 
         /* extensive description of location */
-        add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.location").localize()));
+        add(new Label(EventGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.event.location")));
         ParameterModel locationParam = new StringParameter(LOCATION);
         //locationParam
         //    .addParameterListener(new NotNullValidationListener());
@@ -192,7 +201,8 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: main contributor */
         if (!Event.getConfig().getHideMainContributor()) {
-            add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.main_contributor").localize()));
+            add(new Label(EventGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.event.main_contributor")));
             ParameterModel mainContributorParam =
                     new StringParameter(MAIN_CONTRIBUTOR);
             //mainContributorParam
@@ -206,7 +216,8 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: event type */
         if (!Event.getConfig().getHideEventType()) {
-            add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.event_type").localize()));
+            add(new Label(EventGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.event.event_type")));
             ParameterModel eventTypeParam = new StringParameter(EVENT_TYPE);
             //eventTypeParam
             //    .addParameterListener(new NotNullValidationListener());
@@ -219,7 +230,8 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: link to map */
         if (!Event.getConfig().getHideLinkToMap()) {
-            add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.link_to_map").localize()));
+            add(new Label(EventGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.event.link_to_map")));
             ParameterModel mapLinkParam = new StringParameter(MAP_LINK);
             //mapLinkParam
             //    .addParameterListener(new NotNullValidationListener());
@@ -232,7 +244,8 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: costs */
         if (!Event.getConfig().getHideCost()) {
-            add(new Label((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.cost").localize()));
+            add(new Label(EventGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.event.cost")));
             ParameterModel costParam = new TrimmedStringParameter(COST);
             TextField cost = new TextField(costParam);
             cost.setSize(30);
@@ -242,6 +255,11 @@ public class EventPropertyForm extends BasicPageForm
 
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         super.validate(e);
@@ -253,7 +271,10 @@ public class EventPropertyForm extends BasicPageForm
         if (endDate != null) {
 
             if (startDate == null || startDate.compareTo(endDate) > 0) {
-                throw new FormProcessException((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_date_after_start_date").localize());
+                throw new FormProcessException((String) 
+                          EventGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.event.end_date_after_start_date")
+                          .localize());
             }
         }
     }

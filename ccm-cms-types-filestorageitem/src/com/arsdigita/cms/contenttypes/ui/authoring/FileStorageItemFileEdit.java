@@ -44,7 +44,7 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import java.io.IOException;
 import java.lang.RuntimeException;
 
-/*
+/**
  * Edit page to attach a file to FileStorageItem.
  *
  * @see com.arsdigita.intranet.cms.FileStorageItem
@@ -67,7 +67,8 @@ public class FileStorageItemFileEdit extends SimpleEditStep {
             form.getSaveCancelSection().getCancelButton());
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
-        sheet.add(GlobalizationUtil.globalize("cms.ui.file"), "file.name");
+        sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.file_upload.file"), 
+                  "file.name");
         
         setDisplayComponent(sheet);
         
@@ -89,9 +90,11 @@ public class FileStorageItemFileEdit extends SimpleEditStep {
             addProcessListener(this);
         }
 
+        @Override
         protected void addWidgets() {
             
-            add(new Label(GlobalizationUtil.globalize("cms.ui.file")));
+            add(new Label(GlobalizationUtil.globalize(
+                          "cms.ui.authoring.file_upload.file")));
             add(new Label(new PrintListener() {
                     
                     public void prepare(PrintEvent e) {
@@ -106,7 +109,7 @@ public class FileStorageItemFileEdit extends SimpleEditStep {
                             l.setLabel(file.getName());
                         } else {
                             l.setLabel(GlobalizationUtil
-                                       .globalize("cms.ui.authoring.none"));
+                                       .globalize("cms.ui.authoring.file_upload.no_file"));
                         }
                     }
                 }));

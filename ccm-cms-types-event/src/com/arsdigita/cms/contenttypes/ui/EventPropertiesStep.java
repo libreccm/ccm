@@ -84,18 +84,18 @@ public class EventPropertiesStep extends SimpleEditStep {
      *  of the release
      **/
     public static Component getEventPropertySheet(ItemSelectionModel itemModel) {
+
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
-
         
-    //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.name").localize(), Event.NAME);
-    //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.title").localize(), Event.TITLE);
-    //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead").localize(), Event.LEAD);
-
-        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.name"), Event.NAME);
-        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.title"), Event.TITLE);
-        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead"), Event.LEAD);
+        sheet.add( EventGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.title"), Event.TITLE);
+        sheet.add( EventGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"), Event.NAME);
+        sheet.add( EventGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.event.lead"), Event.LEAD);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(EventGlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
+            sheet.add(EventGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
                     ContentPage.LAUNCH_DATE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -104,15 +104,23 @@ public class EventPropertiesStep extends SimpleEditStep {
                                 PageState state) {
                             ContentPage page = (ContentPage) item;
                             if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale()).format(page.getLaunchDate());
+                                return DateFormat
+                                       .getDateInstance(DateFormat.LONG, 
+                                                        GlobalizationHelper
+                                                        .getNegotiatedLocale())
+                                                        .format(page
+                                                                .getLaunchDate());
                             } else {
-                                return (String) EventGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                return (String) EventGlobalizationUtil
+                                                .globalize("cms.ui.unknown")
+                                                .localize();
                             }
                         }
                     });
         }
-//      sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time").localize(), Event.START_DATE,
-        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time"), Event.START_DATE,
+
+        sheet.add( EventGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.event.start_time"), Event.START_DATE,
                    new DomainObjectPropertySheet.AttributeFormatter() {
 
                     public String format(DomainObject item,
@@ -137,7 +145,6 @@ public class EventPropertiesStep extends SimpleEditStep {
                     }
                 });
 
-//      sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time").localize(), Event.END_DATE,
         sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time"), Event.END_DATE,
                 new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -162,27 +169,33 @@ public class EventPropertiesStep extends SimpleEditStep {
                     }
                 });
         if (!Event.getConfig().getHideDateDescription()) {
-         // sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.date_description").localize(), Event.EVENT_DATE);
-            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.date_description"), Event.EVENT_DATE);
+            sheet.add( EventGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.event.date_description"), 
+                       Event.EVENT_DATE);
         }
-//      sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.location").localize(), Event.LOCATION);
-        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.location"), Event.LOCATION);
+        sheet.add( EventGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.event.location"), 
+                   Event.LOCATION);
 
         if (!Event.getConfig().getHideMainContributor()) {
-        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.main_contributor").localize(), Event.MAIN_CONTRIBUTOR);
-            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.main_contributor"), Event.MAIN_CONTRIBUTOR);
+            sheet.add( EventGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.event.main_contributor"), 
+                       Event.MAIN_CONTRIBUTOR);
         }
         if (!Event.getConfig().getHideEventType()) {
-        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.event_type").localize(), Event.EVENT_TYPE);
-            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.event_type"), Event.EVENT_TYPE);
+            sheet.add( EventGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.event.event_type"), 
+                       Event.EVENT_TYPE);
         }
         if (!Event.getConfig().getHideLinkToMap()) {
-        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.link_to_map").localize(), Event.MAP_LINK);
-            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.link_to_map"), Event.MAP_LINK );
+            sheet.add( EventGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.event.link_to_map"), 
+                       Event.MAP_LINK );
         }
         if (!Event.getConfig().getHideCost()) {
-        //  sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.cost").localize(), Event.COST);
-            sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.cost"), Event.COST );
+            sheet.add( EventGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.event.cost"), 
+                       Event.COST );
         }
         return sheet;
     }
