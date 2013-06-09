@@ -26,13 +26,14 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Job;
+import com.arsdigita.cms.contenttypes.util.JobGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 
@@ -45,14 +46,14 @@ public class JobPropertyForm extends BasicPageForm
 
     private JobPropertiesStep m_step;
 
+    /**  body parameter name */
+    public static final String BODY = "body";
     /** Grade parameter name */
     public static final String GRADE = "grade";
     /** closing date parameter name */
     public static final String CLOSING_DATE = "closingDate";
     /** salary parameter name */
     public static final String SALARY = "salary";
-    /**  body parameter name */
-    public static final String BODY = "body";
     /** Ref number parameter name */
     public static final String REF_NUMBER = "ref_number";
     /** department parameter name */
@@ -96,7 +97,20 @@ public class JobPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.grade")));
+        // Job content type currently does not use the default 
+        // basic descriuption properties (as persisted in cms-pages and by
+        // default part of the object list). Would be convenient to move the
+        // ct specific overview property to basic description.
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.overview")));
+        ParameterModel bodyParam = new StringParameter(BODY);
+        CMSDHTMLEditor body = new CMSDHTMLEditor(bodyParam);
+        body.setCols(40);
+        body.setRows(10);
+        add(body);
+
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.grade")));
         ParameterModel gradeParam
             = new StringParameter(GRADE);
         TextField grade = new TextField(gradeParam);
@@ -104,42 +118,41 @@ public class JobPropertyForm extends BasicPageForm
         grade.setMaxLength(30);
         add(grade);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.closing_date")));
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.closing_date")));
         ParameterModel closingDateParam
             = new DateParameter(CLOSING_DATE);
         com.arsdigita.bebop.form.Date closingDate
             = new com.arsdigita.bebop.form.Date(closingDateParam );
         add(closingDate);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.salary")));
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.salary")));
         ParameterModel salaryParam = new StringParameter(SALARY);
         CMSDHTMLEditor salary = new CMSDHTMLEditor(salaryParam);
         salary.setCols(40);
         salary.setRows(10);
         add(salary);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.bodyoverview")));
-        ParameterModel bodyParam = new StringParameter(BODY);
-        CMSDHTMLEditor body = new CMSDHTMLEditor(bodyParam);
-        body.setCols(40);
-        body.setRows(10);
-        add(body);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.ref_number")));
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.ref_number")));
         ParameterModel refNumberParam = new StringParameter(REF_NUMBER);
         TextField refNumber = new TextField(refNumberParam);
         refNumber.setSize(30);
         refNumber.setMaxLength(30);
         add(refNumber);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.department")));
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.department")));
         ParameterModel departmentParam = new StringParameter(DEPARTMENT);
         TextField department = new TextField(departmentParam);
         department.setSize(30);
         department.setMaxLength(30);
         add(department);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.job_description")));
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.job_description")));
         ParameterModel jobDescriptionParam =
             new StringParameter(JOB_DESCRIPTION);
         CMSDHTMLEditor jobDescription = new CMSDHTMLEditor(jobDescriptionParam);
@@ -147,7 +160,8 @@ public class JobPropertyForm extends BasicPageForm
         jobDescription.setRows(10);
         add(jobDescription);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.person_specification")));
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.person_specification")));
         ParameterModel personSpecificationParam =
             new StringParameter(PERSON_SPECIFICATION);
         CMSDHTMLEditor personSpecification = new CMSDHTMLEditor(personSpecificationParam);
@@ -155,7 +169,8 @@ public class JobPropertyForm extends BasicPageForm
         personSpecification.setRows(10);
         add(personSpecification);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.contact_details")));
+        add(new Label(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.contact_details")));
         ParameterModel contactDetailsParam
             = new StringParameter(CONTACT_DETAILS);
         CMSDHTMLEditor contactDetails = new CMSDHTMLEditor(contactDetailsParam);

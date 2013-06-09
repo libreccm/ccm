@@ -25,6 +25,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Job;
+import com.arsdigita.cms.contenttypes.util.JobGlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -47,6 +48,11 @@ public class JobPropertiesStep extends SimpleEditStep {
     /** The name of the editing sheet added to this step */
     public static String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public JobPropertiesStep(ItemSelectionModel itemModel,
                              AuthoringKitWizard parent) {
         super(itemModel, parent);
@@ -55,7 +61,9 @@ public class JobPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new JobPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getJobPropertySheet(itemModel));
@@ -75,8 +83,11 @@ public class JobPropertiesStep extends SimpleEditStep {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  Job.NAME);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  Job.TITLE);
+        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  
+                Job.TITLE);
+        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  
+                   Job.NAME);
+
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
@@ -89,13 +100,27 @@ public class JobPropertiesStep extends SimpleEditStep {
                                   return DateFormat.getDateInstance(DateFormat.LONG)
                                       .format(page.getLaunchDate());
                               } else {
-                                  return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                  return (String)GlobalizationUtil
+                                          .globalize("cms.ui.unknown")
+                                          .localize();
                               }
                           }
                       });
         }
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.grade"),  Job.GRADE);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.closing_date"),  
+
+        // Job content type currently does not use the default 
+        // basic descriuption properties (as persisted in cms-pages and by
+        // default part of the object list). Would be convenient to move the
+        // ct specific overview property to basic description.
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.overview"),
+                   Job.BODY);
+
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.grade"),  
+                   Job.GRADE);
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.closing_date"),  
                   Job.CLOSING_DATE,
                   new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -107,17 +132,30 @@ public class JobPropertiesStep extends SimpleEditStep {
                               return DateFormat.getDateInstance(DateFormat.LONG)
                                   .format(job.getClosingDate());
                           } else {
-                              return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                              return (String)GlobalizationUtil
+                                      .globalize("cms.ui.unknown")
+                                      .localize();
                           }
                       }
                   });
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.salary"),  Job.SALARY);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.bodyoverview"),  Job.BODY);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.ref_number"),  Job.REF_NUMBER);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.department"),  Job.DEPARTMENT);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.job_description"),  Job.JOB_DESCRIPTION);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.person_specification"),  Job.PERSON_SPECIFICATION);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.contact_details"),  Job.CONTACT_DETAILS);
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.salary"),
+                   Job.SALARY);
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.ref_number"),
+                   Job.REF_NUMBER);
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.department"),
+                   Job.DEPARTMENT);
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.job_description"),
+                   Job.JOB_DESCRIPTION);
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.person_specification"),
+                   Job.PERSON_SPECIFICATION);
+        sheet.add( JobGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.job.contact_details"),
+                   Job.CONTACT_DETAILS);
 
         return sheet;
     }
