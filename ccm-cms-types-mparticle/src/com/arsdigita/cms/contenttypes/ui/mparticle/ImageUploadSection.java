@@ -81,11 +81,11 @@ public class ImageUploadSection extends FormSection
         add(m_deleteImage);
         add(new Label(
                 MPArticleGlobalizationUtil
-                .globalize("cms.contenttypes.ui.mparticle.select_image")));
+                .globalize("cms.contenttypes.ui.mparticle.section.select_image")));
         add(new FileUpload(m_name + IMAGE));
         add(new Label(
                 MPArticleGlobalizationUtil
-                .globalize("cms.contenttypes.ui.mparticle.caption")));
+                .globalize("cms.contenttypes.ui.mparticle.section.caption")));
         TextField caption = new TextField(m_name + CAPTION);
         caption.setSize(40);
         add(caption);
@@ -113,7 +113,8 @@ public class ImageUploadSection extends FormSection
         FormData data = event.getFormData();
         PageState state = event.getPageState();
 
-        ReusableImageAsset image = (ReusableImageAsset)m_selImage.getSelectedObject(state);
+        ReusableImageAsset image = (ReusableImageAsset)
+                                   m_selImage.getSelectedObject(state);
 
         m_currentImage.setVisible(state, false);
         m_imageDisplay.setVisible(state, false);
@@ -171,7 +172,9 @@ public class ImageUploadSection extends FormSection
         if ( image != null ) {
             try {
                 a = new ReusableImageAsset();
-                a.loadFromFile(getImageFilename(event), image, ReusableImageAsset.MIME_JPEG);
+                a.loadFromFile(getImageFilename(event), 
+                               image, 
+                               ReusableImageAsset.MIME_JPEG);
                 a.setDescription((String)data.get(m_name + CAPTION));
             } catch ( Exception ex ) {
                 log.error("Could not load " + getImageFilename(event));

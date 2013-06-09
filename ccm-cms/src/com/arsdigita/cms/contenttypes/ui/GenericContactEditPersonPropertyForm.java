@@ -25,6 +25,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -39,7 +40,10 @@ import org.apache.log4j.Logger;
  *
  * @author quasi
  */
-public class GenericContactEditPersonPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class GenericContactEditPersonPropertyForm extends BasicPageForm 
+                                                  implements FormProcessListener, 
+                                                             FormInitListener, 
+                                                             FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
     private GenericContactPersonPropertiesStep m_step;
@@ -118,7 +122,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new 
                 Option("", 
-                       new Label(ContenttypesGlobalizationUtil
+                       new Label(GlobalizationUtil
                                  .globalize("cms.ui.select_one"))));
 
         // Add the Options to the SingleSelect widget

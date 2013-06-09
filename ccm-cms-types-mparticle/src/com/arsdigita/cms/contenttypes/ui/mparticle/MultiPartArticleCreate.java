@@ -37,6 +37,7 @@ import com.arsdigita.cms.ui.authoring.CreationComponent;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.LanguageWidget;
 import com.arsdigita.cms.ui.authoring.ApplyWorkflowFormSection;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
 import com.arsdigita.util.Assert;
 
@@ -64,16 +65,16 @@ public class MultiPartArticleCreate extends MultiPartArticleForm
         m_workflowSection.setCreationSelector(m_parent);
         m_workflowSection.setContentType(m_itemModel.getContentType());
         addSubmissionListener(this);
-        getSaveCancelSection().getSaveButton().setButtonLabel("Create");
+        getSaveCancelSection().getSaveButton().setButtonLabel(
+                GlobalizationUtil.globalize("cms.ui.create"));
     }
 
     @Override
     protected void addWidgets() {
         m_workflowSection = new ApplyWorkflowFormSection();
         add(m_workflowSection, ColumnPanel.INSERT);
-        add(new Label(
-                MPArticleGlobalizationUtil
-                .globalize("cms.ui.language.field")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
         super.addWidgets();
     }

@@ -91,7 +91,8 @@ public class MultiPartArticleViewSections extends ResettableContainer
 
     private String m_typeIDStr;
 
-    public MultiPartArticleViewSections ( ItemSelectionModel selArticle, AuthoringKitWizard wizard) {
+    public MultiPartArticleViewSections ( ItemSelectionModel selArticle, 
+                                          AuthoringKitWizard wizard) {
         super();
         m_selArticle = selArticle;
         m_wizard = wizard;
@@ -129,13 +130,16 @@ public class MultiPartArticleViewSections extends ResettableContainer
 
         m_sectionTable.setSectionModel(m_selSection);
 
-        Label emptyView = new Label(MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.no_sections_yet"));
+        Label emptyView = new Label(MPArticleGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.mparticle.no_sections_yet"));
         m_sectionTable.setEmptyView(emptyView);
 
-        m_moveSectionLabel = new Label ("Section Name");
+        m_moveSectionLabel = new Label (MPArticleGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.mparticle.section.title"));
         c.add(m_moveSectionLabel, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
-        m_beginLink = new ActionLink( (String) MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.move_to_beginning").localize());
+        m_beginLink = new ActionLink( MPArticleGlobalizationUtil
+                .globalize("cms.contenttypes.ui.mparticle.move_to_beginning"));
         c.add(m_beginLink);
 
         m_beginLink.addActionListener ( new ActionListener() {
@@ -158,28 +162,34 @@ public class MultiPartArticleViewSections extends ResettableContainer
                     } else {
                         m_beginLink.setVisible(state, true);
                         m_moveSectionLabel.setVisible(state, true);
-                        m_moveSectionLabel.setLabel
-                            ((String) MPArticleGlobalizationUtil.globalize
-                             ("cms.contenttypes.ui.mparticle.move_section_name")
-                             .localize() + " " 
-                             + ((ArticleSection)m_moveSection.getSelectedObject(state))
-                             .getTitle(), state);
+                        Object[] parmObj = {
+                         ((ArticleSection)m_moveSection.getSelectedObject(state))
+                         .getTitle()
+                        };
+  
+                        m_moveSectionLabel
+                        .setLabel(MPArticleGlobalizationUtil.globalize(
+                                  "cms.contenttypes.ui.mparticle.move_section_name",
+                                  parmObj  )
+                                  , state
+                                 );
                     }
                 }
             });
 
         // handle clicks to preview or delete a Section
-        m_sectionTable.addTableActionListener ( new TableActionListener () {
+        m_sectionTable.addTableActionListener ( new 
+            TableActionListener () {
                 public void cellSelected ( TableActionEvent event ) {
                     PageState state = event.getPageState();
 
                     TableColumn col = m_sectionTable.getColumnModel()
-                        .get(event.getColumn().intValue());
-                    String colName = (String)col.getHeaderValue();
+                                                    .get(event.getColumn()
+                                                    .intValue());
 
-                    if ( SectionTable.COL_DEL.equals(colName) ) {
+                    if (col.getModelIndex() == SectionTable.COL_INDEX_DELETE) {
                         onlyShowComponent(state, SECTION_DEL+m_typeIDStr);
-                    } else if ( SectionTable.COL_EDIT.equals(colName) ) {
+                    } else if (col.getModelIndex() == SectionTable.COL_INDEX_EDIT) {
                         onlyShowComponent(state, SECTION_EDIT+m_typeIDStr);
                     }
                 }
@@ -215,9 +225,11 @@ public class MultiPartArticleViewSections extends ResettableContainer
                     Label label = (Label)event.getTarget();
 
                     if ( m_selSection.getSelectedKey(state) == null ) {
-                        label.setLabel( (String) MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.add_section").localize());
+                        label.setLabel(MPArticleGlobalizationUtil
+                                       .globalize("cms.contenttypes.ui.mparticle.add_section"));
                     } else {
-                        label.setLabel( (String) MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.edit_section").localize());
+                        label.setLabel(MPArticleGlobalizationUtil
+                                       .globalize("cms.contenttypes.ui.mparticle.edit_section"));
                     }
                 }
             }));
@@ -244,7 +256,8 @@ public class MultiPartArticleViewSections extends ResettableContainer
         c.setBorderColor("#FFFFFF");
         c.setPadColor("#FFFFFF");
 
-        c.add(new Label(MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.delete_section")));
+        c.add(new Label(MPArticleGlobalizationUtil
+                        .globalize("cms.contenttypes.ui.mparticle.delete_section")));
         m_sectionDelete = new SectionDeleteForm(m_selArticle, m_selSection);
         m_sectionDelete.addSubmissionListener ( new FormSubmissionListener () {
                 public void submitted ( FormSectionEvent e ) {
@@ -264,7 +277,8 @@ public class MultiPartArticleViewSections extends ResettableContainer
      * Utility method to create a link to display the section list.
      */
     protected ActionLink buildViewAllLink () {
-        ActionLink viewAllLink = new ActionLink( (String) MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.view_all_sections").localize());
+        ActionLink viewAllLink = new ActionLink(MPArticleGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.mparticle.view_all_sections"));
         viewAllLink.setClassAttr(ACTION_LINK);
         viewAllLink.addActionListener( new ActionListener() {
                 public void actionPerformed ( ActionEvent event ) {
@@ -280,7 +294,8 @@ public class MultiPartArticleViewSections extends ResettableContainer
      * Utility method to create a link to display the section list.
      */
     protected ActionLink buildAddLink () {
-        ActionLink addLink = new ActionLink( (String) MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.add_new_section").localize()) {
+        ActionLink addLink = new ActionLink(MPArticleGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.mparticle.add_new_section")) {
                 public boolean isVisible(PageState state) {
                     SecurityManager sm = Utilities.getSecurityManager(state);
                     ContentItem item = (ContentItem)m_selArticle.getSelectedObject(state);

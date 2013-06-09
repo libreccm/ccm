@@ -63,8 +63,10 @@ import java.util.Date;
  * @version $id$
  */
 public abstract class MultiPartArticleForm extends FormSection
-    implements FormInitListener, FormProcessListener, FormValidationListener
-{
+                                           implements FormInitListener, 
+                                                      FormProcessListener, 
+                                                      FormValidationListener {
+
     protected ItemSelectionModel m_itemModel;
     protected SaveCancelSection  m_saveCancelSection;
 
@@ -114,7 +116,8 @@ public abstract class MultiPartArticleForm extends FormSection
 
 
     protected void addWidgets () {
-        add(new Label(MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.title")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.title")));
         TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotNullValidationListener());
         titleWidget.setOnFocus("if (this.form." + NAME + ".value == '') { " +
@@ -126,7 +129,8 @@ public abstract class MultiPartArticleForm extends FormSection
             );
         add(titleWidget);
 
-        add(new Label(MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.name")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.name")));
         TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
         nameWidget.addValidationListener(new NameValidationListener());
         nameWidget.setOnFocus("defaulting = false");
@@ -138,7 +142,8 @@ public abstract class MultiPartArticleForm extends FormSection
         add(nameWidget);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            add(new Label(MPArticleGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date")));
+            add(new Label(GlobalizationUtil
+                          .globalize("cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
             com.arsdigita.bebop.form.Date launchDate
                 = new com.arsdigita.bebop.form.Date(launchDateParam);
@@ -150,11 +155,15 @@ public abstract class MultiPartArticleForm extends FormSection
             add(launchDate);
         }
 
-        add(new Label(MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.summary")));
+        add(new Label(GlobalizationUtil
+                     .globalize("cms.contenttypes.ui.summary")));
         TextArea summaryWidget = new TextArea(new TrimmedStringParameter(SUMMARY));
-	if (ContentSection.getConfig().mandatoryDescriptions()) {
-	    summaryWidget.addValidationListener(new NotEmptyValidationListener(GlobalizationUtil.globalize("cms.contenttypes.ui.description_missing")));
-	}	
+        if (ContentSection.getConfig().mandatoryDescriptions()) {
+            summaryWidget
+            .addValidationListener(new 
+                NotEmptyValidationListener(GlobalizationUtil
+                        .globalize("cms.contenttypes.ui.description_missing")));
+        }	
         summaryWidget.setRows(5);
         summaryWidget.setCols(30);
         add(summaryWidget);

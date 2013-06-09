@@ -25,12 +25,13 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
+import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 import java.text.DateFormat;
 
@@ -75,14 +76,14 @@ public class MultiPartArticleEdit extends SimpleEditStep {
     ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add( MPArticleGlobalizationUtil
-                   .globalize("cms.contenttypes.ui.mparticle.name"), 
-                   MultiPartArticle.NAME    );
-        sheet.add( MPArticleGlobalizationUtil
-                   .globalize("cms.contenttypes.ui.mparticle.title"),
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.title"),
                    MultiPartArticle.TITLE   );
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"), 
+                   MultiPartArticle.NAME    );
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(MPArticleGlobalizationUtil
+            sheet.add(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
@@ -94,13 +95,12 @@ public class MultiPartArticleEdit extends SimpleEditStep {
                                   return DateFormat.getDateInstance(DateFormat.LONG)
                                       .format(page.getLaunchDate());
                               } else {
-                                  return "<i>unknown</i>";
+                                  return "unknown";
                               }
                           }
                       });
         }
-        sheet.add( MPArticleGlobalizationUtil
-                   .globalize("cms.contenttypes.ui.mparticle.summary"),  
+        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.summary"),  
                    MultiPartArticle.SUMMARY );
 
         return sheet;

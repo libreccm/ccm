@@ -159,14 +159,14 @@ public class SectionEditForm extends Form {
      */
     protected void addWidgets() {
         add(new Label(MPArticleGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.mparticle.title")));
+                      .globalize("cms.contenttypes.ui.mparticle.section.title")));
         TextField titleWidget = new TextField(
             new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotNullValidationListener());
         add(titleWidget);
 
         add(new Label(MPArticleGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.mparticle.body_text")),
+                      .globalize("cms.contenttypes.ui.mparticle.section.text")),
             ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
         CMSDHTMLEditor textWidget =
             new CMSDHTMLEditor(new TrimmedStringParameter(TEXT));
@@ -177,15 +177,16 @@ public class SectionEditForm extends Form {
             ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
 
         add(new Label(MPArticleGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.mparticle.image")),
+                      .globalize("cms.contenttypes.ui.mparticle.section.image")),
             ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
-
         m_imageUpload = new ImageUploadSection("image", m_selImage);
         add(m_imageUpload, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
         add(new Label(""));
         CheckboxGroup pageBreak = new CheckboxGroup(PAGE_BREAK);
-        pageBreak.addOption(new Option("true", "Create page break"));
+        pageBreak.addOption(new Option("true", 
+                new Label(MPArticleGlobalizationUtil
+                .globalize("cms.contenttypes.ui.mparticle.section.create_break")) ));
         add(pageBreak);
     }
 
@@ -316,7 +317,8 @@ public class SectionEditForm extends Form {
             section.setPageBreak(pageBreak);
 
             // get the image asset
-            ReusableImageAsset reusableImageAsset = m_imageUpload.processImageUpload(event);
+            ReusableImageAsset reusableImageAsset = 
+                               m_imageUpload.processImageUpload(event);
             if ( reusableImageAsset != null ) {
                 section.setImage(reusableImageAsset);
                 m_selImage.setSelectedObject(state, reusableImageAsset);

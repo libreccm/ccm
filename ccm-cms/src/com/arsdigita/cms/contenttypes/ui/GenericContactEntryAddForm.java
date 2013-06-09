@@ -26,13 +26,14 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
-import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.contenttypes.GenericContactEntryKeys;
+import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
 import com.arsdigita.globalization.GlobalizationHelper;
 
@@ -63,7 +64,7 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         ParameterModel contactEntryKeyParam = new StringParameter(GenericContactEntry.KEY);
         SingleSelect contactEntryKey = new SingleSelect(contactEntryKeyParam);
         contactEntryKey.addValidationListener(new NotNullValidationListener());
-        contactEntryKey.addOption(new Option("", new Label((String)ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactEntryKey.addOption(new Option("", new Label((String)GlobalizationUtil.globalize("cms.ui.select_one").localize())));
         
         // Add the Options to the SingleSelect widget
         GenericContactEntryKeys keyList = new GenericContactEntryKeys();

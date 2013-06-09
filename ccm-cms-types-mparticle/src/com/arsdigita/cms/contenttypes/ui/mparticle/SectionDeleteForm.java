@@ -33,6 +33,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleSection;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
 import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 
@@ -78,7 +79,8 @@ public class SectionDeleteForm extends Form
 
     protected SaveCancelSection addSaveCancelSection () {
         m_saveCancelSection = new SaveCancelSection();
-        m_saveCancelSection.getSaveButton().setButtonLabel("Delete");
+        m_saveCancelSection.getSaveButton().setButtonLabel(
+                GlobalizationUtil.globalize("cms.ui.delete"));
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
         return m_saveCancelSection;
     }

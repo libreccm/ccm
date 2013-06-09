@@ -38,9 +38,11 @@ import com.arsdigita.cms.contenttypes.ArticleSection;
 import com.arsdigita.cms.contenttypes.ArticleSectionCollection;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.LockableImpl;
+
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
@@ -58,11 +60,11 @@ public class SectionTable extends Table
     private static final Logger log =
         Logger.getLogger(SectionTable.class.getName());
 
-    // column headings
-    public static final String COL_TITLE  = "Section";
-    public static final String COL_EDIT   = "Edit";
-    public static final String COL_MOVE   = "Move";
-    public static final String COL_DEL    = "Delete";
+    // match columns by (symbolic) index, makes for easier reordering
+    public static final int COL_INDEX_TITLE  = 0;   // "Section";
+    public static final int COL_INDEX_EDIT   = 1;   // "Edit";
+    public static final int COL_INDEX_MOVE   = 2;   // "Move"; 
+    public static final int COL_INDEX_DELETE = 3;   // "Delete"; 
 
     private ItemSelectionModel m_selArticle;
     private ItemSelectionModel m_selSection;
@@ -83,10 +85,26 @@ public class SectionTable extends Table
         m_moveSection = moveSection;
 
         TableColumnModel model = getColumnModel();
-        model.add( new TableColumn( 0, COL_TITLE  ));
-        model.add( new TableColumn( 1, COL_EDIT   ));
-        model.add( new TableColumn( 2, COL_MOVE   ));
-        model.add( new TableColumn( 3, COL_DEL    ));
+        model.add( new TableColumn( 
+              COL_INDEX_TITLE, 
+              new Label(MPArticleGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.mparticle.section_table.header_section")
+              ) ));
+        model.add( new TableColumn( 
+              COL_INDEX_EDIT, 
+              new Label(MPArticleGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.mparticle.section_table.header_edit")
+              ) ));
+        model.add( new TableColumn( 
+              COL_INDEX_MOVE, 
+              new Label(MPArticleGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.mparticle.section_table.header_move")
+              ) ));
+        model.add( new TableColumn( 
+              COL_INDEX_DELETE, 
+              new Label(MPArticleGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.mparticle.section_table.header_delete")
+              ) ));
 
         model.get(1).setCellRenderer(new SectionTableCellRenderer(true));
         model.get(2).setCellRenderer(new SectionTableCellRenderer(true));
@@ -99,13 +117,14 @@ public class SectionTable extends Table
                 public void cellSelected ( TableActionEvent event ) {
                     PageState state = event.getPageState();
 
-                    TableColumn col = getColumnModel()
-                        .get(event.getColumn().intValue());
-                    String colName = (String)col.getHeaderValue();
+                    TableColumn col = getColumnModel().get(event.getColumn()
+                                                                .intValue());
 
-                    if ( COL_MOVE.equals(colName) ) {
+                    if ( col.getModelIndex() == COL_INDEX_MOVE ) {
                         if ( m_moveSection.getSelectedKey(state) == null ) {
-                            m_moveSection.setSelectedKey(state, m_selSection.getSelectedKey(state));
+                            m_moveSection.setSelectedKey(state, 
+                                                         m_selSection
+                                                         .getSelectedKey(state));
                         } else {
                             MultiPartArticle article = (MultiPartArticle)
                                 m_selArticle.getSelectedObject(state);
@@ -153,8 +172,6 @@ public class SectionTable extends Table
     }
 
 
-
-
     /**
      * The model builder to generate a suitable model for the SectionTable
      */
@@ -175,7 +192,8 @@ public class SectionTable extends Table
         public TableModel makeModel ( Table table, PageState state ) {
             table.getRowSelectionModel().clearSelection(state);
 
-            MultiPartArticle article = (MultiPartArticle)m_selArticle.getSelectedObject(state);
+            MultiPartArticle article = (MultiPartArticle)m_selArticle
+                                                         .getSelectedObject(state);
 
             return new SectionTableModel(table, state, article, m_moveSection);
         }
@@ -202,7 +220,8 @@ public class SectionTable extends Table
          * @param moveSection
          */
         public SectionTableModel ( Table table, PageState state,
-                                   MultiPartArticle article, ItemSelectionModel moveSection ) {
+                                   MultiPartArticle article, 
+                                   ItemSelectionModel moveSection ) {
             m_colModel = table.getColumnModel();
             m_state = state;
             m_sections = article.getSections();
@@ -215,8 +234,8 @@ public class SectionTable extends Table
             return m_colModel.size();
         }
 
-        /** Move to the next row and return true if the model is now positioned on
-         *  a valid row.
+        /** Move to the next row and return true if the model is now positioned 
+         *  on a valid row.
          */
         public boolean nextRow () {
             if ( m_sections.next() ) {
@@ -226,21 +245,24 @@ public class SectionTable extends Table
             return false;
         }
 
-        /** Return the data element for the given column and the current row. */
-        public Object getElementAt ( int columnIndex ) {
+        /** 
+         * Return the data element for the given column and the current row. 
+         */
+        public Object getElementAt( int columnIndex ) {
+
             if ( m_colModel == null ) { return null; }
 
-            // match columns by name... makes for easier reordering
-            TableColumn col = m_colModel.get(columnIndex);
-            String colName = (String)col.getHeaderValue();
-
-            if ( COL_TITLE.equals(colName) ) {
+            // match columns by (symbolic) index, makes for easier reordering
+            if ( columnIndex == COL_INDEX_TITLE ) {
                 return m_section.getTitle();
-            } else if ( COL_EDIT.equals(colName) ) {
+            } else if ( columnIndex == COL_INDEX_EDIT ) {
                 return "edit";
-            } else if ( COL_DEL.equals(colName) ) {
+              //return new Label(MPArticleGlobalizationUtil.globalize(
+              //       "cms.contenttypes.ui.mparticle.section_table.link_edit")
+              //       );
+            } else if ( columnIndex == COL_INDEX_DELETE ) {
                 return "delete";
-            } else if ( COL_MOVE.equals(colName) ) {
+            } else if ( columnIndex == COL_INDEX_MOVE ) {
                 if ( m_moveSection.getSelectedKey(m_state) == null ) {
                     return "move";
                 } else {
@@ -251,7 +273,9 @@ public class SectionTable extends Table
             return null;
         }
 
-        /** Return the key for the given column and the current row. */
+        /** 
+         * Return the key for the given column and the current row. 
+         */
         public Object getKeyAt ( int columnIndex ) {
             return m_section.getID();
         }

@@ -136,8 +136,8 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         /* The DisplayComponent for the Basic Properties */
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), "title");
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
 

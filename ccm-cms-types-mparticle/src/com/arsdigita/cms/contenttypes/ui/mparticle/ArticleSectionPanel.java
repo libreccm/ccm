@@ -146,7 +146,8 @@ public class ArticleSectionPanel extends SimpleComponent implements
 
             bundle = (ContentBundle) item;
 
-            resolved = bundle.getInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            resolved = bundle.getInstance(GlobalizationHelper
+                             .getNegotiatedLocale().getLanguage());
             if (resolved == null) {
                 resolved = bundle.getPrimaryInstance();
             }
