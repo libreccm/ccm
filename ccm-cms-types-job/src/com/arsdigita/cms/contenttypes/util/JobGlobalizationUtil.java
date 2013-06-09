@@ -31,11 +31,11 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @version $Revision: #4 $ $Date: 2004/08/17 $
  */
 
-public class FAQGlobalizationUtil implements Globalized {
+public class JobGlobalizationUtil implements Globalized {
     
     /**  Name of Java resource files to handle FAQ's globalisation.          */
     final public static String BUNDLE_NAME = 
-                               "com.arsdigita.cms.contenttypes.FAQItemResources";
+        "com.arsdigita.cms.contenttypes.JobResources";
 
     /**
      *  This returns a globalized message using the package specific bundle,

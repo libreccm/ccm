@@ -18,13 +18,14 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Component;
 import com.arsdigita.cms.contenttypes.GlossaryItem;
 import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
-import com.arsdigita.bebop.Component;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
@@ -66,9 +67,15 @@ public class GlossaryItemPropertiesStep
                                                           itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add(GlossaryGlobalizationUtil.globalize("cms.ui.authoring.name_url"), GlossaryItem.NAME );
-        sheet.add(GlossaryGlobalizationUtil.globalize("cms.contenttypes.ui.glossary.term"), GlossaryItem.TITLE );
-        sheet.add(GlossaryGlobalizationUtil.globalize("cms.contenttypes.ui.glossary.definition"), GlossaryItem.DEFINITION );
+        sheet.add(GlossaryGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.glossary.term"), 
+                  GlossaryItem.TITLE );
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"), 
+                  GlossaryItem.NAME );
+        sheet.add(GlossaryGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.glossary.definition"), 
+                  GlossaryItem.DEFINITION );
 
         return sheet;
     }

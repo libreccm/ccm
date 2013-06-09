@@ -18,17 +18,19 @@
  */
 package com.arsdigita.cms.contenttypes.ui.authoring;
 
-import com.arsdigita.cms.contenttypes.GlossaryItem;
-import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.ui.authoring.PageCreate;
-import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.contenttypes.GlossaryItem;
 import com.arsdigita.cms.contenttypes.ui.GlossaryItemWidgetBuilder;
+import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
+import com.arsdigita.cms.ui.authoring.PageCreate;
+import com.arsdigita.cms.ui.authoring.CreationSelector;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /*
  * A page that will create a new GlossaryItem.
@@ -60,11 +62,23 @@ public class GlossaryItemCreate extends PageCreate {
      */
     @Override
     protected void addWidgets() {
+
+        /* Add the default widgets (title & name/url)  */
         super.addWidgets();
         
         GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
         add(builder.makeDefinitionLabel());
         add(builder.makeDefinitionArea());
+    }
+
+    /**
+     * Replace the default Label ("Title") by a module specific one.
+     * @return 
+     */
+    @Override
+    protected GlobalizedMessage getTitleLabel() {
+        return GlossaryGlobalizationUtil
+                .globalize("cms.contenttypes.ui.glossary.term");  
     }
 
     /**

@@ -18,22 +18,25 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.cms.contenttypes.GlossaryItem;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.cms.contenttypes.GlossaryItem;
+import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  * Form to edit the basic properties of an GlossaryItem. This form can be
  * extended to create forms for GlossaryItem subclasses.
  */
-public class GlossaryItemPropertyForm
-    extends BasicPageForm
-    implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class GlossaryItemPropertyForm extends BasicPageForm
+                                      implements FormProcessListener, 
+                                                 FormInitListener, 
+                                                 FormSubmissionListener {
 
     private GlossaryItemPropertiesStep m_step;
 
@@ -61,7 +64,8 @@ public class GlossaryItemPropertyForm
      * work on
      * @param step The GlossaryItemPropertiesStep which controls this form.
      **/
-    public GlossaryItemPropertyForm( ItemSelectionModel itemModel, GlossaryItemPropertiesStep step ) {
+    public GlossaryItemPropertyForm( ItemSelectionModel itemModel, 
+                                     GlossaryItemPropertiesStep step ) {
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
@@ -71,12 +75,25 @@ public class GlossaryItemPropertyForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
+
+        /** Insert default widgets (title/name)                               */
         super.addWidgets();
 
         GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
         add(builder.makeDefinitionLabel());
         add(builder.makeDefinitionArea());
+    }
+
+    /**
+     * Replace the default Label ("Title") by a module specific one.
+     * @return 
+     */
+    @Override
+    protected GlobalizedMessage getTitleLabel() {
+        return GlossaryGlobalizationUtil
+                .globalize("cms.contenttypes.ui.glossary.term");  
     }
 
     /** Form initialisation hook. Fills widgets with data. */

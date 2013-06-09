@@ -101,6 +101,7 @@ public class FAQItem extends ContentPage {
   }
 
     // Search stuff to allow the content type to be searchable
+    @Override
     public String getSearchSummary() {
         return getQuestion();
     }

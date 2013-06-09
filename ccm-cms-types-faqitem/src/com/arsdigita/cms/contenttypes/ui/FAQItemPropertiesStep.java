@@ -28,18 +28,23 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.contenttypes.util.FAQGlobalizationUtil;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 
 /**
- * Authoring step to edit the simple attributes of the FAQItem content 
- * type (and its subclasses). 
+ * Authoring step displays the simple attributes of the FAQItem content 
+ * type (and its subclasses) and provides a link to the edit form. 
  */
-public class FAQItemPropertiesStep
-    extends SimpleEditStep {
+public class FAQItemPropertiesStep extends SimpleEditStep {
 
     /** The name of the editing sheet added to this step */
     public static final String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * Constructor 
+     * @param itemModel
+     * @param parent 
+     */
     public FAQItemPropertiesStep( ItemSelectionModel itemModel,
                                   AuthoringKitWizard parent ) {
         super( itemModel, parent );
@@ -67,11 +72,21 @@ public class FAQItemPropertiesStep
                                                      itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add( FAQGlobalizationUtil.globalize("cms.ui.authoring.name_url"), FAQItem.NAME );
-        sheet.add( FAQGlobalizationUtil.globalize("cms.ui.authoring.page_title"), FAQItem.TITLE );
-        sheet.add( FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.question"), FAQItem.QUESTION );
-        sheet.add( FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.answer"), FAQItem.ANSWER );
-        sheet.add( FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.sectionName"), FAQItem.SECTION_NAME );
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.title"), 
+                   FAQItem.TITLE );
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"), 
+                   FAQItem.NAME );
+        sheet.add( FAQGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.faq.question"), 
+                   FAQItem.QUESTION );
+        sheet.add( FAQGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.faq.answer"), 
+                   FAQItem.ANSWER );
+        sheet.add( FAQGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.faq.sectionName"), 
+                   FAQItem.SECTION_NAME );
 
         return sheet;
     }

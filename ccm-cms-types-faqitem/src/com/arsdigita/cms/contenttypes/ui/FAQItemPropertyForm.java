@@ -19,7 +19,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.contenttypes.FAQItem;
-import com.arsdigita.cms.contenttypes.util.FAQGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.InlinesiteGlobalizationUtil;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -39,9 +39,10 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
  * Form to edit the basic properties of an FAQItem. This form can be
  * extended to create forms for FAQItem subclasses.
  */
-public class FAQItemPropertyForm
-    extends BasicPageForm
-    implements FormProcessListener, FormInitListener,FormSubmissionListener {
+public class FAQItemPropertyForm extends BasicPageForm
+                                 implements FormProcessListener, 
+                                            FormInitListener,
+                                            FormSubmissionListener {
 
     private FAQItemPropertiesStep m_step;
 
@@ -63,6 +64,7 @@ public class FAQItemPropertyForm
     public FAQItemPropertyForm( ItemSelectionModel itemModel ) {
         this(itemModel,null);
     }
+
     /**
      * Creates a new form to edit the FAQItem object specified by the item
      * selection model passed in.
@@ -83,7 +85,8 @@ public class FAQItemPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add( new Label(FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.question")) );
+        add( new Label(InlinesiteGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.faq.question")) );
         ParameterModel questionParam
             = new StringParameter( QUESTION );
         questionParam
@@ -93,7 +96,8 @@ public class FAQItemPropertyForm
         question.setRows( 5 );
         add( question );
 
-        add( new Label(FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.answer")) );
+        add( new Label(InlinesiteGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.faq.answer")) );
         ParameterModel answerParam = new StringParameter( ANSWER );
         answerParam
             .addParameterListener( new NotNullValidationListener() );
@@ -102,7 +106,8 @@ public class FAQItemPropertyForm
         answer.setRows( 5 );
         add( answer );
         
-        add( new Label(FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.sectionName")) );
+        add( new Label(InlinesiteGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.faq.sectionName")) );
         ParameterModel sectionNameParam = new StringParameter( SECTION_NAME );
         TextField sectionName = new TextField(sectionNameParam); 
         add(sectionName);

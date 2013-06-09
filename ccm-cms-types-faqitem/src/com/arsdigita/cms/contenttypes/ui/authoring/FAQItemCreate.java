@@ -32,10 +32,10 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.contenttypes.util.FAQGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.InlinesiteGlobalizationUtil;
 
 
-/*
+/**
  * A page that will create a new FAQItem.
  * 
  * @author Dirk Gomez
@@ -49,6 +49,12 @@ public class FAQItemCreate extends PageCreate {
 
     private CreationSelector m_parent;
 
+    /**
+     * Constructor initializes the form by delegating to parent class.
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public FAQItemCreate(ItemSelectionModel itemModel,
                          CreationSelector parent) {
 
@@ -56,6 +62,10 @@ public class FAQItemCreate extends PageCreate {
         m_parent = parent;
     }
 
+    /**
+     * Add form-specific widgets by overwriting parent class method.
+     */
+    @Override
     protected void addWidgets() {
         
         super.addWidgets();
@@ -65,7 +75,8 @@ public class FAQItemCreate extends PageCreate {
         question.setCols(40);
         question.setRows(5);
 
-        add(new Label(FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.question")));
+        add(new Label(InlinesiteGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.faq.question")));
         add(question);
 
         TextArea answer = new TextArea(ANSWER);
@@ -73,10 +84,17 @@ public class FAQItemCreate extends PageCreate {
         answer.setCols(40);
         answer.setRows(5);
 
-        add(new Label(FAQGlobalizationUtil.globalize("cms.contenttypes.ui.faq.answer")));
+        add(new Label(InlinesiteGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.faq.answer")));
         add(answer);
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
+    @Override
     public void process(FormSectionEvent e) throws FormProcessException {
 
         FormData data = e.getFormData();

@@ -37,6 +37,7 @@ import static com.arsdigita.cms.contenttypes.ui.GlossaryItemPropertyForm.DEFINIT
  * @author <a href="http://sourceforge.net/users/timcarpenter/">timcarpenter</a>
  */
 public class GlossaryItemWidgetBuilder {
+
     public TextArea makeDefinitionArea() {
         TextArea definition = null;
         switch (GlossaryItem.getConfig().getDefinitionEditorType()) {
