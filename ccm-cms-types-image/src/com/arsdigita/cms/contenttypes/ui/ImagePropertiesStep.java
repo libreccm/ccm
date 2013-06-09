@@ -48,6 +48,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizationHelper;
 import java.io.File;
 import java.io.IOException;
@@ -74,7 +75,8 @@ public class ImagePropertiesStep extends SimpleEditStep {
     private final String UPLOAD = "upload";
     private ImageUploadComponent uploadSheet;
 
-    public ImagePropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public ImagePropertiesStep(ItemSelectionModel itemModel, 
+                               AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
@@ -122,10 +124,12 @@ public class ImagePropertiesStep extends SimpleEditStep {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.name"), Image.NAME);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.title"), Image.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), Image.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), 
+                  Image.NAME);
+
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
+            sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
                     ContentPage.LAUNCH_DATE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -137,19 +141,28 @@ public class ImagePropertiesStep extends SimpleEditStep {
                             if (page.getLaunchDate() != null) {
                                 return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
                             } else {
-                                return (String) ImageGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                return (String) GlobalizationUtil
+                                                .globalize("cms.ui.unknown")
+                                                .localize();
                             }
                         }
                     });
         }
 
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.width"), Image.WIDTH);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.height"), Image.HEIGHT);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.caption"), Image.CAPTION);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.description"), Image.DESCRIPTION);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.artist"), Image.ARTIST);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.publishDate"), Image.PUBLISHDATE,
-                new DomainObjectPropertySheet.AttributeFormatter() {
+        sheet.add(ImageGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.image.width"), Image.WIDTH);
+        sheet.add(ImageGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.image.height"), Image.HEIGHT);
+        sheet.add(ImageGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.image.caption"), Image.CAPTION);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.description"), Image.DESCRIPTION);
+        sheet.add(ImageGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.image.artist"), Image.ARTIST);
+        sheet.add(ImageGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.image.publishDate"), 
+                  Image.PUBLISHDATE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
 
                     @Override
                     public String format(DomainObject item, String attribute, PageState state) {
@@ -173,19 +186,39 @@ public class ImagePropertiesStep extends SimpleEditStep {
                                 return DateFormat.getDateInstance(DateFormat.LONG).format(image.getPublishDate());
                             }
                         } else {
-                            return (String) ImageGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                            return (String) GlobalizationUtil
+                                            .globalize("cms.ui.unknown")
+                                            .localize();
                         }
                     }
-                });
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.source"), Image.SOURCE);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.media"), Image.MEDIA);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.copyright"), Image.COPYRIGHT);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.site"), Image.SITE);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.license"), Image.LICENSE);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.material"), Image.MATERIAL);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.technique"), Image.TECHNIQUE);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origin"), Image.ORIGIN);
-        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origSize"), Image.ORIGSIZE);
+                  });
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.source"), 
+                  Image.SOURCE);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.media"), 
+                  Image.MEDIA);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.copyright"), 
+                  Image.COPYRIGHT);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.site"), 
+                  Image.SITE);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.license"), 
+                  Image.LICENSE);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.material"), 
+                  Image.MATERIAL);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.technique"), 
+                  Image.TECHNIQUE);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.origin"), 
+                  Image.ORIGIN);
+        sheet.add(ImageGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.image.origSize"), 
+                  Image.ORIGSIZE);
 
         container.add(sheet);
 
@@ -218,7 +251,9 @@ public class ImagePropertiesStep extends SimpleEditStep {
             }
 
             // save only if save button was pressed
-            if (image != null && uploadSheet.getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+            if (image != null 
+                  && uploadSheet.getSaveCancelSection()
+                                 .getSaveButton().isSelected(fse.getPageState())) {
 
                 image.setImage(imageAsset);
             }
@@ -255,8 +290,11 @@ public class ImagePropertiesStep extends SimpleEditStep {
             setEncType("multipart/form-data");
 
             // Ignoring deprecated constructor.
-            m_imageFile = new FileUploadSection("Image Type", "image", ImageAsset.MIME_JPEG);
-            m_imageFile.getFileUploadWidget().addValidationListener(new NotNullValidationListener());
+            m_imageFile = new FileUploadSection("Image Type", 
+                                                "image", 
+                                                ImageAsset.MIME_JPEG);
+            m_imageFile.getFileUploadWidget().addValidationListener(
+                                              new NotNullValidationListener());
 
             add(m_imageFile, ColumnPanel.FULL_WIDTH);
 

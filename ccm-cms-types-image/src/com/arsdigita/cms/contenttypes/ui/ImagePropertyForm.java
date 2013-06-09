@@ -41,6 +41,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Image;
 import com.arsdigita.cms.contenttypes.util.ImageGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -86,13 +87,18 @@ public class ImagePropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.caption")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.caption")));
         ParameterModel captionParam = new StringParameter(Image.CAPTION);
         captionParam.addParameterListener(new StringInRangeValidationListener(0, 400));
         TextField caption = new TextField(captionParam);
         add(caption);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.description")));
+        /* Image doesn't use the description property part of the basic 
+           properties and persisted in cms-pages, but it's part of the type
+           specific basic properties.                                         */
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.description")));
         ParameterModel descriptionParam = new StringParameter(Image.DESCRIPTION);
         descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea description = new TextArea(descriptionParam);
@@ -100,7 +106,8 @@ public class ImagePropertyForm
         description.setCols(60);
         add(description);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.artist")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.artist")));
         ParameterModel artistParam = new StringParameter(Image.ARTIST);
         artistParam.addParameterListener(new StringInRangeValidationListener(0, 200));
         TextField artist = new TextField(artistParam);
@@ -114,7 +121,8 @@ public class ImagePropertyForm
         Hidden skipMonth = new Hidden(skipMonthParam);
         add(skipMonth);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.publishDate")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.publishDate")));
         IncompleteDateParameter publishDateParam = new IncompleteDateParameter(Image.PUBLISHDATE);
         publishDateParam.allowSkipDay(true);
         publishDateParam.allowSkipMonth(true);
@@ -123,55 +131,64 @@ public class ImagePropertyForm
                 GregorianCalendar.getInstance().get(Calendar.YEAR) + Image.getConfig().getEndYearDelta());
         add(publishDate);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.source")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.source")));
         ParameterModel sourceParam = new StringParameter(Image.SOURCE);
         sourceParam.addParameterListener(new StringInRangeValidationListener(0, 600));
         TextField source = new TextField(sourceParam);
         add(source);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.media")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.media")));
         ParameterModel mediaParam = new StringParameter(Image.MEDIA);
         mediaParam.addParameterListener(new StringInRangeValidationListener(0, 300));
         TextField media = new TextField(mediaParam);
         add(media);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.copyright")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.copyright")));
         ParameterModel copyrightParam = new StringParameter(Image.COPYRIGHT);
         copyrightParam.addParameterListener(new StringInRangeValidationListener(0, 400));
         TextField copyright = new TextField(copyrightParam);
         add(copyright);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.site")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.site")));
         ParameterModel siteParam = new StringParameter(Image.SITE);
         siteParam.addParameterListener(new StringInRangeValidationListener(0, 500));
         TextField site = new TextField(siteParam);
         add(site);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.license")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.license")));
         ParameterModel licenseParam = new StringParameter(Image.LICENSE);
         licenseParam.addParameterListener(new StringInRangeValidationListener(0, 300));
         TextField license = new TextField(licenseParam);
         add(license);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.material")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.material")));
         ParameterModel materialParam = new StringParameter(Image.MATERIAL);
         materialParam.addParameterListener(new StringInRangeValidationListener(0, 200));
         TextField material = new TextField(materialParam);
         add(material);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.technique")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.technique")));
         ParameterModel techniqueParam = new StringParameter(Image.TECHNIQUE);
         techniqueParam.addParameterListener(new StringInRangeValidationListener(0, 200));
         TextField technique = new TextField(techniqueParam);
         add(technique);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origin")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.origin")));
         ParameterModel originParam = new StringParameter(Image.ORIGIN);
         originParam.addParameterListener(new StringInRangeValidationListener(0, 200));
         TextField origin = new TextField(originParam);
         add(origin);
 
-        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origSize")));
+        add(new Label(ImageGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.image.origSize")));
         ParameterModel origSizeParam = new StringParameter(Image.ORIGSIZE);
         origSizeParam.addParameterListener(new StringInRangeValidationListener(0, 100));
         TextField origSize = new TextField(origSizeParam);
@@ -204,6 +221,11 @@ public class ImagePropertyForm
         data.put(Image.ORIGSIZE, image.getOriginalSize());
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         super.validate(e);
