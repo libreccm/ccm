@@ -28,8 +28,9 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.LegalNotice;
+import com.arsdigita.cms.contenttypes.util.LegalNoticeGlobalizationUtil;
+import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
@@ -39,7 +40,9 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  * LegalNotice subclasses.
  **/
 public class LegalNoticePropertyForm extends BasicPageForm
-    implements FormProcessListener, FormInitListener, FormSubmissionListener {
+                                     implements FormProcessListener, 
+                                                FormInitListener, 
+                                                FormSubmissionListener {
 
     private LegalNoticePropertiesStep m_step;
 
@@ -65,7 +68,8 @@ public class LegalNoticePropertyForm extends BasicPageForm
      *    LegalNotice to work on
      * @param step The LegalNoticePropertiesStep which controls this form.
      */
-    public LegalNoticePropertyForm( ItemSelectionModel itemModel, LegalNoticePropertiesStep step ) {
+    public LegalNoticePropertyForm( ItemSelectionModel itemModel, 
+                                    LegalNoticePropertiesStep step ) {
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
@@ -77,7 +81,8 @@ public class LegalNoticePropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.government_uid")));
+        add(new Label(LegalNoticeGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.legal_notice.government_uid")));
         ParameterModel governmentUIDParam = new StringParameter(GOVERNMENT_UID);
         TextField governmentUID = new TextField(governmentUIDParam);
         governmentUID.setSize(30);

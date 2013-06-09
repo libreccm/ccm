@@ -25,6 +25,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.LegalNotice;
+import com.arsdigita.cms.contenttypes.util.LegalNoticeGlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -54,7 +55,9 @@ public class LegalNoticePropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new LegalNoticePropertyForm(itemModel,this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getLegalNoticePropertySheet(itemModel));
@@ -73,10 +76,15 @@ public class LegalNoticePropertiesStep extends SimpleEditStep {
                                                         itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  LegalNotice.NAME);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  LegalNotice.TITLE);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.title"),
+                   LegalNotice.TITLE);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"),
+                   LegalNotice.NAME);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
                           public String format(DomainObject item,
@@ -87,12 +95,16 @@ public class LegalNoticePropertiesStep extends SimpleEditStep {
                                   return DateFormat.getDateInstance(DateFormat.LONG)
                                       .format(page.getLaunchDate());
                               } else {
-                                  return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                  return (String)GlobalizationUtil
+                                         .globalize("cms.ui.unknown")
+                                          .localize();
                               }
                           }
                       });
         }
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.government_uid"),  LegalNotice.GOVERNMENT_UID);
+        sheet.add( LegalNoticeGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.legal_notice.government_uid"),
+                   LegalNotice.GOVERNMENT_UID);
 
         return sheet;
     }
