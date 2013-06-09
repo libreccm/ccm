@@ -25,6 +25,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Minutes;
+import com.arsdigita.cms.contenttypes.util.MinutesGlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -75,10 +76,15 @@ public class MinutesPropertiesStep extends SimpleEditStep {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  Minutes.NAME);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  Minutes.TITLE);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.title"),
+                   Minutes.TITLE);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"),
+                   Minutes.NAME);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
                           public String format(DomainObject item,
@@ -89,16 +95,28 @@ public class MinutesPropertiesStep extends SimpleEditStep {
                                   return DateFormat.getDateInstance(DateFormat.LONG)
                                       .format(page.getLaunchDate());
                               } else {
-                                  return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                  return (String)GlobalizationUtil
+                                          .globalize("cms.ui.unknown")
+                                          .localize();
                               }
                           }
                       });
         }
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.reference"),  Minutes.MINUTE_NUMBER);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.description"),  Minutes.DESCRIPTION);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.action_item"),  Minutes.ACTION_ITEM);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.attendees"),  Minutes.ATTENDEES);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.description_of_minutes"),  Minutes.DESCRIPTION_OF_MINUTES);
+        sheet.add( MinutesGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.minutes.reference"),
+                   Minutes.MINUTE_NUMBER);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.description"),
+                   Minutes.DESCRIPTION);
+        sheet.add( MinutesGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.minutes.action_item"),
+                   Minutes.ACTION_ITEM);
+        sheet.add( MinutesGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.minutes.attendees"),
+                   Minutes.ATTENDEES);
+        sheet.add( MinutesGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.minutes.description_of"),
+                   Minutes.DESCRIPTION_OF_MINUTES);
 
         return sheet;
     }

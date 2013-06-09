@@ -30,6 +30,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Minutes;
+import com.arsdigita.cms.contenttypes.util.MinutesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
@@ -73,7 +74,8 @@ public class MinutesPropertyForm extends BasicPageForm
      *    Minutes to work on
      * @param step The MinutesPropertiesStep which controls this form.
      */
-    public MinutesPropertyForm( ItemSelectionModel itemModel, MinutesPropertiesStep step ) {
+    public MinutesPropertyForm( ItemSelectionModel itemModel, 
+                                MinutesPropertiesStep step ) {
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
@@ -85,35 +87,40 @@ public class MinutesPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.reference")));
+        add(new Label(MinutesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.minutes.reference")));
         ParameterModel minuteNumberParam = new StringParameter(MINUTE_NUMBER);
         TextArea minuteNumber = new TextArea(minuteNumberParam);
         minuteNumber.setCols(40);
         minuteNumber.setRows(3);
         add(minuteNumber);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.description")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.description")));
         ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
         TextArea description = new TextArea(descriptionParam);
         description.setCols(40);
         description.setRows(5);
         add(description);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.action_item")));
+        add(new Label(MinutesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.minutes.action_item")));
         ParameterModel actionItemParam = new StringParameter(ACTION_ITEM);
         TextArea actionItem = new TextArea(actionItemParam);
         actionItem.setCols(40);
         actionItem.setRows(3);
         add(actionItem);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.attendees")));
+        add(new Label(MinutesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.minutes.attendees")));
         ParameterModel attendeesParam = new StringParameter(ATTENDEES);
         TextArea attendees = new TextArea(attendeesParam);
         attendees.setCols(40);
         attendees.setRows(3);
         add(attendees);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.description_of_minutes")));
+        add(new Label(MinutesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.minutes.description_of")));
         ParameterModel descriptionOfMinutesParam =
             new StringParameter(DESCRIPTION_OF_MINUTES);
         TextArea descriptionOfMinutes = new TextArea(descriptionOfMinutesParam);
