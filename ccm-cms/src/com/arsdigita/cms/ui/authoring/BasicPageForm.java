@@ -74,7 +74,8 @@ public abstract class BasicPageForm extends BasicItemForm {
      *
      * @param formName the name of this form
      * @param columnPanel the columnpanel of the form
-     * @param itemModel The {@link ItemSelectionModel} which will be responsible for loading the current item
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible 
+     *                  for loading the current item
      */
     public BasicPageForm(String formName,
                          ColumnPanel columnPanel,
@@ -83,8 +84,8 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
-     * Add various widgets to the form. Child classes should override this method to perform all their widget-adding
-     * needs
+     * Add various widgets to the form. Child classes should override this 
+     * method to perform all their widget-adding needs
      */
     @Override
     protected void addWidgets() {

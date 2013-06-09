@@ -58,7 +58,8 @@ public class MOTDComponent extends SimpleComponent {
         if ( categoryID == null ) {
             try {
                 DataCollection motds = 
-                    SessionManager.getSession().retrieve(MOTDItem.BASE_DATA_OBJECT_TYPE);
+                    SessionManager.getSession()
+                                  .retrieve(MOTDItem.BASE_DATA_OBJECT_TYPE);
                 motds.addFilter("version = 'live'");
                 motds.addOrder("id desc");
               

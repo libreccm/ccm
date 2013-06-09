@@ -24,6 +24,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.event.FormProcessListener;
@@ -65,9 +66,15 @@ public class MOTDItemPropertiesStep extends SimpleEditStep {
         (ItemSelectionModel itemModel) {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
-        sheet.add(MOTDGlobalizationUtil.globalize("cms.ui.authoring.name_url"), MOTDItem.NAME);
-        sheet.add(MOTDGlobalizationUtil.globalize("cms.ui.authoring.page_title"), MOTDItem.TITLE);
-        sheet.add(MOTDGlobalizationUtil.globalize("cms.contenttypes.ui.motd.message"), MOTDItem.MESSAGE);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"), 
+                  MOTDItem.TITLE);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"), 
+                  MOTDItem.NAME);
+        sheet.add(MOTDGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.motd.message"), 
+                  MOTDItem.MESSAGE);
 
         return sheet;
     }
@@ -92,7 +99,8 @@ public class MOTDItemPropertiesStep extends SimpleEditStep {
             msg.setCols(40);
             msg.setRows(5);
             
-            add(new Label(MOTDGlobalizationUtil.globalize("cms.contenttypes.ui.motd.message")));
+            add(new Label(MOTDGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.motd.message")));
             add(msg);
         }
 
@@ -107,7 +115,9 @@ public class MOTDItemPropertiesStep extends SimpleEditStep {
             
             if (getSaveCancelSection().getSaveButton()
                 .isSelected(e.getPageState())) {
-                throw new FormProcessException((String)MOTDGlobalizationUtil.globalize("cms.ui.submission_cancelled").localize());
+                throw new FormProcessException((String)
+                          GlobalizationUtil.globalize("cms.ui.submission_cancelled")
+                          .localize());
             }
         }
 

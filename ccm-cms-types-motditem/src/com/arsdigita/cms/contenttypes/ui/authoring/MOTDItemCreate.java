@@ -73,7 +73,8 @@ public class MOTDItemCreate extends PageCreate {
         msg.setCols(40);
         msg.setRows(5);
 
-        add(new Label(MOTDGlobalizationUtil.globalize("cms.contenttypes.ui.motd.message")));
+        add(new Label(MOTDGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.motd.message")));
         add(msg);
     }
 

@@ -41,6 +41,7 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.web.URL;
 
 import java.io.IOException;
@@ -68,7 +69,9 @@ public class MOTDItemFileEdit extends SimpleEditStep {
             form.getSaveCancelSection().getCancelButton());
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
-        sheet.add(MOTDGlobalizationUtil.globalize("cms.contenttypes.ui.motd.file"), "file.name",
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.file_upload.file"),
+                  "file.name",
                   new DomainObjectPropertySheet.AttributeFormatter() {
                       public String format(DomainObject item,
                                            String attribute,
@@ -82,7 +85,9 @@ public class MOTDItemFileEdit extends SimpleEditStep {
                               "\" target=\"_blank\">" +
                               asset.getDisplayName() + "</a>";
                           } else {
-                              return (String)MOTDGlobalizationUtil.globalize("cms.ui.authoring.none").localize();
+                              return (String)GlobalizationUtil.globalize(
+                                      "cms.ui.authoring.file_upload.no_file")
+                                      .localize();
                           }
                       }
                   });
@@ -109,7 +114,8 @@ public class MOTDItemFileEdit extends SimpleEditStep {
 
         protected void addWidgets() {
             
-            add(new Label(MOTDGlobalizationUtil.globalize("cms.contenttypes.ui.motd.file")));
+            add(new Label(GlobalizationUtil
+                          .globalize("cms.ui.authoring.file_upload.file")));
             add(new Label(new PrintListener() {
                     
                     public void prepare(PrintEvent e) {
@@ -123,12 +129,15 @@ public class MOTDItemFileEdit extends SimpleEditStep {
                         if (file != null) {
                             l.setLabel(file.getName());
                         } else {
-                            l.setLabel(MOTDGlobalizationUtil.globalize("cms.ui.none"));
+                            l.setLabel(GlobalizationUtil
+                                       .globalize("cms.ui.none"));
                         }
                     }
                 }));
 
-            m_fileUploadSection = new FileUploadSection(MOTDGlobalizationUtil.globalize("cms.ui.authoring.file_upload.file_type"),"","");
+            m_fileUploadSection = new 
+                    FileUploadSection(GlobalizationUtil
+                    .globalize("cms.ui.authoring.file_upload.file_type"),"","");
             m_fileUploadSection.getFileUploadWidget()
                 .addValidationListener(new NotNullValidationListener());
 
