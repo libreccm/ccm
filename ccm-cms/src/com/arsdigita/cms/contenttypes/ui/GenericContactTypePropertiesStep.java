@@ -45,10 +45,10 @@ public class GenericContactTypePropertiesStep extends SimpleEditStep {
 
         BasicItemForm addContactTypeSheet = new GenericContactTypeAddForm(itemModel);
         add(ADD_CONTACT_SHEET_NAME,
-                (String) ContenttypesGlobalizationUtil.globalize(
+            (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.person.add_contacttype").localize(),
-                new WorkflowLockedComponentAccess(addContactTypeSheet, itemModel),
-                addContactTypeSheet.getSaveCancelSection().getCancelButton());
+            new WorkflowLockedComponentAccess(addContactTypeSheet, itemModel),
+            addContactTypeSheet.getSaveCancelSection().getCancelButton());
 
         GenericContactTypeTable contacttypesTable = new 
                                 GenericContactTypeTable(itemModel);

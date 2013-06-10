@@ -18,13 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes.ui.authoring;
 
-import com.arsdigita.cms.contenttypes.FAQItem;
-import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.ui.authoring.PageCreate;
-import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -32,11 +25,20 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.contenttypes.util.InlinesiteGlobalizationUtil;
+import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.contenttypes.FAQItem;
+import com.arsdigita.cms.contenttypes.util.FAQGlobalizationUtil;
+import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.ui.authoring.PageCreate;
+import com.arsdigita.cms.ui.authoring.CreationSelector;
 
 
 /**
- * A page that will create a new FAQItem.
+ * A page that will create a new FAQItem. It overwrites the default PageCreate 
+ * class to to customize the creation screen, and include 2 additional widgets 
+ * (question and answer).
  * 
  * @author Dirk Gomez
  * @see com.arsdigita.intranet.cms.FAQItem
@@ -75,7 +77,7 @@ public class FAQItemCreate extends PageCreate {
         question.setCols(40);
         question.setRows(5);
 
-        add(new Label(InlinesiteGlobalizationUtil
+        add(new Label(FAQGlobalizationUtil
                       .globalize("cms.contenttypes.ui.faq.question")));
         add(question);
 
@@ -84,7 +86,7 @@ public class FAQItemCreate extends PageCreate {
         answer.setCols(40);
         answer.setRows(5);
 
-        add(new Label(InlinesiteGlobalizationUtil
+        add(new Label(FAQGlobalizationUtil
                       .globalize("cms.contenttypes.ui.faq.answer")));
         add(answer);
     }

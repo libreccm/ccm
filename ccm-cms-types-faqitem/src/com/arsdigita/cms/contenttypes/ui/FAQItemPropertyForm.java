@@ -19,7 +19,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.contenttypes.FAQItem;
-import com.arsdigita.cms.contenttypes.util.InlinesiteGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.FAQGlobalizationUtil;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -85,7 +85,7 @@ public class FAQItemPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add( new Label(InlinesiteGlobalizationUtil
+        add( new Label(FAQGlobalizationUtil
                        .globalize("cms.contenttypes.ui.faq.question")) );
         ParameterModel questionParam
             = new StringParameter( QUESTION );
@@ -96,7 +96,7 @@ public class FAQItemPropertyForm extends BasicPageForm
         question.setRows( 5 );
         add( question );
 
-        add( new Label(InlinesiteGlobalizationUtil
+        add( new Label(FAQGlobalizationUtil
                        .globalize("cms.contenttypes.ui.faq.answer")) );
         ParameterModel answerParam = new StringParameter( ANSWER );
         answerParam
@@ -106,7 +106,7 @@ public class FAQItemPropertyForm extends BasicPageForm
         answer.setRows( 5 );
         add( answer );
         
-        add( new Label(InlinesiteGlobalizationUtil
+        add( new Label(FAQGlobalizationUtil
                        .globalize("cms.contenttypes.ui.faq.sectionName")) );
         ParameterModel sectionNameParam = new StringParameter( SECTION_NAME );
         TextField sectionName = new TextField(sectionNameParam); 

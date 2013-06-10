@@ -195,7 +195,9 @@ public class Label extends BlockStylable implements Cloneable {
      * Sets new default text for this Label.
      *
      * @param label The new label text; will be used as a key into the current
-     * ResourceBundle if possible, or displayed literally.
+     *              ResourceBundle if possible, or displayed literally.
+     * @deprecated refactor to use
+     *             @see setLabel(GlobalizedMessage) instead!
      */
     public void setLabel(String label) {
         setLabel(label, null);
@@ -210,7 +212,7 @@ public class Label extends BlockStylable implements Cloneable {
      * @param state the page state
      * @pre state == null implies !isLocked()
      * @deprecated refactor to use
-     * @see setLabel(GlobalizedMessage, PageState) instead!
+     *             @see setLabel(GlobalizedMessage, PageState) instead!
      */
     public void setLabel(String label, PageState state) {
         if (label == null || label.length() == 0) {

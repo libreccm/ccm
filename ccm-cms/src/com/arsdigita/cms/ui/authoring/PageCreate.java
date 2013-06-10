@@ -40,8 +40,8 @@ import org.apache.log4j.Logger;
  * A form which will create a new ContentPage or one of its subclasses.
  * 
  * Used to create a new document / content item. Creates widgets to select the
- * workflow, type of content item, and language. Super class adds additional
- * widgets (title and name/url) to complete the form.
+ * workflow, and language. It displays the type of document as well. Super class
+ * adds additional widgets (title and name/url) to complete the form.
  * 
  * It's a pane which is part of a more complex page, additionally containing
  * folder structure, content items in the folder, permissions, etc.
@@ -104,6 +104,7 @@ public class PageCreate extends BasicPageForm
         /* language selection   */
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
+
         /* Additional widgets from super type: title and name (url)   */
         super.addWidgets();
     }

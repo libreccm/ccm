@@ -34,10 +34,11 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 
 /**
- * This class is used by {@link Table} in order to maintain its
- * headers. <code>TableHeader</code> is responsible for setting
- * the control event in order to notify the {@link Table} when one
- * of the column headers is clicked.
+ * This class is used by {@link Table} in order to maintain its headers.
+ * 
+ * <code>TableHeader</code> is responsible for setting the control event 
+ * in order to notify the {@link Table} when one of the column headers 
+ * is clicked.
  *
  * @author David Lutterkort
  * @version $Id: TableHeader.java 1638 2007-09-17 11:48:34Z chrisg23 $

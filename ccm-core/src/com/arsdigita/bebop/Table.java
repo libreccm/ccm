@@ -41,10 +41,10 @@ import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 
 /**
- *  Displays statically or
- * dynamically generated data in tabular form. The data is retrieved
- * from a <code>TableModel</code>.  <p>
- *
+ * Displays statically or dynamically generated data in tabular form. 
+ * The data is retrieved from a <code>TableModel</code>.  
+ * 
+ * <p>
  * This class is similar to the {@link List} class, but it has two dimensions.
  * The table consists of a {@link TableModelBuilder}, a {@link TableColumnModel},
  * a {@link TableHeader} and a {@link TableCellRenderer} for each column.
@@ -803,13 +803,13 @@ public class Table extends BlockStylable implements BebopConstants {
     }
 
     /**
-     *  An internal class
-     * that creates a table model around a set of data given as a
-     * <code>Object[][]</code>. The table models produced by this
-     * builder use row numbers, converted to strings, as the key for
-     * each column of a row.  */
+     * An internal class that creates a table model around a set of data given
+     * as a <code>Object[][]</code>. The table models produced by this builder
+     * use row numbers, converted to strings, as the key for each column of a 
+     * row.
+     */
     public static class MatrixTableModelBuilder
-            extends AbstractTableModelBuilder {
+                        extends AbstractTableModelBuilder {
 
         private Object[][] m_data;
 
