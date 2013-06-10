@@ -35,78 +35,73 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import java.text.DateFormat;
 
-
 /**
- * Authoring step to edit the simple attributes of the InlineSite content 
- * type (and its subclasses). 
+ * Authoring step to edit the simple attributes of the InlineSite content type (and its subclasses).
  */
-public class InlineSitePropertiesStep
-    extends SimpleEditStep {
+public class InlineSitePropertiesStep extends SimpleEditStep {
 
-    /** The name of the editing sheet added to this step */
+    /**
+     * The name of the editing sheet added to this step
+     */
     public static final String EDIT_SHEET_NAME = "edit";
 
-    public InlineSitePropertiesStep( ItemSelectionModel itemModel,
-                                       AuthoringKitWizard parent ) {
-        super( itemModel, parent );
+    public InlineSitePropertiesStep(final ItemSelectionModel itemModel,
+                                    final AuthoringKitWizard parent) {
+        super(itemModel, parent);
 
-        BasicPageForm editSheet;
+        final BasicPageForm editSheet = new InlineSitePropertyForm(itemModel, this);
+        add(EDIT_SHEET_NAME, "Edit",
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
+        setDefaultEditKey(EDIT_SHEET_NAME);
 
-        editSheet = new InlineSitePropertyForm( itemModel );
-        add( EDIT_SHEET_NAME, "Edit", 
-             new WorkflowLockedComponentAccess(editSheet, itemModel),
-             editSheet.getSaveCancelSection().getCancelButton() );
-
-        setDisplayComponent( getInlineSitePropertySheet( itemModel ) );
+        setDisplayComponent(getInlineSitePropertySheet(itemModel));
     }
 
     /**
-     * Returns a component that displays the properties of the 
-     * InlineSite specified by the ItemSelectionModel passed in.
+     * Returns a component that displays the properties of the InlineSite specified by the ItemSelectionModel passed in.
+     *
      * @param itemModel The ItemSelectionModel to use
      * @pre itemModel != null
-     * @return A component to display the state of the basic properties
-     *  of the release
+     * @return A component to display the state of the basic properties of the release
      */
-    public static Component getInlineSitePropertySheet( ItemSelectionModel
-                                                          itemModel ) {
-        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
+    public static Component getInlineSitePropertySheet(final ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), 
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),
                   InlineSite.TITLE);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), 
-                  InlineSite.NAME );
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),
+                  InlineSite.NAME);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.launch_date"),
-                    ContentPage.LAUNCH_DATE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
-
-                        @Override
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            ContentPage page = (ContentPage) item;
-                            if (page.getLaunchDate() != null) {
-                                return DateFormat
-                                       .getDateInstance(DateFormat.LONG)
-                                       .format(page.getLaunchDate());
-                            } else {
-                                return (String) GlobalizationUtil
-                                                .globalize("cms.ui.unknown")
-                                                .localize();
-                            }
-                        }
-                    });
+                    .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new DomainObjectPropertySheet.AttributeFormatter() {
+                @Override
+                public String format(final DomainObject item,
+                                     final String attribute,
+                                     final PageState state) {
+                    ContentPage page = (ContentPage) item;
+                    if (page.getLaunchDate() != null) {
+                        return DateFormat
+                                .getDateInstance(DateFormat.LONG)
+                                .format(page.getLaunchDate());
+                    } else {
+                        return (String) GlobalizationUtil
+                                .globalize("cms.ui.unknown")
+                                .localize();
+                    }
+                }
+            });
         }
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.summary"), 
-                   InlineSite.DESCRIPTION);
-        sheet.add( InlineSiteGlobalizationUtil
-                       .globalize("cms.contenttypes.ui.inlinesite.url"), 
-                   InlineSite.URL );
+
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.summary"),
+                  InlineSite.DESCRIPTION);
+        sheet.add(InlineSiteGlobalizationUtil
+                .globalize("cms.contenttypes.ui.inlinesite.url"),
+                  InlineSite.URL);
 
         return sheet;
     }
 }
-

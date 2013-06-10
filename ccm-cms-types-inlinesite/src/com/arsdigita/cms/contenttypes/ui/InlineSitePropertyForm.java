@@ -38,25 +38,29 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
-
 /**
- * Form to edit the basic properties of an InlineSite. This form can be
- * extended to create forms for InlineSite subclasses.
+ * Form to edit the basic properties of an InlineSite. This form can be extended to create forms for InlineSite
+ * subclasses.
  */
 public class InlineSitePropertyForm extends BasicPageForm
-    implements FormProcessListener, FormInitListener {
+        implements FormProcessListener, FormInitListener {
 
     private TextField m_url;
-	private TextArea m_description;
+    private TextArea m_description;
+    private InlineSitePropertiesStep m_step;
 
     /**
-     * Creates a new form to edit the InlineSite object specified
-     * by the item selection model passed in.
-     * @param itemModel The ItemSelectionModel to use to obtain the 
-     *    InlineSite to work on
+     * Creates a new form to edit the InlineSite object specified by the item selection model passed in.
+     *
+     * @param itemModel The ItemSelectionModel to use to obtain the InlineSite to work on
      */
-    public InlineSitePropertyForm(ItemSelectionModel itemModel) {
+    public InlineSitePropertyForm(final ItemSelectionModel itemModel) {
+        this(itemModel, null);
+    }
+    
+    public InlineSitePropertyForm(final ItemSelectionModel itemModel, final InlineSitePropertiesStep step) {
         super("inlineSiteEdit", itemModel);
+        m_step = step;
     }
 
     /**
@@ -65,49 +69,55 @@ public class InlineSitePropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.description")));
-		m_description = new TextArea(ContentPage.DESCRIPTION);
-		m_description.setCols(30);
-		m_description.setRows(5);
-		if (ContentSection.getConfig().mandatoryDescriptions()) {
-			m_description.addValidationListener(
-							new NotEmptyValidationListener(GlobalizationUtil.globalize("cms.contenttypes.ui.description_missing")));
-		}
-		m_description.addValidationListener(
-						new StringInRangeValidationListener(
-							0,
-							4000));
-		add(m_description);
-        
+        m_description = new TextArea(ContentPage.DESCRIPTION);
+        m_description.setCols(30);
+        m_description.setRows(5);
+        if (ContentSection.getConfig().mandatoryDescriptions()) {
+            m_description.addValidationListener(
+                    new NotEmptyValidationListener(GlobalizationUtil.
+                    globalize("cms.contenttypes.ui.description_missing")));
+        }
+        m_description.addValidationListener(
+                new StringInRangeValidationListener(
+                0,
+                4000));
+        add(m_description);
+
         add(new Label("URL:"));
-        ParameterModel urlParam
-            = new StringParameter("url");
+        ParameterModel urlParam = new StringParameter("url");
         m_url = new TextField(urlParam);
         m_url.setSize(40);
         add(m_url);
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /**
+     * Form initialisation hook. Fills widgets with data.
+     */
     public void init(FormSectionEvent fse) {
-        InlineSite site
-            = (InlineSite) super.initBasicWidgets(fse);
-        
-        m_url.setValue(fse.getPageState(), 
+        InlineSite site = (InlineSite) super.initBasicWidgets(fse);
+
+        m_url.setValue(fse.getPageState(),
                        site.getURL());
         m_description.setValue(fse.getPageState(), site.getDescription());
     }
-    
-    /** Form processing hook. Saves InlineSite object. */
+
+    /**
+     * Form processing hook. Saves InlineSite object.
+     */
     public void process(FormSectionEvent fse) {
-        InlineSite site
-            = (InlineSite) super.processBasicWidgets(fse);
+        InlineSite site = (InlineSite) super.processBasicWidgets(fse);
 
         // save only if save button was pressed
         if (site != null
-           && getSaveCancelSection().getSaveButton()
-           .isSelected(fse.getPageState())) {
-            site.setURL((String)m_url.getValue(fse.getPageState()));
-            site.setDescription((String)m_description.getValue(fse.getPageState()));
+            && getSaveCancelSection().getSaveButton()
+                .isSelected(fse.getPageState())) {
+            site.setURL((String) m_url.getValue(fse.getPageState()));
+            site.setDescription((String) m_description.getValue(fse.getPageState()));
             site.save();
+        }
+        
+        if (m_step != null) {
+            m_step.maybeForwardToNextStep(fse.getPageState());
         }
     }
 }
