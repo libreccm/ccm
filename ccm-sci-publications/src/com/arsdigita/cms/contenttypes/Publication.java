@@ -165,7 +165,7 @@ public class Publication extends ContentPage {
      *
      * @param misc The new content of the misc field.
      */
-    public void setMisc(String misc) {
+    public void setMisc(final String misc) {
         set(MISC, misc);
     }
 
@@ -173,7 +173,7 @@ public class Publication extends ContentPage {
         return (Boolean) get(REVIEWED);
     }
 
-    public void setReviewed(Boolean reviewed) {
+    public void setReviewed(final Boolean reviewed) {
         set(REVIEWED, reviewed);
     }
 
@@ -232,7 +232,7 @@ public class Publication extends ContentPage {
 
     protected void updateAuthorsStr() {
         final AuthorshipCollection authors = getAuthors();
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         while (authors.next()) {
             if (builder.length() > 0) {
                 builder.append("; ");
@@ -378,7 +378,7 @@ public class Publication extends ContentPage {
 
     @Override
     public String getSearchSummary() {
-        String summary = String.format("%s %s %s", getTitle(), getAuthors(), getAbstract());
+        String summary = String.format("%s %s %s", getTitle(), (String)get(AUTHORS_STR), getAbstract());
         if (summary.length() > 4000) {
             summary = summary.substring(0, 4000);
         }
