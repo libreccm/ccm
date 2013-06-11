@@ -42,19 +42,18 @@ import com.arsdigita.portal.Portlet;
 import com.arsdigita.portal.apportlet.AppPortlet;
 
 /**
- * portlet with no attributes that displays links to all forums that user has 
+ * portlet with no attributes that displays links to all forums that user has
  * read access to
- * 
- * 
+ *
+ *
  * @author chris.gilbert@westsussex.gov.uk
  * @version $Id: MyForumsPortlet.java,v 1.4 2006/07/13 10:19:28 cgyg9330 Exp $
  */
 public class MyForumsPortlet extends Portlet {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.forum.MyForumsPortlet";
+            "com.arsdigita.forum.MyForumsPortlet";
 
-    
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -63,61 +62,55 @@ public class MyForumsPortlet extends Portlet {
         super(dataObject);
     }
 
-    
-
     protected AbstractPortletRenderer doGetPortletRenderer() {
         return new MyForumsPortletRenderer(this);
     }
-
-   
 }
 
-class MyForumsPortletRenderer 
-    extends AbstractPortletRenderer 
-    implements Constants {
+class MyForumsPortletRenderer
+        extends AbstractPortletRenderer
+        implements Constants {
 
     private MyForumsPortlet m_portlet;
 
-    public MyForumsPortletRenderer(MyForumsPortlet
-                                         portlet) {
+    public MyForumsPortletRenderer(MyForumsPortlet portlet) {
         m_portlet = portlet;
     }
 
     protected void generateBodyXML(PageState pageState,
-                                   Element parent) {
-        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":myForumsPortlet", 
-                                                 FORUM_XML_NS);
+            Element parent) {
+        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":myForumsPortlet",
+                FORUM_XML_NS);
 
-        
+
         Party party = Kernel.getContext().getParty();
         if (party == null) {
-        	party = Kernel.getPublicUser();
+            party = Kernel.getPublicUser();
         }
-        
+
         DataCollection forums = SessionManager.getSession().retrieve(Forum.BASE_DATA_OBJECT_TYPE);
         forums.addOrder("lower(" + Forum.TITLE + ")");
         PermissionService.filterObjects(forums, PrivilegeDescriptor.READ, party.getOID());
-      
+
 
         while (forums.next()) {
-            Forum forum = (Forum)DomainObjectFactory.newInstance(forums.getDataObject());
-            Element forumEl = content.newChildElement(FORUM_XML_PREFIX + ":forum", FORUM_XML_NS);
+            Forum forum = (Forum) DomainObjectFactory.newInstance(forums.getDataObject());
+            Element forumEl = content.newChildElement(FORUM_XML_PREFIX + ":forumShortcut", FORUM_XML_NS);
             URL url = URL.there(forum, "/", null);
             forumEl.addAttribute("url", url.toString());
-			forumEl.addAttribute("title", forum.getTitle());
-			// display last forum update info
-			ThreadCollection threads = forum.getThreads();
-			threads.addOrder(MessageThread.LAST_UPDATE);
-			if (threads.next()) {
-				MessageThread lastUpdatedThread = threads.getMessageThread();
-				forumEl.addAttribute("lastUpdated", new DateFormatter().format(lastUpdatedThread.getLatestUpdateDate()));
-				threads.close();
-			} else {
-				forumEl.addAttribute("lastUpdated", "");
-			}
+            forumEl.addAttribute("title", forum.getTitle());
+            // display last forum update info
+            ThreadCollection threads = forum.getThreads();
+            threads.addOrder(MessageThread.LAST_UPDATE);
+            if (threads.next()) {
+                MessageThread lastUpdatedThread = threads.getMessageThread();
+                forumEl.addAttribute("lastUpdated", new DateFormatter().format(lastUpdatedThread.getLatestUpdateDate()));
+                threads.close();
+            } else {
+                forumEl.addAttribute("lastUpdated", "");
+            }
 
-           
+
         }
     }
-
 }
