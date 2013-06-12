@@ -38,7 +38,10 @@ import com.arsdigita.toolbox.ui.ComponentAccess;
 public class WorkflowLockedComponentAccess extends ComponentAccess {
 
     ItemSelectionModel m_itemModel;
+
     /**
+     * Constructor. 
+     * 
      * @param c The component
      */
     public WorkflowLockedComponentAccess(Component c, ItemSelectionModel i) {
@@ -47,10 +50,14 @@ public class WorkflowLockedComponentAccess extends ComponentAccess {
     }
 
     /**
+     * Constructor. 
+     * 
      * @param c The component
      * @param check An access check
      */
-    public WorkflowLockedComponentAccess(Component c, String check, ItemSelectionModel i) {
+    public WorkflowLockedComponentAccess(Component c, 
+                                         String check, 
+                                         ItemSelectionModel i) {
         super(c,check);
         m_itemModel = i;
     }

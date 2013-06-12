@@ -138,6 +138,7 @@ public class SiteProxyPanel extends ContentPanel {
     
     class SiteProxyXMLGenerator extends SimpleXMLGenerator {
 
+        @Override
         public void generateXML(PageState state, Element parent, String useContext) {
 
             ContentSection section = CMS.getContext().getContentSection();
@@ -145,26 +146,26 @@ public class SiteProxyPanel extends ContentPanel {
             String url = passParameters(state.getRequest(), item.getURL());
             
             Element child = parent.newChildElement(SITE_PROXY_PANEL_NAME, 
-                    CMS.CMS_XML_NS);
+                                                   CMS.CMS_XML_NS);
             URLData data = internalGetRemoteXML(child, url);
             
             if (data == null) {
                 String[] urlArray = {url};
                 (new Label(SiteProxyGlobalizationUtil.globalize
-                           ("cms.contenttypes.siteproxy.error_fetching_url", 
-                            urlArray))).generateXML(state, parent);
+                     ("cms.contenttypes.dispatcher.siteproxy.error_fetching_url", 
+                     urlArray))).generateXML(state, parent);
             } else if (data.getException() != null) {
                 String[] urlArray = 
                     {url, data.getException().getClass().getName(), 
                      data.getException().getMessage()};
                 (new Label(SiteProxyGlobalizationUtil.globalize
-                           ("cms.contenttypes.siteproxy.exception_fetching_url",
-                            urlArray))).generateXML(state, parent);
+                     ("cms.contenttypes.siteproxy.dispatcher.exception_fetching_url",
+                     urlArray))).generateXML(state, parent);
             } else if (data.getContent().length == 0) {
                 String[] urlArray = {url};
                 (new Label(SiteProxyGlobalizationUtil.globalize
-                           ("cms.contenttypes.siteproxy.empty_page_returned", 
-                            urlArray))).generateXML(state, parent);
+                     ("cms.contenttypes.siteproxy.dispatcher.empty_page_returned", 
+                     urlArray))).generateXML(state, parent);
             }
         }
     }

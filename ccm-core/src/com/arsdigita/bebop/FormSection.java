@@ -191,7 +191,7 @@ public class FormSection extends SimpleComponent implements Container {
             try {
                 listener.submitted(e);
             } catch (FormProcessException ex) {
-                s_log.error(ex);
+                s_log.debug(ex);
                 delayedException = ex;
             }
         }
@@ -388,7 +388,7 @@ public class FormSection extends SimpleComponent implements Container {
 
                 listener.validate(e);
             } catch (FormProcessException fpe) {
-                s_log.error(fpe);
+                s_log.debug(fpe);
                 data.addError(fpe.getMessage());
             }
         }
@@ -503,9 +503,9 @@ public class FormSection extends SimpleComponent implements Container {
     }
 
     /**
-     * Since a form section cannot be processed, always throws an
-     * error. (Processing of form sections is done by the form in which
-     * the section is contained.)
+     * Since a form section cannot be processed, always throws an error.
+     * (Processing of form sections is done by the form in which the
+     * section is contained.)
      *
      * @throws javax.servlet.ServletException because processing a form section is
      * not meaningful.

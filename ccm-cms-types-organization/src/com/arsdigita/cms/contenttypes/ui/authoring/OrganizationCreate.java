@@ -63,15 +63,18 @@ public class OrganizationCreate extends PageCreate {
         super.addWidgets();
 
         TextField link = new TextField(LINK);
-        add(new Label(OrganizationGlobalizationUtil.globalize("cms.contenttypes.link")));
+        add(new Label(OrganizationGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.organization.link")));
         add(link);
 
         TextField contact = new TextField(CONTACT);
-        add(new Label(OrganizationGlobalizationUtil.globalize("cms.contenttypes.contact")));
+        add(new Label(OrganizationGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.organization.contact")));
         add(contact);
     }
 
 
+    @Override
     public void process ( FormSectionEvent e ) throws FormProcessException {
 
         FormData data = e.getFormData();

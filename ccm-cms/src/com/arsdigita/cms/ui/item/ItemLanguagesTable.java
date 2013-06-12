@@ -61,9 +61,12 @@ public class ItemLanguagesTable extends DataTable {
         super(new LanguagesBuilder(model));
         m_model = model;
 
-        addColumn("cms.ui.language.header", ContentPage.LANGUAGE, false,
-                new LanguageCellRenderer(m_model));
-        addColumn("cms.title", ContentPage.TITLE);
+        addColumn("cms.ui.language.header", 
+                  ContentPage.LANGUAGE, 
+                  false,
+                  new LanguageCellRenderer(m_model));
+        addColumn("cms.ui.title", 
+                  ContentPage.TITLE);
         m_deleteColumn = addColumn("cms.ui.action", new ActionCellRenderer(
                 m_model));
         setResourceBundle(GlobalizationUtil.getBundleName());
@@ -241,7 +244,14 @@ public class ItemLanguagesTable extends DataTable {
                 item.delete();
 
                 if (m_model.getSelectedKey(s).equals(id)) {
-                    throw new RedirectSignal(URL.there((new MultilingualItemResolver().generateItemURL(s, bundle.getPrimaryInstance(), bundle.getContentSection(), ContentItem.DRAFT)), null), true);
+                    throw new RedirectSignal(
+                        URL.there((new MultilingualItemResolver()
+                                       .generateItemURL(s, 
+                                                        bundle.getPrimaryInstance(), 
+                                                        bundle.getContentSection(), 
+                                                        ContentItem.DRAFT)), 
+                            null), 
+                        true);
                 }
             } catch (com.arsdigita.domain.DataObjectNotFoundException ex) {
                 // Object not found is ok, it has probably been deleted already

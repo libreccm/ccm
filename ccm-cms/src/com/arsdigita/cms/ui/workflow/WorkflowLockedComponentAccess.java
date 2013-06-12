@@ -42,6 +42,8 @@ public class WorkflowLockedComponentAccess extends ComponentAccess {
     ItemSelectionModel m_itemModel;
 
     /**
+     * Constructor.
+     * 
      * @param c The component
      */
     public WorkflowLockedComponentAccess(Component c, ItemSelectionModel i) {
@@ -50,10 +52,14 @@ public class WorkflowLockedComponentAccess extends ComponentAccess {
     }
 
     /**
+     * Constructor. 
+     * 
      * @param c The component
      * @param check An access check
      */
-    public WorkflowLockedComponentAccess(Component c, String check, ItemSelectionModel i) {
+    public WorkflowLockedComponentAccess(Component c, 
+                                         String check, 
+                                         ItemSelectionModel i) {
         super(c, check);
         m_itemModel = i;
     }
@@ -76,11 +82,12 @@ public class WorkflowLockedComponentAccess extends ComponentAccess {
 
         if (isVisible(state) == true) {
             if (super.canAccess(state, security)) {
-                boolean smCheck = sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM,
+                boolean smCheck = sm.canAccess(state.getRequest(), 
+                                               SecurityManager.EDIT_ITEM,
                         item);
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Superclass security check passed. SecurityManager check is "
-                            + smCheck);
+                    s_log.debug("Superclass security check passed. "
+                                + "SecurityManager check is " + smCheck);
                 }
                 return smCheck;
             }

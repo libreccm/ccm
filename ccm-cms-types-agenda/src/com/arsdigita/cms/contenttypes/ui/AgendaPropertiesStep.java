@@ -48,6 +48,12 @@ public class AgendaPropertiesStep extends SimpleEditStep {
     /** The name of the editing sheet added to this step */
     public static String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * Constructor. 
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public AgendaPropertiesStep(ItemSelectionModel itemModel,
                                 AuthoringKitWizard parent ) {
         super(itemModel, parent );

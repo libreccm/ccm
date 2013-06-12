@@ -36,7 +36,8 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
  * extended to create forms for SiteProxy subclasses.
  */
 public class SiteProxyPropertyForm extends BasicPageForm
-    implements FormProcessListener, FormInitListener {
+                                   implements FormProcessListener, 
+                                              FormInitListener {
 
     private TextField m_url;
 

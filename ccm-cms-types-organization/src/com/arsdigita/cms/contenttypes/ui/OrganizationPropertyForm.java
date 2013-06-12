@@ -26,7 +26,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.ParameterModel;
+// import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
@@ -68,7 +68,8 @@ public class OrganizationPropertyForm
      *    Organization to work on
      * @param step The OrganizationPropertiesStep which controls this form.
      */
-    public OrganizationPropertyForm( ItemSelectionModel itemModel, OrganizationPropertiesStep step ) {
+    public OrganizationPropertyForm( ItemSelectionModel itemModel, 
+                                     OrganizationPropertiesStep step ) {
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
@@ -81,11 +82,13 @@ public class OrganizationPropertyForm
         super.addWidgets();
 
         TextField link = new TextField(LINK);
-        add(new Label(OrganizationGlobalizationUtil.globalize("cms.contenttypes.link")));
+        add(new Label(OrganizationGlobalizationUtil.globalize(
+                     "cms.contenttypes.ui.organization.link")));
         add(link);
 
         TextField contact = new TextField(CONTACT);
-        add(new Label(OrganizationGlobalizationUtil.globalize("cms.contenttypes.contact")));
+        add(new Label(OrganizationGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.organization.contact")));
         add(contact);
 
     }

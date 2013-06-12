@@ -90,7 +90,6 @@ public class ImageDisplay extends SimpleComponent {
         element.addAttribute("name", image.getName());
         element.addAttribute("src", URL.getDispatcherPath() + 
                              Service.getImageURL(image));
-                    //       Utilities.getImageURL(image));
 
         BigDecimal width = image.getWidth();
         if ( width != null ) {

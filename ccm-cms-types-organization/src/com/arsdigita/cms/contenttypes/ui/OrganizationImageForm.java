@@ -19,50 +19,31 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.ColumnPanel;
-import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.event.FormValidationListener;
+import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.form.FileUpload;
+import com.arsdigita.bebop.form.FormErrorDisplay;
 import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SaveCancelSection;
-import com.arsdigita.bebop.form.FileUpload;
-import com.arsdigita.bebop.form.FormErrorDisplay;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.RadioGroup;
-import com.arsdigita.bebop.event.FormInitListener;
-import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
-
-import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.bebop.SaveCancelSection;
+import com.arsdigita.cms.contenttypes.Organization;
+import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
 import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.ImageDisplay;
-
 import com.arsdigita.dispatcher.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
-
-import com.arsdigita.cms.ImageAsset;
-import com.arsdigita.cms.contenttypes.Organization;
-import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
-import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.ColumnPanel;
-import com.arsdigita.bebop.SaveCancelSection;
-import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.event.FormInitListener;
-import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormValidationListener;
-import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.form.FormErrorDisplay;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ItemSelectionModel;
 
 import org.apache.log4j.Logger;
 
@@ -73,10 +54,10 @@ import org.apache.log4j.Logger;
  *
  * @version $Id: OrganizationImageForm.java 757 2005-09-02 14:12:21Z sskracic $
  */
-public class OrganizationImageForm
-    extends Form
-    implements FormInitListener, FormProcessListener, FormValidationListener,
-               FormSubmissionListener {
+public class OrganizationImageForm extends Form implements FormInitListener, 
+                                                           FormProcessListener, 
+                                                           FormValidationListener,
+                                                           FormSubmissionListener {
 
     private OrganizationImageStep m_step;
 
@@ -119,7 +100,9 @@ public class OrganizationImageForm
         this("OrganizationImageForm", itemModel, null);
     }
 
-    public OrganizationImageForm(String name, ItemSelectionModel itemModel, OrganizationImageStep step) {
+    public OrganizationImageForm(String name, 
+                                 ItemSelectionModel itemModel, 
+                                 OrganizationImageStep step) {
         super(name);
 
         m_itemModel = itemModel;
@@ -136,24 +119,39 @@ public class OrganizationImageForm
 
         m_imageDisplay = new ImageDisplay(itemModel) {
                 protected ImageAsset getImageAsset(PageState state) {
-                    ImageAsset image = (ImageAsset) ((Organization) getImageSelectionModel().getSelectedObject(state)).getImage();
+                    ImageAsset image = (ImageAsset) ((Organization) 
+                                                     getImageSelectionModel()
+                                                     .getSelectedObject(state))
+                                                     .getImage();
                     return image;
                 }
             };
         StringParameter imageOptions = new StringParameter(IMAGE + IMAGE_OPTIONS);
         m_group = new RadioGroup(imageOptions);
-        m_group.addOption(new Option(UPLOAD_OPTION, UPLOAD_OPTION));
-        m_group.addOption(new Option(DELETE_OPTION, DELETE_OPTION));
-        m_group.addOption(new Option(IGNORE_OPTION, IGNORE_OPTION));
+        m_group.addOption(new Option(
+                          UPLOAD_OPTION, 
+                          new Label(OrganizationGlobalizationUtil.globalize
+                              ("cms.contenttypes.ui.organization.file_upload"))
+                          ));  //UPLOAD_OPTION));
+        m_group.addOption(new Option(
+                          DELETE_OPTION, 
+                          new Label(OrganizationGlobalizationUtil.globalize
+                              ("cms.contenttypes.ui.organization.file_delete"))
+                          ));  //DELETE_OPTION));
+        m_group.addOption(new Option(
+                          IGNORE_OPTION, 
+                          new Label(OrganizationGlobalizationUtil.globalize
+                              ("cms.contenttypes.ui.organization.file_ignore"))
+                          ));  //IGNORE_OPTION));
         m_group.setDefaultValue(IGNORE_OPTION);
 
         m_currentLabel = new Label(OrganizationGlobalizationUtil.globalize
-                                   ("cms.contenttypes.current_image"));
+                             ("cms.contenttypes.ui.organization.current_image"));
         add(m_currentLabel);
         add(m_imageDisplay);
 
         m_label = new Label(OrganizationGlobalizationUtil.globalize
-                            ("cms.contenttypes.image"));
+                      ("cms.contenttypes.ui.organization.image"));
         add(m_label);
         m_upload = new FileUpload(IMAGE);
         add(m_upload);
@@ -177,14 +175,16 @@ public class OrganizationImageForm
     /** Form initialisation hook. Fills widgets with data. */
     public void init( FormSectionEvent fse ) {
         PageState state = fse.getPageState();
-        Organization item = (Organization) getItemSelectionModel().getSelectedObject(state);
+        Organization item = (Organization) getItemSelectionModel()
+                                           .getSelectedObject(state);
     }
 
     /** Form processing hook. Saves Organization object. */
     public void process( FormSectionEvent fse ) throws FormProcessException {
         PageState state = fse.getPageState();
         FormData data = fse.getFormData();
-        Organization item = (Organization) getItemSelectionModel().getSelectedObject(state);
+        Organization item = (Organization) getItemSelectionModel()
+                                           .getSelectedObject(state);
 
         ImageAsset image = null;
 
@@ -196,7 +196,8 @@ public class OrganizationImageForm
             s_log.debug("uploading image");
             String fileName = (String)(data.get(IMAGE));
             if (fileName != null && fileName.length() > 0) {
-                File file = ((MultipartHttpServletRequest)state.getRequest()).getFile(IMAGE);
+                File file = ((MultipartHttpServletRequest)state
+                              .getRequest()).getFile(IMAGE);
                 s_log.debug("file: " + file);
                 ImageAsset a = new ImageAsset();
                 a.setName(fileName);
@@ -216,7 +217,7 @@ public class OrganizationImageForm
             } else {
                 throw new FormProcessException
                     ((String)(OrganizationGlobalizationUtil.globalize
-                              ("cms.contenttypes.organization.image_option_null")
+                              ("cms.contenttypes.ui.organization.image_option_null")
                               .localize()));
             }
         } else if (imageOption != null && imageOption.equals(DELETE_OPTION)) {
@@ -251,21 +252,24 @@ public class OrganizationImageForm
         
         if (imageOption == null || imageOption.equals(IGNORE_OPTION)) {
             if (fileName != null && !fileName.equals("")) {
-                data.addError(IMAGE,
-                              (OrganizationGlobalizationUtil.globalize
-                               ("cms.contenttypes.organization.chose_image_when_ignoring")));
+                data.addError(
+                     IMAGE,
+                     (OrganizationGlobalizationUtil.globalize
+                     ("cms.contenttypes.ui.organization.chose_image_when_ignoring")));
             }
         } else if (imageOption.equals(DELETE_OPTION)) {
             if (fileName != null && !fileName.equals("")) {
-                data.addError(IMAGE,
-                              (OrganizationGlobalizationUtil.globalize
-                               ("cms.contenttypes.organization.chose_image_when_deleting")));
+                data.addError(
+                     IMAGE,
+                     (OrganizationGlobalizationUtil.globalize
+                     ("cms.contenttypes.ui.organization.chose_image_when_deleting")));
             }
         } else {
             if (fileName == null || fileName.equals("")) {
-                data.addError(IMAGE,
-                              (OrganizationGlobalizationUtil.globalize
-                               ("cms.contenttypes.organization.chose_image_when_uploading")));
+                data.addError(
+                     IMAGE,
+                     (OrganizationGlobalizationUtil.globalize
+                     ("cms.contenttypes.ui.organization.chose_image_when_uploading")));
             }
         }
     }

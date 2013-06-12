@@ -23,14 +23,14 @@ import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
-// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
-import com.arsdigita.cms.ui.authoring.WorkflowLockedComponentAccess;
+// import com.arsdigita.cms.ui.authoring.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.ImageAsset;
 
 import com.arsdigita.cms.Service;
@@ -43,24 +43,35 @@ import java.math.BigDecimal;
  *
  * @version $Id: OrganizationImageStep.java 755 2005-09-02 13:42:47Z sskracic $
  */
-public class OrganizationImageStep
-    extends SimpleEditStep {
+public class OrganizationImageStep extends SimpleEditStep {
 
     /** The name of the editing sheet added to this step */
     public static String IMAGE_SHEET_NAME = "image";
 
+    /**
+     * Constructor.
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public OrganizationImageStep( ItemSelectionModel itemModel,
-				  AuthoringKitWizard parent ) {
+				                  AuthoringKitWizard parent ) {
 	super( itemModel, parent, "_image" );
 
     setDefaultEditKey(IMAGE_SHEET_NAME);
-	add( IMAGE_SHEET_NAME, "Change",
+    // as soon as SecuityPropertyEditor is refactored to accept a Label or a
+    // GlobalizedMessage, the Label String has to be globalized!
+	add( IMAGE_SHEET_NAME, 
+         "Change (OrgImageStep)",
          new WorkflowLockedComponentAccess(new OrganizationImageForm(
-                 "OrganizationImageForm", itemModel, this), itemModel));
+                 "OrganizationImageForm", itemModel, this), 
+         itemModel));
 
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel, false);
-	sheet.add(OrganizationGlobalizationUtil.globalize
-              ("cms.contenttypes.image"), Organization.IMAGE, new ImageFormatter());
+	sheet.add(OrganizationGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.organization.image"), 
+              Organization.IMAGE, 
+              new ImageFormatter());
 
 	setDisplayComponent( sheet );
     }
@@ -72,7 +83,7 @@ public class OrganizationImageStep
         private String m_default;
 
         public ImageFormatter() {
-            this("<i>no image</i>");
+            this("no image");
         }
 
         public ImageFormatter(String def) {
@@ -98,7 +109,7 @@ public class OrganizationImageStep
 
         public static String getHTMLDisplay(ImageAsset image) {
             if (image == null)
-                return ("<i>no image</i>");
+                return ("no image");
 
             BigDecimal width = image.getWidth();
             String widthStr = "";

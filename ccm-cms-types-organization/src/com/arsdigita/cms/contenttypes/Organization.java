@@ -68,6 +68,7 @@ public class Organization extends ContentPage {
         super(type);
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         
@@ -114,6 +115,7 @@ public class Organization extends ContentPage {
     }
 
 
+    @Override
     public void delete() {
         ImageAsset image = getImage();
         if (image != null) {

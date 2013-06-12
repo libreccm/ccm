@@ -36,10 +36,19 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import java.text.DateFormat;
 
+/**
+ * 
+ * 
+ */
 public class GenericPersonPropertiesStep extends SimpleEditStep {
 
     public static final String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public GenericPersonPropertiesStep(ItemSelectionModel itemModel,
                                        AuthoringKitWizard parent) {
         super(itemModel, parent);

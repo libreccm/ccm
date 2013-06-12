@@ -27,6 +27,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.authoring.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 
@@ -69,9 +70,19 @@ public class OrganizationPropertiesStep
                                                           itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"), 
+                  Organization.TITLE);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"), 
+                  Organization.NAME);
 
-    sheet.add(OrganizationGlobalizationUtil.globalize("cms.contenttypes.link"), Organization.LINK);
-    sheet.add(OrganizationGlobalizationUtil.globalize("cms.contenttypes.contact"), Organization.CONTACT);
+        sheet.add(OrganizationGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.organization.link"), 
+                  Organization.LINK);
+        sheet.add(OrganizationGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.organization.contact"), 
+                  Organization.CONTACT);
 
 	return sheet;
     }

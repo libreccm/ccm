@@ -75,7 +75,7 @@ public class FileStorageItemPropertiesStep
         sheet.add( GlobalizationUtil
                    .globalize("cms.ui.authoring.title"), FileStorageItem.TITLE );
         sheet.add( GlobalizationUtil
-                   .globalize("cms.contenttypes.summary"), FileStorageItem.DESCRIPTION );
+                   .globalize("cms.contenttypes.ui.summary"), FileStorageItem.DESCRIPTION );
 
         return sheet;
     }

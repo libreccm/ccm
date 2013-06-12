@@ -23,6 +23,7 @@ import com.arsdigita.cms.contenttypes.SiteProxy;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.util.SiteProxyGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
@@ -33,20 +34,27 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  * Authoring step to edit the simple attributes of the SiteProxy content 
  * type (and its subclasses). 
  */
-public class SiteProxyPropertiesStep
-    extends SimpleEditStep {
+public class SiteProxyPropertiesStep extends SimpleEditStep {
 
     /** The name of the editing sheet added to this step */
     public static final String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * Constructor.
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public SiteProxyPropertiesStep( ItemSelectionModel itemModel,
-                                       AuthoringKitWizard parent ) {
+                                    AuthoringKitWizard parent ) {
         super( itemModel, parent );
 
         BasicPageForm editSheet;
 
         editSheet = new SiteProxyPropertyForm( itemModel );
-        add( EDIT_SHEET_NAME, "Edit", 
+        add( EDIT_SHEET_NAME, 
+             "Edit",   // Parent class SecurityPropertyEditor just aceppts
+                       // a String here. Has to be modified after refactoring!
              new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 
@@ -65,9 +73,15 @@ public class SiteProxyPropertiesStep
                                                           itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add( "Name:", SiteProxy.NAME );
-        sheet.add( "Title:", SiteProxy.TITLE );
-        sheet.add( "URL:", SiteProxy.URL );
+        sheet.add( SiteProxyGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.title"), 
+                   SiteProxy.TITLE );
+        sheet.add( SiteProxyGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"),
+                   SiteProxy.NAME );
+        sheet.add( SiteProxyGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.url"),  
+                   SiteProxy.URL );
 
         return sheet;
     }
