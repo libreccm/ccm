@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.navigation;
 
 import com.arsdigita.categorization.Category;
@@ -86,7 +85,7 @@ import com.arsdigita.xml.XML;
  */
 public class Initializer extends CompoundInitializer {
 
-    public static final Logger s_log = Logger.getLogger(Initializer.class);
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
 
     /**
      * Constructor
@@ -95,10 +94,8 @@ public class Initializer extends CompoundInitializer {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
-        add(new PDLInitializer
-            (new ManifestSource
-             ("ccm-navigation.pdl.mf",
-              new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
+        add(new PDLInitializer(new ManifestSource("ccm-navigation.pdl.mf",
+                                                  new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
     /**
@@ -114,244 +111,246 @@ public class Initializer extends CompoundInitializer {
         // Use the content-sections configuration directly!
         // System.setProperty( NavigationConstants.DEFAULT_CONTENT_SECTION_URL,
         //                     Navigation.getConfig().getDefaultContentSectionURL() );
-        System.setProperty( NavigationConstants.DEFAULT_CONTENT_SECTION_URL,
-                            ContentSection.getConfig().getDefaultContentSection() );
+        System.setProperty(NavigationConstants.DEFAULT_CONTENT_SECTION_URL,
+                           ContentSection.getConfig().getDefaultContentSection());
 
-        e.getFactory().registerInstantiator
-            (Template.BASE_DATA_OBJECT_TYPE,
-             new DomainObjectInstantiator() {
-                 public DomainObject doNewInstance(DataObject dataObject) {
-                     return new Template(dataObject);
-                 }
-                 @Override
-                 public DomainObjectInstantiator
-                     resolveInstantiator(DataObject obj) {
-                     return this;
-                 }
-             });
+        e.getFactory().registerInstantiator(Template.BASE_DATA_OBJECT_TYPE,
+                                            new DomainObjectInstantiator() {
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new Template(dataObject);
+            }
 
-        e.getFactory().registerInstantiator
-            (Navigation.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(DataObject dataObject) {
-                     return new Navigation(dataObject);
-                 }
-             });
+            @Override
+            public DomainObjectInstantiator resolveInstantiator(DataObject obj) {
+                return this;
+            }
+
+        });
+
+        e.getFactory().registerInstantiator(Navigation.BASE_DATA_OBJECT_TYPE,
+                                            new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new Navigation(dataObject);
+            }
+
+        });
 
         NavigationTreePortlet.registerInstantiator();
         NavigationTreePortlet.registerResourceTypeConfig();
 
-        e.getFactory().registerInstantiator
-            (ItemListPortlet.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(DataObject dataObject) {
-                     return new ItemListPortlet(dataObject);
-                 }
-             });
+        e.getFactory().registerInstantiator(ItemListPortlet.BASE_DATA_OBJECT_TYPE,
+                                            new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new ItemListPortlet(dataObject);
+            }
 
-        e.getFactory().registerInstantiator
-            (ObjectListPortlet.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(DataObject dataObject) {
-                     return new ObjectListPortlet(dataObject);
-                 }
-             });
-        
-        e.getFactory().registerInstantiator
-            (TemplateMapping.BASE_DATA_OBJECT_TYPE,
-             new DomainObjectInstantiator() {
-                 public DomainObject doNewInstance(DataObject dataObject) {
-                     return new TemplateMapping(dataObject);
-                 }
-                 @Override
-                 public DomainObjectInstantiator
-                     resolveInstantiator(DataObject obj) {
-                     return this;
-                 }
-            });
+        });
+
+        e.getFactory().registerInstantiator(ObjectListPortlet.BASE_DATA_OBJECT_TYPE,
+                                            new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new ObjectListPortlet(dataObject);
+            }
+
+        });
+
+        e.getFactory().registerInstantiator(TemplateMapping.BASE_DATA_OBJECT_TYPE,
+                                            new DomainObjectInstantiator() {
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new TemplateMapping(dataObject);
+            }
+
+            @Override
+            public DomainObjectInstantiator resolveInstantiator(DataObject obj) {
+                return this;
+            }
+
+        });
 
 
 
         new ResourceTypeConfig(ObjectListPortlet.BASE_DATA_OBJECT_TYPE) {
             @Override
-            public ResourceConfigFormSection getCreateFormSection
-                (final ResourceType resType, final RequestLocal parentAppRL) {
+            public ResourceConfigFormSection getCreateFormSection(final ResourceType resType,
+                                                                  final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
-                    new ObjectListPortletEditor(resType, parentAppRL);
-                
+                                                new ObjectListPortletEditor(resType, parentAppRL);
+
                 return config;
             }
-            
+
             @Override
-            public ResourceConfigFormSection getModifyFormSection
-                (final RequestLocal application) {
+            public ResourceConfigFormSection getModifyFormSection(final RequestLocal application) {
                 final ObjectListPortletEditor config =
-                    new ObjectListPortletEditor(application);
-                
+                                              new ObjectListPortletEditor(application);
+
                 return config;
             }
+
         };
 
         new ResourceTypeConfig(ItemListPortlet.BASE_DATA_OBJECT_TYPE) {
             @Override
-            public ResourceConfigFormSection getCreateFormSection
-                (final ResourceType resType, final RequestLocal parentAppRL) {
+            public ResourceConfigFormSection getCreateFormSection(final ResourceType resType,
+                                                                  final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
-                    new ItemListPortletEditor(resType, parentAppRL);
-                
+                                                new ItemListPortletEditor(resType, parentAppRL);
+
                 return config;
             }
-            
+
             @Override
-            public ResourceConfigFormSection getModifyFormSection
-                (final RequestLocal application) {
+            public ResourceConfigFormSection getModifyFormSection(final RequestLocal application) {
                 final ItemListPortletEditor config =
-                    new ItemListPortletEditor(application);
-                
+                                            new ItemListPortletEditor(application);
+
                 return config;
             }
+
         };
 
+        URLService.registerFinder(Category.BASE_DATA_OBJECT_TYPE, new NavigationUrlFinder());
 
-        URLService.registerFinder(
-            Category.BASE_DATA_OBJECT_TYPE,
-            new URLFinder() {
-                public String find(OID oid, String context)
-                    throws NoValidURLException {
-                    return find(oid);
-                }
-                public String find(OID oid)
-                    throws NoValidURLException {
-                    
-                    if (s_log.isInfoEnabled()) {
-                        s_log.info("Locating " + oid);
-                    }
-
-                    Category cat = (Category)DomainObjectFactory.newInstance(oid);
-                    CategoryCollection ancestors = cat.getDefaultAscendants();
-                    // XXX bz 118313
-                    ancestors.clearOrder();
-                    ancestors.addOrder(Category.DEFAULT_ANCESTORS);
-                    
-                    List ids = new ArrayList();
-                    List paths = new LinkedList();
-                    boolean first = true;
-                    while (ancestors.next()) {
-                        Category anc = ancestors.getCategory();
-                        if (s_log.isDebugEnabled()) {
-                            s_log.debug("Process parent " + anc);
-                        }
-                        ids.add(anc.getID());
-                        if (first) {
-                            first = false;
-                            paths.add("");
-                            continue;
-                        }
-                        if (paths != null) {
-                            String url = anc.getURL();
-                            if (url != null && !"".equals(url)) {
-                                s_log.debug("Appending '" + url + "' for anc");
-                                paths.add(url);
-                            } else {
-                                if (s_log.isInfoEnabled()) {
-                                    s_log.info("Cat " + anc + " has no url ");
-                                }
-                                paths = null;
-                            }
-                        } else {
-                            s_log.debug("Path is null");
-                        }
-                    }
-                    
-                    if (s_log.isDebugEnabled() && null != paths) {
-                        StringBuffer buf = new StringBuffer();
-                        Iterator idsit = ids.iterator();
-                        Iterator pathsit = paths.iterator();
-                        while(idsit.hasNext()) {
-                            buf.append(idsit.next().toString()).append(' ');
-                            buf.append(pathsit.next().toString()).append('/');
-                        }
-                        s_log.debug("Full path is " + buf.toString());
-                    }
-
-                    TemplateContext tContext =
-                        Navigation.getContext().getTemplateContext();
-                    String useContext = null == tContext ?
-                        null : tContext.getContext();
-                    if (s_log.isDebugEnabled()) {
-                        s_log.debug("Use Context: " + useContext);
-                    }
-
-                    DataCollection apps = SessionManager.getSession().retrieve
-                        (Application.BASE_DATA_OBJECT_TYPE);
-                    apps.addEqualsFilter("objectType", Navigation.BASE_DATA_OBJECT_TYPE);
-                    apps.addEqualsFilter("rootUseContext.useContext", useContext);
-                    Filter f = apps.addFilter("rootUseContext.rootCategory in :ids");
-                    f.set("ids", ids);
-
-                    apps.addPath("rootUseContext.rootCategory.id");
-                    
-                    String appURL = null;
-                    BigDecimal rootCatID = null;
-                    
-                    if (!apps.next()) {
-                        appURL = Navigation.getConfig().getDefaultCategoryRootPath();
-                        // We can only use named paths if the category is mapped
-                        // to a navigation app instance in the current
-                        // use context 
-                        paths = null;
-                        if (s_log.isDebugEnabled()) {
-                            s_log.debug("Using default nav path " + appURL);
-                        }
-                    } else {
-                        Application app = (Application)
-                            DomainObjectFactory.newInstance(apps.getDataObject());
-                        appURL = app.getPrimaryURL();
-                        rootCatID = (BigDecimal) apps.get("rootUseContext.rootCategory.id");
-                        apps.close();
-                    }
-                    
-                    if (s_log.isInfoEnabled()) {
-                        s_log.info("Application path is " + appURL);
-                    }
-
-                    Assert.isTrue(appURL.startsWith("/"), "url starts with '/'");
-                    Assert.isTrue(appURL.endsWith("/"), "url ends with '/'");
-
-                    ParameterMap map = new ParameterMap();
-                    String path;
-                    if (paths == null) {
-                        map.setParameter("categoryID", cat.getID());
-                        path = "category.jsp";
-                    } else {
-                        if (s_log.isDebugEnabled()) {
-                            s_log.debug("Generating path from category " +
-                                        rootCatID);
-                        }
-                        StringBuffer buf = new StringBuffer();
-                        Iterator pathsit = paths.iterator();
-                        Iterator idsit = ids.iterator();
-                        boolean gotRoot = false;
-                        while(pathsit.hasNext()) {
-                            String frag = (String)pathsit.next();
-                            BigDecimal id = (BigDecimal)idsit.next();
-                            if (gotRoot) buf.append(frag).append('/');
-                            else if (id.equals(rootCatID)) gotRoot = true;
-                        }
-                        path = buf.toString();
-                    }
-
-                    String url = URL.there(Web.getRequest(),
-                                           appURL + path, map).toString();
-                    if (s_log.isInfoEnabled()) {
-                        s_log.info("Final url is " + url);
-                    }
-                    return url;
-                }
-            });
+//        URLService.registerFinder(Category.BASE_DATA_OBJECT_TYPE,
+//                                  new URLFinder() {
+//                                      
+//            public String find(OID oid, String context)
+//                    throws NoValidURLException {
+//                return find(oid);
+//            }
+//
+//            public String find(OID oid)
+//                    throws NoValidURLException {
+//
+//                if (s_log.isInfoEnabled()) {
+//                    s_log.info("Locating " + oid);
+//                }
+//
+//                Category cat = (Category) DomainObjectFactory.newInstance(oid);
+//                CategoryCollection ancestors = cat.getDefaultAscendants();
+//                // XXX bz 118313
+//                ancestors.clearOrder();
+//                ancestors.addOrder(Category.DEFAULT_ANCESTORS);
+//
+//                List ids = new ArrayList();
+//                List paths = new LinkedList();
+//                boolean first = true;
+//                while (ancestors.next()) {
+//                    Category anc = ancestors.getCategory();
+//                    if (s_log.isDebugEnabled()) {
+//                        s_log.debug("Process parent " + anc);
+//                    }
+//                    ids.add(anc.getID());
+//                    if (first) {
+//                        first = false;
+//                        paths.add("");
+//                        continue;
+//                    }
+//                    if (paths != null) {
+//                        String url = anc.getURL();
+//                        if (url != null && !"".equals(url)) {
+//                            s_log.debug("Appending '" + url + "' for anc");
+//                            paths.add(url);
+//                        } else {
+//                            if (s_log.isInfoEnabled()) {
+//                                s_log.info("Cat " + anc + " has no url ");
+//                            }
+//                            paths = null;
+//                        }
+//                    } else {
+//                        s_log.debug("Path is null");
+//                    }
+//                }
+//
+//                if (s_log.isDebugEnabled() && null != paths) {
+//                    StringBuffer buf = new StringBuffer();
+//                    Iterator idsit = ids.iterator();
+//                    Iterator pathsit = paths.iterator();
+//                    while (idsit.hasNext()) {
+//                        buf.append(idsit.next().toString()).append(' ');
+//                        buf.append(pathsit.next().toString()).append('/');
+//                    }
+//                    s_log.debug("Full path is " + buf.toString());
+//                }
+//
+//                TemplateContext tContext =
+//                                Navigation.getContext().getTemplateContext();
+//                String useContext = null == tContext ? null : tContext.getContext();
+//                if (s_log.isDebugEnabled()) {
+//                    s_log.debug("Use Context: " + useContext);
+//                }
+//
+//                DataCollection apps = SessionManager.getSession().retrieve(Application.BASE_DATA_OBJECT_TYPE);
+//                apps.addEqualsFilter("objectType", Navigation.BASE_DATA_OBJECT_TYPE);
+//                apps.addEqualsFilter("rootUseContext.useContext", useContext);
+//                Filter f = apps.addFilter("rootUseContext.rootCategory in :ids");
+//                f.set("ids", ids);
+//
+//                apps.addPath("rootUseContext.rootCategory.id");
+//
+//                String appURL = null;
+//                BigDecimal rootCatID = null;
+//
+//                if (!apps.next()) {
+//                    appURL = Navigation.getConfig().getDefaultCategoryRootPath();
+//                    // We can only use named paths if the category is mapped
+//                    // to a navigation app instance in the current
+//                    // use context 
+//                    paths = null;
+//                    if (s_log.isDebugEnabled()) {
+//                        s_log.debug("Using default nav path " + appURL);
+//                    }
+//                } else {
+//                    Application app = (Application) DomainObjectFactory.newInstance(apps.getDataObject());
+//                    //appURL = app.getPrimaryURL();
+//                    appURL = String.format("%s/", app.getPath());
+//                    rootCatID = (BigDecimal) apps.get("rootUseContext.rootCategory.id");
+//                    apps.close();
+//                }
+//
+//                if (s_log.isInfoEnabled()) {
+//                    s_log.info("Application path is " + appURL);
+//                }
+//
+//                Assert.isTrue(appURL.startsWith("/"), "url starts with '/'");
+//                Assert.isTrue(appURL.endsWith("/"), "url ends with '/'");
+//
+//                ParameterMap map = new ParameterMap();
+//                String path;
+//                if (paths == null) {
+//                    map.setParameter("categoryID", cat.getID());
+//                    path = "category.jsp";
+//                } else {
+//                    if (s_log.isDebugEnabled()) {
+//                        s_log.debug("Generating path from category " + rootCatID);
+//                    }
+//                    StringBuffer buf = new StringBuffer();
+//                    Iterator pathsit = paths.iterator();
+//                    Iterator idsit = ids.iterator();
+//                    boolean gotRoot = false;
+//                    while (pathsit.hasNext()) {
+//                        String frag = (String) pathsit.next();
+//                        BigDecimal id = (BigDecimal) idsit.next();
+//                        if (gotRoot) {
+//                            buf.append(frag).append('/');
+//                        } else if (id.equals(rootCatID)) {
+//                            gotRoot = true;
+//                        }
+//                    }
+//                    path = buf.toString();
+//                }
+//
+//                String url = URL.there(Web.getRequest(), appURL + path, map).toString();
+//                if (s_log.isInfoEnabled()) {
+//                    s_log.info("Final url is " + url);
+//                }
+//                return url;
+//            }
+//
+//        });
 
         XML.parse(Navigation.getConfig().getTraversalAdapters(),
                   new TraversalHandler());
