@@ -59,24 +59,28 @@ public class SiteProxyAtoZPropertyForm extends BasicItemForm {
 	/**
 	 * Adds widgets to the form.
 	 */
+    @Override
 	protected void addWidgets() {
-		add(new Label(SiteProxyGlobalizationUtil
-				.globalize(Constants.LABEL_TITLE_ATOZ)));
+
+        add(new Label(SiteProxyGlobalizationUtil
+				.globalize("cms.contenttypes.ui.siteproxy.label.atoztitle")));
 		m_title_atoz = new TextField(SiteProxy.TITLE_ATOZ);
 		m_title_atoz.setSize(50);
 		add(m_title_atoz);
-		add(new Label(SiteProxyGlobalizationUtil
-				.globalize(Constants.LABEL_USED_IN_ATOZ)));
+
+        add(new Label(SiteProxyGlobalizationUtil
+				.globalize("cms.contenttypes.ui.siteproxy.label.usedinatoz")));
 		m_radiogroupUsedInAtoZ = new RadioGroup(SiteProxy.USED_IN_ATOZ);
-		m_radiogroupUsedInAtoZ.addOption(new Option(Boolean.TRUE.toString(),
-				SiteProxyGlobalizationUtil.globalize(
-						Constants.OPTION_USED_IN_ATOZ_YES).localize()
-						.toString()));
-		m_radiogroupUsedInAtoZ
-				.addOption(new Option(Boolean.FALSE.toString(),
-						SiteProxyGlobalizationUtil.globalize(
-								Constants.OPTION_USED_IN_ATOZ_NO).localize()
-								.toString()));
+		m_radiogroupUsedInAtoZ.addOption(new 
+                Option(Boolean.TRUE.toString(),
+				       new Label( SiteProxyGlobalizationUtil.globalize(
+                           "cms.contenttypes.ui.siteproxy.option.usedinatoz.yes"))
+                       ));
+		m_radiogroupUsedInAtoZ.addOption(new 
+                Option(Boolean.FALSE.toString(),
+				       new Label( SiteProxyGlobalizationUtil.globalize(
+                           "cms.contenttypes.ui.siteproxy.option.usedinatoz.no"))
+                       ));
 		add(m_radiogroupUsedInAtoZ);
 	}
 

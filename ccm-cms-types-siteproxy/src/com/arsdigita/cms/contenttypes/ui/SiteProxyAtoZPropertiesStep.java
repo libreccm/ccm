@@ -33,29 +33,31 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
  * Authoring step to edit the simple attributes for the SiteProxy content
- * connection to new AtoZ
+ * connection to new AtoZ.
  */
 public class SiteProxyAtoZPropertiesStep extends SimpleEditStep {
 
 	/** The name of the editing sheet added to this step */
 	public static final String EDIT_ATOZ_SHEET_NAME = "editAtoZ";
 
-	public static final String LINK_EDIT = "cms.contenttypes.ui.siteproxy.link.editatoz";
-
 	/**
-	 * @param itemModel
-	 * @param parent
-	 */
-	public SiteProxyAtoZPropertiesStep(ItemSelectionModel itemModel,
-			AuthoringKitWizard parent) {
-		super(itemModel, parent);
+     * Constructor. 
+     * 
+     * @param itemModel
+     * @param parent
+     */
+    public SiteProxyAtoZPropertiesStep(ItemSelectionModel itemModel,
+                                       AuthoringKitWizard parent) {
 
-		BasicItemForm form;
+        super(itemModel, parent);
 
-		form = new SiteProxyAtoZPropertyForm(itemModel);
-		add(EDIT_ATOZ_SHEET_NAME, SiteProxyGlobalizationUtil.globalize(
-				LINK_EDIT).localize().toString(),
-				new WorkflowLockedComponentAccess(form, itemModel), form
+        BasicItemForm form;
+
+        form = new SiteProxyAtoZPropertyForm(itemModel);
+        add(EDIT_ATOZ_SHEET_NAME, 
+            SiteProxyGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.siteproxy.link.editatoz").localize().toString(),
+			new WorkflowLockedComponentAccess(form, itemModel), form
 						.getSaveCancelSection().getCancelButton());
 
 		setDisplayComponent(getSiteProxyAtoZPropertySheet(itemModel));
@@ -72,40 +74,55 @@ public class SiteProxyAtoZPropertiesStep extends SimpleEditStep {
 	 *         properties of the release
 	 */
 	public static Component getSiteProxyAtoZPropertySheet(
-			ItemSelectionModel itemModel) {
-		DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(
+			                                     ItemSelectionModel itemModel) {
+
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(
 				itemModel);
 
 		sheet.add(SiteProxyGlobalizationUtil
-				.globalize(Constants.LABEL_TITLE_ATOZ), SiteProxy.TITLE_ATOZ);
+				  .globalize("cms.contenttypes.ui.siteproxy.label.atoztitle"), 
+                  SiteProxy.TITLE_ATOZ);
 
 		sheet.add(SiteProxyGlobalizationUtil
-				.globalize(Constants.LABEL_USED_IN_ATOZ),
-				SiteProxy.USED_IN_ATOZ, new BooleanAttributeFormater(
-						(String) SiteProxyGlobalizationUtil.globalize(
-								Constants.OPTION_USED_IN_ATOZ_YES).localize(),
-						(String) SiteProxyGlobalizationUtil.globalize(
-								Constants.OPTION_USED_IN_ATOZ_NO).localize()));
+				  .globalize("cms.contenttypes.ui.siteproxy.label.usedinatoz"),
+				  SiteProxy.USED_IN_ATOZ, 
+                  new BooleanAttributeFormater());
 
 		return sheet;
 	}
 
-	private static class BooleanAttributeFormater implements
-			DomainObjectPropertySheet.AttributeFormatter {
+	/**
+     * Private class which implements an AttributeFormatter interface for 
+     * boolean values.
+     * Its format(...) class returns a string representation for either a
+     * false or a true value.
+     */
+    private static class BooleanAttributeFormater 
+                         implements DomainObjectPropertySheet.AttributeFormatter {
 
-		private static final String DEFAULT = "-";
+        /** Default value just in case there is no value at all.             */
+        private static final String DEFAULT = "-";
 
-		private String trueValue;
+        /**
+         * Constructor, does nothing.
+         */
+        public BooleanAttributeFormater() {
+        }
 
-		private String falseValue;
-
-		public BooleanAttributeFormater(String trueValue, String falseValue) {
-			this.trueValue = trueValue;
-			this.falseValue = falseValue;
-		}
-
-		public String format(DomainObject obj, String attribute, PageState state) {
-			if (obj == null)
+        /**
+         * Formatter for the value of an attribute.
+         * 
+         * Note: the format method has to be executed at each page request. Take
+         * care to properly adjust globalization and localization here!
+         * 
+         * @param obj        Object containing the attribute to format.
+         * @param attribute  Name of the attribute to retrieve and format
+         * @param state      PageState of the request
+         * @return           A String representation of the retrieved boolean
+         *                   attribute of the domain object.
+         */
+        public String format(DomainObject obj, String attribute, PageState state) {
+            if (obj == null)
 				return BooleanAttributeFormater.DEFAULT;
 
 			if ((obj instanceof ContentItem)) {
@@ -116,10 +133,19 @@ public class SiteProxyAtoZPropertiesStep extends SimpleEditStep {
 
 				if (field instanceof Boolean) {
 					Boolean value = (Boolean) contentItem.get(attribute);
-					if (value.booleanValue())
-						return trueValue;
-					else
-						return falseValue;
+					if (value.booleanValue()) {
+                        
+                        return (String) SiteProxyGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.siteproxy.option.usedinatoz.yes")
+                            .localize();
+
+                    } else {
+
+                        return (String) SiteProxyGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.siteproxy.option.usedinatoz.no")
+                            .localize();
+
+                    }
 				}
 			}
 			return BooleanAttributeFormater.DEFAULT;

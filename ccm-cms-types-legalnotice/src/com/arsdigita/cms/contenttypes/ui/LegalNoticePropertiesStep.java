@@ -86,21 +86,7 @@ public class LegalNoticePropertiesStep extends SimpleEditStep {
             sheet.add(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-                          public String format(DomainObject item,
-                                               String attribute,
-                                               PageState state) {
-                              ContentPage page = (ContentPage) item;
-                              if(page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG)
-                                      .format(page.getLaunchDate());
-                              } else {
-                                  return (String)GlobalizationUtil
-                                         .globalize("cms.ui.unknown")
-                                          .localize();
-                              }
-                          }
-                      });
+                      new LaunchDateAttributeFormatter() );
         }
         sheet.add( LegalNoticeGlobalizationUtil
                    .globalize("cms.contenttypes.ui.legal_notice.government_uid"),

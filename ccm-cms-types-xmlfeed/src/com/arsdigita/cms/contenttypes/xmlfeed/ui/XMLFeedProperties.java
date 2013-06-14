@@ -39,10 +39,12 @@ public class XMLFeedProperties extends FormProperties {
         super(model, parent);
     }
 
+    @Override
     protected BasicPageForm buildEditForm(ItemSelectionModel model) {
         return new XMLFeedPropertyEditForm(model);
     }
 
+    @Override
     protected Component buildDisplayComponent(ItemSelectionModel model) {
         return new XMLFeedPropertySheet(model);
     }
@@ -55,6 +57,7 @@ public class XMLFeedProperties extends FormProperties {
             super(model);
         }
 
+        @Override
         protected void addWidgets() {
             super.addWidgets();
             
@@ -66,6 +69,7 @@ public class XMLFeedProperties extends FormProperties {
             add(m_url);
         }
 
+        @Override
         public ContentPage initBasicWidgets(FormSectionEvent e) {
             XMLFeed item = (XMLFeed)super.initBasicWidgets(e);
 
@@ -74,6 +78,7 @@ public class XMLFeedProperties extends FormProperties {
         }
 
         
+        @Override
         public ContentPage processBasicWidgets(FormSectionEvent e) {
             XMLFeed item = (XMLFeed)super.processBasicWidgets(e);
 

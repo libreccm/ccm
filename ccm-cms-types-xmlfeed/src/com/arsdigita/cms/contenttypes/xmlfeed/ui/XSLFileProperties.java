@@ -68,9 +68,9 @@ import org.apache.log4j.Logger;
 
 /**
  * <p>
- * This class represents the authoring step for the
- * {@link XmlFeed XmlFeed} that allows you to associate the correct XSL file to
- * allow the feed to be transformed into HTML.
+ * This class represents the authoring step for the {@link XmlFeed XmlFeed}
+ * that allows you to associate the correct XSL file to allow the feed to 
+ * be transformed into HTML.
  * </p>
  *
  * <p>

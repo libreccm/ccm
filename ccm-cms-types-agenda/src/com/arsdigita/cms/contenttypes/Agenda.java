@@ -52,6 +52,10 @@ import java.util.Date;
  **/
 public class Agenda extends GenericArticle {
 
+    /** Data object type for this domain object (for CMS compatibility) */
+    private static final Logger s_log = Logger.getLogger(Logger.class);
+
+    //  PDL stuff  *************************************************************
     /** PDL property name for summary */
     public static final String SUMMARY = "summary";
     /** PDL property name for agenda date */
@@ -67,9 +71,8 @@ public class Agenda extends GenericArticle {
     /** PDL property name for creation date */
     public static final String CREATION_DATE = "creationDate";
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Agenda";
-    /** Data object type for this domain object (for CMS compatibility) */
-    private static final Logger s_log = Logger.getLogger(Logger.class);
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.cms.contenttypes.Agenda";
 
     /**
      * Default constructor. This creates a new (empty) Agenda.

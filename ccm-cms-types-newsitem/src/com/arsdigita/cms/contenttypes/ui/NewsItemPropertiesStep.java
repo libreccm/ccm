@@ -31,6 +31,7 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.contenttypes.util.NewsItemGlobalizationUtil;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 import com.arsdigita.globalization.GlobalizationHelper;
 
@@ -57,9 +58,10 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new NewsItemPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet,
-                                                                       itemModel),
-                editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet,itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getNewsDomainObjectPropertySheet(itemModel));
     }
@@ -84,27 +86,10 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
                   .globalize("cms.contenttypes.ui.newsitem.lead"), NewsItem.LEAD);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(NewsItemGlobalizationUtil.globalize(
-                                                "cms.contenttypes.ui.launch_date"),
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-
-                public String format(DomainObject item,
-                                     String attribute,
-                                     PageState state) {
-                    ContentPage page = (ContentPage) item;
-                    if (page.getLaunchDate() != null) {
-                         return DateFormat.getDateInstance(
-                                   DateFormat.LONG, 
-                                   GlobalizationHelper.getNegotiatedLocale())
-                                   .format(page.getLaunchDate());
-                    } else {
-                        return (String) NewsItemGlobalizationUtil
-                               .globalize("cms.contenttypes.ui.newsitem.unknown")
-                               .localize();
-                    }
-                }
-            });
+                      new LaunchDateAttributeFormatter() );
         }
 
         // Show news item on homepage?
@@ -135,25 +120,66 @@ public class NewsItemPropertiesStep extends SimpleEditStep {
         sheet.add(NewsItemGlobalizationUtil.globalize(
                                            "cms.contenttypes.ui.newsitem.news_date"), 
                   NewsItem.NEWS_DATE,
-                  new DomainObjectPropertySheet.AttributeFormatter() {
-
-            public String format(DomainObject item,
-                                 String attribute,
-                                 PageState state) {
-                NewsItem pr = (NewsItem) item;
-                if (pr.getNewsDate() != null) {
-                    return DateFormat.getDateInstance(
-                               DateFormat.LONG, 
-                               GlobalizationHelper.getNegotiatedLocale())
-                                                  .format(pr.getNewsDate());
-                } else {
-                    return (String) NewsItemGlobalizationUtil
-                            .globalize("cms.contenttypes.ui.newsitem.unknown")
-                            .localize();
-                }
-            }
-        });
+                  new NewsItemDateAttributeFormatter() );
 
         return sheet;
+    }
+
+	/**
+     * Private class which implements an AttributeFormatter interface for 
+     * NewsItem's date values.
+     * Its format(...) class returns a string representation for either a
+     * false or a true value.
+     */
+    private static class NewsItemDateAttributeFormatter 
+                         implements DomainObjectPropertySheet.AttributeFormatter {
+
+        /**
+         * Constructor, does nothing.
+         */
+        public NewsItemDateAttributeFormatter() {
+        }
+
+        /**
+         * Formatter for the value of an attribute.
+         * 
+         * It currently relays on the prerequisite that the passed in property
+         * attribute is in fact a date property. No type checking yet!
+         * 
+         * Note: the format method has to be executed at each page request. Take
+         * care to properly adjust globalization and localization here!
+         * 
+         * @param obj        Object containing the attribute to format.
+         * @param attribute  Name of the attribute to retrieve and format
+         * @param state      PageState of the request
+         * @return           A String representation of the retrieved boolean
+         *                   attribute of the domain object.
+         */
+        public String format(DomainObject obj, String attribute, PageState state) {
+ 
+            if ( obj != null && obj instanceof NewsItem) {
+                
+                NewsItem newsItem = (NewsItem) obj;
+                Object field = newsItem.get(attribute);
+
+                if( field != null ) {
+                    // Note: No type safety here! We relay that it is
+                    // attached to a date property!
+                    return DateFormat.getDateInstance(
+                                         DateFormat.LONG, 
+                                         GlobalizationHelper.getNegotiatedLocale()
+                                          )
+                                     .format(field);
+                } else {
+                    return (String)GlobalizationUtil
+                                   .globalize("cms.ui.unknown")
+                                   .localize();
+                }
+            }
+
+            return (String) GlobalizationUtil
+                            .globalize("cms.ui.unknown")
+                            .localize();
+        }
     }
 }

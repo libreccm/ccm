@@ -56,7 +56,9 @@ public class MinutesPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new MinutesPropertyForm(itemModel,this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getMinutesPropertySheet(itemModel));
@@ -86,21 +88,7 @@ public class MinutesPropertiesStep extends SimpleEditStep {
             sheet.add(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-                          public String format(DomainObject item,
-                                               String attribute,
-                                               PageState state) {
-                              ContentPage page = (ContentPage) item;
-                              if(page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG)
-                                      .format(page.getLaunchDate());
-                              } else {
-                                  return (String)GlobalizationUtil
-                                          .globalize("cms.ui.unknown")
-                                          .localize();
-                              }
-                          }
-                      });
+                      new LaunchDateAttributeFormatter() );
         }
         sheet.add( MinutesGlobalizationUtil
                    .globalize("cms.contenttypes.ui.minutes.reference"),

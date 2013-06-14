@@ -21,6 +21,8 @@ package com.arsdigita.cms.contenttypes.ui.authoring;
 import com.arsdigita.cms.contenttypes.FileStorageItem;
 import com.arsdigita.cms.contenttypes.ui.FileStorageItemPropertyForm;
 import com.arsdigita.bebop.Component;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -70,12 +72,18 @@ public class FileStorageItemPropertiesStep
                                                              itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.ui.authoring.title"), FileStorageItem.TITLE );
         sheet.add(GlobalizationUtil
                   .globalize("cms.ui.authoring.name"), FileStorageItem.NAME );
         sheet.add( GlobalizationUtil
-                   .globalize("cms.ui.authoring.title"), FileStorageItem.TITLE );
-        sheet.add( GlobalizationUtil
                    .globalize("cms.contenttypes.ui.summary"), FileStorageItem.DESCRIPTION );
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
+        }
 
         return sheet;
     }

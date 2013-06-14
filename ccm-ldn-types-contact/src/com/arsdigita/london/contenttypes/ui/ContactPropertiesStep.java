@@ -72,12 +72,12 @@ public class ContactPropertiesStep extends SimpleEditStep {
     DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
     sheet.add(
-      GlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.name"),
-      Contact.NAME);
-
-    sheet.add(
       GlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.title"),
       Contact.TITLE);
+
+    sheet.add(
+      GlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.name"),
+      Contact.NAME);
 
     sheet.add(
       ContactGlobalizationUtil.globalize(

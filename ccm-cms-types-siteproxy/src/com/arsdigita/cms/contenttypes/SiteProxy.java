@@ -48,11 +48,15 @@ public class SiteProxy extends ContentPage {
     public static final String USED_IN_ATOZ = "usedInAtoZ";
 
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.SiteProxy";
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.cms.contenttypes.SiteProxy";
 
     /** Data object type for this domain object (for CMS compatibility) */
     public static final String TYPE = BASE_DATA_OBJECT_TYPE;
 
+    /**
+     * Default Constructor.
+     */
     public SiteProxy() {
         this(BASE_DATA_OBJECT_TYPE);
         try {

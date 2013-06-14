@@ -99,7 +99,8 @@ public class AgendaPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(AgendaGlobalizationUtil.globalize("cms.contenttypes.ui.summary")));
+        add(new Label(AgendaGlobalizationUtil
+                     .globalize("cms.contenttypes.ui.summary")));
         ParameterModel summaryParam = new StringParameter(SUMMARY);
         //summaryParam
         //    .addParameterListener(new NotNullValidationListener());
@@ -109,14 +110,16 @@ public class AgendaPropertyForm extends BasicPageForm
         summary.setRows(5);
         add(summary);
 
-        add(new Label(AgendaGlobalizationUtil.globalize("cms.contenttypes.ui.agenda.agenda_date")));
+        add(new Label(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.agenda_date")));
         ParameterModel agendaDateParam = new DateTimeParameter(AGENDA_DATE);
         agendaDateParam
             .addParameterListener(new NotNullValidationListener());
         DateTime agendaDate = new DateTime(agendaDateParam);
         add(agendaDate);
 
-        add(new Label(AgendaGlobalizationUtil.globalize("cms.contenttypes.ui.agenda.location")));
+        add(new Label(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.location")));
         ParameterModel locationParam = new StringParameter(LOCATION);
         //locationParam
         //    .addParameterListener(new NotNullValidationListener());
@@ -126,7 +129,8 @@ public class AgendaPropertyForm extends BasicPageForm
         location.setRows(3);
         add(location);
 
-        add(new Label(AgendaGlobalizationUtil.globalize("cms.contenttypes.ui.agenda.attendees")));
+        add(new Label(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.attendees")));
         ParameterModel attendeesParam = new StringParameter(ATTENDEES);
         //attendeesParam
         //    .addParameterListener(new NotNullValidationListener());
@@ -136,7 +140,8 @@ public class AgendaPropertyForm extends BasicPageForm
         attendees.setRows(3);
         add(attendees);
 
-        add(new Label(AgendaGlobalizationUtil.globalize("cms.contenttypes.ui.agenda.subject_items")));
+        add(new Label(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.subject_items")));
         ParameterModel subjectItemsParam = new StringParameter(SUBJECT_ITEMS);
         //subjectItemsParam
         //    .addParameterListener(new NotNullValidationListener());
@@ -146,7 +151,8 @@ public class AgendaPropertyForm extends BasicPageForm
         subjectItems.setRows(3);
         add(subjectItems);
 
-        add(new Label(AgendaGlobalizationUtil.globalize("cms.contenttypes.ui.agenda.contact_info")));
+        add(new Label(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.contact_info")));
         ParameterModel contactInfoParam = new StringParameter(CONTACT_INFO);
         //contactInfoParam
         //    .addParameterListener(new NotNullValidationListener());
@@ -156,7 +162,8 @@ public class AgendaPropertyForm extends BasicPageForm
         contactInfo.setRows(3);
         add(contactInfo);
 
-        add(new Label(AgendaGlobalizationUtil.globalize("cms.contenttypes.ui.agenda.creation_date")));
+        add(new Label(AgendaGlobalizationUtil
+                     .globalize("cms.contenttypes.ui.agenda.creation_date")));
         ParameterModel creationDateParam = new DateParameter(CREATION_DATE);
         creationDateParam
             .addParameterListener(new NotNullValidationListener());
@@ -201,12 +208,11 @@ public class AgendaPropertyForm extends BasicPageForm
  
     /**
      * Form processing hook. Saves Agenda object.
-     **/
+     */
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 
-        Agenda agenda
-            = (Agenda) super.processBasicWidgets(fse);
+        Agenda agenda = (Agenda) super.processBasicWidgets(fse);
 
         // save only if save button was pressed
         if (agenda != null

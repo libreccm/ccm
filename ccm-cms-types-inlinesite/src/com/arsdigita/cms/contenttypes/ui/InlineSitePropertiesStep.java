@@ -36,7 +36,8 @@ import com.arsdigita.domain.DomainObject;
 import java.text.DateFormat;
 
 /**
- * Authoring step to edit the simple attributes of the InlineSite content type (and its subclasses).
+ * Authoring step to edit the simple attributes of the InlineSite content type 
+ * (and its subclasses).
  */
 public class InlineSitePropertiesStep extends SimpleEditStep {
 
@@ -75,25 +76,9 @@ public class InlineSitePropertiesStep extends SimpleEditStep {
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil
-                    .globalize("cms.contenttypes.ui.launch_date"),
+                      .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-                @Override
-                public String format(final DomainObject item,
-                                     final String attribute,
-                                     final PageState state) {
-                    ContentPage page = (ContentPage) item;
-                    if (page.getLaunchDate() != null) {
-                        return DateFormat
-                                .getDateInstance(DateFormat.LONG)
-                                .format(page.getLaunchDate());
-                    } else {
-                        return (String) GlobalizationUtil
-                                .globalize("cms.ui.unknown")
-                                .localize();
-                    }
-                }
-            });
+                      new LaunchDateAttributeFormatter() );
         }
 
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.summary"),

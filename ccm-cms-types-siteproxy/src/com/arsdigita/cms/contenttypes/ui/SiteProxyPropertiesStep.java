@@ -26,6 +26,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.util.SiteProxyGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
@@ -62,8 +63,9 @@ public class SiteProxyPropertiesStep extends SimpleEditStep {
     }
 
     /**
-     * Returns a component that displays the properties of the 
-     * SiteProxy specified by the ItemSelectionModel passed in.
+     * Returns a component that displays the properties of the SiteProxy
+     * specified by the ItemSelectionModel passed in.
+     * 
      * @param itemModel The ItemSelectionModel to use
      * @pre itemModel != null
      * @return A component to display the state of the basic properties
@@ -73,14 +75,14 @@ public class SiteProxyPropertiesStep extends SimpleEditStep {
                                                           itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add( SiteProxyGlobalizationUtil
+        sheet.add( GlobalizationUtil
                    .globalize("cms.contenttypes.ui.title"), 
                    SiteProxy.TITLE );
-        sheet.add( SiteProxyGlobalizationUtil
+        sheet.add( GlobalizationUtil
                    .globalize("cms.contenttypes.ui.name"),
                    SiteProxy.NAME );
         sheet.add( SiteProxyGlobalizationUtil
-                   .globalize("cms.contenttypes.ui.url"),  
+                   .globalize("cms.contenttypes.ui.siteproxy.url"),  
                    SiteProxy.URL );
 
         return sheet;
