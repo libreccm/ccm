@@ -56,7 +56,7 @@ public class SiteProxyAtoZPropertiesStep extends SimpleEditStep {
         form = new SiteProxyAtoZPropertyForm(itemModel);
         add(EDIT_ATOZ_SHEET_NAME, 
             SiteProxyGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.siteproxy.link.editatoz").localize().toString(),
+                     "cms.contenttypes.ui.siteproxy.link.editatoz"),
 			new WorkflowLockedComponentAccess(form, itemModel), form
 						.getSaveCancelSection().getCancelButton());
 

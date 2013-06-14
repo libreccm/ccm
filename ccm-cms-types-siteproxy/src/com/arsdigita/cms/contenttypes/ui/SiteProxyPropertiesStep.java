@@ -54,8 +54,8 @@ public class SiteProxyPropertiesStep extends SimpleEditStep {
 
         editSheet = new SiteProxyPropertyForm( itemModel );
         add( EDIT_SHEET_NAME, 
-             "Edit",   // Parent class SecurityPropertyEditor just aceppts
-                       // a String here. Has to be modified after refactoring!
+            SiteProxyGlobalizationUtil.globalize(
+                     "cms.contenttypes.ui.siteproxy.edit_form_link"),
              new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 
