@@ -24,13 +24,14 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PressRelease;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
-import com.arsdigita.domain.DomainObject;
+import com.arsdigita.cms.contenttypes.util.PressReleaseGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 import java.text.DateFormat;
 
@@ -39,13 +40,18 @@ import java.text.DateFormat;
  * (and its subclasses). The attributes edited are 'name', 'title', 'release
  * date' and 'reference code'. This authoring step replaces the
  * <code>com.arsdigita.ui.authoring.PageEdit</code> step for this type.
- **/
-public class PressReleasePropertiesStep
-    extends SimpleEditStep {
+ */
+public class PressReleasePropertiesStep extends SimpleEditStep {
 
     /** The name of the editing sheet added to this step */
     public static String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * Constructor.
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public PressReleasePropertiesStep( ItemSelectionModel itemModel,
                                        AuthoringKitWizard parent ) {
         super( itemModel, parent );
@@ -54,7 +60,12 @@ public class PressReleasePropertiesStep
         BasicPageForm editSheet;
 
         editSheet = new PressReleasePropertyForm( itemModel, this);
-        add( EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
+        // SecurityPropertyEditor#add currently accepts just a String as label
+        // parameter. As soon as it is refactored, a GlobalizedMessage or a
+        // Label should be used.
+        add( EDIT_SHEET_NAME, 
+             "Edit", 
+             new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 
         setDisplayComponent( getPressReleasePropertySheet( itemModel ) );
@@ -73,28 +84,27 @@ public class PressReleasePropertiesStep
                                                           itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  PressRelease.NAME);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.contact_info"), PressRelease.CONTACT_INFO );
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.summary"), PressRelease.SUMMARY );
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  PressRelease.TITLE);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"),  
+                  PressRelease.TITLE);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"),  
+                   PressRelease.NAME);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.summary"), 
+                  PressRelease.SUMMARY );
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-                          public String format(DomainObject item,
-                                               String attribute,
-                                               PageState state) {
-                              ContentPage page = (ContentPage) item;
-                              if(page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG)
-                                      .format(page.getLaunchDate());
-                              } else {
-                                  return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
-                              }
-                          }
-                      });
+                      new LaunchDateAttributeFormatter() );
         }
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.ref_code"), PressRelease.REFERENCE_CODE );
+        sheet.add(PressReleaseGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.pressrelease.contact_info"), 
+                  PressRelease.CONTACT_INFO );
+        sheet.add(PressReleaseGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.pressrelease.ref_code"), 
+                  PressRelease.REFERENCE_CODE );
 
         return sheet;
     }

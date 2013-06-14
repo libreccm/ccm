@@ -32,6 +32,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PressRelease;
+import com.arsdigita.cms.contenttypes.util.PressReleaseGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
@@ -39,16 +40,18 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  * Form to edit the basic properties of a press release. These are name, title,
  * release date and reference code. This form can be extended to create forms
  * for PressRelease subclasses.
- **/
+ */
 public class PressReleasePropertyForm extends BasicPageForm
-    implements FormProcessListener, FormInitListener, FormSubmissionListener {
+                                      implements FormProcessListener, 
+                                                 FormInitListener, 
+                                                 FormSubmissionListener {
 
     private PressReleasePropertiesStep m_step;
 
-    /** contact info parameter name */
-    public static final String CONTACT_INFO = "contactInfo";
     /**  summary parameter name */
     public static final String SUMMARY = "summary";
+    /** contact info parameter name */
+    public static final String CONTACT_INFO = "contactInfo";
     /** Reference code parameter name */
     public static final String REF_CODE = "ref_code";
     /** Release date parameter name */
@@ -73,7 +76,8 @@ public class PressReleasePropertyForm extends BasicPageForm
      *    PressRelease to work on
      * @param step The PressReleasePropertiesStep which controls this form.
      */
-    public PressReleasePropertyForm( ItemSelectionModel itemModel, PressReleasePropertiesStep step ) {
+    public PressReleasePropertyForm( ItemSelectionModel itemModel, 
+                                     PressReleasePropertiesStep step ) {
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
@@ -85,21 +89,24 @@ public class PressReleasePropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.contact_info")));
-        ParameterModel contactInfoParam = new StringParameter(CONTACT_INFO);
-        CMSDHTMLEditor contactInfo = new CMSDHTMLEditor(contactInfoParam);
-        contactInfo.setCols(40);
-        contactInfo.setRows(10);
-        add(contactInfo);
-
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.summary")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.summary")));
         ParameterModel summaryParam = new StringParameter(SUMMARY);
         TextArea summary = new TextArea(summaryParam);
         summary.setCols(40);
         summary.setRows(7);
         add(summary);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.reference_code")));
+        add(new Label(PressReleaseGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.pressrelease.contact_info")));
+        ParameterModel contactInfoParam = new StringParameter(CONTACT_INFO);
+        CMSDHTMLEditor contactInfo = new CMSDHTMLEditor(contactInfoParam);
+        contactInfo.setCols(40);
+        contactInfo.setRows(10);
+        add(contactInfo);
+
+        add(new Label(PressReleaseGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.pressrelease.ref_code")));
         ParameterModel refCodeParam = new StringParameter(REF_CODE);
         TextField refCode = new TextField(refCodeParam);
         refCode.setSize(30);
@@ -107,18 +114,22 @@ public class PressReleasePropertyForm extends BasicPageForm
         add(refCode);
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     */
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PressRelease release
             = (PressRelease) super.initBasicWidgets(fse);
 
-        data.put(CONTACT_INFO, release.getContactInfo());
         data.put(SUMMARY,      release.getSummary());
+        data.put(CONTACT_INFO, release.getContactInfo());
         data.put(REF_CODE,     release.getReferenceCode());
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     */
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -127,7 +138,9 @@ public class PressReleasePropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves PressRelease object. */
+    /** 
+     * Form processing hook. Saves PressRelease object. 
+     */
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 
@@ -138,9 +151,9 @@ public class PressReleasePropertyForm extends BasicPageForm
             && getSaveCancelSection().getSaveButton()
             .isSelected(fse.getPageState())) {
 
-            release.setReferenceCode((String) data.get(REF_CODE));
-            release.setContactInfo((String) data.get(CONTACT_INFO));
             release.setSummary((String) data.get(SUMMARY));
+            release.setContactInfo((String) data.get(CONTACT_INFO));
+            release.setReferenceCode((String) data.get(REF_CODE));
             release.save();
         }
         if (m_step != null) {

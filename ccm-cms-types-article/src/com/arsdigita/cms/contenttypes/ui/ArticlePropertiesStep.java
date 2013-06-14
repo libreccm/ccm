@@ -55,7 +55,7 @@ public class ArticlePropertiesStep extends GenericArticlePropertiesStep {
         BasicPageForm editSheet;
         editSheet = new ArticlePropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, 
-            "Edit", 
+            "Edit",    // curently add accepts just a String, not a Label
             new WorkflowLockedComponentAccess(editSheet, itemModel), 
             editSheet.getSaveCancelSection().getCancelButton());
     }

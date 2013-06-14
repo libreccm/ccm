@@ -20,6 +20,8 @@ package com.arsdigita.cms.contenttypes.ui;
 
 
 import com.arsdigita.bebop.Component;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.contenttypes.Bookmark;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -35,8 +37,7 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
  * Authoring step to edit the simple attributes of the Bookmark content 
  * type (and its subclasses). 
  */
-public class BookmarkPropertiesStep
-    extends SimpleEditStep {
+public class BookmarkPropertiesStep extends SimpleEditStep {
 
     /** The name of the editing sheet added to this step */
     public static final String EDIT_SHEET_NAME = "edit";
@@ -67,16 +68,18 @@ public class BookmarkPropertiesStep
                                                      itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-     // sheet.add( "Page Title:", Bookmark.TITLE );
         sheet.add(GlobalizationUtil
                   .globalize("cms.contenttypes.ui.title"),  Bookmark.TITLE );
-     // sheet.add( "Name (URL):", Bookmark.NAME );
         sheet.add(GlobalizationUtil
                   .globalize("cms.contenttypes.ui.name"),  Bookmark.NAME );
-     // sheet.add( "Description:", Bookmark.DESCRIPTION );
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
+        }
         sheet.add(GlobalizationUtil
                   .globalize("cms.contenttypes.ui.summary"), Bookmark.DESCRIPTION );
-     // sheet.add( "URL:", Bookmark.URL );
         sheet.add(new GlobalizedMessage
                   ("cms.contenttypes.ui.bookmark.url",Bookmark.RESOURCES), 
                   Bookmark.URL );

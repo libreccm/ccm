@@ -84,16 +84,24 @@ public class ImagePropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         m_imageComponentKey = new StringParameter("imageComponent");
-        ParameterSingleSelectionModel componentModel = new ParameterSingleSelectionModel(m_imageComponentKey);
-        m_imageComponent = new MapComponentSelectionModel(componentModel, new HashMap());
+        ParameterSingleSelectionModel componentModel = 
+                new ParameterSingleSelectionModel(m_imageComponentKey);
+        m_imageComponent = new MapComponentSelectionModel(componentModel, 
+                                                          new HashMap());
         Map selectors = m_imageComponent.getComponentsMap();
         uploadSheet = new ImageUploadComponent();
         uploadSheet.getForm().addProcessListener(new ImageUploadListerner());
         selectors.put(UPLOAD, uploadSheet);
 
         editSheet = new ImagePropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
-        add(UPLOAD_SHEET_NAME, "Upload", new WorkflowLockedComponentAccess(uploadSheet, itemModel), uploadSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel), 
+            editSheet.getSaveCancelSection().getCancelButton());
+        add(UPLOAD_SHEET_NAME, 
+            "Upload", 
+            new WorkflowLockedComponentAccess(uploadSheet, itemModel), 
+            uploadSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getImagePropertySheet(itemModel));
     }
@@ -114,7 +122,12 @@ public class ImagePropertiesStep extends SimpleEditStep {
             @Override
             protected ImageAsset getImageAsset(PageState state) {
                 try {
-                    ImageAsset image = ((Image) itemModel.getSelectedItem(state)).getImage().proportionalResizeToWidth(Image.getConfig().getMaxImageWidth());
+                    ImageAsset image = ((Image) 
+                                   itemModel
+                                   .getSelectedItem(state))
+                                   .getImage()
+                                   .proportionalResizeToWidth(Image.getConfig()
+                                                              .getMaxImageWidth());
                     return image;
                 } catch (NullPointerException ex) {
                     return null;
@@ -124,74 +137,40 @@ public class ImagePropertiesStep extends SimpleEditStep {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), Image.TITLE);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), 
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.title"), 
+                  Image.TITLE);
+        sheet.add(GlobalizationUtil
+                  .globalize("cms.contenttypes.ui.name"), 
                   Image.NAME);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
-                    ContentPage.LAUNCH_DATE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
-
-                        @Override
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            ContentPage page = (ContentPage) item;
-                            if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                            } else {
-                                return (String) GlobalizationUtil
-                                                .globalize("cms.ui.unknown")
-                                                .localize();
-                            }
-                        }
-                    });
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
         }
 
         sheet.add(ImageGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.image.width"), Image.WIDTH);
+                  .globalize("cms.contenttypes.ui.image.width"), 
+                  Image.WIDTH);
         sheet.add(ImageGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.image.height"), Image.HEIGHT);
+                  .globalize("cms.contenttypes.ui.image.height"), 
+                  Image.HEIGHT);
         sheet.add(ImageGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.image.caption"), Image.CAPTION);
+                  .globalize("cms.contenttypes.ui.image.caption"), 
+                  Image.CAPTION);
         sheet.add(GlobalizationUtil
-                  .globalize("cms.contenttypes.ui.description"), Image.DESCRIPTION);
+                  .globalize("cms.contenttypes.ui.description"), 
+                  Image.DESCRIPTION);
         sheet.add(ImageGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.image.artist"), Image.ARTIST);
+                  .globalize("cms.contenttypes.ui.image.artist"), 
+                  Image.ARTIST);
         sheet.add(ImageGlobalizationUtil
                   .globalize("cms.contenttypes.ui.image.publishDate"), 
                   Image.PUBLISHDATE,
-                  new DomainObjectPropertySheet.AttributeFormatter() {
-
-                    @Override
-                    public String format(DomainObject item, String attribute, PageState state) {
-                        Image image = (Image) item;
-                        if ((image.getPublishDate()) != null) {
-                            if (image.getSkipDay().booleanValue() == true || image.getSkipMonth().booleanValue() == true) {
-                                String month = "";
-                                if (image.getSkipMonth().booleanValue() == false) {
-                                    Locale locale = GlobalizationHelper.getNegotiatedLocale();
-
-                                    if (locale != null) {
-
-                                        DateFormatSymbols dfs = new DateFormatSymbols(locale);
-                                        String[] months = dfs.getMonths();
-                                        month = months[image.getPublishDate().getMonth()] + " ";
-                                    }
-                                }
-                                String year = Integer.toString(image.getPublishDate().getYear() + 1900);
-                                return month + year;
-                            } else {
-                                return DateFormat.getDateInstance(DateFormat.LONG).format(image.getPublishDate());
-                            }
-                        } else {
-                            return (String) GlobalizationUtil
-                                            .globalize("cms.ui.unknown")
-                                            .localize();
-                        }
-                    }
-                  });
+                  new ImageDateAttributeFormatter()
+                  );
         sheet.add(ImageGlobalizationUtil.globalize(
                                          "cms.contenttypes.ui.image.source"), 
                   Image.SOURCE);
@@ -329,6 +308,80 @@ public class ImagePropertiesStep extends SimpleEditStep {
         @Override
         public Form getForm() {
             return this;
+        }
+    }
+
+	/**
+     * Private class which implements an AttributeFormatter interface for 
+     * boolean values.
+     * Its format(...) class returns a string representation for either a
+     * false or a true value.
+     */
+    private static class ImageDateAttributeFormatter 
+                         implements DomainObjectPropertySheet.AttributeFormatter {
+
+        /**
+         * Constructor, does nothing.
+         */
+        public ImageDateAttributeFormatter() {
+        }
+
+        /**
+         * Formatter for the value of an attribute.
+         * 
+         * It currently relays on the prerequisite that the passed in property
+         * attribute is in fact a date property. No type checking yet!
+         * 
+         * Note: the format method has to be executed at each page request. Take
+         * care to properly adjust globalization and localization here!
+         * 
+         * @param obj        Object containing the attribute to format.
+         * @param attribute  Name of the attribute to retrieve and format
+         * @param state      PageState of the request
+         * @return           A String representation of the retrieved boolean
+         *                   attribute of the domain object.
+         */
+        public String format(DomainObject obj, String attribute, PageState state) {
+ 
+            if ( obj != null && obj instanceof Image) {
+                
+                Image image = (Image) obj;
+
+                if ((image.getPublishDate()) != null) {
+                    if (image.getSkipDay().booleanValue() == true 
+                            || image.getSkipMonth().booleanValue() == true) {
+                        String month = "";
+                        if (image.getSkipMonth().booleanValue() == false) {
+                            Locale locale = GlobalizationHelper.getNegotiatedLocale();
+
+                            if (locale != null) {
+
+                                DateFormatSymbols dfs = new DateFormatSymbols(locale);
+                                String[] months = dfs.getMonths();
+                                month = months[image.getPublishDate().getMonth()] 
+                                        + " ";
+                            }
+                        }
+                        String year = Integer
+                                      .toString(image.getPublishDate().getYear() 
+                                                + 1900);
+                        return month + year;
+                    } else {
+                        return DateFormat.getDateInstance(DateFormat.LONG)
+                                         .format(image.getPublishDate());
+                    }
+
+                } else {
+                    return (String)GlobalizationUtil
+                                   .globalize("cms.ui.unknown")
+                                   .localize();
+                }
+            }
+
+            return (String) GlobalizationUtil
+                            .globalize("cms.ui.unknown")
+                            .localize();
+
         }
     }
 }

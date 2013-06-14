@@ -121,7 +121,8 @@ public class DomainObjectPropertySheet extends PropertySheet {
      *
      * @param label The label for the attribute
      * @param attribute The name for the attribute. Could be a simple name
-     *   or a compound path, such as "foo.bar.baz"
+     *                  or a compound path, such as "foo.bar.baz" (usually a
+     *                  PDL property)
      * @deprecated use add(GlobalizedMessage label, String attribute) instead
      */
     public void add(String label, String attribute) {
@@ -134,7 +135,8 @@ public class DomainObjectPropertySheet extends PropertySheet {
      *
      * @param label The label for the attribute
      * @param attribute The name for the attribute. Could be a simple name
-     *   or a compound path, such as "foo.bar.baz"
+     *                  or a compound path, such as "foo.bar.baz" (usually a
+     *                  PDL property)
      */
     public void add(GlobalizedMessage label, String attribute) {
         // Determine if we are dealing with a simple string or a complex
@@ -152,8 +154,11 @@ public class DomainObjectPropertySheet extends PropertySheet {
      * to a String.
      *
      * @param label The label for the attribute
-     * @param attribute The name for the attribute
+     * @param attribute The name for the attribute. Could be a simple name
+     *                  or a compound path, such as "foo.bar.baz" (usually a
+     *                  PDL property)
      * @param formatter An instance of AttributeFormatter
+     * 
      * @deprecated Use add(GlobalizedMessage label, String attribute, 
      *                      AttributeFormatter f) instead
      */
@@ -167,7 +172,9 @@ public class DomainObjectPropertySheet extends PropertySheet {
      * to a String.
      *
      * @param label The label for the attribute
-     * @param attribute The name for the attribute
+     * @param attribute The name for the attribute. Could be a simple name
+     *                  or a compound path, such as "foo.bar.baz" (usually a
+     *                  PDL property)
      * @param formatter An instance of AttributeFormatter
      */
     public void add(GlobalizedMessage label, String attribute,
@@ -190,7 +197,9 @@ public class DomainObjectPropertySheet extends PropertySheet {
     }
 
     /**
-     * An interface which can transform some property to a string.
+     * An interface which can transform the value of a (domain) property to a 
+     * string.
+     * 
      * Most of the time, classes which implement this interface will just
      * return <code>object.get(attribute).toString()</code>
      * <p>In case of associations, however, more complicated processing
@@ -199,16 +208,26 @@ public class DomainObjectPropertySheet extends PropertySheet {
     public interface AttributeFormatter {
 
         /**
-         * Retrieve the string value for the specified attribute
-         * of the object.
+         * Formatter for the value of an attribute. It has to retrieve the value 
+         * for the specified attribute of the object and format it as an string
+         * if it is one already.
+         * 
+         * Note: the format method has to be executed at each page request. Take
+         * care to properly adjust globalization and localization inside thes
+         * method and not earlier in one of the classes using it!
          *
-         * @param obj The domain object
-         * @param attribute The name of the attribute to get
+         * @param obj        Object containing the attribute to format.
+         * @param attribute  Name of the attribute to retrieve and format
+         * @param state      PageState of the request
+         * @return           A String representation of the retrieved attribute
+         *                   of the domain object.
          */
         String format(DomainObject obj, String attribute, PageState state);
     }
 
-    // Associates a label with the attribute and the formatter
+    /**
+     * Associates a label with the attribute and the formatter.
+     */
     protected static class Property {
 
         private GlobalizedMessage m_label;

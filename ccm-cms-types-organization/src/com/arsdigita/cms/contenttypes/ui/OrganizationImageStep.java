@@ -64,7 +64,7 @@ public class OrganizationImageStep extends SimpleEditStep {
 	add( IMAGE_SHEET_NAME, 
          "Change (OrgImageStep)",
          new WorkflowLockedComponentAccess(new OrganizationImageForm(
-                 "OrganizationImageForm", itemModel, this), 
+                                           "OrganizationImageForm", itemModel, this), 
          itemModel));
 
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel, false);

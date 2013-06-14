@@ -29,6 +29,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
@@ -67,9 +68,10 @@ public class EventPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new EventPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", 
-                new WorkflowLockedComponentAccess(editSheet, itemModel),
-                editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getEventPropertySheet(itemModel));
     }
@@ -93,81 +95,20 @@ public class EventPropertiesStep extends SimpleEditStep {
                    .globalize("cms.contenttypes.ui.name"), Event.NAME);
         sheet.add( EventGlobalizationUtil
                    .globalize("cms.contenttypes.ui.event.lead"), Event.LEAD);
-        if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(EventGlobalizationUtil
+      if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.launch_date"),
-                    ContentPage.LAUNCH_DATE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
-
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            ContentPage page = (ContentPage) item;
-                            if (page.getLaunchDate() != null) {
-                                return DateFormat
-                                       .getDateInstance(DateFormat.LONG, 
-                                                        GlobalizationHelper
-                                                        .getNegotiatedLocale())
-                                                        .format(page
-                                                                .getLaunchDate());
-                            } else {
-                                return (String) EventGlobalizationUtil
-                                                .globalize("cms.ui.unknown")
-                                                .localize();
-                            }
-                        }
-                    });
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
         }
 
         sheet.add( EventGlobalizationUtil
                    .globalize("cms.contenttypes.ui.event.start_time"), Event.START_DATE,
-                   new DomainObjectPropertySheet.AttributeFormatter() {
+                   new DateTimeAttributeFormatter() );
 
-                    public String format(DomainObject item,
-                            String attribute,
-                            PageState state) {
-                        Event e = (Event) item;
-
-                        if (e.getStartDate() != null) {
-
-                            if (e.getStartTime() == null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale()).format(e.getStartDate());
-                            } else {
-                                int timezoneOffset = Calendar.getInstance().get(Calendar.ZONE_OFFSET) + Calendar.getInstance().get(Calendar.DST_OFFSET) / (60 * 1000);
-                                Date startDateTime = new Date(e.getStartDate().getTime() + e.getStartTime().getTime() + timezoneOffset);
-                                return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, GlobalizationHelper.getNegotiatedLocale()).format(startDateTime);
-
-                            }
-
-                        } else {
-                            return  (String) EventGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                        }
-                    }
-                });
-
-        sheet.add( EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time"), Event.END_DATE,
-                new DomainObjectPropertySheet.AttributeFormatter() {
-
-                    public String format(DomainObject item,
-                            String attribute,
-                            PageState state) {
-                        Event e = (Event) item;
-                        if (e.getEndDate() != null) {
-
-                            if (e.getEndTime() == null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG, GlobalizationHelper.getNegotiatedLocale()).format(e.getEndDate());
-                            } else {
-                                int timezoneOffset = Calendar.getInstance().get(Calendar.ZONE_OFFSET) + Calendar.getInstance().get(Calendar.DST_OFFSET) / (60 * 1000);
-                                Date endDateTime = new Date(e.getEndDate().getTime() + e.getEndTime().getTime() + timezoneOffset);
-                                return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, GlobalizationHelper.getNegotiatedLocale()).format(endDateTime);
-
-                            }
-
-                        } else {
-                            return  (String) EventGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                        }
-                    }
-                });
+        sheet.add( EventGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.event.end_time"), Event.END_DATE,
+                   new DateTimeAttributeFormatter() );
         if (!Event.getConfig().getHideDateDescription()) {
             sheet.add( EventGlobalizationUtil
                        .globalize("cms.contenttypes.ui.event.date_description"), 
@@ -198,5 +139,64 @@ public class EventPropertiesStep extends SimpleEditStep {
                        Event.COST );
         }
         return sheet;
+    }
+
+	/**
+     * Private class which implements an AttributeFormatter interface for 
+     * date values.
+     * Its format(...) class returns a string representation for either a
+     * false or a true value.
+     */
+    private static class DateTimeAttributeFormatter 
+                         implements DomainObjectPropertySheet.AttributeFormatter {
+
+        /**
+         * Constructor, does nothing.
+         */
+        public DateTimeAttributeFormatter() {
+        }
+
+        /**
+         * Formatter for the value of an attribute.
+         * 
+         * It currently relays on the prerequisite that the passed in property
+         * attribute is in fact a date property. No type checking yet!
+         * 
+         * Note: the format method has to be executed at each page request. Take
+         * care to properly adjust globalization and localization here!
+         * 
+         * @param obj        Object containing the attribute to format.
+         * @param attribute  Name of the attribute to retrieve and format
+         * @param state      PageState of the request
+         * @return           A String representation of the retrieved boolean
+         *                   attribute of the domain object.
+         */
+        public String format(DomainObject obj, String attribute, PageState state) {
+ 
+            if ( obj != null && obj instanceof Event) {
+                
+                Event event = (Event) obj;
+                Object field = event.get(attribute);
+
+                if( field != null ) {
+                    // Note: No type safety here! We relay that it is
+                    // attached to a date property!
+                    return DateFormat.getDateTimeInstance(
+                                         DateFormat.LONG, 
+                                         DateFormat.SHORT, 
+                                         GlobalizationHelper.getNegotiatedLocale()
+                                          )
+                                     .format(field);
+                } else {
+                    return (String)GlobalizationUtil
+                                   .globalize("cms.ui.unknown")
+                                   .localize();
+                }
+            }
+
+            return (String) GlobalizationUtil
+                            .globalize("cms.ui.unknown")
+                            .localize();
+        }
     }
 }

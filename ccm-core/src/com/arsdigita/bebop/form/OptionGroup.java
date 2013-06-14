@@ -45,7 +45,7 @@ import org.apache.log4j.Logger;
  *    @author Michael Pih    
  *    @version $Id: OptionGroup.java 738 2005-09-01 12:36:52Z sskracic $ */
 public abstract class OptionGroup extends Widget
-    implements BebopConstants {
+                                  implements BebopConstants {
 
     private static final Logger s_log = Logger.getLogger( OptionGroup.class );
 

@@ -25,6 +25,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Service;
+import com.arsdigita.cms.contenttypes.util.ServiceGlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -56,7 +57,9 @@ public class ServicePropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new ServicePropertyForm(itemModel,this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
+        add(EDIT_SHEET_NAME, 
+            "Edit",                      // currently just a String is acepted! 
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getServicePropertySheet(itemModel));
@@ -76,29 +79,33 @@ public class ServicePropertiesStep extends SimpleEditStep {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  Service.NAME);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  Service.TITLE);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.title"),  
+                   Service.TITLE);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.name"),  
+                   Service.NAME);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-                          public String format(DomainObject item,
-                                               String attribute,
-                                               PageState state) {
-                              ContentPage page = (ContentPage) item;
-                              if(page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG)
-                                      .format(page.getLaunchDate());
-                              } else {
-                                  return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
-                              }
-                          }
-                      });
+                      new LaunchDateAttributeFormatter() );
         }
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.summary"),  Service.SUMMARY);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.services_provided"),  Service.SERVICES_PROVIDED);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.opening_times"),  Service.OPENING_TIMES);
-        sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.contacts"),  Service.CONTACTS);
+        sheet.add( GlobalizationUtil
+                   .globalize("cms.contenttypes.ui.summary"),  
+                   Service.SUMMARY);
+        sheet.add( ServiceGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.service.services_provided"),  
+                   Service.SERVICES_PROVIDED);
+        sheet.add( ServiceGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.service.opening_times"),  
+                   Service.OPENING_TIMES);
+        sheet.add( ServiceGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.service.address"),  
+                   Service.ADDRESS);
+        sheet.add( ServiceGlobalizationUtil
+                   .globalize("cms.contenttypes.ui.service.contacts"),  
+                   Service.CONTACTS);
 
         return sheet;
     }

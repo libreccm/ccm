@@ -45,8 +45,7 @@ public class DefaultImageBrowserModelBuilder extends LockableImpl
         implements ImageBrowserModelBuilder, PaginationModelBuilder {
 
     private SingleSelectionModel m_keywordModel;
-    private static ImageBrowserModel EMPTY_MODEL =
-            new EmptyImageBrowserModel();
+    private static ImageBrowserModel EMPTY_MODEL = new EmptyImageBrowserModel();
     private ImageBrowser m_imageBrowser;
     private RequestLocal m_size;
     private String m_key;

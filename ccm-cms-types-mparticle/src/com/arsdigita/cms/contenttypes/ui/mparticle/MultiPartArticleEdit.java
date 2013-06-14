@@ -86,19 +86,7 @@ public class MultiPartArticleEdit extends SimpleEditStep {
             sheet.add(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-                          public String format(DomainObject item,
-                                               String attribute,
-                                               PageState state) {
-                              ContentPage page = (ContentPage) item;
-                              if (page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG)
-                                      .format(page.getLaunchDate());
-                              } else {
-                                  return "unknown";
-                              }
-                          }
-                      });
+                      new LaunchDateAttributeFormatter() );
         }
         sheet.add( GlobalizationUtil.globalize("cms.contenttypes.ui.summary"),  
                    MultiPartArticle.SUMMARY );

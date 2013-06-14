@@ -43,8 +43,8 @@ public class Organization extends ContentPage {
     public static final String IMAGE_ID = "imageID";
 
     /** Data object type for tihs domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.Organization";
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                              "com.arsdigita.cms.contenttypes.Organization";
 
     public Organization () {
         super(BASE_DATA_OBJECT_TYPE);

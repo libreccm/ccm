@@ -30,15 +30,18 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Service;
+import com.arsdigita.cms.contenttypes.util.ServiceGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
  * Form to edit the basic properties of an service. This form can be extended to
  * create forms for Service subclasses.
- **/
+ */
 public class ServicePropertyForm extends BasicPageForm
-    implements FormProcessListener, FormInitListener, FormSubmissionListener {
+                                 implements FormProcessListener, 
+                                            FormInitListener, 
+                                            FormSubmissionListener {
 
     private ServicePropertiesStep m_step;
 
@@ -73,7 +76,8 @@ public class ServicePropertyForm extends BasicPageForm
      *    Service to work on
      * @param step The ServicePropertiesStep which controls this form.
      */
-    public ServicePropertyForm( ItemSelectionModel itemModel, ServicePropertiesStep step ) {
+    public ServicePropertyForm( ItemSelectionModel itemModel, 
+                                ServicePropertiesStep step ) {
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
@@ -85,14 +89,16 @@ public class ServicePropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.summary")));
+        add(new Label(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.summary")));
         ParameterModel summaryParam = new StringParameter(SUMMARY);
         TextArea summary = new TextArea(summaryParam);
         summary.setCols(40);
         summary.setRows(5);
         add(summary);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.services_provided")));
+        add(new Label(ServiceGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.service.services_provided")));
         ParameterModel servicesProvidedParam =
             new StringParameter(SERVICES_PROVIDED);
         TextArea servicesProvided = new TextArea(servicesProvidedParam);
@@ -100,14 +106,16 @@ public class ServicePropertyForm extends BasicPageForm
         servicesProvided.setRows(5);
         add(servicesProvided);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.opening_times")));
+        add(new Label(ServiceGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.service.opening_times")));
         ParameterModel openingTimesParam = new StringParameter(OPENING_TIMES);
         TextArea openingTimes = new TextArea(openingTimesParam);
         openingTimes.setCols(40);
         openingTimes.setRows(5);
         add(openingTimes);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.address")));
+        add(new Label(ServiceGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.service.address")));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         TextArea address = new TextArea(addressParam);
         address.setCols(40);
@@ -115,7 +123,8 @@ public class ServicePropertyForm extends BasicPageForm
         add(address);
 
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.contacts")));
+        add(new Label(ServiceGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.service.contacts")));
         ParameterModel contactsParam = new StringParameter(CONTACTS);
         TextArea contacts = new TextArea(contactsParam);
         contacts.setCols(40);
@@ -124,7 +133,9 @@ public class ServicePropertyForm extends BasicPageForm
 
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     */
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         Service service = (Service) super.initBasicWidgets(fse);
@@ -136,7 +147,9 @@ public class ServicePropertyForm extends BasicPageForm
         data.put(CONTACTS,          service.getContacts());
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     */
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -145,7 +158,9 @@ public class ServicePropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves Service object. */
+    /** 
+     * Form processing hook. Saves Service object. 
+     */
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

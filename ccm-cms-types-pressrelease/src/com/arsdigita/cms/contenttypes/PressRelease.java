@@ -32,8 +32,8 @@ import java.math.BigDecimal;
  * reference purposes. Reference code is an arbitrary string that is used for
  * out-of-system reference. The type inherits name (filename), title, body
  * (TextAsset), and metadata from
- * <code>com.arsdigita.cms.contenttypes.Genericrticle</code>, and also provides the
- * capability to associate contact information with this press release.
+ * <code>com.arsdigita.cms.contenttypes.Genericrticle</code>, and also provides
+ * the capability to associate contact information with this press release.
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  **/
@@ -41,14 +41,15 @@ public class PressRelease extends GenericArticle {
 
     // is the CardBin sort of contact support needed here?
     //    implements ContactSupport {
-    /** PDL property name for contact info */
-    public static final String CONTACT_INFO = "contactInfo";
     /** PDL property name for summary */
     public static final String SUMMARY = "summary";
+    /** PDL property name for contact info */
+    public static final String CONTACT_INFO = "contactInfo";
     /** PDL property name for reference code */
     public static final String REFERENCE_CODE = "referenceCode";
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.PressRelease";
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.cms.contenttypes.PressRelease";
 
     public PressRelease() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -77,20 +78,20 @@ public class PressRelease extends GenericArticle {
     }
 
     /* accessors *****************************************************/
-    public String getContactInfo() {
-        return (String) get(CONTACT_INFO);
-    }
-
-    public void setContactInfo(String contactInfo) {
-        set(CONTACT_INFO, contactInfo);
-    }
-
     public String getSummary() {
         return (String) get(SUMMARY);
     }
 
     public void setSummary(String summary) {
         set(SUMMARY, summary);
+    }
+
+    public String getContactInfo() {
+        return (String) get(CONTACT_INFO);
+    }
+
+    public void setContactInfo(String contactInfo) {
+        set(CONTACT_INFO, contactInfo);
     }
 
     public String getReferenceCode() {

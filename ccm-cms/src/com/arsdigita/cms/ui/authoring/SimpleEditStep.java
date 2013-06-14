@@ -25,11 +25,17 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.RequestEvent;
 import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
+import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.toolbox.ui.ComponentAccess;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
+import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -98,14 +104,14 @@ public class SimpleEditStep extends SecurityPropertyEditor
      * Construct a new SimpleEditStep component
      *
      * @param itemModel The {@link ItemSelectionModel} which will
-     *   be responsible for loading the current item
+     *                  be responsible for loading the current item
      *
-     * @param parent The parent wizard which contains the form.
-     *   The component may use the wizard's methods, such as stepForward
-     *   and stepBack, in its process listener.
+     * @param parent The parent wizard which contains the form. The component
+     *               may use the wizard's methods, such as stepForward
+     *               and stepBack, in its process listener.
      *
-     * @param paramSuffix Additional global parameter name suffix if
-     * there are multiple SimpleEditStep instances in an authoring kit.
+     * @param paramSuffix Additional global parameter name suffix if there are
+     *                    multiple SimpleEditStep instances in an authoring kit.
      */
     public SimpleEditStep(ItemSelectionModel itemModel, 
                           AuthoringKitWizard parent, 
@@ -229,4 +235,62 @@ public class SimpleEditStep extends SecurityPropertyEditor
         }
         
     }
+	/**
+     * Public class which implements an AttributeFormatter interface for 
+     * boolean values.
+     * Its format(...) class returns a string representation for either a
+     * false or a true value.
+     */
+    protected static class LaunchDateAttributeFormatter 
+                        implements DomainObjectPropertySheet.AttributeFormatter {
+
+        /**
+         * Constructor, does nothing.
+         */
+        public LaunchDateAttributeFormatter() {
+        }
+
+        /**
+         * Formatter for the value of a (LaunchDate) attribute.
+         * 
+         * It currently relays on the prerequisite that the passed in property
+         * attribute is in fact a date property. No type checking yet!
+         * 
+         * Note: the format method has to be executed at each page request. Take
+         * care to properly adjust globalization and localization here!
+         * 
+         * @param obj        Object containing the attribute to format.
+         * @param attribute  Name of the attribute to retrieve and format
+         * @param state      PageState of the request
+         * @return           A String representation of the retrieved boolean
+         *                   attribute of the domain object.
+         */
+        public String format(DomainObject obj, String attribute, PageState state) {
+ 
+            if ( obj != null && obj instanceof ContentPage) {
+                
+                ContentPage page = (ContentPage) obj;
+                Object field = page.get(attribute);
+
+                if( field != null ) {
+                    // Note: No type safety here! We relay that it is
+                    // attached to a date property!
+                    return DateFormat.getDateInstance(
+                                         DateFormat.LONG, 
+                                         GlobalizationHelper.getNegotiatedLocale()
+                                          )
+                                     .format(field);
+                } else {
+                    return (String)GlobalizationUtil
+                                   .globalize("cms.ui.unknown")
+                                   .localize();
+                }
+            }
+
+            return (String) GlobalizationUtil
+                            .globalize("cms.ui.unknown")
+                            .localize();
+        }
+    }
+
 }
