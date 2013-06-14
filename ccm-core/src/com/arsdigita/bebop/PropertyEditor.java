@@ -27,13 +27,13 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.list.DefaultListCellRenderer;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.bebop.list.ListModel;
-import com.arsdigita.bebop.List;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.util.SequentialMap;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.FormErrorDisplay;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -228,14 +228,17 @@ public class PropertyEditor extends SimpleContainer {
         setModelBuilder(new DefaultModelBuilder());
 
         m_model = new RequestLocal() {
+                @Override
                 protected Object initialValue(PageState s) {
                     return getModelBuilder().makeModel(PropertyEditor.this, s);
                 }
             };
     }
 
-    // Set the display component visible by default, and the
-    // form(s) invisible by default
+    /** Set the display component visible by default, and the
+     *  form(s) invisible by default.
+     */
+    @Override
     public void register(Page p) {
         Assert.exists(m_display, "display component");
 
@@ -319,15 +322,30 @@ public class PropertyEditor extends SimpleContainer {
     }
 
     /**
-     * Adds a component to the list of links. It is up to the
-     * component to correctly call {@link #showDisplayPane(PageState)} when it is done.
+     * Adds a component to the list of links. It is up to the component to
+     * correctly call {@link #showDisplayPane(PageState)} when it is done.
      *
      * @param key   the symbolic key for the component (must be unique
-     *    for this <code>PropertyEditor</code>)
+     *              for this <code>PropertyEditor</code>)
+     * @param label the label for the link
+     * @param c     the component
+     * @deprecated use addComponent(String,GlobalizedMessage,Component) instead
+     */
+    public void addComponent(String key, String label, Component c) {
+        addComponent(key, c);
+        m_labels.put(key, label);
+    }
+
+    /**
+     * Adds a component to the list of links. It is up to the component to
+     * correctly call {@link #showDisplayPane(PageState)} when it is done.
+     *
+     * @param key   the symbolic key for the component (must be unique
+     *              for this <code>PropertyEditor</code>)
      * @param label the label for the link
      * @param c     the component
      */
-    public void addComponent(String key, String label, Component c) {
+    public void addComponent(String key, GlobalizedMessage label, Component c) {
         addComponent(key, c);
         m_labels.put(key, label);
     }
@@ -337,11 +355,26 @@ public class PropertyEditor extends SimpleContainer {
      * properties.
      *
      * @param key   the symbolic key for the form (must be unique
-     *    for this <code>PropertyEditor</code>)
+     *              for this <code>PropertyEditor</code>)
+     * @param label the label for the link
+     * @param form  the form component
+     * @deprecated use add(String,GlobalizedMessage,Form) instead.
+     */
+    public void add(String key, String label, Form form) {
+        addComponent(key, label, form);
+        addProcessListener(form);
+    }
+
+    /**
+     * Adds a form to the set of forms that can be used to edit the
+     * properties.
+     *
+     * @param key   the symbolic key for the form (must be unique
+     *              for this <code>PropertyEditor</code>)
      * @param label the label for the link
      * @param form  the form component
      */
-    public void add(String key, String label, Form form) {
+    public void add(String key, GlobalizedMessage label, Form form) {
         addComponent(key, label, form);
         addProcessListener(form);
     }
@@ -355,6 +388,7 @@ public class PropertyEditor extends SimpleContainer {
      * @param label the label for the link
      * @param form the form component
      * @param cancelButton the Cancel button on the form
+     * @deprecated use add(String,GlobalizedMessage,Form,Submit) instead.
      */
     public void add(String key, String label, Form form, Submit cancelButton) {
         add(key, label, form);
@@ -368,9 +402,25 @@ public class PropertyEditor extends SimpleContainer {
      * @param key   the symbolic key for the form (must be unique
      *    for this <code>PropertyEditor</code>)
      * @param label the label for the link
-     * @param formSection  the form component
+     * @param form the form component
+     * @param cancelButton the Cancel button on the form
+     */
+    public void add(String key, GlobalizedMessage label, Form form, Submit cancelButton) {
+        add(key, label, form);
+        addListeners(form, cancelButton);
+    }
+
+    /**
+     * Adds a form to the set of forms that can be used to edit the
+     * properties.
      *
+     * @param key   the symbolic key for the form (must be unique
+     *              for this <code>PropertyEditor</code>)
+     * @param label the label for the link
+     * @param formSection  the form component
+     * 
      * @pre !(formSection instanceof Form)
+     * @deprecated use add(String,GlobalizedMessage,FormSection) instead.
      */
     public void add(String key, String label, FormSection formSection) {
         if (formSection instanceof Form) {
@@ -389,10 +439,34 @@ public class PropertyEditor extends SimpleContainer {
      * properties.
      *
      * @param key   the symbolic key for the form (must be unique
-     *    for this <code>PropertyEditor</code>)
+     *              for this <code>PropertyEditor</code>)
+     * @param label the label for the link
+     * @param formSection  the form component
+     *
+     * @pre !(formSection instanceof Form)
+     */
+    public void add(String key, GlobalizedMessage label, FormSection formSection) {
+        if (formSection instanceof Form) {
+            throw new IllegalArgumentException("formSection is an instance of Form");
+        }
+        Form form = new Form("property" + key);
+        form.add(new FormErrorDisplay(form), ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
+        form.add(formSection);
+        form.setMethod(Form.POST);
+        form.setEncType("multipart/form-data");
+        add(key, label , form);
+    }
+
+    /**
+     * Adds a form to the set of forms that can be used to edit the
+     * properties.
+     *
+     * @param key   the symbolic key for the form (must be unique
+     *              for this <code>PropertyEditor</code>)
      * @param label the label for the link
      * @param formSection the form component
      * @param cancelButton the Cancel button on the form
+     * @deprecated use add(String,GlobalizedMessage,FormSection,Submit) instead.
      */
     public void add(String key,
                     String label,
@@ -407,12 +481,34 @@ public class PropertyEditor extends SimpleContainer {
     }
 
     /**
+     * Adds a form to the set of forms that can be used to edit the
+     * properties.
+     *
+     * @param key   the symbolic key for the form (must be unique
+     *              for this <code>PropertyEditor</code>)
+     * @param label the label for the link as a GlobalizedMessage
+     * @param formSection the form component
+     * @param cancelButton the Cancel button on the form
+     */
+    public void add(String key,
+                    GlobalizedMessage label,
+                    FormSection formSection,
+                    Submit cancelButton) {
+        Form form = new Form("property" + key);
+        form.add(new FormErrorDisplay(form), ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
+        form.add(formSection);
+        form.setMethod(Form.POST);
+        form.setEncType("multipart/form-data");
+        add(key, label , form, cancelButton);
+    }
+
+    /**
      * Retrieves the component at the specified key.
      *
      * @param key the key of the component to retrieve
-     * @return a component that has been added to this
-     *   <code>PropertyEditor</code> at the specified key, or null
-     *   if no such component exists.
+     * @return    a component that has been added to this
+     *            <code>PropertyEditor</code> at the specified key, or null
+     *            if no such component exists.
      */
     public Component getComponent(String key) {
         return (Component)m_forms.get(key);
@@ -482,11 +578,11 @@ public class PropertyEditor extends SimpleContainer {
      * if the {@link ActionLink} that is supposed to show the component is
      * buried somewhere deep within the UI.
      *
-     * @param l the {@link ActionLink}
+     * @param l   the {@link ActionLink}
      * @param key the key of the component that will be shown when the link
-     *   is clicked, as specified in the {@link #addComponent(String, Component)}
-     *   method
-     * @see #addComponent(String, Component)
+     *             is clicked, as specified in the 
+     *             {@link #addComponent(String, Component)}  method
+     * @see       #addComponent(String, Component)
      */
     public void addVisibilityListener(ActionLink l, String key) {
         final String t_key = key;
@@ -567,6 +663,7 @@ public class PropertyEditor extends SimpleContainer {
     /**
      * Locks this component.
      */
+    @Override
     public void lock() {
         getModelBuilder().lock();
         super.lock();
@@ -577,6 +674,7 @@ public class PropertyEditor extends SimpleContainer {
      */
     protected static class IdentityCellRenderer extends DefaultListCellRenderer {
 
+        @Override
         public Component getComponent(List list, PageState state, Object value,
                                       String key, int index, boolean isSelected) {
             return (Component)value;
@@ -614,12 +712,11 @@ public class PropertyEditor extends SimpleContainer {
     }
 
     /**
-     * Default implementation of the {@link PropertyEditorModel}.
-     * Takes in an iterator of key->label pairs, and constructs a ControlLink for each
-     * label.
+     * Internal class with default implementation of the {@link PropertyEditorModel}.
+     * Takes in an iterator of key->label pairs, and constructs a ControlLink 
+     * for each label.
      */
-    protected static class DefaultModel
-        implements PropertyEditorModel {
+    protected static class DefaultModel implements PropertyEditorModel {
 
         protected Iterator m_iter;
         protected Map.Entry m_entry;
@@ -638,11 +735,24 @@ public class PropertyEditor extends SimpleContainer {
             return true;
         }
 
+        /**
+         * Actually retrieve action link and label. Will be executed at each
+         * request to ensure proper localization.
+         * @return 
+         */
         public Component getComponent() {
             Assert.exists(m_entry);
-            ControlLink l = new ControlLink(new Label((String)m_entry.getValue()));
-            l.setClassAttr("actionLink");
-            return l;
+            if ( m_entry.getValue() instanceof GlobalizedMessage ) {
+                ControlLink l = new ControlLink(new 
+                                    Label((GlobalizedMessage)m_entry.getValue()));
+                l.setClassAttr("actionLink");
+                return l;
+            } else {
+                ControlLink l = new ControlLink(new Label((String)m_entry.getValue()));                
+                
+                l.setClassAttr("actionLink");
+                return l;
+            }
         }
 
         public Object getKey() {

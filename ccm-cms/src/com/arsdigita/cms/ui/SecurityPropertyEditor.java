@@ -32,6 +32,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.toolbox.ui.ComponentAccess;
 import com.arsdigita.util.Assert;
 
@@ -113,8 +114,24 @@ public class SecurityPropertyEditor extends PropertyEditor {
      *    for this <code>PropertyEditor</code>
      * @param label The label for the link
      * @param ca    The component access
+     * @deprecated use addComponent(String,GlobalizedMessage,ComponentAccess) 
+     *             instead.
      */
     public void addComponent(String key, String label, ComponentAccess ca) {
+        addComponent(key, ca);
+        getLabelsMap().put(key, label);
+    }
+
+    /**
+     * Add a component to the list of links. It is up to the
+     * component to correctly call showDisplayPane when it's done.
+     *
+     * @param key   The symbolic key for the component;  must be unique
+     *    for this <code>PropertyEditor</code>
+     * @param label The label for the link
+     * @param ca    The component access
+     */
+    public void addComponent(String key, GlobalizedMessage label, ComponentAccess ca) {
         addComponent(key, ca);
         getLabelsMap().put(key, label);
     }
@@ -142,10 +159,12 @@ public class SecurityPropertyEditor extends PropertyEditor {
      * Add a form to the set of forms which could be used to edit the
      * properties.
      *
-     * @param key The symbolic key for the form;  must be unique
-     *    for this <code>PropertyEditor</code>
-     * @param label The label for the link
-     * @param ca  The form ComponentAccess
+     * @param key   The symbolic key for the form;  must be unique
+     *              for this <code>PropertyEditor</code>
+     * @param label The label for the link to access the form
+     * @param ca    The form ComponentAccess
+     * 
+     * @deprecated use add(String,GlobalizedMessage,ComponentAccess)
      */
     public void add(String key, String label, ComponentAccess ca) {
         Component c = ca.getComponent();
@@ -167,15 +186,61 @@ public class SecurityPropertyEditor extends PropertyEditor {
 
     /**
      * Add a form to the set of forms which could be used to edit the
+     * properties.
+     *
+     * @param key   The symbolic key for the form;  must be unique
+     *              for this <code>PropertyEditor</code>
+     * @param label The label for the link to access the form
+     * @param ca    The form ComponentAccess
+     */
+    public void add(String key, GlobalizedMessage label, ComponentAccess ca) {
+        Component c = ca.getComponent();
+        if (c instanceof Form) {
+            Form form = (Form) c;
+            m_accessChecks.put(key, ca);
+            add(key, label, form);
+            addSecurityListener(form);
+        } else if (c instanceof FormSection) {
+            FormSection section = (FormSection) ca.getComponent();
+            m_accessChecks.put(key, ca);
+            add(key, label, section);
+            addSecurityListener(section);
+        } else {
+            throw new IllegalArgumentException(
+                  "The ComponentAccess object did not contain a form section.");
+        }
+    }
+
+    /**
+     * Add a form to the set of forms which could be used to edit the
      * properties
      *
      * @param key   The symbolic key for the form; must be unique
-     *    for this <code>PropertyEditor</code>
-     * @param label The label for the link
-     * @param ca  The form ComponentAccess
+     *              for this <code>PropertyEditor</code>
+     * @param label The label for the link to access the form.
+     * @param ca    The form ComponentAccess
      * @param cancelButton The Cancel button on the form.
+     * 
+     * @deprecated use add(String,GlobalizedMessage,ComponentAccess,Submit)
+     *             instead
      */
     public void add(String key, String label,
+                    ComponentAccess ca, Submit cancelButton) {
+        add(key, label, ca);
+        addCancelListener((FormSection) ca.getComponent(), cancelButton);
+    }
+
+    /**
+     * Add a form to the set of forms which could be used to edit the
+     * properties
+     *
+     * @param key   The symbolic key for the form; must be unique
+     *              for this <code>PropertyEditor</code>
+     * @param label The label for the link to access the form.
+     * @param ca    The form ComponentAccess
+     * @param cancelButton The Cancel button on the form.
+     */
+    public void add(String key, GlobalizedMessage label,
                     ComponentAccess ca, Submit cancelButton) {
         add(key, label, ca);
         addCancelListener((FormSection) ca.getComponent(), cancelButton);

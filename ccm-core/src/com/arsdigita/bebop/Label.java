@@ -59,18 +59,20 @@ public class Label extends BlockStylable implements Cloneable {
      * <code>Label</code> with the specified text.
      *
      * @param label the text to display
+     * 
+     * @deprecated  refactor to use Label(GlobalizedMessage label) instad
      */
     public Label(String label) {
         this(label, true);
     }
 
     /**
-     * Creates a new
-     * <code>Label</code> with the specified text and output escaping turned on
-     * if
+     * Creates a new <code>Label</code> with the specified text and 
+     * output escaping turned on if
      * <code>escaping</code> is
-     * <code>true</code>. The setting foroutput escaping affects how markup in
-     * the
+     * <code>true</code>. 
+     * 
+     * The setting foroutput escaping affects how markup in the
      * <code>label</code> is handled. For example: <UL><LI>If output escaping is
      * in effect, &lt;b>text&lt;/b> will appear literally.</LI> <LI>If output
      * escaping is disabled, &lt;b>text&lt;/b> appears as the word "text" in
@@ -79,6 +81,9 @@ public class Label extends BlockStylable implements Cloneable {
      * @param label the text to display
      * @param <code>true</code> if output escaping will be in effect;
      * <code>false</code> if output escaping will be disabled
+     * 
+     * @deprecated  refactor to Label(GlobalizedMessage label, boolean escaping) 
+     *              instead
      */
     public Label(String label, boolean escaping) {
         setLabel(label);
@@ -109,8 +114,8 @@ public class Label extends BlockStylable implements Cloneable {
     }
 
     /**
-     * Creates a new
-     * <code>Label</code> that uses the print listener to generate output.
+     * Creates a new <code>Label</code> that uses the print listener to 
+     * generate output.
      *
      * @param l the print listener used to produce output
      */
@@ -124,6 +129,10 @@ public class Label extends BlockStylable implements Cloneable {
      *
      * @param label The text to display
      * @param fontWeight The fontWeight e.g., Label.BOLD
+     * 
+     * @deprecated  without dir3ect replacement. Refactor to use
+     *              Label(GlobalizedMEssage) instead and modify the theme to
+     *              use proper text marking.
      */
     public Label(String label, String fontWeight) {
         this(label, true);
