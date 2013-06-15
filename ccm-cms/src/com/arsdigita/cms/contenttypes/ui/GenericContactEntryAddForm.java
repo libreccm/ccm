@@ -64,7 +64,9 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         ParameterModel contactEntryKeyParam = new StringParameter(GenericContactEntry.KEY);
         SingleSelect contactEntryKey = new SingleSelect(contactEntryKeyParam);
         contactEntryKey.addValidationListener(new NotNullValidationListener());
-        contactEntryKey.addOption(new Option("", new Label((String)GlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactEntryKey.addOption(new 
+                        Option("", new Label(GlobalizationUtil.globalize(
+                                             "cms.ui.select_one")) ));
         
         // Add the Options to the SingleSelect widget
         GenericContactEntryKeys keyList = new GenericContactEntryKeys();
@@ -103,7 +105,8 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         
         // save only if save button was pressed
         if (contact != null
-                && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+            && getSaveCancelSection().getSaveButton()
+                                     .isSelected(fse.getPageState())) {
             
             GenericContactEntry contactEntry = new GenericContactEntry(contact,
                     (String)data.get(GenericContactEntry.KEY),

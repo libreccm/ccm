@@ -34,6 +34,7 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.ImageAsset;
 
 import com.arsdigita.cms.Service;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import java.math.BigDecimal;
 
 
@@ -62,7 +63,7 @@ public class OrganizationImageStep extends SimpleEditStep {
     // as soon as SecuityPropertyEditor is refactored to accept a Label or a
     // GlobalizedMessage, the Label String has to be globalized!
 	add( IMAGE_SHEET_NAME, 
-         "Change (OrgImageStep)",
+         GlobalizationUtil.globalize("cms.ui.edit"), 
          new WorkflowLockedComponentAccess(new OrganizationImageForm(
                                            "OrganizationImageForm", itemModel, this), 
          itemModel));

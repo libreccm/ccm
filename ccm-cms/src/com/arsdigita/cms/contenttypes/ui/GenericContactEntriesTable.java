@@ -84,12 +84,12 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                       2, 
                       ContenttypesGlobalizationUtil.globalize(
                           "cms.contenttypes.ui.contact.contactEntry.description")
-                      .localize()));
+                      ));
         tab_model.add(new TableColumn(
                       3, 
                       ContenttypesGlobalizationUtil.globalize(
                           "cms.contenttypes.ui.contact.contactEntry.action")
-                      .localize(), 
+                      , 
                       TABLE_COL_DEL));
 
         setModelBuilder(new ContactTableModelBuilder(itemModel));
@@ -194,7 +194,6 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                                 0, MAX_DESC_LENGTH)
                             : m_contactEntry.getDescription();
                 case 3:
-                 // return GlobalizationUtil.globalize("cms.ui.delete").localize();
                     return GlobalizationUtil.globalize("cms.ui.delete");
                 default:
                     return null;

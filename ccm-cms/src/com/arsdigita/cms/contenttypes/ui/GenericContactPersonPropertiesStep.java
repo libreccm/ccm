@@ -28,8 +28,8 @@ public class GenericContactPersonPropertiesStep extends SimpleEditStep {
     public static final String CHANGE_PERSON_SHEET_NAME = "changePerson";
     public static final String DELETE_PERSON_SHEET_NAME = "deletePerson";
     private WorkflowLockedComponentAccess addPerson;
-    private WorkflowLockedComponentAccess editPerson;
-    private WorkflowLockedComponentAccess delPerson;
+    // private WorkflowLockedComponentAccess editPerson;
+    // private WorkflowLockedComponentAccess delPerson;
 
     /**
      * Creates a new instance of GenericContactPersonPropertiesStep
@@ -48,9 +48,8 @@ public class GenericContactPersonPropertiesStep extends SimpleEditStep {
                       GenericContactAttachPersonPropertyForm(itemModel, this);
         addPerson = new WorkflowLockedComponentAccess(addPersonSheet, itemModel);
         add(ADD_PERSON_SHEET_NAME, 
-            (String) ContenttypesGlobalizationUtil
-                     .globalize("cms.contenttypes.ui.contact.attach_person")
-                     .localize(), 
+            ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.contact.attach_person"), 
             addPerson, 
             addPersonSheet.getSaveCancelSection().getCancelButton());
 
@@ -65,6 +64,7 @@ public class GenericContactPersonPropertiesStep extends SimpleEditStep {
     }
 
     public static Component getEmptyPersonPropertySheet(ItemSelectionModel itemModel) {
-        return new Label(((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.emptyPerson").localize()));
+        return new Label((ContenttypesGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.contact.emptyPerson") ));
     }
 }

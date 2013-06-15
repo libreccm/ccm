@@ -60,24 +60,25 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
                 itemModel, this);
 
         add(ADD_ADDRESS_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.contact.attach_address").localize(),
+            ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.contact.attach_address"),
             new AttachAddressWorkflowLockedComponentAccess(attachAddressSheet,
                                                            itemModel),
             attachAddressSheet.getSaveCancelSection().getCancelButton());
-        add(CHANGE_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.
-                globalize("cms.contenttypes.ui.contact.reattach_address").
-                localize(), new EditAddressWorkflowLockedComponentAccess(
-                reattachAddressSheet, itemModel), reattachAddressSheet.
-                getSaveCancelSection().getCancelButton());
+        add(CHANGE_ADDRESS_SHEET_NAME, 
+            ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.contact.reattach_address"),
+                new EditAddressWorkflowLockedComponentAccess(reattachAddressSheet, 
+                                                             itemModel), 
+                reattachAddressSheet.getSaveCancelSection().getCancelButton());
         /*add(EDIT_ADDRESS_SHEET_NAME, (String) ContenttypesGlobalizationUtil.
                 globalize("cms.contenttypes.ui.contact.edit_address").localize(),
             new EditAddressWorkflowLockedComponentAccess(editAddressSheet,
                                                          itemModel),
             editAddressSheet.getSaveCancelSection().getCancelButton());*/
         add(DELETE_ADDRESS_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.contact.delete_address").localize(),
+            ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.contact.delete_address"),
             new EditAddressWorkflowLockedComponentAccess(deleteAddressSheet,
                                                          itemModel),
             deleteAddressSheet.getSaveCancelSection().getCancelButton());
@@ -87,6 +88,11 @@ public class GenericContactAddressPropertiesStep extends SimpleEditStep {
 
     }
 
+    /**
+     * 
+     * @param itemModel
+     * @return 
+     */
     public static Component getAddressPropertySheet(ItemSelectionModel itemModel) {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(

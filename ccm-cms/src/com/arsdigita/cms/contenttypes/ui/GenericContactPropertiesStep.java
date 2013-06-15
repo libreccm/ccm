@@ -73,9 +73,8 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         BasicPageForm editBasicSheet = new GenericContactPropertyForm(itemModel, this);
         basicProperties.add(
                 EDIT_BASIC_SHEET_NAME, 
-                (String) ContenttypesGlobalizationUtil
-                .globalize("cms.contenttypes.ui.contact.edit_basic_properties")
-                .localize(), 
+                ContenttypesGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.contact.edit_basic_properties"), 
                 new WorkflowLockedComponentAccess(
                         editBasicSheet, 
                         itemModel), 
@@ -140,20 +139,10 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-
-            sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), 
-                      ContentPage.LAUNCH_DATE, 
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-
-                public String format(DomainObject obj, String attribute, PageState state) {
-                    ContentPage page = (ContentPage) obj;
-                    if (page.getLaunchDate() != null) {
-                        return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                    } else {
-                        return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
-                    }
-                }
-            });
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
         }
 
         return sheet;

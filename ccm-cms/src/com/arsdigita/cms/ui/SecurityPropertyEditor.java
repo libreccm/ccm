@@ -41,10 +41,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Extends {@link com.arsdigita.bebop.PropertyEditor} to provide
- * access control features. Each link may be associated with a {@link
- * com.arsdigita.toolbox.ui.ComponentAccess} object; if the current
- * does not have sufficient privileges, the link will be hidden.
+ * Extends {@link com.arsdigita.bebop.PropertyEditor} to provide access control
+ * features. Each link may be associated with a {@link
+ * com.arsdigita.toolbox.ui.ComponentAccess} object; if the current does not
+ * have sufficient privileges, the link will be hidden.
  * <p>
  * The simple use pattern for this component is as follows:
  *

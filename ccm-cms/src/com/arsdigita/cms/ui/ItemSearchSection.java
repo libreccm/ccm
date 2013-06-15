@@ -37,6 +37,8 @@ import com.arsdigita.search.ui.QueryGenerator;
 import com.arsdigita.search.QuerySpecification;
 import com.arsdigita.toolbox.ui.LayoutPanel;
 
+import org.apache.log4j.Logger;
+
 /**
  * Contains a form for specifying search parameters, as well as a
  * {@link com.arsdigita.search.ui.ResultsPane} which will perform the search and
@@ -46,11 +48,10 @@ import com.arsdigita.toolbox.ui.LayoutPanel;
  * @version $Id: ItemSearchSection.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ItemSearchSection extends FormSection
-        implements Resettable, QueryGenerator {
+                               implements Resettable, QueryGenerator {
 
-    private static final org.apache.log4j.Logger s_log =
-                                                 org.apache.log4j.Logger.
-            getLogger(ItemSearchSection.class);
+    private static final Logger s_log = org.apache.log4j.Logger.getLogger(
+                                                         ItemSearchSection.class);
     public static final String SINGLE_TYPE_PARAM = "single_type";
     private ItemQueryComponent m_query;
     private Component m_results;
@@ -158,6 +159,7 @@ public class ItemSearchSection extends FormSection
     }
 
     // Hide results by default
+    @Override
     public void register(Page p) {
         super.register(p);
         p.setVisibleDefault(m_results, false);

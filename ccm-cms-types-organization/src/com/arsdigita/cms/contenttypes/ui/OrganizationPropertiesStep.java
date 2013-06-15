@@ -26,7 +26,7 @@ import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.cms.ui.authoring.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
@@ -51,7 +51,8 @@ public class OrganizationPropertiesStep
         BasicPageForm editSheet;
 
         editSheet = new OrganizationPropertyForm( itemModel, this);
-        add( EDIT_SHEET_NAME, "Edit", 
+        add( EDIT_SHEET_NAME, 
+             GlobalizationUtil.globalize("cms.ui.edit"), 
              new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 

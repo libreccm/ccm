@@ -54,11 +54,14 @@ public class ItemSearchSectionInline extends ItemSearchSection {
     /**
      * Construct a new <code>ItemSearchSectionInline</code> component
      *
+     * @param name
      * @param context the context for the retrieved items. Should be
-     *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     *                {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      * @param limitToContentSection limit the search to the current content section
      */
-    public ItemSearchSectionInline(String name, String context, boolean limitToContentSection) {
+    public ItemSearchSectionInline(String name, 
+                                   String context, 
+                                   boolean limitToContentSection) {
         super(name, context, limitToContentSection);
         m_name = name;
         m_item = new OIDParameter(name + "_itemOID");
@@ -66,7 +69,16 @@ public class ItemSearchSectionInline extends ItemSearchSection {
         addResultsPane(this);
     }
     
-     public ItemSearchSectionInline(String name, String context,
+    /**
+     * Constructor. 
+     * 
+     * @param name
+     * @param context
+     * @param limitToContentSection
+     * @param type 
+     */ 
+    public ItemSearchSectionInline(String name, 
+                                   String context,
                                    boolean limitToContentSection,
                                    ContentType type) {
         super(name, context, limitToContentSection, type);

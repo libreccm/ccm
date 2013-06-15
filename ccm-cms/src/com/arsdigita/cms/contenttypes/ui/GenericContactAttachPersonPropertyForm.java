@@ -27,6 +27,7 @@ import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -82,6 +83,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
 
     @Override
     public void addWidgets() {
+
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.contact.select_person")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
@@ -97,7 +99,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("",
-                                         new Label(ContenttypesGlobalizationUtil
+                                         new Label(GlobalizationUtil
                                                   .globalize("cms.ui.select_one"))));
 
         // Add the Options to the SingleSelect widget

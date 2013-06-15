@@ -47,6 +47,7 @@ import com.arsdigita.cms.ContentCenterServlet;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.workflow.simple.Workflow;
@@ -60,7 +61,9 @@ import org.apache.log4j.Logger;
  * @version $Id: ItemSearchWidget.java 1166 2006-06-14 11:45:15Z fabrice $
  */
 public class ItemSearchWidget extends FormSection
-        implements BebopConstants, FormSubmissionListener, FormInitListener {
+                                      implements BebopConstants, 
+                                                 FormSubmissionListener, 
+                                                 FormInitListener {
 
     private static final Logger s_log = Logger.getLogger(ItemSearchWidget.class);
     //private Hidden m_selected;    
@@ -83,8 +86,10 @@ public class ItemSearchWidget extends FormSection
     private ParameterModel m_searchModel;
     private boolean disableCreatePane = false;
     private boolean editAfterCreate = true;
-    private String searchLabelText = (String) GlobalizationUtil.globalize("cms.ui.item_search.search").localize();
-    private String selectedLabelText = (String) GlobalizationUtil.globalize("cms.ui.item_search.selected").localize();
+    private GlobalizedMessage searchLabelText = GlobalizationUtil.globalize(
+                                                "cms.ui.item_search.search");
+    private GlobalizedMessage selectedLabelText = GlobalizationUtil.globalize(
+                                                  "cms.ui.item_search.selected");
     public static final String BEBOP_ITEM_SEARCH = "bebop:itemSearch";
     public static final String SEARCH = "search";
     public static final boolean LIMIT_TO_CONTENT_SECTION = false;
@@ -108,7 +113,7 @@ public class ItemSearchWidget extends FormSection
         private ItemSearchWidget parent;
 
         public SearchFragment(String name, ItemSearchWidget parent) {
-            super(name, "Search");
+            super(name, GlobalizationUtil.globalize("cms.ui.search"));    
             this.parent = parent;
             this.setAttribute("onClick", "return " + parent.m_selected.getName(). //+ parent.m_item.getName().
                     replace('.', '_') + "Popup(this.form)");
@@ -129,10 +134,11 @@ public class ItemSearchWidget extends FormSection
         private ItemSearchWidget parent;
 
         public ClearFragment(String name, ItemSearchWidget parent) {
-            super(name, "Clear");
+            super(name, GlobalizationUtil.globalize("cms.ui.clear"));    
             this.parent = parent;
-            this.setAttribute("onClick", "this.form." + parent.m_selected.getName() + ".value = \"\";"
-                                         + "this.form." + parent.m_item.getName() + ".value = \"\";"
+            this.setAttribute("onClick", "this.form." + parent.m_selected.getName() 
+                                         + ".value = \"\";" + "this.form." 
+                                         + parent.m_item.getName() + ".value = \"\";"
                                          + "return false;");
             this.setAttribute("value", "Clear");
         }
@@ -208,7 +214,8 @@ public class ItemSearchWidget extends FormSection
      *param
      *                                                                                                                         contentType
      */
-    public ItemSearchWidget(final ParameterModel model, final ContentType contentType) {
+    public ItemSearchWidget(final ParameterModel model, 
+                            final ContentType contentType) {
         super(new BoxPanel(BoxPanel.VERTICAL));
 
         if (!(model instanceof ItemSearchParameter)) {
@@ -234,12 +241,14 @@ public class ItemSearchWidget extends FormSection
         m_contentType = contentType;
         //m_selected = new Hidden(model);
         m_selected = new ItemFragment(model, this);
-        final Label selectedItemLabel = new Label(selectedLabelText);
+        final Label selectedItemLabel = new Label(GlobalizationUtil.globalize(""
+                + "                               cms.ui.item_search.selected"));
         selectedItemLabel.addPrintListener(new PrintListener() {
 
             public void prepare(final PrintEvent event) {
                 final Label target = (Label) event.getTarget();
-                target.setLabel(selectedLabelText);
+                target.setLabel(GlobalizationUtil.globalize(
+                                "cms.ui.item_search.selected"));
             }
 
         });
@@ -492,19 +501,19 @@ public class ItemSearchWidget extends FormSection
         }
     }
 
-    public String getSearchLabelText() {
+    public GlobalizedMessage getSearchLabelText() {
         return searchLabelText;
     }
 
-    public void setSearchLabelText(final String searchLabelText) {
+    public void setSearchLabelText(final GlobalizedMessage searchLabelText) {
         this.searchLabelText = searchLabelText;
     }
 
-    public String getSelectedLabelText() {
+    public GlobalizedMessage getSelectedLabelText() {
         return selectedLabelText;
     }
 
-    public void setSelectedLabelText(final String selectedLabelText) {
+    public void setSelectedLabelText(final GlobalizedMessage selectedLabelText) {
         this.selectedLabelText = selectedLabelText;
     }
 
