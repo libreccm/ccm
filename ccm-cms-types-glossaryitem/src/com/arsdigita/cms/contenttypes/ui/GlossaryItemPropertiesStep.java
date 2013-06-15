@@ -48,7 +48,8 @@ public class GlossaryItemPropertiesStep
         BasicPageForm editSheet;
 
         editSheet = new GlossaryItemPropertyForm( itemModel, this);
-        add( EDIT_SHEET_NAME, "Edit", 
+        add( EDIT_SHEET_NAME, 
+             GlobalizationUtil.globalize("cms.ui.edit"), 
              new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 

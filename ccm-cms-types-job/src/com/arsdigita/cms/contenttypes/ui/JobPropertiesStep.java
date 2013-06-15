@@ -63,7 +63,7 @@ public class JobPropertiesStep extends SimpleEditStep {
 
         editSheet = new JobPropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, 
-            "Edit", 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 
