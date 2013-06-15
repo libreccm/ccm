@@ -55,7 +55,9 @@ public abstract class ContentGroupPropertiesStep extends SimpleEditStep {
         BasicItemForm editSheet;
 
         editSheet = getPropertyForm(itemModel);
-        add( EDIT_SHEET_NAME, "Edit", editSheet,
+        add( EDIT_SHEET_NAME, 
+             GlobalizationUtil.globalize("cms.ui.edit"), 
+             editSheet,
              editSheet.getSaveCancelSection().getCancelButton() );
         
         setDisplayComponent( getPropertySheet( itemModel ) );

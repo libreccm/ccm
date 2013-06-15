@@ -135,21 +135,25 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         if (!s_config.getHideTextAssetUploadFile()) {
             PageFileForm f = getPageFileForm();
             addFileWidgets(f);
-            add(FILE_UPLOAD, "Upload a file", f,
+            add(FILE_UPLOAD, 
+            GlobalizationUtil.globalize("cms.ui.upload"), 
+                    f,
                 f.getSaveCancelSection().getCancelButton());
         }
 
         PageTextForm t = new PageTextForm();
         addTextWidgets(t);
-        add(TEXT_ENTRY, "Edit as text", t,
+        add(TEXT_ENTRY, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
+            t,
             t.getSaveCancelSection().getCancelButton());
 
         // Specify full path to properties of the text asset
         DomainObjectPropertySheet sheet = getBodyPropertySheet(assetModel);
-        sheet.add("Text&nbsp;Type:",
+        sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.text_type"),
                   Asset.MIME_TYPE + "." + MimeType.LABEL);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.authoring.body").
-                localize(), TextAsset.CONTENT);
+        sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.body"), 
+                  TextAsset.CONTENT);
 
         setDisplayComponent(sheet);
 

@@ -62,7 +62,7 @@ public class GenericAddressPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
         editSheet = new GenericAddressPropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, 
-            "Edit", 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(editSheet, itemModel), 
             editSheet.getSaveCancelSection().getCancelButton());
     }
@@ -74,6 +74,13 @@ public class GenericAddressPropertiesStep extends SimpleEditStep {
                   .globalize("cms.contenttypes.ui.title"), GenericAddress.TITLE);
         sheet.add(GlobalizationUtil
                   .globalize("cms.contenttypes.ui.name"), GenericAddress.NAME);
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
+        }
+
         sheet.add(ContenttypesGlobalizationUtil
                   .globalize("cms.contenttypes.ui.address.address"), 
                   GenericAddress.ADDRESS);
@@ -106,29 +113,6 @@ public class GenericAddressPropertiesStep extends SimpleEditStep {
                         }
                     }
                 });
-
-        if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil
-                      .globalize("cms.ui.authoring.page_launch_date"),
-                    ContentPage.LAUNCH_DATE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
-
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            ContentPage page = (ContentPage) item;
-                            if (page.getLaunchDate() != null) {
-                                return DateFormat
-                                       .getDateInstance(DateFormat.LONG)
-                                       .format(page.getLaunchDate());
-                            } else {
-                                return (String) GlobalizationUtil
-                                                .globalize("cms.ui.unknown")
-                                                .localize();
-                            }
-                        }
-                    });
-        }
 
         return sheet;
     }
