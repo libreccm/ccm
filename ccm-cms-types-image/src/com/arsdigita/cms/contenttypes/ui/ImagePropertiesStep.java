@@ -95,11 +95,11 @@ public class ImagePropertiesStep extends SimpleEditStep {
 
         editSheet = new ImagePropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, 
-            "Edit", 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(editSheet, itemModel), 
             editSheet.getSaveCancelSection().getCancelButton());
         add(UPLOAD_SHEET_NAME, 
-            "Upload", 
+            GlobalizationUtil.globalize("cms.ui.upload"), 
             new WorkflowLockedComponentAccess(uploadSheet, itemModel), 
             uploadSheet.getSaveCancelSection().getCancelButton());
 

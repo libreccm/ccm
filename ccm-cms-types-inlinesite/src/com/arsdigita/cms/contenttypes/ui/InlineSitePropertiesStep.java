@@ -21,7 +21,6 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.cms.contenttypes.InlineSite;
 
 import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
@@ -32,8 +31,6 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.domain.DomainObject;
-import java.text.DateFormat;
 
 /**
  * Authoring step to edit the simple attributes of the InlineSite content type 
@@ -51,7 +48,8 @@ public class InlineSitePropertiesStep extends SimpleEditStep {
         super(itemModel, parent);
 
         final BasicPageForm editSheet = new InlineSitePropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit",
+        add(EDIT_SHEET_NAME, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
         setDefaultEditKey(EDIT_SHEET_NAME);

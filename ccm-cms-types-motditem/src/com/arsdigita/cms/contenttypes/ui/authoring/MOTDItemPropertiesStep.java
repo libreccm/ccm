@@ -56,7 +56,9 @@ public class MOTDItemPropertiesStep extends SimpleEditStep {
         
         BasicPageForm editSheet;
         editSheet = new MOTDItemPropertyForm(itemModel);
-        add(EDIT_SHEET_NAME, "Edit", editSheet,
+        add(EDIT_SHEET_NAME, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
+            editSheet,
             editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getMOTDDomainObjectPropertySheet(itemModel));
