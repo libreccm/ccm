@@ -74,7 +74,8 @@ public class HealthCareFacilityAttachAddressPropertyForm extends BasicPageForm i
 
     @Override
     public void addWidgets() {
-        add(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address").localize()));
+        add(new Label(HealthCareFacilityGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.healthCareFacility.select_address")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericAddress"));
         add(this.m_itemSearch);
     }

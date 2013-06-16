@@ -43,7 +43,8 @@ public class HealthCareFacilityDeleteAddressForm extends BasicPageForm implement
 
     @Override
     public void addWidgets() {
-        add(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address.label").localize()));
+        add(new Label(HealthCareFacilityGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.healthCareFacility.delete_address.label") ));
     }
 
     /**

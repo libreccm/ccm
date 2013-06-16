@@ -69,7 +69,8 @@ public class HealthCareFacilityContactAddForm extends BasicItemForm {
     protected void addWidgets() {
 
         // Attach a GenericContact object
-        add(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_contact").localize()));
+        add(new Label(HealthCareFacilityGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.healthCareFacility.select_contact")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericContact"));
         add(this.m_itemSearch);
 

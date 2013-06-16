@@ -54,7 +54,12 @@ public class SurveyPropertiesStep extends SimpleEditStep {
 
         /* Create the edit component for this SimpleEditStep and the corresponding link */
         BasicPageForm editBasicSheet = new SurveyPropertiesForm(itemModel, this);
-        basicProperties.add(EDIT_BASIC_SHEET_NAME, (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
+        basicProperties.add(EDIT_BASIC_SHEET_NAME, 
+                            (String) SurveyGlobalizationUtil
+                            .globalize("cms.contenttypes.ui.survey.edit_basic_properties")
+                            .localize(), 
+                            new WorkflowLockedComponentAccess(editBasicSheet, itemModel), 
+                            editBasicSheet.getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
         basicProperties.setDisplayComponent(SurveyPropertiesStep.getSurveyPropertiesSheet(itemModel));
@@ -79,8 +84,14 @@ public class SurveyPropertiesStep extends SimpleEditStep {
         /* The DisplayComponent for the Basic Properties */
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), "title");
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
+        }
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"), ContentPage.DESCRIPTION);
 
         sheet.add(SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.start_date"), Survey.START_DATE);
@@ -137,19 +148,6 @@ public class SurveyPropertiesStep extends SimpleEditStep {
             }
         });
 
-        if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {
-
-                public String format(DomainObject obj, String attribute, PageState state) {
-                    ContentPage page = (ContentPage) obj;
-                    if (page.getLaunchDate() != null) {
-                        return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                    } else {
-                        return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
-                    }
-                }
-            });
-        }
 
         return sheet;
     }

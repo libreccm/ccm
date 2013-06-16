@@ -42,9 +42,10 @@ public class HealthCareFacilityContactPropertiesStep extends SimpleEditStep {
 
         BasicItemForm addContactSheet = new HealthCareFacilityContactAddForm(itemModel);
         add(ADD_CONTACT_SHEET_NAME,
-                (String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.add_contact").localize(),
-                new WorkflowLockedComponentAccess(addContactSheet, itemModel),
-                addContactSheet.getSaveCancelSection().getCancelButton());
+            HealthCareFacilityGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.healthCareFacility.add_contact"),
+            new WorkflowLockedComponentAccess(addContactSheet, itemModel),
+            addContactSheet.getSaveCancelSection().getCancelButton());
 
         HealthCareFacilityContactTable contactsTable = new HealthCareFacilityContactTable(itemModel);
         setDisplayComponent(contactsTable);

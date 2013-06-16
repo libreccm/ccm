@@ -54,22 +54,27 @@ public class HealthCareFacilityPropertiesStep extends SimpleEditStep {
 
         /* Create the edit component for this SimpleEditStep and the corresponding link */
         BasicPageForm editBasicSheet = new HealthCareFacilityPropertyForm(itemModel, this);
-        basicProperties.add(EDIT_BASIC_SHEET_NAME, (String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
+        basicProperties.add(EDIT_BASIC_SHEET_NAME,
+                            HealthCareFacilityGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.healthCareFacility.edit_basic_properties"), 
+                            new WorkflowLockedComponentAccess(editBasicSheet, itemModel), 
+                            editBasicSheet.getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
         basicProperties.setDisplayComponent(getHealthCareFacilityPropertySheet(itemModel));
 
         /* Add the SimpleEditStep to the segmented panel */
-        segmentedPanel.addSegment(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.basic_properties").localize()), basicProperties);
+        segmentedPanel.addSegment(new Label(HealthCareFacilityGlobalizationUtil
+                .globalize("cms.contenttypes.ui.healthCareFacility.basic_properties")), basicProperties);
 
         // If not disabled via registry, add the ui for attaching an address
         if (!HealthCareFacility.getConfig().getHideAddress()) {
             HealthCareFacilityAddressPropertiesStep addressProperties = new HealthCareFacilityAddressPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.address").localize()), addressProperties);
+            segmentedPanel.addSegment(new Label(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.address")), addressProperties);
         }
 
         HealthCareFacilityContactPropertiesStep contactProperties = new HealthCareFacilityContactPropertiesStep(itemModel, parent);
-        segmentedPanel.addSegment(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contact").localize()), contactProperties);
+        segmentedPanel.addSegment(new Label(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contact")), contactProperties);
 
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);

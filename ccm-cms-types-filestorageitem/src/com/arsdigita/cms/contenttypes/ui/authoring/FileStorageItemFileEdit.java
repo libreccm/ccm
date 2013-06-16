@@ -62,7 +62,7 @@ public class FileStorageItemFileEdit extends SimpleEditStep {
         FileEditForm form = new FileEditForm(itemModel);
 
         add("editfile", 
-            "Edit",
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(form, itemModel),
             form.getSaveCancelSection().getCancelButton());
 

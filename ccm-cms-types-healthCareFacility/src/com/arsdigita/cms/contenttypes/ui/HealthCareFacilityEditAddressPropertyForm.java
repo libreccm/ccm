@@ -77,7 +77,8 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
 
     @Override
     public void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.address").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.address.address")));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener(new NotNullValidationListener());
         addressParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
@@ -87,33 +88,39 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
         add(address);
 
         if (!HealthCareFacility.getConfig().getHideAddressPostalCode()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.postal_code").localize()));
+            add(new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.address.postal_code") ));
             ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
             TextField postalCode = new TextField(postalCodeParam);
             /* XXX NumberListener ?*/
             add(postalCode);
         }
 
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.city").localize()));
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.address.city") ));
         ParameterModel cityParam = new StringParameter(CITY);
         TextField city = new TextField(cityParam);
         add(city);
 
         if (!HealthCareFacility.getConfig().getHideAddressState()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.state").localize()));
+            add(new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.address.state") ));
             ParameterModel stateParam = new StringParameter(STATE);
             TextField state = new TextField(stateParam);
             add(state);
         }
 
         if (!HealthCareFacility.getConfig().getHideAddressCountry()) {
-            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.iso_country_code").localize()));
+            add(new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.address.iso_country_code") ));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
 
             SingleSelect country = new SingleSelect(countryParam);
 
-            country.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+            country.addOption(new Option(
+                    "", new Label(ContenttypesGlobalizationUtil
+                                  .globalize("cms.ui.select_one") )));
 
             Iterator countries = com.arsdigita.cms.contenttypes.GenericAddress.getSortedListOfCountries(null).entrySet().iterator();
             while (countries.hasNext()) {

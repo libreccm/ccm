@@ -53,7 +53,8 @@ public class FileStorageItemPropertiesStep
         BasicPageForm editSheet;
 
         editSheet = new FileStorageItemPropertyForm( itemModel, this);
-        add( EDIT_SHEET_NAME, "Edit",
+        add( EDIT_SHEET_NAME, 
+             GlobalizationUtil.globalize("cms.ui.edit"), 
              new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 
