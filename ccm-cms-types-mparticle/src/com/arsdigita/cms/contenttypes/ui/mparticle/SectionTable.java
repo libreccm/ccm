@@ -31,6 +31,7 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
@@ -256,17 +257,30 @@ public class SectionTable extends Table
             if ( columnIndex == COL_INDEX_TITLE ) {
                 return m_section.getTitle();
             } else if ( columnIndex == COL_INDEX_EDIT ) {
-                return "edit";
-              //return new Label(MPArticleGlobalizationUtil.globalize(
-              //       "cms.contenttypes.ui.mparticle.section_table.link_edit")
-              //       );
+              //return "edit";
+                return  new Label(
+                        MPArticleGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.mparticle.section_table.link_edit")
+                        );
             } else if ( columnIndex == COL_INDEX_DELETE ) {
-                return "delete";
+            //  return "delete";
+                return  new Label(
+                        MPArticleGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.mparticle.section_table.link_delete")
+                        );
             } else if ( columnIndex == COL_INDEX_MOVE ) {
                 if ( m_moveSection.getSelectedKey(m_state) == null ) {
-                    return "move";
+                //  return "move";
+                    return  new Label(
+                        MPArticleGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.mparticle.section_table.link_move")
+                        );
                 } else {
-                    return "move below here";
+                //  return "move below here";
+                    return  new Label(
+                        MPArticleGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.mparticle.section_table.link_move_below")
+                        );
                 }
             }
 
@@ -283,9 +297,11 @@ public class SectionTable extends Table
     }
 
 
+    /**
+     * 
+     */
     public class SectionTableCellRenderer extends LockableImpl
-        implements TableCellRenderer
-    {
+                                          implements TableCellRenderer {
 
         private boolean m_active;
 
@@ -302,27 +318,34 @@ public class SectionTable extends Table
                                         Object key, int row, int column ) {
 
             Component ret = null;
-            SecurityManager sm = Utilities.getSecurityManager(state);
+        //  SecurityManager sm = Utilities.getSecurityManager(state);
+            SecurityManager sm = CMS.getSecurityManager(state);
             ContentItem item = (ContentItem)m_selArticle.getSelectedObject(state);
             
-            boolean active = m_active &&
-                sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM,
-                                     item);
+            boolean active = m_active && sm.canAccess(state.getRequest(), 
+                                                      SecurityManager.EDIT_ITEM,
+                                                      item);
 
-            if ( value instanceof Component ) {
-                ret = (Component)value;
-            } else {
-                if ( value == null ) {
-                    ret = new Label("", false);
+            if ( value instanceof Label ) {
+                if ( active ) {
+                    ret = new ControlLink((Component)value);
                 } else {
-                    if ( active ) {
-                        ret = new ControlLink(value.toString());
-                    } else {
-                        ret = new Label(value.toString());
-                    }
-                } // if ( value == null )
-            } // if ( value instanceof Component )
-
+                    ret = (Component)value;
+                }
+                
+            } else if ( value instanceof String ) {
+                // Backwards compatibility, should be removed asap!
+                if ( active ) {
+                    ret = new ControlLink(value.toString());
+                } else {
+                    ret = new Label(value.toString());
+                }
+            } else {
+                ret = new Label(MPArticleGlobalizationUtil.globalize(
+                   "cms.contenttypes.ui.mparticle.section_table.link_not_defined"), 
+                   false);
+            }
+            
             return ret;
         }
 

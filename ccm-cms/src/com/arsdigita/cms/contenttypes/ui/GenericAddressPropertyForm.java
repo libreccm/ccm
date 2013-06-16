@@ -57,19 +57,21 @@ public class GenericAddressPropertyForm extends BasicPageForm
                                                    FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(GenericAddressPropertyForm.class);
+
+    public static final String ID = "Address_edit";
     private GenericAddressPropertiesStep m_step;
     public static final String ADDRESS = GenericAddress.ADDRESS;
     public static final String POSTAL_CODE = GenericAddress.POSTAL_CODE;
     public static final String CITY = GenericAddress.CITY;
     public static final String STATE = GenericAddress.STATE;
     public static final String ISO_COUNTRY_CODE = GenericAddress.ISO_COUNTRY_CODE;
-    public static final String ID = "Address_edit";
 
     public GenericAddressPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
-    public GenericAddressPropertyForm(ItemSelectionModel itemModel, GenericAddressPropertiesStep step) {
+    public GenericAddressPropertyForm(ItemSelectionModel itemModel, 
+                                      GenericAddressPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -93,7 +95,6 @@ public class GenericAddressPropertyForm extends BasicPageForm
                       .globalize("cms.contenttypes.ui.address.postal_code")));
         ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
         TextField postalCode = new TextField(postalCodeParam);
-        /* XXX NumberListener ?*/
         add(postalCode);
 
         add(new Label(ContenttypesGlobalizationUtil
@@ -115,7 +116,6 @@ public class GenericAddressPropertyForm extends BasicPageForm
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
 
             SingleSelect country = new SingleSelect(countryParam);
-
             country.addOption(new Option("", 
                                          new Label(GlobalizationUtil
                                                    .globalize("cms.ui.select_one"))));

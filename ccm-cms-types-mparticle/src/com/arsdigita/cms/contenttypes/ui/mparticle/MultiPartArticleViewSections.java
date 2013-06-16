@@ -148,7 +148,8 @@ public class MultiPartArticleViewSections extends ResettableContainer
                     MultiPartArticle article = (MultiPartArticle)m_selArticle
                         .getSelectedObject(state);
 
-                    article.changeSectionRank((BigDecimal)m_moveSection.getSelectedKey(state), 1);
+                    article.changeSectionRank(
+                            (BigDecimal)m_moveSection.getSelectedKey(state), 1);
                     m_moveSection.setSelectedKey(state, null);
                 }
             });

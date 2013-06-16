@@ -58,7 +58,7 @@ public class MultiPartArticleEdit extends SimpleEditStep {
         setDefaultEditKey("edit");
         MultiPartArticleForm form = getForm(itemModel);
         add("edit",
-            "Edit",
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(form, itemModel),
             form.getSaveCancelSection().getCancelButton()
            );

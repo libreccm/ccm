@@ -27,14 +27,11 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Service;
 import com.arsdigita.cms.contenttypes.util.ServiceGlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
-
-import java.text.DateFormat;
 
 /**
  * Authoring step to edit the simple attributes of the Service content type (and
@@ -58,7 +55,7 @@ public class ServicePropertiesStep extends SimpleEditStep {
 
         editSheet = new ServicePropertyForm(itemModel,this);
         add(EDIT_SHEET_NAME, 
-            "Edit",                      // currently just a String is acepted! 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 

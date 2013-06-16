@@ -60,11 +60,8 @@ public class PressReleasePropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new PressReleasePropertyForm( itemModel, this);
-        // SecurityPropertyEditor#add currently accepts just a String as label
-        // parameter. As soon as it is refactored, a GlobalizedMessage or a
-        // Label should be used.
         add( EDIT_SHEET_NAME, 
-             "Edit", 
+             GlobalizationUtil.globalize("cms.ui.edit"), 
              new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 

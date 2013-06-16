@@ -76,8 +76,9 @@ public class ImageUploadSection extends FormSection
         add(m_currentImage);
         add(m_imageDisplay);
         m_spacer = new Label("");
-	add(m_spacer);
-        m_deleteImage = new Submit("Delete Image");
+        add(m_spacer);
+        m_deleteImage = new Submit(MPArticleGlobalizationUtil.globalize(
+                                   "cms.contenttypes.ui.mparticle.current_image"));
         add(m_deleteImage);
         add(new Label(
                 MPArticleGlobalizationUtil
@@ -118,14 +119,14 @@ public class ImageUploadSection extends FormSection
 
         m_currentImage.setVisible(state, false);
         m_imageDisplay.setVisible(state, false);
-	m_spacer.setVisible(state, false);
-	m_deleteImage.setVisible(state, false);
+        m_spacer.setVisible(state, false);
+        m_deleteImage.setVisible(state, false);
         if ( image != null ) {
             data.put(m_name + CAPTION, image.getDescription());
             m_currentImage.setVisible(state, true);
             m_imageDisplay.setVisible(state, true);
-	    m_spacer.setVisible(state, true);
-	    m_deleteImage.setVisible(state, true);
+        m_spacer.setVisible(state, true);
+        m_deleteImage.setVisible(state, true);
 
         }
     }

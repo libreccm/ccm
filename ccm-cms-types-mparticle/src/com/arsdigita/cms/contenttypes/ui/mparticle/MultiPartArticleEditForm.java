@@ -41,8 +41,6 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
 
     public MultiPartArticleEditForm(ItemSelectionModel itemModel, 
                                     SimpleEditStep step) {
-        //I assume this was a typo, so I corrected it:
-        //super("MutliPartArticleEditForm", itemModel);
         super("MultiPartArticleEditForm", itemModel);
         addSubmissionListener(this);
         m_step = step;
