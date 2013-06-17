@@ -54,6 +54,7 @@ public class BookmarkPropertiesStep extends SimpleEditStep {
              new WorkflowLockedComponentAccess(editSheet, itemModel),
              editSheet.getSaveCancelSection().getCancelButton() );
 
+        setDefaultEditKey(EDIT_SHEET_NAME);
         setDisplayComponent( getBookmarkPropertySheet( itemModel ) );
     }
 
