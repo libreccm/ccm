@@ -30,62 +30,59 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
-
 /**
- * Authoring step to edit the simple attributes of the SiteProxy content 
- * type (and its subclasses). 
+ * Authoring step to edit the simple attributes of the SiteProxy content type (and its subclasses).
  */
 public class SiteProxyPropertiesStep extends SimpleEditStep {
 
-    /** The name of the editing sheet added to this step */
+    /**
+     * The name of the editing sheet added to this step
+     */
     public static final String EDIT_SHEET_NAME = "edit";
 
     /**
      * Constructor.
-     * 
+     *
      * @param itemModel
-     * @param parent 
+     * @param parent
      */
-    public SiteProxyPropertiesStep( ItemSelectionModel itemModel,
-                                    AuthoringKitWizard parent ) {
-        super( itemModel, parent );
+    public SiteProxyPropertiesStep(ItemSelectionModel itemModel,
+                                   AuthoringKitWizard parent) {
+        super(itemModel, parent);
 
         BasicPageForm editSheet;
 
-        editSheet = new SiteProxyPropertyForm( itemModel );
-        add( EDIT_SHEET_NAME, 
+        editSheet = new SiteProxyPropertyForm(itemModel);
+        add(EDIT_SHEET_NAME,
             SiteProxyGlobalizationUtil.globalize(
-                     "cms.contenttypes.ui.siteproxy.edit_form_link"),
-             new WorkflowLockedComponentAccess(editSheet, itemModel),
-             editSheet.getSaveCancelSection().getCancelButton() );
+                "cms.contenttypes.ui.siteproxy.edit_form_link"),
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
 
-        setDisplayComponent( getSiteProxyPropertySheet( itemModel ) );
+        setDefaultEditKey(EDIT_SHEET_NAME);
+        setDisplayComponent(getSiteProxyPropertySheet(itemModel));
     }
 
     /**
-     * Returns a component that displays the properties of the SiteProxy
-     * specified by the ItemSelectionModel passed in.
-     * 
+     * Returns a component that displays the properties of the SiteProxy specified by the ItemSelectionModel passed in.
+     *
      * @param itemModel The ItemSelectionModel to use
      * @pre itemModel != null
-     * @return A component to display the state of the basic properties
-     *  of the release
+     * @return A component to display the state of the basic properties of the release
      */
-    public static Component getSiteProxyPropertySheet( ItemSelectionModel
-                                                          itemModel ) {
-        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
+    public static Component getSiteProxyPropertySheet(ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add( GlobalizationUtil
-                   .globalize("cms.contenttypes.ui.title"), 
-                   SiteProxy.TITLE );
-        sheet.add( GlobalizationUtil
-                   .globalize("cms.contenttypes.ui.name"),
-                   SiteProxy.NAME );
-        sheet.add( SiteProxyGlobalizationUtil
-                   .globalize("cms.contenttypes.ui.siteproxy.url"),  
-                   SiteProxy.URL );
+        sheet.add(GlobalizationUtil
+                .globalize("cms.contenttypes.ui.title"),
+                  SiteProxy.TITLE);
+        sheet.add(GlobalizationUtil
+                .globalize("cms.contenttypes.ui.name"),
+                  SiteProxy.NAME);
+        sheet.add(SiteProxyGlobalizationUtil
+                .globalize("cms.contenttypes.ui.siteproxy.url"),
+                  SiteProxy.URL);
 
         return sheet;
     }
 }
-
