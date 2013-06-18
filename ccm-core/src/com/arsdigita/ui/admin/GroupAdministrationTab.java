@@ -156,7 +156,8 @@ class GroupAdministrationTab extends BoxPanel
         BoxPanel c = new BoxPanel();
         c.setClassAttr("navbar");
 
-        m_tree = new Tree(new GroupTreeModel());
+        //m_tree = new Tree(new GroupTreeModel());
+        m_tree = new Tree(new GroupTreeModelBuilder());
         m_tree.addChangeListener(this);
         c.add(m_tree);
 

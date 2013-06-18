@@ -18,6 +18,7 @@
  */
 package com.arsdigita.ui.admin;
 
+import com.arsdigita.ui.admin.ApplicationsAdministrationTab;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.TabbedPane;
@@ -194,11 +195,11 @@ public class AdminServlet extends BaseApplicationServlet
         /*
          * Create application administration panel
          */
-            ApplicationsAdministrationTab appsAdministrationTab = 
-                                     new ApplicationsAdministrationTab();
-        
+        ApplicationsAdministrationTab appsAdministrationTab =
+                                      new ApplicationsAdministrationTab();
+
         SettingsTab settingsTab = new SettingsTab();
-        
+
 
         // Create the Admin's page tab bar, currently 2 elements: user & groups
         TabbedPane tb = new TabbedPane();
@@ -218,4 +219,5 @@ public class AdminServlet extends BaseApplicationServlet
 
         return p;
     }
+
 }

@@ -66,6 +66,7 @@ public class GroupTreeModel implements TreeModel {
         public void remove() {
             throw new UnsupportedOperationException();
         }
+
     }
 
     /**
@@ -113,22 +114,22 @@ public class GroupTreeModel implements TreeModel {
             DataCollection coll = ssn.retrieve("com.arsdigita.kernel.Group");
 
             coll.addInSubqueryFilter("id", "com.arsdigita.ui.admin.AllNoParentGroups");
-			
-    	    coll.addOrder("lower("+ Group.DISPLAY_NAME + ") asc");
-			
+
+            coll.addOrder("lower(" + Group.DISPLAY_NAME + ") asc");
+
             return new GroupIterator(new ACSObjectCollection(coll));
         } else {
             Group group = null;
 
             try {
-                group = new Group(new BigDecimal((String)n.getKey()));
+                group = new Group(new BigDecimal((String) n.getKey()));
             } catch (DataObjectNotFoundException ed) {
                 // Group is not found just return  null.
                 return null;
             }
 
             GroupCollection coll = group.getSubgroups();
-            coll.addOrder("lower("+ Group.DISPLAY_NAME + ") asc");
+            coll.addOrder("lower(" + Group.DISPLAY_NAME + ") asc");
 
             return new GroupIterator(coll);
 
@@ -147,6 +148,7 @@ class RootTreeNode implements TreeNode {
     public Object getElement() {
         return "/";
     }
+
 }
 
 class GroupTreeNode implements TreeNode {
@@ -166,4 +168,5 @@ class GroupTreeNode implements TreeNode {
     public Object getElement() {
         return m_name;
     }
+
 }

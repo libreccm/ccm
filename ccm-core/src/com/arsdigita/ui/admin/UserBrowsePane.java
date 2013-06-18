@@ -20,6 +20,7 @@ package com.arsdigita.ui.admin;
 
 
 
+import com.arsdigita.ui.admin.ApplicationsAdministrationTab;
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
