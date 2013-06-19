@@ -67,6 +67,8 @@ interface AdminConstants {
         (new GlobalizedMessage("ui.admin.tab.applications.title",
                                BUNDLE_NAME));
 
+    Label INFO_TAB_TITLE = new Label(new GlobalizedMessage("ui.admin.tab.info.title", BUNDLE_NAME));
+    
     GlobalizedMessage USER_NAVBAR_TITLE =
         new GlobalizedMessage("ui.admin.tab.user.navbartitle",
                               BUNDLE_NAME);

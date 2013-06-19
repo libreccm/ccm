@@ -18,7 +18,6 @@
  */
 package com.arsdigita.ui.admin;
 
-import com.arsdigita.ui.admin.ApplicationsAdministrationTab;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.TabbedPane;
@@ -29,23 +28,18 @@ import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.templating.Templating;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;
 import com.arsdigita.web.LoginSignal;
 import com.arsdigita.xml.Document;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
 
 /**
  * Web Developer Support Application Servlet class, central entry point to create and process the applications UI.
@@ -55,21 +49,21 @@ import org.apache.log4j.Logger;
  *
  * @see com.arsdigita.bebop.page.BebopApplicationServlet}
  *
+ * @author Jens Pelzetter
  * @author pb
  */
-public class AdminServlet extends BaseApplicationServlet
-        implements AdminConstants {
+public class AdminServlet extends BaseApplicationServlet implements AdminConstants {
 
+    private static final long serialVersionUID = -3912367600768871630L;
     /**
      * Logger instance for debugging
      */
-    private static final Logger s_log = Logger.getLogger(
-            AdminServlet.class.getName());
+    //private static final Logger LOGGER = Logger.getLogger(AdminServlet.class.getName());
     /**
      * URL (pathinfo) -> Page object mapping. Based on it (and the http request url) the doService method to selects a
      * page to display
      */
-    private final Map m_pages = new HashMap();
+    private final Map<String, Page> pages = new HashMap<String, Page>();
 
     /**
      * User extension point, overwrite this method to setup a URL - page mapping
@@ -78,7 +72,6 @@ public class AdminServlet extends BaseApplicationServlet
      */
     @Override
     public void doInit() throws ServletException {
-
         addPage("/", buildAdminIndexPage());     // index page at address ~/ds
         //  addPage("/index.jsp", buildIndexPage()); // index page at address ~/ds
 
@@ -87,23 +80,24 @@ public class AdminServlet extends BaseApplicationServlet
     /**
      * Central service method, checks for required permission, determines the requested page and passes the page object
      * to PresentationManager.
+     * 
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @throws ServletException
+     * @throws IOException  
      */
-    public final void doService(HttpServletRequest sreq,
-                                HttpServletResponse sresp,
-                                Application app)
-            throws ServletException, IOException {
-
-
-
+    public final void doService(final HttpServletRequest sreq,
+                                final HttpServletResponse sresp,
+                                final Application app) throws ServletException, IOException {
         // ///////    Some preparational steps                   ///////////////
-
         /* Determine access privilege: only logged in users may access DS   */
-        Party party = Kernel.getContext().getParty();
+        final Party party = Kernel.getContext().getParty();
         if (party == null) {
             throw new LoginSignal(sreq);
         }
         /* Determine access privilege: Admin privileges must be granted     */
-        PermissionDescriptor admin = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, app, party);
+        final PermissionDescriptor admin = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, app, party);
         if (!PermissionService.checkPermission(admin)) {
             throw new AccessDeniedException("User is not an administrator");
         }
@@ -112,7 +106,6 @@ public class AdminServlet extends BaseApplicationServlet
 
 
         // ///////   Everything OK here - DO IT                  ///////////////
-
         String pathInfo = sreq.getPathInfo();
         Assert.exists(pathInfo, "String pathInfo");
         if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
@@ -124,21 +117,13 @@ public class AdminServlet extends BaseApplicationServlet
             pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
         }
 
-        final Page page = (Page) m_pages.get(pathInfo);
-
-        if (page != null) {
-
-            final Document doc = page.buildDocument(sreq, sresp);
-
-            PresentationManager pm = Templating.getPresentationManager();
-            pm.servePage(doc, sreq, sresp);
-
-        } else {
-
+        final Page page = pages.get(pathInfo);
+        if (page == null) {
             sresp.sendError(404, "No such page for path " + pathInfo);
-
+        } else {
+            final Document doc = page.buildDocument(sreq, sresp);
+            Templating.getPresentationManager().servePage(doc, sreq, sresp);
         }
-
     }
 
     /**
@@ -148,15 +133,14 @@ public class AdminServlet extends BaseApplicationServlet
      * @param page Page object to display
      */
     private void addPage(final String pathInfo, final Page page) {
-
         Assert.exists(pathInfo, String.class);
         Assert.exists(page, Page.class);
         // Current Implementation requires pathInfo to start with a leading '/'
         // SUN Servlet API specifies: "PathInfo *may be empty* or will start
         // with a '/' character."
-        Assert.isTrue(pathInfo.startsWith("/"), "path starts not with '/'");
+        Assert.isTrue(pathInfo.charAt(0) == '/', "path starts not with '/'");
 
-        m_pages.put(pathInfo, page);
+        pages.put(pathInfo, page);
     }
 
     /**
@@ -164,60 +148,52 @@ public class AdminServlet extends BaseApplicationServlet
      */
     private Page buildAdminIndexPage() {
 
-        Page p = PageFactory.buildPage("admin", PAGE_TITLE_LABEL);
+        final Page page = PageFactory.buildPage("admin", PAGE_TITLE_LABEL);
+        page.addGlobalStateParam(USER_ID_PARAM);
+        page.addGlobalStateParam(GROUP_ID_PARAM);
+        page.addGlobalStateParam(APPLICATIONS_ID_PARAM);
 
-        p.addGlobalStateParam(USER_ID_PARAM);
-        p.addGlobalStateParam(GROUP_ID_PARAM);
-        p.addGlobalStateParam(APPLICATIONS_ID_PARAM);
-
-        /* Create User split panel. */
-        AdminSplitPanel userSplitPanel =
-                        new AdminSplitPanel(USER_NAVBAR_TITLE);
-
-        UserBrowsePane browsePane = new UserBrowsePane();
-
-        userSplitPanel.addTab(USER_TAB_SUMMARY,
-                              new UserSummaryPane(userSplitPanel, browsePane));
-        userSplitPanel.addTab(USER_TAB_BROWSE,
-                              browsePane);
-        userSplitPanel.addTab(USER_TAB_SEARCH,
-                              new UserSearchPane(userSplitPanel, browsePane));
-        userSplitPanel.addTab(USER_TAB_CREATE_USER,
-                              new CreateUserPane(userSplitPanel));
-
-
-        /*
-         * Create group administration panel
+        /* 
+         * Create User split panel. 
+         * Note: Will change soon. 
          */
-        GroupAdministrationTab groupAdministrationTab =
-                               new GroupAdministrationTab();
+        final AdminSplitPanel userSplitPanel = new AdminSplitPanel(USER_NAVBAR_TITLE);
 
+        final UserBrowsePane browsePane = new UserBrowsePane();
+        userSplitPanel.addTab(USER_TAB_SUMMARY, new UserSummaryPane(userSplitPanel, browsePane));
+        userSplitPanel.addTab(USER_TAB_BROWSE, browsePane);
+        userSplitPanel.addTab(USER_TAB_SEARCH, new UserSearchPane(userSplitPanel, browsePane));
+        userSplitPanel.addTab(USER_TAB_CREATE_USER, new CreateUserPane(userSplitPanel));
+        
+        // Create the Admin's page tab bar, currently 2 elements: user & groups
+        final TabbedPane tabbedPane = new TabbedPane();
+        tabbedPane.setIdAttr("page-body");
+
+        /**
+         * Create and add info tab
+         */
+        tabbedPane.addTab(INFO_TAB_TITLE, new AdminInfoTab());
         /*
          * Create application administration panel
          */
-        ApplicationsAdministrationTab appsAdministrationTab =
-                                      new ApplicationsAdministrationTab();
+        tabbedPane.addTab(APPLICATIONS_TAB_TITLE, new ApplicationsAdministrationTab());
+        /*
+         * Add user panel. 
+         */
+        tabbedPane.addTab(USER_TAB_TITLE, userSplitPanel);
+        /*
+         * Create and add group administration panel
+         */
+        final GroupAdministrationTab groupAdminTab = new GroupAdministrationTab();
+        tabbedPane.addTab(GROUP_TAB_TITLE, groupAdminTab);        
 
-        //SettingsTab settingsTab = new SettingsTab();
+        browsePane.setTabbedPane(tabbedPane);
+        browsePane.setGroupAdministrationTab(groupAdminTab);      
 
+        page.add(tabbedPane);
+        page.lock();
 
-        // Create the Admin's page tab bar, currently 2 elements: user & groups
-        TabbedPane tb = new TabbedPane();
-        tb.setIdAttr("page-body");
-
-        tb.addTab(USER_TAB_TITLE, userSplitPanel);
-        tb.addTab(GROUP_TAB_TITLE, groupAdministrationTab);
-        tb.addTab(APPLICATIONS_TAB_TITLE, appsAdministrationTab);
-        //tb.addTab("Settings", settingsTab);
-
-        browsePane.setTabbedPane(tb);
-        browsePane.setGroupAdministrationTab(groupAdministrationTab);
-        //browsePane.setAppsAdministrationTab(appsAdministrationTab);
-
-        p.add(tb);
-        p.lock();
-
-        return p;
+        return page;
     }
 
 }

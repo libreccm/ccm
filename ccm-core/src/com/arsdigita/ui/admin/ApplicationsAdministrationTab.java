@@ -28,7 +28,6 @@ import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.toolbox.ui.Section;
-import com.arsdigita.ui.admin.applications.ApplicationCreateForm;
 import com.arsdigita.ui.admin.applications.ApplicationInstancePane;
 import com.arsdigita.ui.admin.applications.ApplicationManager;
 import com.arsdigita.ui.admin.applications.BaseApplicationPane;
