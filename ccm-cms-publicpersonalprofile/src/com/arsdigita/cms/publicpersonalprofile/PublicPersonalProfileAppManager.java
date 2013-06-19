@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Jens Pelzetter
+ * Copyright (c) 2013 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -18,30 +18,23 @@
  */
 package com.arsdigita.cms.publicpersonalprofile;
 
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.contenttypes.GenericPerson;
-import com.arsdigita.xml.Element;
+import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
 
 /**
- * Implementations of this interface are used to render automatic content
- * (for example a publication list).
- * 
- * @author Jens Pelzetter 
+ *
+ * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public interface ContentGenerator {
+public class PublicPersonalProfileAppManager extends AbstractSingletonApplicationManager<PublicPersonalProfiles>{
     
-    /**
-     * Generates the content
-     * 
-     * @param parent XML element to attach the content to
-     * @param person The person to be used as data source
-     * @param state The current page state.
-     * @param profileLanguage  
-     */
-    void generateContent(Element parent, 
-                         GenericPerson person, 
-                         PageState state, 
-                         String profileLanguage);
+    public Class<PublicPersonalProfiles> getApplication() {
+        return PublicPersonalProfiles.class;
+    }
+    
+    public SimpleContainer getApplicationAdminForm() {
+        return new PublicPersonalProfilesAdminPanel();
+    }
+    
     
 }

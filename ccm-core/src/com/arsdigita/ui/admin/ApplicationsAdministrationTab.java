@@ -19,6 +19,7 @@
 package com.arsdigita.ui.admin;
 
 import com.arsdigita.bebop.BoxPanel;
+import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
@@ -77,14 +78,14 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
 
         final ApplicationTypeCollection applicationTypes = ApplicationType.retrieveAllApplicationTypes();
 
-        final Map<String, ApplicationCreateForm<?>> createForms = retrieveAppCreateForms();
-        final Map<String, ApplicationManager<?>> managementForms = retrieveAppManagers();
+        //final Map<String, ApplicationCreateForm<?>> createForms = retrieveAppCreateForms();
+        final Map<String, ApplicationManager<?>> appManagers = retrieveAppManagers();
 
         while (applicationTypes.next()) {
             if (applicationTypes.getApplicationType().isSingleton()) {
-                createSingletonAppPane(applicationTypes.getApplicationType(), managementForms);
+                createSingletonAppPane(applicationTypes.getApplicationType(), appManagers);
             } else {
-                createAppPane(applicationTypes.getApplicationType(), createForms, managementForms);
+                createAppPane(applicationTypes.getApplicationType(), appManagers);
             }
         }
 
@@ -101,18 +102,15 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
         add(panel);
     }
 
-    @SuppressWarnings("rawtypes")
-    private Map<String, ApplicationCreateForm<?>> retrieveAppCreateForms() {
-        final Map<String, ApplicationCreateForm<?>> appCreateForms = new HashMap<String, ApplicationCreateForm<?>>();
-
-        final ServiceLoader<ApplicationCreateForm> loader = ServiceLoader.load(ApplicationCreateForm.class);
-        for (ApplicationCreateForm<?> appCreateForm : loader) {
-            appCreateForms.put(appCreateForm.getAppClassName(), appCreateForm);
-        }
-
-        return appCreateForms;
-    }
-
+//    @SuppressWarnings("rawtypes")
+//    private Map<String, ApplicationCreateForm<?>> retrieveAppCreateForms() {
+//        final Map<String, ApplicationCreateForm<?>> appCreateForms = new HashMap<String, ApplicationCreateForm<?>>();
+//        final ServiceLoader<ApplicationCreateForm> loader = ServiceLoader.load(ApplicationCreateForm.class);
+//        for (ApplicationCreateForm<?> appCreateForm : loader) {
+//            appCreateForms.put(appCreateForm.getAppClassName(), appCreateForm);
+//        }
+//        return appCreateForms;
+//    }
     @SuppressWarnings("rawtypes")
     private Map<String, ApplicationManager<?>> retrieveAppManagers() {
         final Map<String, ApplicationManager<?>> appManagers = new HashMap<String, ApplicationManager<?>>();
@@ -126,34 +124,39 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
     }
 
     private void createSingletonAppPane(final ApplicationType applicationType,
-                                        final Map<String, ApplicationManager<?>> managementForms) {
+                                        final Map<String, ApplicationManager<?>> appManagers) {
         final String appObjectType = applicationType.getApplicationObjectType();
 
-        final ApplicationManager<?> manager = managementForms.get(appObjectType);
+        final ApplicationManager<?> manager = appManagers.get(appObjectType);
         final SingletonApplicationPane pane;
         if (manager == null) {
             pane = new SingletonApplicationPane(applicationType, null);
         } else {
             pane = new SingletonApplicationPane(
-                    applicationType, managementForms.get(appObjectType).getApplicationAdminForm());
+                    applicationType, appManagers.get(appObjectType).getApplicationAdminForm());
         }
         appPanes.put(appObjectType, pane);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     private void createAppPane(final ApplicationType applicationType,
-                               final Map<String, ApplicationCreateForm<?>> createForms,
-                               final Map<String, ApplicationManager<?>> managementForms) {
-        final MultiInstanceApplicationPane<?> appPane = new MultiInstanceApplicationPane(
-                applicationType,
-                createForms.get(applicationType.getApplicationObjectType()));
+                               final Map<String, ApplicationManager<?>> appManagers) {
+        final ApplicationManager<?> appManager = appManagers.get(applicationType.getApplicationObjectType());
+        final Form createForm;
+        if (appManager == null) {
+            createForm = null;
+        } else {
+            createForm = appManager.getApplicationCreateForm();
+        }
+
+        final MultiInstanceApplicationPane<?> appPane = new MultiInstanceApplicationPane(applicationType, createForm);
         appPanes.put(applicationType.getApplicationObjectType(), appPane);
 
         final ApplicationCollection instances = Application.retrieveAllApplications(
                 applicationType.getApplicationObjectType());
 
         while (instances.next()) {
-            createInstancePane(instances.getApplication(), managementForms);
+            createInstancePane(instances.getApplication(), appManagers);
         }
     }
 
@@ -183,14 +186,21 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
             page.setVisibleDefault(entry.getValue(), false);
         }
     }
-  
+
     private void setPaneVisible(final SimpleContainer pane, final PageState state) {
-        if (visiblePane != null) {
-            visiblePane.setVisible(state, false);
+//        if (visiblePane != null) {
+//            visiblePane.setVisible(state, false);
+//        }
+        
+        for(Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
+            entry.getValue().setVisible(state, false);
+        }
+        for(Map.Entry<String, ApplicationInstancePane> entry : instancePanes.entrySet()) {
+            entry.getValue().setVisible(state, false);
         }
 
         pane.setVisible(state, true);
-        visiblePane = pane;
+        //visiblePane = pane;
     }
 
     private class TreeStateChangeListener implements ChangeListener {
@@ -198,7 +208,7 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
         public TreeStateChangeListener() {
             //Nothing
         }
-        
+
         public void stateChanged(final ChangeEvent event) {
             final PageState state = event.getPageState();
 
@@ -219,5 +229,6 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
                 }
             }
         }
+
     }
 }

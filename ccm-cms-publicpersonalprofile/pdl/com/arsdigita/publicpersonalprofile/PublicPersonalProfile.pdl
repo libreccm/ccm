@@ -2,8 +2,8 @@ model com.arsdigita.cms.publicpersonalprofile;
 
 import com.arsdigita.web.Application;
 
-object type PublicPersonalProfile extends Application {
-    reference key (publicpersonalprofile.application_id);
+object type PublicPersonalProfiles extends Application {
+    reference key (publicpersonalprofiles.application_id);
 }
 
 // Subquery for AbstractObjectList used as a filter

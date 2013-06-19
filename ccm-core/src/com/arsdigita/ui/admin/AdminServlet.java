@@ -198,7 +198,7 @@ public class AdminServlet extends BaseApplicationServlet
         ApplicationsAdministrationTab appsAdministrationTab =
                                       new ApplicationsAdministrationTab();
 
-        SettingsTab settingsTab = new SettingsTab();
+        //SettingsTab settingsTab = new SettingsTab();
 
 
         // Create the Admin's page tab bar, currently 2 elements: user & groups
@@ -208,7 +208,7 @@ public class AdminServlet extends BaseApplicationServlet
         tb.addTab(USER_TAB_TITLE, userSplitPanel);
         tb.addTab(GROUP_TAB_TITLE, groupAdministrationTab);
         tb.addTab(APPLICATIONS_TAB_TITLE, appsAdministrationTab);
-        tb.addTab("Settings", settingsTab);
+        //tb.addTab("Settings", settingsTab);
 
         browsePane.setTabbedPane(tb);
         browsePane.setGroupAdministrationTab(groupAdministrationTab);

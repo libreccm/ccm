@@ -18,8 +18,10 @@
  */
 package com.arsdigita.ui.admin.applications;
 
+import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableModel;
@@ -44,8 +46,7 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
     private final static int COL_URL = 1;
     private final static int COL_DESC = 2;
 
-    public MultiInstanceApplicationPane(final ApplicationType applicationType,
-                                        final ApplicationCreateForm<T> createForm) {
+    public MultiInstanceApplicationPane(final ApplicationType applicationType, final Form createForm) {
         super(applicationType);
 
         final ApplicationCollection applications = Application.retrieveAllApplications(applicationType.

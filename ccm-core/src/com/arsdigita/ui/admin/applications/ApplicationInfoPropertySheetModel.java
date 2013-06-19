@@ -53,6 +53,7 @@ public class ApplicationInfoPropertySheetModel implements PropertySheetModel {
             currentIndex++;
             return true;
         } else {
+            currentIndex = -1;
             return false;
         }
     }
@@ -77,7 +78,7 @@ public class ApplicationInfoPropertySheetModel implements PropertySheetModel {
                 return (String) GlobalizationUtil.globalize(
                         "ui.admin.applications.ApplicationInfoSection.singleton_instance.path.label").localize();
             default:
-                return "";
+                return "unknown";
         }
     }
 

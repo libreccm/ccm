@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2013 University of Bremen. All Rights Reserved.
+ * Copyright (c) 2011 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.contenttypes;
 
 /**
