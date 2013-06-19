@@ -18,7 +18,6 @@
  */
 package com.arsdigita.bebop;
 
-
 import java.util.Iterator;
 
 
@@ -38,28 +37,22 @@ import com.arsdigita.bebop.util.BebopConstants;
  *
  * @version $Id: BoxPanel.java 287 2005-02-22 00:29:02Z sskracic $
  * */
-public class BoxPanel extends SimpleContainer
-    implements BebopConstants
-{
+public class BoxPanel extends SimpleContainer implements BebopConstants {
 
     /**
      * Specifies that components should be laid out left to right.
      */
     public final static int HORIZONTAL = 1;
-
     /**
      * Specifies that components should be laid out top to bottom.
      */
     public final static int VERTICAL = 2;
-
     private static final String WIDTH_ATTR = "width";
     private static final String BORDER_ATTR = "border";
-
     private int m_axis;
     private boolean m_centering;
 
     // Instance methods
-
     /**
      * Creates a box panel that lays out its components from top to bottom.
      * The components are not centered.
@@ -102,18 +95,18 @@ public class BoxPanel extends SimpleContainer
      * &lt;/bebop:boxPanel></code>
      */
     public void generateXML(PageState state, Element parent) {
-        if ( isVisible(state) ) {
+        if (isVisible(state)) {
             Element panel = parent.newChildElement(BEBOP_BOXPANEL, BEBOP_XML_NS);
             // or: rowPanel/columPanel?
             panel.addAttribute("center", String.valueOf(m_centering));
             panel.addAttribute("axis", String.valueOf(m_axis));
             exportAttributes(panel);
 
-            for (Iterator i = children(); i.hasNext(); ) {
+            for (Iterator i = children(); i.hasNext();) {
                 Component c = (Component) i.next();
 
-                if ( c.isVisible(state) ) {
-                    if ( c instanceof Hidden ) {
+                if (c.isVisible(state)) {
+                    if (c instanceof Hidden) {
                         c.generateXML(state, parent);
                     } else {
                         Element cell = panel.newChildElement(BEBOP_CELL, BEBOP_XML_NS);
@@ -148,7 +141,6 @@ public class BoxPanel extends SimpleContainer
 //          setAttribute(BORDER_ATTR, "0");
 //      }
 //  }
-
     /**
      * 
      * Sets the width of the border to draw around the components. This value

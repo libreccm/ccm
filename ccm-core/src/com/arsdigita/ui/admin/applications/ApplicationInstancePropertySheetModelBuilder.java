@@ -18,29 +18,32 @@
  */
 package com.arsdigita.ui.admin.applications;
 
-import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.PropertySheet;
-import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.ui.admin.GlobalizationUtil;
-import com.arsdigita.web.ApplicationType;
+import com.arsdigita.bebop.PropertySheetModel;
+import com.arsdigita.bebop.PropertySheetModelBuilder;
+import com.arsdigita.util.LockableImpl;
+import com.arsdigita.web.Application;
 
 /**
- * Basic application pane containing the parts common for singleton and multi instance applications types. Shows 
- * informations about a specific application type.
+ * {@link PropertySheetModelBuilder} implementation for the {@link ApplicationInstancePropertySheetModel}.
  * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class BaseApplicationPane extends SegmentedPanel {
-  
-    public BaseApplicationPane(final ApplicationType applicationType) {
-        super();
-        
-        final PropertySheet appInfoPanel = new PropertySheet(new ApplicationInfoPropertySheetModelBuilder(
-                applicationType));                      
-        addSegment(new Label(GlobalizationUtil.globalize(
-                "ui.admin.applications.ApplicationInfoSection.heading")), 
-                   appInfoPanel);
-    }
+public class ApplicationInstancePropertySheetModelBuilder extends LockableImpl implements PropertySheetModelBuilder {
 
+    private final Application application;
+    
+    public ApplicationInstancePropertySheetModelBuilder(final Application application) {
+        super();        
+        this.application = application;
+    }
+    
+    public PropertySheetModel makeModel(final PropertySheet sheet, final PageState state) {
+        return new ApplicationInstancePropertySheetModel(application);
+    }
+    
+    
+    
 }

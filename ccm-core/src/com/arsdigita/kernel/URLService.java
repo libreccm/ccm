@@ -85,8 +85,8 @@ public class URLService {
      * to produce a valid non-null URL.
      */
     public static String locate(OID oid)
-        throws URLFinderNotFoundException, NoValidURLException {
-        return locate(oid,null);
+            throws URLFinderNotFoundException, NoValidURLException {
+        return locate(oid, null);
     }
 
     /**
@@ -104,24 +104,20 @@ public class URLService {
      * to produce a valid non-null URL.
      */
     public static String locate(OID oid, String context)
-                         throws URLFinderNotFoundException, NoValidURLException{
+            throws URLFinderNotFoundException, NoValidURLException {
 
         URLFinder f = getFinder(oid.getObjectType());
-        if (f==null) {
-            throw new URLFinderNotFoundException("There is no URLFinder " +
-                                                 "registered for " +
-                                                 "data object type " +
-                                                 oid.getObjectType().getQualifiedName());
+        if (f == null) {
+            throw new URLFinderNotFoundException("There is no URLFinder " + "registered for " + "data object type "
+                                                 + oid.getObjectType().getQualifiedName());
         }
-	
+
         // Determine the URL using the objects URLFinder
-        String url = (context == null) ? f.find(oid) : f.find(oid,context);
+        String url = (context == null) ? f.find(oid) : f.find(oid, context);
 
         if (url == null) {
-            throw new NoValidURLException("The URLFinder for " +
-                                          oid.getObjectType().getQualifiedName() +
-                                          "produced a null URL for " +
-                                          oid);
+            throw new NoValidURLException("The URLFinder for " + oid.getObjectType().getQualifiedName()
+                                          + "produced a null URL for " + oid);
         }
         return url;
     }
@@ -173,9 +169,7 @@ public class URLService {
     /**
      * Returns the URLFinder registered for the given object type.
      **/
-    public synchronized static
-        URLFinder getRegisteredFinder(ObjectType objectType)
-    {
+    public synchronized static URLFinder getRegisteredFinder(ObjectType objectType) {
         return (URLFinder) s_finders.get(objectType);
     }
 
@@ -184,9 +178,7 @@ public class URLService {
      * Returns the URLFinder registered for the given object type.
      *
      **/
-    public synchronized static
-        URLFinder getRegisteredFinder(String objectType)
-    {
+    public synchronized static URLFinder getRegisteredFinder(String objectType) {
         MetadataRoot meta = SessionManager.getMetadataRoot();
         return (URLFinder) s_finders.get(meta.getObjectType(objectType));
     }
@@ -207,7 +199,7 @@ public class URLService {
      **/
     public synchronized static URLFinder getFinder(ObjectType objectType) {
         ObjectType type = objectType;
-        while (type!=null && !s_finders.containsKey(type)) {
+        while (type != null && !s_finders.containsKey(type)) {
             type = type.getSupertype();
         }
         return (URLFinder) s_finders.get(type);
@@ -224,28 +216,28 @@ public class URLService {
 
     public static OID getNonencodedOID(HttpServletRequest sreq) {
 
-	if (sreq == null) {
-	    return null;
-	}
+        if (sreq == null) {
+            return null;
+        }
 
-	String query = sreq.getQueryString();
+        String query = sreq.getQueryString();
 
-	if (query == null) {
-	    return null;
-	}
+        if (query == null) {
+            return null;
+        }
 
-	int start = query.indexOf(OID_START);
-	if (start == -1) {
-	    return null;
-	}
-	start = start+OID_START.length();
+        int start = query.indexOf(OID_START);
+        if (start == -1) {
+            return null;
+        }
+        start = start + OID_START.length();
 
-	int end = query.indexOf(OID_END);
-	if (end == -1) {
-	    end = query.length();
-	}
+        int end = query.indexOf(OID_END);
+        if (end == -1) {
+            end = query.length();
+        }
 
-	return OID.valueOf(query.substring(start, end));
+        return OID.valueOf(query.substring(start, end));
     }
 
     public static final String OID_START = "oid=";

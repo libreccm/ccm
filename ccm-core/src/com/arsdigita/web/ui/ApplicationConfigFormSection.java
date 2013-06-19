@@ -56,68 +56,67 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
     private RequestLocal m_parentResource;
     private RequestLocal m_currentResource;
     private ApplicationType m_applicationType;
-    
     private TextField m_url;
     private TextField m_title;
     private TextArea m_desc;
-
     private boolean m_createApplicationGroup = false;
 
+    public ApplicationConfigFormSection(ResourceType resType,
+                                        RequestLocal parentAppRL,
+                                        boolean createApplicationGroup) {
+        this(resType, parentAppRL);
+        m_createApplicationGroup = createApplicationGroup;
+    }
 
     public ApplicationConfigFormSection(ResourceType resType,
-					RequestLocal parentAppRL,
-					boolean createApplicationGroup) {
-	this (resType, parentAppRL);
-	m_createApplicationGroup = createApplicationGroup;
-    }
-	
-    public ApplicationConfigFormSection(ResourceType resType,
                                         RequestLocal parentAppRL) {
-        m_applicationType = (ApplicationType)resType;
+        m_applicationType = (ApplicationType) resType;
         m_parentResource = parentAppRL;
-        m_applicationType.disconnect(); 
+        m_applicationType.disconnect();
         setup();
     }
-    
+
     public ApplicationConfigFormSection(RequestLocal application) {
         m_currentResource = application;
-        
+
         setup();
     }
-    
+
     private void setup() {
         addInitListener(new FormInitListener() {
-                public void init(FormSectionEvent e)
+            public void init(FormSectionEvent e)
                     throws FormProcessException {
-                    PageState state = e.getPageState();
-                    
-                    if (m_currentResource != null) {
-                        Application application = 
-                            (Application)m_currentResource.get(state);
-                        initWidgets(state, application);
-                    } else {
-                        initWidgets(state, null);
-                    }
+                PageState state = e.getPageState();
+
+                if (m_currentResource != null) {
+                    Application application =
+                                (Application) m_currentResource.get(state);
+                    initWidgets(state, application);
+                } else {
+                    initWidgets(state, null);
                 }
-            });
+            }
+
+        });
         addValidationListener(new FormValidationListener() {
-                public void validate(FormSectionEvent e)
+            public void validate(FormSectionEvent e)
                     throws FormProcessException {
-                    PageState state = e.getPageState();
-                    
-                    if (m_currentResource != null) {
-                        Application application = 
-                            (Application)m_currentResource.get(state);
-                        validateWidgets(state, application);
-                    } else {
-                        validateWidgets(state, null);
-                    }
+                PageState state = e.getPageState();
+
+                if (m_currentResource != null) {
+                    Application application =
+                                (Application) m_currentResource.get(state);
+                    validateWidgets(state, application);
+                } else {
+                    validateWidgets(state, null);
                 }
-            });
-        
+            }
+
+        });
+
         addWidgets();
     }
-    
+
     /**
      * Adds basic form widgets for URL, title
      * and description properties. Override this
@@ -138,7 +137,7 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
         m_desc.setRows(5);
         m_desc.setCols(35);
         m_desc.addValidationListener(new StringInRangeValidationListener(0, 4000));
-        
+
         add(new Label("URL:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_url);
         add(new Label("Title:", Label.BOLD), ColumnPanel.RIGHT);
@@ -146,18 +145,18 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
         add(new Label("Description:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_desc);
     }
-    
+
     /**
      * Initialize the form fields
      * @param application the application being edited, if any
      */
     protected void initWidgets(PageState state,
                                Application application)
-        throws FormProcessException {
-        
+            throws FormProcessException {
+
         if (application != null) {
             String path = application.getPath();
-            String url = path.substring(path.lastIndexOf("/") +1);
+            String url = path.substring(path.lastIndexOf("/") + 1);
 
             m_url.setValue(state, url);
             m_title.setValue(state, application.getTitle());
@@ -168,31 +167,31 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
             m_desc.setValue(state, m_applicationType.getDescription());
         }
     }
-    
+
     /**
      * Validates the form fields
      * @param application the application being edited
      */
     protected void validateWidgets(PageState state,
-                                   Application application) 
-        throws FormProcessException {
+                                   Application application)
+            throws FormProcessException {
 
-        String url = (String)m_url.getValue(state);
-        
+        String url = (String) m_url.getValue(state);
+
         // Change this part
-        if ( url.indexOf("/") != -1) {
+        if (url.indexOf("/") != -1) {
             throw new FormProcessException("The url cannot contain '/'");
         }
-	// amended cg - prevent null pointer exception when 
-	// saving edit of child application        
+        // amended cg - prevent null pointer exception when 
+        // saving edit of child application        
         Application parent;
         if (m_parentResource != null) {
-        
-        parent = (Application)m_parentResource.get(state);
+
+            parent = (Application) m_parentResource.get(state);
         } else {
             parent = application.getParentApplication();
         }
-        
+
         String path;
         if (parent != null) {
             path = parent.getPath() + "/" + url;
@@ -202,47 +201,48 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
         if (Application.isInstalled(Application.BASE_DATA_OBJECT_TYPE,
                                     url)) {
             throw new FormProcessException(
-                "An application already exists with that name");
+                    "An application already exists with that name");
         }
-        
+
     }
-    
+
     public Resource createResource(PageState state) {
-        Application parent = (Application)m_parentResource.get(state);
+        Application parent = (Application) m_parentResource.get(state);
         Application application = Application.createApplication(
-            m_applicationType,
-            (String)m_url.getValue(state),
-            (String)m_title.getValue(state),
-            parent,
-            m_createApplicationGroup);
-        
+                m_applicationType,
+                (String) m_url.getValue(state),
+                (String) m_title.getValue(state),
+                parent,
+                m_createApplicationGroup);
+
         try {
             processWidgets(state, application);
         } catch (FormProcessException ex) {
             throw new UncheckedWrapperException("cannot create resource", ex);
         }
-        
+
         return application;
     }
 
     public void modifyResource(PageState state) {
-        Application application = (Application)m_currentResource.get(state);
-        
+        Application application = (Application) m_currentResource.get(state);
+
         try {
             processWidgets(state, application);
         } catch (FormProcessException ex) {
             throw new UncheckedWrapperException("cannot create resource", ex);
         }
     }
-    
+
     /**
      * Processes the form submission
      * @param application the application being edited, or newly created
      */
     protected void processWidgets(PageState state,
                                   Application application)
-        throws FormProcessException {
-        application.setTitle((String)m_title.getValue(state));
-        application.setDescription((String)m_desc.getValue(state));
+            throws FormProcessException {
+        application.setTitle((String) m_title.getValue(state));
+        application.setDescription((String) m_desc.getValue(state));
     }
+
 }

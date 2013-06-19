@@ -51,16 +51,13 @@ import org.apache.log4j.Logger;
 public class ApplicationType extends ResourceType {
 
     /** The logging object for this class. */
-    private static final Logger s_log = Logger.getLogger
-        (ApplicationType.class);
-
+    private static final Logger s_log = Logger.getLogger(ApplicationType.class);
     /**
      * The fully qualified model name of the underlying data object, which in
      * this case is the same as the Java type (full qualified class name).
      */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.web.ApplicationType";
-
     boolean m_legacyFree = true;
 
     /**
@@ -73,7 +70,7 @@ public class ApplicationType extends ResourceType {
      */
     public ApplicationType(DataObject dataObject) {
         super(dataObject);
-            m_legacyFree = true;
+        m_legacyFree = true;
     }
 
     protected ApplicationType(String dataObjectType) {
@@ -104,9 +101,9 @@ public class ApplicationType extends ResourceType {
      * @param createContainerGroup
      */
     protected ApplicationType(final String objectType,
-                               final String title,
-                               final String applicationObjectType,
-                               final boolean createContainerGroup) {
+                              final String title,
+                              final String applicationObjectType,
+                              final boolean createContainerGroup) {
         this(objectType);  // creates and returns an empty data object
 
         Assert.exists(title, "String title");
@@ -116,7 +113,7 @@ public class ApplicationType extends ResourceType {
         setApplicationObjectType(applicationObjectType);
 
         setDefaults();
-        
+
         if (createContainerGroup) {
             createGroup();
         }
@@ -127,7 +124,6 @@ public class ApplicationType extends ResourceType {
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
-
 
     /**
      * Set defaults for an apoplication type during its initial creation.
@@ -187,8 +183,6 @@ public class ApplicationType extends ResourceType {
         this(BASE_DATA_OBJECT_TYPE, title, applicationObjectType);
     }
 
-
-    
     /**
      * 
      * @param id
@@ -197,8 +191,7 @@ public class ApplicationType extends ResourceType {
     public static ApplicationType retrieveApplicationType(BigDecimal id) {
         Assert.exists(id, "id");
 
-        return ApplicationType.retrieveApplicationType
-            (new OID(ApplicationType.BASE_DATA_OBJECT_TYPE, id));
+        return ApplicationType.retrieveApplicationType(new OID(ApplicationType.BASE_DATA_OBJECT_TYPE, id));
     }
 
     // Param oid cannot be null.
@@ -213,33 +206,29 @@ public class ApplicationType extends ResourceType {
     }
 
     // Param dataObject cannot be null.  Can return null?
-    public static ApplicationType retrieveApplicationType
-                                                     (DataObject dataObject) {
+    public static ApplicationType retrieveApplicationType(DataObject dataObject) {
         Assert.exists(dataObject, "dataObject");
         return new ApplicationType(dataObject);
     }
-
 
     /**
      * 
      * @param applicationObjectType
      * @return Can return null.
      */
-    public static ApplicationType retrieveApplicationTypeForApplication
-                                      (String applicationObjectType) {
+    public static ApplicationType retrieveApplicationTypeForApplication(String applicationObjectType) {
 
         Assert.exists(applicationObjectType, "applicationObjectType");
 
         DataCollection collection =
-            SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+                       SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
         collection.addEqualsFilter("objectType", applicationObjectType);
 
         ApplicationType applicationType = null;
 
         if (collection.next()) {
-            applicationType = ApplicationType.retrieveApplicationType
-                (collection.getDataObject());
+            applicationType = ApplicationType.retrieveApplicationType(collection.getDataObject());
         }
 
         collection.close();
@@ -253,7 +242,7 @@ public class ApplicationType extends ResourceType {
      */
     public static ApplicationTypeCollection retrieveAllApplicationTypes() {
         DataCollection collection =
-            SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+                       SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
         Assert.exists(collection, "collection");
 
@@ -270,7 +259,6 @@ public class ApplicationType extends ResourceType {
     //
     // Member properties
     //
-
     /**
      * 
      * @return 
@@ -294,7 +282,6 @@ public class ApplicationType extends ResourceType {
 
         set("title", title);
     }
-
 
     /**
      * 
@@ -320,7 +307,6 @@ public class ApplicationType extends ResourceType {
 //
 //      return result.booleanValue();
 //  }
-
 //  /**
 //   * @deprecated with no replacement.
 //   * @throws UnsupportedOperationException when this method is
@@ -332,10 +318,8 @@ public class ApplicationType extends ResourceType {
 //          throw new UnsupportedOperationException
 //              ("This method is only supported for legacy application types");
 //      }
-
 //      set("isWorkspaceApplication", new Boolean(isWorkspaceApplication));
 //  }
-
 //  Deprecated in the context of ApplicationType, see comment above!
 //  public boolean hasFullPageView() {
 //      final Boolean result = (Boolean) get("hasFullPageView");
@@ -344,7 +328,6 @@ public class ApplicationType extends ResourceType {
 //
 //      return result.booleanValue();
 //  }
-
 //  /**
 //   * @deprecated with no replacement.
 //   * @throws UnsupportedOperationException when this method is
@@ -359,18 +342,14 @@ public class ApplicationType extends ResourceType {
 //
 //      set("hasFullPageView", new Boolean(hasFullPageView));
 //  }
-
 //  /**
 //   * @deprecated with no replacement.
 //   */
 //  public boolean hasEmbeddedView() {
 //      final Boolean result = (Boolean) get("hasEmbeddedView");
-
 //      Assert.exists(result, "Boolean result");
-
 //      return result.booleanValue();
 //  }
-
 //  /**
 //   * @deprecated with no replacement.
 //   * @throws UnsupportedOperationException when this method is
@@ -382,10 +361,8 @@ public class ApplicationType extends ResourceType {
 //          throw new UnsupportedOperationException
 //              ("This method is only supported for legacy application types");
 //      }
-
 //      set("hasEmbeddedView", new Boolean(hasEmbeddedView));
 //  }
-
     // Can return null.
     public String getProfile() {
         String profile = (String) get("profile");
@@ -398,7 +375,6 @@ public class ApplicationType extends ResourceType {
         set("profile", profile);
     }
 
-
     /**
      * <p>Get the list of relevant privileges for this
      * ApplicationType.</p>
@@ -410,11 +386,11 @@ public class ApplicationType extends ResourceType {
         LinkedList result = new LinkedList();
 
         DataAssociationCursor dac =
-            ((DataAssociation) get("relevantPrivileges")).cursor();
+                              ((DataAssociation) get("relevantPrivileges")).cursor();
 
         while (dac.next()) {
             PrivilegeDescriptor priv =
-                PrivilegeDescriptor.get((String)dac.get("privilege"));
+                                PrivilegeDescriptor.get((String) dac.get("privilege"));
             result.add(priv);
         }
 
@@ -470,7 +446,7 @@ public class ApplicationType extends ResourceType {
      * @return object typ (fully qualified classname) as string
      */
     public String getApplicationObjectType() {
-        String objectType = (String)get("objectType");
+        String objectType = (String) get("objectType");
 
         Assert.exists(objectType);
 
@@ -504,8 +480,8 @@ public class ApplicationType extends ResourceType {
     // the class name without leading package name.
     public String getName() {
 
-            s_log.debug("Expect XSL templates at " + StringUtils.urlize(getTitle()));
-            return StringUtils.urlize(getTitle());
+        s_log.debug("Expect XSL templates at " + StringUtils.urlize(getTitle()));
+        return StringUtils.urlize(getTitle());
 
     }
 
@@ -545,31 +521,28 @@ public class ApplicationType extends ResourceType {
     @Override
     public BigDecimal getID() {
 
-        BigDecimal id = (BigDecimal)get("id");
+        BigDecimal id = (BigDecimal) get("id");
         Assert.exists(id, "id");
         return id;
     }
 
-
     //
     // Other
     //
-
     private BigDecimal generateID() throws PersistenceException {
         try {
             return Sequences.getNextValue();
         } catch (SQLException e) {
-            final String errorMsg = "Unable to generate a unique " +
-                "id.";
+            final String errorMsg = "Unable to generate a unique " + "id.";
             s_log.error(errorMsg);
             throw new PersistenceException(errorMsg);
         }
     }
-    
+
     public void setGroup(Group group) {
-	setAssociation("containerGroup", group);
+        setAssociation("containerGroup", group);
     }
-    
+
     /**
      * Create a group in user administration for this application type. This
      * group is used as a container (hence the name in pdl/table col) for
@@ -577,15 +550,14 @@ public class ApplicationType extends ResourceType {
      * It is named using the application types title followed by the constant
      * "groups". No localisation yet!
      */
-    public void createGroup () {
-        Assert.isEqual(getGroup(), null, "Group has already been created for " +
-                                         "Application Type " + getTitle());
+    public void createGroup() {
+        Assert.isEqual(getGroup(), null, "Group has already been created for " + "Application Type " + getTitle());
         Group group = new Group();
         group.setName(getTitle() + " Groups");
         setAssociation("containerGroup", group);
 
     }
-    
+
     /**
      * Group associated with this application type. Usually
      * used as a container group to keep group admin tidy.
@@ -593,9 +565,10 @@ public class ApplicationType extends ResourceType {
      * @return null if no group is associated with this application type
      */
     public Group getGroup() {
-    	
-	return (Group) DomainObjectFactory.newInstance(
-					(DataObject) get("containerGroup"));
+
+        return (Group) DomainObjectFactory.newInstance(
+                (DataObject) get("containerGroup"));
 
     }
+
 }

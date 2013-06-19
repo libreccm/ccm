@@ -18,33 +18,30 @@
  */
 package com.arsdigita.ui.admin.applications;
 
-import com.arsdigita.bebop.GridPanel;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.ui.admin.GlobalizationUtil;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.PropertySheet;
+import com.arsdigita.bebop.PropertySheetModel;
+import com.arsdigita.bebop.PropertySheetModelBuilder;
+import com.arsdigita.util.LockableImpl;
+import com.arsdigita.web.ApplicationType;
 
 /**
- * A helper class for creating a column panel with two labels in each row.
+ * {@link PropertySheetModelBuilder} implementation for the the {@link ApplicationInfoPropertySheetModel}.
  * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class InfoPanel extends GridPanel {
-
-    public InfoPanel() {
-        super(2);
+public class ApplicationInfoPropertySheetModelBuilder extends LockableImpl implements PropertySheetModelBuilder {
+    
+    private final ApplicationType applicationType;
+    
+    public ApplicationInfoPropertySheetModelBuilder(final ApplicationType  applicationType) {
+        super();
+        this.applicationType = applicationType;
     }
-
-    public void addLine(final String labelKey, final String data) {
-        addLine(labelKey, data, false);
+    
+    public PropertySheetModel makeModel(final PropertySheet sheet, final PageState state) {
+        return new ApplicationInfoPropertySheetModel(applicationType);
     }
-
-    public void addLine(final String labelKey, final String data, final boolean globalizeData) {
-        add(new Label(GlobalizationUtil.globalize(labelKey)));
-        if (globalizeData) {
-            add(new Label(GlobalizationUtil.globalize(data)));
-        } else {
-            add(new Label(data));
-        }
-    }
-
+    
 }

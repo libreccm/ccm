@@ -102,7 +102,7 @@ public class OIDRedirectServlet extends BaseServlet {
             String context = sreq.getParameter("context");
             String url = URLService.locate(oid, context);
 
-            /* Addition by JensP: */
+            /* Addition by Jensp: */
             Map<?, ?> parameters = sreq.getParameterMap();
             StringBuilder urlParams = new StringBuilder();
             for (Map.Entry<?, ?> entry : parameters.entrySet()) {
