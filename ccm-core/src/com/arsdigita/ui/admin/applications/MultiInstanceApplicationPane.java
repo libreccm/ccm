@@ -65,9 +65,9 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
                    table);
 
         if (createForm == null) {
-            addSegment(new Label(com.arsdigita.ui.util.GlobalizationUtil.globalize(
+            addSegment(new Label(GlobalizationUtil.globalize(
                     "ui.admin.MultiInstanceApplicationPane.manage_instances.heading")),
-                       new Label(com.arsdigita.ui.util.GlobalizationUtil.globalize(
+                       new Label(GlobalizationUtil.globalize(
                     "ui.admin.MultiInstancePane.manage.no_create_form_found",
                     new String[]{applicationType.getApplicationObjectType()})));
         } else {

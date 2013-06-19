@@ -18,7 +18,7 @@
  */
 package com.arsdigita.ui.admin.applications;
 
-import com.arsdigita.bebop.ColumnPanel;
+import com.arsdigita.bebop.GridPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.ui.admin.GlobalizationUtil;
 
@@ -28,7 +28,7 @@ import com.arsdigita.ui.admin.GlobalizationUtil;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class InfoPanel extends ColumnPanel {
+public class InfoPanel extends GridPanel {
 
     public InfoPanel() {
         super(2);

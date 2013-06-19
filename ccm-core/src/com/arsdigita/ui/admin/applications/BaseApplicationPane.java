@@ -18,7 +18,6 @@
  */
 package com.arsdigita.ui.admin.applications;
 
-import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SegmentedPanel;
 import com.arsdigita.ui.admin.GlobalizationUtil;
