@@ -38,7 +38,6 @@ import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.ArticleSection;
 import com.arsdigita.cms.contenttypes.ArticleSectionCollection;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
@@ -58,8 +57,7 @@ import java.math.BigDecimal;
  */
 public class SectionTable extends Table
 {
-    private static final Logger log =
-        Logger.getLogger(SectionTable.class.getName());
+    private static final Logger s_log = Logger.getLogger(SectionTable.class);
 
     // match columns by (symbolic) index, makes for easier reordering
     public static final int COL_INDEX_TITLE  = 0;   // "Section";
@@ -69,18 +67,18 @@ public class SectionTable extends Table
 
     private ItemSelectionModel m_selArticle;
     private ItemSelectionModel m_selSection;
-
     private ItemSelectionModel m_moveSection;
-    private static final Logger s_log = Logger.getLogger(SectionTable.class);
 
     /**
-     * Constructor.
+     * Constructor.  Create an instance of this class.
      *
      * @param selArticle a selection model that returns the MultiPartArticle
-     * which holds the sections to display.
+     *                   which holds the sections to display.
      * @param moveSection
      */
-    public SectionTable ( ItemSelectionModel selArticle, ItemSelectionModel moveSection ) {
+    public SectionTable ( ItemSelectionModel selArticle, 
+                          ItemSelectionModel moveSection ) {
+
         super();
         m_selArticle = selArticle;
         m_moveSection = moveSection;
@@ -177,12 +175,17 @@ public class SectionTable extends Table
      * The model builder to generate a suitable model for the SectionTable
      */
     protected class SectionTableModelBuilder extends LockableImpl
-        implements TableModelBuilder
-    {
+                                             implements TableModelBuilder {
+
         protected ItemSelectionModel m_selArticle;
         protected ItemSelectionModel m_moveSection;
 
 
+        /**
+         * Private class constructor.
+         * @param selArticle
+         * @param moveSection 
+         */
         public SectionTableModelBuilder ( ItemSelectionModel selArticle,
                                           ItemSelectionModel moveSection ) {
             m_selArticle = selArticle;
@@ -190,6 +193,12 @@ public class SectionTable extends Table
         }
 
 
+        /**
+         * 
+         * @param table
+         * @param state
+         * @return 
+         */
         public TableModel makeModel ( Table table, PageState state ) {
             table.getRowSelectionModel().clearSelection(state);
 
@@ -202,9 +211,10 @@ public class SectionTable extends Table
     }
 
 
-    protected class SectionTableModel
-        implements TableModel
-    {
+    /**
+     * Internal class
+     */
+    protected class SectionTableModel implements TableModel {
 
         private TableColumnModel m_colModel;
         private SectionTable m_table;
@@ -318,7 +328,6 @@ public class SectionTable extends Table
                                         Object key, int row, int column ) {
 
             Component ret = null;
-        //  SecurityManager sm = Utilities.getSecurityManager(state);
             SecurityManager sm = CMS.getSecurityManager(state);
             ContentItem item = (ContentItem)m_selArticle.getSelectedObject(state);
             

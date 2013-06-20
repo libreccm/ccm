@@ -35,67 +35,72 @@ import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.PageCreate;
 
 /**
- * Authoring kit create component to create objects of <code>Contact</code>
- * ContentType objects.
- * 
- * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
+ * Authoring kit create component to create objects of <code>Contact</code> 
+ * ContentType objects. Replaces the default PageCreate class usually used
+ * for most content items.
  *
+ * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * @version $Id: ContactCreate.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ContactCreate extends PageCreate {
 
-  private CreationSelector m_parent;
+    private CreationSelector m_parent;
 
-  public ContactCreate(ItemSelectionModel itemModel,
-                               CreationSelector parent) {
+    public ContactCreate(ItemSelectionModel itemModel,
+            CreationSelector parent) {
 
-      super(itemModel, parent);
-      m_parent = parent;
-  }
-  
-  protected void addWidgets () {
+        super(itemModel, parent);
+        m_parent = parent;
+    }
 
-      super.addWidgets();
+    protected void addWidgets() {
 
-      TextField givenName = new TextField(Contact.GIVEN_NAME);
-      add(new Label(ContactGlobalizationUtil
-              .globalize("com.arsdigita.london.contenttypes.ui.contact_givenname")));
-      givenName.addValidationListener(new NotNullValidationListener());
-      add(givenName);
+        /* Add the standard widgets title, name, and optional launchdate     */
+        super.addWidgets();
 
-      TextField familyName = new TextField(Contact.FAMILY_NAME);
-      add(new Label(ContactGlobalizationUtil
-              .globalize("com.arsdigita.london.contenttypes.ui.contact_familyname")));
-      familyName.addValidationListener(new NotNullValidationListener());
-      add(familyName);
-  }
+        TextField givenName = new TextField(Contact.GIVEN_NAME);
+        add(new Label(ContactGlobalizationUtil
+                .globalize("london.contenttypes.ui.contact.givenname")));
+        givenName.addValidationListener(new NotNullValidationListener());
+        add(givenName);
 
-  public void process ( FormSectionEvent e ) throws FormProcessException{
+        TextField familyName = new TextField(Contact.FAMILY_NAME);
+        add(new Label(ContactGlobalizationUtil
+                .globalize("london.contenttypes.ui.contact.familyname")));
+        familyName.addValidationListener(new NotNullValidationListener());
+        add(familyName);
+    }
 
-      FormData data = e.getFormData();
-      PageState state = e.getPageState();
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
+    @Override
+    public void process(FormSectionEvent e) throws FormProcessException {
 
-      // try to get the contact section from the state parameter
-      Folder f = m_parent.getFolder(state);
-      ContentSection sec = m_parent.getContentSection(state);
-      Contact contact = (Contact) createContentPage(state);
-      contact.setLanguage((String) data.get(LANGUAGE));                
-      contact.setName((String)data.get(NAME));
-      contact.setTitle((String)data.get(TITLE));
-      contact.setGivenName((String)data.get(Contact.GIVEN_NAME));
-      contact.setFamilyName((String)data.get(Contact.FAMILY_NAME));
-      contact.save();
+        FormData data = e.getFormData();
+        PageState state = e.getPageState();
 
-      final ContentBundle bundle = new ContentBundle(contact);
-      bundle.setParent(f);
-      bundle.setContentSection(m_parent.getContentSection(state));
-      bundle.save();
+        // try to get the contact section from the state parameter
+        Folder f = m_parent.getFolder(state);
+        ContentSection sec = m_parent.getContentSection(state);
+        Contact contact = (Contact) createContentPage(state);
+        contact.setLanguage((String) data.get(LANGUAGE));
+        contact.setName((String) data.get(NAME));
+        contact.setTitle((String) data.get(TITLE));
+        contact.setGivenName((String) data.get(Contact.GIVEN_NAME));
+        contact.setFamilyName((String) data.get(Contact.FAMILY_NAME));
+        contact.save();
 
-      // aplaws default workflow
-      getWorkflowSection().applyWorkflow(state, contact);
+        final ContentBundle bundle = new ContentBundle(contact);
+        bundle.setParent(f);
+        bundle.setContentSection(m_parent.getContentSection(state));
+        bundle.save();
 
-      m_parent.editItem(state, contact);
-  }
+        // aplaws default workflow
+        getWorkflowSection().applyWorkflow(state, contact);
 
+        m_parent.editItem(state, contact);
+    }
 }

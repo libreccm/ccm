@@ -20,14 +20,14 @@ package com.arsdigita.london.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.london.contenttypes.Contact;
-import com.arsdigita.london.contenttypes.util.ContactGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.london.contenttypes.Contact;
+import com.arsdigita.london.contenttypes.util.ContactGlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.PageState;
 
@@ -51,11 +51,10 @@ public class ContactPropertiesStep extends SimpleEditStep {
     BasicPageForm editSheet;
 
     editSheet = new ContactPropertyForm(itemModel);
-    add(
-      EDIT_SHEET_NAME,
-      "Edit",
-      new WorkflowLockedComponentAccess(editSheet, itemModel),
-      editSheet.getSaveCancelSection().getCancelButton());
+    add(EDIT_SHEET_NAME,
+        GlobalizationUtil.globalize("cms.ui.edit"), 
+        new WorkflowLockedComponentAccess(editSheet, itemModel),
+        editSheet.getSaveCancelSection().getCancelButton());
 
     setDisplayComponent(getContactPropertySheet(itemModel));
   }
@@ -71,62 +70,60 @@ public class ContactPropertiesStep extends SimpleEditStep {
   public static Component getContactPropertySheet(ItemSelectionModel itemModel) {
     DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-    sheet.add(
-      GlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.title"),
-      Contact.TITLE);
+    sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),
+              Contact.TITLE);
 
-    sheet.add(
-      GlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.name"),
-      Contact.NAME);
+    sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),
+              Contact.NAME);
 
-    sheet.add(
-      ContactGlobalizationUtil.globalize(
-        "com.arsdigita.london.contenttypes.ui.contact_givenname"),
-      Contact.GIVEN_NAME);
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.givenname"),
+              Contact.GIVEN_NAME);
 
-    sheet.add(
-      ContactGlobalizationUtil.globalize(
-        "com.arsdigita.london.contenttypes.ui.contact_familyname"),
-      Contact.FAMILY_NAME);
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.familyname"),
+              Contact.FAMILY_NAME);
+    
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.suffix"),
+              Contact.SUFFIX);
 
-    sheet.add(
-         ContactGlobalizationUtil.globalize("cms.contenttypes.ui.contact_type"),
-         Contact.CONTACT_TYPE,
-         new DomainObjectPropertySheet.AttributeFormatter() {
-           public String format(DomainObject item,String attribute,PageState state) {
-             Contact contact = (Contact) item;
-               if (contact.getContactType() != null) {
-                 return contact.getContactTypeName();
-               } else {
-                 return "unknown";
-               }
-           }
-         });
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.type"),
+              Contact.CONTACT_TYPE,
+              new DomainObjectPropertySheet.AttributeFormatter() {
+                  public String format(DomainObject item,
+                                       String attribute,
+                                       PageState state) {
+                      Contact contact = (Contact) item;
+                      if (contact.getContactType() != null) {
+                          return contact.getContactTypeName();
+                      } else {
+                          return (String) GlobalizationUtil
+                                          .globalize("cms.ui.unknown")
+                                          .localize();
+                      }
+                  }
+              });
     
-    sheet.add(
-      GlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.description"),
-      Contact.DESCRIPTION);
+    sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"),
+              Contact.DESCRIPTION);
 
-    sheet.add(
-        ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact_emails"),
-        Contact.EMAILS);
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.emails"),
+              Contact.EMAILS);
     
-    sheet.add(
-        ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact_suffix"),
-        Contact.SUFFIX);
+    sheet.add(ContactGlobalizationUtil.globalize(
+              "london.contenttypes.ui.contact.orgname"),
+              Contact.ORG_NAME);
     
-    sheet.add(
-      ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact_orgname"),
-      Contact.ORG_NAME);
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.deptname"),
+              Contact.DEPT_NAME);
     
-    sheet.add(
-      ContactGlobalizationUtil.globalize(
-        "com.arsdigita.london.contenttypes.ui.contact_deptname"),
-      Contact.DEPT_NAME);
-    
-    sheet.add(
-      ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact_role"),
-      Contact.ROLE);
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.role"),
+              Contact.ROLE);
 
     return sheet;
   }

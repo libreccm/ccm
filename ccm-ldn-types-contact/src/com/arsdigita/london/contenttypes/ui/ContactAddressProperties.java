@@ -25,6 +25,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
@@ -50,9 +51,9 @@ public class ContactAddressProperties extends SimpleEditStep {
     form = new ContactAddressPropertyForm(itemModel);
 
     add(EDIT_SHEET_NAME,
-        "Edit",
-         new WorkflowLockedComponentAccess(form, itemModel),
-         form.getSaveCancelSection().getCancelButton());
+        GlobalizationUtil.globalize("cms.ui.edit"), 
+        new WorkflowLockedComponentAccess(form, itemModel),
+        form.getSaveCancelSection().getCancelButton());
 
     setDisplayComponent(getAddressPropertySheet(itemModel));
   }
@@ -69,45 +70,45 @@ public class ContactAddressProperties extends SimpleEditStep {
   public static Component getAddressPropertySheet(ItemSelectionModel itemModel) {
     DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-    sheet.add(
-      ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_saon"),
-      "contactAddress.saon");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.saon"),
+              "contactAddress.saon");
 
-    sheet.add(
-      ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_paon"),
-      "contactAddress.paon");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.paon"),
+              "contactAddress.paon");
 
-    sheet.add(
-      ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_streetdesc"),
-      "contactAddress.streetDesc");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.streetdesc"),
+              "contactAddress.streetDesc");
 
-    sheet.add(
-      ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_streetrefno"),
-      "contactAddress.streetRefNo");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.streetrefno"),
+              "contactAddress.streetRefNo");
 
-    sheet.add(
-      ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_locality"),
-      "contactAddress.locality");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.locality"),
+              "contactAddress.locality");
 
-    sheet.add(
-    ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_town"),
-      "contactAddress.town");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.town"),
+              "contactAddress.town");
       
-    sheet.add(
-    ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_administrative_area"),
-      "contactAddress.administrativeArea");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.administrative_area"),
+              "contactAddress.administrativeArea");
 
-    sheet.add(
-    ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_posttown"),
-      "contactAddress.postTown");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.posttown"),
+              "contactAddress.postTown");
 
-    sheet.add(
-    ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_postcode"),
-      "contactAddress.postCode");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.postcode"),
+              "contactAddress.postCode");
 
-    sheet.add(
-    ContactGlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.contact.address_proprefno"),
-      "contactAddress.referenceNo");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.contact.address.proprefno"),
+              "contactAddress.referenceNo");
 
     return sheet;
   }

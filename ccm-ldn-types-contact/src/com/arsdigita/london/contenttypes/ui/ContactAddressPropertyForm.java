@@ -42,20 +42,21 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  * 
  */
 public class ContactAddressPropertyForm extends BasicItemForm {
+  
+  private static final Logger s_log = Logger.getLogger(
+                                             ContactAddressPropertyForm.class);
 
   /** Name of this form */
   private static final String ID = "Contact_address_edit";
   
-  private static final Logger s_log = Logger.getLogger(ContactAddressPropertyForm.class);
-  
   /**
-   * Creates a new form to edit the <code>ContactAddress</code> object 
-   * properties associated with the <code>Contact</code> object specified by 
-   * the item selection model passed in.
+   * Creates a new form to edit the <code>ContactAddress</code> object properties 
+   * associated with the <code>Contact</code> object specified by the
+   * item selection model passed in.
    *
    * @param itemModel The ItemSelectionModel to use to obtain the Contact 
-   *    object to work on
-   **/
+   *                  object to work on
+   */
   public ContactAddressPropertyForm(ItemSelectionModel itemModel) {
     super(ID, itemModel);
   }
@@ -81,7 +82,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
 
     protected void addSAON() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_saon")));
+                .globalize("london.contenttypes.ui.contact.address.saon")));
         ParameterModel saonParam = new StringParameter(ContactAddress.SAON);
         TextField saon = new TextField(saonParam);
         add(saon);
@@ -89,7 +90,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
 
     protected void addPAON() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_paon")));
+                .globalize("london.contenttypes.ui.contact.address.paon")));
         ParameterModel paonParam = new StringParameter(ContactAddress.PAON);
         TextField paon = new TextField(paonParam);
         paon.addValidationListener(new NotNullValidationListener());
@@ -98,7 +99,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addStreetDesc() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_streetdesc")));
+                .globalize("london.contenttypes.ui.contact.address.streetdesc")));
         ParameterModel streetDescParam = new StringParameter(ContactAddress.STREET_DESC);
         TextField streetDesc = new TextField(streetDescParam);
         streetDesc.addValidationListener(new NotNullValidationListener());
@@ -107,7 +108,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addStreetRefNo() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_streetrefno")));
+                .globalize("london.contenttypes.ui.contact.address.streetrefno")));
         ParameterModel streetRefNoParam = new StringParameter(ContactAddress.STREET_REF_NO);
         TextField streetRefNo = new TextField(streetRefNoParam);
         add(streetRefNo);
@@ -115,7 +116,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addLocality() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_locality")));
+                .globalize("london.contenttypes.ui.contact.address.locality")));
         ParameterModel localityParam = new StringParameter(ContactAddress.LOCALITY);
         TextField locality = new TextField(localityParam);
         add(locality);
@@ -123,7 +124,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addTown() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_town")));
+                .globalize("london.contenttypes.ui.contact.address.town")));
         ParameterModel townParam = new StringParameter(ContactAddress.TOWN);
         TextField town = new TextField(townParam);
         add(town);
@@ -131,7 +132,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addArea() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_administrative_area")));
+                .globalize("london.contenttypes.ui.contact.address.administrative_area")));
         ParameterModel adAreaParam = new StringParameter(ContactAddress.ADMINISTRATIVE_AREA);
         TextField adArea = new TextField(adAreaParam);
         add(adArea);
@@ -139,7 +140,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addPostTown() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_posttown")));
+                .globalize("london.contenttypes.ui.contact.address.posttown")));
         ParameterModel postTownParam = new StringParameter(ContactAddress.POST_TOWN);
         TextField postTown = new TextField(postTownParam);
         add(postTown);
@@ -147,7 +148,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addPostCode() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_postcode")));
+                .globalize("london.contenttypes.ui.contact.address.postcode")));
         ParameterModel postCodeParam = new StringParameter(ContactAddress.POST_CODE);
         TextField postCode = new TextField(postCodeParam);
         add(postCode);
@@ -155,7 +156,7 @@ public class ContactAddressPropertyForm extends BasicItemForm {
     
     protected void addPropRefNo() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact.address_proprefno")));
+                .globalize("london.contenttypes.ui.contact.address.proprefno")));
         ParameterModel propRefNoParam = new StringParameter(ContactAddress.PROP_REF_NO);
         TextField propRefNo = new TextField(propRefNoParam);
         add(propRefNo);

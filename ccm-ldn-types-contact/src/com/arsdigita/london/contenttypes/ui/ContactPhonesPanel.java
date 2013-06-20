@@ -23,35 +23,36 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.london.contenttypes.util.ContactGlobalizationUtil;
 
 /**
- * A UI step to manipulate <code>Phones </code> for the Contact object
- * which is retrieved from the ItemSelectionModel.
- * 
- * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- * 
+ * A UI step to manipulate <code>Phones </code> for the Contact object which is 
+ * retrieved from the ItemSelectionModel.
+ *
+ * @author Shashin Shinde <a
+ * href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * @version $Id: ContactPhonesPanel.java 287 2005-02-22 00:29:02Z sskracic $
- *  
  */
 public class ContactPhonesPanel extends SimpleEditStep {
 
-  /** The name of the editing sheet added to this step */
-  private static String EDIT_SHEET_NAME = "manage-phones";
+    /**
+     * The name of the editing sheet added to this step
+     */
+    private static String EDIT_SHEET_NAME = "manage-phones";
 
-  public ContactPhonesPanel(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
-    super(itemModel, parent);
+    public ContactPhonesPanel(ItemSelectionModel itemModel, 
+                              AuthoringKitWizard parent) {
+        super(itemModel, parent);
 
-    BasicItemForm form = new ContactCreatePhone(itemModel);
+        BasicItemForm form = new ContactCreatePhone(itemModel);
+        add(EDIT_SHEET_NAME,
+            ContactGlobalizationUtil.globalize(
+                   "london.contenttypes.ui.contact.add_phone_button"), 
+            new WorkflowLockedComponentAccess(form, itemModel),
+            form.getSaveCancelSection().getCancelButton());
 
-    add(
-      EDIT_SHEET_NAME,
-      "Add Phone",
-      new WorkflowLockedComponentAccess(form, itemModel),
-      form.getSaveCancelSection().getCancelButton());
+        ContactPhonesTable phTable = new ContactPhonesTable(itemModel);
+        setDisplayComponent(phTable);
 
-    ContactPhonesTable phTable = new ContactPhonesTable(itemModel); 
-    setDisplayComponent(phTable);
-    
-  }
-
+    }
 }

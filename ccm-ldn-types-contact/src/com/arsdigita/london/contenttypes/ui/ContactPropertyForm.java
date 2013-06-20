@@ -35,6 +35,7 @@ import com.arsdigita.london.contenttypes.ContactType;
 import com.arsdigita.london.contenttypes.ContactTypesCollection;
 import com.arsdigita.london.contenttypes.util.ContactGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
  * Form to edit basic properties of <code>Contact</code> object. Used by
@@ -81,32 +82,32 @@ public class ContactPropertyForm extends BasicPageForm {
     }
 
     protected void addGivenNameWidget() {
-        add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_givenname")));
+        add(new Label(ContactGlobalizationUtil.globalize(
+                      "london.contenttypes.ui.contact.givenname")));
         ParameterModel givenNameParam = new StringParameter(Contact.GIVEN_NAME);
         TextField givenName = new TextField(givenNameParam);
         add(givenName);
     }
 
     protected void addFamilyNameWidget() {
-        add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_familyname")));
+        add(new Label(ContactGlobalizationUtil.globalize(
+                      "london.contenttypes.ui.contact.familyname")));
         ParameterModel familyNameParam = new StringParameter(Contact.FAMILY_NAME);
         TextField familyName = new TextField(familyNameParam);
         add(familyName);
     }
     
     protected void addSuffixWidget() {
-        add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_suffix")));
+        add(new Label(ContactGlobalizationUtil.globalize(
+                      "london.contenttypes.ui.contact.suffix")));
         ParameterModel suffixParam = new StringParameter(Contact.SUFFIX);
         TextField suffix = new TextField(suffixParam);
         add(suffix);
     }
     
     protected void addContactTypeWidget() {
-        add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_type")));
+        add(new Label(ContactGlobalizationUtil.globalize(
+                      "london.contenttypes.ui.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(Contact.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         add(contactType);
@@ -118,8 +119,8 @@ public class ContactPropertyForm extends BasicPageForm {
     }
 
     protected void addDescriptionWidget() {
-        add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_description")));
+        add(new Label(GlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.description")));
         ParameterModel descParam = new StringParameter(Contact.DESCRIPTION);
         TextArea desc = new TextArea(descParam);
         desc.setRows(5);
@@ -128,7 +129,7 @@ public class ContactPropertyForm extends BasicPageForm {
     
     protected void addEmailsWidget() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_emails")));
+                .globalize("london.contenttypes.ui.contact.emails")));
         ParameterModel emailsParam = new StringParameter(Contact.EMAILS);
         TextField emails = new TextField(emailsParam);
         add(emails);
@@ -136,7 +137,7 @@ public class ContactPropertyForm extends BasicPageForm {
     
     protected void addOrganizationNameWidget() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_orgname")));
+                .globalize("london.contenttypes.ui.contact.orgname")));
         ParameterModel orgNameParam = new StringParameter(Contact.ORG_NAME);
         TextField orgName = new TextField(orgNameParam);
         add(orgName);
@@ -144,7 +145,7 @@ public class ContactPropertyForm extends BasicPageForm {
     
     protected void addDepartmentNameWidget() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_deptname")));
+                .globalize("london.contenttypes.ui.contact.deptname")));
         ParameterModel deptParam = new StringParameter(Contact.DEPT_NAME);
         TextField deptName = new TextField(deptParam);
         add(deptName);
@@ -152,7 +153,7 @@ public class ContactPropertyForm extends BasicPageForm {
     
     protected void addRoleWidget() {
         add(new Label(ContactGlobalizationUtil
-                .globalize("com.arsdigita.london.contenttypes.ui.contact_role")));
+                .globalize("london.contenttypes.ui.contact.role")));
         ParameterModel roleParam = new StringParameter(Contact.ROLE);
         TextField role = new TextField(roleParam);
         add(role);        
