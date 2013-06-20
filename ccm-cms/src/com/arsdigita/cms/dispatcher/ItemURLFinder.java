@@ -32,21 +32,24 @@ import com.arsdigita.kernel.URLFinderNotFoundException;
 import com.arsdigita.kernel.URLService;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
-/** 
- * Implementation of {@link com.arsdigita.kernel.URLFinder} for content types, 
+/**
+ * Implementation of {@link com.arsdigita.kernel.URLFinder} for content types,
  * necessary for ccm dispatcher to find a concrete content item for an url
  * provided by a client request.
- * 
- * Specifically it is a helper class for {@link com.arsdigita.web.OIDRedirectServlet} 
- * to map an OID to an URL.
- * 
+ *
+ * Specifically it is a helper class for
+ * {@link com.arsdigita.web.OIDRedirectServlet} to map an OID to an URL.
+ *
  */
 public class ItemURLFinder implements URLFinder {
 
@@ -67,13 +70,12 @@ public class ItemURLFinder implements URLFinder {
 
         ContentItem item;
         try {
-            item = (ContentItem)DomainObjectFactory
-                .newInstance(oid);
+            item = (ContentItem) DomainObjectFactory
+                    .newInstance(oid);
         } catch (DataObjectNotFoundException ex) {
             throw new NoValidURLException(
-                "cannot instantiate item " + oid +
-                " message: " + ex.getMessage()
-            );
+                    "cannot instantiate item " + oid
+                    + " message: " + ex.getMessage());
         }
 
         if (ContentItem.LIVE.equals(context)) {
@@ -87,8 +89,7 @@ public class ItemURLFinder implements URLFinder {
             } else {
                 s_log.debug("Item was not live");
                 throw new NoValidURLException(
-                    "item " + oid + " is not live"
-                );
+                        "item " + oid + " is not live");
             }
         }
 
@@ -96,7 +97,7 @@ public class ItemURLFinder implements URLFinder {
     }
 
     /**
-     * 
+     *
      * @param oid
      * @return
      * @throws NoValidURLException
@@ -109,13 +110,12 @@ public class ItemURLFinder implements URLFinder {
 
         ContentItem item;
         try {
-            item = (ContentItem)DomainObjectFactory
-                .newInstance(oid);
+            item = (ContentItem) DomainObjectFactory
+                    .newInstance(oid);
         } catch (DataObjectNotFoundException ex) {
             throw new NoValidURLException(
-                "cannot instantiate item " + oid +
-                " message: " + ex.getMessage()
-            );
+                    "cannot instantiate item " + oid
+                    + " message: " + ex.getMessage());
         }
 
         if (s_log.isDebugEnabled()) {
@@ -145,15 +145,15 @@ public class ItemURLFinder implements URLFinder {
     }
 
     /**
-     * 
+     *
      * @param item
      * @param context publication status ['live'|'draft']
      * @return
      * @throws NoValidURLException
      */
     private String find(ContentItem item, String context)
-                   throws NoValidURLException {
-        
+            throws NoValidURLException {
+
         ContentSection section = item.getContentSection();
         ItemResolver resolver = section.getItemResolver();
 
@@ -170,44 +170,44 @@ public class ItemURLFinder implements URLFinder {
                 bundle = (ContentBundle) ((ContentBundle) parent).getDraftVersion();
             }
             if (bundle != null) {
-                DataAssociationCursor categories =
-                    ((DataAssociation) DomainServiceInterfaceExposer.
-                            get(bundle, Category.CATEGORIES)).cursor();
-                // XXX  pb (2010.12.15)  ToDO
-                // solution is currently not subsite aware!
-                // provides an index url even if the category tree is not part
-                // of subsite (which results in a resource not found exception)
-                categories.addEqualsFilter("link." + Category.IS_INDEX, Boolean.TRUE);
-                if (categories.next()) {
+                List<DataObject> categories = getCategories(bundle);
+
+                /* For all associated categories, try to get a url. Stop at 
+                 * first successful try.*/
+                for(DataObject dobj:categories) {
+                    String url;
                     Category indexCat = (Category) DomainObjectFactory.
-                                        newInstance(categories.getDataObject());
-                    categories.close();
+                            newInstance(dobj);
                     try {
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug(item + " is a Category index item. " +
-                                        "Resolving URL for " + indexCat);
+                            s_log.debug(item + " is a Category index item. "
+                                    + "Resolving URL for " + indexCat);
                         }
-                        return URLService.locate(indexCat.getOID(), context);
+                        url = URLService.locate(indexCat.getOID(), context);
                     } catch (URLFinderNotFoundException ufnfe) {
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug("Could not find URLFinder for " + indexCat +
-                                ", continuing with URL resolution for " + item,
-                                ufnfe);
+                            s_log.debug("Could not find URLFinder for " + indexCat
+                                    + ", continuing with URL resolution for " + item,
+                                    ufnfe);
                         }
+                        continue;
                     } catch (NoValidURLException nvue) {
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug("Could not find valid URL for " + indexCat +
-                                ", continuing with URL resolution for " + item,
-                                nvue);
+                            s_log.debug("Could not find valid URL for " + indexCat
+                                    + ", continuing with URL resolution for " + item,
+                                    nvue);
                         }
+                        continue;
                     }
+                    return url;
+
                 }
             }
         } else { // DRAFT context
             // public users get 404 when item gets unpublished
             // if com.arsdigita.cms.unpublished_not_found=true
             if (ContentSection.getConfig().isUnpublishedNotFound()
-                && !Web.getUserContext().isLoggedIn()) {
+                    && !Web.getUserContext().isLoggedIn()) {
                 throw new NoValidURLException("user must be logged-in to get draft");
             } else {
                 // force the switch to draft version at this point
@@ -233,8 +233,7 @@ public class ItemURLFinder implements URLFinder {
         if (sep == -1) {
             destination = URL.there(url, null);
         } else {
-            final ParameterMap params = ParameterMap.fromString
-                (url.substring(sep + 1));
+            final ParameterMap params = ParameterMap.fromString(url.substring(sep + 1));
 
             destination = URL.there(url.substring(0, sep), params);
         }
@@ -246,4 +245,25 @@ public class ItemURLFinder implements URLFinder {
         return destination.toString();
     }
 
+    /**
+     * Get all categories for a content bundle, where the content bundle is an
+     * index item.
+     *
+     * @param bundle The content bundle to test for
+     * @return a list of associated categories
+     */
+    protected List<DataObject> getCategories(ContentBundle bundle) {
+        List<DataObject> catList = new ArrayList<DataObject>();
+        DataAssociationCursor categories =
+                ((DataAssociation) DomainServiceInterfaceExposer.
+                get(bundle, Category.CATEGORIES)).cursor();
+        categories.addEqualsFilter("link." + Category.IS_INDEX, Boolean.TRUE);
+
+        while(categories.next()) {
+            catList.add(categories.getDataObject());
+        }
+        categories.close();
+        
+        return catList;
+    }
 }

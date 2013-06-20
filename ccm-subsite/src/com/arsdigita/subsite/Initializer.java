@@ -18,24 +18,22 @@
 
 package com.arsdigita.subsite;
 
+import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.db.DbHelper;
-
-import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.domain.DomainObject;
-
+import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.kernel.ACSObjectInstantiator;
-
-import com.arsdigita.persistence.pdl.NameFilter;
-import com.arsdigita.persistence.pdl.ManifestSource;
+import com.arsdigita.kernel.URLService;
 import com.arsdigita.persistence.DataObject;
-
-import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.persistence.pdl.ManifestSource;
+import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-
+import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.subsite.dispatcher.SubsiteItemURLFinder;
 import com.arsdigita.templating.PatternStylesheetResolver;
-
 import com.arsdigita.xml.XML;
 
 /**
@@ -70,6 +68,11 @@ public class Initializer extends CompoundInitializer {
         XML.parse(Subsite.getConfig().getTraversalAdapters(),
                   new TraversalHandler());
 
+        URLService.registerFinder(ContentPage.BASE_DATA_OBJECT_TYPE,
+                                  new SubsiteItemURLFinder());
+        URLService.registerFinder(ContentBundle.BASE_DATA_OBJECT_TYPE,
+                                  new SubsiteItemURLFinder());
+        
         PatternStylesheetResolver.registerPatternGenerator(
             "subsite", new SubsitePatternGenerator()
         );
