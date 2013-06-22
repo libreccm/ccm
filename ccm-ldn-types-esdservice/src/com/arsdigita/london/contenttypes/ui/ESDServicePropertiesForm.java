@@ -53,10 +53,12 @@ public class ESDServicePropertiesForm extends BasicPageForm {
    * Adds widgets to the form.
    **/
   protected void addWidgets() {
-    super.addWidgets();
 
-    add(new Label(ESDServiceGlobalizationUtil
-            .globalize("com.arsdigita.london.contenttypes.ui.esdservice.servicetimes")));
+      /* Add standard widgets Title & name/url    */
+      super.addWidgets();
+
+    add(new Label(ESDServiceGlobalizationUtil.globalize(
+              "london.contenttypes.ui.esdservice.servicetimes")));
     ParameterModel serviceTimesParam = new StringParameter(ESDService.SERVICE_TIMES);
     TextField serviceTimes = new TextField(serviceTimesParam);
     add(serviceTimes);

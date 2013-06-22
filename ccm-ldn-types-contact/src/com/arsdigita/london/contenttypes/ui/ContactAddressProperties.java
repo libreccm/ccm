@@ -35,7 +35,6 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  *
  * @version $Id: ContactAddressProperties.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ContactAddressProperties extends SimpleEditStep {
 

@@ -63,7 +63,8 @@ import com.arsdigita.xml.Element;
  *
  * @author Stanislav Freidin 
  * @author David Lutterkort 
- * @version $Id: ControlLink.java 287 2005-02-22 00:29:02Z sskracic $ */
+ * @version $Id: ControlLink.java 287 2005-02-22 00:29:02Z sskracic $ 
+ */
 public class ControlLink extends BaseLink {
 
     /**
@@ -170,7 +171,6 @@ public class ControlLink extends BaseLink {
         try {
             parent.addAttribute("href", state.stateAsURL());
         } catch (IOException e) {
-//            e.printStackTrace();
             parent.addAttribute("href", "");
         }
         exportAttributes(parent);

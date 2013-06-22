@@ -53,6 +53,7 @@ public class ContactCreate extends PageCreate {
         m_parent = parent;
     }
 
+    @Override
     protected void addWidgets() {
 
         /* Add the standard widgets title, name, and optional launchdate     */

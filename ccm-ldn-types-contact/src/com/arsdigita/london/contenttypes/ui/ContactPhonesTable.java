@@ -74,9 +74,6 @@ class ContactPhonesTable extends Table implements TableActionListener {
         super();
         m_selContact = selContact;
 
-        setEmptyView(new Label(ContactGlobalizationUtil.globalize(
-                "london.contenttypes.ui.contact.phonetable.no_entries_msg")));
-
         TableColumnModel model = getColumnModel();
         model.add(new TableColumn(
               COL_INDEX_PHONE_TYPE, 
@@ -94,6 +91,9 @@ class ContactPhonesTable extends Table implements TableActionListener {
                   "london.contenttypes.ui.contact.phonetable.header_delete")
               ) ));
 
+        setEmptyView(new Label(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.phonetable.no_entries_msg")));
+
         model.get(2).setCellRenderer(new DeleteCellRenderer());
 
         setModelBuilder(new PhonesTableModelBuilder(selContact));
@@ -103,7 +103,7 @@ class ContactPhonesTable extends Table implements TableActionListener {
     }
 
     /**
-     * 
+     * Private class Model Builder to build the required data for the table.
      */
     private class PhonesTableModelBuilder extends LockableImpl
                                           implements TableModelBuilder {
@@ -180,12 +180,11 @@ class ContactPhonesTable extends Table implements TableActionListener {
         public Object getElementAt(int columnIndex) {
 
             switch (columnIndex) {
-                case 0:
+                case COL_INDEX_PHONE_TYPE:
                     return m_phone.getPhoneType();
-                case 1:
+                case COL_INDEX_PHONE_NUM:
                     return m_phone.getPhoneNumber();
-                case 2:
-                //  return "Delete";
+                case COL_INDEX_DELETE:
                     return  new Label(
                             ContactGlobalizationUtil.globalize(
                             "london.contenttypes.ui.contact.phonetable.link_delete")
@@ -207,7 +206,9 @@ class ContactPhonesTable extends Table implements TableActionListener {
     }
 
     /**
-     * Private class to check for the permissions to delete item and put either 
+     * Internal private class to handle the click on the delete link in the
+     * table of available contacts.
+     * Checks for the permissions to delete item and put either 
      * a Lable or a ControlLink accordingly.
      */
     private class DeleteCellRenderer extends LockableImpl 
@@ -222,7 +223,8 @@ class ContactPhonesTable extends Table implements TableActionListener {
          * @param key
          * @param row
          * @param column
-         * @return 
+         * @return             the link to delete the selected
+         *                     entry or just a label without link.
          */
         public Component getComponent(Table table, PageState state, 
                                       Object value, boolean isSelected, 
@@ -240,28 +242,17 @@ class ContactPhonesTable extends Table implements TableActionListener {
             if ( value instanceof Label ) {  // just the delete Controllink
 
                 if (canDelete) {
-                        ret = new ControlLink((Component)value);                
-               //   ret.setConfirmation(ContactGlobalizationUtil.globalize(
-               //       "london.contenttypes.ui.contact.phonetable.confirm_delete"));
-                    } else {
-                        ret = (Component)value;
-                    }
-
-            } else if ( value instanceof String ) { // phone type and value
-
-           //   if (canDelete) {
-                   //   ret = new ControlLink(value.toString());                    
-           //           ret = new ControlLink((String)value);                    
-                   //   link.setConfirmation("Delete this Phone ?");
-                   //  return link;
-           //       } else {
-                        ret = new Label((String)value);
-           //       }
+                    ControlLink link  = new ControlLink( (Component)value );                
+                    link.setConfirmation(ContactGlobalizationUtil.globalize(
+                       "london.contenttypes.ui.contact.phonetable.confirm_delete"));
+                    ret = link;
+                } else {
+                    ret = (Component)value;
+                }
 
             } else {
-             // return new Label(value.toString());
                 /* Just returns the label without underlying link */
-                ret = new Label(value.toString());
+                ret = (Component)value;
             }
             
             return ret;
@@ -278,7 +269,6 @@ class ContactPhonesTable extends Table implements TableActionListener {
         TableColumn col = getColumnModel().get(evt.getColumn().intValue());
         int columnIndex = col.getModelIndex();
  
-     // if (COL_DELETE.equals(colName)) {
         if ( columnIndex == COL_INDEX_DELETE ) {
             BigDecimal phoneID = new BigDecimal(evt.getRowKey().toString());
             Contact contact = (Contact) m_selContact.getSelectedObject(state);

@@ -28,61 +28,64 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
- * Authoring kit step to edit the basic properties of <code>ESDService</code>
- * content type object.
- * 
- * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
+ * Authoring kit step to edit the basic properties of
+ * <code>ESDService</code> content type object.
  *
- * @version $Id: ESDServicePropertiesStep.java 287 2005-02-22 00:29:02Z sskracic $
- * 
+ * @author Shashin Shinde <a
+ * href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
+ *
+ * @version $Id: ESDServicePropertiesStep.java 287 2005-02-22 00:29:02Z sskracic
+ * $
+ *
  */
 public class ESDServicePropertiesStep extends SimpleEditStep {
 
-  /** The name of the editing sheet added to this step */
-  private static String EDIT_SHEET_NAME = "edit";
-  
-  /**
-   * @param itemModel
-   * @param parent
-   */
-  public ESDServicePropertiesStep(ItemSelectionModel itemModel,
-                                  AuthoringKitWizard parent) {
-    super(itemModel, parent);
+    /**
+     * The name of the editing sheet added to this step
+     */
+    private static String EDIT_SHEET_NAME = "edit";
 
-    ESDServicePropertiesForm editSheet;
+    /**
+     * @param itemModel
+     * @param parent
+     */
+    public ESDServicePropertiesStep(ItemSelectionModel itemModel,
+                                    AuthoringKitWizard parent) {
+        super(itemModel, parent);
 
-    editSheet = new ESDServicePropertiesForm(itemModel);
-    add(EDIT_SHEET_NAME,
-        "Edit",
-        new WorkflowLockedComponentAccess(editSheet, itemModel),
-        editSheet.getSaveCancelSection().getCancelButton());
+        ESDServicePropertiesForm editSheet;
 
-    setDisplayComponent(getESDServicePropertySheet(itemModel));    
-  }
+        editSheet = new ESDServicePropertiesForm(itemModel);
+        add(EDIT_SHEET_NAME,
+            GlobalizationUtil.globalize("cms.ui.edit"),
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
 
-  /**
-   * Returns a component that displays the properties of the ESDService
-   * specified by the ItemSelectionModel passed in.
+        setDisplayComponent(getESDServicePropertySheet(itemModel));
+    }
+
+    /**
+     * Returns a component that displays the properties of the ESDService
+     * specified by the ItemSelectionModel passed in.
+     *
+     * @param itemModel The ItemSelectionModel to use
+     * @pre itemModel != null
+     * @return A component to display the state of the basic properties of the
    *
-   * @param itemModel The ItemSelectionModel to use
-   * @pre itemModel != null
-   * @return A component to display the state of the basic properties
-   *  of the
-   **/
-  public static Component getESDServicePropertySheet(ItemSelectionModel itemModel) {
-    DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
+     */
+    public static Component getESDServicePropertySheet(ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-    sheet.add(
-        GlobalizationUtil.globalize("com.arsdigita.london.contenttypes.ui.name"),
-        ESDService.NAME);
-    
-    sheet.add(
-        ESDServiceGlobalizationUtil
-            .globalize("com.arsdigita.london.contenttypes.ui.esdservice.servicetimes"),
-        ESDService.SERVICE_TIMES);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), 
+                  ESDService.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),
+                  ESDService.NAME);
 
-    return sheet;
+        sheet.add(ESDServiceGlobalizationUtil.globalize(
+                  "london.contenttypes.ui.esdservice.servicetimes"),
+                  ESDService.SERVICE_TIMES);
 
-  }
+        return sheet;
 
+    }
 }

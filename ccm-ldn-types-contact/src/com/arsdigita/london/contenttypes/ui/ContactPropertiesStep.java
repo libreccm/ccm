@@ -37,7 +37,6 @@ import com.arsdigita.bebop.PageState;
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * 
  * @version $Id: ContactPropertiesStep.java 287 2005-02-22 00:29:02Z sskracic $
- *  
  */
 public class ContactPropertiesStep extends SimpleEditStep {
 

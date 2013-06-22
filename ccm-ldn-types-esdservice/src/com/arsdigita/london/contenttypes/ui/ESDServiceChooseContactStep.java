@@ -19,10 +19,11 @@ package com.arsdigita.london.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.london.contenttypes.util.ContactGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.london.contenttypes.util.ContactGlobalizationUtil;
+import com.arsdigita.london.contenttypes.util.ESDServiceGlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
@@ -32,7 +33,6 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  *
  * @version $Id: ESDServiceChooseContactStep.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ESDServiceChooseContactStep extends SimpleEditStep {
 
@@ -51,8 +51,9 @@ public class ESDServiceChooseContactStep extends SimpleEditStep {
     ESDServiceContactsTable table = new ESDServiceContactsTable(itemModel , this);
     
     addComponent(EDIT_SHEET_NAME,
-        "Select Contact",
-        new WorkflowLockedComponentAccess(table, itemModel));
+                 ESDServiceGlobalizationUtil.globalize(
+                 "london.contenttypes.ui.esdservice.select_contact"),
+                 new WorkflowLockedComponentAccess(table, itemModel));
 
     setDisplayComponent(getContactPropertiesSheet(itemModel));
   }
@@ -65,20 +66,17 @@ public class ESDServiceChooseContactStep extends SimpleEditStep {
   private Component getContactPropertiesSheet(ItemSelectionModel itemModel) {
     DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-    sheet.add(
-        ContactGlobalizationUtil
-            .globalize("com.arsdigita.london.contenttypes.ui.contact_givenname"),
-                       "serviceContact.givenName");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                                      "london.contenttypes.ui.contact.givenname"),
+              "serviceContact.givenName");
 
-    sheet.add(
-        ContactGlobalizationUtil
-            .globalize("com.arsdigita.london.contenttypes.ui.contact_familyname"),
-                       "serviceContact.familyName");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                                       "london.contenttypes.ui.contact.familyname"),
+              "serviceContact.familyName");
 
-    sheet.add(
-        ContactGlobalizationUtil
-            .globalize("com.arsdigita.london.contenttypes.ui.contact_type"),
-                       "serviceContact.contactType.typeName");
+    sheet.add(ContactGlobalizationUtil.globalize(
+                                       "london.contenttypes.ui.contact.type"),
+              "serviceContact.contactType.typeName");
     
     return sheet;
   }
