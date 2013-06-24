@@ -21,6 +21,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.london.contenttypes.Contact;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+import com.arsdigita.london.contenttypes.util.ContactGlobalizationUtil;
 
 public class ContactToItemAddForm extends FormSection implements
 		FormInitListener, FormValidationListener, FormProcessListener,
@@ -44,8 +45,8 @@ public class ContactToItemAddForm extends FormSection implements
 
 	private AuthoringKitWizard m_parent;
 
-	private Label m_removeLinkText = new Label(GlobalizationUtil
-			.globalize("Remove contact"));
+	private Label m_removeLinkText = new Label(ContactGlobalizationUtil
+			.globalize("london.contenttypes.ui.contact.remove_contact"));
 
 	private ActionLink m_removeLink;
 
@@ -87,10 +88,11 @@ public class ContactToItemAddForm extends FormSection implements
 
 		add(m_removeLink, ColumnPanel.FULL_WIDTH);
 
-		m_searchFormLabel = new Label("Search for Contact:");
+		m_searchFormLabel = new Label(ContactGlobalizationUtil.globalize(
+                            "london.contenttypes.ui.contact.search_contact_label"));
 		add(m_searchFormLabel);
 		m_itemSearch = new ItemSearchWidget(CONTACT_SEARCH,
-				Contact.BASE_DATA_OBJECT_TYPE);
+                                            Contact.BASE_DATA_OBJECT_TYPE);
 		add(m_itemSearch);
 	}
 
@@ -101,7 +103,9 @@ public class ContactToItemAddForm extends FormSection implements
 	/** Adds the saveCancelSection */
 	public void addSaveCancelSection() {
 		m_saveCancelSection = new SaveCancelSection();
-		m_saveCancelSection.getSaveButton().setButtonLabel("Add");
+		m_saveCancelSection.getSaveButton()
+                           .setButtonLabel(ContactGlobalizationUtil.globalize(
+                                 "london.contenttypes.ui.contact.add_contact"));
 		add(m_saveCancelSection, ColumnPanel.FULL_WIDTH);
 	}
 

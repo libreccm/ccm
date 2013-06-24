@@ -38,32 +38,37 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
- * Form to edit basic properties of <code>Contact</code> object. Used by
+ * Form to edit basic properties of
+ * <code>Contact</code> object. Used by
  * <code>ContactPropertiesStep</code> authoring kit step.
- * 
- * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
+ *
+ * @author Shashin Shinde <a
+ * href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * @version $Id: ContactPropertyForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ContactPropertyForm extends BasicPageForm {
 
-  /** Name of this form */
-  public static final String ID = "Contact_edit";
-
-  /**
-   * Creates a new form to edit the Contact object specified by the item
-   * selection model passed in.
-   * 
-   * @param itemModel
-   *          The ItemSelectionModel to use to obtain the Contact to work on
-   */
-  public ContactPropertyForm(ItemSelectionModel itemModel) {
-    super(ID, itemModel);
-  }
+    /**
+     * Name of this form
+     */
+    public static final String ID = "Contact_edit";
 
     /**
-     * Adds widgets to the form. This has been cut into small methods
-     * so that subclasses can pick and choose.
+     * Creates a new form to edit the Contact object specified by the item
+     * selection model passed in.
+     *
+     * @param itemModel The ItemSelectionModel to use to obtain the Contact to
+     * work on
      */
+    public ContactPropertyForm(ItemSelectionModel itemModel) {
+        super(ID, itemModel);
+    }
+
+    /**
+     * Adds widgets to the form. This has been cut into small methods so that
+     * subclasses can pick and choose.
+     */
+    @Override
     protected void addWidgets() {
         addBasicPageFormWidgets();
         addGivenNameWidget();
@@ -83,7 +88,7 @@ public class ContactPropertyForm extends BasicPageForm {
 
     protected void addGivenNameWidget() {
         add(new Label(ContactGlobalizationUtil.globalize(
-                      "london.contenttypes.ui.contact.givenname")));
+                "london.contenttypes.ui.contact.givenname")));
         ParameterModel givenNameParam = new StringParameter(Contact.GIVEN_NAME);
         TextField givenName = new TextField(givenNameParam);
         add(givenName);
@@ -91,23 +96,23 @@ public class ContactPropertyForm extends BasicPageForm {
 
     protected void addFamilyNameWidget() {
         add(new Label(ContactGlobalizationUtil.globalize(
-                      "london.contenttypes.ui.contact.familyname")));
+                "london.contenttypes.ui.contact.familyname")));
         ParameterModel familyNameParam = new StringParameter(Contact.FAMILY_NAME);
         TextField familyName = new TextField(familyNameParam);
         add(familyName);
     }
-    
+
     protected void addSuffixWidget() {
         add(new Label(ContactGlobalizationUtil.globalize(
-                      "london.contenttypes.ui.contact.suffix")));
+                "london.contenttypes.ui.contact.suffix")));
         ParameterModel suffixParam = new StringParameter(Contact.SUFFIX);
         TextField suffix = new TextField(suffixParam);
         add(suffix);
     }
-    
+
     protected void addContactTypeWidget() {
         add(new Label(ContactGlobalizationUtil.globalize(
-                      "london.contenttypes.ui.contact.type")));
+                "london.contenttypes.ui.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(Contact.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         add(contactType);
@@ -120,13 +125,13 @@ public class ContactPropertyForm extends BasicPageForm {
 
     protected void addDescriptionWidget() {
         add(new Label(GlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.description")));
+                "cms.contenttypes.ui.description")));
         ParameterModel descParam = new StringParameter(Contact.DESCRIPTION);
         TextArea desc = new TextArea(descParam);
         desc.setRows(5);
         add(desc);
     }
-    
+
     protected void addEmailsWidget() {
         add(new Label(ContactGlobalizationUtil
                 .globalize("london.contenttypes.ui.contact.emails")));
@@ -134,7 +139,7 @@ public class ContactPropertyForm extends BasicPageForm {
         TextField emails = new TextField(emailsParam);
         add(emails);
     }
-    
+
     protected void addOrganizationNameWidget() {
         add(new Label(ContactGlobalizationUtil
                 .globalize("london.contenttypes.ui.contact.orgname")));
@@ -142,7 +147,7 @@ public class ContactPropertyForm extends BasicPageForm {
         TextField orgName = new TextField(orgNameParam);
         add(orgName);
     }
-    
+
     protected void addDepartmentNameWidget() {
         add(new Label(ContactGlobalizationUtil
                 .globalize("london.contenttypes.ui.contact.deptname")));
@@ -150,66 +155,66 @@ public class ContactPropertyForm extends BasicPageForm {
         TextField deptName = new TextField(deptParam);
         add(deptName);
     }
-    
+
     protected void addRoleWidget() {
         add(new Label(ContactGlobalizationUtil
                 .globalize("london.contenttypes.ui.contact.role")));
         ParameterModel roleParam = new StringParameter(Contact.ROLE);
         TextField role = new TextField(roleParam);
-        add(role);        
+        add(role);
     }
 
-  /**
-   * Initialize Form values from Contact object.
-   */
-  public void init(FormSectionEvent fse) {
+    /**
+     * Initialize Form values from Contact object.
+     */
+    public void init(FormSectionEvent fse) {
 
-    FormData data = fse.getFormData();
-    Contact contact = (Contact) super.initBasicWidgets(fse);
+        FormData data = fse.getFormData();
+        Contact contact = (Contact) super.initBasicWidgets(fse);
 
-    if (contact.getContactType() != null) {
-      data.put(Contact.CONTACT_TYPE, contact.getContactType().getID());
+        if (contact.getContactType() != null) {
+            data.put(Contact.CONTACT_TYPE, contact.getContactType().getID());
+        }
+
+        data.put(Contact.GIVEN_NAME, contact.getGivenName());
+        data.put(Contact.FAMILY_NAME, contact.getFamilyName());
+        data.put(Contact.SUFFIX, contact.getSuffix());
+        data.put(Contact.EMAILS, contact.getEmails());
+        data.put(Contact.DESCRIPTION, contact.getDescription());
+        data.put(Contact.ORG_NAME, contact.getOrganisationName());
+        data.put(Contact.DEPT_NAME, contact.getDeptName());
+        data.put(Contact.ROLE, contact.getRole());
     }
 
-    data.put(Contact.GIVEN_NAME, contact.getGivenName());
-    data.put(Contact.FAMILY_NAME, contact.getFamilyName());
-    data.put(Contact.SUFFIX, contact.getSuffix());
-    data.put(Contact.EMAILS, contact.getEmails());
-    data.put(Contact.DESCRIPTION, contact.getDescription());
-    data.put(Contact.ORG_NAME, contact.getOrganisationName());
-    data.put(Contact.DEPT_NAME, contact.getDeptName());
-    data.put(Contact.ROLE, contact.getRole());
-  }
+    /**
+     * Process the form submission event.
+     */
+    public void process(FormSectionEvent fse) {
 
-  /**
-   * Process the form submission event.
-   */
-  public void process(FormSectionEvent fse) {
+        FormData data = fse.getFormData();
+        Contact contact = (Contact) super.processBasicWidgets(fse);
 
-    FormData data = fse.getFormData();
-    Contact contact = (Contact) super.processBasicWidgets(fse);
+        // save only if save button was pressed
+        if (contact != null
+                && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 
-    // save only if save button was pressed
-    if (contact != null
-      && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+            contact.setGivenName((String) data.get(Contact.GIVEN_NAME));
+            contact.setFamilyName((String) data.get(Contact.FAMILY_NAME));
+            contact.setSuffix((String) data.get(Contact.SUFFIX));
+            contact.setEmails((String) data.get(Contact.EMAILS));
+            String contactTypeIDStr = (String) data.get(Contact.CONTACT_TYPE);
+            if (contactTypeIDStr != null) {
+                BigDecimal contactTypeID =
+                        new BigDecimal(contactTypeIDStr);
+                ContactType ctType = new ContactType(contactTypeID);
+                contact.setContactType(ctType);
+            }
 
-      contact.setGivenName((String) data.get(Contact.GIVEN_NAME));
-      contact.setFamilyName((String) data.get(Contact.FAMILY_NAME));
-      contact.setSuffix((String) data.get(Contact.SUFFIX));
-      contact.setEmails((String) data.get(Contact.EMAILS));
-      String contactTypeIDStr = (String) data.get(Contact.CONTACT_TYPE);
-      if (contactTypeIDStr != null) {
-	  BigDecimal contactTypeID =
-	      new BigDecimal(contactTypeIDStr);
-	  ContactType ctType = new ContactType(contactTypeID);
-	  contact.setContactType(ctType);
-      }
-      
-      contact.setDescription((String) data.get(Contact.DESCRIPTION));
-      contact.setOrganisationName((String) data.get(Contact.ORG_NAME));
-      contact.setDeptName((String) data.get(Contact.DEPT_NAME));
-      contact.setRole((String) data.get(Contact.ROLE));
-      contact.save();
+            contact.setDescription((String) data.get(Contact.DESCRIPTION));
+            contact.setOrganisationName((String) data.get(Contact.ORG_NAME));
+            contact.setDeptName((String) data.get(Contact.DEPT_NAME));
+            contact.setRole((String) data.get(Contact.ROLE));
+            contact.save();
+        }
     }
-  }
 }

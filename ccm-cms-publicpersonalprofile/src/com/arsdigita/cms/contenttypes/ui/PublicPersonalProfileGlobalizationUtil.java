@@ -34,7 +34,7 @@ public class PublicPersonalProfileGlobalizationUtil {
     
     /**  Name of Java resource files to handle PPP's globalisation.  */
       public static final String BUNDLE_NAME =
-                               "com.arsdigita.cms.contenttypes.ui.PublicPersonalProfileResources";
+                               "com.arsdigita.cms.contenttypes.PublicPersonalProfileResources";
 
     /**
      *  This returns a globalized message using the package specific bundle,

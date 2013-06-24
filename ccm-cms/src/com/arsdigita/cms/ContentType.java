@@ -60,10 +60,13 @@ import java.util.StringTokenizer;
 public class ContentType extends ACSObject {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.ContentType";
+                               "com.arsdigita.cms.ContentType";
     public static final String OBJECT_TYPE = "associatedObjectType";
+    /** The name or title of the content type, e.g. "File Storage Item"       */
     public static final String LABEL = "label";
+    /** A short description of the type, what is is meant to do / to use for. */
     public static final String DESCRIPTION = "description";
+    /** Fully qualified name of the (main) domain class (and main entry point)*/
     public static final String CLASSNAME = "className";
     public static final String MODE = "mode";
     public static final String AUTHORING_KIT = "authoringKit";

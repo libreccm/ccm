@@ -42,7 +42,7 @@ public class ContactAddressProperties extends SimpleEditStep {
   public static String EDIT_SHEET_NAME = "edit-contact-address";
 
   public ContactAddressProperties(ItemSelectionModel itemModel,
-                               AuthoringKitWizard parent) {
+                                  AuthoringKitWizard parent) {
     super(itemModel, parent);
 
     BasicItemForm form;

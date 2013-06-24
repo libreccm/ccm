@@ -86,12 +86,14 @@ public class PublicPersonalProfileCreate extends PageCreate {
         add(m_workflowSection, ColumnPanel.INSERT);
         add(new Label(GlobalizationUtil.globalize(
                 "cms.ui.authoring.content_type")));
-        add(new Label(type.getLabel()));
+        add(new Label(type.getLabel()));   // the title or name of the type
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
 
-        add(new Label(PublicPersonalProfileGlobalizationUtil.globalize("publicpersonalprofile.ui.create.select_person")));
-        final ParameterModel ownerModel = new StringParameter(PublicPersonalProfileBundle.OWNER);
+        add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
+                      "publicpersonalprofile.ui.create.select_person")));
+        final ParameterModel ownerModel = new 
+                             StringParameter(PublicPersonalProfileBundle.OWNER);
         final SingleSelect ownerSelect = new SingleSelect(ownerModel);
         ownerSelect.addValidationListener(new NotNullValidationListener());
 
@@ -111,9 +113,11 @@ public class PublicPersonalProfileCreate extends PageCreate {
                     if (types.size() == 0) {
                         personType = "com.arsdigita.cms.contenttypes.GenericPerson";
                     }
-                    DataCollection persons = SessionManager.getSession().retrieve(personType);
+                    DataCollection persons = SessionManager.getSession()
+                                                           .retrieve(personType);
                     //persons.addFilter("profile is null");
-                    persons.addFilter(String.format("version = '%s'", ContentItem.DRAFT));
+                    persons.addFilter(String.format("version = '%s'", 
+                                                    ContentItem.DRAFT));
                     persons.addOrder("surname asc");
                     persons.addOrder("givenname asc");
                     persons.addOrder("language asc");

@@ -93,9 +93,8 @@ public class PublicPersonalProfileNavigationAddForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.nav.select_nav_item").
-                localize()));
+        add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.nav.select_nav_item") ));
         ParameterModel navItemModel =
                        new StringParameter(PublicPersonalProfileNavItem.KEY);
         SingleSelect navItemSelect = new SingleSelect(navItemModel);
@@ -109,7 +108,7 @@ public class PublicPersonalProfileNavigationAddForm
 
                     select.addOption(new Option("", ""));
                     PublicPersonalProfileNavItemCollection navItems =
-                                                           new PublicPersonalProfileNavItemCollection();
+                                  new PublicPersonalProfileNavItemCollection();
                     navItems.addLanguageFilter(GlobalizationHelper.
                             getNegotiatedLocale().
                             getLanguage());
@@ -162,9 +161,8 @@ public class PublicPersonalProfileNavigationAddForm
         add(navItemSelect);
 
         //if (!showGenerated()) {
-        add(new Label((String) PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.nav.select_target").
-                localize()));
+        add(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.nav.select_target") ));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH);
         itemSearch.addValidationListener(this);
         add(this.itemSearch);

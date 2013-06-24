@@ -59,22 +59,19 @@ public class PublicPersonalProfilePropertiesStep extends SimpleEditStep {
         BasicPageForm editBasicSheet =
                       new PublicPersonalProfilePropertyForm(itemModel,
                                                                this);
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicPersonalProfileGlobalizationUtil.
-                globalize(
-                "publicpersonalprofile.ui.profile.edit_basic_properties").
-                localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.profile.edit_basic_properties"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getPublicPersonalProfilePropertySheet(
                 itemModel));
 
-        segmentedPanel.addSegment(new Label((String) PublicPersonalProfileGlobalizationUtil.
-                globalize("publicpersonalprofile.ui.profile.basic_properties").
-                localize()), basicProperties);
+        segmentedPanel.addSegment(new Label(PublicPersonalProfileGlobalizationUtil.
+                globalize("publicpersonalprofile.ui.profile.basic_properties")), 
+                basicProperties);
 
         setDisplayComponent(segmentedPanel);
     }

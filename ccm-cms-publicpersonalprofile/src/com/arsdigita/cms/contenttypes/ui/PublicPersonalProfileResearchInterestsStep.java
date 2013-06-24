@@ -51,9 +51,9 @@ public class PublicPersonalProfileResearchInterestsStep extends SimpleEditStep {
         final BasicItemForm editRiForm =
                             new PublicPersonalProfileResearchInterestsEditForm
                 (itemModel);
-        add(EDIT_RI_SHEET_NAME, (String) PublicPersonalProfileGlobalizationUtil.
-                globalize("publicpersonalprofile.ui.research_interests.edit").
-                localize(),
+        add(EDIT_RI_SHEET_NAME, 
+            PublicPersonalProfileGlobalizationUtil.globalize(
+                    "publicpersonalprofile.ui.research_interests.edit"),
             new WorkflowLockedComponentAccess(editRiForm, itemModel),
             editRiForm.getSaveCancelSection().getCancelButton());
 
@@ -66,7 +66,7 @@ public class PublicPersonalProfileResearchInterestsStep extends SimpleEditStep {
                 itemModel);
 
         sheet.add(PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.research_interests"),
+                  "publicpersonalprofile.ui.research_interests"),
                   PublicPersonalProfile.INTERESTS);
 
         return sheet;

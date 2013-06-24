@@ -50,8 +50,8 @@ public class PublicPersonalProfilePositionStep extends SimpleEditStep {
         final BasicItemForm editPositionForm = new PublicPersonalProfilePositionEditForm(
                 itemModel);
         add(EDIT_POSITION_SHEET_NAME,
-            (String) PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.position.edit").localize(),
+            PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.position.edit"),
             new WorkflowLockedComponentAccess(editPositionForm, itemModel),
             editPositionForm.getSaveCancelSection().getCancelButton());
 

@@ -31,7 +31,6 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
@@ -55,9 +54,8 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class PublicPersonalProfileNavigationTable
-        extends Table
-        implements TableActionListener {
+public class PublicPersonalProfileNavigationTable extends Table
+                                                  implements TableActionListener {
 
     private static final Logger logger = Logger.getLogger(
             PublicPersonalProfileNavigationTable.class);
@@ -79,20 +77,20 @@ public class PublicPersonalProfileNavigationTable
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.nav.target").localize(),
+                new Label(PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.nav.target") ),
                 TABLE_COL_EDIT));
 
         colModel.add(new TableColumn(
                 1,
-                PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.nav.targetitem").localize(),
+                new Label(PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.nav.targetitem")),
                 TABLE_COL_TARGET));
 
         colModel.add(new TableColumn(
                 2,
-                PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.nav.remove").localize(),
+                new Label(PublicPersonalProfileGlobalizationUtil.globalize(
+                "publicpersonalprofile.ui.nav.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new PublicPersonalProfileNavigationTableModelBuilder(
@@ -193,8 +191,11 @@ public class PublicPersonalProfileNavigationTable
                         return targetItem;
                     }
                 case 2:
-                    return PublicPersonalProfileGlobalizationUtil.globalize(
-                            "publicpersonalprofile.ui.nav.remove").localize();
+                //  return PublicPersonalProfileGlobalizationUtil.globalize(
+                //          "publicpersonalprofile.ui.nav.remove").localize();
+                    return new Label(
+                           PublicPersonalProfileGlobalizationUtil.globalize(
+                           "publicpersonalprofile.ui.nav.remove"));
                 default:
                     return null;
             }
@@ -222,7 +223,8 @@ public class PublicPersonalProfileNavigationTable
                                       int col) {
             //com.arsdigita.cms.SecurityManager securityManager = Utilities.getSecurityManager(state);
 
-            return new Label((String) value);
+         // return new Label((String) value);
+            return (Component)value;
         }
 
     }
@@ -293,13 +295,14 @@ public class PublicPersonalProfileNavigationTable
 
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicPersonalProfileGlobalizationUtil.
-                        globalize("publicpersonalprofile.ui.nav.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicPersonalProfileGlobalizationUtil.
+                        globalize("publicpersonalprofile.ui.nav.remove.confirm")
+                        );
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+            //  Label label = new Label(value.toString());
+            //  return label;
+                return (Component)value;
             }
         }
 
