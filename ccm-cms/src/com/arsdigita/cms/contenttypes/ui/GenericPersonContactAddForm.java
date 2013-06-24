@@ -39,6 +39,7 @@ import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.ui.ItemSearchWidget;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 import com.arsdigita.globalization.GlobalizationHelper;
 
@@ -92,7 +93,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("",
-                                         new Label(ContenttypesGlobalizationUtil.
+                                         new Label(GlobalizationUtil.
                                              globalize("cms.ui.select_one"))));
 
         // Add the Options to the SingleSelect widget

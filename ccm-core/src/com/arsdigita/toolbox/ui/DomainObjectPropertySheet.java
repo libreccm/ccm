@@ -444,6 +444,10 @@ public class DomainObjectPropertySheet extends PropertySheet {
             
             /* Determine the default value                                    */
             GlobalizedMessage defaultMsg = getDefaultValue();
+
+            if (obj == null) {
+                return (String)defaultMsg.localize();
+            }
             Object value = get(obj, attribute);
 
             if (value == null) {

@@ -66,8 +66,8 @@ public class GenericPersonAliasPropertiesStep extends SimpleEditStep {
                 this);
 
         add(SET_ALIAS_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.set_alias").localize(),
+            ContenttypesGlobalizationUtil.globalize(
+                                          "cms.contenttypes.ui.person.set_alias"),
             new GenericPersonAliasSetWorkflowLockedComponentAccess(setAliasSheet,
                                                                    itemModel),
             setAliasSheet.getSaveCancelSection().getCancelButton());
@@ -79,8 +79,8 @@ public class GenericPersonAliasPropertiesStep extends SimpleEditStep {
                 itemModel),
             changeAliasSheet.getSaveCancelSection().getCancelButton());*/
         add(DELETE_ALIAS_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.delete_alias").localize(),
+            ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.delete_alias"),
             new GenericPersonAliasEditWorkflowLockedComponentAccess(
                 deleteAliasSheet,
                 itemModel),
@@ -114,8 +114,8 @@ public class GenericPersonAliasPropertiesStep extends SimpleEditStep {
 
     public static Component getEmptyAliasPropertySheet(
             final ItemSelectionModel itemModel) {
-        return new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.alias.none").localize());
+        return new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.alias.none"));
     }
 
     private class GenericPersonAliasSetWorkflowLockedComponentAccess

@@ -20,18 +20,13 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Person;
-import com.arsdigita.cms.contenttypes.util.PersonGlobalizationUtil;
-import com.arsdigita.cms.ui.authoring.BasicPageForm;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -39,11 +34,10 @@ import org.apache.log4j.Logger;
  *
  * @author: Jens Pelzetter
  */
-public class PersonPropertyForm
-        extends GenericPersonPropertyForm
-        implements FormProcessListener,
-                   FormInitListener,
-                   FormSubmissionListener {
+public class PersonPropertyForm extends GenericPersonPropertyForm
+                                implements FormProcessListener,
+                                           FormInitListener,
+                                           FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(
             PersonPropertyForm.class);
@@ -66,12 +60,14 @@ public class PersonPropertyForm
         super.addWidgets();
     }
 
+    @Override
     public void init(FormSectionEvent fse) {
         super.init(fse);
         FormData data = fse.getFormData();
         Person person = (Person) super.initBasicWidgets(fse);
     }
 
+    @Override
     public void process(FormSectionEvent fse) {
         super.process(fse);
         FormData data = fse.getFormData();

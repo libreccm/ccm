@@ -19,11 +19,9 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
@@ -34,7 +32,8 @@ import java.math.BigDecimal;
 public class Person extends GenericPerson {
 
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Person";
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.cms.contenttypes.Person";
 
     /**
      * Default constructor. This creates a new (empty) Person.

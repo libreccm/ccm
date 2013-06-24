@@ -34,6 +34,7 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import java.text.DateFormat;
 
 /**
@@ -66,12 +67,12 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         BasicPageForm editBasicSheet = new GenericPersonPropertyForm(itemModel,
                                                                      this);
         basicProperties.add(EDIT_SHEET_NAME,
-                            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.edit_basic_properties").
-                localize(), new WorkflowLockedComponentAccess(editBasicSheet,
+                            ContenttypesGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.person.edit_basic_properties"), 
+                            new WorkflowLockedComponentAccess(editBasicSheet,
                                                               itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+                            editBasicSheet.getSaveCancelSection()
+                                          .getCancelButton());
 
         /* Set the displayComponent for this step */
         basicProperties.setDisplayComponent(getGenericPersonPropertySheet(
@@ -91,7 +92,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                                          new GenericPersonAliasPropertiesStep(
                 itemModel, parent);
         segmentedPanel.addSegment(new Label(ContenttypesGlobalizationUtil.
-                globalize("cms.contenttypes.ui.person.alias")),
+                globalize("cms.contenttypes.ui.person.alias_title")),
                                   aliasStep);
 
         /* Sets the composed segmentedPanel as display component */
@@ -129,14 +130,14 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                     return DateFormat.getDateInstance(DateFormat.LONG).format(person.
                             getBirthdate());
                 } else {
-                    return (String) ContenttypesGlobalizationUtil.globalize(
+                    return (String) GlobalizationUtil.globalize(
                             "cms.ui.unknown").localize();
                 }
             }
         });
 
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.gender"),
+                                                "cms.contenttypes.ui.person.gender"),
                   GenericPerson.GENDER,
                   new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -146,11 +147,11 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                 //ContentPage page = (ContentPage) item;
                 GenericPerson person = (GenericPerson) item;
                 if (person.getGender() != null) {
-                    return (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender."
-                                                                            + person.
-                            getGender().toLowerCase()).localize();
-                } else {
                     return (String) ContenttypesGlobalizationUtil.globalize(
+                                    "cms.contenttypes.ui.person.gender."
+                                    + person.getGender().toLowerCase()).localize();
+                } else {
+                    return (String) GlobalizationUtil.globalize(
                             "cms.ui.unknown").localize();
                 }
             }
@@ -158,27 +159,13 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(ContenttypesGlobalizationUtil.globalize(
-                    "cms.ui.authoring.page_launch_date"),
+                                  "cms.ui.authoring.page_launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-
-                public String format(DomainObject item,
-                                     String attribute,
-                                     PageState state) {
-                    ContentPage page = (ContentPage) item;
-                    if (page.getLaunchDate() != null) {
-                        return DateFormat.getDateInstance(DateFormat.LONG).
-                                format(page.getLaunchDate());
-                    } else {
-                        return (String) ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknown").localize();
-                    }
-                }
-            });
+                      new LaunchDateAttributeFormatter() );
         }
 
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.description"),
+                              "cms.contenttypes.ui.person.description"),
                   GenericPerson.DESCRIPTION);
         return sheet;
     }
