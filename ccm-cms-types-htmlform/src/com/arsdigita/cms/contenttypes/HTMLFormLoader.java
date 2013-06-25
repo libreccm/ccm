@@ -16,21 +16,33 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- * Loader.
+ * Loader executes nonrecurring once at install time and loads the 
+ * HTMLForm contenttype package persistently into database.
+ *
+ * It uses the base class to create the database schema and the required 
+ * table entries for the contenttype.
+ *
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: //ps/apps/london/htmlform/dev/src/com/arsdigita/cms/contenttypes/HTMLFormLoader.java#1 $
+ * @version $Id: HTMLFormLoader.java#1 $
  */
 public class HTMLFormLoader extends AbstractContentTypeLoader {
-    public final static String versionId =
-        "$Id: //ps/apps/london/htmlform/dev/src/com/arsdigita/cms/contenttypes/HTMLFormLoader.java#1 $" +
-        "$Author: mbooth $" +
-        "$DateTime: 2004/03/05 09:47:41 $";
 
+    /** Defines the xml file containing the FAQ content types 
+     *  property definitions.                                                */
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/HTMLForm.xml"
     };
 
+    /**
+     * Provides the of HTMLForm contenttype property definitions 
+     * implementing the parent's class abstract method.
+     * 
+     * The file defines the types name as displayed in content center
+     * select box and the authoring steps. These are loaded into database.
+     * 
+     * @return String Atring Array of fully qualified file names 
+     */
     public String[] getTypes() {
         return TYPES;
     }

@@ -15,10 +15,10 @@
 
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
@@ -41,8 +41,7 @@ public class HTMLForm extends GenericArticle {
                                = "com.arsdigita.cms.contenttypes.HTMLForm";
 
     /** Data object type for this domain object (for CMS compatibility) */
-    public static final String TYPE
-        = BASE_DATA_OBJECT_TYPE;
+    public static final String TYPE = BASE_DATA_OBJECT_TYPE;
 
     public HTMLForm() {
         this( BASE_DATA_OBJECT_TYPE );

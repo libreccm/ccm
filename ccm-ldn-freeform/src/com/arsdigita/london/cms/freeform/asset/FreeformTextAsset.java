@@ -1,4 +1,4 @@
-package com.arsdigita.london.cms.freeform.assets;
+package com.arsdigita.london.cms.freeform.asset;
 
 import java.math.BigDecimal;
 import com.arsdigita.persistence.OID;

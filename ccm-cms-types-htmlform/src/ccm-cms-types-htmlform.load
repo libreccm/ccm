@@ -6,6 +6,7 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
+    <table name="ct_htmlform"/>
     <initializer class="com.arsdigita.cms.contenttypes.HTMLFormInitializer"/>
   </provides>
   <scripts>

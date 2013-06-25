@@ -54,6 +54,12 @@ public class ResearchNetworkPropertyForm extends BasicPageForm implements FormPr
         researchNetworkTitle.addValidationListener(new NotNullValidationListener());
         add(researchNetworkTitle);
 
+        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.description")));
+        TextArea researchNetworkAreaDescription = new TextArea(RESEARCHNETWORK_DESCRIPTION);
+        researchNetworkAreaDescription.setRows(10);
+        researchNetworkAreaDescription.setCols(30);
+        add(researchNetworkAreaDescription);
+
         add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.direction")));
         TextArea researchNetworkDirection = new TextArea(RESEARCHNETWORK_DIRECTION);
         researchNetworkDirection.setRows(5);
@@ -70,12 +76,6 @@ public class ResearchNetworkPropertyForm extends BasicPageForm implements FormPr
         ParameterModel researchNetworkWebsiteParam = new StringParameter(RESEARCHNETWORK_WEBSITE);
         TextField researchNetworkWebsite = new TextField(researchNetworkWebsiteParam);
         add(researchNetworkWebsite);
-
-        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.description")));
-        TextArea researchNetworkAreaDescription = new TextArea(RESEARCHNETWORK_DESCRIPTION);
-        researchNetworkAreaDescription.setRows(10);
-        researchNetworkAreaDescription.setCols(30);
-        add(researchNetworkAreaDescription);
     }
 
     public void init(FormSectionEvent e) throws FormProcessException {

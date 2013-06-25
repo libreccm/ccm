@@ -11,7 +11,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.FormProcessException;
 
 
-import com.arsdigita.london.cms.freeform.assets.FreeformTextAsset;
+import com.arsdigita.london.cms.freeform.asset.FreeformTextAsset;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.form.SingleSelect;

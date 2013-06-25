@@ -38,21 +38,29 @@ import org.apache.log4j.Logger;
  *
  * @author: Jens Pelzetter
  */
-public class MemberPropertyForm
-        extends GenericPersonPropertyForm
-        implements FormProcessListener,
-                   FormInitListener,
-                   FormSubmissionListener {
+public class MemberPropertyForm extends GenericPersonPropertyForm
+                                implements FormProcessListener,
+                                           FormInitListener,
+                                           FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(
             MemberPropertyForm.class);
     private MemberPropertiesStep m_step;
     public static final String ID = "Member_edit";
 
+    /**
+     * 
+     * @param itemModel 
+     */
     public MemberPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
+    /**
+     * 
+     * @param itemModel
+     * @param step 
+     */
     public MemberPropertyForm(ItemSelectionModel itemModel,
                               MemberPropertiesStep step) {
         super(itemModel, step);
@@ -65,12 +73,14 @@ public class MemberPropertyForm
         super.addWidgets();
     }
 
+    @Override
     public void init(FormSectionEvent fse) {
         super.init(fse);
         FormData data = fse.getFormData();
         Member member = (Member) super.initBasicWidgets(fse);
     }
 
+    @Override
     public void process(FormSectionEvent fse) {
         super.process(fse);
         FormData data = fse.getFormData();

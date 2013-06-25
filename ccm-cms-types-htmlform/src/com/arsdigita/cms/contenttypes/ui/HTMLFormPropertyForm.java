@@ -40,7 +40,10 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  * Form to edit the basic properties of an HTMLForm. This form can be
  * extended to create forms for HTMLForm subclasses.
  */
-public class HTMLFormPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class HTMLFormPropertyForm extends BasicPageForm 
+                                  implements FormProcessListener, 
+                                             FormInitListener, 
+                                             FormSubmissionListener {
 
     private final static org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(HTMLFormPropertyForm.class);
@@ -64,7 +67,8 @@ public class HTMLFormPropertyForm extends BasicPageForm implements FormProcessLi
      *    HTMLForm to work on
      * @param step The HTMLFormPropertiesStep which controls this form.
      */
-    public HTMLFormPropertyForm(ItemSelectionModel itemModel, HTMLFormPropertiesStep step) {
+    public HTMLFormPropertyForm(ItemSelectionModel itemModel, 
+                                HTMLFormPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -81,7 +85,10 @@ public class HTMLFormPropertyForm extends BasicPageForm implements FormProcessLi
         ParameterModel leadParam = new StringParameter(LEAD);
 
         if (ContentSection.getConfig().mandatoryDescriptions()) {
-            leadParam.addParameterListener(new NotEmptyValidationListener(GlobalizationUtil.globalize("cms.contenttypes.ui.description_missing")));
+            leadParam.addParameterListener(new 
+                    NotEmptyValidationListener(
+                        GlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.description_missing")));
         }
         //leadParam
         //    .addParameterListener( new NotNullValidationListener() );
@@ -109,7 +116,8 @@ public class HTMLFormPropertyForm extends BasicPageForm implements FormProcessLi
     /** Cancels streamlined editing. */
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
-                && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+                && getSaveCancelSection()
+                   .getCancelButton().isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
@@ -122,7 +130,8 @@ public class HTMLFormPropertyForm extends BasicPageForm implements FormProcessLi
 
         // save only if save button was pressed
         if (htmlform != null
-                && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+                && getSaveCancelSection()
+                   .getSaveButton().isSelected(fse.getPageState())) {
 
             htmlform.setLead((String) data.get(LEAD));
             htmlform.save();

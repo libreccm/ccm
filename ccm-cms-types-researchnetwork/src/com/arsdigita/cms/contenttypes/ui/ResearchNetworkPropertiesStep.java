@@ -23,44 +23,53 @@ import org.apache.log4j.Logger;
  */
 public class ResearchNetworkPropertiesStep extends SimpleEditStep {
 
-    private final static Logger s_log = Logger.getLogger(ResearchNetworkPropertiesStep.class);
+    private final static Logger s_log = Logger.getLogger(
+                                        ResearchNetworkPropertiesStep.class);
     public final static String EDIT_SHEET_NAME = "edit";
 
-    public ResearchNetworkPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public ResearchNetworkPropertiesStep(ItemSelectionModel itemModel, 
+                                         AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
         BasicPageForm editSheet;
 
         editSheet = new ResearchNetworkPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            "Edit", 
+            new WorkflowLockedComponentAccess(editSheet, itemModel), 
+            editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getResearchNetworkPropertySheet(itemModel));
     }
 
     public static Component getResearchNetworkPropertySheet(ItemSelectionModel itemModel) {
+
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
         //Display the properties
-        sheet.add(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.title"), ResearchNetwork.RESEARCHNETWORK_TITLE);
-        sheet.add(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.direction"), ResearchNetwork.RESEARCHNETWORK_DIRECTION);
-        sheet.add(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.coordination"), ResearchNetwork.RESEARCHNETWORK_COORDINATION);
-        sheet.add(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.website"), ResearchNetwork.RESEARCHNETWORK_WEBSITE);
-        sheet.add(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.description"), ResearchNetwork.RESEARCHNETWORK_DESCRIPTION);
-
+        sheet.add(ResearchNetworkGlobalizationUtil.globalize(
+                                 "cms.contenttypes.researchnetwork.ui.title"), 
+                  ResearchNetwork.RESEARCHNETWORK_TITLE);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {
-
-                public String format(DomainObject obj, String attribute, PageState state) {
-                    ContentPage page = (ContentPage) obj;
-                    if (page.getLaunchDate() != null) {
-                        return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                    } else {
-                        return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
-                    }
-                }
-            });
+            sheet.add(com.arsdigita.cms.util.GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
         }
+        sheet.add(ResearchNetworkGlobalizationUtil
+                       .globalize("cms.contenttypes.researchnetwork.ui.description"), 
+                  ResearchNetwork.RESEARCHNETWORK_DESCRIPTION);
+        sheet.add(ResearchNetworkGlobalizationUtil
+                      .globalize("cms.contenttypes.researchnetwork.ui.direction"), 
+                  ResearchNetwork.RESEARCHNETWORK_DIRECTION);
+        sheet.add(ResearchNetworkGlobalizationUtil
+                      .globalize("cms.contenttypes.researchnetwork.ui.coordination"), 
+                  ResearchNetwork.RESEARCHNETWORK_COORDINATION);
+        sheet.add(ResearchNetworkGlobalizationUtil
+                      .globalize("cms.contenttypes.researchnetwork.ui.website"), 
+                  ResearchNetwork.RESEARCHNETWORK_WEBSITE);
+
 
         return sheet;
     }

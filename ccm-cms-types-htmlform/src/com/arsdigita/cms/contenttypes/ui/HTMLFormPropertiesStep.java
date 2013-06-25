@@ -52,8 +52,10 @@ public class HTMLFormPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new HTMLFormPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
-                editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getHTMLFormPropertySheet(itemModel));
     }
@@ -69,26 +71,17 @@ public class HTMLFormPropertiesStep extends SimpleEditStep {
     public static Component getHTMLFormPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), HTMLForm.NAME);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), HTMLForm.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), 
+                  HTMLForm.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), 
+                  HTMLForm.NAME);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
                     ContentPage.LAUNCH_DATE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
-
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            ContentPage page = (ContentPage) item;
-                            if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                            } else {
-                                return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
-                            }
-                        }
-                    });
+                      new LaunchDateAttributeFormatter() );
         }
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"), HTMLForm.LEAD);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"), 
+                  HTMLForm.LEAD);
 
         return sheet;
     }

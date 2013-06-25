@@ -19,7 +19,8 @@ import java.math.BigDecimal;
 
 
 /**
- * The content type which allows arbitrary assets to be associated to it.
+ * The content type which allows arbitrary assets to be associated to it as
+ * kind of 'body text'.
  * The associations will be 'compositions'
  *
  * @author <a href="mailto:slater@arsdigita.com">Michael Slater</a>
@@ -29,14 +30,14 @@ import java.math.BigDecimal;
 public class FreeformContentItem extends ContentPage {
 
     /** 
-     *  Examples of the different MimeTypes this FreeformContentItem 
-     *  would handle as alternative body assets.  Developers would hav
-     *  to supply support for any news mimetype added. This would include:
-     *  TODO: what are all the tasks a developer needs to do to
+     * Examples of the different MimeTypes this FreeformContentItem 
+     * would handle as alternative body assets.  Developers would hav
+     * to supply support for any news mimetype added. This would include:
+     * TODO: what are all the tasks a developer needs to do to
      * add a new mimetype support?
      *
-     *  TODO:  this information could be an oracle table
-     **/
+     *  TODO:  this information could be persisted in a DB table
+     */
     public static final String HTML = "Text/Html";
     public static final String WML = "Text/WirelessHtml";
     public static final String ADOBE = "Adobe/pdf";
@@ -60,7 +61,7 @@ public class FreeformContentItem extends ContentPage {
     
     /**
      * Default constructor. This creates a new content page.
-     **/
+     */
     public FreeformContentItem() {
         super(BASE_DATA_OBJECT_TYPE);
     }
@@ -122,9 +123,9 @@ public class FreeformContentItem extends ContentPage {
     }
 
     /** 
-     * Associate a Freeform[Text|Binary]Asset with this
-     * item and set its rank. Don't handle rank conflicts,
-     * holes here. Handle them in a higher-order method.
+     * Associate a Freeform[Text|Binary]Asset with this item and set its rank. 
+     * Don't handle rank conflicts, holes here. Handle them in a higher-order 
+     * method.
      *
      * @param oneAsset The asset to add
      * @param rank The rank for the asset. Setting this to 0 will cause

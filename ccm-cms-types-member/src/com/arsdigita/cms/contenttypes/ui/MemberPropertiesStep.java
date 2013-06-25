@@ -23,6 +23,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 public class MemberPropertiesStep extends GenericPersonPropertiesStep {
 
@@ -36,9 +37,10 @@ public class MemberPropertiesStep extends GenericPersonPropertiesStep {
     protected void createEditSheet(ItemSelectionModel itemModel) {
         BasicPageForm editSheet;
         editSheet = new MemberPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit",
-            new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.
-                getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
+            new WorkflowLockedComponentAccess(editSheet, itemModel), 
+            editSheet.getSaveCancelSection().getCancelButton());
     }
 
     public static Component getMemberPropertySheet(ItemSelectionModel itemModel) {
