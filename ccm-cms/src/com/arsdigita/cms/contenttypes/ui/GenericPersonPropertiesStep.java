@@ -68,7 +68,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                                                                      this);
         basicProperties.add(EDIT_SHEET_NAME,
                             ContenttypesGlobalizationUtil.globalize(
-                            "cms.contenttypes.ui.person.edit_basic_properties"), 
+                            "cms.contenttypes.ui.genericperson.edit_basic_properties"), 
                             new WorkflowLockedComponentAccess(editBasicSheet,
                                                               itemModel),
                             editBasicSheet.getSaveCancelSection()
@@ -81,7 +81,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         /* Add the SimpleEditStep to the segmented panel */
         segmentedPanel.addSegment(new 
                 Label(ContenttypesGlobalizationUtil
-                    .globalize("cms.contenttypes.ui.person.basic_properties")), 
+                    .globalize("cms.contenttypes.ui.genericperson.basic_properties")), 
                 basicProperties);
 
 
@@ -92,7 +92,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                                          new GenericPersonAliasPropertiesStep(
                 itemModel, parent);
         segmentedPanel.addSegment(new Label(ContenttypesGlobalizationUtil.
-                globalize("cms.contenttypes.ui.person.alias_title")),
+                globalize("cms.contenttypes.ui.genericperson.alias_title")),
                                   aliasStep);
 
         /* Sets the composed segmentedPanel as display component */
@@ -106,19 +106,19 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                 itemModel);
 
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.surname"),
+                "cms.contenttypes.ui.genericperson.surname"),
                   GenericPerson.SURNAME);
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.givenname"),
+                "cms.contenttypes.ui.genericperson.givenname"),
                   GenericPerson.GIVENNAME);
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.titlepre"),
+                "cms.contenttypes.ui.genericperson.titlepre"),
                   GenericPerson.TITLEPRE);
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.titlepost"),
+                "cms.contenttypes.ui.genericperson.titlepost"),
                   GenericPerson.TITLEPOST);
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.birthdate"),
+                "cms.contenttypes.ui.genericperson.birthdate"),
                   GenericPerson.BIRTHDATE,
                   new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -136,8 +136,8 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
             }
         });
 
-        sheet.add(ContenttypesGlobalizationUtil.globalize(
-                                                "cms.contenttypes.ui.person.gender"),
+        sheet.add(ContenttypesGlobalizationUtil
+                  .globalize("cms.contenttypes.ui.genericperson.gender"),
                   GenericPerson.GENDER,
                   new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -148,7 +148,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                 GenericPerson person = (GenericPerson) item;
                 if (person.getGender() != null) {
                     return (String) ContenttypesGlobalizationUtil.globalize(
-                                    "cms.contenttypes.ui.person.gender."
+                                    "cms.contenttypes.ui.genericperson.gender."
                                     + person.getGender().toLowerCase()).localize();
                 } else {
                     return (String) GlobalizationUtil.globalize(
@@ -165,7 +165,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         }
 
         sheet.add(ContenttypesGlobalizationUtil.globalize(
-                              "cms.contenttypes.ui.person.description"),
+                              "cms.contenttypes.ui.genericperson.description"),
                   GenericPerson.DESCRIPTION);
         return sheet;
     }

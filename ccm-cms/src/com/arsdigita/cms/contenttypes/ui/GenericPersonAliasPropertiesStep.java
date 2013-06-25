@@ -43,11 +43,22 @@ public class GenericPersonAliasPropertiesStep extends SimpleEditStep {
     public static final String DELETE_ALIAS_SHEET_NAME = "deleteAlias";
     private final ItemSelectionModel itemModel;
 
+    /**
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public GenericPersonAliasPropertiesStep(final ItemSelectionModel itemModel,
                                             final AuthoringKitWizard parent) {
         this(itemModel, parent, "");
     }
 
+    /**
+     * 
+     * @param itemModel
+     * @param parent
+     * @param prefix 
+     */
     public GenericPersonAliasPropertiesStep(final ItemSelectionModel itemModel,
                                             final AuthoringKitWizard parent,
                                             final String prefix) {

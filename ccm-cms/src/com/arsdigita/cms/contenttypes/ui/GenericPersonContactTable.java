@@ -41,7 +41,7 @@ import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
+// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizationHelper;
@@ -78,20 +78,30 @@ public class GenericPersonContactTable extends Table implements
                 "cms.contenttypes.ui.person.contacts.none")));
         TableColumnModel tab_model = getColumnModel();
 
-        tab_model.add(new TableColumn(0, ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.contact.type").localize()));
-        tab_model.add(new TableColumn(1, ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.contact.title").localize(),
-                                      TABLE_COL_EDIT));
-        tab_model.add(new TableColumn(2, ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.contact.del").localize(),
-                                      TABLE_COL_DEL));
-        tab_model.add(new TableColumn(3, ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person_contact.up").localize(),
-                                      TABLE_COL_UP));
-        tab_model.add(new TableColumn(4, ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person_contact.down").localize(),
-                                      TABLE_COL_DOWN));
+        tab_model.add(new TableColumn(
+                      0, 
+                      ContenttypesGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.person.contact.type")));
+        tab_model.add(new TableColumn(
+                      1, 
+                      ContenttypesGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.person.contact.title"),
+                      TABLE_COL_EDIT));
+        tab_model.add(new TableColumn(
+                      2, 
+                      ContenttypesGlobalizationUtil.globalize(
+                             "cms.contenttypes.ui.person.contact.del"),
+                      TABLE_COL_DEL));
+        tab_model.add(new TableColumn(
+                      3, 
+                      ContenttypesGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.person_contact.up"),
+                      TABLE_COL_UP));
+        tab_model.add(new TableColumn(
+                      4, 
+                      ContenttypesGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.person_contact.down"),
+                      TABLE_COL_DOWN));
 
         setModelBuilder(new GenericPersonTableModelBuilder(itemModel));
 
@@ -217,7 +227,7 @@ public class GenericPersonContactTable extends Table implements
                 case 1:
                     return m_contact.getTitle();
                 case 2:
-                    return GlobalizationUtil.globalize("cms.ui.delete").localize();
+                    return GlobalizationUtil.globalize("cms.ui.delete");
                 default:
                     return null;
             }
@@ -243,7 +253,7 @@ public class GenericPersonContactTable extends Table implements
                                       boolean isSelected, Object key,
                                       int row, int column) {
 
-            SecurityManager sm = Utilities.getSecurityManager(state);
+            SecurityManager sm = CMS.getSecurityManager(state);
             GenericPerson person = (GenericPerson) m_itemModel.getSelectedObject(
                     state);
 
@@ -296,7 +306,7 @@ public class GenericPersonContactTable extends Table implements
                                       boolean isSelected, Object key,
                                       int row, int column) {
 
-            SecurityManager sm = Utilities.getSecurityManager(state);
+            SecurityManager sm = CMS.getSecurityManager(state);
             GenericPerson person = (GenericPerson) m_itemModel.getSelectedObject(
                     state);
 

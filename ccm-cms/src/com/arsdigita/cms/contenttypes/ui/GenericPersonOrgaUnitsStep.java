@@ -29,7 +29,8 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
  */
 public class GenericPersonOrgaUnitsStep extends SimpleEditStep {
 
-    public GenericPersonOrgaUnitsStep(final ItemSelectionModel itemModel, final AuthoringKitWizard parent) {
+    public GenericPersonOrgaUnitsStep(final ItemSelectionModel itemModel, 
+                                      final AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
@@ -38,7 +39,8 @@ public class GenericPersonOrgaUnitsStep extends SimpleEditStep {
                                       final String prefix) {
         super(itemModel, parent, prefix);
 
-        final GenericPersonOrgaUnitsTable table = new GenericPersonOrgaUnitsTable(itemModel);
+        final GenericPersonOrgaUnitsTable table = new 
+                                          GenericPersonOrgaUnitsTable(itemModel);
         setDisplayComponent(table);
     }
 

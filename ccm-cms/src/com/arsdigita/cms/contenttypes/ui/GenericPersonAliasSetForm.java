@@ -53,6 +53,10 @@ public class GenericPersonAliasSetForm
     private final String ITEM_SEARCH = "personAlias";
     public static final String ID = "GenericPersonAliasSetForm";
 
+    /**
+     * 
+     * @param itemModel 
+     */
     public GenericPersonAliasSetForm(final ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
@@ -67,10 +71,13 @@ public class GenericPersonAliasSetForm
         addProcessListener(this);
     }
 
+    /**
+     * 
+     */
     @Override
     public void addWidgets() {
         add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.alias.select")));
+                "cms.contenttypes.ui.genericperson.alias.select")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericPerson"));      
@@ -78,6 +85,11 @@ public class GenericPersonAliasSetForm
         add(itemSearch);
     }
 
+    /**
+     * 
+     * @param fse
+     * @throws FormProcessException 
+     */
     @Override
     public void init(final FormSectionEvent fse) throws FormProcessException {
         final FormData data = fse.getFormData();
@@ -125,13 +137,13 @@ public class GenericPersonAliasSetForm
                     Submit target = (Submit) event.getTarget();
 
                     if (person.getAlias() != null) {
-                        target.setButtonLabel(ContenttypesGlobalizationUtil.
-                                globalize(
-                                "cms.contenttypes.ui.contact.alias.select.change"));
+                        target.setButtonLabel(ContenttypesGlobalizationUtil
+                        .globalize(
+                        "cms.contenttypes.ui.genericperson.alias.select.change_contact"));
                     } else {
-                        target.setButtonLabel(ContenttypesGlobalizationUtil.
-                                globalize(
-                                "cms.contenttypes.ui.contact.alias.select.add"));
+                        target.setButtonLabel(ContenttypesGlobalizationUtil
+                        .globalize(
+                        "cms.contenttypes.ui.genericperson.alias.select.add_contact"));
                     }
                 }
             });
@@ -154,16 +166,16 @@ public class GenericPersonAliasSetForm
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.person.alias.select.wrong_type"));
+                    "cms.contenttypes.ui.genericperson.alias.select.wrong_type"));
         } else if (person.equals(data.get(ITEM_SEARCH))) {
             data.addError(ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.person.alias.select.same_as_person"));
+                    "cms.contenttypes.ui.genericperson.alias.select.same_as_person"));
         } else if (!alias.getContentBundle().hasInstance(person.getLanguage(),
                                                          Kernel.getConfig().
                 languageIndependentItems())) {
-            data.addError(
+                    data.addError(
                     ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.person.alias.select.no_suitable_language_variant"));
+                    "cms.contenttypes.ui.genericperson.alias.select.no_suitable_language_variant"));
         }
     }
 }

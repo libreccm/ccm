@@ -56,9 +56,8 @@ import org.apache.log4j.Logger;
  */
 public class GenericPersonContactAddForm extends BasicItemForm {
 
-    private static final Logger s_log =
-                                Logger.getLogger(
-            GenericPersonContactAddForm.class);
+    private static final Logger s_log = Logger.getLogger(
+                                               GenericPersonContactAddForm.class);
     private GenericPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
@@ -73,12 +72,15 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
     }
 
+    /**
+     * Add widgets to the form.
+     */
     @Override
     protected void addWidgets() {
 
         // Attach a GenericContact object
         add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.select_contact")));
+                "cms.contenttypes.ui.genericperson.select_contact")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericContact"));
@@ -86,7 +88,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         // GenericContact type field
         add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.contact.type")));
+                "cms.contenttypes.ui.genericperson.contact.type")));
         ParameterModel contactTypeParam =
                        new StringParameter(
                 GenericPersonContactCollection.CONTACTS_KEY);
@@ -148,8 +150,8 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(
-                    ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.person.select_contact.no_contact_selected"));
+              ContenttypesGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.genericperson.select_contact.none_selected"));
 
             return;
         }
@@ -163,8 +165,8 @@ public class GenericPersonContactAddForm extends BasicItemForm {
                                                      Kernel.getConfig().
               languageIndependentItems()))) {
             data.addError(
-                    ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.person.select_contact.no_suitable_language_variant"));
+              ContenttypesGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.genericperson.select_contact.no_suitable_language_variant"));
 
             return;
         }
@@ -177,7 +179,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         if (contacts.size() > 0) {
             data.addError(
                     ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.person.select_contact.already_added"));
+                    "cms.contenttypes.ui.genericperson.select_contact.already_added"));
         }
 
         contacts.close();

@@ -37,20 +37,26 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class GenericPersonAliasDeleteForm
-        extends BasicPageForm
-        implements FormProcessListener {
+public class GenericPersonAliasDeleteForm extends BasicPageForm
+                                          implements FormProcessListener {
 
     public static final String ID = "GenericPersonAliasDeleteForm";
 
-    public GenericPersonAliasDeleteForm(
-            final ItemSelectionModel itemModel,
-            final GenericPersonAliasPropertiesStep step) {
+    /**
+     * 
+     * @param itemModel
+     * @param step 
+     */
+    public GenericPersonAliasDeleteForm(final ItemSelectionModel itemModel,
+                                        final GenericPersonAliasPropertiesStep step) {
         super(ID, itemModel);
         addSaveCancelSection();
         addProcessListener(this);        
     }
 
+    /**
+     * 
+     */
     @Override
     public void addWidgets() {
         add(new Label(ContenttypesGlobalizationUtil.globalize(

@@ -30,7 +30,8 @@ import com.arsdigita.cms.contenttypes.Person;
 import org.apache.log4j.Logger;
 
 /**
- * Form to edit the properties of a person.
+ * Form to edit the properties of a person. Delegate als the gory details to
+ * the standard GenericPerson classes.
  *
  * @author: Jens Pelzetter
  */
@@ -44,10 +45,19 @@ public class PersonPropertyForm extends GenericPersonPropertyForm
     private PersonPropertiesStep m_step;
     public static final String ID = "Person_edit";
 
+    /**
+     * 
+     * @param itemModel 
+     */
     public PersonPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
+    /**
+     * 
+     * @param itemModel
+     * @param step 
+     */
     public PersonPropertyForm(ItemSelectionModel itemModel,
                               PersonPropertiesStep step) {
         super(itemModel, step);
@@ -55,11 +65,18 @@ public class PersonPropertyForm extends GenericPersonPropertyForm
         addSubmissionListener(this);
     }
 
+    /**
+     * 
+     */
     @Override
     protected void addWidgets() {
         super.addWidgets();
     }
 
+    /**
+     * 
+     * @param fse 
+     */
     @Override
     public void init(FormSectionEvent fse) {
         super.init(fse);
@@ -67,6 +84,10 @@ public class PersonPropertyForm extends GenericPersonPropertyForm
         Person person = (Person) super.initBasicWidgets(fse);
     }
 
+    /**
+     * 
+     * @param fse 
+     */
     @Override
     public void process(FormSectionEvent fse) {
         super.process(fse);

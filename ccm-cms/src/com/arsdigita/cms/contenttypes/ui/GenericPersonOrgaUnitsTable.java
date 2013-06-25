@@ -52,6 +52,10 @@ public class GenericPersonOrgaUnitsTable extends Table {
     private final static String TABLE_COL_TYPE = "table_col_type";
     private ItemSelectionModel itemModel;
 
+    /**
+     * 
+     * @param itemModel 
+     */
     public GenericPersonOrgaUnitsTable(final ItemSelectionModel itemModel) {
         super();
 
@@ -64,12 +68,12 @@ public class GenericPersonOrgaUnitsTable extends Table {
         columnModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil
-                .globalize("person.ui.orgaunits.columns.name").localize(),
+                .globalize("person.ui.orgaunits.columns.name"),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 2,
                 ContenttypesGlobalizationUtil
-                .globalize("person.ui.orgaunits.columns.type").localize(),
+                .globalize("person.ui.orgaunits.columns.type"),
                 TABLE_COL_TYPE));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -77,6 +81,9 @@ public class GenericPersonOrgaUnitsTable extends Table {
         columnModel.get(0).setCellRenderer(new EditCellRenderer());
     }
 
+    /**
+     * 
+     */
     private class ModelBuilder extends LockableImpl implements TableModelBuilder {
 
         private final ItemSelectionModel itemModel;
@@ -88,29 +95,50 @@ public class GenericPersonOrgaUnitsTable extends Table {
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
 
-            final GenericPerson person = (GenericPerson) itemModel.getSelectedItem(state);
+            final GenericPerson person = (GenericPerson) itemModel
+                                                         .getSelectedItem(state);
 
             return new Model(table, state, person);
         }
 
     }
 
+    /**
+     * 
+     */
     private class Model implements TableModel {
 
         private final Table table;
         private final GenericOrganizationalUnitBundleCollection orgaUnits;
 
-        public Model(final Table table, final PageState state, final GenericPerson person) {
+        /**
+         * 
+         * @param table
+         * @param state
+         * @param person 
+         */
+        public Model(final Table table, 
+                     final PageState state, 
+                     final GenericPerson person) {
             this.table = table;
             orgaUnits =
-            new GenericOrganizationalUnitBundleCollection((DataCollection) person.getGenericPersonBundle().get("organizationalunits"));
+            new GenericOrganizationalUnitBundleCollection((DataCollection) 
+                    person.getGenericPersonBundle().get("organizationalunits"));
         }
 
+        /**
+         * 
+         * @return 
+         */
         @Override
         public int getColumnCount() {
             return table.getColumnModel().size();
         }
 
+        /**
+         * 
+         * @return 
+         */
         @Override
         public boolean nextRow() {
             boolean ret;
@@ -124,18 +152,29 @@ public class GenericPersonOrgaUnitsTable extends Table {
             return ret;
         }
 
+        /**
+         * 
+         * @param columnIndex
+         * @return 
+         */
         @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return orgaUnits.getGenericOrganizationalUnit().getTitle();
                 case 1:
-                    return ((DataObject) orgaUnits.getGenericOrganizationalUnit().get("type")).get("label");
+                    return ((DataObject) orgaUnits.getGenericOrganizationalUnit()
+                                                  .get("type")).get("label");
                 default:
                     return null;
             }
         }
 
+        /**
+         * 
+         * @param columnIndex
+         * @return 
+         */
         @Override
         public Object getKeyAt(final int columnIndex) {
             return orgaUnits.getGenericOrganizationalUnit().getID();
