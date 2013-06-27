@@ -40,91 +40,93 @@ import com.arsdigita.bebop.PageState;
  */
 public class ContactPropertiesStep extends SimpleEditStep {
 
-  /** The name of the editing sheet added to this step */
-  public static String EDIT_SHEET_NAME = "edit";
+    /** The name of the editing sheet added to this step */
+    public static String EDIT_SHEET_NAME = "edit";
 
-  public ContactPropertiesStep(ItemSelectionModel itemModel,
-                               AuthoringKitWizard parent) {
-    super(itemModel, parent);
+    public ContactPropertiesStep(ItemSelectionModel itemModel,
+                                 AuthoringKitWizard parent) {
+        super(itemModel, parent);
 
-    BasicPageForm editSheet;
+        BasicPageForm editSheet;
 
-    editSheet = new ContactPropertyForm(itemModel);
-    add(EDIT_SHEET_NAME,
-        GlobalizationUtil.globalize("cms.ui.edit"), 
-        new WorkflowLockedComponentAccess(editSheet, itemModel),
-        editSheet.getSaveCancelSection().getCancelButton());
+        editSheet = new ContactPropertyForm(itemModel, this);
+        add(EDIT_SHEET_NAME,
+            GlobalizationUtil.globalize("cms.ui.edit"),
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
 
-    setDisplayComponent(getContactPropertySheet(itemModel));
-  }
+        setDefaultEditKey(EDIT_SHEET_NAME);
+        setDisplayComponent(getContactPropertySheet(itemModel));
+    }
 
-  /**
-   * Returns a component that displays the properties of the Contact specified
-   * by the ItemSelectionModel passed in.
-   * 
-   * @param itemModel
-   *          The ItemSelectionModel to use @pre itemModel != null
-   * @return A component to display the state of the basic properties of the
-   */
-  public static Component getContactPropertySheet(ItemSelectionModel itemModel) {
-    DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
+    /**
+     * Returns a component that displays the properties of the Contact specified
+     * by the ItemSelectionModel passed in.
+     * 
+     * @param itemModel
+     *          The ItemSelectionModel to use @pre itemModel != null
+     * @return A component to display the state of the basic properties of the
+     */
+    public static Component getContactPropertySheet(ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-    sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),
-              Contact.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),
+                  Contact.TITLE);
 
-    sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),
-              Contact.NAME);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),
+                  Contact.NAME);
 
-    sheet.add(ContactGlobalizationUtil.globalize(
-                  "london.contenttypes.ui.contact.givenname"),
-              Contact.GIVEN_NAME);
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.givenname"),
+                  Contact.GIVEN_NAME);
 
-    sheet.add(ContactGlobalizationUtil.globalize(
-                  "london.contenttypes.ui.contact.familyname"),
-              Contact.FAMILY_NAME);
-    
-    sheet.add(ContactGlobalizationUtil.globalize(
-                  "london.contenttypes.ui.contact.suffix"),
-              Contact.SUFFIX);
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.familyname"),
+                  Contact.FAMILY_NAME);
 
-    sheet.add(ContactGlobalizationUtil.globalize(
-                  "london.contenttypes.ui.contact.type"),
-              Contact.CONTACT_TYPE,
-              new DomainObjectPropertySheet.AttributeFormatter() {
-                  public String format(DomainObject item,
-                                       String attribute,
-                                       PageState state) {
-                      Contact contact = (Contact) item;
-                      if (contact.getContactType() != null) {
-                          return contact.getContactTypeName();
-                      } else {
-                          return (String) GlobalizationUtil
-                                          .globalize("cms.ui.unknown")
-                                          .localize();
-                      }
-                  }
-              });
-    
-    sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"),
-              Contact.DESCRIPTION);
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.suffix"),
+                  Contact.SUFFIX);
 
-    sheet.add(ContactGlobalizationUtil.globalize(
-                  "london.contenttypes.ui.contact.emails"),
-              Contact.EMAILS);
-    
-    sheet.add(ContactGlobalizationUtil.globalize(
-              "london.contenttypes.ui.contact.orgname"),
-              Contact.ORG_NAME);
-    
-    sheet.add(ContactGlobalizationUtil.globalize(
-                  "london.contenttypes.ui.contact.deptname"),
-              Contact.DEPT_NAME);
-    
-    sheet.add(ContactGlobalizationUtil.globalize(
-                  "london.contenttypes.ui.contact.role"),
-              Contact.ROLE);
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.type"),
+                  Contact.CONTACT_TYPE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
+            public String format(DomainObject item,
+                                 String attribute,
+                                 PageState state) {
+                Contact contact = (Contact) item;
+                if (contact.getContactType() != null) {
+                    return contact.getContactTypeName();
+                } else {
+                    return (String) GlobalizationUtil
+                            .globalize("cms.ui.unknown")
+                            .localize();
+                }
+            }
 
-    return sheet;
-  }
+        });
+
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"),
+                  Contact.DESCRIPTION);
+
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.emails"),
+                  Contact.EMAILS);
+
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.orgname"),
+                  Contact.ORG_NAME);
+
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.deptname"),
+                  Contact.DEPT_NAME);
+
+        sheet.add(ContactGlobalizationUtil.globalize(
+                "london.contenttypes.ui.contact.role"),
+                  Contact.ROLE);
+
+        return sheet;
+    }
 
 }

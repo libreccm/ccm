@@ -52,6 +52,8 @@ public class ContactPropertyForm extends BasicPageForm {
      * Name of this form
      */
     public static final String ID = "Contact_edit";
+    
+    private final ContactPropertiesStep step;
 
     /**
      * Creates a new form to edit the Contact object specified by the item
@@ -60,8 +62,9 @@ public class ContactPropertyForm extends BasicPageForm {
      * @param itemModel The ItemSelectionModel to use to obtain the Contact to
      * work on
      */
-    public ContactPropertyForm(ItemSelectionModel itemModel) {
+    public ContactPropertyForm(ItemSelectionModel itemModel, ContactPropertiesStep step) {
         super(ID, itemModel);
+        this.step = step;
     }
 
     /**
@@ -215,6 +218,8 @@ public class ContactPropertyForm extends BasicPageForm {
             contact.setDeptName((String) data.get(Contact.DEPT_NAME));
             contact.setRole((String) data.get(Contact.ROLE));
             contact.save();
+            
+            step.maybeForwardToNextStep(fse.getPageState());
         }
     }
 }

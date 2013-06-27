@@ -55,13 +55,14 @@ public class ESDServicePropertiesStep extends SimpleEditStep {
 
         ESDServicePropertiesForm editSheet;
 
-        editSheet = new ESDServicePropertiesForm(itemModel);
+        editSheet = new ESDServicePropertiesForm(itemModel, this);
         add(EDIT_SHEET_NAME,
             GlobalizationUtil.globalize("cms.ui.edit"),
             new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 
-        setDisplayComponent(getESDServicePropertySheet(itemModel));
+        setDefaultEditKey(EDIT_SHEET_NAME);
+        setDisplayComponent(getESDServicePropertySheet(itemModel));        
     }
 
     /**

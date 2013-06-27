@@ -38,53 +38,58 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
  */
 public class ESDServicePropertiesForm extends BasicPageForm {
 
-  /** Name of this form */
-  private static final String ID = "ESDService_edit";
-  
-  
-  /**
-   * @param itemModel
-   */
-  public ESDServicePropertiesForm(ItemSelectionModel itemModel) {
-    super(ID, itemModel);
-  }
+    /** Name of this form */
+    private static final String ID = "ESDService_edit";
+    
+    private final ESDServicePropertiesStep step;
 
-  /**
-   * Adds widgets to the form.
-   **/
-  protected void addWidgets() {
-
-      /* Add standard widgets Title & name/url    */
-      super.addWidgets();
-
-    add(new Label(ESDServiceGlobalizationUtil.globalize(
-              "london.contenttypes.ui.esdservice.servicetimes")));
-    ParameterModel serviceTimesParam = new StringParameter(ESDService.SERVICE_TIMES);
-    TextField serviceTimes = new TextField(serviceTimesParam);
-    add(serviceTimes);
-  }
-
-  /**
-   * Initialize Form with values if already set.
-   */
-  public void init(FormSectionEvent fse) {
-    FormData data = fse.getFormData();
-    ESDService esdService = (ESDService) super.initBasicWidgets(fse);
-    data.put(ESDService.SERVICE_TIMES, esdService.getServiceTimes());    
-  }
-
-  /**
-   * Process this form and set the values from form.
-   */
-  public void process(FormSectionEvent fse) {
-    FormData data = fse.getFormData();
-    ESDService esdService = (ESDService) super.processBasicWidgets(fse);
-
-    // save only if save button was pressed
-    if (esdService != null
-        && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
-
-      esdService.setServiceTimes((String) data.get(ESDService.SERVICE_TIMES));
+    /**
+     * @param itemModel
+     */
+    public ESDServicePropertiesForm(ItemSelectionModel itemModel, ESDServicePropertiesStep step) {
+        super(ID, itemModel);
+        this.step = step;
     }
-  }
+
+    /**
+     * Adds widgets to the form.
+     **/
+    protected void addWidgets() {
+
+        /* Add standard widgets Title & name/url    */
+        super.addWidgets();
+
+        add(new Label(ESDServiceGlobalizationUtil.globalize(
+                "london.contenttypes.ui.esdservice.servicetimes")));
+        ParameterModel serviceTimesParam = new StringParameter(ESDService.SERVICE_TIMES);
+        TextField serviceTimes = new TextField(serviceTimesParam);
+        add(serviceTimes);
+    }
+
+    /**
+     * Initialize Form with values if already set.
+     */
+    public void init(FormSectionEvent fse) {
+        FormData data = fse.getFormData();
+        ESDService esdService = (ESDService) super.initBasicWidgets(fse);
+        data.put(ESDService.SERVICE_TIMES, esdService.getServiceTimes());
+    }
+
+    /**
+     * Process this form and set the values from form.
+     */
+    public void process(FormSectionEvent fse) {
+        FormData data = fse.getFormData();
+        ESDService esdService = (ESDService) super.processBasicWidgets(fse);
+
+        // save only if save button was pressed
+        if (esdService != null
+            && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+
+            esdService.setServiceTimes((String) data.get(ESDService.SERVICE_TIMES));
+            
+            step.maybeForwardToNextStep(fse.getPageState());
+        }
+    }
+
 }
